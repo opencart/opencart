@@ -132,9 +132,21 @@ class Edit extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Update customer in db
 			$this->model_account_customer->editCustomer($this->customer->getId(), $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
+
+			// Update customer session details
+			$this->session->data['customer'] = [
+				'customer_id'       => $this->customer->getId(),
+				'customer_group_id' => $this->customer->getGroupId(),
+				'firstname'         => $this->request->post['firstname'],
+				'lastname'          => $this->request->post['lastname'],
+				'email'             => $this->request->post['email'],
+				'telephone'         => $this->request->post['telephone'],
+				'custom_field'      => $this->request->post['custom_field']
+			];
 
 			$json['redirect'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language'));
 		}

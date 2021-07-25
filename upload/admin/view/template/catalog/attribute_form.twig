@@ -35,7 +35,7 @@
               <select name="attribute_group_id" id="input-attribute-group" class="form-select">
                 <option value="0"></option>
                 {% for attribute_group in attribute_groups %}
-                  <option value="{{ attribute_group.attribute_group_id }}"{% if attribute_group.attribute_group_id == attribute_group_id %} selected="selected"{% endif %}>{{ attribute_group.name }}</option>
+                  <option value="{{ attribute_group.attribute_group_id }}"{% if attribute_group.attribute_group_id == attribute_group_id %} selected{% endif %}>{{ attribute_group.name }}</option>
                 {% endfor %}
               </select>
             </div>

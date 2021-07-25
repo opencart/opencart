@@ -182,8 +182,8 @@
 										<div id="input-option-{{ option.product_option_id }}">
 											{% for option_value in option.product_option_value %}
 												<div class="form-check">
-													<label><input type="radio" name="option[{{ option.product_option_id }}]" value="{{ option_value.product_option_value_id }}" class="form-check-input"/>
-														{% if option_value.image %}<img src="{{ option_value.image }}" alt="{{ option_value.name }} {% if option_value.price %} {{ option_value.price_prefix }} {{ option_value.price }} {% endif %}" class="img-thumbnail"/>{% endif %}
+													<input type="radio" name="option[{{ option.product_option_id }}]" value="{{ option_value.product_option_value_id }}" class="form-check-input"/>
+													<label class="form-check-label">{% if option_value.image %}<img src="{{ option_value.image }}" alt="{{ option_value.name }} {% if option_value.price %} {{ option_value.price_prefix }} {{ option_value.price }} {% endif %}" class="img-thumbnail"/>{% endif %}
 														{{ option_value.name }}
 														{% if option_value.price %}
 															({{ option_value.price_prefix }}{{ option_value.price }})
@@ -197,10 +197,11 @@
 								{% if option.type == 'checkbox' %}
 									<div class="row mb-3{% if option.required %} required {% endif %}">
 										<label class="col-form-label">{{ option.name }}</label>
-										<div id="input-option-{{ option.product_option_id }}"> {% for option_value in option.product_option_value %}
+										<div id="input-option-{{ option.product_option_id }}">
+											{% for option_value in option.product_option_value %}
 												<div class="form-check">
-													<label><input type="checkbox" name="option[{{ option.product_option_id }}][]" value="{{ option_value.product_option_value_id }}" class="form-check-input"/>
-														{% if option_value.image %} <img src="{{ option_value.image }}" alt="{{ option_value.name }} {% if option_value.price %} {{ option_value.price_prefix }} {{ option_value.price }} {% endif %}" class="img-thumbnail"/>{% endif %}
+													<input type="checkbox" name="option[{{ option.product_option_id }}][]" value="{{ option_value.product_option_value_id }}" class="form-check-input"/>
+													<label class="form-check-label">{% if option_value.image %} <img src="{{ option_value.image }}" alt="{{ option_value.name }} {% if option_value.price %} {{ option_value.price_prefix }} {{ option_value.price }} {% endif %}" class="img-thumbnail"/>{% endif %}
 														{{ option_value.name }}
 														{% if option_value.price %}
 															({{ option_value.price_prefix }}{{ option_value.price }})

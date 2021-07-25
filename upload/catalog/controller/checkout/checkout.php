@@ -50,47 +50,26 @@ class Checkout extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'))
 		];
 
-		$data['text_checkout_option'] = sprintf($this->language->get('text_checkout_option'), 1);
-		$data['text_checkout_account'] = sprintf($this->language->get('text_checkout_account'), 2);
-		$data['text_checkout_payment_address'] = sprintf($this->language->get('text_checkout_payment_address'), 2);
-		$data['text_checkout_shipping_address'] = sprintf($this->language->get('text_checkout_shipping_address'), 3);
-		$data['text_checkout_shipping_method'] = sprintf($this->language->get('text_checkout_shipping_method'), 4);
-
-		if ($this->cart->hasShipping()) {
-			$data['text_checkout_payment_method'] = sprintf($this->language->get('text_checkout_payment_method'), 5);
-			$data['text_checkout_confirm'] = sprintf($this->language->get('text_checkout_confirm'), 6);
-		} else {
-			$data['text_checkout_payment_method'] = sprintf($this->language->get('text_checkout_payment_method'), 3);
-			$data['text_checkout_confirm'] = sprintf($this->language->get('text_checkout_confirm'), 4);	
-		}
-
 		if (isset($this->session->data['error'])) {
 			$data['error_warning'] = $this->session->data['error'];
+
 			unset($this->session->data['error']);
 		} else {
 			$data['error_warning'] = '';
 		}
 
 		$data['logged'] = $this->customer->isLogged();
-
-		if (isset($this->session->data['account'])) {
-			$data['account'] = $this->session->data['account'];
-		} else {
-			$data['account'] = '';
-		}
-
 		$data['shipping_required'] = $this->cart->hasShipping();
-		$data['payment_required'] = $this->config->get('config_checkout_address');
+		$data['config_checkout_address'] = $this->config->get('config_checkout_address');
 
-		$data['register'] = $this->load->controller('checkout/register');
 		$data['login'] = $this->load->controller('checkout/login');
-		$data['guest'] = $this->load->controller('checkout/guest');
+		$data['register'] = $this->load->controller('checkout/register');
 
 		//$data['payment_address'] = $this->load->controller('checkout/payment_address');
-		//$data['payment_method'] = $this->load->controller('checkout/payment_method');
 
-		//$data['shipping_address'] = $this->load->controller('checkout/shipping_address');
+		$data['shipping_address'] = $this->load->controller('checkout/shipping_address');
 		//$data['shipping_method'] = $this->load->controller('checkout/shipping_method');
+		$data['payment_method'] = $this->load->controller('checkout/payment_method');
 		//$data['confirm'] = $this->load->controller('checkout/confirm');
 
 		$data['column_left'] = $this->load->controller('common/column_left');

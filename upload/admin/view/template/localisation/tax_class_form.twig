@@ -50,7 +50,7 @@
                   <tr id="tax-rule-row-{{ tax_rule_row }}">
                     <td class="text-start"><select name="tax_rule[{{ tax_rule_row }}][tax_rate_id]" class="form-select">
                         {% for tax_rate in tax_rates %}
-                          <option value="{{ tax_rate.tax_rate_id }}"{% if tax_rate.tax_rate_id == tax_rule.tax_rate_id %} selected="selected"{% endif %}>{{ tax_rate.name }}</option>
+                          <option value="{{ tax_rate.tax_rate_id }}"{% if tax_rate.tax_rate_id == tax_rule.tax_rate_id %} selected{% endif %}>{{ tax_rate.name }}</option>
                         {% endfor %}
                       </select></td>
                     <td class="text-start"><select name="tax_rule[{{ tax_rule_row }}][based]" class="form-select">

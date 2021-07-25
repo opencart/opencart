@@ -42,7 +42,7 @@
                     <td class="text-start"><select name="layout_route[{{ route_row }}][store_id]" class="form-select">
                         <option value="0">{{ text_default }}</option>
                         {% for store in stores %}
-                          <option value="{{ store.store_id }}"{% if store.store_id == layout_route.store_id %} selected="selected"{% endif %}>{{ store.name }}</option>
+                          <option value="{{ store.store_id }}"{% if store.store_id == layout_route.store_id %} selected{% endif %}>{{ store.name }}</option>
                         {% endfor %}
                       </select></td>
                     <td class="text-start"><input type="text" name="layout_route[{{ route_row }}][route]" value="{{ layout_route.route }}" placeholder="{{ entry_route }}" class="form-control"/></td>
@@ -80,10 +80,10 @@
                                 {% for extension in extensions %}
                                   <optgroup label="{{ extension.name }}">
                                     {% if not extension.module %}
-                                      <option value="{{ extension.code }}"{% if extension.code == layout_module.code %} selected="selected"{% endif %}>{{ extension.name }}</option>
+                                      <option value="{{ extension.code }}"{% if extension.code == layout_module.code %} selected{% endif %}>{{ extension.name }}</option>
                                     {% else %}
                                       {% for module in extension.module %}
-                                        <option value="{{ module.code }}"{% if module.code == layout_module.code %} selected="selected"{% endif %}>{{ module.name }}</option>
+                                        <option value="{{ module.code }}"{% if module.code == layout_module.code %} selected{% endif %}>{{ module.name }}</option>
                                       {% endfor %}
                                     {% endif %}
                                   </optgroup>
@@ -121,10 +121,10 @@
                                 {% for extension in extensions %}
                                   <optgroup label="{{ extension.name }}">
                                     {% if not extension.module %}
-                                      <option value="{{ extension.code }}"{% if extension.code == layout_module.code %} selected="selected"{% endif %}>{{ extension.name }}</option>
+                                      <option value="{{ extension.code }}"{% if extension.code == layout_module.code %} selected{% endif %}>{{ extension.name }}</option>
                                     {% else %}
                                       {% for module in extension.module %}
-                                        <option value="{{ module.code }}"{% if module.code == layout_module.code %} selected="selected"{% endif %}>{{ module.name }}</option>
+                                        <option value="{{ module.code }}"{% if module.code == layout_module.code %} selected{% endif %}>{{ module.name }}</option>
                                       {% endfor %}
                                     {% endif %}
                                   </optgroup>
@@ -160,10 +160,10 @@
                                 {% for extension in extensions %}
                                   <optgroup label="{{ extension.name }}">
                                     {% if not extension.module %}
-                                      <option value="{{ extension.code }}"{% if extension.code == layout_module.code %} selected="selected"{% endif %}>{{ extension.name }}</option>
+                                      <option value="{{ extension.code }}"{% if extension.code == layout_module.code %} selected{% endif %}>{{ extension.name }}</option>
                                     {% else %}
                                       {% for module in extension.module %}
-                                        <option value="{{ module.code }}"{% if module.code == layout_module.code %} selected="selected"{% endif %}>{{ module.name }}</option>
+                                        <option value="{{ module.code }}"{% if module.code == layout_module.code %} selected{% endif %}>{{ module.name }}</option>
                                       {% endfor %}
                                     {% endif %}
                                   </optgroup>
@@ -201,10 +201,10 @@
                                 {% for extension in extensions %}
                                   <optgroup label="{{ extension.name }}">
                                     {% if not extension.module %}
-                                    <option value="{{ extension.code }}"{% if extension.code == layout_module.code %} selected="selected"{% endif %}>{{ extension.name }}</option>
+                                    <option value="{{ extension.code }}"{% if extension.code == layout_module.code %} selected{% endif %}>{{ extension.name }}</option>
                                   {% else %}
                                     {% for module in extension.module %}
-                                      <option value="{{ module.code }}"{% if module.code == layout_module.code %} selected="selected"{% endif %}>{{ module.name }}</option>
+                                      <option value="{{ module.code }}"{% if module.code == layout_module.code %} selected{% endif %}>{{ module.name }}</option>
                                     {% endfor %}
                                     {% endif %}
                                   </optgroup>

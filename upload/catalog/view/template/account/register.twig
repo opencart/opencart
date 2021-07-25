@@ -16,8 +16,8 @@
             <label class="col-sm-2 col-form-label">{{ entry_customer_group }}</label>
             <div class="col-sm-10">{% for customer_group in customer_groups %}
                 <div class="form-check">
-                  <label><input type="radio" name="customer_group_id" value="{{ customer_group.customer_group_id }}" class="form-check-input"{% if customer_group.customer_group_id == customer_group_id %} checked="checked"{% endif %}/>
-                    {{ customer_group.name }}</label>
+                  <input type="radio" name="customer_group_id" value="{{ customer_group.customer_group_id }}" class="form-check-input"{% if customer_group.customer_group_id == customer_group_id %} checked{% endif %}/>
+                  <label class="form-check-label">{{ customer_group.name }}</label>
                 </div>
               {% endfor %}
             </div>
@@ -69,7 +69,8 @@
                   <div id="input-custom-field-{{ custom_field.custom_field_id }}">
                     {% for custom_field_value in custom_field.custom_field_value %}
                       <div class="form-check">
-                        <label><input type="radio" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{{ custom_field_value.custom_field_value_id }}" class="form-check-input"/> {{ custom_field_value.name }}</label>
+                        <input type="radio" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{{ custom_field_value.custom_field_value_id }}" class="form-check-input"/>
+                        <label class="form-check-label">{{ custom_field_value.name }}</label>
                       </div>
                     {% endfor %}
                   </div>
@@ -84,7 +85,8 @@
                   <div id="input-custom-field-{{ custom_field.custom_field_id }}">
                     {% for custom_field_value in custom_field.custom_field_value %}
                       <div class="form-check">
-                        <label><input type="checkbox" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" class="form-check-input"/> {{ custom_field_value.name }}</label>
+                        <input type="checkbox" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" class="form-check-input"/>
+                        <label class="form-check-label">{{ custom_field_value.name }}</label>
                       </div>
                     {% endfor %}
                   </div>
@@ -178,10 +180,12 @@
             <label class="col-sm-2 col-form-label">{{ entry_newsletter }}</label>
             <div class="col-sm-10">
               <div class="form-check form-check-inline">
-                <label><input type="radio" name="newsletter" value="1" class="form-check-input"/> {{ text_yes }}</label>
+                <input type="radio" name="newsletter" value="1" class="form-check-input"/>
+                <label class="form-check-label">{{ text_yes }}</label>
               </div>
               <div class="form-check form-check-inline">
-                <label><input type="radio" name="newsletter" value="0" class="form-check-input" checked="checked"/> {{ text_no }}</label>
+                <input type="radio" name="newsletter" value="0" class="form-check-input" checked/>
+                <label class="form-check-label">{{ text_no }}</label>
               </div>
             </div>
           </div>
@@ -203,8 +207,10 @@
           </div>
         {% endif %}
       </form>
-      {{ content_bottom }}</div>
-    {{ column_right }}</div>
+      {{ content_bottom }}
+    </div>
+    {{ column_right }}
+  </div>
 </div>
 <script type="text/javascript"><!--
 // Sort the custom fields

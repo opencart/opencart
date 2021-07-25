@@ -84,16 +84,12 @@ class Register extends \Opencart\System\Engine\Controller {
 			$data['captcha'] = '';
 		}
 
-		if ($this->config->get('config_affiliate_id')) {
-			$this->load->model('catalog/information');
+		$this->load->model('catalog/information');
 
-			$information_info = $this->model_catalog_information->getInformation($this->config->get('config_affiliate_id'));
+		$information_info = $this->model_catalog_information->getInformation($this->config->get('config_affiliate_id'));
 
-			if ($information_info) {
-				$data['text_agree'] = sprintf($this->language->get('text_agree'), $this->url->link('information/information|info', 'language=' . $this->config->get('config_language') . '&information_id=' . $this->config->get('config_affiliate_id')), $information_info['title']);
-			} else {
-				$data['text_agree'] = '';
-			}
+		if ($information_info) {
+			$data['text_agree'] = sprintf($this->language->get('text_agree'), $this->url->link('information/information|info', 'language=' . $this->config->get('config_language') . '&information_id=' . $this->config->get('config_affiliate_id')), $information_info['title']);
 		} else {
 			$data['text_agree'] = '';
 		}

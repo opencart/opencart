@@ -17,8 +17,7 @@
             <label class="col-sm-2 col-form-label">{{ entry_customer_group }}</label>
             <div class="col-sm-10">{% for customer_group in customer_groups %}
                 <div class="form-check">
-                  <label><input type="radio" name="customer_group_id" value="{{ customer_group.customer_group_id }}" class="form-check-input"{% if customer_group.customer_group_id == customer_group_id %} checked="checked"{% endif %}/>
-                    {{ customer_group.name }}</label>
+                  <input type="radio" name="customer_group_id" value="{{ customer_group.customer_group_id }}" class="form-check-input"{% if customer_group.customer_group_id == customer_group_id %} checked{% endif %}/> <label class="form-check-label">{{ customer_group.name }}</label>
                 </div>
               {% endfor %}</div>
           </div>
@@ -70,7 +69,7 @@
                     <div>
                       {% for custom_field_value in custom_field.custom_field_value %}
                         <div class="form-check">
-                          <label><input type="radio" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{{ custom_field_value.custom_field_value_id }}" class="form-check-input"/> {{ custom_field_value.name }}</label>
+                          <input type="radio" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{{ custom_field_value.custom_field_value_id }}" class="form-check-input"/> <label class="form-check-label">{{ custom_field_value.name }}</label>
                         </div>
                       {% endfor %}
                     </div>
@@ -85,7 +84,7 @@
                     <div>
                       {% for custom_field_value in custom_field.custom_field_value %}
                         <div class="form-check">
-                          <label><input type="checkbox" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" class="form-check-input"/> {{ custom_field_value.name }}</label>
+                          <input type="checkbox" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" class="form-check-input"/> <label class="form-check-label">{{ custom_field_value.name }}</label>
                         </div>
                       {% endfor %}
                     </div>
@@ -185,14 +184,16 @@
             <label class="col-sm-2 col-form-label">{{ entry_payment }}</label>
             <div class="col-sm-10">
               <div class="form-check">
-                <label><input type="radio" name="payment" value="cheque" class="form-check-input"{% if payment == 'cheque' %} checked="checked"{% endif %}/> {{ text_cheque }}</label>
+                <input type="radio" name="payment" value="cheque" class="form-check-input"{% if payment == 'cheque' %} checked{% endif %}/>
+                <label class="form-check-label">{{ text_cheque }}</label>
               </div>
               <div class="form-check">
-                <label><input type="radio" name="payment" value="paypal" class="form-check-input"{% if payment == 'paypal' %} checked="checked"{% endif %}/> {{ text_paypal }}
-                </label>
+                <input type="radio" name="payment" value="paypal" class="form-check-input"{% if payment == 'paypal' %} checked{% endif %}/>
+                <label class="form-check-label">{{ text_paypal }}</label>
               </div>
               <div class="form-check">
-                <label><input type="radio" name="payment" value="bank" class="form-check-input"{% if payment == 'bank' %} checked="checked"{% endif %}/>{{ text_bank }}</label>
+                <input type="radio" name="payment" value="bank" class="form-check-input"{% if payment == 'bank' %} checked{% endif %}/>
+                <label class="form-check-label">{{ text_bank }}</label>
               </div>
             </div>
           </div>
@@ -240,6 +241,7 @@
               </div>
             </div>
           </div>
+
           {% for custom_field in custom_fields %}
             {% if custom_field.location == 'affiliate' %}
 
@@ -264,7 +266,7 @@
                     <div>
                       {% for custom_field_value in custom_field.custom_field_value %}
                         <div class="form-check">
-                          <label><input type="radio" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{{ custom_field_value.custom_field_value_id }}" class="form-check-input"/> {{ custom_field_value.name }}</label>
+                          <input type="radio" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{{ custom_field_value.custom_field_value_id }}" class="form-check-input"/> <label class="form-check-label">{{ custom_field_value.name }}</label>
                         </div>
                       {% endfor %}
                     </div>
@@ -279,7 +281,8 @@
                     <div>
                       {% for custom_field_value in custom_field.custom_field_value %}
                         <div class="form-check">
-                          <label><input type="checkbox" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" class="form-check-input"/> {{ custom_field_value.name }}</label>
+                          <input type="checkbox" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" class="form-check-input"/>
+                          <label class="form-check-label">{{ custom_field_value.name }}</label>
                         </div>
                       {% endfor %}
                     </div>
@@ -326,6 +329,7 @@
                   </div>
                 </div>
               {% endif %}
+
               {% if custom_field.type == 'time' %}
                 <div id="custom-field-{{ custom_field.custom_field_id }}" class="row mb-3 custom-field" data-sort="{{ custom_field.sort_order }}">
                   <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
@@ -337,6 +341,7 @@
                   </div>
                 </div>
               {% endif %}
+
               {% if custom_field.type == 'datetime' %}
                 <div id="custom-field-{{ custom_field.custom_field_id }}" class="row mb-3 custom-field" data-sort="{{ custom_field.sort_order }}">
                   <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
@@ -367,21 +372,16 @@
           </div>
         </fieldset>
         {{ captcha }}
-        {% if text_agree %}
-          <div class="d-inline-block pt-2 pd-2 w-100">
-            <div class="float-end">{{ text_agree }}
-              <input type="checkbox" name="agree" value="1"{% if agree %} checked="checked"{% endif %}/>
+        <div class="d-inline-block pt-2 pd-2 w-100">
+          <div class="float-end">
+            {% if text_agree %}
+              {{ text_agree }}
+              <input type="checkbox" name="agree" value="1"{% if agree %} checked{% endif %}/>
               &nbsp;
-              <button type="button" data-oc-action="{{ register }}" data-oc-form="#form-register" class="btn btn-primary">{{ button_continue }}</button>
-            </div>
+            {% endif %}
+            <button type="button" data-oc-action="{{ register }}" data-oc-form="#form-register" class="btn btn-primary">{{ button_continue }}</button>
           </div>
-        {% else %}
-          <div class="d-inline-block pt-2 pd-2 w-100">
-            <div class="float-end">
-              <button type="button" data-oc-action="{{ register }}" data-oc-form="#form-register" class="btn btn-primary">{{ button_continue }}</button>
-            </div>
-          </div>
-        {% endif %}
+        </div>
       </form>
       {{ content_bottom }}
     </div>

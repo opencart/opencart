@@ -31,15 +31,15 @@
               <label for="input-customer-group" class="form-label">{{ entry_customer_group }}</label> <select name="filter_customer_group_id" id="input-customer-group" class="form-select">
                 <option value=""></option>
                 {% for customer_group in customer_groups %}
-                  <option value="{{ customer_group.customer_group_id }}"{% if customer_group.customer_group_id == filter_customer_group_id %} selected="selected"{% endif %}>{{ customer_group.name }}</option>
+                  <option value="{{ customer_group.customer_group_id }}"{% if customer_group.customer_group_id == filter_customer_group_id %} selected{% endif %}>{{ customer_group.name }}</option>
                 {% endfor %}
               </select>
             </div>
             <div class="mb-3">
               <label for="input-status" class="form-label">{{ entry_status }}</label> <select name="filter_status" id="input-status" class="form-select">
                 <option value=""></option>
-                <option value="1"{% if filter_status == '1' %} selected="selected"{% endif %}>{{ text_enabled }}</option>
-                <option value="0" {% if filter_status == '0' %} selected="selected"{% endif %}>{{ text_disabled }}</option>
+                <option value="1"{% if filter_status == '1' %} selected{% endif %}>{{ text_enabled }}</option>
+                <option value="0" {% if filter_status == '0' %} selected{% endif %}>{{ text_disabled }}</option>
               </select>
             </div>
             <div class="mb-3">

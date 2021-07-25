@@ -8,15 +8,13 @@
     {% if not shipping_method.error %}
       {% for quote in shipping_method.quote %}
         <div class="form-check">
-          <label>
-            {% if quote.code == code or not code %}
-              {% set code = quote.code %}
-              <input type="radio" name="shipping_method" value="{{ quote.code }}" class="form-check-input" checked="checked"/>
-            {% else %}
-              <input type="radio" name="shipping_method" value="{{ quote.code }}" class="form-check-input"/>
-            {% endif %}
-            {{ quote.title }} - {{ quote.text }}
-          </label>
+          {% if quote.code == code or not code %}
+            {% set code = quote.code %}
+            <input type="radio" name="shipping_method" value="{{ quote.code }}" class="form-check-input" checked/>
+          {% else %}
+            <input type="radio" name="shipping_method" value="{{ quote.code }}" class="form-check-input"/>
+          {% endif %}
+          <label class="form-check-label">{{ quote.title }} - {{ quote.text }}</label>
         </div>
       {% endfor %}
     {% else %}
@@ -37,54 +35,54 @@
 <script type="text/javascript"><!--
 // Shipping Method
 $('#button-shipping-method').on('click', function() {
-	chain.attach(function() {
-		return $.ajax({
-			url: 'index.php?route=checkout/shipping_method|save',
-			type: 'post',
-			data: $('#collapse-shipping-method input[type=\'radio\']:checked, #collapse-shipping-method textarea'),
-			dataType: 'json',
-			beforeSend: function() {
-				$('#button-shipping-method').button('loading');
-			},
-			success: function(json) {
-				$('.alert-dismissible, .text-danger').remove();
+    chain.attach(function() {
+        return $.ajax({
+            url: 'index.php?route=checkout/shipping_method|save',
+            type: 'post',
+            data: $('#collapse-shipping-method input[type=\'radio\']:checked, #collapse-shipping-method textarea'),
+            dataType: 'json',
+            beforeSend: function() {
+                $('#button-shipping-method').button('loading');
+            },
+            success: function(json) {
+                $('.alert-dismissible, .text-danger').remove();
 
-				if (json['redirect']) {
-					location = json['redirect'];
-				} else if (json['error']) {
-					$('#button-shipping-method').button('reset');
+                if (json['redirect']) {
+                    location = json['redirect'];
+                } else if (json['error']) {
+                    $('#button-shipping-method').button('reset');
 
-					if (json['error']['warning']) {
-						$('#collapse-shipping-method .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + '<button type="button" class="btn-close" data-dismiss="alert"></button></div>');
-					}
-				} else {
-					chain.attach(function() {
-						return $.ajax({
-							url: 'index.php?route=checkout/payment_method',
-							dataType: 'html',
-							complete: function() {
-								$('#button-shipping-method').button('reset');
-							},
-							success: function(html) {
-								$('#collapse-payment-method .card-body').html(html);
+                    if (json['error']['warning']) {
+                        $('#collapse-shipping-method .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + '<button type="button" class="btn-close" data-dismiss="alert"></button></div>');
+                    }
+                } else {
+                    chain.attach(function() {
+                        return $.ajax({
+                            url: 'index.php?route=checkout/payment_method',
+                            dataType: 'html',
+                            complete: function() {
+                                $('#button-shipping-method').button('reset');
+                            },
+                            success: function(html) {
+                                $('#collapse-payment-method .card-body').html(html);
 
-								$('#heading-payment-method').attr('data-bs-toggle', 'collapse');
+                                $('#heading-payment-method').attr('data-bs-toggle', 'collapse');
 
-								$('#heading-payment-method').trigger('click');
+                                $('#heading-payment-method').trigger('click');
 
-								$('#heading-checkout-confirm').removeAttr('data-bs-toggle');
-							},
-							error: function(xhr, ajaxOptions, thrownError) {
-								alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-							}
-						});
-					});
-				}
-			},
-			error: function(xhr, ajaxOptions, thrownError) {
-				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-			}
-		});
-	});
+                                $('#heading-checkout-confirm').removeAttr('data-bs-toggle');
+                            },
+                            error: function(xhr, ajaxOptions, thrownError) {
+                                alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                            }
+                        });
+                    });
+                }
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
+        });
+    });
 });
 //--></script>

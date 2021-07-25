@@ -21,7 +21,7 @@
               <div class="input-group">
                 <select name="type" class="form-select">
                   {% for category in categories %}
-                    <option value="{{ category.href }}"{% if type == category.code %} selected="selected"{% endif %}>{{ category.text }}</option>
+                    <option value="{{ category.href }}"{% if type == category.code %} selected{% endif %}>{{ category.text }}</option>
                   {% endfor %}
                 </select>
                 <div class="input-group-text"><i class="fas fa-filter"></i>&nbsp;{{ text_filter }}</div>

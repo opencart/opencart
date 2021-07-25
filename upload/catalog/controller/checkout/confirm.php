@@ -65,6 +65,11 @@ class Confirm extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+
+
+
+
+
 		if (!$json) {
 			$order_data = [];
 
@@ -109,25 +114,14 @@ class Confirm extends \Opencart\System\Engine\Controller {
 
 			$this->load->model('account/customer');
 
-			if ($this->customer->isLogged()) {
-				$customer_info = $this->model_account_customer->getCustomer($this->customer->getId());
 
-				$order_data['customer_id'] = $this->customer->getId();
-				$order_data['customer_group_id'] = $customer_info['customer_group_id'];
-				$order_data['firstname'] = $customer_info['firstname'];
-				$order_data['lastname'] = $customer_info['lastname'];
-				$order_data['email'] = $customer_info['email'];
-				$order_data['telephone'] = $customer_info['telephone'];
-				$order_data['custom_field'] = json_decode($customer_info['custom_field'], true);
-			} elseif (isset($this->session->data['guest'])) {
-				$order_data['customer_id'] = 0;
-				$order_data['customer_group_id'] = $this->session->data['guest']['customer_group_id'];
-				$order_data['firstname'] = $this->session->data['guest']['firstname'];
-				$order_data['lastname'] = $this->session->data['guest']['lastname'];
-				$order_data['email'] = $this->session->data['guest']['email'];
-				$order_data['telephone'] = $this->session->data['guest']['telephone'];
-				$order_data['custom_field'] = $this->session->data['guest']['custom_field'];
-			}
+			$order_data['customer_id'] = 0;
+			$order_data['customer_group_id'] = $this->session->data['customer']['customer_group_id'];
+			$order_data['firstname'] = $this->session->data['customer']['firstname'];
+			$order_data['lastname'] = $this->session->data['customer']['lastname'];
+			$order_data['email'] = $this->session->data['customer']['email'];
+			$order_data['telephone'] = $this->session->data['customer']['telephone'];
+			$order_data['custom_field'] = $this->session->data['customer']['custom_field'];
 
 			$order_data['payment_firstname'] = $this->session->data['payment_address']['firstname'];
 			$order_data['payment_lastname'] = $this->session->data['payment_address']['lastname'];

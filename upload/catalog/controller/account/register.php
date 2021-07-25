@@ -82,16 +82,12 @@ class Register extends \Opencart\System\Engine\Controller {
 			$data['captcha'] = '';
 		}
 
-		if ($this->config->get('config_account_id')) {
-			$this->load->model('catalog/information');
+		$this->load->model('catalog/information');
 
-			$information_info = $this->model_catalog_information->getInformation($this->config->get('config_account_id'));
+		$information_info = $this->model_catalog_information->getInformation($this->config->get('config_account_id'));
 
-			if ($information_info) {
-				$data['text_agree'] = sprintf($this->language->get('text_agree'), $this->url->link('information/information|info', 'language=' . $this->config->get('config_language') . '&information_id=' . $this->config->get('config_account_id')), $information_info['title']);
-			} else {
-				$data['text_agree'] = '';
-			}
+		if ($information_info) {
+			$data['text_agree'] = sprintf($this->language->get('text_agree'), $this->url->link('information/information|info', 'language=' . $this->config->get('config_language') . '&information_id=' . $this->config->get('config_account_id')), $information_info['title']);
 		} else {
 			$data['text_agree'] = '';
 		}
@@ -112,6 +108,7 @@ class Register extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		$keys = [
+			'customer_group_id',
 			'firstname',
 			'lastname',
 			'email',
@@ -154,7 +151,7 @@ class Register extends \Opencart\System\Engine\Controller {
 		}
 
 		// Customer Group
-		if (isset($this->request->post['customer_group_id']) && is_array($this->config->get('config_customer_group_display')) && in_array($this->request->post['customer_group_id'], $this->config->get('config_customer_group_display'))) {
+		if (in_array($this->request->post['customer_group_id'], (int)$this->config->get('config_customer_group_display'))) {
 			$customer_group_id = $this->request->post['customer_group_id'];
 		} else {
 			$customer_group_id = $this->config->get('config_customer_group_id');
@@ -197,32 +194,41 @@ class Register extends \Opencart\System\Engine\Controller {
 		}
 
 		// Agree to terms
-		if ($this->config->get('config_account_id')) {
-			$this->load->model('catalog/information');
+		$this->load->model('catalog/information');
 
-			$information_info = $this->model_catalog_information->getInformation($this->config->get('config_account_id'));
+		$information_info = $this->model_catalog_information->getInformation($this->config->get('config_account_id'));
 
-			if ($information_info && !isset($this->request->post['agree'])) {
-				$json['error']['warning'] = sprintf($this->language->get('error_agree'), $information_info['title']);
-			}
+		if ($information_info && !$this->request->post['agree']) {
+			$json['error']['warning'] = sprintf($this->language->get('error_agree'), $information_info['title']);
 		}
 
 		if (!$json) {
-			unset($this->session->data['guest']);
-			unset($this->session->data['register_token']);
-
 			$customer_id = $this->model_account_customer->addCustomer($this->request->post);
 
-			// Clear any previous login attempts for unregistered accounts.
-			$this->model_account_customer->deleteLoginAttempts($this->request->post['email']);
-
 			$this->customer->login($this->request->post['email'], html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8'));
+
+			// Add customer details into session
+			$this->session->data['customer'] = [
+				'customer_id'       => $customer_id,
+				'customer_group_id' => $customer_group_id,
+				'firstname'         => $this->request->post['firstname'],
+				'lastname'          => $this->request->post['lastname'],
+				'email'             => $this->request->post['email'],
+				'telephone'         => $this->request->post['telephone'],
+				'custom_field'      => $this->request->post['custom_field']
+			];
 
 			// Log the IP info
 			$this->model_account_customer->addLogin($this->customer->getId(), $this->request->server['REMOTE_ADDR']);
 
 			// Create customer token
 			$this->session->data['customer_token'] = token(26);
+
+			// Clear any previous login attempts for unregistered accounts.
+			$this->model_account_customer->deleteLoginAttempts($this->request->post['email']);
+
+			unset($this->session->data['guest']);
+			unset($this->session->data['register_token']);
 
 			$json['redirect'] = $this->url->link('account/success', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'], true);
 		}

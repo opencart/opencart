@@ -298,7 +298,7 @@
                       <select name="tax_class_id" id="input-tax-class" class="form-select">
                         <option value="0">{{ text_none }}</option>
                         {% for tax_class in tax_classes %}
-                          <option value="{{ tax_class.tax_class_id }}"{% if tax_class.tax_class_id == tax_class_id %} selected="selected"{% endif %}>{{ tax_class.title }}</option>
+                          <option value="{{ tax_class.tax_class_id }}"{% if tax_class.tax_class_id == tax_class_id %} selected{% endif %}>{{ tax_class.title }}</option>
                         {% endfor %}
                       </select>
                       {% if master_id %}
@@ -362,7 +362,7 @@
                     <div class="input-group">
                       <select name="stock_status_id" id="input-stock-status" class="form-select">
                         {% for stock_status in stock_statuses %}
-                          <option value="{{ stock_status.stock_status_id }}"{% if stock_status.stock_status_id == stock_status_id %} selected="selected"{% endif %}>{{ stock_status.name }}</option>
+                          <option value="{{ stock_status.stock_status_id }}"{% if stock_status.stock_status_id == stock_status_id %} selected{% endif %}>{{ stock_status.name }}</option>
                         {% endfor %}
                       </select>
                       {% if master_id %}
@@ -450,7 +450,7 @@
                     <div class="input-group">
                       <select name="length_class_id" id="input-length-class" class="form-select">
                         {% for length_class in length_classes %}
-                          <option value="{{ length_class.length_class_id }}"{% if length_class.length_class_id == length_class_id %} selected="selected"{% endif %}>{{ length_class.title }}</option>
+                          <option value="{{ length_class.length_class_id }}"{% if length_class.length_class_id == length_class_id %} selected{% endif %}>{{ length_class.title }}</option>
                         {% endfor %}
                       </select>
                       {% if master_id %}
@@ -484,7 +484,7 @@
                     <div class="input-group">
                       <select name="weight_class_id" id="input-weight-class" class="form-select">
                         {% for weight_class in weight_classes %}
-                          <option value="{{ weight_class.weight_class_id }}"{% if weight_class.weight_class_id == weight_class_id %} selected="selected"{% endif %}>{{ weight_class.title }}</option>
+                          <option value="{{ weight_class.weight_class_id }}"{% if weight_class.weight_class_id == weight_class_id %} selected{% endif %}>{{ weight_class.title }}</option>
                         {% endfor %}
                       </select>
                       {% if master_id %}

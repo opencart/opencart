@@ -39,26 +39,26 @@
                     <input type="hidden" name="customer_id" value="{{ customer_id }}"/> <input type="hidden" name="customer_group_id" value="{{ customer_group_id }}"/>
                   </div>
                 </div>
-                <div class="row mb-3">
+                <div class="col mb-3">
                   <label for="input-company" class="col-sm-2 col-form-label">{{ entry_company }}</label>
                   <div class="col-sm-10">
                     <input type="text" name="company" value="{{ company }}" placeholder="{{ entry_company }}" id="input-company" class="form-control"/>
                   </div>
                 </div>
-                <div class="row mb-3">
+                <div class="col mb-3">
                   <label for="input-website" class="col-sm-2 col-form-label">{{ entry_website }}</label>
-                  <div class="col-sm-10">
+
                     <input type="text" name="website" value="{{ website }}" placeholder="{{ entry_website }}" id="input-website" class="form-control"/>
-                  </div>
+
                 </div>
-                <div class="row mb-3">
+                <div class="col mb-3">
                   <label for="input-tracking" class="col-sm-2 col-form-label">{{ entry_tracking }}</label>
-                  <div class="col-sm-10">
+
                     <input type="text" name="tracking" value="{{ tracking }}" placeholder="{{ entry_tracking }}" id="input-tracking" class="form-control"/>
                     <div class="form-text text-muted">{{ help_tracking }}</div>
-                  </div>
+
                 </div>
-                <div class="row mb-3">
+                <div class="col mb-3">
                   <label for="input-commission" class="col-sm-2 col-form-label">{{ entry_commission }}</label>
                   <div class="col-sm-10">
                     <input type="text" name="commission" value="{{ commission }}" placeholder="{{ entry_commission }}" id="input-commission" class="form-control"/>
@@ -67,58 +67,50 @@
                 </div>
                 {% for custom_field in custom_fields %}
                   {% if custom_field.location == 'affiliate' %}
+
                     {% if custom_field.type == 'select' %}
-                      <div class="row mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order }}">
+                      <div class="col mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order }}">
                         <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
                         <div class="col-sm-10">
                           <select name="custom_field[{{ custom_field.custom_field_id }}]" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-select">
                             <option value="">{{ text_select }}</option>
                             {% for custom_field_value in custom_field.custom_field_value %}
-                              <option value="{{ custom_field_value.custom_field_value_id }}"{% if affiliate_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id == affiliate_custom_field[custom_field.custom_field_id] %} selected="selected"{% endif %}>{{ custom_field_value.name }}</option>
+                              <option value="{{ custom_field_value.custom_field_value_id }}"{% if affiliate_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id == affiliate_custom_field[custom_field.custom_field_id] %} selected{% endif %}>{{ custom_field_value.name }}</option>
                             {% endfor %}
                           </select></div>
                       </div>
                     {% endif %}
+
                     {% if custom_field.type == 'radio' %}
-                      <div class="row mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order }}">
+                      <div class="col mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order }}">
                         <label class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
                         <div class="col-sm-10">
                           <div id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control" style="height: 150px; overflow: auto;">
                             {% for custom_field_value in custom_field.custom_field_value %}
-                              <label class="form-check">
-                                {% if affiliate_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id == affiliate_custom_field[custom_field.custom_field_id] %}
-                                  <input type="radio" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ custom_field_value.custom_field_value_id }}" class="form-check-input" checked/>
-                                  {{ custom_field_value.name }}
-                                {% else %}
-                                  <input type="radio" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ custom_field_value.custom_field_value_id }}" class="form-check-input"/>
-                                  {{ custom_field_value.name }}
-                                {% endif %}
-                              </label>
+                              <div class="form-check">
+                                <input type="radio" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ custom_field_value.custom_field_value_id }}" id="input-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-input"{% if affiliate_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id == affiliate_custom_field[custom_field.custom_field_id] %} checked{% endif %}/>
+                                <label for="input-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-label">{{ custom_field_value.name }}</label>
+                              </div>
                             {% endfor %}
                           </div>
                         </div>
                       </div>
                     {% endif %}
+
                     {% if custom_field.type == 'checkbox' %}
                       <div class="row mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order }}">
                         <label class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
                         <div class="col-sm-10">
                           <div id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control" style="height: 150px; overflow: auto;">
                             {% for custom_field_value in custom_field.custom_field_value %}
-                              <label class="form-check">
-                                {% if affiliate_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id in affiliate_custom_field[custom_field.custom_field_id] %}
-                                  <input type="checkbox" name="custom_field[{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" class="form-check-input" checked/>
-                                  {{ custom_field_value.name }}
-                                {% else %}
-                                  <input type="checkbox" name="custom_field[{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" class="form-check-input"/>
-                                  {{ custom_field_value.name }}
-                                {% endif %}
-                              </label>
+                              <input type="checkbox" name="custom_field[{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" id="input-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-input"{% if affiliate_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id in affiliate_custom_field[custom_field.custom_field_id] %} checked{% endif %}/>
+                              <label id="input-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-label">{{ custom_field_value.name }}</label>
                             {% endfor %}
                           </div>
                         </div>
                       </div>
                     {% endif %}
+
                     {% if custom_field.type == 'text' %}
                       <div class="row mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order }}">
                         <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
@@ -127,6 +119,7 @@
                         </div>
                       </div>
                     {% endif %}
+
                     {% if custom_field.type == 'textarea' %}
                       <div class="row mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order }}">
                         <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
@@ -135,6 +128,7 @@
                         </div>
                       </div>
                     {% endif %}
+
                     {% if custom_field.type == 'file' %}
                       <div class="row mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order }}">
                         <label class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
@@ -146,6 +140,7 @@
                         </div>
                       </div>
                     {% endif %}
+
                     {% if custom_field.type == 'date' %}
                       <div class="row mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order }}">
                         <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
@@ -157,6 +152,7 @@
                         </div>
                       </div>
                     {% endif %}
+
                     {% if custom_field.type == 'time' %}
                       <div class="row mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order }}">
                         <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
@@ -168,6 +164,7 @@
                         </div>
                       </div>
                     {% endif %}
+
                     {% if custom_field.type == 'datetime' %}
                       <div class="row mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order }}">
                         <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
@@ -179,6 +176,7 @@
                         </div>
                       </div>
                     {% endif %}
+
                   {% endif %}
                 {% endfor %}
               </fieldset>
@@ -266,7 +264,7 @@
                   <label for="input-status" class="col-sm-2 col-form-label">{{ entry_status }}</label>
                   <div class="col-sm-10">
                     <select name="status" id="input-status" class="form-select">
-                      <option value="1"{% if status %} selected="selected"{% endif %}>{{ text_enabled }}</option>
+                      <option value="1"{% if status %} selected{% endif %}>{{ text_enabled }}</option>
                       <option value="0"{% if not status %} selected="selected"{% endif %}>{{ text_disabled }}</option>
                     </select>
                   </div>

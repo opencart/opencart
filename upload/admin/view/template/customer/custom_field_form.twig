@@ -35,7 +35,7 @@
               <label for="input-location" class="col-sm-2 col-form-label">{{ entry_location }}</label>
               <div class="col-sm-10">
                 <select name="location" id="input-location" class="form-select">
-                  <option value="account"{% if location == 'account' %} selected="selected"{% endif %}>{{ text_account }}</option>
+                  <option value="account"{% if location == 'account' %} selected{% endif %}>{{ text_account }}</option>
                   <option value="address"{% if location == 'address' %} selected="selected"{% endif %}>{{ text_address }}</option>
                   <option value="affiliate"{% if location == 'affiliate' %} selected="selected"{% endif %}>{{ text_affiliate }}</option>
                 </select>

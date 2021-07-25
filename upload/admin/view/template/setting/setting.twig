@@ -67,7 +67,7 @@
                 <div class="col-sm-10">
                   <select name="config_theme" id="input-theme" class="form-select">
                     {% for theme in themes %}
-                      <option value="{{ theme.value }}"{% if theme.value == config_theme %} selected="selected"{% endif %}>{{ theme.text }}</option>
+                      <option value="{{ theme.value }}"{% if theme.value == config_theme %} selected{% endif %}>{{ theme.text }}</option>
                     {% endfor %}
                   </select>
                   <br/>
@@ -79,7 +79,7 @@
                 <div class="col-sm-10">
                   <select name="config_layout_id" id="input-layout" class="form-select">
                     {% for layout in layouts %}
-                      <option value="{{ layout.layout_id }}"{% if layout.layout_id == config_layout_id %} selected="selected"{% endif %}>{{ layout.name }}</option>
+                      <option value="{{ layout.layout_id }}"{% if layout.layout_id == config_layout_id %} selected{% endif %}>{{ layout.name }}</option>
                     {% endfor %}
                   </select>
                 </div>
@@ -171,7 +171,7 @@
                 <div class="col-sm-10">
                   <select name="config_country_id" id="input-country" class="form-select">
                     {% for country in countries %}
-                      <option value="{{ country.country_id }}"{% if country.country_id == config_country_id %} selected="selected"{% endif %}>{{ country.name }}</option>
+                      <option value="{{ country.country_id }}"{% if country.country_id == config_country_id %} selected{% endif %}>{{ country.name }}</option>
                     {% endfor %}
                   </select>
                 </div>
@@ -187,7 +187,7 @@
                 <div class="col-sm-10">
                   <select name="config_timezone" id="input-timezone" class="form-select">
                     {% for timezone in timezones %}
-                      <option value="{{ timezone.value }}"{% if timezone.value == config_timezone %} selected="selected"{% endif %}>{{ timezone.text }}</option>
+                      <option value="{{ timezone.value }}"{% if timezone.value == config_timezone %} selected{% endif %}>{{ timezone.text }}</option>
                     {% endfor %}
                   </select>
                 </div>
@@ -197,7 +197,7 @@
                 <div class="col-sm-10">
                   <select name="config_language" id="input-language" class="form-select">
                     {% for language in languages %}
-                      <option value="{{ language.code }}"{% if language.code == config_language %} selected="selected"{% endif %}>{{ language.name }}</option>
+                      <option value="{{ language.code }}"{% if language.code == config_language %} selected{% endif %}>{{ language.name }}</option>
                     {% endfor %}
                   </select>
                 </div>
@@ -207,7 +207,7 @@
                 <div class="col-sm-10">
                   <select name="config_language_admin" id="input-language-admin" class="form-select">
                     {% for language in languages %}
-                      <option value="{{ language.code }}"{% if language.code == config_language_admin %} selected="selected"{% endif %}>{{ language.name }}</option>
+                      <option value="{{ language.code }}"{% if language.code == config_language_admin %} selected{% endif %}>{{ language.name }}</option>
                     {% endfor %}
                   </select>
                 </div>
@@ -217,7 +217,7 @@
                 <div class="col-sm-10">
                   <select name="config_currency" id="input-currency" class="form-select">
                     {% for currency in currencies %}
-                      <option value="{{ currency.code }}"{% if currency.code == config_currency %} selected="selected"{% endif %}>{{ currency.title }}</option>
+                      <option value="{{ currency.code }}"{% if currency.code == config_currency %} selected{% endif %}>{{ currency.title }}</option>
                     {% endfor %}
                   </select>
                   <div class="form-text text-muted">{{ help_currency }}</div>
@@ -228,7 +228,7 @@
                 <div class="col-sm-10">
                   <select name="config_currency_engine" id="input-currency-engine" class="form-select">
                     {% for currency_engine in currency_engines %}
-                      <option value="{{ currency_engine.value }}"{% if currency_engine.value == config_currency_engine %} selected="selected"{% endif %}>{{ currency_engine.text }}</option>
+                      <option value="{{ currency_engine.value }}"{% if currency_engine.value == config_currency_engine %} selected{% endif %}>{{ currency_engine.text }}</option>
                     {% endfor %}
                   </select>
                 </div>
@@ -249,7 +249,7 @@
                 <div class="col-sm-10">
                   <select name="config_length_class_id" id="input-length-class" class="form-select">
                     {% for length_class in length_classes %}
-                      <option value="{{ length_class.length_class_id }}"{% if length_class.length_class_id == config_length_class_id %} selected="selected"{% endif %}>{{ length_class.title }}</option>
+                      <option value="{{ length_class.length_class_id }}"{% if length_class.length_class_id == config_length_class_id %} selected{% endif %}>{{ length_class.title }}</option>
                     {% endfor %}
                   </select>
                 </div>
@@ -259,7 +259,7 @@
                 <div class="col-sm-10">
                   <select name="config_weight_class_id" id="input-weight-class" class="form-select">
                     {% for weight_class in weight_classes %}
-                      <option value="{{ weight_class.weight_class_id }}"{% if weight_class.weight_class_id == config_weight_class_id %} selected="selected"{% endif %}>{{ weight_class.title }}</option>
+                      <option value="{{ weight_class.weight_class_id }}"{% if weight_class.weight_class_id == config_weight_class_id %} selected{% endif %}>{{ weight_class.title }}</option>
                     {% endfor %}
                   </select>
                 </div>
@@ -364,7 +364,7 @@
                       <select name="config_cookie_id" id="input-cookie" class="form-select">
                         <option value="0">{{ text_none }}</option>
                         {% for information in informations %}
-                          <option value="{{ information.information_id }}"{% if information.information_id == config_cookie_id %} selected="selected"{% endif %}>{{ information.title }}</option>
+                          <option value="{{ information.information_id }}"{% if information.information_id == config_cookie_id %} selected{% endif %}>{{ information.title }}</option>
                         {% endfor %}
                       </select>
                       <div class="form-text text-muted">{{ help_cookie }}</div>
@@ -376,7 +376,7 @@
                       <select name="config_gdpr_id" id="input-gdpr" class="form-select">
                         <option value="0">{{ text_none }}</option>
                         {% for information in informations %}
-                          <option value="{{ information.information_id }}"{% if information.information_id == config_gdpr_id %} selected="selected"{% endif %}>{{ information.title }}</option>
+                          <option value="{{ information.information_id }}"{% if information.information_id == config_gdpr_id %} selected{% endif %}>{{ information.title }}</option>
                         {% endfor %}
                       </select>
                       <div class="form-text text-muted">{{ help_gdpr }}</div>
@@ -411,8 +411,8 @@
                     <div class="col-sm-10">
                       <select name="config_tax_default" id="input-tax-default" class="form-select">
                         <option value="">{{ text_none }}</option>
-                        <option value="shipping"{% if config_tax_default == 'shipping' %} selected="selected"{% endif %}>{{ text_shipping }}</option>
-                        <option value="payment"{% if config_tax_default == 'payment' %} selected="selected"{% endif %}>{{ text_payment }}</option>
+                        <option value="shipping"{% if config_tax_default == 'shipping' %} selected{% endif %}>{{ text_shipping }}</option>
+                        <option value="payment"{% if config_tax_default == 'payment' %} selected{% endif %}>{{ text_payment }}</option>
                       </select>
                       <div class="form-text text-muted">{{ help_tax_default }}</div>
                     </div>
@@ -422,8 +422,8 @@
                     <div class="col-sm-10">
                       <select name="config_tax_customer" id="input-tax-customer" class="form-select">
                         <option value="">{{ text_none }}</option>
-                        <option value="shipping"{% if config_tax_customer == 'shipping' %} selected="selected"{% endif %}>{{ text_shipping }}</option>
-                        <option value="payment"{% if config_tax_customer == 'payment' %} selected="selected"{% endif %}>{{ text_payment }}</option>
+                        <option value="shipping"{% if config_tax_customer == 'shipping' %} selected{% endif %}>{{ text_shipping }}</option>
+                        <option value="payment"{% if config_tax_customer == 'payment' %} selected{% endif %}>{{ text_payment }}</option>
                       </select>
                       <div class="form-text text-muted">{{ help_tax_customer }}</div>
                     </div>

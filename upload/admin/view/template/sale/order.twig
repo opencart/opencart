@@ -33,14 +33,14 @@
               <label for="input-store" class="form-label">{{ entry_store }}</label> <select name="filter_store_id" id="input-store" class="form-select">
                 <option value=""></option>
                 {% for store in stores %}
-                  <option value="{{ store.store_id }}"{% if store.store_id == filter_store_id %} selected="selected"{% endif %}>{{ store.name }}</option>
+                  <option value="{{ store.store_id }}"{% if store.store_id == filter_store_id %} selected{% endif %}>{{ store.name }}</option>
                 {% endfor %}
               </select>
             </div>
             <div class="mb-3">
               <label for="input-order-status" class="form-label">{{ entry_order_status }}</label> <select name="filter_order_status_id" id="input-order-status" class="form-select">
                 <option value=""></option>
-                <option value="0"{% if filter_order_status_id == '0' %} selected="selected"{% endif %}>{{ text_missing }}</option>
+                <option value="0"{% if filter_order_status_id == '0' %} selected{% endif %}>{{ text_missing }}</option>
                 {% for order_status in order_statuses %}
                   <option value="{{ order_status.order_status_id }}"{% if order_status.order_status_id == filter_order_status_id %} selected="selected"{% endif %}>{{ order_status.name }}</option>
                 {% endfor %}

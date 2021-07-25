@@ -50,7 +50,7 @@
               <div class="input-group-text"><i class="fas fa-sort-amount-down"></i></div>
               <select onchange="location = this.value;" class="form-select">
                 {% for sorts in sorts %}
-                  <option value="{{ sorts.href }}"{% if sorts.value == sort %} selected="selected"{% endif %}>{{ sorts.text }}</option>
+                  <option value="{{ sorts.href }}"{% if sorts.value == sort %} selected{% endif %}>{{ sorts.text }}</option>
                 {% endfor %}
               </select>
             </div>

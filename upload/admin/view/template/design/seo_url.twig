@@ -33,9 +33,9 @@
             <div class="mb-3">
               <label for="input-store" class="form-label">{{ entry_store }}</label> <select name="filter_store_id" id="input-store" class="form-select">
                 <option value=""></option>
-                <option value="0"{% if filter_store_id == '0' %} selected="selected"{% endif %}>{{ text_default }}</option>
+                <option value="0"{% if filter_store_id == '0' %} selected{% endif %}>{{ text_default }}</option>
                 {% for store in stores %}
-                  <option value="{{ store.store_id }}"{% if store.store_id == filter_store_id %} selected="selected"{% endif %}>{{ store.name }}</option>
+                  <option value="{{ store.store_id }}"{% if store.store_id == filter_store_id %} selected{% endif %}>{{ store.name }}</option>
                 {% endfor %}
               </select>
             </div>
@@ -43,7 +43,7 @@
               <label for="input-language" class="form-label">{{ entry_language }}</label> <select name="filter_language_id" id="input-language" class="form-select">
                 <option value=""></option>
                 {% for language in languages %}
-                  <option value="{{ language.language_id }}"{% if language.language_id == filter_language_id %} selected="selected"{% endif %}>{{ language.name }}</option>
+                  <option value="{{ language.language_id }}"{% if language.language_id == filter_language_id %} selected{% endif %}>{{ language.name }}</option>
                 {% endfor %}
               </select>
             </div>

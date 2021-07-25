@@ -85,7 +85,7 @@ class Login extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!isset($this->request->get['login_token']) || !isset($this->session->data['login_token']) || ($this->session->data['login_token'] != $this->request->get['login_token'])) {
-		//$json['redirect'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'), true);
+			$json['redirect'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'), true);
 		}
 
 		// Check how many login attempts have been made.
@@ -100,21 +100,27 @@ class Login extends \Opencart\System\Engine\Controller {
 		// Check if customer has been approved.
 		$customer_info = $this->model_account_customer->getCustomerByEmail($this->request->post['email']);
 
-		if ($customer_info && !$customer_info['status']) {
+		if ($customer_info && $customer_info['status']) {
 			$json['error']['warning'] = $this->language->get('error_approved');
-		}
-
-		if (!$json) {
+		} else {
 			if (!$this->customer->login($this->request->post['email'], html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8'))) {
 				$json['error']['warning'] = $this->language->get('error_login');
 
 				$this->model_account_customer->addLoginAttempt($this->request->post['email']);
-			} else {
-				$this->model_account_customer->deleteLoginAttempts($this->request->post['email']);
 			}
+		}
 
-			// Unset guest
-			unset($this->session->data['guest']);
+		if (!$json) {
+			// Add customer details into session
+			$this->session->data['customer'] = [
+				'customer_id'       => $customer_info['customer_id'],
+				'customer_group_id' => $customer_info['customer_group_id'],
+				'firstname'         => $customer_info['firstname'],
+				'lastname'          => $customer_info['lastname'],
+				'email'             => $customer_info['email'],
+				'telephone'         => $customer_info['telephone'],
+				'custom_field'      => $customer_info['custom_field']
+			];
 
 			// Default Shipping Address
 			$this->load->model('account/address');
@@ -141,6 +147,11 @@ class Login extends \Opencart\System\Engine\Controller {
 
 			// Create customer token
 			$this->session->data['customer_token'] = token(26);
+
+			$this->model_account_customer->deleteLoginAttempts($this->request->post['email']);
+
+			// Unset guest
+			unset($this->session->data['guest']);
 
 			// Added strpos check to pass McAfee PCI compliance test (http://forum.opencart.com/viewtopic.php?f=10&t=12043&p=151494#p151295)
 			if (isset($this->request->post['redirect']) && (strpos($this->request->post['redirect'], $this->config->get('config_url')) !== false)) {
@@ -193,6 +204,7 @@ class Login extends \Opencart\System\Engine\Controller {
 		if ($customer_info && $customer_info['token'] && $customer_info['token'] == $token && $this->customer->login($customer_info['email'], '', true)) {
 			// Default Addresses
 			$this->load->model('account/address');
+
 			$address_info = $this->model_account_address->getAddress($customer_info['address_id']);
 
 			if ($this->config->get('config_tax_customer') && $address_info) {

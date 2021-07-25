@@ -322,16 +322,16 @@ class Address extends \Opencart\System\Engine\Controller {
 				$this->session->data['success'] = $this->language->get('text_edit');
 			}
 
-			// Default Shipping Address
-			if (isset($this->session->data['shipping_address']['address_id']) && ($this->request->get['address_id'] == $this->session->data['shipping_address']['address_id'])) {
+			// If address is in session update it.
+			if (isset($this->session->data['shipping_address']) && ($this->request->get['address_id'] == $this->session->data['shipping_address']['address_id'])) {
 				$this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->request->get['address_id']);
 
 				unset($this->session->data['shipping_method']);
 				unset($this->session->data['shipping_methods']);
 			}
 
-			// Default Payment Address
-			if (isset($this->session->data['payment_address']['address_id']) && ($this->request->get['address_id'] == $this->session->data['payment_address']['address_id'])) {
+			// If address is in session update it.
+			if (isset($this->session->data['payment_address']) && ($this->request->get['address_id'] == $this->session->data['payment_address']['address_id'])) {
 				$this->session->data['payment_address'] = $this->model_account_address->getAddress($this->request->get['address_id']);
 
 				unset($this->session->data['payment_method']);
@@ -365,16 +365,17 @@ class Address extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Delete address from database.
 			$this->model_account_address->deleteAddress($this->request->get['address_id']);
 
-			// Default Shipping Address
+			// Delete address from session.
 			if (isset($this->session->data['shipping_address']['address_id']) && ($address_id == $this->session->data['shipping_address']['address_id'])) {
 				unset($this->session->data['shipping_address']);
 				unset($this->session->data['shipping_method']);
 				unset($this->session->data['shipping_methods']);
 			}
 
-			// Default Payment Address
+			// Delete address from session.
 			if (isset($this->session->data['payment_address']['address_id']) && ($address_id == $this->session->data['payment_address']['address_id'])) {
 				unset($this->session->data['payment_address']);
 				unset($this->session->data['payment_method']);

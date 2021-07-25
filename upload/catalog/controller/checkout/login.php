@@ -1,20 +1,12 @@
 <?php
 namespace Opencart\Catalog\Controller\Checkout;
 class Login extends \Opencart\System\Engine\Controller {
-	public function index(): void {
+	public function index(): string {
 		$this->load->language('checkout/checkout');
-
-		$data['checkout_guest'] = ($this->config->get('config_checkout_guest') && !$this->config->get('config_customer_price') && !$this->cart->hasDownload());
-
-		if (isset($this->session->data['account'])) {
-			$data['account'] = $this->session->data['account'];
-		} else {
-			$data['account'] = 'register';
-		}
 
 		$data['forgotten'] = $this->url->link('account/forgotten', 'language=' . $this->config->get('config_language'));
 
-		$this->response->setOutput($this->load->view('checkout/login', $data));
+		return $this->load->view('checkout/login', $data);
 	}
 
 	public function save(): void {
@@ -22,10 +14,12 @@ class Login extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
+		// Check if already logged in
 		if ($this->customer->isLogged()) {
 			$json['redirect'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'), true);
 		}
 
+		// Check if there are products or vouchers to checkout with
 		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
 			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
 		}
@@ -56,24 +50,26 @@ class Login extends \Opencart\System\Engine\Controller {
 
 			if ($customer_info && !$customer_info['status']) {
 				$json['error']['warning'] = $this->language->get('error_approved');
-			}
-
-			if (!isset($json['error'])) {
+			} else {
 				if (!$this->customer->login($this->request->post['email'], $this->request->post['password'])) {
 					$json['error']['warning'] = $this->language->get('error_login');
 
 					$this->model_account_customer->addLoginAttempt($this->request->post['email']);
-				} else {
-					$this->model_account_customer->deleteLoginAttempts($this->request->post['email']);
 				}
 			}
 		}
 
 		if (!$json) {
-			// Unset guest
-			if (isset($this->session->data['guest'])) {
-				unset($this->session->data['guest']);
-			}
+			// Add customer details into session
+			$this->session->data['customer'] = [
+				'customer_id'       => $customer_info['customer_id'],
+				'customer_group_id' => $customer_info['customer_group_id'],
+				'firstname'         => $customer_info['firstname'],
+				'lastname'          => $customer_info['lastname'],
+				'email'             => $customer_info['email'],
+				'telephone'         => $customer_info['telephone'],
+				'custom_field'      => $customer_info['custom_field']
+			];
 
 			// Default Shipping Address
 			$this->load->model('account/address');
@@ -97,6 +93,14 @@ class Login extends \Opencart\System\Engine\Controller {
 
 			// Log the IP info
 			$this->model_account_customer->addLogin($this->customer->getId(), $this->request->server['REMOTE_ADDR']);
+
+			// Create customer token
+			$this->session->data['customer_token'] = token(26);
+
+			$this->model_account_customer->deleteLoginAttempts($this->request->post['email']);
+
+			// Unset guest
+			unset($this->session->data['guest']);
 
 			$json['redirect'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'), true);
 		}

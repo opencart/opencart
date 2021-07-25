@@ -13,6 +13,7 @@ $_['text_checkout_payment_method']   = 'Step %s: Payment Method';
 $_['text_checkout_confirm']          = 'Step %s: Confirm Order';
 $_['text_modify']                    = 'Modify &raquo;';
 $_['text_new_customer']              = 'New Customer';
+$_['text_login']                     = 'Login';
 $_['text_returning_customer']        = 'Returning Customer';
 $_['text_checkout']                  = 'Checkout Options:';
 $_['text_i_am_returning_customer']   = 'I am a returning customer';

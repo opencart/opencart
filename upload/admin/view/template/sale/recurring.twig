@@ -31,7 +31,7 @@
             <div class="mb-3">
               <label for="input-status" class="form-label">{{ entry_status }}</label> <select name="filter_status" id="input-status" class="form-select">
                 {% for recurring_status in recurring_statuses %}
-                  <option value="{{ recurring_status.value }}"{% if filter_status == recurring_status.value %} selected="selected"{% endif %}>{{ recurring_status.text }}</option>
+                  <option value="{{ recurring_status.value }}"{% if filter_status == recurring_status.value %} selected{% endif %}>{{ recurring_status.text }}</option>
                 {% endfor %}
               </select>
             </div>

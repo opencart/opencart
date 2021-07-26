@@ -29,8 +29,8 @@
     {% if text_agree %}
       <div class="form-check form-check-inline">
         <label class="form-check-label">{{ text_agree }}</label>
-        <input type="checkbox" name="agree" value="1"{% if agree %} checked{% endif %}/>
-        &nbsp;
+        <input type="checkbox" name="agree" value="1" class="form-check-input"{% if agree %} checked{% endif %}/>
+        &nbsp;6
       </div>
     {% endif %}
     <button type="button" id="button-payment-method" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_continue }}</button>
@@ -72,9 +72,8 @@ $('#button-payment-method').on('click', function() {
                                 if (jqXHR.getResponseHeader('content-type').substr(5, 4) == 'html') {
                                     $('#collapse-checkout-confirm .card-body').html(output);
 
-                                    $('#heading-checkout-confirm').attr('data-bs-toggle', 'collapse');
 
-                                    $('#heading-checkout-confirm').trigger('click');
+
                                 }
 
                                 // If JSON use eval to turn into object.

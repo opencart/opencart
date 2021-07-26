@@ -17,7 +17,7 @@
       <div>
         {% for customer_group in customer_groups %}
           <div class="form-check form-check-inline">
-            <input type="radio" name="customer_group_id" value="{{ customer_group.customer_group_id }}" id="input-customer-group-{{ customer_group.customer_group_id }}" class="form-check-input"{% if customer_group.customer_group_id == customer_group_id %} checked{% endif %}/> <label for="input-customer-group-{{ customer_group.customer_group_id }}" class="form-check-label">{{ customer_group.name }}</label>
+            <input type="radio" name="customer_group_id" value="{{ customer_group.customer_group_id }}" id="input-register-group-{{ customer_group.customer_group_id }}" class="form-check-input"{% if customer_group.customer_group_id == customer_group_id %} checked{% endif %}/> <label for="input-customer-group-{{ customer_group.customer_group_id }}" class="form-check-label">{{ customer_group.name }}</label>
           </div>
         {% endfor %}
       </div>
@@ -264,15 +264,18 @@
           </div>
         {% endif %}
 
-        {% if shipping_required %}
-          <div class="col mb-3">
-            <div class="checkbox">
-              <input type="checkbox" name="shipping_address" value="1" checked="checked"/> <label>{{ entry_shipping }}</label>
-            </div>
-          </div>
-        {% endif %}
+
 
       {% endfor %}
+
+
+      <div class="col mb-3">
+        <div class="form-check">
+          <input type="checkbox" name="shipping_address" value="1" id="input-shipping-address" class="form-check-input" checked/> <label for="input-shipping-address" class="form-check-label">{{ entry_shipping }}</label>
+        </div>
+      </div>
+
+
     </div>
   </fieldset>
 {% endif %}

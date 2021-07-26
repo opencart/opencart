@@ -30,15 +30,16 @@
         </div>
         <div class="col-md-3">
           <div class="form-check form-check-inline">
-            <div class="form-check-input">
+            <div class="form-check">
               <input type="checkbox" name="sub_category" value="1" id="input-sub-category" class="form-check-input"{% if sub_category %} checked{% endif %}/>
+              <label for="input-sub-category" class="form-check-label">{{ text_sub_category }}</label>
             </div>
-            <label for="input-sub-category" class="form-check-label">{{ text_sub_category }}</label>
           </div>
         </div>
       </div>
       <div class="form-check mb-3">
-        <input type="checkbox" name="description" value="1" id="input-description" class="form-check-input"{% if description %} checked{% endif %}/> <label for="input-description" class="form-check-label">{{ entry_description }}</label>
+        <input type="checkbox" name="description" value="1" id="input-description" class="form-check-input"{% if description %} checked{% endif %}/>
+        <label for="input-description" class="form-check-label">{{ entry_description }}</label>
       </div>
       <button type="button" id="button-search" class="btn btn-primary">{{ button_search }}</button>
       <hr/>

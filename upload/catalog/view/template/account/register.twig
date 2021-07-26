@@ -14,10 +14,10 @@
           <legend>{{ text_your_details }}</legend>
           <div class="row mb-3 required{{ customer_groups|length <= 1 ? ' d-none' }}">
             <label class="col-sm-2 col-form-label">{{ entry_customer_group }}</label>
-            <div class="col-sm-10">{% for customer_group in customer_groups %}
+            <div class="col-sm-10">
+              {% for customer_group in customer_groups %}
                 <div class="form-check">
-                  <input type="radio" name="customer_group_id" value="{{ customer_group.customer_group_id }}" class="form-check-input"{% if customer_group.customer_group_id == customer_group_id %} checked{% endif %}/>
-                  <label class="form-check-label">{{ customer_group.name }}</label>
+                  <input type="radio" name="customer_group_id" value="{{ customer_group.customer_group_id }}" class="form-check-input"{% if customer_group.customer_group_id == customer_group_id %} checked{% endif %}/> <label class="form-check-label">{{ customer_group.name }}</label>
                 </div>
               {% endfor %}
             </div>
@@ -69,8 +69,7 @@
                   <div id="input-custom-field-{{ custom_field.custom_field_id }}">
                     {% for custom_field_value in custom_field.custom_field_value %}
                       <div class="form-check">
-                        <input type="radio" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{{ custom_field_value.custom_field_value_id }}" id="input-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-input"/>
-                        <label for=input-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-label">{{ custom_field_value.name }}</label>
+                        <input type="radio" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{{ custom_field_value.custom_field_value_id }}" id="input-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-input"/> <label for="input-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-label">{{ custom_field_value.name }}</label>
                       </div>
                     {% endfor %}
                   </div>
@@ -85,8 +84,7 @@
                   <div id="input-custom-field-{{ custom_field.custom_field_id }}">
                     {% for custom_field_value in custom_field.custom_field_value %}
                       <div class="form-check">
-                        <input type="checkbox" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" id="input-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-input"/>
-                        <label for=input-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-label">{{ custom_field_value.name }}</label>
+                        <input type="checkbox" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" id="input-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-input"/> <label for="input-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-label">{{ custom_field_value.name }}</label>
                       </div>
                     {% endfor %}
                   </div>
@@ -180,32 +178,25 @@
             <label class="col-sm-2 col-form-label">{{ entry_newsletter }}</label>
             <div class="col-sm-10">
               <div class="form-check form-check-inline">
-                <input type="radio" name="newsletter" value="1" class="form-check-input"/>
-                <label class="form-check-label">{{ text_yes }}</label>
+                <input type="radio" name="newsletter" value="1" id="input-newsletter-yes" class="form-check-input"/> <label for="input-newsletter-yes" class="form-check-label">{{ text_yes }}</label>
               </div>
               <div class="form-check form-check-inline">
-                <input type="radio" name="newsletter" value="0" class="form-check-input" checked/>
-                <label class="form-check-label">{{ text_no }}</label>
+                <input type="radio" name="newsletter" value="0" id="input-newsletter-no" class="form-check-input" checked/> <label for="input-newsletter-no" class="form-check-label">{{ text_no }}</label>
               </div>
             </div>
           </div>
         </fieldset>
         {{ captcha }}
-        {% if text_agree %}
-          <div class="d-inline-block pt-2 pd-2 w-100">
-            <div class="float-end">{{ text_agree }}
-              <input type="checkbox" name="agree" value="1" class="form-check-input"/>
-              &nbsp;
-              <button type="button" data-oc-action="{{ register }}" data-oc-form="#form-register" class="btn btn-primary">{{ button_continue }}</button>
-            </div>
+        <div class="d-inline-block pt-2 pd-2 w-100">
+          <div class="float-end text-right">
+            {% if text_agree %}
+              <div class="form-check form-check-inline">
+                <label class="form-check-label">{{ text_agree }}</label> <input type="checkbox" name="agree" value="1" class="form-check-input"/>
+              </div>
+            {% endif %}
+            <button type="button" data-oc-action="{{ register }}" data-oc-form="#form-register" class="btn btn-primary">{{ button_continue }}</button>
           </div>
-        {% else %}
-          <div class="d-inline-block pt-2 pd-2 w-100">
-            <div class="float-end">
-              <button type="button" data-oc-action="{{ register }}" data-oc-form="#form-register" class="btn btn-primary">{{ button_continue }}</button>
-            </div>
-          </div>
-        {% endif %}
+        </div>
       </form>
       {{ content_bottom }}
     </div>

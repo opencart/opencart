@@ -42,8 +42,7 @@
           <div class="col-sm-10">
             {% for voucher_theme in voucher_themes %}
               <div class="form-check">
-                <input type="radio" name="voucher_theme_id" value="{{ voucher_theme.voucher_theme_id }}" class="form-check-input"{% if voucher_theme.voucher_theme_id == voucher_theme_id %} checked{% endif %}/>
-                <label class="form-check-label">{{ voucher_theme.name }}</label>
+                <input type="radio" name="voucher_theme_id" value="{{ voucher_theme.voucher_theme_id }}" id="input-theme-{{ voucher_theme.voucher_theme_id }}" class="form-check-input"{% if voucher_theme.voucher_theme_id == voucher_theme_id %} checked{% endif %}/> <label for="input-theme-{{ voucher_theme.voucher_theme_id }}" class="form-check-label">{{ voucher_theme.name }}</label>
               </div>
             {% endfor %}
           </div>
@@ -61,9 +60,12 @@
           </div>
         </div>
         <div class="d-inline-block pt-2 pd-2 w-100">
-          <div class="float-end"> {{ text_agree }}
-            <input type="checkbox" name="agree" value="1"{% if agree %} checked {% endif %}/>
-            &nbsp;
+          <div class="float-end">
+            <div class="form-check form-check-inline">
+              <label class="form-check-label">{{ text_agree }}</label>
+              <input type="checkbox" name="agree" value="1" class="form-check-input"/>
+              &nbsp;
+            </div>
             <button type="button" data-oc-action="{{ save }}" data-oc-form="#form-voucher" class="btn btn-primary">{{ button_continue }}</button>
           </div>
         </div>

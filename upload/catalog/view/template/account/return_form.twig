@@ -77,7 +77,7 @@
             <div class="col-sm-10">
               {% for return_reason in return_reasons %}
                 <div class="form-check">
-                  <input type="radio" name="return_reason_id" value="{{ return_reason.return_reason_id }}" class="form-check-input"/> <label class="form-check-label">{{ return_reason.name }}</label>
+                  <input type="radio" name="return_reason_id" value="{{ return_reason.return_reason_id }}" id="input-return-reason-{{ return_reason.return_reason_id }}" class="form-check-input"/> <label for="input-return-reason-{{ return_reason.return_reason_id }}" class="form-check-label">{{ return_reason.name }}</label>
                 </div>
               {% endfor %}
             </div>
@@ -86,10 +86,10 @@
             <label class="col-sm-2 col-form-label">{{ entry_opened }}</label>
             <div class="col-sm-10">
               <div class="form-check form-check-inline">
-                <input type="radio" name="opened" value="1" class="form-check-input" checked/> <label class="form-check-label">{{ text_yes }}</label>
+                <input type="radio" name="opened" value="1" id="input-opened-yes" class="form-check-input" checked/> <label for="input-opened-yes" class="form-check-label">{{ text_yes }}</label>
               </div>
               <div class="form-check form-check-inline">
-                <input type="radio" name="opened" value="0" class="form-check-input"/> <label class="form-check-label">{{ text_no }}</label>
+                <input type="radio" name="opened" value="0" id="input-opened-no" class="form-check-input"/> <label for="input-opened-no" class="form-check-label">{{ text_no }}</label>
               </div>
             </div>
           </div>
@@ -101,23 +101,19 @@
           </div>
           {{ captcha }}
         </fieldset>
-        {% if text_agree %}
-          <div class="d-inline-block pt-2 pd-2 w-100">
-            <div class="float-start"><a href="{{ back }}" class="btn btn-danger">{{ button_back }}</a></div>
-            <div class="float-end">{{ text_agree }}
-              <input type="checkbox" name="agree" value="1" class="form-check-input"/>
-              &nbsp;
-              <button type="button" data-oc-action="{{ save }}" data-oc-form="#form-return" class="btn btn-primary">{{ button_submit }}</button>
-            </div>
+        <div class="d-inline-block pt-2 pd-2 w-100">
+          <div class="float-start"><a href="{{ back }}" class="btn btn-danger">{{ button_back }}</a></div>
+          <div class="float-end">
+            {% if text_agree %}
+              <div class="form-check form-check-inline">
+                <label class="form-check-label">{{ text_agree }}</label>
+                <input type="checkbox" name="agree" value="1" class="form-check-input"/>
+                &nbsp;
+              </div>
+            {% endif %}
+            <button type="button" data-oc-action="{{ save }}" data-oc-form="#form-return" class="btn btn-primary">{{ button_submit }}</button>
           </div>
-        {% else %}
-          <div class="d-inline-block pt-2 pd-2 w-100">
-            <div class="float-start"><a href="{{ back }}" class="btn btn-light">{{ button_back }}</a></div>
-            <div class="float-end">
-              <button type="button" data-oc-action="{{ save }}" data-oc-form="#form-return" class="btn btn-primary">{{ button_submit }}</button>
-            </div>
-          </div>
-        {% endif %}
+        </div>
       </form>
       {{ content_bottom }}
     </div>

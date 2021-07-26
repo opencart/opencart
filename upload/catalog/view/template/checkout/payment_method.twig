@@ -6,8 +6,12 @@
   {% for payment_method in payment_methods %}
     <div class="form-check">
       {% if payment_method.code == code or not code %}
-      <input type="radio" name="payment_method" value="{{ payment_method.code }}" class="form-check-input"{% set code = payment_method.code %} checked{% endif %}/>
-      <label class="form-check-label">{{ payment_method.title }}
+        {% set code = payment_method.code %}
+        <input type="radio" name="payment_method" value="{{ payment_method.code }}" id="input-payment-method-{{ payment_method.code }}" class="form-check-input" checked/>
+      {% else %}
+        <input type="radio" name="payment_method" value="{{ payment_method.code }}" id="input-payment-method-{{ payment_method.code }}" class="form-check-input"/>
+      {% endif %}
+      <label for="input-payment-method-{{ payment_method.code }}" class="form-check-label">{{ payment_method.title }}
         {% if payment_method.terms %}
           ({{ payment_method.terms }})
         {% endif %}
@@ -20,21 +24,18 @@
 <p>
   <textarea name="comment" rows="8" class="form-control">{{ comment }}</textarea>
 </p>
-{% if text_agree %}
-  <div class="d-inline-block pt-2 pd-2 w-100">
-    <div class="float-end">{{ text_agree }}
-      <input type="checkbox" name="agree" value="1"{% if agree %} checked{% endif %}/>
-      &nbsp;
-      <button type="button" id="button-payment-method" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_continue }}</button>
-    </div>
+<div class="d-inline-block pt-2 pd-2 w-100">
+  <div class="float-end">
+    {% if text_agree %}
+      <div class="form-check form-check-inline">
+        <label class="form-check-label">{{ text_agree }}</label>
+        <input type="checkbox" name="agree" value="1"{% if agree %} checked{% endif %}/>
+        &nbsp;
+      </div>
+    {% endif %}
+    <button type="button" id="button-payment-method" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_continue }}</button>
   </div>
-{% else %}
-  <div class="d-inline-block pt-2 pd-2 w-100">
-    <div class="float-end">
-      <button type="button" id="button-payment-method" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_continue }}</button>
-    </div>
-  </div>
-{% endif %}
+</div>
 <script type="text/javascript"><!--
 // Payment Method
 $('#button-payment-method').on('click', function() {

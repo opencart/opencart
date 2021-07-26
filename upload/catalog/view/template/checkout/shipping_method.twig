@@ -10,9 +10,9 @@
         <div class="form-check">
           {% if quote.code == code or not code %}
             {% set code = quote.code %}
-            <input type="radio" name="shipping_method" value="{{ quote.code }}" class="form-check-input" checked/>
+            <input type="radio" name="shipping_method" value="{{ quote.code }}" id="input-shipping-method-{{ payment_method.code }}" class="form-check-input" checked/>
           {% else %}
-            <input type="radio" name="shipping_method" value="{{ quote.code }}" class="form-check-input"/>
+            <input type="radio" name="shipping_method" value="{{ quote.code }}" id="input-shipping-method-{{ payment_method.code }}" class="form-check-input"/>
           {% endif %}
           <label class="form-check-label">{{ quote.title }} - {{ quote.text }}</label>
         </div>

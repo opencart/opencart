@@ -54,7 +54,8 @@
                           {% if master_id %}
                             <div class="input-group-text">
                               <div class="form-check form-switch">
-                                <input type="checkbox" name="override[product_description][{{ language.language_id }}][name]" value="1" id="input-variant-name-{{ language.language_id }}" data-oc-toggle="switch" data-oc-target="#input-name-{{ language.language_id }}" class="form-check-input"/> <label for="input-variant-name-{{ language.language_id }}" class="custom-control-label"></label>
+                                <input type="checkbox" name="override[product_description][{{ language.language_id }}][name]" value="1" id="input-variant-name-{{ language.language_id }}" data-oc-toggle="switch" data-oc-target="#input-name-{{ language.language_id }}" class="form-check-input"/>
+                                <label for="input-variant-name-{{ language.language_id }}" class="custom-control-label"></label>
                               </div>
                             </div>
                           {% endif %}
@@ -343,7 +344,7 @@
                   <div class="col-sm-10">
                     <div class="input-group">
                       <div class="btn-group" id="input-subtract">
-                        <input type="radio" name="top" value="1" id="input-subtract-yes" class="btn-check"{% if subtract %} checked{% endif %}/> <label for="input-subtract-yes" class="btn btn-outline-secondary">{{ text_yes }}</label> <input type="radio" name="top" value="0" id="input-subtract-no" class="btn-check"{% if not subtract %} checked{% endif %}/> <label for="input-subtract-no" class="btn btn-outline-secondary">{{ text_no }}</label>
+                        <input type="radio" name="subtract" value="1" id="input-subtract-yes" class="btn-check"{% if subtract %} checked{% endif %}/> <label for="input-subtract-yes" class="btn btn-outline-secondary">{{ text_yes }}</label> <input type="radio" name="subtract" value="0" id="input-subtract-no" class="btn-check"{% if not subtract %} checked{% endif %}/> <label for="input-subtract-no" class="btn btn-outline-secondary">{{ text_no }}</label>
                       </div>
                       {% if master_id %}
                         <div class="input-group-text">
@@ -399,7 +400,7 @@
                   <div class="col-sm-10">
                     <div class="input-group">
                       <div class="btn-group" id="input-shipping">
-                        <input type="radio" name="top" value="1" id="input-shipping-yes" class="btn-check"{% if shipping %} checked{% endif %}/> <label for="input-shipping-yes" class="btn btn-outline-secondary">{{ text_yes }}</label> <input type="radio" name="top" value="0" id="input-shipping-no" class="btn-check"{% if not shipping %} checked{% endif %}/> <label for="input-shipping-no" class="btn btn-outline-secondary">{{ text_no }}</label>
+                        <input type="radio" name="shipping" value="1" id="input-shipping-yes" class="btn-check"{% if shipping %} checked{% endif %}/> <label for="input-shipping-yes" class="btn btn-outline-secondary">{{ text_yes }}</label> <input type="radio" name="shipping" value="0" id="input-shipping-no" class="btn-check"{% if not shipping %} checked{% endif %}/> <label for="input-shipping-no" class="btn btn-outline-secondary">{{ text_no }}</label>
                       </div>
                       {% if master_id %}
                         <div class="input-group-text">
@@ -608,8 +609,8 @@
                     <div id="product-store" class="form-control" style="height: 150px; overflow: auto;">
                       {% for store in stores %}
                         <div class="form-check">
-                          <input type="checkbox" name="product_store[]" value="{{ store.store_id }}" class="form-check-input"{% if store.store_id in product_store %} checked{% endif %}/>
-                          <label class="form-check-label">{{ store.name }}</label>
+                          <input type="checkbox" name="product_store[]" value="{{ store.store_id }}" id="input-store-{{ store.store_id }}" class="form-check-input"{% if store.store_id in product_store %} checked{% endif %}/>
+                          <label for="input-store-{{ store.store_id }}" class="form-check-label">{{ store.name }}</label>
                         </div>
                       {% endfor %}
                     </div>
@@ -909,7 +910,8 @@
                             <div id="input-option-{{ option.product_option_id }}" class="form-control" style="height: 150px; overflow: auto;">
                               {% for option_value in option.product_option_value %}
                                 <div class="form-check">
-                                  <input type="radio" name="variant[{{ option.product_option_id }}]" value="{{ option_value.product_option_value_id }}" id="input-option-value-{{ option_value.product_option_value_id }}" class="form-check-input"{% if variant[option.product_option_id] and option_value.product_option_value_id == variant[option.product_option_id] %} checked{% endif %}/> <label for="input-option-value-{{ option_value.product_option_value_id }}" class="form-check-label">
+                                  <input type="radio" name="variant[{{ option.product_option_id }}]" value="{{ option_value.product_option_value_id }}" id="input-option-value-{{ option_value.product_option_value_id }}" class="form-check-input"{% if variant[option.product_option_id] and option_value.product_option_value_id == variant[option.product_option_id] %} checked{% endif %}/>
+                                  <label for="input-option-value-{{ option_value.product_option_value_id }}" class="form-check-label">
                                     {% if option_value.image %}<img src="{{ option_value.image }}" alt="{{ option_value.name }} {% if option_value.price %} {{ option_value.price_prefix }} {{ option_value.price }} {% endif %}" class="img-thumbnail"/>{% endif %}
                                     {{ option_value.name }}
                                     {% if option_value.price %}
@@ -937,7 +939,8 @@
                             <div id="input-option-{{ option.product_option_id }}" class="form-control" style="height: 150px; overflow: auto;">
                               {% for option_value in option.product_option_value %}
                                 <div class="form-check">
-                                  <input type="checkbox" name="variant[{{ option.product_option_id }}][]" value="{{ option_value.product_option_value_id }}" id="input-option-value-{{ option_value.product_option_value_id }}" class="form-check-input"{% if variant[option.product_option_id] and option_value.product_option_value_id in variant[option.product_option_id] %} checked{% endif %}/> <label for="input-option-value-{{ option_value.product_option_value_id }}" class="form-check-label">{% if option_value.image %} <img src="{{ option_value.image }}" alt="{{ option_value.name }} {% if option_value.price %} {{ option_value.price_prefix }} {{ option_value.price }} {% endif %}" class="img-thumbnail"/>{% endif %}
+                                  <input type="checkbox" name="variant[{{ option.product_option_id }}][]" value="{{ option_value.product_option_value_id }}" id="input-option-value-{{ option_value.product_option_value_id }}" class="form-check-input"{% if variant[option.product_option_id] and option_value.product_option_value_id in variant[option.product_option_id] %} checked{% endif %}/>
+                                  <label for="input-option-value-{{ option_value.product_option_value_id }}" class="form-check-label">{% if option_value.image %} <img src="{{ option_value.image }}" alt="{{ option_value.name }} {% if option_value.price %} {{ option_value.price_prefix }} {{ option_value.price }} {% endif %}" class="img-thumbnail"/>{% endif %}
                                     {{ option_value.name }}
                                     {% if option_value.price %}
                                       ({{ option_value.price_prefix }}{{ option_value.price }})

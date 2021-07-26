@@ -343,7 +343,7 @@
                   <div class="col-sm-10">
                     <div class="input-group">
                       <div class="btn-group" id="input-subtract">
-                        <input type="radio" name="top" value="1" id="input-subtract-yes" class="btn-check"{% if subtract %} checked{% endif %}/> <label for="input-subtract-yes" class="btn btn-outline-secondary">{{ text_yes }}</label> <input type="radio" name="top" value="0" id="input-subtract-no" class="btn-check"{% if not subtract %} checked{% endif %}/> <label for="input-subtract-no" class="btn btn-outline-secondary">{{ text_no }}</label>
+                        <input type="radio" name="subtract" value="1" id="input-subtract-yes" class="btn-check"{% if subtract %} checked{% endif %}/> <label for="input-subtract-yes" class="btn btn-outline-secondary">{{ text_yes }}</label> <input type="radio" name="subtract" value="0" id="input-subtract-no" class="btn-check"{% if not subtract %} checked{% endif %}/> <label for="input-subtract-no" class="btn btn-outline-secondary">{{ text_no }}</label>
                       </div>
                       {% if master_id %}
                         <div class="input-group-text">
@@ -399,7 +399,7 @@
                   <div class="col-sm-10">
                     <div class="input-group">
                       <div class="btn-group" id="input-shipping">
-                        <input type="radio" name="top" value="1" id="input-shipping-yes" class="btn-check"{% if shipping %} checked{% endif %}/> <label for="input-shipping-yes" class="btn btn-outline-secondary">{{ text_yes }}</label> <input type="radio" name="top" value="0" id="input-shipping-no" class="btn-check"{% if not shipping %} checked{% endif %}/> <label for="input-shipping-no" class="btn btn-outline-secondary">{{ text_no }}</label>
+                        <input type="radio" name="shipping" value="1" id="input-shipping-yes" class="btn-check"{% if shipping %} checked{% endif %}/> <label for="input-shipping-yes" class="btn btn-outline-secondary">{{ text_yes }}</label> <input type="radio" name="shipping" value="0" id="input-shipping-no" class="btn-check"{% if not shipping %} checked{% endif %}/> <label for="input-shipping-no" class="btn btn-outline-secondary">{{ text_no }}</label>
                       </div>
                       {% if master_id %}
                         <div class="input-group-text">

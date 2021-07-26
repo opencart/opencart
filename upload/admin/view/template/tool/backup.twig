@@ -1,63 +1,63 @@
 {{ header }}{{ column_left }}
 <div id="content">
-	<div class="page-header">
-		<div class="container-fluid">
-			<div class="float-end">
-				<button type="button" id="button-upload" data-bs-toggle="tooltip" title="{{ button_upload }}" class="btn btn-primary"><i class="fas fa-upload"></i></button>
-			</div>
-			<h1>{{ heading_title }}</h1>
-			<ol class="breadcrumb">
-				{% for breadcrumb in breadcrumbs %}
-					<li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
-				{% endfor %}
-			</ol>
-		</div>
-	</div>
-	<div class="container-fluid">
-		<div class="card">
-			<div class="card-header"><i class="fas fa-exchange-alt"></i> {{ heading_title }}</div>
-			<div class="card-body">
-				<fieldset>
-					<legend>{{ text_progress }}</legend>
-					<div class="row mb-3">
-						<label class="col-sm-2 col-form-label">{{ entry_progress }}</label>
-						<div class="col-sm-10">
-							<div id="progress-backup" class="progress">
-								<div id="progress-bar" class="progress-bar"></div>
-							</div>
-							<div id="progress-text"></div>
-						</div>
-					</div>
-				</fieldset>
-				<fieldset>
-					<legend>{{ text_option }}</legend>
-					<div class="row mb-3">
-						<label class="col-sm-2 col-form-label">{{ entry_export }}</label>
-						<div class="col-sm-10">
-							<div class="form-control" style="height: 150px; overflow: auto;">
-								<label class="form-check">
-									<input type="checkbox" class="form-check-input" onchange="$(this).parent().parent().find(':checkbox').not(this).prop('checked', $(this).prop('checked'));"/> {{ text_all }}
-								</label>
-								{% for table in tables %}
-									<label class="form-check"><input type="checkbox" name="backup[]" value="{{ table }}" class="form-check-input" checked/> {{ table }}</label>
-								{% endfor %}
-							</div>
-						</div>
-					</div>
-					<div class="row mb-3">
-						<div class="offset-sm-2 col-sm-10 text-end">
-							<button type="button" id="button-backup" data-oc-loading-text="{{ text_loading }}" class="btn btn-success"><i class="fas fa-upload"></i> {{ button_backup }}</button>
-						</div>
-					</div>
-				</fieldset>
-				<fieldset>
-					<legend>{{ text_history }}</legend>
-					<div class="alert alert-info"><i class="fas fa-exclamation-circle"></i> {{ text_import }}</div>
-					<div id="history">{{ history }}</div>
-				</fieldset>
-			</div>
-		</div>
-	</div>
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="float-end">
+        <button type="button" id="button-upload" data-bs-toggle="tooltip" title="{{ button_upload }}" class="btn btn-primary"><i class="fas fa-upload"></i></button>
+      </div>
+      <h1>{{ heading_title }}</h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-header"><i class="fas fa-exchange-alt"></i> {{ heading_title }}</div>
+      <div class="card-body">
+        <fieldset>
+          <legend>{{ text_progress }}</legend>
+          <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">{{ entry_progress }}</label>
+            <div class="col-sm-10">
+              <div id="progress-backup" class="progress">
+                <div id="progress-bar" class="progress-bar"></div>
+              </div>
+              <div id="progress-text"></div>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>{{ text_option }}</legend>
+          <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">{{ entry_export }}</label>
+            <div class="col-sm-10">
+              <div class="form-control" style="height: 150px; overflow: auto;">
+                <div class="form-check">
+                  <input type="checkbox" class="form-check-input" onchange="$(this).parent().parent().find(':checkbox').not(this).prop('checked', $(this).prop('checked'));"/> <label class="form-check-label">{{ text_all }}</label>
+                </div>
+                {% for table in tables %}
+                  <div class="form-check"><input type="checkbox" name="backup[]" value="{{ table }}" class="form-check-input" checked/> <label class="form-check-label">{{ table }}</label></div>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="offset-sm-2 col-sm-10 text-end">
+              <button type="button" id="button-backup" data-oc-loading-text="{{ text_loading }}" class="btn btn-success"><i class="fas fa-upload"></i> {{ button_backup }}</button>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>{{ text_history }}</legend>
+          <div class="alert alert-info"><i class="fas fa-exclamation-circle"></i> {{ text_import }}</div>
+          <div id="history">{{ history }}</div>
+        </fieldset>
+      </div>
+    </div>
+  </div>
 </div>
 <script type="text/javascript"><!--
 $('#button-backup').on('click', function() {

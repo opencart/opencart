@@ -90,35 +90,39 @@
                         </div>
                       </div>
                     {% endif %}
+
                     {% if custom_field.type == 'radio' %}
                       <div class="row mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order }}">
                         <label class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
                         <div class="col-sm-10">
                           <div id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control" style="height: 150px; overflow: auto;">
                             {% for custom_field_value in custom_field.custom_field_value %}
-                            <input type="radio" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ custom_field_value.custom_field_value_id }}" class="form-check-input"{% if account_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id == account_custom_field[custom_field.custom_field_id] %} checked{% endif %}/>
-                              <label class="form-check">   {{ custom_field_value.name }}
-                              </label>
+                              <div class="form-check">
+                                <input type="radio" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ custom_field_value.custom_field_value_id }}" id="input-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-input"{% if account_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id == account_custom_field[custom_field.custom_field_id] %} checked{% endif %}/>
+                                <label for="input-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-label">{{ custom_field_value.name }}</label>
+                              </div>
                             {% endfor %}
                           </div>
                         </div>
                       </div>
                     {% endif %}
+
                     {% if custom_field.type == 'checkbox' %}
                       <div class="row mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order }}">
                         <label class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
                         <div class="col-sm-10">
                           <div id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control" style="height: 150px; overflow: auto;">
                             {% for custom_field_value in custom_field.custom_field_value %}
-                            <div class="form-check">
-                              <input type="checkbox" name="custom_field[{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" class="form-check-input"{% if account_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id in account_custom_field[custom_field.custom_field_id] %} checked{% endif %}/>
-                              <label class="form-check-label">{{ custom_field_value.name }}</label>
-                            </div>
+                              <div class="form-check">
+                                <input type="checkbox" name="custom_field[{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" id="input-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-input"{% if account_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id in account_custom_field[custom_field.custom_field_id] %} checked{% endif %}/>
+                                <label for="input-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-label">{{ custom_field_value.name }}</label>
+                              </div>
                             {% endfor %}
                           </div>
                         </div>
                       </div>
                     {% endif %}
+
                     {% if custom_field.type == 'text' %}
                       <div class="row mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order }}">
                         <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
@@ -215,8 +219,7 @@
                   <label class="col-sm-2 col-form-label">{{ entry_status }}</label>
                   <div class="col-sm-10">
                     <div class="btn-group">
-                      <input type="radio" name="status" value="1" id="input-status-yes" class="btn-check"{% if status %} checked{% endif %}/> <label for="input-status-yes" class="btn btn-outline-secondary">{{ text_yes }}</label>
-                      <input type="radio" name="status" value="0" id="input-status-no" class="btn-check"{% if not status %} checked{% endif %}/> <label for="input-status-no" class="btn btn-outline-secondary">{{ text_no }}</label>
+                      <input type="radio" name="status" value="1" id="input-status-yes" class="btn-check"{% if status %} checked{% endif %}/> <label for="input-status-yes" class="btn btn-outline-secondary">{{ text_yes }}</label> <input type="radio" name="status" value="0" id="input-status-no" class="btn-check"{% if not status %} checked{% endif %}/> <label for="input-status-no" class="btn btn-outline-secondary">{{ text_no }}</label>
                     </div>
                   </div>
                 </div>
@@ -224,8 +227,7 @@
                   <label class="col-sm-2 col-form-label">{{ entry_safe }}</label>
                   <div class="col-sm-10">
                     <div class="btn-group">
-                      <input type="radio" name="safe" value="1" id="input-safe-yes" class="btn-check"{% if safe %} checked{% endif %}/> <label for="input-safe-yes" class="btn btn-outline-secondary">{{ text_yes }}</label>
-                      <input type="radio" name="safe" value="0" id="input-safe-no" class="btn-check"{% if not safe %} checked{% endif %}/> <label for="input-safe-no" class="btn btn-outline-secondary">{{ text_no }}</label>
+                      <input type="radio" name="safe" value="1" id="input-safe-yes" class="btn-check"{% if safe %} checked{% endif %}/> <label for="input-safe-yes" class="btn btn-outline-secondary">{{ text_yes }}</label> <input type="radio" name="safe" value="0" id="input-safe-no" class="btn-check"{% if not safe %} checked{% endif %}/> <label for="input-safe-no" class="btn btn-outline-secondary">{{ text_no }}</label>
                     </div>
                     <div class="form-text text-muted">{{ help_safe }}</div>
                   </div>
@@ -321,9 +323,10 @@
                           <div class="col-sm-10">
                             <div id="input-address-{{ address_row }}-custom-field-{{ custom_field.custom_field_id }}" class="form-control" style="height: 150px; overflow: auto;">
                               {% for custom_field_value in custom_field.custom_field_value %}
-                                <label class="form-check"> <input type="radio" name="address[{{ address_row }}][custom_field][{{ custom_field.custom_field_id }}]" value="{{ custom_field_value.custom_field_value_id }}" class="form-check-input"{% if address.custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id == address.custom_field[custom_field.custom_field_id] %} checked{% endif %}/>
-                                  {{ custom_field_value.name }}
-                                </label>
+                                <div class="form-check">
+                                  <input type="radio" name="address[{{ address_row }}][custom_field][{{ custom_field.custom_field_id }}]" value="{{ custom_field_value.custom_field_value_id }}" id="input-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-input"{% if address.custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id == address.custom_field[custom_field.custom_field_id] %} checked{% endif %}/>
+                                  <label for="input-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-label">{{ custom_field_value.name }}</label>
+                                </div>
                               {% endfor %}
                             </div>
                           </div>
@@ -336,14 +339,16 @@
                           <div class="col-sm-10">
                             <div id="input-address-{{ address_row }}-custom-field-{{ custom_field.custom_field_id }}" class="form-control" style="height: 150px; overflow: auto;">
                               {% for custom_field_value in custom_field.custom_field_value %}
-                                <label class="form-check"> <input type="checkbox" name="address[{{ address_row }}][custom_field][{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" class="form-check-input"{% if address.custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id in address.custom_field[custom_field.custom_field_id] %} checked{% endif %}/>
-                                  {{ custom_field_value.name }}
-                                </label>
+                                <div class="form-check">
+                                  <input type="checkbox" name="address[{{ address_row }}][custom_field][{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" id="input-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-input"{% if address.custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id in address.custom_field[custom_field.custom_field_id] %} checked{% endif %}/>
+                                  <label for="input-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-label">{{ custom_field_value.name }}</label>
+                                </div>
                               {% endfor %}
                             </div>
                           </div>
                         </div>
                       {% endif %}
+
                       {% if custom_field.type == 'text' %}
                         <div class="row mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 1 }}">
                           <label for="input-address-{{ address_row }}-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
@@ -618,11 +623,12 @@ $('#button-address').on('click', function(e) {
     html += '  		  <div id="input-address-' + address_row + '-custom-field-{{ custom_field.custom_field_id }}" class="form-control" style="height: 150px; overflow: auto;">';
 
   {% for custom_field_value in custom_field.custom_field_value %}
-    html += '  		    <label class="form-check"><input type="radio" name="address[' + address_row + '][custom_field][{{ custom_field.custom_field_id }}]" value="{{ custom_field_value.custom_field_value_id }}" class="form-check-input"/> {{ custom_field_value.name|e('js') }}</label>';
+    html += '  		  <div class="form-check">';
+    html += '  		    <input type="radio" name="address[' + address_row + '][custom_field][{{ custom_field.custom_field_id }}]" value="{{ custom_field_value.custom_field_value_id }}" id="input-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-input"/>';
+    html += '  		    <label for="input-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-label">{{ custom_field_value.name|e('js') }}</label>';
+    html += '		   </div>';
   {% endfor %}
-
     html += '		    </div>';
-
     html += '		   </div>';
     html += '	   </div>';
   {% endif %}
@@ -634,7 +640,10 @@ $('#button-address').on('click', function(e) {
     html += '		    <div id="input-address-' + address_row + '-custom-field-{{ custom_field.custom_field_id }}" class="form-control" style="height: 150px; overflow: auto;">';
 
   {% for custom_field_value in custom_field.custom_field_value %}
-    html += '			    <label class="form-check"><input type="checkbox" name="address[{{ address_row }}][custom_field][{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" class="form-check-input"/> {{ custom_field_value.name|e('js') }}</label>';
+    html += '			  <div class="form-check">';
+    html += '			    <input type="checkbox" name="address[{{ address_row }}][custom_field][{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" id="input-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-input"/>';
+    html += '         <label for="input-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-label">{{ custom_field_value.name|e('js') }}</label>';
+    html += '		    </div>';
   {% endfor %}
 
     html += '		    </div>';

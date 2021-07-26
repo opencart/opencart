@@ -255,7 +255,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		if ((utf8_strlen(trim($this->request->post['address_1'])) < 3) || (utf8_strlen(trim($this->request->post['address_1'])) > 128)) {
-			$json['error']['address_1'] = $this->language->get('error_address_1km');
+			$json['error']['address_1'] = $this->language->get('error_address_1');
 		}
 
 		if ((utf8_strlen($this->request->post['city']) < 2) || (utf8_strlen($this->request->post['city']) > 32)) {

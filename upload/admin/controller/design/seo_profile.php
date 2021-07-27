@@ -190,7 +190,7 @@ class SeoProfile extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['seo_profile_id'])) {
 			$this->load->model('design/seo_profile');
 
-			$seo_profile_info = $this->model_design_seo_profile->getSeoProfile($this->request->get['seo_profile_id']);
+			$seo_profile_info = $this->model_design_seo_profile->getSeoProfile((int)$this->request->get['seo_profile_id']);
 		}
 
 		if (isset($this->request->get['seo_profile_id'])) {

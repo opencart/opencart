@@ -832,7 +832,7 @@ class Product extends \Opencart\System\Engine\Controller {
 		$data['options'] = [];
 
 		if (isset($this->request->get['master_id'])) {
-			$product_options = $this->model_catalog_product->getOptions($this->request->get['master_id']);
+			$product_options = $this->model_catalog_product->getOptions((int)$this->request->get['master_id']);
 
 			foreach ($product_options as $product_option) {
 				$product_option_value_data = [];
@@ -1023,7 +1023,7 @@ class Product extends \Opencart\System\Engine\Controller {
 		$this->load->model('catalog/product');
 
 		if ($this->request->post['master_id']) {
-			$product_options = $this->model_catalog_product->getOptions($this->request->post['master_id']);
+			$product_options = $this->model_catalog_product->getOptions((int)$this->request->post['master_id']);
 
 			foreach ($product_options as $product_option) {
 				if (isset($this->request->post['override']['variant'][$product_option['product_option_id']]) && $product_option['required'] && empty($this->request->post['variant'][$product_option['product_option_id']])) {

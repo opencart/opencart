@@ -193,7 +193,7 @@ class Information extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['information_id'])) {
 			$this->load->model('catalog/information');
 
-			$information_info = $this->model_catalog_information->getInformation($this->request->get['information_id']);
+			$information_info = $this->model_catalog_information->getInformation((int)$this->request->get['information_id']);
 		}
 
 		if (isset($this->request->get['information_id'])) {
@@ -207,7 +207,7 @@ class Information extends \Opencart\System\Engine\Controller {
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
 		if (isset($this->request->get['information_id'])) {
-			$data['information_description'] = $this->model_catalog_information->getDescriptions($this->request->get['information_id']);
+			$data['information_description'] = $this->model_catalog_information->getDescriptions((int)$this->request->get['information_id']);
 		} else {
 			$data['information_description'] = [];
 		}
@@ -231,7 +231,7 @@ class Information extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->get['information_id'])) {
-			$data['information_store'] = $this->model_catalog_information->getStores($this->request->get['information_id']);
+			$data['information_store'] = $this->model_catalog_information->getStores((int)$this->request->get['information_id']);
 		} else {
 			$data['information_store'] = [0];
 		}
@@ -255,13 +255,13 @@ class Information extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->get['information_id'])) {
-			$data['information_seo_url'] = $this->model_catalog_information->getSeoUrls($this->request->get['information_id']);
+			$data['information_seo_url'] = $this->model_catalog_information->getSeoUrls((int)$this->request->get['information_id']);
 		} else {
 			$data['information_seo_url'] = [];
 		}
 
 		if (isset($this->request->get['information_id'])) {
-			$data['information_layout'] = $this->model_catalog_information->getLayouts($this->request->get['information_id']);
+			$data['information_layout'] = $this->model_catalog_information->getLayouts((int)$this->request->get['information_id']);
 		} else {
 			$data['information_layout'] = [];
 		}

@@ -9,7 +9,8 @@
 					<td class="text-start d-none d-lg-table-cell"><a href="{{ sort_model }}"{% if sort == 'p.model' %} class="{{ order|lower }}"{% endif %}>{{ column_model }}</a></td>
 					<td class="text-end"><a href="{{ sort_price }}"{% if sort == 'p.price' %} class="{{ order|lower }}"{% endif %}>{{ column_price }}</a></td>
 					<td class="text-end"><a href="{{ sort_quantity }}"{% if sort == 'p.quantity' %} class="{{ order|lower }}"{% endif %}>{{ column_quantity }}</a></td>
-					<td class="text-end">{{ column_action }}</td>
+					<td class="text-end">MOQ</td>
+          <td class="text-end">{{ column_action }}</td>
 				</tr>
 			</thead>
 			<tbody>
@@ -41,6 +42,7 @@
 								{% else %}
 									<span class="badge bg-success">{{ product.quantity }}</span>
 								{% endif %}</td>
+              <td class="text-end">{{ product.minimum }}</td>
 							<td class="text-end">
 								{% if product.variant %}
 									<div class="btn-group">

@@ -7,7 +7,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 		$order_info = $this->model_checkout_order->getOrder($args[0]);
 
 		// If order status in the complete range create any vouchers that where in the order need to be made available.
-		if ($order_info && in_array($order_info['order_status_id'], $this->config->get('config_complete_status'))) {
+		if ($order_info && in_array($order_info['order_status_id'], (array)$this->config->get('config_complete_status'))) {
 			// Send out any gift voucher mails
 			$voucher_query = $this->db->query("SELECT *, vtd.name AS theme FROM `" . DB_PREFIX . "voucher` v LEFT JOIN `" . DB_PREFIX . "voucher_theme` vt ON (v.`voucher_theme_id` = vt.`voucher_theme_id`) LEFT JOIN `" . DB_PREFIX . "voucher_theme_description` vtd ON (vt.`voucher_theme_id` = vtd.`voucher_theme_id`) WHERE v.`order_id` = '" . (int)$order_info['order_id'] . "' AND vtd.`language_id` = '" . (int)$order_info['language_id'] . "'");
 

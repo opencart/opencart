@@ -66,7 +66,7 @@ class Statistics extends \Opencart\System\Engine\Controller {
 			$this->load->model('report/statistics');
 			$this->load->model('sale/order');
 
-			$this->model_report_statistics->editValue('order_sale', $this->model_sale_order->getTotalSales(['filter_order_status' => implode(',', array_merge($this->config->get('config_complete_status'), $this->config->get('config_processing_status')))]));
+			$this->model_report_statistics->editValue('order_sale', $this->model_sale_order->getTotalSales(['filter_order_status' => implode(',', array_merge((array)$this->config->get('config_complete_status'), (array)$this->config->get('config_processing_status')))]));
 
 			$json['success'] = $this->language->get('text_success');
 		}

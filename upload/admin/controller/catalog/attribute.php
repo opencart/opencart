@@ -188,7 +188,7 @@ class Attribute extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['attribute_id'])) {
 			$this->load->model('catalog/attribute');
 
-			$attribute_info = $this->model_catalog_attribute->getAttribute($this->request->get['attribute_id']);
+			$attribute_info = $this->model_catalog_attribute->getAttribute((int)$this->request->get['attribute_id']);
 		}
 
 		if (isset($this->request->get['attribute_id'])) {
@@ -202,7 +202,7 @@ class Attribute extends \Opencart\System\Engine\Controller {
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
 		if (isset($this->request->get['attribute_id'])) {
-			$data['attribute_description'] = $this->model_catalog_attribute->getDescriptions($this->request->get['attribute_id']);
+			$data['attribute_description'] = $this->model_catalog_attribute->getDescriptions((int)$this->request->get['attribute_id']);
 		} else {
 			$data['attribute_description'] = [];
 		}

@@ -2,7 +2,7 @@
 namespace Opencart\Catalog\Model\Account;
 class Customer extends \Opencart\System\Engine\Model {
 	public function addCustomer(array $data): int {
-		if (isset($data['customer_group_id']) && is_array($this->config->get('config_customer_group_display')) && in_array($data['customer_group_id'], $this->config->get('config_customer_group_display'))) {
+		if (isset($data['customer_group_id']) && in_array((int)$data['customer_group_id'], (array)$this->config->get('config_customer_group_display'))) {
 			$customer_group_id = $data['customer_group_id'];
 		} else {
 			$customer_group_id = $this->config->get('config_customer_group_id');
@@ -10,7 +10,7 @@ class Customer extends \Opencart\System\Engine\Model {
 
 		$this->load->model('account/customer_group');
 
-		$customer_group_info = $this->model_account_customer_group->getCustomerGroup($customer_group_id);
+		$customer_group_info = $this->model_account_customer_group->getCustomerGroup((int)$customer_group_id);
 
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "customer` SET `customer_group_id` = '" . (int)$customer_group_id . "', `store_id` = '" . (int)$this->config->get('config_store_id') . "', `language_id` = '" . (int)$this->config->get('config_language_id') . "', `firstname` = '" . $this->db->escape((string)$data['firstname']) . "', `lastname` = '" . $this->db->escape((string)$data['lastname']) . "', `email` = '" . $this->db->escape((string)$data['email']) . "', `telephone` = '" . $this->db->escape((string)$data['telephone']) . "', `custom_field` = '" . $this->db->escape(isset($data['custom_field']['account']) ? json_encode($data['custom_field']['account']) : '') . "', `password` = '" . $this->db->escape(password_hash(html_entity_decode($data['password'], ENT_QUOTES, 'UTF-8'), PASSWORD_DEFAULT)) . "', `newsletter` = '" . (isset($data['newsletter']) ? (int)$data['newsletter'] : 0) . "', `ip` = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "', `status` = '" . (int)!$customer_group_info['approval'] . "', `date_added` = NOW()");
 

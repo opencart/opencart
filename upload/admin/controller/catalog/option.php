@@ -190,7 +190,7 @@ class Option extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['option_id'])) {
 			$this->load->model('catalog/option');
 
-			$option_info = $this->model_catalog_option->getOption($this->request->get['option_id']);
+			$option_info = $this->model_catalog_option->getOption((int)$this->request->get['option_id']);
 		}
 
 		if (isset($this->request->get['option_id'])) {
@@ -204,7 +204,7 @@ class Option extends \Opencart\System\Engine\Controller {
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
 		if (isset($this->request->get['option_id'])) {
-			$data['option_description'] = $this->model_catalog_option->getDescriptions($this->request->get['option_id']);
+			$data['option_description'] = $this->model_catalog_option->getDescriptions((int)$this->request->get['option_id']);
 		} else {
 			$data['option_description'] = [];
 		}
@@ -222,7 +222,7 @@ class Option extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->get['option_id'])) {
-			$option_values = $this->model_catalog_option->getValueDescriptions($this->request->get['option_id']);
+			$option_values = $this->model_catalog_option->getValueDescriptions((int)$this->request->get['option_id']);
 		} else {
 			$option_values = [];
 		}
@@ -291,7 +291,7 @@ class Option extends \Opencart\System\Engine\Controller {
 					}
 				}
 
-				$product_option_values = $this->model_catalog_product->getOptionValuesByOptionId($this->request->post['option_id']);
+				$product_option_values = $this->model_catalog_product->getOptionValuesByOptionId((int)$this->request->post['option_id']);
 
 				foreach ($product_option_values as $product_option_value) {
 					if (!in_array($product_option_value['option_value_id'], $option_value_data)) {

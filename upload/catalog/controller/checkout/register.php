@@ -16,20 +16,20 @@ class Register extends \Opencart\System\Engine\Controller {
 
 		$data['customer_groups'] = [];
 
-		if (is_array($this->config->get('config_customer_group_display'))) {
+		if (!empty($this->config->get('config_customer_group_display')) && is_array($this->config->get('config_customer_group_display'))) {
 			$this->load->model('account/customer_group');
 
 			$customer_groups = $this->model_account_customer_group->getCustomerGroups();
 
 			foreach ($customer_groups  as $customer_group) {
-				if (in_array($customer_group['customer_group_id'], $this->config->get('config_customer_group_display'))) {
+				if (in_array($customer_group['customer_group_id'], (array)$this->config->get('config_customer_group_display'))) {
 					$data['customer_groups'][] = $customer_group;
 				}
 			}
 		}
 
 		if (isset($this->session->data['customer']['customer_group_id'])) {
-			$data['customer_group_id'] = $this->session->data['csutomer']['customer_group_id'];
+			$data['customer_group_id'] = (int)$this->session->data['customer']['customer_group_id'];
 		} else {
 			$data['customer_group_id'] = $this->config->get('config_customer_group_id');
 		}
@@ -105,13 +105,13 @@ class Register extends \Opencart\System\Engine\Controller {
 		$data['countries'] = $this->model_localisation_country->getCountries();
 
 		if (isset($this->session->data['payment_address']['country_id'])) {
-			$data['payment_country_id'] = $this->session->data['payment_address']['country_id'];
+			$data['payment_country_id'] = (int)$this->session->data['payment_address']['country_id'];
 		} else {
 			$data['payment_country_id'] = $this->config->get('config_country_id');
 		}
 
 		if (isset($this->session->data['payment_address']['zone_id'])) {
-			$data['payment_zone_id'] = $this->session->data['payment_address']['zone_id'];
+			$data['payment_zone_id'] = (int)$this->session->data['payment_address']['zone_id'];
 		} else {
 			$data['payment_zone_id'] = '';
 		}
@@ -166,13 +166,13 @@ class Register extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->session->data['shipping_address']['country_id'])) {
-			$data['shipping_country_id'] = $this->session->data['shipping_address']['country_id'];
+			$data['shipping_country_id'] = (int)$this->session->data['shipping_address']['country_id'];
 		} else {
 			$data['shipping_country_id'] = $this->config->get('config_country_id');
 		}
 
 		if (isset($this->session->data['shipping_address']['zone_id'])) {
-			$data['shipping_zone_id'] = $this->session->data['shipping_address']['zone_id'];
+			$data['shipping_zone_id'] = (int)$this->session->data['shipping_address']['zone_id'];
 		} else {
 			$data['shipping_zone_id'] = '';
 		}
@@ -271,7 +271,7 @@ class Register extends \Opencart\System\Engine\Controller {
 			}
 
 			// Customer Group
-			if (in_array((int)$this->request->post['customer_group_id'], $this->config->get('config_customer_group_display'))) {
+			if (in_array((int)$this->request->post['customer_group_id'], (array)$this->config->get('config_customer_group_display'))) {
 				$customer_group_id = (int)$this->request->post['customer_group_id'];
 			} else {
 				$customer_group_id = $this->config->get('config_customer_group_id');
@@ -330,7 +330,7 @@ class Register extends \Opencart\System\Engine\Controller {
 					$json['error']['payment_address_1'] = $this->language->get('error_address_1');
 				}
 
-				if ((utf8_strlen($this->request->post['payment_city']) < 2) || (utf8_strlen($this->request->post['payment_city']) > 32)) {
+				if ((utf8_strlen(trim($this->request->post['payment_city'])) < 2) || (utf8_strlen(trim($this->request->post['payment_city'])) > 32)) {
 					$json['error']['payment_city'] = $this->language->get('error_city');
 				}
 
@@ -342,11 +342,11 @@ class Register extends \Opencart\System\Engine\Controller {
 					$json['error']['payment_postcode'] = $this->language->get('error_postcode');
 				}
 
-				if ($this->request->post['payment_country_id'] == '') {
+				if (!filter_var($this->request->post['payment_country_id'], FILTER_VALIDATE_INT)) {
 					$json['error']['payment_country'] = $this->language->get('error_country');
 				}
 
-				if (!isset($this->request->post['payment_zone_id']) || $this->request->post['payment_zone_id'] == '' || !is_numeric($this->request->post['payment_zone_id'])) {
+				if (!isset($this->request->post['payment_zone_id']) || !filter_var($this->request->post['payment_zone_id'], FILTER_VALIDATE_INT)) {
 					$json['error']['payment_zone'] = $this->language->get('error_zone');
 				}
 
@@ -376,7 +376,7 @@ class Register extends \Opencart\System\Engine\Controller {
 					$json['error']['shipping_address_1'] = $this->language->get('error_address_1');
 				}
 
-				if ((utf8_strlen($this->request->post['shipping_city']) < 2) || (utf8_strlen($this->request->post['shipping_city']) > 32)) {
+				if ((utf8_strlen(trim($this->request->post['shipping_city'])) < 2) || (utf8_strlen(trim($this->request->post['shipping_city'])) > 32)) {
 					$json['error']['shipping_city'] = $this->language->get('error_city');
 				}
 
@@ -388,11 +388,11 @@ class Register extends \Opencart\System\Engine\Controller {
 					$json['error']['shipping_postcode'] = $this->language->get('error_postcode');
 				}
 
-				if ($this->request->post['shipping_country_id'] == '') {
+				if (!filter_var($this->request->post['shipping_country_id'], FILTER_VALIDATE_INT)) {
 					$json['error']['shipping_country'] = $this->language->get('error_country');
 				}
 
-				if (!isset($this->request->post['shipping_zone_id']) || $this->request->post['zone_id'] == '' || !is_numeric($this->request->post['shipping_zone_id'])) {
+				if (!isset($this->request->post['shipping_zone_id']) || !filter_var($this->request->post['zone_id'], FILTER_VALIDATE_INT)) {
 					$json['error']['shipping_zone'] = $this->language->get('error_zone');
 				}
 
@@ -407,12 +407,7 @@ class Register extends \Opencart\System\Engine\Controller {
 					}
 				}
 			}
-
-
-
-
-
-
+			
 			$this->load->model('catalog/information');
 
 			$information_info = $this->model_catalog_information->getInformation($this->config->get('config_account_id'));

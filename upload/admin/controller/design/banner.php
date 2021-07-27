@@ -190,7 +190,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['banner_id'])) {
 			$this->load->model('design/banner');
 
-			$banner_info = $this->model_design_banner->getBanner($this->request->get['banner_id']);
+			$banner_info = $this->model_design_banner->getBanner((int)$this->request->get['banner_id']);
 		}
 
 		if (isset($this->request->get['banner_id'])) {
@@ -218,7 +218,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 		$this->load->model('tool/image');
 
 		if (!empty($banner_info)) {
-			$banner_images = $this->model_design_banner->getImages($this->request->get['banner_id']);
+			$banner_images = $this->model_design_banner->getImages((int)$this->request->get['banner_id']);
 		} else {
 			$banner_images = [];
 		}
@@ -273,7 +273,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 			foreach ($this->request->post['banner_image'] as $language_id => $banner_image) {
 				foreach ($banner_image as $key => $value) {
 					if ((utf8_strlen(trim($value['title'])) < 2) || (utf8_strlen($value['title']) > 64)) {
-						$json['error']['banner_image_' . $language_id . '_' . $key . '_title'] = $this->language->get('error_title');
+						$json['error']['banner_image_' . (int)$language_id . '_' . $key . '_title'] = $this->language->get('error_title');
 					}
 				}
 			}
@@ -285,7 +285,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 			if (!$this->request->post['banner_id']) {
 				$json['banner_id'] = $this->model_design_banner->addBanner($this->request->post);
 			} else {
-				$this->model_design_banner->editBanner($this->request->post['banner_id'], $this->request->post);
+				$this->model_design_banner->editBanner((int)$this->request->post['banner_id'], $this->request->post);
 			}
 
 			$json['success'] = $this->language->get('text_success');
@@ -314,7 +314,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 			$this->load->model('design/banner');
 
 			foreach ($selected as $banner_id) {
-				$this->model_design_banner->deleteBanner($banner_id);
+				$this->model_design_banner->deleteBanner((int)$banner_id);
 			}
 
 			$json['success'] = $this->language->get('text_success');

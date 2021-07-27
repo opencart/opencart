@@ -267,7 +267,7 @@ class Layout extends \Opencart\System\Engine\Controller {
 					'edit'       => $this->url->link('extension/' . $part[0] . '/module/' . $part[1], 'user_token=' . $this->session->data['user_token'])
 				];
 			} else {
-				$module_info = $this->model_setting_module->getModule($part[2]);
+				$module_info = $this->model_setting_module->getModule((int)$part[2]);
 
 				if ($module_info) {
 					$data['layout_modules'][] = [

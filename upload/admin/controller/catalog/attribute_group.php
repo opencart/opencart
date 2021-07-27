@@ -190,7 +190,7 @@ class AttributeGroup extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['attribute_group_id'])) {
 			$this->load->model('catalog/attribute_group');
 
-			$attribute_group_info = $this->model_catalog_attribute_group->getAttributeGroup($this->request->get['attribute_group_id']);
+			$attribute_group_info = $this->model_catalog_attribute_group->getAttributeGroup((int)$this->request->get['attribute_group_id']);
 		}
 
 		if (isset($this->request->get['attribute_group_id'])) {
@@ -204,7 +204,7 @@ class AttributeGroup extends \Opencart\System\Engine\Controller {
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
 		if (isset($this->request->get['attribute_group_id'])) {
-			$data['attribute_group_description'] = $this->model_catalog_attribute_group->getDescriptions($this->request->get['attribute_group_id']);
+			$data['attribute_group_description'] = $this->model_catalog_attribute_group->getDescriptions((int)$this->request->get['attribute_group_id']);
 		} else {
 			$data['attribute_group_description'] = [];
 		}

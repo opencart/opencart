@@ -183,7 +183,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		// Customer Group
-		if (isset($this->request->post['customer_group_id']) && is_array($this->config->get('config_customer_group_display')) && in_array($this->request->post['customer_group_id'], $this->config->get('config_customer_group_display'))) {
+		if (isset($this->request->post['customer_group_id']) && in_array($this->request->post['customer_group_id'], (array)$this->config->get('config_customer_group_display'))) {
 			$customer_group_id = $this->request->post['customer_group_id'];
 		} else {
 			$customer_group_id = $this->config->get('config_customer_group_id');
@@ -264,7 +264,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('localisation/country');
 
-		$country_info = $this->model_localisation_country->getCountry($this->request->post['country_id']);
+		$country_info = $this->model_localisation_country->getCountry((int)$this->request->post['country_id']);
 
 		if ($country_info && $country_info['postcode_required'] && (utf8_strlen(trim($this->request->post['postcode'])) < 2 || utf8_strlen(trim($this->request->post['postcode'])) > 10)) {
 			$json['error']['postcode'] = $this->language->get('error_postcode');
@@ -297,7 +297,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		print_r($custom_fields);
 
 		if (!$json) {
-			$country_info = $this->model_localisation_country->getCountry($this->request->post['country_id']);
+			$country_info = $this->model_localisation_country->getCountry((int)$this->request->post['country_id']);
 
 			if ($country_info) {
 				$country = $country_info['name'];
@@ -334,7 +334,7 @@ class Order extends \Opencart\System\Engine\Controller {
 				'zone_id'        => $this->request->post['zone_id'],
 				'zone'           => $zone,
 				'zone_code'      => $zone_code,
-				'country_id'     => $this->request->post['country_id'],
+				'country_id'     => (int)$this->request->post['country_id'],
 				'country'        => $country,
 				'iso_code_2'     => $iso_code_2,
 				'iso_code_3'     => $iso_code_3,
@@ -432,7 +432,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 			$this->load->model('localisation/country');
 
-			$country_info = $this->model_localisation_country->getCountry($this->request->post['country_id']);
+			$country_info = $this->model_localisation_country->getCountry((int)$this->request->post['country_id']);
 
 			if ($country_info && $country_info['postcode_required'] && (utf8_strlen(trim($this->request->post['postcode'])) < 2 || utf8_strlen(trim($this->request->post['postcode'])) > 10)) {
 				$json['error']['postcode'] = $this->language->get('error_postcode');
@@ -500,7 +500,7 @@ class Order extends \Opencart\System\Engine\Controller {
 				'zone_id'        => $this->request->post['zone_id'],
 				'zone'           => $zone,
 				'zone_code'      => $zone_code,
-				'country_id'     => $this->request->post['country_id'],
+				'country_id'     => (int)$this->request->post['country_id'],
 				'country'        => $country,
 				'iso_code_2'     => $iso_code_2,
 				'iso_code_3'     => $iso_code_3,
@@ -679,8 +679,8 @@ class Order extends \Opencart\System\Engine\Controller {
 			$order_data['store_url'] = $this->config->get('config_url');
 
 			// Customer Details
-			$order_data['customer_id'] = $this->session->data['customer']['customer_id'];
-			$order_data['customer_group_id'] = $this->session->data['customer']['customer_group_id'];
+			$order_data['customer_id'] = (int)$this->session->data['customer']['customer_id'];
+			$order_data['customer_group_id'] = (int)$this->session->data['customer']['customer_group_id'];
 			$order_data['firstname'] = $this->session->data['customer']['firstname'];
 			$order_data['lastname'] = $this->session->data['customer']['lastname'];
 			$order_data['email'] = $this->session->data['customer']['email'];
@@ -698,7 +698,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			$order_data['payment_zone'] = $this->session->data['payment_address']['zone'];
 			$order_data['payment_zone_id'] = $this->session->data['payment_address']['zone_id'];
 			$order_data['payment_country'] = $this->session->data['payment_address']['country'];
-			$order_data['payment_country_id'] = $this->session->data['payment_address']['country_id'];
+			$order_data['payment_country_id'] = (int)$this->session->data['payment_address']['country_id'];
 			$order_data['payment_address_format'] = $this->session->data['payment_address']['address_format'];
 			$order_data['payment_custom_field'] = (isset($this->session->data['payment_address']['custom_field']) ? $this->session->data['payment_address']['custom_field'] : []);
 
@@ -726,7 +726,7 @@ class Order extends \Opencart\System\Engine\Controller {
 				$order_data['shipping_zone'] = $this->session->data['shipping_address']['zone'];
 				$order_data['shipping_zone_id'] = $this->session->data['shipping_address']['zone_id'];
 				$order_data['shipping_country'] = $this->session->data['shipping_address']['country'];
-				$order_data['shipping_country_id'] = $this->session->data['shipping_address']['country_id'];
+				$order_data['shipping_country_id'] = (int)$this->session->data['shipping_address']['country_id'];
 				$order_data['shipping_address_format'] = $this->session->data['shipping_address']['address_format'];
 				$order_data['shipping_custom_field'] = (isset($this->session->data['shipping_address']['custom_field']) ? $this->session->data['shipping_address']['custom_field'] : []);
 
@@ -871,7 +871,7 @@ class Order extends \Opencart\System\Engine\Controller {
 				// Affiliate
 				$this->load->model('account/affiliate');
 
-				$affiliate_info = $this->model_account_affiliate->getAffiliate($this->request->post['affiliate_id']);
+				$affiliate_info = $this->model_account_affiliate->getAffiliate((int)$this->request->post['affiliate_id']);
 
 				if ($affiliate_info) {
 					$order_data['affiliate_id'] = $affiliate_info['customer_id'];
@@ -916,7 +916,7 @@ class Order extends \Opencart\System\Engine\Controller {
 				$order_status_id = $this->config->get('config_order_status_id');
 			}
 
-			$this->model_checkout_order->addHistory($json['order_id'], $order_status_id);
+			$this->model_checkout_order->addHistory($json['order_id'], (int)$order_status_id);
 
 			// clear cart since the order has already been successfully stored.
 			$this->cart->clear();
@@ -989,7 +989,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$this->model_checkout_order->addHistory($order_id, $this->request->post['order_status_id'], $this->request->post['comment'], $this->request->post['notify'], $this->request->post['override']);
+			$this->model_checkout_order->addHistory($order_id, (int)$this->request->post['order_status_id'], $this->request->post['comment'], $this->request->post['notify'], $this->request->post['override']);
 
 			$json['success'] = $this->language->get('text_success');
 		}

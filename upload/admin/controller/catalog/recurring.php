@@ -190,7 +190,7 @@ class Recurring extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['recurring_id'])) {
 			$this->load->model('catalog/recurring');
 
-			$recurring_info = $this->model_catalog_recurring->getRecurring($this->request->get['recurring_id']);
+			$recurring_info = $this->model_catalog_recurring->getRecurring((int)$this->request->get['recurring_id']);
 		}
 
 		if (isset($this->request->get['recurring_id'])) {
@@ -204,7 +204,7 @@ class Recurring extends \Opencart\System\Engine\Controller {
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
 		if (isset($this->request->get['recurring_id'])) {
-			$data['recurring_description'] = $this->model_catalog_recurring->getDescription($this->request->get['recurring_id']);
+			$data['recurring_description'] = $this->model_catalog_recurring->getDescription((int)$this->request->get['recurring_id']);
 		} else {
 			$data['recurring_description'] = [];
 		}
@@ -336,7 +336,7 @@ class Recurring extends \Opencart\System\Engine\Controller {
 			if (!$this->request->post['recurring_id']) {
 				$json['recurring_id'] = $this->model_catalog_recurring->addRecurring($this->request->post);
 			} else {
-				$this->model_catalog_recurring->editRecurring($this->request->post['recurring_id'], $this->request->post);
+				$this->model_catalog_recurring->editRecurring((int)$this->request->post['recurring_id'], $this->request->post);
 			}
 
 			$json['success'] = $this->language->get('text_success');
@@ -365,7 +365,7 @@ class Recurring extends \Opencart\System\Engine\Controller {
 			$this->load->model('catalog/recurring');
 
 			foreach ($selected as $product_id) {
-				$this->model_catalog_recurring->copyRecurring($product_id);
+				$this->model_catalog_recurring->copyRecurring((int)$product_id);
 			}
 
 			$json['success'] = $this->language->get('text_success');
@@ -393,7 +393,7 @@ class Recurring extends \Opencart\System\Engine\Controller {
 		$this->load->model('catalog/product');
 
 		foreach ($selected as $recurring_id) {
-			$product_total = $this->model_catalog_product->getTotalProductsByProfileId($recurring_id);
+			$product_total = $this->model_catalog_product->getTotalProductsByProfileId((int)$recurring_id);
 
 			if ($product_total) {
 				$json['error'] = sprintf($this->language->get('error_product'), $product_total);
@@ -404,7 +404,7 @@ class Recurring extends \Opencart\System\Engine\Controller {
 			$this->load->model('catalog/recurring');
 
 			foreach ($selected as $recurring_id) {
-				$this->model_catalog_recurring->deleteRecurring($recurring_id);
+				$this->model_catalog_recurring->deleteRecurring((int)$recurring_id);
 			}
 
 			$json['success'] = $this->language->get('text_success');

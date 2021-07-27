@@ -392,7 +392,7 @@ class Register extends \Opencart\System\Engine\Controller {
 					$json['error']['shipping_country'] = $this->language->get('error_country');
 				}
 
-				if (!isset($this->request->post['shipping_zone_id']) || !filter_var($this->request->post['zone_id'], FILTER_VALIDATE_INT)) {
+				if (!isset($this->request->post['shipping_zone_id']) || !filter_var($this->request->post['shipping_zone_id'], FILTER_VALIDATE_INT)) {
 					$json['error']['shipping_zone'] = $this->language->get('error_zone');
 				}
 

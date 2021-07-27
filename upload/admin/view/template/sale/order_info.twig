@@ -2231,8 +2231,8 @@ $('#modal-cart input[name=\'product\']').autocomplete({
                         option_value = option['product_option_value'][j];
 
                         html += '<div class="form-check">';
-                        html += '  <input type="checkbox" name="option[' + option['product_option_id'] + '][]" value="' + option_value['product_option_value_id'] + '" class="form-check-input"/> ' + option_value['name'];
-                        html += '  <label class="form-check-label">';
+                        html += '  <input type="checkbox" name="option[' + option['product_option_id'] + '][]" value="' + option_value['product_option_value_id'] + '" id="input-option-value-' + option_value['product_option_value_id'] + '" class="form-check-input"/> ' + option_value['name'];
+                        html += '  <label for="input-option-value-' + option_value['product_option_value_id'] + '" class="form-check-label">';
 
                         if (option_value['price']) {
                             html += ' (' + option_value['price_prefix'] + option_value['price'] + ')';

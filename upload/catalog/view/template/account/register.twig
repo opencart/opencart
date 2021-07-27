@@ -17,7 +17,8 @@
             <div class="col-sm-10">
               {% for customer_group in customer_groups %}
                 <div class="form-check">
-                  <input type="radio" name="customer_group_id" value="{{ customer_group.customer_group_id }}" class="form-check-input"{% if customer_group.customer_group_id == customer_group_id %} checked{% endif %}/> <label class="form-check-label">{{ customer_group.name }}</label>
+                  <input type="radio" name="customer_group_id" value="{{ customer_group.customer_group_id }}" id="input-customer-group-{{ customer_group.customer_group_id }}" class="form-check-input"{% if customer_group.customer_group_id == customer_group_id %} checked{% endif %}/>
+                  <label for="input-customer-group-{{ customer_group.customer_group_id }}" class="form-check-label">{{ customer_group.name }}</label>
                 </div>
               {% endfor %}
             </div>

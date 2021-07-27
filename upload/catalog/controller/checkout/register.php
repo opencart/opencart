@@ -445,10 +445,25 @@ class Register extends \Opencart\System\Engine\Controller {
 				// Default Payment Address
 				$this->load->model('account/address');
 
+				if ($this->config->get('config_checkout_address')) {
+					foreach () {
+
+
+					}
+				} else {
+
+				}
+
+
+
+
+
 				$address_id = $this->model_account_address->addAddress($customer_id, $this->request->post);
 
 				// Set the address as default
 				$this->model_account_customer->editAddressId($customer_id, $address_id);
+
+
 			}
 
 			$this->session->data['account'] = 'register';
@@ -464,21 +479,41 @@ class Register extends \Opencart\System\Engine\Controller {
 				'custom_field'      => $this->request->post['custom_field']
 			];
 
-			// Add customer details into session
-			$this->session->data['shipping_address'] = [
-				'customer_id'       => $customer_id,
-				'customer_group_id' => $customer_group_id,
-				'firstname'         => $this->request->post['firstname'],
-				'lastname'          => $this->request->post['lastname'],
-				'company'           => $this->request->post['company'],
-				'address_1'         => $this->request->post['address_1'],
-				'address_2'         => $this->request->post['address_2'],
-				'city'              => $this->request->post['city'],
-				'postcode'          => $this->request->post['postcode'],
-				'country_id'        => $this->request->post['country_id'],
-				'zone_id'           => $this->request->post['zone_id'],
-				'custom_field'      => $this->request->post['custom_field']
-			];
+			// Add payment address into session
+			if ($this->config->get('config_checkout_address')) {
+				$this->session->data['payment_address'] = [
+					'customer_id'       => $customer_id,
+					'customer_group_id' => $customer_group_id,
+					'firstname'         => $this->request->post['payment_firstname'],
+					'lastname'          => $this->request->post['payment_lastname'],
+					'company'           => $this->request->post['payment_company'],
+					'address_1'         => $this->request->post['payment_address_1'],
+					'address_2'         => $this->request->post['payment_address_2'],
+					'city'              => $this->request->post['payment_city'],
+					'postcode'          => $this->request->post['payment_postcode'],
+					'country_id'        => $this->request->post['payment_country_id'],
+					'zone_id'           => $this->request->post['payment_zone_id'],
+					'custom_field'      => $this->request->post['payment_custom_field']
+				];
+			}
+
+			// Add shipping address into session
+			if ($this->cart->hasShipping()) {
+				$this->session->data['shipping_address'] = [
+					'customer_id'       => $customer_id,
+					'customer_group_id' => $customer_group_id,
+					'firstname'         => $this->request->post['shipping_firstname'],
+					'lastname'          => $this->request->post['shipping_lastname'],
+					'company'           => $this->request->post['shipping_company'],
+					'address_1'         => $this->request->post['shipping_address_1'],
+					'address_2'         => $this->request->post['shipping_address_2'],
+					'city'          => $this->request->post['shipping_city'],
+					'postcode'          => $this->request->post['shipping_postcode'],
+					'country_id'          => $this->request->post['shipping_country_id'],
+					'zone_id'          => $this->request->post['shipping_zone_id'],
+					'custom_field'          => $this->request->post['shipping_custom_field']
+				];
+			}
 
 			// Customer groups
 			$this->load->model('account/customer_group');

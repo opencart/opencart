@@ -209,7 +209,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['currency_id'])) {
 			$this->load->model('localisation/currency');
 
-			$currency_info = $this->model_localisation_currency->getCurrency($this->request->get['currency_id']);
+			$currency_info = $this->model_localisation_currency->getCurrency((int)$this->request->get['currency_id']);
 		}
 
 		if (isset($this->request->get['currency_id'])) {
@@ -292,7 +292,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 			if (!$this->request->post['currency_id']) {
 				$json['currency_id'] = $this->model_localisation_currency->addCurrency($this->request->post);
 			} else {
-				$this->model_localisation_currency->editCurrency($this->request->post['currency_id'], $this->request->post);
+				$this->model_localisation_currency->editCurrency((int)$this->request->post['currency_id'], $this->request->post);
 			}
 
 			$json['success'] = $this->language->get('text_success');
@@ -341,7 +341,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 		$this->load->model('sale/order');
 
 		foreach ($selected as $currency_id) {
-			$currency_info = $this->model_localisation_currency->getCurrency($currency_id);
+			$currency_info = $this->model_localisation_currency->getCurrency((int)$currency_id);
 
 			if ($currency_info) {
 				if ($this->config->get('config_currency') == $currency_info['code']) {
@@ -355,7 +355,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-			$order_total = $this->model_sale_order->getTotalOrdersByCurrencyId($currency_id);
+			$order_total = $this->model_sale_order->getTotalOrdersByCurrencyId((int)$currency_id);
 
 			if ($order_total) {
 				$json['error'] = sprintf($this->language->get('error_order'), $order_total);
@@ -364,7 +364,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 
 		if (!$json) {
 			foreach ($selected as $currency_id) {
-				$this->model_localisation_currency->deleteCurrency($currency_id);
+				$this->model_localisation_currency->deleteCurrency((int)$currency_id);
 			}
 
 			$json['success'] = $this->language->get('text_success');

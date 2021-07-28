@@ -222,7 +222,7 @@ class ReturnAction extends \Opencart\System\Engine\Controller {
 
 		foreach ($this->request->post['return_action'] as $language_id => $value) {
 			if ((utf8_strlen($value['name']) < 3) || (utf8_strlen($value['name']) > 64)) {
-				$json['error']['name_' . $language_id] = $this->language->get('error_name');
+				$json['error']['name_' . (int)$language_id] = $this->language->get('error_name');
 			}
 		}
 
@@ -232,7 +232,7 @@ class ReturnAction extends \Opencart\System\Engine\Controller {
 			if (!$this->request->post['return_action_id']) {
 				$json['return_action_id'] = $this->model_localisation_return_action->addReturnAction($this->request->post);
 			} else {
-				$this->model_localisation_return_action->editReturnAction($this->request->post['return_action_id'], $this->request->post);
+				$this->model_localisation_return_action->editReturnAction((int)$this->request->post['return_action_id'], $this->request->post);
 			}
 
 			$json['success'] = $this->language->get('text_success');
@@ -260,7 +260,7 @@ class ReturnAction extends \Opencart\System\Engine\Controller {
 		$this->load->model('sale/returns');
 
 		foreach ($selected as $return_action_id) {
-			$return_total = $this->model_sale_returns->getTotalReturnsByReturnActionId($return_action_id);
+			$return_total = $this->model_sale_returns->getTotalReturnsByReturnActionId((int)$return_action_id);
 
 			if ($return_total) {
 				$json['error'] = sprintf($this->language->get('error_return'), $return_total);
@@ -271,7 +271,7 @@ class ReturnAction extends \Opencart\System\Engine\Controller {
 			$this->load->model('localisation/return_action');
 
 			foreach ($selected as $return_action_id) {
-				$this->model_localisation_return_action->deleteReturnAction($return_action_id);
+				$this->model_localisation_return_action->deleteReturnAction((int)$return_action_id);
 			}
 
 			$json['success'] = $this->language->get('text_success');

@@ -198,7 +198,7 @@ class ReturnStatus extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['return_status_id'])) {
 			$this->load->model('localisation/return_status');
 
-			$data['return_status'] = $this->model_localisation_return_status->getDescriptions($this->request->get['return_status_id']);
+			$data['return_status'] = $this->model_localisation_return_status->getDescriptions((int)$this->request->get['return_status_id']);
 		} else {
 			$data['return_status'] = [];
 		}
@@ -231,7 +231,7 @@ class ReturnStatus extends \Opencart\System\Engine\Controller {
 			if (!$this->request->post['return_status_id']) {
 				$json['return_status_id'] = $this->model_localisation_return_status->addReturnStatus($this->request->post);
 			} else {
-				$this->model_localisation_return_status->editReturnStatus($this->request->post['return_status_id'], $this->request->post);
+				$this->model_localisation_return_status->editReturnStatus((int)$this->request->post['return_status_id'], $this->request->post);
 			}
 
 			$json['success'] = $this->language->get('text_success');
@@ -263,13 +263,13 @@ class ReturnStatus extends \Opencart\System\Engine\Controller {
 				$json['error'] = $this->language->get('error_default');
 			}
 
-			$return_total = $this->model_sale_returns->getTotalReturnsByReturnStatusId($return_status_id);
+			$return_total = $this->model_sale_returns->getTotalReturnsByReturnStatusId((int)$return_status_id);
 
 			if ($return_total) {
 				$json['error'] = sprintf($this->language->get('error_return'), $return_total);
 			}
 
-			$return_total = $this->model_sale_returns->getTotalHistoriesByReturnStatusId($return_status_id);
+			$return_total = $this->model_sale_returns->getTotalHistoriesByReturnStatusId((int)$return_status_id);
 
 			if ($return_total) {
 				$json['error'] = sprintf($this->language->get('error_return'), $return_total);
@@ -280,7 +280,7 @@ class ReturnStatus extends \Opencart\System\Engine\Controller {
 			$this->load->model('localisation/return_status');
 
 			foreach ($selected as $return_status_id) {
-				$this->model_localisation_return_status->deleteReturnStatus($return_status_id);
+				$this->model_localisation_return_status->deleteReturnStatus((int)$return_status_id);
 			}
 
 			$json['success'] = $this->language->get('text_success');

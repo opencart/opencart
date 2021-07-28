@@ -330,7 +330,7 @@ class Register extends \Opencart\System\Engine\Controller {
 					$json['error']['payment_address_1'] = $this->language->get('error_address_1');
 				}
 
-				if ((utf8_strlen(trim($this->request->post['payment_city'])) < 2) || (utf8_strlen(trim($this->request->post['payment_city'])) > 32)) {
+				if ((utf8_strlen(trim($this->request->post['payment_city'])) < 2) || (utf8_strlen(trim($this->request->post['payment_city'])) > 128)) {
 					$json['error']['payment_city'] = $this->language->get('error_city');
 				}
 
@@ -346,7 +346,7 @@ class Register extends \Opencart\System\Engine\Controller {
 					$json['error']['payment_country'] = $this->language->get('error_country');
 				}
 
-				if (!isset($this->request->post['payment_zone_id']) || !filter_var($this->request->post['payment_zone_id'], FILTER_VALIDATE_INT)) {
+				if (!isset($this->request->post['payment_zone_id']) || filter_var($this->request->post['payment_zone_id'], FILTER_VALIDATE_INT) === false) {
 					$json['error']['payment_zone'] = $this->language->get('error_zone');
 				}
 
@@ -376,7 +376,7 @@ class Register extends \Opencart\System\Engine\Controller {
 					$json['error']['shipping_address_1'] = $this->language->get('error_address_1');
 				}
 
-				if ((utf8_strlen(trim($this->request->post['shipping_city'])) < 2) || (utf8_strlen(trim($this->request->post['shipping_city'])) > 32)) {
+				if ((utf8_strlen(trim($this->request->post['shipping_city'])) < 2) || (utf8_strlen(trim($this->request->post['shipping_city'])) > 128)) {
 					$json['error']['shipping_city'] = $this->language->get('error_city');
 				}
 
@@ -392,7 +392,7 @@ class Register extends \Opencart\System\Engine\Controller {
 					$json['error']['shipping_country'] = $this->language->get('error_country');
 				}
 
-				if (!isset($this->request->post['shipping_zone_id']) || !filter_var($this->request->post['shipping_zone_id'], FILTER_VALIDATE_INT)) {
+				if (!isset($this->request->post['shipping_zone_id']) || filter_var($this->request->post['shipping_zone_id'], FILTER_VALIDATE_INT) === false) {
 					$json['error']['shipping_zone'] = $this->language->get('error_zone');
 				}
 

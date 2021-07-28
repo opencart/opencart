@@ -207,7 +207,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['voucher_id'])) {
 			$this->load->model('sale/voucher');
 
-			$voucher_info = $this->model_sale_voucher->getVoucher($this->request->get['voucher_id']);
+			$voucher_info = $this->model_sale_voucher->getVoucher((int)$this->request->get['voucher_id']);
 		}
 
 		if (isset($this->request->get['voucher_id'])) {
@@ -407,7 +407,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		$history_total = $this->model_sale_voucher->getTotalHistories($this->request->get['voucher_id']);
+		$history_total = $this->model_sale_voucher->getTotalHistories((int)$this->request->get['voucher_id']);
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $history_total,
@@ -440,12 +440,12 @@ class Voucher extends \Opencart\System\Engine\Controller {
 			}
 
 			if (isset($this->request->post['voucher_id'])) {
-				$vouchers[] = $this->request->post['voucher_id'];
+				$vouchers[] = (int)$this->request->post['voucher_id'];
 			}
 
 			if ($vouchers) {
 				foreach ($vouchers as $voucher_id) {
-					$this->load->controller('mail/voucher', $voucher_id);
+					$this->load->controller('mail/voucher', (int)$voucher_id);
 				}
 
 				$json['success'] = $this->language->get('text_sent');

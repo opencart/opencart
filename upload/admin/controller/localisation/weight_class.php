@@ -190,7 +190,7 @@ class WeightClass extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['weight_class_id'])) {
 			$this->load->model('localisation/weight_class');
 
-			$weight_class_info = $this->model_localisation_weight_class->getWeightClass($this->request->get['weight_class_id']);
+			$weight_class_info = $this->model_localisation_weight_class->getWeightClass((int)$this->request->get['weight_class_id']);
 		}
 
 		if (isset($this->request->get['weight_class_id'])) {
@@ -204,7 +204,7 @@ class WeightClass extends \Opencart\System\Engine\Controller {
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
 		if (isset($this->request->get['weight_class_id'])) {
-			$data['weight_class_description'] = $this->model_localisation_weight_class->getDescriptions($this->request->get['weight_class_id']);
+			$data['weight_class_description'] = $this->model_localisation_weight_class->getDescriptions((int)$this->request->get['weight_class_id']);
 		} else {
 			$data['weight_class_description'] = [];
 		}
@@ -233,11 +233,11 @@ class WeightClass extends \Opencart\System\Engine\Controller {
 
 		foreach ($this->request->post['weight_class_description'] as $language_id => $value) {
 			if ((utf8_strlen($value['title']) < 3) || (utf8_strlen($value['title']) > 32)) {
-				$json['error']['title_' . $language_id] = $this->language->get('error_title');
+				$json['error']['title_' . (int)$language_id] = $this->language->get('error_title');
 			}
 
 			if (!$value['unit'] || (utf8_strlen($value['unit']) > 4)) {
-				$json['error']['unit_' . $language_id] = $this->language->get('error_unit');
+				$json['error']['unit_' . (int)$language_id] = $this->language->get('error_unit');
 			}
 		}
 
@@ -247,7 +247,7 @@ class WeightClass extends \Opencart\System\Engine\Controller {
 			if (!$this->request->post['weight_class_id']) {
 				$json['weight_class_id'] = $this->model_localisation_weight_class->addWeightClass($this->request->post);
 			} else {
-				$this->model_localisation_weight_class->editWeightClass($this->request->post['weight_class_id'], $this->request->post);
+				$this->model_localisation_weight_class->editWeightClass((int)$this->request->post['weight_class_id'], $this->request->post);
 			}
 
 			$json['success'] = $this->language->get('text_success');
@@ -279,7 +279,7 @@ class WeightClass extends \Opencart\System\Engine\Controller {
 				$json['error'] = $this->language->get('error_default');
 			}
 
-			$product_total = $this->model_catalog_product->getTotalProductsByWeightClassId($weight_class_id);
+			$product_total = $this->model_catalog_product->getTotalProductsByWeightClassId((int)$weight_class_id);
 
 			if ($product_total) {
 				$json['error'] = sprintf($this->language->get('error_product'), $product_total);
@@ -290,7 +290,7 @@ class WeightClass extends \Opencart\System\Engine\Controller {
 			$this->load->model('localisation/weight_class');
 
 			foreach ($selected as $weight_class_id) {
-				$this->model_localisation_weight_class->deleteWeightClass($weight_class_id);
+				$this->model_localisation_weight_class->deleteWeightClass((int)$weight_class_id);
 			}
 
 			$json['success'] = $this->language->get('text_success');

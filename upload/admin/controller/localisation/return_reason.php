@@ -198,7 +198,7 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['return_reason_id'])) {
 			$this->load->model('localisation/return_reason');
 
-			$data['return_reason'] = $this->model_localisation_return_reason->getDescriptions($this->request->get['return_reason_id']);
+			$data['return_reason'] = $this->model_localisation_return_reason->getDescriptions((int)$this->request->get['return_reason_id']);
 		} else {
 			$data['return_reason'] = [];
 		}

@@ -139,7 +139,7 @@ class Store extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['store_id'])) {
 			$this->load->model('setting/setting');
 
-			$store_info = $this->model_setting_setting->getSetting('config', $this->request->get['store_id']);
+			$store_info = $this->model_setting_setting->getSetting('config', (int)$this->request->get['store_id']);
 		}
 
 		if (isset($this->request->get['store_id'])) {
@@ -687,7 +687,7 @@ class Store extends \Opencart\System\Engine\Controller {
 			} else {
 				$this->model_setting_store->editStore($this->request->post['store_id'], $this->request->post);
 
-				$this->model_setting_setting->editSetting('config', $this->request->post, $this->request->post['store_id']);
+				$this->model_setting_setting->editSetting('config', $this->request->post, (int)$this->request->post['store_id']);
 			}
 
 			$json['success'] = $this->language->get('text_success');
@@ -719,7 +719,7 @@ class Store extends \Opencart\System\Engine\Controller {
 				$json['error'] = $this->language->get('error_default');
 			}
 
-			$store_total = $this->model_sale_order->getTotalOrdersByStoreId($store_id);
+			$store_total = $this->model_sale_order->getTotalOrdersByStoreId((int)$store_id);
 
 			if ($store_total) {
 				$json['error'] = sprintf($this->language->get('error_store'), $store_total);
@@ -732,9 +732,9 @@ class Store extends \Opencart\System\Engine\Controller {
 			$this->load->model('setting/setting');
 
 			foreach ($selected as $store_id) {
-				$this->model_setting_store->deleteStore($store_id);
+				$this->model_setting_store->deleteStore((int)$store_id);
 
-				$this->model_setting_setting->deleteSetting('config', $store_id);
+				$this->model_setting_setting->deleteSetting('config', (int)$store_id);
 			}
 
 			$json['success'] = $this->language->get('text_success');

@@ -188,7 +188,7 @@ class VoucherTheme extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['voucher_theme_id'])) {
 			$this->load->model('sale/voucher_theme');
 
-			$voucher_theme_info = $this->model_sale_voucher_theme->getVoucherTheme($this->request->get['voucher_theme_id']);
+			$voucher_theme_info = $this->model_sale_voucher_theme->getVoucherTheme((int)$this->request->get['voucher_theme_id']);
 		}
 
 		if (isset($this->request->get['voucher_theme_id'])) {
@@ -202,7 +202,7 @@ class VoucherTheme extends \Opencart\System\Engine\Controller {
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
 		if (!empty($voucher_theme_info)) {
-			$data['voucher_theme_description'] = $this->model_sale_voucher_theme->getDescriptions($this->request->get['voucher_theme_id']);
+			$data['voucher_theme_description'] = $this->model_sale_voucher_theme->getDescriptions((int)$this->request->get['voucher_theme_id']);
 		} else {
 			$data['voucher_theme_description'] = [];
 		}
@@ -243,7 +243,7 @@ class VoucherTheme extends \Opencart\System\Engine\Controller {
 
 		foreach ($this->request->post['voucher_theme_description'] as $language_id => $value) {
 			if ((utf8_strlen($value['name']) < 3) || (utf8_strlen($value['name']) > 32)) {
-				$json['error']['name_' . $language_id] = $this->language->get('error_name');
+				$json['error']['name_' . (int)$language_id] = $this->language->get('error_name');
 			}
 		}
 
@@ -257,7 +257,7 @@ class VoucherTheme extends \Opencart\System\Engine\Controller {
 			if (!$this->request->post['voucher_theme_id']) {
 				$json['voucher_theme_id'] = $this->model_sale_voucher_theme->addVoucherTheme($this->request->post);
 			} else {
-				$this->model_sale_voucher_theme->editVoucherTheme($this->request->post['voucher_theme_id'], $this->request->post);
+				$this->model_sale_voucher_theme->editVoucherTheme((int)$this->request->post['voucher_theme_id'], $this->request->post);
 			}
 
 			$json['success'] = $this->language->get('text_success');
@@ -285,7 +285,7 @@ class VoucherTheme extends \Opencart\System\Engine\Controller {
 		$this->load->model('sale/voucher');
 
 		foreach ($selected as $voucher_theme_id) {
-			$voucher_total = $this->model_sale_voucher->getTotalVouchersByVoucherThemeId($voucher_theme_id);
+			$voucher_total = $this->model_sale_voucher->getTotalVouchersByVoucherThemeId((int)$voucher_theme_id);
 
 			if ($voucher_total) {
 				$json['error'] = sprintf($this->language->get('error_voucher'), $voucher_total);
@@ -296,7 +296,7 @@ class VoucherTheme extends \Opencart\System\Engine\Controller {
 			$this->load->model('sale/voucher_theme');
 
 			foreach ($selected as $voucher_theme_id) {
-				$this->model_sale_voucher_theme->deleteVoucherTheme($voucher_theme_id);
+				$this->model_sale_voucher_theme->deleteVoucherTheme((int)$voucher_theme_id);
 			}
 
 			$json['success'] = $this->language->get('text_success');

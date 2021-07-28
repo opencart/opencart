@@ -62,7 +62,7 @@ class Contact extends \Opencart\System\Engine\Controller {
 				$this->load->model('customer/customer');
 				$this->load->model('sale/order');
 
-				$store_info = $this->model_setting_store->getStore($this->request->post['store_id']);
+				$store_info = $this->model_setting_store->getStore((int)$this->request->post['store_id']);
 
 				if ($store_info) {
 					$store_name = $store_info['name'];
@@ -70,7 +70,7 @@ class Contact extends \Opencart\System\Engine\Controller {
 					$store_name = $this->config->get('config_name');
 				}
 
-				$setting = $this->model_setting_setting->getSetting('config', $this->request->post['store_id']);
+				$setting = $this->model_setting_setting->getSetting('config', (int)$this->request->post['store_id']);
 
 				$store_email = isset($setting['config_email']) ? $setting['config_email'] : $this->config->get('config_email');
 
@@ -116,7 +116,7 @@ class Contact extends \Opencart\System\Engine\Controller {
 						break;
 					case 'customer_group':
 						$customer_data = [
-							'filter_customer_group_id' => $this->request->post['customer_group_id'],
+							'filter_customer_group_id' => (int)$this->request->post['customer_group_id'],
 							'start'                    => ($page - 1) * 10,
 							'limit'                    => 10
 						];
@@ -130,13 +130,13 @@ class Contact extends \Opencart\System\Engine\Controller {
 						}
 						break;
 					case 'customer':
-						if (!empty($this->request->post['customer'])) {
+						if (!empty($this->request->post['customer']) && is_array($this->request->post['customer'])) {
 							$email_total = count($this->request->post['customer']);
 
 							$customers = array_slice($this->request->post['customer'], ($page - 1) * 10, 10);
 
 							foreach ($customers as $customer_id) {
-								$customer_info = $this->model_customer_customer->getCustomer($customer_id);
+								$customer_info = $this->model_customer_customer->getCustomer((int)$customer_id);
 
 								if ($customer_info) {
 									$emails[] = $customer_info['email'];
@@ -160,11 +160,11 @@ class Contact extends \Opencart\System\Engine\Controller {
 						}
 						break;
 					case 'affiliate':
-						if (!empty($this->request->post['affiliate'])) {
+						if (!empty($this->request->post['affiliate']) && is_array($this->request->post['affiliate'])) {
 							$affiliates = array_slice($this->request->post['affiliate'], ($page - 1) * 10, 10);
 
 							foreach ($affiliates as $affiliate_id) {
-								$affiliate_info = $this->model_customer_customer->getCustomer($affiliate_id);
+								$affiliate_info = $this->model_customer_customer->getCustomer((int)$affiliate_id);
 
 								if ($affiliate_info) {
 									$emails[] = $affiliate_info['email'];
@@ -175,7 +175,7 @@ class Contact extends \Opencart\System\Engine\Controller {
 						}
 						break;
 					case 'product':
-						if (isset($this->request->post['product'])) {
+						if (!empty($this->request->post['product']) && is_array($this->request->post['product'])) {
 							$email_total = $this->model_sale_order->getTotalEmailsByProductsOrdered($this->request->post['product']);
 
 							$results = $this->model_sale_order->getEmailsByProductsOrdered($this->request->post['product'], ($page - 1) * 10, 10);

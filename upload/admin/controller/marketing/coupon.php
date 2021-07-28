@@ -198,7 +198,7 @@ class Coupon extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['coupon_id'])) {
 			$this->load->model('marketing/coupon');
 
-			$coupon_info = $this->model_marketing_coupon->getCoupon($this->request->get['coupon_id']);
+			$coupon_info = $this->model_marketing_coupon->getCoupon((int)$this->request->get['coupon_id']);
 		}
 
 		if (isset($this->request->get['coupon_id'])) {
@@ -250,7 +250,7 @@ class Coupon extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!empty($coupon_info)) {
-			$products = $this->model_marketing_coupon->getProducts($this->request->get['coupon_id']);
+			$products = $this->model_marketing_coupon->getProducts((int)$this->request->get['coupon_id']);
 		} else {
 			$products = [];
 		}
@@ -271,7 +271,7 @@ class Coupon extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!empty($coupon_info)) {
-			$categories = $this->model_marketing_coupon->getCategories($this->request->get['coupon_id']);
+			$categories = $this->model_marketing_coupon->getCategories((int)$this->request->get['coupon_id']);
 		} else {
 			$categories = [];
 		}
@@ -318,7 +318,7 @@ class Coupon extends \Opencart\System\Engine\Controller {
 		if (!empty($coupon_info)) {
 			$data['status'] = $coupon_info['status'];
 		} else {
-			$data['status'] = true;
+			$data['status'] = 1;
 		}
 
 		$data['user_token'] = $this->session->data['user_token'];
@@ -354,7 +354,7 @@ class Coupon extends \Opencart\System\Engine\Controller {
 		if ($coupon_info) {
 			if (!isset($this->request->post['coupon_id'])) {
 				$json['error']['warning'] = $this->language->get('error_exists');
-			} elseif ($coupon_info['coupon_id'] != (int)$this->request->post['coupon_id']) {
+			} elseif ($coupon_info['coupon_id'] != $this->request->post['coupon_id']) {
 				$json['error']['warning'] = $this->language->get('error_exists');
 			}
 		}
@@ -363,7 +363,7 @@ class Coupon extends \Opencart\System\Engine\Controller {
 			if (!$this->request->post['coupon_id']) {
 				$json['coupon_id'] = $this->model_marketing_coupon->addCoupon($this->request->post);
 			} else {
-				$this->model_marketing_coupon->editCoupon($this->request->post['coupon_id'], $this->request->post);
+				$this->model_marketing_coupon->editCoupon((int)$this->request->post['coupon_id'], $this->request->post);
 			}
 
 			$json['success'] = $this->language->get('text_success');
@@ -392,7 +392,7 @@ class Coupon extends \Opencart\System\Engine\Controller {
 			$this->load->model('marketing/coupon');
 
 			foreach ($selected as $coupon_id) {
-				$this->model_marketing_coupon->deleteCoupon($coupon_id);
+				$this->model_marketing_coupon->deleteCoupon((int)$coupon_id);
 			}
 
 			$json['success'] = $this->language->get('text_success');

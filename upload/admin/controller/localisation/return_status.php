@@ -221,7 +221,7 @@ class ReturnStatus extends \Opencart\System\Engine\Controller {
 
 		foreach ($this->request->post['return_status'] as $language_id => $value) {
 			if ((utf8_strlen($value['name']) < 3) || (utf8_strlen($value['name']) > 32)) {
-				$json['error']['name_' . $language_id] = $this->language->get('error_name');
+				$json['error']['name_' . (int)$language_id] = $this->language->get('error_name');
 			}
 		}
 

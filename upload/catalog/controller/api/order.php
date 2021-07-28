@@ -293,9 +293,6 @@ class Order extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		print_r($this->config->get('config_customer_group_id'));
-		print_r($custom_fields);
-
 		if (!$json) {
 			$country_info = $this->model_localisation_country->getCountry($this->request->post['country_id']);
 

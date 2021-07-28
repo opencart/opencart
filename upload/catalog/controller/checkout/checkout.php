@@ -64,13 +64,8 @@ class Checkout extends \Opencart\System\Engine\Controller {
 
 		$data['login'] = $this->load->controller('checkout/login');
 		$data['register'] = $this->load->controller('checkout/register');
-
-		//$data['payment_address'] = $this->load->controller('checkout/payment_address');
-
+		$data['payment_address'] = $this->load->controller('checkout/payment_address');
 		$data['shipping_address'] = $this->load->controller('checkout/shipping_address');
-		//$data['shipping_method'] = $this->load->controller('checkout/shipping_method');
-		$data['payment_method'] = $this->load->controller('checkout/payment_method');
-		//$data['confirm'] = $this->load->controller('checkout/confirm');
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
@@ -99,7 +94,7 @@ class Checkout extends \Opencart\System\Engine\Controller {
 		foreach ($custom_fields as $custom_field) {
 			$json[] = [
 				'custom_field_id' => $custom_field['custom_field_id'],
-				'required'        => $custom_field['required']
+				'required' => $custom_field['required']
 			];
 		}
 

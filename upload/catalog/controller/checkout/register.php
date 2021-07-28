@@ -16,44 +16,50 @@ class Register extends \Opencart\System\Engine\Controller {
 
 		$data['customer_groups'] = [];
 
-		if (!empty($this->config->get('config_customer_group_display')) && is_array($this->config->get('config_customer_group_display'))) {
+		if (is_array($this->config->get('config_customer_group_display'))) {
 			$this->load->model('account/customer_group');
 
 			$customer_groups = $this->model_account_customer_group->getCustomerGroups();
 
 			foreach ($customer_groups  as $customer_group) {
-				if (in_array($customer_group['customer_group_id'], (array)$this->config->get('config_customer_group_display'))) {
+				if (in_array($customer_group['customer_group_id'], $this->config->get('config_customer_group_display'))) {
 					$data['customer_groups'][] = $customer_group;
 				}
 			}
 		}
 
+		if (isset($this->session->data['account'])) {
+			$data['account'] = $this->session->data['account'];
+		} else {
+			$data['account'] = 1;
+		}
+
 		if (isset($this->session->data['customer']['customer_group_id'])) {
-			$data['customer_group_id'] = (int)$this->session->data['customer']['customer_group_id'];
+			$data['customer_group_id'] = $this->session->data['customer']['customer_group_id'];
 		} else {
 			$data['customer_group_id'] = $this->config->get('config_customer_group_id');
 		}
 
 		if (isset($this->session->data['customer']['firstname'])) {
-			$data['firstname'] = $this->session->data['csutomer']['firstname'];
+			$data['firstname'] = $this->session->data['customer']['firstname'];
 		} else {
 			$data['firstname'] = '';
 		}
 
 		if (isset($this->session->data['customer']['lastname'])) {
-			$data['lastname'] = $this->session->data['guest']['lastname'];
+			$data['lastname'] = $this->session->data['customer']['lastname'];
 		} else {
 			$data['lastname'] = '';
 		}
 
 		if (isset($this->session->data['customer']['email'])) {
-			$data['email'] = $this->session->data['guest']['email'];
+			$data['email'] = $this->session->data['customer']['email'];
 		} else {
 			$data['email'] = '';
 		}
 
 		if (isset($this->session->data['customer']['telephone'])) {
-			$data['telephone'] = $this->session->data['guest']['telephone'];
+			$data['telephone'] = $this->session->data['customer']['telephone'];
 		} else {
 			$data['telephone'] = '';
 		}
@@ -64,9 +70,9 @@ class Register extends \Opencart\System\Engine\Controller {
 		$data['custom_fields'] = $this->model_account_custom_field->getCustomFields();
 
 		if (isset($this->session->data['customer']['custom_field'])) {
-			$data['custom_field'] = $this->session->data['customer']['custom_field'];
+			$data['customer_custom_field'] = $this->session->data['customer']['custom_field'];
 		} else {
-			$data['custom_field'] = [];
+			$data['customer_custom_field'] = [];
 		}
 
 		// Payment Address
@@ -105,13 +111,13 @@ class Register extends \Opencart\System\Engine\Controller {
 		$data['countries'] = $this->model_localisation_country->getCountries();
 
 		if (isset($this->session->data['payment_address']['country_id'])) {
-			$data['payment_country_id'] = (int)$this->session->data['payment_address']['country_id'];
+			$data['payment_country_id'] = $this->session->data['payment_address']['country_id'];
 		} else {
 			$data['payment_country_id'] = $this->config->get('config_country_id');
 		}
 
 		if (isset($this->session->data['payment_address']['zone_id'])) {
-			$data['payment_zone_id'] = (int)$this->session->data['payment_address']['zone_id'];
+			$data['payment_zone_id'] = $this->session->data['payment_address']['zone_id'];
 		} else {
 			$data['payment_zone_id'] = '';
 		}
@@ -166,13 +172,13 @@ class Register extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->session->data['shipping_address']['country_id'])) {
-			$data['shipping_country_id'] = (int)$this->session->data['shipping_address']['country_id'];
+			$data['shipping_country_id'] = $this->session->data['shipping_address']['country_id'];
 		} else {
 			$data['shipping_country_id'] = $this->config->get('config_country_id');
 		}
 
 		if (isset($this->session->data['shipping_address']['zone_id'])) {
-			$data['shipping_zone_id'] = (int)$this->session->data['shipping_address']['zone_id'];
+			$data['shipping_zone_id'] = $this->session->data['shipping_address']['zone_id'];
 		} else {
 			$data['shipping_zone_id'] = '';
 		}
@@ -270,8 +276,8 @@ class Register extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-			// Customer Group
-			if (in_array((int)$this->request->post['customer_group_id'], (array)$this->config->get('config_customer_group_display'))) {
+			// Customer
+			if (in_array((int)$this->request->post['customer_group_id'], $this->config->get('config_customer_group_display'))) {
 				$customer_group_id = (int)$this->request->post['customer_group_id'];
 			} else {
 				$customer_group_id = $this->config->get('config_customer_group_id');
@@ -324,13 +330,13 @@ class Register extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-			// If billing address or shipping address is required
+			// Payment Address
 			if ($this->config->get('config_checkout_address')) {
 				if ((utf8_strlen(trim($this->request->post['payment_address_1'])) < 3) || (utf8_strlen(trim($this->request->post['payment_address_1'])) > 128)) {
 					$json['error']['payment_address_1'] = $this->language->get('error_address_1');
 				}
 
-				if ((utf8_strlen(trim($this->request->post['payment_city'])) < 2) || (utf8_strlen(trim($this->request->post['payment_city'])) > 128)) {
+				if ((utf8_strlen($this->request->post['payment_city']) < 2) || (utf8_strlen($this->request->post['payment_city']) > 32)) {
 					$json['error']['payment_city'] = $this->language->get('error_city');
 				}
 
@@ -342,11 +348,11 @@ class Register extends \Opencart\System\Engine\Controller {
 					$json['error']['payment_postcode'] = $this->language->get('error_postcode');
 				}
 
-				if (!filter_var($this->request->post['payment_country_id'], FILTER_VALIDATE_INT)) {
+				if ($this->request->post['payment_country_id'] == '') {
 					$json['error']['payment_country'] = $this->language->get('error_country');
 				}
 
-				if (!isset($this->request->post['payment_zone_id']) || filter_var($this->request->post['payment_zone_id'], FILTER_VALIDATE_INT) === false) {
+				if (!isset($this->request->post['payment_zone_id']) || $this->request->post['payment_zone_id'] == '') {
 					$json['error']['payment_zone'] = $this->language->get('error_zone');
 				}
 
@@ -362,8 +368,8 @@ class Register extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-			// Shipping Validation
-			if ($this->cart->hasShipping()) {
+			// Shipping Address
+			if ($this->cart->hasShipping() && $this->request->post['shipping_address']) {
 				if ((utf8_strlen(trim($this->request->post['shipping_firstname'])) < 1) || (utf8_strlen(trim($this->request->post['shipping_firstname'])) > 32)) {
 					$json['error']['shipping_firstname'] = $this->language->get('error_firstname');
 				}
@@ -376,7 +382,7 @@ class Register extends \Opencart\System\Engine\Controller {
 					$json['error']['shipping_address_1'] = $this->language->get('error_address_1');
 				}
 
-				if ((utf8_strlen(trim($this->request->post['shipping_city'])) < 2) || (utf8_strlen(trim($this->request->post['shipping_city'])) > 128)) {
+				if ((utf8_strlen($this->request->post['shipping_city']) < 2) || (utf8_strlen($this->request->post['shipping_city']) > 32)) {
 					$json['error']['shipping_city'] = $this->language->get('error_city');
 				}
 
@@ -388,11 +394,11 @@ class Register extends \Opencart\System\Engine\Controller {
 					$json['error']['shipping_postcode'] = $this->language->get('error_postcode');
 				}
 
-				if (!filter_var($this->request->post['shipping_country_id'], FILTER_VALIDATE_INT)) {
+				if ($this->request->post['shipping_country_id'] == '') {
 					$json['error']['shipping_country'] = $this->language->get('error_country');
 				}
 
-				if (!isset($this->request->post['shipping_zone_id']) || filter_var($this->request->post['shipping_zone_id'], FILTER_VALIDATE_INT) === false) {
+				if (!isset($this->request->post['shipping_zone_id']) || $this->request->post['zone_id'] == '') {
 					$json['error']['shipping_zone'] = $this->language->get('error_zone');
 				}
 
@@ -407,7 +413,7 @@ class Register extends \Opencart\System\Engine\Controller {
 					}
 				}
 			}
-			
+
 			$this->load->model('catalog/information');
 
 			$information_info = $this->model_catalog_information->getInformation($this->config->get('config_account_id'));
@@ -434,34 +440,58 @@ class Register extends \Opencart\System\Engine\Controller {
 			// For guest account
 			$customer_id = 0;
 
+			$this->session->data['account'] = $this->request->post['account'];
+
+			// Create account
 			if ($this->request->post['account']) {
 				$customer_id = $this->model_account_customer->addCustomer($this->request->post);
 
-				// Default Payment Address
-				$this->load->model('account/address');
-
+				// Add payment address to customer account
 				if ($this->config->get('config_checkout_address')) {
-					foreach () {
+					$payment_address_data = [
+						'firstname'    => $this->request->post['payment_firstname'],
+						'lastname'     => $this->request->post['payment_lastname'],
+						'company'      => $this->request->post['payment_company'],
+						'address_1'    => $this->request->post['payment_address_1'],
+						'address_2'    => $this->request->post['payment_address_2'],
+						'city'         => $this->request->post['payment_city'],
+						'postcode'     => $this->request->post['payment_postcode'],
+						'country_id'   => $this->request->post['payment_country_id'],
+						'zone_id'      => $this->request->post['payment_zone_id'],
+						'custom_field' => $this->request->post['payment_custom_field']
+					];
 
+					$this->load->model('account/address');
 
-					}
-				} else {
+					$address_id = $this->model_account_address->addAddress($customer_id, $payment_address_data);
 
+					// Set the address as default
+					$this->model_account_customer->editAddressId($customer_id, $address_id);
 				}
 
+				// Add shipping address to customer account
+				if ($this->cart->hasShipping()) {
+					$shipping_address_data = [
+						'firstname'    => $this->request->post['shipping_firstname'],
+						'lastname'     => $this->request->post['shipping_lastname'],
+						'company'      => $this->request->post['shipping_company'],
+						'address_1'    => $this->request->post['shipping_address_1'],
+						'address_2'    => $this->request->post['shipping_address_2'],
+						'city'         => $this->request->post['shipping_city'],
+						'postcode'     => $this->request->post['shipping_postcode'],
+						'country_id'   => $this->request->post['shipping_country_id'],
+						'zone_id'      => $this->request->post['shipping_zone_id'],
+						'custom_field' => $this->request->post['shipping_custom_field']
+					];
 
+					$address_id = $this->model_account_address->addAddress($customer_id, $shipping_address_data);
 
-
-
-				$address_id = $this->model_account_address->addAddress($customer_id, $this->request->post);
-
-				// Set the address as default
-				$this->model_account_customer->editAddressId($customer_id, $address_id);
-
-
+					// Set the shipping address as default if no payment checkout is being used
+					if (!$this->config->get('config_checkout_address')) {
+						$this->model_account_customer->editAddressId($customer_id, $address_id);
+					}
+				}
 			}
-
-			$this->session->data['account'] = 'register';
 
 			// Add customer details into session
 			$this->session->data['customer'] = [
@@ -477,55 +507,52 @@ class Register extends \Opencart\System\Engine\Controller {
 			// Add payment address into session
 			if ($this->config->get('config_checkout_address')) {
 				$this->session->data['payment_address'] = [
-					'customer_id'       => $customer_id,
-					'customer_group_id' => $customer_group_id,
-					'firstname'         => $this->request->post['payment_firstname'],
-					'lastname'          => $this->request->post['payment_lastname'],
-					'company'           => $this->request->post['payment_company'],
-					'address_1'         => $this->request->post['payment_address_1'],
-					'address_2'         => $this->request->post['payment_address_2'],
-					'city'              => $this->request->post['payment_city'],
-					'postcode'          => $this->request->post['payment_postcode'],
-					'country_id'        => $this->request->post['payment_country_id'],
-					'zone_id'           => $this->request->post['payment_zone_id'],
-					'custom_field'      => $this->request->post['payment_custom_field']
+					'firstname'    => $this->request->post['payment_firstname'],
+					'lastname'     => $this->request->post['payment_lastname'],
+					'company'      => $this->request->post['payment_company'],
+					'address_1'    => $this->request->post['payment_address_1'],
+					'address_2'    => $this->request->post['payment_address_2'],
+					'city'         => $this->request->post['payment_city'],
+					'postcode'     => $this->request->post['payment_postcode'],
+					'country_id'   => $this->request->post['payment_country_id'],
+					'zone_id'      => $this->request->post['payment_zone_id'],
+					'custom_field' => $this->request->post['payment_custom_field']
 				];
+
+				//  If payment and shipping address are the same
+				if ($this->cart->hasShipping() && $this->request->post['shipping_address']) {
+					$this->session->data['shipping_address'] = $this->session->data['payment_address'];
+				}
 			}
 
 			// Add shipping address into session
-			if ($this->cart->hasShipping()) {
+			if ($this->cart->hasShipping() && !$this->request->post['shipping_address']) {
 				$this->session->data['shipping_address'] = [
-					'customer_id'       => $customer_id,
-					'customer_group_id' => $customer_group_id,
-					'firstname'         => $this->request->post['shipping_firstname'],
-					'lastname'          => $this->request->post['shipping_lastname'],
-					'company'           => $this->request->post['shipping_company'],
-					'address_1'         => $this->request->post['shipping_address_1'],
-					'address_2'         => $this->request->post['shipping_address_2'],
-					'city'          => $this->request->post['shipping_city'],
-					'postcode'          => $this->request->post['shipping_postcode'],
-					'country_id'          => $this->request->post['shipping_country_id'],
-					'zone_id'          => $this->request->post['shipping_zone_id'],
-					'custom_field'          => $this->request->post['shipping_custom_field']
+					'firstname'    => $this->request->post['shipping_firstname'],
+					'lastname'     => $this->request->post['shipping_lastname'],
+					'company'      => $this->request->post['shipping_company'],
+					'address_1'    => $this->request->post['shipping_address_1'],
+					'address_2'    => $this->request->post['shipping_address_2'],
+					'city'         => $this->request->post['shipping_city'],
+					'postcode'     => $this->request->post['shipping_postcode'],
+					'country_id'   => $this->request->post['shipping_country_id'],
+					'zone_id'      => $this->request->post['shipping_zone_id'],
+					'custom_field' => $this->request->post['shipping_custom_field']
 				];
 			}
 
-			// Customer groups
+			// Check if current customer group requires approval
 			$this->load->model('account/customer_group');
 
 			$customer_group_info = $this->model_account_customer_group->getCustomerGroup($customer_group_id);
 
 			if ($customer_group_info && !$customer_group_info['approval']) {
+				// If everything good login
 				$this->customer->login($this->request->post['email'], $this->request->post['password']);
-
-				$this->session->data['payment_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
-
-				if (!empty($this->request->post['shipping_address'])) {
-					$this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
-				}
-			} else {
-				$json['redirect'] = $this->url->link('account/success', 'language=' . $this->config->get('config_language'), true);
 			}
+
+			// Redirect to success page
+			$json['redirect'] = $this->url->link('account/success', 'language=' . $this->config->get('config_language'), true);
 
 			// Clear any previous login attempts for unregistered accounts.
 			$this->model_account_customer->deleteLoginAttempts($this->request->post['email']);

@@ -94,13 +94,13 @@ class Login extends \Opencart\System\Engine\Controller {
 		$login_info = $this->model_account_customer->getLoginAttempts($this->request->post['email']);
 
 		if ($login_info && ($login_info['total'] >= $this->config->get('config_login_attempts')) && strtotime('-1 hour') < strtotime($login_info['date_modified'])) {
-			$json['error']['warning'] = $this->language->get('error_attempts');
+			//$json['error']['warning'] = $this->language->get('error_attempts');
 		}
 
 		// Check if customer has been approved.
 		$customer_info = $this->model_account_customer->getCustomerByEmail($this->request->post['email']);
 
-		if ($customer_info && $customer_info['status']) {
+		if ($customer_info && !$customer_info['status']) {
 			$json['error']['warning'] = $this->language->get('error_approved');
 		} else {
 			if (!$this->customer->login($this->request->post['email'], html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8'))) {

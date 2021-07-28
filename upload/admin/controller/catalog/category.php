@@ -103,10 +103,18 @@ class Category extends \Opencart\System\Engine\Controller {
 
 		$results = $this->model_catalog_category->getCategories($filter_data);
 
+		$this->load->model('tool/image');
 		foreach ($results as $result) {
+			if (is_file(DIR_IMAGE . html_entity_decode($result['image'], ENT_QUOTES, 'UTF-8'))) {
+				$image = $this->model_tool_image->resize(html_entity_decode($result['image'], ENT_QUOTES, 'UTF-8'), 40, 40);
+			} else {
+				$image = $this->model_tool_image->resize('no_image.png', 40, 40);
+			}
+
 			$data['categories'][] = [
 				'category_id' => $result['category_id'],
 				'name'        => $result['name'],
+				'image'       => $image,
 				'sort_order'  => $result['sort_order'],
 				'edit'        => $this->url->link('catalog/category|form', 'user_token=' . $this->session->data['user_token'] . '&category_id=' . $result['category_id'] . $url)
 			];

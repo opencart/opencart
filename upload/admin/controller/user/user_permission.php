@@ -189,7 +189,7 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['user_group_id'])) {
 			$this->load->model('user/user_group');
 
-			$user_group_info = $this->model_user_user_group->getUserGroup($this->request->get['user_group_id']);
+			$user_group_info = $this->model_user_user_group->getUserGroup((int)$this->request->get['user_group_id']);
 		}
 
 		if (isset($this->request->get['user_group_id'])) {
@@ -306,7 +306,7 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 			if (!$this->request->post['user_group_id']) {
 				$json['user_group_id'] = $this->model_user_user_group->addUserGroup($this->request->post);
 			} else {
-				$this->model_user_user_group->editUserGroup($this->request->post['user_group_id'], $this->request->post);
+				$this->model_user_user_group->editUserGroup((int)$this->request->post['user_group_id'], $this->request->post);
 			}
 
 			$json['success'] = $this->language->get('text_success');
@@ -334,7 +334,7 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 		$this->load->model('user/user');
 
 		foreach ($selected as $user_group_id) {
-			$user_total = $this->model_user_user->getTotalUsersByGroupId($user_group_id);
+			$user_total = $this->model_user_user->getTotalUsersByGroupId((int)$user_group_id);
 
 			if ($user_total) {
 				$json['error'] = sprintf($this->language->get('error_user'), $user_total);
@@ -345,7 +345,7 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 			$this->load->model('user/user_group');
 
 			foreach ($selected as $user_group_id) {
-				$this->model_user_user_group->deleteUserGroup($user_group_id);
+				$this->model_user_user_group->deleteUserGroup((int)$user_group_id);
 			}
 
 			$json['success'] = $this->language->get('text_success');

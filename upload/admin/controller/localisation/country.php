@@ -265,7 +265,7 @@ class Country extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['country_id'])) {
 			$this->load->model('localisation/country');
 
-			$country_info = $this->model_localisation_country->getCountry($this->request->get['country_id']);
+			$country_info = $this->model_localisation_country->getCountry((int)$this->request->get['country_id']);
 		}
 
 		if (isset($this->request->get['country_id'])) {

@@ -78,6 +78,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getTemplateAsync(array $args = [])
  * @method \Aws\Result getTemplateSummary(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getTemplateSummaryAsync(array $args = [])
+ * @method \Aws\Result importStacksToStackSet(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise importStacksToStackSetAsync(array $args = [])
  * @method \Aws\Result listChangeSets(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listChangeSetsAsync(array $args = [])
  * @method \Aws\Result listExports(array $args = [])

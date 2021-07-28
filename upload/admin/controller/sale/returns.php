@@ -430,7 +430,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['return_id'])) {
 			$this->load->model('sale/returns');
 
-			$return_info = $this->model_sale_returns->getReturn($this->request->get['return_id']);
+			$return_info = $this->model_sale_returns->getReturn((int)$this->request->get['return_id']);
 		}
 
 		if (isset($this->request->get['return_id'])) {
@@ -613,7 +613,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 			if (!$this->request->post['return_id']) {
 				$json['return_id'] = $this->model_sale_returns->addReturn($this->request->post);
 			} else {
-				$this->model_sale_returns->editReturn($this->request->post['return_id'], $this->request->post);
+				$this->model_sale_returns->editReturn((int)$this->request->post['return_id'], $this->request->post);
 			}
 
 			$json['success'] = $this->language->get('text_success');
@@ -642,7 +642,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 			$this->load->model('sale/returns');
 
 			foreach ($selected as $return_id) {
-				$this->model_sale_returns->deleteReturn($return_id);
+				$this->model_sale_returns->deleteReturn((int)$return_id);
 			}
 
 			$json['success'] = $this->language->get('text_success');
@@ -665,7 +665,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('sale/returns');
 
-		$results = $this->model_sale_returns->getHistories($this->request->get['return_id'], ($page - 1) * 10, 10);
+		$results = $this->model_sale_returns->getHistories((int)$this->request->get['return_id'], ($page - 1) * 10, 10);
 
 		foreach ($results as $result) {
 			$data['histories'][] = [
@@ -676,7 +676,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		$history_total = $this->model_sale_returns->getTotalHistories($this->request->get['return_id']);
+		$history_total = $this->model_sale_returns->getTotalHistories((int)$this->request->get['return_id']);
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $history_total,
@@ -702,7 +702,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('sale/returns');
 
-			$this->model_sale_returns->addHistory($this->request->get['return_id'], $this->request->post['return_status_id'], $this->request->post['comment'], $this->request->post['notify']);
+			$this->model_sale_returns->addHistory((int)$this->request->get['return_id'], (int)$this->request->post['return_status_id'], $this->request->post['comment'], $this->request->post['notify']);
 
 			$json['success'] = $this->language->get('text_success');
 		}

@@ -326,7 +326,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['customer_id'])) {
 			$this->load->model('marketing/affiliate');
 
-			$affiliate_info = $this->model_marketing_affiliate->getAffiliate($this->request->get['customer_id']);
+			$affiliate_info = $this->model_marketing_affiliate->getAffiliate((int)$this->request->get['customer_id']);
 		}
 
 		if (isset($this->request->get['customer_id'])) {
@@ -380,7 +380,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		if (!empty($affiliate_info)) {
 			$data['status'] = $affiliate_info['status'];
 		} else {
-			$data['status'] = '';
+			$data['status'] = 0;
 		}
 
 		if (!empty($affiliate_info)) {
@@ -487,7 +487,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('customer/customer');
 
-		$customer_info = $this->model_customer_customer->getCustomer($this->request->post['customer_id']);
+		$customer_info = $this->model_customer_customer->getCustomer((int)$this->request->post['customer_id']);
 
 		if (!$customer_info) {
 			$json['error']['customer'] = $this->language->get('error_customer');
@@ -496,7 +496,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		// Check to see if customer is already a affiliate
 		$this->load->model('marketing/affiliate');
 
-		$affiliate_info = $this->model_marketing_affiliate->getAffiliate($this->request->post['customer_id']);
+		$affiliate_info = $this->model_marketing_affiliate->getAffiliate((int)$this->request->post['customer_id']);
 
 		if ($affiliate_info && (!isset($this->request->post['customer_id']) || ($this->request->post['customer_id'] != $affiliate_info['customer_id']))) {
 			$json['error']['warning'] = $this->language->get('error_already');
@@ -550,7 +550,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			if (!$this->request->post['customer_id']) {
 				$json['customer_id'] = $this->model_marketing_affiliate->addAffiliate($this->request->post);
 			} else {
-				$this->model_marketing_affiliate->editAffiliate($this->request->post['customer_id'], $this->request->post);
+				$this->model_marketing_affiliate->editAffiliate((int)$this->request->post['customer_id'], $this->request->post);
 			}
 
 			$json['success'] = $this->language->get('text_success');
@@ -579,7 +579,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			$this->load->model('marketing/affiliate');
 
 			foreach ($selected as $affiliate_id) {
-				$this->model_marketing_affiliate->deleteAffiliate($affiliate_id);
+				$this->model_marketing_affiliate->deleteAffiliate((int)$affiliate_id);
 			}
 
 			$json['success'] = $this->language->get('text_success');

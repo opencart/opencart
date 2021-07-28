@@ -180,7 +180,7 @@ class User extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['user_id'])) {
 			$this->load->model('user/user');
 
-			$user_info = $this->model_user_user->getUser($this->request->get['user_id']);
+			$user_info = $this->model_user_user->getUser((int)$this->request->get['user_id']);
 		}
 
 		if (isset($this->request->get['user_id'])) {
@@ -317,7 +317,7 @@ class User extends \Opencart\System\Engine\Controller {
 			if (!$this->request->post['user_id']) {
 				$json['user_id'] = $this->model_user_user->addUser($this->request->post);
 			} else {
-				$this->model_user_user->editUser($this->request->post['user_id'], $this->request->post);
+				$this->model_user_user->editUser((int)$this->request->post['user_id'], $this->request->post);
 			}
 
 			$json['success'] = $this->language->get('text_success');

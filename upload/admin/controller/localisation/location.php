@@ -190,7 +190,7 @@ class Location extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['location_id'])) {
 			$this->load->model('localisation/location');
 
-			$location_info = $this->model_localisation_location->getLocation($this->request->get['location_id']);
+			$location_info = $this->model_localisation_location->getLocation((int)$this->request->get['location_id']);
 		}
 
 		if (isset($this->request->get['location_id'])) {
@@ -289,7 +289,7 @@ class Location extends \Opencart\System\Engine\Controller {
 			if (!$this->request->post['location_id']) {
 				$json['location_id'] = $this->model_localisation_location->addLocation($this->request->post);
 			} else {
-				$this->model_localisation_location->editLocation($this->request->post['location_id'], $this->request->post);
+				$this->model_localisation_location->editLocation((int)$this->request->post['location_id'], $this->request->post);
 			}
 
 			$json['success'] = $this->language->get('text_success');
@@ -318,7 +318,7 @@ class Location extends \Opencart\System\Engine\Controller {
 			$this->load->model('localisation/location');
 
 			foreach ($selected as $location_id) {
-				$this->model_localisation_location->deleteLocation($location_id);
+				$this->model_localisation_location->deleteLocation(int)($location_id);
 			}
 
 			$json['success'] = $this->language->get('text_success');

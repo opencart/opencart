@@ -198,7 +198,7 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['tax_rate_id'])) {
 			$this->load->model('localisation/tax_rate');
 
-			$tax_rate_info = $this->model_localisation_tax_rate->getTaxRate($this->request->get['tax_rate_id']);
+			$tax_rate_info = $this->model_localisation_tax_rate->getTaxRate((int)$this->request->get['tax_rate_id']);
 		}
 
 		if (isset($this->request->get['tax_rate_id'])) {
@@ -226,7 +226,7 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->get['tax_rate_id'])) {
-			$data['tax_rate_customer_group'] = $this->model_localisation_tax_rate->getCustomerGroups($this->request->get['tax_rate_id']);
+			$data['tax_rate_customer_group'] = $this->model_localisation_tax_rate->getCustomerGroups((int)$this->request->get['tax_rate_id']);
 		} else {
 			$data['tax_rate_customer_group'] = [$this->config->get('config_customer_group_id')];
 		}
@@ -275,7 +275,7 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 			if (!$this->request->post['tax_rate_id']) {
 				$json['tax_rate_id'] = $this->model_localisation_tax_rate->addTaxRate($this->request->post);
 			} else {
-				$this->model_localisation_tax_rate->editTaxRate($this->request->post['tax_rate_id'], $this->request->post);
+				$this->model_localisation_tax_rate->editTaxRate((int)$this->request->post['tax_rate_id'], $this->request->post);
 			}
 
 			$json['success'] = $this->language->get('text_success');
@@ -303,7 +303,7 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 		$this->load->model('localisation/tax_class');
 
 		foreach ($this->request->post['selected'] as $tax_rate_id) {
-			$tax_rule_total = $this->model_localisation_tax_class->getTotalTaxRulesByTaxRateId($tax_rate_id);
+			$tax_rule_total = $this->model_localisation_tax_class->getTotalTaxRulesByTaxRateId((int)$tax_rate_id);
 
 			if ($tax_rule_total) {
 				$json['error'] = sprintf($this->language->get('error_tax_rule'), $tax_rule_total);
@@ -314,7 +314,7 @@ class TaxRate extends \Opencart\System\Engine\Controller {
 			$this->load->model('localisation/tax_rate');
 
 			foreach ($selected as $tax_rate_id) {
-				$this->model_localisation_tax_rate->deleteTaxRate($tax_rate_id);
+				$this->model_localisation_tax_rate->deleteTaxRate((int)$tax_rate_id);
 			}
 
 			$json['success'] = $this->language->get('text_success');

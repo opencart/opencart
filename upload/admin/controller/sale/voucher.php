@@ -437,6 +437,8 @@ class Voucher extends \Opencart\System\Engine\Controller {
 
 			if (isset($this->request->post['selected'])) {
 				$vouchers = $this->request->post['selected'];
+			} else {
+				$vouchers = [];	
 			}
 
 			if (isset($this->request->post['voucher_id'])) {

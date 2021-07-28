@@ -38,7 +38,7 @@
 # If you want to ignore install file use following lines [on development mode]
 # /upload/install/*
 
-# IDE Project filescd  xampp
+# IDE Project files
 
 /.idea
 /upload/.idea

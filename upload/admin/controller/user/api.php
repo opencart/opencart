@@ -197,7 +197,7 @@ class Api extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['api_id'])) {
 			$this->load->model('user/api');
 
-			$api_info = $this->model_user_api->getApi($this->request->get['api_id']);
+			$api_info = $this->model_user_api->getApi((int)$this->request->get['api_id']);
 		}
 
 		if (isset($this->request->get['api_id'])) {
@@ -226,7 +226,7 @@ class Api extends \Opencart\System\Engine\Controller {
 
 		// IP
 		if (!empty($api_info)) {
-			$data['api_ips'] = $this->model_user_api->getIps($this->request->get['api_id']);
+			$data['api_ips'] = $this->model_user_api->getIps((int)$this->request->get['api_id']);
 		} else {
 			$data['api_ips'] = [];
 		}
@@ -235,7 +235,7 @@ class Api extends \Opencart\System\Engine\Controller {
 		$data['api_sessions'] = [];
 
 		if (!empty($api_info)) {
-			$results = $this->model_user_api->getSessions($this->request->get['api_id']);
+			$results = $this->model_user_api->getSessions((int)$this->request->get['api_id']);
 
 			foreach ($results as $result) {
 				$data['api_sessions'][] = [
@@ -284,7 +284,7 @@ class Api extends \Opencart\System\Engine\Controller {
 			if (!$this->request->post['api_id']) {
 				$json['api_id'] = $this->model_user_api->addApi($this->request->post);
 			} else {
-				$this->model_user_api->editApi($this->request->post['api_id'], $this->request->post);
+				$this->model_user_api->editApi((int)$this->request->post['api_id'], $this->request->post);
 			}
 
 			$json['success'] = $this->language->get('text_success');
@@ -313,7 +313,7 @@ class Api extends \Opencart\System\Engine\Controller {
 			$this->load->model('user/api');
 
 			foreach ($selected as $api_id) {
-				$this->model_user_api->deleteApi($api_id);
+				$this->model_user_api->deleteApi((int)$api_id);
 			}
 
 			$json['success'] = $this->language->get('text_success');
@@ -333,7 +333,7 @@ class Api extends \Opencart\System\Engine\Controller {
 		} else {
 			$this->load->model('user/api');
 
-			$this->model_user_api->deleteSession($this->request->get['api_session_id']);
+			$this->model_user_api->deleteSession((int)$this->request->get['api_session_id']);
 
 			$json['success'] = $this->language->get('text_success');
 		}

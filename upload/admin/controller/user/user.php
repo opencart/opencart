@@ -352,7 +352,7 @@ class User extends \Opencart\System\Engine\Controller {
 			$this->load->model('user/user');
 
 			foreach ($selected as $user_id) {
-				$this->model_user_user->deleteUser($user_id);
+				$this->model_user_user->deleteUser((int)$user_id);
 			}
 
 			$json['success'] = $this->language->get('text_success');

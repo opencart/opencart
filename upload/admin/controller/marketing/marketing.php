@@ -287,7 +287,7 @@ class Marketing extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['marketing_id'])) {
 			$this->load->model('marketing/marketing');
 
-			$marketing_info = $this->model_marketing_marketing->getMarketing($this->request->get['marketing_id']);
+			$marketing_info = $this->model_marketing_marketing->getMarketing((int)$this->request->get['marketing_id']);
 		}
 
 		if (isset($this->request->get['marketing_id'])) {
@@ -383,7 +383,7 @@ class Marketing extends \Opencart\System\Engine\Controller {
 			$this->load->model('marketing/marketing');
 
 			foreach ($selected as $marketing_id) {
-				$this->model_marketing_marketing->deleteMarketing($marketing_id);
+				$this->model_marketing_marketing->deleteMarketing((int)$marketing_id);
 			}
 
 			$json['success'] = $this->language->get('text_success');

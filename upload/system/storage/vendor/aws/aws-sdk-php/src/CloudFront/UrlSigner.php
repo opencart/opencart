@@ -57,7 +57,7 @@ class UrlSigner
         // Get the real scheme by removing wildcards from the scheme
         $scheme = str_replace('*', '', $urlSections[0]);
         $uri = new Uri($scheme . '://' . $urlSections[1]);
-        $query = Psr7\parse_query($uri->getQuery(), PHP_QUERY_RFC3986);
+        $query = Psr7\Query::parse($uri->getQuery(), PHP_QUERY_RFC3986);
         $signature = $this->signer->getSignature(
             $this->createResource($scheme, (string) $uri),
             $expires,

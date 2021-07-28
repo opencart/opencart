@@ -2,6 +2,7 @@
 namespace Aws\Arn;
 
 use Aws\Arn\S3\AccessPointArn as S3AccessPointArn;
+use Aws\Arn\ObjectLambdaAccessPointArn;
 use Aws\Arn\S3\OutpostsBucketArn;
 use Aws\Arn\S3\RegionalBucketArn;
 use Aws\Arn\S3\OutpostsAccessPointArn;
@@ -35,6 +36,9 @@ class ArnParser
     public static function parse($string)
     {
         $data = Arn::parse($string);
+        if ($data['service'] === 's3-object-lambda') {
+            return new ObjectLambdaAccessPointArn($string);
+        }
         $resource = self::explodeResourceComponent($data['resource']);
         if ($resource[0] === 'outpost') {
             if (isset($resource[2]) && $resource[2] === 'bucket') {

@@ -54,10 +54,15 @@ By default, the filter uses the current locale. You can pass it explicitly:
 
     .. code-block:: bash
 
-        $ composer req twig/intl-extra
+        $ composer require twig/intl-extra
 
-    Then, use the ``twig/extra-bundle`` on Symfony projects or add the extension
-    explicitly on the Twig environment::
+    Then, on Symfony projects, install the ``twig/extra-bundle``:
+
+    .. code-block:: bash
+
+        $ composer require twig/extra-bundle
+
+    Otherwise, add the extension explicitly on the Twig environment::
 
         use Twig\Extra\Intl\IntlExtension;
 

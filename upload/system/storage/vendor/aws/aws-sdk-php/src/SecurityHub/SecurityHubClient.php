@@ -5,6 +5,8 @@ use Aws\AwsClient;
 
 /**
  * This client is used to interact with the **AWS SecurityHub** service.
+ * @method \Aws\Result acceptAdministratorInvitation(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise acceptAdministratorInvitationAsync(array $args = [])
  * @method \Aws\Result acceptInvitation(array $args = [])
  * @method \GuzzleHttp\Promise\Promise acceptInvitationAsync(array $args = [])
  * @method \Aws\Result batchDisableStandards(array $args = [])
@@ -49,6 +51,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise disableOrganizationAdminAccountAsync(array $args = [])
  * @method \Aws\Result disableSecurityHub(array $args = [])
  * @method \GuzzleHttp\Promise\Promise disableSecurityHubAsync(array $args = [])
+ * @method \Aws\Result disassociateFromAdministratorAccount(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise disassociateFromAdministratorAccountAsync(array $args = [])
  * @method \Aws\Result disassociateFromMasterAccount(array $args = [])
  * @method \GuzzleHttp\Promise\Promise disassociateFromMasterAccountAsync(array $args = [])
  * @method \Aws\Result disassociateMembers(array $args = [])
@@ -59,6 +63,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise enableOrganizationAdminAccountAsync(array $args = [])
  * @method \Aws\Result enableSecurityHub(array $args = [])
  * @method \GuzzleHttp\Promise\Promise enableSecurityHubAsync(array $args = [])
+ * @method \Aws\Result getAdministratorAccount(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getAdministratorAccountAsync(array $args = [])
  * @method \Aws\Result getEnabledStandards(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getEnabledStandardsAsync(array $args = [])
  * @method \Aws\Result getFindings(array $args = [])

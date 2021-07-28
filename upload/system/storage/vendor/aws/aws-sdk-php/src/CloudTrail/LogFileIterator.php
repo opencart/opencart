@@ -208,7 +208,7 @@ class LogFileIterator extends \IteratorIterator
     /**
      * Normalizes a date value to a unix timestamp
      *
-     * @param string|\DateTime|int $date
+     * @param int|string|\DateTimeInterface $date
      *
      * @return int
      * @throws \InvalidArgumentException if the value cannot be converted to
@@ -218,7 +218,7 @@ class LogFileIterator extends \IteratorIterator
     {
         if (is_string($date)) {
             $date = strtotime($date);
-        } elseif ($date instanceof \DateTime) {
+        } elseif ($date instanceof \DateTimeInterface) {
             $date = $date->format('U');
         } elseif (!is_int($date)) {
             throw new \InvalidArgumentException('Date values must be a '

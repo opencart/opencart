@@ -393,11 +393,11 @@ class CurlFactory implements CurlFactoryInterface
 
         if (!isset($options['sink'])) {
             // Use a default temp stream if no sink was set.
-            $options['sink'] = \fopen('php://temp', 'w+');
+            $options['sink'] = \GuzzleHttp\Psr7\Utils::tryFopen('php://temp', 'w+');
         }
         $sink = $options['sink'];
         if (!\is_string($sink)) {
-            $sink = \GuzzleHttp\Psr7\stream_for($sink);
+            $sink = \GuzzleHttp\Psr7\Utils::streamFor($sink);
         } elseif (!\is_dir(\dirname($sink))) {
             // Ensure that the directory exists before failing in curl.
             throw new \RuntimeException(\sprintf('Directory %s does not exist for sink value of %s', \dirname($sink), $sink));
@@ -455,6 +455,12 @@ class CurlFactory implements CurlFactoryInterface
             }
             if (!\file_exists($cert)) {
                 throw new \InvalidArgumentException("SSL certificate not found: {$cert}");
+            }
+            # OpenSSL (versions 0.9.3 and later) also support "P12" for PKCS#12-encoded files.
+            # see https://curl.se/libcurl/c/CURLOPT_SSLCERTTYPE.html
+            $ext = pathinfo($cert, \PATHINFO_EXTENSION);
+            if (preg_match('#^(der|p12)$#i', $ext)) {
+                $conf[\CURLOPT_SSLCERTTYPE] = strtoupper($ext);
             }
             $conf[\CURLOPT_SSLCERT] = $cert;
         }

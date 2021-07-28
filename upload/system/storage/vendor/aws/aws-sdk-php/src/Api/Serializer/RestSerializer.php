@@ -32,7 +32,7 @@ abstract class RestSerializer
     public function __construct(Service $api, $endpoint)
     {
         $this->api = $api;
-        $this->endpoint = Psr7\uri_for($endpoint);
+        $this->endpoint = Psr7\Utils::uriFor($endpoint);
     }
 
     /**
@@ -114,7 +114,7 @@ abstract class RestSerializer
         ) {
             // Streaming bodies or payloads that are strings are
             // always just a stream of data.
-            $opts['body'] = Psr7\stream_for($args[$name]);
+            $opts['body'] = Psr7\Utils::streamFor($args[$name]);
             return;
         }
 
@@ -208,7 +208,7 @@ abstract class RestSerializer
 
         // Add the query string variables or appending to one if needed.
         if (!empty($opts['query'])) {
-            $append = Psr7\build_query($opts['query']);
+            $append = Psr7\Query::build($opts['query']);
             $relative .= strpos($relative, '?') ? "&{$append}" : "?$append";
         }
 

@@ -31,7 +31,7 @@
         "php": "^7.2.5 || ^8.0",
         "ext-json": "*",
         "guzzlehttp/promises": "^1.4",
-        "guzzlehttp/psr7": "^1.7",
+        "guzzlehttp/psr7": "^1.7 || ^2.0",
         "psr/http-client": "^1.0"
     },
     "provide": {
@@ -39,6 +39,7 @@
     },
     "require-dev": {
         "ext-curl": "*",
+        "bamarni/composer-bin-plugin": "^1.4.1",
         "php-http/client-integration-tests": "^3.0",
         "phpunit/phpunit": "^8.5.5 || ^9.3.5",
         "psr/log": "^1.1"
@@ -53,7 +54,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "7.1-dev"
+            "dev-master": "7.3-dev"
         }
     },
     "autoload": {

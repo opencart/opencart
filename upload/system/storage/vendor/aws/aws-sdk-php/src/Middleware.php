@@ -231,7 +231,7 @@ final class Middleware
                 ) {
                     $request = $request->withHeader(
                         'Content-Type',
-                        Psr7\mimetype_from_filename($uri) ?: 'application/octet-stream'
+                        Psr7\MimeType::fromFilename($uri) ?: 'application/octet-stream'
                     );
                 }
 

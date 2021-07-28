@@ -187,7 +187,7 @@ class MultipartCopy extends AbstractUploadManager
         if (strpos($key, '?')) {
             list($key, $query) = explode('?', $key, 2);
             $headParams['Key'] = $key;
-            $query = Psr7\parse_query($query, false);
+            $query = Psr7\Query::parse($query, false);
             if (isset($query['versionId'])) {
                 $headParams['VersionId'] = $query['versionId'];
             }

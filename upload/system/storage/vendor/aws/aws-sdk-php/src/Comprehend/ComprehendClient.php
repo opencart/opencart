@@ -17,6 +17,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise batchDetectSyntaxAsync(array $args = [])
  * @method \Aws\Result classifyDocument(array $args = [])
  * @method \GuzzleHttp\Promise\Promise classifyDocumentAsync(array $args = [])
+ * @method \Aws\Result containsPiiEntities(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise containsPiiEntitiesAsync(array $args = [])
  * @method \Aws\Result createDocumentClassifier(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createDocumentClassifierAsync(array $args = [])
  * @method \Aws\Result createEndpoint(array $args = [])

@@ -155,7 +155,7 @@ class EndpointArnMiddleware
 
                         // Replace ARN in the payload
                         $req->getBody()->seek(0);
-                        $body = Psr7\stream_for(str_replace(
+                        $body = Psr7\Utils::streamFor(str_replace(
                             $cmd[$accesspointNameMember],
                             $arn->getAccesspointName(),
                             $req->getBody()->getContents()
@@ -179,7 +179,7 @@ class EndpointArnMiddleware
                             $arn->getBucketName(),
                             $req->getBody()->getContents()
                         );
-                        $body = Psr7\stream_for($newBody);
+                        $body = Psr7\Utils::streamFor($newBody);
 
                         // Replace ARN in the command
                         $cmd[$bucketNameMember] = $arn->getBucketName();
@@ -334,7 +334,7 @@ class EndpointArnMiddleware
         $this->validateMatchingRegion($arn);
 
         // Ensure it is not resolved to fips pseudo-region for S3 Outposts
-        $this->validateFipsNotUsedWithOutposts($arn);
+        $this->validateFipsConfigurations($arn);
 
         return $arnPart;
     }

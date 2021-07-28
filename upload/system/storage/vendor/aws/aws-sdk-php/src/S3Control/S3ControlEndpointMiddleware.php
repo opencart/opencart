@@ -21,6 +21,8 @@ class S3ControlEndpointMiddleware
     private $region;
     /** @var callable */
     private $nextHandler;
+    /** @var string|null */
+    private $endpoint;
 
     /**
      * Create a middleware wrapper function

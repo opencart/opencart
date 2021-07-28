@@ -27,6 +27,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise createMultiplexAsync(array $args = [])
  * @method \Aws\Result createMultiplexProgram(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createMultiplexProgramAsync(array $args = [])
+ * @method \Aws\Result createPartnerInput(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise createPartnerInputAsync(array $args = [])
  * @method \Aws\Result createTags(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createTagsAsync(array $args = [])
  * @method \Aws\Result deleteChannel(array $args = [])

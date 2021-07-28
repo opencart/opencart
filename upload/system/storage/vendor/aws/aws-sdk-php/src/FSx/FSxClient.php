@@ -9,6 +9,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise associateFileSystemAliasesAsync(array $args = [])
  * @method \Aws\Result cancelDataRepositoryTask(array $args = [])
  * @method \GuzzleHttp\Promise\Promise cancelDataRepositoryTaskAsync(array $args = [])
+ * @method \Aws\Result copyBackup(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise copyBackupAsync(array $args = [])
  * @method \Aws\Result createBackup(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createBackupAsync(array $args = [])
  * @method \Aws\Result createDataRepositoryTask(array $args = [])

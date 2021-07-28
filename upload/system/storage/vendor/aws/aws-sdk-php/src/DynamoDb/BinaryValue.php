@@ -19,7 +19,7 @@ class BinaryValue implements \JsonSerializable
     public function __construct($value)
     {
         if (!is_string($value)) {
-            $value = Psr7\stream_for($value);
+            $value = Psr7\Utils::streamFor($value);
         }
         $this->value = (string) $value;
     }

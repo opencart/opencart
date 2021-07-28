@@ -219,6 +219,8 @@ use Psr\Http\Message\RequestInterface;
  * @method \GuzzleHttp\Promise\Promise uploadPartAsync(array $args = [])
  * @method \Aws\Result uploadPartCopy(array $args = [])
  * @method \GuzzleHttp\Promise\Promise uploadPartCopyAsync(array $args = [])
+ * @method \Aws\Result writeGetObjectResponse(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise writeGetObjectResponseAsync(array $args = [])
  */
 class S3Client extends AwsClient implements S3ClientInterface
 {
@@ -363,7 +365,7 @@ class S3Client extends AwsClient implements S3ClientInterface
                     [
                         'dual_stack' => $this->getConfig('use_dual_stack_endpoint'),
                         'accelerate' => $this->getConfig('use_accelerate_endpoint'),
-                        'path_style' => $this->getConfig('use_path_style_endpoint')
+                        'path_style' => $this->getConfig('use_path_style_endpoint'),
                     ]
                 ),
                 's3.endpoint_middleware'
@@ -746,6 +748,16 @@ class S3Client extends AwsClient implements S3ClientInterface
         $docs['operations']['CompleteMultipartUpload'] .=  $s3ExceptionRetryMessage;
         $docs['operations']['UploadPartCopy'] .=  $s3ExceptionRetryMessage;
         $docs['operations']['UploadPart'] .=  $s3ExceptionRetryMessage;
+
+        // Add note about stream ownership in the putObject call
+        $guzzleStreamMessage = "<p>Additional info on behavior of the stream"
+            . " parameters: Psr7 takes ownership of streams and will automatically close"
+            . " streams when this method is called with a stream as the <code>Body</code>"
+            . " parameter.  To prevent this, set the <code>Body</code> using"
+            . " <code>GuzzleHttp\Psr7\stream_for</code> method with a is an instance of"
+            . " <code>Psr\Http\Message\StreamInterface</code>, and it will be returned"
+            . " unmodified. This will allow you to keep the stream in scope. </p>";
+        $docs['operations']['PutObject'] .=  $guzzleStreamMessage;
 
         // Add the SourceFile parameter.
         $docs['shapes']['SourceFile']['base'] = 'The path to a file on disk to use instead of the Body parameter.';

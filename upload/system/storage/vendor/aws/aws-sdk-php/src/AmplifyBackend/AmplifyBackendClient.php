@@ -39,6 +39,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getBackendJobAsync(array $args = [])
  * @method \Aws\Result getToken(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getTokenAsync(array $args = [])
+ * @method \Aws\Result importBackendAuth(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise importBackendAuthAsync(array $args = [])
  * @method \Aws\Result listBackendJobs(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listBackendJobsAsync(array $args = [])
  * @method \Aws\Result removeAllBackends(array $args = [])

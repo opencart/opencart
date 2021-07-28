@@ -316,12 +316,12 @@ Twig comes bundled with the following extensions:
 * *Twig\Extension\SandboxExtension*: Adds a sandbox mode to the default Twig
   environment, making it safe to evaluate untrusted code.
 
-* *Twig\Extension\ProfilerExtension*: Enabled the built-in Twig profiler.
+* *Twig\Extension\ProfilerExtension*: Enables the built-in Twig profiler.
 
 * *Twig\Extension\OptimizerExtension*: Optimizes the node tree before
   compilation.
 
-* *Twig\Extension\StringLoaderExtension*: Defined the ``template_from_string``
+* *Twig\Extension\StringLoaderExtension*: Defines the ``template_from_string``
    function to allow loading templates from string in a template.
 
 The Core, Escaper, and Optimizer extensions are registered by default.
@@ -384,26 +384,26 @@ The escaping rules are implemented as follows:
 * Literals (integers, booleans, arrays, ...) used in the template directly as
   variables or filter arguments are never automatically escaped:
 
-  .. code-block:: twig
+  .. code-block:: html+twig
 
-        {{ "Twig<br />" }} {# won't be escaped #}
+        {{ "Twig<br/>" }} {# won't be escaped #}
 
-        {% set text = "Twig<br />" %}
+        {% set text = "Twig<br/>" %}
         {{ text }} {# will be escaped #}
 
 * Expressions which the result is a literal or a variable marked safe
   are never automatically escaped:
 
-  .. code-block:: twig
+  .. code-block:: html+twig
 
-        {{ foo ? "Twig<br />" : "<br />Twig" }} {# won't be escaped #}
+        {{ foo ? "Twig<br/>" : "<br/>Twig" }} {# won't be escaped #}
 
-        {% set text = "Twig<br />" %}
-        {{ true ? text : "<br />Twig" }} {# will be escaped #}
-        {{ false ? text : "<br />Twig" }} {# won't be escaped #}
+        {% set text = "Twig<br/>" %}
+        {{ true ? text : "<br/>Twig" }} {# will be escaped #}
+        {{ false ? text : "<br/>Twig" }} {# won't be escaped #}
 
-        {% set text = "Twig<br />" %}
-        {{ foo ? text|raw : "<br />Twig" }} {# won't be escaped #}
+        {% set text = "Twig<br/>" %}
+        {{ foo ? text|raw : "<br/>Twig" }} {# won't be escaped #}
 
 * Objects with a ``__toString`` method are converted to strings and
   escaped. You can mark some classes and/or interfaces as being safe for some

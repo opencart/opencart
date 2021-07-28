@@ -25,6 +25,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise createStackAsync(array $args = [])
  * @method \Aws\Result createStreamingURL(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createStreamingURLAsync(array $args = [])
+ * @method \Aws\Result createUpdatedImage(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise createUpdatedImageAsync(array $args = [])
  * @method \Aws\Result createUsageReportSubscription(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createUsageReportSubscriptionAsync(array $args = [])
  * @method \Aws\Result createUser(array $args = [])

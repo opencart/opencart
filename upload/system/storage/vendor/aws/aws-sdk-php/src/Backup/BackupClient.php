@@ -39,6 +39,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise describeRegionSettingsAsync(array $args = [])
  * @method \Aws\Result describeRestoreJob(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeRestoreJobAsync(array $args = [])
+ * @method \Aws\Result disassociateRecoveryPoint(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise disassociateRecoveryPointAsync(array $args = [])
  * @method \Aws\Result exportBackupPlanTemplate(array $args = [])
  * @method \GuzzleHttp\Promise\Promise exportBackupPlanTemplateAsync(array $args = [])
  * @method \Aws\Result getBackupPlan(array $args = [])

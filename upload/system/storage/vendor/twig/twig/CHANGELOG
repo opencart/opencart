@@ -1,3 +1,29 @@
+# 3.3.2 (2021-05-16)
+
+ * Revert "Throw a proper exception when a template name is an absolute path (as it has never been supported)"
+
+# 3.3.1 (2021-05-12)
+
+ * Fix PHP 8.1 compatibility
+ * Throw a proper exception when a template name is an absolute path (as it has never been supported)
+
+# 3.3.0 (2021-02-08)
+
+ * Fix macro calls in a "cache" tag
+ * Add the slug filter
+ * Allow extra bundle to be compatible with Twig 2
+
+# 3.2.1 (2021-01-05)
+
+ * Fix extra bundle compat with older versions of Symfony
+
+# 3.2.0 (2021-01-05)
+
+ * Add the Cache extension in the "extra" repositories: "cache" tag
+ * Add "registerUndefinedTokenParserCallback"
+ * Mark built-in node visitors as @internal
+ * Fix "odd" not working for negative numbers
+
 # 3.1.1 (2020-10-27)
 
  * Fix "include(template_from_string())"
@@ -62,9 +88,30 @@
  * bumped minimum PHP version to 7.2
  * removed PSR-0 classes
 
-# 2.14.1 (2020-XX-XX)
+# 2.14.6 (2021-XX-XX)
 
- * n/a
+ * Revert "Throw a proper exception when a template name is an absolute path (as it has never been supported)"
+
+# 2.14.5 (2021-05-12)
+
+ * Fix PHP 8.1 compatibility
+ * Throw a proper exception when a template name is an absolute path (as it has never been supported)
+
+# 2.14.4 (2021-03-10)
+
+ * Add the slug filter
+
+# 2.14.3 (2021-01-05)
+
+ * Fix extra bundle compat with older versions of Symfony
+
+# 2.14.2 (2021-01-05)
+
+ * Fix "odd" not working for negative numbers
+
+# 2.14.1 (2020-10-27)
+
+* Fix "include(template_from_string())"
 
 # 2.14.0 (2020-10-21)
 
@@ -392,7 +439,20 @@
  * improved the performance of the filesystem loader
  * removed features that were deprecated in 1.x
 
-# 1.44.1 (2020-XX-XX)
+# 1.44.4 (2021-XX-XX)
+
+ * Revert "Throw a proper exception when a template name is an absolute path (as it has never been supported)"
+
+# 1.44.3 (2021-05-12)
+
+ * Fix PHP 8.1 compatibility
+ * Throw a proper exception when a template name is an absolute path (as it has never been supported)
+
+# 1.44.2 (2021-01-05)
+
+ * Fix "odd" not working for negative numbers
+
+# 1.44.1 (2020-10-27)
 
  * Fix "include(template_from_string())"
 

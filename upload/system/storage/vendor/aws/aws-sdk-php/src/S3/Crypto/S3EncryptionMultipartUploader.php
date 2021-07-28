@@ -107,7 +107,7 @@ class S3EncryptionMultipartUploader extends MultipartUploader
         $source,
         array $config = []
     ) {
-        $this->appendUserAgent($client, 'S3CryptoV' . self::CRYPTO_VERSION);
+        $this->appendUserAgent($client, 'feat/s3-encrypt/' . self::CRYPTO_VERSION);
         $this->client = $client;
         $config['params'] = [];
         if (!empty($config['bucket'])) {

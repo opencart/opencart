@@ -2,17 +2,17 @@
     "packages": [
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.171.3",
-            "version_normalized": "3.171.3.0",
+            "version": "3.186.0",
+            "version_normalized": "3.186.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "7469c8e7f8db5dec544937677d08d8fff4f2f4e9"
+                "reference": "e8511d38de286233bcb6a827d3344c0fc4808b75"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/7469c8e7f8db5dec544937677d08d8fff4f2f4e9",
-                "reference": "7469c8e7f8db5dec544937677d08d8fff4f2f4e9",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/e8511d38de286233bcb6a827d3344c0fc4808b75",
+                "reference": "e8511d38de286233bcb6a827d3344c0fc4808b75",
                 "shasum": ""
             },
             "require": {
@@ -20,9 +20,9 @@
                 "ext-pcre": "*",
                 "ext-simplexml": "*",
                 "guzzlehttp/guzzle": "^5.3.3|^6.2.1|^7.0",
-                "guzzlehttp/promises": "^1.0",
-                "guzzlehttp/psr7": "^1.4.1",
-                "mtdowling/jmespath.php": "^2.5",
+                "guzzlehttp/promises": "^1.4.0",
+                "guzzlehttp/psr7": "^1.7.0",
+                "mtdowling/jmespath.php": "^2.6",
                 "php": ">=5.5"
             },
             "require-dev": {
@@ -48,7 +48,7 @@
                 "ext-openssl": "Allows working with CloudFront private distributions and verifying received SNS messages",
                 "ext-sockets": "To use client-side monitoring"
             },
-            "time": "2020-12-21T19:14:02+00:00",
+            "time": "2021-07-27T18:17:00+00:00",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -89,29 +89,29 @@
             "support": {
                 "forum": "https://forums.aws.amazon.com/forum.jspa?forumID=80",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.171.3"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.186.0"
             },
             "install-path": "../aws/aws-sdk-php"
         },
         {
             "name": "guzzlehttp/guzzle",
-            "version": "7.2.0",
-            "version_normalized": "7.2.0.0",
+            "version": "7.3.0",
+            "version_normalized": "7.3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "0aa74dfb41ae110835923ef10a9d803a22d50e79"
+                "reference": "7008573787b430c1c1f650e3722d9bba59967628"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/0aa74dfb41ae110835923ef10a9d803a22d50e79",
-                "reference": "0aa74dfb41ae110835923ef10a9d803a22d50e79",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/7008573787b430c1c1f650e3722d9bba59967628",
+                "reference": "7008573787b430c1c1f650e3722d9bba59967628",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
                 "guzzlehttp/promises": "^1.4",
-                "guzzlehttp/psr7": "^1.7",
+                "guzzlehttp/psr7": "^1.7 || ^2.0",
                 "php": "^7.2.5 || ^8.0",
                 "psr/http-client": "^1.0"
             },
@@ -119,6 +119,7 @@
                 "psr/http-client-implementation": "1.0"
             },
             "require-dev": {
+                "bamarni/composer-bin-plugin": "^1.4.1",
                 "ext-curl": "*",
                 "php-http/client-integration-tests": "^3.0",
                 "phpunit/phpunit": "^8.5.5 || ^9.3.5",
@@ -129,11 +130,11 @@
                 "ext-intl": "Required for Internationalized Domain Name (IDN) support",
                 "psr/log": "Required for using the Log middleware"
             },
-            "time": "2020-10-10T11:47:56+00:00",
+            "time": "2021-03-23T11:33:13+00:00",
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "7.1-dev"
+                    "dev-master": "7.3-dev"
                 }
             },
             "installation-source": "dist",
@@ -176,7 +177,7 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/guzzle/issues",
-                "source": "https://github.com/guzzle/guzzle/tree/7.2.0"
+                "source": "https://github.com/guzzle/guzzle/tree/7.3.0"
             },
             "funding": [
                 {
@@ -200,17 +201,17 @@
         },
         {
             "name": "guzzlehttp/promises",
-            "version": "1.4.0",
-            "version_normalized": "1.4.0.0",
+            "version": "1.4.1",
+            "version_normalized": "1.4.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/promises.git",
-                "reference": "60d379c243457e073cff02bc323a2a86cb355631"
+                "reference": "8e7d04f1f6450fef59366c399cfad4b9383aa30d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/promises/zipball/60d379c243457e073cff02bc323a2a86cb355631",
-                "reference": "60d379c243457e073cff02bc323a2a86cb355631",
+                "url": "https://api.github.com/repos/guzzle/promises/zipball/8e7d04f1f6450fef59366c399cfad4b9383aa30d",
+                "reference": "8e7d04f1f6450fef59366c399cfad4b9383aa30d",
                 "shasum": ""
             },
             "require": {
@@ -219,7 +220,7 @@
             "require-dev": {
                 "symfony/phpunit-bridge": "^4.4 || ^5.1"
             },
-            "time": "2020-09-30T07:37:28+00:00",
+            "time": "2021-03-07T09:25:29+00:00",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -252,23 +253,23 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/promises/issues",
-                "source": "https://github.com/guzzle/promises/tree/1.4.0"
+                "source": "https://github.com/guzzle/promises/tree/1.4.1"
             },
             "install-path": "../guzzlehttp/promises"
         },
         {
             "name": "guzzlehttp/psr7",
-            "version": "1.7.0",
-            "version_normalized": "1.7.0.0",
+            "version": "1.8.2",
+            "version_normalized": "1.8.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/psr7.git",
-                "reference": "53330f47520498c0ae1f61f7e2c90f55690c06a3"
+                "reference": "dc960a912984efb74d0a90222870c72c87f10c91"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/psr7/zipball/53330f47520498c0ae1f61f7e2c90f55690c06a3",
-                "reference": "53330f47520498c0ae1f61f7e2c90f55690c06a3",
+                "url": "https://api.github.com/repos/guzzle/psr7/zipball/dc960a912984efb74d0a90222870c72c87f10c91",
+                "reference": "dc960a912984efb74d0a90222870c72c87f10c91",
                 "shasum": ""
             },
             "require": {
@@ -286,7 +287,7 @@
             "suggest": {
                 "laminas/laminas-httphandlerrunner": "Emit PSR-7 responses"
             },
-            "time": "2020-09-30T07:37:11+00:00",
+            "time": "2021-04-26T09:17:50+00:00",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -330,23 +331,23 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/psr7/issues",
-                "source": "https://github.com/guzzle/psr7/tree/1.7.0"
+                "source": "https://github.com/guzzle/psr7/tree/1.8.2"
             },
             "install-path": "../guzzlehttp/psr7"
         },
         {
             "name": "mtdowling/jmespath.php",
-            "version": "2.6.0",
-            "version_normalized": "2.6.0.0",
+            "version": "2.6.1",
+            "version_normalized": "2.6.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jmespath/jmespath.php.git",
-                "reference": "42dae2cbd13154083ca6d70099692fef8ca84bfb"
+                "reference": "9b87907a81b87bc76d19a7fb2d61e61486ee9edb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jmespath/jmespath.php/zipball/42dae2cbd13154083ca6d70099692fef8ca84bfb",
-                "reference": "42dae2cbd13154083ca6d70099692fef8ca84bfb",
+                "url": "https://api.github.com/repos/jmespath/jmespath.php/zipball/9b87907a81b87bc76d19a7fb2d61e61486ee9edb",
+                "reference": "9b87907a81b87bc76d19a7fb2d61e61486ee9edb",
                 "shasum": ""
             },
             "require": {
@@ -354,10 +355,10 @@
                 "symfony/polyfill-mbstring": "^1.17"
             },
             "require-dev": {
-                "composer/xdebug-handler": "^1.4",
+                "composer/xdebug-handler": "^1.4 || ^2.0",
                 "phpunit/phpunit": "^4.8.36 || ^7.5.15"
             },
-            "time": "2020-07-31T21:01:56+00:00",
+            "time": "2021-06-14T00:11:39+00:00",
             "bin": [
                 "bin/jp.php"
             ],
@@ -392,6 +393,10 @@
                 "json",
                 "jsonpath"
             ],
+            "support": {
+                "issues": "https://github.com/jmespath/jmespath.php/issues",
+                "source": "https://github.com/jmespath/jmespath.php/tree/2.6.1"
+            },
             "install-path": "../mtdowling/jmespath.php"
         },
         {
@@ -614,17 +619,17 @@
         },
         {
             "name": "symfony/polyfill-ctype",
-            "version": "v1.20.0",
-            "version_normalized": "1.20.0.0",
+            "version": "v1.23.0",
+            "version_normalized": "1.23.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-ctype.git",
-                "reference": "f4ba089a5b6366e453971d3aad5fe8e897b37f41"
+                "reference": "46cd95797e9df938fdd2b03693b5fca5e64b01ce"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-ctype/zipball/f4ba089a5b6366e453971d3aad5fe8e897b37f41",
-                "reference": "f4ba089a5b6366e453971d3aad5fe8e897b37f41",
+                "url": "https://api.github.com/repos/symfony/polyfill-ctype/zipball/46cd95797e9df938fdd2b03693b5fca5e64b01ce",
+                "reference": "46cd95797e9df938fdd2b03693b5fca5e64b01ce",
                 "shasum": ""
             },
             "require": {
@@ -633,11 +638,11 @@
             "suggest": {
                 "ext-ctype": "For best performance"
             },
-            "time": "2020-10-23T14:02:19+00:00",
+            "time": "2021-02-19T12:13:01+00:00",
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "1.20-dev"
+                    "dev-main": "1.23-dev"
                 },
                 "thanks": {
                     "name": "symfony/polyfill",
@@ -676,7 +681,7 @@
                 "portable"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-ctype/tree/v1.20.0"
+                "source": "https://github.com/symfony/polyfill-ctype/tree/v1.23.0"
             },
             "funding": [
                 {
@@ -696,17 +701,17 @@
         },
         {
             "name": "symfony/polyfill-mbstring",
-            "version": "v1.20.0",
-            "version_normalized": "1.20.0.0",
+            "version": "v1.23.0",
+            "version_normalized": "1.23.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-mbstring.git",
-                "reference": "39d483bdf39be819deabf04ec872eb0b2410b531"
+                "reference": "2df51500adbaebdc4c38dea4c89a2e131c45c8a1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/39d483bdf39be819deabf04ec872eb0b2410b531",
-                "reference": "39d483bdf39be819deabf04ec872eb0b2410b531",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/2df51500adbaebdc4c38dea4c89a2e131c45c8a1",
+                "reference": "2df51500adbaebdc4c38dea4c89a2e131c45c8a1",
                 "shasum": ""
             },
             "require": {
@@ -715,11 +720,11 @@
             "suggest": {
                 "ext-mbstring": "For best performance"
             },
-            "time": "2020-10-23T14:02:19+00:00",
+            "time": "2021-05-27T09:27:20+00:00",
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "1.20-dev"
+                    "dev-main": "1.23-dev"
                 },
                 "thanks": {
                     "name": "symfony/polyfill",
@@ -759,7 +764,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-mbstring/tree/v1.20.0"
+                "source": "https://github.com/symfony/polyfill-mbstring/tree/v1.23.0"
             },
             "funding": [
                 {
@@ -779,17 +784,17 @@
         },
         {
             "name": "twig/twig",
-            "version": "v3.1.1",
-            "version_normalized": "3.1.1.0",
+            "version": "v3.3.2",
+            "version_normalized": "3.3.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "b02fa41f3783a2616eccef7b92fbc2343ffed737"
+                "reference": "21578f00e83d4a82ecfa3d50752b609f13de6790"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/b02fa41f3783a2616eccef7b92fbc2343ffed737",
-                "reference": "b02fa41f3783a2616eccef7b92fbc2343ffed737",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/21578f00e83d4a82ecfa3d50752b609f13de6790",
+                "reference": "21578f00e83d4a82ecfa3d50752b609f13de6790",
                 "shasum": ""
             },
             "require": {
@@ -801,11 +806,11 @@
                 "psr/container": "^1.0",
                 "symfony/phpunit-bridge": "^4.4.9|^5.0.9"
             },
-            "time": "2020-10-27T19:28:23+00:00",
+            "time": "2021-05-16T12:14:13+00:00",
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.1-dev"
+                    "dev-master": "3.3-dev"
                 }
             },
             "installation-source": "dist",
@@ -842,7 +847,7 @@
             ],
             "support": {
                 "issues": "https://github.com/twigphp/Twig/issues",
-                "source": "https://github.com/twigphp/Twig/tree/v3.1.1"
+                "source": "https://github.com/twigphp/Twig/tree/v3.3.2"
             },
             "funding": [
                 {

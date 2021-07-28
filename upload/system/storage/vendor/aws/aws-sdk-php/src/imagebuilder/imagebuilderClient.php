@@ -69,6 +69,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listDistributionConfigurationsAsync(array $args = [])
  * @method \Aws\Result listImageBuildVersions(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listImageBuildVersionsAsync(array $args = [])
+ * @method \Aws\Result listImagePackages(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listImagePackagesAsync(array $args = [])
  * @method \Aws\Result listImagePipelineImages(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listImagePipelineImagesAsync(array $args = [])
  * @method \Aws\Result listImagePipelines(array $args = [])

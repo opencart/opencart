@@ -105,7 +105,7 @@ class S3EncryptionClientV2 extends AbstractCryptoClientV2
         S3Client $client,
         $instructionFileSuffix = null
     ) {
-        $this->appendUserAgent($client, 'S3CryptoV' . self::CRYPTO_VERSION);
+        $this->appendUserAgent($client, 'feat/s3-encrypt/' . self::CRYPTO_VERSION);
         $this->client = $client;
         $this->instructionFileSuffix = $instructionFileSuffix;
         $this->legacyWarningCount = 0;
@@ -177,7 +177,7 @@ class S3EncryptionClientV2 extends AbstractCryptoClientV2
         $envelope = new MetadataEnvelope();
 
         return Promise\promise_for($this->encrypt(
-            Psr7\stream_for($args['Body']),
+            Psr7\Utils::streamFor($args['Body']),
             $args,
             $provider,
             $envelope

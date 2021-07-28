@@ -346,7 +346,7 @@ This is used by many of the tests built into Twig::
             $compiler
                 ->raw('(')
                 ->subcompile($this->getNode('node'))
-                ->raw(' % 2 == 1')
+                ->raw(' % 2 != 0')
                 ->raw(')')
             ;
         }
@@ -647,7 +647,7 @@ method::
 
     class Project_Twig_Extension extends \Twig\Extension\AbstractExtension implements \Twig\Extension\GlobalsInterface
     {
-        public function getGlobals()
+        public function getGlobals(): array
         {
             return [
                 'text' => new Text(),
@@ -879,7 +879,9 @@ structure in your test directory::
 
 The ``IntegrationTest.php`` file should look like this::
 
-    class Project_Tests_IntegrationTest extends \Twig\Test\IntegrationTestCase
+    use Twig\Test\IntegrationTestCase;
+
+    class Project_Tests_IntegrationTest extends IntegrationTestCase
     {
         public function getExtensions()
         {
@@ -905,6 +907,5 @@ Testing the node visitors can be complex, so extend your test cases from
 ``\Twig\Test\NodeTestCase``. Examples can be found in the Twig repository
 `tests/Twig/Node`_ directory.
 
-.. _`rot13`:               https://secure.php.net/manual/en/function.str-rot13.php
 .. _`tests/Twig/Fixtures`: https://github.com/twigphp/Twig/tree/3.x/tests/Fixtures
 .. _`tests/Twig/Node`:     https://github.com/twigphp/Twig/tree/3.x/tests/Node

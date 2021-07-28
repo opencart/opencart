@@ -33,6 +33,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise describeDatasetAsync(array $args = [])
  * @method \Aws\Result describeJob(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeJobAsync(array $args = [])
+ * @method \Aws\Result describeJobRun(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeJobRunAsync(array $args = [])
  * @method \Aws\Result describeProject(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeProjectAsync(array $args = [])
  * @method \Aws\Result describeRecipe(array $args = [])

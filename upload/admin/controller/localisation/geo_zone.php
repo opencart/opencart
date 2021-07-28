@@ -190,7 +190,7 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['geo_zone_id'])) {
 			$this->load->model('localisation/geo_zone');
 
-			$geo_zone_info = $this->model_localisation_geo_zone->getGeoZone($this->request->get['geo_zone_id']);
+			$geo_zone_info = $this->model_localisation_geo_zone->getGeoZone((int)$this->request->get['geo_zone_id']);
 		}
 
 		if (isset($this->request->get['geo_zone_id'])) {
@@ -216,7 +216,7 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 		$data['countries'] = $this->model_localisation_country->getCountries();
 
 		if (!empty($geo_zone_info)) {
-			$data['zone_to_geo_zones'] = $this->model_localisation_geo_zone->getZoneToGeoZones($this->request->get['geo_zone_id']);
+			$data['zone_to_geo_zones'] = $this->model_localisation_geo_zone->getZoneToGeoZones((int)$this->request->get['geo_zone_id']);
 		} else {
 			$data['zone_to_geo_zones'] = [];
 		}
@@ -253,7 +253,7 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 			if (!$this->request->post['geo_zone_id']) {
 				$json['geo_zone_id'] = $this->model_localisation_geo_zone->addGeoZone($this->request->post);
 			} else {
-				$this->model_localisation_geo_zone->editGeoZone($this->request->post['geo_zone_id'], $this->request->post);
+				$this->model_localisation_geo_zone->editGeoZone((int)$this->request->post['geo_zone_id'], $this->request->post);
 			}
 
 			$json['success'] = $this->language->get('text_success');
@@ -281,7 +281,7 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 		$this->load->model('localisation/tax_rate');
 
 		foreach ($selected as $geo_zone_id) {
-			$tax_rate_total = $this->model_localisation_tax_rate->getTotalTaxRatesByGeoZoneId($geo_zone_id);
+			$tax_rate_total = $this->model_localisation_tax_rate->getTotalTaxRatesByGeoZoneId((int)$geo_zone_id);
 
 			if ($tax_rate_total) {
 				$json['error'] = sprintf($this->language->get('error_tax_rate'), $tax_rate_total);
@@ -292,7 +292,7 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 			$this->load->model('localisation/geo_zone');
 
 			foreach ($selected as $geo_zone_id) {
-				$this->model_localisation_geo_zone->deleteGeoZone($geo_zone_id);
+				$this->model_localisation_geo_zone->deleteGeoZone((int)$geo_zone_id);
 			}
 
 			$json['success'] = $this->language->get('text_success');

@@ -91,7 +91,7 @@ class Api extends \Opencart\System\Engine\Controller {
 
 		// Store
 		if (isset($this->request->post['store_id'])) {
-			$config->set('config_store_id', $this->request->post['store_id']);
+			$config->set('config_store_id', (int)$this->request->post['store_id']);
 		} else {
 			$config->set('config_store_id', 0);
 		}
@@ -121,7 +121,6 @@ class Api extends \Opencart\System\Engine\Controller {
 		$this->store = $registry;
 	}
 
-
 	public function delete(): void {
 		$this->load->language('sale/order');
 
@@ -141,7 +140,7 @@ class Api extends \Opencart\System\Engine\Controller {
 			$this->load->model('sale/order');
 
 			foreach ($selected as $order_id) {
-				$this->model_sale_order->deleteOrder($order_id);
+				$this->model_sale_order->deleteOrder((int)$order_id);
 			}
 
 			$json['success'] = $this->language->get('text_success');
@@ -179,10 +178,7 @@ class Api extends \Opencart\System\Engine\Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
-
-
-
-
+	
 	public function add(): void {
 		// 1. We set some defaults so there are no undefined indexes.
 		$defaults = [
@@ -231,7 +227,7 @@ class Api extends \Opencart\System\Engine\Controller {
 
 			'currency_id'           => 0,
 			'currency_code'         => (string)$this->config->get('config_currency'),
-			'currency_value'        => (string)$this->config->get('config_currency'),
+			'currency_value'        => 0,
 
 			'coupon'                => '',
 			'voucher'               => '',
@@ -288,7 +284,6 @@ class Api extends \Opencart\System\Engine\Controller {
 		$order = array();
 
 		if (!$json) {
-
 			// 1. Merge the old order data with the new data
 			foreach ($order_info as $key => $value) {
 				if (isset($this->request->post[$key])) {
@@ -334,11 +329,6 @@ class Api extends \Opencart\System\Engine\Controller {
 			// Affiliate
 			$data['affiliate_id'] = $order_info['affiliate_id'];
 
-			// Addresses
-
-
-
-
 			// Products
 			$data['order_products'] = [];
 
@@ -369,9 +359,6 @@ class Api extends \Opencart\System\Engine\Controller {
 						}
 					}
 				}
-
-
-
 
 				$data['order_products'][] = [
 					'order_product_id' => $product['order_product_id'],
@@ -425,8 +412,6 @@ class Api extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-
-
 	public function createInvoiceNo(): void {
 		$this->load->language('sale/order');
 
@@ -458,8 +443,8 @@ class Api extends \Opencart\System\Engine\Controller {
 
 	public function customer(): void {
 		$this->store->request->post = [
-			'customer_id'       => $this->request->post['customer_id'],
-			'customer_group_id' => $this->request->post['customer_group_id'],
+			'customer_id'       => (int)$this->request->post['customer_id'],
+			'customer_group_id' => (int)$this->request->post['customer_group_id'],
 			'firstname'         => $this->request->post['firstname'],
 			'lastname'          => $this->request->post['lastname'],
 			'email'             => $this->request->post['email'],
@@ -728,7 +713,7 @@ class Api extends \Opencart\System\Engine\Controller {
 			'postcode'     => $this->request->post['postcode'],
 			'city'         => $this->request->post['city'],
 			'zone_id'      => $this->request->post['zone_id'],
-			'country_id'   => $this->request->post['country_id'],
+			'country_id'   => (int)$this->request->post['country_id'],
 			'custom_field' => $this->request->post['custom_field']
 		];
 
@@ -748,7 +733,7 @@ class Api extends \Opencart\System\Engine\Controller {
 			'postcode'     => $this->request->post['postcode'],
 			'city'         => $this->request->post['city'],
 			'zone_id'      => $this->request->post['zone_id'],
-			'country_id'   => $this->request->post['country_id'],
+			'country_id'   => (int)$this->request->post['country_id'],
 			'custom_field' => $this->request->post['custom_field']
 		];
 
@@ -760,7 +745,7 @@ class Api extends \Opencart\System\Engine\Controller {
 
 	public function addProduct(): void {
 		$this->store->request->post = [
-			'product_id' => $this->request->post['product_id'],
+			'product_id' => (int)$this->request->post['product_id'],
 			'option'     => $this->request->post['option'],
 			'quantity'   => $this->request->post['quantity']
 		];
@@ -772,7 +757,7 @@ class Api extends \Opencart\System\Engine\Controller {
 	}
 
 	public function removeProduct(): void {
-		$this->store->request->post = ['key' => $this->request->post['cart_id']];
+		$this->store->request->post = ['key' => (int)$this->request->post['cart_id']];
 
 		$this->store->load->controller('api/cart/remove');
 

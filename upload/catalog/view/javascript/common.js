@@ -136,10 +136,6 @@ $(document).ready(function() {
 		$('#content .product-module').attr('class', 'product-layout product-module col-lg-3 col-md-3 col-sm-6 col-12');
 	}
 
-
-
-
-
 	/* Agree to Terms */
 	$('body').on('click', '.modal-link', function(e) {
 		e.preventDefault();

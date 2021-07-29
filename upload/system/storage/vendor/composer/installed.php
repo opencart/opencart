@@ -5,18 +5,18 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../../../../',
         'aliases' => array(),
-        'reference' => '17d5df0464da11c6a91ec76005d8d28542fb95df',
+        'reference' => 'e4ae22aee7d9c1c402ec805fc0786ada23d8a9ca',
         'name' => 'opencart/opencart',
         'dev' => true,
     ),
     'versions' => array(
         'aws/aws-sdk-php' => array(
-            'pretty_version' => '3.186.1',
-            'version' => '3.186.1.0',
+            'pretty_version' => '3.186.2',
+            'version' => '3.186.2.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../aws/aws-sdk-php',
             'aliases' => array(),
-            'reference' => '50f1ec9c1afa9c09512e1b0f8e03fcec9ea5e731',
+            'reference' => 'ce90f6e5c322f2ce600d818b7949dbfcbf192359',
             'dev_requirement' => false,
         ),
         'guzzlehttp/guzzle' => array(
@@ -61,7 +61,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../../../../',
             'aliases' => array(),
-            'reference' => '17d5df0464da11c6a91ec76005d8d28542fb95df',
+            'reference' => 'e4ae22aee7d9c1c402ec805fc0786ada23d8a9ca',
             'dev_requirement' => false,
         ),
         'psr/http-client' => array(
@@ -122,12 +122,12 @@
             'dev_requirement' => false,
         ),
         'symfony/polyfill-mbstring' => array(
-            'pretty_version' => 'v1.23.0',
-            'version' => '1.23.0.0',
+            'pretty_version' => 'v1.23.1',
+            'version' => '1.23.1.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../symfony/polyfill-mbstring',
             'aliases' => array(),
-            'reference' => '2df51500adbaebdc4c38dea4c89a2e131c45c8a1',
+            'reference' => '9174a3d80210dca8daa7f31fec659150bbeabfc6',
             'dev_requirement' => false,
         ),
         'twig/twig' => array(

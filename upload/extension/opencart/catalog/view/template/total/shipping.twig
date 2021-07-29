@@ -8,11 +8,7 @@
           <select name="country_id" id="input-country" class="form-control">
             <option value="">{{ text_select }}</option>
             {% for country in countries %}
-              {% if country.country_id == country_id %}
-                <option value="{{ country.country_id }}" selected="selected">{{ country.name }}</option>
-              {% else %}
-                <option value="{{ country.country_id }}">{{ country.name }}</option>
-              {% endif %}
+              <option value="{{ country.country_id }}"{% if country.country_id == country_id %} selected="selected"{% endif %}>{{ country.name }}</option>
             {% endfor %}
           </select>
         </div>
@@ -20,7 +16,7 @@
       <div class="form-group row required">
         <label for="input-zone" class="col-sm-3 col-form-label">{{ entry_zone }}</label>
         <div class="col-md-9">
-          <select name="zone_id" id="input-zone" class="form-control"> </select>
+          <select name="zone_id" id="input-zone" class="form-control"></select>
         </div>
       </div>
       <div class="form-group row required">

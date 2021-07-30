@@ -7,7 +7,7 @@
         <div id="filter-group-{{ filter_group.filter_group_id }}">
           {% for filter in filter_group.filter %}
             <div class="form-check">
-              <input type="checkbox" name="filter[]" value="{{ filter.filter_id }}" id="input-filter-{{ filter.filter_id }}" class="form-check-input"{% if filter.filter_id in filter_category %} checked="checked"{% endif %}/>
+              <input type="checkbox" name="filter[]" value="{{ filter.filter_id }}" id="input-filter-{{ filter.filter_id }}" class="form-check-input"{% if filter.filter_id in filter_category %} checked{% endif %}/>
               <label for="input-filter-{{ filter.filter_id }}" class="form-check-label">{{ filter.name }}</label>
             </div>
           {% endfor %}

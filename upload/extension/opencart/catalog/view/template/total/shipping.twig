@@ -86,7 +86,7 @@
                               html += '  <label>';
 
                               if (json['shipping_method'][i]['quote'][j]['code'] == '{{ shipping_method }}') {
-                                  html += '<input type="radio" name="shipping_method" value="' + json['shipping_method'][i]['quote'][j]['code'] + '" checked="checked" /> ';
+                                  html += '<input type="radio" name="shipping_method" value="' + json['shipping_method'][i]['quote'][j]['code'] + '" checked/> ';
                               } else {
                                   html += '<input type="radio" name="shipping_method" value="' + json['shipping_method'][i]['quote'][j]['code'] + '" /> ';
                               }

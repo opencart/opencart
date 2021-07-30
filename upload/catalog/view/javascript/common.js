@@ -320,7 +320,7 @@ var wishlist = {
 
 				if (json['success']) {
 					html  = '<div class="toast">';
-					html += '  <div class="toast-body"><button type="button" class="ml-2 mb-1 close float-right" data-dismiss="toast">&times;</button> ' + json['success'] + '</div>';
+					html += '  <div class="toast-body"><button type="button" class="ml-2 mb-1 close float-right" data-dismiss="toast"></button> ' + json['success'] + '</div>';
 					html += '</div>';
 
 					$('#toast').prepend(html);
@@ -354,7 +354,7 @@ var compare = {
 
 				if (json['success']) {
 					html  = '<div class="toast">';
-					html += '  <div class="toast-body"><button type="button" class="ml-2 mb-1 close float-right" data-dismiss="toast">&times;</button> ' + json['success'] + '</div>';
+					html += '  <div class="toast-body"><button type="button" class="ml-2 mb-1 close float-right" data-dismiss="toast"></button> ' + json['success'] + '</div>';
 					html += '</div>';
 
 					$('#toast').prepend(html);

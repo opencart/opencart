@@ -24,10 +24,7 @@ class Confirm extends \Opencart\System\Engine\Controller {
 		if ($this->config->get('config_checkout_address') && !isset($this->session->data['payment_address'])) {
 			$json['redirect'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'), true);
 		}
-
-
-
-
+		
 		$this->load->model('setting/extension');
 
 		if (isset($this->session->data['payment_method'])) {
@@ -60,16 +57,10 @@ class Confirm extends \Opencart\System\Engine\Controller {
 
 			if ($product['minimum'] > $product_total) {
 				$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
-
 				break;
 			}
 		}
-
-
-
-
-
-
+		
 		if (!$json) {
 			$order_data = [];
 
@@ -113,7 +104,6 @@ class Confirm extends \Opencart\System\Engine\Controller {
 			$order_data['store_url'] = $this->config->get('config_url');
 
 			$this->load->model('account/customer');
-
 
 			$order_data['customer_id'] = 0;
 			$order_data['customer_group_id'] = $this->session->data['customer']['customer_group_id'];

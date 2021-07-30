@@ -49,7 +49,7 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if ($this->customer->isLogged()) {
-			$json['redirect'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language'));
+			$json['redirect'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language'), true);
 		}
 
 		if (empty($this->request->post['email']) || (utf8_strlen($this->request->post['email']) > 96) || !filter_var($this->request->post['email'], FILTER_VALIDATE_EMAIL)) {
@@ -65,7 +65,7 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$json['redirect'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'));
+			$json['redirect'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'), true);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

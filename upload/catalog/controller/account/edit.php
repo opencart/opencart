@@ -148,7 +148,7 @@ class Edit extends \Opencart\System\Engine\Controller {
 				'custom_field'      => $this->request->post['custom_field']
 			];
 
-			$json['redirect'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language'));
+			$json['redirect'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language'), true);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

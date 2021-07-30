@@ -1965,7 +1965,7 @@ $('#modal-payment-address #button-payment-address').on('click', function() {
                 }
 
                 for (i in json['error']) {
-                    var element = $('#input-payment-' + i.replace('_', '-'));
+                    var element = $('#input-payment-' + i.replaceAll('_', '-'));
 
                     // Highlight any found errors
                     $(element).addClass('is-invalid');
@@ -2366,7 +2366,7 @@ $('#modal-cart #button-product-add').on('click', function() {
 
                 if (json['error']['option']) {
                     for (i in json['error']['option']) {
-                        var element = $('#input-option-' + i.replace('_', '-'));
+                        var element = $('#input-option-' + i.replaceAll('_', '-'));
 
                         // Highlight any found errors
                         $(element).addClass('is-invalid');

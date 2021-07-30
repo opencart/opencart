@@ -256,6 +256,7 @@ class Register extends \Opencart\System\Engine\Controller {
 				'payment_postcode',
 				'payment_country_id',
 				'payment_zone_id',
+				'shipping_address',
 				'shipping_firstname',
 				'shipping_lastname',
 				'shipping_company',
@@ -313,9 +314,9 @@ class Register extends \Opencart\System\Engine\Controller {
 			foreach ($custom_fields as $custom_field) {
 				if ($custom_field['location'] == 'account') {
 					if ($custom_field['required'] && empty($this->request->post['customer_custom_field'][$custom_field['location']][$custom_field['custom_field_id']])) {
-						$json['error']['customer_custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
+						$json['error']['custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
 					} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !preg_match(html_entity_decode($custom_field['validation'], ENT_QUOTES, 'UTF-8'), $this->request->post['custom_field'][$custom_field['location']][$custom_field['custom_field_id']])) {
-						$json['error']['customer_custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_regex'), $custom_field['name']);
+						$json['error']['custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_regex'), $custom_field['name']);
 					}
 				}
 			}
@@ -342,7 +343,7 @@ class Register extends \Opencart\System\Engine\Controller {
 
 				$this->load->model('localisation/country');
 
-				$country_info = $this->model_localisation_country->getCountry($this->request->post['payment_country_id']);
+				$country_info = $this->model_localisation_country->getCountry((int)$this->request->post['payment_country_id']);
 
 				if ($country_info && $country_info['postcode_required'] && (utf8_strlen(trim($this->request->post['payment_postcode'])) < 2 || utf8_strlen(trim($this->request->post['payment_postcode'])) > 10)) {
 					$json['error']['payment_postcode'] = $this->language->get('error_postcode');
@@ -369,7 +370,7 @@ class Register extends \Opencart\System\Engine\Controller {
 			}
 
 			// Shipping Address
-			if ($this->cart->hasShipping() && $this->request->post['shipping_address']) {
+			if ($this->cart->hasShipping() && !$this->request->post['shipping_address']) {
 				if ((utf8_strlen(trim($this->request->post['shipping_firstname'])) < 1) || (utf8_strlen(trim($this->request->post['shipping_firstname'])) > 32)) {
 					$json['error']['shipping_firstname'] = $this->language->get('error_firstname');
 				}
@@ -388,7 +389,7 @@ class Register extends \Opencart\System\Engine\Controller {
 
 				$this->load->model('localisation/country');
 
-				$country_info = $this->model_localisation_country->getCountry($this->request->post['shipping_country_id']);
+				$country_info = $this->model_localisation_country->getCountry((int)$this->request->post['shipping_country_id']);
 
 				if ($country_info && $country_info['postcode_required'] && (utf8_strlen(trim($this->request->post['shipping_postcode'])) < 2 || utf8_strlen(trim($this->request->post['shipping_postcode'])) > 10)) {
 					$json['error']['shipping_postcode'] = $this->language->get('error_postcode');
@@ -398,7 +399,7 @@ class Register extends \Opencart\System\Engine\Controller {
 					$json['error']['shipping_country'] = $this->language->get('error_country');
 				}
 
-				if (!isset($this->request->post['shipping_zone_id']) || $this->request->post['zone_id'] == '') {
+				if (!isset($this->request->post['shipping_zone_id']) || $this->request->post['shipping_zone_id'] == '') {
 					$json['error']['shipping_zone'] = $this->language->get('error_zone');
 				}
 
@@ -552,7 +553,7 @@ class Register extends \Opencart\System\Engine\Controller {
 			}
 
 			// Redirect to success page
-			$json['redirect'] = $this->url->link('account/success', 'language=' . $this->config->get('config_language'), true);
+			$json['success'] = '';
 
 			// Clear any previous login attempts for unregistered accounts.
 			$this->model_account_customer->deleteLoginAttempts($this->request->post['email']);

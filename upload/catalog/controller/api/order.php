@@ -270,11 +270,11 @@ class Order extends \Opencart\System\Engine\Controller {
 			$json['error']['postcode'] = $this->language->get('error_postcode');
 		}
 
-		if ($this->request->post['country_id'] == '') {
+		if (!filter_var($this->request->post['country_id'], FILTER_VALIDATE_INT)) {
 			$json['error']['country'] = $this->language->get('error_country');
 		}
 
-		if (!isset($this->request->post['zone_id']) || $this->request->post['zone_id'] == '') {
+		if (!isset($this->request->post['zone_id']) || filter_var($this->request->post['zone_id'], FILTER_VALIDATE_INT) === false) {
 			$json['error']['zone'] = $this->language->get('error_zone');
 		}
 
@@ -435,11 +435,11 @@ class Order extends \Opencart\System\Engine\Controller {
 				$json['error']['postcode'] = $this->language->get('error_postcode');
 			}
 
-			if ($this->request->post['country_id'] == '') {
+			if (!filter_var($this->request->post['country_id'], FILTER_VALIDATE_INT)) {
 				$json['error']['country'] = $this->language->get('error_country');
 			}
 
-			if (!isset($this->request->post['zone_id']) || $this->request->post['zone_id'] == '') {
+			if (!isset($this->request->post['zone_id']) || filter_var($this->request->post['zone_id'], FILTER_VALIDATE_INT) === false) {
 				$json['error']['zone'] = $this->language->get('error_zone');
 			}
 

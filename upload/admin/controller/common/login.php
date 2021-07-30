@@ -99,7 +99,7 @@ class Login extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->session->data['user_token'] = token(32);
 
-			// Remove login token so it can not be used again.
+			// Remove login token so it cannot be used again.
 			unset($this->session->data['login_token']);
 
 			if ($this->request->post['redirect'] && (strpos($this->request->post['redirect'], HTTP_SERVER) === 0)) {

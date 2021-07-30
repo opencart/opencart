@@ -96,7 +96,6 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 
 			if ($product['minimum'] > $product_total) {
 				$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
-
 				break;
 			}
 		}

@@ -155,7 +155,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (!$this->config->get('config_affiliate_status')) {
-			$json['redirect'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language'));
+			$json['redirect'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language'), true);
 		}
 
 		$keys = [

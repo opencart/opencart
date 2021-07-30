@@ -339,7 +339,7 @@ class Address extends \Opencart\System\Engine\Controller {
 				unset($this->session->data['payment_methods']);
 			}
 
-			$json['redirect'] = $this->url->link('account/address', 'language=' . $this->config->get('config_language'));
+			$json['redirect'] = $this->url->link('account/address', 'language=' . $this->config->get('config_language'), true);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -385,7 +385,7 @@ class Address extends \Opencart\System\Engine\Controller {
 
 			$this->session->data['success'] = $this->language->get('text_delete');
 
-			$json['redirect'] = $this->url->link('account/address', 'language=' . $this->config->get('config_language'));
+			$json['redirect'] = $this->url->link('account/address', 'language=' . $this->config->get('config_language'), true);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

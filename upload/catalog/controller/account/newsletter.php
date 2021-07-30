@@ -51,7 +51,7 @@ class Newsletter extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (!$this->customer->isLogged()) {
-			$json['redirect'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'));
+			$json['redirect'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'), true);
 		}
 
 		if (!$json) {

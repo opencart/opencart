@@ -47,7 +47,7 @@ class Login extends \Opencart\System\Engine\Controller {
 			$data['redirect'] = '';
 		}
 
-		if ($this->config->get('config_password')) {
+		if ($this->config->get('config_forgotten_password')) {
 			$data['forgotten'] = $this->url->link('common/forgotten');
 		} else {
 			$data['forgotten'] = '';

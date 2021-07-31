@@ -549,6 +549,13 @@ class Setting extends \Opencart\System\Engine\Controller {
 		// Server
 		$data['config_shared'] = $this->config->get('config_shared');
 		$data['config_robots'] = $this->config->get('config_robots');
+
+		if ($this->config->has('config_session_expire')) {
+			$data['config_session_expire'] = $this->config->get('config_session_expire');
+		} else {
+			$data['config_session_expire'] = 3600;
+		}
+
 		$data['config_seo_url'] = $this->config->get('config_seo_url');
 
 		if ($this->config->get('config_file_max_size')) {
@@ -560,7 +567,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 		$data['config_file_ext_allowed'] = $this->config->get('config_file_ext_allowed');
 		$data['config_file_mime_allowed'] = $this->config->get('config_file_mime_allowed');
 		$data['config_maintenance'] = $this->config->get('config_maintenance');
-		$data['config_password'] = $this->config->get('config_password');
+		$data['config_forgotten_password'] = $this->config->get('config_forgotten_password');
 		$data['config_encryption'] = $this->config->get('config_encryption');
 		$data['config_compression'] = $this->config->get('config_compression');
 		$data['config_error_display'] = $this->config->get('config_error_display');

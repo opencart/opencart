@@ -845,7 +845,7 @@ class Product extends \Opencart\System\Engine\Controller {
 							'product_option_value_id' => $product_option_value['product_option_value_id'],
 							'option_value_id'         => $product_option_value['option_value_id'],
 							'name'                    => $option_value_info['name'],
-							'price'                   => (float)$product_option_value['price'] ? $this->currency->format($product_option_value['price'], $this->config->get('config_currency')) : false,
+							'price'                   => filter_var($product_option_value['price'], FILTER_VALIDATE_FLOAT) ? $this->currency->format($product_option_value['price'], $this->config->get('config_currency')) : false,
 							'price_prefix'            => $product_option_value['price_prefix']
 						];
 					}
@@ -1194,7 +1194,7 @@ class Product extends \Opencart\System\Engine\Controller {
 									'product_option_value_id' => $product_option_value['product_option_value_id'],
 									'option_value_id'         => $product_option_value['option_value_id'],
 									'name'                    => $option_value_info['name'],
-									'price'                   => (float)$product_option_value['price'] ? $this->currency->format($product_option_value['price'], $this->config->get('config_currency')) : false,
+									'price'                   => filter_var($product_option_value['price'], FILTER_VALIDATE_FLOAT) ? $this->currency->format($product_option_value['price'], $this->config->get('config_currency')) : false,
 									'price_prefix'            => $product_option_value['price_prefix']
 								];
 							}

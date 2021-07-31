@@ -47,12 +47,14 @@ class Order extends \Opencart\System\Engine\Controller {
 		$download_status = false;
 
 		$order_products = $this->model_checkout_order->getProducts($order_info['order_id']);
+		
+		$this->load->model('catalog/product');
 
 		foreach ($order_products as $order_product) {
 			// Check if there are any linked downloads
-			$product_download_query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "product_to_download` WHERE `product_id` = '" . (int)$order_product['product_id'] . "'");
+			$product_download_total = $this->model_catalog_product->getTotalDownloads($order_product['product_id']);
 
-			if ($product_download_query->row['total']) {
+			if ($product_download_total) {
 				$download_status = true;
 			}
 		}
@@ -405,16 +407,18 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		if ($order_info && !$order_info['order_status_id'] && $order_status_id && in_array('order', (array)$this->config->get('config_mail_alert'))) {
 			$this->load->language('mail/order_alert');
+			
+			$this->load->model('localisation/order_status');
 
 			$subject = html_entity_decode(sprintf($this->language->get('text_subject'), $this->config->get('config_name'), $order_info['order_id']), ENT_QUOTES, 'UTF-8');
 
 			$data['order_id'] = $order_info['order_id'];
 			$data['date_added'] = date($this->language->get('date_format_short'), strtotime($order_info['date_added']));
 
-			$order_status_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_status` WHERE `order_status_id` = '" . (int)$order_status_id . "' AND `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
+			$order_status = $this->model_localisation_order_status->getOrderStatus($order_status_id);
 
-			if ($order_status_query->num_rows) {
-				$data['order_status'] = $order_status_query->row['name'];
+			if ($order_status) {
+				$data['order_status'] = $order_status['name'];
 			} else {
 				$data['order_status'] = '';
 			}

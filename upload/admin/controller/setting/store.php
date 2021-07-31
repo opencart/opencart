@@ -178,6 +178,7 @@ class Store extends \Opencart\System\Engine\Controller {
 			$data['config_theme'] = '';
 		}
 
+		// Themes
 		$data['themes'] = [];
 
 		$this->load->model('setting/extension');
@@ -201,6 +202,7 @@ class Store extends \Opencart\System\Engine\Controller {
 			$data['config_layout_id'] = '';
 		}
 
+		// Layouts
 		$this->load->model('design/layout');
 
 		$data['layouts'] = $this->model_design_layout->getLayouts();
@@ -251,6 +253,7 @@ class Store extends \Opencart\System\Engine\Controller {
 
 		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', 100, 100);
 
+		// Thumb
 		if (is_file(DIR_IMAGE . html_entity_decode($data['config_image'], ENT_QUOTES, 'UTF-8'))) {
 			$data['thumb'] = $this->model_tool_image->resize(html_entity_decode($data['config_image'], ENT_QUOTES, 'UTF-8'), 750, 90);
 		} else {
@@ -269,6 +272,7 @@ class Store extends \Opencart\System\Engine\Controller {
 			$data['config_comment'] = '';
 		}
 
+		// Locations
 		$this->load->model('localisation/location');
 
 		$data['locations'] = $this->model_localisation_location->getLocations();
@@ -279,6 +283,7 @@ class Store extends \Opencart\System\Engine\Controller {
 			$data['config_location'] = [];
 		}
 
+		// Localisation
 		if (isset($store_info['config_country_id'])) {
 			$data['config_country_id'] = $store_info['config_country_id'];
 		} else {
@@ -294,7 +299,8 @@ class Store extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['config_zone_id'] = $this->config->get('config_zone_id');
 		}
-
+		
+		// Languages
 		if (isset($store_info['config_language'])) {
 			$data['config_language'] = $store_info['config_language'];
 		} else {
@@ -305,6 +311,7 @@ class Store extends \Opencart\System\Engine\Controller {
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
+		// Currencies
 		if (isset($store_info['config_currency'])) {
 			$data['config_currency'] = $store_info['config_currency'];
 		} else {
@@ -322,6 +329,7 @@ class Store extends \Opencart\System\Engine\Controller {
 			$data['config_product_description_length'] = 100;
 		}
 
+		// Pagimation
 		if (isset($store_info['config_pagination'])) {
 			$data['config_pagination'] = $store_info['config_pagination'];
 		} else {
@@ -334,18 +342,21 @@ class Store extends \Opencart\System\Engine\Controller {
 			$data['config_product_count'] = 10;
 		}
 
+		// Cookie
 		if (isset($store_info['config_cookie_id'])) {
 			$data['config_cookie_id'] = $store_info['config_cookie_id'];
 		} else {
 			$data['config_cookie_id'] = '';
 		}
 
+		// GDPR
 		if (isset($store_info['config_gdpr_id'])) {
 			$data['config_gdpr_id'] = $store_info['config_gdpr_id'];
 		} else {
 			$data['config_gdpr_id'] = '';
 		}
 
+		// Taxes
 		if (isset($store_info['config_tax'])) {
 			$data['config_tax'] = $store_info['config_tax'];
 		} else {
@@ -364,6 +375,7 @@ class Store extends \Opencart\System\Engine\Controller {
 			$data['config_tax_customer'] = '';
 		}
 
+		// Customer Group
 		if (isset($store_info['config_customer_group_id'])) {
 			$data['config_customer_group_id'] = $store_info['config_customer_group_id'];
 		} else {
@@ -386,6 +398,7 @@ class Store extends \Opencart\System\Engine\Controller {
 			$data['config_customer_price'] = '';
 		}
 
+		// Informations
 		if (isset($store_info['config_account_id'])) {
 			$data['config_account_id'] = $store_info['config_account_id'];
 		} else {
@@ -414,6 +427,7 @@ class Store extends \Opencart\System\Engine\Controller {
 			$data['config_checkout_id'] = '';
 		}
 
+		// Order Statuses
 		if (isset($store_info['config_order_status_id'])) {
 			$data['config_order_status_id'] = $store_info['config_order_status_id'];
 		} else {
@@ -443,16 +457,14 @@ class Store extends \Opencart\System\Engine\Controller {
 			$data['config_logo'] = '';
 		}
 
-		$this->load->model('tool/image');
-
-		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', 100, 100);
-
+		// Logo
 		if (is_file(DIR_IMAGE . html_entity_decode($data['config_logo'], ENT_QUOTES, 'UTF-8'))) {
 			$data['logo'] = $this->model_tool_image->resize(html_entity_decode($data['config_logo'], ENT_QUOTES, 'UTF-8'), 100, 100);
 		} else {
 			$data['logo'] = $data['placeholder'];
 		}
 
+		// Dimensions
 		if (isset($store_info['config_image_category_width'])) {
 			$data['config_image_category_width'] = $store_info['config_image_category_width'];
 		} else {

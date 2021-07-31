@@ -284,16 +284,17 @@ class Register extends \Opencart\System\Engine\Controller {
 				$customer_group_id = $this->config->get('config_customer_group_id');
 			}
 
+			// Use _custromer to separate error ids
 			if ((utf8_strlen(trim($this->request->post['firstname'])) < 1) || (utf8_strlen(trim($this->request->post['firstname'])) > 32)) {
-				$json['error']['firstname'] = $this->language->get('error_firstname');
+				$json['error']['customer_firstname'] = $this->language->get('error_firstname');
 			}
 
 			if ((utf8_strlen(trim($this->request->post['lastname'])) < 1) || (utf8_strlen(trim($this->request->post['lastname'])) > 32)) {
-				$json['error']['lastname'] = $this->language->get('error_lastname');
+				$json['error']['customer_lastname'] = $this->language->get('error_lastname');
 			}
 
 			if ((utf8_strlen($this->request->post['email']) > 96) || !filter_var($this->request->post['email'], FILTER_VALIDATE_EMAIL)) {
-				$json['error']['email'] = $this->language->get('error_email');
+				$json['error']['customer_email'] = $this->language->get('error_email');
 			}
 
 			$this->load->model('account/customer');
@@ -303,7 +304,7 @@ class Register extends \Opencart\System\Engine\Controller {
 			}
 
 			if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
-				$json['error']['telephone'] = $this->language->get('error_telephone');
+				$json['error']['customer_telephone'] = $this->language->get('error_telephone');
 			}
 
 			// Custom field validation
@@ -313,22 +314,30 @@ class Register extends \Opencart\System\Engine\Controller {
 
 			foreach ($custom_fields as $custom_field) {
 				if ($custom_field['location'] == 'account') {
+
 					if ($custom_field['required'] && empty($this->request->post['customer_custom_field'][$custom_field['location']][$custom_field['custom_field_id']])) {
-						$json['error']['custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
+						$json['error']['customer_custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
 					} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !preg_match(html_entity_decode($custom_field['validation'], ENT_QUOTES, 'UTF-8'), $this->request->post['custom_field'][$custom_field['location']][$custom_field['custom_field_id']])) {
-						$json['error']['custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_regex'), $custom_field['name']);
+						$json['error']['customer_custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_regex'), $custom_field['name']);
 					}
+
 				}
 			}
 
+
+			//print_r($this->request->post);
+
 			if ($this->request->post['account']) {
+
+
 				if ((utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) < 4) || (utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) > 40)) {
-					$json['error']['password'] = $this->language->get('error_password');
+					$json['error']['customer_password'] = $this->language->get('error_password');
 				}
 
 				if ($this->request->post['confirm'] != $this->request->post['password']) {
-					$json['error']['confirm'] = $this->language->get('error_confirm');
+					$json['error']['customer_confirm'] = $this->language->get('error_confirm');
 				}
+
 			}
 
 			// Payment Address
@@ -471,7 +480,7 @@ class Register extends \Opencart\System\Engine\Controller {
 				}
 
 				// Add shipping address to customer account
-				if ($this->cart->hasShipping()) {
+				if ($this->cart->hasShipping() && !$this->request->post['shipping_address']) {
 					$shipping_address_data = [
 						'firstname'    => $this->request->post['shipping_firstname'],
 						'lastname'     => $this->request->post['shipping_lastname'],

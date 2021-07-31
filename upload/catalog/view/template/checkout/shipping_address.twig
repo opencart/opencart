@@ -59,7 +59,7 @@
       {% for custom_field in custom_fields %}
 
         {% if custom_field.type == 'select' %}
-          <div class="col mb-3{% if custom_field.required %} required{% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
+          <div class="col mb-3{% if custom_field.required %} required{% endif %} custom-field" data-oc-sort="{{ custom_field.sort_order }}">
             <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
 
             <select name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-select">
@@ -73,7 +73,7 @@
         {% endif %}
 
         {% if custom_field.type == 'radio' %}
-          <div class="col mb-3{% if custom_field.required %} required{% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
+          <div class="col mb-3{% if custom_field.required %} required{% endif %} custom-field" data-oc-sort="{{ custom_field.sort_order }}">
             <label class="form-label">{{ custom_field.name }}</label>
 
             <div id="input-shipping-custom-field-{{ custom_field.custom_field_id }}">
@@ -88,7 +88,7 @@
         {% endif %}
 
         {% if custom_field.type == 'checkbox' %}
-          <div class="col mb-3{% if custom_field.required %} required{% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
+          <div class="col mb-3{% if custom_field.required %} required{% endif %} custom-field" data-oc-sort="{{ custom_field.sort_order }}">
             <label class="form-label">{{ custom_field.name }}</label>
 
             <div id="input-shipping-custom-field-{{ custom_field.custom_field_id }}">
@@ -103,7 +103,7 @@
         {% endif %}
 
         {% if custom_field.type == 'text' %}
-          <div class="col mb-3{% if custom_field.required %} required{% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
+          <div class="col mb-3{% if custom_field.required %} required{% endif %} custom-field" data-oc-sort="{{ custom_field.sort_order }}">
             <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
             <div class="col-sm-10">
               <input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{{ custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
@@ -112,7 +112,7 @@
         {% endif %}
 
         {% if custom_field.type == 'textarea' %}
-          <div class="col mb-3{% if custom_field.required %} required{% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
+          <div class="col mb-3{% if custom_field.required %} required{% endif %} custom-field" data-oc-sort="{{ custom_field.sort_order }}">
             <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
             <div class="col-sm-10">
               <textarea name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" rows="5" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-control">{{ custom_field.value }}</textarea>
@@ -121,17 +121,17 @@
         {% endif %}
 
         {% if custom_field.type == 'file' %}
-          <div class="col mb-3{% if custom_field.required %} required{% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
+          <div class="col mb-3{% if custom_field.required %} required{% endif %} custom-field" data-oc-sort="{{ custom_field.sort_order }}">
             <label class="form-label">{{ custom_field.name }}</label>
             <div class="col-sm-10">
-              <button type="button" id="button-shipping-custom-field-{{ custom_field.custom_field_id }}" data-loading-text="{{ text_loading }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
+              <button type="button" data-oc-upload="index.php?route=tool/upload" data-loading-text="{{ text_loading }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
               <input type="hidden" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}"/>
             </div>
           </div>
         {% endif %}
 
         {% if custom_field.type == 'date' %}
-          <div class="col mb-3{% if custom_field.required %} required{% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
+          <div class="col mb-3{% if custom_field.required %} required{% endif %} custom-field" data-oc-sort="{{ custom_field.sort_order }}">
             <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
             <div class="col-sm-10">
               <div class="input-group date">
@@ -143,7 +143,7 @@
         {% endif %}
 
         {% if custom_field.type == 'time' %}
-          <div class="col mb-3{% if custom_field.required %} required{% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
+          <div class="col mb-3{% if custom_field.required %} required{% endif %} custom-field" data-oc-sort="{{ custom_field.sort_order }}">
             <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
             <div class="col-sm-10">
               <div class="input-group time">
@@ -154,7 +154,7 @@
           </div>
         {% endif %}
         {% if custom_field.type == 'datetime' %}
-          <div class="row mb-3{% if custom_field.required %} required{% endif %} custom-field" data-sort="{{ custom_field.sort_order }}">
+          <div class="row mb-3{% if custom_field.required %} required{% endif %} custom-field" data-oc-sort="{{ custom_field.sort_order }}">
             <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
             <div class="col-sm-10">
               <div class="input-group datetime">
@@ -190,7 +190,7 @@ $('#button-shipping-address').on('click', function() {
         return $.ajax({
             url: 'index.php?route=checkout/shipping_address|save',
             type: 'post',
-            data: $('#collapse-shipping-address input[type=\'text\'], #collapse-shipping-address input[type=\'date\'], #collapse-shipping-address input[type=\'datetime-local\'], #collapse-shipping-address input[type=\'time\'], #collapse-shipping-address input[type=\'password\'], #collapse-shipping-address input[type=\'checkbox\']:checked, #collapse-shipping-address input[type=\'radio\']:checked, #collapse-shipping-address textarea, #collapse-shipping-address select'),
+            data: $('#checkout-shipping-address input[type=\'text\'], #checkout-shipping-address input[type=\'date\'], #checkout-shipping-address input[type=\'datetime-local\'], #checkout-shipping-address input[type=\'time\'], #checkout-shipping-address input[type=\'password\'], #checkout-shipping-address input[type=\'checkbox\']:checked, #checkout-shipping-address input[type=\'radio\']:checked, #checkout-shipping-address textarea, #checkout-shipping-address select'),
             dataType: 'json',
             beforeSend: function() {
                 $('#button-shipping-address').button('loading');
@@ -205,7 +205,7 @@ $('#button-shipping-address').on('click', function() {
                     $('#button-shipping-address').button('reset');
 
                     if (json['error']['warning']) {
-                        $('#collapse-shipping-address .card-body').prepend('<div class="alert alert-warning alert-dismissible">' + json['error']['warning'] + '<button type="button" class="btn-close" data-dismiss="alert"></button></div>');
+                        $('#checkout-shipping-address .card-body').prepend('<div class="alert alert-warning alert-dismissible">' + json['error']['warning'] + '<button type="button" class="btn-close" data-dismiss="alert"></button></div>');
                     }
 
                     for (i in json['error']) {
@@ -231,7 +231,7 @@ $('#button-shipping-address').on('click', function() {
                                 $('#button-shipping-address').button('reset');
                             },
                             success: function(html) {
-                                $('#collapse-shipping-method .card-body').html(html);
+                                $('#checkout-shipping-method .card-body').html(html);
 
                                 $('#heading-shipping-method').attr('data-bs-toggle', 'collapse');
 
@@ -251,7 +251,7 @@ $('#button-shipping-address').on('click', function() {
                             url: 'index.php?route=checkout/payment_address',
                             dataType: 'html',
                             success: function(html) {
-                                $('#collapse-payment-address .card-body').html(html);
+                                $('#checkout-payment-address .card-body').html(html);
                             },
                             error: function(xhr, ajaxOptions, thrownError) {
                                 alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -264,7 +264,7 @@ $('#button-shipping-address').on('click', function() {
                             url: 'index.php?route=checkout/shipping_address',
                             dataType: 'html',
                             success: function(html) {
-                                $('#collapse-shipping-address .card-body').html(html);
+                                $('#checkout-shipping-address .card-body').html(html);
                             },
                             error: function(xhr, ajaxOptions, thrownError) {
                                 alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -281,86 +281,23 @@ $('#button-shipping-address').on('click', function() {
 });
 //--></script>
 <script type="text/javascript"><!--
-$('#collapse-shipping-address .mb-3[data-sort]').detach().each(function() {
-    if ($(this).attr('data-sort') >= 0 && $(this).attr('data-sort') <= $('#collapse-shipping-address .mb-3').length - 2) {
-        $('#collapse-shipping-address .mb-3').eq(parseInt($(this).attr('data-sort')) + 2).before(this);
+$('#checkout-shipping-address .mb-3[data-oc-sort]').detach().each(function() {
+    if ($(this).attr('data-oc-sort') >= 0 && $(this).attr('data-oc-sort') <= $('#checkout-shipping-address .mb-3').length - 2) {
+        $('#checkout-shipping-address .mb-3').eq(parseInt($(this).attr('data-oc-sort')) + 2).before(this);
     }
 
-    if ($(this).attr('data-sort') > $('#collapse-shipping-address .mb-3').length - 2) {
-        $('#collapse-shipping-address .mb-3:last').after(this);
+    if ($(this).attr('data-oc-sort') > $('#checkout-shipping-address .mb-3').length - 2) {
+        $('#checkout-shipping-address .mb-3:last').after(this);
     }
 
-    if ($(this).attr('data-sort') == $('#collapse-shipping-address .mb-3').length - 2) {
-        $('#collapse-shipping-address .mb-3:last').after(this);
+    if ($(this).attr('data-oc-sort') == $('#checkout-shipping-address .mb-3').length - 2) {
+        $('#checkout-shipping-address .mb-3:last').after(this);
     }
 
-    if ($(this).attr('data-sort') < -$('#collapse-shipping-address .mb-3').length - 2) {
-        $('#collapse-shipping-address .mb-3:first').before(this);
+    if ($(this).attr('data-oc-sort') < -$('#checkout-shipping-address .mb-3').length - 2) {
+        $('#checkout-shipping-address .mb-3:first').before(this);
     }
 });
-//--></script>
-<script type="text/javascript"><!--
-$('#collapse-shipping-address button[id^=\'button-shipping-custom-field\']').on('click', function() {
-    var element = this;
-
-    $('#form-upload').remove();
-
-    $('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" /></form>');
-
-    $('#form-upload input[name=\'file\']').trigger('click');
-
-    $('#form-upload input[name=\'file\']').on('change', function() {
-        if (this.files[0].size > {{ config_file_max_size }}) {
-            $(this).val('');
-
-            alert('{{ error_upload_size }}');
-        }
-    });
-
-    if (typeof timer != 'undefined') {
-        clearInterval(timer);
-    }
-
-    timer = setInterval(function() {
-        if ($('#form-upload input[name=\'file\']').val() != '') {
-            clearInterval(timer);
-
-            $.ajax({
-                url: 'index.php?route=tool/upload',
-                type: 'post',
-                dataType: 'json',
-                data: new FormData($('#form-upload')[0]),
-                cache: false,
-                contentType: false,
-                processData: false,
-                beforeSend: function() {
-                    $(element).button('loading');
-                },
-                complete: function() {
-                    $(element).button('reset');
-                },
-                success: function(json) {
-                    $(element).parent().find('.text-danger').remove();
-
-                    if (json['error']) {
-                        $(element).parent().find('input[name^=\'custom_field\']').after('<div class="text-danger">' + json['error'] + '</div>');
-                    }
-
-                    if (json['success']) {
-                        alert(json['success']);
-
-                        $(element).parent().find('input[name^=\'custom_field\']').val(json['code']);
-                    }
-                },
-                error: function(xhr, ajaxOptions, thrownError) {
-                    alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-                }
-            });
-        }
-    }, 500);
-});
-//--></script>
-<script type="text/javascript"><!--
 $('.date').datetimepicker({
     'format': 'YYYY-MM-DD',
     'locale': '{{ datepicker }}',
@@ -378,25 +315,23 @@ $('.datetime').datetimepicker({
     'locale': '{{ datepicker }}',
     'allowInputToggle': true
 });
-//--></script>
-<script type="text/javascript"><!--
-$('#collapse-shipping-address select[name=\'country_id\']').on('change', function() {
 
+$('#checkout-shipping-address select[name=\'country_id\']').on('change', function() {
     chain.attach(function() {
         return $.ajax({
-            url: 'index.php?route=localisation/country&country_id=' + $('#collapse-shipping-address select[name=\'country_id\']').val(),
+            url: 'index.php?route=localisation/country&country_id=' + $('#checkout-shipping-address select[name=\'country_id\']').val(),
             dataType: 'json',
             beforeSend: function() {
-                $('#collapse-shipping-address select[name=\'country_id\']').prop('disabled', true);
+                $('#checkout-shipping-address select[name=\'country_id\']').prop('disabled', true);
             },
             complete: function() {
-                $('#collapse-shipping-address select[name=\'country_id\']').prop('disabled', false);
+                $('#checkout-shipping-address select[name=\'country_id\']').prop('disabled', false);
             },
             success: function(json) {
                 if (json['postcode_required'] == '1') {
-                    $('#collapse-shipping-address input[name=\'postcode\']').parent().parent().addClass('required');
+                    $('#checkout-shipping-address input[name=\'postcode\']').parent().parent().addClass('required');
                 } else {
-                    $('#collapse-shipping-address input[name=\'postcode\']').parent().parent().removeClass('required');
+                    $('#checkout-shipping-address input[name=\'postcode\']').parent().parent().removeClass('required');
                 }
 
                 html = '<option value="">{{ text_select }}</option>';
@@ -415,7 +350,7 @@ $('#collapse-shipping-address select[name=\'country_id\']').on('change', functio
                     html += '<option value="0" selected="selected">{{ text_none }}</option>';
                 }
 
-                $('#collapse-shipping-address select[name=\'zone_id\']').html(html);
+                $('#checkout-shipping-address select[name=\'zone_id\']').html(html);
             },
             error: function(xhr, ajaxOptions, thrownError) {
                 alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -424,5 +359,5 @@ $('#collapse-shipping-address select[name=\'country_id\']').on('change', functio
     });
 });
 
-$('#collapse-shipping-address select[name=\'country_id\']').trigger('change');
+$('#checkout-shipping-address select[name=\'country_id\']').trigger('change');
 //--></script>

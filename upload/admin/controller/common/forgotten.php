@@ -8,7 +8,7 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 			$this->response->redirect($this->url->link('common/login'));
 		}
 
-		if (!$this->config->get('config_password')) {
+		if (!$this->config->get('config_forgotten_password')) {
 			$this->response->redirect($this->url->link('common/login'));
 		}
 
@@ -54,7 +54,7 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 			$json['redirect'] = $this->url->link('common/login');
 		}
 
-		if (!$this->config->get('config_password')) {
+		if (!$this->config->get('config_forgotten_password')) {
 			$json['redirect'] = $this->url->link('common/login');
 		}
 
@@ -97,7 +97,7 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 			$this->response->redirect($this->url->link('common/login'));
 		}
 
-		if (!$this->config->get('config_password')) {
+		if (!$this->config->get('config_forgotten_password')) {
 			$this->session->data['error'] = $this->language->get('error_disabled');
 
 			$this->response->redirect($this->url->link('common/login'));

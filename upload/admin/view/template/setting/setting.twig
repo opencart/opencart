@@ -655,11 +655,8 @@
                     <label class="col-sm-2 col-form-label">{{ entry_stock_display }}</label>
                     <div class="col-sm-10">
                       <div class="btn-group">
-
                         <input type="radio" name="config_stock_display" value="1" id="input-stock-display-yes" class="btn-check"{% if config_stock_display %} checked{% endif %}/> <label for="input-stock-display-yes" class="btn btn-outline-secondary">{{ text_yes }}</label>
-
                         <input type="radio" name="config_stock_display" value="0" id="input-stock-display-no" class="btn-check"{% if not config_stock_display %} checked{% endif %}/> <label for="input-stock-display-no" class="btn btn-outline-secondary">{{ text_no }}</label>
-
                       </div>
                       <div class="form-text text-muted">{{ help_stock_display }}</div>
                     </div>
@@ -668,11 +665,8 @@
                     <label class="col-sm-2 col-form-label">{{ entry_stock_warning }}</label>
                     <div class="col-sm-10">
                       <div class="btn-group">
-
                         <input type="radio" name="config_stock_warning" value="1" id="input-stock-warning-yes" class="btn-check"{% if config_stock_warning %} checked{% endif %}/> <label for="input-stock-warning-yes" class="btn btn-outline-secondary">{{ text_yes }}</label>
-
                         <input type="radio" name="config_stock_warning" value="0" id="input-stock-warning-no" class="btn-check"{% if not config_stock_warning %} checked{% endif %}/> <label for="input-stock-warning-no" class="btn btn-outline-secondary">{{ text_no }}</label>
-
                       </div>
                       <div class="form-text text-muted">{{ help_stock_warning }}</div>
                     </div>
@@ -681,11 +675,8 @@
                     <label class="col-sm-2 col-form-label">{{ entry_stock_checkout }}</label>
                     <div class="col-sm-10">
                       <div class="btn-group">
-
                         <input type="radio" name="config_stock_checkout" value="1" id="input-stock-checkout-yes" class="btn-check"{% if config_stock_checkout %} checked{% endif %}/> <label for="input-stock-checkout-yes" class="btn btn-outline-secondary">{{ text_yes }}</label>
-
                         <input type="radio" name="config_stock_checkout" value="0" id="input-stock-checkout-no" class="btn-check"{% if not config_stock_checkout %} checked{% endif %}/> <label for="input-stock-checkout-no" class="btn btn-outline-secondary">{{ text_no }}</label>
-
                       </div>
                       <div class="form-text text-muted">{{ help_stock_checkout }}</div>
                     </div>
@@ -699,11 +690,8 @@
                     <label class="col-sm-2 col-form-label">{{ entry_affiliate_status }}</label>
                     <div class="col-sm-10">
                       <div class="btn-group">
-
                         <input type="radio" name="config_affiliate_status" value="1" id="input-affiliate-status-yes" class="btn-check"{% if config_affiliate_status %} checked{% endif %}/> <label for="input-affiliate-status-yes" class="btn btn-outline-secondary">{{ text_yes }}</label>
-
                         <input type="radio" name="config_affiliate_status" value="0" id="input-affiliate-status-no" class="btn-check"{% if not config_affiliate_status %} checked{% endif %}/> <label for="input-affiliate-status-no" class="btn btn-outline-secondary">{{ text_no }}</label>
-
                       </div>
                       <div class="form-text text-muted">{{ help_affiliate_status }}</div>
                     </div>
@@ -722,11 +710,8 @@
                     <label class="col-sm-2 col-form-label">{{ entry_affiliate_approval }}</label>
                     <div class="col-sm-10">
                       <div class="btn-group">
-
                         <input type="radio" name="config_affiliate_approval" value="1" id="input-affiliate-approval-yes" class="btn-check"{% if config_affiliate_approval %} checked{% endif %}/> <label for="input-affiliate-approval-yes" class="btn btn-outline-secondary">{{ text_yes }}</label>
-
                         <input type="radio" name="config_affiliate_approval" value="0" id="input-affiliate-approval-no" class="btn-check"{% if not config_affiliate_approval %} checked{% endif %}/> <label for="input-affiliate-approval-no" class="btn btn-outline-secondary">{{ text_no }}</label>
-
                       </div>
                       <div class="form-text text-muted">{{ help_affiliate_approval }}</div>
                     </div>
@@ -735,11 +720,8 @@
                     <label class="col-sm-2 col-form-label">{{ entry_affiliate_auto }}</label>
                     <div class="col-sm-10">
                       <div class="btn-group">
-
                         <input type="radio" name="config_affiliate_auto" value="1" id="input-affiliate-auto-yes" class="btn-check"{% if config_affiliate_auto %} checked{% endif %}/> <label for="input-affiliate-auto-yes" class="btn btn-outline-secondary">{{ text_yes }}</label>
-
                         <input type="radio" name="config_affiliate_auto" value="0" id="input-affiliate-auto-no" class="btn-check"{% if not config_affiliate_auto %} checked{% endif %}/> <label for="input-affiliate-auto-no" class="btn btn-outline-secondary">{{ text_no }}</label>
-
                       </div>
                       <div class="form-text text-muted">{{ help_affiliate_auto }}</div>
                     </div>
@@ -1049,24 +1031,25 @@
                   <label class="col-sm-2 col-form-label">{{ entry_maintenance }}</label>
                   <div class="col-sm-10">
                     <div class="btn-group">
-
                       <input type="radio" name="config_maintenance" value="1" id="input-maintenance-yes" class="btn-check"{% if config_maintenance %} checked{% endif %}/> <label for="input-maintenance-yes" class="btn btn-outline-secondary">{{ text_yes }}</label>
-
                       <input type="radio" name="config_maintenance" value="0" id="input-maintenance-no" class="btn-check"{% if not config_maintenance %} checked{% endif %}/> <label for="input-maintenance-no" class="btn btn-outline-secondary">{{ text_no }}</label>
-
                     </div>
                     <div class="form-text text-muted">{{ help_maintenance }}</div>
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="input-session-expire" class="col-sm-2 col-form-label">{{ entry_session_expire }}</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="config_session_expire" value="{{ config_session_expire }}" placeholder="{{ entry_session_expire }}" id="input-session-expire" class="form-control"/>
+                    <div class="form-text text-muted">{{ help_session_expire }}</div>
                   </div>
                 </div>
                 <div class="row mb-3">
                   <label class="col-sm-2 col-form-label">{{ entry_seo_url }}</label>
                   <div class="col-sm-10">
                     <div class="btn-group">
-
                       <input type="radio" name="config_seo_url" value="1" id="input-seo-url-yes" class="btn-check"{% if config_seo_url %} checked{% endif %}/> <label for="input-seo-url-yes" class="btn btn-outline-secondary">{{ text_yes }}</label>
-
                       <input type="radio" name="config_seo_url" value="0" id="input-seo-url-no" class="btn-check"{% if not config_seo_url %} checked{% endif %}/> <label for="input-seo-url-no" class="btn btn-outline-secondary">{{ text_no }}</label>
-
                     </div>
                     <div class="form-text text-muted">{{ help_seo_url }}</div>
                   </div>
@@ -1089,27 +1072,23 @@
               <fieldset>
                 <legend>{{ text_security }}</legend>
                 <div class="row mb-3">
-                  <label class="col-sm-2 col-form-label">{{ entry_password }}</label>
+                  <label class="col-sm-2 col-form-label">{{ entry_forgotten_password }}</label>
                   <div class="col-sm-10">
                     <div class="btn-group">
-
-                      <input type="radio" name="config_password" value="1" id="input-password-yes" class="btn-check"{% if config_password %} checked{% endif %}/> <label for="input-password-yes" class="btn btn-outline-secondary">{{ text_yes }}</label>
-
-                      <input type="radio" name="config_password" value="0" id="input-password-no" class="btn-check"{% if not config_password %} checked{% endif %}/> <label for="input-password-no" class="btn btn-outline-secondary">{{ text_no }}</label>
-
+                      <input type="radio" name="config_forgotten_password" value="1" id="input-password-yes" class="btn-check"{% if config_forgotten_password %} checked{% endif %}/>
+                      <label for="input-forgotten-password-yes" class="btn btn-outline-secondary">{{ text_yes }}</label>
+                      <input type="radio" name="config_forgotten_password" value="0" id="input-password-no" class="btn-check"{% if not config_forgotten_password %} checked{% endif %}/>
+                      <label for="input-forgotten-password-no" class="btn btn-outline-secondary">{{ text_no }}</label>
                     </div>
-                    <div class="form-text text-muted">{{ help_password }}</div>
+                    <div class="form-text text-muted">{{ help_forgotten_password }}</div>
                   </div>
                 </div>
                 <div class="row mb-3">
                   <label class="col-sm-2 col-form-label">{{ entry_shared }}</label>
                   <div class="col-sm-10">
                     <div class="btn-group">
-
                       <input type="radio" name="config_shared" value="1" id="input-shared-yes" class="btn-check"{% if config_shared %} checked{% endif %}/> <label for="input-shared-yes" class="btn btn-outline-secondary">{{ text_yes }}</label>
-
                       <input type="radio" name="config_shared" value="0" id="input-shared-no" class="btn-check"{% if not config_shared %} checked{% endif %}/> <label for="input-shared-no" class="btn btn-outline-secondary">{{ text_no }}</label>
-
                     </div>
                     <div class="form-text text-muted">{{ help_shared }}</div>
                   </div>
@@ -1152,11 +1131,8 @@
                   <label class="col-sm-2 col-form-label">{{ entry_error_display }}</label>
                   <div class="col-sm-10">
                     <div class="btn-group">
-
                       <input type="radio" name="config_error_display" value="1" id="input-error-display-yes" class="btn-check"{% if config_error_display %} checked{% endif %}/> <label for="input-error-display-yes" class="btn btn-outline-secondary">{{ text_yes }}</label>
-
                       <input type="radio" name="config_error_display" value="0" id="input-error-display-no" class="btn-check"{% if not config_error_display %} checked{% endif %}/> <label for="input-error-display-no" class="btn btn-outline-secondary">{{ text_no }}</label>
-
                     </div>
                   </div>
                 </div>

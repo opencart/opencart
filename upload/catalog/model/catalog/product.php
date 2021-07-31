@@ -509,7 +509,7 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 	
 	public function getTotalDownloads(int $product_id): int {
-		$query = $product_download_query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "product_to_download` WHERE `product_id` = '" . (int)$product_id . "'");	
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "product_to_download` WHERE `product_id` = '" . (int)$product_id . "'");	
 		
 		if (isset($query->row['total'])) {
 			return $query->row['total'];

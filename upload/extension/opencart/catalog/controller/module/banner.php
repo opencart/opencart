@@ -5,6 +5,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 		static $module = 0;
 
 		$this->load->model('design/banner');
+		
 		$this->load->model('tool/image');
 
 		$data['banners'] = [];

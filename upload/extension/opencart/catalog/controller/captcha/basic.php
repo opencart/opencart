@@ -12,7 +12,7 @@ class Basic extends \Opencart\System\Engine\Controller {
 	public function validate(): string {
 		$this->load->language('extension/opencart/captcha/basic');
 
-		if (empty($this->session->data['captcha']) || ($this->session->data['captcha'] != $this->request->post['captcha'])) {
+		if (!isset($this->session->data['captcha']) || !isset($this->request->post['captcha']) || ($this->session->data['captcha'] != $this->request->post['captcha'])) {
 			return $this->language->get('error_captcha');
 		} else {
 			return '';

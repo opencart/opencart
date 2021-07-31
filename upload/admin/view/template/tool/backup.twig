@@ -207,25 +207,25 @@ $('#history').on('click', '.btn-warning', function() {
 
 // Upload
 $('#button-upload').on('click', function() {
-    $('#upload-form').remove();
+    $('#form-upload').remove();
 
     $('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="upload" /></form>');
 
-    $('#upload-form input[name=\'upload\']').trigger('click');
+    $('#form-upload input[name=\'upload\']').trigger('click');
 
     if (typeof timer != 'undefined') {
         clearInterval(timer);
     }
 
     timer = setInterval(function() {
-        if ($('#upload-form input[name=\'upload\']').val() != '') {
+        if ($('#form-upload input[name=\'upload\']').val() != '') {
             clearInterval(timer);
 
             $.ajax({
                 url: 'index.php?route=tool/backup|upload&user_token={{ user_token }}',
                 type: 'post',
                 dataType: 'json',
-                data: new FormData($('#upload-form')[0]),
+                data: new FormData($('#form-upload')[0]),
                 cache: false,
                 contentType: false,
                 processData: false,

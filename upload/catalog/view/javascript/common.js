@@ -463,6 +463,72 @@ $(document).on('click', '[data-oc-action]', function() {
 	});
 });
 
+// Upload
+$(document).on('click', '[data-oc-upload]', function() {
+	var element = this;
+
+	$('#form-upload').remove();
+
+	$('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" /></form>');
+
+	$('#form-upload input[name=\'file\']').trigger('click');
+
+	$('#form-upload input[name=\'file\']').on('change', function() {
+		if (this.files[0].size > 0) {
+			//$(this).val('');
+
+			//alert('');
+		}
+	});
+
+	if (typeof timer != 'undefined') {
+		clearInterval(timer);
+	}
+
+	timer = setInterval(function() {
+		if ($('#form-upload input[name=\'file\']').val() != '') {
+			clearInterval(timer);
+
+			$.ajax({
+				url: $(element).attr('data-oc-upload'),
+				type: 'post',
+				dataType: 'json',
+				data: new FormData($('#form-upload')[0]),
+				cache: false,
+				contentType: false,
+				processData: false,
+				beforeSend: function() {
+					$(element).button('loading');
+				},
+				complete: function() {
+					$(element).button('reset');
+				},
+				success: function(json) {
+					$(element).parent().find('.invalid-tooltip').remove();
+
+					if (json['error']) {
+						$(element).after('<div class="invalid-tooltip d-inline">' + json['error'] + '</div>');
+					}
+
+					if (json['success']) {
+						alert(json['success']);
+
+						delete json['success'];
+
+						// Replace any form values that correspond to form names.
+						for (key in json) {
+							$(form).find('[name=\'' + key + '\']:input').val(json[key]);
+						}
+					}
+				},
+				error: function(xhr, ajaxOptions, thrownError) {
+					alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+				}
+			});
+		}
+	}, 500);
+});
+
 // Chain ajax calls.
 class Chain {
 	constructor() {

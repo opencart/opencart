@@ -1002,12 +1002,10 @@
                         <label class="col-sm-2 col-form-label">{{ option.name }}</label>
                         <div class="col-sm-10 col-md-4">
                           <div id="input-option-{{ option.product_option_id }}" class="input-group">
-                            <button type="button" id="button-upload-{{ option.product_option_id }}" data-oc-loading-text="{{ text_loading }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
+                            <button type="button" id="button-upload-{{ option.product_option_id }}" data-oc-upload="index.php?route=tool/upload|upload&user_token={{ user_token }}" data-oc-loading-text="{{ text_loading }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
                             <input type="hidden" name="variant[{{ option.product_option_id }}]" value="{{ variant[option.product_option_id] ? variant[option.product_option_id] : option.value }}"/>
                             <div class="form-check form-switch">
-
                               <input type="checkbox" name="override[variant][{{ option.product_option_id }}]" value="1" id="input-variant-option-{{ option.product_option_id }}" data-oc-toggle="switch" data-oc-target="#button-upload-{{ option.product_option_id }}" class="form-check-input"{% if override.variant[option.product_option_id] %} checked{% endif %}/>
-
                               <label for="input-variant-option-{{ option.product_option_id }}" class="custom-control-label"></label>
                             </div>
                           </div>
@@ -2039,69 +2037,6 @@ $('#button-recurring').on('click', function() {
     $('#product-recurring').append(html);
 
     recurring_row++;
-});
-//--></script>
-<script type="text/javascript"><!--
-$('#content').on('click', 'button[id^=\'button-upload\']', function() {
-    var element = this;
-
-    $('#upload-form').remove();
-
-    $('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" /></form>');
-
-    $('#upload-form input[name=\'file\']').trigger('click');
-
-    $('#upload-form input[name=\'file\']').on('change', function() {
-        if (this.files[0].size > {{ config_file_max_size }}) {
-            $(this).val('');
-
-            alert('{{ error_upload_size }}');
-        }
-    });
-
-    if (typeof timer != 'undefined') {
-        clearInterval(timer);
-    }
-
-    timer = setInterval(function() {
-        if ($('#upload-form input[name=\'file\']').val() != '') {
-            clearInterval(timer);
-
-            $.ajax({
-                url: 'index.php?route=tool/upload|upload&user_token={{ user_token }}',
-                type: 'post',
-                dataType: 'json',
-                data: new FormData($('#upload-form')[0]),
-                cache: false,
-                contentType: false,
-                processData: false,
-                beforeSend: function() {
-                    $(element).button('loading');
-                },
-                complete: function() {
-                    $(element).button('reset');
-                },
-                success: function(json) {
-                    $(element).parent().find('.invalid-tooltip').remove();
-
-                    if (json['error']) {
-                        $(element).parent().find('input[type=\'hidden\']').after('<div class="invalid-tooltip d-inline">' + json['error'] + '</div>');
-                    }
-
-                    if (json['success']) {
-                        alert(json['success']);
-                    }
-
-                    if (json['code']) {
-                        $(element).parent().find('input[type=\'hidden\']').val(json['code']);
-                    }
-                },
-                error: function(xhr, ajaxOptions, thrownError) {
-                    alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-                }
-            });
-        }
-    }, 500);
 });
 
 $('.date').datetimepicker({

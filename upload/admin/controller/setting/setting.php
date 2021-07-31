@@ -765,10 +765,6 @@ class Setting extends \Opencart\System\Engine\Controller {
 			$json['error']['encryption'] = $this->language->get('error_encryption');
 		}
 		
-		if (filter_var($this->request->post['config_product_count'], FILTER_VALIDATE_INT) === false) {
-			$json['error']['product_count'] = $this->language->get('error_product_count');	
-		}
-
 		if (isset($json['error']) && !isset($json['error']['warning'])) {
 			$json['error']['warning'] = $this->language->get('error_warning');
 		}

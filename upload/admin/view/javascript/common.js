@@ -139,87 +139,99 @@ $(document).ajaxStop(function(e) {
 });
 */
 // Forms
-$(document).on('click', '[data-oc-action]', function() {
-    var element = this;
+$(document).ready(function() {
+    $(document).on('click', '[data-oc-action]', function() {
+        var element = this;
 
-    var form = $(element).attr('data-oc-form');
+        var form = $(element).attr('data-oc-form');
 
-    $.ajax({
-        url: $(element).attr('data-oc-action'),
-        type: 'post',
-        dataType: 'json',
-        data: new FormData($(form)[0]),
-        cache: false,
-        contentType: false,
-        processData: false,
-        beforeSend: function() {
-            $(element).button('loading');
-        },
-        complete: function() {
-            $(element).button('reset');
-        },
-        success: function(json) {
-            $('.invalid-tooltip, .alert-dismissible').remove();
+        // https://github.com/opencart/opencart/issues/9690
+        if (typeof CKEDITOR != 'undefined') {
+            for (instance in CKEDITOR.instances) {
+                CKEDITOR.instances[instance].updateElement();
 
-            console.log(json);
-
-            if (json['redirect']) {
-                location = json['redirect'];
-
-                // Not sure this part works
-                delete json['redirect'];
+                console.log("updateElement called for '" + CKEDITOR.instances[instance] + "'");
             }
-
-            if (typeof json['error'] == 'object') {
-                if (json['error']['warning']) {
-                    $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-                }
-
-                for (key in json['error']) {
-                    var element = $('#input-' + key.replaceAll('_', '-'));
-
-                    // Highlight any found errors
-                    $(element).addClass('is-invalid');
-
-                    if ($(element).parent().hasClass('input-group')) {
-                        $(element).parent().after('<div class="invalid-tooltip d-inline">' + json['error'][key] + '</div>');
-                    } else {
-                        $(element).after('<div class="invalid-tooltip d-inline">' + json['error'][key] + '</div>');
-                    }
-                }
-
-                delete json['error'];
-            }
-
-            if (typeof json['error'] == 'string') {
-                $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                delete json['error'];
-            }
-
-            if (json['success']) {
-                $('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                // Refresh
-                var url = $(form).attr('data-oc-load');
-                var target = $(form).attr('data-oc-target');
-
-                if (typeof url !== typeof undefined && typeof target !== typeof undefined) {
-                    $(target).load(url);
-                }
-
-                $(target).find('[data-bs-toggle=\'tooltip\']').tooltip();
-
-                delete json['success'];
-            }
-
-            for (key in json) {
-                $(form).find('[name=\'' + key + '\']').val(json[key]);
-            }
-        },
-        error: function(xhr, ajaxOptions, thrownError) {
-            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
+
+        $.ajax({
+            url: $(element).attr('data-oc-action'),
+            type: 'post',
+            dataType: 'json',
+            data: new FormData($(form)[0]),
+            cache: false,
+            contentType: false,
+            processData: false,
+            beforeSend: function() {
+                $(element).button('loading');
+            },
+            complete: function() {
+                $(element).button('reset');
+            },
+            success: function(json) {
+                $('.invalid-tooltip, .alert-dismissible').remove();
+
+                console.log(json);
+
+                if (json['redirect']) {
+                    location = json['redirect'];
+
+                    // Not sure this part works
+                    delete json['redirect'];
+                }
+
+                if (typeof json['error'] == 'object') {
+                    if (json['error']['warning']) {
+                        $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    }
+
+                    for (key in json['error']) {
+                        var element = $('#input-' + key.replaceAll('_', '-'));
+
+                        // Highlight any found errors
+                        $(element).addClass('is-invalid');
+
+                        if ($(element).parent().hasClass('input-group')) {
+                            $(element).parent().after('<div class="invalid-tooltip d-inline">' + json['error'][key] + '</div>');
+                        } else {
+                            $(element).after('<div class="invalid-tooltip d-inline">' + json['error'][key] + '</div>');
+                        }
+                    }
+
+                    delete json['error'];
+                }
+
+                if (typeof json['error'] == 'string') {
+                    $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                    delete json['error'];
+                }
+
+                if (json['success']) {
+                    $('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                    // Refresh
+                    var url = $(form).attr('data-oc-load');
+                    var target = $(form).attr('data-oc-target');
+
+                    if (typeof url !== typeof undefined && typeof target !== typeof undefined) {
+                        $(target).load(url);
+                    }
+
+                    $(target).find('[data-bs-toggle=\'tooltip\']').tooltip();
+
+                    delete json['success'];
+                }
+
+                // Replace any form values that correspond to form names.
+                for (key in json) {
+                    $(form).find('[name=\'' + key + '\']').val(json[key]);
+                }
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
+        });
     });
 });
 
@@ -227,17 +239,17 @@ $(document).on('click', '[data-oc-action]', function() {
 $(document).on('click', '[data-oc-upload]', function() {
     var element = this;
 
-    $('#upload-form').remove();
+    $('#form-upload').remove();
 
     $('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" /></form>');
 
-    $('#upload-form input[name=\'file\']').trigger('click');
+    $('#form-upload input[name=\'file\']').trigger('click');
 
-    $('#upload-form input[name=\'file\']').on('change', function() {
+    $('#form-upload input[name=\'file\']').on('change', function() {
         if (this.files[0].size > 0) {
-            $(this).val('');
+            //$(this).val('');
 
-            alert('');
+            //alert('');
         }
     });
 
@@ -246,14 +258,14 @@ $(document).on('click', '[data-oc-upload]', function() {
     }
 
     timer = setInterval(function() {
-        if ($('#upload-form input[name=\'file\']').val() != '') {
+        if ($('#form-upload input[name=\'file\']').val() != '') {
             clearInterval(timer);
 
             $.ajax({
-                url: 'index.php?route=tool/upload|upload&user_token={{ user_token }}',
+                url: $(element).attr('data-oc-upload'),
                 type: 'post',
                 dataType: 'json',
-                data: new FormData($('#upload-form')[0]),
+                data: new FormData($('#form-upload')[0]),
                 cache: false,
                 contentType: false,
                 processData: false,
@@ -267,15 +279,16 @@ $(document).on('click', '[data-oc-upload]', function() {
                     $(element).parent().find('.invalid-tooltip').remove();
 
                     if (json['error']) {
-                        $(element).parent().find('input[type=\'hidden\']').after('<div class="invalid-tooltip d-inline">' + json['error'] + '</div>');
+                        $(element).after('<div class="invalid-tooltip d-inline">' + json['error'] + '</div>');
                     }
 
                     if (json['success']) {
                         alert(json['success']);
-                    }
 
-                    if (json['code']) {
-                        $(element).parent().find('input[type=\'hidden\']').val(json['code']);
+                        // Replace any form values that correspond to form names.
+                        for (key in json) {
+                            $(form).find('[name=\'' + key + '\']:input').val(json[key]);
+                        }
                     }
                 },
                 error: function(xhr, ajaxOptions, thrownError) {
@@ -289,8 +302,6 @@ $(document).on('click', '[data-oc-upload]', function() {
 // Buttons
 /*
 $(document).on('click', '[data-oc-loading-text]', function() {
-
-
     $(this).attr('data-oc-loading-text');
 
     var text = $(this).html();
@@ -304,8 +315,6 @@ $(document).on('click', '[data-oc-loading-text]', function() {
 
 //    }
 });
-
-
 
 // Button
 (function($) {

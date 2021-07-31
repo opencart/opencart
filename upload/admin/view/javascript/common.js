@@ -149,8 +149,6 @@ $(document).ready(function() {
         if (typeof CKEDITOR != 'undefined') {
             for (instance in CKEDITOR.instances) {
                 CKEDITOR.instances[instance].updateElement();
-
-                console.log("updateElement called for '" + CKEDITOR.instances[instance] + "'");
             }
         }
 

@@ -5,6 +5,7 @@ class BestSeller extends \Opencart\System\Engine\Controller {
 		$this->load->language('extension/opencart/module/bestseller');
 
 		$this->load->model('catalog/product');
+		
 		$this->load->model('tool/image');
 
 		$data['axis'] = $setting['axis'];

@@ -908,7 +908,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 		}
 		
 		if (!$json) {
-			if (!filter_var($this->request->post['amount'], FILTER_VALIDATE_FLOAT)) {
+			if (filter_var($this->request->post['amount'], FILTER_VALIDATE_FLOAT) === false) {
 				$json['error'] = $this->language->get('error_amount');
 			}
 		}

@@ -163,7 +163,7 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 					$json['error']['country'] = $this->language->get('error_country');
 				}
 
-				if (!isset($this->request->post['zone_id']) || filter_var($this->request->post['zone_id'], FILTER_VALIDATE_INT) === true) {
+				if (!isset($this->request->post['zone_id']) || filter_var($this->request->post['zone_id'], FILTER_VALIDATE_INT) === false) {
 					$json['error']['zone'] = $this->language->get('error_zone');
 				}
 

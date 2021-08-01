@@ -385,7 +385,7 @@ class Product extends \Opencart\System\Engine\Controller {
 
 			$data['reviews'] = sprintf($this->language->get('text_reviews'), (int)$product_info['reviews']);
 			$data['rating'] = (int)$product_info['rating'];
-			$data['review_status'] = $this->config->get('config_review_status');
+			$data['review_status'] = (int)$this->config->get('config_review_status');
 
 			// Captcha
 			$this->load->model('setting/extension');

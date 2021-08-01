@@ -184,7 +184,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 				array_multisort($sort_order, SORT_ASC, $results);
 
 				foreach ($results as $result) {
-					if ($this->config->get('total_' . $result['code'] . '_status')) {
+					if ((int)$this->config->get('total_' . $result['code'] . '_status') == 1) {
 						$this->load->model('extension/' . $result['extension'] . '/total/' . $result['code']);
 
 						// __call can not pass-by-reference so we get PHP to call it as an anonymous function.
@@ -208,7 +208,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 				}
 				
 				foreach ($results as $result) {
-					if ($this->config->get('total_' . $result['code'] . '_status')) {
+					if ((int)$this->config->get('total_' . $result['code'] . '_status') == 1) {
 						$result = $this->load->controller('extension/' . $result['extension'] . '/total/' . $result['code']);
 
 						if (!$result instanceof \Exception) {

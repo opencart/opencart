@@ -906,6 +906,12 @@ class Customer extends \Opencart\System\Engine\Controller {
 		if (!$this->user->hasPermission('modify', 'customer/customer')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
+		
+		if (!$json) {
+			if (!filter_var($this->request->post['amount'], FILTER_VALIDATE_FLOAT)) {
+				$json['error'] = $this->language->get('error_amount');
+			}
+		}
 
 		if (!$json) {
 			$this->load->model('customer/customer');

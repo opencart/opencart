@@ -24,7 +24,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$this->session->data['voucher'] = $this->request->post['voucher'];
+			$this->session->data['voucher'] = $voucher;
 
 			$json['success'] = $this->language->get('text_success');
 		}
@@ -112,7 +112,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 					'to_email'         => $this->request->post['to_email'],
 					'from_name'        => $this->request->post['from_name'],
 					'from_email'       => $this->request->post['from_email'],
-					'voucher_theme_id' => $this->request->post['voucher_theme_id'],
+					'voucher_theme_id' => (int)$this->request->post['voucher_theme_id'],
 					'message'          => $this->request->post['message'],
 					'amount'           => $this->currency->convert($this->request->post['amount'], $this->session->data['currency'], $this->config->get('config_currency'))
 				];

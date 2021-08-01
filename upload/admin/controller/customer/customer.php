@@ -637,7 +637,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 					$json['error']['address_' . $key . '_city'] = $this->language->get('error_city');
 				}
 
-				if (!isset($value['country_id']) || $value['country_id'] == '') {
+				if (!isset($value['country_id']) || !filter_var($value['country_id'], FILTER_VALIDATE_INT)) {
 					$json['error']['address_' . $key . '_country'] = $this->language->get('error_country');
 				} else {
 
@@ -650,7 +650,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 					}
 				}
 
-				if (!isset($value['zone_id']) || $value['zone_id'] == '') {
+				if (!isset($value['zone_id']) || filter_var($value['zone_id'], FILTER_VALIDATE_INT) === true) {
 					$json['error']['address_' . $key . '_zone'] = $this->language->get('error_zone');
 				}
 

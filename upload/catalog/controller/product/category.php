@@ -247,7 +247,7 @@ class Category extends \Opencart\System\Engine\Controller {
 				'href'  => $this->url->link('product/category', 'language=' . $this->config->get('config_language') . '&path=' . $this->request->get['path'] . '&sort=p.price&order=DESC' . $url)
 			];
 
-			if ($this->config->get('config_review_status')) {
+			if ((int)$this->config->get('config_review_status') == 1) {
 				$data['sorts'][] = [
 					'text'  => $this->language->get('text_rating_desc'),
 					'value' => 'rating-DESC',

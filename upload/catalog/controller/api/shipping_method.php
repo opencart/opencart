@@ -27,7 +27,7 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 			$results = $this->model_setting_extension->getExtensionsByType('shipping');
 
 			foreach ($results as $result) {
-				if ($this->config->get('shipping_' . $result['code'] . '_status')) {
+				if ((int)$this->config->get('shipping_' . $result['code'] . '_status') == 1) {
 					$this->load->model('extension/' . $result['extension'] . '/shipping/' . $result['code']);
 
 					$quote = $this->{'model_extension_' . $result['extension'] . '_shipping_' . $result['code']}->getQuote($this->session->data['shipping_address']);

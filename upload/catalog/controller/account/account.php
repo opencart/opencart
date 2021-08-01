@@ -42,7 +42,7 @@ class Account extends \Opencart\System\Engine\Controller {
 		$results = $this->model_setting_extension->getExtensionsByType('payment');
 
 		foreach ($results as $result) {
-			if ((int)$this->config->get('payment_' . $result['code'] . '_status') == 1 && $this->config->get('payment_' . $result['code'] . '_card')) {
+			if ($this->config->get('payment_' . $result['code'] . '_status') && $this->config->get('payment_' . $result['code'] . '_card')) {
 				$this->load->language('extension/' . $result['extension'] . '/credit_card/' . $result['code'], 'extension');
 
 				$data['credit_cards'][] = [
@@ -56,7 +56,7 @@ class Account extends \Opencart\System\Engine\Controller {
 		$data['order'] = $this->url->link('account/order', 'language=' . $this->config->get('config_language'));
 		$data['download'] = $this->url->link('account/download', 'language=' . $this->config->get('config_language'));
 
-		if ($this->config->get('total_reward_status')) {
+		if ((int)$this->config->get('total_reward_status') == 1) {
 			$data['reward'] = $this->url->link('account/reward', 'language=' . $this->config->get('config_language'));
 		} else {
 			$data['reward'] = '';
@@ -67,7 +67,7 @@ class Account extends \Opencart\System\Engine\Controller {
 		$data['newsletter'] = $this->url->link('account/newsletter', 'language=' . $this->config->get('config_language'));
 		$data['recurring'] = $this->url->link('account/recurring', 'language=' . $this->config->get('config_language'));
 
-		if ($this->config->get('config_affiliate_status')) {
+		if ((int)$this->config->get('config_affiliate_status') == 1) {
 			$data['affiliate'] = $this->url->link('account/affiliate', 'language=' . $this->config->get('config_language'));
 
 			$this->load->model('account/affiliate');

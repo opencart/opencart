@@ -140,7 +140,7 @@ class WishList extends \Opencart\System\Engine\Controller {
 
 				$this->session->data['wishlist'] = array_unique($this->session->data['wishlist']);
 
-				$json['success'] = sprintf($this->language->get('text_login'), $this->url->link('account/login', 'language=' . $this->config->get('config_language')), $this->url->link('account/register', 'language=' . $this->config->get('config_language')), $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . (int)$this->request->post['product_id']), $product_info['name'], $this->url->link('account/wishlist', 'language=' . $this->config->get('config_language')));
+				$json['success'] = sprintf($this->language->get('text_login'), $this->url->link('account/login', 'language=' . $this->config->get('config_language'), true), $this->url->link('account/register', 'language=' . $this->config->get('config_language'), true), $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . (int)$this->request->post['product_id'], true), $product_info['name'], $this->url->link('account/wishlist', 'language=' . $this->config->get('config_language'), true));
 
 				$json['total'] = sprintf($this->language->get('text_wishlist'), (isset($this->session->data['wishlist']) ? count($this->session->data['wishlist']) : 0));
 			}

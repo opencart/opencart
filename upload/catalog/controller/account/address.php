@@ -143,7 +143,7 @@ class Address extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['address_id'])) {
 			$this->load->model('account/address');
 
-			$address_info = $this->model_account_address->getAddress($this->request->get['address_id']);
+			$address_info = $this->model_account_address->getAddress((int)$this->request->get['address_id']);
 		}
 
 		if (!empty($address_info)) {
@@ -197,7 +197,7 @@ class Address extends \Opencart\System\Engine\Controller {
 		if (!empty($address_info)) {
 			$data['zone_id'] = $address_info['zone_id'];
 		} else {
-			$data['zone_id'] = '';
+			$data['zone_id'] = 0;
 		}
 
 		$this->load->model('localisation/country');
@@ -224,7 +224,7 @@ class Address extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->get['address_id'])) {
-			$data['default'] = ($this->customer->getAddressId() == $this->request->get['address_id']);
+			$data['default'] = ($this->customer->getAddressId() == (int)$this->request->get['address_id']);
 		} else {
 			$data['default'] = false;
 		}
@@ -281,17 +281,17 @@ class Address extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('localisation/country');
 
-		$country_info = $this->model_localisation_country->getCountry($this->request->post['country_id']);
+		$country_info = $this->model_localisation_country->getCountry((int)$this->request->post['country_id']);
 
 		if ($country_info && $country_info['postcode_required'] && (utf8_strlen(trim($this->request->post['postcode'])) < 2 || utf8_strlen(trim($this->request->post['postcode'])) > 10)) {
 			$json['error']['postcode'] = $this->language->get('error_postcode');
 		}
 
-		if ($this->request->post['country_id'] == '') {
+		if (!filter_var($this->request->post['country_id'], FILTER_VALIDATE_INT)) {
 			$json['error']['country'] = $this->language->get('error_country');
 		}
 
-		if (!isset($this->request->post['zone_id']) || $this->request->post['zone_id'] == '') {
+		if (!isset($this->request->post['zone_id']) || filter_var($this->request->post['zone_id'], FILTER_VALIDATE_INT) === true) {
 			$json['error']['zone'] = $this->language->get('error_zone');
 		}
 
@@ -318,22 +318,22 @@ class Address extends \Opencart\System\Engine\Controller {
 
 				$this->session->data['success'] = $this->language->get('text_add');
 			} else {
-				$this->model_account_address->editAddress($this->request->get['address_id'], $this->request->post);
+				$this->model_account_address->editAddress((int)$this->request->get['address_id'], $this->request->post);
 
 				$this->session->data['success'] = $this->language->get('text_edit');
 			}
 
 			// If address is in session update it.
-			if (isset($this->session->data['shipping_address']) && ($this->session->data['shipping_address']['address_id'] == $this->request->get['address_id'])) {
-				$this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->request->get['address_id']);
+			if (isset($this->session->data['shipping_address']) && ((int)$this->session->data['shipping_address']['address_id'] == (int)$this->request->get['address_id'])) {
+				$this->session->data['shipping_address'] = $this->model_account_address->getAddress((int)$this->request->get['address_id']);
 
 				unset($this->session->data['shipping_method']);
 				unset($this->session->data['shipping_methods']);
 			}
 
 			// If address is in session update it.
-			if (isset($this->session->data['payment_address']) && ($this->session->data['payment_address']['address_id'] == $this->request->get['address_id'])) {
-				$this->session->data['payment_address'] = $this->model_account_address->getAddress($this->request->get['address_id']);
+			if (isset($this->session->data['payment_address']) && ((int)$this->session->data['payment_address']['address_id'] == (int)$this->request->get['address_id'])) {
+				$this->session->data['payment_address'] = $this->model_account_address->getAddress((int)$this->request->get['address_id']);
 
 				unset($this->session->data['payment_method']);
 				unset($this->session->data['payment_methods']);
@@ -352,7 +352,7 @@ class Address extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->get['address_id'])) {
-			$address_id = $this->request->get['address_id'];
+			$address_id = (int)$this->request->get['address_id'];
 		} else {
 			$address_id = 0;
 		}
@@ -367,17 +367,17 @@ class Address extends \Opencart\System\Engine\Controller {
 
 		if (!$json) {
 			// Delete address from database.
-			$this->model_account_address->deleteAddress($this->request->get['address_id']);
+			$this->model_account_address->deleteAddress($address_id);
 
 			// Delete address from session.
-			if (isset($this->session->data['shipping_address']['address_id']) && ($this->session->data['shipping_address']['address_id'] == $address_id)) {
+			if (isset($this->session->data['shipping_address']['address_id']) && ((int)$this->session->data['shipping_address']['address_id'] == $address_id)) {
 				unset($this->session->data['shipping_address']);
 				unset($this->session->data['shipping_method']);
 				unset($this->session->data['shipping_methods']);
 			}
 
 			// Delete address from session.
-			if (isset($this->session->data['payment_address']['address_id']) && ($this->session->data['payment_address']['address_id'] == $address_id)) {
+			if (isset($this->session->data['payment_address']['address_id']) && ((int)$this->session->data['payment_address']['address_id'] == $address_id)) {
 				unset($this->session->data['payment_address']);
 				unset($this->session->data['payment_method']);
 				unset($this->session->data['payment_methods']);

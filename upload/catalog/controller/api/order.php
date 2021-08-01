@@ -184,7 +184,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		// Customer Group
 		if (isset($this->request->post['customer_group_id']) && in_array($this->request->post['customer_group_id'], (array)$this->config->get('config_customer_group_display'))) {
-			$customer_group_id = $this->request->post['customer_group_id'];
+			$customer_group_id = (int)$this->request->post['customer_group_id'];
 		} else {
 			$customer_group_id = $this->config->get('config_customer_group_id');
 		}
@@ -192,7 +192,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		// Custom field validation
 		$this->load->model('account/custom_field');
 
-		$custom_fields = $this->model_account_custom_field->getCustomFields((int)$customer_group_id);
+		$custom_fields = $this->model_account_custom_field->getCustomFields($customer_group_id);
 
 		foreach ($custom_fields as $custom_field) {
 			if ($custom_field['location'] == 'account') {
@@ -911,12 +911,12 @@ class Order extends \Opencart\System\Engine\Controller {
 
 			// Set the order history
 			if (isset($this->request->post['order_status_id'])) {
-				$order_status_id = $this->request->post['order_status_id'];
+				$order_status_id = (int)$this->request->post['order_status_id'];
 			} else {
 				$order_status_id = $this->config->get('config_order_status_id');
 			}
 
-			$this->model_checkout_order->addHistory($json['order_id'], (int)$order_status_id);
+			$this->model_checkout_order->addHistory($json['order_id'], $order_status_id);
 
 			// clear cart since the order has already been successfully stored.
 			$this->cart->clear();

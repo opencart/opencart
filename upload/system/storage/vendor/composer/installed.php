@@ -5,18 +5,18 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../../../../',
         'aliases' => array(),
-        'reference' => 'e4ae22aee7d9c1c402ec805fc0786ada23d8a9ca',
+        'reference' => '74829bce19887e4f1427137a27e916cc68f4881e',
         'name' => 'opencart/opencart',
         'dev' => true,
     ),
     'versions' => array(
         'aws/aws-sdk-php' => array(
-            'pretty_version' => '3.186.2',
-            'version' => '3.186.2.0',
+            'pretty_version' => '3.186.3',
+            'version' => '3.186.3.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../aws/aws-sdk-php',
             'aliases' => array(),
-            'reference' => 'ce90f6e5c322f2ce600d818b7949dbfcbf192359',
+            'reference' => '037fd80e421b1dde4d32ec16d0f79c61bbee1605',
             'dev_requirement' => false,
         ),
         'guzzlehttp/guzzle' => array(
@@ -61,7 +61,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../../../../',
             'aliases' => array(),
-            'reference' => 'e4ae22aee7d9c1c402ec805fc0786ada23d8a9ca',
+            'reference' => '74829bce19887e4f1427137a27e916cc68f4881e',
             'dev_requirement' => false,
         ),
         'psr/http-client' => array(

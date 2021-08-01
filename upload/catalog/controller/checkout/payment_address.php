@@ -98,12 +98,12 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 			if (isset($this->request->post['payment_address']) && $this->request->post['payment_address'] == 'existing') {
 				if (empty($this->request->post['address_id'])) {
 					$json['error']['warning'] = $this->language->get('error_address');
-				} elseif (!in_array($this->request->post['address_id'], array_keys($this->model_account_address->getAddresses()))) {
+				} elseif (!in_array((int)$this->request->post['address_id'], array_keys($this->model_account_address->getAddresses()))) {
 					$json['error']['warning'] = $this->language->get('error_address');
 				}
 
 				if (!$json) {
-					$this->session->data['payment_address'] = $this->model_account_address->getAddress($this->request->post['address_id']);
+					$this->session->data['payment_address'] = $this->model_account_address->getAddress((int)$this->request->post['address_id']);
 
 					unset($this->session->data['payment_method']);
 					unset($this->session->data['payment_methods']);
@@ -145,17 +145,17 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 
 				$this->load->model('localisation/country');
 
-				$country_info = $this->model_localisation_country->getCountry($this->request->post['country_id']);
+				$country_info = $this->model_localisation_country->getCountry((int)$this->request->post['country_id']);
 
 				if ($country_info && $country_info['postcode_required'] && (utf8_strlen(trim($this->request->post['postcode'])) < 2 || utf8_strlen(trim($this->request->post['postcode'])) > 10)) {
 					$json['error']['postcode'] = $this->language->get('error_postcode');
 				}
 
-				if ($this->request->post['country_id'] == '') {
+				if (!filter_var($this->request->post['country_id'], FILTER_VALIDATE_INT)) {
 					$json['error']['country'] = $this->language->get('error_country');
 				}
 
-				if (!isset($this->request->post['zone_id']) || $this->request->post['zone_id'] == '') {
+				if (!isset($this->request->post['zone_id']) || filter_var($this->request->post['zone_id'], FILTER_VALIDATE_INT) === true) {
 					$json['error']['zone'] = $this->language->get('error_zone');
 				}
 

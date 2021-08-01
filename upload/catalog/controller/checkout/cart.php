@@ -316,7 +316,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 			if (!$json) {
 				$this->cart->add($this->request->post['product_id'], $quantity, $option, $recurring_id);
 
-				$json['success'] = sprintf($this->language->get('text_success'), $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product_id), $product_info['name'], $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language')));
+				$json['success'] = sprintf($this->language->get('text_success'), $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product_id, true), $product_info['name'], $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true));
 
 				// Unset all shipping and payment methods
 				unset($this->session->data['shipping_method']);

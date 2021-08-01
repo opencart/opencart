@@ -160,7 +160,7 @@ class Special extends \Opencart\System\Engine\Controller {
 			'href'  => $this->url->link('product/special', 'language=' . $this->config->get('config_language') . '&sort=ps.price&order=DESC' . $url)
 		];
 
-		if ($this->config->get('config_review_status')) {
+		if ((int)$this->config->get('config_review_status') == 1) {
 			$data['sorts'][] = [
 				'text'  => $this->language->get('text_rating_desc'),
 				'value' => 'rating-DESC',

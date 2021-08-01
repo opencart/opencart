@@ -830,7 +830,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			array_multisort($sort_order, SORT_ASC, $results);
 
 			foreach ($results as $result) {
-				if ($this->config->get('total_' . $result['code'] . '_status')) {
+				if ((int)$this->config->get('total_' . $result['code'] . '_status') == 1) {
 					$this->load->model('extension/' . $result['extension'] . '/total/' . $result['code']);
 
 					// __call can not pass-by-reference so we get PHP to call it as an anonymous function.
@@ -865,7 +865,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			$order_data['commission'] = 0;
 			$order_data['marketing_id'] = 0;
 
-			if (isset($this->request->post['affiliate_id']) && $this->config->get('config_affiliate_status')) {
+			if (isset($this->request->post['affiliate_id']) && (int)$this->config->get('config_affiliate_status') == 1) {
 				$subtotal = $this->cart->getSubTotal();
 
 				// Affiliate

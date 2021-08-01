@@ -232,7 +232,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 				'href'  => $this->url->link('product/manufacturer|info', 'language=' . $this->config->get('config_language') . '&manufacturer_id=' . $this->request->get['manufacturer_id'] . '&sort=p.price&order=DESC' . $url)
 			];
 
-			if ($this->config->get('config_review_status')) {
+			if ((int)$this->config->get('config_review_status') == 1) {
 				$data['sorts'][] = [
 					'text'  => $this->language->get('text_rating_desc'),
 					'value' => 'rating-DESC',

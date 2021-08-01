@@ -323,8 +323,10 @@ class Voucher extends \Opencart\System\Engine\Controller {
 		if ((utf8_strlen($this->request->post['from_email']) > 96) || !filter_var($this->request->post['from_email'], FILTER_VALIDATE_EMAIL)) {
 			$json['error']['from_email'] = $this->language->get('error_email');
 		}
+		
+		$amount = filter_var($this->request->post['amount'], FILTER_VALIDATE_FLOAT);
 
-		if (!filter_var($this->request->post['amount'], FILTER_VALIDATE_FLOAT)) {
+		if (!$amount || $amount < 1) {
 			$json['error']['amount'] = $this->language->get('error_amount');
 		}
 

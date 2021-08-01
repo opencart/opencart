@@ -98,7 +98,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 				$json['error']['to_email'] = $this->language->get('error_email');
 			}
 
-			if (($this->request->post['amount'] < $this->config->get('config_voucher_min')) || ($this->request->post['amount'] > $this->config->get('config_voucher_max'))) {
+			if (($this->request->post['amount'] < $this->config->get('config_voucher_min')) || ($this->request->post['amount'] > $this->config->get('config_voucher_max')) || (!filter_var($this->request->post['amount'], FILTER_VALIDATE_FLOAT))) {
 				$json['error']['amount'] = sprintf($this->language->get('error_amount'), $this->currency->format($this->config->get('config_voucher_min'), $this->session->data['currency']), $this->currency->format($this->config->get('config_voucher_max'), $this->session->data['currency']));
 			}
 

@@ -78,7 +78,7 @@ class Fixer extends \Opencart\System\Engine\Controller {
 
 			$response_info = json_decode($response, true);
 
-			if (is_array($response_info) && isset($response_info['rates'])) {
+			if (!empty($response_info) && is_array($response_info) && in_array('rates', $response_info)) {
 				// Compile all the rates into an array
 				$currencies = [];
 

@@ -42,7 +42,7 @@ class Account extends \Opencart\System\Engine\Controller {
 		$results = $this->model_setting_extension->getExtensionsByType('payment');
 
 		foreach ($results as $result) {
-			if ($this->config->get('payment_' . $result['code'] . '_status') && $this->config->get('payment_' . $result['code'] . '_card')) {
+			if ((int)$this->config->get('payment_' . $result['code'] . '_status') == 1 && $this->config->get('payment_' . $result['code'] . '_card')) {
 				$this->load->language('extension/' . $result['extension'] . '/credit_card/' . $result['code'], 'extension');
 
 				$data['credit_cards'][] = [

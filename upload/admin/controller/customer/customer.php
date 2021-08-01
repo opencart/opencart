@@ -650,7 +650,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 					}
 				}
 
-				if (!isset($value['zone_id']) || filter_var($value['zone_id'], FILTER_VALIDATE_INT) === true) {
+				if (!isset($value['zone_id']) || filter_var($value['zone_id'], FILTER_VALIDATE_INT) === false) {
 					$json['error']['address_' . $key . '_zone'] = $this->language->get('error_zone');
 				}
 

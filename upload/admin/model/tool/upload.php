@@ -1,60 +1,61 @@
 <?php
-class ModelToolUpload extends Model {
-	public function addUpload($name, $filename) {
+namespace Opencart\Admin\Model\Tool;
+class Upload extends \Opencart\System\Engine\Model {
+	public function addUpload(string $name, string $filename): string {
 		$code = sha1(uniqid(mt_rand(), true));
 
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "upload` SET `name` = '" . $this->db->escape($name) . "', `filename` = '" . $this->db->escape($filename) . "', `code` = '" . $this->db->escape($code) . "', `date_added` = NOW()");
 
 		return $code;
 	}
-		
-	public function deleteUpload($upload_id) {
-		$this->db->query("DELETE FROM " . DB_PREFIX . "upload WHERE upload_id = '" . (int)$upload_id . "'");
+
+	public function deleteUpload(int $upload_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "upload` WHERE `upload_id` = '" . (int)$upload_id . "'");
 	}
 
-	public function getUpload($upload_id) {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "upload` WHERE upload_id = '" . (int)$upload_id . "'");
+	public function getUpload(int $upload_id): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "upload` WHERE `upload_id` = '" . (int)$upload_id . "'");
 
 		return $query->row;
 	}
 
-	public function getUploadByCode($code) {
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "upload WHERE code = '" . $this->db->escape($code) . "'");
+	public function getUploadByCode(string $code): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "upload` WHERE `code` = '" . $this->db->escape($code) . "'");
 
 		return $query->row;
 	}
 
-	public function getUploads($data = array()) {
-		$sql = "SELECT * FROM " . DB_PREFIX . "upload";
+	public function getUploads(array $data = []): array {
+		$sql = "SELECT * FROM `" . DB_PREFIX . "upload`";
 
-		$implode = array();
+		$implode = [];
 
 		if (!empty($data['filter_name'])) {
-			$implode[] = "name LIKE '" . $this->db->escape($data['filter_name']) . "%'";
+			$implode[] = "`name` LIKE '" . $this->db->escape((string)$data['filter_name']) . "%'";
 		}
 
 		if (!empty($data['filter_filename'])) {
-			$implode[] = "filename LIKE '" . $this->db->escape($data['filter_filename']) . "%'";
+			$implode[] = "`filename` LIKE '" . $this->db->escape((string)$data['filter_filename']) . "%'";
 		}
 
 		if (!empty($data['filter_date_added'])) {
-			$implode[] = "date_added = '" . $this->db->escape($data['filter_date_added']) . "%'";
+			$implode[] = "DATE(`date_added`) = DATE('" . $this->db->escape((string)$data['filter_date_added']) . "')";
 		}
 
 		if ($implode) {
 			$sql .= " WHERE " . implode(" AND ", $implode);
 		}
 
-		$sort_data = array(
+		$sort_data = [
 			'name',
 			'filename',
 			'date_added'
-		);
+		];
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
-			$sql .= " ORDER BY " . $data['sort'];
+			$sql .= " ORDER BY `" . $data['sort'] . "`";
 		} else {
-			$sql .= " ORDER BY date_added";
+			$sql .= " ORDER BY `date_added`";
 		}
 
 		if (isset($data['order']) && ($data['order'] == 'DESC')) {
@@ -80,21 +81,21 @@ class ModelToolUpload extends Model {
 		return $query->rows;
 	}
 
-	public function getTotalUploads() {
-		$sql = "SELECT COUNT(*) AS total FROM " . DB_PREFIX . "upload";
+	public function getTotalUploads(array $data = []): int {
+		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "upload`";
 
-		$implode = array();
+		$implode = [];
 
 		if (!empty($data['filter_name'])) {
-			$implode[] = "name LIKE '" . $this->db->escape($data['filter_name']) . "%'";
+			$implode[] = "`name` LIKE '" . $this->db->escape((string)$data['filter_name']) . "%'";
 		}
 
 		if (!empty($data['filter_filename'])) {
-			$implode[] = "filename LIKE '" . $this->db->escape($data['filter_filename']) . "%'";
+			$implode[] = "`filename` LIKE '" . $this->db->escape((string)$data['filter_filename']) . "%'";
 		}
 
 		if (!empty($data['filter_date_added'])) {
-			$implode[] = "date_added = '" . $this->db->escape($data['filter_date_added']) . "'";
+			$implode[] = "DATE(`date_added`) = DATE('" . $this->db->escape((string)$data['filter_date_added']) . "')";
 		}
 
 		if ($implode) {
@@ -103,6 +104,6 @@ class ModelToolUpload extends Model {
 
 		$query = $this->db->query($sql);
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
 	}
 }

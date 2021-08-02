@@ -8,7 +8,23 @@ $_['text_list']             = 'Customer List';
 $_['text_add']              = 'Add Customer';
 $_['text_edit']             = 'Edit Customer';
 $_['text_default']          = 'Default';
+$_['text_store']            = 'Store';
+$_['text_account']          = 'Customer Details';
+$_['text_password']         = 'Password';
+$_['text_other']            = 'Other';
 $_['text_balance']          = 'Balance';
+$_['text_address']          = 'Address';
+$_['text_history']          = 'History';
+$_['text_history_add']      = 'Add History';
+$_['text_transaction']      = 'Transactions';
+$_['text_transaction_add']  = 'Add Transaction';
+$_['text_reward']           = 'Reward Points';
+$_['text_reward_add']       = 'Add Reward Points';
+$_['text_ip']               = 'IP';
+$_['text_option']           = 'Options';
+$_['text_login']            = 'Login into Store';
+$_['text_unlock']           = 'Unlock Account';
+$_['text_filter']           = 'Filter';
 
 // Column
 $_['column_name']           = 'Customer Name';
@@ -21,19 +37,20 @@ $_['column_description']    = 'Description';
 $_['column_amount']         = 'Amount';
 $_['column_points']         = 'Points';
 $_['column_ip']             = 'IP';
-$_['column_total']          = 'Total Accounts';
+$_['column_account']        = 'Accounts';
+$_['column_store']          = 'Store';
+$_['column_country']        = 'Country';
 $_['column_action']         = 'Action';
 
 // Entry
+$_['entry_store']           = 'Store';
 $_['entry_customer_group']  = 'Customer Group';
 $_['entry_firstname']       = 'First Name';
 $_['entry_lastname']        = 'Last Name';
 $_['entry_email']           = 'E-Mail';
 $_['entry_telephone']       = 'Telephone';
-$_['entry_fax']             = 'Fax';
 $_['entry_newsletter']      = 'Newsletter';
 $_['entry_status']          = 'Status';
-$_['entry_approved']        = 'Approved';
 $_['entry_safe']            = 'Safe';
 $_['entry_password']        = 'Password';
 $_['entry_confirm']         = 'Confirm';
@@ -52,6 +69,9 @@ $_['entry_points']          = 'Points';
 $_['entry_name']            = 'Customer Name';
 $_['entry_ip']              = 'IP';
 $_['entry_date_added']      = 'Date Added';
+
+// Button
+$_['button_order']          = 'Orders';
 
 // Help
 $_['help_safe']             = 'Set to true to avoid this customer from being caught by the anti-fraud system';

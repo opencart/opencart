@@ -2,33 +2,37 @@
 
 ## Overview
 
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg?style=flat-square)](https://php.net/)
+[![GitHub release](https://img.shields.io/github/v/release/opencart/opencart)](https://github.com/opencart/opencart)
+
 OpenCart is a free open source ecommerce platform for online merchants. OpenCart provides a professional and reliable foundation from which to build a successful online store.
 
-## Reporting a bug and security issues
+
+## How to install
+
+Please read the [installation instructions](INSTALL.md) included in the repository or download file.
+
+
+## How to upgrade from previous versions
+
+Please read the [upgrading instructions](UPGRADE.md) included in the repository or download file.
+
+## Reporting a bug
 
 Read the instructions below before you create a bug report.
 
- 1. Search the [OpenCart forum](http://forum.opencart.com/viewforum.php?f=191), ask the community if they have seen the bug or know how to fix it.
+ 1. Search the [OpenCart forum](https://forum.opencart.com/viewforum.php?f=201), ask the community if they have seen the bug or know how to fix it.
  2. Check all open and closed issues on the [GitHub bug tracker](https://github.com/opencart/opencart/issues).
  3. If your bug is related to the OpenCart core code then please create a bug report on GitHub.
- 4. READ the [changelog for the master branch](https://github.com/opencart/opencart/blob/master/changelog.md)
- 5. Use [Google](http://www.google.com) to search for your issue.
+ 4. READ the [changelog for the master branch](https://github.com/opencart/opencart/blob/master/CHANGELOG.md)
+ 5. Use [Google](https://www.google.com) to search for your issue.
  6. Make sure that your bug/issue is not related to your hosting environment.
- 7. We now offer limited free support through our [support site](http://support.opencart.com/)
 
-If you are not sure about your issue, it is always best to ask the community on our [bug forum thread](http://forum.opencart.com/viewforum.php?f=191)
+If you are not sure about your issue, it is always best to ask the community on our [bug forum thread](https://forum.opencart.com/viewforum.php?f=201)
 
 **Important!**
 - If your bug report is not related to the core code (such as a 3rd party module or your server configuration) then the issue will be closed without a reason. You must contact the extension developer, use the forum or find a commercial partner to resolve a 3rd party code issue.
-- If you would like to report a security bug please do one of the following; PM an OpenCart moderator (Daniel or James) on the forum, send an email to the support desk at &nbsp;&nbsp;&nbsp;![Support Email image](http://img4me.com/ZHj.png "Type our email into your mail client")or use the contact form on the [OpenCart website](https://www.opencart.com/index.php?route=support/contact). 
-- Please do not report concept/ideas/unproven security flaws - all security reports are taken seriously but you must include the EXACT details steps to reproduce it otherwise it is a huge drain on resources. Please DO NOT post security flaws in a public location like forums, twitter, Reddit
-- If you have found a bug / security issue it is very important to check if it is present in the latest version of OpenCart before reporting it, please check commit the history of the file(s) where the bug is to see if it is resolved.
-
-## Making a suggestion
-
-Please do not create a bug report if you think something needs improving / adding (such as features or change to code standards etc).
-
-We welcome public suggestions on our [User Voice site](http://opencart.uservoice.com).
+- If you would like to report a serious security bug please PM an OpenCart moderator/administrator on the forum. Please do not report concept/ideas/unproven security flaws - all security reports are taken seriously but you must include the EXACT details steps to reproduce it. Please DO NOT post security flaws in a public location.
 
 ## How to contribute
 
@@ -60,11 +64,8 @@ Developer release source code will not change once tagged.
 
 If a bug is found in an announced developer release that is significant (such as a major feature is broken) then the release will be pulled. A patch version will be issued to replace it, depending on the severity of the patch an extended testing period may be announced. If the developer release version was never made public then the preceding patch version tag will be removed.
 
-To receive developer notifications about release information, sign up to the newsletter on the [OpenCart website](http://www.opencart.com) - located in the footer. Then choose the developer news option.
+To receive developer notifications about release information, sign up to the newsletter on the [OpenCart website](https://www.opencart.com) - located in the footer. Then choose the developer news option.
 
-## How to install
-
-Please read the installation instructions included in the repository or download file.
 
 ## License
 
@@ -72,9 +73,9 @@ Please read the installation instructions included in the repository or download
 
 ## Links
 
-- [OpenCart homepage](http://www.opencart.com/)
-- [OpenCart forums](http://forum.opencart.com/)
-- [OpenCart blog](http://www.opencart.com/index.php?route=feature/blog)
-- [How to documents](http://docs.opencart.com/)
-- [Newsletter](http://newsletter.opencart.com/h/r/B660EBBE4980C85C)
-- [User Voice suggestions](http://opencart.uservoice.com)
+- [OpenCart homepage](https://www.opencart.com/)
+- [OpenCart forums](https://forum.opencart.com/)
+- [OpenCart blog](https://www.opencart.com/index.php?route=feature/blog)
+- [How to documents](http://docs.opencart.com/en-gb/introduction/)
+- [Newsletter](https://newsletter.opencart.com/h/r/B660EBBE4980C85C)
+- [User Voice suggestions](https://opencart.uservoice.com)

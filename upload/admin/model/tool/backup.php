@@ -1,80 +1,45 @@
 <?php
-class ModelToolBackup extends Model {
-	public function restore($sql) {
-		foreach (explode(";\n", $sql) as $sql) {
-			$sql = trim($sql);
-
-			if ($sql) {
-				$this->db->query($sql);
-			}
-		}
-
-		$this->cache->delete('*');
-	}
-
-	public function getTables() {
-		$table_data = array();
+namespace Opencart\Admin\Model\Tool;
+class Backup extends \Opencart\System\Engine\Model {
+	public function getTables(): array {
+		$table_data = [];
 
 		$query = $this->db->query("SHOW TABLES FROM `" . DB_DATABASE . "`");
 
 		foreach ($query->rows as $result) {
-			if (utf8_substr($result['Tables_in_' . DB_DATABASE], 0, strlen(DB_PREFIX)) == DB_PREFIX) {
-				if (isset($result['Tables_in_' . DB_DATABASE])) {
-					$table_data[] = $result['Tables_in_' . DB_DATABASE];
-				}
+			if (isset($result['Tables_in_' . DB_DATABASE]) && utf8_substr($result['Tables_in_' . DB_DATABASE], 0, strlen(DB_PREFIX)) == DB_PREFIX) {
+				$table_data[] = $result['Tables_in_' . DB_DATABASE];
 			}
 		}
 
 		return $table_data;
 	}
 
-	public function backup($tables) {
-		$output = '';
-
-		foreach ($tables as $table) {
-			if (DB_PREFIX) {
-				if (strpos($table, DB_PREFIX) === false) {
-					$status = false;
-				} else {
-					$status = true;
-				}
-			} else {
-				$status = true;
-			}
-
-			if ($status) {
-				$output .= 'TRUNCATE TABLE `' . $table . '`;' . "\n\n";
-
-				$query = $this->db->query("SELECT * FROM `" . $table . "`");
-
-				foreach ($query->rows as $result) {
-					$fields = '';
-
-					foreach (array_keys($result) as $value) {
-						$fields .= '`' . $value . '`, ';
-					}
-
-					$values = '';
-
-					foreach (array_values($result) as $value) {
-						$value = str_replace(array("\x00", "\x0a", "\x0d", "\x1a"), array('\0', '\n', '\r', '\Z'), $value);
-						$value = str_replace(array("\n", "\r", "\t"), array('\n', '\r', '\t'), $value);
-						$value = str_replace('\\', '\\\\',	$value);
-						$value = str_replace('\'', '\\\'',	$value);
-						$value = str_replace('\\\n', '\n',	$value);
-						$value = str_replace('\\\r', '\r',	$value);
-						$value = str_replace('\\\t', '\t',	$value);
-
-						$values .= '\'' . $value . '\', ';
-					}
-
-					$output .= 'INSERT INTO `' . $table . '` (' . preg_replace('/, $/', '', $fields) . ') VALUES (' . preg_replace('/, $/', '', $values) . ');' . "\n";
-				}
-
-				$output .= "\n\n";
-			}
+	public function getRecords(string $table, int $start = 0, int $limit = 100): array {
+		if ($start < 0) {
+			$start = 0;
 		}
 
-		return $output;
+		if ($limit < 1) {
+			$limit = 10;
+		}
+
+		$query = $this->db->query("SELECT * FROM `" . $table . "` LIMIT " . (int)$start . "," . (int)$limit);
+
+		if ($query->num_rows) {
+			return $query->rows;
+		} else {
+			return [];
+		}
+	}
+
+	public function getTotalRecords(string $table): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . $table . "`");
+
+		if ($query->num_rows) {
+			return (int)$query->row['total'];
+		} else {
+			return 0;
+		}
 	}
 }

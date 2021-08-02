@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html dir="{{ direction }}" lang="{{ lang }}">
+<head>
+	<meta charset="UTF-8"/>
+	<title>{{ title }}</title>
+	<base href="{{ base }}"/>
+	<link href="{{ bootstrap_css }}" rel="stylesheet" media="screen"/>
+	<link href="{{ icons }}" rel="stylesheet" type="text/css"/>
+	<script src="{{ jquery }}" type="text/javascript"></script>
+	<script src="{{ bootstrap_js }}" type="text/javascript"></script>
+	<link href="{{ stylesheet }}" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div class="container">
+	{% for order in orders %}
+		<div style="page-break-after: always;">
+			<h1>{{ text_invoice }} #{{ order.order_id }}</h1>
+
+			<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4">
+
+				<div class="col">
+					<div class="form-control-plaintext p-0 border rounded mb-3">
+						<p class="lead p-2 mb-0"><strong>{{ text_invoice }}</strong>
+							<br/>
+							{{ order.invoice_no }}
+						</p>
+					</div>
+				</div>
+
+				<div class="col">
+					<div class="form-control-plaintext p-0 border rounded mb-3">
+						<p class="lead p-2 mb-0"><strong>{{ text_order_id }}</strong>
+							<br/>
+							{{ order.order_id }}
+						</p>
+					</div>
+				</div>
+
+				<div class="col">
+					<div class="form-control-plaintext p-0 border rounded mb-3">
+						<p class="lead p-2 mb-0"><strong>{{ text_date_added }}</strong>
+							<br/>
+							{{ order.date_added }}
+						</p>
+					</div>
+				</div>
+
+				<div class="col">
+					<div class="form-control-plaintext p-0 border rounded mb-3">
+						<p class="lead p-2 mb-0"><strong>{{ text_store }}</strong>
+							<br/>
+							{{ order.store_name }}
+						</p>
+					</div>
+				</div>
+
+				<div class="col">
+					<div class="form-control-plaintext p-0 border rounded mb-3">
+						<p class="lead p-2 mb-0"><strong>{{ text_store }} Address</strong>
+							<br/>
+							{{ order.store_address }}
+						</p>
+					</div>
+				</div>
+
+				<div class="col">
+					<div class="form-control-plaintext p-0 border rounded mb-3">
+						<p class="lead p-2 mb-0"><strong>{{ text_payment_method }}</strong>
+							<br/>
+							{{ order.payment_method }}
+						</p>
+					</div>
+				</div>
+
+				<div class="col">
+					<div class="form-control-plaintext p-0 border rounded mb-3">
+						<p class="lead p-2 mb-0"><strong>{{ text_shipping_method }}</strong>
+							<br/>
+							{{ order.shipping_method }}
+						</p>
+					</div>
+				</div>
+
+				<div class="col">
+					<div class="form-control-plaintext p-0 border rounded mb-3">
+						<p class="lead p-2 mb-0"><strong>{{ text_contact }}</strong>
+							<br/>
+							{{ order.store_telephone }}
+						</p>
+					</div>
+				</div>
+
+			</div>
+
+
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<td style="width: 50%;"><b>{{ text_payment_address }}</b></td>
+						<td style="width: 50%;"><b>{{ text_shipping_address }}</b></td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>
+							<address>
+								{{ order.payment_address }}
+							</address>
+						</td>
+						<td>
+							<address>
+								{{ order.shipping_address }}
+							</address>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<td><b>{{ column_product }}</b></td>
+						<td><b>{{ column_model }}</b></td>
+						<td class="text-end"><b>{{ column_quantity }}</b></td>
+						<td class="text-end"><b>{{ column_price }}</b></td>
+						<td class="text-end"><b>{{ column_total }}</b></td>
+					</tr>
+				</thead>
+				<tbody>
+					{% for product in order.product %}
+						<tr>
+							<td>{{ product.name }}
+								{% for option in product.option %}
+									<br/>
+									&nbsp;
+									<small> - {{ option.name }}: {{ option.value }}</small>
+								{% endfor %}</td>
+							<td>{{ product.model }}</td>
+							<td class="text-end">{{ product.quantity }}</td>
+							<td class="text-end">{{ product.price }}</td>
+							<td class="text-end">{{ product.total }}</td>
+						</tr>
+					{% endfor %}
+					{% for voucher in order.voucher %}
+						<tr>
+							<td>{{ voucher.description }}</td>
+							<td></td>
+							<td class="text-end">1</td>
+							<td class="text-end">{{ voucher.amount }}</td>
+							<td class="text-end">{{ voucher.amount }}</td>
+						</tr>
+					{% endfor %}
+					{% for total in order.total %}
+						<tr>
+							<td class="text-end" colspan="4"><b>{{ total.title }}</b></td>
+							<td class="text-end">{{ total.text }}</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+			{% if order.comment %}
+				<table class="table table-bordered">
+					<thead>
+						<tr>
+							<td><b>{{ text_comment }}</b></td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>{{ order.comment }}</td>
+						</tr>
+					</tbody>
+				</table>
+			{% endif %}
+		</div>
+	{% endfor %}
+</div>
+</body>
+</html>

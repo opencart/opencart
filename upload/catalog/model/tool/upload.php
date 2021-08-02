@@ -1,6 +1,7 @@
 <?php
-class ModelToolUpload extends Model {
-	public function addUpload($name, $filename) {
+namespace Opencart\Catalog\Model\Tool;
+class Upload extends \Opencart\System\Engine\Model {
+	public function addUpload(string $name, string $filename): string {
 		$code = sha1(uniqid(mt_rand(), true));
 
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "upload` SET `name` = '" . $this->db->escape($name) . "', `filename` = '" . $this->db->escape($filename) . "', `code` = '" . $this->db->escape($code) . "', `date_added` = NOW()");
@@ -8,7 +9,7 @@ class ModelToolUpload extends Model {
 		return $code;
 	}
 
-	public function getUploadByCode($code) {
+	public function getUploadByCode(string $code): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "upload` WHERE code = '" . $this->db->escape($code) . "'");
 
 		return $query->row;

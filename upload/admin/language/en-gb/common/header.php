@@ -1,21 +1,13 @@
 <?php
 // Heading
-$_['heading_title']          = 'OpenCart';
+$_['heading_title']         = 'OpenCart';
 
 // Text
-$_['text_order']             = 'Orders';
-$_['text_processing_status'] = 'Processing';
-$_['text_complete_status']   = 'Completed';
-$_['text_customer']          = 'Customers';
-$_['text_online']            = 'Customers Online';
-$_['text_approval']          = 'Pending approval';
-$_['text_product']           = 'Products';
-$_['text_stock']             = 'Out of stock';
-$_['text_review']            = 'Reviews';
-$_['text_return']            = 'Returns';
-$_['text_affiliate']         = 'Affiliates';
+$_['text_notification']      = 'Notifications';
+$_['text_notification_all']  = 'Show All';
+$_['text_notification_none'] = 'There are no notifications';
+$_['text_profile']           = 'Your Profile';
 $_['text_store']             = 'Stores';
-$_['text_front']             = 'Store Front';
 $_['text_help']              = 'Help';
 $_['text_homepage']          = 'OpenCart Homepage';
 $_['text_support']           = 'Support Forum';

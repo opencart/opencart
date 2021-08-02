@@ -1,7 +1,8 @@
 <?php
-class ModelDesignTheme extends Model {
-	public function getTheme($route, $theme) {
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "theme WHERE store_id = '" . (int)$this->config->get('config_store_id') . "' AND theme = '" . $this->db->escape($theme) . "' AND route = '" . $this->db->escape($route) . "'");
+namespace Opencart\Catalog\Model\Design;
+class Theme extends \Opencart\System\Engine\Model {
+	public function getTheme(string $route): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "theme` WHERE `store_id` = '" . (int)$this->config->get('config_store_id') . "' AND `route` = '" . $this->db->escape($route) . "'");
 
 		return $query->row;
 	}

@@ -1,9 +1,10 @@
 <?php
-class ControllerToolUpload extends Controller {
-	public function index() {
+namespace Opencart\Catalog\Controller\Tool;
+class Upload extends \Opencart\System\Engine\Controller {
+	public function index(): void {
 		$this->load->language('tool/upload');
 
-		$json = array();
+		$json = [];
 
 		if (!empty($this->request->files['file']['name']) && is_file($this->request->files['file']['tmp_name'])) {
 			// Sanitize the filename
@@ -15,7 +16,7 @@ class ControllerToolUpload extends Controller {
 			}
 
 			// Allowed file extension types
-			$allowed = array();
+			$allowed = [];
 
 			$extension_allowed = preg_replace('~\r?\n~', "\n", $this->config->get('config_file_ext_allowed'));
 
@@ -30,7 +31,7 @@ class ControllerToolUpload extends Controller {
 			}
 
 			// Allowed file mime types
-			$allowed = array();
+			$allowed = [];
 
 			$mime_allowed = preg_replace('~\r?\n~', "\n", $this->config->get('config_file_mime_allowed'));
 
@@ -41,13 +42,6 @@ class ControllerToolUpload extends Controller {
 			}
 
 			if (!in_array($this->request->files['file']['type'], $allowed)) {
-				$json['error'] = $this->language->get('error_filetype');
-			}
-
-			// Check to see if any PHP files are trying to be uploaded
-			$content = file_get_contents($this->request->files['file']['tmp_name']);
-
-			if (preg_match('/\<\?php/i', $content)) {
 				$json['error'] = $this->language->get('error_filetype');
 			}
 

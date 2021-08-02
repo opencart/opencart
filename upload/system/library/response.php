@@ -1,31 +1,82 @@
 <?php
-class Response {
-	private $headers = array();
-	private $level = 0;
-	private $output;
+/**
+ * @package		OpenCart
+ * @author		Daniel Kerr
+ * @copyright	Copyright (c) 2005 - 2017, OpenCart, Ltd. (https://www.opencart.com/)
+ * @license		https://opensource.org/licenses/GPL-3.0
+ * @link		https://www.opencart.com
+*/
 
-	public function addHeader($header) {
+/**
+* Response class
+ *
+ * Stores the response so the correct headers can go out before the response output is shown.
+ *
+*/
+namespace Opencart\System\Library;
+class Response {
+	private array $headers = [];
+	private int $level = 0;
+	private string $output = '';
+
+	/**
+	 * Constructor
+	 *
+	 * @param	string	$header
+	 *
+ 	*/
+	public function addHeader(string $header): void {
 		$this->headers[] = $header;
 	}
-
-	public function redirect($url, $status = 302) {
-		header('Location: ' . str_replace(array('&amp;', "\n", "\r"), array('&', '', ''), $url), true, $status);
+	
+	/**
+	 * Redirect
+	 *
+	 * @param	string	$url
+	 * @param	int		$status
+	 *
+ 	*/
+	public function redirect(string $url, int $status = 302): void {
+		header('Location: ' . str_replace(['&amp;', "\n", "\r"], ['&', '', ''], $url), true, $status);
 		exit();
 	}
-
-	public function setCompression($level) {
+	
+	/**
+	 * Set Compression
+	 *
+	 * @param	int		$level
+ 	*/
+	public function setCompression(int $level): void {
 		$this->level = $level;
 	}
 
-	public function getOutput() {
-		return $this->output;
-	}
-	
-	public function setOutput($output) {
+	/**
+	 * Set Output
+	 *
+	 * @param	string	$output
+ 	*/	
+	public function setOutput(string $output): void {
 		$this->output = $output;
 	}
 
-	private function compress($data, $level = 0) {
+	/**
+	 * Get Output
+	 *
+	 * @return	array
+	 */
+	public function getOutput(): string {
+		return $this->output;
+	}
+
+	/**
+	 * Compress
+	 *
+	 * @param	string	$data
+	 * @param	int		$level
+	 * 
+	 * @return	string
+ 	*/
+	private function compress(array $data, int $level = 0): string {
 		if (isset($_SERVER['HTTP_ACCEPT_ENCODING']) && (strpos($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip') !== false)) {
 			$encoding = 'gzip';
 		}
@@ -52,17 +103,24 @@ class Response {
 
 		$this->addHeader('Content-Encoding: ' . $encoding);
 
-		return gzencode($data, (int)$level);
+		return gzencode($data, $level);
 	}
-
-	public function output() {
+	
+	/**
+	 * Output
+	 *
+	 * Displays the set HTML output
+ 	*/
+	public function output(): void {
 		if ($this->output) {
 			$output = $this->level ? $this->compress($this->output, $this->level) : $this->output;
+			
 			if (!headers_sent()) {
 				foreach ($this->headers as $header) {
 					header($header, true);
 				}
 			}
+			
 			echo $output;
 		}
 	}

@@ -1,0 +1,15 @@
+<div class="card mb-3">
+  <div class="card-header"><i class="fas fa-calendar"></i> {{ heading_title }}</div>
+  <ul class="list-group list-group-flush">
+    {% if activities %}
+      {% for activity in activities %}
+        <li class="list-group-item">{{ activity.comment }}
+          <br/>
+          <small class="text-muted"><i class="fas fa-clock"></i> {{ activity.date_added }}</small>
+        </li>
+      {% endfor %}
+    {% else %}
+      <li class="list-group-item text-center">{{ text_no_results }}</li>
+    {% endif %}
+  </ul>
+</div>

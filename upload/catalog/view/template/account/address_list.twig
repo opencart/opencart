@@ -1,0 +1,37 @@
+{{ header }}
+<div id="account-address" class="container">
+  <ul class="breadcrumb">
+    {% for breadcrumb in breadcrumbs %}
+      <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+    {% endfor %}
+  </ul>
+  {% if success %}
+    <div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> {{ success }}</div>
+  {% endif %}
+  <div class="row">{{ column_left }}
+    <div id="content" class="col">{{ content_top }}
+      <h1>{{ text_address_book }}</h1>
+      {% if addresses %}
+        <div class="table-responsive">
+          <table class="table table-bordered table-hover">
+            {% for result in addresses %}
+              <tr>
+                <td class="text-start">{{ result.address }}</td>
+                <td class="text-end"><a href="{{ result.update }}" class="btn btn-info">{{ button_edit }}</a> &nbsp; <a href="{{ result.delete }}" class="btn btn-danger">{{ button_delete }}</a></td>
+              </tr>
+            {% endfor %}
+          </table>
+        </div>
+      {% else %}
+        <p>{{ text_no_results }}</p>
+      {% endif %}
+      <div class="d-inline-block pt-2 pd-2 w-100">
+        <div class="float-start"><a href="{{ back }}" class="btn btn-light">{{ button_back }}</a></div>
+        <div class="float-end"><a href="{{ add }}" class="btn btn-primary">{{ button_new_address }}</a></div>
+      </div>
+      {{ content_bottom }}
+    </div>
+    {{ column_right }}
+  </div>
+</div>
+{{ footer }}

@@ -1,0 +1,149 @@
+{{ header }}
+<div id="product-search" class="container">
+  <ul class="breadcrumb">
+    {% for breadcrumb in breadcrumbs %}
+      <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+    {% endfor %}
+  </ul>
+  <div class="row">{{ column_left }}
+    <div id="content" class="col">
+      {{ content_top }}
+      <h1>{{ heading_title }}</h1>
+      <label for="input-search" class="col-form-label">{{ entry_search }}</label>
+      <div class="row">
+        <div class="col-md-4">
+          <input type="text" name="search" value="{{ search }}" placeholder="{{ text_keyword }}" id="input-search" class="form-control"/>
+        </div>
+        <div class="col-md-3">
+          <select name="category_id" class="form-select">
+            <option value="0">{{ text_category }}</option>
+            {% for category_1 in categories %}
+              <option value="{{ category_1.category_id }}"{% if category_1.category_id == category_id %} selected="selected"{% endif %}>{{ category_1.name }}</option>
+              {% for category_2 in category_1.children %}
+                <option value="{{ category_2.category_id }}"{% if category_2.category_id == category_id %} selected="selected"{% endif %}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ category_2.name }}</option>
+                {% for category_3 in category_2.children %}
+                  <option value="{{ category_3.category_id }}"{% if category_3.category_id == category_id %} selected="selected"{% endif %}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ category_3.name }}</option>
+                {% endfor %}
+              {% endfor %}
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col-md-3">
+          <div class="form-check form-check-inline">
+            <div class="form-check">
+              <input type="checkbox" name="sub_category" value="1" id="input-sub-category" class="form-check-input"{% if sub_category %} checked{% endif %}/>
+              <label for="input-sub-category" class="form-check-label">{{ text_sub_category }}</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-check mb-3">
+        <input type="checkbox" name="description" value="1" id="input-description" class="form-check-input"{% if description %} checked{% endif %}/>
+        <label for="input-description" class="form-check-label">{{ entry_description }}</label>
+      </div>
+      <button type="button" id="button-search" class="btn btn-primary">{{ button_search }}</button>
+      <hr/>
+      <h2>{{ text_search }}</h2>
+      {% if products %}
+        <div id="display-control" class="row">
+          <div class="col-md-3">
+            <div class="mb-3">
+              <a href="{{ compare }}" id="compare-total" class="btn btn-primary d-block"><i class="fas fa-exchange-alt"></i> <span class="d-inline d-md-none d-lg-inline">{{ text_compare }}</span></a>
+            </div>
+          </div>
+          <div class="col-md-1 d-none d-md-block">
+            <div class="btn-group">
+              <button type="button" id="list-view" class="btn btn-light" data-bs-toggle="tooltip" title="{{ button_list }}"><i class="fas fa-th-list"></i></button>
+              <button type="button" id="grid-view" class="btn btn-light" data-bs-toggle="tooltip" title="{{ button_grid }}"><i class="fas fa-th"></i></button>
+            </div>
+          </div>
+          <div class="col-md-4 offset-md-1 col-6">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <label for="input-sort" class="input-group-text">{{ text_sort }}</label>
+              </div>
+              <select id="input-sort" class="form-select" onchange="location = this.value;">
+                {% for sorts in sorts %}
+                  <option value="{{ sorts.href }}"{% if sorts.value == '%s-%s'|format(sort, order) %} selected="selected"{% endif %}>{{ sorts.text }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+          <div class="col-md-3 col-6">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <label for="input-limit" class="input-group-text">{{ text_limit }}</label>
+              </div>
+              <select id="input-limit" class="form-select" onchange="location = this.value;">
+                {% for limits in limits %}
+                  <option value="{{ limits.href }}"{% if limits.value == limit %} selected="selected"{% endif %}>{{ limits.text }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          {% for product in products %}
+            <div class="product-layout product-list col-12">{{ product }}</div>
+          {% endfor %}
+        </div>
+        <div class="row">
+          <div class="col-sm-6 text-start">{{ pagination }}</div>
+          <div class="col-sm-6 text-end">{{ results }}</div>
+        </div>
+      {% else %}
+        <p>{{ text_no_results }}</p>
+      {% endif %}
+      {{ content_bottom }}
+    </div>
+    {{ column_right }}
+  </div>
+</div>
+<script type="text/javascript"><!--
+$('#button-search').bind('click', function() {
+    url = 'index.php?route=product/search&language={{ language }}';
+
+    var search = $('#content input[name=\'search\']').prop('value');
+
+    if (search) {
+        url += '&search=' + encodeURIComponent(search);
+    }
+
+    var category_id = $('#content select[name=\'category_id\']').prop('value');
+
+    if (category_id > 0) {
+        url += '&category_id=' + encodeURIComponent(category_id);
+    }
+
+    var sub_category = $('#content input[name=\'sub_category\']:checked').prop('value');
+
+    if (sub_category) {
+        url += '&sub_category=true';
+    }
+
+    var filter_description = $('#content input[name=\'description\']:checked').prop('value');
+
+    if (filter_description) {
+        url += '&description=true';
+    }
+
+    location = url;
+});
+
+$('#content input[name=\'search\']').bind('keydown', function(e) {
+    if (e.keyCode == 13) {
+        $('#button-search').trigger('click');
+    }
+});
+
+$('select[name=\'category_id\']').on('change', function() {
+    if (this.value == '0') {
+        $('input[name=\'sub_category\']').prop('disabled', true);
+    } else {
+        $('input[name=\'sub_category\']').prop('disabled', false);
+    }
+});
+
+$('select[name=\'category_id\']').trigger('change');
+//--></script>
+{{ footer }}

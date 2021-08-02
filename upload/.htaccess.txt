@@ -6,11 +6,11 @@
 
 Options +FollowSymlinks
 
-# Prevent Directoy listing
+# Prevent Directory listing
 Options -Indexes
 
 # Prevent Direct Access to files
-<FilesMatch "(?i)((\.tpl|\.ini|\.log|(?<!robots)\.txt))">
+<FilesMatch "(?i)((\.tpl|\.twig|\.ini|\.log|(?<!robots)\.txt))">
  Require all denied
 ## For apache 2.2 and older, replace "Require all denied" with these two lines :
 # Order deny,allow
@@ -22,13 +22,18 @@ RewriteEngine On
 # If your opencart installation does not run on the main web folder make sure you folder it does run in ie. / becomes /shop/
 
 RewriteBase /
-RewriteRule ^sitemap.xml$ index.php?route=extension/feed/google_sitemap [L]
-RewriteRule ^googlebase.xml$ index.php?route=extension/feed/google_base [L]
-RewriteRule ^system/download/(.*) index.php?route=error/not_found [L]
+RewriteRule ^system/storage/(.*) index.php?route=error/not_found [L]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_URI} !.*\.(ico|gif|jpg|jpeg|png|js|css)
+RewriteCond %{REQUEST_URI} !.*\.(ico|gif|jpg|jpeg|png|webp|js|css|svg)
 RewriteRule ^([^?]*) index.php?_route_=$1 [L,QSA]
+
+#ErrorDocument 400 /index.php?route=error/not_found
+#ErrorDocument 401 /index.php?route=error/permission
+#ErrorDocument 403 /index.php?route=error/not_found
+#ErrorDocument 404 /index.php?route=error/not_found
+#ErrorDocument 500 /index.php?route=error/not_found
+#ErrorDocument 503 /index.php?route=error/not_found
 
 ### Additional Settings that may need to be enabled for some servers
 ### Uncomment the commands by removing the # sign in front of it.

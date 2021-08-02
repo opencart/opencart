@@ -1,52 +1,100 @@
 <?php
-/*
-* Event System Userguide
+/**
+ * @package		OpenCart
+ * @author		Daniel Kerr
+ * @copyright	Copyright (c) 2005 - 2017, OpenCart, Ltd. (https://www.opencart.com/)
+ * @license		https://opensource.org/licenses/GPL-3.0
+ * @link		https://www.opencart.com
+*/
+
+/**
+* Event class
+*
+* Event System
 * 
 * https://github.com/opencart/opencart/wiki/Events-(script-notifications)-2.2.x.x
 */
+namespace Opencart\System\Engine;
 class Event {
 	protected $registry;
-	protected $data = array();
-
-	public function __construct($registry) {
+	protected $data = [];
+	
+	/**
+	 * Constructor
+	 *
+	 * @param	object	$route
+ 	*/
+	public function __construct(\Opencart\System\Engine\Registry $registry) {
 		$this->registry = $registry;
 	}
+	
+	/**
+	 * 
+	 *
+	 * @param	string	$trigger
+	 * @param	object	$action
+	 * @param	int		$priority
+ 	*/	
+	public function register(string $trigger, \Opencart\System\Engine\Action $action, int $priority = 0): void {
+		$this->data[] = [
+			'trigger'  => $trigger,
+			'action'   => $action,
+			'priority' => $priority
+		];
+		
+		$sort_order = [];
 
-	public function register($trigger, Action $action) {
-		$this->data[$trigger][] = $action;
+		foreach ($this->data as $key => $value) {
+			$sort_order[$key] = $value['priority'];
+		}
+
+		array_multisort($sort_order, SORT_ASC, $this->data);	
 	}
 	
-	public function trigger($event, array $args = array()) {
-		foreach ($this->data as $trigger => $actions) {
-			if (preg_match('/^' . str_replace(array('\*', '\?'), array('.*', '.'), preg_quote($trigger, '/')) . '/', $event)) {
-				foreach ($actions as $action) {
-					$result = $action->execute($this->registry, $args);
+	/**
+	 * 
+	 *
+	 * @param	string	$event
+	 * @param	array	$args
+ 	*/		
+	public function trigger(string $event, array $args = []): mixed {
+		foreach ($this->data as $value) {
+			if (preg_match('/^' . str_replace(['\*', '\?'], ['.*', '.'], preg_quote($value['trigger'], '/')) . '/', $event)) {
+				$result = $value['action']->execute($this->registry, $args);
 
-					if (!is_null($result) && !($result instanceof Exception)) {
-						return $result;
-					}
+				if (!is_null($result) && !($result instanceof \Exception)) {
+					return $result;
 				}
 			}
 		}
-	}
 
-	public function unregister($trigger, $route = '') {
-		if ($route) {
-			foreach ($this->data[$trigger] as $key => $action) {
-				if ($action->getId() == $route) {
-					unset($this->data[$trigger][$key]);
-				}
-			}
-		} else {
-			unset($this->data[$trigger]);
-		}
+		return '';
 	}
-
-	public function removeAction($trigger, $route) {
-		foreach ($this->data[$trigger] as $key => $action) {
-			if ($action->getId() == $route) {
-				unset($this->data[$trigger][$key]);
+	
+	/**
+	 * 
+	 *
+	 * @param	string	$trigger
+	 * @param	string	$route
+ 	*/	
+	public function unregister(string $trigger, string $route): void {
+		foreach ($this->data as $key => $value) {
+			if ($trigger == $value['trigger'] && $value['action']->getId() == $route) {
+				unset($this->data[$key]);
+			}
+		}			
+	}
+	
+	/**
+	 * 
+	 *
+	 * @param	string	$trigger
+ 	*/		
+	public function clear(string $trigger): void {
+		foreach ($this->data as $key => $value) {
+			if ($trigger == $value['trigger']) {
+				unset($this->data[$key]);
 			}
 		}
-	}
+	}	
 }

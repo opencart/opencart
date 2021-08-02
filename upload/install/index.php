@@ -11,25 +11,28 @@ if ((isset($_SERVER['HTTPS']) && (($_SERVER['HTTPS'] == 'on') || ($_SERVER['HTTP
 	$protocol = 'http://';
 }
 
+// APPLICATION
+define('APPLICATION', 'Install');
+
+// HTTP
 define('HTTP_SERVER', $protocol . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['SCRIPT_NAME']), '/.\\') . '/');
 define('HTTP_OPENCART', $protocol . $_SERVER['HTTP_HOST'] . rtrim(rtrim(dirname($_SERVER['SCRIPT_NAME']), 'install'), '/.\\') . '/');
 
 // DIR
 define('DIR_OPENCART', str_replace('\\', '/', realpath(dirname(__FILE__) . '/../') . '/'));
-define('DIR_APPLICATION', str_replace('\\', '/', realpath(dirname(__FILE__))) . '/');
-define('DIR_SYSTEM', str_replace('\\', '/', realpath(dirname(__FILE__) . '/../')) . '/system/');
-define('DIR_IMAGE', str_replace('\\', '/', realpath(dirname(__FILE__) . '/../')) . '/image/');
+define('DIR_APPLICATION', DIR_OPENCART . 'install/');
+define('DIR_SYSTEM', DIR_OPENCART . 'system/');
+define('DIR_EXTENSION', DIR_OPENCART . 'extension/');
+define('DIR_IMAGE', DIR_OPENCART . 'image/');
+define('DIR_STORAGE', DIR_SYSTEM . 'storage/');
 define('DIR_LANGUAGE', DIR_APPLICATION . 'language/');
 define('DIR_TEMPLATE', DIR_APPLICATION . 'view/template/');
-define('DIR_DATABASE', DIR_SYSTEM . 'database/');
 define('DIR_CONFIG', DIR_SYSTEM . 'config/');
 define('DIR_CACHE', DIR_SYSTEM . 'storage/cache/');
-define('DIR_LOGS', DIR_SYSTEM . 'storage/logs/');
-define('DIR_MODIFICATION', DIR_SYSTEM . 'storage/modification/');
 define('DIR_DOWNLOAD', DIR_SYSTEM . 'storage/download/');
+define('DIR_LOGS', DIR_SYSTEM . 'storage/logs/');
+define('DIR_SESSION', DIR_SYSTEM . 'storage/session/');
 define('DIR_UPLOAD', DIR_SYSTEM . 'storage/upload/');
 
 // Startup
 require_once(DIR_SYSTEM . 'startup.php');
-
-start('install');

@@ -1,0 +1,75 @@
+{{ header }}{{ column_left }}
+<div id="content">
+	<div class="page-header">
+		<div class="container-fluid">
+			<div class="float-end">
+				<button type="button" data-oc-action="{{ delete }}" data-oc-form="#cron-list" data-bs-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+			</div>
+			<h1>{{ heading_title }}</h1>
+			<ol class="breadcrumb">
+				{% for breadcrumb in breadcrumbs %}
+					<li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+				{% endfor %}
+			</ol>
+		</div>
+	</div>
+	<div class="container-fluid">
+		<div class="card mb-3">
+			<div class="card-header"><i class="fas fa-question-circle"></i> {{ text_instruction }}</div>
+			<div class="card-body">
+				<p>{{ text_cron_1 }}</p>
+				<p>{{ text_cron_2 }}</p>
+				<div class="mb-3">
+					<div class="input-group">
+						<div class="input-group-text">{{ entry_cron }}</div>
+						<input type="text" value="wget &quot;{{ cron }}&quot; --read-timeout=5400" id="input-cron" class="form-control"/>
+						<button type="button" id="button-copy" data-bs-toggle="tooltip" title="{{ button_copy }}" class="btn btn-light"><i class="fas fa-copy"></i></button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="card">
+			<div class="card-header"><i class="fas fa-list"></i> {{ text_list }}</div>
+			<div id="cron" class="card-body">{{ list }}</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript"><!--
+$('#cron').on('click', 'thead a, .pagination a', function(e) {
+    e.preventDefault();
+
+    $('#cron').load(this.href);
+});
+
+$('#cron').on('click', '.btn-success, .btn-warning, .btn-danger', function() {
+    var element = this;
+
+    $.ajax({
+        url: $(element).val(),
+        dataType: 'json',
+        beforeSend: function() {
+            $(element).button('loading');
+        },
+        complete: function() {
+            $(element).button('reset');
+        },
+        success: function(json) {
+            $('.alert-dismissible').remove();
+
+            if (json['error']) {
+                $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            if (json['success']) {
+                $('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                $('#cron').load($('#cron-list').attr('data-oc-load'));
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+//--></script>
+{{ footer }}

@@ -1,25 +1,22 @@
 <?php
-class ControllerErrorPermission extends Controller {
-	public function index() {
+namespace Opencart\Admin\Controller\Error;
+class Permission extends \Opencart\System\Engine\Controller {
+	public function index(): void {
 		$this->load->language('error/permission');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$data['heading_title'] = $this->language->get('heading_title');
+		$data['breadcrumbs'] = [];
 
-		$data['text_permission'] = $this->language->get('text_permission');
-
-		$data['breadcrumbs'] = array();
-
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
-		);
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+		];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link($this->request->get['route'], 'token=' . $this->session->data['token'], true)
-		);
+			'href' => $this->url->link($this->request->get['route'], 'user_token=' . $this->session->data['user_token'])
+		];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

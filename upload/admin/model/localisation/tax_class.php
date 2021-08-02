@@ -1,53 +1,54 @@
 <?php
-class ModelLocalisationTaxClass extends Model {
-	public function addTaxClass($data) {
-		$this->db->query("INSERT INTO " . DB_PREFIX . "tax_class SET title = '" . $this->db->escape($data['title']) . "', description = '" . $this->db->escape($data['description']) . "', date_added = NOW()");
+namespace Opencart\Admin\Model\Localisation;
+class TaxClass extends \Opencart\System\Engine\Model {
+	public function addTaxClass(array $data): int {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "tax_class` SET `title` = '" . $this->db->escape((string)$data['title']) . "', `description` = '" . $this->db->escape((string)$data['description']) . "', `date_added` = NOW()");
 
 		$tax_class_id = $this->db->getLastId();
 
 		if (isset($data['tax_rule'])) {
 			foreach ($data['tax_rule'] as $tax_rule) {
-				$this->db->query("INSERT INTO " . DB_PREFIX . "tax_rule SET tax_class_id = '" . (int)$tax_class_id . "', tax_rate_id = '" . (int)$tax_rule['tax_rate_id'] . "', based = '" . $this->db->escape($tax_rule['based']) . "', priority = '" . (int)$tax_rule['priority'] . "'");
+				$this->db->query("INSERT INTO `" . DB_PREFIX . "tax_rule` SET `tax_class_id` = '" . (int)$tax_class_id . "', `tax_rate_id` = '" . (int)$tax_rule['tax_rate_id'] . "', `based` = '" . $this->db->escape($tax_rule['based']) . "', `priority` = '" . (int)$tax_rule['priority'] . "'");
 			}
 		}
 
 		$this->cache->delete('tax_class');
-		
+
 		return $tax_class_id;
 	}
 
-	public function editTaxClass($tax_class_id, $data) {
-		$this->db->query("UPDATE " . DB_PREFIX . "tax_class SET title = '" . $this->db->escape($data['title']) . "', description = '" . $this->db->escape($data['description']) . "', date_modified = NOW() WHERE tax_class_id = '" . (int)$tax_class_id . "'");
+	public function editTaxClass(int $tax_class_id, array $data): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "tax_class` SET `title` = '" . $this->db->escape((string)$data['title']) . "', `description` = '" . $this->db->escape((string)$data['description']) . "', `date_modified` = NOW() WHERE `tax_class_id` = '" . (int)$tax_class_id . "'");
 
-		$this->db->query("DELETE FROM " . DB_PREFIX . "tax_rule WHERE tax_class_id = '" . (int)$tax_class_id . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "tax_rule` WHERE `tax_class_id` = '" . (int)$tax_class_id . "'");
 
 		if (isset($data['tax_rule'])) {
 			foreach ($data['tax_rule'] as $tax_rule) {
-				$this->db->query("INSERT INTO " . DB_PREFIX . "tax_rule SET tax_class_id = '" . (int)$tax_class_id . "', tax_rate_id = '" . (int)$tax_rule['tax_rate_id'] . "', based = '" . $this->db->escape($tax_rule['based']) . "', priority = '" . (int)$tax_rule['priority'] . "'");
+				$this->db->query("INSERT INTO `" . DB_PREFIX . "tax_rule` SET `tax_class_id` = '" . (int)$tax_class_id . "', `tax_rate_id` = '" . (int)$tax_rule['tax_rate_id'] . "', `based` = '" . $this->db->escape($tax_rule['based']) . "', `priority` = '" . (int)$tax_rule['priority'] . "'");
 			}
 		}
 
 		$this->cache->delete('tax_class');
 	}
 
-	public function deleteTaxClass($tax_class_id) {
-		$this->db->query("DELETE FROM " . DB_PREFIX . "tax_class WHERE tax_class_id = '" . (int)$tax_class_id . "'");
-		$this->db->query("DELETE FROM " . DB_PREFIX . "tax_rule WHERE tax_class_id = '" . (int)$tax_class_id . "'");
+	public function deleteTaxClass(int $tax_class_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "tax_class` WHERE `tax_class_id` = '" . (int)$tax_class_id . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "tax_rule` WHERE `tax_class_id` = '" . (int)$tax_class_id . "'");
 
 		$this->cache->delete('tax_class');
 	}
 
-	public function getTaxClass($tax_class_id) {
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "tax_class WHERE tax_class_id = '" . (int)$tax_class_id . "'");
+	public function getTaxClass(int $tax_class_id): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "tax_class` WHERE `tax_class_id` = '" . (int)$tax_class_id . "'");
 
 		return $query->row;
 	}
 
-	public function getTaxClasses($data = array()) {
+	public function getTaxClasses(array $data = []): array {
 		if ($data) {
-			$sql = "SELECT * FROM " . DB_PREFIX . "tax_class";
+			$sql = "SELECT * FROM `" . DB_PREFIX . "tax_class`";
 
-			$sql .= " ORDER BY title";
+			$sql .= " ORDER BY `title`";
 
 			if (isset($data['order']) && ($data['order'] == 'DESC')) {
 				$sql .= " DESC";
@@ -74,7 +75,7 @@ class ModelLocalisationTaxClass extends Model {
 			$tax_class_data = $this->cache->get('tax_class');
 
 			if (!$tax_class_data) {
-				$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "tax_class");
+				$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "tax_class`");
 
 				$tax_class_data = $query->rows;
 
@@ -85,21 +86,21 @@ class ModelLocalisationTaxClass extends Model {
 		}
 	}
 
-	public function getTotalTaxClasses() {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "tax_class");
+	public function getTotalTaxClasses(): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "tax_class`");
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
 	}
 
-	public function getTaxRules($tax_class_id) {
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "tax_rule WHERE tax_class_id = '" . (int)$tax_class_id . "'");
+	public function getTaxRules(int $tax_class_id): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "tax_rule` WHERE `tax_class_id` = '" . (int)$tax_class_id . "' ORDER BY `priority` ASC");
 
 		return $query->rows;
 	}
 
-	public function getTotalTaxRulesByTaxRateId($tax_rate_id) {
-		$query = $this->db->query("SELECT COUNT(DISTINCT tax_class_id) AS total FROM " . DB_PREFIX . "tax_rule WHERE tax_rate_id = '" . (int)$tax_rate_id . "'");
+	public function getTotalTaxRulesByTaxRateId(int $tax_rate_id): int {
+		$query = $this->db->query("SELECT COUNT(DISTINCT `tax_class_id`) AS `total` FROM `" . DB_PREFIX . "tax_rule` WHERE `tax_rate_id` = '" . (int)$tax_rate_id . "'");
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
 	}
 }

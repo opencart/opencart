@@ -1,4 +1,5 @@
 <?php
+//namespace Opencart\System\Helper;
 if (extension_loaded('mbstring')) {
 	mb_internal_encoding('UTF-8');
 
@@ -14,8 +15,8 @@ if (extension_loaded('mbstring')) {
 		return mb_strrpos($string, $needle, $offset);
 	}
 
-	function utf8_substr($string, $offset, $length = null) {
-		if ($length === null) {
+	function utf8_substr($string, $offset, $length = '') {
+		if ($length === '') {
 			return mb_substr($string, $offset, utf8_strlen($string));
 		} else {
 			return mb_substr($string, $offset, $length);
@@ -29,6 +30,8 @@ if (extension_loaded('mbstring')) {
 	function utf8_strtolower($string) {
 		return mb_strtolower($string);
 	}
+
+
 } elseif (function_exists('iconv')) {
 	function utf8_strlen($string) {
 		return iconv_strlen($string, 'UTF-8');
@@ -42,8 +45,8 @@ if (extension_loaded('mbstring')) {
 		return iconv_strrpos($string, $needle, 'UTF-8');
 	}
 
-	function utf8_substr($string, $offset, $length = null) {
-		if ($length === null) {
+	function utf8_substr($string, $offset, $length = '') {
+		if ($length === '') {
 			return iconv_substr($string, $offset, utf8_strlen($string), 'UTF-8');
 		} else {
 			return iconv_substr($string, $offset, $length, 'UTF-8');
@@ -54,7 +57,7 @@ if (extension_loaded('mbstring')) {
 		static $upper_to_lower;
 
 		if ($upper_to_lower == null) {
-			$upper_to_lower = array(
+			$upper_to_lower = [
 				0x0041 => 0x0061,
 				0x03A6 => 0x03C6,
 				0x0162 => 0x0163,
@@ -268,7 +271,7 @@ if (extension_loaded('mbstring')) {
 				0x00D0 => 0x00F0,
 				0x0407 => 0x0457,
 				0x0122 => 0x0123
-			);
+			];
 		}
 
 		$unicode = utf8_to_unicode($string);
@@ -290,7 +293,7 @@ if (extension_loaded('mbstring')) {
 		static $lower_to_upper;
 
 		if ($lower_to_upper == null) {
-			$lower_to_upper = array(
+			$lower_to_upper = [
 				0x0061 => 0x0041,
 				0x03C6 => 0x03A6,
 				0x0163 => 0x0162,
@@ -504,7 +507,7 @@ if (extension_loaded('mbstring')) {
 				0x00F0 => 0x00D0,
 				0x0457 => 0x0407,
 				0x0123 => 0x0122
-			);
+			];
 		}
 
 		$unicode = utf8_to_unicode($string);
@@ -523,7 +526,7 @@ if (extension_loaded('mbstring')) {
 	}
 
 	function utf8_to_unicode($string) {
-		$unicode = array();
+		$unicode = [];
 
 		for ($i = 0; $i < strlen($string); $i++) {
 			$chr = ord($string[$i]);
@@ -577,7 +580,7 @@ if (extension_loaded('mbstring')) {
 			}
 
 			if ($unicode[$i] >= 2097152 && $unicode[$i] <= 67108863) {
-				$string  .= chr(($unicode[$i] / 16777216) + 248) . chr((($unicode[$i] / 262144) % 64) + 128) . chr((($unicode[$i] / 4096) % 64) + 128) . chr((($unicode[$i] / 64) % 64) + 128) . chr(($unicode[$i] % 64) + 128);
+				$string .= chr(($unicode[$i] / 16777216) + 248) . chr((($unicode[$i] / 262144) % 64) + 128) . chr((($unicode[$i] / 4096) % 64) + 128) . chr((($unicode[$i] / 64) % 64) + 128) . chr(($unicode[$i] % 64) + 128);
 			}
 
 			if ($unicode[$i] >= 67108864 && $unicode[$i] <= 2147483647) {

@@ -20,7 +20,7 @@ $_['entry_unit']       = 'Length Unit';
 $_['entry_value']      = 'Value';
 
 // Help
-$_['help_value']       = 'Set to 1.00000 if this is your default length.';
+$_['help_value']       = 'The value of your default length in the current length unit. Set to 1 for your default length.';
 
 // Error
 $_['error_permission'] = 'Warning: You do not have permission to modify length classes!';

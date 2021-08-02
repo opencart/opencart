@@ -1,0 +1,36 @@
+<div class="table-responsive">
+  <table class="table table-bordered table-hover">
+    <thead>
+      <tr>
+        <td class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></td>
+        <td class="text-start"><a href="{{ sort_name }}"{% if sort == 'name' %} class="{{ order|lower }}"{% endif %}>{{ column_name }}</a></td>
+        <td class="text-start"><a href="{{ sort_key }}"{% if sort == 'key' %} class="{{ order|lower }}"{% endif %}>{{ column_key }}</a></td>
+        <td class="text-start d-none d-lg-table-cell"><a href="{{ sort_regex }}"{% if sort == 'regex' %} class="{{ order|lower }}"{% endif %}>{{ column_regex }}</a></td>
+        <td class="text-end d-none d-lg-table-cell"><a href="{{ sort_sort_order }}"{% if sort == 'sort_order' %} class="{{ order|lower }}"{% endif %}>{{ column_sort_order }}</a></td>
+        <td class="text-end">{{ column_action }}</td>
+      </tr>
+    </thead>
+    <tbody>
+      {% if seo_profiles %}
+        {% for seo_profile in seo_profiles %}
+          <tr>
+            <td class="text-center"><input type="checkbox" name="selected[]" value="{{ seo_profile.seo_profile_id }}" class="form-check-input"/></td>
+            <td class="text-start">{{ seo_profile.name }}</td>
+            <td class="text-start">{{ seo_profile.key }}</td>
+            <td class="text-start d-none d-lg-table-cell">{{ seo_profile.regex }}</td>
+            <td class="text-end d-none d-lg-table-cell">{{ seo_profile.sort_order }}</td>
+            <td class="text-end"><a href="{{ seo_profile.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a></td>
+          </tr>
+        {% endfor %}
+      {% else %}
+        <tr>
+          <td class="text-center" colspan="6">{{ text_no_results }}</td>
+        </tr>
+      {% endif %}
+    </tbody>
+  </table>
+</div>
+<div class="row">
+  <div class="col-sm-6 text-start">{{ pagination }}</div>
+  <div class="col-sm-6 text-end">{{ results }}</div>
+</div>

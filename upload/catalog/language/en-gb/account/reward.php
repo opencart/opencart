@@ -11,4 +11,4 @@ $_['column_points']      = 'Points';
 $_['text_account']       = 'Account';
 $_['text_reward']        = 'Reward Points';
 $_['text_total']         = 'Your total number of reward points is:';
-$_['text_empty']         = 'You do not have any reward points!';
+$_['text_no_results']    = 'You do not have any reward points!';

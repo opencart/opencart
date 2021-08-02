@@ -1,0 +1,53 @@
+.breadcrumb {
+  //display: flex;
+  display: inline-block;
+  flex-wrap: nowrap;
+  padding: $breadcrumb-padding-y $breadcrumb-padding-x;
+  margin-bottom: $breadcrumb-margin-bottom;
+  @include font-size($breadcrumb-font-size);
+  list-style: none;
+  background-color: $breadcrumb-bg;
+  @include border-radius($breadcrumb-border-radius);
+}
+
+/* OpenCart Start */
+.breadcrumb-item a {
+  color: #999999;
+}
+
+.breadcrumb-item:last-child a {
+  color: #1e91cf;
+}
+/* OpenCart End */
+
+.breadcrumb-item {
+  /* OpenCart Start */
+  text-shadow: 0 1px #fff;
+  font-size: .9231rem;
+  display: inline-block;
+  /* OpenCart End */
+
+ // The separator between breadcrumbs (by default, a forward-slash: "/")
+  + .breadcrumb-item {
+    padding-left: $breadcrumb-item-padding-x;
+
+    &::before {
+      float: left; // Suppress inline spacings and underlining of the separator
+      padding-right: $breadcrumb-item-padding-x;
+      color: $breadcrumb-divider-color;
+      content: var(--#{$variable-prefix}breadcrumb-divider, escape-svg($breadcrumb-divider)) #{"/* rtl:"} var(--#{$variable-prefix}breadcrumb-divider, escape-svg($breadcrumb-divider-flipped)) #{"*/"};
+      /* OpenCart Start */
+      font-family: "Font Awesome 5 Free";
+      font-weight: 600;
+      font-size: .7692rem;
+      color: #BBBBBB;
+      float: none;
+
+      /* OpenCart End */
+    }
+  }
+
+  &.active {
+    color: $breadcrumb-active-color;
+  }
+}

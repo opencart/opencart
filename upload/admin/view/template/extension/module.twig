@@ -1,0 +1,54 @@
+{{ promotion }}
+<fieldset>
+  <legend>{{ heading_title }}</legend>
+  <div class="alert alert-info"><i class="fas fa-info-circle"></i> {{ text_layout }}</div>
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <td class="text-start">{{ column_name }}</td>
+          <td class="text-start">{{ column_status }}</td>
+          <td class="text-end" style="min-width: 103px;">{{ column_action }}</td>
+        </tr>
+      </thead>
+      <tbody>
+        {% if extensions %}
+          {% for extension in extensions %}
+            <tr>
+              <td><b>{{ extension.name }}</b></td>
+              <td>{{ extension.status }}</td>
+              <td class="text-end">
+                {% if extension.installed %}
+                  {% if extension.module %}
+                    <a href="{{ extension.edit }}" data-bs-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i></a>
+                  {% else %}
+                    <a href="{{ extension.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a>
+                  {% endif %}
+                {% else %}
+                  <button type="button" class="btn btn-primary" disabled="disabled"><i class="fas fa-pencil-alt"></i></button>
+                {% endif %}
+                {% if not extension.installed %}
+                  <a href="{{ extension.install }}" data-bs-toggle="tooltip" title="{{ button_install }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></a>
+                {% else %}
+                  <a href="{{ extension.uninstall }}" data-bs-toggle="tooltip" title="{{ button_uninstall }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></a>
+                {% endif %}</td>
+            </tr>
+            {% for module in extension.module %}
+              <tr>
+                <td class="text-start">&nbsp;&nbsp;&nbsp;<i class="fas fa-folder-open"></i>&nbsp;&nbsp;&nbsp;{{ module.name }}</td>
+                <td class="text-start">{{ module.status }}</td>
+                <td class="text-end">
+                  <a href="{{ module.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-outline-primary"><i class="fas fa-pencil-alt"></i></a> <a href="{{ module.delete }}" data-bs-toggle="tooltip" title="{{ button_delete }}" class="btn btn-outline-danger"><i class="fas fa-trash-alt"></i></a>
+                </td>
+              </tr>
+            {% endfor %}
+          {% endfor %}
+        {% else %}
+          <tr>
+            <td class="text-center" colspan="3">{{ text_no_results }}</td>
+          </tr>
+        {% endif %}
+      </tbody>
+    </table>
+  </div>
+</fieldset>

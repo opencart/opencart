@@ -1,25 +1,25 @@
 <?php
-namespace Cart;
+namespace Opencart\System\Library\Cart;
 class Length {
-	private $lengths = array();
+	private $lengths = [];
 
-	public function __construct($registry) {
+	public function __construct(\Opencart\System\Engine\Registry $registry) {
 		$this->db = $registry->get('db');
 		$this->config = $registry->get('config');
 
-		$length_class_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "length_class mc LEFT JOIN " . DB_PREFIX . "length_class_description mcd ON (mc.length_class_id = mcd.length_class_id) WHERE mcd.language_id = '" . (int)$this->config->get('config_language_id') . "'");
+		$length_class_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "length_class` mc LEFT JOIN `" . DB_PREFIX . "length_class_description` mcd ON (mc.`length_class_id` = mcd.`length_class_id`) WHERE mcd.`language_id` = '" . (int)$this->config->get('config_language_id') . "'");
 
 		foreach ($length_class_query->rows as $result) {
-			$this->lengths[$result['length_class_id']] = array(
+			$this->lengths[$result['length_class_id']] = [
 				'length_class_id' => $result['length_class_id'],
 				'title'           => $result['title'],
 				'unit'            => $result['unit'],
 				'value'           => $result['value']
-			);
+			];
 		}
 	}
 
-	public function convert($value, $from, $to) {
+	public function convert(float $value, string $from, string $to): float {
 		if ($from == $to) {
 			return $value;
 		}
@@ -39,7 +39,7 @@ class Length {
 		return $value * ($to / $from);
 	}
 
-	public function format($value, $length_class_id, $decimal_point = '.', $thousand_point = ',') {
+	public function format(float $value, int $length_class_id, string $decimal_point = '.', string $thousand_point = ','): string {
 		if (isset($this->lengths[$length_class_id])) {
 			return number_format($value, 2, $decimal_point, $thousand_point) . $this->lengths[$length_class_id]['unit'];
 		} else {
@@ -47,7 +47,7 @@ class Length {
 		}
 	}
 
-	public function getUnit($length_class_id) {
+	public function getUnit(int $length_class_id): string {
 		if (isset($this->lengths[$length_class_id])) {
 			return $this->lengths[$length_class_id]['unit'];
 		} else {

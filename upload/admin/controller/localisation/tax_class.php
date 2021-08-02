@@ -1,116 +1,58 @@
 <?php
-class ControllerLocalisationTaxClass extends Controller {
-	private $error = array();
-
-	public function index() {
+namespace Opencart\Admin\Controller\Localisation;
+class TaxClass extends \Opencart\System\Engine\Controller {
+	public function index(): void {
 		$this->load->language('localisation/tax_class');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('localisation/tax_class');
+		$url = '';
 
-		$this->getList();
-	}
-
-	public function add() {
-		$this->load->language('localisation/tax_class');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('localisation/tax_class');
-
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_localisation_tax_class->addTaxClass($this->request->post);
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('localisation/tax_class', 'token=' . $this->session->data['token'] . $url, true));
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
 		}
 
-		$this->getForm();
-	}
-
-	public function edit() {
-		$this->load->language('localisation/tax_class');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('localisation/tax_class');
-
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_localisation_tax_class->editTaxClass($this->request->get['tax_class_id'], $this->request->post);
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('localisation/tax_class', 'token=' . $this->session->data['token'] . $url, true));
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
 		}
 
-		$this->getForm();
-	}
-
-	public function delete() {
-		$this->load->language('localisation/tax_class');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('localisation/tax_class');
-
-		if (isset($this->request->post['selected']) && $this->validateDelete()) {
-			foreach ($this->request->post['selected'] as $tax_class_id) {
-				$this->model_localisation_tax_class->deleteTaxClass($tax_class_id);
-			}
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('localisation/tax_class', 'token=' . $this->session->data['token'] . $url, true));
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$this->getList();
+		$data['breadcrumbs'] = [];
+
+		$data['breadcrumbs'][] = [
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+		];
+
+		$data['breadcrumbs'][] = [
+			'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('localisation/tax_class', 'user_token=' . $this->session->data['user_token'] . $url)
+		];
+
+		$data['add'] = $this->url->link('localisation/tax_class|form', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['delete'] = $this->url->link('localisation/tax_class|delete', 'user_token=' . $this->session->data['user_token']);
+
+		$data['list'] = $this->getList();
+
+		$data['user_token'] = $this->session->data['user_token'];
+
+		$data['header'] = $this->load->controller('common/header');
+		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['footer'] = $this->load->controller('common/footer');
+
+		$this->response->setOutput($this->load->view('localisation/tax_class', $data));
 	}
 
-	protected function getList() {
+	public function list(): void {
+		$this->load->language('localisation/tax_class');
+		
+		$this->response->setOutput($this->getList());
+	}
+
+	protected function getList(): string {
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
 		} else {
@@ -124,7 +66,7 @@ class ControllerLocalisationTaxClass extends Controller {
 		}
 
 		if (isset($this->request->get['page'])) {
-			$page = $this->request->get['page'];
+			$page = (int)$this->request->get['page'];
 		} else {
 			$page = 1;
 		}
@@ -143,73 +85,29 @@ class ControllerLocalisationTaxClass extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['action'] = $this->url->link('localisation/tax_class|list', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
-		);
+		$data['tax_classes'] = [];
 
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('localisation/tax_class', 'token=' . $this->session->data['token'] . $url, true)
-		);
-
-		$data['add'] = $this->url->link('localisation/tax_class/add', 'token=' . $this->session->data['token'] . $url, true);
-		$data['delete'] = $this->url->link('localisation/tax_class/delete', 'token=' . $this->session->data['token'] . $url, true);
-
-		$data['tax_classes'] = array();
-
-		$filter_data = array(
+		$filter_data = [
 			'sort'  => $sort,
 			'order' => $order,
-			'start' => ($page - 1) * $this->config->get('config_limit_admin'),
-			'limit' => $this->config->get('config_limit_admin')
-		);
+			'start' => ($page - 1) * $this->config->get('config_pagination_admin'),
+			'limit' => $this->config->get('config_pagination_admin')
+		];
+
+		$this->load->model('localisation/tax_class');
 
 		$tax_class_total = $this->model_localisation_tax_class->getTotalTaxClasses();
 
 		$results = $this->model_localisation_tax_class->getTaxClasses($filter_data);
 
 		foreach ($results as $result) {
-			$data['tax_classes'][] = array(
+			$data['tax_classes'][] = [
 				'tax_class_id' => $result['tax_class_id'],
 				'title'        => $result['title'],
-				'edit'         => $this->url->link('localisation/tax_class/edit', 'token=' . $this->session->data['token'] . '&tax_class_id=' . $result['tax_class_id'] . $url, true)
-			);
-		}
-
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_list'] = $this->language->get('text_list');
-		$data['text_no_results'] = $this->language->get('text_no_results');
-		$data['text_confirm'] = $this->language->get('text_confirm');
-
-		$data['column_title'] = $this->language->get('column_title');
-		$data['column_action'] = $this->language->get('column_action');
-
-		$data['button_add'] = $this->language->get('button_add');
-		$data['button_edit'] = $this->language->get('button_edit');
-		$data['button_delete'] = $this->language->get('button_delete');
-
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-
-		if (isset($this->session->data['success'])) {
-			$data['success'] = $this->session->data['success'];
-
-			unset($this->session->data['success']);
-		} else {
-			$data['success'] = '';
-		}
-
-		if (isset($this->request->post['selected'])) {
-			$data['selected'] = (array)$this->request->post['selected'];
-		} else {
-			$data['selected'] = array();
+				'edit'         => $this->url->link('localisation/tax_class|form', 'user_token=' . $this->session->data['user_token'] . '&tax_class_id=' . $result['tax_class_id'] . $url)
+			];
 		}
 
 		$url = '';
@@ -224,7 +122,7 @@ class ControllerLocalisationTaxClass extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['sort_title'] = $this->url->link('localisation/tax_class', 'token=' . $this->session->data['token'] . '&sort=title' . $url, true);
+		$data['sort_title'] = $this->url->link('localisation/tax_class|list', 'user_token=' . $this->session->data['user_token'] . '&sort=title' . $url);
 
 		$url = '';
 
@@ -236,62 +134,27 @@ class ControllerLocalisationTaxClass extends Controller {
 			$url .= '&order=' . $this->request->get['order'];
 		}
 
-		$pagination = new Pagination();
-		$pagination->total = $tax_class_total;
-		$pagination->page = $page;
-		$pagination->limit = $this->config->get('config_limit_admin');
-		$pagination->url = $this->url->link('localisation/tax_class', 'token=' . $this->session->data['token'] . $url . '&page={page}', true);
+		$data['pagination'] = $this->load->controller('common/pagination', [
+			'total' => $tax_class_total,
+			'page'  => $page,
+			'limit' => $this->config->get('config_pagination_admin'),
+			'url'   => $this->url->link('localisation/tax_class|list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+		]);
 
-		$data['pagination'] = $pagination->render();
-
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($tax_class_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($tax_class_total - $this->config->get('config_limit_admin'))) ? $tax_class_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $tax_class_total, ceil($tax_class_total / $this->config->get('config_limit_admin')));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($tax_class_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($tax_class_total - $this->config->get('config_pagination_admin'))) ? $tax_class_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $tax_class_total, ceil($tax_class_total / $this->config->get('config_pagination_admin')));
 
 		$data['sort'] = $sort;
 		$data['order'] = $order;
 
-		$data['header'] = $this->load->controller('common/header');
-		$data['column_left'] = $this->load->controller('common/column_left');
-		$data['footer'] = $this->load->controller('common/footer');
-
-		$this->response->setOutput($this->load->view('localisation/tax_class_list', $data));
+		return $this->load->view('localisation/tax_class_list', $data);
 	}
 
-	protected function getForm() {
-		$data['heading_title'] = $this->language->get('heading_title');
+	public function form(): void {
+		$this->load->language('localisation/tax_class');
+
+		$this->document->setTitle($this->language->get('heading_title'));
 
 		$data['text_form'] = !isset($this->request->get['tax_class_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
-		$data['text_shipping'] = $this->language->get('text_shipping');
-		$data['text_payment'] = $this->language->get('text_payment');
-		$data['text_store'] = $this->language->get('text_store');
-
-		$data['entry_title'] = $this->language->get('entry_title');
-		$data['entry_description'] = $this->language->get('entry_description');
-		$data['entry_rate'] = $this->language->get('entry_rate');
-		$data['entry_based'] = $this->language->get('entry_based');
-		$data['entry_priority'] = $this->language->get('entry_priority');
-
-		$data['button_save'] = $this->language->get('button_save');
-		$data['button_cancel'] = $this->language->get('button_cancel');
-		$data['button_rule_add'] = $this->language->get('button_rule_add');
-		$data['button_remove'] = $this->language->get('button_remove');
-
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-
-		if (isset($this->error['title'])) {
-			$data['error_title'] = $this->error['title'];
-		} else {
-			$data['error_title'] = '';
-		}
-
-		if (isset($this->error['description'])) {
-			$data['error_description'] = $this->error['description'];
-		} else {
-			$data['error_description'] = '';
-		}
 
 		$url = '';
 
@@ -307,41 +170,40 @@ class ControllerLocalisationTaxClass extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = [];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
-		);
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+		];
 
-		$data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('localisation/tax_class', 'token=' . $this->session->data['token'] . $url, true)
-		);
+			'href' => $this->url->link('localisation/tax_class', 'user_token=' . $this->session->data['user_token'] . $url)
+		];
 
-		if (!isset($this->request->get['tax_class_id'])) {
-			$data['action'] = $this->url->link('localisation/tax_class/add', 'token=' . $this->session->data['token'] . $url, true);
-		} else {
-			$data['action'] = $this->url->link('localisation/tax_class/edit', 'token=' . $this->session->data['token'] . '&tax_class_id=' . $this->request->get['tax_class_id'] . $url, true);
-		}
+		$data['save'] = $this->url->link('localisation/tax_class|save', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['back'] = $this->url->link('localisation/tax_class', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		$data['cancel'] = $this->url->link('localisation/tax_class', 'token=' . $this->session->data['token'] . $url, true);
+		if (isset($this->request->get['tax_class_id'])) {
+			$this->load->model('localisation/tax_class');
 
-		if (isset($this->request->get['tax_class_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$tax_class_info = $this->model_localisation_tax_class->getTaxClass($this->request->get['tax_class_id']);
 		}
 
-		if (isset($this->request->post['title'])) {
-			$data['title'] = $this->request->post['title'];
-		} elseif (!empty($tax_class_info)) {
+		if (isset($this->request->get['tax_class_id'])) {
+			$data['tax_class_id'] = (int)$this->request->get['tax_class_id'];
+		} else {
+			$data['tax_class_id'] = 0;
+		}
+
+		if (!empty($tax_class_info)) {
 			$data['title'] = $tax_class_info['title'];
 		} else {
 			$data['title'] = '';
 		}
 
-		if (isset($this->request->post['description'])) {
-			$data['description'] = $this->request->post['description'];
-		} elseif (!empty($tax_class_info)) {
+		if (!empty($tax_class_info)) {
 			$data['description'] = $tax_class_info['description'];
 		} else {
 			$data['description'] = '';
@@ -351,12 +213,10 @@ class ControllerLocalisationTaxClass extends Controller {
 
 		$data['tax_rates'] = $this->model_localisation_tax_rate->getTaxRates();
 
-		if (isset($this->request->post['tax_rule'])) {
-			$data['tax_rules'] = $this->request->post['tax_rule'];
-		} elseif (isset($this->request->get['tax_class_id'])) {
+		if (isset($this->request->get['tax_class_id'])) {
 			$data['tax_rules'] = $this->model_localisation_tax_class->getTaxRules($this->request->get['tax_class_id']);
 		} else {
-			$data['tax_rules'] = array();
+			$data['tax_rules'] = [];
 		}
 
 		$data['header'] = $this->load->controller('common/header');
@@ -366,37 +226,75 @@ class ControllerLocalisationTaxClass extends Controller {
 		$this->response->setOutput($this->load->view('localisation/tax_class_form', $data));
 	}
 
-	protected function validateForm() {
+	public function save(): void {
+		$this->load->language('localisation/tax_class');
+
+		$json = [];
+
 		if (!$this->user->hasPermission('modify', 'localisation/tax_class')) {
-			$this->error['warning'] = $this->language->get('error_permission');
+			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
 		if ((utf8_strlen($this->request->post['title']) < 3) || (utf8_strlen($this->request->post['title']) > 32)) {
-			$this->error['title'] = $this->language->get('error_title');
+			$json['error']['title'] = $this->language->get('error_title');
 		}
 
 		if ((utf8_strlen($this->request->post['description']) < 3) || (utf8_strlen($this->request->post['description']) > 255)) {
-			$this->error['description'] = $this->language->get('error_description');
+			$json['error']['description'] = $this->language->get('error_description');
 		}
 
-		return !$this->error;
+		if (!$json) {
+			$this->load->model('localisation/tax_class');
+
+			if (!$this->request->post['tax_class_id']) {
+				$json['tax_class_id'] = $this->model_localisation_tax_class->addTaxClass($this->request->post);
+			} else {
+				$this->model_localisation_tax_class->editTaxClass($this->request->post['tax_class_id'], $this->request->post);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
-	protected function validateDelete() {
+	public function delete(): void {
+		$this->load->language('localisation/tax_class');
+
+		$json = [];
+
+		if (isset($this->request->post['selected'])) {
+			$selected = $this->request->post['selected'];
+		} else {
+			$selected = [];
+		}
+
 		if (!$this->user->hasPermission('modify', 'localisation/tax_class')) {
-			$this->error['warning'] = $this->language->get('error_permission');
+			$json['error'] = $this->language->get('error_permission');
 		}
 
 		$this->load->model('catalog/product');
 
-		foreach ($this->request->post['selected'] as $tax_class_id) {
+		foreach ($selected as $tax_class_id) {
 			$product_total = $this->model_catalog_product->getTotalProductsByTaxClassId($tax_class_id);
 
 			if ($product_total) {
-				$this->error['warning'] = sprintf($this->language->get('error_product'), $product_total);
+				$json['error'] = sprintf($this->language->get('error_product'), $product_total);
 			}
 		}
 
-		return !$this->error;
+		if (!$json) {
+			$this->load->model('localisation/tax_class');
+
+			foreach ($selected as $tax_class_id) {
+				$this->model_localisation_tax_class->deleteTaxClass($tax_class_id);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 }

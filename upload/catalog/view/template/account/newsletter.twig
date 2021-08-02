@@ -1,0 +1,36 @@
+{{ header }}
+<div id="account-newsletter" class="container">
+  <ul class="breadcrumb">
+    {% for breadcrumb in breadcrumbs %}
+      <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+    {% endfor %}
+  </ul>
+  <div class="row">{{ column_left }}
+    <div id="content" class="col">{{ content_top }}
+      <h1>{{ heading_title }}</h1>
+      <form id="form-newsletter">
+        <fieldset>
+          <div class="row mb-3 mb-0">
+            <label class="col-md-3 col-form-label">{{ entry_newsletter }}</label>
+            <div class="col-md-9">
+              <div class="form-check form-check-inline">
+                <input type="radio" name="newsletter" value="1" id="input-newsletter-yes" class="form-check-input"{% if newsletter %} checked{% endif %}{% endif %}/> <label for="input-newsletter-yes" class="form-check-label">{{ text_yes }}</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input type="radio" name="newsletter" value="0" id="input-newsletter-no" class="form-check-input"{% if not newsletter %} checked{% endif %}{% endif %}/> <label for="input-newsletter-no" class="form-check-label">{{ text_no }}</label>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+        <div class="d-inline-block pt-2 pd-2 w-100">
+          <div class="float-start"><a href="{{ back }}" class="btn btn-light">{{ button_back }}</a></div>
+          <div class="float-end">
+            <button type="button" data-oc-action="{{ save }}" data-oc-form="#form-newsletter" class="btn btn-primary">{{ button_continue }}</button>
+          </div>
+        </div>
+      </form>
+      {{ content_bottom }}
+    </div>
+    {{ column_right }}</div>
+</div>
+{{ footer }}

@@ -1,6 +1,7 @@
 <?php
-class ControllerCommonSearch extends Controller {
-	public function index() {
+namespace Opencart\Catalog\Controller\Common;
+class Search extends \Opencart\System\Engine\Controller {
+	public function index(): string {
 		$this->load->language('common/search');
 
 		$data['text_search'] = $this->language->get('text_search');

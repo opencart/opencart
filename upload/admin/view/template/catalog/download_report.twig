@@ -1,0 +1,34 @@
+<div class="table-responsive">
+	<table class="table table-bordered table-hover">
+		<thead>
+			<tr>
+				<td class="text-start">{{ column_ip }}</td>
+				<td class="text-end">{{ column_account }}</td>
+				<td class="text-start">{{ column_store }}</td>
+				<td class="text-start">{{ column_country }}</td>
+				<td class="text-start">{{ column_date_added }}</td>
+			</tr>
+		</thead>
+		<tbody>
+			{% if reports %}
+				{% for report in reports %}
+					<tr>
+						<td class="text-start"><a href="https://whatismyipaddress.com/ip/{{ report.ip }}" target="_blank">{{ report.ip }}</a></td>
+						<td class="text-end"><a href="{{ report.filter_ip }}" target="_blank">{{ report.account }}</a></td>
+						<td class="text-start">{{ report.store }}</td>
+						<td class="text-start">{{ report.country }}</td>
+						<td class="text-start">{{ report.date_added }}</td>
+					</tr>
+				{% endfor %}
+			{% else %}
+				<tr>
+					<td class="text-center" colspan="5">{{ text_no_results }}</td>
+				</tr>
+			{% endif %}
+		</tbody>
+	</table>
+</div>
+<div class="row">
+	<div class="col-sm-6 text-start">{{ pagination }}</div>
+	<div class="col-sm-6 text-end">{{ results }}</div>
+</div>

@@ -5,6 +5,7 @@ $_['heading_title']                        = 'Recurring Orders';
 // Text
 $_['text_success']                         = 'Success: You have modified recurring profiles!';
 $_['text_list']                            = 'Recurring Order List';
+$_['text_filter']                          = 'Filter';
 $_['text_recurring_detail']                = 'Recurring Details';
 $_['text_order_detail']                    = 'Order Details';
 $_['text_product_detail']                  = 'Product Details';
@@ -48,15 +49,15 @@ $_['text_transaction_expired']             = 'Expired';
 $_['text_cancelled']                       = 'Recurring payment has been cancelled';
 
 // Column
-$_['column_order_recurring_id']             = 'Recurring ID';
-$_['column_order_id']                       = 'Order ID';
-$_['column_reference']                      = 'Payment Reference';
-$_['column_customer']                       = 'Customer';
-$_['column_date_added']                     = 'Date Added';
-$_['column_status']                         = 'Status';
-$_['column_amount']                         = 'Amount';
-$_['column_type']                           = 'Type';
-$_['column_action']                         = 'Action';
+$_['column_order_recurring_id']            = 'Recurring ID';
+$_['column_order_id']                      = 'Order ID';
+$_['column_reference']                     = 'Payment Reference';
+$_['column_customer']                      = 'Customer';
+$_['column_date_added']                    = 'Date Added';
+$_['column_status']                        = 'Status';
+$_['column_amount']                        = 'Amount';
+$_['column_type']                          = 'Type';
+$_['column_action']                        = 'Action';
 
 // Entry
 $_['entry_order_recurring_id']             = 'Recurring ID';

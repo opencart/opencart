@@ -1,16 +1,43 @@
 <?php
+/**
+ * @package		OpenCart
+ * @author		Daniel Kerr
+ * @copyright	Copyright (c) 2005 - 2017, OpenCart, Ltd. (https://www.opencart.com/)
+ * @license		https://opensource.org/licenses/GPL-3.0
+ * @link		https://www.opencart.com
+*/
+
+/**
+* Log class
+*/
+namespace Opencart\System\Library;
 class Log {
-	private $handle;
+	private string $file;
+	private string $message = '';
 
-	public function __construct($filename) {
-		$this->handle = fopen(DIR_LOGS . $filename, 'a');
+	/**
+	 * Constructor
+	 *
+	 * @param	string	$filename
+ 	*/
+	public function __construct(string $filename) {
+		$this->file = DIR_LOGS . $filename;
 	}
-
-	public function write($message) {
-		fwrite($this->handle, date('Y-m-d G:i:s') . ' - ' . print_r($message, true) . "\n");
+	
+	/**
+     * 
+     *
+     * @param	string	$message
+     */
+	public function write(string $message): void {
+		$this->message .= date('Y-m-d G:i:s') . ' - ' . print_r($message, true) . "\n";
 	}
-
+	
+	/**
+     * 
+     *
+     */
 	public function __destruct() {
-		fclose($this->handle);
+		file_put_contents($this->file, $this->message, FILE_APPEND);
 	}
 }

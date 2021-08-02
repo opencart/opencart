@@ -1,0 +1,22 @@
+<?php
+namespace Opencart\Catalog\Controller\Extension\Opencart\Payment;
+class FreeCheckout extends \Opencart\System\Engine\Controller {
+	public function index(): string {
+		return $this->load->view('extension/opencart/payment/free_checkout');
+	}
+
+	public function confirm(): void {
+		$json = [];
+
+		if ($this->session->data['payment_method']['code'] == 'free_checkout') {
+			$this->load->model('checkout/order');
+
+			$this->model_checkout_order->addHistory($this->session->data['order_id'], $this->config->get('payment_free_checkout_order_status_id'));
+
+			$json['redirect'] = $this->url->link('checkout/success', 'language=' . $this->config->get('config_language'), true);
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+}

@@ -1,0 +1,108 @@
+{{ header }}
+<div id="product-category" class="container">
+  <ul class="breadcrumb">
+    {% for breadcrumb in breadcrumbs %}
+      <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+    {% endfor %}
+  </ul>
+  <div class="row">{{ column_left }}
+    <div id="content" class="col">{{ content_top }}
+      <h2>{{ heading_title }}</h2>
+      {% if thumb or description %}
+        <div class="row">
+          {% if thumb %}
+            <div class="col-sm-2"><img src="{{ thumb }}" alt="{{ heading_title }}" title="{{ heading_title }}" class="img-thumbnail"/></div>
+          {% endif %}
+          {% if description %}
+            <div class="col-sm-10">{{ description }}</div>
+          {% endif %}
+        </div>
+        <hr/>
+      {% endif %}
+      {% if categories %}
+        <h3>{{ text_refine }}</h3>
+        {% if categories|length <= 5 %}
+          <div class="row">
+            <div class="col-sm-3">
+              <ul>
+                {% for category in categories %}
+                  <li><a href="{{ category.href }}">{{ category.name }}</a></li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+        {% else %}
+          <div class="row">
+            {% for category in categories|batch((categories|length / 4)|round(1, 'ceil')) %}
+              <div class="col-sm-3">
+                <ul>
+                  {% for child in category %}
+                    <li><a href="{{ child.href }}">{{ child.name }}</a></li>
+                  {% endfor %}
+                </ul>
+              </div>
+            {% endfor %}
+          </div>
+          <br/>
+        {% endif %}
+      {% endif %}
+      {% if products %}
+        <div id="display-control" class="row">
+          <div class="col-lg-3">
+            <div class="mb-3">
+              <a href="{{ compare }}" id="compare-total" class="btn btn-primary d-block"><i class="fas fa-exchange-alt"></i> <span class="d-none d-xl-inline">{{ text_compare }}</span></a>
+            </div>
+          </div>
+          <div class="col-lg-1 d-none d-lg-block">
+            <div class="btn-group">
+              <button type="button" id="list-view" class="btn btn-light" data-bs-toggle="tooltip" title="{{ button_list }}"><i class="fas fa-th-list"></i></button>
+              <button type="button" id="grid-view" class="btn btn-light" data-bs-toggle="tooltip" title="{{ button_grid }}"><i class="fas fa-th"></i></button>
+            </div>
+          </div>
+          <div class="col-lg-4 offset-lg-1 col-6">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <label for="input-sort" class="input-group-text">{{ text_sort }}</label>
+              </div>
+              <select id="input-sort" class="form-select" onchange="location = this.value;">
+                {% for sorts in sorts %}
+                  <option value="{{ sorts.href }}"{% if sorts.value == '%s-%s'|format(sort, order) %} selected="selected"{% endif %}>{{ sorts.text }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+          <div class="col-lg-3 col-6">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <label for="input-limit" class="input-group-text">{{ text_limit }}</label>
+              </div>
+              <select id="input-limit" class="form-select" onchange="location = this.value;">
+                {% for limits in limits %}
+                  <option value="{{ limits.href }}"{% if limits.value == limit %} selected="selected"{% endif %}>{{ limits.text }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          {% for product in products %}
+            <div class="product-layout product-list col-12">{{ product }}</div>
+          {% endfor %}
+        </div>
+        <div class="row">
+          <div class="col-sm-6 text-start">{{ pagination }}</div>
+          <div class="col-sm-6 text-end">{{ results }}</div>
+        </div>
+      {% endif %}
+      {% if not categories and not products %}
+        <p>{{ text_no_results }}</p>
+        <div class="d-inline-block pt-2 pd-2 w-100">
+          <div class="float-end"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
+        </div>
+      {% endif %}
+      {{ content_bottom }}
+    </div>
+    {{ column_right }}
+  </div>
+</div>
+{{ footer }}

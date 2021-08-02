@@ -1,42 +1,23 @@
 <?php
-class ControllerCommonLogin extends Controller {
-	private $error = array();
-
-	public function index() {
+namespace Opencart\Admin\Controller\Common;
+class Login extends \Opencart\System\Engine\Controller {
+	public function index(): void {
 		$this->load->language('common/login');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		if ($this->user->isLogged() && isset($this->request->get['token']) && ($this->request->get['token'] == $this->session->data['token'])) {
-			$this->response->redirect($this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true));
+		// Check to see if user is already logged
+		if ($this->user->isLogged() && isset($this->request->get['user_token']) && isset($this->session->data['user_token']) && ($this->request->get['user_token'] == $this->session->data['user_token'])) {
+			$this->response->redirect($this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token']));
 		}
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->session->data['token'] = token(32);
-			
-			if (isset($this->request->post['redirect']) && (strpos($this->request->post['redirect'], HTTP_SERVER) === 0 || strpos($this->request->post['redirect'], HTTPS_SERVER) === 0)) {
-				$this->response->redirect($this->request->post['redirect'] . '&token=' . $this->session->data['token']);
-			} else {
-				$this->response->redirect($this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true));
-			}
-		}
+		// Check to see if user is using incorrect token
+		if (isset($this->request->get['user_token']) && (!isset($this->session->data['user_token']) || ($this->request->get['user_token'] != $this->session->data['user_token']))) {
+			$data['error_warning'] = $this->language->get('error_token');
+		} elseif (isset($this->session->data['error'])) {
+			$data['error_warning'] = $this->session->data['error'];
 
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_login'] = $this->language->get('text_login');
-		$data['text_forgotten'] = $this->language->get('text_forgotten');
-
-		$data['entry_username'] = $this->language->get('entry_username');
-		$data['entry_password'] = $this->language->get('entry_password');
-
-		$data['button_login'] = $this->language->get('button_login');
-
-		if ((isset($this->session->data['token']) && !isset($this->request->get['token'])) || ((isset($this->request->get['token']) && (isset($this->session->data['token']) && ($this->request->get['token'] != $this->session->data['token']))))) {
-			$this->error['warning'] = $this->language->get('error_token');
-		}
-
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
+			unset($this->session->data['error']);
 		} else {
 			$data['error_warning'] = '';
 		}
@@ -49,25 +30,11 @@ class ControllerCommonLogin extends Controller {
 			$data['success'] = '';
 		}
 
-		$data['action'] = $this->url->link('common/login', '', true);
-
-		if (isset($this->request->post['username'])) {
-			$data['username'] = $this->request->post['username'];
-		} else {
-			$data['username'] = '';
-		}
-
-		if (isset($this->request->post['password'])) {
-			$data['password'] = $this->request->post['password'];
-		} else {
-			$data['password'] = '';
-		}
-
-		if (isset($this->request->get['route'])) {
+		if (isset($this->request->get['route']) && $this->request->get['route'] != 'common/login') {
 			$route = $this->request->get['route'];
 
 			unset($this->request->get['route']);
-			unset($this->request->get['token']);
+			unset($this->request->get['user_token']);
 
 			$url = '';
 
@@ -75,16 +42,21 @@ class ControllerCommonLogin extends Controller {
 				$url .= http_build_query($this->request->get);
 			}
 
-			$data['redirect'] = $this->url->link($route, $url, true);
+			$data['redirect'] = $this->url->link($route, $url);
 		} else {
 			$data['redirect'] = '';
 		}
 
-		if ($this->config->get('config_password')) {
-			$data['forgotten'] = $this->url->link('common/forgotten', '', true);
+		if ($this->config->get('config_forgotten_password')) {
+			$data['forgotten'] = $this->url->link('common/forgotten');
 		} else {
 			$data['forgotten'] = '';
 		}
+
+		// Create a login token to prevent brute force attacks
+		$this->session->data['login_token'] = token(32);
+
+		$data['login_token'] = $this->session->data['login_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -92,11 +64,52 @@ class ControllerCommonLogin extends Controller {
 		$this->response->setOutput($this->load->view('common/login', $data));
 	}
 
-	protected function validate() {
-		if (!isset($this->request->post['username']) || !isset($this->request->post['password']) || !$this->user->login($this->request->post['username'], html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8'))) {
-			$this->error['warning'] = $this->language->get('error_login');
+	public function login(): void {
+		$this->load->language('common/login');
+
+		$json = [];
+
+		// Stop any undefined index messages.
+		$keys = [
+			'username',
+			'password',
+			'redirect'
+		];
+
+		foreach ($keys as $key) {
+			if (!isset($this->request->post[$key])) {
+				$this->request->post[$key] = '';
+			}
 		}
 
-		return !$this->error;
+		if ($this->user->isLogged() && isset($this->request->get['user_token']) && isset($this->session->data['user_token']) && ($this->request->get['user_token'] == $this->session->data['user_token'])) {
+			$json['redirect'] = $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true);
+		}
+
+		if (!isset($this->request->get['login_token']) || !isset($this->session->data['login_token']) || $this->request->get['login_token'] != $this->session->data['login_token']) {
+			$this->session->data['error'] = $this->language->get('error_login');
+
+			$json['redirect'] = $this->url->link('common/login');
+		}
+
+		if (!$this->user->login($this->request->post['username'], html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8'))) {
+			$json['error'] = $this->language->get('error_login');
+		}
+
+		if (!$json) {
+			$this->session->data['user_token'] = token(32);
+
+			// Remove login token so it can not be used again.
+			unset($this->session->data['login_token']);
+
+			if ($this->request->post['redirect'] && (strpos($this->request->post['redirect'], HTTP_SERVER) === 0)) {
+				$json['redirect'] = $this->request->post['redirect'] . '&user_token=' . $this->session->data['user_token'];
+			} else {
+				$json['redirect'] = $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true);
+			}
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 }

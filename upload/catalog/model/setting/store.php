@@ -1,10 +1,23 @@
 <?php
-class ModelSettingStore extends Model {
-	public function getStores($data = array()) {
+namespace Opencart\Catalog\Model\Setting;
+class Store extends \Opencart\System\Engine\Model {
+	public function getStore(int $store_id): array {
+		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "store` WHERE `store_id` = '" . (int)$store_id . "'");
+
+		return $query->row;
+	}
+
+	public function getStoreByHostname(string $url): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "store` WHERE REPLACE(`url`, 'www.', '') = '" . $this->db->escape(($this->request->server['HTTPS'] ? 'https://' : 'http://') . str_replace('www.', '', $this->request->server['HTTP_HOST']) . rtrim(dirname($this->request->server['PHP_SELF']), '/.\\') . '/') . "'");
+
+		return $query->row;
+	}
+
+	public function getStores(): array {
 		$store_data = $this->cache->get('store');
 
 		if (!$store_data) {
-			$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "store ORDER BY url");
+			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "store` ORDER BY `url`");
 
 			$store_data = $query->rows;
 

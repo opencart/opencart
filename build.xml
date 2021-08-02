@@ -19,6 +19,7 @@
             <arg value="-l"/>
             <fileset dir="${basedir}/upload">
                 <include name="**/*.php"/>
+                <exclude name="**/vendor/**" />
                 <modified/>
             </fileset>
         </apply>
@@ -38,6 +39,8 @@
         <exec executable="phploc">
             <arg value="--log-csv"/>
             <arg value="${basedir}/tests/logs/phploc.csv"/>
+            <arg value="--exclude"/>
+            <arg value="${basedir}/upload/system/storage/"/>
             <arg path="${basedir}/upload"/>
         </exec>
     </target>

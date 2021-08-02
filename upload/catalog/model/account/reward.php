@@ -1,18 +1,19 @@
 <?php
-class ModelAccountReward extends Model {
-	public function getRewards($data = array()) {
-		$sql = "SELECT * FROM `" . DB_PREFIX . "customer_reward` WHERE customer_id = '" . (int)$this->customer->getId() . "'";
+namespace Opencart\Catalog\Model\Account;
+class Reward extends \Opencart\System\Engine\Model {
+	public function getRewards(array $data = []): array {
+		$sql = "SELECT * FROM `" . DB_PREFIX . "customer_reward` WHERE `customer_id` = '" . (int)$this->customer->getId() . "'";
 
-		$sort_data = array(
+		$sort_data = [
 			'points',
 			'description',
 			'date_added'
-		);
+		];
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
-			$sql .= " ORDER BY " . $data['sort'];
+			$sql .= " ORDER BY `" . $data['sort'] . "`";
 		} else {
-			$sql .= " ORDER BY date_added";
+			$sql .= " ORDER BY `date_added`";
 		}
 
 		if (isset($data['order']) && ($data['order'] == 'DESC')) {
@@ -38,14 +39,14 @@ class ModelAccountReward extends Model {
 		return $query->rows;
 	}
 
-	public function getTotalRewards() {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "customer_reward` WHERE customer_id = '" . (int)$this->customer->getId() . "'");
+	public function getTotalRewards(): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer_reward` WHERE `customer_id` = '" . (int)$this->customer->getId() . "'");
 
 		return $query->row['total'];
 	}
 
-	public function getTotalPoints() {
-		$query = $this->db->query("SELECT SUM(points) AS total FROM `" . DB_PREFIX . "customer_reward` WHERE customer_id = '" . (int)$this->customer->getId() . "' GROUP BY customer_id");
+	public function getTotalPoints(): int {
+		$query = $this->db->query("SELECT SUM(`points`) AS `total` FROM `" . DB_PREFIX . "customer_reward` WHERE `customer_id` = '" . (int)$this->customer->getId() . "' GROUP BY `customer_id`");
 
 		if ($query->num_rows) {
 			return $query->row['total'];

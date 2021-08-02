@@ -33,7 +33,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
-		
+
 		$this->response->setOutput($this->load->view('marketplace/installer', $data));
 	}
 
@@ -65,7 +65,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 		}
 
 		$data['extensions'] = [];
-		
+
 		$this->load->model('setting/extension');
 
 		$filter_data = [
@@ -79,7 +79,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 		$extension_total = $this->model_setting_extension->getTotalInstalls($filter_data);
 
 		$results = $this->model_setting_extension->getInstalls($filter_data);
-		
+
 		foreach ($results as $result) {
 			if ($result['extension_id']) {
 				$link = $this->url->link('marketplace/marketplace|info', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $result['extension_id']);
@@ -426,10 +426,18 @@ class Installer extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
+		// Main OpenCart Extensions
+		$oc_extensions = [1];
+
 		if (isset($this->request->get['extension_install_id'])) {
 			$extension_install_id = (int)$this->request->get['extension_install_id'];
 		} else {
 			$extension_install_id = 0;
+		}
+
+		// Should'nt be able to uninstall a main extension
+		if(in_array($extension_install_id, $oc_extensions)) {
+			$json['error'] = $this->language->get('error_permission');
 		}
 
 		if (!$this->user->hasPermission('modify', 'marketplace/installer')) {

@@ -194,6 +194,7 @@ foreach ($config->get('action_pre_action') as $pre_action) {
 		$action = $error;
 
 		$error = '';
+		
 		break;
 	}
 }

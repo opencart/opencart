@@ -115,7 +115,6 @@ $_['entry_image_popup']                = 'Product Image Popup Size (W x H)';
 $_['entry_image_product']              = 'Product Image List Size (W x H)';
 $_['entry_image_additional']           = 'Additional Product Image Size (W x H)';
 $_['entry_image_related']              = 'Related Product Image Size (W x H)';
-$_['entry_image_related']              = 'Related Product Image Size (W x H)';
 $_['entry_image_compare']              = 'Compare Image Size (W x H)';
 $_['entry_image_wishlist']             = 'Wish List Image Size (W x H)';
 $_['entry_image_cart']                 = 'Cart Image Size (W x H)';

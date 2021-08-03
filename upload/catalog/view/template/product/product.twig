@@ -90,7 +90,8 @@
                         <input type="radio" name="rating" value="4"/>
                         &nbsp;
                         <input type="radio" name="rating" value="5"/>
-                        &nbsp;{{ entry_good }}</div>
+                        &nbsp;{{ entry_good }}
+                      </div>
                     </div>
                     {{ captcha }}
                     <div class="d-inline-block pt-2 pd-2 w-100">
@@ -103,7 +104,8 @@
                   {% endif %}
                 </form>
               </div>
-            {% endif %}</div>
+            {% endif %}
+          </div>
         </div>
 
         {% if column_left or column_right %}
@@ -118,8 +120,8 @@
             <button type="button" data-bs-toggle="tooltip" class="btn btn-light" title="{{ button_compare }}" onclick="compare.add('{{ product_id }}');"><i class="fas fa-exchange-alt"></i></button>
           </div>
 
-
           <h1>{{ heading_title }}</h1>
+          
           <ul class="list-unstyled">
             {% if manufacturer %}
               <li>{{ text_manufacturer }} <a href="{{ manufacturers }}">{{ manufacturer }}</a></li>
@@ -130,8 +132,10 @@
             {% endif %}
             <li>{{ text_stock }} {{ stock }}</li>
           </ul>
+          
           {% if price %}
             <ul class="list-unstyled">
+            
               {% if not special %}
                 <li>
                   <h2>{{ price }}</h2>
@@ -142,12 +146,14 @@
                   <h2>{{ special }}</h2>
                 </li>
               {% endif %}
+              
               {% if tax %}
                 <li>{{ text_tax }} {{ tax }}</li>
               {% endif %}
               {% if points %}
                 <li>{{ text_points }} {{ points }}</li>
               {% endif %}
+              
               {% if discounts %}
                 <li>
                   <hr>
@@ -156,8 +162,10 @@
                   <li>{{ discount.quantity }}{{ text_discount }}{{ discount.price }}</li>
                 {% endfor %}
               {% endif %}
+              
             </ul>
           {% endif %}
+          
           <div id="product">{% if options %}
               <hr>
               <h3>{{ text_option }}</h3>
@@ -270,6 +278,7 @@
 
               {% endfor %}
             {% endif %}
+            
             {% if recurrings %}
               <hr/>
               <h3>{{ text_payment_recurring }}</h3>
@@ -283,6 +292,7 @@
                 <div id="recurring-description" class="help-block"></div>
               </div>
             {% endif %}
+            
             <div class="row mb-3">
               <label for="input-quantity" class="col-form-label">{{ entry_qty }}</label> <input type="text" name="quantity" value="{{ minimum }}" size="2" id="input-quantity" class="form-control"/> <input type="hidden" name="product_id" value="{{ product_id }}"/>
               <br/>
@@ -301,8 +311,10 @@
                 <a href="" onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;">{{ reviews }}</a> / <a href="" onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;">{{ text_write }}</a></p>
             </div>
           {% endif %}
+          
         </div>
       </div>
+      
       {% if products %}
         <h3>{{ text_related }}</h3>
         <div class="row">
@@ -311,6 +323,7 @@
           {% endfor %}
         </div>
       {% endif %}
+      
       {% if tags %}
         <p>{{ text_tags }}
           {% for i in 0..tags|length %}
@@ -322,6 +335,7 @@
           {% endfor %}
         </p>
       {% endif %}
+      
       {{ content_bottom }}
     </div>
     {{ column_right }}

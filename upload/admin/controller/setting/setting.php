@@ -567,7 +567,6 @@ class Setting extends \Opencart\System\Engine\Controller {
 		$data['config_file_ext_allowed'] = $this->config->get('config_file_ext_allowed');
 		$data['config_file_mime_allowed'] = $this->config->get('config_file_mime_allowed');
 		$data['config_maintenance'] = $this->config->get('config_maintenance');
-		$data['config_forgotten_password'] = $this->config->get('config_forgotten_password');
 		$data['config_encryption'] = $this->config->get('config_encryption');
 		$data['config_compression'] = $this->config->get('config_compression');
 		$data['config_error_display'] = $this->config->get('config_error_display');

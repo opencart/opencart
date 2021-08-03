@@ -1072,18 +1072,6 @@
               <fieldset>
                 <legend>{{ text_security }}</legend>
                 <div class="row mb-3">
-                  <label class="col-sm-2 col-form-label">{{ entry_forgotten_password }}</label>
-                  <div class="col-sm-10">
-                    <div class="btn-group">
-                      <input type="radio" name="config_forgotten_password" value="1" id="input-password-yes" class="btn-check"{% if config_forgotten_password %} checked{% endif %}/>
-                      <label for="input-forgotten-password-yes" class="btn btn-outline-secondary">{{ text_yes }}</label>
-                      <input type="radio" name="config_forgotten_password" value="0" id="input-password-no" class="btn-check"{% if not config_forgotten_password %} checked{% endif %}/>
-                      <label for="input-forgotten-password-no" class="btn btn-outline-secondary">{{ text_no }}</label>
-                    </div>
-                    <div class="form-text text-muted">{{ help_forgotten_password }}</div>
-                  </div>
-                </div>
-                <div class="row mb-3">
                   <label class="col-sm-2 col-form-label">{{ entry_shared }}</label>
                   <div class="col-sm-10">
                     <div class="btn-group">

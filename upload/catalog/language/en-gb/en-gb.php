@@ -84,9 +84,9 @@ $_['error_upload_8']        = 'Warning: File upload stopped by extension!';
 $_['error_upload_999']      = 'Warning: No error code available!';
 $_['error_upload_size']     = 'Warning: The uploaded file exceeds the %smb max file size!';
 $_['error_curl']            = 'CURL: Error Code(%s): %s';
+$_['error_session']         = 'Warning: Session has expired please submit the foprm again!';
 
 /* When doing translations only include the matching language code */
-
 // Datepicker
 //$_['datepicker']            = 'af';
 //$_['datepicker']            = 'ar-dz';

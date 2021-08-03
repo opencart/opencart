@@ -128,78 +128,80 @@ class Register extends \Opencart\System\Engine\Controller {
 			$json['redirect'] = $this->url->link('account/register', 'language=' . $this->config->get('config_language'), true);
 		}
 
-		if ((utf8_strlen($this->request->post['firstname']) < 1) || (utf8_strlen($this->request->post['firstname']) > 32)) {
-			$json['error']['firstname'] = $this->language->get('error_firstname');
-		}
-
-		if ((utf8_strlen($this->request->post['lastname']) < 1) || (utf8_strlen($this->request->post['lastname']) > 32)) {
-			$json['error']['lastname'] = $this->language->get('error_lastname');
-		}
-
-		if ((utf8_strlen($this->request->post['email']) > 96) || !filter_var($this->request->post['email'], FILTER_VALIDATE_EMAIL)) {
-			$json['error']['email'] = $this->language->get('error_email');
-		}
-
-		$this->load->model('account/customer');
-
-		if ($this->model_account_customer->getTotalCustomersByEmail($this->request->post['email'])) {
-			$json['error']['warning'] = $this->language->get('error_exists');
-		}
-
-		if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
-			$json['error']['telephone'] = $this->language->get('error_telephone');
-		}
-
-		// Customer Group
-		if (in_array($this->request->post['customer_group_id'], (array)$this->config->get('config_customer_group_display'))) {
-			$customer_group_id = $this->request->post['customer_group_id'];
-		} else {
-			$customer_group_id = $this->config->get('config_customer_group_id');
-		}
-
-		// Custom field validation
-		$this->load->model('account/custom_field');
-
-		$custom_fields = $this->model_account_custom_field->getCustomFields((int)$customer_group_id);
-
-		foreach ($custom_fields as $custom_field) {
-
-				if ($custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['location']][$custom_field['custom_field_id']])) {
-					$json['error']['custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
-				} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !preg_match(html_entity_decode($custom_field['validation'], ENT_QUOTES, 'UTF-8'), $this->request->post['custom_field'][$custom_field['location']][$custom_field['custom_field_id']])) {
-					$json['error']['custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_regex'), $custom_field['name']);
-				}
-
-		}
-
-		if ((utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) < 4) || (utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) > 40)) {
-			$json['error']['password'] = $this->language->get('error_password');
-		}
-
-		if ($this->request->post['confirm'] !== $this->request->post['password']) {
-			$json['error']['confirm'] = $this->language->get('error_confirm');
-		}
-
-		// Captcha
-		$this->load->model('setting/extension');
-
-		$extension_info = $this->model_setting_extension->getExtensionByCode('captcha', $this->config->get('config_captcha'));
-
-		if ($extension_info && $this->config->get('captcha_' . $this->config->get('config_captcha') . '_status') && in_array('register', (array)$this->config->get('config_captcha_page'))) {
-			$captcha = $this->load->controller('extension/'  . $extension_info['extension'] . '/captcha/' . $extension_info['code'] . '|validate');
-
-			if ($captcha) {
-				$json['error']['captcha'] = $captcha;
+		if (!$json) {
+			if ((utf8_strlen($this->request->post['firstname']) < 1) || (utf8_strlen($this->request->post['firstname']) > 32)) {
+				$json['error']['firstname'] = $this->language->get('error_firstname');
 			}
-		}
 
-		// Agree to terms
-		$this->load->model('catalog/information');
+			if ((utf8_strlen($this->request->post['lastname']) < 1) || (utf8_strlen($this->request->post['lastname']) > 32)) {
+				$json['error']['lastname'] = $this->language->get('error_lastname');
+			}
 
-		$information_info = $this->model_catalog_information->getInformation($this->config->get('config_account_id'));
+			if ((utf8_strlen($this->request->post['email']) > 96) || !filter_var($this->request->post['email'], FILTER_VALIDATE_EMAIL)) {
+				$json['error']['email'] = $this->language->get('error_email');
+			}
 
-		if ($information_info && !$this->request->post['agree']) {
-			$json['error']['warning'] = sprintf($this->language->get('error_agree'), $information_info['title']);
+			$this->load->model('account/customer');
+
+			if ($this->model_account_customer->getTotalCustomersByEmail($this->request->post['email'])) {
+				$json['error']['warning'] = $this->language->get('error_exists');
+			}
+
+			if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
+				$json['error']['telephone'] = $this->language->get('error_telephone');
+			}
+
+			// Customer Group
+			if (in_array($this->request->post['customer_group_id'], (array)$this->config->get('config_customer_group_display'))) {
+				$customer_group_id = $this->request->post['customer_group_id'];
+			} else {
+				$customer_group_id = $this->config->get('config_customer_group_id');
+			}
+
+			// Custom field validation
+			$this->load->model('account/custom_field');
+
+			$custom_fields = $this->model_account_custom_field->getCustomFields((int)$customer_group_id);
+
+			foreach ($custom_fields as $custom_field) {
+				if ($custom_field['location'] == 'account') {
+					if ($custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['location']][$custom_field['custom_field_id']])) {
+						$json['error']['custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
+					} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !preg_match(html_entity_decode($custom_field['validation'], ENT_QUOTES, 'UTF-8'), $this->request->post['custom_field'][$custom_field['location']][$custom_field['custom_field_id']])) {
+						$json['error']['custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_regex'), $custom_field['name']);
+					}
+				}
+			}
+
+			if ((utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) < 4) || (utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) > 40)) {
+				$json['error']['password'] = $this->language->get('error_password');
+			}
+
+			if ($this->request->post['confirm'] !== $this->request->post['password']) {
+				$json['error']['confirm'] = $this->language->get('error_confirm');
+			}
+
+			// Captcha
+			$this->load->model('setting/extension');
+
+			$extension_info = $this->model_setting_extension->getExtensionByCode('captcha', $this->config->get('config_captcha'));
+
+			if ($extension_info && $this->config->get('captcha_' . $this->config->get('config_captcha') . '_status') && in_array('register', (array)$this->config->get('config_captcha_page'))) {
+				$captcha = $this->load->controller('extension/' . $extension_info['extension'] . '/captcha/' . $extension_info['code'] . '|validate');
+
+				if ($captcha) {
+					$json['error']['captcha'] = $captcha;
+				}
+			}
+
+			// Agree to terms
+			$this->load->model('catalog/information');
+
+			$information_info = $this->model_catalog_information->getInformation($this->config->get('config_account_id'));
+
+			if ($information_info && !$this->request->post['agree']) {
+				$json['error']['warning'] = sprintf($this->language->get('error_agree'), $information_info['title']);
+			}
 		}
 
 		if (!$json) {

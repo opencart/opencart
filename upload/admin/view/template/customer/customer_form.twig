@@ -211,11 +211,8 @@
                   <label class="col-sm-2 col-form-label">{{ entry_newsletter }}</label>
                   <div class="col-sm-10">
                     <div class="btn-group">
-
                       <input type="radio" name="newsletter" value="1" id="input-newsletter-yes" class="btn-check"{% if newsletter %} checked{% endif %}/> <label for="input-newsletter-yes" class="btn btn-outline-secondary">{{ text_yes }}</label>
-
                       <input type="radio" name="newsletter" value="0" id="input-newsletter-no" class="btn-check"{% if not newsletter %} checked{% endif %}/> <label for="input-newsletter-no" class="btn btn-outline-secondary">{{ text_no }}</label>
-
                     </div>
                   </div>
                 </div>
@@ -245,7 +242,7 @@
                 <fieldset id="address-row-{{ address_row }}">
                   <legend>{{ text_address }} {{ address_row + 1 }} <button type="button" onclick="$('#address-row-{{ address_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-sm float-end"><i class="fas fa-minus-circle"></i></button></legend>
                   <input type="hidden" name="address[{{ address_row }}][address_id]" value="{{ address.address_id }}"/>
-
+                  
                   <div class="row mb-3 required">
                     <label for="input-address-{{ address_row }}-firstname" class="col-sm-2 col-form-label">{{ entry_firstname }}</label>
                     <div class="col-sm-10">
@@ -307,6 +304,7 @@
                   </div>
                   {% for custom_field in custom_fields %}
                     {% if custom_field.location == 'address' %}
+                    
                       {% if custom_field.type == 'select' %}
                         <div class="row mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}" data-oc-sort="{{ custom_field.sort_order + 1 }}">
                           <label for="input-address-{{ address_row }}-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
@@ -359,6 +357,7 @@
                           </div>
                         </div>
                       {% endif %}
+                      
                       {% if custom_field.type == 'textarea' %}
                         <div class="row mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}" data-oc-sort="{{ custom_field.sort_order + 1 }}">
                           <label for="input-address-{{ address_row }}-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
@@ -389,6 +388,7 @@
                           </div>
                         </div>
                       {% endif %}
+                      
                       {% if custom_field.type == 'time' %}
                         <div class="row mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}" data-oc-sort="{{ custom_field.sort_order + 1 }}">
                           <label for="input-address-{{ address_row }}-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
@@ -400,6 +400,7 @@
                           </div>
                         </div>
                       {% endif %}
+                      
                       {% if custom_field.type == 'datetime' %}
                         <div class="row mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}" data-oc-sort="{{ custom_field.sort_order + 1 }}">
                           <label for="input-address-{{ address_row }}-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
@@ -411,6 +412,7 @@
                           </div>
                         </div>
                       {% endif %}
+                      
                     {% endif %}
                   {% endfor %}
                   <div class="row mb-3">
@@ -420,7 +422,7 @@
                     </div>
                   </div>
                 </fieldset>
-                {% set address_row = address_row + 1 %}
+                {% set address_row = address_row + 1 %}                
               {% endfor %}
               <div class="text-end">
                 <button type="button" id="button-address" class="btn btn-primary"><i class="fas fa-plus-circle"></i> {{ button_address_add }}</button>

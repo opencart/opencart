@@ -205,7 +205,7 @@ $('#button-shipping-address').on('click', function() {
                     $('#button-shipping-address').button('reset');
 
                     if (json['error']['warning']) {
-                        $('#checkout-shipping-address .card-body').prepend('<div class="alert alert-warning alert-dismissible">' + json['error']['warning'] + '<button type="button" class="btn-close" data-dismiss="alert"></button></div>');
+                        $('#checkout-shipping-address .card-body').prepend('<div class="alert alert-warning alert-dismissible">' + json['error']['warning'] + '<button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                     }
 
                     for (i in json['error']) {

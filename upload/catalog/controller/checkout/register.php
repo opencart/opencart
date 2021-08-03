@@ -314,22 +314,15 @@ class Register extends \Opencart\System\Engine\Controller {
 
 			foreach ($custom_fields as $custom_field) {
 				if ($custom_field['location'] == 'account') {
-
 					if ($custom_field['required'] && empty($this->request->post['customer_custom_field'][$custom_field['location']][$custom_field['custom_field_id']])) {
 						$json['error']['customer_custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
 					} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !preg_match(html_entity_decode($custom_field['validation'], ENT_QUOTES, 'UTF-8'), $this->request->post['custom_field'][$custom_field['location']][$custom_field['custom_field_id']])) {
 						$json['error']['customer_custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_regex'), $custom_field['name']);
 					}
-
 				}
 			}
 
-
-			//print_r($this->request->post);
-
 			if ($this->request->post['account']) {
-
-
 				if ((utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) < 4) || (utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) > 40)) {
 					$json['error']['customer_password'] = $this->language->get('error_password');
 				}
@@ -337,7 +330,6 @@ class Register extends \Opencart\System\Engine\Controller {
 				if ($this->request->post['confirm'] != $this->request->post['password']) {
 					$json['error']['customer_confirm'] = $this->language->get('error_confirm');
 				}
-
 			}
 
 			// Payment Address
@@ -562,7 +554,7 @@ class Register extends \Opencart\System\Engine\Controller {
 			}
 
 			// Redirect to success page
-			$json['success'] = '';
+			$json['success'] = 'Success: Your account has been successfully created!';
 
 			// Clear any previous login attempts for unregistered accounts.
 			$this->model_account_customer->deleteLoginAttempts($this->request->post['email']);

@@ -25,21 +25,17 @@
       <div class="col mb-3 required">
         <label for="input-customer-firstname" class="form-label">{{ entry_firstname }}</label> <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-customer-firstname" class="form-control"/>
       </div>
-
       <div class="col mb-3 required">
         <label for="input-customer-lastname" class="form-label">{{ entry_lastname }}</label> <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-customer-lastname" class="form-control"/>
       </div>
-
       <div class="col mb-3 required">
         <label for="input-customer-email" class="form-label">{{ entry_email }}</label> <input type="text" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-customer-email" class="form-control"/>
       </div>
-
       <div class="col mb-3 required">
         <label for="input-customer-telephone" class="form-label">{{ entry_telephone }}</label> <input type="text" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" id="input-customer-telephone" class="form-control"/>
       </div>
 
       {% for custom_field in custom_fields %}
-
         {% if custom_field.location == 'account' %}
 
           {% if custom_field.type == 'select' %}
@@ -149,19 +145,15 @@
         <div class="col mb-3 required">
           <label for="input-payment-address-1" class="form-label">{{ entry_address_1 }}</label> <input type="text" name="payment_address_1" value="{{ payment_address_1 }}" placeholder="{{ entry_address_1 }}" id="input-payment-address-1" class="form-control"/>
         </div>
-
         <div class="col mb-3">
           <label for="input-payment-address-2" class="form-label">{{ entry_address_2 }}</label> <input type="text" name="payment_address_2" value="{{ payment_address_2 }}" placeholder="{{ entry_address_2 }}" id="input-payment-address-2" class="form-control"/>
         </div>
-
         <div class="col mb-3 required">
           <label for="input-payment-city" class="form-label">{{ entry_city }}</label> <input type="text" name="payment_city" value="{{ payment_city }}" placeholder="{{ entry_city }}" id="input-payment-city" class="form-control"/>
         </div>
-
         <div class="col mb-3 required">
           <label for="input-payment-postcode" class="form-label">{{ entry_postcode }}</label> <input type="text" name="payment_postcode" value="{{ payment_postcode }}" placeholder="{{ entry_postcode }}" id="input-payment-postcode" class="form-control"/>
         </div>
-
         <div class="col mb-3 required">
           <label for="input-payment-country" class="form-label">{{ entry_country }}</label> <select name="payment_country_id" id="input-payment-country" class="form-select">
             <option value="">{{ text_select }}</option>
@@ -173,9 +165,7 @@
         <div class="col mb-3 required">
           <label for="input-payment-zone" class="form-label">{{ entry_zone }}</label> <select name="payment_zone_id" id="input-payment-zone" class="form-select"></select>
         </div>
-
         {% for custom_field in custom_fields %}
-
           {% if custom_field.location == 'address' %}
 
             {% if custom_field.type == 'select' %}
@@ -320,7 +310,6 @@
         </div>
 
         {% for custom_field in custom_fields %}
-
           {% if custom_field.location == 'address' %}
 
             {% if custom_field.type == 'select' %}

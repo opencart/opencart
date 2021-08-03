@@ -12,7 +12,7 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 
 			$data['text_greeting'] = sprintf($this->language->get('text_greeting'), $store_name);
 
-			$data['reset'] = $this->url->link('common/reset', 'email=' . urlencode($args[0]) . '&code=' . $args[1], true);
+			$data['reset'] = $this->url->link('common/forgotten|reset', 'email=' . urlencode($args[0]) . '&code=' . $args[1], true);
 			$data['ip'] = $this->request->server['REMOTE_ADDR'];
 
 			$data['store'] = $store_name;

@@ -406,6 +406,8 @@ class Translation extends \Opencart\System\Engine\Controller {
 			$directory = DIR_EXTENSION . $part[1] . '/catalog/language/';
 
 			array_shift($part);
+			// Don't remove. Required for extension route.
+			array_shift($part);
 
 			$route = implode('/', $part);
 		}

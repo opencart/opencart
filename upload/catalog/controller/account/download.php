@@ -37,11 +37,13 @@ class Download extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
+		$limit = $this->config->get('config_pagination');
+
 		$data['downloads'] = [];
 
 		$download_total = $this->model_account_download->getTotalDownloads();
 
-		$results = $this->model_account_download->getDownloads(($page - 1) * 10);
+		$results = $this->model_account_download->getDownloads(($page - 1) * $limit, $limit);
 
 		foreach ($results as $result) {
 			if (is_file(DIR_DOWNLOAD . $result['filename'])) {
@@ -75,8 +77,6 @@ class Download extends \Opencart\System\Engine\Controller {
 				];
 			}
 		}
-		
-		$limit = $this->config->get('config_pagination');
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $download_total,

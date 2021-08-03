@@ -285,11 +285,11 @@ class Register extends \Opencart\System\Engine\Controller {
 			}
 
 			// Use _custromer to separate error ids
-			if ((utf8_strlen(trim($this->request->post['firstname'])) < 1) || (utf8_strlen(trim($this->request->post['firstname'])) > 32)) {
+			if ((utf8_strlen($this->request->post['firstname']) < 1) || (utf8_strlen($this->request->post['firstname']) > 32)) {
 				$json['error']['customer_firstname'] = $this->language->get('error_firstname');
 			}
 
-			if ((utf8_strlen(trim($this->request->post['lastname'])) < 1) || (utf8_strlen(trim($this->request->post['lastname'])) > 32)) {
+			if ((utf8_strlen($this->request->post['lastname']) < 1) || (utf8_strlen($this->request->post['lastname']) > 32)) {
 				$json['error']['customer_lastname'] = $this->language->get('error_lastname');
 			}
 
@@ -342,7 +342,7 @@ class Register extends \Opencart\System\Engine\Controller {
 
 			// Payment Address
 			if ($this->config->get('config_checkout_address')) {
-				if ((utf8_strlen(trim($this->request->post['payment_address_1'])) < 3) || (utf8_strlen(trim($this->request->post['payment_address_1'])) > 128)) {
+				if ((utf8_strlen($this->request->post['payment_address_1']) < 3) || (utf8_strlen($this->request->post['payment_address_1']) > 128)) {
 					$json['error']['payment_address_1'] = $this->language->get('error_address_1');
 				}
 
@@ -354,7 +354,7 @@ class Register extends \Opencart\System\Engine\Controller {
 
 				$country_info = $this->model_localisation_country->getCountry((int)$this->request->post['payment_country_id']);
 
-				if ($country_info && $country_info['postcode_required'] && (utf8_strlen(trim($this->request->post['payment_postcode'])) < 2 || utf8_strlen(trim($this->request->post['payment_postcode'])) > 10)) {
+				if ($country_info && $country_info['postcode_required'] && (utf8_strlen($this->request->post['payment_postcode']) < 2 || utf8_strlen($this->request->post['payment_postcode']) > 10)) {
 					$json['error']['payment_postcode'] = $this->language->get('error_postcode');
 				}
 
@@ -380,15 +380,15 @@ class Register extends \Opencart\System\Engine\Controller {
 
 			// Shipping Address
 			if ($this->cart->hasShipping() && !$this->request->post['shipping_address']) {
-				if ((utf8_strlen(trim($this->request->post['shipping_firstname'])) < 1) || (utf8_strlen(trim($this->request->post['shipping_firstname'])) > 32)) {
+				if ((utf8_strlen($this->request->post['shipping_firstname']) < 1) || (utf8_strlen($this->request->post['shipping_firstname']) > 32)) {
 					$json['error']['shipping_firstname'] = $this->language->get('error_firstname');
 				}
 
-				if ((utf8_strlen(trim($this->request->post['shipping_lastname'])) < 1) || (utf8_strlen(trim($this->request->post['shipping_lastname'])) > 32)) {
+				if ((utf8_strlen($this->request->post['shipping_lastname']) < 1) || (utf8_strlen($this->request->post['shipping_lastname']) > 32)) {
 					$json['error']['shipping_lastname'] = $this->language->get('error_lastname');
 				}
 
-				if ((utf8_strlen(trim($this->request->post['shipping_address_1'])) < 3) || (utf8_strlen(trim($this->request->post['shipping_address_1'])) > 128)) {
+				if ((utf8_strlen($this->request->post['shipping_address_1']) < 3) || (utf8_strlen($this->request->post['shipping_address_1']) > 128)) {
 					$json['error']['shipping_address_1'] = $this->language->get('error_address_1');
 				}
 
@@ -400,7 +400,7 @@ class Register extends \Opencart\System\Engine\Controller {
 
 				$country_info = $this->model_localisation_country->getCountry((int)$this->request->post['shipping_country_id']);
 
-				if ($country_info && $country_info['postcode_required'] && (utf8_strlen(trim($this->request->post['shipping_postcode'])) < 2 || utf8_strlen(trim($this->request->post['shipping_postcode'])) > 10)) {
+				if ($country_info && $country_info['postcode_required'] && (utf8_strlen($this->request->post['shipping_postcode']) < 2 || utf8_strlen($this->request->post['shipping_postcode']) > 10)) {
 					$json['error']['shipping_postcode'] = $this->language->get('error_postcode');
 				}
 

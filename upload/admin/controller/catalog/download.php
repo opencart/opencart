@@ -249,7 +249,7 @@ class Download extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		if ((utf8_strlen(trim($this->request->post['filename'])) < 3) || (utf8_strlen($this->request->post['filename']) > 128)) {
+		if ((utf8_strlen($this->request->post['filename']) < 3) || (utf8_strlen($this->request->post['filename']) > 128)) {
 			$json['error']['filename'] = $this->language->get('error_filename');
 		}
 
@@ -257,7 +257,7 @@ class Download extends \Opencart\System\Engine\Controller {
 			$json['error']['filename'] = $this->language->get('error_exists');
 		}
 
-		if ((utf8_strlen(trim($this->request->post['mask'])) < 3) || (utf8_strlen($this->request->post['mask']) > 128)) {
+		if ((utf8_strlen($this->request->post['mask']) < 3) || (utf8_strlen($this->request->post['mask']) > 128)) {
 			$json['error']['mask'] = $this->language->get('error_mask');
 		}
 

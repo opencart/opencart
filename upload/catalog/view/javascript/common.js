@@ -207,7 +207,7 @@ var cart = {
 
                 if (json['success']) {
                     html = '<div class="toast">';
-                    html += '  <div class="toast-body"><button type="button" class="btn-close" data-dismiss="toast"></button> ' + json['success'] + '</div>';
+                    html += '  <div class="toast-body"><button type="button" class="btn-close" data-bs-dismiss="toast"></button> ' + json['success'] + '</div>';
                     html += '</div>';
 
                     $('#toast').prepend(html);
@@ -320,7 +320,7 @@ var wishlist = {
 
                 if (json['success']) {
                     html = '<div class="toast">';
-                    html += '  <div class="toast-body"><button type="button" class="ml-2 mb-1 close float-right" data-dismiss="toast"></button> ' + json['success'] + '</div>';
+                    html += '  <div class="toast-body"><button type="button" class="ml-2 mb-1 close float-right" data-bs-dismiss="toast"></button> ' + json['success'] + '</div>';
                     html += '</div>';
 
                     $('#toast').prepend(html);
@@ -354,7 +354,7 @@ var compare = {
 
                 if (json['success']) {
                     html = '<div class="toast">';
-                    html += '  <div class="toast-body"><button type="button" class="ml-2 mb-1 close float-right" data-dismiss="toast"></button> ' + json['success'] + '</div>';
+                    html += '  <div class="toast-body"><button type="button" class="ml-2 mb-1 close float-right" data-bs-dismiss="toast"></button> ' + json['success'] + '</div>';
                     html += '</div>';
 
                     $('#toast').prepend(html);
@@ -401,8 +401,6 @@ $(document).ready(function() {
 
                 console.log(json);
 
-                console.log(Array.isArray(json['error']));
-
                 if (json['redirect']) {
                     location = json['redirect'];
 
@@ -410,23 +408,28 @@ $(document).ready(function() {
                     delete json['redirect'];
                 }
 
-
                 if (typeof json['error'] == 'object') {
                     if (json['error']['warning']) {
                         $('.breadcrumb').after('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                     }
 
                     for (key in json['error']) {
-                        var element = $(form).find('#input-' + key.replaceAll('_', '-'));
+
+
+
+
+                        var input = $(form).find('#input-' + key.replaceAll('_', '-'));
+
+
+
+                        //var elements = $(form).find('#input-' + key.replaceAll('_', '-') + '\']');
+
+                        var input = $(element).parent();
 
                         // Highlight any found errors
-                        $(element).addClass('is-invalid');
+                        field.find('.form-control, .form-select, .form-check-input, .form-check-label, btn btn-light').addClass('is-invalid');
 
-                        if ($(element).parent().hasClass('input-group')) {
-                            $(element).parent().after('<div class="invalid-tooltip d-inline">' + json['error'][key] + '</div>');
-                        } else {
-                            $(element).after('<div class="invalid-tooltip d-inline">' + json['error'][key] + '</div>');
-                        }
+                        $(element).prepend('<div class="invalid-feedback">' + json['error'][key] + '</div>');
                     }
 
                     delete json['error'];

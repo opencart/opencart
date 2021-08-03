@@ -104,9 +104,11 @@ class Category extends \Opencart\System\Engine\Controller {
 		$results = $this->model_catalog_category->getCategories($filter_data);
 
 		$this->load->model('tool/image');
+		
 		foreach ($results as $result) {
-			if (is_file(DIR_IMAGE . html_entity_decode($result['image'], ENT_QUOTES, 'UTF-8'))) {
-				$image = $this->model_tool_image->resize(html_entity_decode($result['image'], ENT_QUOTES, 'UTF-8'), 40, 40);
+			$image_file = DIR_IMAGE . html_entity_decode($result['image'], ENT_QUOTES, 'UTF-8');
+			if (is_file($image_file)) {
+				$image = $this->model_tool_image->resize($image_file, 40, 40);
 			} else {
 				$image = $this->model_tool_image->resize('no_image.png', 40, 40);
 			}

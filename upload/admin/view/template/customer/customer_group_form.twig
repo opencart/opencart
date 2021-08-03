@@ -44,13 +44,8 @@
 						<label class="col-sm-2 col-form-label">{{ entry_approval }}</label>
 						<div class="col-sm-10">
 							<div class="btn-group">
-
-								<input type="radio" name="approval" value="1" id="input-approval-yes" class="btn-check"{% if approval %} checked{% endif %}/>
-								<label for="input-approval-yes" class="btn btn-outline-secondary">{{ text_yes }}</label>
-
-								<input type="radio" name="approval" value="0" id="input-approval-no" class="btn-check"{% if not approval %} checked{% endif %}/>
-								<label for="input-approval-no" class="btn btn-outline-secondary">{{ text_no }}</label>
-
+								<input type="radio" name="approval" value="1" id="input-approval-yes" class="btn-check"{% if approval %} checked{% endif %}/> <label for="input-approval-yes" class="btn btn-outline-secondary">{{ text_yes }}</label>
+								<input type="radio" name="approval" value="0" id="input-approval-no" class="btn-check"{% if not approval %} checked{% endif %}/> <label for="input-approval-no" class="btn btn-outline-secondary">{{ text_no }}</label>
 							</div>
 							<div class="form-text text-muted">{{ help_approval }}</div>
 						</div>

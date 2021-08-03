@@ -1157,7 +1157,7 @@ class Product extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->get['limit'])) {
-			$limit = $this->request->get['limit'];
+			$limit = (int)$this->request->get['limit'];
 		} else {
 			$limit = 5;
 		}

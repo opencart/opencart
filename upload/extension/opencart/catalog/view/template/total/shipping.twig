@@ -50,7 +50,7 @@
 
               if (json['error']) {
                   if (json['error']['warning']) {
-                      $('#collapse-shipping .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-dismiss="alert"></button></div>');
+                      $('#collapse-shipping .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                   }
 
                   if (json['error']['country']) {
@@ -100,7 +100,7 @@
 
                   html += '      </div>';
                   html += '      <div class="modal-footer">';
-                  html += '        <button type="button" class="btn btn-light" data-dismiss="modal">{{ button_cancel }}</button>';
+                  html += '        <button type="button" class="btn btn-light" data-bs-dismiss="modal">{{ button_cancel }}</button>';
 
                 {% if shipping_method %}
                   html += '        <button type="button" id="button-shipping" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_shipping }}</button>';
@@ -144,7 +144,7 @@
               $('.alert-dismissible').remove();
 
               if (json['error']) {
-                  $('.breadcrumb').after('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + '<button type="button" class="btn-close" data-dismiss="alert"></button></div>');
+                  $('.breadcrumb').after('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + '<button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                   $('html, body').animate({scrollTop: 0}, 'slow');
               }

@@ -239,7 +239,10 @@
                 <div class="col-sm-10">
                   <div class="btn-group">
                     <div class="btn-group">
+                    
                       <input type="radio" name="config_currency_auto" value="1" id="input-currency-auto-yes" class="btn-check"{% if config_currency_auto %} checked{% endif %}/> <label for="input-currency-auto-yes" class="btn btn-outline-secondary">{{ text_yes }}</label> <input type="radio" name="config_currency_auto" value="0" id="input-currency-auto-no" class="btn-check"{% if not config_currency_auto %} checked{% endif %}/> <label for="input-currency-auto-no" class="btn btn-outline-secondary">{{ text_no }}</label>
+                      <label for="input-currency-auto-no" class="btn btn-outline-secondary">{{ text_no }}</label>
+                      
                     </div>
                   </div>
                   <div class="form-text text-muted">{{ help_currency_auto }}</div>

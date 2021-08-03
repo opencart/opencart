@@ -230,9 +230,11 @@
                       <div class="btn-group">
 
                         <input type="radio" name="config_product_count" value="1" id="input-product-count-yes" class="btn-check"{% if config_product_count %} checked{% endif %}/> <label for="input-product-count-yes" class="btn btn-outline-secondary">{{ text_yes }}</label>
+                        <label for="input-product-count-yes" class="btn btn-outline-secondary">{{ text_yes }}</label>
 
                         <input type="radio" name="config_product_count" value="0" id="input-product-count-no" class="btn-check"{% if not config_product_count %} checked{% endif %}/> <label for="input-product-count-no" class="btn btn-outline-secondary">{{ text_no }}</label>
-
+                        <label for="input-product-count-no" class="btn btn-outline-secondary">{{ text_no }}</label>
+                        
                       </div>
                       <div class="form-text text-muted">{{ help_product_count }}</div>
                     </div>

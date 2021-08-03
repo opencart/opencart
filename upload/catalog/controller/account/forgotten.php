@@ -57,6 +57,8 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			$this->load->model('account/customer');
+			
 			$customer_info = $this->model_account_customer->getCustomerByEmail($this->request->post['email']);
 
 			if ($customer_info) {

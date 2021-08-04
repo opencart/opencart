@@ -259,10 +259,10 @@ class Upload extends \Opencart\System\Engine\Controller {
 					readfile($file, 'rb');
 					exit;
 				} else {
-					exit('Error: Could not find file ' . $file . '!');
+					exit(sprintf($this->language->get('error_not_found'), basename($file)));
 				}
 			} else {
-				exit('Error: Headers already sent out!');
+				exit($this->language->get('error_headers_sent'));
 			}
 		} else {
 			$this->load->language('error/not_found');

@@ -20,3 +20,5 @@ $_['entry_date_added']  = 'Date Added';
 
 // Error
 $_['error_permission']  = 'Warning: You do not have permission to modify uploads!';
+$_['error_not_found']    = 'Error: Could not find file %s !';
+$_['error_headers_sent'] = 'Error: Headers already sent out!';

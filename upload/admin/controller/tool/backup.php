@@ -379,7 +379,7 @@ class Backup extends \Opencart\System\Engine\Controller {
 
 			exit();
 		} else {
-			exit('Error: Headers already sent out!');
+			exit($this->language->get('error_headers_sent'));
 		}
 	}
 

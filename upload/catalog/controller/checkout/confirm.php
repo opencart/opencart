@@ -25,9 +25,6 @@ class Confirm extends \Opencart\System\Engine\Controller {
 			$json['redirect'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'), true);
 		}
 
-
-
-
 		$this->load->model('setting/extension');
 
 		if (isset($this->session->data['payment_method'])) {
@@ -64,11 +61,6 @@ class Confirm extends \Opencart\System\Engine\Controller {
 				break;
 			}
 		}
-
-
-
-
-
 
 		if (!$json) {
 			$order_data = [];
@@ -113,7 +105,6 @@ class Confirm extends \Opencart\System\Engine\Controller {
 			$order_data['store_url'] = $this->config->get('config_url');
 
 			$this->load->model('account/customer');
-
 
 			$order_data['customer_id'] = 0;
 			$order_data['customer_group_id'] = $this->session->data['customer']['customer_group_id'];
@@ -213,16 +204,16 @@ class Confirm extends \Opencart\System\Engine\Controller {
 				$order_data['products'][] = [
 					'product_id' => $product['product_id'],
 					'master_id'  => $product['master_id'],
-					'name' 		 => $product['name'],
-					'model' 	 => $product['model'],
-					'option' 	 => $option_data,
-					'download' 	 => $product['download'],
-					'quantity' 	 => $product['quantity'],
-					'subtract' 	 => $product['subtract'],
-					'price' 	 => $product['price'],
-					'total' 	 => $product['total'],
-					'tax' 		 => $this->tax->getTax($product['price'], $product['tax_class_id']),
-					'reward' 	 => $product['reward']
+					'name'       => $product['name'],
+					'model'      => $product['model'],
+					'option'     => $option_data,
+					'download'   => $product['download'],
+					'quantity'   => $product['quantity'],
+					'subtract'   => $product['subtract'],
+					'price'      => $product['price'],
+					'total'      => $product['total'],
+					'tax'        => $this->tax->getTax($product['price'], $product['tax_class_id']),
+					'reward'     => $product['reward']
 				];
 			}
 
@@ -233,14 +224,14 @@ class Confirm extends \Opencart\System\Engine\Controller {
 				foreach ($this->session->data['vouchers'] as $voucher) {
 					$order_data['vouchers'][] = [
 						'description'      => $voucher['description'],
-						'code' 			   => token(10),
-						'to_name' 		   => $voucher['to_name'],
-						'to_email' 		   => $voucher['to_email'],
-						'from_name' 	   => $voucher['from_name'],
-						'from_email' 	   => $voucher['from_email'],
+						'code'             => token(10),
+						'to_name'          => $voucher['to_name'],
+						'to_email'         => $voucher['to_email'],
+						'from_name'        => $voucher['from_name'],
+						'from_email'       => $voucher['from_email'],
 						'voucher_theme_id' => $voucher['voucher_theme_id'],
-						'message' 		   => $voucher['message'],
-						'amount' 		   => $voucher['amount']
+						'message'          => $voucher['message'],
+						'amount'           => $voucher['amount']
 					];
 				}
 			}
@@ -314,11 +305,11 @@ class Confirm extends \Opencart\System\Engine\Controller {
 			$this->load->model('tool/upload');
 
 			$frequencies = [
-				'day' 		 => $this->language->get('text_day'),
-				'week' 		 => $this->language->get('text_week'),
+				'day'        => $this->language->get('text_day'),
+				'week'       => $this->language->get('text_week'),
 				'semi_month' => $this->language->get('text_semi_month'),
-				'month' 	 => $this->language->get('text_month'),
-				'year' 		 => $this->language->get('text_year')
+				'month'      => $this->language->get('text_month'),
+				'year'       => $this->language->get('text_year')
 			];
 
 			$data['products'] = [];

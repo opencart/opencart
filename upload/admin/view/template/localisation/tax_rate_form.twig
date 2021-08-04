@@ -53,8 +53,7 @@
               <div id="product-store" class="form-control" style="height: 150px; overflow: auto;">
                 {% for customer_group in customer_groups %}
                   <div class="form-check">
-                    <input type="checkbox" name="tax_rate_customer_group[]" value="{{ customer_group.customer_group_id }}" id="input-customer-group-{{ customer_group.customer_group_id }}" class="form-check-input"{% if customer_group.customer_group_id in tax_rate_customer_group %} checked{% endif %}/>
-                    <label for="input-customer-group-{{ customer_group.customer_group_id }}" class="form-check-label">{{ customer_group.name }}</label>
+                    <input type="checkbox" name="tax_rate_customer_group[]" value="{{ customer_group.customer_group_id }}" id="input-customer-group-{{ customer_group.customer_group_id }}" class="form-check-input"{% if customer_group.customer_group_id in tax_rate_customer_group %} checked{% endif %}/> <label for="input-customer-group-{{ customer_group.customer_group_id }}" class="form-check-label">{{ customer_group.name }}</label>
                   </div>
                 {% endfor %}
               </div>

@@ -47,6 +47,7 @@ $_['text_progress']      = 'Progress';
 $_['text_available']     = 'Available Installs';
 $_['text_action']        = 'Action';
 $_['text_see_more']      = 'see more replies...';
+$_['text_featured']      = 'Featured';
 
 // Entry
 $_['entry_pin']          = 'PIN';

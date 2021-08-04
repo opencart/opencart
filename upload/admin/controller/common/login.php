@@ -47,12 +47,12 @@ class Login extends \Opencart\System\Engine\Controller {
 			$data['redirect'] = '';
 		}
 
-		$data['forgotten'] = $this->url->link('common/forgotten');
-
 		// Create a login token to prevent brute force attacks
 		$this->session->data['login_token'] = token(32);
 
-		$data['login_token'] = $this->session->data['login_token'];
+		$data['login'] = $this->url->link('common/login', 'login_token=' . $this->session->data['login_token'], true);
+
+		$data['forgotten'] = $this->url->link('common/forgotten');
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -88,7 +88,7 @@ class Login extends \Opencart\System\Engine\Controller {
 			$json['redirect'] = $this->url->link('common/login');
 		}
 
-		if (!$this->user->login($this->request->post['username'], html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8'))) {
+		if (!$json && !$this->user->login($this->request->post['username'], html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8'))) {
 			$json['error'] = $this->language->get('error_login');
 		}
 

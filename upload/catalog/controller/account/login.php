@@ -75,7 +75,8 @@ class Login extends \Opencart\System\Engine\Controller {
 
 		$keys = [
 			'email',
-			'password'
+			'password',
+			'redirect'
 		];
 
 		foreach ($keys as $key) {

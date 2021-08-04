@@ -4,6 +4,11 @@ class Login extends \Opencart\System\Engine\Controller {
 	public function index(): string {
 		$this->load->language('checkout/checkout');
 
+		// Create a login token to prevent brute force attacks
+		$this->session->data['login_token'] = token(32);
+
+		$data['login'] = $this->url->link('checkout/login|save', 'login_token=' . $this->session->data['login_token'], true);
+
 		$data['forgotten'] = $this->url->link('account/forgotten', 'language=' . $this->config->get('config_language'));
 
 		return $this->load->view('checkout/login', $data);

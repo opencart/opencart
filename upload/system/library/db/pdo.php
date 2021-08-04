@@ -7,7 +7,7 @@ final class PDO {
 	public function __construct($hostname, $username, $password, $database, $port = '3306') {
 		try {
 			$this->connection = new \PDO("mysql:host=" . $hostname . ";port=" . $port . ";dbname=" . $database, $username, $password, array(\PDO::ATTR_PERSISTENT => true));
-		} catch(\PDOException $e) {
+		} catch (\PDOException $e) {
 			throw new \Exception('Failed to connect to database. Reason: \'' . $e->getMessage() . '\'');
 		}
 
@@ -43,7 +43,7 @@ final class PDO {
 				$result->rows = $data;
 				$result->num_rows = $this->statement->rowCount();
 			}
-		} catch(\PDOException $e) {
+		} catch (\PDOException $e) {
 			throw new \Exception('Error: ' . $e->getMessage() . ' Error Code : ' . $e->getCode());
 		}
 	}

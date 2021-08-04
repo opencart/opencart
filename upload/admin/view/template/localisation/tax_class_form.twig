@@ -60,70 +60,30 @@
               {% for tax_rule in tax_rules %}
               <tr id="tax-rule-row{{ tax_rule_row }}">
                 <td class="text-left"><select name="tax_rule[{{ tax_rule_row }}][tax_rate_id]" class="form-control">
-                    
-                    
                     {% for tax_rate in tax_rates %}
                     {% if tax_rate.tax_rate_id == tax_rule.tax_rate_id %}
-                    
-                    
                     <option value="{{ tax_rate.tax_rate_id }}" selected="selected">{{ tax_rate.name }}</option>
-                    
-                    
                     {% else %}
-                    
-                    
                     <option value="{{ tax_rate.tax_rate_id }}">{{ tax_rate.name }}</option>
-                    
-                    
                     {% endif %}
                     {% endfor %}
-                  
-                  
                   </select></td>
                 <td class="text-left"><select name="tax_rule[{{ tax_rule_row }}][based]" class="form-control">
-                    
-                    
                     {% if tax_rule.based == 'shipping' %}
-                    
-                    
                     <option value="shipping" selected="selected">{{ text_shipping }}</option>
-                    
-                    
                     {% else %}
-                    
-                    
                     <option value="shipping">{{ text_shipping }}</option>
-                    
-                    
                     {% endif %}
                      {% if tax_rule.based == 'payment' %}
-                    
-                    
                     <option value="payment" selected="selected">{{ text_payment }}</option>
-                    
-                    
                     {% else %}
-                    
-                    
                     <option value="payment">{{ text_payment }}</option>
-                    
-                    
                     {% endif %}
                     {% if tax_rule.based == 'store' %}
-                    
-                    
                     <option value="store" selected="selected">{{ text_store }}</option>
-                    
-                    
                     {% else %}
-                    
-                    
                     <option value="store">{{ text_store }}</option>
-                    
-                    
                     {% endif %}
-                  
-                  
                   </select></td>
                 <td class="text-left"><input type="text" name="tax_rule[{{ tax_rule_row }}][priority]" value="{{ tax_rule.priority }}" placeholder="{{ entry_priority }}" class="form-control" /></td>
                 <td class="text-left"><button type="button" onclick="$('#tax-rule-row{{ tax_rule_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
@@ -138,6 +98,7 @@
                   <td class="text-left"><button type="button" onclick="addRule();" data-toggle="tooltip" title="{{ button_rule_add }}" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
                 </tr>
               </tfoot>
+	      
             </table>
           </fieldset>
         </form>

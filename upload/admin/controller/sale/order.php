@@ -1498,6 +1498,7 @@ class ControllerSaleOrder extends Controller {
 		}
 
 		$data['direction'] = $this->language->get('direction');
+		
 		$data['lang'] = $this->language->get('code');
 
 		$this->load->model('sale/order');
@@ -1516,6 +1517,7 @@ class ControllerSaleOrder extends Controller {
 
 		foreach ($orders as $order_id) {
 			$order_info = $this->model_sale_order->getOrder($order_id);
+			
 			$data['text_order'] = sprintf($this->language->get('text_order'), $order_id);
 			
 			if ($order_info) {

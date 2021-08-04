@@ -9,7 +9,7 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 		$data['config_file_max_size'] = $this->config->get('config_file_max_size');
 
 		if (isset($this->session->data['payment_address']['address_id'])) {
-			$data['address_id'] = $this->session->data['payment_address']['address_id'];
+			$data['address_id'] = (int)$this->session->data['payment_address']['address_id'];
 		} else {
 			$data['address_id'] = $this->customer->getAddressId();
 		}
@@ -19,7 +19,7 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 		$data['addresses'] = $this->model_account_address->getAddresses();
 
 		if (isset($this->session->data['payment_address']['country_id'])) {
-			$data['country_id'] = $this->session->data['payment_address']['country_id'];
+			$data['country_id'] = (int)$this->session->data['payment_address']['country_id'];
 		} else {
 			$data['country_id'] = $this->config->get('config_country_id');
 		}
@@ -98,7 +98,7 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 			if (isset($this->request->post['payment_address']) && $this->request->post['payment_address'] == 'existing') {
 				if (empty($this->request->post['address_id'])) {
 					$json['error']['warning'] = $this->language->get('error_address');
-				} elseif (!in_array($this->request->post['address_id'], array_keys($this->model_account_address->getAddresses()))) {
+				} elseif (!in_array((int)$this->request->post['address_id'], array_keys($this->model_account_address->getAddresses()))) {
 					$json['error']['warning'] = $this->language->get('error_address');
 				}
 
@@ -151,11 +151,11 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 					$json['error']['postcode'] = $this->language->get('error_postcode');
 				}
 
-				if ($this->request->post['country_id'] == '') {
+				if (!filter_var($this->request->post['country_id'], FILTER_VALIDATE_INT)) {
 					$json['error']['country'] = $this->language->get('error_country');
 				}
 
-				if (!isset($this->request->post['zone_id']) || $this->request->post['zone_id'] == '') {
+				if (!isset($this->request->post['zone_id']) || filter_var($this->request->post['zone_id'], FILTER_VALIDATE_INT) === false) {
 					$json['error']['zone'] = $this->language->get('error_zone');
 				}
 

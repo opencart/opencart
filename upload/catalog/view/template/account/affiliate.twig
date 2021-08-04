@@ -97,6 +97,7 @@
           </div>
           {% for custom_field in custom_fields %}
             {% if custom_field.location == 'affiliate' %}
+            
               {% if custom_field.type == 'select' %}
                 <div class="row mb-3{% if custom_field.required %} required{% endif %} custom-field" data-oc-sort="{{ custom_field.sort_order }}">
                   <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
@@ -149,6 +150,7 @@
                   </div>
                 </div>
               {% endif %}
+              
               {% if custom_field.type == 'textarea' %}
                 <div class="row mb-3{% if custom_field.required %} required{% endif %} custom-field" data-oc-sort="{{ custom_field.sort_order }}">
                   <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
@@ -157,6 +159,7 @@
                   </div>
                 </div>
               {% endif %}
+              
               {% if custom_field.type == 'file' %}
                 <div class="row mb-3{% if custom_field.required %} required{% endif %} custom-field" data-oc-sort="{{ custom_field.sort_order }}">
                   <label class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
@@ -166,6 +169,7 @@
                   </div>
                 </div>
               {% endif %}
+              
               {% if custom_field.type == 'date' %}
                 <div class="row mb-3{% if custom_field.required %} required{% endif %} custom-field" data-oc-sort="{{ custom_field.sort_order }}">
                   <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
@@ -177,6 +181,7 @@
                   </div>
                 </div>
               {% endif %}
+              
               {% if custom_field.type == 'time' %}
                 <div class="row mb-3{% if custom_field.required %} required{% endif %} custom-field" data-oc-sort="{{ custom_field.sort_order }}">
                   <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
@@ -188,6 +193,7 @@
                   </div>
                 </div>
               {% endif %}
+              
               {% if custom_field.type == 'datetime' %}
                 <div class="row mb-3{% if custom_field.required %} required{% endif %} custom-field" data-oc-sort="{{ custom_field.sort_order }}">
                   <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
@@ -199,6 +205,7 @@
                   </div>
                 </div>
               {% endif %}
+              
             {% endif %}
           {% endfor %}
         </fieldset>

@@ -54,44 +54,20 @@
             <div class="input-group pull-right">
               <div class="input-group-addon"><i class="fa fa-sort-amount-asc"></i></div>
               <select onchange="location = this.value;" class="form-control">
-                
-              
-            
-              
                   {% for sorts in sorts %}
                   {% if sorts.value == sort %}
-                
-              
-            
-              
-                <option value="{{ sorts.href }}" selected="selected">{{ sorts.text }}</option>
-                
-              
-            
-              
+                  <option value="{{ sorts.href }}" selected="selected">{{ sorts.text }}</option>
                   {% else %}
-                
-              
-            
-              
-                <option value="{{ sorts.href }}">{{ sorts.text }}</option>
-                
-              
-            
-              
+                  <option value="{{ sorts.href }}">{{ sorts.text }}</option>
                   {% endif %}
                   {% endfor %}
-              
-            
-          
-            
               </select>
             </div>
           </div>
         </div>
-        <br />
+        <br/>
         <div id="extension-list">{% if promotions %}
-          <h3>Featured</h3>
+          <h3>{{ text_featured }}</h3>
           <div class="row">{% for extension in promotions %}
             {% if extension %}
             <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">

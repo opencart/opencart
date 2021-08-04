@@ -52,20 +52,14 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
                 <div class="col-sm-10">
-                  <select name="status" id="input-status" class="form-control">
-                    
-                    {% if status %}
-                    
+                  <select name="status" id="input-status" class="form-control">                    
+                    {% if status %}                    
                     <option value="0">{{ text_disabled }}</option>
-                    <option value="1" selected="selected">{{ text_enabled }}</option>
-                    
-                    {% else %}
-                    
+                    <option value="1" selected="selected">{{ text_enabled }}</option>                    
+                    {% else %}                    
                     <option value="0" selected="selected">{{ text_disabled }}</option>
-                    <option value="1">{{ text_enabled }}</option>
-                    
-                    {% endif %}
-                  
+                    <option value="1">{{ text_enabled }}</option>                    
+                    {% endif %}                  
                   </select>
                 </div>
               </div>
@@ -98,6 +92,7 @@
                       <td class="text-left"><button type="button" onclick="addIp()" data-toggle="tooltip" title="{{ button_ip_add }}" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
                     </tr>
                   </tfoot>
+		  
                 </table>
               </div>
             </div>

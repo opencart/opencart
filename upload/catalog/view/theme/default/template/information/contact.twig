@@ -66,7 +66,7 @@
                 {% if location.image %}
                 <div class="col-sm-3"><img src="{{ location.image }}" alt="{{ location.name }}" title="{{ location.name }}" class="img-thumbnail" /></div>
                 {% endif %}
-                <div class="col-sm-3"><strong>{{ location.name }}</strong><br />
+                <div class="col-sm-3"><strong>{{ location.name }}</strong><br/>
                   <address>
                   {{ location.address }}
                   </address>
@@ -74,22 +74,22 @@
                   <a href="https://maps.google.com/maps?q={{ location.geocode|url_encode }}&hl={{ geocode_hl }}&t=m&z=15" target="_blank" class="btn btn-info"><i class="fa fa-map-marker"></i> {{ button_map }}</a>
                   {% endif %}
                 </div>
-                <div class="col-sm-3"> <strong>{{ text_telephone }}</strong><br>
-                  {{ location.telephone }}<br />
-                  <br />
+                <div class="col-sm-3"> <strong>{{ text_telephone }}</strong><br/>
+                  {{ location.telephone }}<br/>
+                  <br/>
                   {% if location.fax %}
-                  <strong>{{ text_fax }}</strong><br>
+                  <strong>{{ text_fax }}</strong><br/>
                   {{ location.fax }}
                   {% endif %}
                 </div>
                 <div class="col-sm-3">
                   {% if location.open %}
-                  <strong>{{ text_open }}</strong><br />
-                  {{ location.open }}<br />
-                  <br />
+                  <strong>{{ text_open }}</strong><br/>
+                  {{ location.open }}<br/>
+                  <br/>
                   {% endif %}
                   {% if location.comment %}
-                  <strong>{{ text_comment }}</strong><br />
+                  <strong>{{ text_comment }}</strong><br/>
                   {{ location.comment }}
                   {% endif %}
                 </div>

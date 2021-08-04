@@ -399,7 +399,7 @@ $(document).ready(function() {
             success: function(json) {
                 $('.invalid-tooltip, .alert-dismissible').remove();
 
-                console.log(json);
+                console.log(json['error']);
 
                 if (json['redirect']) {
                     location = json['redirect'];
@@ -410,39 +410,30 @@ $(document).ready(function() {
 
                 if (typeof json['error'] == 'object') {
                     if (json['error']['warning']) {
-                        $('.breadcrumb').after('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                        $(form).prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                     }
 
                     for (key in json['error']) {
-
-
-
-
-                        var input = $(form).find('#input-' + key.replaceAll('_', '-'));
-
-
-
-                        //var elements = $(form).find('#input-' + key.replaceAll('_', '-') + '\']');
-
-                        var input = $(element).parent();
+                        // Grab the label
+                        var input = $(form).find('label[for=\'input-' + key.replaceAll('_', '-') + '\']').parent();
 
                         // Highlight any found errors
-                        field.find('.form-control, .form-select, .form-check-input, .form-check-label, btn btn-light').addClass('is-invalid');
+                        input.find('.form-control, .input-group, .form-select, .form-check-input, .form-check-label, .form-label').addClass('is-invalid');
 
-                        $(element).prepend('<div class="invalid-feedback">' + json['error'][key] + '</div>');
+                        input.prepend('<div class="invalid-feedback d-block">' + json['error'][key] + '</div>');
                     }
 
                     delete json['error'];
                 }
 
                 if (typeof json['error'] == 'string') {
-                    $('.breadcrumb').after('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    $(form).after('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                     delete json['error'];
                 }
 
                 if (json['success']) {
-                    $('.breadcrumb').after('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    $(form).after('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                     // Refresh
                     var url = $(form).attr('data-oc-load');
@@ -471,6 +462,7 @@ $(document).ready(function() {
 // Upload
 $(document).on('click', '[data-oc-upload]', function() {
     var element = this;
+    var target = $(element).attr('data-oc-target');
 
     $('#form-upload').remove();
 
@@ -509,6 +501,8 @@ $(document).on('click', '[data-oc-upload]', function() {
                     $(element).button('reset');
                 },
                 success: function(json) {
+                    console.log(json);
+
                     $(element).parent().find('.invalid-tooltip').remove();
 
                     if (json['error']) {
@@ -519,11 +513,10 @@ $(document).on('click', '[data-oc-upload]', function() {
                         alert(json['success']);
 
                         delete json['success'];
+                    }
 
-                        // Replace any form values that correspond to form names.
-                        for (key in json) {
-                            $(form).find('[name=\'' + key + '\']:input').val(json[key]);
-                        }
+                    if (json['code']) {
+                        $(target).attr('value', json['code']);
                     }
                 },
                 error: function(xhr, ajaxOptions, thrownError) {
@@ -563,6 +556,9 @@ class Chain {
 }
 
 var chain = new Chain();
+
+
+
 
 // Autocomplete
 (function($) {
@@ -701,6 +697,8 @@ var chain = new Chain();
     }
 })(window.jQuery);
 
+
+
 +function($) {
     'use strict';
 
@@ -745,7 +743,7 @@ var chain = new Chain();
 
     Button.prototype.toggle = function() {
         var changed = true
-        var $parent = this.$element.closest('[data-toggle="buttons"]')
+        var $parent = this.$element.closest('[data-octoggle="buttons"]')
 
         if ($parent.length) {
             var $input = this.$element.find('input')

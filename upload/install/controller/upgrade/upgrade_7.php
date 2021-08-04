@@ -253,7 +253,7 @@ class Upgrade7 extends \Opencart\System\Engine\Controller {
 					$this->db->query("DROP TABLE `" . DB_PREFIX . $table . "`");
 				}
 			}
-		} catch(\ErrorException $exception) {
+		} catch (\ErrorException $exception) {
 			$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
 		}
 

@@ -155,7 +155,7 @@ class Upgrade1 extends \Opencart\System\Engine\Controller {
 					}
 				}
 			}
-		} catch(\ErrorException $exception) {
+		} catch (\ErrorException $exception) {
 			$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
 		}
 

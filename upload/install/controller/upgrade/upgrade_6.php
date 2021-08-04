@@ -123,7 +123,7 @@ class Upgrade6 extends \Opencart\System\Engine\Controller {
 
 			// Sort the categories to take advantage of the nested set model
 			$this->repairCategories(0);
-		} catch(\ErrorException $exception) {
+		} catch (\ErrorException $exception) {
 			$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
 		}
 

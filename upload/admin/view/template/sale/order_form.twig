@@ -249,10 +249,10 @@
                     {% set product_row = 0 %}
                     {% for order_product in order_products %}
                     <tr>
-                      <td class="text-left">{{ order_product.name }}<br />
+                      <td class="text-left">{{ order_product.name }}<br/>
                         <input type="hidden" name="product[{{ product_row }}][product_id]" value="{{ order_product.product_id }}" />
                         {% for option in order_product.option %}
-                        - <small>{{ option.name }}: {{ option.value }}</small><br />
+                        - <small>{{ option.name }}: {{ option.value }}</small><br/>
                         {% if option.type == 'select' or option.type == 'radio' or option.type == 'image' %}
                         <input type="hidden" name="product[{{ product_row }}][option][{{ option.product_option_id }}]" value="{{ option.product_option_value_id }}" />
                         {% endif %}
@@ -384,7 +384,7 @@
                   </div>
                 </div>
               </div>
-              <br />
+              <br/>
               <div class="row">
                 <div class="col-sm-6 text-left">
                   <button type="button" onclick="$('a[href=\'#tab-customer\']').tab('show');" class="btn btn-default"><i class="fa fa-arrow-left"></i> {{ button_back }}</button>
@@ -2349,14 +2349,14 @@ $('#button-refresh').on('click', function() {
 					product = json['products'][i];
 
 					html += '<tr>';
-					html += '  <td class="text-left">' + product['name'] + ' ' + (!product['stock'] ? '<span class="text-danger">***</span>' : '') + '<br />';
+					html += '  <td class="text-left">' + product['name'] + ' ' + (!product['stock'] ? '<span class="text-danger">***</span>' : '') + '<br/>';
 					html += '  <input type="hidden" name="product[' + i + '][product_id]" value="' + product['product_id'] + '" />';
 
 					if (product['option']) {
 						for (j = 0; j < product['option'].length; j++) {
 							option = product['option'][j];
 
-							html += '  - <small>' + option['name'] + ': ' + option['value'] + '</small><br />';
+							html += '  - <small>' + option['name'] + ': ' + option['value'] + '</small><br/>';
 
 							if (option['type'] == 'select' || option['type'] == 'radio' || option['type'] == 'image') {
 								html += '<input type="hidden" name="product[' + i + '][option][' + option['product_option_id'] + ']" value="' + option['product_option_value_id'] + '" />';
@@ -2436,13 +2436,13 @@ $('#button-refresh').on('click', function() {
 					product = json['products'][i];
 
 					html += '<tr>';
-					html += '  <td class="text-left">' + product['name'] + ' ' + (!product['stock'] ? '<span class="text-danger">***</span>' : '') + '<br />';
+					html += '  <td class="text-left">' + product['name'] + ' ' + (!product['stock'] ? '<span class="text-danger">***</span>' : '') + '<br/>';
 
 					if (product['option']) {
 						for (j = 0; j < product['option'].length; j++) {
 							option = product['option'][j];
 
-							html += '  - <small>' + option['name'] + ': ' + option['value'] + '</small><br />';
+							html += '  - <small>' + option['name'] + ': ' + option['value'] + '</small><br/>';
 						}
 					}
 

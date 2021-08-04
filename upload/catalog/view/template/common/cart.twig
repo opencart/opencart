@@ -23,7 +23,7 @@
         <tr>
           <td class="text-center"></td>
           <td class="text-start">{{ voucher.description }}</td>
-          <td class="text-end">x&nbsp;1</td>
+          <td class="text-end">{{ text_x }}&nbsp;1</td>
           <td class="text-end">{{ voucher.amount }}</td>
           <td class="text-center text-danger"><button type="button" onclick="voucher.remove('{{ voucher.key }}');" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-sm"><i class="fas fa-times"></i></button></td>
         </tr>

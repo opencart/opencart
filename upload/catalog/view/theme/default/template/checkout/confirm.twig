@@ -14,9 +14,9 @@
     
     {% for product in products %}
     <tr>
-      <td class="text-left"><a href="{{ product.href }}">{{ product.name }}</a> {% for option in product.option %} <br />
+      <td class="text-left"><a href="{{ product.href }}">{{ product.name }}</a> {% for option in product.option %} <br/>
         &nbsp;<small> - {{ option.name }}: {{ option.value }}</small> {% endfor %}
-        {% if product.recurring %} <br />
+        {% if product.recurring %} <br/>
         <span class="label label-info">{{ text_recurring_item }}</span> <small>{{ product.recurring }}</small> {% endif %}</td>
       <td class="text-left">{{ product.model }}</td>
       <td class="text-right">{{ product.quantity }}</td>

@@ -102,6 +102,7 @@
               </div>
               {% for custom_field in custom_fields %}
               {% if custom_field.location == 'account' %}
+	      
               {% if custom_field.type == 'select' %}
               <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 3 }}">
                 <label class="col-sm-2 control-label" for="input-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
@@ -119,6 +120,7 @@
                 </div>
               </div>
               {% endif %}
+	      
               {% if custom_field.type == 'radio' %}
               <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 3 }}">
                 <label class="col-sm-2 control-label">{{ custom_field.name }}</label>
@@ -141,6 +143,7 @@
                 </div>
               </div>
               {% endif %}
+	      
               {% if custom_field.type == 'checkbox' %}
               <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 3 }}">
                 <label class="col-sm-2 control-label">{{ custom_field.name }}</label>
@@ -163,6 +166,7 @@
                 </div>
               </div>
               {% endif %}
+	      
               {% if custom_field.type == 'text' %}
               <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 3 }}">
                 <label class="col-sm-2 control-label" for="input-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
@@ -179,6 +183,7 @@
                 </div>
               </div>
               {% endif %}
+	      
               {% if custom_field.type == 'file' %}
               <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 3 }}">
                 <label class="col-sm-2 control-label">{{ custom_field.name }}</label>
@@ -189,6 +194,7 @@
                 </div>
               </div>
               {% endif %}
+	      
               {% if custom_field.type == 'date' %}
               <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 3 }}">
                 <label class="col-sm-2 control-label" for="input-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
@@ -201,6 +207,7 @@
                 </div>
               </div>
               {% endif %}
+	      
               {% if custom_field.type == 'time' %}
               <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 3 }}">
                 <label class="col-sm-2 control-label" for="input-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
@@ -225,6 +232,7 @@
                 </div>
               </div>
               {% endif %}
+	      
               {% endif %}
               {% endfor %}
               <div class="text-right">
@@ -472,6 +480,7 @@
               </div>
               {% for custom_field in custom_fields %}
               {% if custom_field.location == 'address' %}
+	      
               {% if custom_field.type == 'select' %}
               <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 3 }}">
                 <label class="col-sm-2 control-label" for="input-payment-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
@@ -489,6 +498,7 @@
                 </div>
               </div>
               {% endif %}
+	      
               {% if custom_field.type == 'radio' %}
               <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 3 }}">
                 <label class="col-sm-2 control-label">{{ custom_field.name }}</label>
@@ -511,6 +521,7 @@
                 </div>
               </div>
               {% endif %}
+	      
               {% if custom_field.type == 'checkbox' %}
               <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 3 }}">
                 <label class="col-sm-2 control-label">{{ custom_field.name }}</label>
@@ -533,6 +544,7 @@
                 </div>
               </div>
               {% endif %}
+	      
               {% if custom_field.type == 'text' %}
               <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 3 }}">
                 <label class="col-sm-2 control-label" for="input-payment-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
@@ -541,6 +553,7 @@
                 </div>
               </div>
               {% endif %}
+	      
               {% if custom_field.type == 'textarea' %}
               <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 3 }}">
                 <label class="col-sm-2 control-label" for="input-payment-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
@@ -549,6 +562,7 @@
                 </div>
               </div>
               {% endif %}
+	      
               {% if custom_field.type == 'file' %}
               <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 3 }}">
                 <label class="col-sm-2 control-label">{{ custom_field.name }}</label>
@@ -559,6 +573,7 @@
                 </div>
               </div>
               {% endif %}
+	      
               {% if custom_field.type == 'date' %}
               <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 3 }}">
                 <label class="col-sm-2 control-label" for="input-payment-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
@@ -571,6 +586,7 @@
                 </div>
               </div>
               {% endif %}
+	      
               {% if custom_field.type == 'time' %}
               <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 3 }}">
                 <label class="col-sm-2 control-label" for="input-payment-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
@@ -583,6 +599,7 @@
                 </div>
               </div>
               {% endif %}
+	      
               {% if custom_field.type == 'datetime' %}
               <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 3 }}">
                 <label class="col-sm-2 control-label" for="input-payment-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
@@ -595,6 +612,7 @@
                 </div>
               </div>
               {% endif %}
+	      
               {% endif %}
               {% endfor %}
               <div class="row">
@@ -684,6 +702,7 @@
               </div>
               {% for custom_field in custom_fields %}
               {% if custom_field.location == 'address' %}
+	      
               {% if custom_field.type == 'select' %}
               <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 3 }}">
                 <label class="col-sm-2 control-label" for="input-shipping-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
@@ -701,6 +720,7 @@
                 </div>
               </div>
               {% endif %}
+	      
               {% if custom_field.type == 'radio' %}
               <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 3 }}">
                 <label class="col-sm-2 control-label">{{ custom_field.name }}</label>
@@ -721,8 +741,9 @@
                     {% endfor %}
                   </div>
                 </div>
-              </div>
+              </div>	      
               {% endif %}
+	      
               {% if custom_field.type == 'checkbox' %}
               <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 3 }}">
                 <label class="col-sm-2 control-label">{{ custom_field.name }}</label>
@@ -745,6 +766,7 @@
                 </div>
               </div>
               {% endif %}
+	      
               {% if custom_field.type == 'text' %}
               <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 3 }}">
                 <label class="col-sm-2 control-label" for="input-shipping-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
@@ -753,6 +775,7 @@
                 </div>
               </div>
               {% endif %}
+	      
               {% if custom_field.type == 'textarea' %}
               <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 3 }}">
                 <label class="col-sm-2 control-label" for="input-shipping-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
@@ -761,6 +784,7 @@
                 </div>
               </div>
               {% endif %}
+	      
               {% if custom_field.type == 'file' %}
               <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 3 }}">
                 <label class="col-sm-2 control-label">{{ custom_field.name }}</label>
@@ -771,6 +795,7 @@
                 </div>
               </div>
               {% endif %}
+	      
               {% if custom_field.type == 'date' %}
               <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 3 }}">
                 <label class="col-sm-2 control-label" for="input-shipping-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
@@ -783,6 +808,7 @@
                 </div>
               </div>
               {% endif %}
+	      
               {% if custom_field.type == 'time' %}
               <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 3 }}">
                 <label class="col-sm-2 control-label" for="input-shipping-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
@@ -795,6 +821,7 @@
                 </div>
               </div>
               {% endif %}
+	      
               {% if custom_field.type == 'datetime' %}
               <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 3 }}">
                 <label class="col-sm-2 control-label" for="input-shipping-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
@@ -807,6 +834,7 @@
                 </div>
               </div>
               {% endif %}
+	      
               {% endif %}
               {% endfor %}
               <div class="row">

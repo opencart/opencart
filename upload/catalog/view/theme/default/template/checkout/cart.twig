@@ -53,12 +53,12 @@
               <td class="text-center">{% if product.thumb %} <a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-thumbnail" /></a> {% endif %}</td>
               <td class="text-left"><a href="{{ product.href }}">{{ product.name }}</a> {% if not product.stock %} <span class="text-danger">***</span> {% endif %}
                 {% if product.option %}
-                {% for option in product.option %} <br />
+                {% for option in product.option %} <br/>
                 <small>{{ option.name }}: {{ option.value }}</small> {% endfor %}
                 {% endif %}
-                {% if product.reward %} <br />
+                {% if product.reward %} <br/>
                 <small>{{ product.reward }}</small> {% endif %}
-                {% if product.recurring %} <br />
+                {% if product.recurring %} <br/>
                 <span class="label label-info">{{ text_recurring_item }}</span> <small>{{ product.recurring }}</small> {% endif %}</td>
               <td class="text-left">{{ product.model }}</td>
               <td class="text-left"><div class="input-group btn-block" style="max-width: 200px;">
@@ -96,7 +96,7 @@
       <div class="panel-group" id="accordion"> {% for module in modules %}
         {{ module }}
         {% endfor %} </div>
-      {% endif %} <br />
+      {% endif %} <br/>
       <div class="row">
         <div class="col-sm-4 col-sm-offset-8">
           <table class="table table-bordered">

@@ -24,19 +24,19 @@
       <tbody>
         <tr>
           <td><address>
-            <strong>{{ order.store_name }}</strong><br />
+            <strong>{{ order.store_name }}</strong><br/>
             {{ order.store_address }}
             </address>
-            <b>{{ text_telephone }}</b> {{ order.store_telephone }}<br />
-            <b>{{ text_email }}</b> {{ order.store_email }}<br />
+            <b>{{ text_telephone }}</b> {{ order.store_telephone }}<br/>
+            <b>{{ text_email }}</b> {{ order.store_email }}<br/>
             <b>{{ text_website }}</b> <a href="{{ order.store_url }}">{{ order.store_url }}</a></td>
-          <td style="width: 50%;"><b>{{ text_date_added }}</b> {{ order.date_added }}<br />
+          <td style="width: 50%;"><b>{{ text_date_added }}</b> {{ order.date_added }}<br/>
             {% if order.invoice_no %}
-            <b>{{ text_invoice_no }}</b> {{ order.invoice_no }}<br />
+            <b>{{ text_invoice_no }}</b> {{ order.invoice_no }}<br/>
             {% endif %}
-            <b>{{ text_order_id }}</b> {{ order.order_id }}<br />
+            <b>{{ text_order_id }}</b> {{ order.order_id }}<br/>
             {% if order.shipping_method %}
-            <b>{{ text_shipping_method }}</b> {{ order.shipping_method }}<br />
+            <b>{{ text_shipping_method }}</b> {{ order.shipping_method }}<br/>
             {% endif %}</td>
         </tr>
       </tbody>
@@ -72,26 +72,26 @@
         <tr>
           <td>{{ product.location }}</td>
           <td>{% if product.sku %}
-            {{ text_sku }} {{ product.sku }}<br />
+            {{ text_sku }} {{ product.sku }}<br/>
             {% endif %}
             {% if product.upc %}
-            {{ text_upc }} {{ product.upc }}<br />
+            {{ text_upc }} {{ product.upc }}<br/>
             {% endif %}
             {% if product.ean %}
-            {{ text_ean }} {{ product.ean }}<br />
+            {{ text_ean }} {{ product.ean }}<br/>
             {% endif %}
             {% if product.jan %}
-            {{ text_jan }} {{ product.jan }}<br />
+            {{ text_jan }} {{ product.jan }}<br/>
             {% endif %}
             {% if product.isbn %}
-            {{ text_isbn }} {{ product.isbn }}<br />
+            {{ text_isbn }} {{ product.isbn }}<br/>
             {% endif %}
             {% if product.mpn %}
-            {{ text_mpn }}{{ product.mpn }}<br />
+            {{ text_mpn }}{{ product.mpn }}<br/>
             {% endif %}</td>
           <td>{{ product.name }}
             {% for option in product.option %}
-            <br />
+            <br/>
             &nbsp;<small> - {{ option.name }}: {{ option.value }}</small>
             {% endfor %}</td>
           <td>{{ product.weight }}</td>

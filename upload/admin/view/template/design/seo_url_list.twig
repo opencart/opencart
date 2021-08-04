@@ -62,73 +62,13 @@
               <label class="control-label" for="input-language">{{ entry_language }}</label>
               <select name="filter_language_id" id="input-language" class="form-control">
                 <option value=""></option>
-                
-                
-                  
-                
-              
-              
-              
-              
-              
-                  
                   {% for language in languages %}
                   {% if language.language_id == filter_language_id %}
-                  
-                  
-              
-              
-              
-              
-              
-                
-                  
-                
-                <option value="{{ language.language_id }}" selected="selected">{{ language.name }}</option>
-                
-                
-                  
-                
-              
-              
-              
-              
-              
-                  
+                  <option value="{{ language.language_id }}" selected="selected">{{ language.name }}</option>
                   {% else %}
-                  
-                  
-              
-              
-              
-              
-              
-                
-                  
-                
-                <option value="{{ language.language_id }}">{{ language.name }}</option>
-                
-                
-                  
-                
-              
-              
-              
-              
-              
-                  
+                  <option value="{{ language.language_id }}">{{ language.name }}</option>
                   {% endif %}
                   {% endfor %}
-                
-                
-            
-            
-            
-            
-            
-              
-                
-              
               </select>
             </div>
             <div class="text-right">

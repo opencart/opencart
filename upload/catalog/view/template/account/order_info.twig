@@ -11,7 +11,7 @@
       <table class="table table-bordered table-hover">
         <thead>
           <tr>
-            <td class="text-start" colspan="2">{{ text_order_detail }}</td>
+            <th class="text-start" colspan="2">{{ text_order_detail }}</th>
           </tr>
         </thead>
         <tbody>
@@ -48,13 +48,13 @@
         <table class="table table-bordered table-hover">
           <thead>
             <tr>
-              <td class="text-start">{{ column_name }}</td>
-              <td class="text-start">{{ column_model }}</td>
-              <td class="text-end">{{ column_quantity }}</td>
-              <td class="text-end">{{ column_price }}</td>
-              <td class="text-end">{{ column_total }}</td>
+              <th class="text-start">{{ column_name }}</th>
+              <th class="text-start">{{ column_model }}</th>
+              <th class="text-end">{{ column_quantity }}</th>
+              <th class="text-end">{{ column_price }}</th>
+              <th class="text-end">{{ column_total }}</th>
               {% if products %}
-                <td style="width: 20px;"></td>
+                <th style="width: 20px;"></th>
               {% endif %} </tr>
           </thead>
           <tbody>
@@ -116,9 +116,9 @@
         <table class="table table-bordered table-hover">
           <thead>
             <tr>
-              <td class="text-start">{{ column_date_added }}</td>
-              <td class="text-start">{{ column_status }}</td>
-              <td class="text-start">{{ column_comment }}</td>
+              <th class="text-start">{{ column_date_added }}</th>
+              <th class="text-start">{{ column_status }}</th>
+              <th class="text-start">{{ column_comment }}</th>
             </tr>
           </thead>
           <tbody>

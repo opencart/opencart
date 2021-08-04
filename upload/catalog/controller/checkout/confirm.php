@@ -231,7 +231,7 @@ class Confirm extends \Opencart\System\Engine\Controller {
 						'from_email'       => $voucher['from_email'],
 						'voucher_theme_id' => $voucher['voucher_theme_id'],
 						'message'          => $voucher['message'],
-						'amount'          => $voucher['amount']
+						'amount'           => $voucher['amount']
 					];
 				}
 			}

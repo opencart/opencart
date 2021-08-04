@@ -288,7 +288,7 @@ class Upgrade3 extends \Opencart\System\Engine\Controller {
 					$this->db->query("UPDATE `" . DB_PREFIX . "extension` SET `extension` = 'opencart' WHERE `code` = '" . $this->db->escape($result['code']) . "'");
 				}
 			}
-		} catch(\ErrorException $exception) {
+		} catch (\ErrorException $exception) {
 			$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
 		}
 

@@ -18,14 +18,12 @@
       <div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_form }}</div>
       <div class="card-body">
         <form id="form-category">
-
           <ul class="nav nav-tabs">
             <li class="nav-item"><a href="#tab-general" data-bs-toggle="tab" class="nav-link active">{{ tab_general }}</a></li>
             <li class="nav-item"><a href="#tab-data" data-bs-toggle="tab" class="nav-link">{{ tab_data }}</a></li>
             <li class="nav-item"><a href="#tab-seo" data-bs-toggle="tab" class="nav-link">{{ tab_seo }}</a></li>
             <li class="nav-item"><a href="#tab-design" data-bs-toggle="tab" class="nav-link">{{ tab_design }}</a></li>
           </ul>
-
           <div class="tab-content">
             <div id="tab-general" class="tab-pane active">
               <ul class="nav nav-tabs" id="language">
@@ -40,6 +38,7 @@
                       <label for="input-name-{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_name }}</label>
                       <div class="col-sm-10">
                         <input type="text" name="category_description[{{ language.language_id }}][name]" value="{{ category_description[language.language_id] ? category_description[language.language_id].name }}" placeholder="{{ entry_name }}" id="input-name-{{ language.language_id }}" class="form-control"/>
+                        <div id="error-name-{{ language.language_id }}" class="invalid-feedback"></div>
                       </div>
                     </div>
                     <div class="row mb-3">
@@ -52,6 +51,7 @@
                       <label for="input-meta-title-{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_meta_title }}</label>
                       <div class="col-sm-10">
                         <input type="text" name="category_description[{{ language.language_id }}][meta_title]" value="{{ category_description[language.language_id] ? category_description[language.language_id].meta_title }}" placeholder="{{ entry_meta_title }}" id="input-meta-title-{{ language.language_id }}" class="form-control"/>
+                        <div id="error-meta-title-{{ language.language_id }}" class="invalid-feedback"></div>
                       </div>
                     </div>
                     <div class="row mb-3">
@@ -77,6 +77,7 @@
                 <div class="col-sm-10">
                   <input type="text" name="path" value="{{ path }}" placeholder="{{ entry_parent }}" id="input-parent" class="form-control"/> <input type="hidden" name="parent_id" value="{{ parent_id }}"/>
                   <div class="form-text text-muted">{{ help_parent }}</div>
+                  <div id="error-parent-{{ language.language_id }}" class="invalid-feedback"></div>
                 </div>
               </div>
               <div class="row mb-3">
@@ -175,6 +176,7 @@
                               <div class="input-group-text"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/></div>
                               <input type="text" name="category_seo_url[{{ store.store_id }}][{{ language.language_id }}]" value="{% if category_seo_url[store.store_id][language.language_id] %}{{ category_seo_url[store.store_id][language.language_id] }}{% endif %}" placeholder="{{ entry_keyword }}" id="input-keyword-{{ store.store_id }}-{{ language.language_id }}" class="form-control"/>
                             </div>
+                            <div id="error-keyword-{{ store.store_id }}-{{ language.language_id }}" class="invalid-feedback"></div>
                           {% endfor %}
                         </td>
                       </tr>

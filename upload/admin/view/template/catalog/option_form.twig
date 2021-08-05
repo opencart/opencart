@@ -27,6 +27,7 @@
                   <div class="input-group">
                     <div class="input-group-text"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/></div>
                     <input type="text" name="option_description[{{ language.language_id }}][name]" value="{{ option_description[language.language_id] ? option_description[language.language_id].name }}" placeholder="{{ entry_name }}" id="input-name-{{ language.language_id }}" class="form-control"/>
+                    <div id="error-name-{{ language.language_id }}" class="invalid-feedback"></div>
                   </div>
                 {% endfor %}
               </div>
@@ -83,6 +84,7 @@
                           <div class="input-group-text"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/></div>
                           <input type="text" name="option_value[{{ option_value_row }}][option_value_description][{{ language.language_id }}][name]" value="{{ option_value.option_value_description[language.language_id] ? option_value.option_value_description[language.language_id].name }}" placeholder="{{ entry_option_value }}" id="input-option-value-{{ option_value_row }}-{{ language.language_id }}" class="form-control"/>
                         </div>
+                        <div id="error-option-value-{{ option_value_row }}-{{ language.language_id }}" class="invalid-feedback"></div>
                       {% endfor %}</td>
                     <td class="text-center">
                       <div class="card image">
@@ -132,7 +134,8 @@ function addOptionValue() {
   {% for language in languages %}
     html += '    <div class="input-group">';
     html += '      <div class="input-group-text"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></div>';
-    html += '      <input type="text" name="option_value[' + option_value_row + '][option_value_description][{{ language.language_id }}][name]" value="" placeholder="{{ entry_option_value }}" id="input-option-value-' + option_value_row + '-{{ language.language_id }}" class="form-control" />';
+    html += '      <input type="text" name="option_value[' + option_value_row + '][option_value_description][{{ language.language_id }}][name]" value="" placeholder="{{ entry_option_value }}" id="input-option-value-' + option_value_row + '-{{ language.language_id }}" class="form-control"/>';
+    html += '      <div id="error-option-value-' + option_value_row + '-{{ language.language_id }}" class="invalid-feedback"></div>';
     html += '    </div>';
   {% endfor %}
     html += '  </td>';

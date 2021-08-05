@@ -55,12 +55,14 @@
             <label for="input-cheque" class="col-sm-2 col-form-label">{{ entry_cheque }}</label>
             <div class="col-sm-10">
               <input type="text" name="cheque" value="{{ cheque }}" placeholder="{{ entry_cheque }}" id="input-cheque" class="form-control"/>
+              <div id="error-cheque" class="invalid-feedback"></div>
             </div>
           </div>
           <div class="row mb-3 required payment" id="payment-paypal">
             <label for="input-paypal" class="col-sm-2 col-form-label">{{ entry_paypal }}</label>
             <div class="col-sm-10">
               <input type="text" name="paypal" value="{{ paypal }}" placeholder="{{ entry_paypal }}" id="input-paypal" class="form-control"/>
+              <div id="error-paypal" class="invalid-feedback"></div>
             </div>
           </div>
           <div id="payment-bank" class="payment">
@@ -86,12 +88,14 @@
               <label for="input-bank-account-name" class="col-sm-2 col-form-label">{{ entry_bank_account_name }}</label>
               <div class="col-sm-10">
                 <input type="text" name="bank_account_name" value="{{ bank_account_name }}" placeholder="{{ entry_bank_account_name }}" id="input-bank-account-name" class="form-control"/>
+                <div id="error-bank-account-name" class="invalid-feedback"></div>
               </div>
             </div>
             <div class="row mb-3 required row">
               <label for="input-bank-account-number" class="col-sm-2 col-form-label">{{ entry_bank_account_number }}</label>
               <div class="col-sm-10">
                 <input type="text" name="bank_account_number" value="{{ bank_account_number }}" placeholder="{{ entry_bank_account_number }}" id="input-bank-account-number" class="form-control"/>
+                <div id="error-bank-account-number" class="invalid-feedback"></div>
               </div>
             </div>
           </div>
@@ -107,6 +111,7 @@
                         <option value="{{ custom_field_value.custom_field_value_id }}"{% if affiliate_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id == affiliate_custom_field[custom_field.custom_field_id] %} selected="selected"{% endif %}>{{ custom_field_value.name }}</option>
                       {% endfor %}
                     </select>
+                    <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                   </div>
                 </div>
               {% endif %}
@@ -115,13 +120,14 @@
                 <div class="row mb-3{% if custom_field.required %} required{% endif %} custom-field" data-oc-sort="{{ custom_field.sort_order }}">
                   <label class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
                   <div class="col-sm-10">
-                    <div>
+                    <div id="input-custom-field-{{ custom_field.custom_field_id }}">
                       {% for custom_field_value in custom_field.custom_field_value %}
                         <div class="form-check">
                           <input type="radio" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{{ custom_field_value.custom_field_value_id }}" id="input-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-input"{% if affiliate_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id == affiliate_custom_field[custom_field.custom_field_id] %} checked{% endif %}/> <label for="input-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-label">{{ custom_field_value.name }}</label>
                         </div>
                       {% endfor %}
                     </div>
+                    <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                   </div>
                 </div>
               {% endif %}
@@ -130,13 +136,14 @@
                 <div class="row mb-3{% if custom_field.required %} required{% endif %} custom-field" data-oc-sort="{{ custom_field.sort_order }}">
                   <label class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
                   <div class="col-sm-10">
-                    <div>
+                    <div id="input-custom-field-{{ custom_field.custom_field_id }}">
                       {% for custom_field_value in custom_field.custom_field_value %}
                         <div class="form-check">
                           <input type="checkbox" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" id="input-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-input"{% if affiliate_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id in affiliate_custom_field[custom_field.custom_field_id] %} checked{% endif %}/> <label for="input-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-label">{{ custom_field_value.name }}</label>
                         </div>
                       {% endfor %}
                     </div>
+                    <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                   </div>
                 </div>
               {% endif %}
@@ -146,26 +153,32 @@
                   <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
                   <div class="col-sm-10">
                     <input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{% if affiliate_custom_field[custom_field.custom_field_id] %}{{ affiliate_custom_field[custom_field.custom_field_id] }}{% else %}{{ custom_field.value }}{% endif %}" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
+                    <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                   </div>
                 </div>
               {% endif %}
+
               {% if custom_field.type == 'textarea' %}
                 <div class="row mb-3{% if custom_field.required %} required{% endif %} custom-field" data-oc-sort="{{ custom_field.sort_order }}">
                   <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
                   <div class="col-sm-10">
                     <textarea name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" rows="5" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control">{% if affiliate_custom_field[custom_field.custom_field_id] %}{{ affiliate_custom_field[custom_field.custom_field_id] }}{% else %}{{ custom_field.value }}{% endif %}</textarea>
+                    <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                   </div>
                 </div>
               {% endif %}
+
               {% if custom_field.type == 'file' %}
                 <div class="row mb-3{% if custom_field.required %} required{% endif %} custom-field" data-oc-sort="{{ custom_field.sort_order }}">
                   <label class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
                   <div class="col-sm-10">
-                    <button type="button" data-oc-upload="index.php?route=tool/upload" data-loading-text="{{ text_loading }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
-                    <input type="hidden" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{% if affiliate_custom_field[custom_field.custom_field_id] %}{{ affiliate_custom_field[custom_field.custom_field_id] }} {% endif %}" id="input-custom-field-{{ custom_field.custom_field_id }}"/>
+                    <button type="button" data-oc-upload="index.php?route=tool/upload" data-oc-target="#input-custom-field-{{ custom_field.custom_field_id }}" data-loading-text="{{ text_loading }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
+                    <input type="hidden" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{% if affiliate_custom_field[custom_field.custom_field_id] %}{{ affiliate_custom_field[custom_field.custom_field_id] }}{% endif %}" id="input-custom-field-{{ custom_field.custom_field_id }}"/>
+                    <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                   </div>
                 </div>
               {% endif %}
+
               {% if custom_field.type == 'date' %}
                 <div class="row mb-3{% if custom_field.required %} required{% endif %} custom-field" data-oc-sort="{{ custom_field.sort_order }}">
                   <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
@@ -174,6 +187,7 @@
                       <input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{% if affiliate_custom_field[custom_field.custom_field_id] %}{{ affiliate_custom_field[custom_field.custom_field_id] }}{% else %}{{ custom_field.value }}{% endif %}" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
                       <div class="input-group-text"><i class="fas fa-calendar"></i></div>
                     </div>
+                    <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                   </div>
                 </div>
               {% endif %}
@@ -185,6 +199,7 @@
                       <input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{% if affiliate_custom_field[custom_field.custom_field_id] %}{{ affiliate_custom_field[custom_field.custom_field_id] }}{% else %}{{ custom_field.value }}{% endif %}" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
                       <div class="input-group-text"><i class="fas fa-calendar"></i></div>
                     </div>
+                    <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                   </div>
                 </div>
               {% endif %}
@@ -196,6 +211,7 @@
                       <input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{% if affiliate_custom_field[custom_field.custom_field_id] %}{{ affiliate_custom_field[custom_field.custom_field_id] }}{% else %}{{ custom_field.value }}{% endif %}" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
                       <div class="input-group-text"><i class="fas fa-calendar"></i></div>
                     </div>
+                    <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                   </div>
                 </div>
               {% endif %}

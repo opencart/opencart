@@ -26,6 +26,7 @@
                 <div class="input-group">
                   <div class="input-group-text"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/></div>
                   <input type="text" name="recurring_description[{{ language.language_id }}][name]" value="{{ recurring_description[language.language_id] ? recurring_description[language.language_id].name }}" placeholder="{{ entry_name }}" id="input-name-{{ language.language_id }}" class="form-control"/>
+                  <div id="error-name-{{ language.language_id }}" class="invalid-feedback"></div>
                 </div>
               {% endfor %}
             </div>

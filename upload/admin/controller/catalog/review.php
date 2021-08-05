@@ -380,12 +380,12 @@ class Review extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!$this->request->post['product_id']) {
-			$json['error']['product'] = $this->language->get('error_product');
-		}
-
 		if ((utf8_strlen($this->request->post['author']) < 3) || (utf8_strlen($this->request->post['author']) > 64)) {
 			$json['error']['author'] = $this->language->get('error_author');
+		}
+
+		if (!$this->request->post['product_id']) {
+			$json['error']['product'] = $this->language->get('error_product');
 		}
 
 		if (utf8_strlen($this->request->post['text']) < 1) {

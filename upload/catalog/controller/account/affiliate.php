@@ -172,41 +172,36 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		if ($this->request->post['payment'] == 'cheque' && !$this->request->post['cheque']) {
-			$json['error']['cheque'] = $this->language->get('error_cheque');
-		} elseif (($this->request->post['payment'] == 'paypal') && ((utf8_strlen($this->request->post['paypal']) > 96) || !filter_var($this->request->post['paypal'], FILTER_VALIDATE_EMAIL))) {
-			$json['error']['paypal'] = $this->language->get('error_paypal');
-		} elseif ($this->request->post['payment'] == 'bank') {
-			if ($this->request->post['bank_account_name'] == '') {
-				$json['error']['bank_account_name'] = $this->language->get('error_bank_account_name');
-			}
+		if (!$json) {
+			if ($this->request->post['payment'] == 'cheque' && !$this->request->post['cheque']) {
+				$json['error']['cheque'] = $this->language->get('error_cheque');
+			} elseif (($this->request->post['payment'] == 'paypal') && ((utf8_strlen($this->request->post['paypal']) > 96) || !filter_var($this->request->post['paypal'], FILTER_VALIDATE_EMAIL))) {
+				$json['error']['paypal'] = $this->language->get('error_paypal');
+			} elseif ($this->request->post['payment'] == 'bank') {
+				if ($this->request->post['bank_account_name'] == '') {
+					$json['error']['bank_account_name'] = $this->language->get('error_bank_account_name');
+				}
 
-			if ($this->request->post['bank_account_number'] == '') {
-				$json['error']['bank_account_number'] = $this->language->get('error_bank_account_number');
-			}
-		}
-
-		// Custom field validation
-		$this->load->model('account/custom_field');
-
-		$custom_fields = $this->model_account_custom_field->getCustomFields((int)$this->config->get('config_customer_group_id'));
-
-		foreach ($custom_fields as $custom_field) {
-			if ($custom_field['location'] == 'affiliate') {
-				if ($custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['location']][$custom_field['custom_field_id']])) {
-					$json['error']['custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
-				} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !preg_match(html_entity_decode($custom_field['validation'], ENT_QUOTES, 'UTF-8'), $this->request->post['custom_field'][$custom_field['location']][$custom_field['custom_field_id']])) {
-					$json['error']['custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_regex'), $custom_field['name']);
+				if ($this->request->post['bank_account_number'] == '') {
+					$json['error']['bank_account_number'] = $this->language->get('error_bank_account_number');
 				}
 			}
-		}
 
-		// Validate agree only if customer not already an affiliate
-		$this->load->model('account/affiliate');
+			// Custom field validation
+			$this->load->model('account/custom_field');
 
-		$affiliate_info = $this->model_account_affiliate->getAffiliate($this->customer->getId());
+			$custom_fields = $this->model_account_custom_field->getCustomFields((int)$this->config->get('config_customer_group_id'));
 
-		if (!$affiliate_info && $this->config->get('config_affiliate_id')) {
+			foreach ($custom_fields as $custom_field) {
+				if ($custom_field['location'] == 'affiliate') {
+					if ($custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['location']][$custom_field['custom_field_id']])) {
+						$json['error']['custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
+					} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !preg_match(html_entity_decode($custom_field['validation'], ENT_QUOTES, 'UTF-8'), $this->request->post['custom_field'][$custom_field['location']][$custom_field['custom_field_id']])) {
+						$json['error']['custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_regex'), $custom_field['name']);
+					}
+				}
+			}
+
 			$this->load->model('catalog/information');
 
 			$information_info = $this->model_catalog_information->getInformation($this->config->get('config_affiliate_id'));
@@ -217,6 +212,11 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// Validate agree only if customer not already an affiliate
+			$this->load->model('account/affiliate');
+
+			$affiliate_info = $this->model_account_affiliate->getAffiliate($this->customer->getId());
+
 			if (!$affiliate_info) {
 				$this->model_account_affiliate->addAffiliate($this->customer->getId(), $this->request->post);
 			} else {

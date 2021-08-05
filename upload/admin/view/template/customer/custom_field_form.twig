@@ -28,6 +28,7 @@
                     <div class="input-group-text"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/></div>
                     <input type="text" name="custom_field_description[{{ language.language_id }}][name]" value="{{ custom_field_description[language.language_id] ? custom_field_description[language.language_id].name }}" placeholder="{{ entry_name }}" id="input-name-{{ language.language_id }}" class="form-control"/>
                   </div>
+                  <div id="error-name-{{ language.language_id }}" class="invalid-feedback"></div>
                 {% endfor %}
               </div>
             </div>
@@ -146,6 +147,7 @@
                             <div class="input-group-text"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/></div>
                             <input type="text" name="custom_field_value[{{ custom_field_value_row }}][custom_field_value_description][{{ language.language_id }}][name]" value="{{ custom_field_value.custom_field_value_description[language.language_id] ? custom_field_value.custom_field_value_description[language.language_id].name }}" id="input-custom-field-{{ custom_field_value_row }}-{{ language.language_id }}" placeholder="{{ entry_custom_value }}" class="form-control"/>
                           </div>
+                          <div id="error-custom-field-{{ custom_field_value_row }}-{{ language.language_id }}" class="invalid-feedback"></div>
                         {% endfor %}</td>
                       <td class="text-end"><input type="text" name="custom_field_value[{{ custom_field_value_row }}][sort_order]" value="{{ custom_field_value.sort_order }}" placeholder="{{ entry_sort_order }}" class="form-control"/></td>
                       <td class="text-end"><button type="button" onclick="$('#custom-field-value-row-{{ custom_field_value_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
@@ -221,6 +223,7 @@ function addCustomFieldValue() {
     html += '      <div class="input-group-text"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></div>';
     html += '      <input type="text" name="custom_field_value[' + custom_field_value_row + '][custom_field_value_description][{{ language.language_id }}][name]" value="" placeholder="{{ entry_custom_value }}" id="input-custom-field-{{ custom_field_value_row }}-{{ language.language_id }}" class="form-control" />';
     html += '    </div>';
+    html += '    <div id="error-custom-field-value-{{ custom_field_value_row }}-{{ language.language_id }}" class="invalid-feedback"></div>';
   {% endfor %}
     html += '  </td>';
     html += '  <td class="text-end"><input type="text" name="custom_field_value[' + custom_field_value_row + '][sort_order]" value="" placeholder="{{ entry_sort_order }}" class="form-control" /></td>';

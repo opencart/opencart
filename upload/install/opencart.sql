@@ -643,15 +643,33 @@ INSERT INTO `oc_customer_group_description` (`customer_group_id`, `language_id`,
 --
 
 INSERT INTO `oc_custom_field` (`custom_field_id`, `type`, `value`, `validation`, `location`, `status`, `sort_order`) VALUES
-(1, 'select', '', '', 'account', 0, 1),
-(2, 'radio', '', '', 'account', 0, 2),
-(3, 'checkbox', '', '', 'account', 0, 3),
-(4, 'text', '', '', 'account', 0, 4),
-(5, 'textarea', '', '', 'account', 0, 5),
-(6, 'file', '', '', 'account', 0, 6),
-(7, 'date', '', '', 'account', 0, 7),
-(8, 'time', '', '', 'account', 0, 8),
-(9, 'datetime', '', '', 'account', 0, 9);
+(1, 'select', '', '', 'account', 1, 1),
+(2, 'radio', '', '', 'account', 1, 2),
+(3, 'checkbox', '', '', 'account', 1, 3),
+(4, 'text', '', '', 'account', 1, 4),
+(5, 'textarea', '', '', 'account', 1, 5),
+(6, 'file', '', '', 'account', 1, 6),
+(7, 'date', '', '', 'account', 1, 7),
+(8, 'time', '', '', 'account', 1, 8),
+(9, 'datetime', '', '', 'account', 1, 9),
+(11, 'checkbox', '', '', 'address', 1, 3),
+(12, 'time', '', '', 'address', 1, 8),
+(13, 'date', '', '', 'address', 1, 7),
+(14, 'datetime', '', '', 'address', 1, 9),
+(15, 'file', '', '', 'address', 1, 6),
+(16, 'radio', '', '', 'address', 1, 2),
+(17, 'select', '', '', 'address', 1, 1),
+(18, 'text', '', '', 'address', 1, 4),
+(19, 'textarea', '', '', 'address', 1, 5),
+(20, 'checkbox', '', '', 'affiliate', 1, 3),
+(21, 'date', '', '', 'affiliate', 1, 8),
+(22, 'datetime', '', '', 'affiliate', 1, 9),
+(23, 'file', '', '', 'affiliate', 1, 6),
+(24, 'radio', '', '', 'affiliate', 1, 2),
+(25, 'select', '', '', 'affiliate', 1, 1),
+(26, 'text', '', '', 'affiliate', 1, 4),
+(27, 'textarea', '', '', 'affiliate', 1, 5),
+(28, 'time', '', '', 'affiliate', 1, 8);
 
 -----------------------------------------------------------
 
@@ -668,7 +686,25 @@ INSERT INTO `oc_custom_field_customer_group` (`custom_field_id`, `customer_group
 (6, 1, 1),
 (7, 1, 1),
 (8, 1, 1),
-(9, 1, 1);
+(9, 1, 1),
+(11, 1, 1),
+(12, 1, 1),
+(13, 1, 1),
+(14, 1, 1),
+(15, 1, 1),
+(16, 1, 1),
+(17, 1, 1),
+(18, 1, 1),
+(19, 1, 1),
+(20, 1, 1),
+(21, 1, 1),
+(22, 1, 1),
+(23, 1, 1),
+(24, 1, 1),
+(25, 1, 1),
+(26, 1, 1),
+(27, 1, 1),
+(28, 1, 1);
 
 -----------------------------------------------------------
 
@@ -685,7 +721,25 @@ INSERT INTO `oc_custom_field_description` (`custom_field_id`, `language_id`, `na
 (6, 1, 'File'),
 (7, 1, 'Date'),
 (8, 1, 'Time'),
-(9, 1, 'Date &amp; Time');
+(9, 1, 'Date &amp; Time'),
+(11, 1, 'Checkbox'),
+(12, 1, 'Time'),
+(13, 1, 'Date'),
+(14, 1, 'Date &amp; Time'),
+(15, 1, 'File'),
+(16, 1, 'Radio'),
+(17, 1, 'Select'),
+(18, 1, 'Text'),
+(19, 1, 'Textarea'),
+(20, 1, 'Checkbox'),
+(21, 1, 'Date'),
+(22, 1, 'Date &amp; Time'),
+(23, 1, 'File'),
+(24, 1, 'Radio'),
+(25, 1, 'Select'),
+(26, 1, 'Text'),
+(27, 1, 'Textarea'),
+(28, 1, 'Time');
 
 -----------------------------------------------------------
 
@@ -702,7 +756,25 @@ INSERT INTO `oc_custom_field_value` (`custom_field_value_id`, `custom_field_id`,
 (6, 2, 3),
 (7, 3, 1),
 (8, 3, 2),
-(9, 3, 3);
+(9, 3, 3),
+(20, 11, 1),
+(21, 11, 2),
+(22, 11, 3),
+(32, 16, 1),
+(33, 16, 2),
+(34, 16, 3),
+(35, 17, 1),
+(36, 17, 2),
+(37, 17, 3),
+(38, 20, 1),
+(39, 20, 2),
+(40, 20, 3),
+(41, 24, 1),
+(42, 24, 2),
+(43, 24, 3),
+(44, 25, 0),
+(45, 25, 0),
+(46, 25, 0);
 
 -----------------------------------------------------------
 
@@ -719,7 +791,25 @@ INSERT INTO `oc_custom_field_value_description` (`custom_field_value_id`, `langu
 (6, 1, 2, 'Test 3'),
 (7, 1, 3, 'Test 1'),
 (8, 1, 3, 'Test 2'),
-(9, 1, 3, 'Test 3');
+(9, 1, 3, 'Test 3'),
+(20, 1, 11, 'Test 1'),
+(21, 1, 11, 'Test 2'),
+(22, 1, 11, 'Test 3'),
+(32, 1, 16, 'Test 1'),
+(33, 1, 16, 'Test 2'),
+(34, 1, 16, 'Test 3'),
+(35, 1, 17, 'Test 1'),
+(36, 1, 17, 'Test 2'),
+(37, 1, 17, 'Test 3'),
+(38, 1, 20, 'Test 1'),
+(39, 1, 20, 'Test 2'),
+(40, 1, 20, 'Test 3'),
+(41, 1, 24, 'Test 1'),
+(42, 1, 24, 'Test 2'),
+(43, 1, 24, 'Test 3'),
+(44, 1, 25, 'Test 1'),
+(45, 1, 25, 'Test 2'),
+(46, 1, 25, 'Test 3');
 
 -----------------------------------------------------------
 

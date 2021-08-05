@@ -33,13 +33,13 @@ class Register extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->session->data['shipping_address']['country_id'])) {
-			$data['country_id'] = $this->session->data['shipping_address']['country_id'];
+			$data['country_id'] = (int)$this->session->data['shipping_address']['country_id'];
 		} else {
 			$data['country_id'] = $this->config->get('config_country_id');
 		}
 
 		if (isset($this->session->data['shipping_address']['zone_id'])) {
-			$data['zone_id'] = $this->session->data['shipping_address']['zone_id'];
+			$data['zone_id'] = (int)$this->session->data['shipping_address']['zone_id'];
 		} else {
 			$data['zone_id'] = '';
 		}
@@ -206,7 +206,7 @@ class Register extends \Opencart\System\Engine\Controller {
 
 			// Customer Group
 			if (isset($this->request->post['customer_group_id']) && is_array($this->config->get('config_customer_group_display')) && in_array($this->request->post['customer_group_id'], $this->config->get('config_customer_group_display'))) {
-				$customer_group_id = $this->request->post['customer_group_id'];
+				$customer_group_id = (int)$this->request->post['customer_group_id'];
 			} else {
 				$customer_group_id = $this->config->get('config_customer_group_id');
 			}
@@ -214,7 +214,7 @@ class Register extends \Opencart\System\Engine\Controller {
 			// Custom field validation
 			$this->load->model('account/custom_field');
 
-			$custom_fields = $this->model_account_custom_field->getCustomFields((int)$customer_group_id);
+			$custom_fields = $this->model_account_custom_field->getCustomFields($customer_group_id);
 
 			foreach ($custom_fields as $custom_field) {
 				if ($custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['location']][$custom_field['custom_field_id']])) {

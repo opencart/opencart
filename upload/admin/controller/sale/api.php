@@ -69,7 +69,6 @@ class Api extends \Opencart\System\Engine\Controller {
 		// Cache
 		$registry->set('cache', $this->cache);
 
-
 		// Create a dummy session class so we can feed the data to the order editor
 		$session = new \stdClass();
 		$session->data = [];

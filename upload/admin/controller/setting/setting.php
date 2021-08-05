@@ -206,6 +206,13 @@ class Setting extends \Opencart\System\Engine\Controller {
 		$data['config_tax_customer'] = $this->config->get('config_tax_customer');
 
 		$data['config_customer_online'] = $this->config->get('config_customer_online');
+
+		if ($this->config->has('config_customer_online_expire')) {
+			$data['config_customer_online_expire'] = $this->config->get('config_customer_online_expire');
+		} else {
+			$data['config_customer_online_expire'] = 1;
+		}
+
 		$data['config_customer_activity'] = $this->config->get('config_customer_activity');
 		$data['config_customer_search'] = $this->config->get('config_customer_search');
 		$data['config_customer_group_id'] = $this->config->get('config_customer_group_id');
@@ -641,6 +648,10 @@ class Setting extends \Opencart\System\Engine\Controller {
 
 		if (!$this->request->post['config_voucher_max']) {
 			$json['error']['voucher_max'] = $this->language->get('error_voucher_max');
+		}
+
+		if ($this->request->post['config_customer_online'] && !filter_var($this->request->post['config_customer_online_expire'], FILTER_VALIDATE_INT)) {
+			$json['error']['customer_online_expire'] = $this->language->get('error_customer_online_expire');
 		}
 
 		if (!isset($this->request->post['config_processing_status'])) {

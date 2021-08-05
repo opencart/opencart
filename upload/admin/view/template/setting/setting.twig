@@ -448,6 +448,16 @@
                     </div>
                   </div>
                   <div class="row mb-3">
+                    <label for="input-customer-online-expire" class="col-sm-2 col-form-label">{{ entry_customer_online_expire }}</label>
+                    <div class="col-sm-10">
+                      <div class="input-group">
+                        <input type="text" name="config_customer_online_expire" value="{{ config_customer_online_expire }}" placeholder="{{ entry_customer_online_expire }}" id="input-customer-online-expire" class="form-control"/>
+                        <span class="input-group-text" id="basic-addon2">{{ text_hour }}</span>
+                      </div>
+                      <div class="form-text text-muted">{{ help_customer_online_expire }}</div>
+                    </div>
+                  </div>
+                  <div class="row mb-3">
                     <label class="col-sm-2 col-form-label">{{ entry_customer_activity }}</label>
                     <div class="col-sm-10">
                       <div class="btn-group">

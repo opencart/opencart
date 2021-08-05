@@ -250,7 +250,7 @@ class Confirm extends \Opencart\System\Engine\Controller {
 				$subtotal = $this->cart->getSubTotal();
 
 				// Affiliate
-				if ((int)$this->config->get('config_affiliate_status') == 1) {
+				if ($this->config->get('config_affiliate_status')) {
 					$this->load->model('account/affiliate');
 
 					$affiliate_info = $this->model_account_affiliate->getAffiliateByTracking($this->request->cookie['tracking']);

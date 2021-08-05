@@ -331,7 +331,7 @@ class Order extends \Opencart\System\Engine\Controller {
 				'address_2'      => $this->request->post['address_2'],
 				'postcode'       => $this->request->post['postcode'],
 				'city'           => $this->request->post['city'],
-				'zone_id'        => $this->request->post['zone_id'],
+				'zone_id'        => (int)$this->request->post['zone_id'],
 				'zone'           => $zone,
 				'zone_code'      => $zone_code,
 				'country_id'     => (int)$this->request->post['country_id'],
@@ -479,7 +479,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 			$this->load->model('localisation/zone');
 
-			$zone_info = $this->model_localisation_zone->getZone($this->request->post['zone_id']);
+			$zone_info = $this->model_localisation_zone->getZone((int)$this->request->post['zone_id']);
 
 			if ($zone_info) {
 				$zone = $zone_info['name'];
@@ -497,7 +497,7 @@ class Order extends \Opencart\System\Engine\Controller {
 				'address_2'      => $this->request->post['address_2'],
 				'postcode'       => $this->request->post['postcode'],
 				'city'           => $this->request->post['city'],
-				'zone_id'        => $this->request->post['zone_id'],
+				'zone_id'        => (int)$this->request->post['zone_id'],
 				'zone'           => $zone,
 				'zone_code'      => $zone_code,
 				'country_id'     => (int)$this->request->post['country_id'],
@@ -696,7 +696,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			$order_data['payment_city'] = $this->session->data['payment_address']['city'];
 			$order_data['payment_postcode'] = $this->session->data['payment_address']['postcode'];
 			$order_data['payment_zone'] = $this->session->data['payment_address']['zone'];
-			$order_data['payment_zone_id'] = $this->session->data['payment_address']['zone_id'];
+			$order_data['payment_zone_id'] = (int)$this->session->data['payment_address']['zone_id'];
 			$order_data['payment_country'] = $this->session->data['payment_address']['country'];
 			$order_data['payment_country_id'] = (int)$this->session->data['payment_address']['country_id'];
 			$order_data['payment_address_format'] = $this->session->data['payment_address']['address_format'];
@@ -724,7 +724,7 @@ class Order extends \Opencart\System\Engine\Controller {
 				$order_data['shipping_city'] = $this->session->data['shipping_address']['city'];
 				$order_data['shipping_postcode'] = $this->session->data['shipping_address']['postcode'];
 				$order_data['shipping_zone'] = $this->session->data['shipping_address']['zone'];
-				$order_data['shipping_zone_id'] = $this->session->data['shipping_address']['zone_id'];
+				$order_data['shipping_zone_id'] = (int)$this->session->data['shipping_address']['zone_id'];
 				$order_data['shipping_country'] = $this->session->data['shipping_address']['country'];
 				$order_data['shipping_country_id'] = (int)$this->session->data['shipping_address']['country_id'];
 				$order_data['shipping_address_format'] = $this->session->data['shipping_address']['address_format'];
@@ -750,9 +750,9 @@ class Order extends \Opencart\System\Engine\Controller {
 				$order_data['shipping_city'] = '';
 				$order_data['shipping_postcode'] = '';
 				$order_data['shipping_zone'] = '';
-				$order_data['shipping_zone_id'] = '';
+				$order_data['shipping_zone_id'] = 0;
 				$order_data['shipping_country'] = '';
-				$order_data['shipping_country_id'] = '';
+				$order_data['shipping_country_id'] = 0;
 				$order_data['shipping_address_format'] = '';
 				$order_data['shipping_custom_field'] = [];
 				$order_data['shipping_method'] = '';
@@ -767,29 +767,29 @@ class Order extends \Opencart\System\Engine\Controller {
 
 				foreach ($product['option'] as $option) {
 					$option_data[] = [
-						'product_option_id' => $option['product_option_id'],
-						'product_option_value_id' => $option['product_option_value_id'],
-						'option_id' => $option['option_id'],
-						'option_value_id' => $option['option_value_id'],
-						'name' => $option['name'],
-						'value' => $option['value'],
-						'type' => $option['type']
+						'product_option_id' 		=> $option['product_option_id'],
+						'product_option_value_id' 	=> $option['product_option_value_id'],
+						'option_id' 				=> $option['option_id'],
+						'option_value_id' 			=> $option['option_value_id'],
+						'name' 						=> $option['name'],
+						'value' 					=> $option['value'],
+						'type' 						=> $option['type']
 					];
 				}
 
 				$order_data['products'][] = [
-					'product_id' => $product['product_id'],
-					'master_id' => $product['master_id'],
-					'name' => $product['name'],
-					'model' => $product['model'],
-					'option' => $option_data,
-					'download' => $product['download'],
-					'quantity' => $product['quantity'],
-					'subtract' => $product['subtract'],
-					'price' => $product['price'],
-					'total' => $product['total'],
-					'tax' => $this->tax->getTax($product['price'], $product['tax_class_id']),
-					'reward' => $product['reward']
+					'product_id'	=> $product['product_id'],
+					'master_id' 	=> $product['master_id'],
+					'name' 			=> $product['name'],
+					'model' 		=> $product['model'],
+					'option' 		=> $option_data,
+					'download' 		=> $product['download'],
+					'quantity' 		=> $product['quantity'],
+					'subtract' 		=> $product['subtract'],
+					'price' 		=> $product['price'],
+					'total' 		=> $product['total'],
+					'tax' 			=> $this->tax->getTax($product['price'], $product['tax_class_id']),
+					'reward' 		=> $product['reward']
 				];
 			}
 
@@ -799,15 +799,15 @@ class Order extends \Opencart\System\Engine\Controller {
 			if (!empty($this->session->data['vouchers'])) {
 				foreach ($this->session->data['vouchers'] as $voucher) {
 					$order_data['vouchers'][] = [
-						'description' => $voucher['description'],
-						'code' => token(10),
-						'to_name' => $voucher['to_name'],
-						'to_email' => $voucher['to_email'],
-						'from_name' => $voucher['from_name'],
-						'from_email' => $voucher['from_email'],
-						'voucher_theme_id' => $voucher['voucher_theme_id'],
-						'message' => $voucher['message'],
-						'amount' => $voucher['amount']
+						'description'		=> $voucher['description'],
+						'code' 				=> token(10),
+						'to_name' 			=> $voucher['to_name'],
+						'to_email' 			=> $voucher['to_email'],
+						'from_name' 		=> $voucher['from_name'],
+						'from_email' 		=> $voucher['from_email'],
+						'voucher_theme_id' 	=> $voucher['voucher_theme_id'],
+						'message' 			=> $voucher['message'],
+						'amount' 			=> $voucher['amount']
 					];
 				}
 			}

@@ -28,6 +28,7 @@
                     <div class="input-group-text"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/></div>
                     <input type="text" name="filter_group_description[{{ language.language_id }}][name]" value="{{ filter_group_description[language.language_id] ? filter_group_description[language.language_id].name }}" placeholder="{{ entry_group }}" id="input-group-{{ language.language_id }}" class="form-control"/>
                   </div>
+                  <div id="error-group-{{ language.language_id }}" class="invalid-feedback"></div>
                 {% endfor %}
               </div>
             </div>
@@ -58,6 +59,7 @@
                           <div class="input-group-text"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/></div>
                           <input type="text" name="filter[{{ filter_row }}][filter_description][{{ language.language_id }}][name]" value="{{ filter.filter_description[language.language_id] ? filter.filter_description[language.language_id].name }}" placeholder="{{ entry_name }}" id="input-filter-{{ filter_row }}-{{ language.language_id }}" class="form-control"/>
                         </div>
+                        <div id="error-filter-{{ filter_row }}-{{ language.language_id }}" class="invalid-feedback"></div>
                       {% endfor %}</td>
                     <td class="text-end"><input type="text" name="filter[{{ filter_row }}][sort_order]" value="{{ filter.sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/></td>
                     <td class="text-end"><button type="button" onclick="$('#filter-row-{{ filter_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>

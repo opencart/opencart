@@ -27,24 +27,28 @@
             <label for="input-firstname" class="col-sm-2 col-form-label">{{ entry_firstname }}</label>
             <div class="col-sm-10">
               <input type="text" name="firstname" value="" placeholder="{{ entry_firstname }}" id="input-firstname" class="form-control"/>
+              <div id="error-firstname" class="invalid-feedback"></div>
             </div>
           </div>
           <div class="row mb-3 required">
             <label for="input-lastname" class="col-sm-2 col-form-label">{{ entry_lastname }}</label>
             <div class="col-sm-10">
               <input type="text" name="lastname" value="" placeholder="{{ entry_lastname }}" id="input-lastname" class="form-control"/>
+              <div id="error-lastname" class="invalid-feedback"></div>
             </div>
           </div>
           <div class="row mb-3 required">
             <label for="input-email" class="col-sm-2 col-form-label">{{ entry_email }}</label>
             <div class="col-sm-10">
               <input type="email" name="email" value="" placeholder="{{ entry_email }}" id="input-email" class="form-control"/>
+              <div id="error-email" class="invalid-feedback"></div>
             </div>
           </div>
           <div class="row mb-3 required">
             <label for="input-telephone" class="col-sm-2 col-form-label">{{ entry_telephone }}</label>
             <div class="col-sm-10">
               <input type="tel" name="telephone" value="" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control"/>
+              <div id="error-telephone" class="invalid-feedback"></div>
             </div>
           </div>
           {% for custom_field in custom_fields %}
@@ -59,6 +63,7 @@
                       <option value="{{ custom_field_value.custom_field_value_id }}">{{ custom_field_value.name }}</option>
                     {% endfor %}
                   </select>
+                  <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               </div>
             {% endif %}
@@ -74,6 +79,7 @@
                       </div>
                     {% endfor %}
                   </div>
+                  <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               </div>
             {% endif %}
@@ -89,6 +95,7 @@
                       </div>
                     {% endfor %}
                   </div>
+                  <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               </div>
             {% endif %}
@@ -98,6 +105,7 @@
                 <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{{ custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
+                  <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               </div>
             {% endif %}
@@ -107,6 +115,7 @@
                 <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
                 <div class="col-sm-10">
                   <textarea name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" rows="5" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control">{{ custom_field.value }}</textarea>
+                  <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               </div>
             {% endif %}
@@ -117,6 +126,7 @@
                 <div class="col-sm-10">
                   <button type="button" data-oc-upload="index.php?route=tool/upload" data-oc-target="#input-custom-field-{{ custom_field.custom_field_id }}" data-loading-text="{{ text_loading }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
                   <input type="hidden" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="" id="input-custom-field-{{ custom_field.custom_field_id }}"/>
+                  <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               </div>
             {% endif %}
@@ -129,6 +139,7 @@
                     <input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{{ custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
                     <div class="input-group-text"><i class="fas fa-calendar"></i></div>
                   </div>
+                  <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               </div>
             {% endif %}
@@ -141,6 +152,7 @@
                     <input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{{ custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
                     <div class="input-group-text"><i class="fas fa-calendar"></i></div>
                   </div>
+                  <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               </div>
             {% endif %}
@@ -153,6 +165,7 @@
                     <input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{{ custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
                     <div class="input-group-text"><i class="fas fa-calendar"></i></div>
                   </div>
+                  <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               </div>
             {% endif %}

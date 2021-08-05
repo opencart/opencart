@@ -414,22 +414,14 @@ $(document).ready(function() {
                     }
 
                     for (key in json['error']) {
-                        // Grab the label
-                        var input = $(form).find('label[for=\'input-' + key.replaceAll('_', '-') + '\']').parent();
-
-                        // Highlight any found errors
-                        input.find('.form-control, .input-group, .form-select, .form-check-input, .form-check-label, .form-label').addClass('is-invalid');
-
-                        input.prepend('<div class="invalid-feedback d-block">' + json['error'][key] + '</div>');
+                        $(form).find('#error-' + key.replaceAll('_', '-') + '\']').addClass('is-invalid');
                     }
 
                     delete json['error'];
                 }
 
                 if (typeof json['error'] == 'string') {
-                    $(form).after('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                    delete json['error'];
+                    $('warning-error').after('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                 }
 
                 if (json['success']) {

@@ -29,6 +29,7 @@
                 <label for="input-name" class="col-sm-2 col-form-label">{{ entry_name }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
+                  <div id="error-name" class="invalid-feedback"></div>
                 </div>
               </div>
               <div class="row mb-3">
@@ -82,6 +83,7 @@
                               <div class="input-group-text"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/></div>
                               <input type="text" name="manufacturer_seo_url[{{ store.store_id }}][{{ language.language_id }}]" value="{% if manufacturer_seo_url[store.store_id][language.language_id] %}{{ manufacturer_seo_url[store.store_id][language.language_id] }}{% endif %}" placeholder="{{ entry_keyword }}" id="input-keyword-{{ store.store_id }}-{{ language.language_id }}" class="form-control"/>
                             </div>
+                            <div id="error-keyword-{{ store.store_id }}-{{ language.language_id }}" class="invalid-feedback"></div>
                           {% endfor %}</td>
                       </tr>
                     {% endfor %}

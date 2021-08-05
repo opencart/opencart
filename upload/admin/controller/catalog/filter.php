@@ -158,8 +158,6 @@ class Filter extends \Opencart\System\Engine\Controller {
 
 		$data['text_form'] = !isset($this->request->get['filter_group_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
-		$data['user_token'] = $this->session->data['user_token'];
-
 		$url = '';
 
 		if (isset($this->request->get['sort'])) {

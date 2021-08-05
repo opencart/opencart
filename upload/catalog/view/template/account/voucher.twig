@@ -17,24 +17,28 @@
           <label for="input-to-name" class="col-sm-2 col-form-label">{{ entry_to_name }}</label>
           <div class="col-sm-10">
             <input type="text" name="to_name" value="{{ to_name }}" id="input-to-name" class="form-control"/>
+            <div id="error-to-name" class="invalid-feedback"></div>
           </div>
         </div>
         <div class="row mb-3 required">
           <label for="input-to-email" class="col-sm-2 col-form-label">{{ entry_to_email }}</label>
           <div class="col-sm-10">
             <input type="text" name="to_email" value="{{ to_email }}" id="input-to-email" class="form-control"/>
+            <div id="error-to-email" class="invalid-feedback"></div>
           </div>
         </div>
         <div class="row mb-3 required">
           <label for="input-from-name" class="col-sm-2 col-form-label">{{ entry_from_name }}</label>
           <div class="col-sm-10">
             <input type="text" name="from_name" value="{{ from_name }}" id="input-from-name" class="form-control"/>
+            <div id="error-from-name" class="invalid-feedback"></div>
           </div>
         </div>
         <div class="row mb-3 required">
           <label for="input-from-email" class="col-sm-2 col-form-label">{{ entry_from_email }}</label>
           <div class="col-sm-10">
             <input type="text" name="from_email" value="{{ from_email }}" id="input-from-email" class="form-control"/>
+            <div id="error-from-email" class="invalid-feedback"></div>
           </div>
         </div>
         <div class="row mb-3 required">
@@ -42,9 +46,11 @@
           <div class="col-sm-10">
             {% for voucher_theme in voucher_themes %}
               <div class="form-check">
-                <input type="radio" name="voucher_theme_id" value="{{ voucher_theme.voucher_theme_id }}" id="input-theme-{{ voucher_theme.voucher_theme_id }}" class="form-check-input"{% if voucher_theme.voucher_theme_id == voucher_theme_id %} checked{% endif %}/> <label for="input-theme-{{ voucher_theme.voucher_theme_id }}" class="form-check-label">{{ voucher_theme.name }}</label>
+                <input type="radio" name="voucher_theme_id" value="{{ voucher_theme.voucher_theme_id }}" id="input-theme-{{ voucher_theme.voucher_theme_id }}" class="form-check-input"{% if voucher_theme.voucher_theme_id == voucher_theme_id %} checked{% endif %}/>
+                <label for="input-theme-{{ voucher_theme.voucher_theme_id }}" class="form-check-label">{{ voucher_theme.name }}</label>
               </div>
             {% endfor %}
+            <div id="error-theme" class="invalid-feedback"></div>
           </div>
         </div>
         <div class="row mb-3">
@@ -57,6 +63,7 @@
           <label for="input-amount" class="col-sm-2 col-form-label"><span data-bs-toggle="tooltip" title="{{ help_amount }}" class="col-sm-2 col-form-label">{{ entry_amount }}</span></label>
           <div class="col-sm-10">
             <input type="text" name="amount" value="{{ amount }}" id="input-amount" class="form-control" size="5"/>
+            <div id="error-amount" class="invalid-feedback"></div>
           </div>
         </div>
         <div class="d-inline-block pt-2 pd-2 w-100">

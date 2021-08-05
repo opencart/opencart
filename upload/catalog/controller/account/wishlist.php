@@ -2,19 +2,13 @@
 namespace Opencart\Catalog\Controller\Account;
 class WishList extends \Opencart\System\Engine\Controller {
 	public function index(): void {
+		$this->load->language('account/wishlist');
+		
 		if (!$this->customer->isLogged()) {
 			$this->session->data['redirect'] = $this->url->link('account/wishlist', 'language=' . $this->config->get('config_language'));
 
 			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language')));
 		}
-
-		$this->load->language('account/wishlist');
-
-		$this->load->model('account/wishlist');
-
-		$this->load->model('catalog/product');
-
-		$this->load->model('tool/image');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -44,6 +38,12 @@ class WishList extends \Opencart\System\Engine\Controller {
 		}
 
 		$data['products'] = [];
+		
+		$this->load->model('account/wishlist');
+
+		$this->load->model('catalog/product');
+
+		$this->load->model('tool/image');
 
 		$results = $this->model_account_wishlist->getWishlist();
 

@@ -600,9 +600,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			} else {
 				$data['reward_total'] = 0;
 			}
-
-
-
+			
 			if ($order_id) {
 				$order_totals = $this->model_sale_order->getTotals($order_id);
 
@@ -662,13 +660,9 @@ class Order extends \Opencart\System\Engine\Controller {
 				$data['language'] = '';
 			}
 
-			//$order_info['language_id']
-
 			$this->load->model('localisation/language');
 
 			$data['languages'] = $this->model_localisation_language->getLanguages();
-
-			//$language_info = $this->model_localisation_language->getLanguage();
 
 			// Total
 			$data['total'] = $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value']);
@@ -877,7 +871,6 @@ class Order extends \Opencart\System\Engine\Controller {
 				];
 			}
 
-			$data['comment'] = $order_info['comment'];
 			$data['comment'] = nl2br($order_info['comment']);
 
 			// Additional Tabs
@@ -921,33 +914,6 @@ class Order extends \Opencart\System\Engine\Controller {
 					}
 				}
 			}
-
-			/*
-			// Order Status
-			$this->load->model('localisation/order_status');
-
-			$order_status_info = $this->model_localisation_order_status->getOrderStatus($order_info['order_status_id']);
-
-			if ($order_status_info) {
-				$data['order_status'] = $order_status_info['name'];
-			} else {
-				$data['order_status'] = '';
-			}
-
-			$data['order_status_id'] = $order_info['order_status_id'];
-
-			$this->config->get('config_order_status_id');
-
-			$data['order_status_id'] =
-			$data['comment'] = '';
-			$data['affiliate_id'] = 0;
-			$data['affiliate'] = '';
-			$data['currency_code'] =$this->config->get('config_currency');
-
-			$data['coupon'] = '';
-			$data['voucher'] = '';
-			$data['reward'] = '';
-			*/
 
 			// Additional information
 			$data['ip'] = $order_info['ip'];

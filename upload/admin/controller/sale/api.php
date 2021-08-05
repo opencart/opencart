@@ -280,7 +280,7 @@ class Api extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->langage->get('error_store');
 		}
 
-		$order = array();
+		$order = [];
 
 		if (!$json) {
 			// 1. Merge the old order data with the new data

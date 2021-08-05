@@ -71,9 +71,6 @@ $('#button-payment-method').on('click', function() {
                                 // If HTML response display
                                 if (jqXHR.getResponseHeader('content-type').substr(5, 4) == 'html') {
                                     $('#collapse-checkout-confirm .card-body').html(output);
-
-
-
                                 }
 
                                 // If JSON use eval to turn into object.

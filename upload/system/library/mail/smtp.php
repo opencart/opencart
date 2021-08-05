@@ -142,7 +142,7 @@ class Smtp {
 
 				$this->handleReply($handle, 220, 'Error: STARTTLS not accepted from server!');
 
-				stream_socket_enable_crypto($handle, true, STREAM_CRYPTO_METHOD_TLS_CLIENT);
+				stream_socket_enable_crypto($handle, true, STREAM_CRYPTO_METHOD_TLSv1_2_CLIENT);
 			}
 
 			if (!empty($this->smtp_username) && !empty($this->smtp_password)) {

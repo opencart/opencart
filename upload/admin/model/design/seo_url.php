@@ -92,7 +92,6 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 
 		$implode = [];
 
-
 		if (!empty($data['filter_keyword'])) {
 			$implode[] = "`keyword` LIKE '" . $this->db->escape((string)$data['filter_keyword']) . "'";
 		}

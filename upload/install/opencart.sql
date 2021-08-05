@@ -1951,6 +1951,7 @@ INSERT INTO `oc_setting` (`store_id`, `code`, `key`, `value`, `serialized`) VALU
 (0, 'config', 'config_tax_default', 'shipping', 0),
 (0, 'config', 'config_tax_customer', 'shipping', 0),
 (0, 'config', 'config_customer_online', '0', 0),
+(0, 'config', 'config_customer_online_expire', '1', 0),
 (0, 'config', 'config_customer_activity', '0', 0),
 (0, 'config', 'config_customer_search', '0', 0),
 (0, 'config', 'config_customer_group_id', '1', 0),

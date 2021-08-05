@@ -51,7 +51,6 @@
               </div>
             </div>
 
-
             <div class="col">
               <div class="form-control-plaintext p-0 border rounded mb-3">
                 <p class="lead p-2 mb-0"><strong>{{ text_date_added }}</strong>
@@ -299,8 +298,7 @@
                       {% endif %}
                     {% endfor %}</td>
                   <td class="text-start">{{ order_product.model }}</td>
-                  <td class="text-end">{{ order_product.quantity }}
-                    <input type="hidden" name="product[{{ product_row }}][quantity]" value="{{ order_product.quantity }}"/></td>
+                  <td class="text-end">{{ order_product.quantity }}<input type="hidden" name="product[{{ product_row }}][quantity]" value="{{ order_product.quantity }}"/></td>
                   <td class="text-end">{{ order_product.price }}</td>
                   <td class="text-end">{{ order_product.total }}</td>
                   <td class="text-end"><button type="button" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
@@ -323,11 +321,9 @@
               {% endfor %}
 
             {% else %}
-
               <tr>
                 <td class="text-center" colspan="6">{{ text_no_results }}</td>
               </tr>
-
             {% endif %}
 
             <tr>
@@ -804,7 +800,6 @@
       </div>
       <div class="modal-body">
         <form id="form-payment-address">
-
           <div class="mb-3">
             <label for="input-payment-address" class="form-label">{{ entry_address }}</label> <select name="payment_address" id="input-payment-address" class="form-select">
               <option value="0" selected="selected">{{ text_none }}</option>
@@ -946,7 +941,6 @@
               {% endif %}
 
             {% endif %}
-
           {% endfor %}
         </form>
       </div>
@@ -1141,7 +1135,6 @@
           </div>
 
           <div id="tab-voucher" class="tab-pane">
-
             <form id="form-cart-voucher">
               <fieldset>
                 <legend>{{ text_voucher_add }}</legend>
@@ -1175,7 +1168,6 @@
                 <button type="button" id="button-voucher-add" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
               </div>
             </form>
-
           </div>
         </div>
       </div>

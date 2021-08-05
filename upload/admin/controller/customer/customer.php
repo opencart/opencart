@@ -834,7 +834,6 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-
 		if (!$json) {
 			$this->load->model('customer/customer');
 

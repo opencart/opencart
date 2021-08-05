@@ -91,12 +91,6 @@ class Order extends \Opencart\System\Engine\Controller {
 				$this->cart->add($product['product_id'], $product['quantity'], $option);
 			}
 
-			$vouchers = $this->model_checkout_order->getVouchers($order_id);
-
-			foreach ($vouchers as $voucher) {
-
-			}
-
 			$json['success'] = $this->language->get('text_success');
 		}
 

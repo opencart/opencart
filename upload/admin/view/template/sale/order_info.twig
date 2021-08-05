@@ -550,7 +550,7 @@
               {% if custom_field.type == 'file' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}" data-oc-sort="{{ custom_field.sort_order + 3 }}">
                   <label class="form-label">{{ custom_field.name }}</label>
-                  <button type="button" data-oc-upload="index.php?route=tool/upload|upload&user_token={{ user_token }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
+                  <button type="button" data-oc-upload="index.php?route=tool/upload|upload&user_token={{ user_token }}" data-oc-target="#input-custom-field-{{ custom_field.custom_field_id }}" data-oc-loading-text="{{ text_loading }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
                   <input type="hidden" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] }}" id="input-custom-field-{{ custom_field.custom_field_id }}"/>
                 </div>
               {% endif %}
@@ -910,7 +910,7 @@
               {% if custom_field.type == 'file' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}" data-oc-sort="{{ custom_field.sort_order + 3 }}">
                   <label class="col-form-label">{{ custom_field.name }}</label>
-                  <button type="button" data-oc-upload="index.php?route=tool/upload|upload&user_token={{ user_token }}" data-oc-loading-text="{{ text_loading }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
+                  <button type="button" data-oc-upload="index.php?route=tool/upload|upload&user_token={{ user_token }}" data-oc-target="#input-payment-custom-field-{{ custom_field.custom_field_id }}" data-oc-loading-text="{{ text_loading }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
                   <input type="hidden" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ payment_custom_field[custom_field.custom_field_id] ? payment_custom_field[custom_field.custom_field_id] }}" id="input-payment-custom-field-{{ custom_field.custom_field_id }}"/>
                 </div>
               {% endif %}
@@ -1049,21 +1049,23 @@
 
               {% if custom_field.type == 'text' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}" data-oc-sort="{{ custom_field.sort_order + 3 }}">
-                  <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="col-form-label">{{ custom_field.name }}</label> <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ shipping_custom_field[custom_field.custom_field_id] ? shipping_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
+                  <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="col-form-label">{{ custom_field.name }}</label>
+                  <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ shipping_custom_field[custom_field.custom_field_id] ? shipping_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
                 </div>
               {% endif %}
 
               {% if custom_field.type == 'textarea' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}" data-oc-sort="{{ custom_field.sort_order + 3 }}">
-                  <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="col-form-label">{{ custom_field.name }}</label> <textarea name="custom_field[{{ custom_field.custom_field_id }}]" rows="5" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" placeholder="{{ custom_field.name }}" class="form-control">{{ shipping_custom_field[custom_field.custom_field_id] ? shipping_custom_field[custom_field.custom_field_id] : custom_field.value }}</textarea>
+                  <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="col-form-label">{{ custom_field.name }}</label>
+                  <textarea name="custom_field[{{ custom_field.custom_field_id }}]" rows="5" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" placeholder="{{ custom_field.name }}" class="form-control">{{ shipping_custom_field[custom_field.custom_field_id] ? shipping_custom_field[custom_field.custom_field_id] : custom_field.value }}</textarea>
                 </div>
               {% endif %}
 
               {% if custom_field.type == 'file' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}" data-oc-sort="{{ custom_field.sort_order + 3 }}">
                   <label class="col-form-label">{{ custom_field.name }}</label>
-                  <button type="button" data-oc-upload="index.php?route=tool/upload|upload&user_token={{ user_token }}" data-oc-loading-text="{{ text_loading }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
-                  <input type="hidden" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ shipping_custom_field[custom_field.custom_field_id] ? shipping_custom_field[custom_field.custom_field_id] }}" id="input-custom-field-{{ custom_field.custom_field_id }}"/>
+                  <button type="button" data-oc-upload="index.php?route=tool/upload|upload&user_token={{ user_token }}" data-oc-target="#input-shipping-custom-field-{{ custom_field.custom_field_id }}" data-oc-loading-text="{{ text_loading }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
+                  <input type="hidden" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ shipping_custom_field[custom_field.custom_field_id] ? shipping_custom_field[custom_field.custom_field_id] }}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}"/>
                 </div>
               {% endif %}
 

@@ -17,7 +17,9 @@
     <div class="card">
       <div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_form }}</div>
       <div class="card-body">
+
         <form id="form-affiliate">
+
           <ul class="nav nav-tabs">
             <li class="nav-item"><a href="#tab-general" data-bs-toggle="tab" class="nav-link active">{{ tab_general }}</a></li>
             <li class="nav-item"><a href="#tab-history" data-bs-toggle="tab" class="nav-link">{{ tab_history }}</a></li>
@@ -25,9 +27,11 @@
             <li class="nav-item"><a href="#tab-report" data-bs-toggle="tab" class="nav-link">{{ tab_report }}</a></li>
           </ul>
           <div class="tab-content">
-            <div id="tab-general">
+            <div id="tab-general" class="tab-pane active">
+
               <fieldset>
                 <legend>{{ text_affiliate }}</legend>
+
                 <div class="row mb-3 required" class="tab-pane active">
                   <label for="input-customer" class="col-sm-2 col-form-label">{{ entry_customer }}</label>
                   <div class="col-sm-10">
@@ -36,9 +40,11 @@
                     {% else %}
                       <input type="text" name="customer" value="{{ customer }}" placeholder="{{ entry_customer }}" id="input-customer" class="form-control" disabled/>
                     {% endif %}
-                    <input type="hidden" name="customer_id" value="{{ customer_id }}"/> <input type="hidden" name="customer_group_id" value="{{ customer_group_id }}"/>
+                    <input type="hidden" name="customer_id" value="{{ customer_id }}"/>
+                    <input type="hidden" name="customer_group_id" value="{{ customer_group_id }}"/>
                   </div>
                 </div>
+
                 <div class="row mb-3">
                   <label for="input-company" class="col-sm-2 col-form-label">{{ entry_company }}</label>
                   <div class="col-sm-10">
@@ -69,7 +75,7 @@
                   {% if custom_field.location == 'affiliate' %}
 
                     {% if custom_field.type == 'select' %}
-                      <div class="col mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}" data-oc-sort="{{ custom_field.sort_order }}">
+                      <div class="row mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}" data-oc-sort="{{ custom_field.sort_order }}">
                         <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
                         <div class="col-sm-10">
                           <select name="custom_field[{{ custom_field.custom_field_id }}]" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-select">
@@ -77,21 +83,25 @@
                             {% for custom_field_value in custom_field.custom_field_value %}
                               <option value="{{ custom_field_value.custom_field_value_id }}"{% if affiliate_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id == affiliate_custom_field[custom_field.custom_field_id] %} selected{% endif %}>{{ custom_field_value.name }}</option>
                             {% endfor %}
-                          </select></div>
+                          </select>
+                        </div>
                       </div>
                     {% endif %}
 
                     {% if custom_field.type == 'radio' %}
-                      <div class="col mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}" data-oc-sort="{{ custom_field.sort_order }}">
+                      <div class="row mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}" data-oc-sort="{{ custom_field.sort_order }}">
                         <label class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
                         <div class="col-sm-10">
+
                           <div id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control" style="height: 150px; overflow: auto;">
                             {% for custom_field_value in custom_field.custom_field_value %}
                               <div class="form-check">
-                                <input type="radio" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ custom_field_value.custom_field_value_id }}" id="input-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-input"{% if affiliate_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id == affiliate_custom_field[custom_field.custom_field_id] %} checked{% endif %}/> <label for="input-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-label">{{ custom_field_value.name }}</label>
+                                <input type="radio" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ custom_field_value.custom_field_value_id }}" id="input-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-input"{% if affiliate_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id == affiliate_custom_field[custom_field.custom_field_id] %} checked{% endif %}/>
+                                <label for="input-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-label">{{ custom_field_value.name }}</label>
                               </div>
                             {% endfor %}
                           </div>
+
                         </div>
                       </div>
                     {% endif %}
@@ -133,7 +143,7 @@
                       <div class="row mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}" data-oc-sort="{{ custom_field.sort_order }}">
                         <label class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
                         <div class="col-sm-10">
-                          <button type="button" data-oc-upload="index.php?route=tool/upload|upload&user_token={{ user_token }}" data-oc-loading-text="{{ text_loading }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
+                          <button type="button" data-oc-upload="index.php?route=tool/upload|upload&user_token={{ user_token }}" data-oc-target="#input-custom-field-{{ custom_field.custom_field_id }}" data-oc-loading-text="{{ text_loading }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
                           <input type="hidden" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ affiliate_custom_field[custom_field.custom_field_id] ? affiliate_custom_field[custom_field.custom_field_id] }}" id="input-custom-field-{{ custom_field.custom_field_id }}"/>
                         </div>
                       </div>
@@ -178,6 +188,7 @@
                   {% endif %}
                 {% endfor %}
               </fieldset>
+
               <fieldset>
                 <legend>{{ text_payment }}</legend>
                 <div class="row mb-3">
@@ -249,6 +260,7 @@
                   </div>
                 </div>
               </fieldset>
+
               <fieldset>
                 <legend>{{ text_other }}</legend>
                 <div class="row mb-3">
@@ -261,8 +273,11 @@
                   </div>
                 </div>
               </fieldset>
+
             </div>
+
             <div id="tab-history" class="tab-pane">
+
               <fieldset>
                 <legend>{{ text_history }}</legend>
                 <div id="history"></div>
@@ -280,7 +295,9 @@
               <div class="text-end">
                 <button id="button-history" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i> {{ button_history_add }}</button>
               </div>
+
             </div>
+
             <div id="tab-transaction" class="tab-pane">
               <fieldset>
                 <legend>{{ text_transaction }}</legend>

@@ -149,6 +149,7 @@
                   </div>
                 </div>
               {% endif %}
+
               {% if custom_field.type == 'textarea' %}
                 <div class="row mb-3{% if custom_field.required %} required{% endif %} custom-field" data-oc-sort="{{ custom_field.sort_order }}">
                   <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
@@ -157,15 +158,17 @@
                   </div>
                 </div>
               {% endif %}
+
               {% if custom_field.type == 'file' %}
                 <div class="row mb-3{% if custom_field.required %} required{% endif %} custom-field" data-oc-sort="{{ custom_field.sort_order }}">
                   <label class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
                   <div class="col-sm-10">
-                    <button type="button" data-oc-upload="index.php?route=tool/upload" data-loading-text="{{ text_loading }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
-                    <input type="hidden" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{% if affiliate_custom_field[custom_field.custom_field_id] %}{{ affiliate_custom_field[custom_field.custom_field_id] }} {% endif %}" id="input-custom-field-{{ custom_field.custom_field_id }}"/>
+                    <button type="button" data-oc-upload="index.php?route=tool/upload" data-oc-target="#input-custom-field-{{ custom_field.custom_field_id }}" data-loading-text="{{ text_loading }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
+                    <input type="hidden" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{% if affiliate_custom_field[custom_field.custom_field_id] %}{{ affiliate_custom_field[custom_field.custom_field_id] }}{% endif %}" id="input-custom-field-{{ custom_field.custom_field_id }}"/>
                   </div>
                 </div>
               {% endif %}
+
               {% if custom_field.type == 'date' %}
                 <div class="row mb-3{% if custom_field.required %} required{% endif %} custom-field" data-oc-sort="{{ custom_field.sort_order }}">
                   <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>

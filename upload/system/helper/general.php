@@ -20,7 +20,7 @@ function token($length = 32) {
  * http://php.net/manual/en/function.hash-equals.php
  */
 
-if(!function_exists('hash_equals')) {
+if (!function_exists('hash_equals')) {
 	function hash_equals($known_string, $user_string) {
 		$known_string = (string)$known_string;
 		$user_string = (string)$user_string;

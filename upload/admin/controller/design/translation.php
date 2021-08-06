@@ -336,7 +336,7 @@ class ControllerDesignTranslation extends Controller {
 			// Get a list of files ready to upload
 			$data['paths'] = array();
 
-			$path = glob(DIR_CATALOG . 'language/'.$code.'/*');
+			$path = glob(DIR_CATALOG . 'language/' . $code . '/*');
 
 			while (count($path) != 0) {
 				$next = array_shift($path);

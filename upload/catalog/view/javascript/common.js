@@ -397,9 +397,8 @@ $(document).ready(function() {
                 $(element).button('reset');
             },
             success: function(json) {
-                $('.invalid-tooltip, .alert-dismissible').remove();
-
-                console.log(json['error']);
+                $(form).find('.invalid-feedback').removeClass('d-block');
+                $(form).find('.alert-dismissible').remove();
 
                 if (json['redirect']) {
                     location = json['redirect'];
@@ -414,7 +413,19 @@ $(document).ready(function() {
                     }
 
                     for (key in json['error']) {
-                        $(form).find('#error-' + key.replaceAll('_', '-') + '\']').addClass('is-invalid');
+                        var error = $('#error-' + key.replaceAll('_', '-'));
+
+                        error.html(json['error'][key]);
+                        error.addClass('d-block');
+
+                        var input = $('#input-' + key.replaceAll('_', '-'));
+
+                        if (input.is('div')) {
+
+                        } else {
+                            input.addClass('is-invalid');
+                            input.find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
+                        }
                     }
 
                     delete json['error'];

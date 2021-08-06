@@ -107,7 +107,7 @@ $('#button-tax-rule').on('click', function() {
     html += '    <option value="payment">{{ text_payment }}</option>';
     html += '    <option value="store">{{ text_store }}</option>';
     html += '  </select></td>';
-    html += '  <td class="text-start"><input type="text" name="tax_rule[' + tax_rule_row + '][priority]" value="" placeholder="{{ entry_priority }}" class="form-control" /></td>';
+    html += '  <td class="text-start"><input type="text" name="tax_rule[' + tax_rule_row + '][priority]" value="" placeholder="{{ entry_priority }}" class="form-control"/></td>';
     html += '  <td class="text-end"><button type="button" onclick="$(\'#tax-rule-row-' + tax_rule_row + '\').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
     html += '</tr>';
 

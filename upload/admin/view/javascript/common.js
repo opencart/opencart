@@ -163,7 +163,6 @@ $(document).ready(function() {
                 $(element).button('reset');
             },
             success: function(json) {
-
                 $('.invalid-feedback').removeClass('d-block');
                 $('.alert-dismissible').remove();
 
@@ -183,8 +182,10 @@ $(document).ready(function() {
                     }
 
                     for (key in json['error']) {
-                        $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]);
-                        $('#error-' + key.replaceAll('_', '-')).addClass('d-block');
+                        var error = $('#error-' + key.replaceAll('_', '-'));
+
+                        error.html(json['error'][key]);
+                        error.addClass('d-block');
 
                         var input = $('#input-' + key.replaceAll('_', '-'));
 

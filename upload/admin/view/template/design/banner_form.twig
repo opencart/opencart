@@ -105,8 +105,8 @@ $('button[id^=\'button-banner\']').on('click', function() {
     var element = this;
 
     html = '<tr id="image-row-' + image_row + '">';
-    html += '  <td class="text-start"><input type="text" name="banner_image[' + $(element).attr('data-language') + '][' + image_row + '][title]" value="" placeholder="{{ entry_title }}" id="input-banner-image-' + $(element).attr('data-language') + '-' + image_row + '-title" class="form-control" /></td>';
-    html += '  <td class="text-start"><input type="text" name="banner_image[' + $(element).attr('data-language') + '][' + image_row + '][link]" value="" placeholder="{{ entry_link }}" class="form-control" /></td>';
+    html += '  <td class="text-start"><input type="text" name="banner_image[' + $(element).attr('data-language') + '][' + image_row + '][title]" value="" placeholder="{{ entry_title }}" id="input-banner-image-' + $(element).attr('data-language') + '-' + image_row + '-title" class="form-control"/></td>';
+    html += '  <td class="text-start"><input type="text" name="banner_image[' + $(element).attr('data-language') + '][' + image_row + '][link]" value="" placeholder="{{ entry_link }}" class="form-control"/></td>';
     html += '  <td class="text-center">';
     html += '    <div class="card">';
     html += '      <img src="{{ placeholder }}" alt="" title="" id="thumb-image-' + image_row + '" data-oc-placeholder="{{ placeholder }}" class="card-img-top"/>';
@@ -117,7 +117,7 @@ $('button[id^=\'button-banner\']').on('click', function() {
     html += '      </div>';
     html += '    </div>';
     html += '  </td>';
-    html += '  <td class="text-end"><input type="text" name="banner_image[' + $(element).attr('data-language') + '][' + image_row + '][sort_order]" value="" placeholder="{{ entry_sort_order }}" id="input-banner-image-' + $(element).attr('data-language') + '-' + image_row + '-sort-order" class="form-control" /></td>';
+    html += '  <td class="text-end"><input type="text" name="banner_image[' + $(element).attr('data-language') + '][' + image_row + '][sort_order]" value="" placeholder="{{ entry_sort_order }}" id="input-banner-image-' + $(element).attr('data-language') + '-' + image_row + '-sort-order" class="form-control"/></td>';
     html += '  <td class="text-end"><button type="button" onclick="$(\'#image-row-' + image_row + ', .tooltip\').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
     html += '</tr>';
 

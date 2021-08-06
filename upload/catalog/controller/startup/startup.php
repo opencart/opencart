@@ -10,7 +10,7 @@ class ControllerStartupStartup extends Controller {
 		
 		if (isset($this->request->get['store_id'])) {
 			$this->config->set('config_store_id', (int)$this->request->get['store_id']);
-		} else if ($query->num_rows) {
+		} elseif ($query->num_rows) {
 			$this->config->set('config_store_id', $query->row['store_id']);
 		} else {
 			$this->config->set('config_store_id', 0);

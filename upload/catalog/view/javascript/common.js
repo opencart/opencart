@@ -397,9 +397,12 @@ $(document).ready(function() {
                 $(element).button('reset');
             },
             success: function(json) {
-                $(form).find('.invalid-feedback').removeClass('d-block');
-                $(form).find('.form-*').removeClass('is-invalid');
                 $(form).find('.alert-dismissible').remove();
+                $(form).find('.is-invalid').removeClass('is-invalid');
+                $(form).find('.invalid-feedback').removeClass('d-block');
+
+                console.log(json);
+                console.log(json['error']);
 
                 if (json['redirect']) {
                     location = json['redirect'];

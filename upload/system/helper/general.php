@@ -25,7 +25,7 @@ if (!function_exists('hash_equals')) {
 		$known_string = (string)$known_string;
 		$user_string = (string)$user_string;
 
-		if(strlen($known_string) != strlen($user_string)) {
+		if (strlen($known_string) != strlen($user_string)) {
 			return false;
 		} else {
 			$res = $known_string ^ $user_string;

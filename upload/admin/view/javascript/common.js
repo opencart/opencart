@@ -108,13 +108,9 @@ $(document).ajaxStop(function() {
    // $('[data-bs-toggle=\'tooltip\']').tooltip();
 });
 
-
-
 // Tabs
-
 (function($) {
     $.fn.tab = function(element, option) {
-
         return $(element).each(function() {
             handler = bootstrap.Tab.getInstance(element);
 
@@ -189,6 +185,14 @@ $(document).ready(function() {
                     for (key in json['error']) {
                         $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]);
                         $('#error-' + key.replaceAll('_', '-')).addClass('d-block');
+
+                        var input = $('#input-' + key.replaceAll('_', '-'));
+
+                        if (input.is('div')) {
+                            input.find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
+                        } else {
+                            input.addClass('is-invalid');
+                        }
                     }
 
                     delete json['error'];
@@ -300,12 +304,9 @@ $(document).on('click', '[data-oc-loading-text]', function() {
     var text = $(this).html();
 
     var text = $(this).html();
-
  //   if () {
-
  //       $(this).html(text);
  //   } else {
-
 //    }
 });
 

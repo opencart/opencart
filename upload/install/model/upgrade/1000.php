@@ -110,7 +110,7 @@ class ModelUpgrade1000 extends Model {
 				foreach($index[1] as $field) {
 					if ($key == '') {
 						$key = $field;
-					} else{
+					} else {
 						$index_data[$key][] = $field;
 					}
 				}

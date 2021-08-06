@@ -25,7 +25,6 @@
 								{% for store in stores %}
 									<option value="{{ store.store_id }}">{{ store.name }}</option>
 								{% endfor %}
-
 							</select>
 						</div>
 					</div>
@@ -87,6 +86,7 @@
 						<label for="input-subject" class="col-sm-2 col-form-label">{{ entry_subject }}</label>
 						<div class="col-sm-10">
 							<input type="text" name="subject" value="" placeholder="{{ entry_subject }}" id="input-subject" class="form-control"/>
+              <div id="error-subject" class="invalid-feedback"></div>
 						</div>
 					</div>
 					<div class="row mb-3 required">
@@ -94,6 +94,7 @@
 						<div class="col-sm-10">
 							<div id="input-message">
 								<textarea name="message" placeholder="{{ entry_message }}" data-oc-toggle="ckeditor" data-lang="{{ ckeditor }}" class="form-control"></textarea>
+                <div id="error-message" class="invalid-feedback"></div>
 							</div>
 						</div>
 					</div>

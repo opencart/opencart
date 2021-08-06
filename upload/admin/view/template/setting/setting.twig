@@ -34,6 +34,7 @@
                 <label for="input-meta-title" class="col-sm-2 col-form-label">{{ entry_meta_title }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="config_meta_title" value="{{ config_meta_title }}" placeholder="{{ entry_meta_title }}" id="input-meta-title" class="form-control"/>
+                  <div id="error-meta-title" class="invalid-feedback"></div>
                 </div>
               </div>
               <div class="row mb-3">
@@ -51,7 +52,6 @@
               <div class="row mb-3">
                 <label for="input-logo" class="col-sm-2 col-form-label">{{ entry_logo }}</label>
                 <div class="col-sm-10">
-
                   <div class="card image">
                     <img src="{{ logo }}" alt="" title="" id="thumb-logo" data-oc-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="config_logo" value="{{ config_logo }}" id="input-logo"/>
                     <div class="card-body">
@@ -59,7 +59,6 @@
                       <button type="button" data-oc-toggle="clear" data-oc-target="#input-logo" data-oc-thumb="#thumb-logo" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>
                     </div>
                   </div>
-
                 </div>
               </div>
               <div class="row mb-3">
@@ -90,12 +89,14 @@
                 <label for="input-name" class="col-sm-2 col-form-label">{{ entry_name }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="config_name" value="{{ config_name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
+                  <div id="error-name" class="invalid-feedback"></div>
                 </div>
               </div>
               <div class="row mb-3 required">
                 <label for="input-owner" class="col-sm-2 col-form-label">{{ entry_owner }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="config_owner" value="{{ config_owner }}" placeholder="{{ entry_owner }}" id="input-owner" class="form-control"/>
+                  <div id="error-owner" class="invalid-feedback"></div>
                 </div>
               </div>
               <div class="row mb-3 required">
@@ -115,12 +116,14 @@
                 <label for="input-email" class="col-sm-2 col-form-label">{{ entry_email }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="config_email" value="{{ config_email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control"/>
+                  <div id="error-email" class="invalid-feedback"></div>
                 </div>
               </div>
               <div class="row mb-3 required">
                 <label for="input-telephone" class="col-sm-2 col-form-label">{{ entry_telephone }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="config_telephone" value="{{ config_telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control"/>
+                  <div id="error-telephone" class="invalid-feedback"></div>
                 </div>
               </div>
               <div class="row mb-3">
@@ -275,6 +278,7 @@
                     <div class="col-sm-10">
                       <input type="text" name="config_product_description_length" value="{{ config_product_description_length }}" placeholder="{{ entry_product_description_length }}" id="input-product-description-length" class="form-control"/>
                       <div class="form-text text-muted">{{ help_product_description_length }}</div>
+                      <div id="error-product-description-length" class="invalid-feedback"></div>
                     </div>
                   </div>
                   <div class="row mb-3 required">
@@ -282,17 +286,15 @@
                     <div class="col-sm-10">
                       <input type="text" name="config_pagination" value="{{ config_pagination }}" placeholder="{{ entry_pagination }}" id="input-pagination" class="form-control"/>
                       <div class="form-text text-muted">{{ help_pagination }}</div>
+                      <div id="error-pagination" class="invalid-feedback"></div>
                     </div>
                   </div>
                   <div class="row mb-3">
                     <label class="col-sm-2 col-form-label">{{ entry_product_count }}</label>
                     <div class="col-sm-10">
                       <div class="btn-group">
-
                         <input type="radio" name="config_product_count" value="1" id="input-product-count-yes" class="btn-check"{% if config_product_count %} checked{% endif %}/> <label for="input-product-count-yes" class="btn btn-outline-secondary">{{ text_yes }}</label>
-
                         <input type="radio" name="config_product_count" value="0" id="input-product-count-no" class="btn-check"{% if not config_product_count %} checked{% endif %}/> <label for="input-product-count-no" class="btn btn-outline-secondary">{{ text_no }}</label>
-
                       </div>
                       <div class="form-text text-muted">{{ help_product_count }}</div>
                     </div>
@@ -302,6 +304,7 @@
                     <div class="col-sm-10">
                       <input type="text" name="config_pagination_admin" value="{{ config_pagination_admin }}" placeholder="{{ entry_pagination_admin }}" id="input-pagination-admin" class="form-control"/>
                       <div class="form-text text-muted">{{ help_pagination }}</div>
+                      <div id="error-pagination-admin" class="invalid-feedback"></div>
                     </div>
                   </div>
                 </div>
@@ -313,11 +316,8 @@
                     <label class="col-sm-2 col-form-label">{{ entry_review_status }}</label>
                     <div class="col-sm-10">
                       <div class="btn-group">
-
                         <input type="radio" name="config_review_status" value="1" id="input-review-status-yes" class="btn-check"{% if config_review_status %} checked{% endif %}/> <label for="input-review-status-yes" class="btn btn-outline-secondary">{{ text_yes }}</label>
-
                         <input type="radio" name="config_review_status" value="0" id="input-review-status-no" class="btn-check"{% if not config_review_status %} checked{% endif %}/> <label for="input-review-status-no" class="btn btn-outline-secondary">{{ text_no }}</label>
-
                       </div>
                       <div class="form-text text-muted">{{ help_review }}</div>
                     </div>
@@ -326,11 +326,8 @@
                     <label class="col-sm-2 col-form-label">{{ entry_review_guest }}</label>
                     <div class="col-sm-10">
                       <div class="btn-group">
-
                         <input type="radio" name="config_review_guest" value="1" id="input-review-guest-yes" class="btn-check"{% if config_review_guest %} checked{% endif %}/> <label for="input-review-guest-yes" class="btn btn-outline-secondary">{{ text_yes }}</label>
-
                         <input type="radio" name="config_review_guest" value="0" id="input-review-guest-no" class="btn-check"{% if not config_review_guest %} checked{% endif %}/> <label for="input-review-guest-no" class="btn btn-outline-secondary">{{ text_no }}</label>
-
                       </div>
                       <div class="form-text text-muted">{{ help_review_guest }}</div>
                     </div>
@@ -345,6 +342,7 @@
                     <div class="col-sm-10">
                       <input type="text" name="config_voucher_min" value="{{ config_voucher_min }}" placeholder="{{ entry_voucher_min }}" id="input-voucher-min" class="form-control"/>
                       <div class="form-text text-muted">{{ help_voucher_min }}</div>
+                      <div id="error-voucher-min" class="invalid-feedback"></div>
                     </div>
                   </div>
                   <div class="row mb-3 required">
@@ -352,6 +350,7 @@
                     <div class="col-sm-10">
                       <input type="text" name="config_voucher_max" value="{{ config_voucher_max }}" placeholder="{{ entry_voucher_max }}" id="input-voucher-max" class="form-control"/>
                       <div class="form-text text-muted">{{ help_voucher_max }}</div>
+                      <div id="error-voucher-max" class="invalid-feedback"></div>
                     </div>
                   </div>
                 </div>
@@ -399,11 +398,8 @@
                     <label class="col-sm-2 col-form-label">{{ entry_tax }}</label>
                     <div class="col-sm-10">
                       <div class="btn-group">
-
                         <input type="radio" name="config_tax" value="1" id="input-tax-yes" class="btn-check"{% if config_tax %} checked{% endif %}/> <label for="input-tax-yes" class="btn btn-outline-secondary">{{ text_yes }}</label>
-
                         <input type="radio" name="config_tax" value="0" id="input-tax-no" class="btn-check"{% if not config_tax %} checked{% endif %}/> <label for="input-tax-no" class="btn btn-outline-secondary">{{ text_no }}</label>
-
                       </div>
                     </div>
                   </div>
@@ -438,11 +434,8 @@
                     <label class="col-sm-2 col-form-label">{{ entry_customer_online }}</label>
                     <div class="col-sm-10">
                       <div class="btn-group">
-
                         <input type="radio" name="config_customer_online" value="1" id="input-customer-online-yes" class="btn-check"{% if config_customer_online %} checked{% endif %}/> <label for="input-customer-online-yes" class="btn btn-outline-secondary">{{ text_yes }}</label>
-
                         <input type="radio" name="config_customer_online" value="0" id="input-customer-online-no" class="btn-check"{% if not config_customer_online %} checked{% endif %}/> <label for="input-customer-online-no" class="btn btn-outline-secondary">{{ text_no }}</label>
-
                       </div>
                       <div class="form-text text-muted">{{ help_customer_online }}</div>
                     </div>
@@ -455,17 +448,15 @@
                         <span class="input-group-text" id="basic-addon2">{{ text_hour }}</span>
                       </div>
                       <div class="form-text text-muted">{{ help_customer_online_expire }}</div>
+                      <div id="error-customer-online-expire" class="invalid-feedback"></div>
                     </div>
                   </div>
                   <div class="row mb-3">
                     <label class="col-sm-2 col-form-label">{{ entry_customer_activity }}</label>
                     <div class="col-sm-10">
                       <div class="btn-group">
-
                         <input type="radio" name="config_customer_activity" value="1" id="input-customer-activity-yes" class="btn-check"{% if config_customer_activity %} checked{% endif %}/> <label for="input-customer-activity-yes" class="btn btn-outline-secondary">{{ text_yes }}</label>
-
                         <input type="radio" name="config_customer_activity" value="0" id="input-customer-activity-no" class="btn-check"{% if not config_customer_activity %} checked{% endif %}/> <label for="input-customer-activity-no" class="btn btn-outline-secondary">{{ text_no }}</label>
-
                       </div>
                       <div class="form-text text-muted">{{ help_customer_activity }}</div>
                     </div>
@@ -474,11 +465,8 @@
                     <label class="col-sm-2 col-form-label">{{ entry_customer_search }}</label>
                     <div class="col-sm-10">
                       <div class="btn-group">
-
                         <input type="radio" name="config_customer_search" value="1" id="input-customer-search-yes" class="btn-check"{% if config_customer_search %} checked{% endif %}/> <label for="input-customer-search-yes" class="btn btn-outline-secondary">{{ text_yes }}</label>
-
                         <input type="radio" name="config_customer_search" value="0" id="input-customer-search-no" class="btn-check"{% if not config_customer_search %} checked{% endif %}/> <label for="input-customer-search-no" class="btn btn-outline-secondary">{{ text_no }}</label>
-
                       </div>
                     </div>
                   </div>
@@ -496,7 +484,7 @@
                   <div class="row mb-3">
                     <label class="col-sm-2 col-form-label">{{ entry_customer_group_display }}</label>
                     <div class="col-sm-10">
-                      <div class="form-control" style="height: 150px; overflow: auto;">
+                      <div id="input-customer-group-display" class="form-control" style="height: 150px; overflow: auto;">
                         {% for customer_group in customer_groups %}
                           <div class="form-check">
                             <input type="checkbox" name="config_customer_group_display[]" value="{{ customer_group.customer_group_id }}" id="input-customer-group-{{ customer_group.customer_group_id }}" class="form-check-input"{% if customer_group.customer_group_id in config_customer_group_display %} checked{% endif %}/>
@@ -505,6 +493,7 @@
                         {% endfor %}
                       </div>
                       <div class="form-text text-muted">{{ help_customer_group_display }}</div>
+                      <div id="error-customer-group-display" class="invalid-feedback"></div>
                     </div>
                   </div>
                   <div class="row mb-3">
@@ -521,6 +510,7 @@
                     <div class="col-sm-10">
                       <input type="text" name="config_login_attempts" value="{{ config_login_attempts }}" placeholder="{{ entry_login_attempts }}" id="input-login-attempts" class="form-control"/>
                       <div class="form-text text-muted">{{ help_login_attempts }}</div>
+                      <div id="error-login-attempts" class="invalid-feedback"></div>
                     </div>
                   </div>
                   <div class="row mb-3">
@@ -551,11 +541,8 @@
                     <label class="col-sm-2 col-form-label">{{ entry_cart_weight }}</label>
                     <div class="col-sm-10">
                       <div class="btn-group">
-
                         <input type="radio" name="config_cart_weight" value="1" id="input-cart-weight-yes" class="btn-check"{% if config_cart_weight %} checked{% endif %}/> <label for="input-cart-weight-yes" class="btn btn-outline-secondary">{{ text_yes }}</label>
-
                         <input type="radio" name="config_cart_weight" value="0" id="input-cart-weight-no" class="btn-check"{% if not config_cart_weight %} checked{% endif %}/> <label for="input-cart-weight-no" class="btn btn-outline-secondary">{{ text_no }}</label>
-
                       </div>
                       <div class="form-text text-muted">{{ help_cart_weight }}</div>
                     </div>
@@ -564,11 +551,8 @@
                     <label class="col-sm-2 col-form-label">{{ entry_checkout_guest }}</label>
                     <div class="col-sm-10">
                       <div class="btn-group">
-
                         <input type="radio" name="config_checkout_guest" value="1" id="input-checkout-guest-yes" class="btn-check"{% if config_checkout_guest %} checked{% endif %}/> <label for="input-checkout-guest-yes" class="btn btn-outline-secondary">{{ text_yes }}</label>
-
                         <input type="radio" name="config_checkout_guest" value="0" id="input-checkout-guest-no" class="btn-check"{% if not config_checkout_guest %} checked{% endif %}/> <label for="input-checkout-guest-no" class="btn btn-outline-secondary">{{ text_no }}</label>
-
                       </div>
                       <div class="form-text text-muted">{{ help_checkout_guest }}</div>
                     </div>
@@ -606,9 +590,9 @@
                     </div>
                   </div>
                   <div class="row mb-3">
-                    <label for="input-process-status" class="col-sm-2 col-form-label">{{ entry_processing_status }}</label>
+                    <label class="col-sm-2 col-form-label">{{ entry_processing_status }}</label>
                     <div class="col-sm-10">
-                      <div class="form-control" style="height: 150px; overflow: auto;">
+                      <div id="input-processing-status" class="form-control" style="height: 150px; overflow: auto;">
                         {% for order_status in order_statuses %}
                           <div class="form-check">
                             <input type="checkbox" name="config_processing_status[]" value="{{ order_status.order_status_id }}" id="input-processing-status-{{ order_status.order_status_id }}" class="form-check-input"{% if order_status.order_status_id in config_processing_status %} checked{% endif %}/>
@@ -617,12 +601,13 @@
                         {% endfor %}
                       </div>
                       <div class="form-text text-muted">{{ help_processing_status }}</div>
+                      <div id="error-processing-status" class="invalid-feedback"></div>
                     </div>
                   </div>
                   <div class="row mb-3">
-                    <label for="input-complete-status" class="col-sm-2 col-form-label">{{ entry_complete_status }}</label>
+                    <label class="col-sm-2 col-form-label">{{ entry_complete_status }}</label>
                     <div class="col-sm-10">
-                      <div class="form-control" style="height: 150px; overflow: auto;">
+                      <div id="input-complete-status" class="form-control" style="height: 150px; overflow: auto;">
                         {% for order_status in order_statuses %}
                           <div class="form-check">
                             <input type="checkbox" name="config_complete_status[]" value="{{ order_status.order_status_id }}" id="input-complete-status-{{ order_status.order_status_id }}" class="form-check-input"{% if order_status.order_status_id in config_complete_status %} checked{% endif %}/>
@@ -631,6 +616,7 @@
                         {% endfor %}
                       </div>
                       <div class="form-text text-muted">{{ help_complete_status }}</div>
+                      <div id="error-complete-status" class="invalid-feedback"></div>
                     </div>
                   </div>
                   <div class="row mb-3">
@@ -757,7 +743,6 @@
                   </div>
                 </div>
               </fieldset>
-
               <fieldset>
                 <legend><a href="#collapse-return" data-bs-toggle="collapse">{{ text_return }}</a></legend>
                 <div id="collapse-return" class="collapse" data-bs-parent="#tab-option">
@@ -833,6 +818,7 @@
                         <input type="text" name="config_image_category_height" value="{{ config_image_category_height }}" placeholder="{{ entry_height }}" id="input-image-category-height" class="form-control"/>
                       </div>
                     </div>
+                    <div id="error-image-category" class="invalid-feedback"></div>
                   </div>
                 </div>
                 <div class="row mb-3 required">
@@ -846,6 +832,7 @@
                         <input type="text" name="config_image_thumb_height" value="{{ config_image_thumb_height }}" placeholder="{{ entry_height }}" id="input-image-thumb-height" class="form-control"/>
                       </div>
                     </div>
+                    <div id="error-image-thumb" class="invalid-feedback"></div>
                   </div>
                 </div>
                 <div class="row mb-3 required">
@@ -859,6 +846,7 @@
                         <input type="text" name="config_image_popup_height" value="{{ config_image_popup_height }}" placeholder="{{ entry_height }}" id="input-image-popup-height" class="form-control"/>
                       </div>
                     </div>
+                    <div id="error-image-popup" class="invalid-feedback"></div>
                   </div>
                 </div>
                 <div class="row mb-3 required">
@@ -872,6 +860,7 @@
                         <input type="text" name="config_image_product_height" value="{{ config_image_product_height }}" placeholder="{{ entry_height }}" id="input-image-product-height" class="form-control"/>
                       </div>
                     </div>
+                    <div id="error-image-product" class="invalid-feedback"></div>
                   </div>
                 </div>
                 <div class="row mb-3 required">
@@ -885,6 +874,7 @@
                         <input type="text" name="config_image_additional_height" value="{{ config_image_additional_height }}" placeholder="{{ entry_height }}" id="input-image-additional-height" class="form-control"/>
                       </div>
                     </div>
+                    <div id="error-image-additional" class="invalid-feedback"></div>
                   </div>
                 </div>
                 <div class="row mb-3 required">
@@ -898,6 +888,7 @@
                         <input type="text" name="config_image_related_height" value="{{ config_image_related_height }}" placeholder="{{ entry_height }}" id="input-image-related-height" class="form-control"/>
                       </div>
                     </div>
+                    <div id="error-image-related" class="invalid-feedback"></div>
                   </div>
                 </div>
                 <div class="row mb-3 required">
@@ -911,6 +902,7 @@
                         <input type="text" name="config_image_compare_height" value="{{ config_image_compare_height }}" placeholder="{{ entry_height }}" id="input-image-compare-height" class="form-control"/>
                       </div>
                     </div>
+                    <div id="error-image-compare" class="invalid-feedback"></div>
                   </div>
                 </div>
                 <div class="row mb-3 required">
@@ -924,6 +916,7 @@
                         <input type="text" name="config_image_wishlist_height" value="{{ config_image_wishlist_height }}" placeholder="{{ entry_height }}" id="input-image-wishlist-height" class="form-control"/>
                       </div>
                     </div>
+                    <div id="error-image-wishlist" class="invalid-feedback"></div>
                   </div>
                 </div>
                 <div class="row mb-3 required">
@@ -937,6 +930,7 @@
                         <input type="text" name="config_image_cart_height" value="{{ config_image_cart_height }}" placeholder="{{ entry_height }}" id="input-image-cart-height" class="form-control"/>
                       </div>
                     </div>
+                    <div id="error-image-cart" class="invalid-feedback"></div>
                   </div>
                 </div>
                 <div class="row mb-3 required">
@@ -950,6 +944,7 @@
                         <input type="text" name="config_image_location_height" value="{{ config_image_location_height }}" placeholder="{{ entry_height }}" id="input-image-location-height" class="form-control"/>
                       </div>
                     </div>
+                    <div id="error-image-location" class="invalid-feedback"></div>
                   </div>
                 </div>
               </fieldset>
@@ -1096,6 +1091,7 @@
                   <div class="col-sm-10">
                     <textarea name="config_encryption" rows="5" placeholder="{{ entry_encryption }}" id="input-encryption" class="form-control">{{ config_encryption }}</textarea>
                     <div class="form-text text-muted">{{ help_encryption }}</div>
+                    <div id="error-encryption" class="invalid-feedback"></div>
                   </div>
                 </div>
               </fieldset>
@@ -1106,6 +1102,7 @@
                   <div class="col-sm-10">
                     <input type="text" name="config_file_max_size" value="{{ config_file_max_size }}" placeholder="{{ entry_file_max_size }}" id="input-file-max-size" class="form-control"/>
                     <div class="form-text text-muted">{{ help_file_max_size }}</div>
+                    <div id="error-file-max-size" class="invalid-feedback"></div>
                   </div>
                 </div>
                 <div class="row mb-3">
@@ -1113,6 +1110,7 @@
                   <div class="col-sm-10">
                     <textarea name="config_file_ext_allowed" rows="5" placeholder="{{ entry_file_ext_allowed }}" id="input-file-ext-allowed" class="form-control">{{ config_file_ext_allowed }}</textarea>
                     <div class="form-text text-muted">{{ help_file_ext_allowed }}</div>
+                    <div id="error-file-ext-allowed" class="invalid-feedback"></div>
                   </div>
                 </div>
                 <div class="row mb-3">
@@ -1120,6 +1118,7 @@
                   <div class="col-sm-10">
                     <textarea name="config_file_mime_allowed" rows="5" placeholder="{{ entry_file_mime_allowed }}" id="input-file-mime-allowed" class="form-control">{{ config_file_mime_allowed }}</textarea>
                     <div class="form-text text-muted">{{ help_file_mime_allowed }}</div>
+                    <div id="error-file-mime-allowed" class="invalid-feedback"></div>
                   </div>
                 </div>
               </fieldset>
@@ -1138,11 +1137,8 @@
                   <label class="col-sm-2 col-form-label">{{ entry_error_log }}</label>
                   <div class="col-sm-10">
                     <div class="btn-group">
-
                       <input type="radio" name="config_error_log" value="1" id="input-error-log-yes" class="btn-check"{% if config_error_log %} checked{% endif %}/> <label for="input-error-log-yes" class="btn btn-outline-secondary">{{ text_yes }}</label>
-
                       <input type="radio" name="config_error_log" value="0" id="input-error-log-no" class="btn-check"{% if not config_error_log %} checked{% endif %}/> <label for="input-error-log-no" class="btn btn-outline-secondary">{{ text_no }}</label>
-
                     </div>
                   </div>
                 </div>
@@ -1150,6 +1146,7 @@
                   <label for="input-error-filename" class="col-sm-2 col-form-label">{{ entry_error_filename }}</label>
                   <div class="col-sm-10">
                     <input type="text" name="config_error_filename" value="{{ config_error_filename }}" placeholder="{{ entry_error_filename }}" id="input-error-filename" class="form-control"/>
+                    <div id="error-error-filename" class="invalid-feedback"></div>
                   </div>
                 </div>
               </fieldset>

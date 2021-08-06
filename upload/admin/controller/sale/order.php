@@ -492,7 +492,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$data['stores'][] = [
 			'store_id' => 0,
-			'name' => $this->language->get('text_default')
+			'name'     => $this->language->get('text_default')
 		];
 
 		$this->load->model('setting/store');
@@ -502,7 +502,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		foreach ($results as $result) {
 			$data['stores'][] = [
 				'store_id' => $result['store_id'],
-				'name' => $result['name']
+				'name'     => $result['name']
 			];
 		}
 

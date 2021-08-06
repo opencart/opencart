@@ -108,13 +108,9 @@ $(document).ajaxStop(function() {
    // $('[data-bs-toggle=\'tooltip\']').tooltip();
 });
 
-
-
 // Tabs
-
 (function($) {
     $.fn.tab = function(element, option) {
-
         return $(element).each(function() {
             handler = bootstrap.Tab.getInstance(element);
 
@@ -167,9 +163,12 @@ $(document).ready(function() {
                 $(element).button('reset');
             },
             success: function(json) {
-                $('.invalid-tooltip, .alert-dismissible').remove();
+
+                $('.invalid-feedback').removeClass('d-block');
+                $('.alert-dismissible').remove();
 
                 console.log(json);
+                console.log(json['error']);
 
                 if (json['redirect']) {
                     location = json['redirect'];
@@ -184,15 +183,15 @@ $(document).ready(function() {
                     }
 
                     for (key in json['error']) {
-                        var element = $('#input-' + key.replaceAll('_', '-'));
+                        $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]);
+                        $('#error-' + key.replaceAll('_', '-')).addClass('d-block');
 
-                        // Highlight any found errors
-                        $(element).addClass('is-invalid');
+                        var input = $('#input-' + key.replaceAll('_', '-'));
 
-                        if ($(element).parent().hasClass('input-group')) {
-                            $(element).parent().after('<div class="invalid-tooltip d-inline">' + json['error'][key] + '</div>');
+                        if (input.is('div')) {
+                            input.find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
                         } else {
-                            $(element).after('<div class="invalid-tooltip d-inline">' + json['error'][key] + '</div>');
+                            input.addClass('is-invalid');
                         }
                     }
 
@@ -305,12 +304,9 @@ $(document).on('click', '[data-oc-loading-text]', function() {
     var text = $(this).html();
 
     var text = $(this).html();
-
  //   if () {
-
  //       $(this).html(text);
  //   } else {
-
 //    }
 });
 

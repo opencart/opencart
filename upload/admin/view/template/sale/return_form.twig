@@ -32,6 +32,7 @@
                   <label for="input-order-id" class="col-sm-2 col-form-label">{{ entry_order_id }}</label>
                   <div class="col-sm-10">
                     <input type="text" name="order_id" value="{{ order_id }}" placeholder="{{ entry_order_id }}" id="input-order-id" class="form-control"/>
+                    <div id="error-order-id" class="invalid-feedback"></div>
                   </div>
                 </div>
                 <div class="row mb-3">
@@ -53,24 +54,28 @@
                   <label for="input-firstname" class="col-sm-2 col-form-label">{{ entry_firstname }}</label>
                   <div class="col-sm-10">
                     <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-firstname" class="form-control"/>
+                    <div id="error-firstname" class="invalid-feedback"></div>
                   </div>
                 </div>
                 <div class="row mb-3 required">
                   <label for="input-lastname" class="col-sm-2 col-form-label">{{ entry_lastname }}</label>
                   <div class="col-sm-10">
                     <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-lastname" class="form-control"/>
+                    <div id="error-lastname" class="invalid-feedback"></div>
                   </div>
                 </div>
                 <div class="row mb-3 required">
                   <label for="input-email" class="col-sm-2 col-form-label">{{ entry_email }}</label>
                   <div class="col-sm-10">
                     <input type="text" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control"/>
+                    <div id="error-email" class="invalid-feedback"></div>
                   </div>
                 </div>
                 <div class="row mb-3 required">
                   <label for="input-telephone" class="col-sm-2 col-form-label">{{ entry_telephone }}</label>
                   <div class="col-sm-10">
                     <input type="text" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control"/>
+                    <div id="error-telephone" class="invalid-feedback"></div>
                   </div>
                 </div>
               </fieldset>
@@ -81,12 +86,14 @@
                   <div class="col-sm-10">
                     <input type="text" name="product" value="{{ product }}" placeholder="{{ entry_product }}" id="input-product" class="form-control"/> <input type="hidden" name="product_id" value="{{ product_id }}"/>
                     <div class="form-text text-muted">{{ help_product }}</div>
+                    <div id="error-product" class="invalid-feedback"></div>
                   </div>
                 </div>
                 <div class="row mb-3 required">
                   <label for="input-model" class="col-sm-2 col-form-label">{{ entry_model }}</label>
                   <div class="col-sm-10">
                     <input type="text" name="model" value="{{ model }}" placeholder="{{ entry_model }}" id="input-model" class="form-control"/>
+                    <div id="error-model" class="invalid-feedback"></div>
                   </div>
                 </div>
                 <div class="row mb-3">
@@ -103,6 +110,7 @@
                         <option value="{{ return_reason.return_reason_id }}"{% if return_reason.return_reason_id == return_reason_id %} selected{% endif %}>{{ return_reason.name }}</option>
                       {% endfor %}
                     </select>
+                    <div id="error-return-reason" class="invalid-feedback"></div>
                   </div>
                 </div>
                 <div class="row mb-3">

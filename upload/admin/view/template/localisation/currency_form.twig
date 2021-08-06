@@ -23,6 +23,7 @@
 						<label for="input-title" class="col-sm-2 col-form-label">{{ entry_title }}</label>
 						<div class="col-sm-10">
 							<input type="text" name="title" value="{{ title }}" placeholder="{{ entry_title }}" id="input-title" class="form-control"/>
+							<div id="error-title" class="invalid-feedback"></div>
 						</div>
 					</div>
 					<div class="row mb-3 required">
@@ -30,6 +31,7 @@
 						<div class="col-sm-10">
 							<input type="text" name="code" value="{{ code }}" placeholder="{{ entry_code }}" id="input-code" class="form-control"/>
 							<div class="form-text text-muted">{{ help_code }}</div>
+							<div id="error-code" class="invalid-feedback"></div>
 						</div>
 					</div>
 					<div class="row mb-3">

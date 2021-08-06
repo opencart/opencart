@@ -26,6 +26,7 @@
 									<div class="input-group-text"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/></div>
 									<input type="text" name="voucher_theme_description[{{ language.language_id }}][name]" value="{{ voucher_theme_description[language.language_id] ? voucher_theme_description[language.language_id].name }}" placeholder="{{ entry_name }}" id="input-name-{{ language.language_id }}" class="form-control"/>
 								</div>
+								<div id="error-name-{{ language.language_id }}" class="invalid-feedback"></div>
 							{% endfor %}
 						</div>
 					</div>
@@ -39,6 +40,7 @@
 									<button type="button" data-oc-toggle="clear" data-oc-target="#input-image" data-oc-thumb="#thumb-image" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>
 								</div>
 							</div>
+							<div id="error-image" class="invalid-feedback"></div>
 						</div>
 					</div>
 					<input type="hidden" name="theme_voucher_id" value="{{ theme_voucher_id }}" id="input-theme-voucher-id"/>

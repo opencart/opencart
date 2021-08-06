@@ -200,7 +200,7 @@ class Upgrade4 extends \Opencart\System\Engine\Controller {
 			$events[] = [
 				'code'    => 'admin_mail_return',
 				'trigger' => 'admin/model/sale/return/addReturn/after',
-				'action'  => 'mail/return'
+				'action'  => 'mail/returns'
 			];
 
 			$events[] = [

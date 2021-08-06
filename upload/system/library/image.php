@@ -180,7 +180,7 @@ class Image {
 
 			imagecolortransparent($this->image, $background);
 
-		} else if ($this->mime == 'image/webp') {
+		} elseif ($this->mime == 'image/webp') {
 			imagealphablending($this->image, false);
 			imagesavealpha($this->image, true);
 

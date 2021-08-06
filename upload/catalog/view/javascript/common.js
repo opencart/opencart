@@ -398,6 +398,7 @@ $(document).ready(function() {
             },
             success: function(json) {
                 $(form).find('.invalid-feedback').removeClass('d-block');
+                $(form).find('.form-*').removeClass();
                 $(form).find('.alert-dismissible').remove();
 
                 if (json['redirect']) {
@@ -420,12 +421,9 @@ $(document).ready(function() {
 
                         var input = $('#input-' + key.replaceAll('_', '-'));
 
-                        if (input.is('div')) {
+                        //input.addClass('is-invalid');
 
-                        } else {
-                            input.addClass('is-invalid');
-                            input.find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
-                        }
+                        input.find('.form-*').addClass('is-invalid');
                     }
 
                     delete json['error'];

@@ -96,7 +96,7 @@ class ModelUpgrade1006 extends Model {
         $files = array();
 
         foreach ($directories as $dir) {
-			if (is_dir($dir)){
+			if (is_dir($dir)) {
 				// Make path into an array
 				$path = array($dir . '*');
 

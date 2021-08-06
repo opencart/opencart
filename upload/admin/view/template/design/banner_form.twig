@@ -58,14 +58,12 @@
                     {% if banner_images[language.language_id] %}
                       {% for banner_image in banner_images[language.language_id] %}
                         <tr id="image-row-{{ image_row }}">
-                          <td class="text-start"><input type="text" name="banner_image[{{ language.language_id }}][{{ image_row }}][title]" value="{{ banner_image.title }}" placeholder="{{ entry_title }}" id="input-banner-image-{{ language.language_id }}-{{ image_row }}-title" class="form-control"/>
+                          <td class="text-start">
+                            <input type="text" name="banner_image[{{ language.language_id }}][{{ image_row }}][title]" value="{{ banner_image.title }}" placeholder="{{ entry_title }}" id="input-banner-image-{{ language.language_id }}-{{ image_row }}-title" class="form-control"/>gjhjhgj
                             <div id="error-banner-image-{{ language.language_id }}-{{ image_row }}-title" class="invalid-feedback"></div>
                           </td>
-
-
                           <td class="text-start" style="width: 30%;"><input type="text" name="banner_image[{{ language.language_id }}][{{ image_row }}][link]" value="{{ banner_image.link }}" placeholder="{{ entry_link }}" id="input-banner-image-{{ language.language_id }}-{{ image_row }}-link" class="form-control"/></td>
                           <td class="text-center">
-
                             <div class="card">
                               <img src="{{ banner_image.thumb }}" alt="" title="" id="thumb-image-{{ image_row }}" data-oc-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="banner_image[{{ language.language_id }}][{{ image_row }}][image]" value="{{ banner_image.image }}" id="input-banner-image-{{ language.language_id }}-{{ image_row }}-image"/>
                               <div class="card-body">
@@ -73,7 +71,6 @@
                                 <button type="button" data-oc-toggle="clear" data-oc-target="#input-image-{{ image_row }}" data-oc-thumb="#thumb-image-{{ image_row }}" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>
                               </div>
                             </div>
-
                           </td>
                           <td class="text-end" style="width: 10%;"><input type="text" name="banner_image[{{ language.language_id }}][{{ image_row }}][sort_order]" value="{{ banner_image.sort_order }}" placeholder="{{ entry_sort_order }}" id="input-banner-image-{{ language.language_id }}-{{ image_row }}-sort-order" class="form-control"/></td>
                           <td class="text-end"><button type="button" onclick="$('#image-row-{{ image_row }}, .tooltip').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
@@ -105,8 +102,9 @@ $('button[id^=\'button-banner\']').on('click', function() {
     var element = this;
 
     html = '<tr id="image-row-' + image_row + '">';
-    html += '  <td class="text-start"><input type="text" name="banner_image[' + $(element).attr('data-language') + '][' + image_row + '][title]" value="" placeholder="{{ entry_title }}" id="input-banner-image-' + $(element).attr('data-language') + '-' + image_row + '-title" class="form-control" /></td>';
-    html += '  <td class="text-start"><input type="text" name="banner_image[' + $(element).attr('data-language') + '][' + image_row + '][link]" value="" placeholder="{{ entry_link }}" class="form-control" /></td>';
+    html += '  <td class="text-start"><input type="text" name="banner_image[' + $(element).attr('data-language') + '][' + image_row + '][title]" value="" placeholder="{{ entry_title }}" id="input-banner-image-' + $(element).attr('data-language') + '-' + image_row + '-title" class="form-control"/>';
+    html += '    <div id="error-banner-image-' + $(element).attr('data-language') + '-' + image_row + '-title" class="invalid-feedback"></div></td>';
+    html += '  <td class="text-start"><input type="text" name="banner_image[' + $(element).attr('data-language') + '][' + image_row + '][link]" value="" placeholder="{{ entry_link }}" class="form-control"/></td>';
     html += '  <td class="text-center">';
     html += '    <div class="card">';
     html += '      <img src="{{ placeholder }}" alt="" title="" id="thumb-image-' + image_row + '" data-oc-placeholder="{{ placeholder }}" class="card-img-top"/>';
@@ -117,7 +115,7 @@ $('button[id^=\'button-banner\']').on('click', function() {
     html += '      </div>';
     html += '    </div>';
     html += '  </td>';
-    html += '  <td class="text-end"><input type="text" name="banner_image[' + $(element).attr('data-language') + '][' + image_row + '][sort_order]" value="" placeholder="{{ entry_sort_order }}" id="input-banner-image-' + $(element).attr('data-language') + '-' + image_row + '-sort-order" class="form-control" /></td>';
+    html += '  <td class="text-end"><input type="text" name="banner_image[' + $(element).attr('data-language') + '][' + image_row + '][sort_order]" value="" placeholder="{{ entry_sort_order }}" id="input-banner-image-' + $(element).attr('data-language') + '-' + image_row + '-sort-order" class="form-control"/></td>';
     html += '  <td class="text-end"><button type="button" onclick="$(\'#image-row-' + image_row + ', .tooltip\').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
     html += '</tr>';
 

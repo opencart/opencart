@@ -14,6 +14,8 @@ class Register extends \Opencart\System\Engine\Controller {
 
 		$data['shipping_required'] = $this->cart->hasShipping();
 
+		$data['save'] = $this->url->link('checkout/register|save', 'language=' . $this->config->get('config_language'));
+
 		$data['customer_groups'] = [];
 
 		if (is_array($this->config->get('config_customer_group_display'))) {

@@ -862,9 +862,9 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
-		$this->load->model('customer/customer');
-
 		$data['transactions'] = [];
+
+		$this->load->model('customer/customer');
 
 		$results = $this->model_customer_customer->getTransactions($customer_id, ($page - 1) * 10, 10);
 
@@ -934,9 +934,9 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
-		$this->load->model('customer/customer');
-
 		$data['rewards'] = [];
+
+		$this->load->model('customer/customer');
 
 		$results = $this->model_customer_customer->getRewards($customer_id, ($page - 1) * 10, 10);
 
@@ -1006,10 +1006,10 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
+		$data['ips'] = [];
+
 		$this->load->model('customer/customer');
 		$this->load->model('setting/store');
-
-		$data['ips'] = [];
 
 		$results = $this->model_customer_customer->getIps($customer_id, ($page - 1) * 10, 10);
 
@@ -1070,8 +1070,6 @@ class Customer extends \Opencart\System\Engine\Controller {
 				$filter_affiliate = '';
 			}
 
-			$this->load->model('customer/customer');
-
 			$filter_data = [
 				'filter_name'      => $filter_name,
 				'filter_email'     => $filter_email,
@@ -1079,6 +1077,8 @@ class Customer extends \Opencart\System\Engine\Controller {
 				'start'            => 0,
 				'limit'            => 5
 			];
+
+			$this->load->model('customer/customer');
 
 			$results = $this->model_customer_customer->getCustomers($filter_data);
 
@@ -1113,14 +1113,14 @@ class Customer extends \Opencart\System\Engine\Controller {
 	public function customfield(): void {
 		$json = [];
 
-		$this->load->model('customer/custom_field');
-
 		// Customer Group
 		if (isset($this->request->get['customer_group_id'])) {
 			$customer_group_id = (int)$this->request->get['customer_group_id'];
 		} else {
 			$customer_group_id = $this->config->get('config_customer_group_id');
 		}
+
+		$this->load->model('customer/custom_field');
 
 		$custom_fields = $this->model_customer_custom_field->getCustomFields(['filter_customer_group_id' => $customer_group_id]);
 

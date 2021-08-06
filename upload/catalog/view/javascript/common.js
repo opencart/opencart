@@ -397,8 +397,11 @@ $(document).ready(function() {
                 $(element).button('reset');
             },
             success: function(json) {
-                $('.invalid-tooltip, .alert-dismissible').remove();
+                $(form).find('.alert-dismissible').remove();
+                $(form).find('.is-invalid').removeClass('is-invalid');
+                $(form).find('.invalid-feedback').removeClass('d-block');
 
+                console.log(json);
                 console.log(json['error']);
 
                 if (json['redirect']) {
@@ -414,7 +417,11 @@ $(document).ready(function() {
                     }
 
                     for (key in json['error']) {
-                        $(form).find('#error-' + key.replaceAll('_', '-') + '\']').addClass('is-invalid');
+                        // Show errors
+                        $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
+
+                        // Highlight error fields
+                        $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
                     }
 
                     delete json['error'];

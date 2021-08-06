@@ -22,6 +22,7 @@
             <label for="input-name" class="col-sm-2 col-form-label">{{ entry_name }}</label>
             <div class="col-sm-10">
               <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
+              <div id="error-name" class="invalid-feedback"></div>
             </div>
           </div>
           <div class="row mb-3">
@@ -43,12 +44,14 @@
             <label for="input-width" class="col-sm-2 col-form-label">{{ entry_width }}</label>
             <div class="col-sm-10">
               <input type="text" name="width" value="{{ width }}" placeholder="{{ entry_width }}" id="input-width" class="form-control"/>
+              <div id="error-width" class="invalid-feedback"></div>
             </div>
           </div>
           <div class="row mb-3 required">
             <label for="input-height" class="col-sm-2 col-form-label">{{ entry_height }}</label>
             <div class="col-sm-10">
               <input type="text" name="height" value="{{ height }}" placeholder="{{ entry_height }}" id="input-height" class="form-control"/>
+              <div id="error-height" class="invalid-feedback"></div>
             </div>
           </div>
           <div class="row mb-3">

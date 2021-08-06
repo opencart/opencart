@@ -2331,7 +2331,7 @@ $('#modal-cart input[name=\'product\']').autocomplete({
                 if (option['type'] == 'text') {
                     html += '<div class="mb-3' + (option['required'] == 1 ? ' required' : '') + '">';
                     html += '  <label for="input-option-' + option['product_option_id'] + '" class="col-form-label">' + option['name'] + '</label>';
-                    html += '  <input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '" id="input-option-' + option['product_option_id'] + '" class="form-control" />';
+                    html += '  <input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '" id="input-option-' + option['product_option_id'] + '" class="form-control"/>';
                     html += '</div>';
                 }
 
@@ -2353,21 +2353,21 @@ $('#modal-cart input[name=\'product\']').autocomplete({
                 if (option['type'] == 'date') {
                     html += '<div class="mb-3' + (option['required'] == 1 ? ' required' : '') + '">';
                     html += '  <label for="input-option-' + option['product_option_id'] + '" class="col-form-label">' + option['name'] + '</label>';
-                    html += '  <div class="input-group date"><input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '"  id="input-option-' + option['product_option_id'] + '" class="form-control" /><div class="input-group-text"><i class="fas fa-calendar"></i></div></div>';
+                    html += '  <div class="input-group date"><input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '"  id="input-option-' + option['product_option_id'] + '" class="form-control"/><div class="input-group-text"><i class="fas fa-calendar"></i></div></div>';
                     html += '</div>';
                 }
 
                 if (option['type'] == 'datetime') {
                     html += '<div class="mb-3' + (option['required'] == 1 ? ' required' : '') + '">';
                     html += '  <label for="input-option-' + option['product_option_id'] + '" class="col-form-label">' + option['name'] + '</label>';
-                    html += '  <div class="input-group datetime"><input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '" id="input-option-' + option['product_option_id'] + '" class="form-control" /><div class="input-group-text"><i class="fas fa-calendar"></i></div></div>';
+                    html += '  <div class="input-group datetime"><input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '" id="input-option-' + option['product_option_id'] + '" class="form-control"/><div class="input-group-text"><i class="fas fa-calendar"></i></div></div>';
                     html += '</div>';
                 }
 
                 if (option['type'] == 'time') {
                     html += '<div class="mb-3' + (option['required'] == 1 ? ' required' : '') + '">';
                     html += '  <label for="input-option-' + option['product_option_id'] + '" class="col-form-label">' + option['name'] + '</label>';
-                    html += '  <div class="input-group time"><input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '" id="input-option-' + option['product_option_id'] + '" class="form-control" /><div class="input-group-text"><i class="fas fa-calendar"></i></div></div>';
+                    html += '  <div class="input-group time"><input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '" id="input-option-' + option['product_option_id'] + '" class="form-control"/><div class="input-group-text"><i class="fas fa-calendar"></i></div></div>';
                     html += '</div>';
                 }
             }
@@ -2596,7 +2596,7 @@ $('#button-refresh').on('click', function() {
 
                     html += '</td>';
                     html += '  <td class="text-start">' + product['model'] + '</td>';
-                    html += '  <td class="text-end"><div class="input-group"><input type="text" name="product[' + i + '][quantity]" value="' + product['quantity'] + '" class="form-control" /><button type="button" data-bs-toggle="tooltip" title="{{ button_refresh }}" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-sync"></i></button></div></td>';
+                    html += '  <td class="text-end"><div class="input-group"><input type="text" name="product[' + i + '][quantity]" value="' + product['quantity'] + '" class="form-control"/><button type="button" data-bs-toggle="tooltip" title="{{ button_refresh }}" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-sync"></i></button></div></td>';
                     html += '  <td class="text-end">' + product['price'] + '</td>';
                     html += '  <td class="text-end">' + product['total'] + '</td>';
                     html += '  <td class="text-end" style="width: 3px;"><button type="button" value="' + product['cart_id'] + '" data-bs-toggle="tooltip" title="{{ button_remove }}" data-oc-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';

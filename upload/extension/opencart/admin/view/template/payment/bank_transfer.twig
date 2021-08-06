@@ -28,6 +28,7 @@
                   </div>
                   <textarea name="payment_bank_transfer_bank_{{ language.language_id }}" cols="80" rows="10" placeholder="{{ entry_bank }}" id="input-bank-{{ language.language_id }}" class="form-control">{{ payment_bank_transfer_bank[language.language_id] ? payment_bank_transfer_bank[language.language_id] }}</textarea>
                 </div>
+                <div id="error-bank-{{ language.language_id }}" class="invalid-feedback"></div>
               </div>
             </div>
           {% endfor %}

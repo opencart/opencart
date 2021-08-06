@@ -163,9 +163,9 @@ $(document).ready(function() {
                 $(element).button('reset');
             },
             success: function(json) {
-
-                $('.invalid-feedback').removeClass('d-block');
-                $('.alert-dismissible').remove();
+                $(form).find('.alert-dismissible').remove();
+                $(form).find('.is-invalid').removeClass('is-invalid');
+                $(form).find('.invalid-feedback').removeClass('d-block');
 
                 console.log(json);
                 console.log(json['error']);
@@ -183,15 +183,12 @@ $(document).ready(function() {
                     }
 
                     for (key in json['error']) {
-                        $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]);
-                        $('#error-' + key.replaceAll('_', '-')).addClass('d-block');
+                        for (key in json['error']) {
+                            // Show errors
+                            $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
 
-                        var input = $('#input-' + key.replaceAll('_', '-'));
-
-                        if (input.is('div')) {
-                            input.find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
-                        } else {
-                            input.addClass('is-invalid');
+                            // Highlight error fields
+                            $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
                         }
                     }
 

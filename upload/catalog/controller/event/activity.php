@@ -148,7 +148,7 @@ class ControllerEventActivity extends Controller {
 		if ($this->config->get('config_customer_activity')) {
 			$this->load->model('account/activity');
 
-			if($this->customer->getId()) {
+			if ($this->customer->getId()) {
 				$activity_data = array(
 					'customer_id' => $this->customer->getId(),
 					'name'        => $this->customer->getFirstName() . ' ' . $this->customer->getLastName()

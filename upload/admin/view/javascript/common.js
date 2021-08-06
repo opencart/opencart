@@ -167,9 +167,6 @@ $(document).ready(function() {
                 $('.invalid-feedback').removeClass('d-block');
                 $('.alert-dismissible').remove();
 
-                console.log(json);
-                console.log(json['error']);
-
                 if (json['redirect']) {
                     location = json['redirect'];
 

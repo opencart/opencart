@@ -182,17 +182,12 @@ $(document).ready(function() {
                     }
 
                     for (key in json['error']) {
-                        var error = $('#error-' + key.replaceAll('_', '-'));
+                        for (key in json['error']) {
+                            // Show errors
+                            $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
 
-                        error.html(json['error'][key]);
-                        error.addClass('d-block');
-
-                        var input = $('#input-' + key.replaceAll('_', '-'));
-
-                        if (input.is('div')) {
-                            input.find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
-                        } else {
-                            input.addClass('is-invalid');
+                            // Highlight error fields
+                            $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
                         }
                     }
 

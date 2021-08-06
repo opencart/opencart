@@ -398,7 +398,7 @@ $(document).ready(function() {
             },
             success: function(json) {
                 $(form).find('.invalid-feedback').removeClass('d-block');
-                $(form).find('.form-*').removeClass();
+                $(form).find('.form-*').removeClass('is-invalid');
                 $(form).find('.alert-dismissible').remove();
 
                 if (json['redirect']) {
@@ -414,16 +414,11 @@ $(document).ready(function() {
                     }
 
                     for (key in json['error']) {
-                        var error = $('#error-' + key.replaceAll('_', '-'));
+                        // Show errors
+                        $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
 
-                        error.html(json['error'][key]);
-                        error.addClass('d-block');
-
-                        var input = $('#input-' + key.replaceAll('_', '-'));
-
-                        //input.addClass('is-invalid');
-
-                        input.find('.form-*').addClass('is-invalid');
+                        // Highlight error fields
+                        $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
                     }
 
                     delete json['error'];

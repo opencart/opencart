@@ -22,12 +22,14 @@
 						<label for="input-name" class="col-sm-2 col-form-label">{{ entry_name }}</label>
 						<div class="col-sm-10">
 							<input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
+							<div id="error-name" class="invalid-feedback"></div>
 						</div>
 					</div>
 					<div class="row mb-3 required">
 						<label for="input-address" class="col-sm-2 col-form-label">{{ entry_address }}</label>
 						<div class="col-sm-10">
 							<textarea type="text" name="address" rows="5" placeholder="{{ entry_address }}" id="input-address" class="form-control">{{ address }}</textarea>
+							<div id="error-address" class="invalid-feedback"></div>
 						</div>
 					</div>
 					<div class="row mb-3">
@@ -41,6 +43,7 @@
 						<label for="input-telephone" class="col-sm-2 col-form-label">{{ entry_telephone }}</label>
 						<div class="col-sm-10">
 							<input type="text" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control"/>
+							<div id="error-telephone" class="invalid-feedback"></div>
 						</div>
 					</div>
 					<div class="row mb-3">

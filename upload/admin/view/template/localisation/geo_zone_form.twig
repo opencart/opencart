@@ -22,12 +22,14 @@
             <label for="input-name" class="col-sm-2 col-form-label">{{ entry_name }}</label>
             <div class="col-sm-10">
               <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
+              <div id="error-name" class="invalid-feedback"></div>
             </div>
           </div>
           <div class="row mb-3 required">
             <label for="input-description" class="col-sm-2 col-form-label">{{ entry_description }}</label>
             <div class="col-sm-10">
               <input type="text" name="description" value="{{ description }}" placeholder="{{ entry_description }}" id="input-description" class="form-control"/>
+              <div id="error-description" class="invalid-feedback"></div>
             </div>
           </div>
           <fieldset>

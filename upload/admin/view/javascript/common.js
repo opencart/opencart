@@ -167,9 +167,12 @@ $(document).ready(function() {
                 $(element).button('reset');
             },
             success: function(json) {
-                $('.invalid-tooltip, .alert-dismissible').remove();
+
+                $('.invalid-feedback').removeClass('d-block');
+                $('.alert-dismissible').remove();
 
                 console.log(json);
+                console.log(json['error']);
 
                 if (json['redirect']) {
                     location = json['redirect'];
@@ -184,16 +187,8 @@ $(document).ready(function() {
                     }
 
                     for (key in json['error']) {
-                        var element = $('#input-' + key.replaceAll('_', '-'));
-
-                        // Highlight any found errors
-                        $(element).addClass('is-invalid');
-
-                        if ($(element).parent().hasClass('input-group')) {
-                            $(element).parent().after('<div class="invalid-tooltip d-inline">' + json['error'][key] + '</div>');
-                        } else {
-                            $(element).after('<div class="invalid-tooltip d-inline">' + json['error'][key] + '</div>');
-                        }
+                        $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]);
+                        $('#error-' + key.replaceAll('_', '-')).addClass('d-block');
                     }
 
                     delete json['error'];

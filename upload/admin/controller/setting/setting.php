@@ -702,6 +702,10 @@ class Setting extends \Opencart\System\Engine\Controller {
 			$json['error']['image_location'] = $this->language->get('error_image_location');
 		}
 
+		if ((utf8_strlen($this->request->post['config_encryption']) < 32) || (utf8_strlen($this->request->post['config_encryption']) > 1024)) {
+			$json['error']['encryption'] = $this->language->get('error_encryption');
+		}
+
 		if (!$this->request->post['config_file_max_size']) {
 			$json['error']['file_max_size'] = $this->language->get('error_file_max_size');
 		}
@@ -716,7 +720,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 
 		foreach ($extensions as $extension) {
 			if (in_array(trim($extension), $disallowed)) {
-				$json['error']['extension'] = $this->language->get('error_extension');
+				$json['error']['file_ext_allowed'] = $this->language->get('error_extension');
 
 				break;
 			}
@@ -732,22 +736,18 @@ class Setting extends \Opencart\System\Engine\Controller {
 
 		foreach ($mimes as $mime) {
 			if (in_array(trim($mime), $disallowed)) {
-				$json['error']['mime'] = $this->language->get('error_mime');
+				$json['error']['file_mime_allowed'] = $this->language->get('error_mime');
 
 				break;
 			}
 		}
 
 		if (!$this->request->post['config_error_filename']) {
-			$json['error']['log'] = $this->language->get('error_log_required');
+			$json['error']['error_filename'] = $this->language->get('error_log_required');
 		} elseif (preg_match('/\.\.[\/\\\]?/', $this->request->post['config_error_filename'])) {
-			$json['error']['log'] = $this->language->get('error_log_invalid');
+			$json['error']['error_filename'] = $this->language->get('error_log_invalid');
 		} elseif (substr($this->request->post['config_error_filename'], strrpos($this->request->post['config_error_filename'], '.')) != '.log') {
-			$json['error']['log'] = $this->language->get('error_log_extension');
-		}
-
-		if ((utf8_strlen($this->request->post['config_encryption']) < 32) || (utf8_strlen($this->request->post['config_encryption']) > 1024)) {
-			$json['error']['encryption'] = $this->language->get('error_encryption');
+			$json['error']['error_filename'] = $this->language->get('error_log_extension');
 		}
 
 		if (isset($json['error']) && !isset($json['error']['warning'])) {

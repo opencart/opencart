@@ -22,6 +22,7 @@
             <label for="input-name" class="col-sm-2 col-form-label">{{ entry_name }}</label>
             <div class="col-sm-10">
               <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
+              <div id="error-name" class="invalid-feedback"></div>
             </div>
           </div>
           <div class="row mb-3 required">
@@ -32,6 +33,7 @@
                   <option value="{{ language }}"{% if language == code %} selected="selected"{% endif %}>{{ language }}</option>
                 {% endfor %}
               </select>
+              <div id="error-code" class="invalid-feedback"></div>
             </div>
           </div>
           <div class="row mb-3 required">
@@ -39,6 +41,7 @@
             <div class="col-sm-10">
               <input type="text" name="locale" value="{{ locale }}" placeholder="{{ entry_locale }}" id="input-locale" class="form-control"/>
               <div class="form-text text-muted">{{ help_locale }}</div>
+              <div id="error-locale" class="invalid-feedback"></div>
             </div>
           </div>
           <div class="row mb-3">

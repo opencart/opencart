@@ -33,30 +33,35 @@
 								<div class="col-sm-10">
 									<input type="text" name="code" value="{{ code }}" placeholder="{{ entry_code }}" id="input-code" class="form-control"/>
 									<div class="form-text text-muted">{{ help_code }}</div>
+									<div id="error-code" class="invalid-feedback"></div>
 								</div>
 							</div>
 							<div class="row mb-3 required">
 								<label for="input-from-name" class="col-sm-2 col-form-label">{{ entry_from_name }}</label>
 								<div class="col-sm-10">
 									<input type="text" name="from_name" value="{{ from_name }}" placeholder="{{ entry_from_name }}" id="input-from-name" class="form-control"/>
+									<div id="error-from-name" class="invalid-feedback"></div>
 								</div>
 							</div>
 							<div class="row mb-3 required">
 								<label for="input-from-email" class="col-sm-2 col-form-label">{{ entry_from_email }}</label>
 								<div class="col-sm-10">
 									<input type="text" name="from_email" value="{{ from_email }}" placeholder="{{ entry_from_email }}" id="input-from-email" class="form-control"/>
+									<div id="error-from-email" class="invalid-feedback"></div>
 								</div>
 							</div>
 							<div class="row mb-3 required">
 								<label for="input-to-name" class="col-sm-2 col-form-label">{{ entry_to_name }}</label>
 								<div class="col-sm-10">
 									<input type="text" name="to_name" value="{{ to_name }}" placeholder="{{ entry_to_name }}" id="input-to-name" class="form-control"/>
+									<div id="error-to-name" class="invalid-feedback"></div>
 								</div>
 							</div>
 							<div class="row mb-3 required">
 								<label for="input-to-email" class="col-sm-2 col-form-label">{{ entry_to_email }}</label>
 								<div class="col-sm-10">
 									<input type="text" name="to_email" value="{{ to_email }}" placeholder="{{ entry_to_email }}" id="input-to-email" class="form-control"/>
+									<div id="error-to-email" class="invalid-feedback"></div>
 								</div>
 							</div>
 							<div class="row mb-3">
@@ -83,6 +88,7 @@
 								<label for="input-amount" class="col-sm-2 col-form-label">{{ entry_amount }}</label>
 								<div class="col-sm-10">
 									<input type="text" name="amount" value="{{ amount }}" placeholder="{{ entry_amount }}" id="input-amount" class="form-control"/>
+									<div id="error-amount" class="invalid-feedback"></div>
 								</div>
 							</div>
 							<div class="row mb-3">

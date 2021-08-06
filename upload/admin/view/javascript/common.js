@@ -163,8 +163,9 @@ $(document).ready(function() {
                 $(element).button('reset');
             },
             success: function(json) {
-                $('.invalid-feedback').removeClass('d-block');
-                $('.alert-dismissible').remove();
+                $(form).find('.alert-dismissible').remove();
+                $(form).find('.is-invalid').removeClass('is-invalid');
+                $(form).find('.invalid-feedback').removeClass('d-block');
 
                 console.log(json);
                 console.log(json['error']);

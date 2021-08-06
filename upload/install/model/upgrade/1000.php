@@ -81,7 +81,7 @@ class ModelUpgrade1000 extends Model {
 
 			if (isset($match[0])) {
 				preg_match_all('#`(\w[\w\d]*)`#', $match[0], $match);
-			} else{
+			} else {
 				$match = array();
 			}
 

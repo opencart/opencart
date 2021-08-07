@@ -316,7 +316,7 @@ class Register extends \Opencart\System\Engine\Controller {
 
 			foreach ($custom_fields as $custom_field) {
 				if ($custom_field['location'] == 'account') {
-					if ($custom_field['required'] && empty($this->request->post['customer_custom_field'][$custom_field['location']][$custom_field['custom_field_id']])) {
+					if ($custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['location']][$custom_field['custom_field_id']])) {
 						$json['error']['customer_custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
 					} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !preg_match(html_entity_decode($custom_field['validation'], ENT_QUOTES, 'UTF-8'), $this->request->post['custom_field'][$custom_field['location']][$custom_field['custom_field_id']])) {
 						$json['error']['customer_custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_regex'), $custom_field['name']);
@@ -374,12 +374,15 @@ class Register extends \Opencart\System\Engine\Controller {
 
 			// Shipping Address
 			if ($this->cart->hasShipping() && !$this->request->post['shipping_address']) {
-				if ((utf8_strlen($this->request->post['shipping_firstname']) < 1) || (utf8_strlen($this->request->post['shipping_firstname']) > 32)) {
-					$json['error']['shipping_firstname'] = $this->language->get('error_firstname');
-				}
+				// If no payment address no need to validate shipping firstname and lastname as the customer info will be used.
+				if ($this->config->get('config_checkout_address')) {
+					if ((utf8_strlen($this->request->post['shipping_firstname']) < 1) || (utf8_strlen($this->request->post['shipping_firstname']) > 32)) {
+						$json['error']['shipping_firstname'] = $this->language->get('error_firstname');
+					}
 
-				if ((utf8_strlen($this->request->post['shipping_lastname']) < 1) || (utf8_strlen($this->request->post['shipping_lastname']) > 32)) {
-					$json['error']['shipping_lastname'] = $this->language->get('error_lastname');
+					if ((utf8_strlen($this->request->post['shipping_lastname']) < 1) || (utf8_strlen($this->request->post['shipping_lastname']) > 32)) {
+						$json['error']['shipping_lastname'] = $this->language->get('error_lastname');
+					}
 				}
 
 				if ((utf8_strlen($this->request->post['shipping_address_1']) < 3) || (utf8_strlen($this->request->post['shipping_address_1']) > 128)) {
@@ -453,8 +456,8 @@ class Register extends \Opencart\System\Engine\Controller {
 				// Add payment address to customer account
 				if ($this->config->get('config_checkout_address')) {
 					$payment_address_data = [
-						'firstname'    => $this->request->post['payment_firstname'],
-						'lastname'     => $this->request->post['payment_lastname'],
+						'firstname'    => $this->request->post['customer_firstname'],
+						'lastname'     => $this->request->post['customer_lastname'],
 						'company'      => $this->request->post['payment_company'],
 						'address_1'    => $this->request->post['payment_address_1'],
 						'address_2'    => $this->request->post['payment_address_2'],
@@ -475,9 +478,18 @@ class Register extends \Opencart\System\Engine\Controller {
 
 				// Add shipping address to customer account
 				if ($this->cart->hasShipping() && !$this->request->post['shipping_address']) {
+					// If no payment address we can use the customer name instead of shipping
+					if (!$this->config->get('config_checkout_address')) {
+						$firstname = $this->request->post['customer_firstname'];
+						$lastname = $this->request->post['customer_lastname'];
+					} else {
+						$firstname = $this->request->post['shipping_firstname'];
+						$lastname = $this->request->post['shipping_lastname'];
+					}
+
 					$shipping_address_data = [
-						'firstname'    => $this->request->post['shipping_firstname'],
-						'lastname'     => $this->request->post['shipping_lastname'],
+						'firstname'    => $firstname,
+						'lastname'     => $lastname,
 						'company'      => $this->request->post['shipping_company'],
 						'address_1'    => $this->request->post['shipping_address_1'],
 						'address_2'    => $this->request->post['shipping_address_2'],
@@ -511,8 +523,8 @@ class Register extends \Opencart\System\Engine\Controller {
 			// Add payment address into session
 			if ($this->config->get('config_checkout_address')) {
 				$this->session->data['payment_address'] = [
-					'firstname'    => $this->request->post['payment_firstname'],
-					'lastname'     => $this->request->post['payment_lastname'],
+					'firstname'    => $this->request->post['customer_firstname'],
+					'lastname'     => $this->request->post['customer_lastname'],
 					'company'      => $this->request->post['payment_company'],
 					'address_1'    => $this->request->post['payment_address_1'],
 					'address_2'    => $this->request->post['payment_address_2'],
@@ -531,9 +543,18 @@ class Register extends \Opencart\System\Engine\Controller {
 
 			// Add shipping address into session
 			if ($this->cart->hasShipping() && !$this->request->post['shipping_address']) {
+				// If no payment address we can use the customer name instead of shipping
+				if (!$this->config->get('config_checkout_address')) {
+					$firstname = $this->request->post['customer_firstname'];
+					$lastname = $this->request->post['customer_lastname'];
+				} else {
+					$firstname = $this->request->post['shipping_firstname'];
+					$lastname = $this->request->post['shipping_lastname'];
+				}
+
 				$this->session->data['shipping_address'] = [
-					'firstname'    => $this->request->post['shipping_firstname'],
-					'lastname'     => $this->request->post['shipping_lastname'],
+					'firstname'    => $firstname,
+					'lastname'     => $lastname,
 					'company'      => $this->request->post['shipping_company'],
 					'address_1'    => $this->request->post['shipping_address_1'],
 					'address_2'    => $this->request->post['shipping_address_2'],

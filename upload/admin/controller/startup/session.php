@@ -18,11 +18,12 @@ class Session extends \Opencart\System\Engine\Controller {
 
 		$path = substr($path, 0, strrpos($path, '/')) . '/';
 
+		// Update the session lifetime
 		if ($this->config->get('config_session_expire')) {
-			$expire = $this->config->get('config_session_expire');
-		} else {
-			$expire = $this->config->get('session_expire');
+			$this->config->set('session_expire', $this->config->get('config_session_expire'));
 		}
+
+		$expire = $this->config->get('config_session_expire');
 
 		// Require higher security for session cookies
 		$option = [

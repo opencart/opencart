@@ -26,14 +26,16 @@
 
         {% if shipping_required %}
           <div id="checkout-shipping-address">{{ shipping_address }}</div>
-          <div id="checkout-shipping-method"></div>
         {% endif %}
 
       {% endif %}
 
+      {% if shipping_required %}
+        <div id="checkout-shipping-method"></div>
+      {% endif %}
+
       <div id="checkout-payment-method"></div>
       <div id="checkout-confirm"></div>
-
       {{ content_bottom }}
     </div>
     {{ column_right }}

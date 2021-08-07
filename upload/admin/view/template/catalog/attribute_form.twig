@@ -39,6 +39,7 @@
                   <option value="{{ attribute_group.attribute_group_id }}"{% if attribute_group.attribute_group_id == attribute_group_id %} selected{% endif %}>{{ attribute_group.name }}</option>
                 {% endfor %}
               </select>
+              <div id="error-attribute-group" class="invalid-feedback"></div>
             </div>
           </div>
           <div class="row mb-3">

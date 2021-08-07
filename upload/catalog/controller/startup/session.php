@@ -34,6 +34,11 @@ class Session extends \Opencart\System\Engine\Controller {
 		for all sessions!
 		*/
 
+		// Update the session lifetime
+		if ($this->config->get('config_session_expire')) {
+			$this->config->set('session_expire', $this->config->get('config_session_expire'));
+		}
+
 		if (isset($this->request->cookie[$this->config->get('session_name')])) {
 			$session_id = $this->request->cookie[$this->config->get('session_name')];
 		} else {

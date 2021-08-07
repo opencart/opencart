@@ -42,9 +42,9 @@
                 <div class="col-sm-10">
                   <div class="input-group">
                     <input type="text" name="filename" value="{{ filename }}" placeholder="{{ entry_filename }}" id="input-filename" class="form-control"/>
-                    <button type="button" data-oc-upload="index.php?route=catalog/download|upload&user_token={{ user_token }}" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-upload"></i> {{ button_upload }}</button>
+                    <button type="button" id="button-upload" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-upload"></i> {{ button_upload }}</button>
                   </div>
-                  <div class="form-text text-muted">{{ help_filename }}</div>s
+                  <div class="form-text text-muted">{{ help_filename }}</div>
                   <div id="error-filename" class="invalid-feedback"></div>
                 </div>
               </div>
@@ -78,5 +78,63 @@ $('#report').on('click', '.pagination a', function(e) {
 });
 
 $('#report').load('index.php?route=catalog/download|report&user_token={{ user_token }}&download_id=' + $('input[name=\'download_id\']').val());
+//--></script>
+<script type="text/javascript"><!--
+$('#button-upload').on('click', function() {
+    $('#form-upload').remove();
+
+    $('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" /></form>');
+
+    $('#form-upload input[name=\'file\']').trigger('click');
+
+    $('#form-upload input[name=\'file\']').on('change', function() {
+        if (this.files[0].size > {{ config_file_max_size }}) {
+            $(this).val('');
+
+            alert('{{ error_upload_size }}');
+        }
+    });
+
+    if (typeof timer != 'undefined') {
+        clearInterval(timer);
+    }
+
+    timer = setInterval(function() {
+        if ($('#form-upload input[name=\'file\']').val() != '') {
+            clearInterval(timer);
+
+            $.ajax({
+                url: 'index.php?route=catalog/download|upload&user_token={{ user_token }}',
+                type: 'post',
+                dataType: 'json',
+                data: new FormData($('#form-upload')[0]),
+                cache: false,
+                contentType: false,
+                processData: false,
+                beforeSend: function() {
+                    $('#button-upload').button('loading');
+                },
+                complete: function() {
+                    $('#button-upload').button('reset');
+                },
+                success: function(json) {
+                    if (json['error']) {
+                        alert(json['error']);
+                    }
+
+                    if (json['success']) {
+                        alert(json['success']);
+
+                        $('input[name=\'filename\']').val(json['filename']);
+                        $('input[name=\'mask\']').val(json['mask']);
+                    }
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                }
+            });
+        }
+    }, 500);
+});
 //--></script>
 {{ footer }}

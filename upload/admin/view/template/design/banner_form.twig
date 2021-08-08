@@ -59,7 +59,7 @@
                       {% for banner_image in banner_images[language.language_id] %}
                         <tr id="image-row-{{ image_row }}">
                           <td class="text-start">
-                            <input type="text" name="banner_image[{{ language.language_id }}][{{ image_row }}][title]" value="{{ banner_image.title }}" placeholder="{{ entry_title }}" id="input-banner-image-{{ language.language_id }}-{{ image_row }}-title" class="form-control"/>gjhjhgj
+                            <input type="text" name="banner_image[{{ language.language_id }}][{{ image_row }}][title]" value="{{ banner_image.title }}" placeholder="{{ entry_title }}" id="input-banner-image-{{ language.language_id }}-{{ image_row }}-title" class="form-control"/>
                             <div id="error-banner-image-{{ language.language_id }}-{{ image_row }}-title" class="invalid-feedback"></div>
                           </td>
                           <td class="text-start" style="width: 30%;"><input type="text" name="banner_image[{{ language.language_id }}][{{ image_row }}][link]" value="{{ banner_image.link }}" placeholder="{{ entry_link }}" id="input-banner-image-{{ language.language_id }}-{{ image_row }}-link" class="form-control"/></td>

@@ -1,7 +1,9 @@
 {% if error_warning %}
   <div class="alert alert-warning alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}</div>
 {% endif %}
+
 {% if payment_methods %}
+
   <p>{{ text_payment_method }}</p>
   {% for payment_method in payment_methods %}
     <div class="form-check">
@@ -18,7 +20,9 @@
       </label>
     </div>
   {% endfor %}
+
 {% endif %}
+
 <br/>
 <p><strong>{{ text_comments }}</strong></p>
 <p>
@@ -71,9 +75,6 @@ $('#button-payment-method').on('click', function() {
                                 // If HTML response display
                                 if (jqXHR.getResponseHeader('content-type').substr(5, 4) == 'html') {
                                     $('#collapse-checkout-confirm .card-body').html(output);
-
-
-
                                 }
 
                                 // If JSON use eval to turn into object.

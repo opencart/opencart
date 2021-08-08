@@ -4,6 +4,11 @@ $_['heading_title']    = 'Important Security Notification!';
 
 // Text
 $_['text_success']     = 'Success: You have modified the storage folder!';
+
+$_['text_install'] = 'Warning: Install folder still exists and should be deleted for security reasons!';
+
+
+
 $_['text_security']    = 'It is very important that you move the storage directory outside of the web directory (e.g. public_html, www or htdocs).';
 $_['text_choose']      = 'Choose how to move the storage directory';
 $_['text_automatic']   = 'Automatically Move';
@@ -26,3 +31,6 @@ $_['error_path']       = 'Warning: Invalid path!';
 $_['error_directory']  = 'Warning: Invalid directory!';
 $_['error_exists']     = 'Warning: Directory already exists!';
 $_['error_writable']   = 'Warning: config.php and admin/config.php need to be made writable!';
+
+// Error
+$_['error_install'] = 'Warning: Install folder still exists and should be deleted for security reasons!';

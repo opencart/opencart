@@ -1,7 +1,7 @@
 <form id="form-register">
   <fieldset>
     <legend>{{ text_your_details }}</legend>
-    <div class="row row-cols-2">
+    <div id="account" class="row row-cols-2">
       <div class="col mb-3 required">
         <div class="form-check form-check-inline">
           <input type="radio" name="account" value="1" id="input-register" class="form-check-input"{% if account %} checked{% endif %}/> <label for="input-register" class="form-check-label">{{ text_register }}</label>
@@ -551,26 +551,7 @@ $('#checkout-register input[name=\'customer_group_id\']').on('change', function(
 });
 
 $('#checkout-register input[name=\'customer_group_id\']:checked').trigger('change');
-/*
-// Sort the custom fields
-$('#account .mb-3[data-oc-sort]').detach().each(function() {
-    if ($(this).attr('data-oc-sort') >= 0 && $(this).attr('data-oc-sort') <= $('#account .mb-3').length) {
-        $('#account .mb-3').eq($(this).attr('data-oc-sort')).before(this);
-    }
 
-    if ($(this).attr('data-oc-sort') > $('#account .mb-3').length) {
-        $('#account .mb-3:last').after(this);
-    }
-
-    if ($(this).attr('data-oc-sort') == $('#account .mb-3').length) {
-        $('#account .mb-3:last').after(this);
-    }
-
-    if ($(this).attr('data-oc-sort') < -$('#account .mb-3').length) {
-        $('#account .mb-3:first').before(this);
-    }
-});
-*/
 // Shipping Address
 $('#checkout-register input[name=\'shipping_address\']').on('change', function() {
     if ($(this).prop('checked')) {

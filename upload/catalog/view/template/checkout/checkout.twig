@@ -17,24 +17,29 @@
 
       {% if not logged %}
         <div id="checkout-login">{{ login }}</div>
+        <br/>
         <div id="checkout-register">{{ register }}</div>
       {% else %}
 
         {% if payment_address %}
+          <br/>
           <div id="checkout-payment-address">{{ payment_address }}</div>
         {% endif %}
 
         {% if shipping_required %}
+          <br/>
           <div id="checkout-shipping-address">{{ shipping_address }}</div>
         {% endif %}
 
       {% endif %}
 
       {% if shipping_required %}
-        <div id="checkout-shipping-method"></div>
+        <br/>
+        <div id="checkout-shipping-method">{{ shipping_method }}</div>
       {% endif %}
-
-      <div id="checkout-payment-method"></div>
+      <br/>
+      <div id="checkout-payment-method">{{ payment_method }}</div>
+      <br/>
       <div id="checkout-confirm"></div>
       {{ content_bottom }}
     </div>

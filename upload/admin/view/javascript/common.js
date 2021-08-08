@@ -232,6 +232,7 @@ $(document).ready(function() {
 // Upload
 $(document).on('click', '[data-oc-upload]', function() {
     var element = this;
+    var target = $(element).attr('data-oc-target');
 
     $('#form-upload').remove();
 
@@ -270,6 +271,8 @@ $(document).on('click', '[data-oc-upload]', function() {
                     $(element).button('reset');
                 },
                 success: function(json) {
+                    console.log(json);
+
                     $(element).parent().find('.invalid-tooltip').remove();
 
                     if (json['error']) {
@@ -279,9 +282,8 @@ $(document).on('click', '[data-oc-upload]', function() {
                     if (json['success']) {
                         alert(json['success']);
 
-                        // Replace any form values that correspond to form names.
-                        for (key in json) {
-                            $(form).find('[name=\'' + key + '\']:input').val(json[key]);
+                        if (json['code']) {
+                            $(target).attr('value', json['code']);
                         }
                     }
                 },

@@ -83,8 +83,6 @@ $(document).ready(function() {
 
             if (!handler) {
                 new bootstrap.Tooltip(element, option);
-            } else {
-                console.log(handler);
             }
 
             $.extend(this, option);
@@ -114,7 +112,6 @@ $(document).ajaxStop(function() {
         return $(element).each(function() {
             handler = bootstrap.Tab.getInstance(element);
 
-            console.log('fdd');
             if (!handler) {
                 var tab = new bootstrap.Tab(element, option);
 
@@ -163,9 +160,9 @@ $(document).ready(function() {
                 $(element).button('reset');
             },
             success: function(json) {
-
-                $('.invalid-feedback').removeClass('d-block');
-                $('.alert-dismissible').remove();
+                $(form).find('.alert-dismissible').remove();
+                $(form).find('.is-invalid').removeClass('is-invalid');
+                $(form).find('.invalid-feedback').removeClass('d-block');
 
                 if (json['redirect']) {
                     location = json['redirect'];
@@ -180,15 +177,12 @@ $(document).ready(function() {
                     }
 
                     for (key in json['error']) {
-                        $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]);
-                        $('#error-' + key.replaceAll('_', '-')).addClass('d-block');
+                        for (key in json['error']) {
+                            // Show errors
+                            $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
 
-                        var input = $('#input-' + key.replaceAll('_', '-'));
-
-                        if (input.is('div')) {
-                            input.find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
-                        } else {
-                            input.addClass('is-invalid');
+                            // Highlight error fields
+                            $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
                         }
                     }
 
@@ -232,6 +226,7 @@ $(document).ready(function() {
 // Upload
 $(document).on('click', '[data-oc-upload]', function() {
     var element = this;
+    var target = $(element).attr('data-oc-target');
 
     $('#form-upload').remove();
 
@@ -279,9 +274,8 @@ $(document).on('click', '[data-oc-upload]', function() {
                     if (json['success']) {
                         alert(json['success']);
 
-                        // Replace any form values that correspond to form names.
-                        for (key in json) {
-                            $(form).find('[name=\'' + key + '\']:input').val(json[key]);
+                        if (json['code']) {
+                            $(target).attr('value', json['code']);
                         }
                     }
                 },
@@ -310,8 +304,6 @@ $(document).on('click', '[data-oc-loading-text]', function() {
 // Button
 (function($) {
     $.fn.button = function(state) {
-        console.log(state);
-
         return this.each(function(state) {
             if (state == 'reset') {
                 $(this).html($reset);

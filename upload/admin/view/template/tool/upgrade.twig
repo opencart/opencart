@@ -16,19 +16,15 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
       </div>
     {% endif %}
-    {% if success %}
-      <div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> {{ success }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-      </div>
-    {% endif %}
     <div id="collapse">
       <div class="card">
-        <div class="card-header" data-bs-toggle="collapse" data-bs-target="#collapse-version"><i class="fas fa-sync"></i> {{ text_version }}</div>
-        <div id="collapse-version" data-bs-parent="#collapse" class="collapse show">
+        <div class="card-header"><i class="fas fa-sync"></i> {{ text_version }}</div>
           <div class="card-body">
+
             <fieldset>
               <legend id="btn-version"{% if error_warning %} class="text-danger"{% endif %}>{{ text_update }}</legend>
             </fieldset>
+
             <div class="alert alert-info">
               <p><strong><i class="fas fa-exclamation-circle"></i> {{ text_tips }}</strong></p>
               <ol>
@@ -42,58 +38,11 @@
                 <li>{{ text_better }}</li>
               </ol>
             </div>
-            <fieldset>
-              <legend id="version">{{ text_change }}</legend>
-              <textarea wrap="off" rows="10" readonly class="form-control">{{ log }}</textarea>
-            </fieldset>
             <br/>
-            <div class="text-end"><a href="#collapse-compatible" data-bs-toggle="collapse" data-bs-parent="#collapse" class="btn btn-primary"><i class="fas fa-arrow-right"></i> {{ button_continue }}</a></div>
-          </div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-header collapsed" data-bs-toggle="collapse" data-bs-target="#collapse-compatible"><i class="fas fa-random"></i> {{ text_compatibility }}</div>
-        <div id="collapse-compatible" data-bs-parent="#collapse" class="collapse">
-          <div class="card-body">
-            <div class="alert alert-warning">
-              {{ text_before }}
-              <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            </div>
-            <table class="table table-bordered table-hover">
-              <thead>
-                <tr>
-                  <td class="text-start">{{ column_name }}</td>
-                  <td class="text-center">{{ column_compatible }}</td>
-                  <td class="text-center">{{ column_available }}</td>
-                </tr>
-              </thead>
-              <tbody>
-                {% if extensions %}
-                  {% for extension in extensions %}
-                    <tr>
-                      <td class="text-start"><a href="{{ extension.link }}">{{ extension.name }}</a></td>
-                      <td class="text-center">{% if extension.compatible %}<i class="fas fa-check text-success"></i>{% else %}<i class="fas fa-times text-danger"></i>{% endif %}</td>
-                      <td class="text-center">{% if extension.available %}<i class="fas fa-check text-success"></i>{% else %}<i class="fas fa-times text-danger"></i>{% endif %}</td>
-                    </tr>
-                  {% endfor %}
-                {% else %}
-                  <tr>
-                    <td class="text-center" colspan="3">{{ text_no_results }}</td>
-                  </tr>
-                {% endif %}
-              </tbody>
-            </table>
-            <br/>
-            <div class="text-end"><a href="#collapse-upgrade" data-bs-toggle="collapse" data-bs-parent="#collapse" class="btn btn-primary"><i class="fas fa-arrow-right"></i> {{ button_continue }}</a></div>
-          </div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-header collapsed" data-bs-toggle="collapse" data-bs-target="#collapse-upgrade"><i class="fas fa-check"></i> {{ text_upgrade }}</div>
-        <div id="collapse-upgrade" data-bs-parent="#collapse" class="collapse">
-          <div class="card-body">
+
             <fieldset>
               <legend>{{ text_progress }}</legend>
+
               <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">{{ text_progress_short }}</label>
                 <div class="col-sm-10">
@@ -103,19 +52,20 @@
                   <div id="progress-text"></div>
                 </div>
               </div>
-              <div class="col-sm-10 offset-sm-2">
-                <div class="row mb-3">
+
+
+
+
                   <button type="button" id="button-upgrade" data-oc-loading-text="{{ text_loading }}" class="btn btn-success" {% if not upgrade %} disabled="disabled"{% endif %}><i class="fas fa-play"></i> {{ button_start }}</button>
-                </div>
-              </div>
+
+
+
             </fieldset>
-            <fieldset>
-              <legend>{{ text_log }}</legend>
-              <textarea id="log" wrap="off" rows="10" readonly class="form-control"></textarea>
-            </fieldset>
+
           </div>
         </div>
       </div>
+
     </div>
   </div>
 </div>
@@ -176,8 +126,11 @@ $('#button-upgrade').on('click', function() {
             }
         });
     }
-
     chain.attach(upgrade);
 });
+
+
+
+
 //--></script>
 {{ footer }}

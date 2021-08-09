@@ -54,7 +54,7 @@ $_['error_display']        = true;
 $_['error_log']            = true;
 $_['error_filename']       = 'error.log';
 
-// Reponse
+// Response
 $_['response_header']      = array('Content-Type: text/html; charset=utf-8');
 $_['response_compression'] = 0;
 

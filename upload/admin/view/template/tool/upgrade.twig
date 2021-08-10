@@ -68,14 +68,14 @@ $('#button-upgrade').on('click', function() {
     var i = 0;
 
     $('#progress-bar').css('width', '0%').removeClass('progress-bar-danger progress-bar-success');
+    
     $('#progress-text').html('{{ text_download }}');
+    
     $('#log').append('{{ text_download }}' + "\n");
 
     var next = 'index.php?route=tool/backup|restore&user_token={{ user_token }}&filename=' + encodeURIComponent($(this).val());
 
-
-    'index.php?route=tool/upgrade|download&user_token={{ user_token }}&version={{ version }}'
-
+    var url = 'index.php?route=tool/upgrade|download&user_token={{ user_token }}&version={{ version }}';
 
     var upgrade = function(url) {
         return $.ajax({
@@ -101,8 +101,8 @@ $('#button-upgrade').on('click', function() {
                     i = i + 1;
 
                     $('#progress-bar').css('width', (i * 20) + '%');
-
                     $('#progress-bar').css('width', '20%');
+                    
                     $('#progress-text').html(json['text']);
                 }
 

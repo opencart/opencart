@@ -4,19 +4,12 @@ class Security extends \Opencart\System\Engine\Controller {
 	public function index(): string {
 		$this->load->language('common/security');
 
-
-
-
 		// Check install directory exists
 		if (is_dir(DIR_CATALOG . '../install')) {
 			$data['error_install'] = $this->language->get('error_install');
 		} else {
 			$data['error_install'] = '';
 		}
-
-
-
-
 
 		if (DIR_STORAGE == DIR_SYSTEM . 'storage/') {
 
@@ -40,10 +33,14 @@ class Security extends \Opencart\System\Engine\Controller {
 
 		$data['document_root'] = str_replace('\\', '/', realpath($this->request->server['DOCUMENT_ROOT'] . '/../') . '/');
 
-
 		$data['user_token'] = $this->session->data['user_token'];
 
 		return $this->load->view('common/security', $data);
+
+	}
+
+
+	public function validate(): void {
 
 	}
 
@@ -90,6 +87,51 @@ class Security extends \Opencart\System\Engine\Controller {
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
+	}
+
+	public function storage(): string {
+		$this->load->language('common/security');
+
+
+
+
+		// Check install directory exists
+		if (is_dir(DIR_CATALOG . '../install')) {
+			$data['error_install'] = $this->language->get('error_install');
+		} else {
+			$data['error_install'] = '';
+		}
+
+
+
+
+
+		if (DIR_STORAGE == DIR_SYSTEM . 'storage/') {
+
+		}
+
+		$data['storage'] = DIR_SYSTEM . 'storage/';
+
+		$path = '';
+
+		$data['paths'] = [];
+
+		$parts = explode('/', str_replace('\\', '/', rtrim(DIR_SYSTEM, '/')));
+
+		foreach ($parts as $part) {
+			$path .= $part . '/';
+
+			$data['paths'][] = $path;
+		}
+
+		rsort($data['paths']);
+
+		$data['document_root'] = str_replace('\\', '/', realpath($this->request->server['DOCUMENT_ROOT'] . '/../') . '/');
+
+
+		$data['user_token'] = $this->session->data['user_token'];
+
+		return $this->load->view('common/security', $data);
 	}
 
 	public function move(): void {

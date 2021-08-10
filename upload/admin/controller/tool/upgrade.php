@@ -64,7 +64,6 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 		}
 
 		$data['backup'] = $this->url->link('tool/backup', 'user_token=' . $this->session->data['user_token']);
-		$data['opencart_account'] = 'https://www.opencart.com/index.php?route=account/account';
 
 		$data['user_token'] = $this->session->data['user_token'];
 
@@ -158,31 +157,12 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 					// Only extract the contents of the upload folder
 					$destination = str_replace('\\', '/', substr($source, strlen('upload/')));
 
-					$path = '';
+					// Extension
+					$path = DIR_OPENCART . $destination;
 
-					// admin
+					// Fixes admin folder being under a different name
 					if (substr($destination, 0, 6) == 'admin/') {
 						$path = DIR_APPLICATION . substr($destination, 6);
-					}
-
-					// catalog
-					if (substr($destination, 0, 8) == 'catalog/') {
-						$path = DIR_CATALOG  . substr($destination, 0, 8);
-					}
-
-					// image
-					if (substr($destination, 0, 6) == 'image/') {
-						$path = DIR_IMAGE . substr($destination, 6);
-					}
-
-					// Extension
-					if (substr($destination, 0, 10) == 'extension/') {
-						$path = DIR_EXTENSION . substr($destination, 6);
-					}
-
-					// Add the system directory if it doesn't exist.
-					if (substr($destination, 0, 7) == 'system/') {
-						$path = DIR_SYSTEM . substr($destination, 7);
 					}
 
 					// We need to store the path differently for vendor folders.
@@ -190,29 +170,23 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 						$path = DIR_STORAGE . substr($destination, 15);
 					}
 
-					if ($path) {
-						// Must not have a path before files and directories can be moved
-						if (substr($path, -1) == '/' && mkdir($path, 0777)) {
-							$json['error'] = '';
-						}
+					// Must not have a path before files and directories can be moved
+					if (substr($path, -1) == '/' && mkdir($path, 0777)) {
+						$json['error'] = '';
+					}
 
-						// If check if the path is not directory and check there is no existing file
-						if (substr($path, -1) != '/' && copy('zip://' . $file . '#' . $source, $path)) {
-							$json['error'] ='';
-						}
+					// If check if the path is not directory and check there is no existing file
+					if (substr($path, -1) != '/' && copy('zip://' . $file . '#' . $source, $path)) {
+						$json['error'] ='';
 					}
 				}
 
 				$zip->close();
 
 				// Delete upgrade zip
-				$file = DIR_DOWNLOAD . 'opencart-' . $version . '.zip';
+				unlink($file);
 
-				if (is_file($file)) {
-					unlink($file);
-				}
-
-				$json['success'] = $this->language->get('text_success');
+				$json['redirect'] = HTTP_CATALOG . 'install/';
 			} else {
 				$json['error'] = $this->language->get('error_unzip');
 			}

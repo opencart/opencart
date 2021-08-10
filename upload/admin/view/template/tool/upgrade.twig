@@ -16,59 +16,53 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
       </div>
     {% endif %}
-    <div id="collapse">
-      <div class="card">
-        <div class="card-header"><i class="fas fa-sync"></i> {{ text_version }}</div>
-          <div class="card-body">
-
-            <fieldset>
-              <legend id="btn-version"{% if error_warning %} class="text-danger"{% endif %}>{{ text_update }}</legend>
-            </fieldset>
-
-            <div class="alert alert-info">
-              <p><strong><i class="fas fa-exclamation-circle"></i> {{ text_tips }}</strong></p>
-              <ol>
-                <li>{{ text_make }}
-                  <br/>
-                  {{ text_backup }} <a href="{{ backup }}">{{ text_here }}</a>;
-                  <br/>
-                  {{ text_cloud }} <a href="{{ opencart_account }}" target="_blank">{{ text_here }}</a>.
-                </li>
-                <li>{{ text_check }}</li>
-                <li>{{ text_better }}</li>
-              </ol>
-            </div>
-            <br/>
-
-            <fieldset>
-              <legend>{{ text_progress }}</legend>
-
-              <div class="row mb-3">
-                <label class="col-sm-2 col-form-label">{{ text_progress_short }}</label>
-                <div class="col-sm-10">
-                  <div id="progress-download" class="progress">
-                    <div id="progress-bar" class="progress-bar"></div>
-                  </div>
-                  <div id="progress-text"></div>
-                </div>
-              </div>
 
 
+    <div class="card">
+      <div class="card-header"><i class="fas fa-sync"></i> {{ text_version }}</div>
+      <div class="card-body">
 
+        <fieldset>
+          <legend id="btn-version"{% if error_warning %} class="text-danger"{% endif %}>{{ text_update }}</legend>
+        </fieldset>
 
-                  <button type="button" id="button-upgrade" data-oc-loading-text="{{ text_loading }}" class="btn btn-success" {% if not upgrade %} disabled="disabled"{% endif %}><i class="fas fa-play"></i> {{ button_start }}</button>
-
-
-
-            </fieldset>
-
-          </div>
+        <div class="alert alert-info">
+          <p><strong><i class="fas fa-exclamation-circle"></i> {{ text_tips }}</strong></p>
+          <ol>
+            <li>{{ text_make }}
+              <br/>
+              {{ text_backup }} <a href="{{ backup }}">{{ text_here }}</a>;
+            </li>
+            <li>{{ text_check }}</li>
+            <li>{{ text_better }}</li>
+          </ol>
         </div>
-      </div>
+        <br/>
 
+        <fieldset>
+          <legend>{{ text_progress }}</legend>
+
+          <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">{{ text_progress_short }}</label>
+            <div class="col-sm-10">
+              <div id="progress-download" class="progress">
+                <div id="progress-bar" class="progress-bar"></div>
+              </div>
+              <br/>
+
+              <button type="button" id="button-upgrade" data-oc-loading-text="{{ text_loading }}" class="btn btn-success" {% if not upgrade %} disabled="disabled"{% endif %}><i class="fas fa-play"></i> {{ button_start }}</button>
+              <div id="progress-text"></div>
+            </div>
+          </div>
+
+        </fieldset>
+
+      </div>
     </div>
+
   </div>
 </div>
+
 <script type="text/javascript"><!--
 $('#button-upgrade').on('click', function() {
     var i = 0;
@@ -79,9 +73,13 @@ $('#button-upgrade').on('click', function() {
 
     var next = 'index.php?route=tool/backup|restore&user_token={{ user_token }}&filename=' + encodeURIComponent($(this).val());
 
-    var upgrade = function() {
+
+    'index.php?route=tool/upgrade|download&user_token={{ user_token }}&version={{ version }}'
+
+
+    var upgrade = function(url) {
         return $.ajax({
-            url: 'index.php?route=tool/upgrade|download&user_token={{ user_token }}&version={{ version }}',
+            url: url,
             dataType: 'json',
             beforeSend: function() {
                 $('#button-upgrade').button('loading');
@@ -93,16 +91,10 @@ $('#button-upgrade').on('click', function() {
                 if (json['error']) {
                     $('#progress-bar').addClass('progress-bar-danger');
                     $('#progress-text').html('<div class="invalid-tooltip">' + json['error'] + '</div>');
-                    $('#log').append(json['error'] + "\n");
                 }
 
-                if (json['success']) {
-                    $('#progress-bar').addClass('progress-bar-success');
-                    $('#progress-text').html('<div class="text-success">' + json['success'] + '</div>');
-                    $('#log').append(json['success'] + "\n");
-
-
-                    $('#button-upgrade').button('reset');
+                if (json['redirect']) {
+                    location = json['redirect'];
                 }
 
                 if (json['text']) {
@@ -112,7 +104,6 @@ $('#button-upgrade').on('click', function() {
 
                     $('#progress-bar').css('width', '20%');
                     $('#progress-text').html(json['text']);
-                    $('#log').append(json['text'] + "\n");
                 }
 
                 if (json['next']) {
@@ -126,11 +117,8 @@ $('#button-upgrade').on('click', function() {
             }
         });
     }
+
     chain.attach(upgrade);
 });
-
-
-
-
 //--></script>
 {{ footer }}

@@ -1,52 +1,68 @@
 <div id="modal-security" class="modal">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title text-danger"><i class="fas fa-exclamation-triangle"></i> {{ heading_title }}</h5>
-				<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-			</div>
-			<div class="modal-body">
-				<div class="alert alert-info"><i class="fas fa-exclamation-circle"></i> {{ text_security }}</div>
-				<form>
-					<fieldset>
-						<legend>{{ text_choose }}</legend>
-						<div class="mb-3">
-							<select name="type" id="input-type" class="form-select">
-								<option value="automatic">{{ text_automatic }}</option>
-								<option value="manual">{{ text_manual }}</option>
-							</select>
-						</div>
-					</fieldset>
-					<fieldset id="collapse-automatic" class="collapse">
-						<legend>{{ text_automatic }}</legend>
-						<div class="mb-3">
-							<div class="input-group dropdown">
-								<button type="button" id="button-path" data-bs-toggle="dropdown" class="btn btn-primary dropdown-toggle">{{ document_root }} <span class="fas fa-caret-down"></span></button>
-								<div class="dropdown-menu">
-									{% for path in paths %}
-										{% if path|length > document_root|length %}
-											<a href="{{ path }}" class="dropdown-item"><i class="fas fa-exclamation-triangle fa-fw text-danger"></i> {{ path }}</a>
-										{% else %}
-											<a href="{{ path }}" class="dropdown-item"><i class="fas fa-check-circle fa-fw text-success"></i> {{ path }}</a>
-										{% endif %}
-									{% endfor %}
-								</div>
-								<input type="text" name="directory" value="storage" placeholder="{{ entry_directory }}" class="form-control"/>
-								<button type="button" id="button-move" data-oc-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-exclamation-triangle"></i> {{ button_move }}</button>
-							</div>
-							<input type="hidden" name="path" value="{{ document_root }}"/>
-						</div>
-					</fieldset>
-					<fieldset id="collapse-manual" class="collapse">
-						<legend>{{ text_manual }}</legend>
-						<div class="card bg-light">
-							<div class="card-body" style="height: 300px; overflow-y: scroll;"></div>
-						</div>
-					</fieldset>
-				</form>
-			</div>
-		</div>
-	</div>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-danger"><i class="fas fa-exclamation-triangle"></i> {{ heading_title }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-info"><i class="fas fa-exclamation-circle"></i> {{ text_security }}</div>
+
+
+        {% if error_install %}
+          <div class="alert alert-danger text-center"><i class="fas fa-exclamation-circle"></i> {{ error_install }}<br/>
+            <button type="button" id="button-setting" data-bs-toggle="tooltip" title="{{ button_developer }}" data-oc-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-cog"></i> Remove</button>
+          </div>
+        {% endif %}
+
+        {% if error_storage %}
+          <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_storage }}
+            <button type="button" id="button-setting" data-bs-toggle="tooltip" title="{{ button_developer }}" data-oc-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-cog"></i> Move</button>
+          </div>
+        {% endif %}
+
+
+
+        <form>
+          <fieldset>
+            <legend>{{ text_choose }}</legend>
+            <div class="mb-3">
+              <select name="type" id="input-type" class="form-select">
+                <option value="automatic">{{ text_automatic }}</option>
+                <option value="manual">{{ text_manual }}</option>
+              </select>
+            </div>
+          </fieldset>
+          <fieldset id="collapse-automatic" class="collapse">
+            <legend>{{ text_automatic }}</legend>
+            <div class="mb-3">
+              <div class="input-group dropdown">
+                <button type="button" id="button-path" data-bs-toggle="dropdown" class="btn btn-primary dropdown-toggle">{{ document_root }} <span class="fas fa-caret-down"></span></button>
+                <div class="dropdown-menu">
+                  {% for path in paths %}
+                    {% if path|length > document_root|length %}
+                      <a href="{{ path }}" class="dropdown-item"><i class="fas fa-exclamation-triangle fa-fw text-danger"></i> {{ path }}</a>
+                    {% else %}
+                      <a href="{{ path }}" class="dropdown-item"><i class="fas fa-check-circle fa-fw text-success"></i> {{ path }}</a>
+                    {% endif %}
+                  {% endfor %}
+                </div>
+                <input type="text" name="directory" value="storage" placeholder="{{ entry_directory }}" class="form-control"/>
+                <button type="button" id="button-move" data-oc-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-exclamation-triangle"></i> {{ button_move }}</button>
+              </div>
+              <input type="hidden" name="path" value="{{ document_root }}"/>
+            </div>
+          </fieldset>
+          <fieldset id="collapse-manual" class="collapse">
+            <legend>{{ text_manual }}</legend>
+            <div class="card bg-light">
+              <div class="card-body" style="height: 300px; overflow-y: scroll;"></div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>
 <script type="text/javascript"><!--
 $(document).ready(function() {

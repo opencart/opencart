@@ -66,6 +66,10 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionBudgets(array $args = [])
  * @method \Aws\Chime\ChimeClient createChime(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionChime(array $args = [])
+ * @method \Aws\ChimeSDKIdentity\ChimeSDKIdentityClient createChimeSDKIdentity(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionChimeSDKIdentity(array $args = [])
+ * @method \Aws\ChimeSDKMessaging\ChimeSDKMessagingClient createChimeSDKMessaging(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionChimeSDKMessaging(array $args = [])
  * @method \Aws\Cloud9\Cloud9Client createCloud9(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionCloud9(array $args = [])
  * @method \Aws\CloudDirectory\CloudDirectoryClient createCloudDirectory(array $args = [])
@@ -551,7 +555,7 @@ namespace Aws;
  */
 class Sdk
 {
-    const VERSION = '3.186.3';
+    const VERSION = '3.188.0';
 
     /** @var array Arguments for creating clients */
     private $args;

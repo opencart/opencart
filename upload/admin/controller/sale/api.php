@@ -717,8 +717,6 @@ class Api extends \Opencart\System\Engine\Controller {
 	}
 
 	public function paymentaddress(): void {
-		print_r($this->request->post);
-
 		$this->store->request->post = [
 			'firstname'    => $this->request->post['firstname'],
 			'lastname'     => $this->request->post['lastname'],

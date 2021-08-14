@@ -38,9 +38,7 @@ $('#button-save').on('click', function(e) {
             $('#button-save').button('reset');
         },
         success: function(json) {
-        	console.log(json);
-
-            $('.alert-dismissible, .invalid-feedback').remove();
+        	  $('.alert-dismissible, .invalid-feedback').remove();
 
             if (json['error']) {
                 if (json['error']['warning']) {

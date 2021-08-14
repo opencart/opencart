@@ -322,8 +322,6 @@ var compare = {
             data: 'product_id=' + product_id,
             dataType: 'json',
             success: function(json) {
-                $('.toast').remove();
-
                 if (json['success']) {
                     html = '<div class="toast">';
                     html += '  <div class="toast-body"><button type="button" class="ml-2 mb-1 close float-right" data-bs-dismiss="toast"></button> ' + json['success'] + '</div>';
@@ -371,7 +369,7 @@ $(document).ready(function() {
             success: function(json) {
                 $(form).find('.alert-dismissible').remove();
                 $(form).find('.is-invalid').removeClass('is-invalid');
-                $(form).find('.invalid-feedback').removeClass('d-block');
+                $(form).find('.invalid-feedback').removeClass('show');
 
                 console.log(json);
                 console.log(json['error']);
@@ -383,6 +381,12 @@ $(document).ready(function() {
                     delete json['redirect'];
                 }
 
+                if (typeof json['error'] == 'string') {
+                    $('warning-error').after('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                    delete json['error'];
+                }
+
                 if (typeof json['error'] == 'object') {
                     if (json['error']['warning']) {
                         $(form).prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
@@ -390,17 +394,13 @@ $(document).ready(function() {
 
                     for (key in json['error']) {
                         // Show errors
-                        $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
+                        $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('show');
 
                         // Highlight error fields
                         $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
                     }
 
                     delete json['error'];
-                }
-
-                if (typeof json['error'] == 'string') {
-                    $('warning-error').after('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                 }
 
                 if (json['success']) {

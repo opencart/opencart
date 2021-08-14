@@ -5,12 +5,14 @@
       <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
     {% endfor %}
   </ul>
+
   {% if error_warning %}
     <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
       <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
     </div>
   {% endif %}
-  <div class="row row-cols-2">{{ column_left }}
+
+  <div class="row row-cols-1">{{ column_left }}
     <div id="content" class="col">
       {{ content_top }}
       <h1>{{ heading_title }}</h1>
@@ -33,17 +35,32 @@
 
       {% endif %}
 
-      {% if shipping_required %}
+
+      <div class="row row-cols-2">
+
+        <div class="col mb-3 required">
+
+          {% if shipping_required %}
+            <br/>
+            <div id="checkout-shipping-method">{{ shipping_method }}</div>
+          {% endif %}
+
+        </div>
+
+
         <br/>
-        <div id="checkout-shipping-method">{{ shipping_method }}</div>
-      {% endif %}
-      <br/>
-      <div id="checkout-payment-method">{{ payment_method }}</div>
-      <br/>
-      <div id="checkout-confirm"></div>
-      {{ content_bottom }}
+        <div class="col mb-3 required">
+          <div id="checkout-payment-method">{{ payment_method }}</div>
+        </div>
+        <br/>
+        <div id="checkout-confirm">
+
+        </div>
+
+        {{ content_bottom }}
+      </div>
+
+      {{ column_right }}
     </div>
-    {{ column_right }}
   </div>
-</div>
 {{ footer }}

@@ -591,4 +591,14 @@ class Register extends \Opencart\System\Engine\Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
+
+	public function confirm() {
+		$this->load->language('checkout/checkout');
+
+		$data['shipping_method'] = $this->load->controller('checkout/shipping_method');
+		$data['payment_method'] = $this->load->controller('checkout/payment_method');
+		$data['confirm'] = $this->load->controller('checkout/confirm');
+
+		return $this->load->view('checkout/register', $data);
+	}
 }

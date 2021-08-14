@@ -173,7 +173,7 @@ $('input[name=\'affiliates\']').autocomplete({
 
         $('#mail-affiliate-' + item['value']).remove();
 
-        html = '<tr id="mail-affiliate-' + item['value'] + '">';
+        html  = '<tr id="mail-affiliate-' + item['value'] + '">';
         html += '  <td>' + item['label'] + '<input type="hidden" name="affiliate[]" value="' + item['value'] + '"/></td>';
         html += '  <td class="text-end"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>';
         html += '</tr>';
@@ -210,7 +210,7 @@ $('input[name=\'products\']').autocomplete({
 
         $('#mail-product-' + item['value']).remove();
 
-        html = '<tr id="mail-product-' + item['value'] + '">';
+        html  = '<tr id="mail-product-' + item['value'] + '">';
         html += '  <td>' + item['label'] + '<input type="hidden" name="product[]" value="' + item['value'] + '"/></td>';
         html += '  <td class="text-end"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>';
         html += '</tr>';
@@ -242,24 +242,28 @@ function send(url) {
             $('#button-send').button('reset');
         },
         success: function(json) {
-            $('.alert-dismissible, .invalid-tooltip').remove();
+            $('.invalid-feedback').removeClass('show');
 
             if (json['error']) {
                 if (json['error']['warning']) {
-                    $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    $('#alert').prepend('<div class="alert alert-danger"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                    delete json['error'];
                 }
 
-                if (json['error']['subject']) {
-                    $('#input-subject').after('<div class="invalid-tooltip d-inline">' + json['error']['subject'] + '</div>');
-                }
+                for (key in json['error']) {
+                    for (key in json['error']) {
+                        // Show errors
+                        $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('show');
 
-                if (json['error']['message']) {
-                    $('#input-message').after('<div class="invalid-tooltip d-inline">' + json['error']['message'] + '</div>');
+                        // Highlight error fields
+                        $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
+                    }
                 }
             }
 
             if (json['success']) {
-                $('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i>  ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<div class="alert alert-success"><i class="fas fa-check-circle"></i>  ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
 
             if (json['next']) {
@@ -271,6 +275,5 @@ function send(url) {
         }
     });
 }
-
 //--></script>
 {{ footer }}

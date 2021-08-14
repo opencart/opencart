@@ -8,10 +8,14 @@
 			<div class="modal-body">
 				<div class="alert alert-info"><i class="fas fa-info-circle"></i> {{ text_signup }}</div>
 				<div class="mb-3">
-					<label for="input-username" class="form-label">{{ entry_username }}</label> <input type="text" name="opencart_username" value="" placeholder="{{ entry_username }}" id="input-username" class="form-control"/>
+					<label for="input-username" class="form-label">{{ entry_username }}</label>
+					<input type="text" name="opencart_username" value="" placeholder="{{ entry_username }}" id="input-username" class="form-control"/>
+					<div id="error-username" class="invalid-feedback"></div>
 				</div>
 				<div class="mb-3">
-					<label for="input-secret" class="form-label">{{ entry_secret }}</label> <textarea name="opencart_secret" placeholder="{{ entry_secret }}" rows="8" id="input-secret" class="form-control"></textarea>
+					<label for="input-secret" class="form-label">{{ entry_secret }}</label>
+					<textarea name="opencart_secret" placeholder="{{ entry_secret }}" rows="8" id="input-secret" class="form-control"></textarea>
+					<div id="error-secret" class="invalid-feedback"></div>
 				</div>
 			</div>
 			<div class="modal-footer">
@@ -34,7 +38,9 @@ $('#button-save').on('click', function(e) {
             $('#button-save').button('reset');
         },
         success: function(json) {
-            $('.alert-dismissible, .invalid-tooltip').remove();
+        	console.log(json);
+
+            $('.alert-dismissible, .invalid-feedback').remove();
 
             if (json['error']) {
                 if (json['error']['warning']) {
@@ -42,11 +48,13 @@ $('#button-save').on('click', function(e) {
                 }
 
                 if (json['error']['username']) {
-                    $('input[name=\'username\']').after('<div class="invalid-tooltip d-inline">' + json['error']['username'] + '</div>');
+                    $('#error-username').addClass('show').html(json['error']['username']);
                 }
 
                 if (json['error']['secret']) {
-                    $('textarea[name=\'secret\']').after('<div class="invalid-tooltip d-inline">' + json['error']['secret'] + '</div>');
+                    $('#error-secret').html(json['error']['secret']);
+
+									$('#error-secret').addClass('show');
                 }
             }
 

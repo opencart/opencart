@@ -11,12 +11,12 @@
     </div>
   </div>
   <div class="container-fluid">
+
     {% if error_warning %}
       <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
       </div>
     {% endif %}
-
 
     <div class="card">
       <div class="card-header"><i class="fas fa-sync"></i> {{ text_version }}</div>
@@ -50,7 +50,7 @@
               </div>
               <br/>
 
-              <button type="button" id="button-upgrade" data-oc-loading-text="{{ text_loading }}" class="btn btn-success" {% if not upgrade %} disabled="disabled"{% endif %}><i class="fas fa-play"></i> {{ button_start }}</button>
+              <button type="button" id="button-upgrade" data-oc-loading-text="{{ text_loading }}" class="btn btn-success"{% if not upgrade %} disabled{% endif %}><i class="fas fa-play"></i> {{ button_start }}</button>
               <div id="progress-text"></div>
             </div>
           </div>
@@ -90,7 +90,7 @@ $('#button-upgrade').on('click', function() {
             success: function(json) {
                 if (json['error']) {
                     $('#progress-bar').addClass('progress-bar-danger');
-                    $('#progress-text').html('<div class="invalid-tooltip">' + json['error'] + '</div>');
+                    $('#progress-text').html('<div class="invalid-feedback">' + json['error'] + '</div>');
                 }
 
                 if (json['redirect']) {

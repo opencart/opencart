@@ -163,12 +163,10 @@ $(document).ready(function() {
                 $(element).button('reset');
             },
             success: function(json) {
-                $(form).find('.alert-dismissible').remove();
                 $(form).find('.is-invalid').removeClass('is-invalid');
-                $(form).find('.invalid-feedback').removeClass('d-block');
+                $(form).find('.invalid-feedback').removeClass('show');
 
                 console.log(json);
-                console.log(json['error']);
 
                 if (json['redirect']) {
                     location = json['redirect'];
@@ -177,15 +175,21 @@ $(document).ready(function() {
                     delete json['redirect'];
                 }
 
+                if (typeof json['error'] == 'string') {
+                    $('#alert').prepend('<div class="alert alert-danger fade show"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                    delete json['error'];
+                }
+
                 if (typeof json['error'] == 'object') {
                     if (json['error']['warning']) {
-                        $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                        $('#alert').prepend('<div class="alert alert-danger fade opacity-25 show"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                     }
 
                     for (key in json['error']) {
                         for (key in json['error']) {
                             // Show errors
-                            $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
+                            $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('show');
 
                             // Highlight error fields
                             $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
@@ -195,16 +199,10 @@ $(document).ready(function() {
                     delete json['error'];
                 }
 
-                if (typeof json['error'] == 'string') {
-                    $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                    delete json['error'];
-                }
-
                 if (json['success']) {
-                    $('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    $('#alert').prepend('<div class="alert alert-success fade opacity-50"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                    // Refresh
+                    // Refreshv    
                     var url = $(form).attr('data-oc-load');
                     var target = $(form).attr('data-oc-target');
 

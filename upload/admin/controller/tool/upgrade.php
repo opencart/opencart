@@ -165,7 +165,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 						$path = DIR_APPLICATION . substr($destination, 6);
 					}
 
-					// We need to store the path differently for vendor folders.
+					// We need to use a different path for vendor folders.
 					if (substr($destination, 0, 15) == 'system/storage/') {
 						$path = DIR_STORAGE . substr($destination, 15);
 					}

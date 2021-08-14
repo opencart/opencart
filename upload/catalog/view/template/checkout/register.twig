@@ -16,29 +16,34 @@
         <div>
           {% for customer_group in customer_groups %}
             <div class="form-check form-check-inline">
-              <input type="radio" name="customer_group_id" value="{{ customer_group.customer_group_id }}" id="input-customer-group-{{ customer_group.customer_group_id }}" class="form-check-input"{% if customer_group.customer_group_id == customer_group_id %} checked{% endif %}/> <label for="input-customer-group-{{ customer_group.customer_group_id }}" class="form-check-label">{{ customer_group.name }}</label>
+              <input type="radio" name="customer_group_id" value="{{ customer_group.customer_group_id }}" id="input-customer-group-{{ customer_group.customer_group_id }}" class="form-check-input"{% if customer_group.customer_group_id == customer_group_id %} checked{% endif %}/>
+              <label for="input-customer-group-{{ customer_group.customer_group_id }}" class="form-check-label">{{ customer_group.name }}</label>
             </div>
           {% endfor %}
         </div>
       </div>
 
       <div class="col mb-3 required">
-        <label for="input-customer-firstname" class="form-label">{{ entry_firstname }}</label> <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-customer-firstname" class="form-control"/>
+        <label for="input-customer-firstname" class="form-label">{{ entry_firstname }}</label>
+        <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-customer-firstname" class="form-control"/>
         <div id="error-customer-firstname" class="invalid-feedback"></div>
       </div>
 
       <div class="col mb-3 required">
-        <label for="input-customer-lastname" class="form-label">{{ entry_lastname }}</label> <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-customer-lastname" class="form-control"/>
+        <label for="input-customer-lastname" class="form-label">{{ entry_lastname }}</label>
+        <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-customer-lastname" class="form-control"/>
         <div id="error-customer-lastname" class="invalid-feedback"></div>
       </div>
 
       <div class="col mb-3 required">
-        <label for="input-customer-email" class="form-label">{{ entry_email }}</label> <input type="text" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-customer-email" class="form-control"/>
+        <label for="input-customer-email" class="form-label">{{ entry_email }}</label>
+        <input type="text" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-customer-email" class="form-control"/>
         <div id="error-customer-email" class="invalid-feedback"></div>
       </div>
 
       <div class="col mb-3 required">
-        <label for="input-customer-telephone" class="form-label">{{ entry_telephone }}</label> <input type="text" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" id="input-customer-telephone" class="form-control"/>
+        <label for="input-customer-telephone" class="form-label">{{ entry_telephone }}</label>
+        <input type="text" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" id="input-customer-telephone" class="form-control"/>
         <div id="error-customer-telephone" class="invalid-feedback"></div>
       </div>
 
@@ -472,7 +477,6 @@
     </fieldset>
   {% endif %}
 
-
   <fieldset id="password">
     <legend>{{ text_your_password }}</legend>
     <div class="row row-cols-2">
@@ -505,9 +509,19 @@
         </div>
       </fieldset>
     </div>
-
   </div>
 </form>
+</div>
+<div id="payment">
+
+
+
+</div>
+
+
+
+
+
 <script type="text/javascript"><!--
 // Account
 $('#checkout-register input[name=\'account\']').on('click', function() {
@@ -520,7 +534,7 @@ $('#checkout-register input[name=\'account\']').on('click', function() {
     if (value == 1) {
         $('#password').removeClass('d-none');
     }
-});
+})
 
 $('#checkout-register input[name=\'account\']:checked').trigger('click');
 
@@ -613,6 +627,90 @@ $('#checkout-register select[name$=\'_country_id\']').on('change', function() {
 
 $('#checkout-register select[name=\'payment_country_id\']').trigger('change');
 $('#checkout-register select[name=\'shipping_country_id\']').trigger('change');
+
+
+
+
+// Forms
+$(document).ready(function() {
+    $(document).on('click', '#button-register', function() {
+        var element = this;
+
+        $.ajax({
+            url: 'index.php?route=',
+            type: 'post',
+            dataType: 'json',
+            data: new FormData($('#form-register')[0]),
+            cache: false,
+            contentType: false,
+            processData: false,
+            beforeSend: function() {
+                $(element).button('loading');
+            },
+            complete: function() {
+                $(element).button('reset');
+            },
+            success: function(json) {
+                $('#form-register').find('.alert-dismissible').remove();
+                $('#form-register').find('.is-invalid').removeClass('is-invalid');
+                $('#form-register').find('.invalid-feedback').removeClass('d-block');
+
+                console.log(json);
+                console.log(json['error']);
+
+                if (json['redirect']) {
+                    location = json['redirect'];
+
+                    // Not sure this part works
+                    delete json['redirect'];
+                }
+
+                if (typeof json['error'] == 'object') {
+                    if (json['error']['warning']) {
+                        $('#form-register').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    }
+
+                    for (key in json['error']) {
+                        // Show errors
+                        $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
+
+                        // Highlight error fields
+                        $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
+                    }
+
+                    delete json['error'];
+                }
+
+                if (typeof json['error'] == 'string') {
+                    $('warning-error').after('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                }
+
+                if (json['success']) {
+                    $(form).after('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                    // Refresh
+                    var url = $(form).attr('data-oc-load');
+                    var target = $(form).attr('data-oc-target');
+
+                    if (typeof url !== typeof undefined && typeof target !== typeof undefined) {
+                        $(target).load(url);
+                    }
+
+                    delete json['success'];
+                }
+
+                for (key in json) {
+                    $(form).find('[name=\'' + key + '\']').val(json[key]);
+                }
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+
+                alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
+        });
+    });
+});
 
 $('.date').datetimepicker({
     'format': 'YYYY-MM-DD',

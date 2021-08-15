@@ -232,7 +232,8 @@ $(document).ready(function() {
                 }
             },
             error: function(xhr, ajaxOptions, thrownError) {
-                alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });
     });
@@ -289,7 +290,7 @@ $(document).on('click', '[data-oc-upload]', function() {
                     }
 
                     if (json['success']) {
-                        alert(json['success']);
+                        oc.alert('success', json['success']);
 
                         if (json['code']) {
                             $(target).attr('value', json['code']);
@@ -297,7 +298,8 @@ $(document).on('click', '[data-oc-upload]', function() {
                     }
                 },
                 error: function(xhr, ajaxOptions, thrownError) {
-                    alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                    oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                    console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
                 }
             });
         }

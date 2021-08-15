@@ -228,8 +228,7 @@
                   <label class="col-sm-2 col-form-label">{{ entry_newsletter }}</label>
                   <div class="col-sm-10">
                     <div class="btn-group">
-                      <input type="radio" name="newsletter" value="1" id="input-newsletter-yes" class="btn-check"{% if newsletter %} checked{% endif %}/> <label for="input-newsletter-yes" class="btn btn-outline-secondary">{{ text_yes }}</label>
-                      <input type="radio" name="newsletter" value="0" id="input-newsletter-no" class="btn-check"{% if not newsletter %} checked{% endif %}/> <label for="input-newsletter-no" class="btn btn-outline-secondary">{{ text_no }}</label>
+                      <input type="radio" name="newsletter" value="1" id="input-newsletter-yes" class="btn-check"{% if newsletter %} checked{% endif %}/> <label for="input-newsletter-yes" class="btn btn-outline-secondary">{{ text_yes }}</label> <input type="radio" name="newsletter" value="0" id="input-newsletter-no" class="btn-check"{% if not newsletter %} checked{% endif %}/> <label for="input-newsletter-no" class="btn btn-outline-secondary">{{ text_no }}</label>
                     </div>
                   </div>
                 </div>
@@ -564,7 +563,8 @@ $('select[name=\'customer_group_id\']').on('change', function() {
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
-            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 });
@@ -867,7 +867,8 @@ $('#tab-address').on('change', 'select[name$=\'[country_id]\']', function() {
                 $('#tab-address select[name$=\'[country_id]\']:disabled:first').trigger('change');
             },
             error: function(xhr, ajaxOptions, thrownError) {
-                alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });
     } else {
@@ -938,7 +939,8 @@ $('#button-history').on('click', function(e) {
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
-            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 });
@@ -983,7 +985,8 @@ $('#button-transaction').on('click', function(e) {
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
-            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 });
@@ -1028,7 +1031,8 @@ $('#button-reward').on('click', function(e) {
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
-            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 });

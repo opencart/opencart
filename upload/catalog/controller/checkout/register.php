@@ -469,7 +469,7 @@ class Register extends \Opencart\System\Engine\Controller {
 						'zone_id'      => $this->request->post['payment_zone_id'],
 						'custom_field' => isset($this->request->post['payment_custom_field']) ? $this->request->post['payment_custom_field'] : []
 					];
-					
+
 					$address_id = $this->model_account_address->addAddress($customer_id, $payment_address_data);
 
 					// Set the address as default

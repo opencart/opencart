@@ -134,6 +134,21 @@ $(document).ajaxStop(function(e) {
   //  $('.nav-tabs li:first-child [data-bs-toggle=\'tab\']').tab('show');
 });
 */
+
+var oc = [];
+
+oc.alert = function(type, message) {
+    $('#alert').prepend('<div class="alert alert-' + type + ' fade show"><i class="fas fa-exclamation-circle"></i> ' + message + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+}
+
+oc.error = function(key, message) {
+    // Highlight error fields
+    $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
+
+    // Show errors
+    $('#error-' + key.replaceAll('_', '-')).html(message).addClass('show');
+}
+
 // Forms
 $(document).ready(function() {
     $(document).on('click', '[data-oc-action]', function() {
@@ -176,23 +191,19 @@ $(document).ready(function() {
                 }
 
                 if (typeof json['error'] == 'string') {
-                    $('#alert').prepend('<div class="alert alert-danger fade show"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    oc.alert('danger', json['error']);
 
                     delete json['error'];
                 }
 
                 if (typeof json['error'] == 'object') {
                     if (json['error']['warning']) {
-                        $('#alert').prepend('<div class="alert alert-danger fade opacity-25 show"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                        oc.alert('danger', json['error']['warning']);
                     }
 
                     for (key in json['error']) {
                         for (key in json['error']) {
-                            // Show errors
-                            $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('show');
-
-                            // Highlight error fields
-                            $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
+                            oc.error(key, json['error'][key]);
                         }
                     }
 
@@ -210,7 +221,7 @@ $(document).ready(function() {
                         $(target).load(url);
                     }
 
-                    $(target).find('[data-bs-toggle=\'tooltip\']').tooltip();
+                   // $(target).find('[data-bs-toggle=\'tooltip\']').tooltip();
 
                     delete json['success'];
                 }
@@ -271,10 +282,10 @@ $(document).on('click', '[data-oc-upload]', function() {
                 success: function(json) {
                     console.log(json);
 
-                    $(element).parent().find('.invalid-tooltip').remove();
+                    $(element).parent().find('.invalid-feedback').remove();
 
                     if (json['error']) {
-                        $(element).after('<div class="invalid-tooltip d-inline">' + json['error'] + '</div>');
+                        $(element).after('<div class="invalid-feedback show">' + json['error'] + '</div>');
                     }
 
                     if (json['success']) {

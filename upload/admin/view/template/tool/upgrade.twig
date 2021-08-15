@@ -13,9 +13,7 @@
   <div class="container-fluid">
 
     {% if error_warning %}
-      <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-      </div>
+      <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }} <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>
     {% endif %}
 
     <div class="card">
@@ -71,15 +69,9 @@ $('#button-upgrade').on('click', function() {
     $('#progress-text').html('{{ text_download }}');
     $('#log').append('{{ text_download }}' + "\n");
 
-    var next = 'index.php?route=tool/backup|restore&user_token={{ user_token }}&filename=' + encodeURIComponent($(this).val());
-
-
-    'index.php?route=tool/upgrade|download&user_token={{ user_token }}&version={{ version }}'
-
-
-    var upgrade = function(url) {
+    var upgrade = function(next) {
         return $.ajax({
-            url: url,
+            url: next,
             dataType: 'json',
             beforeSend: function() {
                 $('#button-upgrade').button('loading');
@@ -90,7 +82,7 @@ $('#button-upgrade').on('click', function() {
             success: function(json) {
                 if (json['error']) {
                     $('#progress-bar').addClass('progress-bar-danger');
-                    $('#progress-text').html('<div class="invalid-feedback">' + json['error'] + '</div>');
+                    $('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
                 }
 
                 if (json['redirect']) {
@@ -101,24 +93,22 @@ $('#button-upgrade').on('click', function() {
                     i = i + 1;
 
                     $('#progress-bar').css('width', (i * 20) + '%');
-
                     $('#progress-bar').css('width', '20%');
+
                     $('#progress-text').html(json['text']);
                 }
 
                 if (json['next']) {
-                    next = json['next'];
-
-                    chain.attach(upgrade);
+                    chain.attach(upgrade(json['next']));
                 }
             },
             error: function(xhr, ajaxOptions, thrownError) {
                 $('#log').append(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });
-    }
+    };
 
-    chain.attach(upgrade);
+    chain.attach(upgrade('index.php?route=tool/upgrade|download&user_token={{ user_token }}&version={{ version }}'));
 });
 //--></script>
 {{ footer }}

@@ -102,7 +102,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 			$json['error']['from_email'] = $this->language->get('error_email');
 		}
 
-		if (!isset($this->request->post['voucher_theme_id'])) {
+		if (!$this->request->post['voucher_theme_id']) {
 			$json['error']['theme'] = $this->language->get('error_theme');
 		}
 

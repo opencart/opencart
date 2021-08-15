@@ -58,7 +58,7 @@ $('#button-save').on('click', function(e) {
 
             if (json['success']) {
                 $('#modal-opencart .modal-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
+                
                 window.location.reload();
             }
         },

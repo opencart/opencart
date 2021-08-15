@@ -453,11 +453,13 @@ class Register extends \Opencart\System\Engine\Controller {
 			if ($this->request->post['account']) {
 				$customer_id = $this->model_account_customer->addCustomer($this->request->post);
 
+				$this->load->model('account/address');
+
 				// Add payment address to customer account
 				if ($this->config->get('config_checkout_address')) {
 					$payment_address_data = [
-						'firstname'    => $this->request->post['customer_firstname'],
-						'lastname'     => $this->request->post['customer_lastname'],
+						'firstname'    => $this->request->post['firstname'],
+						'lastname'     => $this->request->post['lastname'],
 						'company'      => $this->request->post['payment_company'],
 						'address_1'    => $this->request->post['payment_address_1'],
 						'address_2'    => $this->request->post['payment_address_2'],
@@ -465,11 +467,9 @@ class Register extends \Opencart\System\Engine\Controller {
 						'postcode'     => $this->request->post['payment_postcode'],
 						'country_id'   => $this->request->post['payment_country_id'],
 						'zone_id'      => $this->request->post['payment_zone_id'],
-						'custom_field' => $this->request->post['payment_custom_field']
+						'custom_field' => isset($this->request->post['payment_custom_field']) ? $this->request->post['payment_custom_field'] : []
 					];
-
-					$this->load->model('account/address');
-
+					
 					$address_id = $this->model_account_address->addAddress($customer_id, $payment_address_data);
 
 					// Set the address as default
@@ -480,8 +480,8 @@ class Register extends \Opencart\System\Engine\Controller {
 				if ($this->cart->hasShipping() && !$this->request->post['shipping_address']) {
 					// If no payment address we can use the customer name instead of shipping
 					if (!$this->config->get('config_checkout_address')) {
-						$firstname = $this->request->post['customer_firstname'];
-						$lastname = $this->request->post['customer_lastname'];
+						$firstname = $this->request->post['firstname'];
+						$lastname = $this->request->post['lastname'];
 					} else {
 						$firstname = $this->request->post['shipping_firstname'];
 						$lastname = $this->request->post['shipping_lastname'];
@@ -497,7 +497,7 @@ class Register extends \Opencart\System\Engine\Controller {
 						'postcode'     => $this->request->post['shipping_postcode'],
 						'country_id'   => $this->request->post['shipping_country_id'],
 						'zone_id'      => $this->request->post['shipping_zone_id'],
-						'custom_field' => $this->request->post['shipping_custom_field']
+						'custom_field' => isset($this->request->post['shipping_custom_field']) ? $this->request->post['shipping_custom_field'] : []
 					];
 
 					$address_id = $this->model_account_address->addAddress($customer_id, $shipping_address_data);
@@ -517,14 +517,14 @@ class Register extends \Opencart\System\Engine\Controller {
 				'lastname'          => $this->request->post['lastname'],
 				'email'             => $this->request->post['email'],
 				'telephone'         => $this->request->post['telephone'],
-				'custom_field'      => $this->request->post['custom_field']
+				'custom_field'      => isset($this->request->post['custom_field']) ? $this->request->post['custom_field'] : []
 			];
 
 			// Add payment address into session
 			if ($this->config->get('config_checkout_address')) {
 				$this->session->data['payment_address'] = [
-					'firstname'    => $this->request->post['customer_firstname'],
-					'lastname'     => $this->request->post['customer_lastname'],
+					'firstname'    => $this->request->post['firstname'],
+					'lastname'     => $this->request->post['lastname'],
 					'company'      => $this->request->post['payment_company'],
 					'address_1'    => $this->request->post['payment_address_1'],
 					'address_2'    => $this->request->post['payment_address_2'],
@@ -532,7 +532,7 @@ class Register extends \Opencart\System\Engine\Controller {
 					'postcode'     => $this->request->post['payment_postcode'],
 					'country_id'   => $this->request->post['payment_country_id'],
 					'zone_id'      => $this->request->post['payment_zone_id'],
-					'custom_field' => $this->request->post['payment_custom_field']
+					'custom_field' => isset($this->request->post['payment_custom_field']) ? $this->request->post['payment_custom_field'] : []
 				];
 
 				//  If payment and shipping address are the same
@@ -545,8 +545,8 @@ class Register extends \Opencart\System\Engine\Controller {
 			if ($this->cart->hasShipping() && !$this->request->post['shipping_address']) {
 				// If no payment address we can use the customer name instead of shipping
 				if (!$this->config->get('config_checkout_address')) {
-					$firstname = $this->request->post['customer_firstname'];
-					$lastname = $this->request->post['customer_lastname'];
+					$firstname = $this->request->post['firstname'];
+					$lastname = $this->request->post['lastname'];
 				} else {
 					$firstname = $this->request->post['shipping_firstname'];
 					$lastname = $this->request->post['shipping_lastname'];
@@ -562,7 +562,7 @@ class Register extends \Opencart\System\Engine\Controller {
 					'postcode'     => $this->request->post['shipping_postcode'],
 					'country_id'   => $this->request->post['shipping_country_id'],
 					'zone_id'      => $this->request->post['shipping_zone_id'],
-					'custom_field' => $this->request->post['shipping_custom_field']
+					'custom_field' => isset($this->request->post['shipping_custom_field']) ? $this->request->post['shipping_custom_field'] : []
 				];
 			}
 

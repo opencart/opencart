@@ -33,14 +33,12 @@ $('#statistics').on('click', '.btn-warning', function(e) {
             $(element).button('reset');
         },
         success: function(json) {
-            $('.invalid-tooltip, .alert-dismissible').remove();
-
             if (json['error']) {
-                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                oc.alert('danger', json['error']);
             }
 
             if (json['success']) {
-                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                oc.alert('success', json['success']);
 
                 $('#statistics').load('index.php?route=report/statistics|list&user_token={{ user_token }}');
             }

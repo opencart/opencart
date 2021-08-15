@@ -1,7 +1,7 @@
 <?php
-namespace Opencart\Application\Model\Extension\Opencart\Report;
+namespace Opencart\Admin\Model\Extension\Opencart\Report;
 class Marketing extends \Opencart\System\Engine\Model {
-	public function getMarketing($data = []) {
+	public function getMarketing(array $data = []): array {
 		$sql = "SELECT m.`marketing_id`, m.`name` AS campaign, m.`code`, m.`clicks` AS clicks, (SELECT COUNT(DISTINCT `order_id`) FROM `" . DB_PREFIX . "order` o1 WHERE o1.`marketing_id` = m.`marketing_id`";
 
 		if (!empty($data['filter_order_status_id'])) {
@@ -11,11 +11,11 @@ class Marketing extends \Opencart\System\Engine\Model {
 		}
 
 		if (!empty($data['filter_date_start'])) {
-			$sql .= " AND DATE(o1.`date_added`) >= '" . $this->db->escape((string)$data['filter_date_start']) . "'";
+			$sql .= " AND DATE(o1.`date_added`) >= DATE('" . $this->db->escape((string)$data['filter_date_start']) . "')";
 		}
 
 		if (!empty($data['filter_date_end'])) {
-			$sql .= " AND DATE(o1.`date_added`) <= '" . $this->db->escape((string)$data['filter_date_end']) . "'";
+			$sql .= " AND DATE(o1.`date_added`) <= DATE('" . $this->db->escape((string)$data['filter_date_end']) . "')";
 		}
 
 		$sql .= ") AS `orders`, (SELECT SUM(`total`) FROM `" . DB_PREFIX . "order` o2 WHERE o2.`marketing_id` = m.`marketing_id`";
@@ -27,11 +27,11 @@ class Marketing extends \Opencart\System\Engine\Model {
 		}
 
 		if (!empty($data['filter_date_start'])) {
-			$sql .= " AND DATE(o2.`date_added`) >= '" . $this->db->escape((string)$data['filter_date_start']) . "'";
+			$sql .= " AND DATE(o2.`date_added`) >= DATE('" . $this->db->escape((string)$data['filter_date_start']) . "')";
 		}
 
 		if (!empty($data['filter_date_end'])) {
-			$sql .= " AND DATE(o2.`date_added`) <= '" . $this->db->escape((string)$data['filter_date_end']) . "'";
+			$sql .= " AND DATE(o2.`date_added`) <= DATE('" . $this->db->escape((string)$data['filter_date_end']) . "')";
 		}
 
 		$sql .= " GROUP BY o2.`marketing_id`) AS `total` FROM `" . DB_PREFIX . "marketing` m ORDER BY m.`date_added` ASC";
@@ -53,7 +53,7 @@ class Marketing extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function getTotalMarketing($data = []) {
+	public function getTotalMarketing(array $data = []): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "marketing`");
 
 		return $query->row['total'];

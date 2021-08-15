@@ -8,9 +8,6 @@
   {% if success %}
     <div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> {{ success }}</div>
   {% endif %}
-  {% if error_warning %}
-    <div class="alert alert-warning"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}</div>
-  {% endif %}
   <div class="row">{{ column_left }}
     <div id="content" class="col">{{ content_top }}
       <h1>{{ text_address_book }}</h1>
@@ -19,8 +16,8 @@
           <table class="table table-bordered table-hover">
             {% for result in addresses %}
               <tr>
-                <td class="text-left">{{ result.address }}</td>
-                <td class="text-right"><a href="{{ result.update }}" class="btn btn-info">{{ button_edit }}</a> &nbsp; <a href="{{ result.delete }}" class="btn btn-danger">{{ button_delete }}</a></td>
+                <td class="text-start">{{ result.address }}</td>
+                <td class="text-end"><a href="{{ result.update }}" class="btn btn-info">{{ button_edit }}</a> &nbsp; <a href="{{ result.delete }}" class="btn btn-danger">{{ button_delete }}</a></td>
               </tr>
             {% endfor %}
           </table>
@@ -29,8 +26,8 @@
         <p>{{ text_no_results }}</p>
       {% endif %}
       <div class="d-inline-block pt-2 pd-2 w-100">
-        <div class="float-left"><a href="{{ back }}" class="btn btn-light">{{ button_back }}</a></div>
-        <div class="float-right"><a href="{{ add }}" class="btn btn-primary">{{ button_new_address }}</a></div>
+        <div class="float-start"><a href="{{ back }}" class="btn btn-light">{{ button_back }}</a></div>
+        <div class="float-end"><a href="{{ add }}" class="btn btn-primary">{{ button_new_address }}</a></div>
       </div>
       {{ content_bottom }}
     </div>

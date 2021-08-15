@@ -1,28 +1,13 @@
 <?php
-namespace Opencart\Application\Controller\Account;
+namespace Opencart\Catalog\Controller\Account;
 class WishList extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): void {
+		$this->load->language('account/wishlist');
+
 		if (!$this->customer->isLogged()) {
 			$this->session->data['redirect'] = $this->url->link('account/wishlist', 'language=' . $this->config->get('config_language'));
 
 			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language')));
-		}
-
-		$this->load->language('account/wishlist');
-
-		$this->load->model('account/wishlist');
-
-		$this->load->model('catalog/product');
-
-		$this->load->model('tool/image');
-
-		if (isset($this->request->get['remove'])) {
-			// Remove Wishlist
-			$this->model_account_wishlist->deleteWishlist($this->request->get['remove']);
-
-			$this->session->data['success'] = $this->language->get('text_remove');
-
-			$this->response->redirect($this->url->link('account/wishlist', 'language=' . $this->config->get('config_language')));
 		}
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -54,6 +39,10 @@ class WishList extends \Opencart\System\Engine\Controller {
 
 		$data['products'] = [];
 
+		$this->load->model('account/wishlist');
+		$this->load->model('catalog/product');
+		$this->load->model('tool/image');
+
 		$results = $this->model_account_wishlist->getWishlist();
 
 		foreach ($results as $result) {
@@ -61,7 +50,7 @@ class WishList extends \Opencart\System\Engine\Controller {
 
 			if ($product_info) {
 				if ($product_info['image']) {
-					$image = $this->model_tool_image->resize(html_entity_decode($product_info['image'], ENT_QUOTES, 'UTF-8'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_wishlist_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_wishlist_height'));
+					$image = $this->model_tool_image->resize(html_entity_decode($product_info['image'], ENT_QUOTES, 'UTF-8'), $this->config->get('config_image_wishlist_width'), $this->config->get('config_image_wishlist_height'));
 				} else {
 					$image = false;
 				}
@@ -115,7 +104,7 @@ class WishList extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('account/wishlist', $data));
 	}
 
-	public function add() {
+	public function add(): void {
 		$this->load->language('account/wishlist');
 
 		$json = [];
@@ -153,6 +142,24 @@ class WishList extends \Opencart\System\Engine\Controller {
 
 				$json['total'] = sprintf($this->language->get('text_wishlist'), (isset($this->session->data['wishlist']) ? count($this->session->data['wishlist']) : 0));
 			}
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	public function remove(): void {
+		$this->load->language('account/wishlist');
+
+		$json = [];
+
+		if (isset($this->request->get['remove'])) {
+			// Remove Wishlist
+			$this->model_account_wishlist->deleteWishlist($this->request->get['remove']);
+
+			$this->session->data['success'] = $this->language->get('text_remove');
+
+			$json['redirect'] = $this->url->link('account/wishlist', 'language=' . $this->config->get('config_language'), true);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

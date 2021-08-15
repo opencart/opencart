@@ -1,7 +1,7 @@
 <?php
-namespace Opencart\Application\Controller\Extension\Opencart\Total;
+namespace Opencart\Catalog\Controller\Extension\Opencart\Total;
 class Coupon extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): string {
 		if ($this->config->get('total_coupon_status')) {
 			$this->load->language('extension/opencart/total/coupon');
 
@@ -15,7 +15,7 @@ class Coupon extends \Opencart\System\Engine\Controller {
 		}
 	}
 
-	public function coupon() {
+	public function save(): void {
 		$this->load->language('extension/opencart/total/coupon');
 
 		$json = [];
@@ -28,7 +28,7 @@ class Coupon extends \Opencart\System\Engine\Controller {
 			$coupon = '';
 		}
 
-		$coupon_info = $this->model_extension_total_coupon->getCoupon($coupon);
+		$coupon_info = $this->model_extension_opencart_total_coupon->getCoupon($coupon);
 
 		if (empty($this->request->post['coupon'])) {
 			$json['error'] = $this->language->get('error_empty');
@@ -38,10 +38,27 @@ class Coupon extends \Opencart\System\Engine\Controller {
 			$this->session->data['coupon'] = $this->request->post['coupon'];
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'));
+			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
 		} else {
 			$json['error'] = $this->language->get('error_coupon');
 		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	public function remove(): void {
+		$this->load->language('extension/opencart/total/coupon');
+
+		$json = [];
+
+		if (isset($this->session->data['coupon'])) {
+			unset($this->session->data['coupon']);
+
+			$this->session->data['success'] = $this->language->get('text_remove');
+		}
+
+		$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

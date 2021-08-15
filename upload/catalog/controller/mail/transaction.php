@@ -1,8 +1,8 @@
 <?php
-namespace Opencart\Application\Controller\Mail;
+namespace Opencart\Catalog\Controller\Mail;
 class Transaction extends \Opencart\System\Engine\Controller {
 	// catalog/model/account/customer/addTransaction/after
-	public function index(&$route, &$args, &$output) {
+	public function index(string &$route, array &$args, mixed &$output): void {
 		$this->load->language('mail/transaction');
 
 		$this->load->model('account/customer');
@@ -10,23 +10,48 @@ class Transaction extends \Opencart\System\Engine\Controller {
 		$customer_info = $this->model_account_customer->getCustomer($args[0]);
 
 		if ($customer_info) {
-			$this->load->model('tool/image');
+			$this->load->model('setting/store');
 
-			if (is_file(DIR_IMAGE . html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8'))) {
-				$data['logo'] = $this->model_tool_image->resize(html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8'), $this->config->get('theme_default_image_location_width'), $this->config->get('theme_default_image_cart_height'));
+			$store_info = $this->model_setting_store->getStore($customer_info['store_id']);
+
+			if ($store_info) {
+				$store_name = html_entity_decode($store_info['name'], ENT_QUOTES, 'UTF-8');
+				$store_url = $store_info['store_url'];
 			} else {
-				$data['logo'] = '';
+				$store_name = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
+				$store_url = $this->config->get('config_url');
 			}
 
-			$data['text_received'] = sprintf($this->language->get('text_received'), $this->config->get('config_name'));
-			$data['text_amount'] = $this->language->get('text_amount');
-			$data['text_total'] = $this->language->get('text_total');
+			$this->load->model('localisation/language');
+
+			$language_info = $this->model_localisation_language->getLanguage($customer_info['language_id']);
+
+			if ($language_info) {
+				$language_code = $language_info['code'];
+			} else {
+				$language_code = $this->config->get('config_language');
+			}
+
+			// Load the language for any mails using a different country code and prefixing it so it does not pollute the main data pool.
+			$this->language->load($language_code, 'mail', $language_code);
+			$this->language->load('mail/transaction', 'mail', $language_code);
+
+			// Add language vars to the template folder
+			$results = $this->language->all('mail');
+
+			foreach ($results as $key => $value) {
+				$data[$key] = $value;
+			}
+
+			$subject = sprintf($this->language->get('mail_text_subject'), $store_name);
+
+			$data['text_received'] = sprintf($this->language->get('mail_text_received'), $store_name);
 
 			$data['amount'] = $this->currency->format($args[2], $this->config->get('config_currency'));
 			$data['total'] = $this->currency->format($this->model_account_customer->getTransactionTotal($args[0]), $this->config->get('config_currency'));
 
-			$data['store_url'] = $this->config->get('config_url');
-			$data['store'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
+			$data['store'] = $store_name;
+			$data['store_url'] = $store_url;
 
 			$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'));
 			$mail->parameter = $this->config->get('config_mail_parameter');
@@ -38,8 +63,8 @@ class Transaction extends \Opencart\System\Engine\Controller {
 
 			$mail->setTo($customer_info['email']);
 			$mail->setFrom($this->config->get('config_email'));
-			$mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
-			$mail->setSubject(html_entity_decode(sprintf($this->language->get('text_subject'), $this->config->get('config_name')), ENT_QUOTES, 'UTF-8'));
+			$mail->setSender($store_name);
+			$mail->setSubject($subject);
 			$mail->setHtml($this->load->view('mail/transaction', $data));
 			$mail->send();
 		}

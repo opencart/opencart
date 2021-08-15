@@ -1,7 +1,7 @@
 <?php
-namespace Opencart\Application\Controller\Checkout;
+namespace Opencart\Catalog\Controller\Checkout;
 class Cart extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): void {
 		$this->load->language('checkout/cart');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -30,7 +30,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 			}
 
 			if ($this->config->get('config_customer_price') && !$this->customer->isLogged()) {
-				$data['attention'] = sprintf($this->language->get('text_login'), $this->url->link('account/login', 'language=' . $this->config->get('config_language')), $this->url->link('account|register', 'language=' . $this->config->get('config_language')));
+				$data['attention'] = sprintf($this->language->get('text_login'), $this->url->link('account/login', 'language=' . $this->config->get('config_language')), $this->url->link('account/register', 'language=' . $this->config->get('config_language')));
 			} else {
 				$data['attention'] = '';
 			}
@@ -43,184 +43,16 @@ class Cart extends \Opencart\System\Engine\Controller {
 				$data['success'] = '';
 			}
 
-			$data['action'] = $this->url->link('checkout/cart|edit', 'language=' . $this->config->get('config_language'));
-
 			if ($this->config->get('config_cart_weight')) {
 				$data['weight'] = $this->weight->format($this->cart->getWeight(), $this->config->get('config_weight_class_id'), $this->language->get('decimal_point'), $this->language->get('thousand_point'));
 			} else {
 				$data['weight'] = '';
 			}
 
-			$this->load->model('tool/image');
-			$this->load->model('tool/upload');
-
-			$frequencies = [
-				'day'        => $this->language->get('text_day'),
-				'week'       => $this->language->get('text_week'),
-				'semi_month' => $this->language->get('text_semi_month'),
-				'month'      => $this->language->get('text_month'),
-				'year'       => $this->language->get('text_year')
-			];
-
-			$data['products'] = [];
-
-			$products = $this->cart->getProducts();
-
-			foreach ($products as $product) {
-				$product_total = 0;
-
-				foreach ($products as $product_2) {
-					if ($product_2['product_id'] == $product['product_id']) {
-						$product_total += $product_2['quantity'];
-					}
-				}
-
-				if ($product['minimum'] > $product_total) {
-					$data['error_warning'] = sprintf($this->language->get('error_minimum'), $product['name'], $product['minimum']);
-				}
-
-				if ($product['image']) {
-					$image = $this->model_tool_image->resize(html_entity_decode($product['image'], ENT_QUOTES, 'UTF-8'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_cart_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_cart_height'));
-				} else {
-					$image = $this->model_tool_image->resize('placeholder.png', $this->config->get('theme_' . $this->config->get('config_theme') . '_image_cart_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_cart_height'));
-				}
-
-				$option_data = [];
-
-				foreach ($product['option'] as $option) {
-					if ($option['type'] != 'file') {
-						$value = $option['value'];
-					} else {
-						$upload_info = $this->model_tool_upload->getUploadByCode($option['value']);
-
-						if ($upload_info) {
-							$value = $upload_info['name'];
-						} else {
-							$value = '';
-						}
-					}
-
-					$option_data[] = [
-						'name'  => $option['name'],
-						'value' => (utf8_strlen($value) > 20 ? utf8_substr($value, 0, 20) . '..' : $value)
-					];
-				}
-
-				// Display prices
-				if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
-					$unit_price = $this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax'));
-
-					$price = $this->currency->format($unit_price, $this->session->data['currency']);
-					$total = $this->currency->format($unit_price * $product['quantity'], $this->session->data['currency']);
-				} else {
-					$price = false;
-					$total = false;
-				}
-
-				$recurring = '';
-
-				if ($product['recurring']) {
-					if ($product['recurring']['trial']) {
-						$recurring = sprintf($this->language->get('text_trial_description'), $this->currency->format($this->tax->calculate($product['recurring']['trial_price'] * $product['quantity'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']), $product['recurring']['trial_cycle'], $frequencies[$product['recurring']['trial_frequency']], $product['recurring']['trial_duration']) . ' ';
-					}
-
-					if ($product['recurring']['duration']) {
-						$recurring .= sprintf($this->language->get('text_payment_description'), $this->currency->format($this->tax->calculate($product['recurring']['price'] * $product['quantity'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']), $product['recurring']['cycle'], $frequencies[$product['recurring']['frequency']], $product['recurring']['duration']);
-					} else {
-						$recurring .= sprintf($this->language->get('text_payment_cancel'), $this->currency->format($this->tax->calculate($product['recurring']['price'] * $product['quantity'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']), $product['recurring']['cycle'], $frequencies[$product['recurring']['frequency']], $product['recurring']['duration']);
-					}
-				}
-
-				$data['products'][] = [
-					'cart_id'   => $product['cart_id'],
-					'thumb'     => $image,
-					'name'      => $product['name'],
-					'model'     => $product['model'],
-					'option'    => $option_data,
-					'recurring' => $recurring,
-					'quantity'  => $product['quantity'],
-					'stock'     => $product['stock'] ? true : !(!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning')),
-					'reward'    => ($product['reward'] ? sprintf($this->language->get('text_points'), $product['reward']) : ''),
-					'price'     => $price,
-					'total'     => $total,
-					'href'      => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product['product_id'])
-				];
-			}
-
-			// Gift Voucher
-			$data['vouchers'] = [];
-
-			if (!empty($this->session->data['vouchers'])) {
-				foreach ($this->session->data['vouchers'] as $key => $voucher) {
-					$data['vouchers'][] = [
-						'key'         => $key,
-						'description' => $voucher['description'],
-						'amount'      => $this->currency->format($voucher['amount'], $this->session->data['currency']),
-						'remove'      => $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language') . '&remove=' . $key)
-					];
-				}
-			}
-
-			// Totals
-			$this->load->model('setting/extension');
-
-			$totals = [];
-			$taxes = $this->cart->getTaxes();
-			$total = 0;
-
-			// Display prices
-			if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
-				$sort_order = [];
-
-				$results = $this->model_setting_extension->getExtensionsByType('total');
-
-				foreach ($results as $key => $value) {
-					$sort_order[$key] = $this->config->get('total_' . $value['code'] . '_sort_order');
-				}
-
-				array_multisort($sort_order, SORT_ASC, $results);
-
-				foreach ($results as $result) {
-					if ($this->config->get('total_' . $result['code'] . '_status')) {
-						$this->load->model('extension/' . $result['extension'] . '/total/' . $result['code']);
-
-						// __call can not pass-by-reference so we get PHP to call it as an anonymous function.
-						($this->{'model_extension_' . $result['extension'] . '_total_' . $result['code']}->getTotal)($totals, $taxes, $total);
-					}
-				}
-
-				$sort_order = [];
-
-				foreach ($totals as $key => $value) {
-					$sort_order[$key] = $value['sort_order'];
-				}
-
-				array_multisort($sort_order, SORT_ASC, $totals);
-			}
-
-			$data['totals'] = [];
-
-			foreach ($totals as $total) {
-				$data['totals'][] = [
-					'title' => $total['title'],
-					'text'  => $this->currency->format($total['value'], $this->session->data['currency'])
-				];
-			}
+			$data['list'] = $this->load->controller('checkout/cart|getList');
 
 			$data['continue'] = $this->url->link('common/home', 'language=' . $this->config->get('config_language'));
 			$data['checkout'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'));
-
-			$data['modules'] = [];
-
-			foreach ($results as $result) {
-				if ($this->config->get('total_' . $result['code'] . '_status')) {
-					$result = $this->load->controller('extension/' . $result['extension'] . '/total/' . $result['code']);
-
-					if (!$result instanceof \Exception) {
-						$data['modules'][] = $result;
-					}
-				}
-			}
 
 			$data['column_left'] = $this->load->controller('common/column_left');
 			$data['column_right'] = $this->load->controller('common/column_right');
@@ -235,8 +67,6 @@ class Cart extends \Opencart\System\Engine\Controller {
 
 			$data['continue'] = $this->url->link('common/home', 'language=' . $this->config->get('config_language'));
 
-			unset($this->session->data['success']);
-
 			$data['column_left'] = $this->load->controller('common/column_left');
 			$data['column_right'] = $this->load->controller('common/column_right');
 			$data['content_top'] = $this->load->controller('common/content_top');
@@ -248,7 +78,186 @@ class Cart extends \Opencart\System\Engine\Controller {
 		}
 	}
 
-	public function add() {
+	public function list(): void {
+		$this->load->language('checkout/cart');
+
+		$this->response->setOutput($this->getList());
+	}
+
+	public function getList(): string {
+		$this->load->model('tool/image');
+		$this->load->model('tool/upload');
+
+		$frequencies = [
+			'day'        => $this->language->get('text_day'),
+			'week'       => $this->language->get('text_week'),
+			'semi_month' => $this->language->get('text_semi_month'),
+			'month'      => $this->language->get('text_month'),
+			'year'       => $this->language->get('text_year')
+		];
+
+		$data['products'] = [];
+
+		$products = $this->cart->getProducts();
+
+		foreach ($products as $product) {
+			$product_total = 0;
+
+			foreach ($products as $product_2) {
+				if ($product_2['product_id'] == $product['product_id']) {
+					$product_total += $product_2['quantity'];
+				}
+			}
+
+			if ($product['minimum'] > $product_total) {
+				$data['error_warning'] = sprintf($this->language->get('error_minimum'), $product['name'], $product['minimum']);
+			}
+
+			if ($product['image']) {
+				$image = $this->model_tool_image->resize(html_entity_decode($product['image'], ENT_QUOTES, 'UTF-8'), $this->config->get('config_image_cart_width'), $this->config->get('config_image_cart_height'));
+			} else {
+				$image = $this->model_tool_image->resize('placeholder.png', $this->config->get('config_image_cart_width'), $this->config->get('config_image_cart_height'));
+			}
+
+			$option_data = [];
+
+			foreach ($product['option'] as $option) {
+				if ($option['type'] != 'file') {
+					$value = $option['value'];
+				} else {
+					$upload_info = $this->model_tool_upload->getUploadByCode($option['value']);
+
+					if ($upload_info) {
+						$value = $upload_info['name'];
+					} else {
+						$value = '';
+					}
+				}
+
+				$option_data[] = [
+					'name'  => $option['name'],
+					'value' => (utf8_strlen($value) > 20 ? utf8_substr($value, 0, 20) . '..' : $value)
+				];
+			}
+
+			// Display prices
+			if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
+				$unit_price = $this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax'));
+
+				$price = $this->currency->format($unit_price, $this->session->data['currency']);
+				$total = $this->currency->format($unit_price * $product['quantity'], $this->session->data['currency']);
+			} else {
+				$price = false;
+				$total = false;
+			}
+
+			$recurring = '';
+
+			if ($product['recurring']) {
+				if ($product['recurring']['trial']) {
+					$recurring = sprintf($this->language->get('text_trial_description'), $this->currency->format($this->tax->calculate($product['recurring']['trial_price'] * $product['quantity'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']), $product['recurring']['trial_cycle'], $frequencies[$product['recurring']['trial_frequency']], $product['recurring']['trial_duration']) . ' ';
+				}
+
+				if ($product['recurring']['duration']) {
+					$recurring .= sprintf($this->language->get('text_payment_description'), $this->currency->format($this->tax->calculate($product['recurring']['price'] * $product['quantity'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']), $product['recurring']['cycle'], $frequencies[$product['recurring']['frequency']], $product['recurring']['duration']);
+				} else {
+					$recurring .= sprintf($this->language->get('text_payment_cancel'), $this->currency->format($this->tax->calculate($product['recurring']['price'] * $product['quantity'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']), $product['recurring']['cycle'], $frequencies[$product['recurring']['frequency']], $product['recurring']['duration']);
+				}
+			}
+
+			$data['products'][] = [
+				'cart_id'   => $product['cart_id'],
+				'thumb'     => $image,
+				'name'      => $product['name'],
+				'model'     => $product['model'],
+				'option'    => $option_data,
+				'recurring' => $recurring,
+				'quantity'  => $product['quantity'],
+				'stock'     => $product['stock'] ? true : !(!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning')),
+				'reward'    => ($product['reward'] ? sprintf($this->language->get('text_points'), $product['reward']) : ''),
+				'price'     => $price,
+				'total'     => $total,
+				'href'      => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product['product_id'])
+			];
+		}
+
+		$data['action'] = $this->url->link('checkout/cart|edit', 'language=' . $this->config->get('config_language'));
+
+		// Gift Voucher
+		$data['vouchers'] = [];
+
+		if (!empty($this->session->data['vouchers'])) {
+			foreach ($this->session->data['vouchers'] as $key => $voucher) {
+				$data['vouchers'][] = [
+					'key'         => $key,
+					'description' => $voucher['description'],
+					'amount'      => $this->currency->format($voucher['amount'], $this->session->data['currency']),
+					'remove'      => $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language') . '&remove=' . $key)
+				];
+			}
+		}
+
+		// Totals
+		$this->load->model('setting/extension');
+
+		$totals = [];
+		$taxes = $this->cart->getTaxes();
+		$total = 0;
+
+		$data['totals'] = [];
+		$data['modules'] = [];
+
+		// Display prices
+		if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
+			$sort_order = [];
+
+			$results = $this->model_setting_extension->getExtensionsByType('total');
+
+			foreach ($results as $key => $value) {
+				$sort_order[$key] = $this->config->get('total_' . $value['code'] . '_sort_order');
+			}
+
+			array_multisort($sort_order, SORT_ASC, $results);
+
+			foreach ($results as $result) {
+				if ($this->config->get('total_' . $result['code'] . '_status')) {
+					$this->load->model('extension/' . $result['extension'] . '/total/' . $result['code']);
+
+					// __call can not pass-by-reference so we get PHP to call it as an anonymous function.
+					($this->{'model_extension_' . $result['extension'] . '_total_' . $result['code']}->getTotal)($totals, $taxes, $total);
+				}
+			}
+
+			$sort_order = [];
+
+			foreach ($totals as $key => $value) {
+				$sort_order[$key] = $value['sort_order'];
+			}
+
+			array_multisort($sort_order, SORT_ASC, $totals);
+
+			foreach ($totals as $total) {
+				$data['totals'][] = [
+					'title' => $total['title'],
+					'text'  => $this->currency->format($total['value'], $this->session->data['currency'])
+				];
+			}
+
+			foreach ($results as $result) {
+				if ($this->config->get('total_' . $result['code'] . '_status')) {
+					$result = $this->load->controller('extension/' . $result['extension'] . '/total/' . $result['code']);
+
+					if (!$result instanceof \Exception) {
+						$data['modules'][] = $result;
+					}
+				}
+			}
+		}
+
+		return $this->load->view('checkout/cart_list', $data);
+	}
+
+	public function add(): void {
 		$this->load->language('checkout/cart');
 
 		$json = [];
@@ -290,7 +299,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 
 			foreach ($product_options as $product_option) {
 				if ($product_option['required'] && empty($option[$product_option['product_option_id']])) {
-					$json['error']['option'][$product_option['product_option_id']] = sprintf($this->language->get('error_required'), $product_option['name']);
+					$json['error']['option_' . $product_option['product_option_id']] = sprintf($this->language->get('error_required'), $product_option['name']);
 				}
 			}
 
@@ -325,7 +334,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 				unset($this->session->data['payment_method']);
 				unset($this->session->data['payment_methods']);
 			} else {
-				$json['redirect'] = str_replace('&amp;', '&', $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $this->request->post['product_id']));
+				$json['redirect'] = $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $this->request->post['product_id'], true);
 			}
 		}
 
@@ -333,52 +342,42 @@ class Cart extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function edit() {
+	public function edit(): void {
 		$this->load->language('checkout/cart');
 
 		$json = [];
 
-		// Update
-		if (!empty($this->request->post['quantity'])) {
-			// Handles single item update
-			if (!empty($this->request->post['key'])) {
-				$key = $this->request->post['key'];
-				$quantity = (int)$this->request->post['quantity'];
-
-				$this->cart->update($key, $quantity);
-
-				$json['success'] = $this->language->get('text_remove');
-			} else {
-				foreach ($this->request->post['quantity'] as $key => $value) {
-					$this->cart->update($key, $value);
-				}
-
-				$this->session->data['success'] = $this->language->get('text_remove');
-
-				unset($this->session->data['shipping_method']);
-				unset($this->session->data['shipping_methods']);
-				unset($this->session->data['payment_method']);
-				unset($this->session->data['payment_methods']);
-				unset($this->session->data['reward']);
-
-				$this->response->redirect($this->url->link('checkout/cart', 'language=' . $this->config->get('config_language')));
-			}
+		if (isset($this->request->get['key'])) {
+			$key = (string)$this->request->get['key'];
+		} else {
+			$key = '';
 		}
+
+		if (isset($this->request->get['quantity'])) {
+			$quantity = (int)$this->request->get['quantity'];
+		} else {
+			$quantity = 1;
+		}
+
+		// Handles single item update
+		$this->cart->update($key, $quantity);
+
+		$json['success'] = $this->language->get('text_update');
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function remove() {
+	public function remove(): void {
 		$this->load->language('checkout/cart');
 
 		$json = [];
 
 		// Remove
-		if (isset($this->request->post['key'])) {
-			$this->cart->remove($this->request->post['key']);
+		if (isset($this->request->get['key'])) {
+			$this->cart->remove($this->request->get['key']);
 
-			unset($this->session->data['vouchers'][$this->request->post['key']]);
+			unset($this->session->data['vouchers'][$this->request->get['key']]);
 
 			$json['success'] = $this->language->get('text_remove');
 

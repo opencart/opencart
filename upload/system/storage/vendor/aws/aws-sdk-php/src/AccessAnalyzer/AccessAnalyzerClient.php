@@ -5,6 +5,8 @@ use Aws\AwsClient;
 
 /**
  * This client is used to interact with the **Access Analyzer** service.
+ * @method \Aws\Result applyArchiveRule(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise applyArchiveRuleAsync(array $args = [])
  * @method \Aws\Result createAnalyzer(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createAnalyzerAsync(array $args = [])
  * @method \Aws\Result createArchiveRule(array $args = [])

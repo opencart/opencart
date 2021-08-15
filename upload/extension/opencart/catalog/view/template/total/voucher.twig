@@ -3,7 +3,7 @@
   <div id="collapse-voucher" class="collapse" data-parent="#accordion">
     <div class="card-body">
       <div class="row">
-        <label class="col-sm-2 col-form-label" for="input-voucher">{{ entry_voucher }}</label>
+        <label for="input-voucher" class="col-sm-2 col-form-label">{{ entry_voucher }}</label>
         <div class="col-md-10">
           <div class="input-group">
             <input type="text" name="voucher" value="{{ voucher }}" placeholder="{{ entry_voucher }}" id="input-voucher" class="form-control"/>
@@ -17,32 +17,32 @@
   </div>
   <script type="text/javascript"><!--
   $('#button-voucher').on('click', function() {
-	  $.ajax({
-		  url: 'index.php?route=extension/opencart/total/voucher|voucher',
-		  type: 'post',
-		  data: 'voucher=' + encodeURIComponent($('input[name=\'voucher\']').val()),
-		  dataType: 'json',
-		  beforeSend: function() {
-			  $('#button-voucher').button('loading');
-		  },
-		  complete: function() {
-			  $('#button-voucher').button('reset');
-		  },
-		  success: function(json) {
-			  $('.alert-dismissible').remove();
+      $.ajax({
+          url: 'index.php?route=extension/opencart/total/voucher|save',
+          type: 'post',
+          data: 'voucher=' + encodeURIComponent($('input[name=\'voucher\']').val()),
+          dataType: 'json',
+          beforeSend: function() {
+              $('#button-voucher').button('loading');
+          },
+          complete: function() {
+              $('#button-voucher').button('reset');
+          },
+          success: function(json) {
+              $('.alert-dismissible').remove();
 
-			  if (json['error']) {
-				  $('#collapse-voucher .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-			  }
+              if (json['error']) {
+                  $('#collapse-voucher .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+              }
 
-			  if (json['redirect']) {
-				  location = json['redirect'];
-			  }
-		  },
-		  error: function(xhr, ajaxOptions, thrownError) {
-			  alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		  }
-	  });
+              if (json['redirect']) {
+                  location = json['redirect'];
+              }
+          },
+          error: function(xhr, ajaxOptions, thrownError) {
+              alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+          }
+      });
   });
   //--></script>
 </div>

@@ -1,28 +1,10 @@
 <?php
-namespace Opencart\Application\Controller\Extension\Opencart\Dashboard;
+namespace Opencart\Admin\Controller\Extension\Opencart\Dashboard;
 class Map extends \Opencart\System\Engine\Controller {
-	private $error = [];
-
-	public function index() {
+	public function index(): void {
 		$this->load->language('extension/opencart/dashboard/map');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('setting/setting');
-
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('dashboard_map', $this->request->post);
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=dashboard'));
-		}
-
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
 
 		$data['breadcrumbs'] = [];
 
@@ -41,15 +23,10 @@ class Map extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('extension/opencart/dashboard/map', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		$data['action'] = $this->url->link('extension/opencart/dashboard/map', 'user_token=' . $this->session->data['user_token']);
+		$data['save'] = $this->url->link('extension/opencart/dashboard/map|save', 'user_token=' . $this->session->data['user_token']);
+		$data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=dashboard');
 
-		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=dashboard');
-
-		if (isset($this->request->post['dashboard_map_width'])) {
-			$data['dashboard_map_width'] = $this->request->post['dashboard_map_width'];
-		} else {
-			$data['dashboard_map_width'] = $this->config->get('dashboard_map_width');
-		}
+		$data['dashboard_map_width'] = $this->config->get('dashboard_map_width');
 
 		$data['columns'] = [];
 
@@ -57,17 +34,8 @@ class Map extends \Opencart\System\Engine\Controller {
 			$data['columns'][] = $i;
 		}
 
-		if (isset($this->request->post['dashboard_map_status'])) {
-			$data['dashboard_map_status'] = $this->request->post['dashboard_map_status'];
-		} else {
-			$data['dashboard_map_status'] = $this->config->get('dashboard_map_status');
-		}
-
-		if (isset($this->request->post['dashboard_map_sort_order'])) {
-			$data['dashboard_map_sort_order'] = $this->request->post['dashboard_map_sort_order'];
-		} else {
-			$data['dashboard_map_sort_order'] = $this->config->get('dashboard_map_sort_order');
-		}
+		$data['dashboard_map_status'] = $this->config->get('dashboard_map_status');
+		$data['dashboard_map_sort_order'] = $this->config->get('dashboard_map_sort_order');
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -76,15 +44,28 @@ class Map extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('extension/opencart/dashboard/map_form', $data));
 	}
 
-	protected function validate() {
+	public function save(): void {
+		$this->load->language('extension/opencart/dashboard/map');
+
+		$json = [];
+
 		if (!$this->user->hasPermission('modify', 'extension/opencart/dashboard/map')) {
-			$this->error['warning'] = $this->language->get('error_permission');
+			$json['error']  = $this->language->get('error_permission');
 		}
 
-		return !$this->error;
+		if (!$json) {
+			$this->load->model('setting/setting');
+
+			$this->model_setting_setting->editSetting('dashboard_map', $this->request->post);
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
-	public function dashboard() {
+	public function dashboard(): string {
 		$this->load->language('extension/opencart/dashboard/map');
 
 		$data['user_token'] = $this->session->data['user_token'];

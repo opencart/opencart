@@ -1,7 +1,7 @@
 <?php
-namespace Opencart\Application\Controller\Extension\Opencart\Total;
+namespace Opencart\Catalog\Controller\Extension\Opencart\Total;
 class Voucher extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): string {
 		if ($this->config->get('total_voucher_status')) {
 			$this->load->language('extension/opencart/total/voucher');
 
@@ -15,7 +15,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 		}
 	}
 
-	public function voucher() {
+	public function save(): void {
 		$this->load->language('extension/opencart/total/voucher');
 
 		$json = [];
@@ -37,7 +37,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'));
+			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
 		} else {
 			$json['error'] = $this->language->get('error_voucher');
 		}

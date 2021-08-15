@@ -1,4 +1,5 @@
 <?php
+
 /**
  * SCSSPHP
  *
@@ -44,7 +45,7 @@ class OutputBlock
     public $children;
 
     /**
-     * @var \ScssPhp\ScssPhp\Formatter\OutputBlock
+     * @var OutputBlock|null
      */
     public $parent;
 

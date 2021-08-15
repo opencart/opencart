@@ -1,52 +1,10 @@
 <?php
-namespace Opencart\Application\Controller\Extension\Opencart\Module;
+namespace Opencart\Admin\Controller\Extension\Opencart\Module;
 class BestSeller extends \Opencart\System\Engine\Controller {
-	private $error = [];
-
-	public function index() {
+	public function index(): void {
 		$this->load->language('extension/opencart/module/bestseller');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('setting/module');
-
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			if (!isset($this->request->get['module_id'])) {
-				$this->model_setting_module->addModule('opencart.bestseller', $this->request->post);
-			} else {
-				$this->model_setting_module->editModule($this->request->get['module_id'], $this->request->post);
-			}
-
-			$this->cache->delete('product');
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module'));
-		}
-
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-
-		if (isset($this->error['name'])) {
-			$data['error_name'] = $this->error['name'];
-		} else {
-			$data['error_name'] = '';
-		}
-
-		if (isset($this->error['width'])) {
-			$data['error_width'] = $this->error['width'];
-		} else {
-			$data['error_width'] = '';
-		}
-
-		if (isset($this->error['height'])) {
-			$data['error_height'] = $this->error['height'];
-		} else {
-			$data['error_height'] = '';
-		}
 
 		$data['breadcrumbs'] = [];
 
@@ -73,52 +31,50 @@ class BestSeller extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!isset($this->request->get['module_id'])) {
-			$data['action'] = $this->url->link('extension/opencart/module/bestseller', 'user_token=' . $this->session->data['user_token']);
+			$data['save'] = $this->url->link('extension/opencart/module/bestseller|save', 'user_token=' . $this->session->data['user_token']);
 		} else {
-			$data['action'] = $this->url->link('extension/opencart/module/bestseller', 'user_token=' . $this->session->data['user_token'] . '&module_id=' . $this->request->get['module_id']);
+			$data['save'] = $this->url->link('extension/opencart/module/bestseller|save', 'user_token=' . $this->session->data['user_token'] . '&module_id=' . $this->request->get['module_id']);
 		}
 
-		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module');
+		$data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module');
 
-		if (isset($this->request->get['module_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+		if (isset($this->request->get['module_id'])) {
+			$this->load->model('setting/module');
+
 			$module_info = $this->model_setting_module->getModule($this->request->get['module_id']);
 		}
 
-		if (isset($this->request->post['name'])) {
-			$data['name'] = $this->request->post['name'];
-		} elseif (!empty($module_info)) {
+		if (isset($module_info['name'])) {
 			$data['name'] = $module_info['name'];
 		} else {
 			$data['name'] = '';
 		}
 
-		if (isset($this->request->post['limit'])) {
-			$data['limit'] = $this->request->post['limit'];
-		} elseif (!empty($module_info)) {
+		if (isset($module_info['axis'])) {
+			$data['axis'] = $module_info['axis'];
+		} else {
+			$data['axis'] ='';
+		}
+
+		if (isset($module_info['limit'])) {
 			$data['limit'] = $module_info['limit'];
 		} else {
 			$data['limit'] = 5;
 		}
 
-		if (isset($this->request->post['width'])) {
-			$data['width'] = $this->request->post['width'];
-		} elseif (!empty($module_info)) {
+		if (isset($module_info['width'])) {
 			$data['width'] = $module_info['width'];
 		} else {
 			$data['width'] = 200;
 		}
 
-		if (isset($this->request->post['height'])) {
-			$data['height'] = $this->request->post['height'];
-		} elseif (!empty($module_info)) {
+		if (isset($module_info['height'])) {
 			$data['height'] = $module_info['height'];
 		} else {
 			$data['height'] = 200;
 		}
 
-		if (isset($this->request->post['status'])) {
-			$data['status'] = $this->request->post['status'];
-		} elseif (!empty($module_info)) {
+		if (isset($module_info['status'])) {
 			$data['status'] = $module_info['status'];
 		} else {
 			$data['status'] = '';
@@ -131,23 +87,42 @@ class BestSeller extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('extension/opencart/module/bestseller', $data));
 	}
 
-	protected function validate() {
+	public function save(): void {
+		$this->load->language('extension/opencart/module/bestseller');
+
+		$json = [];
+
 		if (!$this->user->hasPermission('modify', 'extension/opencart/module/bestseller')) {
-			$this->error['warning'] = $this->language->get('error_permission');
+			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
 		if ((utf8_strlen($this->request->post['name']) < 3) || (utf8_strlen($this->request->post['name']) > 64)) {
-			$this->error['name'] = $this->language->get('error_name');
+			$json['error']['name'] = $this->language->get('error_name');
 		}
 
 		if (!$this->request->post['width']) {
-			$this->error['width'] = $this->language->get('error_width');
+			$json['error']['width'] = $this->language->get('error_width');
 		}
 
 		if (!$this->request->post['height']) {
-			$this->error['height'] = $this->language->get('error_height');
+			$json['error']['height'] = $this->language->get('error_height');
 		}
 
-		return !$this->error;
+		if (!$json) {
+			$this->load->model('setting/module');
+
+			if (!isset($this->request->get['module_id'])) {
+				$this->model_setting_module->addModule('opencart.bestseller', $this->request->post);
+			} else {
+				$this->model_setting_module->editModule($this->request->get['module_id'], $this->request->post);
+			}
+
+			$this->cache->delete('product');
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 }

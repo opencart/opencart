@@ -1,45 +1,37 @@
 <div class="row">
-  <div id="filter-report" class="col-md-3 col-sm-12 order-md-9 d-none d-md-block mb-3">
+  <div id="filter-report" class="col-lg-3 col-md-12 order-lg-last d-none d-lg-block mb-3">
     <div class="card">
       <div class="card-header"><i class="fas fa-filter"></i> {{ text_filter }}</div>
       <div class="card-body">
-        <div class="form-group">
+        <div class="mb-3">
           <label for="input-date-start" class="col-form-label">{{ entry_date_start }}</label>
           <div class="input-group date">
             <input type="text" name="filter_date_start" value="{{ filter_date_start }}" placeholder="{{ entry_date_start }}" id="input-date-start" class="form-control"/>
-            <div class="input-group-append">
-              <div class="input-group-text"><i class="fas fa-calendar"></i></div>
-            </div>
+            <div class="input-group-text"><i class="fas fa-calendar"></i></div>
           </div>
         </div>
-        <div class="form-group">
+        <div class="mb-3">
           <label for="input-date-end" class="col-form-label">{{ entry_date_end }}</label>
           <div class="input-group date">
             <input type="text" name="filter_date_end" value="{{ filter_date_end }}" placeholder="{{ entry_date_end }}" id="input-date-end" class="form-control"/>
-            <div class="input-group-append">
-              <div class="input-group-text"><i class="fas fa-calendar"></i></div>
-            </div>
+            <div class="input-group-text"><i class="fas fa-calendar"></i></div>
           </div>
         </div>
-        <div class="form-group">
-          <label for="input-status" class="col-form-label">{{ entry_order_status }}</label> <select name="filter_order_status_id" id="input-status" class="form-control">
+        <div class="mb-3">
+          <label for="input-status" class="col-form-label">{{ entry_order_status }}</label> <select name="filter_order_status_id" id="input-status" class="form-select">
             <option value="0">{{ text_all_status }}</option>
             {% for order_status in order_statuses %}
-              {% if order_status.order_status_id == filter_order_status_id %}
-                <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
-              {% else %}
-                <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-              {% endif %}
+              <option value="{{ order_status.order_status_id }}"{% if order_status.order_status_id == filter_order_status_id %} selected="selected"{% endif %}>{{ order_status.name }}</option>
             {% endfor %}
           </select>
         </div>
-        <div class="form-group text-right">
+        <div class="text-end">
           <button type="button" id="button-filter" class="btn btn-light"><i class="fas fa-filter"></i> {{ button_filter }}</button>
         </div>
       </div>
     </div>
   </div>
-  <div class="col-md-9 col-sm-12">
+  <div class="col col-lg-9 col-md-12">
     <div class="card">
       <div class="card-header"><i class="fas fa-chart-bar"></i> {{ heading_title }}</div>
       <div class="card-body">
@@ -47,22 +39,22 @@
           <table class="table table-bordered">
             <thead>
               <tr>
-                <td class="text-left">{{ column_campaign }}</td>
-                <td class="text-left">{{ column_code }}</td>
-                <td class="text-right">{{ column_clicks }}</td>
-                <td class="text-right">{{ column_orders }}</td>
-                <td class="text-right">{{ column_total }}</td>
+                <td class="text-start">{{ column_campaign }}</td>
+                <td class="text-start">{{ column_code }}</td>
+                <td class="text-end">{{ column_clicks }}</td>
+                <td class="text-end">{{ column_orders }}</td>
+                <td class="text-end">{{ column_total }}</td>
               </tr>
             </thead>
             <tbody>
               {% if marketings %}
                 {% for marketing in marketings %}
                   <tr>
-                    <td class="text-left">{{ marketing.campaign }}</td>
-                    <td class="text-left">{{ marketing.code }}</td>
-                    <td class="text-right">{{ marketing.clicks }}</td>
-                    <td class="text-right">{{ marketing.orders }}</td>
-                    <td class="text-right">{{ marketing.total }}</td>
+                    <td class="text-start">{{ marketing.campaign }}</td>
+                    <td class="text-start">{{ marketing.code }}</td>
+                    <td class="text-end">{{ marketing.clicks }}</td>
+                    <td class="text-end">{{ marketing.orders }}</td>
+                    <td class="text-end">{{ marketing.total }}</td>
                   </tr>
                 {% endfor %}
               {% else %}
@@ -74,8 +66,8 @@
           </table>
         </div>
         <div class="row">
-          <div class="col-sm-6 text-left">{{ pagination }}</div>
-          <div class="col-sm-6 text-right">{{ results }}</div>
+          <div class="col-sm-6 text-start">{{ pagination }}</div>
+          <div class="col-sm-6 text-end">{{ results }}</div>
         </div>
       </div>
     </div>
@@ -83,33 +75,33 @@
 </div>
 <script type="text/javascript"><!--
 $('#button-filter').on('click', function() {
-	var url = '';
+    var url = '';
 
-	var filter_date_start = $('input[name=\'filter_date_start\']').val();
+    var filter_date_start = $('input[name=\'filter_date_start\']').val();
 
-	if (filter_date_start) {
-		url += '&filter_date_start=' + encodeURIComponent(filter_date_start);
-	}
+    if (filter_date_start) {
+        url += '&filter_date_start=' + encodeURIComponent(filter_date_start);
+    }
 
-	var filter_date_end = $('input[name=\'filter_date_end\']').val();
+    var filter_date_end = $('input[name=\'filter_date_end\']').val();
 
-	if (filter_date_end) {
-		url += '&filter_date_end=' + encodeURIComponent(filter_date_end);
-	}
+    if (filter_date_end) {
+        url += '&filter_date_end=' + encodeURIComponent(filter_date_end);
+    }
 
-	var filter_order_status_id = $('select[name=\'filter_order_status_id\']').val();
+    var filter_order_status_id = $('select[name=\'filter_order_status_id\']').val();
 
-	if (filter_order_status_id != 0) {
-		url += '&filter_order_status_id=' + encodeURIComponent(filter_order_status_id);
-	}
+    if (filter_order_status_id != 0) {
+        url += '&filter_order_status_id=' + encodeURIComponent(filter_order_status_id);
+    }
 
-	location = 'index.php?route=report/report&code=marketing&user_token={{ user_token }}' + url;
+    location = 'index.php?route=report/report&code=marketing&user_token={{ user_token }}' + url;
 });
 //--></script>
 <script type="text/javascript"><!--
 $('.date').datetimepicker({
-	'format': 'YYYY-MM-DD',
-	'locale': '{{ datepicker }}',
-	'allowInputToggle': true
+    'format': 'YYYY-MM-DD',
+    'locale': '{{ datepicker }}',
+    'allowInputToggle': true
 });
 //--></script>

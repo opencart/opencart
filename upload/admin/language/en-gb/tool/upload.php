@@ -5,6 +5,7 @@ $_['heading_title']     = 'Uploads';
 // Text
 $_['text_success']      = 'Success: You have modified uploads!';
 $_['text_list']         = 'Upload List';
+$_['text_filter']       = 'Filter';
 
 // Column
 $_['column_name']       = 'Upload Name';
@@ -19,3 +20,5 @@ $_['entry_date_added']  = 'Date Added';
 
 // Error
 $_['error_permission']  = 'Warning: You do not have permission to modify uploads!';
+$_['error_not_found']    = 'Error: Could not find file %s !';
+$_['error_headers_sent'] = 'Error: Headers already sent out!';

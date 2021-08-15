@@ -1,6 +1,7 @@
 <?php
+//namespace Opencart\System\Helper;
 /* BBCode Converter that converts BBCode written for OpenCart */
-function bbcode_decode($string) {
+function bbcode_decode(string $string) {
 	$pattern = [];
 	$replace = [];
 

@@ -1,7 +1,7 @@
 <?php
-namespace Opencart\Application\Controller\Design;
+namespace Opencart\Admin\Controller\Design;
 class Theme extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): void {
 		$this->load->language('design/theme');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -18,8 +18,6 @@ class Theme extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('design/theme', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		$data['user_token'] = $this->session->data['user_token'];
-
 		$data['stores'] = [];
 
 		$this->load->model('setting/store');
@@ -33,6 +31,8 @@ class Theme extends \Opencart\System\Engine\Controller {
 			];
 		}
 
+		$data['user_token'] = $this->session->data['user_token'];
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -40,7 +40,7 @@ class Theme extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('design/theme', $data));
 	}
 
-	public function history() {
+	public function history(): void {
 		$this->load->language('design/theme');
 
 		if (isset($this->request->get['page'])) {
@@ -89,7 +89,7 @@ class Theme extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('design/theme_history', $data));
 	}
 
-	public function path() {
+	public function path(): void {
 		$this->load->language('design/theme');
 
 		$json = [];
@@ -114,7 +114,7 @@ class Theme extends \Opencart\System\Engine\Controller {
 
 		if (substr(str_replace('\\', '/', realpath($directory . '/' . $path)), 0, strlen($directory)) == $directory) {
 			// We grab the files from the default template directory
-			$files = glob(rtrim(DIR_CATALOG . 'view/template/' . $path, '/') . '/*', GLOB_BRACE);
+			$files = glob(rtrim(DIR_CATALOG . 'view/template/' . $path, '/') . '/*');
 
 			foreach ($files as $file) {
 				if (is_dir($file)) {
@@ -183,7 +183,9 @@ class Theme extends \Opencart\System\Engine\Controller {
 			}
 
 			if ($safe) {
-				$files = glob(rtrim(DIR_EXTENSION . $extension . '/catalog/view/template/' . $route, '/') . '/*', GLOB_BRACE);
+				$files = glob(rtrim(DIR_EXTENSION . $extension . '/catalog/view/template/' . $route, '/') . '/*');
+
+				sort($files);
 
 				foreach ($files as $file) {
 					if (is_dir($file)) {
@@ -214,7 +216,7 @@ class Theme extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function template() {
+	public function template(): void {
 		$this->load->language('design/theme');
 
 		$json = [];
@@ -279,7 +281,7 @@ class Theme extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function save() {
+	public function save(): void {
 		$this->load->language('design/theme');
 
 		$json = [];
@@ -319,7 +321,7 @@ class Theme extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function reset() {
+	public function reset(): void {
 		$json = [];
 
 		if (isset($this->request->get['store_id'])) {
@@ -372,7 +374,7 @@ class Theme extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function delete() {
+	public function delete(): void {
 		$this->load->language('design/theme');
 
 		$json = [];

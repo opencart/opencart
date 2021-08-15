@@ -1,4 +1,14 @@
-# 3.0.5 (2020-05-08)
+# 3.1.1 (2020-10-27)
+
+ * Fix "include(template_from_string())"
+
+# 3.1.0 (2020-10-21)
+
+ * Fix sandbox support when using "include(template_from_string())"
+ * Make round brackets optional for one argument tests like "same as" or "divisible by"
+ * Add support for ES2015 style object initialisation shortcut { a } is the same as { 'a': a }
+
+# 3.0.5 (2020-08-05)
 
  * Fix twig_compare w.r.t. whitespace trimming
  * Fix sandbox not disabled if syntax error occurs within {% sandbox %} tag
@@ -52,11 +62,18 @@
  * bumped minimum PHP version to 7.2
  * removed PSR-0 classes
 
-# 2.13.2 (2020-XX-XX)
+# 2.14.1 (2020-XX-XX)
 
  * n/a
 
-# 2.13.1 (2020-05-08)
+# 2.14.0 (2020-10-21)
+
+ * Fix sandbox support when using "include(template_from_string())"
+ * Make round brackets optional for one argument tests like "same as" or "divisible by"
+ * Add support for ES2015 style object initialisation shortcut { a } is the same as { 'a': a }
+ * Drop PHP 7.1 support
+
+# 2.13.1 (2020-08-05)
 
  * Fix sandbox not disabled if syntax error occurs within {% sandbox %} tag
  * Fix a regression when not using a space before an operator
@@ -375,9 +392,18 @@
  * improved the performance of the filesystem loader
  * removed features that were deprecated in 1.x
 
-# 1.43.2 (2020-XX-XX)
+# 1.44.1 (2020-XX-XX)
 
- * n/a
+ * Fix "include(template_from_string())"
+
+# 1.44.0 (2020-10-21)
+
+ * Remove implicit dependency on ext/iconv in JS escaper
+ * Fix sandbox support when using "include(template_from_string())"
+ * Make round brackets optional for one argument tests like "same as" or "divisible by"
+ * Add support for ES2015 style object initialisation shortcut { a } is the same as { 'a': a }
+ * Fix filter(), map(), and reduce() to throw a RuntimeError instead of a PHP TypeError
+ * Drop PHP 7.1 support
 
 # 1.43.1 (2020-08-05)
 

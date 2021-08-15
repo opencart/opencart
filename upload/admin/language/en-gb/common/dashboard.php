@@ -3,4 +3,5 @@
 $_['heading_title'] = 'Dashboard';
 
 // Error
-$_['error_install'] = 'Warning: Install folder still exists and should be deleted for security reasons!';
+$_['error_install'] = 'Warning: your installation directory needs deleting';
+$_['error_storage'] = 'Warning: your storage directory needs deleting';

@@ -1,7 +1,7 @@
 <?php
-namespace Opencart\Application\Controller\Common;
+namespace Opencart\Admin\Controller\Common;
 class ColumnLeft extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): string {
 		if (isset($this->request->get['user_token']) && isset($this->session->data['user_token']) && ((string)$this->request->get['user_token'] == $this->session->data['user_token'])) {
 			$this->load->language('common/column_left');
 
@@ -11,7 +11,7 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 			// Menu
 			$data['menus'][] = [
 				'id'       => 'menu-dashboard',
-				'icon'	   => 'fa-dashboard',
+				'icon'	   => 'fas fa-home',
 				'name'	   => $this->language->get('text_dashboard'),
 				'href'     => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token']),
 				'children' => []
@@ -122,7 +122,7 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 			if ($catalog) {
 				$data['menus'][] = [
 					'id'       => 'menu-catalog',
-					'icon'	   => 'fa-tag',
+					'icon'	   => 'fas fa-tag',
 					'name'	   => $this->language->get('text_catalog'),
 					'href'     => '',
 					'children' => $catalog
@@ -183,7 +183,7 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 			if ($marketplace) {
 				$data['menus'][] = [
 					'id'       => 'menu-extension',
-					'icon'	   => 'fa-puzzle-piece',
+					'icon'	   => 'fas fa-puzzle-piece',
 					'name'	   => $this->language->get('text_extension'),
 					'href'     => '',
 					'children' => $marketplace
@@ -254,7 +254,7 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 			if ($design) {
 				$data['menus'][] = [
 					'id'       => 'menu-design',
-					'icon'	   => 'fa-desktop',
+					'icon'	   => 'fas fa-desktop',
 					'name'	   => $this->language->get('text_design'),
 					'href'     => '',
 					'children' => $design
@@ -318,7 +318,7 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 			if ($sale) {
 				$data['menus'][] = [
 					'id'       => 'menu-sale',
-					'icon'	   => 'fa-shopping-cart',
+					'icon'	   => 'fas fa-shopping-cart',
 					'name'	   => $this->language->get('text_sale'),
 					'href'     => '',
 					'children' => $sale
@@ -371,7 +371,7 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 			if ($customer) {
 				$data['menus'][] = [
 					'id'       => 'menu-customer',
-					'icon'	   => 'fa-user',
+					'icon'	   => 'fas fa-user',
 					'name'	   => $this->language->get('text_customer'),
 					'href'     => '',
 					'children' => $customer
@@ -416,7 +416,7 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 			if ($marketing) {
 				$data['menus'][] = [
 					'id'       => 'menu-marketing',
-					'icon'	   => 'fa-share-alt',
+					'icon'	   => 'fas fa-share-alt',
 					'name'	   => $this->language->get('text_marketing'),
 					'href'     => '',
 					'children' => $marketing
@@ -659,8 +659,6 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 
 			if ($maintenance) {
 				$system[] = [
-					'id'       => 'menu-maintenance',
-					'icon'	   => 'fa-cog',
 					'name'	   => $this->language->get('text_maintenance'),
 					'href'     => '',
 					'children' => $maintenance
@@ -670,7 +668,7 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 			if ($system) {
 				$data['menus'][] = [
 					'id'       => 'menu-system',
-					'icon'	   => 'fa-cog',
+					'icon'	   => 'fas fa-cog',
 					'name'	   => $this->language->get('text_system'),
 					'href'     => '',
 					'children' => $system
@@ -706,7 +704,7 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 			if ($report) {
 				$data['menus'][] = [
 					'id'       => 'menu-report',
-					'icon'	   => 'fa-chart-bar',
+					'icon'	   => 'fas fa-chart-bar',
 					'name'	   => $this->language->get('text_reports'),
 					'href'     => '',
 					'children' => $report

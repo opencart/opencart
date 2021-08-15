@@ -12,7 +12,7 @@
 */
 namespace Opencart\System\Library;
 class Template {
-	private $adaptor;
+	private object $adaptor;
 
 	/**
 	 * Constructor
@@ -20,13 +20,13 @@ class Template {
 	 * @param    string $adaptor
 	 *
 	 */
-	public function __construct($adaptor) {
+	public function __construct(string $adaptor) {
 		$class = 'Opencart\System\Library\Template\\' . $adaptor;
 
 		if (class_exists($class)) {
 			$this->adaptor = new $class();
 		} else {
-			error_log('Error: Could not load template adaptor ' . $adaptor . '!');
+			throw new \Exception('Error: Could not load template adaptor ' . $adaptor . '!');
 		}
 	}
 
@@ -36,7 +36,7 @@ class Template {
 	 * @param    string $namespace
 	 * @param    string $directory
 	 */
-	public function addPath($namespace, $directory = '') {
+	public function addPath(string $namespace, string $directory = ''): void {
 		$this->adaptor->addPath($namespace, $directory);
 	}
 
@@ -49,7 +49,7 @@ class Template {
 	 *
 	 * @return    string
 	 */
-	public function render($filename, $data = [], $code = '') {
+	public function render(string $filename, array $data = [], string $code = ''): string {
 		return $this->adaptor->render($filename, $data, $code);
 	}
 }

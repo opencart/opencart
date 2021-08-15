@@ -1,7 +1,7 @@
 <?php
-namespace Opencart\Application\Controller\Account;
+namespace Opencart\Catalog\Controller\Account;
 class Account extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): void {
 		if (!$this->customer->isLogged()) {
 			$this->session->data['redirect'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language'));
 
@@ -68,15 +68,11 @@ class Account extends \Opencart\System\Engine\Controller {
 		$data['recurring'] = $this->url->link('account/recurring', 'language=' . $this->config->get('config_language'));
 
 		if ($this->config->get('config_affiliate_status')) {
+			$data['affiliate'] = $this->url->link('account/affiliate', 'language=' . $this->config->get('config_language'));
+
 			$this->load->model('account/affiliate');
 
 			$affiliate_info = $this->model_account_affiliate->getAffiliate($this->customer->getId());
-
-			if (!$affiliate_info) {
-				$data['affiliate'] = $this->url->link('account/affiliate|add', 'language=' . $this->config->get('config_language'));
-			} else {
-				$data['affiliate'] = $this->url->link('account/affiliate|edit', 'language=' . $this->config->get('config_language'));
-			}
 
 			if ($affiliate_info) {
 				$data['tracking'] = $this->url->link('account/tracking', 'language=' . $this->config->get('config_language'));

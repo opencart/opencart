@@ -1,9 +1,10 @@
 <?php
-namespace Opencart\Application\Model\Extension\Opencart\Total;
+namespace Opencart\Catalog\Model\Extension\Opencart\Total;
 class Shipping extends \Opencart\System\Engine\Model {
-	public function getTotal(&$totals, &$taxes, &$total) {
+	public function getTotal(array &$totals, array &$taxes, float &$total): void {
 		if ($this->cart->hasShipping() && isset($this->session->data['shipping_method']['title']) && isset($this->session->data['shipping_method']['cost'])) {
 			$totals[] = [
+				'extension'  => 'opencart',
 				'code'       => 'shipping',
 				'title'      => $this->session->data['shipping_method']['title'],
 				'value'      => $this->session->data['shipping_method']['cost'],

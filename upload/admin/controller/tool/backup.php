@@ -1,7 +1,7 @@
 <?php
-namespace Opencart\Application\Controller\Tool;
+namespace Opencart\Admin\Controller\Tool;
 class Backup extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): void {
 		$this->load->language('tool/backup');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -17,8 +17,6 @@ class Backup extends \Opencart\System\Engine\Controller {
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('tool/backup', 'user_token=' . $this->session->data['user_token'])
 		];
-
-		$data['user_token'] = $this->session->data['user_token'];
 
 		$this->load->model('tool/backup');
 
@@ -37,6 +35,10 @@ class Backup extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		$data['history'] = $this->getHistory();
+
+		$data['user_token'] = $this->session->data['user_token'];
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -44,7 +46,13 @@ class Backup extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('tool/backup', $data));
 	}
 
-	public function history() {
+	public function history(): void {
+		$this->load->language('tool/backup');
+
+		$this->response->setOutput($this->getHistory());
+	}
+
+	public function getHistory(): string {
 		$this->load->language('tool/backup');
 
 		$data['histories'] = [];
@@ -82,10 +90,10 @@ class Backup extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		$this->response->setOutput($this->load->view('tool/backup_history', $data));
+		return $this->load->view('tool/backup_history', $data);
 	}
 
-	public function backup() {
+	public function backup(): void {
 		$this->load->language('tool/backup');
 
 		$json = [];
@@ -202,7 +210,7 @@ class Backup extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function restore() {
+	public function restore(): void {
 		$this->load->language('tool/backup');
 
 		$json = [];
@@ -281,7 +289,7 @@ class Backup extends \Opencart\System\Engine\Controller {
 			if ($position && !feof($handle)) {
 				$json['text'] = sprintf($this->language->get('text_restore'), $position, $size);
 
-				$json['next'] = str_replace('&amp;', '&', $this->url->link('tool/backup|restore', 'user_token=' . $this->session->data['user_token'] . '&filename=' . urlencode($filename) . '&position=' . $position));
+				$json['next'] = $this->url->link('tool/backup|restore', 'user_token=' . $this->session->data['user_token'] . '&filename=' . urlencode($filename) . '&position=' . $position, true);
 			} else {
 				$json['success'] = $this->language->get('text_success');
 
@@ -295,7 +303,7 @@ class Backup extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function upload() {
+	public function upload(): void {
 		$this->load->language('tool/backup');
 
 		$json = [];
@@ -333,7 +341,7 @@ class Backup extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function download() {
+	public function download(): void {
 		$this->load->language('tool/backup');
 
 		$json = [];
@@ -371,11 +379,11 @@ class Backup extends \Opencart\System\Engine\Controller {
 
 			exit();
 		} else {
-			exit('Error: Headers already sent out!');
+			exit($this->language->get('error_headers_sent'));
 		}
 	}
 
-	public function delete() {
+	public function delete(): void {
 		$this->load->language('tool/backup');
 
 		$json = [];

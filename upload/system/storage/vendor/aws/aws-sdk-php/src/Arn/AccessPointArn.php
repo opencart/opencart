@@ -6,7 +6,7 @@ use Aws\Arn\Exception\InvalidArnException;
 /**
  * @internal
  */
-class AccessPointArn extends Arn implements ArnInterface
+class AccessPointArn extends Arn implements AccessPointArnInterface
 {
     use ResourceTypeAndIdTrait;
 
@@ -24,7 +24,14 @@ class AccessPointArn extends Arn implements ArnInterface
     public static function parse($string)
     {
         $data = parent::parse($string);
-        return self::parseResourceTypeAndId($data);
+        $data = self::parseResourceTypeAndId($data);
+        $data['accesspoint_name'] = $data['resource_id'];
+        return $data;
+    }
+
+    public function getAccesspointName()
+    {
+        return $this->data['accesspoint_name'];
     }
 
     /**
@@ -34,19 +41,8 @@ class AccessPointArn extends Arn implements ArnInterface
      */
     protected static function validate(array $data)
     {
-        if (empty($data['region'])) {
-            throw new InvalidArnException("The 4th component of an access point ARN"
-                . " represents the region and must not be empty.");
-        }
-
-        if (empty($data['account_id'])) {
-            throw new InvalidArnException("The 5th component of an access point ARN"
-                . " represents the account ID and must not be empty.");
-        }
-        if (!self::isValidHostLabel($data['account_id'])) {
-            throw new InvalidArnException("The account ID in an access point ARN"
-                . " must be a valid host label value.");
-        }
+        self::validateRegion($data, 'access point ARN');
+        self::validateAccountId($data, 'access point ARN');
 
         if ($data['resource_type'] !== 'accesspoint') {
             throw new InvalidArnException("The 6th component of an access point ARN"
@@ -66,17 +62,5 @@ class AccessPointArn extends Arn implements ArnInterface
             throw new InvalidArnException("The resource ID in an access point ARN"
                 . " must be a valid host label value.");
         }
-    }
-
-    protected static function isValidHostLabel($string)
-    {
-        $length = strlen($string);
-        if ($length < 1 || $length > 63) {
-            return false;
-        }
-        if ($value = preg_match("/^[a-zA-Z0-9-]+$/", $string)) {
-            return true;
-        }
-        return false;
     }
 }

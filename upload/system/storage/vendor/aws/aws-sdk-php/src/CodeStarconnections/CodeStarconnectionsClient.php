@@ -27,5 +27,7 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise tagResourceAsync(array $args = [])
  * @method \Aws\Result untagResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise untagResourceAsync(array $args = [])
+ * @method \Aws\Result updateHost(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateHostAsync(array $args = [])
  */
 class CodeStarconnectionsClient extends AwsClient {}

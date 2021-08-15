@@ -15,9 +15,6 @@ use Psr\Http\Message\RequestInterface;
  */
 class S3ControlEndpointMiddleware
 {
-    const NO_PATTERN = 0;
-    const DUALSTACK = 1;
-
     /** @var bool */
     private $dualStackByDefault;
     /** @var string */
@@ -56,9 +53,6 @@ class S3ControlEndpointMiddleware
         if ($this->isDualStackRequest($command, $request)) {
             $request = $this->applyDualStackEndpoint($command, $request);
         }
-        $request = $this->applyHostStyleEndpoint($command, $request)
-            ->withoutHeader('x-amz-account-id');
-        unset($command['AccountId']);
 
         $nextHandler = $this->nextHandler;
         return $nextHandler($command, $request);
@@ -88,39 +82,5 @@ class S3ControlEndpointMiddleware
                 $uri->getHost()
             ))
         );
-    }
-
-    private function getAccountIdStyleHost(CommandInterface $command, $host)
-    {
-        if (!\Aws\is_valid_hostname($command['AccountId'])) {
-            throw new \InvalidArgumentException(
-                "The supplied parameters result in an invalid hostname: '{$command['AccountId']}.{$host}'."
-            );
-        }
-        return "{$command['AccountId']}.{$host}";
-    }
-
-    private function getAccountIdlessPath($path, CommandInterface $command)
-    {
-        $pattern = '/^\\/' . preg_quote($command['AccountId'], '/') . '/';
-        return preg_replace($pattern, '', $path) ?: '/';
-    }
-
-    private function applyHostStyleEndpoint(
-        CommandInterface $command,
-        RequestInterface $request
-    ) {
-        $uri = $request->getUri();
-        $request = $request->withUri(
-            $uri->withHost($this->getAccountIdStyleHost(
-                $command,
-                $uri->getHost()
-            ))
-            ->withPath($this->getAccountIdlessPath(
-                $uri->getPath(),
-                $command
-            ))
-        );
-        return $request;
     }
 }

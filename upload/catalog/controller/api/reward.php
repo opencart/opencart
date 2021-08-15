@@ -1,7 +1,7 @@
 <?php
-namespace Opencart\Application\Controller\Api;
+namespace Opencart\Catalog\Controller\Api;
 class Reward extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): void {
 		$this->load->language('api/reward');
 
 		// Delete past reward in case there is an error
@@ -9,35 +9,48 @@ class Reward extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		if (!isset($this->session->data['api_id'])) {
-			$json['error'] = $this->language->get('error_permission');
-		} else {
-			$points = $this->customer->getRewardPoints();
+		$points = $this->customer->getRewardPoints();
 
-			$points_total = 0;
+		$points_total = 0;
 
-			foreach ($this->cart->getProducts() as $product) {
-				if ($product['points']) {
-					$points_total += $product['points'];
-				}
+		foreach ($this->cart->getProducts() as $product) {
+			if ($product['points']) {
+				$points_total += $product['points'];
 			}
+		}
 
-			if (empty($this->request->post['reward'])) {
-				$json['error'] = $this->language->get('error_reward');
-			}
+		if (empty($this->request->post['reward'])) {
+			$json['error'] = $this->language->get('error_reward');
+		}
 
-			if ($this->request->post['reward'] > $points) {
-				$json['error'] = sprintf($this->language->get('error_points'), $this->request->post['reward']);
-			}
+		if ($this->request->post['reward'] > $points) {
+			$json['error'] = sprintf($this->language->get('error_points'), $this->request->post['reward']);
+		}
 
-			if ($this->request->post['reward'] > $points_total) {
-				$json['error'] = sprintf($this->language->get('error_maximum'), $points_total);
-			}
+		if ($this->request->post['reward'] > $points_total) {
+			$json['error'] = sprintf($this->language->get('error_maximum'), $points_total);
+		}
 
-			if (!$json) {
-				$this->session->data['reward'] = abs($this->request->post['reward']);
+		if (!$json) {
+			$this->session->data['reward'] = abs($this->request->post['reward']);
 
-				$json['success'] = $this->language->get('text_success');
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	public function maximum(): void {
+		$this->load->language('api/reward');
+
+		$json = [];
+
+		$json['maximum'] = 0;
+
+		foreach ($this->cart->getProducts() as $product) {
+			if ($product['points']) {
+				$json['maximum'] += $product['points'];
 			}
 		}
 
@@ -45,37 +58,15 @@ class Reward extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function maximum() {
-		$this->load->language('api/reward');
-
-		$json = [];
-
-		if (!isset($this->session->data['api_id'])) {
-			$json['error'] = $this->language->get('error_permission');
-		} else {
-			$json['maximum'] = 0;
-
-			foreach ($this->cart->getProducts() as $product) {
-				if ($product['points']) {
-					$json['maximum'] += $product['points'];
-				}
-			}
-		}
-
+	public function available(): void {
 		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+		$this->response->setOutput(json_encode(['points' => $this->customer->getRewardPoints()]));
 	}
 
-	public function available() {
-		$this->load->language('api/reward');
+	public function clear(): void {
+		unset($this->session->data['reward']);
 
-		$json = [];
-
-		if (!isset($this->session->data['api_id'])) {
-			$json['error'] = $this->language->get('error_permission');
-		} else {
-			$json['points'] = $this->customer->getRewardPoints();
-		}
+		$json['success'] = $this->language->get('text_success');
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

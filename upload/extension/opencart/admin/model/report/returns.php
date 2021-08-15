@@ -1,7 +1,7 @@
 <?php
-namespace Opencart\Application\Model\Extension\Opencart\Report;
+namespace Opencart\Admin\Model\Extension\Opencart\Report;
 class Returns extends \Opencart\System\Engine\Model {
-	public function getReturns($data = []) {
+	public function getReturns(array $data = []): array {
 		$sql = "SELECT MIN(r.`date_added`) AS date_start, MAX(r.`date_added`) AS date_end, COUNT(r.`return_id`) AS returns FROM `" . DB_PREFIX . "return` r";
 
 		if (!empty($data['filter_return_status_id'])) {
@@ -11,11 +11,11 @@ class Returns extends \Opencart\System\Engine\Model {
 		}
 
 		if (!empty($data['filter_date_start'])) {
-			$sql .= " AND DATE(r.`date_added`) >= '" . $this->db->escape((string)$data['filter_date_start']) . "'";
+			$sql .= " AND DATE(r.`date_added`) >= DATE('" . $this->db->escape((string)$data['filter_date_start']) . "')";
 		}
 
 		if (!empty($data['filter_date_end'])) {
-			$sql .= " AND DATE(r.`date_added`) <= '" . $this->db->escape((string)$data['filter_date_end']) . "'";
+			$sql .= " AND DATE(r.`date_added`) <= DATE('" . $this->db->escape((string)$data['filter_date_end']) . "')";
 		}
 
 		if (isset($data['filter_group'])) {
@@ -57,7 +57,7 @@ class Returns extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function getTotalReturns($data = []) {
+	public function getTotalReturns(array $data = []): int {
 		if (!empty($data['filter_group'])) {
 			$group = $data['filter_group'];
 		} else {
@@ -87,11 +87,11 @@ class Returns extends \Opencart\System\Engine\Model {
 		}
 
 		if (!empty($data['filter_date_start'])) {
-			$sql .= " AND DATE(`date_added`) >= '" . $this->db->escape((string)$data['filter_date_start']) . "'";
+			$sql .= " AND DATE(`date_added`) >= DATE('" . $this->db->escape((string)$data['filter_date_start']) . "')";
 		}
 
 		if (!empty($data['filter_date_end'])) {
-			$sql .= " AND DATE(`date_added`) <= '" . $this->db->escape((string)$data['filter_date_end']) . "'";
+			$sql .= " AND DATE(`date_added`) <= DATE('" . $this->db->escape((string)$data['filter_date_end']) . "')";
 		}
 
 		$query = $this->db->query($sql);

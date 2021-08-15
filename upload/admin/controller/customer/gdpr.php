@@ -1,7 +1,7 @@
 <?php
-namespace Opencart\Application\Controller\Customer;
+namespace Opencart\Admin\Controller\Customer;
 class Gdpr extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): void {
 		$this->load->language('customer/gdpr');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -21,8 +21,10 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 		$data['text_info'] = sprintf($this->language->get('text_info'), $this->config->get('config_gdpr_limit'));
 
 		$data['approve'] = $this->url->link('customer/gdpr|approve', 'user_token=' . $this->session->data['user_token']);
-		$data['deny'] = $this->url->link('customer/gdpr|deny', 'user_token=' . $this->session->data['user_token']);
-		$data['delete'] = $this->url->link('customer/gdpr|delete', 'user_token=' . $this->session->data['user_token']);
+		$data['deny']    = $this->url->link('customer/gdpr|deny', 'user_token=' . $this->session->data['user_token']);
+		$data['delete']  = $this->url->link('customer/gdpr|delete', 'user_token=' . $this->session->data['user_token']);
+
+		$data['list'] = $this->getList();
 
 		$data['user_token'] = $this->session->data['user_token'];
 
@@ -33,7 +35,13 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('customer/gdpr', $data));
 	}
 
-	public function gdpr() {
+	public function list(): void {
+		$this->load->language('customer/gdpr');
+
+		$this->response->setOutput($this->getList());
+	}
+
+	public function getList(): string {
 		$this->load->language('customer/gdpr');
 
 		if (isset($this->request->get['filter_email'])) {
@@ -73,8 +81,8 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 			'filter_action'     => $filter_action,
 			'filter_status'     => $filter_status,
 			'filter_date_added' => $filter_date_added,
-			'start'             => ($page - 1) * $this->config->get('config_pagination'),
-			'limit'             => $this->config->get('config_pagination')
+			'start'             => ($page - 1) * $this->config->get('config_pagination_admin'),
+			'limit'             => $this->config->get('config_pagination_admin')
 		];
 
 		$this->load->model('customer/gdpr');
@@ -88,7 +96,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 			$customer_info = $this->model_customer_customer->getCustomerByEmail($result['email']);
 
 			if ($customer_info) {
-				$edit = $this->url->link('customer/customer|edit', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $customer_info['customer_id']);
+				$edit = $this->url->link('customer/customer|form', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $customer_info['customer_id']);
 			} else {
 				$edit = '';
 			}
@@ -127,13 +135,13 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $gdpr_total,
 			'page'  => $page,
-			'limit' => $this->config->get('config_pagination'),
-			'url'   => $this->url->link('customer/gdpr|gdpr', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+			'limit' => $this->config->get('config_pagination_admin'),
+			'url'   => $this->url->link('customer/gdpr|list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
 		]);
 
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($gdpr_total) ? (($page - 1) * $this->config->get('config_pagination')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination')) > ($gdpr_total - $this->config->get('config_pagination'))) ? $gdpr_total : ((($page - 1) * $this->config->get('config_pagination')) + $this->config->get('config_pagination')), $gdpr_total, ceil($gdpr_total / $this->config->get('config_pagination')));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($gdpr_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($gdpr_total - $this->config->get('config_pagination_admin'))) ? $gdpr_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $gdpr_total, ceil($gdpr_total / $this->config->get('config_pagination_admin')));
 
-		$this->response->setOutput($this->load->view('customer/gdpr_list', $data));
+		return $this->load->view('customer/gdpr_list', $data);
 	}
 
 	/*
@@ -159,14 +167,16 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 	 *	processing = 2
 	 *	denied     = -1
 	*/
-	public function approve() {
+	public function approve(): void {
 		$this->load->language('customer/gdpr');
 
 		$json = [];
 
 		if (!$this->user->hasPermission('modify', 'customer/gdpr')) {
 			$json['error'] = $this->language->get('error_permission');
-		} else {
+		}
+
+		if (!$json) {
 			$gdprs = [];
 
 			if (isset($this->request->post['selected'])) {
@@ -200,14 +210,16 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function deny() {
+	public function deny(): void {
 		$this->load->language('customer/gdpr');
 
 		$json = [];
 
 		if (!$this->user->hasPermission('modify', 'customer/gdpr')) {
 			$json['error'] = $this->language->get('error_permission');
-		} else {
+		}
+
+		if (!$json) {
 			$gdprs = [];
 
 			if (isset($this->request->post['selected'])) {
@@ -231,14 +243,16 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function delete() {
+	public function delete(): void {
 		$this->load->language('customer/gdpr');
 
 		$json = [];
 
 		if (!$this->user->hasPermission('modify', 'customer/gdpr')) {
 			$json['error'] = $this->language->get('error_permission');
-		} else {
+		}
+
+		if (!$json) {
 			$gdprs = [];
 
 			if (isset($this->request->post['selected'])) {

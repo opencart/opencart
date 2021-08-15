@@ -52,6 +52,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise dissociatePackageAsync(array $args = [])
  * @method \Aws\Result getCompatibleElasticsearchVersions(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getCompatibleElasticsearchVersionsAsync(array $args = [])
+ * @method \Aws\Result getPackageVersionHistory(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getPackageVersionHistoryAsync(array $args = [])
  * @method \Aws\Result getUpgradeHistory(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getUpgradeHistoryAsync(array $args = [])
  * @method \Aws\Result getUpgradeStatus(array $args = [])
@@ -78,6 +80,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise startElasticsearchServiceSoftwareUpdateAsync(array $args = [])
  * @method \Aws\Result updateElasticsearchDomainConfig(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateElasticsearchDomainConfigAsync(array $args = [])
+ * @method \Aws\Result updatePackage(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updatePackageAsync(array $args = [])
  * @method \Aws\Result upgradeElasticsearchDomain(array $args = [])
  * @method \GuzzleHttp\Promise\Promise upgradeElasticsearchDomainAsync(array $args = [])
  */

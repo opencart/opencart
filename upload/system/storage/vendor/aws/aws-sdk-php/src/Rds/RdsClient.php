@@ -262,6 +262,8 @@ use Aws\PresignUrlMiddleware;
  * @method \GuzzleHttp\Promise\Promise startDBClusterAsync(array $args = []) (supported in versions 2014-10-31)
  * @method \Aws\Result startDBInstance(array $args = []) (supported in versions 2014-10-31)
  * @method \GuzzleHttp\Promise\Promise startDBInstanceAsync(array $args = []) (supported in versions 2014-10-31)
+ * @method \Aws\Result startDBInstanceAutomatedBackupsReplication(array $args = []) (supported in versions 2014-10-31)
+ * @method \GuzzleHttp\Promise\Promise startDBInstanceAutomatedBackupsReplicationAsync(array $args = []) (supported in versions 2014-10-31)
  * @method \Aws\Result startExportTask(array $args = []) (supported in versions 2014-10-31)
  * @method \GuzzleHttp\Promise\Promise startExportTaskAsync(array $args = []) (supported in versions 2014-10-31)
  * @method \Aws\Result stopActivityStream(array $args = []) (supported in versions 2014-10-31)
@@ -270,6 +272,8 @@ use Aws\PresignUrlMiddleware;
  * @method \GuzzleHttp\Promise\Promise stopDBClusterAsync(array $args = []) (supported in versions 2014-10-31)
  * @method \Aws\Result stopDBInstance(array $args = []) (supported in versions 2014-10-31)
  * @method \GuzzleHttp\Promise\Promise stopDBInstanceAsync(array $args = []) (supported in versions 2014-10-31)
+ * @method \Aws\Result stopDBInstanceAutomatedBackupsReplication(array $args = []) (supported in versions 2014-10-31)
+ * @method \GuzzleHttp\Promise\Promise stopDBInstanceAutomatedBackupsReplicationAsync(array $args = []) (supported in versions 2014-10-31)
  */
 class RdsClient extends AwsClient
 {
@@ -285,7 +289,8 @@ class RdsClient extends AwsClient
                             'CopyDBSnapshot',
                             'CreateDBInstanceReadReplica',
                             'CopyDBClusterSnapshot',
-                            'CreateDBCluster'
+                            'CreateDBCluster',
+                            'StartDBInstanceAutomatedBackupsReplication'
                         ],
                         'service' => 'rds',
                         'presign_param' => 'PreSignedUrl',

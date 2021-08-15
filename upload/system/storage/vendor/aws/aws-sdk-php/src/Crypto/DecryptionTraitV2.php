@@ -88,14 +88,14 @@ trait DecryptionTraitV2
 
         $this->validateOptionsAndEnvelope($options, $envelope);
 
-        $decryptionSteam = $this->getDecryptingStream(
+        $decryptionStream = $this->getDecryptingStream(
             $cipherText,
             $cek,
             $options['@CipherOptions']
         );
         unset($cek);
 
-        return $decryptionSteam;
+        return $decryptionStream;
     }
 
     private function getTagFromCiphertextStream(

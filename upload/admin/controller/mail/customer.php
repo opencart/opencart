@@ -1,28 +1,24 @@
 <?php
-namespace Opencart\Application\Controller\Mail;
+namespace Opencart\Admin\Controller\Mail;
 class Customer extends \Opencart\System\Engine\Controller {
-	public function approve(&$route, &$args, &$output) {
+	public function approve(string &$route, array &$args, mixed &$output): void {
 		$this->load->model('customer/customer');
 
 		$customer_info = $this->model_customer_customer->getCustomer($args[0]);
 
 		if ($customer_info) {
-			$this->load->model('tool/image');
-
-			if (is_file(DIR_IMAGE . html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8'))) {
-				$data['logo'] = $this->model_tool_image->resize(html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8'), $this->config->get('theme_default_image_location_width'), $this->config->get('theme_default_image_cart_height'));
-			} else {
-				$data['logo'] = '';
-			}
-
 			$this->load->model('setting/store');
 
 			$store_info = $this->model_setting_store->getStore($customer_info['store_id']);
 
 			if ($store_info) {
+				$this->load->model('setting/setting');
+
+				$store_logo = html_entity_decode($this->model_setting_setting->getValue('config_logo', $store_info['store_id']), ENT_QUOTES, 'UTF-8');
 				$store_name = html_entity_decode($store_info['name'], ENT_QUOTES, 'UTF-8');
 				$store_url = $store_info['url'];
 			} else {
+				$store_logo = html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8');
 				$store_name = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
 				$store_url = HTTP_CATALOG;
 			}
@@ -37,20 +33,31 @@ class Customer extends \Opencart\System\Engine\Controller {
 				$language_code = $this->config->get('config_language');
 			}
 
-			$language = new \Opencart\System\Library\Language($language_code);
-			$language->load($language_code);
-			$language->load('mail/customer_approve');
+			// Load the language for any mails using a different country code and prefixing it so it does not pollute the main data pool.
+			$this->language->load($language_code, 'mail', $language_code);
+			$this->language->load('mail/customer_approve', 'mail', $language_code);
 
-			$subject = sprintf($language->get('text_subject'), $store_name);
+			// Add language vars to the template folder
+			$results = $this->language->all('mail');
 
-			$data['text_welcome'] = sprintf($language->get('text_welcome'), $store_name);
-			$data['text_login'] = $language->get('text_login');
-			$data['text_service'] = $language->get('text_service');
-			$data['text_thanks'] = $language->get('text_thanks');
+			foreach ($results as $key => $value) {
+				$data[$key] = $value;
+			}
 
-			$data['button_login'] = $language->get('button_login');
+			$this->load->model('tool/image');
+
+			if (is_file(DIR_IMAGE . $store_logo)) {
+				$data['logo'] = $store_url . 'image/' . $store_logo;
+			} else {
+				$data['logo'] = '';
+			}
+
+			$subject = sprintf($this->language->get('mail_text_subject'), $store_name);
+
+			$data['text_welcome'] = sprintf($this->language->get('mail_text_welcome'), $store_name);
 
 			$data['login'] = $store_url . 'index.php?route=account/login';
+
 			$data['store'] = $store_name;
 			$data['store_url'] = $store_url;
 
@@ -71,28 +78,24 @@ class Customer extends \Opencart\System\Engine\Controller {
 		}
 	}
 
-	public function deny(&$route, &$args, &$output) {
+	public function deny(string &$route, array &$args, mixed &$output): void {
 		$this->load->model('customer/customer');
 
 		$customer_info = $this->model_customer_customer->getCustomer($args[0]);
 
 		if ($customer_info) {
-			$this->load->model('tool/image');
-
-			if (is_file(DIR_IMAGE . html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8'))) {
-				$data['logo'] = $this->model_tool_image->resize(html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8'), $this->config->get('theme_default_image_location_width'), $this->config->get('theme_default_image_cart_height'));
-			} else {
-				$data['logo'] = '';
-			}
-
 			$this->load->model('setting/store');
 
 			$store_info = $this->model_setting_store->getStore($customer_info['store_id']);
 
 			if ($store_info) {
+				$this->load->model('setting/setting');
+
+				$store_logo = html_entity_decode($this->model_setting_setting->getValue('config_logo', $customer_info['store_id']), ENT_QUOTES, 'UTF-8');
 				$store_name = html_entity_decode($store_info['name'], ENT_QUOTES, 'UTF-8');
 				$store_url = $store_info['url'];
 			} else {
+				$store_logo = html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8');
 				$store_name = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
 				$store_url = HTTP_CATALOG;
 			}
@@ -107,19 +110,31 @@ class Customer extends \Opencart\System\Engine\Controller {
 				$language_code = $this->config->get('config_language');
 			}
 
-			$language = new \Opencart\System\Library\Language($language_code);
-			$language->load($language_code);
-			$language->load('mail/customer_deny');
+			// Load the language for any mails using a different country code and prefixing it so it does not pollute the main data pool.
+			$this->language->load($language_code, 'mail', $language_code);
+			$this->language->load('mail/customer_deny', 'mail', $language_code);
 
-			$subject = sprintf($language->get('text_subject'), $store_name);
+			// Add language vars to the template folder
+			$results = $this->language->all('mail');
 
-			$data['text_welcome'] = sprintf($language->get('text_welcome'), $store_name);
-			$data['text_denied'] = $language->get('text_denied');
-			$data['text_thanks'] = $language->get('text_thanks');
+			foreach ($results as $key => $value) {
+				$data[$key] = $value;
+			}
 
-			$data['button_contact'] = $language->get('button_contact');
+			$this->load->model('tool/image');
+
+			if (is_file(DIR_IMAGE . $store_logo)) {
+				$data['logo'] = $store_url . 'image/' . $store_logo;
+			} else {
+				$data['logo'] = '';
+			}
+
+			$subject = sprintf($this->language->get('mail_text_subject'), $store_name);
+
+			$data['text_welcome'] = sprintf($this->language->get('mail_text_welcome'), $store_name);
 
 			$data['contact'] = $store_url . 'index.php?route=information/contact';
+
 			$data['store'] = $store_name;
 			$data['store_url'] = $store_url;
 

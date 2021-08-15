@@ -1,7 +1,7 @@
 <?php
-namespace Opencart\Application\Controller\Extension\Opencart\Module;
+namespace Opencart\Catalog\Controller\Extension\Opencart\Module;
 class Filter extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): string {
 		if (isset($this->request->get['path'])) {
 			$parts = explode('_', (string)$this->request->get['path']);
 		} else {
@@ -71,5 +71,7 @@ class Filter extends \Opencart\System\Engine\Controller {
 				return $this->load->view('extension/opencart/module/filter', $data);
 			}
 		}
+
+		return '';
 	}
 }

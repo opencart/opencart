@@ -1,66 +1,8 @@
 <?php
 namespace Opencart\Catalog\Controller\Checkout;
 class Confirm extends \Opencart\System\Engine\Controller {
-	public function index(): void {
-		if ($this->cart->hasShipping()) {
-			// Validate if shipping address has been set.
-			if (!isset($this->session->data['shipping_address'])) {
-				$this->response->redirect($this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'), true));
-			}
-
-			// Validate if shipping method has been set.
-			if (!isset($this->session->data['shipping_method'])) {
-				$this->response->redirect($this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'), true));
-			}
-		} else {
-			unset($this->session->data['shipping_address']);
-			unset($this->session->data['shipping_method']);
-			unset($this->session->data['shipping_methods']);
-		}
-
-		// Validate if payment address has been set.
-		if ($this->config->get('config_checkout_address') && !isset($this->session->data['payment_address'])) {
-			$this->response->redirect($this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'), true));
-		}
-
-		$this->load->model('setting/extension');
-
-		if (isset($this->session->data['payment_method'])) {
-			// Validate if payment method has been set.
-			$extension_info = $this->model_setting_extension->getExtensionByCode('payment', $this->session->data['payment_method']['code']);
-
-			if (!$extension_info) {
-				$json['redirect'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'), true);
-			}
-		} else {
-			$json['redirect'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'), true);
-		}
-
-		// Validate cart has products and has stock.
-		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
-			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
-		}
-
-		// Validate minimum quantity requirements.
-		$products = $this->cart->getProducts();
-
-		foreach ($products as $product) {
-			$product_total = 0;
-
-			foreach ($products as $product_2) {
-				if ($product_2['product_id'] == $product['product_id']) {
-					$product_total += $product_2['quantity'];
-				}
-			}
-
-			if ($product['minimum'] > $product_total) {
-				$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
-
-				break;
-			}
-		}
-
-
+	public function index(): string {
+		$this->load->language('checkout/checkout');
 
 		$this->load->model('tool/upload');
 
@@ -176,12 +118,74 @@ class Confirm extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		$data['payment'] = $this->load->controller('extension/' . $extension_info['extension'] . '/payment/' . $extension_info['code']);
+		//$data['payment'] = $this->load->controller('extension/' . $extension_info['extension'] . '/payment/' . $extension_info['code']);
 
-		$this->response->setOutput($this->load->view('checkout/confirm', $data));
+		return $this->load->view('checkout/confirm', $data);
 	}
 
 	public function confirm(): void {
+
+		// Validate minimum quantity requirements.
+		$products = $this->cart->getProducts();
+
+		foreach ($products as $product) {
+			$product_total = 0;
+
+			foreach ($products as $product_2) {
+				if ($product_2['product_id'] == $product['product_id']) {
+					$product_total += $product_2['quantity'];
+				}
+			}
+
+			if ($product['minimum'] > $product_total) {
+				$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
+
+				break;
+			}
+		}
+
+		if ($this->cart->hasShipping()) {
+			// Validate if shipping address has been set.
+			if (!isset($this->session->data['shipping_address'])) {
+				$this->response->redirect($this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'), true));
+			}
+
+			// Validate if shipping method has been set.
+			if (!isset($this->session->data['shipping_method'])) {
+				$this->response->redirect($this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'), true));
+			}
+		} else {
+			unset($this->session->data['shipping_address']);
+			unset($this->session->data['shipping_method']);
+			unset($this->session->data['shipping_methods']);
+		}
+
+		// Validate if payment address has been set.
+		if ($this->config->get('config_checkout_address') && !isset($this->session->data['payment_address'])) {
+			$this->response->redirect($this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'), true));
+		}
+
+		$this->load->model('setting/extension');
+
+		if (isset($this->session->data['payment_method'])) {
+			// Validate if payment method has been set.
+			$extension_info = $this->model_setting_extension->getExtensionByCode('payment', $this->session->data['payment_method']['code']);
+
+			if (!$extension_info) {
+				$json['redirect'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'), true);
+			}
+		} else {
+			$json['redirect'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'), true);
+		}
+
+		// Validate cart has products and has stock.
+		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
+			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
+		}
+
+
+
+
 
 
 		if ($this->cart->hasShipping()) {
@@ -222,6 +226,9 @@ class Confirm extends \Opencart\System\Engine\Controller {
 		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
 			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
 		}
+
+
+
 
 		// Validate minimum quantity requirements.
 		$products = $this->cart->getProducts();

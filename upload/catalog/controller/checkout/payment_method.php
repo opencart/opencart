@@ -4,7 +4,53 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 	public function index(): string {
 		$this->load->language('checkout/checkout');
 
-		if (isset($this->session->data['payment_address'])) {
+		if (isset($this->session->data['payment_methods'])) {
+			$data['payment_methods'] = $this->session->data['payment_methods'];
+		} else {
+			$data['payment_methods'] = [];
+		}
+
+		if (isset($this->session->data['payment_method']['code'])) {
+			$data['code'] = $this->session->data['payment_method']['code'];
+		} else {
+			$data['code'] = '';
+		}
+
+		$this->load->model('catalog/information');
+
+		$information_info = $this->model_catalog_information->getInformation($this->config->get('config_checkout_id'));
+
+		if ($information_info) {
+			$data['text_agree'] = sprintf($this->language->get('text_agree'), $this->url->link('information/information|info', 'language=' . $this->config->get('config_language') . '&information_id=' . $this->config->get('config_checkout_id')), $information_info['title']);
+		} else {
+			$data['text_agree'] = '';
+		}
+
+		if (isset($this->session->data['agree'])) {
+			$data['agree'] = $this->session->data['agree'];
+		} else {
+			$data['agree'] = '';
+		}
+
+		return $this->load->view('checkout/payment_method', $data);
+	}
+
+	public function getMethods(): void {
+		$this->load->language('checkout/checkout');
+
+		$json = [];
+
+		// Validate if payment address has been set.
+		if ($this->config->get('config_checkout_address') && !isset($this->session->data['payment_address'])) {
+			$json['redirect'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'), true);
+		}
+
+		// Validate cart has products and has stock.
+		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
+			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
+		}
+
+		if (!$json) {
 			// Totals
 			$totals = [];
 			$taxes = $this->cart->getTaxes();
@@ -66,50 +112,19 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 
 			array_multisort($sort_order, SORT_ASC, $method_data);
 
+			if (!$method_data) {
+				$json['error'] = sprintf($this->language->get('error_no_payment'), $this->url->link('information/contact', 'language=' . $this->config->get('config_language')));
+			}
+		}
+
+		if (!$json) {
+			$json['payment_methods'] = $method_data;
+
 			$this->session->data['payment_methods'] = $method_data;
 		}
 
-		if (empty($this->session->data['payment_methods'])) {
-			$data['error_warning'] = sprintf($this->language->get('error_no_payment'), $this->url->link('information/contact', 'language=' . $this->config->get('config_language')));
-		} else {
-			$data['error_warning'] = '';
-		}
-
-		if (isset($this->session->data['payment_methods'])) {
-			$data['payment_methods'] = $this->session->data['payment_methods'];
-		} else {
-			$data['payment_methods'] = [];
-		}
-
-		if (isset($this->session->data['payment_method']['code'])) {
-			$data['code'] = $this->session->data['payment_method']['code'];
-		} else {
-			$data['code'] = '';
-		}
-
-		if (isset($this->session->data['comment'])) {
-			$data['comment'] = $this->session->data['comment'];
-		} else {
-			$data['comment'] = '';
-		}
-
-		$this->load->model('catalog/information');
-
-		$information_info = $this->model_catalog_information->getInformation($this->config->get('config_checkout_id'));
-
-		if ($information_info) {
-			$data['text_agree'] = sprintf($this->language->get('text_agree'), $this->url->link('information/information|info', 'language=' . $this->config->get('config_language') . '&information_id=' . $this->config->get('config_checkout_id')), $information_info['title']);
-		} else {
-			$data['text_agree'] = '';
-		}
-
-		if (isset($this->session->data['agree'])) {
-			$data['agree'] = $this->session->data['agree'];
-		} else {
-			$data['agree'] = '';
-		}
-
-		return $this->load->view('checkout/payment_method', $data);
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function save(): void {
@@ -125,25 +140,6 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 		// Validate cart has products and has stock.
 		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
 			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
-		}
-
-		// Validate minimum quantity requirements.
-		$products = $this->cart->getProducts();
-
-		foreach ($products as $product) {
-			$product_total = 0;
-
-			foreach ($products as $product_2) {
-				if ($product_2['product_id'] == $product['product_id']) {
-					$product_total += $product_2['quantity'];
-				}
-			}
-
-			if ($product['minimum'] > $product_total) {
-				$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
-
-				break;
-			}
 		}
 
 		if (!isset($this->request->post['payment_method'])) {
@@ -163,8 +159,9 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			$json['success'] = $this->language->get('text_success');
+
 			$this->session->data['payment_method'] = $this->session->data['payment_methods'][$this->request->post['payment_method']];
-			$this->session->data['comment'] = strip_tags($this->request->post['comment']);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

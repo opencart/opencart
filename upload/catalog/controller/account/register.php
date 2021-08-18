@@ -177,10 +177,6 @@ class Register extends \Opencart\System\Engine\Controller {
 				$json['error']['password'] = $this->language->get('error_password');
 			}
 
-			if ($this->request->post['confirm'] !== $this->request->post['password']) {
-				$json['error']['confirm'] = $this->language->get('error_confirm');
-			}
-
 			// Captcha
 			$this->load->model('setting/extension');
 

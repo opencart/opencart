@@ -1135,15 +1135,17 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('select[name=\'config_theme\']').on('change', function() {
+$('#input-theme').on('change', function() {
+    var element = this;
+
     $.ajax({
         url: 'index.php?route=setting/setting|theme&user_token={{ user_token }}&theme=' + this.value,
         dataType: 'html',
         beforeSend: function() {
-            $('select[name=\'config_theme\']').prop('disabled', true);
+            $(element).prop('disabled', true);
         },
         complete: function() {
-            $('select[name=\'config_theme\']').prop('disabled', false);
+            $(element).prop('disabled', false);
         },
         success: function(html) {
             $('#theme-thumb').attr('src', html);
@@ -1155,18 +1157,19 @@ $('select[name=\'config_theme\']').on('change', function() {
     });
 });
 
-$('select[name=\'config_theme\']').trigger('change');
-//--></script>
-<script type="text/javascript"><!--
-$('select[name=\'config_country_id\']').on('change', function() {
+$('#input-theme').trigger('change');
+
+$('#input-country').on('change', function() {
+    var element = this;
+
     $.ajax({
         url: 'index.php?route=localisation/country|country&user_token={{ user_token }}&country_id=' + this.value,
         dataType: 'json',
         beforeSend: function() {
-            $('select[name=\'config_country_id\']').prop('disabled', true);
+            $(element).prop('disabled', true);
         },
         complete: function() {
-            $('select[name=\'config_country_id\']').prop('disabled', false);
+            $(element).prop('disabled', false);
         },
         success: function(json) {
             html = '<option value="">{{ text_select }}</option>';
@@ -1185,7 +1188,7 @@ $('select[name=\'config_country_id\']').on('change', function() {
                 html += '<option value="0" selected="selected">{{ text_none }}</option>';
             }
 
-            $('select[name=\'config_zone_id\']').html(html);
+            $('#input-zone').html(html);
 
             $('#button-save').prop('disabled', false);
         },
@@ -1196,6 +1199,6 @@ $('select[name=\'config_country_id\']').on('change', function() {
     });
 });
 
-$('select[name=\'config_country_id\']').trigger('change');
+$('#input-country').trigger('change');
 //--></script>
 {{ footer }}

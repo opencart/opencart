@@ -116,7 +116,7 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('select[name=\'type\']').on('change', function() {
+$('#input-type').on('change', function() {
     if (this.value == 'select' || this.value == 'radio' || this.value == 'checkbox' || this.value == 'image') {
         $('#option-value').parent().show();
     } else {
@@ -124,7 +124,7 @@ $('select[name=\'type\']').on('change', function() {
     }
 });
 
-$('select[name=\'type\']').trigger('change');
+$('#input-type').trigger('change');
 
 var option_value_row = {{ option_value_row }};
 

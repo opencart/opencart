@@ -35,19 +35,19 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('select[name=\'type\']').on('change', function() {
+$('#input-type').on('change', function() {
     $.ajax({
         url: $(this).val(),
         dataType: 'html',
         beforeSend: function() {
             $('.fa-filter').addClass('fa-circle-notch fa-spin');
             $('.fa-filter').removeClass('fa-filter');
-            $('select[name=\'type\']').prop('disabled', true);
+            $('#input-type').prop('disabled', true);
         },
         complete: function() {
             $('.fa-circle-notch').addClass('fa-filter');
             $('.fa-circle-notch').removeClass('fa-circle-notch fa-spin');
-            $('select[name=\'type\']').prop('disabled', false);
+            $('#input-type').prop('disabled', false);
         },
         success: function(html) {
             $('#extension').html(html);
@@ -119,7 +119,7 @@ $('#extension').on('click', '.dropdown-item', function(e) {
             if (json['success']) {
                 $('#extension').before('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + '  <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#extension').load($('select[name=\'type\']').val());
+                $('#extension').load($('#input-type').val());
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
@@ -154,7 +154,7 @@ $('#extension').on('click', '.btn-success', function(e) {
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('select[name=\'type\']').trigger('change');
+                $('#input-type').trigger('change');
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
@@ -192,7 +192,7 @@ $('#extension').on('click', '.btn-danger, .btn-outline-danger', function(e) {
                 if (json['success']) {
                     $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                    $('select[name=\'type\']').trigger('change');
+                    $('#input-type').trigger('change');
                 }
             },
             error: function(xhr, ajaxOptions, thrownError) {

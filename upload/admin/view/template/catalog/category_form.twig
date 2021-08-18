@@ -221,7 +221,7 @@
 <script type="text/javascript"><!--
 $('textarea[data-oc-toggle=\'ckeditor\']').ckeditor();
 
-$('input[name=\'path\']').autocomplete({
+$('#input-path').autocomplete({
     'source': function(request, response) {
         $.ajax({
             url: 'index.php?route=catalog/category|autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
@@ -242,12 +242,12 @@ $('input[name=\'path\']').autocomplete({
         });
     },
     'select': function(item) {
-        $('input[name=\'path\']').val(item['label']);
-        $('input[name=\'parent_id\']').val(item['value']);
+        $('#input-path').val(item['label']);
+        $('#input-parent_id').val(item['value']);
     }
 });
 
-$('input[name=\'filter\']').autocomplete({
+$('#input-filter').autocomplete({
     'source': function(request, response) {
         $.ajax({
             url: 'index.php?route=catalog/filter|autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
@@ -263,7 +263,7 @@ $('input[name=\'filter\']').autocomplete({
         });
     },
     'select': function(item) {
-        $('input[name=\'filter\']').val('');
+        $('#input-filter').val('');
 
         $('#category-filter-' + item['value']).remove();
 

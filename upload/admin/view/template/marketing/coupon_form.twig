@@ -186,7 +186,7 @@
 	</div>
 </div>
 <script type="text/javascript"><!--
-$('input[name=\'product\']').autocomplete({
+$('#input-product').autocomplete({
     'source': function(request, response) {
         $.ajax({
             url: 'index.php?route=catalog/product|autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
@@ -202,7 +202,7 @@ $('input[name=\'product\']').autocomplete({
         });
     },
     'select': function(item) {
-        $('input[name=\'product\']').val('');
+        $('#input-product').val('');
 
         $('#coupon-product-' + item['value']).remove();
 
@@ -220,7 +220,7 @@ $('#coupon-product').on('click', '.btn', function() {
 });
 
 // Category
-$('input[name=\'category\']').autocomplete({
+$('#input-category').autocomplete({
     'source': function(request, response) {
         $.ajax({
             url: 'index.php?route=catalog/category|autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
@@ -236,7 +236,7 @@ $('input[name=\'category\']').autocomplete({
         });
     },
     'select': function(item) {
-        $('input[name=\'category\']').val('');
+        $('#input-category').val('');
 
         $('#coupon-category-' + item['value']).remove();
 
@@ -259,7 +259,7 @@ $('#history').on('click', '.pagination a', function(e) {
     $('#history').load(this.href);
 });
 
-$('#history').load('index.php?route=marketing/coupon|history&user_token={{ user_token }}&coupon_id=' + $('input[name=\'coupon_id\']').val());
+$('#history').load('index.php?route=marketing/coupon|history&user_token={{ user_token }}&coupon_id=' + $('#input-coupon-id').val());
 
 $('.date').datetimepicker({
     'format': 'YYYY-MM-DD',

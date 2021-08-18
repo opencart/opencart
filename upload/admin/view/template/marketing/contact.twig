@@ -248,7 +248,7 @@ $('#button-send').on('click', function() {
                 $('#button-send').button('reset');
             },
             success: function(json) {
-                $('.invalid-feedback').removeClass('show');
+                $('.invalid-feedback').removeClass('d-block');
 
                 if (json['error']) {
                     if (json['error']['warning']) {

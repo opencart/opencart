@@ -56,19 +56,19 @@ $('#upload').on('click', 'thead a, .pagination a', function(e) {
 $('#button-filter').on('click', function() {
     url = '';
 
-    var filter_name = $('input[name=\'filter_name\']').val();
+    var filter_name = $('#input-name').val();
 
     if (filter_name) {
         url += '&filter_name=' + encodeURIComponent(filter_name);
     }
 
-    var filter_filename = $('input[name=\'filter_filename\']').val();
+    var filter_filename = $('#input-filename').val();
 
     if (filter_filename) {
         url += '&filter_filename=' + encodeURIComponent(filter_filename);
     }
 
-    var filter_date_added = $('input[name=\'filter_date_added\']').val();
+    var filter_date_added = $('#input-date-added').val();
 
     if (filter_date_added) {
         url += '&filter_date_added=' + encodeURIComponent(filter_date_added);

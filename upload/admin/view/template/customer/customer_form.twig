@@ -544,7 +544,7 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('select[name=\'customer_group_id\']').on('change', function() {
+$('#input-customer-group').on('change', function() {
     $.ajax({
         url: 'index.php?route=customer/customer|customfield&user_token={{ user_token }}&customer_group_id=' + this.value,
         dataType: 'json',

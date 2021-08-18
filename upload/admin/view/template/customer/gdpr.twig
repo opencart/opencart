@@ -147,25 +147,25 @@ $('#gdpr').on('click', '.btn-success, .btn-warning, .btn-danger', function(e) {
 $('#button-filter').on('click', function() {
     var url = '';
 
-    var filter_email = $('input[name=\'filter_email\']').val();
+    var filter_email = $('#input-email').val();
 
     if (filter_email) {
         url += '&filter_email=' + encodeURIComponent(filter_email);
     }
 
-    var filter_action = $('select[name=\'filter_action\']').val();
+    var filter_action = $('#input-action').val();
 
     if (filter_action !== '') {
         url += '&filter_action=' + filter_action;
     }
 
-    var filter_status = $('select[name=\'filter_status\']').val();
+    var filter_status = $('#input-status').val();
 
     if (filter_status !== '') {
         url += '&filter_status=' + filter_status;
     }
 
-    var filter_date_added = $('input[name=\'filter_date_added\']').val();
+    var filter_date_added = $('#input-date-added').val();
 
     if (filter_date_added) {
         url += '&filter_date_added=' + encodeURIComponent(filter_date_added);

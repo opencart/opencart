@@ -159,7 +159,7 @@ $(document).ready(function() {
 var oc = [];
 
 oc.alert = function(type, message) {
-    $('#alert').prepend('<div class="alert alert-' + type + ' fade show"><i class="fas fa-exclamation-circle"></i> ' + message + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+    $('#alert').prepend('<div class="alert alert-' + type + '"><i class="fas fa-exclamation-circle"></i> ' + message + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 }
 
 oc.error = function(key, message) {
@@ -381,9 +381,8 @@ $(document).ready(function() {
                 $(element).button('reset');
             },
             success: function(json) {
-                $(form).find('.alert-dismissible').remove();
                 $(form).find('.is-invalid').removeClass('is-invalid');
-                $(form).find('.invalid-feedback').removeClass('show');
+                $(form).find('.invalid-feedback').removeClass('d-block');
 
                 console.log(json);
                 console.log(json['error']);

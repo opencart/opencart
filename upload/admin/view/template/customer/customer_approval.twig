@@ -92,8 +92,6 @@ $('#button-approve, #button-deny, #button-delete').on('click', function(e) {
             $(element).button('reset');
         },
         success: function(json) {
-            $('.alert-dismissible').remove();
-
             if (json['error']) {
                 $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
@@ -126,8 +124,6 @@ $('#customer-approval').on('click', '.btn-success, .btn-danger', function(e) {
             $(element).button('reset');
         },
         success: function(json) {
-            $('.alert-dismissible').remove();
-
             if (json['error']) {
                 $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
@@ -148,31 +144,31 @@ $('#customer-approval').on('click', '.btn-success, .btn-danger', function(e) {
 $('#button-filter').on('click', function() {
     var url = '';
 
-    var filter_customer = $('input[name=\'filter_customer\']').val();
+    var filter_customer = $('#input-customer').val();
 
     if (filter_customer) {
         url += '&filter_customer=' + encodeURIComponent(filter_customer);
     }
 
-    var filter_email = $('input[name=\'filter_email\']').val();
+    var filter_email = $('#input-email').val();
 
     if (filter_email) {
         url += '&filter_email=' + encodeURIComponent(filter_email);
     }
 
-    var filter_customer_group_id = $('select[name=\'filter_customer_group_id\']').val();
+    var filter_customer_group_id = $('#input-customer_group').val();
 
     if (filter_customer_group_id !== '') {
         url += '&filter_customer_group_id=' + encodeURIComponent(filter_customer_group_id);
     }
 
-    var filter_type = $('select[name=\'filter_type\']').val();
+    var filter_type = $('#input-type').val();
 
     if (filter_type !== '') {
         url += '&filter_type=' + filter_type;
     }
 
-    var filter_date_added = $('input[name=\'filter_date_added\']').val();
+    var filter_date_added = $('#input-date-added').val();
 
     if (filter_date_added) {
         url += '&filter_date_added=' + encodeURIComponent(filter_date_added);
@@ -180,9 +176,8 @@ $('#button-filter').on('click', function() {
 
     $('#customer-approval').load('index.php?route=customer/customer_approval|list&user_token={{ user_token }}' + url);
 });
-//--></script>
-<script type="text/javascript"><!--
-$('input[name=\'filter_name\']').autocomplete({
+
+$('#input-customer').autocomplete({
     'source': function(request, response) {
         $.ajax({
             url: 'index.php?route=customer/customer|autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
@@ -198,11 +193,11 @@ $('input[name=\'filter_name\']').autocomplete({
         });
     },
     'select': function(item) {
-        $('input[name=\'filter_name\']').val(item['label']);
+        $('#input-customer').val(item['label']);
     }
 });
 
-$('input[name=\'filter_email\']').autocomplete({
+$('#input-email').autocomplete({
     'source': function(request, response) {
         $.ajax({
             url: 'index.php?route=customer/customer|autocomplete&user_token={{ user_token }}&filter_email=' + encodeURIComponent(request),
@@ -218,11 +213,10 @@ $('input[name=\'filter_email\']').autocomplete({
         });
     },
     'select': function(item) {
-        $('input[name=\'filter_email\']').val(item['label']);
+        $('#input-email').val(item['label']);
     }
 });
-//--></script>
-<script type="text/javascript"><!--
+
 $('.date').datetimepicker({
     'format': 'YYYY-MM-DD',
     'locale': '{{ datepicker }}',

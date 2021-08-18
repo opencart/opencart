@@ -116,16 +116,18 @@
 </div>
 <script type="text/javascript"><!--
 $('#button-send').on('click', function() {
+		var element = this;
+
     $.ajax({
         url: 'index.php?route=sale/voucher|send&user_token={{ user_token }}',
         type: 'post',
         dataType: 'json',
-        data: 'voucher_id=' + $('input[name=\'voucher_id\']').val(),
+        data: 'voucher_id=' + $('#input-voucher-id').val(),
         beforeSend: function() {
-            $('#button-send').prop('disabled', true);
+            $(element).prop('disabled', true);
         },
         complete: function() {
-            $('#button-send').prop('disabled', false);
+            $(element).prop('disabled', false);
         },
         success: function(json) {
             $('.alert-dismissible').remove();

@@ -16,23 +16,20 @@
     <div id="content" class="col">
       {{ content_top }}
       <h1>{{ heading_title }}</h1>
-
       {% if not logged %}
-        <div id="checkout-login">{{ login }}</div>
+      <div id="checkout-login">{{ login }}</div>
+    <br/>
+      <div id="checkout-register">{{ register }}</div>
+    {% else %}
+
+      {% if payment_address %}
         <br/>
-        <div id="checkout-register">{{ register }}</div>
-      {% else %}
+        <div id="checkout-payment-address">{{ payment_address }}</div>
+      {% endif %}
 
-        {% if payment_address %}
-          <br/>
-          <div id="checkout-payment-address">{{ payment_address }}</div>
-        {% endif %}
-
-        {% if shipping_required %}
-          <br/>
-          <div id="checkout-shipping-address">{{ shipping_address }}</div>
-        {% endif %}
-
+      {% if shipping_required %}
+        <br/>
+        <div id="checkout-shipping-address">{{ shipping_address }}</div>
       {% endif %}
 
 
@@ -56,6 +53,11 @@
         <div id="checkout-confirm">
 
         </div>
+
+
+        {% endif %}
+
+
 
         {{ content_bottom }}
       </div>

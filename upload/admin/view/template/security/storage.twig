@@ -8,7 +8,6 @@
       <div class="modal-body">
         <div class="alert alert-info"><i class="fas fa-exclamation-circle"></i> {{ text_security }}</div>
 
-
         {% if error_install %}
           <div class="alert alert-danger text-center"><i class="fas fa-exclamation-circle"></i> {{ error_install }}<br/>
             <button type="button" id="button-setting" data-bs-toggle="tooltip" title="{{ button_developer }}" data-oc-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-cog"></i> Remove</button>
@@ -21,9 +20,8 @@
           </div>
         {% endif %}
 
-
-
         <form>
+
           <fieldset>
             <legend>{{ text_choose }}</legend>
             <div class="mb-3">
@@ -33,6 +31,7 @@
               </select>
             </div>
           </fieldset>
+
           <fieldset id="collapse-automatic" class="collapse">
             <legend>{{ text_automatic }}</legend>
             <div class="mb-3">

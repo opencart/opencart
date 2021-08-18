@@ -67,8 +67,6 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 			array_multisort($sort_order, SORT_ASC, $method_data);
 
 			if (!$method_data) {
-				$this->session->data['shipping_methods'] = $method_data;
-			} else {
 				$json['warning'] = sprintf($this->language->get('error_no_shipping'), $this->url->link('information/contact', 'language=' . $this->config->get('config_language')));
 			}
 		}

@@ -46,7 +46,7 @@ $('#button-clear').on('click', function() {
                 if (json['success']) {
                     $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                    $('textarea[name=\'log\']').val('');
+                    $('#input-log').val('');
                 }
             },
             error: function(xhr, ajaxOptions, thrownError) {

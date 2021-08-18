@@ -102,43 +102,16 @@ $(document).on('click', '[data-bs-toggle=\'tooltip\']', function(e) {
    // $('body > .tooltip').remove();
 });
 
-/*
 // Makes tooltips work on ajax generated content
 $(document).ajaxStop(function() {
    // $('[data-bs-toggle=\'tooltip\']').tooltip();
-});
-
-// Tabs
-(function($) {
-    $.fn.tab = function(element, option) {
-        return $(element).each(function() {
-            handler = bootstrap.Tab.getInstance(element);
-
-            console.log('fdd');
-            if (!handler) {
-                var tab = new bootstrap.Tab(element, option);
-
-                tab.show();
-            }
-
-            $.extend(this, option);
-        });
-    }
-})(jQuery);
-
-$(document).ready(function() {
-    $('.nav-tabs li:first-child [data-bs-toggle=\'tab\']').tab('show');
-});
-
-$(document).ajaxStop(function(e) {
-  //  $('.nav-tabs li:first-child [data-bs-toggle=\'tab\']').tab('show');
 });
 */
 
 var oc = [];
 
 oc.alert = function(type, message) {
-    $('#alert').prepend('<div class="alert alert-' + type + ' fade show"><i class="fas fa-exclamation-circle"></i> ' + message + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+    $('#alert').prepend('<div class="alert alert-' + type + '"><i class="fas fa-exclamation-circle"></i> ' + message + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 }
 
 oc.error = function(key, message) {
@@ -146,7 +119,7 @@ oc.error = function(key, message) {
     $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
 
     // Show errors
-    $('#error-' + key.replaceAll('_', '-')).html(message).addClass('show');
+    $('#error-' + key.replaceAll('_', '-')).html(message).addClass('d-block');
 }
 
 // Forms
@@ -179,7 +152,7 @@ $(document).ready(function() {
             },
             success: function(json) {
                 $(form).find('.is-invalid').removeClass('is-invalid');
-                $(form).find('.invalid-feedback').removeClass('show');
+                $(form).find('.invalid-feedback').removeClass('d-block');
 
                 console.log(json);
 
@@ -197,6 +170,9 @@ $(document).ready(function() {
                 }
 
                 if (typeof json['error'] == 'object') {
+                    console.log(json['error']);
+
+
                     if (json['error']['warning']) {
                         oc.alert('danger', json['error']['warning']);
                     }
@@ -211,7 +187,7 @@ $(document).ready(function() {
                 }
 
                 if (json['success']) {
-                    $('#alert').prepend('<div class="alert alert-success fade opacity-50"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    oc.alert('success', json['success']);
 
                     // Refreshv    
                     var url = $(form).attr('data-oc-load');

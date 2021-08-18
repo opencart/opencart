@@ -66,31 +66,31 @@ $('#product').on('click', 'thead a, .pagination a', function(e) {
 $('#button-filter').on('click', function() {
     var url = '';
 
-    var filter_name = $('input[name=\'filter_name\']').val();
+    var filter_name = $('#input-name').val();
 
     if (filter_name) {
         url += '&filter_name=' + encodeURIComponent(filter_name);
     }
 
-    var filter_model = $('input[name=\'filter_model\']').val();
+    var filter_model = $('#input-model').val();
 
     if (filter_model) {
         url += '&filter_model=' + encodeURIComponent(filter_model);
     }
 
-    var filter_price = $('input[name=\'filter_price\']').val();
+    var filter_price = $('#input-price').val();
 
     if (filter_price) {
         url += '&filter_price=' + encodeURIComponent(filter_price);
     }
 
-    var filter_quantity = $('input[name=\'filter_quantity\']').val();
+    var filter_quantity = $('#input-quantity').val();
 
     if (filter_quantity) {
         url += '&filter_quantity=' + encodeURIComponent(filter_quantity);
     }
 
-    var filter_status = $('select[name=\'filter_status\']').val();
+    var filter_status = $('#input-status').val();
 
     if (filter_status !== '') {
         url += '&filter_status=' + encodeURIComponent(filter_status);
@@ -99,7 +99,7 @@ $('#button-filter').on('click', function() {
     $('#product').load('index.php?route=catalog/product|list&user_token={{ user_token }}' + url);
 });
 
-$('input[name=\'filter_name\']').autocomplete({
+$('#input-name').autocomplete({
     'source': function(request, response) {
         $.ajax({
             url: 'index.php?route=catalog/product|autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
@@ -115,11 +115,11 @@ $('input[name=\'filter_name\']').autocomplete({
         });
     },
     'select': function(item) {
-        $('input[name=\'filter_name\']').val(item['label']);
+        $('#input-name').val(item['label']);
     }
 });
 
-$('input[name=\'filter_model\']').autocomplete({
+$('#input-model').autocomplete({
     'source': function(request, response) {
         $.ajax({
             url: 'index.php?route=catalog/product|autocomplete&user_token={{ user_token }}&filter_model=' + encodeURIComponent(request),
@@ -135,7 +135,7 @@ $('input[name=\'filter_model\']').autocomplete({
         });
     },
     'select': function(item) {
-        $('input[name=\'filter_model\']').val(item['label']);
+        $('#input-model').val(item['label']);
     }
 });
 //--></script>

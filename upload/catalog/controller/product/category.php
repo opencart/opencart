@@ -168,6 +168,21 @@ class ControllerProductCategory extends Controller {
 				} else {
 					$image = $this->model_tool_image->resize('placeholder.png', $this->config->get('theme_' . $this->config->get('config_theme') . '_image_product_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_product_height'));
 				}
+				
+				if (empty($result['description']) !== true) {
+					$description = trim(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')));
+					if (empty($this->config->get('theme_' . $this->config->get('config_theme') . '_product_description_length')) !== true) {
+						$max_length = $this->config->get('theme_' . $this->config->get('config_theme') . '_product_description_length');
+					} else {
+						$max_length = 0;
+					}
+					if ($max_length !== 0 && strlen($description) > $max_length) {
+						$description = utf8_substr($description, 0, $max_length);
+						$description .= '..';
+					}
+				} else {
+					$description = '';
+				}
 
 				if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
 					$price = $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
@@ -199,7 +214,7 @@ class ControllerProductCategory extends Controller {
 					'product_id'  => $result['product_id'],
 					'thumb'       => $image,
 					'name'        => $result['name'],
-					'description' => utf8_substr(trim(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8'))), 0, $this->config->get('theme_' . $this->config->get('config_theme') . '_product_description_length')) . '..',
+					'description' => $description,
 					'price'       => $price,
 					'special'     => $special,
 					'tax'         => $tax,

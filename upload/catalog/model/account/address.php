@@ -37,7 +37,7 @@ class Address extends \Opencart\System\Engine\Model {
 		$address_query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "address` WHERE `address_id` = '" . (int)$address_id . "' AND `customer_id` = '" . (int)$this->customer->getId() . "'");
 
 		if ($address_query->num_rows) {
-			$country_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "country` WHERE `country_id` = '" . (int)$address_query->row['country_id'] . "'");
+			$country_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "country` WHERE `country_id` = '" . (int)$address_query->row['country_id'] . "' AND status ='1'");
 
 			if ($country_query->num_rows) {
 				$country = $country_query->row['name'];

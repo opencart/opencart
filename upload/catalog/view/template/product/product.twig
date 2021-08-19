@@ -68,31 +68,32 @@
               </div>
             {% endif %}
             {% if review_status %}
-              <div id="tab-review" class="tab-pane fade" role="tabpanel" aria-labelledby="review-tab">
+              <div id="tab-review" class="tab-pane fade">
                 <form id="form-review">
                   <div id="review"></div>
                   <h2>{{ text_write }}</h2>
                   {% if review_guest %}
-                    <div class="row mb-3 required">
-                      <label for="input-name" class="col-form-label">{{ entry_name }}</label> <input type="text" name="name" value="{{ customer_name }}" id="input-name" class="form-control"/>
+                    <div class="mb-3 required">
+                      <label for="input-name" class="form-label">{{ entry_name }}</label> <input type="text" name="name" value="{{ customer_name }}" id="input-name" class="form-control"/>
+                      <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="mb-3 required">
+                      <label for="input-review" class="form-label">{{ entry_review }}</label> <textarea name="text" rows="5" id="input-review" class="form-control"></textarea>
+                      <div class="form-text text-danger">{{ text_note }}</div>
                     </div>
                     <div class="row mb-3 required">
-                      <label for="input-review" class="col-form-label">{{ entry_review }}</label> <textarea name="text" rows="5" id="input-review" class="form-control"></textarea>
-                      <div class="help-block">{{ text_note }}</div>
-                    </div>
-                    <div class="row mb-3 required">
-                      <div class="col-sm-12">
-                        <label class="col-form-label">{{ entry_rating }}</label>
-                        &nbsp;&nbsp;&nbsp; {{ entry_bad }}&nbsp;
-                        <input type="radio" name="rating" value="1"/>
+                      <label class="form-label">{{ entry_rating }}</label>
+                      <div id="input-rating">
+                        {{ entry_bad }}&nbsp;
+                        <input type="radio" name="rating" value="1" class="form-check-input"/>
                         &nbsp;
-                        <input type="radio" name="rating" value="2"/>
+                        <input type="radio" name="rating" value="2" class="form-check-input"/>
                         &nbsp;
-                        <input type="radio" name="rating" value="3"/>
+                        <input type="radio" name="rating" value="3" class="form-check-input"/>
                         &nbsp;
-                        <input type="radio" name="rating" value="4"/>
+                        <input type="radio" name="rating" value="4" class="form-check-input"/>
                         &nbsp;
-                        <input type="radio" name="rating" value="5"/>
+                        <input type="radio" name="rating" value="5" class="form-check-input"/>
                         &nbsp;{{ entry_good }}</div>
                     </div>
                     {{ captcha }}
@@ -273,7 +274,6 @@
                       <div id="error-option-{{ option.product_option_id }}" class="invalid-feedback"></div>
                     </div>
                   {% endif %}
-
                   {% if option.type == 'time' %}
                     <div class="mb-3{% if option.required %} required{% endif %}">
                       <label for="input-option-{{ option.product_option_id }}" class="form-label">{{ option.name }}</label>
@@ -281,11 +281,9 @@
                         <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" id="input-option-{{ option.product_option_id }}" class="form-control"/>
                         <div class="input-group-text"><i class="fas fa-calendar"></i></div>
                       </div>
-
                       <div id="error-option-{{ option.product_option_id }}" class="invalid-feedback"></div>
                     </div>
                   {% endif %}
-
                 {% endfor %}
                 {% endif %}
 
@@ -299,22 +297,20 @@
                         <option value="{{ recurring.recurring_id }}">{{ recurring.name }}</option>
                       {% endfor %}
                     </select>
-                    <div id="recurring-description" class="help-block"></div>
-                    <div id="error-recurring" class="help-block"></div>
+                    <div id="recurring-description" class="form-text"></div>
+                    <div id="error-recurring" class="invalid-feedback"></div>
                   </div>
-
                 {% endif %}
 
                 <div class="mb-3">
-                  <label for="input-quantity" class="form-label">{{ entry_qty }}</label> <input type="text" name="quantity" value="{{ minimum }}" size="2" id="input-quantity" class="form-control"/> <input type="hidden" name="product_id" value="{{ product_id }}"/>
-                  <div id="error-quantity" class="help-block"></div>
+                  <label for="input-quantity" class="form-label">{{ entry_qty }}</label> <input type="text" name="quantity" value="{{ minimum }}" size="2" id="input-quantity" class="form-control"/> <input type="hidden" name="product_id" value="{{ product_id }}" id="input-product-id"/>
+                  <div id="error-quantity" class="form-text"></div>
                   <br/>
                   <button type="button" id="button-cart" data-loading-text="{{ text_loading }}" class="btn btn-primary btn-lg btn-block">{{ button_cart }}</button>
                 </div>
                 {% if minimum > 1 %}
                   <div class="alert alert-info"><i class="fas fa-info-circle"></i> {{ text_minimum }}</div>
                 {% endif %}
-
               </div>
 
               {% if review_status %}
@@ -325,6 +321,7 @@
                     <a href="" onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;">{{ reviews }}</a> / <a href="" onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;">{{ text_write }}</a></p>
                 </div>
               {% endif %}
+
             </form>
           </div>
         </div>
@@ -357,11 +354,11 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('select[name=\'recurring_id\'], input[name=\'quantity\']').change(function() {
+$('#input-recurring, #input-quantity').change(function() {
     $.ajax({
         url: 'index.php?route=product/product|getRecurringDescription',
         type: 'post',
-        data: $('input[name=\'product_id\'], input[name=\'quantity\'], select[name=\'recurring_id\']'),
+        data: $('#input-product-id, #input-quantity, #input-recurring'),
         dataType: 'json',
         beforeSend: function() {
             $('#recurring-description').html('');
@@ -375,7 +372,6 @@ $('select[name=\'recurring_id\'], input[name=\'quantity\']').change(function() {
 });
 
 $('#button-cart').on('click', function() {
-
     $.ajax({
         url: 'index.php?route=checkout/cart|add',
         type: 'post',
@@ -401,7 +397,7 @@ $('#button-cart').on('click', function() {
             }
 
             if (json['success']) {
-                html = '<div class="toast">';
+                html  = '<div class="toast">';
                 html += '  <div class="toast-body"><button type="button" class="ml-2 mb-1 btn-close float-end" data-bs-dismiss="toast"></button> ' + json['success'] + '</div>';
                 html += '</div>';
 
@@ -467,14 +463,18 @@ $('#button-review').on('click', function() {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
-                $('#review').after('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + '</div>');
+               // $('#form-review').after('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                for (key in json['error']) {
+                    oc.error(key, json['error'][key]);
+                }
             }
 
             if (json['success']) {
-                $('#review').after('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + '</div>');
+                $('#form-review').after('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('input[name=\'name\']').val('');
-                $('textarea[name=\'text\']').val('');
+                $('#input-name').val('');
+                $('#input-text').val('');
                 $('input[name=\'rating\']:checked').prop('checked', false);
             }
         }

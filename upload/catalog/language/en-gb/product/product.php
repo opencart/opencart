@@ -45,6 +45,8 @@ $_['tab_attribute']            = 'Specification';
 $_['tab_review']               = 'Reviews (%s)';
 
 // Error
-$_['error_name']               = 'Warning: Review Name must be between 3 and 25 characters!';
-$_['error_text']               = 'Warning: Review Text must be between 25 and 1000 characters!';
-$_['error_rating']             = 'Warning: Please select a review rating!';
+$_['error_product']            = 'Warning: Recurring product could not be found!';
+$_['error_profile']            = 'Warning: Recurring profile could not be found!';
+$_['error_name']               = 'Review Name must be between 3 and 25 characters!';
+$_['error_text']               = 'Review Text must be between 25 and 1000 characters!';
+$_['error_rating']             = 'Please select a review rating!';

@@ -15,7 +15,7 @@
           <input type="text" name="search" value="{{ search }}" placeholder="{{ text_keyword }}" id="input-search" class="form-control"/>
         </div>
         <div class="col-md-3">
-          <select name="category_id" class="form-select">
+          <select name="category_id" id="input-category" class="form-select">
             <option value="0">{{ text_category }}</option>
             {% for category_1 in categories %}
               <option value="{{ category_1.category_id }}"{% if category_1.category_id == category_id %} selected="selected"{% endif %}>{{ category_1.name }}</option>
@@ -51,12 +51,14 @@
               <a href="{{ compare }}" id="compare-total" class="btn btn-primary d-block"><i class="fas fa-exchange-alt"></i> <span class="d-inline d-md-none d-lg-inline">{{ text_compare }}</span></a>
             </div>
           </div>
+
           <div class="col-md-1 d-none d-md-block">
             <div class="btn-group">
               <button type="button" id="list-view" class="btn btn-light" data-bs-toggle="tooltip" title="{{ button_list }}"><i class="fas fa-th-list"></i></button>
               <button type="button" id="grid-view" class="btn btn-light" data-bs-toggle="tooltip" title="{{ button_grid }}"><i class="fas fa-th"></i></button>
             </div>
           </div>
+
           <div class="col-md-4 offset-md-1 col-6">
             <div class="input-group mb-3">
               <div class="input-group-prepend">
@@ -69,6 +71,7 @@
               </select>
             </div>
           </div>
+
           <div class="col-md-3 col-6">
             <div class="input-group mb-3">
               <div class="input-group-prepend">
@@ -81,6 +84,7 @@
               </select>
             </div>
           </div>
+
         </div>
         <div class="row">
           {% for product in products %}
@@ -103,47 +107,43 @@
 $('#button-search').bind('click', function() {
     url = 'index.php?route=product/search&language={{ language }}';
 
-    var search = $('#content input[name=\'search\']').prop('value');
+    var search = $('#input-search').prop('value');
 
     if (search) {
         url += '&search=' + encodeURIComponent(search);
     }
 
-    var category_id = $('#content select[name=\'category_id\']').prop('value');
+    var category_id = $('#input-category').prop('value');
 
     if (category_id > 0) {
         url += '&category_id=' + encodeURIComponent(category_id);
     }
 
-    var sub_category = $('#content input[name=\'sub_category\']:checked').prop('value');
+    var sub_category = $('#input-sub-category:checked').prop('value');
 
     if (sub_category) {
-        url += '&sub_category=true';
+        url += '&sub_category=1';
     }
 
-    var filter_description = $('#content input[name=\'description\']:checked').prop('value');
+    var filter_description = $('##input-description:checked').prop('value');
 
     if (filter_description) {
-        url += '&description=true';
+        url += '&description=1';
     }
 
     location = url;
 });
 
-$('#content input[name=\'search\']').bind('keydown', function(e) {
+$('#input-search').bind('keydown', function(e) {
     if (e.keyCode == 13) {
         $('#button-search').trigger('click');
     }
 });
 
-$('select[name=\'category_id\']').on('change', function() {
-    if (this.value == '0') {
-        $('input[name=\'sub_category\']').prop('disabled', true);
-    } else {
-        $('input[name=\'sub_category\']').prop('disabled', false);
-    }
+$('#input-category').on('change', function() {
+    $('#input-sub-category').prop('disabled', (this.value == '0' ? true : false));
 });
 
-$('select[name=\'category_id\']').trigger('change');
+$('#input-category').trigger('change');
 //--></script>
 {{ footer }}

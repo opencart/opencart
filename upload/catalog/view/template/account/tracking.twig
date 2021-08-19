@@ -40,7 +40,7 @@
 	</div>
 </div>
 <script type="text/javascript"><!--
-$('input[name=\'product\']').autocomplete({
+$('#input-generator').autocomplete({
     'source': function(request, response) {
         $.ajax({
             url: 'index.php?route=account/tracking|autocomplete&filter_name=' + encodeURIComponent(request) + '&tracking=' + encodeURIComponent($('#input-code').val()),
@@ -56,8 +56,8 @@ $('input[name=\'product\']').autocomplete({
         });
     },
     'select': function(item) {
-        $('input[name=\'product\']').val(item['label']);
-        $('textarea[name=\'link\']').val(item['value']);
+        $('#input-generator').val(item['label']);
+        $('#input-link').val(item['value']);
     }
 });
 //--></script>

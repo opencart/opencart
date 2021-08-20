@@ -123,95 +123,93 @@ oc.error = function(key, message) {
 }
 
 // Forms
-$(document).ready(function() {
-    $(document).on('click', '[data-oc-action]', function() {
-        var element = this;
+$(document).on('click', '[data-oc-action]', function() {
+    var element = this;
 
-        var form = $(element).attr('data-oc-form');
+    var form = $(element).attr('data-oc-form');
 
-        // https://github.com/opencart/opencart/issues/9690
-        if (typeof CKEDITOR != 'undefined') {
-            for (instance in CKEDITOR.instances) {
-                CKEDITOR.instances[instance].updateElement();
-            }
+    // https://github.com/opencart/opencart/issues/9690
+    if (typeof CKEDITOR != 'undefined') {
+        for (instance in CKEDITOR.instances) {
+            CKEDITOR.instances[instance].updateElement();
         }
+    }
 
-        $.ajax({
-            url: $(element).attr('data-oc-action'),
-            type: 'post',
-            dataType: 'json',
-            data: new FormData($(form)[0]),
-            cache: false,
-            contentType: false,
-            processData: false,
-            beforeSend: function() {
-                $(element).button('loading');
-            },
-            complete: function() {
-                $(element).button('reset');
-            },
-            success: function(json) {
-                $(form).find('.is-invalid').removeClass('is-invalid');
-                $(form).find('.invalid-feedback').removeClass('d-block');
+    $.ajax({
+        url: $(element).attr('data-oc-action'),
+        type: 'post',
+        dataType: 'json',
+        data: new FormData($(form)[0]),
+        cache: false,
+        contentType: false,
+        processData: false,
+        beforeSend: function() {
+            $(element).button('loading');
+        },
+        complete: function() {
+            $(element).button('reset');
+        },
+        success: function(json) {
+            $(form).find('.is-invalid').removeClass('is-invalid');
+            $(form).find('.invalid-feedback').removeClass('d-block');
 
-                console.log(json);
+            console.log(json);
 
-                if (json['redirect']) {
-                    location = json['redirect'];
+            if (json['redirect']) {
+                location = json['redirect'];
 
-                    // Not sure this part works
-                    delete json['redirect'];
-                }
-
-                if (typeof json['error'] == 'string') {
-                    oc.alert('danger', json['error']);
-
-                    delete json['error'];
-                }
-
-                if (typeof json['error'] == 'object') {
-                    console.log(json['error']);
-
-
-                    if (json['error']['warning']) {
-                        oc.alert('danger', json['error']['warning']);
-                    }
-
-                    for (key in json['error']) {
-                        for (key in json['error']) {
-                            oc.error(key, json['error'][key]);
-                        }
-                    }
-
-                    delete json['error'];
-                }
-
-                if (json['success']) {
-                    oc.alert('success', json['success']);
-
-                    // Refreshv    
-                    var url = $(form).attr('data-oc-load');
-                    var target = $(form).attr('data-oc-target');
-
-                    if (typeof url !== typeof undefined && typeof target !== typeof undefined) {
-                        $(target).load(url);
-                    }
-
-                   // $(target).find('[data-bs-toggle=\'tooltip\']').tooltip();
-
-                    delete json['success'];
-                }
-
-                // Replace any form values that correspond to form names.
-                for (key in json) {
-                    $(form).find('[name=\'' + key + '\']').val(json[key]);
-                }
-            },
-            error: function(xhr, ajaxOptions, thrownError) {
-                oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                // Not sure this part works
+                delete json['redirect'];
             }
-        });
+
+            if (typeof json['error'] == 'string') {
+                oc.alert('danger', json['error']);
+
+                delete json['error'];
+            }
+
+            if (typeof json['error'] == 'object') {
+                console.log(json['error']);
+
+
+                if (json['error']['warning']) {
+                    oc.alert('danger', json['error']['warning']);
+                }
+
+                for (key in json['error']) {
+                    for (key in json['error']) {
+                        oc.error(key, json['error'][key]);
+                    }
+                }
+
+                delete json['error'];
+            }
+
+            if (json['success']) {
+                oc.alert('success', json['success']);
+
+                // Refreshv
+                var url = $(form).attr('data-oc-load');
+                var target = $(form).attr('data-oc-target');
+
+                if (typeof url !== typeof undefined && typeof target !== typeof undefined) {
+                    $(target).load(url);
+                }
+
+               // $(target).find('[data-bs-toggle=\'tooltip\']').tooltip();
+
+                delete json['success'];
+            }
+
+            // Replace any form values that correspond to form names.
+            for (key in json) {
+                $(form).find('[name=\'' + key + '\']').val(json[key]);
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
     });
 });
 
@@ -439,9 +437,11 @@ $(document).on('click', '[data-oc-toggle=\'image\']', function(e) {
 
     var element = this;
 
-    var test = document.querySelector('#modal-image');
+    console.log(element);
 
-    var modal = new bootstrap.Modal(test);
+   // var test = document.querySelector('#modal-image');
+
+   // var modal = new bootstrap.Modal(test);
 
     //  if () {
     //     $('#modal-image').remove();
@@ -457,6 +457,8 @@ $(document).on('click', '[data-oc-toggle=\'image\']', function(e) {
             $(element).button('reset');
         },
         success: function(html) {
+            console.log(html);
+
             $('body').append(html);
 
             var element = document.querySelector('#modal-image');

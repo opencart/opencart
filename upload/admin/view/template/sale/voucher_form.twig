@@ -153,6 +153,6 @@ $('#history').on('click', '.pagination a', function(e) {
     $('#history').load(this.href);
 });
 
-$('#history').load('index.php?route=sale/voucher|history&user_token={{ user_token }}&voucher_id=' + $('input[name=\'voucher_id\']').val());
+$('#history').load('index.php?route=sale/voucher|history&user_token={{ user_token }}&voucher_id=' + $('#input-voucher-id').val());
 //--></script>
 {{ footer }}

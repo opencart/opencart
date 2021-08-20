@@ -22,19 +22,24 @@
           <div class="card-header"><i class="fas fa-filter"></i> {{ text_filter }}</div>
           <div class="card-body">
             <div class="mb-3">
-              <label for="input-return-id" class="form-label">{{ entry_return_id }}</label> <input type="text" name="filter_return_id" value="{{ filter_return_id }}" placeholder="{{ entry_return_id }}" id="input-return-id" class="form-control"/>
+              <label for="input-return-id" class="form-label">{{ entry_return_id }}</label>
+              <input type="text" name="filter_return_id" value="{{ filter_return_id }}" placeholder="{{ entry_return_id }}" id="input-return-id" class="form-control"/>
             </div>
             <div class="mb-3">
-              <label for="input-order-id" class="form-label">{{ entry_order_id }}</label> <input type="text" name="filter_order_id" value="{{ filter_order_id }}" placeholder="{{ entry_order_id }}" id="input-order-id" class="form-control"/>
+              <label for="input-order-id" class="form-label">{{ entry_order_id }}</label>
+              <input type="text" name="filter_order_id" value="{{ filter_order_id }}" placeholder="{{ entry_order_id }}" id="input-order-id" class="form-control"/>
             </div>
             <div class="mb-3">
-              <label class="form-label">{{ entry_customer }}</label> <input type="text" name="filter_customer" value="{{ filter_customer }}" placeholder="{{ entry_customer }}" id="input-customer" class="form-control"/>
+              <label class="form-label">{{ entry_customer }}</label>
+              <input type="text" name="filter_customer" value="{{ filter_customer }}" placeholder="{{ entry_customer }}" id="input-customer" class="form-control"/>
             </div>
             <div class="mb-3">
-              <label class="form-label">{{ entry_product }}</label> <input type="text" name="filter_product" value="{{ filter_product }}" placeholder="{{ entry_product }}" id="input-product" class="form-control"/>
+              <label class="form-label">{{ entry_product }}</label>
+              <input type="text" name="filter_product" value="{{ filter_product }}" placeholder="{{ entry_product }}" id="input-product" class="form-control"/>
             </div>
             <div class="mb-3">
-              <label class="form-label">{{ entry_model }}</label> <input type="text" name="filter_model" value="{{ filter_model }}" placeholder="{{ entry_model }}" id="input-model" class="form-control"/>
+              <label class="form-label">{{ entry_model }}</label>
+              <input type="text" name="filter_model" value="{{ filter_model }}" placeholder="{{ entry_model }}" id="input-model" class="form-control"/>
             </div>
             <div class="mb-3">
               <label for="input-return-status" class="form-label">{{ entry_return_status }}</label> <select name="filter_return_status_id" id="input-return-status" class="form-select">
@@ -83,49 +88,49 @@ $('#return').on('click', 'thead a, .pagination a', function(e) {
 $('#button-filter').on('click', function() {
     url = '';
 
-    var filter_return_id = $('input[name=\'filter_return_id\']').val();
+    var filter_return_id = $('#input-return-id').val();
 
     if (filter_return_id) {
         url += '&filter_return_id=' + encodeURIComponent(filter_return_id);
     }
 
-    var filter_order_id = $('input[name=\'filter_order_id\']').val();
+    var filter_order_id = $('#input-order-id').val();
 
     if (filter_order_id) {
         url += '&filter_order_id=' + encodeURIComponent(filter_order_id);
     }
 
-    var filter_customer = $('input[name=\'filter_customer\']').val();
+    var filter_customer = $('#input-customer').val();
 
     if (filter_customer) {
         url += '&filter_customer=' + encodeURIComponent(filter_customer);
     }
 
-    var filter_product = $('input[name=\'filter_product\']').val();
+    var filter_product = $('#input-product').val();
 
     if (filter_product) {
         url += '&filter_product=' + encodeURIComponent(filter_product);
     }
 
-    var filter_model = $('input[name=\'filter_model\']').val();
+    var filter_model = $('#input-model').val();
 
     if (filter_model) {
         url += '&filter_model=' + encodeURIComponent(filter_model);
     }
 
-    var filter_return_status_id = $('select[name=\'filter_return_status_id\']').val();
+    var filter_return_status_id = $('#input-return-status').val();
 
     if (filter_return_status_id !== '') {
         url += '&filter_return_status_id=' + encodeURIComponent(filter_return_status_id);
     }
 
-    var filter_date_added = $('input[name=\'filter_date_added\']').val();
+    var filter_date_added = $('#input-date-added').val();
 
     if (filter_date_added) {
         url += '&filter_date_added=' + encodeURIComponent(filter_date_added);
     }
 
-    var filter_date_modified = $('input[name=\'filter_date_modified\']').val();
+    var filter_date_modified = $('#input-date-modified').val();
 
     if (filter_date_modified) {
         url += '&filter_date_modified=' + encodeURIComponent(filter_date_modified);
@@ -134,7 +139,7 @@ $('#button-filter').on('click', function() {
     $('#return').load('index.php?route=sale/returns|list&user_token={{ user_token }}' + url);
 });
 
-$('input[name=\'filter_customer\']').autocomplete({
+$('#input-customer').autocomplete({
     'source': function(request, response) {
         $.ajax({
             url: 'index.php?route=customer/customer/|autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
@@ -150,11 +155,11 @@ $('input[name=\'filter_customer\']').autocomplete({
         });
     },
     'select': function(item) {
-        $('input[name=\'filter_customer\']').val(item['label']);
+        $('#input-customer').val(item['label']);
     }
 });
 
-$('input[name=\'filter_product\']').autocomplete({
+$('#input-product').autocomplete({
     'source': function(request, response) {
         $.ajax({
             url: 'index.php?route=catalog/product|autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
@@ -170,11 +175,11 @@ $('input[name=\'filter_product\']').autocomplete({
         });
     },
     'select': function(item) {
-        $('input[name=\'filter_product\']').val(item['label']);
+        $('#input-product').val(item['label']);
     }
 });
 
-$('input[name=\'filter_model\']').autocomplete({
+$('#input-model').autocomplete({
     'source': function(request, response) {
         $.ajax({
             url: 'index.php?route=catalog/product|autocomplete&user_token={{ user_token }}&filter_model=' + encodeURIComponent(request),
@@ -190,7 +195,7 @@ $('input[name=\'filter_model\']').autocomplete({
         });
     },
     'select': function(item) {
-        $('input[name=\'filter_model\']').val(item['label']);
+        $('#input-model').val(item['label']);
     }
 });
 

@@ -50,13 +50,13 @@ $('#online').on('click', 'thead a, .pagination a', function(e) {
 $('#button-filter, #button-refresh').on('click', function() {
     var url = '';
 
-    var filter_customer = $('input[name=\'filter_customer\']').val();
+    var filter_customer = $('#input-customer').val();
 
     if (filter_customer) {
         url += '&filter_customer=' + encodeURIComponent(filter_customer);
     }
 
-    var filter_ip = $('input[name=\'filter_ip\']').val();
+    var filter_ip = $('#input-ip').val();
 
     if (filter_ip) {
         url += '&filter_ip=' + encodeURIComponent(filter_ip);
@@ -65,7 +65,7 @@ $('#button-filter, #button-refresh').on('click', function() {
     $('#online').load('index.php?route=report/online|list&user_token={{ user_token }}' + url);
 });
 
-$('input[name=\'filter_customer\']').autocomplete({
+$('#input-customer').autocomplete({
     'source': function(request, response) {
         $.ajax({
             url: 'index.php?route=customer/customer|autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
@@ -81,7 +81,7 @@ $('input[name=\'filter_customer\']').autocomplete({
         });
     },
     'select': function(item) {
-        $('input[name=\'filter_customer\']').val(item['label']);
+        $('#input-customer').val(item['label']);n
     }
 });
 //--></script>

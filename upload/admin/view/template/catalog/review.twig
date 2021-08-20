@@ -26,7 +26,8 @@
 							<input type="text" name="filter_product" value="{{ filter_product }}" placeholder="{{ entry_product }}" id="input-product" class="form-control"/>
 						</div>
 						<div class="mb-3">
-							<label for="input-author" class="form-label">{{ entry_author }}</label> <input type="text" name="filter_author" value="{{ filter_author }}" placeholder="{{ entry_author }}" id="input-author" class="form-control"/>
+							<label for="input-author" class="form-label">{{ entry_author }}</label>
+							<input type="text" name="filter_author" value="{{ filter_author }}" placeholder="{{ entry_author }}" id="input-author" class="form-control"/>
 						</div>
 						<div class="mb-3">
 							<label for="input-status" class="form-label">{{ entry_status }}</label> <select name="filter_status" id="input-status" class="form-select">
@@ -67,25 +68,25 @@ $('#review').on('click', 'thead a, .pagination a', function(e) {
 $('#button-filter').on('click', function() {
     url = '';
 
-    var filter_product = $('input[name=\'filter_product\']').val();
+    var filter_product = $('#input-product').val();
 
     if (filter_product) {
         url += '&filter_product=' + encodeURIComponent(filter_product);
     }
 
-    var filter_author = $('input[name=\'filter_author\']').val();
+    var filter_author = $('#input-author').val();
 
     if (filter_author) {
         url += '&filter_author=' + encodeURIComponent(filter_author);
     }
 
-    var filter_status = $('select[name=\'filter_status\']').val();
+    var filter_status = $('#input-status').val();
 
     if (filter_status !== '') {
         url += '&filter_status=' + encodeURIComponent(filter_status);
     }
 
-    var filter_date_added = $('input[name=\'filter_date_added\']').val();
+    var filter_date_added = $('#input-date-added').val();
 
     if (filter_date_added) {
         url += '&filter_date_added=' + encodeURIComponent(filter_date_added);

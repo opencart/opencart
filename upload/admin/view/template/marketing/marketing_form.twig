@@ -83,6 +83,6 @@ $('#report').on('click', '.pagination a', function(e) {
     $('#report').load(this.href);
 });
 
-$('#report').load('index.php?route=marketing/marketing|report&user_token={{ user_token }}&marketing_id=' + $('input[name=\'marketing_id\']').val());
+$('#report').load('index.php?route=marketing/marketing|report&user_token={{ user_token }}&marketing_id=' + $('#input-marketing-id').val());
 //--></script>
 {{ footer }}

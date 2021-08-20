@@ -22,7 +22,7 @@
         <div class="card bg-light">
           <div class="card-body">
             <div id="extension-filter" class="input-group dropdown">
-              <input type="text" name="filter_search" value="{{ filter_search }}" placeholder="{{ text_search }}" class="form-control"/>
+              <input type="text" name="filter_search" value="{{ filter_search }}" placeholder="{{ text_search }}" id="input-search" class="form-control"/>
               {% for category in categories %}
                 {% if category.value == filter_category %}
                   <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown">{{ text_category }} ({{ category.text }}) <i class="fas fa-caret-down"></i></button>
@@ -164,7 +164,7 @@ $('#button-filter').on('click', function(e) {
     location = url;
 });
 
-$('input[name=\'filter_search\']').keydown(function(e) {
+$('#input-search').keydown(function(e) {
     if (e.keyCode == 13) {
         e.preventDefault();
 

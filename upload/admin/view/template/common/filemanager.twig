@@ -23,7 +23,7 @@
       $('#modal-image .modal-body').load($(this).attr('href'));
   });
 
-  $('#modal-image').on('keydown', 'input[name=\'search\']', function(e) {
+  $('#modal-image').on('keydown', '#input-search', function(e) {
       if (e.which == 13) {
           $('#button-search').trigger('click');
       }
@@ -32,13 +32,13 @@
   $('#modal-image').on('click', '#button-search', function(e) {
       var url = 'index.php?route=common/filemanager|list&user_token={{ user_token }}';
 
-      var directory = $('#modal-image input[name=\'directory\']').val();
+      var directory = $('##input-directory').val();
 
       if (directory) {
           url += '&directory=' + encodeURIComponent(directory);
       }
 
-      var filter_name = $('#modal-image input[name=\'search\']').val();
+      var filter_name = $('##input-search').val();
 
       if (filter_name) {
           url += '&filter_name=' + encodeURIComponent(filter_name);
@@ -62,7 +62,7 @@
   $('#modal-image').on('click', '#button-upload', function() {
       $('#form-upload').remove();
 
-      $('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file[]" value="" multiple="multiple" /></form>');
+      $('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file[]" value="" multiple="multiple"/></form>');
 
       $('#form-upload input[name=\'file[]\']').trigger('click');
 
@@ -86,7 +86,7 @@
 
               var url = 'index.php?route=common/filemanager|upload&user_token={{ user_token }}';
 
-              var directory = $('#modal-image input[name=\'directory\']').val();
+              var directory = $('#input-directory').val();
 
               if (directory) {
                   url += '&directory=' + encodeURIComponent(directory);
@@ -135,7 +135,7 @@
   $('#modal-image').on('click', '#button-create', function() {
       var url = 'index.php?route=common/filemanager|folder&user_token={{ user_token }}';
 
-      var directory = $('#modal-image input[name=\'directory\']').val();
+      var directory = $('#input-directory').val();
 
       if (directory) {
           url += '&directory=' + encodeURIComponent(directory);
@@ -145,7 +145,7 @@
           url: url,
           type: 'post',
           dataType: 'json',
-          data: 'folder=' + encodeURIComponent($('#modal-image input[name=\'folder\']').val()),
+          data: 'folder=' + encodeURIComponent($('#input-folder').val()),
           beforeSend: function() {
               $('#button-create').prop('disabled', true);
           },

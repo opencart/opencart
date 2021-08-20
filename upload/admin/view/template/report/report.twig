@@ -20,7 +20,7 @@
         <div class="card">
           <div class="card-body bg-light">
             <div class="input-group">
-              <select name="report" class="form-select">
+              <select name="report" id="input-report" class="form-select">
                 {% for report in reports %}
                   <option value="{{ report.href }}"{% if code == report.code %} selected{% endif %}>{{ report.text }}</option>
                 {% endfor %}
@@ -35,10 +35,10 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('select[name=\'report\']').on('change', function(e) {
+$('#input-report').on('change', function(e) {
     $('#report').load(this.value);
 });
 
-$('select[name=\'report\']').trigger('change');
+$('#input-report').trigger('change');
 //--></script>
 {{ footer }}

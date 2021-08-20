@@ -695,14 +695,26 @@ class Returns extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
+		if (isset($this->request->get['return_id'])) {
+			$return_id = (int)$this->request->get['return_id'];
+		} else {
+			$return_id = 0;
+		}
+
 		if (!$this->user->hasPermission('modify', 'sale/returns')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		if (!$json) {
-			$this->load->model('sale/returns');
+		$this->load->model('sale/returns');
 
-			$this->model_sale_returns->addHistory($this->request->get['return_id'], $this->request->post['return_status_id'], $this->request->post['comment'], $this->request->post['notify']);
+		$return_info = $this->model_sale_returns->getReturn($return_id);
+
+		if (!$return_info) {
+			$json['error'] = $this->language->get('error_return');
+		}
+
+		if (!$json) {
+			$this->model_sale_returns->addHistory($return_id, $this->request->post['return_status_id'], $this->request->post['comment'], $this->request->post['notify']);
 
 			$json['success'] = $this->language->get('text_success');
 		}

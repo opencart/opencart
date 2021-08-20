@@ -907,10 +907,19 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
+
+		$this->load->model('customer/customer');
+
+		$customer_info = $this->model_customer_customer->getCustomer($customer_id);
+
+		if (!$customer_info) {
+			$json['error'] = $this->language->get('error_customer');
+		}
+
 		if (!$json) {
 			$this->load->model('customer/customer');
 
-			$this->model_customer_customer->addTransaction($customer_id, $this->request->post['description'], $this->request->post['amount']);
+			$this->model_customer_customer->addTransaction($customer_id, (string)$this->request->post['description'], (float)$this->request->post['amount']);
 
 			$json['success'] = $this->language->get('text_success');
 		}
@@ -979,10 +988,18 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
+		$this->load->model('customer/customer');
+
+		$customer_info = $this->model_customer_customer->getCustomer($customer_id);
+
+		if (!$customer_info) {
+			$json['error'] = $this->language->get('error_customer');
+		}
+
 		if (!$json) {
 			$this->load->model('customer/customer');
 
-			$this->model_customer_customer->addReward($customer_id, $this->request->post['description'], $this->request->post['points']);
+			$this->model_customer_customer->addReward($customer_id, (string)$this->request->post['description'], (int)$this->request->post['points']);
 
 			$json['success'] = $this->language->get('text_success');
 		}

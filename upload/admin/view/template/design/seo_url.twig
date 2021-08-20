@@ -72,31 +72,31 @@ $('#seo-url').on('click', 'thead a, .pagination a', function(e) {
 $('#button-filter').on('click', function() {
     var url = '';
 
-    var filter_keyword = $('input[name=\'filter_keyword\']').val();
+    var filter_keyword = $('#input-keyword').val();
 
     if (filter_keyword) {
         url += '&filter_keyword=' + encodeURIComponent(filter_keyword);
     }
 
-    var filter_key = $('input[name=\'filter_key\']').val();
+    var filter_key = $('#input-key').val();
 
     if (filter_key) {
         url += '&filter_key=' + encodeURIComponent(filter_key);
     }
 
-    var filter_value = $('input[name=\'filter_value\']').val();
+    var filter_value = $('#input-value').val();
 
     if (filter_value) {
         url += '&filter_value=' + encodeURIComponent(filter_value);
     }
 
-    var filter_store_id = $('select[name=\'filter_store_id\']').val();
+    var filter_store_id = $('#input-store').val();
 
     if (filter_store_id) {
         url += '&filter_store_id=' + encodeURIComponent(filter_store_id);
     }
 
-    var filter_language_id = $('select[name=\'filter_language_id\']').val();
+    var filter_language_id = $('#input-language').val();
 
     if (filter_language_id) {
         url += '&filter_language_id=' + encodeURIComponent(filter_language_id);

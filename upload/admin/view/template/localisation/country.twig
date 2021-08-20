@@ -57,19 +57,19 @@ $('#country').on('click', 'thead a, .pagination a', function(e) {
 $('#button-filter').on('click', function() {
     var url = '';
 
-    var filter_name = $('input[name=\'filter_name\']').val();
+    var filter_name = $('#input-name').val();
 
     if (filter_name) {
         url += '&filter_name=' + encodeURIComponent(filter_name);
     }
 
-    var filter_iso_code_2 = $('input[name=\'filter_iso_code_2\']').val();
+    var filter_iso_code_2 = $('#input-iso_code_2').val();
 
     if (filter_iso_code_2) {
         url += '&filter_iso_code_2=' + encodeURIComponent(filter_iso_code_2);
     }
 
-    var filter_iso_code_3 = $('input[name=\'filter_iso_code_3\']').val();
+    var filter_iso_code_3 = $('#input-iso_code_3').val();
 
     if (filter_iso_code_3) {
         url += '&filter_iso_code_3=' + encodeURIComponent(filter_iso_code_3);

@@ -55,19 +55,19 @@ $('#zone').on('click', 'thead a, .pagination a', function(e) {
 $('#button-filter').on('click', function() {
     var url = '';
 
-    var filter_name = $('input[name=\'filter_name\']').val();
+    var filter_name = $('#input-name').val();
 
     if (filter_name) {
         url += '&filter_name=' + encodeURIComponent(filter_name);
     }
 
-    var filter_country = $('input[name=\'filter_country\']').val();
+    var filter_country = $('#input-country').val();
 
     if (filter_country) {
         url += '&filter_country=' + encodeURIComponent(filter_country);
     }
 
-    var filter_code = $('input[name=\'filter_code\']').val();
+    var filter_code = $('#input-code').val();
 
     if (filter_code) {
         url += '&filter_code=' + encodeURIComponent(filter_code);

@@ -1302,7 +1302,7 @@ $('#modal-store #button-store').on('click', function() {
 });
 
 // Customer
-$('#modal-customer input[name=\'customer\']').autocomplete({
+$('#input-customer').autocomplete({
     'source': function(request, response) {
         $.ajax({
             url: 'index.php?route=customer/customer|autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
@@ -1344,13 +1344,13 @@ $('#modal-customer input[name=\'customer\']').autocomplete({
         $('#modal-customer select option').removeAttr('selected');
         $('#modal-customer input[type=\'checkbox\'], #modal-customer input[type=\'radio\']').removeAttr('checked');
 
-        $('#modal-customer input[name=\'customer\']').val(item['label']);
-        $('#modal-customer input[name=\'customer_id\']').val(item['value']);
-        $('#modal-customer select[name=\'customer_group_id\']').val(item['customer_group_id']);
-        $('#modal-customer input[name=\'firstname\']').val(item['firstname']);
-        $('#modal-customer input[name=\'lastname\']').val(item['lastname']);
-        $('#modal-customer input[name=\'email\']').val(item['email']);
-        $('#modal-customer input[name=\'telephone\']').val(item['telephone']);
+        $('#modal-customer #input-customer').val(item['label']);
+        $('#modal-customer #input-customer-id').val(item['value']);
+        $('#modal-customer #input-customer-group').val(item['customer_group_id']);
+        $('#modal-customer #input-firstname').val(item['firstname']);
+        $('#modal-customer #input-lastname').val(item['lastname']);
+        $('#modal-customer #input-email').val(item['email']);
+        $('#modal-customer #input-telephone').val(item['telephone']);
 
         for (i in item.custom_field) {
             $('#modal-customer select[name=\'custom_field[' + i + ']\']').val(item.custom_field[i]);
@@ -1824,17 +1824,17 @@ $(document).on('click', '#button-reward-add, #button-reward-remove, #button-comm
 
                 if (part[1] == 'reward') {
                     if (part[2] == 'add') {
-                        $(element).replaceWith('<button id="button-reward-remove" data-bs-toggle="tooltip" title="{{ button_reward_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>');
+                        $(element).replaceWith('<button type="button" id="button-reward-remove" data-bs-toggle="tooltip" title="{{ button_reward_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>');
                     } else {
-                        $(element).replaceWith('<button id="button-reward-add" data-bs-toggle="tooltip" title="{{ button_reward_add }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></button>');
+                        $(element).replaceWith('<button type="button" id="button-reward-add" data-bs-toggle="tooltip" title="{{ button_reward_add }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></button>');
                     }
                 }
 
                 if (part[1] == 'commission') {
                     if (part[2] == 'add') {
-                        $(element).replaceWith('<button id="button-commission-remove" data-bs-toggle="tooltip" title="{{ button_commission_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>');
+                        $(element).replaceWith('<button type="button" id="button-commission-remove" data-bs-toggle="tooltip" title="{{ button_commission_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>');
                     } else {
-                        $(element).replaceWith('<button id="button-commission-add" data-bs-toggle="tooltip" title="{{ button_commission_add }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></button>');
+                        $(element).replaceWith('<button type="button" id="button-commission-add" data-bs-toggle="tooltip" title="{{ button_commission_add }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></button>');
                     }
                 }
             }

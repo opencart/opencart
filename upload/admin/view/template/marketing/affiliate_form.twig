@@ -40,7 +40,8 @@
                     {% else %}
                       <input type="text" name="customer" value="{{ customer }}" placeholder="{{ entry_customer }}" id="input-customer" class="form-control" disabled/>
                     {% endif %}
-                    <input type="hidden" name="customer_id" value="{{ customer_id }}"/> <input type="hidden" name="customer_group_id" value="{{ customer_group_id }}"/>
+                    <input type="hidden" name="customer_id" value="{{ customer_id }}" id="input-customer-id"/>
+                    <input type="hidden" name="customer_group_id" value="{{ customer_group_id }}" id="input-customer-group"/>
                     <div id="error-customer" class="invalid-feedback"></div>
                   </div>
                 </div>
@@ -300,7 +301,7 @@
                 </div>
               </fieldset>
               <div class="text-end">
-                <button id="button-history" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i> {{ button_history_add }}</button>
+                <button type="button" id="button-history" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i> {{ button_history_add }}</button>
               </div>
             </div>
             <div id="tab-transaction" class="tab-pane">
@@ -360,16 +361,16 @@ $('#input-customer').autocomplete({
         });
     },
     'select': function(item) {
-        $('input[name=\'customer\']').val(item['label']);
-        $('input[name=\'customer_id\']').val(item['value']);
-        $('input[name=\'customer_group_id\']').val(item['customer_group_id']);
+        $('#input-customer').val(item['label']);
+        $('#input-customer-id').val(item['value']);
+        $('#input-customer-group').val(item['customer_group_id']);
 
-        $('input[name=\'customer_group_id\']').trigger('change');
+        $('#input-customer-group').trigger('change');
     }
 });
 //--></script>
 <script type="text/javascript"><!--
-$('input[name=\'customer_group_id\']').on('change', function() {
+$('#input-customer-group').on('change', function() {
     $.ajax({
         url: 'index.php?route=customer/customer|customfield&user_token={{ user_token }}&customer_group_id=' + this.value,
         dataType: 'json',
@@ -394,7 +395,7 @@ $('input[name=\'customer_group_id\']').on('change', function() {
     });
 });
 
-$('input[name=\'customer_group_id\']').trigger('change');
+$('#input-customer-group').trigger('change');
 //--></script>
 <script type="text/javascript"><!--
 $('#history').on('click', '.pagination a', function(e) {
@@ -403,21 +404,21 @@ $('#history').on('click', '.pagination a', function(e) {
     $('#history').load(this.href);
 });
 
-$('#history').load('index.php?route=customer/customer|history&user_token={{ user_token }}&customer_id=' + $('input[name=\'customer_id\']').val());
+$('#history').load('index.php?route=customer/customer|history&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val());
 
 $('#button-history').on('click', function(e) {
-    e.preventDefault();
+    var element = this;
 
     $.ajax({
-        url: 'index.php?route=customer/customer|addhistory&user_token={{ user_token }}&customer_id=' + $('input[name=\'customer_id\']').val(),
+        url: 'index.php?route=customer/customer|addhistory&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val(),
         type: 'post',
         dataType: 'json',
-        data: 'comment=' + encodeURIComponent($('#tab-history textarea[name=\'comment\']').val()),
+        data: 'comment=' + encodeURIComponent($('#input-comment').val()),
         beforeSend: function() {
-            $('#button-history').button('loading');
+            $(element).button('loading');
         },
         complete: function() {
-            $('#button-history').button('reset');
+            $(element).button('reset');
         },
         success: function(json) {
             $('.alert-dismissible').remove();
@@ -429,9 +430,9 @@ $('#button-history').on('click', function(e) {
             if (json['success']) {
                 $('#tab-history').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#history').load('index.php?route=customer/customer|history&user_token={{ user_token }}&customer_id=' + $('input[name=\'customer_id\']').val());
+                $('#history').load('index.php?route=customer/customer|history&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val());
 
-                $('#tab-history textarea[name=\'comment\']').val('');
+                $('#input-comment').val('');
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
@@ -448,16 +449,16 @@ $('#transaction').on('click', '.pagination a', function(e) {
     $('#transaction').load(this.href);
 });
 
-$('#transaction').load('index.php?route=customer/customer|transaction&user_token={{ user_token }}&customer_id=' + $('input[name=\'customer_id\']').val());
+$('#transaction').load('index.php?route=customer/customer|transaction&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val());
 
 $('#button-transaction').on('click', function(e) {
     e.preventDefault();
 
     $.ajax({
-        url: 'index.php?route=customer/customer|addtransaction&user_token={{ user_token }}&customer_id=' + $('input[name=\'customer_id\']').val(),
+        url: 'index.php?route=customer/customer|addtransaction&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val(),
         type: 'post',
         dataType: 'json',
-        data: 'description=' + encodeURIComponent($('#tab-transaction input[name=\'description\']').val()) + '&amount=' + encodeURIComponent($('#tab-transaction input[name=\'amount\']').val()),
+        data: 'description=' + encodeURIComponent($('#input-transaction-description').val()) + '&amount=' + encodeURIComponent($('#input-transaction-amount').val()),
         beforeSend: function() {
             $('#button-transaction').button('loading');
         },
@@ -474,10 +475,10 @@ $('#button-transaction').on('click', function(e) {
             if (json['success']) {
                 $('#tab-transaction').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#transaction').load('index.php?route=customer/customer|transaction&user_token={{ user_token }}&customer_id=' + $('input[name=\'customer_id\']').val());
+                $('#transaction').load('index.php?route=customer/customer|transaction&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val());
 
-                $('#tab-transaction input[name=\'amount\']').val('');
-                $('#tab-transaction input[name=\'description\']').val('');
+                $('#input-transaction-amount').val('');
+                $('#input-transaction-description').val('');
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
@@ -494,7 +495,7 @@ $('#report').on('click', '.pagination a', function(e) {
     $('#report').load(this.href);
 });
 
-$('#report').load('index.php?route=marketing/affiliate|report&user_token={{ user_token }}&customer_id=' + $('input[name=\'customer_id\']').val());
+$('#report').load('index.php?route=marketing/affiliate|report&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val());
 //--></script>
 <script type="text/javascript"><!--
 $('.date').datetimepicker({

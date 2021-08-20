@@ -24,7 +24,7 @@
           <ul class="nav nav-tabs">
             <li class="nav-item"><a href="#tab-general" data-bs-toggle="tab" class="nav-link active">{{ tab_general }}</a></li>
             <li class="nav-item"><a href="#tab-address" data-bs-toggle="tab" class="nav-link">{{ tab_address }}</a></li>
-            <li class="nav-item"><a href="#tab-history" data-bs-toggle="tab" class="nav-link d-none">{{ tab_history }}</a></li>
+            <li class="nav-item"><a href="#tab-history" data-bs-toggle="tab" class="nav-link">{{ tab_history }}</a></li>
             <li class="nav-item"><a href="#tab-transaction" data-bs-toggle="tab" class="nav-link">{{ tab_transaction }}</a></li>
             <li class="nav-item"><a href="#tab-reward" data-bs-toggle="tab" class="nav-link">{{ tab_reward }}</a></li>
             <li class="nav-item"><a href="#tab-ip" data-bs-toggle="tab" class="nav-link">{{ tab_ip }}</a></li>
@@ -476,7 +476,7 @@
                 </div>
               </fieldset>
               <div class="text-end">
-                <button id="button-history" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i> {{ button_history_add }}</button>
+                <button type="button" id="button-history" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i> {{ button_history_add }}</button>
               </div>
             </div>
             <div id="tab-transaction" class="tab-pane">
@@ -496,7 +496,7 @@
                 <div class="row mb-3">
                   <label for="input-amount" class="col-sm-2 col-form-label">{{ entry_amount }}</label>
                   <div class="col-sm-10">
-                    <input type="text" name="amount" value="" placeholder="{{ entry_amount }}" id="input-amount" class="form-control"/>
+                    <input type="text" name="amount" value="" placeholder="{{ entry_amount }}" id="input-transaction-amount" class="form-control"/>
                   </div>
                 </div>
               </fieldset>
@@ -569,7 +569,7 @@ $('#input-customer-group').on('change', function() {
     });
 });
 
-$('select[name=\'customer_group_id\']').trigger('change');
+$('#input-customer-group').trigger('change');
 //--></script>
 <script type="text/javascript"><!--
 var address_row = {{ address_row }};
@@ -788,7 +788,7 @@ $('#button-address').on('click', function(e) {
 
     $(this).parent().before(html);
 
-    $('select[name=\'customer_group_id\']').trigger('change');
+    $('#input-customer-group').trigger('change');
 
     $('select[name=\'address[' + address_row + '][country_id]\']').trigger('change');
 
@@ -907,16 +907,16 @@ $('#history').on('click', '.pagination a', function(e) {
     $('#history').load(this.href);
 });
 
-$('#history').load('index.php?route=customer/customer|history&user_token={{ user_token }}&customer_id=' + $('input[name=\'customer_id\']').val());
+$('#history').load('index.php?route=customer/customer|history&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val());
 
 $('#button-history').on('click', function(e) {
     e.preventDefault();
 
     $.ajax({
-        url: 'index.php?route=customer/customer|addhistory&user_token={{ user_token }}&customer_id=' + $('input[name=\'customer_id\']').val(),
+        url: 'index.php?route=customer/customer|addhistory&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val(),
         type: 'post',
         dataType: 'json',
-        data: 'comment=' + encodeURIComponent($('#tab-history textarea[name=\'comment\']').val()),
+        data: 'comment=' + encodeURIComponent($('#input-comment').val()),
         beforeSend: function() {
             $('#button-history').button('loading');
         },
@@ -935,7 +935,7 @@ $('#button-history').on('click', function(e) {
 
                 $('#history').load('index.php?route=customer/customer|history&user_token={{ user_token }}&customer_id={{ customer_id }}');
 
-                $('#tab-history textarea[name=\'comment\']').val('');
+                $('#input-comment').val('');
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
@@ -952,16 +952,16 @@ $('#transaction').on('click', '.pagination a', function(e) {
     $('#transaction').load(this.href);
 });
 
-$('#transaction').load('index.php?route=customer/customer|transaction&user_token={{ user_token }}&customer_id=' + $('input[name=\'customer_id\']').val());
+$('#transaction').load('index.php?route=customer/customer|transaction&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val());
 
 $('#button-transaction').on('click', function(e) {
     e.preventDefault();
 
     $.ajax({
-        url: 'index.php?route=customer/customer|addtransaction&user_token={{ user_token }}&customer_id=' + $('input[name=\'customer_id\']').val(),
+        url: 'index.php?route=customer/customer|addtransaction&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val(),
         type: 'post',
         dataType: 'json',
-        data: 'description=' + encodeURIComponent($('#tab-transaction input[name=\'description\']').val()) + '&amount=' + encodeURIComponent($('#tab-transaction input[name=\'amount\']').val()),
+        data: 'description=' + encodeURIComponent($('#input-transaction-description').val()) + '&amount=' + encodeURIComponent($('#input-transaction-amount').val()),
         beforeSend: function() {
             $('#button-transaction').button('loading');
         },
@@ -978,10 +978,10 @@ $('#button-transaction').on('click', function(e) {
             if (json['success']) {
                 $('#tab-transaction').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#transaction').load('index.php?route=customer/customer|transaction&user_token={{ user_token }}&customer_id=' + $('input[name=\'customer_id\']').val());
+                $('#transaction').load('index.php?route=customer/customer|transaction&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val());
 
-                $('#tab-transaction input[name=\'amount\']').val('');
-                $('#tab-transaction input[name=\'description\']').val('');
+                $('#input-transaction-amount').val('');
+                $('#input-transaction-description').val('');
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
@@ -998,16 +998,16 @@ $('#reward').on('click', '.pagination a', function(e) {
     $('#reward').load(this.href);
 });
 
-$('#reward').load('index.php?route=customer/customer|reward&user_token={{ user_token }}&customer_id=' + $('input[name=\'customer_id\']').val());
+$('#reward').load('index.php?route=customer/customer|reward&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val());
 
 $('#button-reward').on('click', function(e) {
     e.preventDefault();
 
     $.ajax({
-        url: 'index.php?route=customer/customer|addreward&user_token={{ user_token }}&customer_id=' + $('input[name=\'customer_id\']').val(),
+        url: 'index.php?route=customer/customer|addreward&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val(),
         type: 'post',
         dataType: 'json',
-        data: 'description=' + encodeURIComponent($('#tab-reward input[name=\'description\']').val()) + '&points=' + encodeURIComponent($('#tab-reward input[name=\'points\']').val()),
+        data: 'description=' + encodeURIComponent($('#input-reward-description').val()) + '&points=' + encodeURIComponent($('#input-reward-points').val()),
         beforeSend: function() {
             $('#button-reward').button('loading');
         },
@@ -1024,10 +1024,10 @@ $('#button-reward').on('click', function(e) {
             if (json['success']) {
                 $('#tab-reward').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#reward').load('index.php?route=customer/customer|reward&user_token={{ user_token }}&customer_id=' + $('input[name=\'customer_id\']').val());
+                $('#reward').load('index.php?route=customer/customer|reward&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val());
 
-                $('#tab-reward input[name=\'points\']').val('');
-                $('#tab-reward input[name=\'description\']').val('');
+                $('#input-reward-points').val('');
+                $('#input-reward-description').val('');
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
@@ -1043,7 +1043,7 @@ $('#ip').on('click', '.pagination a', function(e) {
     $('#ip').load(this.href);
 });
 
-$('#ip').load('index.php?route=customer/customer|ip&user_token={{ user_token }}&customer_id=' + $('input[name=\'customer_id\']').val());
+$('#ip').load('index.php?route=customer/customer|ip&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val());
 
 $('.date').datetimepicker({
     'format': 'YYYY-MM-DD',
@@ -1062,13 +1062,5 @@ $('.datetime').datetimepicker({
     'locale': '{{ datepicker }}',
     'allowInputToggle': true
 });
-
-$('input[name=\'payment\']').on('change', function() {
-    $('.payment').hide();
-
-    $('#payment-' + this.value).show();
-});
-
-$('input[name=\'payment\']:checked').trigger('change');
 //--></script>
 {{ footer }}

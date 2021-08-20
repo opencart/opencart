@@ -74,7 +74,7 @@
 						<div id="buy" class="card mb-3">
 							<div class="card-body">
 								{% if license == '1' and not purchased %}
-									<button id="button-buy" class="btn btn-success btn-lg btn-block">{{ button_purchase }}</button>
+									<button type="button" id="button-buy" class="btn btn-success btn-lg btn-block">{{ button_purchase }}</button>
 								{% endif %}
 								<div id="price" class="row">
 									<div class="col-lg-5"><strong>{{ text_price }}</strong></div>
@@ -203,7 +203,7 @@ $('body').on('click', '#modal-purchase #button-purchase', function(e) {
     $.ajax({
         url: 'index.php?route=marketplace/marketplace|purchase&user_token={{ user_token }}&extension_id={{ extension_id }}',
         type: 'post',
-        data: $('input[name=\'pin\']'),
+        data: $('#input-pin'),
         dataType: 'json',
         beforeSend: function() {
             $(element).button('loading');
@@ -318,7 +318,7 @@ $('#button-comment').on('click', function() {
         url: 'index.php?route=marketplace/marketplace|addcomment&user_token={{ user_token }}&extension_id={{ extension_id }}',
         type: 'post',
         dataType: 'json',
-        data: 'comment=' + encodeURIComponent($('textarea[name=\'comment\']').val()),
+        data: 'comment=' + encodeURIComponent($('#input-comment').val()),
         beforeSend: function() {
             $('#button-comment').button('loading');
         },
@@ -337,7 +337,7 @@ $('#button-comment').on('click', function() {
 
                 $('#comment').load('index.php?route=marketplace/marketplace|comment&user_token={{ user_token }}&extension_id={{ extension_id }}');
 
-                $('textarea[name=\'comment\']').val('');
+                $('#input-comment').val('');
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {

@@ -3,7 +3,7 @@
 	<div class="page-header">
 		<div class="container-fluid">
 			<div class="float-end">
-				<button id="button-send" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-envelope"></i> {{ button_send }}</button></div>
+				<button type="button" id="button-send" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-envelope"></i> {{ button_send }}</button></div>
 			<h1>{{ heading_title }}</h1>
 			<ol class="breadcrumb">
 				{% for breadcrumb in breadcrumbs %}
@@ -104,16 +104,16 @@
 	</div>
 </div>
 <script type="text/javascript"><!--
-$('select[name=\'to\']').on('change', function() {
+$('#input-to').on('change', function() {
     $('.to').hide();
 
     $('#to-' + this.value.replaceAll('_', '-')).show();
 });
 
-$('select[name=\'to\']').trigger('change');
+$('#input-to').trigger('change');
 
 // Customers
-$('input[name=\'customers\']').autocomplete({
+$('#input-customer').autocomplete({
     'source': function(request, response) {
         $.ajax({
             url: 'index.php?route=customer/customer|autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
@@ -133,7 +133,7 @@ $('input[name=\'customers\']').autocomplete({
         });
     },
     'select': function(item) {
-        $('input[name=\'customers\']').val('');
+        $('#input-customer').val('');
 
         $('#mail-customer-' + item['value']).remove();
 
@@ -151,7 +151,7 @@ $('#mail-customer').on('click', '.btn', function() {
 });
 
 // Affiliates
-$('input[name=\'affiliates\']').autocomplete({
+$('#input-affiliate').autocomplete({
     'source': function(request, response) {
         $.ajax({
             url: 'index.php?route=customer/customer|autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request) + '&filter_affiliate=1',
@@ -171,7 +171,7 @@ $('input[name=\'affiliates\']').autocomplete({
         });
     },
     'select': function(item) {
-        $('input[name=\'affiliates\']').val('');
+        $('#input-affiliate').val('');
 
         $('#mail-affiliate-' + item['value']).remove();
 
@@ -189,7 +189,7 @@ $('#input-affiliate').on('click', '.btn', function() {
 });
 
 // Products
-$('input[name=\'products\']').autocomplete({
+$('#input-product').autocomplete({
     'source': function(request, response) {
         $.ajax({
             url: 'index.php?route=catalog/product|autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
@@ -209,7 +209,7 @@ $('input[name=\'products\']').autocomplete({
         });
     },
     'select': function(item) {
-        $('input[name=\'products\']').val('');
+        $('#input-product').val('');
 
         $('#mail-product-' + item['value']).remove();
 

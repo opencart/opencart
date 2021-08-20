@@ -186,7 +186,7 @@
                     </div>
                   </div>
                   <div class="text-end">
-                    <button id="button-history" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i> {{ button_history_add }}</button>
+                    <button type="button" id="button-history" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i> {{ button_history_add }}</button>
                   </div>
                 </fieldset>
               </div>
@@ -199,7 +199,7 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('input[name=\'customer\']').autocomplete({
+$('#input-customer').autocomplete({
     'source': function(request, response) {
         $.ajax({
             url: 'index.php?route=customer/customer|autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
@@ -230,7 +230,7 @@ $('input[name=\'customer\']').autocomplete({
 });
 //--></script>
 <script type="text/javascript"><!--
-$('input[name=\'product\']').autocomplete({
+$('#input-product').autocomplete({
     'source': function(request, response) {
         $.ajax({
             url: 'index.php?route=catalog/product|autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
@@ -268,7 +268,7 @@ $('#button-history').on('click', function(e) {
         url: 'index.php?route=sale/returns|addhistory&user_token={{ user_token }}&return_id=' + $('#input-return-id').val(),
         type: 'post',
         dataType: 'json',
-        data: 'return_status_id=' + encodeURIComponent($('#tab-history select[name=\'return_status_id\']').val()) + '&notify=' + ($('input[name=\'notify\']').prop('checked') ? 1 : 0) + '&comment=' + encodeURIComponent($('#input-comment').val()),
+        data: 'return_status_id=' + encodeURIComponent($('#input-return-status').val()) + '&notify=' + ($('#input-notify').prop('checked') ? 1 : 0) + '&comment=' + encodeURIComponent($('#input-comment').val()),
         beforeSend: function() {
             $('#button-history').button('loading');
         },
@@ -285,7 +285,7 @@ $('#button-history').on('click', function(e) {
             if (json['success']) {
                 $('#history').load('index.php?route=sale/returns|history&user_token={{ user_token }}&return_id=' + $('#input-return-id').val());
 
-                $('#tab-history').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                 $('#input-comment').val('');
             }

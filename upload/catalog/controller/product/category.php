@@ -171,14 +171,22 @@ class ControllerProductCategory extends Controller {
 				
 				if (empty($result['description']) !== true) {
 					$description = trim(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')));
-					if (empty($this->config->get('theme_' . $this->config->get('config_theme') . '_product_description_length')) !== true) {
-						$max_length = $this->config->get('theme_' . $this->config->get('config_theme') . '_product_description_length');
+					$max_length = $this->config->get('theme_' . $this->config->get('config_theme') . '_product_description_length');
+					if (empty($max_length) !== true) {
+						if (strlen($description) > $max_length) {
+							if ($description[$max_length] !== ' ' && strpos($description, ' ') !== false) {
+								for ($i = $max_length; $i > 0; $i--) {
+									if ($description[$i] === ' ') {
+										$max_length = $i - 1;
+										break;
+									}
+								}
+							}
+							$description = utf8_substr($description, 0, $max_length);
+							$description .= $this->language->get('text_ellipsis');
+						}
 					} else {
 						$max_length = 0;
-					}
-					if ($max_length !== 0 && strlen($description) > $max_length) {
-						$description = utf8_substr($description, 0, $max_length);
-						$description .= '..';
 					}
 				} else {
 					$description = '';

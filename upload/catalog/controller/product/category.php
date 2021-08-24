@@ -173,14 +173,11 @@ class ControllerProductCategory extends Controller {
 					$description = trim(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')));
 					$max_length = $this->config->get('theme_' . $this->config->get('config_theme') . '_product_description_length');
 					if (empty($max_length) !== true) {
-						if (strlen($description) > $max_length) {
-							if ($description[$max_length] !== ' ' && strpos($description, ' ') !== false) {
-								for ($i = $max_length; $i > 0; $i--) {
-									if ($description[$i] === ' ') {
-										$max_length = $i - 1;
-										break;
-									}
-								}
+						$description_length = strlen($description);
+						if ($description_length > $max_length) {
+							$last_space_position = strrpos($description, ' ', -($description_length - $max_length));
+							if ($description[$max_length] !== ' ' && $last_space_position !== false) {
+								$max_length = $last_space_position - 1;
 							}
 							$description = utf8_substr($description, 0, $max_length);
 							$description .= $this->language->get('text_ellipsis');

@@ -1,4 +1,5 @@
 <form id="form-shpping-method">
+
   <fieldset>
     <legend>{{ text_shipping_method }}</legend>
     <select name="shipping_method" id="input-shipping-method" class="form-select"{% if not shipping_methods %} disabled{% endif %}>
@@ -15,12 +16,14 @@
               {% endif %}
             {% endfor %}
           {% else %}
-            <option value="" style="color: #ff0000;" disabled>{{ shipping_method.error }}</option>
+            <option value="" class="text-danger" disabled>{{ shipping_method.error }}</option>
           {% endif %}
         </optgroup>
       {% endfor %}
     </select>
+    <button type="button" id="button-shipping-method" class="btn btn-light">shipping_methods</button>
   </fieldset>
+
 </form>
 <script type="text/javascript"><!--
 // Shipping Methods
@@ -38,10 +41,12 @@ $('#button-shipping-method').on('click', function() {
               $(element).button('reset');
           },
           success: function(json) {
+              console.log(json);
+
               $('.alert-dismissible').remove();
 
               if (json['redirect']) {
-                  location = json['redirect'];
+                  ///location = json['redirect'];
               }
 
               if (json['error']) {

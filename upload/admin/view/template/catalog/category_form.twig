@@ -73,9 +73,10 @@
 
             <div id="tab-data" class="tab-pane">
               <div class="row mb-3">
-                <label class="col-sm-2 col-form-label">{{ entry_parent }}</label>
+                <label for="input-parent" class="col-sm-2 col-form-label">{{ entry_parent }}</label>
                 <div class="col-sm-10">
-                  <input type="text" name="path" value="{{ path }}" placeholder="{{ entry_parent }}" id="input-parent" class="form-control"/> <input type="hidden" name="parent_id" value="{{ parent_id }}"/>
+                  <input type="text" name="path" value="{{ path }}" placeholder="{{ entry_parent }}" id="input-parent" class="form-control"/>
+                  <input type="hidden" name="parent_id" value="{{ parent_id }}"/>
                   <div class="form-text text-muted">{{ help_parent }}</div>
                   <div id="error-parent-{{ language.language_id }}" class="invalid-feedback"></div>
                 </div>
@@ -221,7 +222,7 @@
 <script type="text/javascript"><!--
 $('textarea[data-oc-toggle=\'ckeditor\']').ckeditor();
 
-$('#input-path').autocomplete({
+$('#input-parent').autocomplete({
     'source': function(request, response) {
         $.ajax({
             url: 'index.php?route=catalog/category|autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
@@ -242,8 +243,8 @@ $('#input-path').autocomplete({
         });
     },
     'select': function(item) {
-        $('#input-path').val(item['label']);
-        $('#input-parent_id').val(item['value']);
+        $('#input-parent').val(item['label']);
+        $('#input-parent-id').val(item['value']);
     }
 });
 

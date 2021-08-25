@@ -1,57 +1,91 @@
 <div class="table-responsive">
-	<table class="table table-bordered table-hover">
-		<thead>
-			<tr>
-				<td class="text-start">{{ column_name }}</td>
-				<td class="text-start">{{ column_model }}</td>
-				<td class="text-end">{{ column_quantity }}</td>
-				<td class="text-end">{{ column_price }}</td>
-				<td class="text-end">{{ column_total }}</td>
-			</tr>
-		</thead>
-		<tbody>
-			{% for product in products %}
-				<tr>
-					<td class="text-start"><a href="{{ product.href }}">{{ product.name }}</a>
-						{% for option in product.option %}
-							<br/>
-							&nbsp;
-							<small> - {{ option.name }}: {{ option.value }}</small>
-						{% endfor %}
-						{% if product.recurring %}
-							<br/>
-							<small class="badge badge-warning">{{ text_recurring_item }}</small>
-							<small>{{ product.recurring }}</small>
-						{% endif %}</td>
-					<td class="text-start">{{ product.model }}</td>
-					<td class="text-end">{{ product.quantity }}</td>
-					<td class="text-end">{{ product.price }}</td>
-					<td class="text-end">{{ product.total }}</td>
-				</tr>
-			{% endfor %}
-			{% for voucher in vouchers %}
-				<tr>
-					<td class="text-start">{{ voucher.description }}</td>
-					<td class="text-start"></td>
-					<td class="text-end">1</td>
-					<td class="text-end">{{ voucher.amount }}</td>
-					<td class="text-end">{{ voucher.amount }}</td>
-				</tr>
-			{% endfor %}
-		</tbody>
-		<tfoot>
-			{% for total in totals %}
-				<tr>
-					<td colspan="4" class="text-end"><strong>{{ total.title }}:</strong></td>
-					<td class="text-end">{{ total.text }}</td>
-				</tr>
-			{% endfor %}
-		</tfoot>
-	</table>
+  <table class="table table-bordered table-hover">
+    <thead>
+      <tr>
+        <td class="text-start">{{ column_name }}</td>
+        <td class="text-start">{{ column_model }}</td>
+        <td class="text-end">{{ column_quantity }}</td>
+        <td class="text-end">{{ column_price }}</td>
+        <td class="text-end">{{ column_total }}</td>
+      </tr>
+    </thead>
+    <tbody>
+      {% for product in products %}
+        <tr>
+          <td class="text-start"><a href="{{ product.href }}">{{ product.name }}</a>
+            {% for option in product.option %}
+              <br/>
+              &nbsp;
+              <small> - {{ option.name }}: {{ option.value }}</small>
+            {% endfor %}
+            {% if product.recurring %}
+              <br/>
+              <small class="badge badge-warning">{{ text_recurring_item }}</small>
+              <small>{{ product.recurring }}</small>
+            {% endif %}</td>
+          <td class="text-start">{{ product.model }}</td>
+          <td class="text-end">{{ product.quantity }}</td>
+          <td class="text-end">{{ product.price }}</td>
+          <td class="text-end">{{ product.total }}</td>
+        </tr>
+      {% endfor %}
+      {% for voucher in vouchers %}
+        <tr>
+          <td class="text-start">{{ voucher.description }}</td>
+          <td class="text-start"></td>
+          <td class="text-end">1</td>
+          <td class="text-end">{{ voucher.amount }}</td>
+          <td class="text-end">{{ voucher.amount }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+    <tfoot id="checkout-total">
+      {% for total in totals %}
+        <tr>
+          <td colspan="4" class="text-end"><strong>{{ total.title }}:</strong></td>
+          <td class="text-end">{{ total.text }}</td>
+        </tr>
+      {% endfor %}
+    </tfoot>
+  </table>
 </div>
-
 <p><strong>{{ text_comments }}</strong></p>
 <p>
-	<textarea name="comment" rows="8" class="form-control">{{ comment }}</textarea>
+  <textarea name="comment" rows="8" id="input-comment" class="form-control">{{ comment }}</textarea>
 </p>
+<script type="text/javascript"><!--
+// Payment Method
+$('#button-cart').on('click', function() {
+    var element = this;
+
+    $.ajax({
+        url: 'index.php?route=checkout/cart|getTotals',
+        dataType: 'json',
+        beforeSend: function() {
+            $(element).button('loading');
+        },
+        complete: function() {
+            $(element).button('reset');
+        },
+        success: function(json) {
+            html = '';
+
+            if (json['totals']) {
+                for (i in json['totals']) {
+                    html += '<tr>';
+                    html += '  <td colspan="4" class="text-end"><strong>{{ total.title }}:</strong></td>';
+                    html += '  <td class="text-end">{{ total.text }}</td>';
+                    html += '</tr>';
+                }
+            }
+
+            $('#checkout-total').html(html);
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+//--></script>
 {{ payment }}

@@ -837,9 +837,9 @@ $('#tab-address').on('change', 'select[name$=\'[country_id]\']', function() {
                 zone[$(element).val()] = json;
 
                 if (json['postcode_required'] == '1') {
-                    $('input[name=\'address[' + $(element).attr('data-address-row') + '][postcode]\']').parent().parent().addClass('required');
+                    $('#input-address-' + $(element).attr('data-address-row') + '-postcode').parent().parent().addClass('required');
                 } else {
-                    $('input[name=\'address[' + $(element).attr('data-address-row') + '][postcode]\']').parent().parent().removeClass('required');
+                    $('#input-address-' + $(element).attr('data-address-row') + '-postcode').parent().parent().removeClass('required');
                 }
 
                 html = '<option value="">{{ text_select }}</option>';

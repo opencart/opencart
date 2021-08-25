@@ -17,38 +17,26 @@
   <div class="row">
     {{ column_left }}
     <div id="content" class="col">
+
       {{ content_top }}
       <h1>{{ heading_title }}
         {% if weight %}
           &nbsp;({{ weight }})
         {% endif %}</h1>
+
       {{ list }}
+
       {% if modules %}
         <h2>{{ text_next }}</h2>
         <p>{{ text_next_choice }}</p>
-
         <div id="accordion">
           {% for module in modules %}
             {{ module }}
           {% endfor %}
         </div>
-
       {% endif %}
+
       <br/>
-
-      <div class="row">
-        <div class="col-md-4 offset-md-8">
-          <table class="table table-bordered">
-            {% for total in totals %}
-              <tr>
-                <td class="text-end"><strong>{{ total.title }}:</strong></td>
-                <td class="text-end">{{ total.text }}</td>
-              </tr>
-            {% endfor %}
-          </table>
-        </div>
-      </div>
-
       <div class="d-inline-block pt-2 pd-2 w-100">
         <div class="float-start"><a href="{{ continue }}" class="btn btn-light">{{ button_shopping }}</a></div>
         <div class="float-end"><a href="{{ checkout }}" class="btn btn-primary">{{ button_checkout }}</a></div>

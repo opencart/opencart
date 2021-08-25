@@ -35,11 +35,7 @@
                 <div class="row mb-3 required" class="tab-pane active">
                   <label for="input-customer" class="col-sm-2 col-form-label">{{ entry_customer }}</label>
                   <div class="col-sm-10">
-                    {% if not customer_id %}
-                      <input type="text" name="customer" value="{{ customer }}" placeholder="{{ entry_customer }}" id="input-customer" class="form-control"/>
-                    {% else %}
-                      <input type="text" name="customer" value="{{ customer }}" placeholder="{{ entry_customer }}" id="input-customer" class="form-control" disabled/>
-                    {% endif %}
+                    <input type="text" name="customer" value="{{ customer }}" placeholder="{{ entry_customer }}" id="input-customer" class="form-control"{% if not customer_id %} disabled{% endif %}/>
                     <input type="hidden" name="customer_id" value="{{ customer_id }}" id="input-customer-id"/>
                     <input type="hidden" name="customer_group_id" value="{{ customer_group_id }}" id="input-customer-group"/>
                     <div id="error-customer" class="invalid-feedback"></div>
@@ -52,13 +48,15 @@
                     <input type="text" name="company" value="{{ company }}" placeholder="{{ entry_company }}" id="input-company" class="form-control"/>
                   </div>
                 </div>
+
                 <div class="row mb-3">
                   <label for="input-website" class="col-sm-2 col-form-label">{{ entry_website }}</label>
                   <div class="col-sm-10">
                     <input type="text" name="website" value="{{ website }}" placeholder="{{ entry_website }}" id="input-website" class="form-control"/>
                   </div>
                 </div>
-                <div class="row mb-3">
+
+                <div class="row mb-3 required">
                   <label for="input-tracking" class="col-sm-2 col-form-label">{{ entry_tracking }}</label>
                   <div class="col-sm-10">
                     <input type="text" name="tracking" value="{{ tracking }}" placeholder="{{ entry_tracking }}" id="input-tracking" class="form-control"/>
@@ -66,6 +64,7 @@
                     <div id="error-tracking" class="invalid-feedback"></div>
                   </div>
                 </div>
+
                 <div class="row mb-3">
                   <label for="input-commission" class="col-sm-2 col-form-label">{{ entry_commission }}</label>
                   <div class="col-sm-10">
@@ -73,6 +72,7 @@
                     <div class="form-text text-muted">{{ help_commission }}</div>
                   </div>
                 </div>
+
                 {% for custom_field in custom_fields %}
                   {% if custom_field.location == 'affiliate' %}
 

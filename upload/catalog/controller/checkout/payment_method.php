@@ -77,6 +77,17 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 				}
 			}
 
+
+			if (isset($this->session->data['payment_address'])) {
+				$payment_address = $this->session->data['payment_address'];
+			} else {
+				$payment_address = [
+					'postcode'   => '',
+					'country_id' => 0,
+					'zone_id'    => 0
+				];
+			}
+
 			// Payment Methods
 			$method_data = [];
 
@@ -90,7 +101,7 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 				if ($this->config->get('payment_' . $result['code'] . '_status')) {
 					$this->load->model('extension/' . $result['extension'] . '/payment/' . $result['code']);
 
-					$method = $this->{'model_extension_' . $result['extension'] . '_payment_' . $result['code']}->getMethod($this->session->data['payment_address'], $total);
+					$method = $this->{'model_extension_' . $result['extension'] . '_payment_' . $result['code']}->getMethod($payment_address, $total);
 
 					if ($method) {
 						if ($recurring) {

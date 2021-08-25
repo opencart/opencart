@@ -1,4 +1,5 @@
 <form id="form-payment-method">
+
   <fieldset>
     <legend>{{ text_payment_method }}</legend>
     <select name="payment_method" id="input-payment-method" class="form-select"{% if not payment_methods %} disabled{% endif %}>
@@ -12,7 +13,10 @@
         {% endif %}
       {% endfor %}
     </select>
+    <button type="button" id="button-payment-method" class="btn btn-light">payment_methods</button>
   </fieldset>
+
+
 </form>
 {% for payment_method in payment_methods %}
   {% if payment_method.terms %}
@@ -95,6 +99,7 @@ $('#input-payment-method').on('change', function() {
                 }
 
                 if (json['success']) {
+
                     $('#checkout-confirm').load('index.php?route=checkout/confirm');
                 }
             },

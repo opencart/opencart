@@ -181,8 +181,6 @@ class Cart extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		$data['action'] = $this->url->link('checkout/cart|edit', 'language=' . $this->config->get('config_language'));
-
 		// Gift Voucher
 		$data['vouchers'] = [];
 
@@ -205,7 +203,6 @@ class Cart extends \Opencart\System\Engine\Controller {
 		$total = 0;
 
 		$data['totals'] = [];
-		$data['modules'] = [];
 
 		// Display prices
 		if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
@@ -241,16 +238,6 @@ class Cart extends \Opencart\System\Engine\Controller {
 					'title' => $total['title'],
 					'text'  => $this->currency->format($total['value'], $this->session->data['currency'])
 				];
-			}
-
-			foreach ($results as $result) {
-				if ($this->config->get('total_' . $result['code'] . '_status')) {
-					$result = $this->load->controller('extension/' . $result['extension'] . '/total/' . $result['code']);
-
-					if (!$result instanceof \Exception) {
-						$data['modules'][] = $result;
-					}
-				}
 			}
 		}
 
@@ -386,6 +373,61 @@ class Cart extends \Opencart\System\Engine\Controller {
 			unset($this->session->data['payment_method']);
 			unset($this->session->data['payment_methods']);
 			unset($this->session->data['reward']);
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	public function getTotals(): void {
+		$this->load->language('checkout/cart');
+
+		$json = [];
+
+		// Totals
+		$totals = [];
+		$taxes = $this->cart->getTaxes();
+		$total = 0;
+
+		$json['totals'] = [];
+
+		// Display prices
+		if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
+			$sort_order = [];
+
+			$this->load->model('setting/extension');
+
+			$results = $this->model_setting_extension->getExtensionsByType('total');
+
+			foreach ($results as $key => $value) {
+				$sort_order[$key] = $this->config->get('total_' . $value['code'] . '_sort_order');
+			}
+
+			array_multisort($sort_order, SORT_ASC, $results);
+
+			foreach ($results as $result) {
+				if ($this->config->get('total_' . $result['code'] . '_status')) {
+					$this->load->model('extension/' . $result['extension'] . '/total/' . $result['code']);
+
+					// __call can not pass-by-reference so we get PHP to call it as an anonymous function.
+					($this->{'model_extension_' . $result['extension'] . '_total_' . $result['code']}->getTotal)($totals, $taxes, $total);
+				}
+			}
+
+			$sort_order = [];
+
+			foreach ($totals as $key => $value) {
+				$sort_order[$key] = $value['sort_order'];
+			}
+
+			array_multisort($sort_order, SORT_ASC, $totals);
+
+			foreach ($totals as $total) {
+				$json['totals'][] = [
+					'title' => $total['title'],
+					'text'  => $this->currency->format($total['value'], $this->session->data['currency'])
+				];
+			}
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

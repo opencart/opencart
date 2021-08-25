@@ -84,7 +84,7 @@ $('#button-approve, #button-deny, #button-delete').on('click', function(e) {
         url: $(element).val(),
         type: 'post',
         dataType: 'json',
-        data: $('#gdpr input[name=\'selected[]\']:checked'),
+        data: $('#customer-approval input[name=\'selected[]\']:checked'),
         beforeSend: function() {
             $(element).button('loading');
         },
@@ -99,7 +99,7 @@ $('#button-approve, #button-deny, #button-delete').on('click', function(e) {
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#customer-approval').load('index.php?route=customer/gdpr|list&user_token={{ user_token }}');
+                $('#customer-approval').load('index.php?route=customer/customer_approval|list&user_token={{ user_token }}');
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {

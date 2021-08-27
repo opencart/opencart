@@ -26,11 +26,11 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 
 		// Validate if shipping is required. If not the customer should not have reached this page.
 		if (!$this->cart->hasShipping()) {
-			$json['redirect'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'), true);
+			//$json['redirect'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'), true);
 		}
 
 		if (!isset($this->session->data['shipping_address'])) {
-			$json['redirect'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'), true);
+			//$json['redirect'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'), true);
 		}
 
 		$method_data = [];

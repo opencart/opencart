@@ -9,18 +9,17 @@
     <div id="content" class="col">{{ content_top }}
       <h1>{{ heading_title }}</h1>
       <p>{{ text_account_already }}</p>
-
       <form id="form-register">
         <fieldset id="account">
           <legend>{{ text_your_details }}</legend>
           <div class="row mb-3 required{{ customer_groups|length <= 1 ? ' d-none' }}">
             <label class="col-sm-2 col-form-label">{{ entry_customer_group }}</label>
             <div class="col-sm-10">
-              {% for customer_group in customer_groups %}
-                <div class="form-check">
-                  <input type="radio" name="customer_group_id" value="{{ customer_group.customer_group_id }}" id="input-customer-group-{{ customer_group.customer_group_id }}" class="form-check-input"{% if customer_group.customer_group_id == customer_group_id %} checked{% endif %}/> <label for="input-customer-group-{{ customer_group.customer_group_id }}" class="form-check-label">{{ customer_group.name }}</label>
-                </div>
-              {% endfor %}
+              <select name="customer_group_id" id="input-customer-group" class="form-select">
+                {% for customer_group in customer_groups %}
+                  <option value="{{ customer_group.customer_group_id }}"{% if customer_group.customer_group_id == customer_group_id %} selected{% endif %}>{{ customer_group.name }}</option>
+                {% endfor %}
+              </select>
             </div>
           </div>
           <div class="row mb-3 required">
@@ -216,9 +215,9 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('input[name=\'customer_group_id\']').on('change', function() {
+$('#input-customer-group').on('change', function() {
     $.ajax({
-        url: 'index.php?route=account/register|customfield&customer_group_id=' + this.value,
+        url: 'index.php?route=account/custom_field&customer_group_id=' + this.value,
         dataType: 'json',
         success: function(json) {
             $('.custom-field').hide();
@@ -241,7 +240,7 @@ $('input[name=\'customer_group_id\']').on('change', function() {
     });
 });
 
-$('input[name=\'customer_group_id\']:checked').trigger('change');
+$('#input-customer-group').trigger('change');
 
 $('.date').datetimepicker({
     'format': 'YYYY-MM-DD',

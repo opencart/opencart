@@ -152,7 +152,7 @@ class Register extends \Opencart\System\Engine\Controller {
 			}
 
 			// Customer Group
-			if (in_array($this->request->post['customer_group_id'], (array)$this->config->get('config_customer_group_display'))) {
+			if (in_array((int)$this->request->post['customer_group_id'], (array)$this->config->get('config_customer_group_display'))) {
 				$customer_group_id = $this->request->post['customer_group_id'];
 			} else {
 				$customer_group_id = $this->config->get('config_customer_group_id');
@@ -229,31 +229,6 @@ class Register extends \Opencart\System\Engine\Controller {
 			unset($this->session->data['register_token']);
 
 			$json['redirect'] = $this->url->link('account/success', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'], true);
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	public function customfield(): void {
-		$json = [];
-
-		$this->load->model('account/custom_field');
-
-		// Customer Group
-		if (isset($this->request->get['customer_group_id']) && in_array((int)$this->request->get['customer_group_id'], (array)$this->config->get('config_customer_group_display'))) {
-			$customer_group_id = (int)$this->request->get['customer_group_id'];
-		} else {
-			$customer_group_id = $this->config->get('config_customer_group_id');
-		}
-
-		$custom_fields = $this->model_account_custom_field->getCustomFields($customer_group_id);
-
-		foreach ($custom_fields as $custom_field) {
-			$json[] = [
-				'custom_field_id' => $custom_field['custom_field_id'],
-				'required'        => $custom_field['required']
-			];
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

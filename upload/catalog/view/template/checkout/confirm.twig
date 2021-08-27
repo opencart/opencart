@@ -42,50 +42,11 @@
     <tfoot id="checkout-total">
       {% for total in totals %}
         <tr>
-          <td colspan="4" class="text-end"><strong>{{ total.title }}:</strong></td>
+          <td colspan="4" class="text-end"><strong>{{ total.title }}</strong></td>
           <td class="text-end">{{ total.text }}</td>
         </tr>
       {% endfor %}
     </tfoot>
   </table>
 </div>
-<p><strong>{{ text_comments }}</strong></p>
-<p>
-  <textarea name="comment" rows="8" id="input-comment" class="form-control">{{ comment }}</textarea>
-</p>
-<script type="text/javascript"><!--
-// Payment Method
-$('#button-cart').on('click', function() {
-    var element = this;
-
-    $.ajax({
-        url: 'index.php?route=checkout/cart|getTotals',
-        dataType: 'json',
-        beforeSend: function() {
-            $(element).button('loading');
-        },
-        complete: function() {
-            $(element).button('reset');
-        },
-        success: function(json) {
-            html = '';
-
-            if (json['totals']) {
-                for (i in json['totals']) {
-                    html += '<tr>';
-                    html += '  <td colspan="4" class="text-end"><strong>{{ total.title }}:</strong></td>';
-                    html += '  <td class="text-end">{{ total.text }}</td>';
-                    html += '</tr>';
-                }
-            }
-
-            $('#checkout-total').html(html);
-        },
-        error: function(xhr, ajaxOptions, thrownError) {
-            oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-        }
-    });
-});
-//--></script>
 {{ payment }}

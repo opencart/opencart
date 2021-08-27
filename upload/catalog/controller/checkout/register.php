@@ -206,10 +206,6 @@ class Register extends \Opencart\System\Engine\Controller {
 			$data['text_agree'] = '';
 		}
 
-		$data['shipping_method'] = $this->load->controller('checkout/shipping_method');
-		$data['payment_method'] = $this->load->controller('checkout/payment_method');
-		$data['confirm'] = $this->load->controller('checkout/confirm');
-
 		return $this->load->view('checkout/register', $data);
 	}
 
@@ -284,7 +280,7 @@ class Register extends \Opencart\System\Engine\Controller {
 			}
 
 			// Customer
-			if (in_array((int)$this->request->post['customer_group_id'], $this->config->get('config_customer_group_display'))) {
+			if (in_array((int)$this->request->post['customer_group_id'], (array)$this->config->get('config_customer_group_display'))) {
 				$customer_group_id = (int)$this->request->post['customer_group_id'];
 			} else {
 				$customer_group_id = $this->config->get('config_customer_group_id');
@@ -331,10 +327,6 @@ class Register extends \Opencart\System\Engine\Controller {
 			if ($this->request->post['account']) {
 				if ((utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) < 4) || (utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) > 40)) {
 					$json['error']['customer_password'] = $this->language->get('error_password');
-				}
-
-				if ($this->request->post['confirm'] != $this->request->post['password']) {
-					$json['error']['customer_confirm'] = $this->language->get('error_confirm');
 				}
 			}
 
@@ -594,15 +586,5 @@ class Register extends \Opencart\System\Engine\Controller {
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
-	}
-
-	public function confirm() {
-		$this->load->language('checkout/checkout');
-
-		$data['shipping_method'] = $this->load->controller('checkout/shipping_method');
-		$data['payment_method'] = $this->load->controller('checkout/payment_method');
-		$data['confirm'] = $this->load->controller('checkout/confirm');
-
-		return $this->load->view('checkout/register', $data);
 	}
 }

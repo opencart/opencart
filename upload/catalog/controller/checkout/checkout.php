@@ -65,6 +65,13 @@ class Checkout extends \Opencart\System\Engine\Controller {
 		$data['login'] = $this->load->controller('checkout/login');
 		$data['register'] = $this->load->controller('checkout/register');
 
+		$data['shipping_address'] = $this->load->controller('checkout/shipping_address');
+		$data['payment_address'] = $this->load->controller('checkout/payment_address');
+
+		$data['shipping_method'] = $this->load->controller('checkout/shipping_method');
+		$data['payment_method'] = $this->load->controller('checkout/payment_method');
+		$data['confirm'] = $this->load->controller('checkout/confirm');
+
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
 		$data['content_top'] = $this->load->controller('common/content_top');
@@ -73,30 +80,5 @@ class Checkout extends \Opencart\System\Engine\Controller {
 		$data['header'] = $this->load->controller('common/header');
 
 		$this->response->setOutput($this->load->view('checkout/checkout', $data));
-	}
-
-	public function customfield(): void {
-		$json = [];
-
-		$this->load->model('account/custom_field');
-
-		// Customer Group
-		if (isset($this->request->get['customer_group_id']) && is_array($this->config->get('config_customer_group_display')) && in_array($this->request->get['customer_group_id'], $this->config->get('config_customer_group_display'))) {
-			$customer_group_id = (int)$this->request->get['customer_group_id'];
-		} else {
-			$customer_group_id = $this->config->get('config_customer_group_id');
-		}
-
-		$custom_fields = $this->model_account_custom_field->getCustomFields((int)$customer_group_id);
-
-		foreach ($custom_fields as $custom_field) {
-			$json[] = [
-				'custom_field_id' => $custom_field['custom_field_id'],
-				'required' => $custom_field['required']
-			];
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
 	}
 }

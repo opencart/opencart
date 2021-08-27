@@ -2,26 +2,31 @@
 
   <fieldset>
     <legend>{{ text_shipping_method }}</legend>
-    <select name="shipping_method" id="input-shipping-method" class="form-select"{% if not shipping_methods %} disabled{% endif %}>
-      <option value="">{{ text_select }}</option>
-      {% for shipping_method in shipping_methods %}
-        <optgroup label="{{ shipping_method.title }}">
-          {% if not shipping_method.error %}
-            {% for quote in shipping_method.quote %}
-              {% if quote.code == code or not code %}
-                {% set code = quote.code %}
-                <option value="{{ quote.code }}" selected>{{ quote.title }} - {{ quote.text }}</option>
-              {% else %}
-                <option value="{{ quote.code }}">{{ quote.title }} - {{ quote.text }}</option>
-              {% endif %}
-            {% endfor %}
-          {% else %}
-            <option value="" class="text-danger" disabled>{{ shipping_method.error }}</option>
-          {% endif %}
-        </optgroup>
-      {% endfor %}
-    </select>
-    <button type="button" id="button-shipping-method" class="btn btn-light">shipping_methods</button>
+
+    <div class="input-group">
+      <select name="shipping_method" id="input-shipping-method" class="form-select"{% if not shipping_methods %} disabled{% endif %}>
+        <option value="">{{ text_select }}</option>
+        {% for shipping_method in shipping_methods %}
+          <optgroup label="{{ shipping_method.title }}">
+            {% if not shipping_method.error %}
+              {% for quote in shipping_method.quote %}
+                {% if quote.code == code or not code %}
+                  {% set code = quote.code %}
+                  <option value="{{ quote.code }}" selected>{{ quote.title }} - {{ quote.text }}</option>
+                {% else %}
+                  <option value="{{ quote.code }}">{{ quote.title }} - {{ quote.text }}</option>
+                {% endif %}
+              {% endfor %}
+            {% else %}
+              <option value="" class="text-danger" disabled>{{ shipping_method.error }}</option>
+            {% endif %}
+          </optgroup>
+        {% endfor %}
+      </select>
+
+      <button type="button" id="button-shipping-method" class="btn btn-light"><i class="fas fa-sync"></i></button>
+
+    </div>
   </fieldset>
 
 </form>
@@ -32,57 +37,57 @@ $('#button-shipping-method').on('click', function() {
 
     chain.attach(function() {
         return $.ajax({
-          url: 'index.php?route=checkout/shipping_method|getMethods',
-          dataType: 'json',
-          beforeSend: function() {
-              $(element).button('loading');
-          },
-          complete: function() {
-              $(element).button('reset');
-          },
-          success: function(json) {
-              console.log(json);
+            url: 'index.php?route=checkout/shipping_method|getMethods',
+            dataType: 'json',
+            beforeSend: function() {
+                $(element).prop('disabled', true);
+            },
+            complete: function() {
+                $(element).prop('disabled', false);
+            },
+            success: function(json) {
+                console.log(json);
 
-              $('.alert-dismissible').remove();
+                $('.alert-dismissible').remove();
 
-              if (json['redirect']) {
-                  ///location = json['redirect'];
-              }
+                if (json['redirect']) {
+                    //location = json['redirect'];
+                }
 
-              if (json['error']) {
-                  $('#form-shipping-method').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-              }
+                if (json['error']) {
+                    $('#form-shipping-method').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                }
 
-              // Shipping Methods
-              html = '<option value="">{{ text_select }}</option>';
+                // Shipping Methods
+                html = '<option value="">{{ text_select }}</option>';
 
-              if (json['shipping_methods']) {
-                  for (i in json['shipping_methods']) {
-                      html += '<optgroup label="' + json['shipping_methods'][i]['title'] + '">';
+                if (json['shipping_methods']) {
+                    for (i in json['shipping_methods']) {
+                        html += '<optgroup label="' + json['shipping_methods'][i]['title'] + '">';
 
-                      if (!json['shipping_methods'][i]['error']) {
-                          for (j in json['shipping_methods'][i]['quote']) {
-                              if (json['shipping_methods'][i]['quote'][j]['code'] == $('input-shipping-method option:selected').val()) {
-                                  html += '<option value="' + json['shipping_methods'][i]['quote'][j]['code'] + '" selected="selected">' + json['shipping_methods'][i]['quote'][j]['title'] + ' - ' + json['shipping_methods'][i]['quote'][j]['text'] + '</option>';
-                              } else {
-                                  html += '<option value="' + json['shipping_methods'][i]['quote'][j]['code'] + '">' + json['shipping_methods'][i]['quote'][j]['title'] + ' - ' + json['shipping_methods'][i]['quote'][j]['text'] + '</option>';
-                              }
-                          }
-                      } else {
-                          html += '<option value="" style="color: #ff0000;" disabled>' + json['shipping_methods'][i]['error'] + '</option>';
-                      }
+                        if (!json['shipping_methods'][i]['error']) {
+                            for (j in json['shipping_methods'][i]['quote']) {
+                                if (json['shipping_methods'][i]['quote'][j]['code'] == $('input-shipping-method').val()) {
+                                    html += '<option value="' + json['shipping_methods'][i]['quote'][j]['code'] + '" selected="selected">' + json['shipping_methods'][i]['quote'][j]['title'] + ' - ' + json['shipping_methods'][i]['quote'][j]['text'] + '</option>';
+                                } else {
+                                    html += '<option value="' + json['shipping_methods'][i]['quote'][j]['code'] + '">' + json['shipping_methods'][i]['quote'][j]['title'] + ' - ' + json['shipping_methods'][i]['quote'][j]['text'] + '</option>';
+                                }
+                            }
+                        } else {
+                            html += '<option value="" style="color: #ff0000;" disabled>' + json['shipping_methods'][i]['error'] + '</option>';
+                        }
 
-                      html += '</optgroup>';
-                  }
-              }
+                        html += '</optgroup>';
+                    }
+                }
 
-              $('#input-shipping-method').html(html);
-          },
-          error: function(xhr, ajaxOptions, thrownError) {
-              oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-              console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-          }
-      });
+                $('#input-shipping-method').html(html);
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
+        });
     });
 });
 

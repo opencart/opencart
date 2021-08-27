@@ -1,38 +1,39 @@
 <form id="form-payment-method">
-
   <fieldset>
     <legend>{{ text_payment_method }}</legend>
-    <select name="payment_method" id="input-payment-method" class="form-select"{% if not payment_methods %} disabled{% endif %}>
-      <option value="">{{ text_select }}</option>
-      {% for payment_method in payment_methods %}
-        {% if payment_method.code == code or not code %}
-          {% set code = payment_method.code %}
-          <option value="{{ payment_method.code }}" selected>{{ payment_method.title }}</option>
-        {% else %}
-          <option value="{{ payment_method.code }}">{{ payment_method.title }}</option>
-        {% endif %}
-      {% endfor %}
-    </select>
-    <button type="button" id="button-payment-method" class="btn btn-light">payment_methods</button>
+    <div class="input-group">
+      <select name="payment_method" id="input-payment-method" class="form-select"{% if not payment_methods %} disabled{% endif %}>
+        <option value="">{{ text_select }}</option>
+        {% for payment_method in payment_methods %}
+          {% if payment_method.code == code or not code %}
+            {% set code = payment_method.code %}
+            <option value="{{ payment_method.code }}" selected>{{ payment_method.title }}</option>
+          {% else %}
+            <option value="{{ payment_method.code }}">{{ payment_method.title }}</option>
+          {% endif %}
+        {% endfor %}
+      </select>
+      <button type="button" id="button-payment-method" class="btn btn-light"><i class="fas fa-sync"></i></button>
+    </div>
   </fieldset>
-
-
 </form>
+
 {% for payment_method in payment_methods %}
   {% if payment_method.terms %}
     <div id="payment-terms">({{ payment_method.terms }})</div>
   {% endif %}
 {% endfor %}
-<div class="d-inline-block pt-2 pd-2 w-100">
-  <div class="float-end">
-    {% if text_agree %}
-      <div class="form-check form-check-inline">
-        <label class="form-check-label">{{ text_agree }}</label> <input type="checkbox" name="agree" value="1" class="form-check-input"{% if agree %} checked{% endif %}/>
-        &nbsp;
-      </div>
-    {% endif %}
-  </div>
+
+<div class="d-inline-block pt-2 pb-3 w-100">
+  {% if text_agree %}
+    <div class="form-check form-check-inline">
+      <label class="form-check-label">{{ text_agree }}</label>
+      <input type="checkbox" name="agree" value="1" class="form-check-input"{% if agree %} checked{% endif %}/>
+      &nbsp;
+    </div>
+  {% endif %}
 </div>
+
 <script type="text/javascript"><!--
 // Payment Method
 $('#button-payment-method').on('click', function() {
@@ -42,19 +43,21 @@ $('#button-payment-method').on('click', function() {
         url: 'index.php?route=checkout/payment_method|getMethods',
         dataType: 'json',
         beforeSend: function() {
-            $(element).button('loading');
+            $(element).prop('disabled', true);
         },
         complete: function() {
-            $(element).button('reset');
+            $(element).prop('disabled', false);
         },
         success: function(json) {
+            console.log(json);
+
             $('.alert-dismissible').remove();
 
             html = '<option value="">{{ text_select }}</option>';
 
             if (json['payment_methods']) {
                 for (i in json['payment_methods']) {
-                    if (json['payment_methods'][i]['code'] == $('#input-payment-method option:selected').val()) {
+                    if (json['payment_methods'][i]['code'] == $('#input-payment-method').val()) {
                         html += '<option value="' + json['payment_methods'][i]['code'] + '" selected="selected">' + json['payment_methods'][i]['title'] + '</option>';
                     } else {
                         html += '<option value="' + json['payment_methods'][i]['code'] + '">' + json['payment_methods'][i]['title'] + '</option>';
@@ -88,6 +91,8 @@ $('#input-payment-method').on('change', function() {
                 $(element).prop('disabled', false);
             },
             success: function(json) {
+                console.log(json);
+
                 $('.alert-dismissible').remove();
 
                 if (json['redirect']) {
@@ -99,7 +104,6 @@ $('#input-payment-method').on('change', function() {
                 }
 
                 if (json['success']) {
-
                     $('#checkout-confirm').load('index.php?route=checkout/confirm');
                 }
             },

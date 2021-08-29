@@ -409,36 +409,7 @@ class Api extends \Opencart\System\Engine\Controller {
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
-	}
-
-	public function createInvoiceNo(): void {
-		$this->load->language('sale/order');
-
-		$json = [];
-
-		if (isset($this->request->get['order_id'])) {
-			$order_id = (int)$this->request->get['order_id'];
-		} else {
-			$order_id = 0;
-		}
-
-		if (!$this->user->hasPermission('modify', 'sale/order')) {
-			$json['error'] = $this->language->get('error_permission');
-		} else {
-			$this->load->model('sale/order');
-
-			$invoice_no = $this->model_sale_order->createInvoiceNo($order_id);
-
-			if ($invoice_no) {
-				$json['invoice_no'] = $invoice_no;
-			} else {
-				$json['error'] = $this->language->get('error_action');
-			}
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
+	}	
 
 	public function customer(): void {
 		$this->store->request->post = [

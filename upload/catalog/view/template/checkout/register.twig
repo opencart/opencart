@@ -1,25 +1,32 @@
 <form id="form-register">
+
   <fieldset>
     <legend>{{ text_your_details }}</legend>
-    <div class="mb-3 required">
-      <div class="form-check form-check-inline">
-        <input type="radio" name="account" value="1" id="input-register" class="form-check-input"{% if account %} checked{% endif %}/> <label for="input-register" class="form-check-label">{{ text_register }}</label>
-      </div>
-      <div class="form-check form-check-inline">
-        <input type="radio" name="account" value="0" id="input-guest" class="form-check-input"{% if not account %} checked{% endif %}/> <label for="input-guest" class="form-check-label">{{ text_guest }}</label>
-      </div>
-    </div>
 
-    <div id="account" class="row row-cols-2">
+    <div id="account" class="row">
+
+      <div class="col mb-3 required">
+
+        <div class="form-check form-check-inline">
+          <input type="radio" name="account" value="1" id="input-register" class="form-check-input"{% if account %} checked{% endif %}/> <label for="input-register" class="form-check-label">{{ text_register }}</label>
+        </div>
+
+        <div class="form-check form-check-inline">
+          <input type="radio" name="account" value="0" id="input-guest" class="form-check-input"{% if not account %} checked{% endif %}/> <label for="input-guest" class="form-check-label">{{ text_guest }}</label>
+        </div>
+
+      </div>
 
       <div class="col mb-3{{ customer_groups|length <= 1 ? ' d-none' }}">
-        <label class="form-label">{{ entry_customer_group }}</label>
-        <select name="customer_group_id" id="input-customer-group" class="form-select">
+        <label class="form-label">{{ entry_customer_group }}</label> <select name="customer_group_id" id="input-customer-group" class="form-select">
           {% for customer_group in customer_groups %}
             <option value="{{ customer_group.customer_group_id }}"{% if customer_group.customer_group_id == customer_group_id %} selected{% endif %}>{{ customer_group.name }}</option>
           {% endfor %}
         </select>
       </div>
+    </div>
+
+    <div id="account" class="row row-cols-2">
 
       <div class="col mb-3 required">
         <label for="input-customer-firstname" class="form-label">{{ entry_firstname }}</label> <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-customer-firstname" class="form-control"/>
@@ -154,19 +161,16 @@
       <div class="row row-cols-2">
 
         <div class="col mb-3">
-          <label for="input-payment-company" class="form-label">{{ entry_company }}</label>
-          <input type="text" name="payment_company" value="{{ payment_company }}" placeholder="{{ entry_company }}" id="input-payment-company" class="form-control"/>
+          <label for="input-payment-company" class="form-label">{{ entry_company }}</label> <input type="text" name="payment_company" value="{{ payment_company }}" placeholder="{{ entry_company }}" id="input-payment-company" class="form-control"/>
         </div>
 
         <div class="col mb-3 required">
-          <label for="input-payment-address-1" class="form-label">{{ entry_address_1 }}</label>
-          <input type="text" name="payment_address_1" value="{{ payment_address_1 }}" placeholder="{{ entry_address_1 }}" id="input-payment-address-1" class="form-control"/>
+          <label for="input-payment-address-1" class="form-label">{{ entry_address_1 }}</label> <input type="text" name="payment_address_1" value="{{ payment_address_1 }}" placeholder="{{ entry_address_1 }}" id="input-payment-address-1" class="form-control"/>
           <div id="error-payment-address" class="invalid-feedback"></div>
         </div>
 
         <div class="col mb-3">
-          <label for="input-payment-address-2" class="form-label">{{ entry_address_2 }}</label>
-          <input type="text" name="payment_address_2" value="{{ payment_address_2 }}" placeholder="{{ entry_address_2 }}" id="input-payment-address-2" class="form-control"/>
+          <label for="input-payment-address-2" class="form-label">{{ entry_address_2 }}</label> <input type="text" name="payment_address_2" value="{{ payment_address_2 }}" placeholder="{{ entry_address_2 }}" id="input-payment-address-2" class="form-control"/>
         </div>
 
         <div class="col mb-3 required">
@@ -180,8 +184,7 @@
         </div>
 
         <div class="col mb-3 required">
-          <label for="input-payment-country" class="form-label">{{ entry_country }}</label>
-          <select name="payment_country_id" id="input-payment-country" class="form-select">
+          <label for="input-payment-country" class="form-label">{{ entry_country }}</label> <select name="payment_country_id" id="input-payment-country" class="form-select">
             <option value="">{{ text_select }}</option>
             {% for country in countries %}
               <option value="{{ country.country_id }}"{% if country.country_id == payment_country_id %} selected="selected"{% endif %}>{{ country.name }}</option>
@@ -201,8 +204,7 @@
 
             {% if custom_field.type == 'select' %}
               <div class="col mb-3{% if custom_field.required %} required{% endif %} custom-field custom-field-{{ custom_field.custom_field_id }}">
-                <label for="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
-                <select name="payment_custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" id="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-select">
+                <label for="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <select name="payment_custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" id="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-select">
                   <option value="">{{ text_select }}</option>
                   {% for custom_field_value in custom_field.custom_field_value %}
                     <option value="{{ custom_field_value.custom_field_value_id }}"{% if payment_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id == payment_custom_field[custom_field.custom_field_id] %} selected{% endif %}>{{ custom_field_value.name }}</option>
@@ -304,8 +306,7 @@
         {% if shipping_required %}
           <div class="col mb-3">
             <div class="form-check">
-              <input type="checkbox" name="shipping_address" value="1" id="input-shipping-address" class="form-check-input" checked/>
-              <label for="input-shipping-address" class="form-check-label">{{ entry_shipping }}</label>
+              <input type="checkbox" name="shipping_address" value="1" id="input-shipping-address" class="form-check-input" checked/> <label for="input-shipping-address" class="form-check-label">{{ entry_shipping }}</label>
             </div>
           </div>
         {% endif %}
@@ -315,48 +316,41 @@
   {% endif %}
 
   {% if shipping_required %}
-    <fieldset id="shipping-address"{% if config_checkout_address %} class="d-none{% endif %}">
+    <fieldset id="shipping-address"{% if config_checkout_address %} class="d-none"{% endif %}>
       <legend>{{ text_shipping_address }}</legend>
       <div class="row row-cols-2">
 
         {% if config_checkout_address %}
           <div class="col mb-3 required">
-            <label for="input-shipping-firstname" class="form-label">{{ entry_firstname }}</label>
-            <input type="text" name="shipping_firstname" value="{{ shipping_firstname }}" placeholder="{{ entry_firstname }}" id="input-shipping-firstname" class="form-control"/>
+            <label for="input-shipping-firstname" class="form-label">{{ entry_firstname }}</label> <input type="text" name="shipping_firstname" value="{{ shipping_firstname }}" placeholder="{{ entry_firstname }}" id="input-shipping-firstname" class="form-control"/>
             <div id="error-shipping-firstname" class="invalid-feedback"></div>
           </div>
           <div class="col mb-3 required">
-            <label for="input-shipping-lastname" class="form-label">{{ entry_lastname }}</label>
-            <input type="text" name="shipping_lastname" value="{{ shipping_lastname }}" placeholder="{{ entry_lastname }}" id="input-shipping-lastname" class="form-control"/>
+            <label for="input-shipping-lastname" class="form-label">{{ entry_lastname }}</label> <input type="text" name="shipping_lastname" value="{{ shipping_lastname }}" placeholder="{{ entry_lastname }}" id="input-shipping-lastname" class="form-control"/>
             <div id="error-shipping-lastname" class="invalid-feedback"></div>
           </div>
         {% endif %}
 
         <div class="col mb-3">
-          <label for="input-shipping-company" class="form-label">{{ entry_company }}</label>
-          <input type="text" name="shipping_company" value="{{ shipping_company }}" placeholder="{{ entry_company }}" id="input-shipping-company" class="form-control"/>
+          <label for="input-shipping-company" class="form-label">{{ entry_company }}</label> <input type="text" name="shipping_company" value="{{ shipping_company }}" placeholder="{{ entry_company }}" id="input-shipping-company" class="form-control"/>
         </div>
 
         <div class="col mb-3 required">
-          <label for="input-shipping-address-1" class="form-label">{{ entry_address_1 }}</label>
-          <input type="text" name="shipping_address_1" value="{{ shipping_address_1 }}" placeholder="{{ entry_address_1 }}" id="input-shipping-address-1" class="form-control"/>
+          <label for="input-shipping-address-1" class="form-label">{{ entry_address_1 }}</label> <input type="text" name="shipping_address_1" value="{{ shipping_address_1 }}" placeholder="{{ entry_address_1 }}" id="input-shipping-address-1" class="form-control"/>
           <div id="error-shipping-address-1" class="invalid-feedback"></div>
         </div>
 
         <div class="col mb-3">
-          <label for="input-shipping-address-2" class="form-label">{{ entry_address_2 }}</label>
-          <input type="text" name="shipping_address_2" value="{{ shipping_address_2 }}" placeholder="{{ entry_address_2 }}" id="input-shipping-address-2" class="form-control"/>
+          <label for="input-shipping-address-2" class="form-label">{{ entry_address_2 }}</label> <input type="text" name="shipping_address_2" value="{{ shipping_address_2 }}" placeholder="{{ entry_address_2 }}" id="input-shipping-address-2" class="form-control"/>
         </div>
 
         <div class="col mb-3 required">
-          <label for="input-shipping-city" class="form-label">{{ entry_city }}</label>
-          <input type="text" name="shipping_city" value="{{ shipping_city }}" placeholder="{{ entry_city }}" id="input-shipping-city" class="form-control"/>
+          <label for="input-shipping-city" class="form-label">{{ entry_city }}</label> <input type="text" name="shipping_city" value="{{ shipping_city }}" placeholder="{{ entry_city }}" id="input-shipping-city" class="form-control"/>
           <div id="error-shipping-city" class="invalid-feedback"></div>
         </div>
 
         <div class="col mb-3 required">
-          <label for="input-shipping-postcode" class="form-label">{{ entry_postcode }}</label>
-          <input type="text" name="shipping_postcode" value="{{ shipping_postcode }}" placeholder="{{ entry_postcode }}" id="input-shipping-postcode" class="form-control"/>
+          <label for="input-shipping-postcode" class="form-label">{{ entry_postcode }}</label> <input type="text" name="shipping_postcode" value="{{ shipping_postcode }}" placeholder="{{ entry_postcode }}" id="input-shipping-postcode" class="form-control"/>
           <div id="error-shipping-postcode" class="invalid-feedback"></div>
         </div>
 
@@ -371,8 +365,7 @@
         </div>
 
         <div class="col mb-3 required">
-          <label for="input-shipping-zone" class="form-label">{{ entry_zone }}</label>
-          <select name="shipping_zone_id" id="input-shipping-zone" class="form-select"></select>
+          <label for="input-shipping-zone" class="form-label">{{ entry_zone }}</label> <select name="shipping_zone_id" id="input-shipping-zone" class="form-select"></select>
           <div id="error-shipping-zone" class="invalid-feedback"></div>
         </div>
 
@@ -489,27 +482,24 @@
     <div class="row">
 
       <div id="password" class="col mb-3 required">
-        <label for="input-customer-password" class="form-label">{{ entry_password }}</label>
-        <input type="password" name="password" value="" placeholder="{{ entry_password }}" id="input-customer-password" class="form-control"/>
+        <label for="input-customer-password" class="form-label">{{ entry_password }}</label> <input type="password" name="password" value="" placeholder="{{ entry_password }}" id="input-customer-password" class="form-control"/>
       </div>
 
       <div class="col mb-3 required">
 
         <div class="form-check">
-          <label for="input-newsletter" class="form-check-label">{{ entry_newsletter }}</label>
-          <input type="checkbox" name="newsletter" value="1" id="input-newsletter" class="form-check-input"/>
+          <label for="input-newsletter" class="form-check-label">{{ entry_newsletter }}</label> <input type="checkbox" name="newsletter" value="1" id="input-newsletter" class="form-check-input"/>
         </div>
 
         {% if text_agree %}
           <div class="form-check form-check-inline">
-            <label class="form-check-label">{{ text_agree }}</label>
-            <input type="checkbox" name="agree" value="1" id="input-agree" class="form-check-input"/>
+            <label class="form-check-label">{{ text_agree }}</label> <input type="checkbox" name="agree" value="1" id="input-register-agree" class="form-check-input"/>
           </div>
         {% endif %}
 
         <div class="text-right">
           {{ captcha }}
-          <button type="button" data-oc-action="{{ save }}" data-oc-form="#form-register" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_continue }}</button>
+          <button type="button" id="button-register" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_continue }}</button>
         </div>
 
       </div>
@@ -541,7 +531,7 @@ $('#input-customer-group').on('change', function() {
 
     chain.attach(function() {
         return $.ajax({
-            url: 'index.php?route=account/custom_field&customer_group_id=' + $(element).val(),
+            url: 'index.php?route=account/custom_field&language={{ language }}&customer_group_id=' + $(element).val(),
             dataType: 'json',
             success: function(json) {
                 $('.custom-field').hide();
@@ -567,7 +557,7 @@ $('#input-customer-group').on('change', function() {
 $('#input-customer-group').trigger('change');
 
 // Shipping Address
-$('input[name=\'shipping_address\']').on('change', function() {
+$('#input-shipping-address').on('change', function() {
     if ($(this).prop('checked')) {
         $('#shipping-address').addClass('d-none');
     } else {
@@ -575,7 +565,7 @@ $('input[name=\'shipping_address\']').on('change', function() {
     }
 });
 
-$('input[name=\'shipping_address\']:checked').trigger('change');
+$('#input-shipping-address:checked').trigger('change');
 
 $('select[name$=\'_country_id\']').on('change', function() {
     var element = this;
@@ -583,7 +573,7 @@ $('select[name$=\'_country_id\']').on('change', function() {
 
     chain.attach(function() {
         return $.ajax({
-            url: 'index.php?route=localisation/country&country_id=' + $('select[name=\'' + type + '_country_id\']').val(),
+            url: 'index.php?route=localisation/country&language={{ language }}&country_id=' + $('select[name=\'' + type + '_country_id\']').val(),
             dataType: 'json',
             beforeSend: function() {
                 $(element).prop('disabled', true);
@@ -626,77 +616,164 @@ $('select[name$=\'_country_id\']').on('change', function() {
 
 $('select[name$=\'_country_id\']').trigger('change');
 
-// Forms
-$(document).ready(function() {
-    $(document).on('click', '#button-register', function() {
-        var element = this;
+document.getElementById('button-register').addEventListener('click', function(e) {
+    e.preventDefault();
 
-        $.ajax({
-            url: 'index.php?route=',
-            type: 'post',
-            dataType: 'json',
-            data: new FormData($('#form-register')[0]),
-            cache: false,
-            contentType: false,
-            processData: false,
+    var request = new XMLHttpRequest();
 
-            complete: function() {
-                $(element).button('reset');
-            },
-            success: function(json) {
-                $('#form-register').find('.alert-dismissible').remove();
-                $('#form-register').find('.is-invalid').removeClass('is-invalid');
-                $('#form-register').find('.invalid-feedback').removeClass('d-block');
+    request.open('POST', 'index.php?route=checkout/register|save&language={{ language }}');
 
-                console.log(json);
-                console.log(json['error']);
+    request.onreadystatechange = function() {
+        if (this.readyState === 4 && this.status === 200) {
+            var response = JSON.parse(this.responseText);
 
-                if (json['redirect']) {
-                    location = json['redirect'];
+            console.log(response);
+        }
+    };
 
-                    // Not sure this part works
-                    delete json['redirect'];
-                }
+    request.onloadstart = function(e) {
+        console.log('onloadstart');
 
-                if (typeof json['error'] == 'object') {
-                    if (json['error']['warning']) {
-                        $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-                    }
+        $(element).button('loading');
+    };
 
-                    for (key in json['error']) {
-                        oc.error(key, json['error'][key]);
-                    }
+    request.onprogress = function(e) {
+        console.log('Received ' + e.loaded + ' of ' + e.total);
+    };
 
-                    delete json['error'];
-                }
+    request.onload = function() {
+        var json = JSON.parse(this.responseText);
 
-                if (typeof json['error'] == 'string') {
-                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-                }
+        if (json['redirect']) {
+            location = json['redirect'];
 
-                if (json['success']) {
-                    $(form).after('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            // Not sure this part works
+            delete json['redirect'];
+        }
 
-                  {% if shipping_required %}
-                    $('#button-shipping-method').trigger('click');
-                  {% else %}
-                    $('#button-payment-method').trigger('click');
-                  {% endif %}
-
-                    delete json['success'];
-                }
-
-                for (key in json) {
-                    $(form).find('[name=\'' + key + '\']').val(json[key]);
-                }
-            },
-            error: function(xhr, ajaxOptions, thrownError) {
-                oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        if (typeof json['error'] == 'object') {
+            if (json['error']['warning']) {
+                document.querySelector('#toast').insertAdjacentHTML('afterbegin', '<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
-        });
-    });
+
+            for (key in json['error']) {
+                //oc.error(key, json['error'][key]);
+            }
+
+            delete json['error'];
+        }
+
+        if (typeof json['error'] == 'string') {
+            $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+        }
+
+        if (json['success']) {
+            $(form).after('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+          {% if shipping_required %}
+            $('#button-shipping-method').trigger('click');
+          {% else %}
+            $('#button-payment-method').trigger('click');
+          {% endif %}
+
+            delete json['success'];
+        }
+
+        for (key in json) {
+            //$(form).find('[name=\'' + key + '\']').val(json[key]);
+        }
+    };
+
+    request.onerror = function(e) {
+        console.log('onerror');
+        console.log('e');
+
+        oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+    };
+
+    request.send(new FormData(document.querySelector('#form-register')));
 });
+
+/*
+$('#button-register').on('click', function(e) {
+    var element = this;
+
+    var url = $('base').attr('href') + 'index.php?route=checkout/register|save&language={{ language }}';
+
+    //console.log($('#form-register').serialize());
+    //console.log($('#form-register').serializeArray());
+    //console.log($.param($('#form-register').serializeArray()));
+
+    console.log(url);
+
+    $.ajax({
+        url: url,
+        type: 'post',
+        data: $('#form-register').serialize(),
+        dataType: 'html',
+        cache: false,
+        contentType: false,
+        processData: false,
+        beforeSend: function() {
+            $(element).button('loading');
+        },
+        complete: function() {
+            $(element).button('reset');
+        },
+        success: function(json) {
+            $('#form-register').find('.alert-dismissible').remove();
+            $('#form-register').find('.is-invalid').removeClass('is-invalid');
+            $('#form-register').find('.invalid-feedback').removeClass('d-block');
+
+            console.log(json);
+            console.log(json['error']);
+
+            if (json['redirect']) {
+                location = json['redirect'];
+
+                // Not sure this part works
+                delete json['redirect'];
+            }
+
+            if (typeof json['error'] == 'object') {
+                if (json['error']['warning']) {
+                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                }
+
+                for (key in json['error']) {
+                    oc.error(key, json['error'][key]);
+                }
+
+                delete json['error'];
+            }
+
+            if (typeof json['error'] == 'string') {
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            if (json['success']) {
+                $(form).after('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+              {% if shipping_required %}
+                $('#button-shipping-method').trigger('click');
+              {% else %}
+                $('#button-payment-method').trigger('click');
+              {% endif %}
+
+                delete json['success'];
+            }
+
+            for (key in json) {
+              //  $(form).find('[name=\'' + key + '\']').val(json[key]);
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});*/
 
 $('.date').datetimepicker({
     'format': 'YYYY-MM-DD',

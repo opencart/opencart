@@ -372,11 +372,15 @@ $('#input-recurring, #input-quantity').change(function() {
 });
 
 $('#button-cart').on('click', function() {
+    var test = $('#form-product').serialize();
+
+    console.log(test);
+
     $.ajax({
         url: 'index.php?route=checkout/cart|add',
         type: 'post',
-        data: $('#form-product').serialize(),
         dataType: 'json',
+        data: test,
         beforeSend: function() {
             $('#button-cart').button('loading');
         },

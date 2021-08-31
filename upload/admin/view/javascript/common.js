@@ -135,11 +135,18 @@ $(document).on('click', '[data-oc-action]', function() {
         }
     }
 
+
+
+
+
+  //  console.log(twst);
+
     $.ajax({
         url: $(element).attr('data-oc-action'),
         type: 'post',
-        dataType: 'json',
+       // data:  JSON.stringify($(form).serializeArray()),
         data: new FormData($(form)[0]),
+        dataType: 'json',
         cache: false,
         contentType: false,
         processData: false,

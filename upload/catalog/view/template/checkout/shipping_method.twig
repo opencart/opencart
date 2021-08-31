@@ -99,7 +99,7 @@ $('#input-shipping-method').on('change', function() {
         return $.ajax({
             url: 'index.php?route=checkout/shipping_method|save',
             type: 'post',
-            data: 'shipping_method=' + $(element).val(),
+            data: new FormData($('#form-shipping-method')[0]),
             dataType: 'json',
             beforeSend: function() {
                 $(element).prop('disabled', true);

@@ -51,6 +51,22 @@ class Cart extends \Opencart\System\Engine\Controller {
 
 			$data['list'] = $this->load->controller('checkout/cart|getList');
 
+			$this->load->model('setting/extension');
+
+			$data['modules'] = array();
+
+			$files = glob(DIR_APPLICATION . '/controller/extension/total/*.php');
+
+			if ($files) {
+				foreach ($files as $file) {
+					$result = $this->load->controller('extension/total/' . basename($file, '.php'));
+
+					if ($result) {
+						$data['modules'][] = $result;
+					}
+				}
+			}
+
 			$data['continue'] = $this->url->link('common/home', 'language=' . $this->config->get('config_language'));
 			$data['checkout'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'));
 
@@ -195,8 +211,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		// Totals
-		$this->load->model('setting/extension');
+
 
 		$totals = [];
 		$taxes = $this->cart->getTaxes();
@@ -207,6 +222,8 @@ class Cart extends \Opencart\System\Engine\Controller {
 		// Display prices
 		if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
 			$sort_order = [];
+
+			$this->load->model('setting/extension');
 
 			$results = $this->model_setting_extension->getExtensionsByType('total');
 

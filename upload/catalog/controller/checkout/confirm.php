@@ -1,7 +1,11 @@
 <?php
 namespace Opencart\Catalog\Controller\Checkout;
 class Confirm extends \Opencart\System\Engine\Controller {
-	public function index(): string {
+	public function index(): void {
+		$this->response->setOutput($this->confirm());
+	}
+
+	public function confirm(): string {
 		$this->load->language('checkout/checkout');
 
 		// Validate if payment method has been set.
@@ -14,11 +18,6 @@ class Confirm extends \Opencart\System\Engine\Controller {
 		$extension_info = $this->model_setting_extension->getExtensionByCode('payment', $code);
 
 		if ($extension_info) {
-
-
-
-
-
 			// Create Order if there is a payment method
 			$order_data = [];
 
@@ -160,8 +159,8 @@ class Confirm extends \Opencart\System\Engine\Controller {
 
 				$order_data['products'][] = [
 					'product_id' => $product['product_id'],
-					'master_id' => $product['master_id'],
-					'name' => $product['name'],
+					'master_id'  => $product['master_id'],
+					'name'       => $product['name'],
 					'model' => $product['model'],
 					'option' => $option_data,
 					'download' => $product['download'],
@@ -389,12 +388,7 @@ class Confirm extends \Opencart\System\Engine\Controller {
 		return $this->load->view('checkout/confirm', $data);
 	}
 
-	public function confirm(): void {
-
-
-
-
-
+	public function fhdfh(): void {
 
 		$this->load->model('setting/extension');
 
@@ -435,13 +429,6 @@ class Confirm extends \Opencart\System\Engine\Controller {
 			$json['redirect'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'), true);
 		}
 
-
-
-
-
-
-
-
 		$this->load->model('setting/extension');
 
 		if (isset($this->session->data['payment_method'])) {
@@ -458,35 +445,6 @@ class Confirm extends \Opencart\System\Engine\Controller {
 		// Validate cart has products and has stock.
 		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
 			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
-		}
-
-
-
-
-		// Validate minimum quantity requirements.
-		$products = $this->cart->getProducts();
-
-		foreach ($products as $product) {
-			$product_total = 0;
-
-			foreach ($products as $product_2) {
-				if ($product_2['product_id'] == $product['product_id']) {
-					$product_total += $product_2['quantity'];
-				}
-			}
-
-			if ($product['minimum'] > $product_total) {
-				$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
-
-				break;
-			}
-		}
-
-		if (!$json) {
-
-
-			$this->response->addHeader('Content-Type: application/json');
-			$this->response->setOutput(json_encode($json));
 		}
 	}
 }

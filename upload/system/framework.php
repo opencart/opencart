@@ -109,6 +109,11 @@ foreach ($config->get('response_header') as $header) {
 	$response->addHeader($header);
 }
 
+$response->addHeader('Access-Control-Allow-Origin: *');
+$response->addHeader('Access-Control-Allow-Credentials: true');
+$response->addHeader('Access-Control-Max-Age: 1000');
+$response->addHeader('Access-Control-Allow-Headers: X-Requested-With, Content-Type, Origin, Cache-Control, Pragma, Authorization, Accept, Accept-Encoding');
+$response->addHeader('Access-Control-Allow-Methods: PUT, POST, GET, OPTIONS, DELETE');
 $response->setCompression($config->get('response_compression'));
 $registry->set('response', $response);
 

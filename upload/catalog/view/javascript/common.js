@@ -156,20 +156,6 @@ $(document).ready(function() {
     });
 });
 
-var oc = [];
-
-oc.alert = function(type, message) {
-    $('#alert').prepend('<div class="alert alert-' + type + '"><i class="fas fa-exclamation-circle"></i> ' + message + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-}
-
-oc.error = function(key, message) {
-    // Highlight error fields
-    $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
-
-    // Show errors
-    $('#error-' + key.replaceAll('_', '-')).html(message).addClass('d-block');
-}
-
 // Cart add remove functions
 var cart = [];
 
@@ -194,7 +180,7 @@ cart.add = function(product_id, quantity) {
             }
 
             if (json['success']) {
-                html  = '<div class="toast">';
+                html = '<div class="toast">';
                 html += '  <div class="toast-body"><button type="button" class="btn-close" data-bs-dismiss="toast"></button> ' + json['success'] + '</div>';
                 html += '</div>';
 
@@ -310,7 +296,7 @@ wishlist.add = function(product_id) {
             }
 
             if (json['success']) {
-                html  = '<div class="toast">';
+                html = '<div class="toast">';
                 html += '  <div class="toast-body"><button type="button" class="ml-2 mb-1 close float-right" data-bs-dismiss="toast"></button> ' + json['success'] + '</div>';
                 html += '</div>';
 
@@ -360,6 +346,124 @@ compare.add = function(product_id) {
 };
 
 // Forms
+
+var oc = [];
+
+oc.alert = function(type, message) {
+    $('#alert').prepend('<div class="alert alert-' + type + '"><i class="fas fa-exclamation-circle"></i> ' + message + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+}
+
+oc.error = function(key, message) {
+    // Highlight error fields
+    $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
+
+    // Show errors
+    $('#error-' + key.replaceAll('_', '-')).html(message).addClass('d-block');
+}
+
+
+document.addEventListener('DOMContentLoaded', function(event) {
+    this.querySelectorAll('[data-oc-action]').forEach(function(element) {
+        element.addEventListener('click', function(e) {
+            e.preventDefault();
+
+            var form = document.querySelector(this.getAttribute('data-oc-form'));
+
+            var request = new XMLHttpRequest();
+
+            request.open('POST', this.getAttribute('data-oc-action'));
+
+            request.onreadystatechange = function() {
+
+                if (this.readyState === 4 && this.status === 200) {
+                    var json = JSON.parse(this.responseText);
+
+                    // Remove any previous error classes
+                    form.querySelectorAll('.is-invalid').forEach(element => element.classList.remove('is-invalid'));
+                    form.querySelectorAll('.invalid-feedback').forEach(element => element.classList.remove('d-block'));
+
+                    if (json['redirect']) {
+                       // location = json['redirect'];
+
+                        // Not sure this part works
+                        delete json['redirect'];
+                    }
+
+
+                    if (typeof json['error'] == 'string') {
+                        document.querySelector('#toast').insertAdjacentHTML('afterbegin', '<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                        delete json['error'];
+                    }
+
+                    if (typeof json['error'] == 'object') {
+
+
+                        if (json['error']['warning']) {
+                            document.querySelector('#toast').insertAdjacentHTML('afterbegin', '<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                        }
+
+                        for (key in json['error']) {
+                            var input = form.querySelector('#input-' + key.replaceAll('_', '-'));
+                            var error = form.querySelector('#error-' + key.replaceAll('_', '-'));
+
+                            if (input) {
+                                input.classList.add('is-invalid');
+                                input.querySelectorAll('.form-control, .form-select, .form-check-input, .form-check-label').forEach(element => element.classList.add('is-invalid'));
+                            }
+
+                            if (error) {
+                                error.innerHTML = json['error'][key];
+                                error.classList.add('d-block');
+                            }
+                        }
+
+                        delete json['error'];
+                    }
+
+
+
+                    if (typeof json['success'] == 'string') {
+                        //$(form).after('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                        // Refresh
+                        var url = $(form).attr('data-oc-load');
+                        var target = $(form).attr('data-oc-target');
+
+                        if (typeof url !== typeof undefined && typeof target !== typeof undefined) {
+                            $(target).load(url);
+                        }
+
+                        delete json['success'];
+                    }
+
+                    for (key in json) {
+                        form.querySelector('[name=\'' + key + '\']').val(json[key]);
+                    }
+                }
+            };
+
+            request.onprogress = function(e) {
+                console.log('onprogress');
+            };
+
+            request.onload = function(e) {
+                console.log('onload');
+
+
+
+            };
+
+            request.onerror = function(e) {
+                console.log('onerror');
+            };
+
+            request.send(new FormData(form));
+        });
+    });
+});
+
+/*
 $(document).ready(function() {
     $(document).on('click', '[data-oc-action]', function() {
         var element = this;
@@ -438,7 +542,7 @@ $(document).ready(function() {
         });
     });
 });
-
+*/
 // Upload
 $(document).on('click', '[data-oc-upload]', function() {
     var element = this;

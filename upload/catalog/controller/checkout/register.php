@@ -11,10 +11,9 @@ class Register extends \Opencart\System\Engine\Controller {
 		$data['config_checkout_guest'] = ($this->config->get('config_checkout_guest') && !$this->config->get('config_customer_price') && !$this->cart->hasDownload());
 		$data['config_checkout_address'] = $this->config->get('config_checkout_address');
 		$data['config_file_max_size'] = $this->config->get('config_file_max_size');
+		$data['language'] = $this->config->get('config_language');
 
 		$data['shipping_required'] = $this->cart->hasShipping();
-
-		$data['save'] = $this->url->link('checkout/register|save', 'language=' . $this->config->get('config_language'));
 
 		$data['customer_groups'] = [];
 
@@ -301,8 +300,16 @@ class Register extends \Opencart\System\Engine\Controller {
 
 			$this->load->model('account/customer');
 
-			if ($this->model_account_customer->getTotalCustomersByEmail($this->request->post['email'])) {
-				$json['error']['warning'] = $this->language->get('error_exists');
+			if ($this->request->post['account']) {
+
+				if ($this->model_account_customer->getTotalCustomersByEmail($this->request->post['email'])) {
+					$json['error']['warning'] = $this->language->get('error_exists');
+				}
+
+				if ((utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) < 4) || (utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) > 40)) {
+					$json['error']['customer_password'] = $this->language->get('error_password');
+				}
+
 			}
 
 			if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
@@ -321,12 +328,6 @@ class Register extends \Opencart\System\Engine\Controller {
 					} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !preg_match(html_entity_decode($custom_field['validation'], ENT_QUOTES, 'UTF-8'), $this->request->post['custom_field'][$custom_field['location']][$custom_field['custom_field_id']])) {
 						$json['error']['customer_custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_regex'), $custom_field['name']);
 					}
-				}
-			}
-
-			if ($this->request->post['account']) {
-				if ((utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) < 4) || (utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) > 40)) {
-					$json['error']['customer_password'] = $this->language->get('error_password');
 				}
 			}
 

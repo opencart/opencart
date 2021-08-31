@@ -52,7 +52,24 @@ class Cart extends \Opencart\System\Engine\Controller {
 			}
 
 			$this->load->model('tool/image');
+			
 			$this->load->model('tool/upload');
+			
+			$this->load->model('setting/extension');
+
+			$data['modules'] = [];
+
+			$files = glob(DIR_APPLICATION . '/controller/extension/total/*.php');
+
+			if ($files) {
+				foreach ($files as $file) {
+					$result = $this->load->controller('extension/total/' . basename($file, '.php'));
+
+					if ($result) {
+						$data['modules'][] = $result;
+					}
+				}
+			}
 
 			$frequencies = [
 				'day'        => $this->language->get('text_day'),

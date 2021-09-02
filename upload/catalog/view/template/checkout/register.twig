@@ -634,7 +634,7 @@ document.getElementById('button-register').addEventListener('click', function(e)
     request.onloadstart = function(e) {
         console.log('onloadstart');
 
-        $(element).button('loading');
+       // $(element).button('loading');
     };
 
     request.onprogress = function(e) {
@@ -664,11 +664,11 @@ document.getElementById('button-register').addEventListener('click', function(e)
         }
 
         if (typeof json['error'] == 'string') {
-            $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            document.querySelector('#toast').insertAdjacentHTML('afterbegin', '<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
         }
 
         if (json['success']) {
-            $(form).after('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            document.querySelector('#toast').insertAdjacentHTML('afterbegin', '<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
           {% if shipping_required %}
             $('#button-shipping-method').trigger('click');

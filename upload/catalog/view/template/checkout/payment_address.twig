@@ -1,23 +1,24 @@
 <form id="form-payment-address">
-  <fieldset id="payment-address">
+  <fieldset>
     <legend>Billing Address</legend>
-    {% if addresses %}
-      <div>
-        <div class="form-check">
-          <input type="radio" name="payment_address" value="existing" id="input-payment-existing" class="form-check-input" checked/> <label for="input-payment-existing" class="form-check-label">{{ text_address_existing }}</label>
-        </div>
-        <div class="form-check">
-          <input type="radio" name="payment_address" value="new" id="input-payment-new" class="form-check-input"> <label for="input-payment-new" class="form-check-label">{{ text_address_new }}</label>
-        </div>
 
-        <div id="payment-existing">
-          <select name="address_id" class="form-select">
-            {% for address in addresses %}
-              <option value="{{ address.address_id }}"{% if address['address_id'] == address_id %} selected="selected"{% endif %}>{{ address.firstname }} {{ address.lastname }}, {{ address.address_1 }}, {{ address.city }}, {{ address.zone }}, {{ address.country }}</option>
-            {% endfor %}
-          </select>
-        </div>
+    {% if addresses %}
+
+      <div class="form-check">
+        <input type="radio" name="payment_address" value="existing" id="input-payment-existing" class="form-check-input" checked/> <label for="input-payment-existing" class="form-check-label">{{ text_address_existing }}</label>
       </div>
+      <div class="form-check">
+        <input type="radio" name="payment_address" value="new" id="input-payment-new" class="form-check-input"> <label for="input-payment-new" class="form-check-label">{{ text_address_new }}</label>
+      </div>
+
+      <div id="payment-existing">
+        <select name="address_id" class="form-select">
+          {% for address in addresses %}
+            <option value="{{ address.address_id }}"{% if address['address_id'] == address_id %} selected="selected"{% endif %}>{{ address.firstname }} {{ address.lastname }}, {{ address.address_1 }}, {{ address.city }}, {{ address.zone }}, {{ address.country }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
     {% endif %}
 
     <br/>
@@ -25,39 +26,45 @@
     <div id="payment-new" style="display: {% if addresses %}none{% else %}block{% endif %};">
 
       <div class="col mb-3 required">
-        <label for="input-payment-firstname" class="form-label">{{ entry_firstname }}</label> <input type="text" name="firstname" value="" placeholder="{{ entry_firstname }}" id="input-payment-firstname" class="form-control"/>
+        <label for="input-payment-firstname" class="form-label">{{ entry_firstname }}</label>
+        <input type="text" name="firstname" value="" placeholder="{{ entry_firstname }}" id="input-payment-firstname" class="form-control"/>
       </div>
-
       <div class="col mb-3 required">
-        <label for="input-payment-lastname" class="form-label">{{ entry_lastname }}</label> <input type="text" name="lastname" value="" placeholder="{{ entry_lastname }}" id="input-payment-lastname" class="form-control"/>
+        <label for="input-payment-lastname" class="form-label">{{ entry_lastname }}</label>
+        <input type="text" name="lastname" value="" placeholder="{{ entry_lastname }}" id="input-payment-lastname" class="form-control"/>
       </div>
       <div class="col mb-3">
-        <label for="input-payment-company" class="form-label">{{ entry_company }}</label> <input type="text" name="company" value="" placeholder="{{ entry_company }}" id="input-payment-company" class="form-control"/>
+        <label for="input-payment-company" class="form-label">{{ entry_company }}</label>
+        <input type="text" name="company" value="" placeholder="{{ entry_company }}" id="input-payment-company" class="form-control"/>
       </div>
       <div class="col mb-3 required">
-        <label for="input-payment-address-1" class="form-label">{{ entry_address_1 }}</label> <input type="text" name="address_1" value="" placeholder="{{ entry_address_1 }}" id="input-payment-address-1" class="form-control"/>
+        <label for="input-payment-address-1" class="form-label">{{ entry_address_1 }}</label>
+        <input type="text" name="address_1" value="" placeholder="{{ entry_address_1 }}" id="input-payment-address-1" class="form-control"/>
       </div>
       <div class="col mb-3">
-        <label for="input-payment-address-2" class="orm-label">{{ entry_address_2 }}</label> <input type="text" name="address_2" value="" placeholder="{{ entry_address_2 }}" id="input-payment-address-2" class="form-control"/>
+        <label for="input-payment-address-2" class="orm-label">{{ entry_address_2 }}</label>
+        <input type="text" name="address_2" value="" placeholder="{{ entry_address_2 }}" id="input-payment-address-2" class="form-control"/>
       </div>
       <div class="col mb-3 required">
-        <label for="input-payment-city" class="form-label">{{ entry_city }}</label> <input type="text" name="city" value="" placeholder="{{ entry_city }}" id="input-payment-city" class="form-control"/>
+        <label for="input-payment-city" class="form-label">{{ entry_city }}</label>
+        <input type="text" name="city" value="" placeholder="{{ entry_city }}" id="input-payment-city" class="form-control"/>
       </div>
       <div class="col mb-3 required">
-        <label for="input-payment-postcode" class="form-label">{{ entry_postcode }}</label> <input type="text" name="postcode" value="" placeholder="{{ entry_postcode }}" id="input-payment-postcode" class="form-control"/>
+        <label for="input-payment-postcode" class="form-label">{{ entry_postcode }}</label>
+        <input type="text" name="postcode" value="" placeholder="{{ entry_postcode }}" id="input-payment-postcode" class="form-control"/>
       </div>
-
       <div class="col mb-3 required">
-        <label for="input-payment-country" class="form-label">{{ entry_country }}</label> <select name="country_id" id="input-payment-country" class="form-select">
+        <label for="input-payment-country" class="form-label">{{ entry_country }}</label>
+        <select name="country_id" id="input-payment-country" class="form-select">
           <option value="">{{ text_select }}</option>
           {% for country in countries %}
             <option value="{{ country.country_id }}"{% if country.country_id == country_id %} selected="selected"{% endif %}>{{ country.name }}</option>
           {% endfor %}
         </select>
       </div>
-
       <div class="col mb-3 required">
-        <label for="input-payment-zone" class="form-label">{{ entry_zone }}</label> <select name="zone_id" id="input-payment-zone" class="form-select"> </select>
+        <label for="input-payment-zone" class="form-label">{{ entry_zone }}</label>
+        <select name="zone_id" id="input-payment-zone" class="form-select"></select>
       </div>
 
       {% for custom_field in custom_fields %}
@@ -161,12 +168,14 @@
 
       {% endfor %}
 
-    </div>
-    <div class="d-inline-block pt-2 pd-2 w-100">
-      <div class="float-end">
-        <button type="button" id="button-payment-address" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_continue }}</button>
+      <div class="d-inline-block pt-2 pd-2 w-100">
+        <div class="float-end">
+          <button type="button" id="button-payment-address" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_continue }}</button>
+        </div>
       </div>
+
     </div>
+
   </fieldset>
 </form>
 <script type="text/javascript"><!--
@@ -200,7 +209,9 @@ $('#button-payment-address').on('click', function() {
 
                 if (json['redirect']) {
                     location = json['redirect'];
-                } else if (json['error']) {
+                }
+
+                if (json['error']) {
                     if (json['error']['warning']) {
                         $('#checkout-payment-address .card-body').prepend('<div class="alert alert-warning alert-dismissible">' + json['error']['warning'] + '<button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                     }

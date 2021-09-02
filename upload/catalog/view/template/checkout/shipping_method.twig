@@ -1,4 +1,4 @@
-<form id="form-shpping-method">
+<form id="form-shipping-method">
 
   <fieldset>
     <legend>{{ text_shipping_method }}</legend>
@@ -40,10 +40,10 @@ $('#button-shipping-method').on('click', function() {
             url: 'index.php?route=checkout/shipping_method|getMethods',
             dataType: 'json',
             beforeSend: function() {
-                $(element).prop('disabled', true);
+                $('#input-shipping-method').prop('disabled', true);
             },
             complete: function() {
-                $(element).prop('disabled', false);
+                $('#input-shipping-method').prop('disabled', false);
             },
             success: function(json) {
                 console.log(json);
@@ -91,6 +91,7 @@ $('#button-shipping-method').on('click', function() {
     });
 });
 
+
 // Shipping Method
 $('#input-shipping-method').on('change', function() {
     var element = this;
@@ -99,7 +100,7 @@ $('#input-shipping-method').on('change', function() {
         return $.ajax({
             url: 'index.php?route=checkout/shipping_method|save',
             type: 'post',
-            data: new FormData($('#form-shipping-method')[0]),
+            data: $('#form-shipping-method').serialize(),
             dataType: 'json',
             beforeSend: function() {
                 $(element).prop('disabled', true);
@@ -108,6 +109,8 @@ $('#input-shipping-method').on('change', function() {
                 $(element).prop('disabled', false);
             },
             success: function(json) {
+                console.log(json);
+
                 $('.alert-dismissible').remove();
 
                 if (json['redirect']) {

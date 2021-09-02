@@ -5,46 +5,51 @@ class Security extends \Opencart\System\Engine\Controller {
 		$this->load->language('common/security');
 
 		// Check install directory exists
-		if (is_dir(DIR_CATALOG . '../install')) {
+		if (is_dir(DIR_OPENCART . 'install')) {
 			$data['error_install'] = $this->language->get('error_install');
 		} else {
 			$data['error_install'] = '';
 		}
 
+		// Check storage directory exists
 		if (DIR_STORAGE == DIR_SYSTEM . 'storage/') {
+			$data['error_storage'] = $this->language->get('error_storage');
 
+			// Check install directory exists
+			$data['storage'] = DIR_SYSTEM . 'storage/';
+
+			$path = '';
+
+			$data['paths'] = [];
+
+			$parts = explode('/', str_replace('\\', '/', rtrim(DIR_SYSTEM, '/')));
+
+			foreach ($parts as $part) {
+				$path .= $part . '/';
+
+				$data['paths'][] = $path;
+			}
+
+			rsort($data['paths']);
+
+			$data['document_root'] = str_replace('\\', '/', realpath($this->request->server['DOCUMENT_ROOT'] . '/../') . '/');
+		} else {
+			$data['error_storage'] = '';
 		}
 
-		$data['storage'] = DIR_SYSTEM . 'storage/';
-
-		$path = '';
-
-		$data['paths'] = [];
-
-		$parts = explode('/', str_replace('\\', '/', rtrim(DIR_SYSTEM, '/')));
-
-		foreach ($parts as $part) {
-			$path .= $part . '/';
-
-			$data['paths'][] = $path;
+		// Check admin directory ia renamed
+		if (DIR_APPLICATION == DIR_OPENCART . 'admin/') {
+			$data['error_admin'] = $this->language->get('error_admin');
+		} else {
+			$data['error_admin'] = '';
 		}
-
-		rsort($data['paths']);
-
-		$data['document_root'] = str_replace('\\', '/', realpath($this->request->server['DOCUMENT_ROOT'] . '/../') . '/');
 
 		$data['user_token'] = $this->session->data['user_token'];
 
 		return $this->load->view('common/security', $data);
-
 	}
 
-
-	public function validate(): void {
-
-	}
-
-	public function remove(): void {
+	public function install(): void {
 		$this->load->language('common/security');
 
 		$json = [];
@@ -89,52 +94,7 @@ class Security extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function storage(): string {
-		$this->load->language('common/security');
-
-
-
-
-		// Check install directory exists
-		if (is_dir(DIR_CATALOG . '../install')) {
-			$data['error_install'] = $this->language->get('error_install');
-		} else {
-			$data['error_install'] = '';
-		}
-
-
-
-
-
-		if (DIR_STORAGE == DIR_SYSTEM . 'storage/') {
-
-		}
-
-		$data['storage'] = DIR_SYSTEM . 'storage/';
-
-		$path = '';
-
-		$data['paths'] = [];
-
-		$parts = explode('/', str_replace('\\', '/', rtrim(DIR_SYSTEM, '/')));
-
-		foreach ($parts as $part) {
-			$path .= $part . '/';
-
-			$data['paths'][] = $path;
-		}
-
-		rsort($data['paths']);
-
-		$data['document_root'] = str_replace('\\', '/', realpath($this->request->server['DOCUMENT_ROOT'] . '/../') . '/');
-
-
-		$data['user_token'] = $this->session->data['user_token'];
-
-		return $this->load->view('common/security', $data);
-	}
-
-	public function move(): void {
+	public function storage(): void {
 		$this->load->language('common/security');
 
 		$json = [];
@@ -243,6 +203,51 @@ class Security extends \Opencart\System\Engine\Controller {
 			}
 
 			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	public function admin(): void {
+		$this->load->language('common/security');
+
+		$json = [];
+
+		if (!$this->user->hasPermission('modify', 'common/security')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!is_dir(DIR_OPENCART . 'admin/')) {
+			$json['error'] = $this->language->get('error_directory');
+		}
+
+		if (!$json) {
+			$path = token(6) . '-admin/';
+
+			rename(DIR_OPENCART . 'admin/', DIR_OPENCART . token(6) . '-admin/');
+
+			foreach ($files as $file) {
+				$output = '';
+
+				$lines = file($file);
+
+				foreach ($lines as $line_id => $line) {
+					if (strpos($line, 'define(\'DIR_STORAGE') !== false) {
+						$output .= 'define(\'DIR_STORAGE\', \'' . $path . $directory . '/\');' . "\n";
+					} else {
+						$output .= $line;
+					}
+				}
+
+				$file = fopen($file, 'w');
+
+				fwrite($file, $output);
+
+				fclose($file);
+			}
+
+			$json['redirect'] = $this->language->get('text_success');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

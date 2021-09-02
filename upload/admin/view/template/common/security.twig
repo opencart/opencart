@@ -8,57 +8,108 @@
       <div class="modal-body">
         <div class="alert alert-info"><i class="fas fa-exclamation-circle"></i> {{ text_security }}</div>
 
-        {% if error_install %}
-          <div class="alert alert-danger text-center"><i class="fas fa-exclamation-circle"></i> {{ error_install }}<br/>
-            <button type="button" id="button-setting" data-bs-toggle="tooltip" title="{{ button_developer }}" data-oc-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-cog"></i> Remove</button>
-          </div>
-        {% endif %}
 
-        {% if error_storage %}
-          <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_storage }}
-            <button type="button" id="button-setting" data-bs-toggle="tooltip" title="{{ button_developer }}" data-oc-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-cog"></i> Move</button>
-          </div>
-        {% endif %}
+        <div class="vstack gap-3">
 
-        <form>
 
-          <fieldset>
-            <legend>{{ text_choose }}</legend>
-            <div class="mb-3">
-              <select name="type" id="input-type" class="form-select">
-                <option value="automatic">{{ text_automatic }}</option>
-                <option value="manual">{{ text_manual }}</option>
-              </select>
+          {% if install %}
+            <div class="bg-light p-2 mb-2 rounded-3 border border-danger">
+              <h4><a href="" class="text-danger"> <i class="fas fa-exclamation-triangle"></i> {{ text_install }} <i class="fas fa-arrow-right"></i></a></h4>
+
             </div>
-          </fieldset>
-
-          <fieldset id="collapse-automatic" class="collapse">
-            <legend>{{ text_automatic }}</legend>
-            <div class="mb-3">
-              <div class="input-group dropdown">
-                <button type="button" id="button-path" data-bs-toggle="dropdown" class="btn btn-primary dropdown-toggle">{{ document_root }} <span class="fas fa-caret-down"></span></button>
-                <div class="dropdown-menu">
-                  {% for path in paths %}
-                    {% if path|length > document_root|length %}
-                      <a href="{{ path }}" class="dropdown-item"><i class="fas fa-exclamation-triangle fa-fw text-danger"></i> {{ path }}</a>
-                    {% else %}
-                      <a href="{{ path }}" class="dropdown-item"><i class="fas fa-check-circle fa-fw text-success"></i> {{ path }}</a>
-                    {% endif %}
-                  {% endfor %}
+            <form id="form-install">
+              <fieldset>
+                <legend>{{ text_choose }}</legend>
+                <div class="mb-3">
+                  The install below directory needs deleting. %s
+                  <button type="button" id="button-delete" class="btn badge-warning"><i class="fas fa-trash-alt"></i> Delete</button>
                 </div>
-                <input type="text" name="directory" value="storage" placeholder="{{ entry_directory }}" class="form-control"/>
-                <button type="button" id="button-move" data-oc-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-exclamation-triangle"></i> {{ button_move }}</button>
+              </fieldset>
+            </form>
+          {% endif %}
+
+
+
+          {% if error_storage %}
+
+          <div class="bg-light p-3 mb-2 rounded-3 border border-danger">
+
+            <h4 class="text-danger"><i class="fas fa-exclamation-triangle"></i> {{ text_storage }}</h4>
+
+            <form id="form-storage">
+
+              <fieldset>
+                <legend>{{ text_storage_choose }}</legend>
+                <div class="mb-3">
+                  <select name="type" id="input-type" class="form-select">
+                    <option value="automatic">{{ text_storage_automatic }}</option>
+                    <option value="manual">{{ text_storage_manual }}</option>
+                  </select>
+                </div>
+              </fieldset>
+
+              <fieldset id="collapse-automatic" class="collapse">
+                <legend>{{ text_storage_automatic }}</legend>
+                <div class="mb-3">
+                  <div class="input-group dropdown">
+                    <button type="button" id="button-path" data-bs-toggle="dropdown" class="btn btn-primary dropdown-toggle">{{ document_root }} <span class="fas fa-caret-down"></span></button>
+                    <div class="dropdown-menu">
+                      {% for path in paths %}
+                        {% if path|length > document_root|length %}
+                          <a href="{{ path }}" class="dropdown-item"><i class="fas fa-exclamation-triangle fa-fw text-danger"></i> {{ path }}</a>
+                        {% else %}
+                          <a href="{{ path }}" class="dropdown-item"><i class="fas fa-check-circle fa-fw text-success"></i> {{ path }}</a>
+                        {% endif %}
+                      {% endfor %}
+                    </div>
+                    <input type="text" name="directory" value="storage" placeholder="{{ entry_directory }}" class="form-control"/>
+                    <button type="button" id="button-move" data-oc-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-exclamation-triangle"></i> {{ button_move }}</button>
+                  </div>
+
+                  <input type="hidden" name="path" value="{{ document_root }}"/>
+                </div>
+              </fieldset>
+
+              <fieldset id="collapse-manual" class="collapse">
+                <legend>{{ text_storage_manual }}</legend>
+                <div class="card-body" style="height: 300px; overflow-y: scroll;"></div>
+              </fieldset>
+
+            </form>
+
+            {% endif %}
+
+
+          </div>
+
+          {% if admin %}
+
+          <div class="bg-light p-3 mb-2 rounded-3 border border-danger">
+            <h4 class="text-danger"><i class="fas fa-exclamation-triangle"></i> {{ text_admin }}</h4>
+
+
+          </div>
+        </div>
+
+        <form id="form-admin">
+          <fieldset>
+            <legend>{{ text_admin_choose }}</legend>
+            <div class="mb-3">
+
+              <div class="input-group">
+                <input type="text" name="directory" value="admin" id="input-directory" class="form-control"/>
+                <button type="button" id="button-move" data-oc-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-exclamation-triangle"></i> {{ button_rename }}</button>
               </div>
-              <input type="hidden" name="path" value="{{ document_root }}"/>
+
             </div>
-          </fieldset>
-          <fieldset id="collapse-manual" class="collapse">
-            <legend>{{ text_manual }}</legend>
-            <div class="card bg-light">
-              <div class="card-body" style="height: 300px; overflow-y: scroll;"></div>
-            </div>
+
           </fieldset>
         </form>
+
+
+        {% endif %}
+
+
       </div>
     </div>
   </div>

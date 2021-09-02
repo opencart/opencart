@@ -15,23 +15,20 @@
     <div id="content" class="col">
       {{ content_top }}
       <h1>{{ heading_title }}</h1>
-
       {% if not logged %}
         <div id="checkout-login">{{ login }}</div>
         <br/>
         <div id="checkout-register">{{ register }}</div>
       {% else %}
-
+      <div class="row row-cols-2">
         {% if payment_address %}
           <div id="checkout-payment-address">{{ payment_address }}</div>
         {% endif %}
-
         {% if shipping_required %}
           <div id="checkout-shipping-address">{{ shipping_address }}</div>
         {% endif %}
-
       {% endif %}
-
+      </div>
       <br/>
       <div class="row row-cols-2">
         <div class="col mb-3">
@@ -39,10 +36,6 @@
             {{ shipping_method }}
           {% endif %}
           {{ payment_method }}
-          <p><strong>{{ text_comments }}</strong></p>
-          <p>
-            <textarea name="comment" rows="5" id="input-comment" class="form-control">{{ comment }}</textarea>
-          </p>
         </div>
         <div class="col mb-3" id="checkout-confirm">{{ confirm }}</div>
       </div>

@@ -29,17 +29,20 @@
     <div id="account" class="row row-cols-2">
 
       <div class="col mb-3 required">
-        <label for="input-customer-firstname" class="form-label">{{ entry_firstname }}</label> <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-customer-firstname" class="form-control"/>
+        <label for="input-customer-firstname" class="form-label">{{ entry_firstname }}</label>
+        <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-customer-firstname" class="form-control"/>
         <div id="error-customer-firstname" class="invalid-feedback"></div>
       </div>
 
       <div class="col mb-3 required">
-        <label for="input-customer-lastname" class="form-label">{{ entry_lastname }}</label> <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-customer-lastname" class="form-control"/>
+        <label for="input-customer-lastname" class="form-label">{{ entry_lastname }}</label>
+        <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-customer-lastname" class="form-control"/>
         <div id="error-customer-lastname" class="invalid-feedback"></div>
       </div>
 
       <div class="col mb-3 required">
-        <label for="input-customer-email" class="form-label">{{ entry_email }}</label> <input type="text" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-customer-email" class="form-control"/>
+        <label for="input-customer-email" class="form-label">{{ entry_email }}</label>
+        <input type="text" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-customer-email" class="form-control"/>
         <div id="error-customer-email" class="invalid-feedback"></div>
       </div>
 
@@ -619,6 +622,8 @@ $('select[name$=\'_country_id\']').trigger('change');
 document.getElementById('button-register').addEventListener('click', function(e) {
     e.preventDefault();
 
+    var form = document.querySelector('#form-register');
+
     var request = new XMLHttpRequest();
 
     request.open('POST', 'index.php?route=checkout/register|save&language={{ language }}');
@@ -657,7 +662,18 @@ document.getElementById('button-register').addEventListener('click', function(e)
             }
 
             for (key in json['error']) {
-                //oc.error(key, json['error'][key]);
+                var input = form.querySelector('#input-' + key.replaceAll('_', '-'));
+                var error = form.querySelector('#error-' + key.replaceAll('_', '-'));
+
+                if (input) {
+                    input.classList.add('is-invalid');
+                    input.querySelectorAll('.form-control, .form-select, .form-check-input, .form-check-label').forEach(element => element.classList.add('is-invalid'));
+                }
+
+                if (error) {
+                    error.innerHTML = json['error'][key];
+                    error.classList.add('d-block');
+                }
             }
 
             delete json['error'];
@@ -694,86 +710,6 @@ document.getElementById('button-register').addEventListener('click', function(e)
 
     request.send(new FormData(document.querySelector('#form-register')));
 });
-
-/*
-$('#button-register').on('click', function(e) {
-    var element = this;
-
-    var url = $('base').attr('href') + 'index.php?route=checkout/register|save&language={{ language }}';
-
-    //console.log($('#form-register').serialize());
-    //console.log($('#form-register').serializeArray());
-    //console.log($.param($('#form-register').serializeArray()));
-
-    console.log(url);
-
-    $.ajax({
-        url: url,
-        type: 'post',
-        data: $('#form-register').serialize(),
-        dataType: 'html',
-        cache: false,
-        contentType: false,
-        processData: false,
-        beforeSend: function() {
-            $(element).button('loading');
-        },
-        complete: function() {
-            $(element).button('reset');
-        },
-        success: function(json) {
-            $('#form-register').find('.alert-dismissible').remove();
-            $('#form-register').find('.is-invalid').removeClass('is-invalid');
-            $('#form-register').find('.invalid-feedback').removeClass('d-block');
-
-            console.log(json);
-            console.log(json['error']);
-
-            if (json['redirect']) {
-                location = json['redirect'];
-
-                // Not sure this part works
-                delete json['redirect'];
-            }
-
-            if (typeof json['error'] == 'object') {
-                if (json['error']['warning']) {
-                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-                }
-
-                for (key in json['error']) {
-                    oc.error(key, json['error'][key]);
-                }
-
-                delete json['error'];
-            }
-
-            if (typeof json['error'] == 'string') {
-                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-            }
-
-            if (json['success']) {
-                $(form).after('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-              {% if shipping_required %}
-                $('#button-shipping-method').trigger('click');
-              {% else %}
-                $('#button-payment-method').trigger('click');
-              {% endif %}
-
-                delete json['success'];
-            }
-
-            for (key in json) {
-              //  $(form).find('[name=\'' + key + '\']').val(json[key]);
-            }
-        },
-        error: function(xhr, ajaxOptions, thrownError) {
-            oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-        }
-    });
-});*/
 
 $('.date').datetimepicker({
     'format': 'YYYY-MM-DD',

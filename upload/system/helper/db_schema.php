@@ -5357,6 +5357,14 @@ function db_schema() {
 		'primary' => [
 			'session_id'
 		],
+		'index' => [
+			[
+				'name' => 'expire',
+				'key' => [
+					'expire'
+				]
+			]
+		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'

@@ -33,9 +33,7 @@ class Session {
 			}
 
 			register_shutdown_function([&$this, 'close']);
-			register_shutdown_function(function() use ($this) {
-				$this->adaptor->gc($this->session_id);
-			});
+			register_shutdown_function([&$this, 'gc']);
 		} else {
 			throw new \Exception('Error: Could not load session adaptor ' . $adaptor . ' session!');
 		}
@@ -97,5 +95,14 @@ class Session {
 		$this->data = [];
 
 		$this->adaptor->destroy($this->session_id);
+	}
+
+	/**
+	 * GC
+	 *
+	 * Garbage Collection
+	 */
+	public function gc(): void {
+		$this->adaptor->gc($this->session_id);
 	}
 }

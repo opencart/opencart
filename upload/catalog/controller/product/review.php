@@ -1,6 +1,6 @@
 <?php
 namespace Opencart\Catalog\Controller\Product;
-class Product extends \Opencart\System\Engine\Controller {
+class Review extends \Opencart\System\Engine\Controller {
 	public function review(): void {
 		$this->load->language('product/product');
 

@@ -2,7 +2,11 @@
 namespace Opencart\Admin\Controller\Common;
 class ColumnLeft extends \Opencart\System\Engine\Controller {
 	public function index(): string {
-		if (isset($this->request->get['user_token']) && isset($this->session->data['user_token']) && ((string)$this->request->get['user_token'] == $this->session->data['user_token'])) {
+		if (
+			isset($this->request->get['user_token']) &&
+			isset($this->session->data['user_token']) &&
+			((string)$this->request->get['user_token'] == $this->session->data['user_token'])
+		) {
 			$this->load->language('common/column_left');
 
 			// Create a 3 level menu array
@@ -750,5 +754,6 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 
 			return $this->load->view('common/column_left', $data);
 		}
+		return '';
 	}
 }

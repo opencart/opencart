@@ -88,7 +88,7 @@ class Language {
 	/**
 	 * Clear
 	 *
-	 * @return	array
+	 * @return	void
 	 */
 	public function clear(): void {
 		$this->data = [];

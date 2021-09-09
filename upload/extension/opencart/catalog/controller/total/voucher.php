@@ -13,6 +13,8 @@ class Voucher extends \Opencart\System\Engine\Controller {
 
 			return $this->load->view('extension/opencart/total/voucher', $data);
 		}
+
+		return '';
 	}
 
 	public function save(): void {

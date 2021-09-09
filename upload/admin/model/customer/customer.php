@@ -152,7 +152,7 @@ class Customer extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function getAddress(int $address_id): array {
+	public function getAddress(int $address_id): array|null {
 		$address_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "address` WHERE `address_id` = '" . (int)$address_id . "'");
 
 		if ($address_query->num_rows) {
@@ -201,6 +201,7 @@ class Customer extends \Opencart\System\Engine\Model {
 				'custom_field'   => json_decode($address_query->row['custom_field'], true)
 			];
 		}
+		return null;
 	}
 
 	public function getAddresses(int $customer_id): array {

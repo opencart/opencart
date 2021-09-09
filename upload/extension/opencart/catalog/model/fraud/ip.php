@@ -28,5 +28,7 @@ class Ip extends \Opencart\System\Engine\Model {
 		if ($status) {
 			return (int)$this->config->get('fraud_ip_order_status_id');
 		}
+
+		return 0;
 	}
 }

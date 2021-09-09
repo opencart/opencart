@@ -68,7 +68,7 @@ class Image {
 	 *
 	 * @return	array
      */
-	public function getImage(): string {
+	public function getImage(): \GdImage|bool|resource {
 		return $this->image;
 	}
 
@@ -204,10 +204,10 @@ class Image {
 	/**
      *
      *
-     * @param	string	$watermark
+     * @param	Image	$watermark
 	 * @param	string	$position
      */
-	public function watermark(string $watermark, string $position = 'bottomright'): void {
+	public function watermark(Image $watermark, string $position = 'bottomright'): void {
 		switch($position) {
 			case 'topleft':
 				$watermark_pos_x = 0;
@@ -332,7 +332,7 @@ class Image {
 	 *
 	 * @return	array
      */
-	private function html2rgb(string $color): array {
+	private function html2rgb(string $color): bool|array {
 		if ($color[0] == '#') {
 			$color = substr($color, 1);
 		}

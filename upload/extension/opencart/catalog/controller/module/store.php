@@ -37,5 +37,7 @@ class Store extends \Opencart\System\Engine\Controller {
 
 			return $this->load->view('extension/opencart/module/store', $data);
 		}
+
+		return '';
 	}
 }

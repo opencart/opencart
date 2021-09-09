@@ -14,3 +14,7 @@ indent_size = 4
 [*.twig]
 indent_style = space
 indent_size = 2
+
+[*.php]
+php_diagnostic_php6401 = false
+php_diagnostic = true

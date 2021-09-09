@@ -242,8 +242,9 @@ class Api extends \Opencart\System\Engine\Controller {
 		foreach ($defaults as $key => $value) {
 			if (isset($this->request->post[$key])) {
 				$order[$key] = $this->request->post[$key];
-			} elseif (isset($order_data[$key])) {
-				$order[$key] = $order_info[$key];
+			// ? Use of unassigned variable '$order_info' ???
+			// } elseif (isset($order_data[$key])) {
+			// 	$order[$key] = $order_info[$key];
 			} else {
 				$order[$key] = $value;
 			}
@@ -418,38 +419,7 @@ class Api extends \Opencart\System\Engine\Controller {
 			$data['order_status_id'] = $order_info['order_status_id'];
 
 			$this->response->addHeader('Content-Type: application/json');
-			$this->response->setOutput($store->response->getOutput());
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-
-
-	public function createInvoiceNo(): void {
-		$this->load->language('sale/order');
-
-		$json = [];
-
-		if (isset($this->request->get['order_id'])) {
-			$order_id = (int)$this->request->get['order_id'];
-		} else {
-			$order_id = 0;
-		}
-
-		if (!$this->user->hasPermission('modify', 'sale/order')) {
-			$json['error'] = $this->language->get('error_permission');
-		} else {
-			$this->load->model('sale/order');
-
-			$invoice_no = $this->model_sale_order->createInvoiceNo($order_id);
-
-			if ($invoice_no) {
-				$json['invoice_no'] = $invoice_no;
-			} else {
-				$json['error'] = $this->language->get('error_action');
-			}
+			$this->response->setOutput($this->store->response->getOutput());
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -527,7 +497,7 @@ class Api extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->store->response->getOutput());
 	}
 
-	public function getPaymentMethods(): array {
+	public function getPaymentMethods(): void {
 		$this->store->load->controller('api/payment_method|getPaymentMethods');
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -543,7 +513,7 @@ class Api extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->store->response->getOutput());
 	}
 
-	public function getShippingMethods(): array {
+	public function getShippingMethods(): void {
 		$this->store->load->controller('api/shipping_method|getShippingMethods');
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -755,7 +725,7 @@ class Api extends \Opencart\System\Engine\Controller {
 		$this->store->load->controller('api/shipping_address');
 
 		$this->response->addHeader('Content-Type: application/json');
-		$this->setOutput($this->store->response->getOutput());
+		$this->response->setOutput($this->store->response->getOutput());
 	}
 
 	public function addProduct(): void {

@@ -375,7 +375,7 @@ class Backup extends \Opencart\System\Engine\Controller {
 				ob_end_clean();
 			}
 
-			readfile($file, 'rb');
+			readfile($file);
 
 			exit();
 		} else {

@@ -256,7 +256,7 @@ class Upload extends \Opencart\System\Engine\Controller {
 					header('Pragma: public');
 					header('Content-Length: ' . filesize($file));
 
-					readfile($file, 'rb');
+					readfile($file);
 					exit;
 				} else {
 					exit(sprintf($this->language->get('error_not_found'), basename($file)));

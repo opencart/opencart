@@ -45,6 +45,7 @@ class PDO {
 
 				$statement->closeCursor();
 			}
+			return false;
 		} catch (\PDOException $e) {
 			throw new \Exception('Error: ' . $e->getMessage() . ' Error Code : ' . $e->getCode() . ' <br />' . $sql);
 		}
@@ -62,8 +63,14 @@ class PDO {
 		return $this->affected;
 	}
 
-	public function getLastId(): int {
-		return $this->connection->lastInsertId();
+	public function getLastId(): bool|int {
+		$v = $this->connection->lastInsertId();
+		if (gettype($v) == 'bool'){
+			return $v; 
+		} else if (gettype($v) == 'string') {
+			return intval($v);
+		}
+		return false;
 	}
 
 	public function isConnected(): bool {

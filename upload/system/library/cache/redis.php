@@ -30,6 +30,6 @@ class Redis {
 	}
 
 	public function delete(string $key): bool {
-		$this->cache->del(CACHE_PREFIX . $key);
+		return (bool) $this->cache->del(CACHE_PREFIX . $key);
 	}
 }

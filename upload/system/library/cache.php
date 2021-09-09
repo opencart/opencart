@@ -46,9 +46,9 @@ class Cache {
      * Sets a cache by key value.
      *
      * @param	string	$key	The cache key
-	 * @param	string	$value	The cache value
+	 * @param	array|string|null	$value	The cache value
 	 * 
-	 * @return	string
+	 * @return	void
      */
 	public function set(string $key, array|string|null $value, int $expire = 0): void {
 		$this->adaptor->set($key, $value, $expire);

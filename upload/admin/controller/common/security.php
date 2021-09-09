@@ -227,25 +227,26 @@ class Security extends \Opencart\System\Engine\Controller {
 
 			rename(DIR_OPENCART . 'admin/', DIR_OPENCART . token(6) . '-admin/');
 
-			foreach ($files as $file) {
-				$output = '';
+			// ? Use of unassigned variable '$files' ???
+			// foreach ($files as $file) {
+			// 	$output = '';
 
-				$lines = file($file);
+			// 	$lines = file($file);
 
-				foreach ($lines as $line_id => $line) {
-					if (strpos($line, 'define(\'DIR_STORAGE') !== false) {
-						$output .= 'define(\'DIR_STORAGE\', \'' . $path . $directory . '/\');' . "\n";
-					} else {
-						$output .= $line;
-					}
-				}
+			// 	foreach ($lines as $line_id => $line) {
+			// 		if (strpos($line, 'define(\'DIR_STORAGE') !== false) {
+			// 			$output .= 'define(\'DIR_STORAGE\', \'' . $path . $directory . '/\');' . "\n";
+			// 		} else {
+			// 			$output .= $line;
+			// 		}
+			// 	}
 
-				$file = fopen($file, 'w');
+			// 	$file = fopen($file, 'w');
 
-				fwrite($file, $output);
+			// 	fwrite($file, $output);
 
-				fclose($file);
-			}
+			// 	fclose($file);
+			// }
 
 			$json['redirect'] = $this->language->get('text_success');
 		}

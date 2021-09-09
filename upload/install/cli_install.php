@@ -78,7 +78,7 @@ set_error_handler(function($code, $message, $file, $line, array $errcontext) {
 });
 
 class Cli extends \Opencart\System\Engine\Controller {
-	public function index():  string {
+	public function index(): void {
 		if (isset($this->request->server['argv'])) {
 			$argv = $this->request->server['argv'];
 		} else {

@@ -339,5 +339,6 @@ class Order extends \Opencart\System\Engine\Model {
 
 			return $order_history_id;
 		}
+		return 0;
 	}
 }

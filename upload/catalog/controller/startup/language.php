@@ -33,9 +33,13 @@ class Language extends \Opencart\System\Engine\Controller {
 				$position = strpos($browser_language, ';q=');
 
 				if ($position !== false) {
-					$browser_codes[][substr($browser_language, 0, $position)] = (float)substr($browser_language, $position + 3);
+					$browser_codes[] = [
+						substr($browser_language, 0, $position) => (float)substr($browser_language, $position + 3)
+					];
 				} else {
-					$browser_codes[][$browser_language] = 1.0;
+					$browser_codes[] = [
+						$browser_language => 1.0
+					];
 				}
 			}
 

@@ -45,7 +45,7 @@ class Loader {
 	 * @param    string $key
 	 * @param    object $value
 	 *
-	 * @return    object
+	 * @return    void
 	 */
 	public function __set(string $key, object $value): void {
 		$this->registry->set($key, $value);
@@ -72,7 +72,7 @@ class Loader {
 		$this->event->trigger('controller/' . $trigger . '/before', [&$route, &$args]);
 
 		// Make sure its only the last event that returns an output if required.
-		$action = new \Opencart\System\Engine\Action($route);
+		$action = new  Action($route);
 		$output = $action->execute($this->registry, $args);
 
 		// Trigger the post events
@@ -247,7 +247,7 @@ class Loader {
 	 *
 	 * @param	string $route
 	 *
-	 * @return	closure
+	 * @return	\Closure
 	 */
 	protected function callback(string $route): callable {
 		return function (mixed &...$args) use ($route) {

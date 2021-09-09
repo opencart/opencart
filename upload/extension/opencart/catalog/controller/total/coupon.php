@@ -13,6 +13,8 @@ class Coupon extends \Opencart\System\Engine\Controller {
 
 			return $this->load->view('extension/opencart/total/coupon', $data);
 		}
+
+		return '';
 	}
 
 	public function save(): void {

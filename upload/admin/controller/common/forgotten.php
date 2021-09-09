@@ -124,7 +124,7 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('common/forgotten_reset', $data));
 	}
 
-	public function password(): bool {
+	public function password(): void {
 		$this->load->language('common/forgotten');
 
 		$json = [];

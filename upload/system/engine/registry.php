@@ -35,7 +35,7 @@ class Registry {
 	 * @param    string $key
 	 * @param    object $value
 	 *
-	 * @return    object
+	 * @return    void
 	 */
 	public function __set(string $key, object $value): void {
 		$this->set($key, $value);

@@ -99,7 +99,7 @@ class Twig {
 			$twig = new \Twig\Environment($loader, $config);
 
 			return $twig->render($file, $data);
-		} catch (Twig_Error_Syntax $e) {
+		} catch (\Twig_Error_Syntax $e) {
 			throw new \Exception('Error: Could not load template ' . $filename . '!');
 		}
 	}

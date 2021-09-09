@@ -74,9 +74,9 @@ class Response {
 	 * @param	string	$data
 	 * @param	int		$level
 	 * 
-	 * @return	string
+	 * @return	string|array
  	*/
-	private function compress(array $data, int $level = 0): string {
+	private function compress(array $data, int $level = 0): string|array {
 		if (isset($_SERVER['HTTP_ACCEPT_ENCODING']) && (strpos($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip') !== false)) {
 			$encoding = 'gzip';
 		}

@@ -3,6 +3,9 @@
 $_['heading_title']            = 'Important Security Notification!';
 
 // Text
+$_['text_security']            = 'Security';
+$_['text_step']                = 'Step';
+
 $_['text_install']             = 'Installation directory';
 $_['text_install_description'] = 'Your installation directory needs deleting!';
 $_['text_install_delete']      = 'click below to delete to installation directory';
@@ -45,11 +48,6 @@ $_['error_path']       = 'Warning: Invalid path!';
 $_['error_directory']  = 'Warning: Invalid directory!';
 $_['error_exists']     = 'Warning: Directory already exists!';
 $_['error_writable']   = 'Warning: config.php and admin/config.php need to be made writable!';
-
-
-
-
-
 
 
 // Error

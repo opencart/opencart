@@ -1,4 +1,4 @@
-<div id="modal-security" class="modal">
+<div id="modal-security" class="modal show">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -6,17 +6,20 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
+
         <div class="alert alert-info"><i class="fas fa-exclamation-circle"></i> {{ text_security }}</div>
 
+        <div id="security-start">
 
-        <div class="vstack gap-3">
+          <p>Some security is have been detected. Click continue to start fixing the issues.</p>
 
+          <button type="button" class="btn btn-primary">Continue</button>
+       </div>
 
-          {% if install %}
-            <div class="bg-light p-2 mb-2 rounded-3 border border-danger">
-              <h4><a href="" class="text-danger"> <i class="fas fa-exclamation-triangle"></i> {{ text_install }} <i class="fas fa-arrow-right"></i></a></h4>
+        {% if error_install %}
+          <div id="security-install" class="d-none">
+            <h4 class="text-danger"><i class="fas fa-exclamation-triangle"></i> {{ text_install }}</h4>
 
-            </div>
             <form id="form-install">
               <fieldset>
                 <legend>{{ text_choose }}</legend>
@@ -26,18 +29,16 @@
                 </div>
               </fieldset>
             </form>
-          {% endif %}
+
+          </div>
+        {% endif %}
 
 
-
-          {% if error_storage %}
-
-          <div class="bg-light p-3 mb-2 rounded-3 border border-danger">
-
+        {% if error_storage %}
+          <div id="security-install" class="d-none">
             <h4 class="text-danger"><i class="fas fa-exclamation-triangle"></i> {{ text_storage }}</h4>
 
             <form id="form-storage">
-
               <fieldset>
                 <legend>{{ text_storage_choose }}</legend>
                 <div class="mb-3">
@@ -47,7 +48,6 @@
                   </select>
                 </div>
               </fieldset>
-
               <fieldset id="collapse-automatic" class="collapse">
                 <legend>{{ text_storage_automatic }}</legend>
                 <div class="mb-3">
@@ -65,59 +65,48 @@
                     <input type="text" name="directory" value="storage" placeholder="{{ entry_directory }}" class="form-control"/>
                     <button type="button" id="button-move" data-oc-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-exclamation-triangle"></i> {{ button_move }}</button>
                   </div>
-
                   <input type="hidden" name="path" value="{{ document_root }}"/>
                 </div>
               </fieldset>
-
               <fieldset id="collapse-manual" class="collapse">
                 <legend>{{ text_storage_manual }}</legend>
                 <div class="card-body" style="height: 300px; overflow-y: scroll;"></div>
               </fieldset>
-
             </form>
-
-            {% endif %}
-
-
           </div>
-
-          {% if admin %}
-
-          <div class="bg-light p-3 mb-2 rounded-3 border border-danger">
-            <h4 class="text-danger"><i class="fas fa-exclamation-triangle"></i> {{ text_admin }}</h4>
-
-
-          </div>
-        </div>
-
-        <form id="form-admin">
-          <fieldset>
-            <legend>{{ text_admin_choose }}</legend>
-            <div class="mb-3">
-
-              <div class="input-group">
-                <input type="text" name="directory" value="admin" id="input-directory" class="form-control"/>
-                <button type="button" id="button-move" data-oc-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-exclamation-triangle"></i> {{ button_rename }}</button>
-              </div>
-
-            </div>
-
-          </fieldset>
-        </form>
-
-
         {% endif %}
 
+        {% if error_admin %}
+          <div id="security-admin" class="d-none">
 
+            <div class="bg-light p-3 mb-2 rounded-3 border border-danger">
+              <h4 class="text-danger"><i class="fas fa-exclamation-triangle"></i> {{ text_admin }}</h4>
+            </div>
+
+            <form id="form-admin">
+              <fieldset>
+                <legend>{{ text_admin_choose }}</legend>
+                <div class="mb-3">
+                  <div class="input-group">
+                    <input type="text" name="directory" value="admin" id="input-directory" class="form-control"/>
+                    <button type="button" id="button-move" data-oc-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-exclamation-triangle"></i> {{ button_rename }}</button>
+                  </div>
+                </div>
+              </fieldset>
+            </form>
+
+          </div>
+
+        {% endif %}
       </div>
+
+
     </div>
   </div>
 </div>
 <script type="text/javascript"><!--
-$(document).ready(function() {
-    $('#modal-security').modal('show');
-});
+$('#modal-security').modal('show');
+
 
 $('#modal-security select[name=\'type\']').on('change', function() {
     $('#modal-security fieldset.collapse').removeClass('show');
@@ -145,6 +134,8 @@ $('#modal-security .dropdown-menu a').on('click', function(e) {
 
     $('input[name=\'path\']').trigger('change');
 });
+
+
 
 $('#button-move').on('click', function() {
     var element = this;

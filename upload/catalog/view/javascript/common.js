@@ -361,188 +361,83 @@ oc.error = function(key, message) {
     $('#error-' + key.replaceAll('_', '-')).html(message).addClass('d-block');
 }
 
+$(document).on('click', '[data-oc-action]', function() {
+    var element = this;
 
-document.addEventListener('DOMContentLoaded', function(event) {
-    this.querySelectorAll('[data-oc-action]').forEach(function(element) {
-        element.addEventListener('click', function(e) {
-            e.preventDefault();
+    var form = $(element).attr('data-oc-form');
 
-            var form = document.querySelector(this.getAttribute('data-oc-form'));
+    $.ajax({
+        url: $(element).attr('data-oc-action'),
+        type: 'post',
+        dataType: 'json',
+        data: $(form).serialize(),
+        cache: false,
+        contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+        processData: false,
+        beforeSend: function() {
+            $(element).button('loading');
+        },
+        complete: function() {
+            $(element).button('reset');
+        },
+        success: function(json) {
+            $(form).find('.is-invalid').removeClass('is-invalid');
+            $(form).find('.invalid-feedback').removeClass('d-block');
 
-            var request = new XMLHttpRequest();
+            console.log(json);
+            console.log(json['error']);
 
-            request.open('POST', this.getAttribute('data-oc-action'));
+            if (json['redirect']) {
+                location = json['redirect'];
 
-            request.onreadystatechange = function() {
-
-                if (this.readyState === 4 && this.status === 200) {
-                    var json = JSON.parse(this.responseText);
-
-                    // Remove any previous error classes
-                    form.querySelectorAll('.is-invalid').forEach(element => element.classList.remove('is-invalid'));
-                    form.querySelectorAll('.invalid-feedback').forEach(element => element.classList.remove('d-block'));
-
-                    if (json['redirect']) {
-                       // location = json['redirect'];
-
-                        // Not sure this part works
-                        delete json['redirect'];
-                    }
-
-
-                    if (typeof json['error'] == 'string') {
-                        document.querySelector('#toast').insertAdjacentHTML('afterbegin', '<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                        delete json['error'];
-                    }
-
-                    if (typeof json['error'] == 'object') {
-
-
-                        if (json['error']['warning']) {
-                            document.querySelector('#toast').insertAdjacentHTML('afterbegin', '<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-                        }
-
-                        for (key in json['error']) {
-                            var input = form.querySelector('#input-' + key.replaceAll('_', '-'));
-                            var error = form.querySelector('#error-' + key.replaceAll('_', '-'));
-
-                            if (input) {
-                                input.classList.add('is-invalid');
-                                input.querySelectorAll('.form-control, .form-select, .form-check-input, .form-check-label').forEach(element => element.classList.add('is-invalid'));
-                            }
-
-                            if (error) {
-                                error.innerHTML = json['error'][key];
-                                error.classList.add('d-block');
-                            }
-                        }
-
-                        delete json['error'];
-                    }
-
-
-
-                    if (typeof json['success'] == 'string') {
-                        //$(form).after('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                        // Refresh
-                        var url = $(form).attr('data-oc-load');
-                        var target = $(form).attr('data-oc-target');
-
-                        if (typeof url !== typeof undefined && typeof target !== typeof undefined) {
-                            $(target).load(url);
-                        }
-
-                        delete json['success'];
-                    }
-
-                    for (key in json) {
-                        form.querySelector('[name=\'' + key + '\']').val(json[key]);
-                    }
-                }
-            };
-
-            request.onprogress = function(e) {
-                console.log('onprogress');
-            };
-
-            request.onload = function(e) {
-                console.log('onload');
-
-
-
-            };
-
-            request.onerror = function(e) {
-                console.log('onerror');
-            };
-
-            request.send(new FormData(form));
-        });
-    });
-});
-
-/*
-$(document).ready(function() {
-    $(document).on('click', '[data-oc-action]', function() {
-        var element = this;
-
-        var form = $(element).attr('data-oc-form');
-
-        $.ajax({
-            url: $(element).attr('data-oc-action'),
-            type: 'post',
-            dataType: 'json',
-            data: new FormData($(form)[0]),
-            cache: false,
-            contentType: false,
-            processData: false,
-            beforeSend: function() {
-                $(element).button('loading');
-            },
-            complete: function() {
-                $(element).button('reset');
-            },
-            success: function(json) {
-                $(form).find('.is-invalid').removeClass('is-invalid');
-                $(form).find('.invalid-feedback').removeClass('d-block');
-
-                console.log(json);
-                console.log(json['error']);
-
-                if (json['redirect']) {
-                    location = json['redirect'];
-
-                    // Not sure this part works
-                    delete json['redirect'];
-                }
-
-                if (typeof json['error'] == 'string') {
-                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                    delete json['error'];
-                }
-
-                if (typeof json['error'] == 'object') {
-
-                    if (json['error']['warning']) {
-                        $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-                    }
-
-                    for (key in json['error']) {
-                        oc.error(key, json['error'][key]);
-                    }
-
-                    delete json['error'];
-                }
-
-                if (json['success']) {
-                    $(form).after('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                    // Refresh
-                    var url = $(form).attr('data-oc-load');
-                    var target = $(form).attr('data-oc-target');
-
-                    if (typeof url !== typeof undefined && typeof target !== typeof undefined) {
-                        $(target).load(url);
-                    }
-
-                    delete json['success'];
-                }
-
-                for (key in json) {
-                    $(form).find('[name=\'' + key + '\']').val(json[key]);
-                }
-            },
-            error: function(xhr, ajaxOptions, thrownError) {
-                oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                // Not sure this part works
+                delete json['redirect'];
             }
-        });
+
+            if (typeof json['error'] == 'string') {
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                delete json['error'];
+            }
+
+            if (typeof json['error'] == 'object') {
+
+                if (json['error']['warning']) {
+                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                }
+
+                for (key in json['error']) {
+                    oc.error(key, json['error'][key]);
+                }
+
+                delete json['error'];
+            }
+
+            if (json['success']) {
+                $(form).after('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                // Refresh
+                var url = $(form).attr('data-oc-load');
+                var target = $(form).attr('data-oc-target');
+
+                if (typeof url !== typeof undefined && typeof target !== typeof undefined) {
+                    $(target).load(url);
+                }
+
+                delete json['success'];
+            }
+
+            for (key in json) {
+                $(form).find('[name=\'' + key + '\']').val(json[key]);
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
     });
 });
-*/
+
 // Upload
 $(document).on('click', '[data-oc-upload]', function() {
     var element = this;

@@ -406,6 +406,24 @@ class Confirm extends \Opencart\System\Engine\Controller {
 
 	public function fhdfh(): void {
 
+
+
+
+		if ($this->config->get('config_checkout_id')) {
+			$this->load->model('catalog/information');
+
+			$information_info = $this->model_catalog_information->getInformation($this->config->get('config_checkout_id'));
+
+			if ($information_info && !isset($this->request->post['agree'])) {
+				$json['error'] = sprintf($this->language->get('error_agree'), $information_info['title']);
+			}
+		}
+
+
+
+
+
+
 		$this->load->model('setting/extension');
 
 		if (isset($this->session->data['payment_method'])) {

@@ -301,7 +301,6 @@ class Register extends \Opencart\System\Engine\Controller {
 			$this->load->model('account/customer');
 
 			if ($this->request->post['account']) {
-
 				if ($this->model_account_customer->getTotalCustomersByEmail($this->request->post['email'])) {
 					$json['error']['warning'] = $this->language->get('error_exists');
 				}

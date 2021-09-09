@@ -19,7 +19,7 @@
           <div class="card bg-light">
             <div class="card-body">
               <div class="input-group">
-                <select name="type" class="form-select">
+                <select name="type" id="input-type" class="form-select">
                   {% for category in categories %}
                     <option value="{{ category.href }}"{% if type == category.code %} selected{% endif %}>{{ category.text }}</option>
                   {% endfor %}

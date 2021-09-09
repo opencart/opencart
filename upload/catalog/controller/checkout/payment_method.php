@@ -184,22 +184,6 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_payment');
 		}
 
-
-
-
-
-
-
-		if ($this->config->get('config_checkout_id')) {
-			$this->load->model('catalog/information');
-
-			$information_info = $this->model_catalog_information->getInformation($this->config->get('config_checkout_id'));
-
-			if ($information_info && !isset($this->request->post['agree'])) {
-				$json['error'] = sprintf($this->language->get('error_agree'), $information_info['title']);
-			}
-		}
-
 		if (!$json) {
 			$json['success'] = $this->language->get('text_success');
 

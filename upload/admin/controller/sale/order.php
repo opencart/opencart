@@ -1518,7 +1518,7 @@ class ControllerSaleOrder extends Controller {
 		foreach ($orders as $order_id) {
 			$order_info = $this->model_sale_order->getOrder($order_id);
 			
-			$data['text_order'] = sprintf($this->language->get('text_order'), $order_id);
+			$text_order = sprintf($this->language->get('text_order'), $order_id);
 			
 			if ($order_info) {
 				$store_info = $this->model_setting_setting->getSetting('config', $order_info['store_id']);

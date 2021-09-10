@@ -15,34 +15,26 @@
     <div id="content" class="col">
       {{ content_top }}
       <h1>{{ heading_title }}</h1>
-      {% if not logged %}
-        <div id="checkout-login">{{ login }}</div>
-        <br/>
-        <div id="checkout-register">{{ register }}</div>
-      {% else %}
-      <div class="row row-cols-2">
-        {% if payment_address %}
-          <div id="checkout-payment-address">{{ payment_address }}</div>
-        {% endif %}
-        {% if shipping_required %}
-          <div id="checkout-shipping-address">{{ shipping_address }}</div>
-        {% endif %}
-      {% endif %}
-      </div>
-      <br/>
-      <div class="row row-cols-2">
-        <div class="col mb-3">
-          {% if shipping_required %}
-            {{ shipping_method }}
-            <br/>
+      <div class="row">
+        <div class="col-8 mb-3">
+          {% if not logged %}
+            <div id="checkout-register">{{ register }}</div>
+          {% else %}
+
+            {% if config_checkout_address %}
+              <div id="checkout-payment-address">{{ payment_address }}</div>
+            {% endif %}
+            {% if shipping_required %}
+              <div id="checkout-shipping-address">{{ shipping_address }}</div>
+            {% endif %}
           {% endif %}
-          {{ payment_method }}
         </div>
-        <div class="col mb-3" id="checkout-confirm">{{ confirm }}</div>
+        <div id="checkout-confirm" class="col-4 mb-3">{{ confirm }}</div>
       </div>
-      {{ content_bottom }}
     </div>
-    {{ column_right }}
+    {{ content_bottom }}
   </div>
+  {{ column_right }}
+</div>
 </div>
 {{ footer }}

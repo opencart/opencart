@@ -1,8 +1,6 @@
 <form id="form-shipping-method">
-
   <fieldset>
     <legend>{{ text_shipping_method }}</legend>
-
     <div class="input-group">
       <select name="shipping_method" id="input-shipping-method" class="form-select"{% if not shipping_methods %} disabled{% endif %}>
         <option value="">{{ text_select }}</option>
@@ -23,12 +21,9 @@
           </optgroup>
         {% endfor %}
       </select>
-
       <button type="button" id="button-shipping-method" class="btn btn-light"><i class="fas fa-sync"></i></button>
-
     </div>
   </fieldset>
-
 </form>
 <script type="text/javascript"><!--
 // Shipping Methods
@@ -90,7 +85,6 @@ $('#button-shipping-method').on('click', function() {
         });
     });
 });
-
 
 // Shipping Method
 $('#input-shipping-method').on('change', function() {

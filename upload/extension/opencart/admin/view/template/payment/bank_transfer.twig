@@ -23,9 +23,7 @@
               <label for="input-bank{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_bank }}</label>
               <div class="col-sm-10">
                 <div class="input-group">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/></span>
-                  </div>
+                  <span class="input-group-text"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/></span>
                   <textarea name="payment_bank_transfer_bank_{{ language.language_id }}" cols="80" rows="10" placeholder="{{ entry_bank }}" id="input-bank-{{ language.language_id }}" class="form-control">{{ payment_bank_transfer_bank[language.language_id] ? payment_bank_transfer_bank[language.language_id] }}</textarea>
                 </div>
                 <div id="error-bank-{{ language.language_id }}" class="invalid-feedback"></div>

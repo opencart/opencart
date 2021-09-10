@@ -17,6 +17,7 @@
     </div>
   </fieldset>
 </form>
+
 <script type="text/javascript"><!--
 // Payment Method
 $('#button-payment-method').on('click', function() {
@@ -65,7 +66,7 @@ $('#input-payment-method').on('change', function() {
         url: 'index.php?route=checkout/payment_method|save',
         type: 'post',
         data: $('#form-payment-method').serialize(),
-        dataType: 'html',
+        dataType: 'json',
         beforeSend: function() {
             $(element).prop('disabled', true);
         },

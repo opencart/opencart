@@ -3,7 +3,6 @@
     <thead>
       <tr>
         <td class="text-start">{{ column_name }}</td>
-        <td class="text-start">{{ column_model }}</td>
         <td class="text-end">{{ column_quantity }}</td>
         <td class="text-end">{{ column_price }}</td>
         <td class="text-end">{{ column_total }}</td>
@@ -23,7 +22,6 @@
               <small class="badge badge-warning">{{ text_recurring_item }}</small>
               <small>{{ product.recurring }}</small>
             {% endif %}</td>
-          <td class="text-start">{{ product.model }}</td>
           <td class="text-end">{{ product.quantity }}</td>
           <td class="text-end">{{ product.price }}</td>
           <td class="text-end">{{ product.total }}</td>
@@ -32,32 +30,39 @@
       {% for voucher in vouchers %}
         <tr>
           <td class="text-start">{{ voucher.description }}</td>
-          <td class="text-start"></td>
           <td class="text-end">1</td>
           <td class="text-end">{{ voucher.amount }}</td>
           <td class="text-end">{{ voucher.amount }}</td>
         </tr>
       {% endfor %}
     </tbody>
-    <tfoot id="checkout-total">
-      {% for total in totals %}
-        <tr>
-          <td colspan="4" class="text-end"><strong>{{ total.title }}</strong></td>
-          <td class="text-end">{{ total.text }}</td>
-        </tr>
-      {% endfor %}
-    </tfoot>
   </table>
 </div>
-<div>
-  <p><strong>{{ text_comments }}</strong></p>
-  <p>
-    <textarea name="comment" rows="5" id="input-comment" class="form-control">{{ comment }}</textarea>
-    {% if text_agree %}
-    <div class="text-end">{{ text_agree }} <input type="checkbox" name="agree" value="1" id="input-agree" class="form-check-input"{% if agree %} checked{% endif %}/></div>
-    {% endif %}
-  </p>
-  <div id="checkout-confirm">{{ confirm }}</div>
-</div>
+{% if shipping_required %}
+  {{ shipping_method }}
+  <br/>
+{% endif %}
+{{ payment_method }}
 <br/>
-{{ payment }}
+<div class="mb-2">
+  <label for="input-comment" class="form-label"><strong>{{ text_comments }}</strong></label> <textarea name="comment" rows="5" id="input-comment" class="form-control">{{ comment }}</textarea>
+</div>
+<div class="mb-3">
+  {% if text_agree %}
+    <div class="text-end">{{ text_agree }} <input type="checkbox" name="agree" value="1" id="input-agree" class="form-check-input"{% if agree %} checked{% endif %}/></div>
+  {% endif %}
+</div>
+
+<div id="checkout-confirm">{{ confirm }}</div>
+
+<table class="table table-bordered table-hover">
+  <tfoot id="checkout-total">
+    {% for total in totals %}
+      <tr>
+        <td colspan="3" class="text-end"><strong>{{ total.title }}</strong></td>
+        <td class="text-end">{{ total.text }}</td>
+      </tr>
+    {% endfor %}
+  </tfoot>
+</table>
+<div id="checkout-payment">{{ payment }}</div>

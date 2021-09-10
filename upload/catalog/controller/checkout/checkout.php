@@ -64,13 +64,9 @@ class Checkout extends \Opencart\System\Engine\Controller {
 
 		$data['login'] = $this->load->controller('checkout/login');
 		$data['register'] = $this->load->controller('checkout/register');
-
 		$data['shipping_address'] = $this->load->controller('checkout/shipping_address');
 		$data['payment_address'] = $this->load->controller('checkout/payment_address');
-
-		$data['shipping_method'] = $this->load->controller('checkout/shipping_method');
-		$data['payment_method'] = $this->load->controller('checkout/payment_method');
-		$data['confirm'] = $this->load->controller('checkout/confirm|confirm');
+		$data['confirm'] = $this->load->controller('checkout/confirm');
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');

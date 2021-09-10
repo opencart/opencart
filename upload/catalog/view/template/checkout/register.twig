@@ -1,5 +1,6 @@
 <form id="form-register">
 
+  <p>Already have an account? You can <a href=""><strong>login here</strong></a>.</p>
   <fieldset>
     <legend>{{ text_your_details }}</legend>
 
@@ -691,115 +692,6 @@ $('#button-register').on('click', function() {
         }
     });
 });
-
-
-
-
-
-
-/*
-document.getElementById('button-register').addEventListener('click', function(e) {
-    e.preventDefault();
-
-    var form = document.querySelector('#form-register');
-
-    document.querySelector('#button-payment-method').dispatchEvent(new MouseEvent('click'));
-
-    var request = new XMLHttpRequest();
-
-    request.open('POST', 'index.php?route=checkout/register|save&language={{ language }}');
-
-    request.onreadystatechange = function() {
-        if (this.readyState === 4 && this.status === 200) {
-            var response = JSON.parse(this.responseText);
-
-            console.log(response);
-        }
-    };
-
-    request.onloadstart = function(e) {
-        console.log('onloadstart');
-
-       // $(element).button('loading');
-    };
-
-    request.onprogress = function(e) {
-        console.log('Received ' + e.loaded + ' of ' + e.total);
-    };
-
-    request.onload = function() {
-        var json = JSON.parse(this.responseText);
-
-        if (json['redirect']) {
-            location = json['redirect'];
-
-            // Not sure this part works
-            delete json['redirect'];
-        }
-
-        if (typeof json['error'] == 'object') {
-            if (json['error']['warning']) {
-                document.querySelector('#toast').insertAdjacentHTML('afterbegin', '<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-            }
-
-            for (key in json['error']) {
-                var input = form.querySelector('#input-' + key.replaceAll('_', '-'));
-                var error = form.querySelector('#error-' + key.replaceAll('_', '-'));
-
-                if (input) {
-                    input.classList.add('is-invalid');
-                    input.querySelectorAll('.form-control, .form-select, .form-check-input, .form-check-label').forEach(element => element.classList.add('is-invalid'));
-                }
-
-                if (error) {
-                    error.innerHTML = json['error'][key];
-                    error.classList.add('d-block');
-                }
-            }
-
-            delete json['error'];
-        }
-
-        if (typeof json['error'] == 'string') {
-            document.querySelector('#toast').insertAdjacentHTML('afterbegin', '<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-        }
-
-        if (json['success']) {
-            document.querySelector('#toast').insertAdjacentHTML('afterbegin', '<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-          {% if shipping_required %}
-            const event = new MouseEvent('click', {
-                view: window,
-                bubbles: true,
-                cancelable: true
-            });
-
-            document.querySelector('#button-shipping-method').dispatchEvent(event);
-
-            $('#button-shipping-method').trigger('click');
-          {% else %}
-            $('#button-payment-method').trigger('click');
-          {% endif %}
-
-            delete json['success'];
-        }
-
-        for (key in json) {
-            //$(form).find('[name=\'' + key + '\']').val(json[key]);
-        }
-    };
-
-    request.onerror = function(e) {
-        console.log('onerror');
-        console.log('e');
-
-        oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-        console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-    };
-
-    request.send(new FormData(document.querySelector('#form-register')));
-});
-*/
 
 $('.date').datetimepicker({
     'format': 'YYYY-MM-DD',

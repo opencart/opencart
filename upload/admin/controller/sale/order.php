@@ -1518,6 +1518,8 @@ class ControllerSaleOrder extends Controller {
 		foreach ($orders as $order_id) {
 			$order_info = $this->model_sale_order->getOrder($order_id);
 			
+			$data['text_order'] = sprintf($this->language->get('text_order'), $order_id);
+			
 			if ($order_info) {
 				$store_info = $this->model_setting_setting->getSetting('config', $order_info['store_id']);
 
@@ -1670,8 +1672,9 @@ class ControllerSaleOrder extends Controller {
 				}
 
 				$data['orders'][] = array(
-					'order_id'	       => $order_id,
+					'order_id'	   => $order_id,
 					'invoice_no'       => $invoice_no,
+					'text_order'	   => $text_order,
 					'date_added'       => date($this->language->get('date_format_short'), strtotime($order_info['date_added'])),
 					'store_name'       => $order_info['store_name'],
 					'store_url'        => rtrim($order_info['store_url'], '/'),

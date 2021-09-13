@@ -11,8 +11,11 @@ class Register extends \Opencart\System\Engine\Controller {
 		$data['error_upload_size'] = sprintf($this->language->get('error_upload_size'), $this->config->get('config_file_max_size'));
 
 		$data['config_checkout_guest'] = ($this->config->get('config_checkout_guest') && !$this->config->get('config_customer_price') && !$this->cart->hasDownload());
+		$data['config_checkout_address'] = $this->config->get('config_checkout_address');
 		$data['config_file_max_size'] = $this->config->get('config_file_max_size');
 		$data['language'] = $this->config->get('config_language');
+
+		$data['shipping_required'] = $this->cart->hasShipping();
 
 		$data['customer_groups'] = [];
 
@@ -73,6 +76,114 @@ class Register extends \Opencart\System\Engine\Controller {
 			$data['customer_custom_field'] = $this->session->data['customer']['custom_field'];
 		} else {
 			$data['customer_custom_field'] = [];
+		}
+
+		// Payment Address
+		if (isset($this->session->data['payment_address']['company'])) {
+			$data['payment_company'] = $this->session->data['payment_address']['company'];
+		} else {
+			$data['payment_company'] = '';
+		}
+
+		if (isset($this->session->data['payment_address']['address_1'])) {
+			$data['payment_address_1'] = $this->session->data['payment_address']['address_1'];
+		} else {
+			$data['payment_address_1'] = '';
+		}
+
+		if (isset($this->session->data['payment_address']['address_2'])) {
+			$data['payment_address_2'] = $this->session->data['payment_address']['address_2'];
+		} else {
+			$data['payment_address_2'] = '';
+		}
+
+		if (isset($this->session->data['payment_address']['postcode'])) {
+			$data['payment_postcode'] = $this->session->data['payment_address']['postcode'];
+		} else {
+			$data['payment_postcode'] = '';
+		}
+
+		if (isset($this->session->data['payment_address']['city'])) {
+			$data['payment_city'] = $this->session->data['payment_address']['city'];
+		} else {
+			$data['payment_city'] = '';
+		}
+
+		$this->load->model('localisation/country');
+
+		$data['countries'] = $this->model_localisation_country->getCountries();
+
+		if (isset($this->session->data['payment_address']['country_id'])) {
+			$data['payment_country_id'] = $this->session->data['payment_address']['country_id'];
+		} else {
+			$data['payment_country_id'] = $this->config->get('config_country_id');
+		}
+
+		if (isset($this->session->data['payment_address']['zone_id'])) {
+			$data['payment_zone_id'] = $this->session->data['payment_address']['zone_id'];
+		} else {
+			$data['payment_zone_id'] = '';
+		}
+
+		if (isset($this->session->data['payment_address']['custom_field'])) {
+			$data['payment_custom_field'] = $this->session->data['payment_address']['custom_field'];
+		} else {
+			$data['payment_custom_field'] = [];
+		}
+
+		// Shipping Address
+		if (isset($this->session->data['shipping_address']['firstname'])) {
+			$data['shipping_firstname'] = $this->session->data['shipping_address']['firstname'];
+		} else {
+			$data['shipping_firstname'] = '';
+		}
+
+		if (isset($this->session->data['shipping_address']['lastname'])) {
+			$data['shipping_lastname'] = $this->session->data['shipping_address']['lastname'];
+		} else {
+			$data['shipping_lastname'] = '';
+		}
+
+		if (isset($this->session->data['shipping_address']['company'])) {
+			$data['shipping_company'] = $this->session->data['shipping_address']['company'];
+		} else {
+			$data['shipping_company'] = '';
+		}
+
+		if (isset($this->session->data['shipping_address']['address_1'])) {
+			$data['shipping_address_1'] = $this->session->data['shipping_address']['address_1'];
+		} else {
+			$data['shipping_address_1'] = '';
+		}
+
+		if (isset($this->session->data['shipping_address']['address_2'])) {
+			$data['shipping_address_2'] = $this->session->data['shipping_address']['address_2'];
+		} else {
+			$data['shipping_address_2'] = '';
+		}
+
+		if (isset($this->session->data['shipping_address']['postcode'])) {
+			$data['shipping_postcode'] = $this->session->data['shipping_address']['postcode'];
+		} else {
+			$data['shipping_postcode'] = '';
+		}
+
+		if (isset($this->session->data['shipping_address']['city'])) {
+			$data['shipping_city'] = $this->session->data['shipping_address']['city'];
+		} else {
+			$data['shipping_city'] = '';
+		}
+
+		if (isset($this->session->data['shipping_address']['country_id'])) {
+			$data['shipping_country_id'] = $this->session->data['shipping_address']['country_id'];
+		} else {
+			$data['shipping_country_id'] = $this->config->get('config_country_id');
+		}
+
+		if (isset($this->session->data['shipping_address']['zone_id'])) {
+			$data['shipping_zone_id'] = $this->session->data['shipping_address']['zone_id'];
+		} else {
+			$data['shipping_zone_id'] = '';
 		}
 
 		// Captcha
@@ -141,6 +252,23 @@ class Register extends \Opencart\System\Engine\Controller {
 				'lastname',
 				'email',
 				'telephone',
+				'payment_company',
+				'payment_address_1',
+				'payment_address_2',
+				'payment_city',
+				'payment_postcode',
+				'payment_country_id',
+				'payment_zone_id',
+				'shipping_address',
+				'shipping_firstname',
+				'shipping_lastname',
+				'shipping_company',
+				'shipping_address_1',
+				'shipping_address_2',
+				'shipping_city',
+				'shipping_postcode',
+				'shipping_country_id',
+				'shipping_zone_id',
 				'password',
 				'confirm',
 				'agree'
@@ -197,6 +325,93 @@ class Register extends \Opencart\System\Engine\Controller {
 						$json['error']['customer_custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
 					} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !preg_match(html_entity_decode($custom_field['validation'], ENT_QUOTES, 'UTF-8'), $this->request->post['custom_field'][$custom_field['location']][$custom_field['custom_field_id']])) {
 						$json['error']['customer_custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_regex'), $custom_field['name']);
+					}
+				}
+			}
+
+			// Payment Address
+			if ($this->config->get('config_checkout_address')) {
+				if ((utf8_strlen($this->request->post['payment_address_1']) < 3) || (utf8_strlen($this->request->post['payment_address_1']) > 128)) {
+					$json['error']['payment_address_1'] = $this->language->get('error_address_1');
+				}
+
+				if ((utf8_strlen($this->request->post['payment_city']) < 2) || (utf8_strlen($this->request->post['payment_city']) > 32)) {
+					$json['error']['payment_city'] = $this->language->get('error_city');
+				}
+
+				$this->load->model('localisation/country');
+
+				$country_info = $this->model_localisation_country->getCountry((int)$this->request->post['payment_country_id']);
+
+				if ($country_info && $country_info['postcode_required'] && (utf8_strlen($this->request->post['payment_postcode']) < 2 || utf8_strlen($this->request->post['payment_postcode']) > 10)) {
+					$json['error']['payment_postcode'] = $this->language->get('error_postcode');
+				}
+
+				if ($this->request->post['payment_country_id'] == '') {
+					$json['error']['payment_country'] = $this->language->get('error_country');
+				}
+
+				if (!isset($this->request->post['payment_zone_id']) || $this->request->post['payment_zone_id'] == '') {
+					$json['error']['payment_zone'] = $this->language->get('error_zone');
+				}
+
+				// Custom field validation
+				foreach ($custom_fields as $custom_field) {
+					if ($custom_field['location'] == 'address') {
+						if ($custom_field['required'] && empty($this->request->post['payment_custom_field'][$custom_field['location']][$custom_field['custom_field_id']])) {
+							$json['error']['payment_custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
+						} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !preg_match(html_entity_decode($custom_field['validation'], ENT_QUOTES, 'UTF-8'), $this->request->post['payment_custom_field'][$custom_field['location']][$custom_field['custom_field_id']])) {
+							$json['error']['payment_custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_regex'), $custom_field['name']);
+						}
+					}
+				}
+			}
+
+			// Shipping Address
+			if ($this->cart->hasShipping() && !$this->request->post['shipping_address']) {
+				// If no payment address no need to validate shipping firstname and lastname as the customer info will be used.
+				if ($this->config->get('config_checkout_address')) {
+					if ((utf8_strlen($this->request->post['shipping_firstname']) < 1) || (utf8_strlen($this->request->post['shipping_firstname']) > 32)) {
+						$json['error']['shipping_firstname'] = $this->language->get('error_firstname');
+					}
+
+					if ((utf8_strlen($this->request->post['shipping_lastname']) < 1) || (utf8_strlen($this->request->post['shipping_lastname']) > 32)) {
+						$json['error']['shipping_lastname'] = $this->language->get('error_lastname');
+					}
+				}
+
+				if ((utf8_strlen($this->request->post['shipping_address_1']) < 3) || (utf8_strlen($this->request->post['shipping_address_1']) > 128)) {
+					$json['error']['shipping_address_1'] = $this->language->get('error_address_1');
+				}
+
+				if ((utf8_strlen($this->request->post['shipping_city']) < 2) || (utf8_strlen($this->request->post['shipping_city']) > 32)) {
+					$json['error']['shipping_city'] = $this->language->get('error_city');
+				}
+
+				$this->load->model('localisation/country');
+
+				$country_info = $this->model_localisation_country->getCountry((int)$this->request->post['shipping_country_id']);
+
+				if ($country_info && $country_info['postcode_required'] && (utf8_strlen($this->request->post['shipping_postcode']) < 2 || utf8_strlen($this->request->post['shipping_postcode']) > 10)) {
+					$json['error']['shipping_postcode'] = $this->language->get('error_postcode');
+				}
+
+				if ($this->request->post['shipping_country_id'] == '') {
+					$json['error']['shipping_country'] = $this->language->get('error_country');
+				}
+
+				if (!isset($this->request->post['shipping_zone_id']) || $this->request->post['shipping_zone_id'] == '') {
+					$json['error']['shipping_zone'] = $this->language->get('error_zone');
+				}
+
+				// Custom field validation
+				foreach ($custom_fields as $custom_field) {
+					if ($custom_field['location'] == 'address') {
+						if ($custom_field['required'] && empty($this->request->post['shipping_custom_field'][$custom_field['location']][$custom_field['custom_field_id']])) {
+							$json['error']['shipping_custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
+						} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !preg_match(html_entity_decode($custom_field['validation'], ENT_QUOTES, 'UTF-8'), $this->request->post['shipping_custom_field'][$custom_field['location']][$custom_field['custom_field_id']])) {
+							$json['error']['shipping_custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_regex'), $custom_field['name']);
+						}
 					}
 				}
 			}

@@ -5,10 +5,13 @@
     {% if addresses %}
 
       <div class="form-check">
-        <input type="radio" name="shipping_address" value="existing" id="input-shipping-existing" class="form-check-input" checked/> <label for="input-shipping-existing" class="form-check-label">{{ text_address_existing }}</label>
+        <input type="radio" name="existing" value="existing" id="input-shipping-existing" class="form-check-input" checked/>
+        <label for="input-shipping-existing" class="form-check-label">{{ text_address_existing }}</label>
       </div>
+
       <div class="form-check">
-        <input type="radio" name="shipping_address" value="new" id="input-shipping-new" class="form-check-input"/> <label for="input-shipping-new" class="form-check-label">{{ text_address_new }}</label>
+        <input type="radio" name="existing" value="new" id="input-shipping-new" class="form-check-input"/>
+        <label for="input-shipping-new" class="form-check-label">{{ text_address_new }}</label>
       </div>
 
       <div id="shipping-existing">
@@ -179,13 +182,15 @@
           {% endif %}
         {% endfor %}
       </div>
+      <div class="text-end mb-3">
+        <button type="button" id="button-shipping-address" class="btn btn-primary">{{ button_continue }}</button>
+      </div>
     </div>
-
   </fieldset>
 </form>
 
 <script type="text/javascript"><!--
-$('input[name=\'shipping_address\']').on('change', function() {
+$('input[name=\'existing\']').on('change', function() {
     if (this.value == 'new') {
         $('#shipping-existing').hide();
         $('#shipping-new').show();
@@ -201,7 +206,7 @@ $('#button-shipping-address').on('click', function() {
         return $.ajax({
             url: 'index.php?route=checkout/shipping_address|save',
             type: 'post',
-            data: $('#checkout-shipping-address input[type=\'text\'], #checkout-shipping-address input[type=\'date\'], #checkout-shipping-address input[type=\'datetime-local\'], #checkout-shipping-address input[type=\'time\'], #checkout-shipping-address input[type=\'password\'], #checkout-shipping-address input[type=\'checkbox\']:checked, #checkout-shipping-address input[type=\'radio\']:checked, #checkout-shipping-address textarea, #checkout-shipping-address select'),
+            data: $('#form-shipping-address').serialize(),
             dataType: 'json',
             beforeSend: function() {
                 $('#button-shipping-address').button('loading');
@@ -294,42 +299,23 @@ $('#button-shipping-address').on('click', function() {
         });
     });
 });
-//--></script>
-<script type="text/javascript"><!--
-$('.date').datetimepicker({
-    'format': 'YYYY-MM-DD',
-    'locale': '{{ datepicker }}',
-    'allowInputToggle': true
-});
 
-$('.time').datetimepicker({
-    'format': 'HH:mm',
-    'locale': '{{ datepicker }}',
-    'allowInputToggle': true
-});
-
-$('.datetime').datetimepicker({
-    'format': 'YYYY-MM-DD HH:mm',
-    'locale': '{{ datepicker }}',
-    'allowInputToggle': true
-});
-
-$('#checkout-shipping-address select[name=\'country_id\']').on('change', function() {
+$('#input-shipping-country').on('change', function() {
     chain.attach(function() {
         return $.ajax({
-            url: 'index.php?route=localisation/country&country_id=' + $('#checkout-shipping-address select[name=\'country_id\']').val(),
+            url: 'index.php?route=localisation/country&country_id=' + $('#input-shipping-country').val(),
             dataType: 'json',
             beforeSend: function() {
-                $('#checkout-shipping-address select[name=\'country_id\']').prop('disabled', true);
+                $('#input-shipping-country').prop('disabled', true);
             },
             complete: function() {
-                $('#checkout-shipping-address select[name=\'country_id\']').prop('disabled', false);
+                $('#input-shipping-country').prop('disabled', false);
             },
             success: function(json) {
                 if (json['postcode_required'] == '1') {
-                    $('#checkout-shipping-address input[name=\'postcode\']').parent().parent().addClass('required');
+                    $('#input-shipping-postcode').parent().parent().addClass('required');
                 } else {
-                    $('#checkout-shipping-address input[name=\'postcode\']').parent().parent().removeClass('required');
+                    $('#input-shipping-postcode').parent().parent().removeClass('required');
                 }
 
                 html = '<option value="">{{ text_select }}</option>';
@@ -348,7 +334,7 @@ $('#checkout-shipping-address select[name=\'country_id\']').on('change', functio
                     html += '<option value="0" selected="selected">{{ text_none }}</option>';
                 }
 
-                $('#checkout-shipping-address select[name=\'zone_id\']').html(html);
+                $('#input-shipping-zone').html(html);
             },
             error: function(xhr, ajaxOptions, thrownError) {
                 oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -358,5 +344,23 @@ $('#checkout-shipping-address select[name=\'country_id\']').on('change', functio
     });
 });
 
-$('#checkout-shipping-address select[name=\'country_id\']').trigger('change');
+$('#input-shipping-country').trigger('change');
+
+$('.date').datetimepicker({
+    'format': 'YYYY-MM-DD',
+    'locale': '{{ datepicker }}',
+    'allowInputToggle': true
+});
+
+$('.time').datetimepicker({
+    'format': 'HH:mm',
+    'locale': '{{ datepicker }}',
+    'allowInputToggle': true
+});
+
+$('.datetime').datetimepicker({
+    'format': 'YYYY-MM-DD HH:mm',
+    'locale': '{{ datepicker }}',
+    'allowInputToggle': true
+});
 //--></script>

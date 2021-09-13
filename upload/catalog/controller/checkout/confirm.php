@@ -2,6 +2,8 @@
 namespace Opencart\Catalog\Controller\Checkout;
 class Confirm extends \Opencart\System\Engine\Controller {
 	public function index(): string {
+		$this->load->language('checkout/checkout');
+
 		// Display order info
 		$frequencies = [
 			'day'        => $this->language->get('text_day'),
@@ -78,7 +80,40 @@ class Confirm extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		$data['shipping_required'] = $this->cart->hasShipping();
 
+		$data['shipping_method'] = $this->load->controller('checkout/shipping_method');
+		$data['payment_method'] = $this->load->controller('checkout/payment_method');
+
+		$this->load->model('catalog/information');
+
+		$information_info = $this->model_catalog_information->getInformation($this->config->get('config_checkout_id'));
+
+		if ($information_info) {
+			$data['text_agree'] = sprintf($this->language->get('text_agree'), $this->url->link('information/information|info', 'language=' . $this->config->get('config_language') . '&information_id=' . $this->config->get('config_checkout_id')), $information_info['title']);
+		} else {
+			$data['text_agree'] = '';
+		}
+
+		if (isset($this->session->data['agree'])) {
+			$data['agree'] = $this->session->data['agree'];
+		} else {
+			$data['agree'] = '';
+		}
+
+		return $this->load->view('checkout/confirm', $data);
+	}
+
+	public function total(): void {
+		$this->load->language('checkout/checkout');
+
+
+
+		//$this->response->setOutput($this->confirm());
+	}
+
+	public function payment(): string {
+		$this->load->language('checkout/checkout');
 
 		$totals = [];
 		$taxes = $this->cart->getTaxes();
@@ -118,33 +153,6 @@ class Confirm extends \Opencart\System\Engine\Controller {
 				'text'  => $this->currency->format($total['value'], $this->session->data['currency'])
 			];
 		}
-
-		$data['shipping_required'] = $this->cart->hasShipping();
-
-		$data['shipping_method'] = $this->load->controller('checkout/shipping_method');
-		$data['payment_method'] = $this->load->controller('checkout/payment_method');
-
-		$this->load->model('catalog/information');
-
-		$information_info = $this->model_catalog_information->getInformation($this->config->get('config_checkout_id'));
-
-		if ($information_info) {
-			$data['text_agree'] = sprintf($this->language->get('text_agree'), $this->url->link('information/information|info', 'language=' . $this->config->get('config_language') . '&information_id=' . $this->config->get('config_checkout_id')), $information_info['title']);
-		} else {
-			$data['text_agree'] = '';
-		}
-
-		if (isset($this->session->data['agree'])) {
-			$data['agree'] = $this->session->data['agree'];
-		} else {
-			$data['agree'] = '';
-		}
-
-		return $this->load->view('checkout/confirm', $data);
-	}
-
-	public function payment(): string {
-		$this->load->language('checkout/checkout');
 
 		// Validate if payment method has been set.
 		if (isset($this->session->data['payment_method'])) {
@@ -403,22 +411,18 @@ class Confirm extends \Opencart\System\Engine\Controller {
 				$this->model_checkout_order->editOrder($this->session->data['order_id'], $order_data);
 			}
 			*/
-		}
 
-		// Show payment method
-		if ($extension_info) {
+
 			$data['payment'] = $this->load->controller('extension/' . $extension_info['extension'] . '/payment/' . $extension_info['code']);
 		} else {
 			$data['payment'] = '';
 		}
 
+
+
 		return $this->load->view('checkout/confirm', $data);
 	}
 
-
-	public function total(): void {
-		//$this->response->setOutput($this->confirm());
-	}
 
 	public function fhdfh(): void {
 

@@ -80,7 +80,7 @@ class Account extends \Opencart\System\Engine\Controller {
 				$data['tracking'] = '';
 			}
 		} else {
-			$data['affiliate'] = false;
+			$data['affiliate'] = '';
 		}
 
 		$data['column_left'] = $this->load->controller('common/column_left');

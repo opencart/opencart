@@ -54,9 +54,9 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->session->data['shipping_address']['custom_field'])) {
-			$data['shipping_address_custom_field'] = $this->session->data['shipping_address']['custom_field'];
+			$data['custom_field'] = $this->session->data['shipping_address']['custom_field'];
 		} else {
-			$data['shipping_address_custom_field'] = [];
+			$data['custom_field'] = [];
 		}
 
 		return $this->load->view('checkout/shipping_address', $data);
@@ -183,15 +183,58 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 				}
 
 				if (!$json) {
-					$address_id = $this->model_account_address->addAddress($this->customer->getId(), $this->request->post);
+
+
+
+
+
+					// If no payment address we can use the customer name instead of shipping
+					if (!$this->config->get('config_checkout_address')) {
+						$firstname = $this->request->post['firstname'];
+						$lastname = $this->request->post['lastname'];
+					} else {
+						$firstname = $this->request->post['shipping_firstname'];
+						$lastname = $this->request->post['shipping_lastname'];
+					}
+
+					$this->session->data['shipping_address'] = [
+						'firstname'    => $firstname,
+						'lastname'     => $lastname,
+						'company'      => $this->request->post['shipping_company'],
+						'address_1'    => $this->request->post['shipping_address_1'],
+						'address_2'    => $this->request->post['shipping_address_2'],
+						'city'         => $this->request->post['shipping_city'],
+						'postcode'     => $this->request->post['shipping_postcode'],
+						'country_id'   => $this->request->post['shipping_country_id'],
+						'zone_id'      => $this->request->post['shipping_zone_id'],
+						'custom_field' => isset($this->request->post['shipping_custom_field']) ? $this->request->post['shipping_custom_field'] : []
+					];
+
+
+
 
 					$this->session->data['shipping_address'] = $this->model_account_address->getAddress($address_id);
 
-					// If no default address ID set we use the last address
-					if ($this->customer->isLogged() && !$this->customer->getAddressId()) {
-						$this->load->model('account/customer');
 
-						$this->model_account_customer->editAddressId($this->customer->getId(), $address_id);
+					// If no default address ID set we use the last address
+					if ($this->customer->isLogged()) {
+
+						$address_id = $this->model_account_address->addAddress($this->customer->getId(), $this->request->post);
+
+						if (!$this->customer->getAddressId()) {
+							$this->load->model('account/customer');
+
+							$this->model_account_customer->editAddressId($this->customer->getId(), $address_id);
+
+							// Set the shipping address as default if no payment checkout is being used
+							if (!$this->config->get('config_checkout_address')) {
+								$this->model_account_customer->editAddressId($this->customer->getId(), $address_id);
+							}
+						}
+					} else {
+
+
+
 					}
 
 					unset($this->session->data['shipping_method']);

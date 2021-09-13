@@ -50,14 +50,6 @@ class Checkout extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'))
 		];
 
-		if (isset($this->session->data['error'])) {
-			$data['error_warning'] = $this->session->data['error'];
-
-			unset($this->session->data['error']);
-		} else {
-			$data['error_warning'] = '';
-		}
-
 		$data['logged'] = $this->customer->isLogged();
 		$data['shipping_required'] = $this->cart->hasShipping();
 		$data['config_checkout_address'] = $this->config->get('config_checkout_address');

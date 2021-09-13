@@ -45,7 +45,7 @@
 {{ payment_method }}
 <br/>
 <div class="mb-2">
-  <label for="input-comment" class="form-label"><strong>{{ text_comments }}</strong></label> <textarea name="comment" rows="5" id="input-comment" class="form-control">{{ comment }}</textarea>
+  <label for="input-comment" class="form-label"><strong>{{ text_comments }}</strong></label> <textarea name="comment" rows="3" id="input-comment" class="form-control">{{ comment }}</textarea>
 </div>
 <div class="mb-3">
   {% if text_agree %}
@@ -53,7 +53,7 @@
   {% endif %}
 </div>
 
-<div id="checkout-confirm">{{ confirm }}</div>
+<div id="confirm">{{ confirm }}</div>
 
 <table class="table table-bordered table-hover">
   <tfoot id="checkout-total">
@@ -65,4 +65,12 @@
     {% endfor %}
   </tfoot>
 </table>
-<div id="checkout-payment">{{ payment }}</div>
+
+
+<div id="checkout-payment">
+  {% if not payment %}
+    {{ payment }}
+  {% else %}
+    <button type="button" class="btn btn-primary" disabled>{{ button_continue }}</button>
+  {% endif %}
+</div>

@@ -161,15 +161,15 @@ class Register extends \Opencart\System\Engine\Controller {
 
 			// Use _custromer to separate error ids
 			if ((utf8_strlen($this->request->post['firstname']) < 1) || (utf8_strlen($this->request->post['firstname']) > 32)) {
-				$json['error']['customer_firstname'] = $this->language->get('error_firstname');
+				$json['error']['firstname'] = $this->language->get('error_firstname');
 			}
 
 			if ((utf8_strlen($this->request->post['lastname']) < 1) || (utf8_strlen($this->request->post['lastname']) > 32)) {
-				$json['error']['customer_lastname'] = $this->language->get('error_lastname');
+				$json['error']['lastname'] = $this->language->get('error_lastname');
 			}
 
 			if ((utf8_strlen($this->request->post['email']) > 96) || !filter_var($this->request->post['email'], FILTER_VALIDATE_EMAIL)) {
-				$json['error']['customer_email'] = $this->language->get('error_email');
+				$json['error']['email'] = $this->language->get('error_email');
 			}
 
 			$this->load->model('account/customer');
@@ -179,11 +179,11 @@ class Register extends \Opencart\System\Engine\Controller {
 			}
 
 			if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
-				$json['error']['customer_telephone'] = $this->language->get('error_telephone');
+				$json['error']['telephone'] = $this->language->get('error_telephone');
 			}
 
 			if ($this->request->post['account'] && (utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) < 4) || (utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) > 40)) {
-				$json['error']['customer_password'] = $this->language->get('error_password');
+				$json['error']['password'] = $this->language->get('error_password');
 			}
 
 			// Custom field validation
@@ -194,9 +194,9 @@ class Register extends \Opencart\System\Engine\Controller {
 			foreach ($custom_fields as $custom_field) {
 				if ($custom_field['location'] == 'account') {
 					if ($custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['location']][$custom_field['custom_field_id']])) {
-						$json['error']['customer_custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
+						$json['error']['custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
 					} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !preg_match(html_entity_decode($custom_field['validation'], ENT_QUOTES, 'UTF-8'), $this->request->post['custom_field'][$custom_field['location']][$custom_field['custom_field_id']])) {
-						$json['error']['customer_custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_regex'), $custom_field['name']);
+						$json['error']['custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_regex'), $custom_field['name']);
 					}
 				}
 			}
@@ -224,69 +224,11 @@ class Register extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// For guest account
-			$customer_id = 0;
-
-			$this->session->data['account'] = $this->request->post['account'];
-
 			// Create account
 			if ($this->request->post['account']) {
 				$customer_id = $this->model_account_customer->addCustomer($this->request->post);
-
-				$this->load->model('account/address');
-
-				// Add payment address to customer account
-				if ($this->config->get('config_checkout_address')) {
-					$payment_address_data = [
-						'firstname'    => $this->request->post['firstname'],
-						'lastname'     => $this->request->post['lastname'],
-						'company'      => $this->request->post['payment_company'],
-						'address_1'    => $this->request->post['payment_address_1'],
-						'address_2'    => $this->request->post['payment_address_2'],
-						'city'         => $this->request->post['payment_city'],
-						'postcode'     => $this->request->post['payment_postcode'],
-						'country_id'   => $this->request->post['payment_country_id'],
-						'zone_id'      => $this->request->post['payment_zone_id'],
-						'custom_field' => isset($this->request->post['payment_custom_field']) ? $this->request->post['payment_custom_field'] : []
-					];
-
-					$address_id = $this->model_account_address->addAddress($customer_id, $payment_address_data);
-
-					// Set the address as default
-					$this->model_account_customer->editAddressId($customer_id, $address_id);
-				}
-
-				// Add shipping address to customer account
-				if ($this->cart->hasShipping() && !$this->request->post['shipping_address']) {
-					// If no payment address we can use the customer name instead of shipping
-					if (!$this->config->get('config_checkout_address')) {
-						$firstname = $this->request->post['firstname'];
-						$lastname = $this->request->post['lastname'];
-					} else {
-						$firstname = $this->request->post['shipping_firstname'];
-						$lastname = $this->request->post['shipping_lastname'];
-					}
-
-					$shipping_address_data = [
-						'firstname'    => $firstname,
-						'lastname'     => $lastname,
-						'company'      => $this->request->post['shipping_company'],
-						'address_1'    => $this->request->post['shipping_address_1'],
-						'address_2'    => $this->request->post['shipping_address_2'],
-						'city'         => $this->request->post['shipping_city'],
-						'postcode'     => $this->request->post['shipping_postcode'],
-						'country_id'   => $this->request->post['shipping_country_id'],
-						'zone_id'      => $this->request->post['shipping_zone_id'],
-						'custom_field' => isset($this->request->post['shipping_custom_field']) ? $this->request->post['shipping_custom_field'] : []
-					];
-
-					$address_id = $this->model_account_address->addAddress($customer_id, $shipping_address_data);
-
-					// Set the shipping address as default if no payment checkout is being used
-					if (!$this->config->get('config_checkout_address')) {
-						$this->model_account_customer->editAddressId($customer_id, $address_id);
-					}
-				}
+			} else {
+				$customer_id = 0;
 			}
 
 			// Add customer details into session
@@ -299,52 +241,6 @@ class Register extends \Opencart\System\Engine\Controller {
 				'telephone'         => $this->request->post['telephone'],
 				'custom_field'      => isset($this->request->post['custom_field']) ? $this->request->post['custom_field'] : []
 			];
-
-			// Add payment address into session
-			if ($this->config->get('config_checkout_address')) {
-				$this->session->data['payment_address'] = [
-					'firstname'    => $this->request->post['firstname'],
-					'lastname'     => $this->request->post['lastname'],
-					'company'      => $this->request->post['payment_company'],
-					'address_1'    => $this->request->post['payment_address_1'],
-					'address_2'    => $this->request->post['payment_address_2'],
-					'city'         => $this->request->post['payment_city'],
-					'postcode'     => $this->request->post['payment_postcode'],
-					'country_id'   => $this->request->post['payment_country_id'],
-					'zone_id'      => $this->request->post['payment_zone_id'],
-					'custom_field' => isset($this->request->post['payment_custom_field']) ? $this->request->post['payment_custom_field'] : []
-				];
-
-				//  If payment and shipping address are the same
-				if ($this->cart->hasShipping() && $this->request->post['shipping_address']) {
-					$this->session->data['shipping_address'] = $this->session->data['payment_address'];
-				}
-			}
-
-			// Add shipping address into session
-			if ($this->cart->hasShipping() && !$this->request->post['shipping_address']) {
-				// If no payment address we can use the customer name instead of shipping
-				if (!$this->config->get('config_checkout_address')) {
-					$firstname = $this->request->post['firstname'];
-					$lastname = $this->request->post['lastname'];
-				} else {
-					$firstname = $this->request->post['shipping_firstname'];
-					$lastname = $this->request->post['shipping_lastname'];
-				}
-
-				$this->session->data['shipping_address'] = [
-					'firstname'    => $firstname,
-					'lastname'     => $lastname,
-					'company'      => $this->request->post['shipping_company'],
-					'address_1'    => $this->request->post['shipping_address_1'],
-					'address_2'    => $this->request->post['shipping_address_2'],
-					'city'         => $this->request->post['shipping_city'],
-					'postcode'     => $this->request->post['shipping_postcode'],
-					'country_id'   => $this->request->post['shipping_country_id'],
-					'zone_id'      => $this->request->post['shipping_zone_id'],
-					'custom_field' => isset($this->request->post['shipping_custom_field']) ? $this->request->post['shipping_custom_field'] : []
-				];
-			}
 
 			// Check if current customer group requires approval
 			$this->load->model('account/customer_group');

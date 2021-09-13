@@ -1,9 +1,7 @@
 <form id="form-register">
-
   <p>{{ text_login }}</p>
   <fieldset>
     <legend>{{ text_your_details }}</legend>
-
     <div class="row">
       <div class="col mb-3 required">
         <div class="form-check form-check-inline">
@@ -21,29 +19,27 @@
         </select>
       </div>
     </div>
-
     <div class="row row-cols-2">
-
       <div class="col mb-3 required">
-        <label for="input-customer-firstname" class="form-label">{{ entry_firstname }}</label> <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-customer-firstname" class="form-control"/>
-        <div id="error-customer-firstname" class="invalid-feedback"></div>
+        <label for="input-customer-firstname" class="form-label">{{ entry_firstname }}</label>
+        <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-firstname" class="form-control"/>
+        <div id="error-firstname" class="invalid-feedback"></div>
       </div>
-
       <div class="col mb-3 required">
-        <label for="input-customer-lastname" class="form-label">{{ entry_lastname }}</label> <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-customer-lastname" class="form-control"/>
-        <div id="error-customer-lastname" class="invalid-feedback"></div>
+        <label for="input-lastname" class="form-label">{{ entry_lastname }}</label>
+        <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-lastname" class="form-control"/>
+        <div id="error-lastname" class="invalid-feedback"></div>
       </div>
-
       <div class="col mb-3 required">
-        <label for="input-customer-email" class="form-label">{{ entry_email }}</label> <input type="text" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-customer-email" class="form-control"/>
-        <div id="error-customer-email" class="invalid-feedback"></div>
+        <label for="input-email" class="form-label">{{ entry_email }}</label>
+        <input type="text" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control"/>
+        <div id="error-email" class="invalid-feedback"></div>
       </div>
-
       <div class="col mb-3 required">
-        <label for="input-customer-telephone" class="form-label">{{ entry_telephone }}</label> <input type="text" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" id="input-customer-telephone" class="form-control"/>
-        <div id="error-customer-telephone" class="invalid-feedback"></div>
+        <label for="input-telephone" class="form-label">{{ entry_telephone }}</label>
+        <input type="text" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control"/>
+        <div id="error-telephone" class="invalid-feedback"></div>
       </div>
-
       {% for custom_field in custom_fields %}
 
         {% if custom_field.location == 'account' %}
@@ -56,7 +52,7 @@
                   <option value="{{ custom_field_value.custom_field_value_id }}"{% if customer_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id == customer_custom_field[custom_field.custom_field_id] %} selected="selected"{% endif %}>{{ custom_field_value.name }}</option>
                 {% endfor %}
               </select>
-              <div id="error-customer-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
+              <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
             </div>
           {% endif %}
 
@@ -70,7 +66,7 @@
                   </div>
                 {% endfor %}
               </div>
-              <div id="error-customer-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
+              <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
             </div>
           {% endif %}
 
@@ -84,21 +80,21 @@
                   </div>
                 {% endfor %}
               </div>
-              <div id="error-customer-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
+              <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
             </div>
           {% endif %}
 
           {% if custom_field.type == 'text' %}
             <div class="col mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
               <label for="input-customer-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{% if customer_custom_field[custom_field.custom_field_id] %}{{ customer_custom_field[custom_field.custom_field_id] }}{% else %}{{ custom_field.value }}{% endif %}" placeholder="{{ custom_field.name }}" id="input-customer-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
-              <div id="error-customer-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
+              <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
             </div>
           {% endif %}
 
           {% if custom_field.type == 'textarea' %}
             <div class="col mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
               <label for="input-customer-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <textarea name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" rows="5" placeholder="{{ custom_field.name }}" id="input-customer-custom-field-{{ custom_field.custom_field_id }}" class="form-control">{% if customer_custom_field[custom_field.custom_field_id] %}{{ customer_custom_field[custom_field.custom_field_id] }}{% else %}{{ custom_field.value }}{% endif %}</textarea>
-              <div id="error-customer-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
+              <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
             </div>
           {% endif %}
 
@@ -108,7 +104,7 @@
               <div>
                 <button type="button" data-oc-upload="index.php?route=tool/upload" data-oc-target="#input-customer-custom-field-{{ custom_field.custom_field_id }}" data-loading-text="{{ text_loading }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
                 <input type="hidden" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{% if customer_custom_field[custom_field.custom_field_id] %}{{ customer_custom_field[custom_field.custom_field_id] }}{% endif %}" id="input-customer-custom-field-{{ custom_field.custom_field_id }}"/>
-                <div id="error-customer-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
+                <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
               </div>
             </div>
           {% endif %}
@@ -120,7 +116,7 @@
                 <input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{% if customer_custom_field[custom_field.custom_field_id] %}{{ customer_custom_field[custom_field.custom_field_id] }}{% else %}{{ custom_field.value }}{% endif %}" placeholder="{{ custom_field.name }}" id="input-customer-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
                 <div class="input-group-text"><i class="fas fa-calendar"></i></div>
               </div>
-              <div id="error-customer-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
+              <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
             </div>
           {% endif %}
 
@@ -131,7 +127,7 @@
                 <input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{% if customer_custom_field[custom_field.custom_field_id] %}{{ customer_custom_field[custom_field.custom_field_id] }}{% else %}{{ custom_field.value }}{% endif %}" placeholder="{{ custom_field.name }}" id="input-customer-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
                 <div class="input-group-text"><i class="fas fa-calendar"></i></div>
               </div>
-              <div id="error-customer-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
+              <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
             </div>
           {% endif %}
 
@@ -142,29 +138,28 @@
                 <input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{% if customer_custom_field[custom_field.custom_field_id] %}{{ customer_custom_field[custom_field.custom_field_id] }}{% else %}{{ custom_field.value }}{% endif %}" placeholder="{{ custom_field.name }}" id="input-customer-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
                 <div class="input-group-text"><i class="fas fa-calendar"></i></div>
               </div>
-              <div id="error-customer-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
+              <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
             </div>
           {% endif %}
 
         {% endif %}
       {% endfor %}
     </div>
-
   </fieldset>
-
   <div class="row row-cols-2">
     <div id="password" class="col mb-3 required">
       <fieldset>
         <legend>{{ text_your_password }}</legend>
         <div class="row">
           <div class="col mb-3 required">
-            <label for="input-customer-password" class="form-label">{{ entry_password }}</label> <input type="password" name="password" value="" placeholder="{{ entry_password }}" id="input-customer-password" class="form-control"/>
+            <label for="input-password" class="form-label">{{ entry_password }}</label>
+            <input type="password" name="password" value="" placeholder="{{ entry_password }}" id="input-password" class="form-control"/>
+            <div id="error-password" class="invalid-feedback"></div>
           </div>
         </div>
       </fieldset>
     </div>
     <div class="col mb-3 required">{{ captcha }}</div>
-
     <div class="col mb-3">
       <div>
         <div class="form-check">

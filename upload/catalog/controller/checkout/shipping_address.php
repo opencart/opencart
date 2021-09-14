@@ -25,7 +25,7 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 
 		$data['addresses'] = $this->model_account_address->getAddresses();
 
-		if (isset($this->session->data['shipping_address'])) {
+		if (!$this->customer->isLogged() && isset($this->session->data['shipping_address'])) {
 			$data['firstname'] = $this->session->data['shipping_address']['firstname'];
 			$data['lastname'] = $this->session->data['shipping_address']['lastname'];
 			$data['company'] = $this->session->data['shipping_address']['company'];

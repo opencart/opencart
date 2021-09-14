@@ -18,9 +18,18 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 			$data['address_id'] = $this->customer->getAddressId();
 		}
 
+		$data['addresses'] = [];
+
 		$this->load->model('account/address');
 
-		$data['addresses'] = $this->model_account_address->getAddresses();
+		$results = $this->model_account_address->getAddresses();
+
+		foreach ($results as $result) {
+			$data['addresses'][] = [
+				'text'  => $result['firstname'] . ' ' . $result['lastname'] . ', ' . $result['address_1'] . ', ' . $result['city'] . ', ' . $result['zone'] . ', ' . $result['country'],
+				'value' => $result['address_id']
+			];
+		}
 
 		if (isset($this->session->data['payment_address'])) {
 			$data['firstname'] = $this->session->data['payment_address']['firstname'];
@@ -167,7 +176,6 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-
 			if ($this->customer->isLogged()) {
 				$this->load->model('account/address');
 
@@ -207,10 +215,12 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 				unset($this->session->data['shipping_method']);
 				unset($this->session->data['shipping_methods']);
 			}
+
+			$json['success'] = 'Success: Your address has been successfully created!';
 		}
 
-		//$this->response->addHeader('Content-Type: application/json');
-		//$this->response->setOutput(json_encode($json));
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function address(): void {
@@ -253,16 +263,22 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			$this->load->model('account/address');
+
 			$address_info = $this->model_account_address->getAddress($address_id);
 
-			if ($address_info) {
-				$this->session->data['payment_address'] = $address_info;
-
-				unset($this->session->data['payment_method']);
-				unset($this->session->data['payment_methods']);
-			} else {
-				$json['error']['warning'] = $this->language->get('error_address');
+			if (!$address_info) {
+				$json['error'] = $this->language->get('error_address');
 			}
+		}
+
+		if (!$json) {
+			$this->session->data['payment_address'] = $address_info;
+
+			unset($this->session->data['payment_method']);
+			unset($this->session->data['payment_methods']);
+
+			$json['success'] = 'Success: Your address has been successfully created!';
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

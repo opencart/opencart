@@ -252,9 +252,6 @@ class Register extends \Opencart\System\Engine\Controller {
 				$this->customer->login($this->request->post['email'], $this->request->post['password']);
 			}
 
-			// Redirect to success page
-			$json['success'] = 'Success: Your account has been successfully created!';
-
 			// Clear any previous login attempts for unregistered accounts.
 			$this->model_account_customer->deleteLoginAttempts($this->request->post['email']);
 
@@ -262,6 +259,8 @@ class Register extends \Opencart\System\Engine\Controller {
 			unset($this->session->data['shipping_methods']);
 			unset($this->session->data['payment_method']);
 			unset($this->session->data['payment_methods']);
+
+			$json['success'] = 'Success: Your account has been successfully created!';
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

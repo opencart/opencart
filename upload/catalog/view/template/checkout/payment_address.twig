@@ -5,16 +5,18 @@
     {% if addresses %}
 
       <div class="form-check">
-        <input type="radio" name="existing" value="1" id="input-payment-existing" class="form-check-input" checked/> <label for="input-payment-existing" class="form-check-label">{{ text_address_existing }}</label>
+        <input type="radio" name="payment_existing" value="1" id="input-payment-existing" class="form-check-input" checked/>
+        <label for="input-payment-existing" class="form-check-label">{{ text_address_existing }}</label>
       </div>
       <div class="form-check">
-        <input type="radio" name="existing" value="0" id="input-payment-new" class="form-check-input"> <label for="input-payment-new" class="form-check-label">{{ text_address_new }}</label>
+        <input type="radio" name="payment_existing" value="0" id="input-payment-new" class="form-check-input">
+        <label for="input-payment-new" class="form-check-label">{{ text_address_new }}</label>
       </div>
 
       <div id="payment-existing">
-        <select name="address_id" id="inout-existing" class="form-select">
+        <select name="address_id" id="input-payment-address" class="form-select">
           {% for address in addresses %}
-            <option value="{{ address.address_id }}"{% if address['address_id'] == address_id %} selected="selected"{% endif %}>{{ address.firstname }} {{ address.lastname }}, {{ address.address_1 }}, {{ address.city }}, {{ address.zone }}, {{ address.country }}</option>
+            <option value="{{ address.address_id }}"{% if address.address_id == address_id %} selected="selected"{% endif %}>{{ address.text }}</option>
           {% endfor %}
         </select>
       </div>
@@ -162,13 +164,15 @@
 
         {% endfor %}
 
-        {% if shipping_required %}
+        {% if not logged and shipping_required %}
           <div class="col mb-3">
             <div class="form-check">
-              <input type="checkbox" name="shipping_address" value="1" id="input-shipping-address" class="form-check-input" checked/> <label for="input-shipping-address" class="form-check-label">{{ entry_shipping }}</label>
+              <input type="checkbox" name="shipping_address" value="1" id="input-shipping-address" class="form-check-input" checked/>
+              <label for="input-shipping-address" class="form-check-label">{{ entry_shipping }}</label>
             </div>
           </div>
         {% endif %}
+
       </div>
       <div class="text-end mb-3">
         <button type="button" id="button-payment-address" class="btn btn-primary">{{ button_continue }}</button>
@@ -176,19 +180,14 @@
     </div>
   </fieldset>
 </form>
-
-
 <script type="text/javascript"><!--
-
-
-$('input[name=\'existing\']').on('change', function() {
-    if (this.value == 'new') {
-        $('#payment-existing').hide();
-        $('#payment-existing').hide();
-        $('#payment-new').show();
-    } else {
+$('input[name=\'payment_existing\']').on('change', function() {
+    if ($(this).val() == 1) {
         $('#payment-existing').show();
         $('#payment-new').hide();
+    } else {
+        $('#payment-existing').hide();
+        $('#payment-new').show();
     }
 });
 
@@ -197,10 +196,17 @@ $('#button-payment-address').on('click', function() {
     var element = this;
 
     chain.attach(function() {
+      {% if logged %}
+        var data = '#form-payment-address'
+      {% else %}
+        var data = '#input-firstname, #input-lastname, #form-payment-address';
+      {% endif %}
+
+
         return $.ajax({
             url: 'index.php?route=checkout/payment_address|save',
             type: 'post',
-            data: $('#form-payment-address, input-customer-firstname').serialize(),
+            data: $('#form-payment-address, #input-firstname, #input-lastname').serialize(),
             dataType: 'json',
             beforeSend: function() {
                 $(element).button('loading');
@@ -224,40 +230,15 @@ $('#button-payment-address').on('click', function() {
                     for (i in json['error']) {
                         var element = $('#input-payment-' + i.replace('_', '-'));
 
-                        if ($(element).parent().hasClass('input-group')) {
-                            $(element).parent().after('<div class="text-danger">' + json['error'][i] + '</div>');
-                        } else {
-                            $(element).after('<div class="text-danger">' + json['error'][i] + '</div>');
-                        }
+                        $(element).html('<div class="text-danger">' + json['error'][i] + '</div>');
 
                         $(element).addClass('is-invalid');
                     }
 
-                    // Highlight any found errors
-                    $('.text-danger').parent().parent().addClass('has-error');
                 } else {
+
                   {% if shipping_required %}
-                    chain.attach(function() {
-                        return $.ajax({
-                            url: 'index.php?route=checkout/shipping_address',
-                            dataType: 'html',
-                            success: function(html) {
-                                $('#checkout-shipping-address .card-body').html(html);
 
-                                $('#heading-shipping-address').attr('data-bs-toggle', 'collapse');
-
-                                $('#heading-shipping-address').trigger('click');
-
-                                $('#heading-shipping-method').removeAttr('data-bs-toggle');
-                                $('#heading-payment-method').removeAttr('data-bs-toggle');
-                                $('#heading-checkout-confirm').removeAttr('data-bs-toggle');
-                            },
-                            error: function(xhr, ajaxOptions, thrownError) {
-                                oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-                                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-                            }
-                        });
-                    });
 
                     chain.attach(function() {
                         return $.ajax({
@@ -273,39 +254,7 @@ $('#button-payment-address').on('click', function() {
                         });
                     });
                   {% else %}
-                    chain.attach(function() {
-                        return $.ajax({
-                            url: 'index.php?route=checkout/payment_method',
-                            dataType: 'html',
-                            success: function(html) {
-                                $('#checkout-payment-method .card-body').html(html);
 
-                                $('#heading-payment-method').attr('data-bs-toggle', 'collapse');
-
-                                $('#heading-payment-method').trigger('click');
-
-                                $('#heading-checkout-confirm').removeAttr('data-bs-toggle');
-                            },
-                            error: function(xhr, ajaxOptions, thrownError) {
-                                oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-                                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-                            }
-                        });
-                    });
-
-                    chain.attach(function() {
-                        return $.ajax({
-                            url: 'index.php?route=checkout/payment_address',
-                            dataType: 'html',
-                            success: function(html) {
-                                $('#checkout-payment-address .card-body').html(html);
-                            },
-                            error: function(xhr, ajaxOptions, thrownError) {
-                                oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-                                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-                            }
-                        });
-                    });
                   {% endif %}
                 }
             },
@@ -317,16 +266,39 @@ $('#button-payment-address').on('click', function() {
     });
 });
 
+$('#input-payment-address').on('change', function() {
+    $.ajax({
+        url: 'index.php?route=checkout/payment_address&language={{ language }}&address_id=' + $(this).val(),
+        dataType: 'json',
+        beforeSend: function() {
+            $(element).prop('disabled', true);
+        },
+        complete: function() {
+            $(element).prop('disabled', false);
+        },
+        success: function(json) {
+
+
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
 $('#input-payment-country').on('change', function() {
+    var element = this;
+
     chain.attach(function() {
         return $.ajax({
-            url: 'index.php?route=localisation/country&country_id=' + $('#input-payment-country').val(),
+            url: 'index.php?route=localisation/country&language={{ language }}&country_id=' + $('#input-payment-country').val(),
             dataType: 'json',
             beforeSend: function() {
-                $('#input-payment-country').prop('disabled', true);
+                $(element).prop('disabled', true);
             },
             complete: function() {
-                $('#input-payment-country').prop('disabled', false);
+                $(element).prop('disabled', false);
             },
             success: function(json) {
                 if (json['postcode_required'] == '1') {
@@ -365,9 +337,9 @@ $('#input-payment-country').trigger('change');
 
 $('#input-shipping-address').on('change', function() {
     if ($(this).prop('checked')) {
-        $('#checkout-shipping-address').show();
-    } else {
         $('#checkout-shipping-address').hide();
+    } else {
+        $('#checkout-shipping-address').show();
     }
 });
 

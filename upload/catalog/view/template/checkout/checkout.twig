@@ -19,7 +19,7 @@
             <div id="checkout-payment-address">{{ payment_address }}</div>
           {% endif %}
           {% if shipping_required %}
-            <div id="checkout-shipping-address">{{ shipping_address }}</div>
+            <div id="checkout-shipping-address"{% if not logged %} style="display: none;"{% endif %}>{{ shipping_address }}</div>
           {% endif %}
         </div>
         <div id="confirm" class="col-4 mb-3">{{ confirm }}</div>

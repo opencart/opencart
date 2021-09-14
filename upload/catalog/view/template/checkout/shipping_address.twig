@@ -5,19 +5,19 @@
     {% if addresses %}
 
       <div class="form-check">
-        <input type="radio" name="existing" value="existing" id="input-shipping-existing" class="form-check-input" checked/>
+        <input type="radio" name="shipping_existing" value="1" id="input-shipping-existing" class="form-check-input" checked/>
         <label for="input-shipping-existing" class="form-check-label">{{ text_address_existing }}</label>
       </div>
 
       <div class="form-check">
-        <input type="radio" name="existing" value="new" id="input-shipping-new" class="form-check-input"/>
+        <input type="radio" name="shipping_existing" value="0" id="input-shipping-new" class="form-check-input"/>
         <label for="input-shipping-new" class="form-check-label">{{ text_address_new }}</label>
       </div>
 
       <div id="shipping-existing">
-        <select name="address_id" class="form-select">
+        <select name="address_id" id="input-shipping-address" class="form-select">
           {% for address in addresses %}
-            <option value="{{ address.address_id }}"{% if address.address_id == address_id %} selected="selected"{% endif %}>{{ address.firstname }} {{ address.lastname }}, {{ address.address_1 }}, {{ address.city }}, {{ address.zone }}, {{ address.country }}</option>
+            <option value="{{ address.address_id }}"{% if address.address_id == address_id %} selected="selected"{% endif %}>{{ address.text }}</option>
           {% endfor %}
         </select>
       </div>
@@ -27,7 +27,7 @@
     <br/>
     <div id="shipping-new" style="display: {% if addresses %}none{% else %}block{% endif %};">
       <div class="row row-cols-2">
-        {% if config_checkout_address %}
+        {% if logged or config_checkout_address %}
         <div class="col mb-3 required">
           <label for="input-shipping-firstname" class="form-label">{{ entry_firstname }}</label> <input type="text" name="firstname" value="" placeholder="{{ entry_firstname }}" id="input-shipping-firstname" class="form-control"/>
           <div id="error-shipping-firstname" class="invalid-feedback"></div>
@@ -192,23 +192,29 @@
 </form>
 
 <script type="text/javascript"><!--
-$('input[name=\'existing\']').on('change', function() {
-    if (this.value == 'new') {
-        $('#shipping-existing').hide();
-        $('#shipping-new').show();
-    } else {
+$('input[name=\'shipping_existing\']').on('change', function() {
+    if ($(this).val() == 1) {
         $('#shipping-existing').show();
         $('#shipping-new').hide();
+    } else {
+        $('#shipping-existing').hide();
+        $('#shipping-new').show();
     }
 });
 
 // Shipping Address
 $('#button-shipping-address').on('click', function() {
     chain.attach(function() {
+
+
+
+        var data = $('#form-shipping-address, #input-shipping-firstname').serialize()
+
+
         return $.ajax({
             url: 'index.php?route=checkout/shipping_address|save',
             type: 'post',
-            data: $('#form-shipping-address').serialize(),
+            data: data,
             dataType: 'json',
             beforeSend: function() {
                 $('#button-shipping-address').button('loading');
@@ -302,16 +308,43 @@ $('#button-shipping-address').on('click', function() {
     });
 });
 
+$('#input-shipping-address').on('change', function() {
+    var element = this;
+
+    $.ajax({
+        url: 'index.php?route=checkout/shipping_address&address_id=' + $(this).val(),
+        dataType: 'json',
+        beforeSend: function() {
+            $(element).prop('disabled', true);
+        },
+        complete: function() {
+            $(element).prop('disabled', false);
+        },
+        success: function(json) {
+
+
+
+
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
 $('#input-shipping-country').on('change', function() {
+    var element = this;
+
     chain.attach(function() {
         return $.ajax({
             url: 'index.php?route=localisation/country&country_id=' + $('#input-shipping-country').val(),
             dataType: 'json',
             beforeSend: function() {
-                $('#input-shipping-country').prop('disabled', true);
+                $(element).prop('disabled', true);
             },
             complete: function() {
-                $('#input-shipping-country').prop('disabled', false);
+                $(element).prop('disabled', false);
             },
             success: function(json) {
                 if (json['postcode_required'] == '1') {

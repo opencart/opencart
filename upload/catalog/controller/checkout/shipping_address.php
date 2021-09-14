@@ -8,6 +8,9 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 
 		$data['config_checkout_address'] = $this->config->get('config_checkout_address');
 		$data['config_file_max_size'] = $this->config->get('config_file_max_size');
+		$data['config_checkout_address'] = $this->config->get('config_checkout_address');
+
+		$data['logged'] = $this->customer->isLogged();
 
 		if (isset($this->session->data['shipping_address']['address_id'])) {
 			$data['address_id'] = (int)$this->session->data['shipping_address']['address_id'];
@@ -15,9 +18,18 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 			$data['address_id'] = $this->customer->getAddressId();
 		}
 
+		$data['addresses'] = [];
+
 		$this->load->model('account/address');
 
-		$data['addresses'] = $this->model_account_address->getAddresses();
+		$results = $this->model_account_address->getAddresses();
+
+		foreach ($results as $result) {
+			$data['addresses'][] = [
+				'text'  => $result['firstname'] . ' ' . $result['lastname'] . ', ' . $result['address_1'] . ', ' . $result['city'] . ', ' . $result['zone'] . ', ' . $result['country'],
+				'value' => $result['address_id']
+			];
+		}
 
 		if (isset($this->session->data['shipping_address'])) {
 			$data['firstname'] = $this->session->data['shipping_address']['firstname'];
@@ -216,15 +228,47 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 			$json['redirect'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'), true);
 		}
 
-		$address_info = $this->model_account_address->getAddress($address_id);
+		// Validate cart has products and has stock.
+		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
+			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
+		}
 
-		if ($address_info) {
-			$this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->request->post['address_id']);
+		// Validate minimum quantity requirements.
+		$products = $this->cart->getProducts();
+
+		foreach ($products as $product) {
+			$product_total = 0;
+
+			foreach ($products as $product_2) {
+				if ($product_2['product_id'] == $product['product_id']) {
+					$product_total += $product_2['quantity'];
+				}
+			}
+
+			if ($product['minimum'] > $product_total) {
+				$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
+
+				break;
+			}
+		}
+
+		if (!$json) {
+			$this->load->model('account/address');
+
+			$address_info = $this->model_account_address->getAddress($address_id);
+
+			if (!$address_info) {
+				$json['error'] = $this->language->get('error_address');
+			}
+		}
+
+		if (!$json) {
+			$this->session->data['shipping_address'] = $address_info;
 
 			unset($this->session->data['shipping_method']);
 			unset($this->session->data['shipping_methods']);
-		} else {
-			$json['error']['warning'] = $this->language->get('error_address');
+
+			$json['success'] = 'Success: Your address has been successfully created!';
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

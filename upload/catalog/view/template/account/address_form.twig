@@ -198,17 +198,6 @@
             {% endif %}
 
           {% endfor %}
-          <div class="row mb-3">
-            <label class="col-sm-2 col-form-label">{{ entry_default }}</label>
-            <div class="col-sm-10">
-              <div class="form-check form-check-inline">
-                <input type="radio" name="default" value="1" id="input-default-yes" class="form-check-input"{% if default %} checked{% endif %}/> <label for="input-default-yes" class="form-check-label">{{ text_yes }}</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input type="radio" name="default" value="0" id="input-default-no" class="form-check-input"{% if not default %} checked{% endif %}/> <label for="input-default-no" class="form-check-label">{{ text_no }}</label>
-              </div>
-            </div>
-          </div>
         </fieldset>
         <div class="d-inline-block pt-2 pd-2 w-100">
           <div class="float-start">

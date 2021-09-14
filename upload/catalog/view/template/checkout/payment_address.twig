@@ -13,6 +13,7 @@
 
       <div id="payment-existing">
         <select name="address_id" id="input-payment-address" class="form-select">
+          <option value="">{{ text_select }}</option>
           {% for address in addresses %}
             <option value="{{ address.address_id }}"{% if address.address_id == address_id %} selected="selected"{% endif %}>{{ address.firstname }} {{ address.lastname }}, {{ address.address_1 }}, {{ address.city }}, {{ address.zone }}, {{ address.country }}</option>
           {% endfor %}
@@ -28,26 +29,26 @@
       <div class="row row-cols-2">
         {% if logged %}
           <div class="col mb-3 required">
-            <label for="input-payment-firstname" class="form-label">{{ entry_firstname }}</label> <input type="text" name="firstname" value="" placeholder="{{ entry_firstname }}" id="input-payment-firstname" class="form-control"/>
+            <label for="input-payment-firstname" class="form-label">{{ entry_firstname }}</label> <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-payment-firstname" class="form-control"/>
           </div>
           <div class="col mb-3 required">
-            <label for="input-payment-lastname" class="form-label">{{ entry_lastname }}</label> <input type="text" name="lastname" value="" placeholder="{{ entry_lastname }}" id="input-payment-lastname" class="form-control"/>
+            <label for="input-payment-lastname" class="form-label">{{ entry_lastname }}</label> <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-payment-lastname" class="form-control"/>
           </div>
         {% endif %}
         <div class="col mb-3">
-          <label for="input-payment-company" class="form-label">{{ entry_company }}</label> <input type="text" name="company" value="" placeholder="{{ entry_company }}" id="input-payment-company" class="form-control"/>
+          <label for="input-payment-company" class="form-label">{{ entry_company }}</label> <input type="text" name="company" value="{{ company }}" placeholder="{{ entry_company }}" id="input-payment-company" class="form-control"/>
         </div>
         <div class="col mb-3 required">
-          <label for="input-payment-address-1" class="form-label">{{ entry_address_1 }}</label> <input type="text" name="address_1" value="" placeholder="{{ entry_address_1 }}" id="input-payment-address-1" class="form-control"/>
+          <label for="input-payment-address-1" class="form-label">{{ entry_address_1 }}</label> <input type="text" name="address_1" value="{{ address_1 }}" placeholder="{{ entry_address_1 }}" id="input-payment-address-1" class="form-control"/>
         </div>
         <div class="col mb-3">
-          <label for="input-payment-address-2" class="form-label">{{ entry_address_2 }}</label> <input type="text" name="address_2" value="" placeholder="{{ entry_address_2 }}" id="input-payment-address-2" class="form-control"/>
+          <label for="input-payment-address-2" class="form-label">{{ entry_address_2 }}</label> <input type="text" name="address_2" value="{{ address_2 }}" placeholder="{{ entry_address_2 }}" id="input-payment-address-2" class="form-control"/>
         </div>
         <div class="col mb-3 required">
-          <label for="input-payment-city" class="form-label">{{ entry_city }}</label> <input type="text" name="city" value="" placeholder="{{ entry_city }}" id="input-payment-city" class="form-control"/>
+          <label for="input-payment-city" class="form-label">{{ entry_city }}</label> <input type="text" name="city" value="{{ city }}" placeholder="{{ entry_city }}" id="input-payment-city" class="form-control"/>
         </div>
         <div class="col mb-3 required">
-          <label for="input-payment-postcode" class="form-label">{{ entry_postcode }}</label> <input type="text" name="postcode" value="" placeholder="{{ entry_postcode }}" id="input-payment-postcode" class="form-control"/>
+          <label for="input-payment-postcode" class="form-label">{{ entry_postcode }}</label> <input type="text" name="postcode" value="{{ postcode }}" placeholder="{{ entry_postcode }}" id="input-payment-postcode" class="form-control"/>
         </div>
         <div class="col mb-3 required">
           <label for="input-payment-country" class="form-label">{{ entry_country }}</label> <select name="country_id" id="input-payment-country" class="form-select">
@@ -67,7 +68,7 @@
               <label for="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label> <select name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" id="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-select">
                 <option value="">{{ text_select }}</option>
                 {% for custom_field_value in custom_field.custom_field_value %}
-                  <option value="{{ custom_field_value.custom_field_value_id }}">{{ custom_field_value.name }}</option>
+                  <option value="{{ custom_field_value.custom_field_value_id }}"{% if payment_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id == payment_custom_field[custom_field.custom_field_id] %} selected="selected"{% endif %}>{{ custom_field_value.name }}</option>
                 {% endfor %}
               </select>
               <div id="error-payment-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
@@ -188,7 +189,46 @@ $('input[name=\'payment_existing\']').on('change', function() {
     }
 });
 
-// Payment Address
+// Existing Payment Address
+$('#input-payment-address').on('change', function() {
+    var element = this;
+
+    chain.attach(function() {
+        return $.ajax({
+            url: 'index.php?route=checkout/payment_address|address&language={{ language }}&address_id=' + $(element).val(),
+            dataType: 'json',
+            beforeSend: function() {
+                $(element).prop('disabled', true);
+            },
+            complete: function() {
+                $(element).prop('disabled', false);
+            },
+            success: function(json) {
+                console.log(json);
+
+                if (json['redirect']) {
+                    location = json['redirect'];
+                }
+
+                if (json['error']) {
+                    $('#alert').prepend('<div class="alert alert-warning alert-dismissible"><i class="fas fa-check-circle"></i>  ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                }
+
+                if (json['success']) {
+                    $('#alert').after('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                    $('#button-payment-method').trigger('click');
+                }
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
+        });
+    });
+});
+
+// New Payment Address
 $('#button-payment-address').on('click', function() {
     var element = this;
 
@@ -241,44 +281,6 @@ $('#button-payment-address').on('click', function() {
                   {% endif %}
                 }
 
-            },
-            error: function(xhr, ajaxOptions, thrownError) {
-                oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-            }
-        });
-    });
-});
-
-$('#input-payment-address').on('change', function() {
-    var element = this;
-
-    chain.attach(function() {
-        return $.ajax({
-            url: 'index.php?route=checkout/payment_address|address&language={{ language }}&address_id=' + $(element).val(),
-            dataType: 'json',
-            beforeSend: function() {
-                $(element).prop('disabled', true);
-            },
-            complete: function() {
-                $(element).prop('disabled', false);
-            },
-            success: function(json) {
-                console.log(json);
-
-                if (json['redirect']) {
-                    location = json['redirect'];
-                }
-
-                if (json['error']) {
-                    $('#alert').prepend('<div class="alert alert-warning alert-dismissible"><i class="fas fa-check-circle"></i>  ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-                }
-
-                if (json['success']) {
-                    $('#alert').after('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                    $('#button-payment-method').trigger('click');
-                }
             },
             error: function(xhr, ajaxOptions, thrownError) {
                 oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);

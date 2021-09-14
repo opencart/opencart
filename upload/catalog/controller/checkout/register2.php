@@ -466,9 +466,6 @@ class Register extends \Opencart\System\Engine\Controller {
 					];
 
 					$address_id = $this->model_account_address->addAddress($customer_id, $payment_address_data);
-
-					// Set the address as default
-					$this->model_account_customer->editAddressId($customer_id, $address_id);
 				}
 
 				// Add shipping address to customer account
@@ -496,11 +493,6 @@ class Register extends \Opencart\System\Engine\Controller {
 					];
 
 					$address_id = $this->model_account_address->addAddress($customer_id, $shipping_address_data);
-
-					// Set the shipping address as default if no payment checkout is being used
-					if (!$this->config->get('config_checkout_address')) {
-						$this->model_account_customer->editAddressId($customer_id, $address_id);
-					}
 				}
 			}
 

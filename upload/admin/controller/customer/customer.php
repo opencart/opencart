@@ -540,12 +540,6 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$data['addresses'] = [];
 		}
 
-		if (!empty($customer_info)) {
-			$data['default'] = array_search($customer_info['address_id'], array_column($data['addresses'], 'address_id'));
-		} else {
-			$data['default'] = '';
-		}
-
 		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');

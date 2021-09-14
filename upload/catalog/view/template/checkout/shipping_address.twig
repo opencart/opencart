@@ -16,6 +16,7 @@
 
       <div id="shipping-existing">
         <select name="address_id" id="input-shipping-address" class="form-select">
+          <option value="">{{ text_select }}</option>
           {% for address in addresses %}
             <option value="{{ address.address_id }}"{% if address.address_id == address_id %} selected="selected"{% endif %}>{{ address.firstname }} {{ address.lastname }}, {{ address.address_1 }}, {{ address.city }}, {{ address.zone }}, {{ address.country }}</option>
           {% endfor %}
@@ -29,26 +30,26 @@
       <div class="row row-cols-2">
         {% if logged or config_checkout_address %}
         <div class="col mb-3 required">
-          <label for="input-shipping-firstname" class="form-label">{{ entry_firstname }}</label> <input type="text" name="firstname" value="" placeholder="{{ entry_firstname }}" id="input-shipping-firstname" class="form-control"/>
+          <label for="input-shipping-firstname" class="form-label">{{ entry_firstname }}</label> <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-shipping-firstname" class="form-control"/>
           <div id="error-shipping-firstname" class="invalid-feedback"></div>
         </div>
         <div class="col mb-3 required">
-          <label for="input-shipping-lastname" class="form-label">{{ entry_lastname }}</label> <input type="text" name="lastname" value="" placeholder="{{ entry_lastname }}" id="input-shipping-lastname" class="form-control"/>
+          <label for="input-shipping-lastname" class="form-label">{{ entry_lastname }}</label> <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-shipping-lastname" class="form-control"/>
           <div id="error-shipping-lastname" class="invalid-feedback"></div>
         </div>
         {% endif %}
         <div class="col mb-3">
-          <label for="input-shipping-company" class="form-label">{{ entry_company }}</label> <input type="text" name="company" value="" placeholder="{{ entry_company }}" id="input-shipping-company" class="form-control"/>
+          <label for="input-shipping-company" class="form-label">{{ entry_company }}</label> <input type="text" name="company" value="{{ company }}" placeholder="{{ entry_company }}" id="input-shipping-company" class="form-control"/>
         </div>
         <div class="col mb-3 required">
-          <label for="input-shipping-address-1" class="form-label">{{ entry_address_1 }}</label> <input type="text" name="address_1" value="" placeholder="{{ entry_address_1 }}" id="input-shipping-address-1" class="form-control"/>
+          <label for="input-shipping-address-1" class="form-label">{{ entry_address_1 }}</label> <input type="text" name="address_1" value="{{ address_1 }}" placeholder="{{ entry_address_1 }}" id="input-shipping-address-1" class="form-control"/>
           <div id="error-shipping-address-1" class="invalid-feedback"></div>
         </div>
         <div class="col mb-3">
-          <label for="input-shipping-address-2" class="form-label">{{ entry_address_2 }}</label> <input type="text" name="address_2" value="" placeholder="{{ entry_address_2 }}" id="input-shipping-address-2" class="form-control"/>
+          <label for="input-shipping-address-2" class="form-label">{{ entry_address_2 }}</label> <input type="text" name="address_2" value="{{ address_2 }}" placeholder="{{ entry_address_2 }}" id="input-shipping-address-2" class="form-control"/>
         </div>
         <div class="col mb-3 required">
-          <label for="input-shipping-city" class="form-label">{{ entry_city }}</label> <input type="text" name="city" value="" placeholder="{{ entry_city }}" id="input-shipping-city" class="form-control"/>
+          <label for="input-shipping-city" class="form-label">{{ entry_city }}</label> <input type="text" name="city" value="{{ city }}" placeholder="{{ entry_city }}" id="input-shipping-city" class="form-control"/>
           <div id="error-shipping-city" class="invalid-feedback"></div>
         </div>
         <div class="col mb-3 required">
@@ -78,7 +79,7 @@
               <select name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-select">
                 <option value="">{{ text_select }}</option>
                 {% for custom_field_value in custom_field.custom_field_value %}
-                  <option value="{{ custom_field_value.custom_field_value_id }}">{{ custom_field_value.name }}</option>
+                  <option value="{{ custom_field_value.custom_field_value_id }}"{% if shipping_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id == shipping_custom_field[custom_field.custom_field_id] %}  selected="selected"{% endif %}>{{ custom_field_value.name }}</option>
                 {% endfor %}
               </select>
               <div id="error-shipping-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
@@ -201,113 +202,9 @@ $('input[name=\'shipping_existing\']').on('change', function() {
     }
 });
 
-// Shipping Address
-$('#button-shipping-address').on('click', function() {
-    var element = this;
-
-    var data = $('#form-shipping-address, #input-shipping-firstname').serialize()
 
 
-
-
-    chain.attach(function() {
-        return $.ajax({
-            url: 'index.php?route=checkout/shipping_address|save&language={{ language }}',
-            type: 'post',
-            data: data,
-            dataType: 'json',
-            beforeSend: function() {
-                $('#button-shipping-address').button('loading');
-            },
-            success: function(json) {
-                $('.alert-dismissible, .text-danger').remove();
-                $('.mb-3').removeClass('has-error');
-
-                if (json['redirect']) {
-                    location = json['redirect'];
-                } else if (json['error']) {
-                    $('#button-shipping-address').button('reset');
-
-                    if (json['error']['warning']) {
-                        $('#checkout-shipping-address .card-body').prepend('<div class="alert alert-warning alert-dismissible">' + json['error']['warning'] + '<button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-                    }
-
-                    for (i in json['error']) {
-                        var element = $('#input-shipping-' + i.replace('_', '-'));
-
-                        if ($(element).parent().hasClass('input-group')) {
-                            $(element).parent().after('<div class="text-danger">' + json['error'][i] + '</div>');
-                        } else {
-                            $(element).after('<div class="text-danger">' + json['error'][i] + '</div>');
-                        }
-
-                        $(element).addClass('is-invalid');
-                    }
-
-                    // Highlight any found errors
-                    $('.text-danger').parent().parent().addClass('has-error');
-                } else {
-                    chain.attach(function() {
-                        return $.ajax({
-                            url: 'index.php?route=checkout/shipping_method',
-                            dataType: 'html',
-                            complete: function() {
-                                $('#button-shipping-address').button('reset');
-                            },
-                            success: function(html) {
-                                $('#checkout-shipping-method .card-body').html(html);
-
-                                $('#heading-shipping-method').attr('data-bs-toggle', 'collapse');
-
-                                $('#heading-shipping-method').trigger('click');
-
-                                $('#heading-payment-method').removeAttr('data-bs-toggle');
-                                $('#heading-checkout-confirm').removeAttr('data-bs-toggle');
-                            },
-                            error: function(xhr, ajaxOptions, thrownError) {
-                                oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-                                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-                            }
-                        });
-                    });
-
-                    chain.attach(function() {
-                        return $.ajax({
-                            url: 'index.php?route=checkout/payment_address',
-                            dataType: 'html',
-                            success: function(html) {
-                                $('#checkout-payment-address .card-body').html(html);
-                            },
-                            error: function(xhr, ajaxOptions, thrownError) {
-                                oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-                                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-                            }
-                        });
-                    });
-
-                    chain.attach(function() {
-                        return $.ajax({
-                            url: 'index.php?route=checkout/shipping_address',
-                            dataType: 'html',
-                            success: function(html) {
-                                $('#checkout-shipping-address .card-body').html(html);
-                            },
-                            error: function(xhr, ajaxOptions, thrownError) {
-                                oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-                                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-                            }
-                        });
-                    });
-                }
-            },
-            error: function(xhr, ajaxOptions, thrownError) {
-                oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-            }
-        });
-    });
-});
-
+// Existing Shipping Address
 $('#input-shipping-address').on('change', function() {
     var element = this;
 
@@ -341,6 +238,65 @@ $('#input-shipping-address').on('change', function() {
             oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
+    });
+});
+
+// New Shipping Address
+$('#button-shipping-address').on('click', function() {
+    var element = this;
+
+    var data = $('#form-shipping-address, #input-shipping-firstname').serialize()
+
+    chain.attach(function() {
+        return $.ajax({
+            url: 'index.php?route=checkout/shipping_address|save&language={{ language }}',
+            type: 'post',
+            data: data,
+            dataType: 'json',
+            beforeSend: function() {
+                $(element).button('loading');
+            },
+            complete: function() {
+                $(element).button('reset');
+            },
+            success: function(json) {
+                $('.alert-dismissible, .text-danger').remove();
+                $('.mb-3').removeClass('has-error');
+
+                if (json['redirect']) {
+                    location = json['redirect'];
+                }
+
+                if (json['error']) {
+                    if (json['error']['warning']) {
+                        $('#checkout-shipping-address .card-body').prepend('<div class="alert alert-warning alert-dismissible">' + json['error']['warning'] + '<button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    }
+
+                    for (i in json['error']) {
+                        var element = $('#input-shipping-' + i.replace('_', '-'));
+
+                        if ($(element).parent().hasClass('input-group')) {
+                            $(element).parent().after('<div class="text-danger">' + json['error'][i] + '</div>');
+                        } else {
+                            $(element).after('<div class="text-danger">' + json['error'][i] + '</div>');
+                        }
+
+                        $(element).addClass('is-invalid');
+                    }
+
+                    // Highlight any found errors
+                    $('.text-danger').parent().parent().addClass('has-error');
+                }
+
+
+
+
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
+        });
     });
 });
 

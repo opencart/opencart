@@ -223,12 +223,6 @@ class Address extends \Opencart\System\Engine\Controller {
 			$data['address_custom_field'] = [];
 		}
 
-		if (isset($this->request->get['address_id'])) {
-			$data['default'] = ($this->customer->getAddressId() == $this->request->get['address_id']);
-		} else {
-			$data['default'] = false;
-		}
-
 		$data['back'] = $this->url->link('account/address', 'language=' . $this->config->get('config_language'));
 
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -359,10 +353,6 @@ class Address extends \Opencart\System\Engine\Controller {
 
 		if ($this->model_account_address->getTotalAddresses() == 1) {
 			$json['error']['warning'] = $this->language->get('error_delete');
-		}
-
-		if ($this->customer->getAddressId() == $address_id) {
-			$json['error']['warning'] = $this->language->get('error_default');
 		}
 
 		if (!$json) {

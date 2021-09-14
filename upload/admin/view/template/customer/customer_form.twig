@@ -447,12 +447,6 @@
 
                     {% endif %}
                   {% endfor %}
-                  <div class="row mb-3">
-                    <label class="col-sm-2 col-form-label">{{ entry_default }}</label>
-                    <div class="col-sm-10">
-                      <input type="radio" name="default" value="{{ address_row }}" class="form-check-input"{% if default == address_row %} checked{% endif %}/>
-                    </div>
-                  </div>
                 </fieldset>
                 {% set address_row = address_row + 1 %}
               {% endfor %}
@@ -780,10 +774,6 @@ $('#button-address').on('click', function(e) {
   {% endif %}
   {% endfor %}
 
-    html += '  <div class="row mb-3">';
-    html += '    <label class="col-sm-2 col-form-label">{{ entry_default }}</label>';
-    html += '    <div class="col-sm-10"><input type="radio" name="default" value="' + address_row + '" class="form-check-input"/></div>';
-    html += '  </div>';
     html += '</fieldset>';
 
     $(this).parent().before(html);

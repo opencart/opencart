@@ -6,27 +6,11 @@ class Address extends \Opencart\System\Engine\Model {
 
 		$address_id = $this->db->getLastId();
 
-		if (!empty($data['default'])) {
-			$this->db->query("UPDATE `" . DB_PREFIX . "customer` SET `address_id` = '" . (int)$address_id . "' WHERE `customer_id` = '" . (int)$customer_id . "'");
-
-			if ($address_id !== $this->customer->getAddressId() && $this->config->get('config_tax_customer')) {
-				$this->session->data[$this->config->get('config_tax_customer') . '_address'] = $this->getAddress($address_id);
-			}
-		}
-
 		return $address_id;
 	}
 
 	public function editAddress(int $address_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "address` SET `firstname` = '" . $this->db->escape((string)$data['firstname']) . "', `lastname` = '" . $this->db->escape((string)$data['lastname']) . "', `company` = '" . $this->db->escape((string)$data['company']) . "', `address_1` = '" . $this->db->escape((string)$data['address_1']) . "', `address_2` = '" . $this->db->escape((string)$data['address_2']) . "', `postcode` = '" . $this->db->escape((string)$data['postcode']) . "', `city` = '" . $this->db->escape((string)$data['city']) . "', `zone_id` = '" . (int)$data['zone_id'] . "', `country_id` = '" . (int)$data['country_id'] . "', `custom_field` = '" . $this->db->escape(isset($data['custom_field']['address']) ? json_encode($data['custom_field']['address']) : '') . "' WHERE `address_id` = '" . (int)$address_id . "' AND `customer_id` = '" . (int)$this->customer->getId() . "'");
-
-		if (!empty($data['default'])) {
-			$this->db->query("UPDATE `" . DB_PREFIX . "customer` SET `address_id` = '" . (int)$address_id . "' WHERE `customer_id` = '" . (int)$this->customer->getId() . "'");
-
-			if ($address_id !== $this->customer->getAddressId() && $this->config->get('config_tax_customer')) {
-				$this->session->data[$this->config->get('config_tax_customer') . '_address'] = $this->getAddress($address_id);
-			}
-		}
 	}
 
 	public function deleteAddress(int $address_id): void {

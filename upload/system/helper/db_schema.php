@@ -1079,12 +1079,6 @@ function db_schema() {
 				'default' => '0'
 			],
 			[
-				'name' => 'address_id',
-				'type' => 'int(11)',
-				'not_null' => true,
-				'default' => '0'
-			],
-			[
 				'name' => 'custom_field',
 				'type' => 'text',
 				'not_null' => true

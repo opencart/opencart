@@ -25,7 +25,7 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 
 		$data['addresses'] = $this->model_account_address->getAddresses();
 
-		if (isset($this->session->data['payment_address'])) {
+		if (!$this->customer->isLogged() && isset($this->session->data['payment_address'])) {
 			$data['firstname'] = $this->session->data['payment_address']['firstname'];
 			$data['lastname'] = $this->session->data['payment_address']['lastname'];
 			$data['company'] = $this->session->data['payment_address']['company'];

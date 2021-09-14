@@ -12,6 +12,7 @@ class Register extends \Opencart\System\Engine\Controller {
 
 		$data['config_checkout_guest'] = ($this->config->get('config_checkout_guest') && !$this->config->get('config_customer_price') && !$this->cart->hasDownload());
 		$data['config_file_max_size'] = $this->config->get('config_file_max_size');
+
 		$data['language'] = $this->config->get('config_language');
 
 		$data['customer_groups'] = [];

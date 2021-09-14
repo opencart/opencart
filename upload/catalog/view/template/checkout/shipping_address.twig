@@ -17,7 +17,7 @@
       <div id="shipping-existing">
         <select name="address_id" id="input-shipping-address" class="form-select">
           {% for address in addresses %}
-            <option value="{{ address.address_id }}"{% if address.address_id == address_id %} selected="selected"{% endif %}>{{ address.text }}</option>
+            <option value="{{ address.address_id }}"{% if address.address_id == address_id %} selected="selected"{% endif %}>{{ address.firstname }} {{ address.lastname }}, {{ address.address_1 }}, {{ address.city }}, {{ address.zone }}, {{ address.country }}</option>
           {% endfor %}
         </select>
       </div>
@@ -190,7 +190,6 @@
     </div>
   </fieldset>
 </form>
-
 <script type="text/javascript"><!--
 $('input[name=\'shipping_existing\']').on('change', function() {
     if ($(this).val() == 1) {
@@ -204,15 +203,16 @@ $('input[name=\'shipping_existing\']').on('change', function() {
 
 // Shipping Address
 $('#button-shipping-address').on('click', function() {
+    var element = this;
+
+    var data = $('#form-shipping-address, #input-shipping-firstname').serialize()
+
+
+
+
     chain.attach(function() {
-
-
-
-        var data = $('#form-shipping-address, #input-shipping-firstname').serialize()
-
-
         return $.ajax({
-            url: 'index.php?route=checkout/shipping_address|save',
+            url: 'index.php?route=checkout/shipping_address|save&language={{ language }}',
             type: 'post',
             data: data,
             dataType: 'json',
@@ -312,7 +312,7 @@ $('#input-shipping-address').on('change', function() {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=checkout/shipping_address&address_id=' + $(this).val(),
+        url: 'index.php?route=checkout/shipping_address|address&language={{ language }}&address_id=' + $(element).val(),
         dataType: 'json',
         beforeSend: function() {
             $(element).prop('disabled', true);
@@ -321,10 +321,21 @@ $('#input-shipping-address').on('change', function() {
             $(element).prop('disabled', false);
         },
         success: function(json) {
+            console.log(json);
 
+            if (json['redirect']) {
+                location = json['redirect'];
+            }
 
+            if (json['error']) {
+                $('#alert').prepend('<div class="alert alert-warning alert-dismissible"><i class="fas fa-check-circle"></i>  ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
 
+            if (json['success']) {
+                $('#alert').after('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
+                $('#button-shipping-method').trigger('click');
+            }
         },
         error: function(xhr, ajaxOptions, thrownError) {
             oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);

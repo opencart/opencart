@@ -115,6 +115,20 @@ class Confirm extends \Opencart\System\Engine\Controller {
 	public function payment(): string {
 		$this->load->language('checkout/checkout');
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 		$totals = [];
 		$taxes = $this->cart->getTaxes();
 		$total = 0;
@@ -417,8 +431,6 @@ class Confirm extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['payment'] = '';
 		}
-
-
 
 		return $this->load->view('checkout/confirm', $data);
 	}

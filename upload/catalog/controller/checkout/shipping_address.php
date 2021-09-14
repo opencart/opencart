@@ -10,6 +10,7 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 		$data['config_file_max_size'] = $this->config->get('config_file_max_size');
 		$data['config_checkout_address'] = $this->config->get('config_checkout_address');
 
+		$data['language'] = $this->config->get('config_language');
 		$data['logged'] = $this->customer->isLogged();
 
 		if (isset($this->session->data['shipping_address']['address_id'])) {
@@ -22,14 +23,7 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('account/address');
 
-		$results = $this->model_account_address->getAddresses();
-
-		foreach ($results as $result) {
-			$data['addresses'][] = [
-				'text'  => $result['firstname'] . ' ' . $result['lastname'] . ', ' . $result['address_1'] . ', ' . $result['city'] . ', ' . $result['zone'] . ', ' . $result['country'],
-				'value' => $result['address_id']
-			];
-		}
+		$data['addresses'] = $this->model_account_address->getAddresses();
 
 		if (isset($this->session->data['shipping_address'])) {
 			$data['firstname'] = $this->session->data['shipping_address']['firstname'];

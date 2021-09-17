@@ -45,7 +45,7 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 			$data['postcode'] = '';
 			$data['city'] = '';
 			$data['country_id'] = $this->config->get('config_country_id');
-			$data['zone_id'] = '';
+			$data['zone_id'] = $this->config->get('config_zone_id');
 			$data['shipping_custom_field'] = [];
 		}
 

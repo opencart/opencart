@@ -1,6 +1,6 @@
 <?php
 namespace Cart;
-class Weight {	
+class Weight {
 	private $weights = array();
 	private $language;
 

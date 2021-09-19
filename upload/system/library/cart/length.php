@@ -2,6 +2,7 @@
 namespace Cart;
 class Length {
 	private $lengths = array();
+	private $language;
 
 	public function __construct($registry) {
 		$this->db = $registry->get('db');
@@ -39,7 +40,15 @@ class Length {
 		return $value * ($to / $from);
 	}
 
-	public function format($value, $length_class_id, $decimal_point = '.', $thousand_point = ',') {
+	public function format($value, $length_class_id, $decimal_point = '', $thousand_point = '') {
+		if (!$decimal_point) {
+			$decimal_point = $this->language->get('decimal_point');
+		}
+		
+		if (!$thousand_point) {
+			$thousand_point = $this->language->get('thousand_point');
+		}
+		
 		if (isset($this->lengths[$length_class_id])) {
 			return number_format($value, 2, $decimal_point, $thousand_point) . $this->lengths[$length_class_id]['unit'];
 		} else {

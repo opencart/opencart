@@ -1,11 +1,13 @@
 <?php
 namespace Cart;
-class Weight {
+class Weight {	
 	private $weights = array();
+	private $language;
 
 	public function __construct($registry) {
 		$this->db = $registry->get('db');
 		$this->config = $registry->get('config');
+		$this->language = $registry->get('language');
 
 		$weight_class_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "weight_class wc LEFT JOIN " . DB_PREFIX . "weight_class_description wcd ON (wc.weight_class_id = wcd.weight_class_id) WHERE wcd.language_id = '" . (int)$this->config->get('config_language_id') . "'");
 
@@ -39,7 +41,15 @@ class Weight {
 		return $value * ($to / $from);
 	}
 
-	public function format($value, $weight_class_id, $decimal_point = '.', $thousand_point = ',') {
+	public function format($value, $weight_class_id, $decimal_point = '', $thousand_point = '') {
+		if (!$decimal_point) {
+			$decimal_point = $this->language->get('decimal_point');
+		}
+		
+		if (!$thousand_point) {
+			$thousand_point = $this->language->get('thousand_point');	
+		}
+		
 		if (isset($this->weights[$weight_class_id])) {
 			return number_format($value, 2, $decimal_point, $thousand_point) . $this->weights[$weight_class_id]['unit'];
 		} else {

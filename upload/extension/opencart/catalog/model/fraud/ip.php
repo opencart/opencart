@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Catalog\Model\Extension\Opencart\Fraud;
 class Ip extends \Opencart\System\Engine\Model {
-	public function check(array $order_info): int {
+	public function check(array $order_info): int|void {
 		$status = false;
 
 		if ($order_info['customer_id']) {

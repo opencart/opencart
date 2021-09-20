@@ -53,17 +53,17 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 
 			$this->load->model('localisation/country');
 
-			$country_info = $this->model_localisation_country->getCountry($this->request->post['country_id']);
+			$country_info = $this->model_localisation_country->getCountry((int)$this->request->post['country_id']);
 
 			if ($country_info && $country_info['postcode_required'] && (utf8_strlen($this->request->post['postcode']) < 2 || utf8_strlen($this->request->post['postcode']) > 10)) {
 				$json['error']['postcode'] = $this->language->get('error_postcode');
 			}
 
-			if ($this->request->post['country_id'] == '') {
+			if (!filter_var($this->request->post['country_id'], FILTER_VALIDATE_INT)) {
 				$json['error']['country'] = $this->language->get('error_country');
 			}
 
-			if (!isset($this->request->post['zone_id']) || $this->request->post['zone_id'] == '') {
+			if (!isset($this->request->post['zone_id']) || filter_var($this->request->post['zone_id'], FILTER_VALIDATE_INT) === false) {
 				$json['error']['zone'] = $this->language->get('error_zone');
 			}
 
@@ -85,7 +85,7 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 			if (!$json) {
 				$this->load->model('localisation/country');
 
-				$country_info = $this->model_localisation_country->getCountry($this->request->post['country_id']);
+				$country_info = $this->model_localisation_country->getCountry((int)$this->request->post['country_id']);
 
 				if ($country_info) {
 					$country = $country_info['name'];
@@ -122,7 +122,7 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 					'zone_id'        => $this->request->post['zone_id'],
 					'zone'           => $zone,
 					'zone_code'      => $zone_code,
-					'country_id'     => $this->request->post['country_id'],
+					'country_id'     => (int)$this->request->post['country_id'],
 					'country'        => $country,
 					'iso_code_2'     => $iso_code_2,
 					'iso_code_3'     => $iso_code_3,

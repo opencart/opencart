@@ -4,7 +4,7 @@ class Download extends \Opencart\System\Engine\Model {
 	public function getDownload(int $download_id): array {
 		$implode = [];
 
-		$order_statuses = $this->config->get('config_complete_status');
+		$order_statuses = (array)$this->config->get('config_complete_status');
 
 		foreach ($order_statuses as $order_status_id) {
 			$implode[] = "o.`order_status_id` = '" . (int)$order_status_id . "'";
@@ -30,7 +30,7 @@ class Download extends \Opencart\System\Engine\Model {
 
 		$implode = [];
 
-		$order_statuses = $this->config->get('config_complete_status');
+		$order_statuses = (array)$this->config->get('config_complete_status');
 
 		foreach ($order_statuses as $order_status_id) {
 			$implode[] = "o.`order_status_id` = '" . (int)$order_status_id . "'";
@@ -48,7 +48,7 @@ class Download extends \Opencart\System\Engine\Model {
 	public function getTotalDownloads(): int {
 		$implode = [];
 
-		$order_statuses = $this->config->get('config_complete_status');
+		$order_statuses = (array)$this->config->get('config_complete_status');
 
 		foreach ($order_statuses as $order_status_id) {
 			$implode[] = "o.`order_status_id` = '" . (int)$order_status_id . "'";

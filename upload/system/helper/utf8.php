@@ -31,7 +31,6 @@ if (extension_loaded('mbstring')) {
 		return mb_strtolower($string);
 	}
 
-
 } elseif (function_exists('iconv')) {
 	function utf8_strlen($string) {
 		return iconv_strlen($string, 'UTF-8');

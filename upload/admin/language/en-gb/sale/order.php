@@ -42,12 +42,9 @@ $_['text_commission_added']      = 'Success: Commission added!';
 $_['text_commission_removed']    = 'Success: Commission removed!';
 $_['text_restock']               = 'Success: Products have been restocked!';
 $_['text_upload']                = 'Your file was successfully uploaded!';
-
 $_['text_contact']               = 'Contact Tel';
-
 $_['text_more']                  = 'More..';
 $_['text_less']                  = 'Less..';
-
 $_['text_payment_address']       = 'Payment Address';
 $_['text_payment_address_edit']  = 'Edit Payment Address';
 $_['text_payment_address_edit']  = 'Edit Payment Address';
@@ -59,12 +56,8 @@ $_['text_shipping_address']      = 'Shipping Address';
 $_['text_shipping_address_edit'] = 'Edit Shipping Address';
 $_['text_comment_edit']          = 'Edit Comment';
 $_['text_comment']               = 'Customer Comment';
-
-
-
 $_['text_history']               = 'Order History';
 $_['text_history_add']           = 'Add Order History';
-
 $_['text_account_custom_field']  = 'Account Custom Fields';
 $_['text_payment_custom_field']  = 'Payment Address Custom Fields';
 $_['text_shipping_custom_field'] = 'Shipping Address Custom Fields';

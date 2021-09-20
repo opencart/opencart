@@ -650,7 +650,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 			$json['error']['voucher_max'] = $this->language->get('error_voucher_max');
 		}
 
-		if ($this->request->post['config_customer_online'] && !filter_var($this->request->post['config_customer_online_expire'], FILTER_VALIDATE_INT)) {
+		if (!filter_var($this->request->post['config_customer_online_expire'], FILTER_VALIDATE_INT)) {
 			$json['error']['customer_online_expire'] = $this->language->get('error_customer_online_expire');
 		}
 

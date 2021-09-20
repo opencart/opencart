@@ -9,10 +9,10 @@
           <td class="text-center">{% if product.thumb %} <a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-thumbnail" /></a> {% endif %}</td>
           <td class="text-start"><a href="{{ product.href }}">{{ product.name }}</a>
             {% if product.option %}
-            {% for option in product.option %}<br />
+            {% for option in product.option %}<br/>
             - <small>{{ option.name }} {{ option.value }}</small> {% endfor %}
             {% endif %}
-            {% if product.recurring %}<br />
+            {% if product.recurring %}<br/>
             - <small>{{ text_recurring }} {{ product.recurring }}</small> {% endif %}</td>
           <td class="text-end">x {{ product.quantity }}</td>
           <td class="text-end">{{ product.total }}</td>
@@ -23,7 +23,7 @@
         <tr>
           <td class="text-center"></td>
           <td class="text-start">{{ voucher.description }}</td>
-          <td class="text-end">x&nbsp;1</td>
+          <td class="text-end">{{ text_x }}&nbsp;1</td>
           <td class="text-end">{{ voucher.amount }}</td>
           <td class="text-center text-danger"><button type="button" onclick="voucher.remove('{{ voucher.key }}');" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-sm"><i class="fas fa-times"></i></button></td>
         </tr>

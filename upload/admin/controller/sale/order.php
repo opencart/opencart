@@ -640,8 +640,6 @@ class Order extends \Opencart\System\Engine\Controller {
 			// Total
 			$data['total'] = $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value']);
 
-
-
 			// Reward Points
 			$data['reward'] = $order_info['reward'];
 
@@ -650,7 +648,6 @@ class Order extends \Opencart\System\Engine\Controller {
 			} else {
 				$data['reward_total'] = 0;
 			}
-
 
 			// Coupon, Voucher, Reward
 			$data['coupon'] = '';
@@ -670,15 +667,6 @@ class Order extends \Opencart\System\Engine\Controller {
 					}
 				}
 			}
-
-
-
-
-
-
-
-
-
 
 			// Affiliate
 			if (!empty($order_info) && $order_info['affiliate_id']) {
@@ -700,7 +688,6 @@ class Order extends \Opencart\System\Engine\Controller {
 			// Commission
 			$data['commission'] = $this->currency->format($order_info['commission'], $order_info['currency_code'], $order_info['currency_value']);
 			$data['commission_total'] = $this->model_customer_customer->getTotalTransactionsByOrderId($order_id);
-
 
 			// Addresses
 			$this->load->model('customer/customer');
@@ -787,15 +774,15 @@ class Order extends \Opencart\System\Engine\Controller {
 
 			$replace = [
 				'firstname' => $order_info['shipping_firstname'],
-				'lastname' => $order_info['shipping_lastname'],
-				'company' => $order_info['shipping_company'],
+				'lastname'  => $order_info['shipping_lastname'],
+				'company'   => $order_info['shipping_company'],
 				'address_1' => $order_info['shipping_address_1'],
 				'address_2' => $order_info['shipping_address_2'],
-				'city' => $order_info['shipping_city'],
-				'postcode' => $order_info['shipping_postcode'],
-				'zone' => $order_info['shipping_zone'],
+				'city'      => $order_info['shipping_city'],
+				'postcode'  => $order_info['shipping_postcode'],
+				'zone'      => $order_info['shipping_zone'],
 				'zone_code' => $order_info['shipping_zone_code'],
-				'country' => $order_info['shipping_country']
+				'country'   => $order_info['shipping_country']
 			];
 
 			$data['shipping_address'] = str_replace(["\r\n", "\r", "\n"], '<br />', preg_replace(["/\s\s+/", "/\r\r+/", "/\n\n+/"], '<br />', trim(str_replace($find, $replace, $format))));
@@ -814,8 +801,6 @@ class Order extends \Opencart\System\Engine\Controller {
 			// Shipping method
 			$data['shipping_method'] = $order_info['shipping_method'];
 			$data['shipping_code'] = $order_info['shipping_code'];
-
-
 
 			// Products
 			$data['order_products'] = [];
@@ -899,7 +884,6 @@ class Order extends \Opencart\System\Engine\Controller {
 			}
 
 			// Comment
-			$data['comment'] = $order_info['comment'];
 			$data['comment'] = nl2br($order_info['comment']);
 
 			// Additional tabs that are payment gateway specific
@@ -1001,8 +985,6 @@ class Order extends \Opencart\System\Engine\Controller {
 
 			$data['total'] = 0;
 
-
-
 			$data['coupon'] = '';
 			$data['voucher'] = '';
 			$data['reward'] = '';
@@ -1071,11 +1053,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('sale/order_info', $data));
 	}
 
-	/*
-	 * Method to call store front api and return a response.
-	 *
-	 *
-	 * */
+	// Method to call store front api and return a response.
 	public function call(): void {
 		// 1. Create a store instance using loader class to call controllers, models, views, libraries
 
@@ -1401,7 +1379,7 @@ class Order extends \Opencart\System\Engine\Controller {
 						}
 
 						$option_data[] = [
-							'name' => $option['name'],
+							'name'  => $option['name'],
 							'value' => $value
 						];
 					}

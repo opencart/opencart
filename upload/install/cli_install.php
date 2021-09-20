@@ -101,7 +101,7 @@ class Cli extends \Opencart\System\Engine\Controller {
 				break;
 		}
 
-		$this->response->setOutput($output);
+		return $this->response->setOutput($output);
 	}
 
 	public function install($argv) {

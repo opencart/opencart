@@ -95,10 +95,10 @@ $('#button-filter').on('click', function() {
     $('#review').load('index.php?route=catalog/review|list&user_token={{ user_token }}' + url);
 });
 
-$('input[name=\'filter_product\']').autocomplete({
+$('#input-product').autocomplete({
 	'source': function(request, response) {
 		$.ajax({
-			url: 'index.php?route=catalog/product/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
+			url: 'index.php?route=catalog/product|autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
 			dataType: 'json',
 			success: function(json) {
 				response($.map(json, function(item) {
@@ -111,7 +111,7 @@ $('input[name=\'filter_product\']').autocomplete({
 		});
 	},
 	'select': function(item) {
-		$('input[name=\'filter_product\']').val(item['label']);
+		$('#input-product').val(item['label']);
 	}
 });
 //--></script>

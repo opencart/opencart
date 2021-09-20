@@ -27,7 +27,7 @@ function isIE() {
     if (!!window.ActiveXObject || "ActiveXObject" in window) return true;
 }
 
-// Header and menu
+// Header
 $(document).ready(function() {
     // Header
     $('#header-notification [data-bs-toggle=\'modal\']').on('click', function(e) {
@@ -47,8 +47,10 @@ $(document).ready(function() {
             }
         });
     });
+});
 
-    // Menu
+// Menu
+$(document).ready(function() {
     $('#button-menu').on('click', function(e) {
         e.preventDefault();
 
@@ -75,10 +77,25 @@ $(document).ready(function() {
 });
 
 // Tooltip
-/*
-(function($) {
-    $.fn.tooltip = function(element, option) {
-        return $(element).each(function() {
+$(document).ready(function() {
+    // Apply to all on current page
+    $('[data-bs-toggle=\'tooltip\']').each(function(i, element) {
+        var handler = bootstrap.Tooltip.getInstance(element);
+
+        if (!handler) {
+            var option = [];
+
+            var handler = new bootstrap.Tooltip(element, option);
+
+            $.extend(element, option);
+        }
+    });
+
+    // Makes tooltips work on ajax generated content
+    $(document).ajaxStop(function() {
+        $('[data-bs-toggle=\'tooltip\']').each(function() {
+            var option = []
+
             handler = bootstrap.Tooltip.getInstance(element);
 
             if (!handler) {
@@ -86,27 +103,46 @@ $(document).ready(function() {
             } else {
                 console.log(handler);
             }
-
-            $.extend(this, option);
         });
-    }
-})(jQuery);
+    });
 
+// Apply to all js generated content
+    $(document).on('click', '[data-bs-toggle=\'tooltip\']', function(e) {
+        var element = this;
 
+        var handler = bootstrap.Tooltip.getInstance(element);
+
+        if (!handler) {
+            var option = [];
+
+            var handler = new bootstrap.Tooltip(element, option);
+
+            $.extend(element, option);
+        }
+
+        // remove fix
+        $('body > .tooltip').remove();
+    });
+});
+
+// Buttons
 $(document).ready(function() {
-    //$('[data-bs-toggle=\'tooltip\']').tooltip();
-});
+    $(document).on('click', '[data-oc-loading-text]', function(state) {
+        var element = this;
 
-// Tooltip remove fixed
-$(document).on('click', '[data-bs-toggle=\'tooltip\']', function(e) {
-   // $('body > .tooltip').remove();
-});
+        var html = $(element).html();
 
-// Makes tooltips work on ajax generated content
-$(document).ajaxStop(function() {
-   // $('[data-bs-toggle=\'tooltip\']').tooltip();
+        var loading = $(element).attr('data-oc-loading-text');
+
+        if (state == 'loading') {
+            $(element).html(loading);
+        }
+
+        if (state == 'reset') {
+            $(element).html(html);
+        }
+    });
 });
-*/
 
 var oc = [];
 
@@ -123,10 +159,26 @@ oc.error = function(key, message) {
 }
 
 // Forms
-$(document).on('click', '[data-oc-action]', function() {
+$(document).on('submit', '[data-oc-toggle=\'ajax\']', function(e) {
+    e.preventDefault();
+
     var element = this;
 
-    var form = $(element).attr('data-oc-form');
+    console.log(element);
+
+    var action = $(element).attr('action');
+
+    var method = $(element).attr('method');
+
+    if (!method) {
+        method = 'post';
+    }
+
+    var enctype = $(element).attr('enctype');
+
+    if (!enctype) {
+        enctype = 'application/x-www-form-urlencoded; charset=UTF-8';
+    }
 
     // https://github.com/opencart/opencart/issues/9690
     if (typeof CKEDITOR != 'undefined') {
@@ -136,12 +188,12 @@ $(document).on('click', '[data-oc-action]', function() {
     }
 
     $.ajax({
-        url: $(element).attr('data-oc-action'),
+        url: action,
         type: 'post',
-        data: $(form).serialize(),
+        data: $(element).serialize(),
         dataType: 'json',
         cache: false,
-        contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+        contentType: enctype,
         processData: false,
         beforeSend: function() {
             $(element).button('loading');
@@ -150,9 +202,10 @@ $(document).on('click', '[data-oc-action]', function() {
             $(element).button('reset');
         },
         success: function(json) {
-            $(form).find('.is-invalid').removeClass('is-invalid');
-            $(form).find('.invalid-feedback').removeClass('d-block');
+            $(element).find('.is-invalid').removeClass('is-invalid');
+            $(element).find('.invalid-feedback').removeClass('d-block');
 
+            console.log(json['error']);
             console.log(json);
 
             if (json['redirect']) {
@@ -196,7 +249,7 @@ $(document).on('click', '[data-oc-action]', function() {
                     $(target).load(url);
                 }
 
-               // $(target).find('[data-bs-toggle=\'tooltip\']').tooltip();
+                // $(target).find('[data-bs-toggle=\'tooltip\']').tooltip();
 
                 delete json['success'];
             }
@@ -280,46 +333,6 @@ $(document).on('click', '[data-oc-upload]', function() {
     }, 500);
 });
 
-// Buttons
-/*
-$(document).on('click', '[data-oc-loading-text]', function() {
-    $(this).attr('data-oc-loading-text');
-
-    var text = $(this).html();
-
-    var text = $(this).html();
- //   if () {
- //       $(this).html(text);
- //   } else {
-//    }
-});
-
-// Button
-(function($) {
-    $.fn.button = function(state) {
-        console.log(state);
-
-        return this.each(function(state) {
-            if (state == 'reset') {
-                $(this).html($reset);
-
-                var $reset = '';
-            } else {
-                if (!$reset) {
-                    $reset = $(this).html();
-                }
-
-                $(this).html($(this).attr('data-oc-' + state + '-text'));
-            }
-        });
-    }
-})(jQuery);
-
-$(document).ready(function() {
-    $('[data-oc-loading-text]').button('loading');
-});
-
-*/
 /*
 +function($) {
     'use strict';
@@ -439,9 +452,9 @@ $(document).on('click', '[data-oc-toggle=\'image\']', function(e) {
 
     console.log(element);
 
-   // var test = document.querySelector('#modal-image');
+    // var test = document.querySelector('#modal-image');
 
-   // var modal = new bootstrap.Modal(test);
+    // var modal = new bootstrap.Modal(test);
 
     //  if () {
     //     $('#modal-image').remove();

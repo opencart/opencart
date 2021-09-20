@@ -55,15 +55,13 @@ class Cart extends \Opencart\System\Engine\Controller {
 
 			$data['modules'] = array();
 
-			$files = glob(DIR_APPLICATION . '/controller/extension/total/*.php');
+			$extensions = $this->model_setting_extension->getExtensionsByType('total');
 
-			if ($files) {
-				foreach ($files as $file) {
-					$result = $this->load->controller('extension/total/' . basename($file, '.php'));
+			foreach ($extensions as $extension) {
+				 $result = $this->load->controller('extension/' . $extension['extension'] . '/total/' . $extension['code']);
 
-					if ($result) {
-						$data['modules'][] = $result;
-					}
+				if (!$result instanceof \Exception) {
+					$data['modules'][] = $result;
 				}
 			}
 

@@ -196,7 +196,7 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 			unset($this->session->data['payment_methods']);
 
 			// If shipping address the same
-			if ($this->cart->hasShipping() && $this->request->post['shipping_address']) {
+			if ($this->cart->hasShipping() && $this->request->post['address_match']) {
 				$this->session->data['shipping_address'] = $this->session->data['payment_address'];
 
 				unset($this->session->data['shipping_method']);

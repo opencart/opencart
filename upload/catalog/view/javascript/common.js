@@ -31,6 +31,11 @@ $(document).ready(function() {
         $('[data-toggle=\'tooltip\']').tooltip({container: 'body'});
     });
 
+
+
+});
+
+$(document).ready(function() {
     // Currency
     $('#form-currency .dropdown-item').on('click', function(e) {
         e.preventDefault();
@@ -361,13 +366,33 @@ oc.error = function(key, message) {
     $('#error-' + key.replaceAll('_', '-')).html(message).addClass('d-block');
 }
 
-$(document).on('click', '[data-oc-action]', function() {
+$(document).on('submit', '[data-oc-toggle=\'ajax\']', function(e) {
+    e.preventDefault();
+
     var element = this;
 
     var form = $(element).attr('data-oc-form');
 
+    var action = $(form).attr('action');
+    var method = $(form).attr('method');
+
+
+    if (!method) {
+        method = 'post';
+    } else {
+        method = 'get';
+    }
+
+    var enctype = $(form).attr('enctype');
+
+    if (!enctype) {
+        enctype = 'application/x-www-form-urlencoded; charset=UTF-8';
+    } else {
+        enctype = 'multipart/form-data';
+    }
+
     $.ajax({
-        url: $(element).attr('data-oc-action'),
+        url: action,
         type: 'post',
         dataType: 'json',
         data: $(form).serialize(),
@@ -439,7 +464,7 @@ $(document).on('click', '[data-oc-action]', function() {
 });
 
 // Upload
-$(document).on('click', '[data-oc-upload]', function() {
+$(document).on('click', '[data-oc-toggle=\'upload\']', function() {
     var element = this;
     var target = $(element).attr('data-oc-target');
 
@@ -466,7 +491,7 @@ $(document).on('click', '[data-oc-upload]', function() {
             clearInterval(timer);
 
             $.ajax({
-                url: $(element).attr('data-oc-upload'),
+                url: $(element).attr('data-oc-url'),
                 type: 'post',
                 dataType: 'json',
                 data: new FormData($('#form-upload')[0]),

@@ -5,13 +5,11 @@
     {% if addresses %}
 
       <div class="form-check">
-        <input type="radio" name="shipping_existing" value="1" id="input-shipping-existing" class="form-check-input" checked/>
-        <label for="input-shipping-existing" class="form-check-label">{{ text_address_existing }}</label>
+        <input type="radio" name="shipping_existing" value="1" id="input-shipping-existing" class="form-check-input" checked/> <label for="input-shipping-existing" class="form-check-label">{{ text_address_existing }}</label>
       </div>
 
       <div class="form-check">
-        <input type="radio" name="shipping_existing" value="0" id="input-shipping-new" class="form-check-input"/>
-        <label for="input-shipping-new" class="form-check-label">{{ text_address_new }}</label>
+        <input type="radio" name="shipping_existing" value="0" id="input-shipping-new" class="form-check-input"/> <label for="input-shipping-new" class="form-check-label">{{ text_address_new }}</label>
       </div>
 
       <div id="shipping-existing">
@@ -22,42 +20,48 @@
           {% endfor %}
         </select>
       </div>
-
     {% endif %}
-
     <br/>
     <div id="shipping-new" style="display: {% if addresses %}none{% else %}block{% endif %};">
       <div class="row row-cols-2">
         {% if logged or config_checkout_address %}
-        <div class="col mb-3 required">
-          <label for="input-shipping-firstname" class="form-label">{{ entry_firstname }}</label> <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-shipping-firstname" class="form-control"/>
-          <div id="error-shipping-firstname" class="invalid-feedback"></div>
-        </div>
-        <div class="col mb-3 required">
-          <label for="input-shipping-lastname" class="form-label">{{ entry_lastname }}</label> <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-shipping-lastname" class="form-control"/>
-          <div id="error-shipping-lastname" class="invalid-feedback"></div>
-        </div>
+          <div class="col mb-3 required">
+            <label for="input-shipping-firstname" class="form-label">{{ entry_firstname }}</label>
+            <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-shipping-firstname" class="form-control"/>
+            <div id="error-shipping-firstname" class="invalid-feedback"></div>
+          </div>
+          <div class="col mb-3 required">
+            <label for="input-shipping-lastname" class="form-label">{{ entry_lastname }}</label>
+            <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-shipping-lastname" class="form-control"/>
+            <div id="error-shipping-lastname" class="invalid-feedback"></div>
+          </div>
         {% endif %}
         <div class="col mb-3">
-          <label for="input-shipping-company" class="form-label">{{ entry_company }}</label> <input type="text" name="company" value="{{ company }}" placeholder="{{ entry_company }}" id="input-shipping-company" class="form-control"/>
+          <label for="input-shipping-company" class="form-label">{{ entry_company }}</label>
+          <input type="text" name="company" value="{{ company }}" placeholder="{{ entry_company }}" id="input-shipping-company" class="form-control"/>
         </div>
         <div class="col mb-3 required">
-          <label for="input-shipping-address-1" class="form-label">{{ entry_address_1 }}</label> <input type="text" name="address_1" value="{{ address_1 }}" placeholder="{{ entry_address_1 }}" id="input-shipping-address-1" class="form-control"/>
+          <label for="input-shipping-address-1" class="form-label">{{ entry_address_1 }}</label>
+          <input type="text" name="address_1" value="{{ address_1 }}" placeholder="{{ entry_address_1 }}" id="input-shipping-address-1" class="form-control"/>
           <div id="error-shipping-address-1" class="invalid-feedback"></div>
         </div>
         <div class="col mb-3">
-          <label for="input-shipping-address-2" class="form-label">{{ entry_address_2 }}</label> <input type="text" name="address_2" value="{{ address_2 }}" placeholder="{{ entry_address_2 }}" id="input-shipping-address-2" class="form-control"/>
+          <label for="input-shipping-address-2" class="form-label">{{ entry_address_2 }}</label>
+          <input type="text" name="address_2" value="{{ address_2 }}" placeholder="{{ entry_address_2 }}" id="input-shipping-address-2" class="form-control"/>
         </div>
         <div class="col mb-3 required">
-          <label for="input-shipping-city" class="form-label">{{ entry_city }}</label> <input type="text" name="city" value="{{ city }}" placeholder="{{ entry_city }}" id="input-shipping-city" class="form-control"/>
+          <label for="input-shipping-city" class="form-label">{{ entry_city }}</label>
+          <input type="text" name="city" value="{{ city }}" placeholder="{{ entry_city }}" id="input-shipping-city" class="form-control"/>
           <div id="error-shipping-city" class="invalid-feedback"></div>
         </div>
         <div class="col mb-3 required">
-          <label for="input-shipping-postcode" class="form-label">{{ entry_postcode }}</label> <input type="text" name="postcode" value="{{ postcode }}" placeholder="{{ entry_postcode }}" id="input-shipping-postcode" class="form-control"/>
+          <label for="input-shipping-postcode" class="form-label">{{ entry_postcode }}</label>
+          <input type="text" name="postcode" value="{{ postcode }}" placeholder="{{ entry_postcode }}" id="input-shipping-postcode" class="form-control"/>
           <div id="error-shipping-postcode" class="invalid-feedback"></div>
         </div>
         <div class="col mb-3 required">
-          <label for="input-shipping-country" class="form-label">{{ entry_country }}</label> <select name="country_id" id="input-shipping-country" class="form-select">
+          <label for="input-shipping-country" class="form-label">{{ entry_country }}</label>
+          <select name="country_id" id="input-shipping-country" class="form-select">
             <option value="">{{ text_select }}</option>
             {% for country in countries %}
               <option value="{{ country.country_id }}"{% if country.country_id == country_id %} selected="selected"{% endif %}>{{ country.name }}</option>
@@ -79,7 +83,7 @@
               <select name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-select">
                 <option value="">{{ text_select }}</option>
                 {% for custom_field_value in custom_field.custom_field_value %}
-                  <option value="{{ custom_field_value.custom_field_value_id }}"{% if shipping_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id == shipping_custom_field[custom_field.custom_field_id] %}  selected="selected"{% endif %}>{{ custom_field_value.name }}</option>
+                  <option value="{{ custom_field_value.custom_field_value_id }}"{% if shipping_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id == shipping_custom_field[custom_field.custom_field_id] %} selected="selected"{% endif %}>{{ custom_field_value.name }}</option>
                 {% endfor %}
               </select>
               <div id="error-shipping-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
@@ -139,7 +143,7 @@
             <div class="col mb-3{% if custom_field.required %} required{% endif %} custom-field">
               <label class="form-label">{{ custom_field.name }}</label>
               <div class="col-sm-10">
-                <button type="button" data-oc-upload="index.php?route=tool/upload" data-oc-target="#input-shipping-custom-field-{{ custom_field.custom_field_id }}" data-loading-text="{{ text_loading }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
+                <button type="button" data-oc-toggle="upload" data-oc-url="index.php?route=tool/upload" data-oc-target="#input-shipping-custom-field-{{ custom_field.custom_field_id }}" data-loading-text="{{ text_loading }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
                 <input type="hidden" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{% if shipping_custom_field[custom_field.custom_field_id] %}{{ shipping_custom_field[custom_field.custom_field_id] }}{% endif %}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}"/>
                 <div id="error-shipping-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
               </div>
@@ -150,7 +154,7 @@
             <div class="col mb-3{% if custom_field.required %} required{% endif %} custom-field">
               <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
               <div class="col-sm-10">
-                <div class="input-group date">
+                <div data-oc-date="" class="input-group date">
                   <input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{% if shipping_custom_field[custom_field.custom_field_id] %}{{ shipping_custom_field[custom_field.custom_field_id] }}{% else %}{{ custom_field.value }}{% endif %}" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
                   <div class="input-group-text"><i class="fas fa-calendar"></i></div>
                   <div id="error-shipping-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
@@ -184,6 +188,7 @@
             </div>
           {% endif %}
         {% endfor %}
+
       </div>
       <div class="text-end mb-3">
         <button type="button" id="button-shipping-address" class="btn btn-primary">{{ button_continue }}</button>
@@ -287,8 +292,6 @@ $('#button-shipping-address').on('click', function() {
                 }
 
 
-
-
             },
             error: function(xhr, ajaxOptions, thrownError) {
                 oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -345,22 +348,4 @@ $('#input-shipping-country').on('change', function() {
 });
 
 $('#input-shipping-country').trigger('change');
-
-$('.date').datetimepicker({
-    'format': 'YYYY-MM-DD',
-    'locale': '{{ datepicker }}',
-    'allowInputToggle': true
-});
-
-$('.time').datetimepicker({
-    'format': 'HH:mm',
-    'locale': '{{ datepicker }}',
-    'allowInputToggle': true
-});
-
-$('.datetime').datetimepicker({
-    'format': 'YYYY-MM-DD HH:mm',
-    'locale': '{{ datepicker }}',
-    'allowInputToggle': true
-});
 //--></script>

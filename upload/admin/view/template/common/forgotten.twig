@@ -10,7 +10,7 @@
             <i class="fas fa-redo"></i> {{ heading_title }}
           </div>
           <div class="card-body">
-            <form id="form-forgotten">
+            <form id="form-forgotten" action="{{ confirm }}" method="post">
               <p>{{ text_email }}</p>
               <div class="mb-3">
                 <label for="input-email" class="form-label">{{ entry_email }}</label>
@@ -20,7 +20,7 @@
                 </div>
               </div>
               <div class="text-end">
-                <button type="button" data-oc-action="{{ confirm }}" data-oc-form="#form-forgotten" class="btn btn-primary"><i class="fas fa-check"></i> {{ button_reset }}</button>
+                <button type="submit" class="btn btn-primary"><i class="fas fa-check"></i> {{ button_reset }}</button>
                 <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a>
               </div>
             </form>

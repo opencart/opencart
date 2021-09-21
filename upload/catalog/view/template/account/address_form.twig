@@ -231,7 +231,7 @@ $('#input-country').on('change', function() {
                 $('#input-postcode').parent().parent().removeClass('required');
             }
 
-            html = '<option value="">   {{ text_select }}</option>';
+            html = '<option value="">{{ text_select }}</option>';
 
             if (json['zone'] && json['zone'] != '') {
                 for (i = 0; i < json['zone'].length; i++) {
@@ -244,7 +244,7 @@ $('#input-country').on('change', function() {
                     html += '>' + json['zone'][i]['name'] + '</option>';
                 }
             } else {
-                html += '<option value="0" selected="selected">   {{ text_none }}</option>';
+                html += '<option value="0" selected="selected">{{ text_none }}</option>';
             }
 
             $('#input-zone').html(html);

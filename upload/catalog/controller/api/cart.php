@@ -13,7 +13,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->post['quantity'])) {
-			$quantity = $this->request->post['quantity'];
+			$quantity = (int)$this->request->post['quantity'];
 		} else {
 			$quantity = 1;
 		}
@@ -43,7 +43,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$this->cart->add($this->request->post['product_id'], $quantity, $option);
+			$this->cart->add((int)$this->request->post['product_id'], $quantity, $option);
 
 			$json['success'] = $this->language->get('text_success');
 
@@ -63,7 +63,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (!$json) {
-			$this->cart->update($this->request->post['key'], $this->request->post['quantity']);
+			$this->cart->update($this->request->post['key'], (int)$this->request->post['quantity']);
 
 			$json['success'] = $this->language->get('text_success');
 		}

@@ -339,7 +339,6 @@ class Customer extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-
 	public function getTotalTransactions(int $customer_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total`  FROM `" . DB_PREFIX . "customer_transaction` WHERE `customer_id` = '" . (int)$customer_id . "'");
 

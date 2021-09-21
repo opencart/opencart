@@ -145,7 +145,6 @@ class Upgrade3 extends \Opencart\System\Engine\Controller {
 				];
 			}
 
-
 			if (isset($settings['config_smtp_port'])) {
 				$missing[] = [
 					'key'        => 'config_mail_smtp_port',

@@ -17,9 +17,7 @@
     <div class="card">
       <div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_form }}</div>
       <div class="card-body">
-
-        <form id="form-affiliate" action="{{ save }}" method="post">
-
+        <form id="form-affiliate" action="{{ save }}" method="post" data-oc-toggle="ajax">
           <ul class="nav nav-tabs">
             <li class="nav-item"><a href="#tab-general" data-bs-toggle="tab" class="nav-link active">{{ tab_general }}</a></li>
             <li class="nav-item"><a href="#tab-history" data-bs-toggle="tab" class="nav-link">{{ tab_history }}</a></li>
@@ -28,16 +26,12 @@
           </ul>
           <div class="tab-content">
             <div id="tab-general" class="tab-pane active">
-
               <fieldset>
                 <legend>{{ text_affiliate }}</legend>
-
                 <div class="row mb-3 required" class="tab-pane active">
                   <label for="input-customer" class="col-sm-2 col-form-label">{{ entry_customer }}</label>
                   <div class="col-sm-10">
-                    <input type="text" name="customer" value="{{ customer }}" placeholder="{{ entry_customer }}" id="input-customer" class="form-control"{% if not customer_id %} disabled{% endif %}/>
-                    <input type="hidden" name="customer_id" value="{{ customer_id }}" id="input-customer-id"/>
-                    <input type="hidden" name="customer_group_id" value="{{ customer_group_id }}" id="input-customer-group"/>
+                    <input type="text" name="customer" value="{{ customer }}" placeholder="{{ entry_customer }}" id="input-customer" class="form-control"{% if not customer_id %} disabled{% endif %}/> <input type="hidden" name="customer_id" value="{{ customer_id }}" id="input-customer-id"/> <input type="hidden" name="customer_group_id" value="{{ customer_group_id }}" id="input-customer-group"/>
                     <div id="error-customer" class="invalid-feedback"></div>
                   </div>
                 </div>

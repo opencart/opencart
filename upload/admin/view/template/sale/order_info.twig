@@ -465,7 +465,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
-        <form id="form-customer">
+        <form id="form-customer" data-oc-toggle="ajax">
           <div class="mb-3">
             <label for="input-customer" class="form-label">{{ entry_customer }}</label>
             <div class="input-group"><input type="text" name="customer" value="{{ firstname }} {{ lastname }}" placeholder="{{ entry_customer }}" id="input-customer" class="form-control"/> <input type="hidden" name="customer_id" value="{{ customer_id }}"/> <a href="{{ customer_add }}" target="_blank" data-bs-toggle="tooltip" title="{{ button_customer_add }}" class="btn btn-outline-secondary"><i class="fas fa-user-plus"></i></a></div>
@@ -615,7 +615,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
-        <form id="form-store">
+        <form id="form-store" data-oc-toggle="ajax">
           <select name="store_id" id="input-store" class="form-select">
             {% for store in stores %}
               <option value="{{ store.store_id }}"{% if store.store_id == store_id %} selected="selected"{% endif %}>{{ store.name }}</option>

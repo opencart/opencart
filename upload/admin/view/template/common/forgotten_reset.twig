@@ -8,7 +8,7 @@
         <div class="card">
           <div class="card-header"><i class="fas fa-redo"></i> {{ heading_title }}</div>
           <div class="card-body">
-            <form id="form-forgotten" action="{{ save }}" method="post">
+            <form id="form-forgotten" action="{{ save }}" method="post" data-oc-toggle="ajax">
               <p>{{ text_password }}</p>
               <div class="mb-3">
                 <label for="input-password" class="form-label">{{ entry_password }}</label>

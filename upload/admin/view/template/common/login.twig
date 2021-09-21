@@ -8,7 +8,7 @@
         <div class="card">
           <div class="card-header"><i class="fas fa-lock"></i> {{ text_login }}</div>
           <div class="card-body">
-            <form id="form-login" data-oc-toggle="ajax" action="{{ login }}" method="post">
+            <form id="form-login" action="{{ login }}" method="post" data-oc-toggle="ajax">
               {% if error_warning %}
                 <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}</div>
               {% endif %}

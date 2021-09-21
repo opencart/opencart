@@ -90,7 +90,7 @@ $(document).ready(function() {
             $.extend(element, option);
         }
     });
-
+/*
     // Makes tooltips work on ajax generated content
     $(document).ajaxStop(function() {
         $('[data-bs-toggle=\'tooltip\']').each(function(i, element) {
@@ -105,7 +105,7 @@ $(document).ready(function() {
             }
         });
     });
-
+*/
 // Apply to all js generated content
     $(document).on('click', '[data-bs-toggle=\'tooltip\']', function(e) {
         var element = this;
@@ -162,17 +162,17 @@ oc.error = function(key, message) {
 $(document).submit('form[data-oc-toggle=\'ajax\']', function(e) {
     e.preventDefault();
 
-    console.log(e);
-
     var element = this;
-
-    console.log(element);
 
     var form = e.target;
 
     var action = $(form).attr('action');
 
-    console.log(action);
+    var formaction = $(e.originalEvent.submitter).attr('formaction');
+
+    if (typeof formaction != 'undefined') {
+        action = formaction;
+    }
 
     var method = $(form).attr('method');
 
@@ -180,14 +180,11 @@ $(document).submit('form[data-oc-toggle=\'ajax\']', function(e) {
         method = 'post';
     }
 
-    console.log(method);
-
     var enctype = $(element).attr('enctype');
 
     if (typeof enctype == 'undefined') {
         enctype = 'application/x-www-form-urlencoded';
     }
-    console.log(enctype);
 
     // https://github.com/opencart/opencart/issues/9690
     if (typeof CKEDITOR != 'undefined') {
@@ -195,6 +192,13 @@ $(document).submit('form[data-oc-toggle=\'ajax\']', function(e) {
             CKEDITOR.instances[instance].updateElement();
         }
     }
+
+    console.log(e);
+    console.log(element);
+    console.log(action);
+    console.log(formaction);
+    console.log(method);
+    console.log(enctype);
 
     $.ajax({
         url: action,
@@ -205,17 +209,17 @@ $(document).submit('form[data-oc-toggle=\'ajax\']', function(e) {
         contentType: enctype,
         processData: false,
         beforeSend: function() {
-            //$(element).button('loading');
+           // $(button).button('loading');
         },
         complete: function() {
-          // $(element).button('reset');
+         //  $(button).button('reset');
         },
         success: function(json) {
             $(element).find('.is-invalid').removeClass('is-invalid');
             $(element).find('.invalid-feedback').removeClass('d-block');
 
-            console.log(json['error']);
-            console.log(json);
+           // console.log(json['error']);
+           // console.log(json);
 
             if (json['redirect']) {
                 location = json['redirect'];
@@ -232,7 +236,6 @@ $(document).submit('form[data-oc-toggle=\'ajax\']', function(e) {
 
             if (typeof json['error'] == 'object') {
                 console.log(json['error']);
-
 
                 if (json['error']['warning']) {
                     oc.alert('danger', json['error']['warning']);
@@ -255,22 +258,20 @@ $(document).submit('form[data-oc-toggle=\'ajax\']', function(e) {
                 var target = $(form).attr('data-oc-target');
 
                 if (typeof url !== typeof undefined && typeof target !== typeof undefined) {
-                    $(target).load(url);
+                   $(target).load(url);
                 }
-
-                // $(target).find('[data-bs-toggle=\'tooltip\']').tooltip();
 
                 delete json['success'];
             }
 
             // Replace any form values that correspond to form names.
             for (key in json) {
-                $(element).find('[name=\'' + key + '\']').val(json[key]);
+                //$(element).find('[name=\'' + key + '\']').val(json[key]);
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
-            oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+           // oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+           // console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 

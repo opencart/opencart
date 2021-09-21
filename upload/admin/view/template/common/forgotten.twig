@@ -10,7 +10,7 @@
             <i class="fas fa-redo"></i> {{ heading_title }}
           </div>
           <div class="card-body">
-            <form id="form-forgotten" action="{{ confirm }}" method="post">
+            <form id="form-forgotten" action="{{ confirm }}" method="post" data-oc-toggle="ajax">
               <p>{{ text_email }}</p>
               <div class="mb-3">
                 <label for="input-email" class="form-label">{{ entry_email }}</label>

@@ -20,7 +20,7 @@
           <div id="security-install" class="d-none">
             <h4 class="text-danger"><i class="fas fa-exclamation-triangle"></i> {{ text_install }}</h4>
 
-            <form id="form-install" action="{{ save }}" method="post">
+            <form id="form-install" action="{{ save }}" method="post" data-oc-toggle="ajax">
               <fieldset>
                 <legend>{{ text_choose }}</legend>
                 <div class="mb-3">
@@ -38,7 +38,7 @@
           <div id="security-install" class="d-none">
             <h4 class="text-danger"><i class="fas fa-exclamation-triangle"></i> {{ text_storage }}</h4>
 
-            <form id="form-storage" action="{{ save }}" method="post">
+            <form id="form-storage" action="{{ save }}" method="post" data-oc-toggle="ajax">
               <fieldset>
                 <legend>{{ text_storage_choose }}</legend>
                 <div class="mb-3">
@@ -83,7 +83,7 @@
               <h4 class="text-danger"><i class="fas fa-exclamation-triangle"></i> {{ text_admin }}</h4>
             </div>
 
-            <form id="form-admin" action="{{ save }}" method="post">
+            <form id="form-admin" action="{{ save }}" method="post" data-oc-toggle="ajax">
               <fieldset>
                 <legend>{{ text_admin_choose }}</legend>
                 <div class="mb-3">

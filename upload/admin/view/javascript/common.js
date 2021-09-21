@@ -279,8 +279,9 @@ $(document).submit('form[data-oc-toggle=\'ajax\']', function(e) {
 });
 
 // Upload
-$(document).on('click', '[data-oc-upload]', function() {
+$(document).on('click', '[data-oc-toggle=\'upload\']', function() {
     var element = this;
+
     var target = $(element).attr('data-oc-target');
 
     $('#form-upload').remove();

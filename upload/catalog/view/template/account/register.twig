@@ -9,7 +9,7 @@
     <div id="content" class="col">{{ content_top }}
       <h1>{{ heading_title }}</h1>
       <p>{{ text_account_already }}</p>
-      <form id="form-register" action="{{ save }}" method="post" data-oc-toggle="ajax">
+      <form id="form-register" action="{{ register }}" method="post" data-oc-toggle="ajax">
         <fieldset id="account">
           <legend>{{ text_your_details }}</legend>
           <div class="row mb-3 required{{ customer_groups|length <= 1 ? ' d-none' }}">

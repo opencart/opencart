@@ -158,7 +158,7 @@ class Category extends \Opencart\System\Engine\Model {
 		}
 
 		// Update all the previous paths to the new one
-		$this->db->query("UPDATE `" . DB_PREFIX . "seo_url` SET `value` = REPLACE(`value`, '" . $this->db->escape($path_old) . "', '" . $this->db->escape($path) . "') WHERE `key` = 'path' AND `value` LIKE '" . $this->db->escape($path_old) . "\_%'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "seo_url` SET `value` = REPLACE (`value`, '" . $this->db->escape($path_old) . "', '" . $this->db->escape($path) . "') WHERE `key` = 'path' AND `value` LIKE '" . $this->db->escape($path_old) . "\_%'");
 
 		// Layouts
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "category_to_layout` WHERE `category_id` = '" . (int)$category_id . "'");

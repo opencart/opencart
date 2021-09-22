@@ -42,11 +42,11 @@ class Weight {
 	}
 
 	public function format($value, $weight_class_id, $decimal_point = '', $thousand_point = '') {
-		if (!$decimal_point) {
+		if ($decimal_point === '') {
 			$decimal_point = $this->language->get('decimal_point');
 		}
 		
-		if (!$thousand_point) {
+		if ($thousand_point === '') {
 			$thousand_point = $this->language->get('thousand_point');	
 		}
 		

@@ -256,6 +256,7 @@ $('#button-shipping-address').on('click', function() {
             type: 'post',
             data: data,
             dataType: 'json',
+            contentType: 'application/x-www-form-urlencoded',
             beforeSend: function() {
                 $(element).button('loading');
             },
@@ -263,8 +264,8 @@ $('#button-shipping-address').on('click', function() {
                 $(element).button('reset');
             },
             success: function(json) {
-                $('.alert-dismissible, .text-danger').remove();
-                $('.mb-3').removeClass('has-error');
+                $('#form-shipping-address').find('.is-invalid').removeClass('is-invalid');
+                $('#form-shipping-address').find('.invalid-feedback').removeClass('d-block');
 
                 if (json['redirect']) {
                     location = json['redirect'];
@@ -272,7 +273,7 @@ $('#button-shipping-address').on('click', function() {
 
                 if (json['error']) {
                     if (json['error']['warning']) {
-                        $('#checkout-shipping-address .card-body').prepend('<div class="alert alert-warning alert-dismissible">' + json['error']['warning'] + '<button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                        $('#alert').prepend('<div class="alert alert-warning alert-dismissible">' + json['error']['warning'] + '<button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                     }
 
                     for (i in json['error']) {
@@ -287,8 +288,7 @@ $('#button-shipping-address').on('click', function() {
                         $(element).addClass('is-invalid');
                     }
 
-                    // Highlight any found errors
-                    $('.text-danger').parent().parent().addClass('has-error');
+
                 }
 
 

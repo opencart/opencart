@@ -168,7 +168,9 @@ $(document).submit('form[data-oc-toggle=\'ajax\']', function(e) {
 
     var action = $(form).attr('action');
 
-    var formaction = $(e.originalEvent.submitter).attr('formaction');
+    var button = e.originalEvent.submitter;
+
+    var formaction = $(button).attr('formaction');
 
     if (typeof formaction != 'undefined') {
         action = formaction;
@@ -200,7 +202,7 @@ $(document).submit('form[data-oc-toggle=\'ajax\']', function(e) {
     console.log(method);
     console.log(enctype);
 
-    $('data-loading-text').attr();
+   // $('data-loading-text').attr();
 
     $.ajax({
         url: action,
@@ -214,7 +216,7 @@ $(document).submit('form[data-oc-toggle=\'ajax\']', function(e) {
             $(button).button('loading');
         },
         complete: function() {
-         //  $(button).button('reset');
+           $(button).button('reset');
         },
         success: function(json) {
             $(element).find('.is-invalid').removeClass('is-invalid');

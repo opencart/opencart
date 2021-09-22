@@ -232,23 +232,23 @@ class Register extends \Opencart\System\Engine\Controller {
 				$customer_id = 0;
 			}
 
-			// Add customer details into session
-			$this->session->data['customer'] = [
-				'customer_id'       => $customer_id,
-				'customer_group_id' => $customer_group_id,
-				'firstname'         => $this->request->post['firstname'],
-				'lastname'          => $this->request->post['lastname'],
-				'email'             => $this->request->post['email'],
-				'telephone'         => $this->request->post['telephone'],
-				'custom_field'      => isset($this->request->post['custom_field']) ? $this->request->post['custom_field'] : []
-			];
-
 			// Check if current customer group requires approval
 			$this->load->model('account/customer_group');
 
 			$customer_group_info = $this->model_account_customer_group->getCustomerGroup($customer_group_id);
 
 			if ($customer_group_info && !$customer_group_info['approval']) {
+				// Add customer details into session
+				$this->session->data['customer'] = [
+					'customer_id'       => $customer_id,
+					'customer_group_id' => $customer_group_id,
+					'firstname'         => $this->request->post['firstname'],
+					'lastname'          => $this->request->post['lastname'],
+					'email'             => $this->request->post['email'],
+					'telephone'         => $this->request->post['telephone'],
+					'custom_field'      => isset($this->request->post['custom_field']) ? $this->request->post['custom_field'] : []
+				];
+
 				// If everything good login
 				$this->customer->login($this->request->post['email'], $this->request->post['password']);
 			}

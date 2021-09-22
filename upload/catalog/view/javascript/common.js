@@ -32,7 +32,23 @@ $(document).ready(function() {
     });
 
 
+    $('.date').datetimepicker({
+        'format': 'YYYY-MM-DD',
+        'locale': '{{ datepicker }}',
+        'allowInputToggle': true
+    });
 
+    $('.time').datetimepicker({
+        'format': 'HH:mm',
+        'locale': '{{ datepicker }}',
+        'allowInputToggle': true
+    });
+
+    $('.datetime').datetimepicker({
+        'format': 'YYYY-MM-DD HH:mm',
+        'locale': '{{ datepicker }}',
+        'allowInputToggle': true
+    });
 });
 
 $(document).ready(function() {
@@ -351,7 +367,6 @@ compare.add = function(product_id) {
 };
 
 // Forms
-
 var oc = [];
 
 oc.alert = function(type, message) {

@@ -71,7 +71,7 @@ $_['entry_postcode']                 = 'Post Code';
 $_['entry_city']                     = 'City';
 $_['entry_country']                  = 'Country';
 $_['entry_zone']                     = 'Region / State';
-$_['entry_shipping']                 = 'My delivery and billing addresses are the same.';
+$_['entry_match']                    = 'My delivery and billing addresses are the same.';
 $_['entry_newsletter']               = 'I wish to subscribe to the %s newsletter.';
 
 // Error

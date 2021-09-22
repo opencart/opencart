@@ -386,33 +386,37 @@ $(document).on('submit', '[data-oc-toggle=\'ajax\']', function(e) {
 
     var element = this;
 
-    var form = $(element).attr('data-oc-form');
+    var form = e.target;
 
     var action = $(form).attr('action');
-    var method = $(form).attr('method');
 
+    var button = e.originalEvent.submitter;
 
-    if (!method) {
-        method = 'post';
-    } else {
-        method = 'get';
+    var formaction = $(button).attr('formaction');
+
+    if (typeof formaction != 'undefined') {
+        action = formaction;
     }
 
-    var enctype = $(form).attr('enctype');
+    var method = $(form).attr('method');
 
-    if (!enctype) {
-        enctype = 'application/x-www-form-urlencoded; charset=UTF-8';
-    } else {
-        enctype = 'multipart/form-data';
+    if (typeof method == 'undefined') {
+        method = 'post';
+    }
+
+    var enctype = $(element).attr('enctype');
+
+    if (typeof enctype == 'undefined') {
+        enctype = 'application/x-www-form-urlencoded';
     }
 
     $.ajax({
         url: action,
-        type: 'post',
+        type: method,
         dataType: 'json',
         data: $(form).serialize(),
         cache: false,
-        contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+        contentType: enctype,
         processData: false,
         beforeSend: function() {
             $(element).button('loading');

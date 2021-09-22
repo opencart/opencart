@@ -12,7 +12,7 @@
     <div id="content" class="col">{{ content_top }}
       <h1>{{ heading_title }}</h1>
       <p>{{ text_description }}</p>
-      <form id="form-voucher">
+      <form id="form-voucher" action="{{ save }}" method="post" data-oc-toggle="ajax">
         <div class="row mb-3 required">
           <label for="input-to-name" class="col-sm-2 col-form-label">{{ entry_to_name }}</label>
           <div class="col-sm-10">
@@ -74,7 +74,7 @@
               <label class="form-check-label">{{ text_agree }}</label> <input type="checkbox" name="agree" value="1" class="form-check-input"/>
               &nbsp;
             </div>
-            <button type="button" data-oc-action="{{ save }}" data-oc-form="#form-voucher" class="btn btn-primary">{{ button_continue }}</button>
+            <button type="submit" class="btn btn-primary">{{ button_continue }}</button>
           </div>
         </div>
       </form>

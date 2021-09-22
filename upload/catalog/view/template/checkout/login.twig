@@ -1,4 +1,4 @@
-<form id="form-login">
+<form id="form-login" action="{{ login }}" method="post" data-oc-toggle="ajax">
   <fieldset>
     <legend>{{ text_login }}</legend>
     <div class="mb-3">
@@ -10,6 +10,6 @@
       <input type="password" name="password" value="" placeholder="{{ entry_password }}" id="input-password" class="form-control"/>
       <a href="{{ forgotten }}">{{ text_forgotten }}</a>
     </div>
-    <button type="button" data-oc-action="{{ login }}" data-oc-form="#form-login" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_login }}</button>
+    <button type="submit" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_login }}</button>
   </fieldset>
 </form>

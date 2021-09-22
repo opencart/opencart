@@ -11,7 +11,7 @@
     <div id="content" class="col">
       {{ content_top }}
       <h1>{{ heading_title }}</h1>
-      <form id="form-affiliate">
+      <form id="form-affiliate" action="{{ save }}" method="post" data-oc-toggle="ajax">
 
         <fieldset>
           <legend>{{ text_my_affiliate }}</legend>
@@ -41,16 +41,13 @@
             <label class="col-sm-2 col-form-label">{{ entry_payment }}</label>
             <div class="col-sm-10">
               <div class="form-check">
-                <input type="radio" name="payment" value="cheque" id="input-payment-cheque" class="form-check-input"{% if payment == 'cheque' %} checked{% endif %}/>
-                <label for="input-payment-cheque" class="form-check-label">{{ text_cheque }}</label>
+                <input type="radio" name="payment" value="cheque" id="input-payment-cheque" class="form-check-input"{% if payment == 'cheque' %} checked{% endif %}/> <label for="input-payment-cheque" class="form-check-label">{{ text_cheque }}</label>
               </div>
               <div class="form-check">
-                <input type="radio" name="payment" value="paypal" id="input-payment-paypal" class="form-check-input"{% if payment == 'paypal' %} checked{% endif %}/>
-                <label for="input-payment-paypal" class="form-check-label">{{ text_paypal }}</label>
+                <input type="radio" name="payment" value="paypal" id="input-payment-paypal" class="form-check-input"{% if payment == 'paypal' %} checked{% endif %}/> <label for="input-payment-paypal" class="form-check-label">{{ text_paypal }}</label>
               </div>
               <div class="form-check">
-                <input type="radio" name="payment" value="bank" id="input-payment-bank" class="form-check-input"{% if payment == 'bank' %} checked{% endif %}/>
-                <label for="input-payment-bank" class="form-check-label">{{ text_bank }}</label>
+                <input type="radio" name="payment" value="bank" id="input-payment-bank" class="form-check-input"{% if payment == 'bank' %} checked{% endif %}/> <label for="input-payment-bank" class="form-check-label">{{ text_bank }}</label>
               </div>
             </div>
           </div>
@@ -230,7 +227,7 @@
                 &nbsp;
               </div>
             {% endif %}
-            <button type="button" data-oc-action="{{ save }}" data-oc-form="#form-affiliate" id="button-confirm" class="btn btn-primary">{{ button_continue }}</button>
+            <button type="submit" class="btn btn-primary">{{ button_continue }}</button>
           </div>
         </div>
 

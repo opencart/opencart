@@ -9,7 +9,7 @@
     <div id="content" class="col"> {{ content_top }}
       <h1>{{ heading_title }}</h1>
       <p>{{ text_description }}</p>
-      <form id="form-return">
+      <form id="form-return" action="{{ save }}" method="post" data-oc-toggle="ajax">
         <fieldset>
           <legend>{{ text_order }}</legend>
           <div class="row mb-3 required">
@@ -123,7 +123,7 @@
                 &nbsp;
               </div>
             {% endif %}
-            <button type="button" data-oc-action="{{ save }}" data-oc-form="#form-return" class="btn btn-primary">{{ button_submit }}</button>
+            <button type="submit" class="btn btn-primary">{{ button_submit }}</button>
           </div>
         </div>
       </form>

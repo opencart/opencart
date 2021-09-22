@@ -8,7 +8,7 @@
   <div class="row">{{ column_left }}
     <div id="content" class="col">{{ content_top }}
       <h1>{{ text_address }}</h1>
-      <form id="form-address">
+      <form id="form-address" action="{{ save }}" method="post" data-oc-toggle="ajax">
         <fieldset>
           <div class="row mb-3 required">
             <label for="input-firstname" class="col-sm-2 col-form-label">{{ entry_firstname }}</label>
@@ -202,7 +202,7 @@
             <a href="{{ back }}" class="btn btn-light">{{ button_back }}</a>
           </div>
           <div class="float-end">
-            <button type="button" data-oc-action="{{ save }}" data-oc-form="#form-address" class="btn btn-primary">{{ button_continue }}</button>
+            <button type="submit" class="btn btn-primary">{{ button_continue }}</button>
           </div>
         </div>
       </form>

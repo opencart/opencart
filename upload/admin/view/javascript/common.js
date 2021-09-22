@@ -200,6 +200,8 @@ $(document).submit('form[data-oc-toggle=\'ajax\']', function(e) {
     console.log(method);
     console.log(enctype);
 
+    $('data-loading-text').attr();
+
     $.ajax({
         url: action,
         type: method,
@@ -209,7 +211,7 @@ $(document).submit('form[data-oc-toggle=\'ajax\']', function(e) {
         contentType: enctype,
         processData: false,
         beforeSend: function() {
-           // $(button).button('loading');
+            $(button).button('loading');
         },
         complete: function() {
          //  $(button).button('reset');

@@ -6,7 +6,7 @@
         {% if orders %}
           <a href="{{ orders }}" data-bs-toggle="tooltip" title="{{ button_order }}" class="btn btn-warning"><i class="fas fa-receipt"></i></a>
         {% endif %}
-        <button type="submit" data-oc-toggle="ajax" form="form-customer" formaction="{{ save }}" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
+        <button type="submit" form="form-customer" formaction="{{ save }}" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
         <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
       <ol class="breadcrumb">
@@ -613,7 +613,7 @@ $('#button-address').on('click', function(e) {
     html += '    <label for="input-address-' + address_row + '-city" class="col-sm-2 col-form-label">{{ entry_city }}</label>';
     html += '    <div class="col-sm-10">';
     html += '      <input type="text" name="address[' + address_row + '][city]" value="" placeholder="{{ entry_city }}" id="input-address-' + address_row + '-city" class="form-control"/>';
-    html += '      <div id="error-address-' + address_row + '-address-1" class="invalid-feedback"></div>';
+    html += '      <div id="error-address-' + address_row + '-city" class="invalid-feedback"></div>';
     html += '    </div>';
     html += '  </div>';
 

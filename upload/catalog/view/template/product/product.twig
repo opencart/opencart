@@ -7,7 +7,6 @@
   </ul>
   <div class="row">{{ column_left }}
     <div id="content" class="col">{{ content_top }}
-
       <div class="row">
 
         {% if column_left or column_right %}
@@ -401,7 +400,7 @@ $('#button-cart').on('click', function() {
             }
 
             if (json['success']) {
-                html  = '<div class="toast">';
+                html = '<div class="toast">';
                 html += '  <div class="toast-body"><button type="button" class="ml-2 mb-1 btn-close float-end" data-bs-dismiss="toast"></button> ' + json['success'] + '</div>';
                 html += '</div>';
 
@@ -467,7 +466,7 @@ $('#button-review').on('click', function() {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
-               // $('#form-review').after('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                // $('#form-review').after('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                 for (key in json['error']) {
                     oc.error(key, json['error'][key]);

@@ -9,7 +9,7 @@
     <div id="content" class="col">{{ content_top }}
       <h1>{{ heading_title }}</h1>
       <p>{{ text_account_already }}</p>
-      <form id="form-register">
+      <form id="form-register" action="{{ save }}" method="post" data-oc-toggle="ajax">
         <fieldset id="account">
           <legend>{{ text_your_details }}</legend>
           <div class="row mb-3 required{{ customer_groups|length <= 1 ? ' d-none' }}">
@@ -205,7 +205,7 @@
                 <label class="form-check-label">{{ text_agree }}</label> <input type="checkbox" name="agree" value="1" class="form-check-input"/>
               </div>
             {% endif %}
-            <button type="button" data-oc-action="{{ register }}" data-oc-form="#form-register" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_continue }}</button>
+            <button type="submit" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_continue }}</button>
           </div>
         </div>
       </form>

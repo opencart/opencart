@@ -98,7 +98,7 @@
 					{% endfor %}
 				</div>
 			{% endif %}
-			<form id="form-contact">
+			<form id="form-contact" action="{{ send }}" method="post" data-oc-toggle="ajax">
 				<fieldset>
 					<legend>{{ text_contact }}</legend>
 					<div class="row mb-3 required">
@@ -126,7 +126,7 @@
 				</fieldset>
 				<div class="d-inline-block pt-2 pd-2 w-100">
 					<div class="text-end">
-						<button type="button" data-oc-action="{{ send }}" data-oc-form="#form-contact" class="btn btn-primary">{{ button_submit }}</button>
+						<button type="submit" class="btn btn-primary">{{ button_submit }}</button>
 					</div>
 				</div>
 			</form>

@@ -8,7 +8,6 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 
 		$data['config_checkout_address'] = $this->config->get('config_checkout_address');
 		$data['config_file_max_size'] = $this->config->get('config_file_max_size');
-		$data['config_checkout_address'] = $this->config->get('config_checkout_address');
 
 		$data['language'] = $this->config->get('config_language');
 		$data['logged'] = $this->customer->isLogged();
@@ -196,6 +195,8 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 
 			unset($this->session->data['shipping_method']);
 			unset($this->session->data['shipping_methods']);
+
+			$json['success'] = 'Success: Your address has been successfully created!';
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

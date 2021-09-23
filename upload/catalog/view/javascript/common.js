@@ -31,7 +31,7 @@ $(document).ready(function() {
         $('[data-toggle=\'tooltip\']').tooltip({container: 'body'});
     });
 
-
+/*
     $('.date').datetimepicker({
         'format': 'YYYY-MM-DD',
         'locale': '{{ datepicker }}',
@@ -49,6 +49,7 @@ $(document).ready(function() {
         'locale': '{{ datepicker }}',
         'allowInputToggle': true
     });
+    */
 });
 
 $(document).ready(function() {

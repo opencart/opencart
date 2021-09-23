@@ -71,9 +71,9 @@ class Register extends \Opencart\System\Engine\Controller {
 		$data['custom_fields'] = $this->model_account_custom_field->getCustomFields();
 
 		if (isset($this->session->data['customer']['custom_field'])) {
-			$data['customer_custom_field'] = $this->session->data['customer']['custom_field'];
+			$data['account_custom_field'] = $this->session->data['customer']['custom_field'];
 		} else {
-			$data['customer_custom_field'] = [];
+			$data['account_custom_field'] = [];
 		}
 
 		// Captcha
@@ -112,7 +112,7 @@ class Register extends \Opencart\System\Engine\Controller {
 
 		// Validate cart has products and has stock.
 		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
-			$json['redirect'] =  $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
+			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
 		}
 
 		// Validate minimum quantity requirements.
@@ -153,14 +153,17 @@ class Register extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-			// Customer
-			if (in_array((int)$this->request->post['customer_group_id'], (array)$this->config->get('config_customer_group_display'))) {
-				$customer_group_id = (int)$this->request->post['customer_group_id'];
+			if (!$this->config->get('config_checkout_guest')) {
+				$account = true;
 			} else {
-				$customer_group_id = $this->config->get('config_customer_group_id');
+				$account = (bool)$this->request->post['account'];
 			}
 
-			// Use _custromer to separate error ids
+			// Make sure people can not logout if they have products that requrie downloads or login display price.
+			if (!$account && (!$this->config->get('config_customer_price') || $this->cart->hasDownload())) {
+				$json['error']['warning'] = $this->language->get('error_account');
+			}
+
 			if ((utf8_strlen($this->request->post['firstname']) < 1) || (utf8_strlen($this->request->post['firstname']) > 32)) {
 				$json['error']['firstname'] = $this->language->get('error_firstname');
 			}
@@ -175,7 +178,7 @@ class Register extends \Opencart\System\Engine\Controller {
 
 			$this->load->model('account/customer');
 
-			if ($this->request->post['account'] && $this->model_account_customer->getTotalCustomersByEmail($this->request->post['email'])) {
+			if ($account && $this->model_account_customer->getTotalCustomersByEmail($this->request->post['email'])) {
 				$json['error']['warning'] = $this->language->get('error_exists');
 			}
 
@@ -183,11 +186,21 @@ class Register extends \Opencart\System\Engine\Controller {
 				$json['error']['telephone'] = $this->language->get('error_telephone');
 			}
 
-			if ($this->request->post['account'] && (utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) < 4) || (utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) > 40)) {
+			if ($account && (utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) < 4) || (utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) > 40)) {
 				$json['error']['password'] = $this->language->get('error_password');
 			}
 
 			// Custom field validation
+			if (in_array((int)$this->request->post['customer_group_id'], (array)$this->config->get('config_customer_group_display'))) {
+				$customer_group_id = (int)$this->request->post['customer_group_id'];
+			} else {
+				$customer_group_id = $this->config->get('config_customer_group_id');
+			}
+
+
+
+
+
 			$this->load->model('account/custom_field');
 
 			$custom_fields = $this->model_account_custom_field->getCustomFields($customer_group_id);
@@ -225,8 +238,8 @@ class Register extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Create account
-			if ($this->request->post['account']) {
+			if ($account) {
+				// Create account
 				$customer_id = $this->model_account_customer->addCustomer($this->request->post);
 			} else {
 				$customer_id = 0;
@@ -251,6 +264,11 @@ class Register extends \Opencart\System\Engine\Controller {
 
 				// If everything good login
 				$this->customer->login($this->request->post['email'], $this->request->post['password']);
+
+				$json['success'] = 'Success: Your account has been successfully created!';
+			} else {
+				// If account needs approval we redirect to the account success / requires approval page.
+				$json['redirect'] =  $this->url->link('account/success', 'language=' . $this->config->get('config_language'), true);
 			}
 
 			// Clear any previous login attempts for unregistered accounts.
@@ -260,8 +278,6 @@ class Register extends \Opencart\System\Engine\Controller {
 			unset($this->session->data['shipping_methods']);
 			unset($this->session->data['payment_method']);
 			unset($this->session->data['payment_methods']);
-
-			$json['success'] = 'Success: Your account has been successfully created!';
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

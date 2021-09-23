@@ -198,6 +198,7 @@ $(document).submit('form[data-oc-toggle=\'ajax\']', function(e) {
     console.log(e);
     console.log(element);
     console.log(action);
+    console.log(button);
     console.log(formaction);
     console.log(method);
     console.log(enctype);
@@ -233,7 +234,7 @@ $(document).submit('form[data-oc-toggle=\'ajax\']', function(e) {
             }
 
             if (typeof json['error'] == 'string') {
-                oc.alert('danger', json['error']);
+                $('#alert').prepend('<div class="alert alert-danger"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                 delete json['error'];
             }
@@ -242,12 +243,16 @@ $(document).submit('form[data-oc-toggle=\'ajax\']', function(e) {
                 console.log(json['error']);
 
                 if (json['error']['warning']) {
-                    oc.alert('danger', json['error']['warning']);
+                    $('#alert').prepend('<div class="alert alert-danger"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                 }
 
                 for (key in json['error']) {
                     for (key in json['error']) {
-                        oc.error(key, json['error'][key]);
+                        // Highlight error fields
+                        $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-*').addClass('is-invalid');
+
+                        // Show errors
+                        $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
                     }
                 }
 
@@ -255,7 +260,7 @@ $(document).submit('form[data-oc-toggle=\'ajax\']', function(e) {
             }
 
             if (json['success']) {
-                oc.alert('success', json['success']);
+                $('#alert').prepend('<div class="alert alert-success"><i class="fas fa-exclamation-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                 // Refreshv
                 var url = $(form).attr('data-oc-load');
@@ -270,7 +275,7 @@ $(document).submit('form[data-oc-toggle=\'ajax\']', function(e) {
 
             // Replace any form values that correspond to form names.
             for (key in json) {
-                //$(element).find('[name=\'' + key + '\']').val(json[key]);
+                $(element).find('[name=\'' + key + '\']').val(json[key]);
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
@@ -334,7 +339,7 @@ $(document).on('click', '[data-oc-toggle=\'upload\']', function() {
                     }
 
                     if (json['success']) {
-                        oc.alert('success', json['success']);
+                        $('#alert').prepend('<div class="alert alert-success"><i class="fas fa-exclamation-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                         if (json['code']) {
                             $(target).attr('value', json['code']);

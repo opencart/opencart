@@ -55,13 +55,13 @@ $_['column_price']                   = 'Unit Price';
 $_['column_total']                   = 'Total';
 
 // Entry
-$_['entry_email_address']            = 'E-Mail Address';
-$_['entry_email']                    = 'E-Mail';
-$_['entry_password']                 = 'Password';
-$_['entry_confirm']                  = 'Password Confirm';
 $_['entry_firstname']                = 'First Name';
 $_['entry_lastname']                 = 'Last Name';
+$_['entry_email_address']            = 'E-Mail Address';
+$_['entry_email']                    = 'E-Mail';
 $_['entry_telephone']                = 'Telephone';
+$_['entry_password']                 = 'Password';
+$_['entry_confirm']                  = 'Password Confirm';
 $_['entry_address']                  = 'Choose Address';
 $_['entry_company']                  = 'Company';
 $_['entry_customer_group']           = 'Account Type';
@@ -79,6 +79,7 @@ $_['error_warning']                  = 'There was a problem while trying to proc
 $_['error_login']                    = 'Warning: No match for E-Mail Address and/or Password.';
 $_['error_attempts']                 = 'Warning: Your account has exceeded allowed number of login attempts. Please try again in 1 hour.';
 $_['error_approved']                 = 'Warning: Your account requires approval before you can login.';
+$_['error_account']                  = 'Warning: Items in your shopping cart require you to register for an account!';
 $_['error_exists']                   = 'Warning: E-Mail Address is already registered!';
 $_['error_firstname']                = 'First Name must be between 1 and 32 characters!';
 $_['error_lastname']                 = 'Last Name must be between 1 and 32 characters!';

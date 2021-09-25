@@ -2,10 +2,12 @@
 namespace Opencart\System\Library\Cart;
 class Length {
 	private $lengths = [];
+	private $language;
 
 	public function __construct(\Opencart\System\Engine\Registry $registry) {
 		$this->db = $registry->get('db');
 		$this->config = $registry->get('config');
+		$this->language = $registry->get('language');
 
 		$length_class_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "length_class` mc LEFT JOIN `" . DB_PREFIX . "length_class_description` mcd ON (mc.`length_class_id` = mcd.`length_class_id`) WHERE mcd.`language_id` = '" . (int)$this->config->get('config_language_id') . "'");
 
@@ -39,7 +41,15 @@ class Length {
 		return $value * ($to / $from);
 	}
 
-	public function format(float $value, int $length_class_id, string $decimal_point = '.', string $thousand_point = ','): string {
+	public function format(float $value, int $length_class_id, string $decimal_point = null, string $thousand_point = null): string {
+		if (is_null($decimal_point)) {
+			$decimal_point = $this->language->get('decimal_point');
+		}
+		
+		if (is_null($thousand_point)) {
+			$thousand_point = $this->language->get('thousand_point');
+		}
+		
 		if (isset($this->lengths[$length_class_id])) {
 			return number_format($value, 2, $decimal_point, $thousand_point) . $this->lengths[$length_class_id]['unit'];
 		} else {

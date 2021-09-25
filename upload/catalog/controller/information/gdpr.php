@@ -23,6 +23,8 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 				'href' => $this->url->link('information/gdpr', 'language=' . $this->config->get('config_language'))
 			];
 
+			$data['action'] = $this->url->link('information/gdpr|action', 'language=' . $this->config->get('config_language'));
+
 			$data['title'] = $information_info['title'];
 
 			$data['gdpr'] = $this->url->link('information/information', 'language=' . $this->config->get('config_language') . '&information_id=' . $information_info['information_id']);

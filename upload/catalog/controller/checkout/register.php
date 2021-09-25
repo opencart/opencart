@@ -159,7 +159,7 @@ class Register extends \Opencart\System\Engine\Controller {
 				$account = (bool)$this->request->post['account'];
 			}
 
-			// Make sure people can not logout if they have products that requrie downloads or login display price.
+			// Make sure people can not logout if they have products that require downloads or login display price.
 			if (!$account && (!$this->config->get('config_customer_price') || $this->cart->hasDownload())) {
 				$json['error']['warning'] = $this->language->get('error_account');
 			}
@@ -190,17 +190,26 @@ class Register extends \Opencart\System\Engine\Controller {
 				$json['error']['password'] = $this->language->get('error_password');
 			}
 
-			// Custom field validation
-			if (in_array((int)$this->request->post['customer_group_id'], (array)$this->config->get('config_customer_group_display'))) {
+			// Customer Group
+			if ($this->request->post['customer_group_id']) {
 				$customer_group_id = (int)$this->request->post['customer_group_id'];
 			} else {
 				$customer_group_id = $this->config->get('config_customer_group_id');
 			}
 
+			$this->load->model('account/customer_group');
 
+			$customer_group_info = $this->model_account_customer_group->getCustomerGroup($customer_group_id);
 
+			if (!$customer_group_info) {
+				$json['error']['warning'] = $this->language->get('error_customer_group');
+			}
 
+			if (!in_array($customer_group_id, (array)$this->config->get('config_customer_group_display'))) {
+				$json['error']['warning'] = $this->language->get('error_customer_group');
+			}
 
+			// Custom field validation
 			$this->load->model('account/custom_field');
 
 			$custom_fields = $this->model_account_custom_field->getCustomFields($customer_group_id);
@@ -246,11 +255,7 @@ class Register extends \Opencart\System\Engine\Controller {
 			}
 
 			// Check if current customer group requires approval
-			$this->load->model('account/customer_group');
-
-			$customer_group_info = $this->model_account_customer_group->getCustomerGroup($customer_group_id);
-
-			if ($customer_group_info && !$customer_group_info['approval']) {
+			if (!$customer_group_info['approval']) {
 				// Add customer details into session
 				$this->session->data['customer'] = [
 					'customer_id'       => $customer_id,

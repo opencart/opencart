@@ -47,12 +47,12 @@ class Registry {
 	 * 
 	 * @return	mixed
      */
-	public function get(string $key): object {
+	public function get(string $key): object|null {
 		if (!$this->data[$key]) {
 			exit('Missing ' . $key);
 		}
 
-		return isset($this->data[$key]) ? $this->data[$key] : '';
+		return isset($this->data[$key]) ? $this->data[$key] : null;
 	}
 
     /**

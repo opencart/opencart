@@ -2,10 +2,12 @@
 namespace Opencart\System\Library\Cart;
 class Weight {
 	private array $weights = [];
+	private $language;
 
 	public function __construct(\Opencart\System\Engine\Registry $registry) {
 		$this->db = $registry->get('db');
 		$this->config = $registry->get('config');
+		$this->language = $registry->get('language');
 
 		$weight_class_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "weight_class` wc LEFT JOIN `" . DB_PREFIX . "weight_class_description` wcd ON (wc.`weight_class_id` = wcd.`weight_class_id`) WHERE wcd.`language_id` = '" . (int)$this->config->get('config_language_id') . "'");
 
@@ -39,7 +41,15 @@ class Weight {
 		return $value * ($to / $from);
 	}
 
-	public function format(float $value, string $weight_class_id, string $decimal_point = '.', string $thousand_point = ','): string {
+	public function format(float $value, string $weight_class_id, string $decimal_point = null, string $thousand_point = null): string {
+		if (is_null($decimal_point)) {
+			$decimal_point = $this->language->get('decimal_point');
+		}
+		
+		if (is_null($thousand_point)) {
+			$thousand_point = $this->language->get('thousand_point');
+		}
+		
 		if (isset($this->weights[$weight_class_id])) {
 			return number_format($value, 2, $decimal_point, $thousand_point) . $this->weights[$weight_class_id]['unit'];
 		} else {

@@ -57,7 +57,7 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('account/custom_field');
 
-		$custom_fields = $this->model_account_custom_field->getCustomFields((int)$this->config->get('config_customer_group_id'));
+		$custom_fields = $this->model_account_custom_field->getCustomFields();
 
 		foreach ($custom_fields as $custom_field) {
 			if ($custom_field['location'] == 'address') {

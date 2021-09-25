@@ -351,6 +351,8 @@ class Address extends \Opencart\System\Engine\Controller {
 			$address_id = 0;
 		}
 
+		$this->load->model('account/address');
+
 		if ($this->model_account_address->getTotalAddresses() == 1) {
 			$json['error']['warning'] = $this->language->get('error_delete');
 		}

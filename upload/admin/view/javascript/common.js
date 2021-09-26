@@ -249,7 +249,7 @@ $(document).submit('form[data-oc-toggle=\'ajax\']', function(e) {
                 for (key in json['error']) {
                     for (key in json['error']) {
                         // Highlight error fields
-                        $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-*').addClass('is-invalid');
+                        $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
 
                         // Show errors
                         $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
@@ -266,7 +266,7 @@ $(document).submit('form[data-oc-toggle=\'ajax\']', function(e) {
                 var url = $(form).attr('data-oc-load');
                 var target = $(form).attr('data-oc-target');
 
-                if (typeof url !== typeof undefined && typeof target !== typeof undefined) {
+                if (url !== typeof undefined && target !== typeof undefined) {
                    $(target).load(url);
                 }
 

@@ -31,7 +31,7 @@ $(document).ready(function() {
         $('[data-toggle=\'tooltip\']').tooltip({container: 'body'});
     });
 
-/*
+    /*
     $('.date').datetimepicker({
         'format': 'YYYY-MM-DD',
         'locale': '{{ datepicker }}',
@@ -452,7 +452,11 @@ $(document).on('submit', '[data-oc-toggle=\'ajax\']', function(e) {
                 }
 
                 for (key in json['error']) {
-                    oc.error(key, json['error'][key]);
+                    // Highlight error fields
+                    $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-*').addClass('is-invalid');
+
+                    // Show errors
+                    $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
                 }
 
                 delete json['error'];
@@ -763,7 +767,7 @@ var chain = new Chain();
 
     Button.prototype.toggle = function() {
         var changed = true
-        var $parent = this.$element.closest('[data-octoggle="buttons"]')
+        var $parent = this.$element.closest('[data-oc-toggle="buttons"]')
 
         if ($parent.length) {
             var $input = this.$element.find('input')

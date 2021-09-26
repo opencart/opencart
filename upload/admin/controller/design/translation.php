@@ -336,7 +336,7 @@ class ControllerDesignTranslation extends Controller {
 			// Get a list of files ready to upload
 			$data['paths'] = array();
 
-			$path = glob(DIR_CATALOG . 'language/'.$code.'/*');
+			$path = glob(DIR_CATALOG . 'language/' . $code . '/*');
 
 			while (count($path) != 0) {
 				$next = array_shift($path);
@@ -347,7 +347,7 @@ class ControllerDesignTranslation extends Controller {
 					}
 
 					if (substr($file, -4) == '.php') {
-						$data['paths'][] = substr(substr($file, strlen(DIR_CATALOG . 'language/'.$code.'/')), 0, -4);
+						$data['paths'][] = substr(substr($file, strlen(DIR_CATALOG . 'language/' . $code . '/')), 0, -4);
 					}
 				}
 			}
@@ -440,7 +440,7 @@ class ControllerDesignTranslation extends Controller {
 		$language_info = $this->model_localisation_language->getLanguage($language_id);
 
 		if (!empty($language_info)) {
-			$path = glob(DIR_CATALOG . 'language/'.$language_info['code'].'/*');
+			$path = glob(DIR_CATALOG . 'language/' . $language_info['code'] . '/*');
 
 			while (count($path) != 0) {
 				$next = array_shift($path);
@@ -451,7 +451,7 @@ class ControllerDesignTranslation extends Controller {
 					}
 
 					if (substr($file, -4) == '.php') {
-						$json[] = substr(substr($file, strlen(DIR_CATALOG . 'language/'.$language_info['code'].'/')), 0, -4);
+						$json[] = substr(substr($file, strlen(DIR_CATALOG . 'language/' . $language_info['code'] . '/')), 0, -4);
 					}
 				}
 			}

@@ -104,9 +104,8 @@ class Confirm extends \Opencart\System\Engine\Controller {
 		return $this->load->view('checkout/confirm', $data);
 	}
 
-	public function total(): void {
+	public function confirm(): void {
 		$this->load->language('checkout/checkout');
-
 
 
 		//$this->response->setOutput($this->confirm());
@@ -114,20 +113,6 @@ class Confirm extends \Opencart\System\Engine\Controller {
 
 	public function payment(): string {
 		$this->load->language('checkout/checkout');
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 		$totals = [];
 		$taxes = $this->cart->getTaxes();
@@ -429,7 +414,7 @@ class Confirm extends \Opencart\System\Engine\Controller {
 
 			$data['payment'] = $this->load->controller('extension/' . $extension_info['extension'] . '/payment/' . $extension_info['code']);
 		} else {
-			$data['payment'] = '';
+			$data['payment'] = 'dfgdfg';
 		}
 
 		return $this->load->view('checkout/confirm', $data);

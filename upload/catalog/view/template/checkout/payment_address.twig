@@ -277,6 +277,10 @@ $('#form-payment-address').submit(function(e) {
                 $('#button-payment-address').button('reset');
             },
             success: function(json) {
+                console.log(json);
+                console.log(json['error']);
+
+
                 $('#form-payment-address').find('.is-invalid').removeClass('is-invalid');
                 $('#form-payment-address').find('.invalid-feedback').removeClass('d-block');
 
@@ -291,9 +295,7 @@ $('#form-payment-address').submit(function(e) {
 
                     for (i in json['error']) {
                         for (key in json['error']) {
-                            $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid');
-
-                            $('#input-' + key.replaceAll('_', '-')).find('.form-*').addClass('is-invalid');
+                            $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
 
                             $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
                         }

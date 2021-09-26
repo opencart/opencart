@@ -3,7 +3,7 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="float-end">
-        <button type="submit" data-oc-toggle="ajax" form="form-cron" formaction="{{ delete }}" data-bs-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+        <button type="submit" form="form-cron" formaction="{{ delete }}" data-bs-toggle="tooltip" title="{{ button_delete }}" onclick="confirm('{{ text_confirm }}') ? $('#form-cron').submit() : false;" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
       </div>
       <h1>{{ heading_title }}</h1>
       <ol class="breadcrumb">
@@ -61,7 +61,7 @@ $('#cron').on('click', '.btn-success, .btn-warning, .btn-danger', function() {
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#cron').load($('#cron-list').attr('data-oc-load'));
+                $('#cron').load($('#form-cron').attr('data-oc-load'));
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {

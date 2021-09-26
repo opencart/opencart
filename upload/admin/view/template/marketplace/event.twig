@@ -3,7 +3,7 @@
 	<div class="page-header">
 		<div class="container-fluid">
 			<div class="float-end">
-				<button type="submit" data-oc-toggle="ajax" form="form-event" formaction="{{ delete }}" data-bs-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+				<button type="submit" form="form-event" formaction="{{ delete }}" data-bs-toggle="tooltip" title="{{ button_delete }}" onclick="confirm('{{ text_confirm }}') ? $('#form-event').submit() : false;" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
 			</div>
 			<h1>{{ heading_title }}</h1>
 			<ol class="breadcrumb">
@@ -28,7 +28,9 @@ $('#event').on('click', 'thead a, .pagination a', function(e) {
     $('#event').load(this.href);
 });
 
-$('#event').on('click', '.btn-success, .btn-danger', function() {
+$('#event').on('click', '.btn-success, .btn-danger', function(e) {
+    e.preventDefault();
+
     var element = this;
 
     $.ajax({
@@ -50,7 +52,7 @@ $('#event').on('click', '.btn-success, .btn-danger', function() {
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#event').load($('#event-list').attr('data-oc-load'));
+                $('#event').load($('#form-event').attr('data-oc-load'));
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {

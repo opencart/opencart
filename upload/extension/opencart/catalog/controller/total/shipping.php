@@ -34,9 +34,9 @@ class Shipping extends \Opencart\System\Engine\Controller {
 			}
 
 			return $this->load->view('extension/opencart/total/shipping', $data);
-		} else {
-			return '';
 		}
+
+		return '';
 	}
 
 	public function quote(): void {
@@ -56,7 +56,7 @@ class Shipping extends \Opencart\System\Engine\Controller {
 			$json['error']['country'] = $this->language->get('error_country');
 		}
 
-		if (!isset($this->request->post['zone_id']) || $this->request->post['zone_id'] == '' || !is_numeric($this->request->post['zone_id'])) {
+		if (!isset($this->request->post['zone_id']) || $this->request->post['zone_id'] == '') {
 			$json['error']['zone'] = $this->language->get('error_zone');
 		}
 

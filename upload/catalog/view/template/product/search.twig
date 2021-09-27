@@ -18,11 +18,11 @@
           <select name="category_id" id="input-category" class="form-select">
             <option value="0">{{ text_category }}</option>
             {% for category_1 in categories %}
-              <option value="{{ category_1.category_id }}"{% if category_1.category_id == category_id %} selected="selected"{% endif %}>{{ category_1.name }}</option>
+              <option value="{{ category_1.category_id }}"{% if category_1.category_id == category_id %} selected{% endif %}>{{ category_1.name }}</option>
               {% for category_2 in category_1.children %}
-                <option value="{{ category_2.category_id }}"{% if category_2.category_id == category_id %} selected="selected"{% endif %}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ category_2.name }}</option>
+                <option value="{{ category_2.category_id }}"{% if category_2.category_id == category_id %} selected{% endif %}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ category_2.name }}</option>
                 {% for category_3 in category_2.children %}
-                  <option value="{{ category_3.category_id }}"{% if category_3.category_id == category_id %} selected="selected"{% endif %}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ category_3.name }}</option>
+                  <option value="{{ category_3.category_id }}"{% if category_3.category_id == category_id %} selected{% endif %}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ category_3.name }}</option>
                 {% endfor %}
               {% endfor %}
             {% endfor %}
@@ -65,7 +65,7 @@
               </div>
               <select id="input-sort" class="form-select" onchange="location = this.value;">
                 {% for sorts in sorts %}
-                  <option value="{{ sorts.href }}"{% if sorts.value == '%s-%s'|format(sort, order) %} selected="selected"{% endif %}>{{ sorts.text }}</option>
+                  <option value="{{ sorts.href }}"{% if sorts.value == '%s-%s'|format(sort, order) %} selected{% endif %}>{{ sorts.text }}</option>
                 {% endfor %}
               </select>
             </div>
@@ -78,7 +78,7 @@
               </div>
               <select id="input-limit" class="form-select" onchange="location = this.value;">
                 {% for limits in limits %}
-                  <option value="{{ limits.href }}"{% if limits.value == limit %} selected="selected"{% endif %}>{{ limits.text }}</option>
+                  <option value="{{ limits.href }}"{% if limits.value == limit %} selected{% endif %}>{{ limits.text }}</option>
                 {% endfor %}
               </select>
             </div>

@@ -11,7 +11,7 @@
       {{ content_top }}
       <h1>{{ heading_title }}</h1>
       <div class="row">
-        <div class="col-8 mb-3">
+        <div class="col-md-8 mb-3">
           {% if not logged %}
             <div id="checkout-register">{{ register }}</div>
           {% endif %}
@@ -22,7 +22,7 @@
             <div id="checkout-shipping-address"{% if config_checkout_address and not logged %} style="display: none;"{% endif %}>{{ shipping_address }}</div>
           {% endif %}
         </div>
-        <div id="checkout-confirm" class="col-4 mb-3">{{ confirm }}</div>
+        <div id="checkout-confirm" class="col-md-4 mb-3">{{ confirm }}</div>
       </div>
     </div>
     {{ content_bottom }}

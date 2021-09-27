@@ -3,7 +3,6 @@
     <legend>{{ text_payment_address }}</legend>
 
     {% if addresses %}
-
       <div class="form-check">
         <input type="radio" name="payment_existing" value="1" id="input-payment-existing" class="form-check-input" checked/> <label for="input-payment-existing" class="form-check-label">{{ text_address_existing }}</label>
       </div>
@@ -15,66 +14,56 @@
         <select name="address_id" id="input-payment-address" class="form-select">
           <option value="">{{ text_select }}</option>
           {% for address in addresses %}
-            <option value="{{ address.address_id }}"{% if address.address_id == address_id %} selected="selected"{% endif %}>{{ address.firstname }} {{ address.lastname }}, {{ address.address_1 }}, {{ address.city }}, {{ address.zone }}, {{ address.country }}</option>
+            <option value="{{ address.address_id }}"{% if address.address_id == address_id %} selected{% endif %}>{{ address.firstname }} {{ address.lastname }}, {{ address.address_1 }}, {{ address.city }}, {{ address.zone }}, {{ address.country }}</option>
           {% endfor %}
         </select>
       </div>
-
     {% endif %}
 
     <br/>
 
     <div id="payment-new" style="display: {% if addresses %}none{% else %}block{% endif %};">
 
-      <div class="row row-cols-2">
+      <div class="row row-cols-1 row-cols-md-2">
         {% if logged %}
           <div class="col mb-3 required">
-            <label for="input-payment-firstname" class="form-label">{{ entry_firstname }}</label>
-            <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-payment-firstname" class="form-control"/>
+            <label for="input-payment-firstname" class="form-label">{{ entry_firstname }}</label> <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-payment-firstname" class="form-control"/>
             <div id="error-payment-firstname" class="invalid-feedback"></div>
           </div>
           <div class="col mb-3 required">
-            <label for="input-payment-lastname" class="form-label">{{ entry_lastname }}</label>
-            <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-payment-lastname" class="form-control"/>
+            <label for="input-payment-lastname" class="form-label">{{ entry_lastname }}</label> <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-payment-lastname" class="form-control"/>
             <div id="error-payment-lastname" class="invalid-feedback"></div>
           </div>
         {% endif %}
         <div class="col mb-3">
-          <label for="input-payment-company" class="form-label">{{ entry_company }}</label>
-          <input type="text" name="company" value="{{ company }}" placeholder="{{ entry_company }}" id="input-payment-company" class="form-control"{% if not logged %} disabled{% endif %}/>
+          <label for="input-payment-company" class="form-label">{{ entry_company }}</label> <input type="text" name="company" value="{{ company }}" placeholder="{{ entry_company }}" id="input-payment-company" class="form-control"{% if not logged %} disabled{% endif %}/>
         </div>
         <div class="col mb-3 required">
-          <label for="input-payment-address-1" class="form-label">{{ entry_address_1 }}</label>
-          <input type="text" name="address_1" value="{{ address_1 }}" placeholder="{{ entry_address_1 }}" id="input-payment-address-1" class="form-control"{% if not logged %} disabled{% endif %}/>
+          <label for="input-payment-address-1" class="form-label">{{ entry_address_1 }}</label> <input type="text" name="address_1" value="{{ address_1 }}" placeholder="{{ entry_address_1 }}" id="input-payment-address-1" class="form-control"{% if not logged %} disabled{% endif %}/>
           <div id="error-payment-address-1" class="invalid-feedback"></div>
         </div>
         <div class="col mb-3">
-          <label for="input-payment-address-2" class="form-label">{{ entry_address_2 }}</label>
-          <input type="text" name="address_2" value="{{ address_2 }}" placeholder="{{ entry_address_2 }}" id="input-payment-address-2" class="form-control"{% if not logged %} disabled{% endif %}/>
+          <label for="input-payment-address-2" class="form-label">{{ entry_address_2 }}</label> <input type="text" name="address_2" value="{{ address_2 }}" placeholder="{{ entry_address_2 }}" id="input-payment-address-2" class="form-control"{% if not logged %} disabled{% endif %}/>
         </div>
         <div class="col mb-3 required">
-          <label for="input-payment-city" class="form-label">{{ entry_city }}</label>
-          <input type="text" name="city" value="{{ city }}" placeholder="{{ entry_city }}" id="input-payment-city" class="form-control"{% if not logged %} disabled{% endif %}/>
+          <label for="input-payment-city" class="form-label">{{ entry_city }}</label> <input type="text" name="city" value="{{ city }}" placeholder="{{ entry_city }}" id="input-payment-city" class="form-control"{% if not logged %} disabled{% endif %}/>
           <div id="error-payment-city" class="invalid-feedback"></div>
         </div>
         <div class="col mb-3 required">
-          <label for="input-payment-postcode" class="form-label">{{ entry_postcode }}</label>
-          <input type="text" name="postcode" value="{{ postcode }}" placeholder="{{ entry_postcode }}" id="input-payment-postcode" class="form-control"{% if not logged %} disabled{% endif %}/>
+          <label for="input-payment-postcode" class="form-label">{{ entry_postcode }}</label> <input type="text" name="postcode" value="{{ postcode }}" placeholder="{{ entry_postcode }}" id="input-payment-postcode" class="form-control"{% if not logged %} disabled{% endif %}/>
           <div id="error-payment-postcode" class="invalid-feedback"></div>
         </div>
         <div class="col mb-3 required">
-          <label for="input-payment-country" class="form-label">{{ entry_country }}</label>
-          <select name="country_id" id="input-payment-country" class="form-select"{% if not logged %} disabled{% endif %}>
+          <label for="input-payment-country" class="form-label">{{ entry_country }}</label> <select name="country_id" id="input-payment-country" class="form-select"{% if not logged %} disabled{% endif %}>
             <option value="">{{ text_select }}</option>
             {% for country in countries %}
-              <option value="{{ country.country_id }}"{% if country.country_id == country_id %} selected="selected"{% endif %}>{{ country.name }}</option>
+              <option value="{{ country.country_id }}"{% if country.country_id == country_id %} selected{% endif %}>{{ country.name }}</option>
             {% endfor %}
           </select>
           <div id="error-payment-country" class="invalid-feedback"></div>
         </div>
         <div class="col mb-3 required">
-          <label for="input-payment-zone" class="form-label">{{ entry_zone }}</label>
-          <select name="zone_id" id="input-payment-zone" class="form-select"{% if not logged %} disabled{% endif %}></select>
+          <label for="input-payment-zone" class="form-label">{{ entry_zone }}</label> <select name="zone_id" id="input-payment-zone" class="form-select"{% if not logged %} disabled{% endif %}></select>
           <div id="error-payment-zone" class="invalid-feedback"></div>
         </div>
 
@@ -82,11 +71,10 @@
 
           {% if custom_field.type == 'select' %}
             <div class="col mb-3{% if custom_field.required %} required{% endif %} custom-field custom-field-{{ custom_field.custom_field_id }}">
-              <label for="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
-              <select name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" id="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-select"{% if not logged %} disabled{% endif %}>
+              <label for="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <select name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" id="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-select"{% if not logged %} disabled{% endif %}>
                 <option value="">{{ text_select }}</option>
                 {% for custom_field_value in custom_field.custom_field_value %}
-                  <option value="{{ custom_field_value.custom_field_value_id }}"{% if payment_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id == payment_custom_field[custom_field.custom_field_id] %} selected="selected"{% endif %}>{{ custom_field_value.name }}</option>
+                  <option value="{{ custom_field_value.custom_field_value_id }}"{% if payment_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id == payment_custom_field[custom_field.custom_field_id] %} selected{% endif %}>{{ custom_field_value.name }}</option>
                 {% endfor %}
               </select>
               <div id="error-payment-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
@@ -99,8 +87,7 @@
               <div id="input-payment-custom-field-{{ custom_field.custom_field_id }}">
                 {% for custom_field_value in custom_field.custom_field_value %}
                   <div class="form-check">
-                    <input type="radio" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{{ custom_field_value.custom_field_value_id }}" id="input-payment-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-input"{% if payment_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id == payment_custom_field[custom_field.custom_field_id] %} checked{% endif %}{% if not logged %} disabled{% endif %}/>
-                    <label for="input-payment-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-label">{{ custom_field_value.name }}</label>
+                    <input type="radio" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{{ custom_field_value.custom_field_value_id }}" id="input-payment-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-input"{% if payment_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id == payment_custom_field[custom_field.custom_field_id] %} checked{% endif %}{% if not logged %} disabled{% endif %}/> <label for="input-payment-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-label">{{ custom_field_value.name }}</label>
                   </div>
                 {% endfor %}
               </div>
@@ -114,8 +101,7 @@
               <div id="input-payment-custom-field-{{ custom_field.custom_field_id }}">
                 {% for custom_field_value in custom_field.custom_field_value %}
                   <div class="form-check">
-                    <input type="checkbox" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" id="input-payment-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-input"{% if address_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id in address_custom_field[custom_field.custom_field_id] %} checked{% endif %}{% if not logged %} disabled{% endif %}/>
-                    <label for="input-payment-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-label">{{ custom_field_value.name }}</label>
+                    <input type="checkbox" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" id="input-payment-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-input"{% if address_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id in address_custom_field[custom_field.custom_field_id] %} checked{% endif %}{% if not logged %} disabled{% endif %}/> <label for="input-payment-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-label">{{ custom_field_value.name }}</label>
                   </div>
                 {% endfor %}
               </div>
@@ -125,16 +111,14 @@
 
           {% if custom_field.type == 'text' %}
             <div class="col mb-3{% if custom_field.required %} required{% endif %} custom-field custom-field-{{ custom_field.custom_field_id }}">
-              <label for="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
-              <input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{% if address_custom_field[custom_field.custom_field_id] %}{{ address_custom_field[custom_field.custom_field_id] }}{% else %}{{ custom_field.value }}{% endif %}" placeholder="{{ custom_field.name }}" id="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-control"{% if not logged %} disabled{% endif %}/>
+              <label for="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{% if address_custom_field[custom_field.custom_field_id] %}{{ address_custom_field[custom_field.custom_field_id] }}{% else %}{{ custom_field.value }}{% endif %}" placeholder="{{ custom_field.name }}" id="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-control"{% if not logged %} disabled{% endif %}/>
               <div id="error-payment-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
             </div>
           {% endif %}
 
           {% if custom_field.type == 'textarea' %}
             <div class="col mb-3{% if custom_field.required %} required{% endif %} custom-field custom-field-{{ custom_field.custom_field_id }}">
-              <label for="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
-              <textarea name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" rows="5" placeholder="{{ custom_field.name }}" id="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-control"{% if not logged %} disabled{% endif %}>{% if address_custom_field[custom_field.custom_field_id] %}{{ address_custom_field[custom_field.custom_field_id] }}{% else %}{{ custom_field.value }}{% endif %}</textarea>
+              <label for="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <textarea name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" rows="5" placeholder="{{ custom_field.name }}" id="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-control"{% if not logged %} disabled{% endif %}>{% if address_custom_field[custom_field.custom_field_id] %}{{ address_custom_field[custom_field.custom_field_id] }}{% else %}{{ custom_field.value }}{% endif %}</textarea>
               <div id="error-payment-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
             </div>
           {% endif %}
@@ -164,12 +148,10 @@
           {% if custom_field.type == 'time' %}
             <div class="col mb-3{% if custom_field.required %} required{% endif %} custom-field custom-field-{{ custom_field.custom_field_id }}">
               <label for="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
-
               <div data-oc-toggle="time" data-oc-date-format="HH:mm" data-oc-date-locale="{{ datepicker }}" class="input-group time">
                 <input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{% if payment_custom_field[custom_field.custom_field_id] %}{{ payment_custom_field[custom_field.custom_field_id] }}{% else %}{{ custom_field.value }}{% endif %}" placeholder="{{ custom_field.name }}" id="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-control"{% if not logged %} disabled{% endif %}/>
                 <div class="input-group-text"><i class="fas fa-calendar"></i></div>
               </div>
-
               <div id="error-payment-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
             </div>
           {% endif %}
@@ -190,8 +172,7 @@
         {% if not logged and shipping_required %}
           <div class="col mb-3">
             <div class="form-check">
-              <input type="checkbox" name="address_match" value="1" id="input-address-match" class="form-check-input" checked{% if not logged %} disabled{% endif %}/>
-              <label for="input-address-match" class="form-check-label">{{ entry_match }}</label>
+              <input type="checkbox" name="address_match" value="1" id="input-address-match" class="form-check-input" checked{% if not logged %} disabled{% endif %}/> <label for="input-address-match" class="form-check-label">{{ entry_match }}</label>
             </div>
           </div>
         {% endif %}
@@ -242,11 +223,18 @@ $('#input-payment-address').on('change', function() {
                 if (json['success']) {
                     $('#alert').after('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                    $('#button-payment-method').trigger('click');
+
+                    $('#button-shipping-refresh').trigger('click');
+
+                  {% if shipping_required %}
+                    $('#input-shipping-address').prop('disabled', false);
+                    $('#form-shipping-address').find(':disabled').prop('disabled', false);
+                  {% else %}
+                    $('#input-payment-address').prop('disabled', false);
+                  {% endif %}
                 }
             },
             error: function(xhr, ajaxOptions, thrownError) {
-                oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });
@@ -257,17 +245,11 @@ $('#input-payment-address').on('change', function() {
 $('#form-payment-address').submit(function(e) {
     e.preventDefault();
 
-  {% if logged %}
-    var data = $('#form-payment-address').serialize();
-  {% else %}
-    var data = $('#input-firstname, #input-lastname, #form-payment-address').serialize();
-  {% endif %}
-
     chain.attach(function() {
         return $.ajax({
             url: 'index.php?route=checkout/payment_address|save&language={{ language }}',
             type: 'post',
-            data: data,
+            data: $('{% if not logged %}#input-firstname, #input-lastname, {% endif %}#form-payment-address').serialize(),
             dataType: 'json',
             contentType: 'application/x-www-form-urlencoded',
             beforeSend: function() {
@@ -279,7 +261,6 @@ $('#form-payment-address').submit(function(e) {
             success: function(json) {
                 console.log(json);
                 console.log(json['error']);
-
 
                 $('#form-payment-address').find('.is-invalid').removeClass('is-invalid');
                 $('#form-payment-address').find('.invalid-feedback').removeClass('d-block');
@@ -296,7 +277,6 @@ $('#form-payment-address').submit(function(e) {
                     for (i in json['error']) {
                         for (key in json['error']) {
                             $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
-
                             $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
                         }
                     }
@@ -306,6 +286,18 @@ $('#form-payment-address').submit(function(e) {
                     $('#alert').prepend('<div class="alert alert-success alert-dismissible"> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
 
+                    $('#form-payment-address').prop('disabled', false);
+
+
+
+
+
+                  {% if shipping_required %}
+                    $('#input-shipping-address').prop('disabled', false);
+                    $('#form-shipping-address').find(':disabled').prop('disabled', false);
+                  {% else %}
+                    $('#input-payment-address').prop('disabled', false);
+                  {% endif %}
 
 
                   {% if shipping_required %}
@@ -317,7 +309,6 @@ $('#form-payment-address').submit(function(e) {
                 }
             },
             error: function(xhr, ajaxOptions, thrownError) {
-                oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });
@@ -351,19 +342,18 @@ $('#input-payment-country').on('change', function() {
                         html += '<option value="' + json['zone'][i]['zone_id'] + '"';
 
                         if (json['zone'][i]['zone_id'] == '{{ zone_id }}') {
-                            html += ' selected="selected"';
+                            html += ' selected';
                         }
 
                         html += '>' + json['zone'][i]['name'] + '</option>';
                     }
                 } else {
-                    html += '<option value="0" selected="selected">{{ text_none }}</option>';
+                    html += '<option value="0" selected>{{ text_none }}</option>';
                 }
 
                 $('#input-payment-zone').html(html);
             },
             error: function(xhr, ajaxOptions, thrownError) {
-                oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });

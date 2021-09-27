@@ -5,6 +5,36 @@ class Confirm extends \Opencart\System\Engine\Controller {
 		$this->load->language('checkout/checkout');
 
 		// Display order info
+		$data['shipping_required'] = $this->cart->hasShipping();
+
+		$data['shipping_method'] = $this->load->controller('checkout/shipping_method');
+		$data['payment_method'] = $this->load->controller('checkout/payment_method');
+
+		$data['cart'] = $this->getCart();
+
+		$this->load->model('catalog/information');
+
+		$information_info = $this->model_catalog_information->getInformation($this->config->get('config_checkout_id'));
+
+		if ($information_info) {
+			$data['text_agree'] = sprintf($this->language->get('text_agree'), $this->url->link('information/information|info', 'language=' . $this->config->get('config_language') . '&information_id=' . $this->config->get('config_checkout_id')), $information_info['title']);
+		} else {
+			$data['text_agree'] = '';
+		}
+
+		if (isset($this->session->data['agree'])) {
+			$data['agree'] = $this->session->data['agree'];
+		} else {
+			$data['agree'] = '';
+		}
+
+		return $this->load->view('checkout/confirm', $data);
+	}
+
+	public function getCart(): string {
+		$this->load->language('checkout/checkout');
+
+		// Display order info
 		$frequencies = [
 			'day'        => $this->language->get('text_day'),
 			'week'       => $this->language->get('text_week'),
@@ -80,35 +110,50 @@ class Confirm extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$data['shipping_required'] = $this->cart->hasShipping();
+		$totals = [];
+		$taxes = $this->cart->getTaxes();
+		$total = 0;
+		$sort_order = [];
 
-		$data['shipping_method'] = $this->load->controller('checkout/shipping_method');
-		$data['payment_method'] = $this->load->controller('checkout/payment_method');
+		$results = $this->model_setting_extension->getExtensionsByType('total');
 
-		$this->load->model('catalog/information');
-
-		$information_info = $this->model_catalog_information->getInformation($this->config->get('config_checkout_id'));
-
-		if ($information_info) {
-			$data['text_agree'] = sprintf($this->language->get('text_agree'), $this->url->link('information/information|info', 'language=' . $this->config->get('config_language') . '&information_id=' . $this->config->get('config_checkout_id')), $information_info['title']);
-		} else {
-			$data['text_agree'] = '';
+		foreach ($results as $key => $value) {
+			$sort_order[$key] = $this->config->get('total_' . $value['code'] . '_sort_order');
 		}
 
-		if (isset($this->session->data['agree'])) {
-			$data['agree'] = $this->session->data['agree'];
-		} else {
-			$data['agree'] = '';
+		array_multisort($sort_order, SORT_ASC, $results);
+
+		foreach ($results as $result) {
+			if ($this->config->get('total_' . $result['code'] . '_status')) {
+				$this->load->model('extension/' . $result['extension'] . '/total/' . $result['code']);
+
+				// __call can not pass-by-reference so we get PHP to call it as an anonymous function.
+				($this->{'model_extension_' . $result['extension'] . '_total_' . $result['code']}->getTotal)($totals, $taxes, $total);
+			}
 		}
 
-		return $this->load->view('checkout/confirm', $data);
+		$sort_order = [];
+
+		foreach ($totals as $key => $value) {
+			$sort_order[$key] = $value['sort_order'];
+		}
+
+		array_multisort($sort_order, SORT_ASC, $totals);
+
+		$data['totals'] = [];
+
+		foreach ($totals as $total) {
+			$data['totals'][] = [
+				'title' => $total['title'],
+				'text'  => $this->currency->format($total['value'], $this->session->data['currency'])
+			];
+		}
+
+		return $this->load->view('checkout/confirm_cart', $data);
 	}
 
-	public function confirm(): void {
-		$this->load->language('checkout/checkout');
-
-
-		//$this->response->setOutput($this->confirm());
+	public function cart(): void {
+		$this->response->setOutput($this->cart());
 	}
 
 	public function payment(): string {

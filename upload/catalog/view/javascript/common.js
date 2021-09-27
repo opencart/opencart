@@ -368,20 +368,6 @@ compare.add = function(product_id) {
 };
 
 // Forms
-var oc = [];
-
-oc.alert = function(type, message) {
-    $('#alert').prepend('<div class="alert alert-' + type + '"><i class="fas fa-exclamation-circle"></i> ' + message + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-}
-
-oc.error = function(key, message) {
-    // Highlight error fields
-    $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
-
-    // Show errors
-    $('#error-' + key.replaceAll('_', '-')).html(message).addClass('d-block');
-}
-
 $(document).on('submit', '[data-oc-toggle=\'ajax\']', function(e) {
     e.preventDefault();
 
@@ -395,19 +381,19 @@ $(document).on('submit', '[data-oc-toggle=\'ajax\']', function(e) {
 
     var formaction = $(button).attr('formaction');
 
-    if (typeof formaction != 'undefined') {
+    if (typeof formaction == undefined) {
         action = formaction;
     }
 
     var method = $(form).attr('method');
 
-    if (typeof method == 'undefined') {
+    if (typeof method == undefined) {
         method = 'post';
     }
 
     var enctype = $(element).attr('enctype');
 
-    if (typeof enctype == 'undefined') {
+    if (typeof enctype == undefined) {
         enctype = 'application/x-www-form-urlencoded';
     }
 
@@ -453,7 +439,7 @@ $(document).on('submit', '[data-oc-toggle=\'ajax\']', function(e) {
 
                 for (key in json['error']) {
                     // Highlight error fields
-                    $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-*').addClass('is-invalid');
+                    $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
 
                     // Show errors
                     $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');

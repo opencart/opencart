@@ -2,25 +2,29 @@
   <h4 class="card-header collapsed" data-toggle="collapse" data-target="#collapse-reward">{{ heading_title }}</h4>
   <div id="collapse-reward" class="collapse" data-parent="#accordion">
     <div class="card-body">
-      <div class="row">
-        <label for="input-reward" class="col-md-2 col-form-label">{{ entry_reward }}</label>
-        <div class="col-md-10">
-          <div class="input-group">
-            <input type="text" name="reward" value="{{ reward }}" placeholder="{{ entry_reward }}" id="input-reward" class="form-control"/>
-            <div class="input-group-append">
-              <button type="submit" id="button-reward" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_reward }}</button>
+      <form id="form-reward" action="{{ save }}" method="post" data-oc-toggle="ajax">
+        <div class="row">
+          <label for="input-reward" class="col-md-2 col-form-label">{{ entry_reward }}</label>
+          <div class="col-md-10">
+            <div class="input-group">
+              <input type="text" name="reward" value="{{ reward }}" placeholder="{{ entry_reward }}" id="input-reward" class="form-control"/>
+              <div class="input-group-append">
+                <button type="submit" id="button-reward" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_reward }}</button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </form>
     </div>
   </div>
   <script type="text/javascript"><!--
-  $('#button-reward').on('click', function() {
+  $('#form-reward').on('submit', function(e) {
+      e.preventDefault();
+
       $.ajax({
           url: 'index.php?route=extension/opencart/total/reward|save',
           type: 'post',
-          data: 'reward=' + encodeURIComponent($('input[name=\'reward\']').val()),
+          data: $('#form-reward').serialize(),
           dataType: 'json',
           beforeSend: function() {
               $('#button-reward').button('loading');
@@ -44,6 +48,5 @@
           }
       });
   });
-  //-->
-  </script>
+  //--></script>
 </div>

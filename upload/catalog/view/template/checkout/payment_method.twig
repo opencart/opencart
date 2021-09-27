@@ -2,7 +2,7 @@
   <fieldset>
     <legend>{{ text_payment_method }}</legend>
     <div class="input-group">
-      <select name="payment_method" id="input-payment-method" class="form-select"{% if not payment_methods %} disabled{% endif %}>
+      <select name="payment_method" id="input-payment-method" class="form-select" disabled>
         <option value="">{{ text_select }}</option>
         {% for payment_method in payment_methods %}
           {% if payment_method.code == code or not code %}
@@ -13,25 +13,19 @@
           {% endif %}
         {% endfor %}
       </select>
-      <button type="button" id="button-payment-method" class="btn btn-light"><i class="fas fa-sync"></i></button>
+      <button type="button" id="button-payment-refresh" class="btn btn-light"><i class="fas fa-sync"></i></button>
     </div>
   </fieldset>
 </form>
 <script type="text/javascript"><!--
 // Payment Method
-$('#button-payment-method').on('click', function() {
+$('#button-payment-refresh').on('click', function() {
     var element = this;
 
     chain.attach(function() {
         return $.ajax({
             url: 'index.php?route=checkout/payment_method|getMethods',
             dataType: 'json',
-            beforeSend: function() {
-                $('#input-payment-method').prop('disabled', true);
-            },
-            complete: function() {
-                $('#input-payment-method').prop('disabled', false);
-            },
             success: function(json) {
                 $('.alert-dismissible').remove();
 
@@ -42,7 +36,7 @@ $('#button-payment-method').on('click', function() {
                 if (json['payment_methods']) {
                     for (i in json['payment_methods']) {
                         if (json['payment_methods'][i]['code'] == $('#input-payment-method').val()) {
-                            html += '<option value="' + json['payment_methods'][i]['code'] + '" selected="selected">' + json['payment_methods'][i]['title'] + '</option>';
+                            html += '<option value="' + json['payment_methods'][i]['code'] + '" selected>' + json['payment_methods'][i]['title'] + '</option>';
                         } else {
                             html += '<option value="' + json['payment_methods'][i]['code'] + '">' + json['payment_methods'][i]['title'] + '</option>';
                         }
@@ -52,7 +46,6 @@ $('#button-payment-method').on('click', function() {
                 $('#input-payment-method').html(html);
             },
             error: function(xhr, ajaxOptions, thrownError) {
-                oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });
@@ -92,7 +85,6 @@ $('#input-payment-method').on('change', function() {
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
-            oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });

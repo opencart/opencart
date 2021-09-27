@@ -2,7 +2,7 @@
   <fieldset>
     <legend>{{ text_shipping_method }}</legend>
     <div class="input-group">
-      <select name="shipping_method" id="input-shipping-method" class="form-select"{% if not shipping_methods %} disabled{% endif %}>
+      <select name="shipping_method" id="input-shipping-method" class="form-select" disabled>
         <option value="">{{ text_select }}</option>
         {% for shipping_method in shipping_methods %}
           <optgroup label="{{ shipping_method.title }}">
@@ -21,32 +21,26 @@
           </optgroup>
         {% endfor %}
       </select>
-      <button type="button" id="button-shipping-method" class="btn btn-light"><i class="fas fa-sync"></i></button>
+      <button type="button" id="button-shipping-refresh" class="btn btn-light"><i class="fas fa-sync"></i></button>
     </div>
   </fieldset>
 </form>
 <script type="text/javascript"><!--
 // Shipping Methods
-$('#button-shipping-method').on('click', function() {
+$('#button-shipping-refresh').on('click', function() {
     var element = this;
 
     chain.attach(function() {
         return $.ajax({
             url: 'index.php?route=checkout/shipping_method|getMethods',
             dataType: 'json',
-            beforeSend: function() {
-                $('#input-shipping-method').prop('disabled', true);
-            },
-            complete: function() {
-                $('#input-shipping-method').prop('disabled', false);
-            },
             success: function(json) {
                 $('.alert-dismissible').remove();
 
                 console.log(json);
 
                 if (json['redirect']) {
-                    //location = json['redirect'];
+                    location = json['redirect'];
                 }
 
                 if (json['error']) {
@@ -63,7 +57,7 @@ $('#button-shipping-method').on('click', function() {
                         if (!json['shipping_methods'][i]['error']) {
                             for (j in json['shipping_methods'][i]['quote']) {
                                 if (json['shipping_methods'][i]['quote'][j]['code'] == $('input-shipping-method').val()) {
-                                    html += '<option value="' + json['shipping_methods'][i]['quote'][j]['code'] + '" selected="selected">' + json['shipping_methods'][i]['quote'][j]['title'] + ' - ' + json['shipping_methods'][i]['quote'][j]['text'] + '</option>';
+                                    html += '<option value="' + json['shipping_methods'][i]['quote'][j]['code'] + '" selected>' + json['shipping_methods'][i]['quote'][j]['title'] + ' - ' + json['shipping_methods'][i]['quote'][j]['text'] + '</option>';
                                 } else {
                                     html += '<option value="' + json['shipping_methods'][i]['quote'][j]['code'] + '">' + json['shipping_methods'][i]['quote'][j]['title'] + ' - ' + json['shipping_methods'][i]['quote'][j]['text'] + '</option>';
                                 }
@@ -79,7 +73,6 @@ $('#button-shipping-method').on('click', function() {
                 $('#input-shipping-method').html(html);
             },
             error: function(xhr, ajaxOptions, thrownError) {
-                oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });
@@ -112,15 +105,18 @@ $('#input-shipping-method').on('change', function() {
                 }
 
                 if (json['error']) {
-                    $('#form-shipping-method > legend').after('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    $('#form-shipping-method').after('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                 }
 
                 if (json['success']) {
-                    $('#button-payment-method').trigger('click');
+                    $('#input-payment-method').prop('disabled', false);
+
+                    $('#button-payment-method').prop('disabled', true);
+
+
                 }
             },
             error: function(xhr, ajaxOptions, thrownError) {
-                oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });

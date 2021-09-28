@@ -27,10 +27,10 @@ $('#button-payment-refresh').on('click', function() {
             url: 'index.php?route=checkout/payment_method|getMethods',
             dataType: 'json',
             beforeSend: function() {
-                $(element).prop('disabled', true);
+                $('#input-payment-method').prop('disabled', true);
             },
             complete: function() {
-                $(element).prop('disabled', false);
+                $('#input-payment-method').prop('disabled', false);
             },
             success: function(json) {
                 $('.alert-dismissible').remove();

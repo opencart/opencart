@@ -30,18 +30,15 @@
 $('#button-shipping-refresh').on('click', function() {
     var element = this;
 
-    console.log('#button-shipping-refresh');
-
     chain.attach(function() {
-
         return $.ajax({
             url: 'index.php?route=checkout/shipping_method|getMethods',
             dataType: 'json',
             beforeSend: function() {
-                $(element).prop('disabled', true);
+                $('#input-shipping-method').prop('disabled', true);
             },
             complete: function() {
-                $(element).prop('disabled', false);
+                $('#input-shipping-method').prop('disabled', false);
             },
             success: function(json) {
                 $('.alert-dismissible').remove();

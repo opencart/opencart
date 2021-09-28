@@ -5,6 +5,7 @@ class Logout extends \Opencart\System\Engine\Controller {
 		if ($this->customer->isLogged()) {
 			$this->customer->logout();
 
+			unset($this->session->data['customer']);
 			unset($this->session->data['shipping_address']);
 			unset($this->session->data['shipping_method']);
 			unset($this->session->data['shipping_methods']);

@@ -4,10 +4,12 @@
 
     {% if addresses %}
       <div class="form-check">
-        <input type="radio" name="payment_existing" value="1" id="input-payment-existing" class="form-check-input" checked/> <label for="input-payment-existing" class="form-check-label">{{ text_address_existing }}</label>
+        <input type="radio" name="payment_existing" value="1" id="input-payment-existing" class="form-check-input" checked/>
+        <label for="input-payment-existing" class="form-check-label">{{ text_address_existing }}</label>
       </div>
       <div class="form-check">
-        <input type="radio" name="payment_existing" value="0" id="input-payment-new" class="form-check-input"> <label for="input-payment-new" class="form-check-label">{{ text_address_new }}</label>
+        <input type="radio" name="payment_existing" value="0" id="input-payment-new" class="form-check-input">
+        <label for="input-payment-new" class="form-check-label">{{ text_address_new }}</label>
       </div>
 
       <div id="payment-existing">
@@ -21,7 +23,6 @@
     {% endif %}
 
     <br/>
-
     <div id="payment-new" style="display: {% if addresses %}none{% else %}block{% endif %};">
 
       <div class="row row-cols-1 row-cols-md-2">
@@ -36,25 +37,31 @@
           </div>
         {% endif %}
         <div class="col mb-3">
-          <label for="input-payment-company" class="form-label">{{ entry_company }}</label> <input type="text" name="company" value="{{ company }}" placeholder="{{ entry_company }}" id="input-payment-company" class="form-control"{% if not logged %} disabled{% endif %}/>
+          <label for="input-payment-company" class="form-label">{{ entry_company }}</label>
+          <input type="text" name="company" value="{{ company }}" placeholder="{{ entry_company }}" id="input-payment-company" class="form-control"{% if not logged %} disabled{% endif %}/>
         </div>
         <div class="col mb-3 required">
-          <label for="input-payment-address-1" class="form-label">{{ entry_address_1 }}</label> <input type="text" name="address_1" value="{{ address_1 }}" placeholder="{{ entry_address_1 }}" id="input-payment-address-1" class="form-control"{% if not logged %} disabled{% endif %}/>
+          <label for="input-payment-address-1" class="form-label">{{ entry_address_1 }}</label>
+          <input type="text" name="address_1" value="{{ address_1 }}" placeholder="{{ entry_address_1 }}" id="input-payment-address-1" class="form-control"{% if not logged %} disabled{% endif %}/>
           <div id="error-payment-address-1" class="invalid-feedback"></div>
         </div>
         <div class="col mb-3">
-          <label for="input-payment-address-2" class="form-label">{{ entry_address_2 }}</label> <input type="text" name="address_2" value="{{ address_2 }}" placeholder="{{ entry_address_2 }}" id="input-payment-address-2" class="form-control"{% if not logged %} disabled{% endif %}/>
+          <label for="input-payment-address-2" class="form-label">{{ entry_address_2 }}</label>
+          <input type="text" name="address_2" value="{{ address_2 }}" placeholder="{{ entry_address_2 }}" id="input-payment-address-2" class="form-control"{% if not logged %} disabled{% endif %}/>
         </div>
         <div class="col mb-3 required">
-          <label for="input-payment-city" class="form-label">{{ entry_city }}</label> <input type="text" name="city" value="{{ city }}" placeholder="{{ entry_city }}" id="input-payment-city" class="form-control"{% if not logged %} disabled{% endif %}/>
+          <label for="input-payment-city" class="form-label">{{ entry_city }}</label>
+          <input type="text" name="city" value="{{ city }}" placeholder="{{ entry_city }}" id="input-payment-city" class="form-control"{% if not logged %} disabled{% endif %}/>
           <div id="error-payment-city" class="invalid-feedback"></div>
         </div>
         <div class="col mb-3 required">
-          <label for="input-payment-postcode" class="form-label">{{ entry_postcode }}</label> <input type="text" name="postcode" value="{{ postcode }}" placeholder="{{ entry_postcode }}" id="input-payment-postcode" class="form-control"{% if not logged %} disabled{% endif %}/>
+          <label for="input-payment-postcode" class="form-label">{{ entry_postcode }}</label>
+          <input type="text" name="postcode" value="{{ postcode }}" placeholder="{{ entry_postcode }}" id="input-payment-postcode" class="form-control"{% if not logged %} disabled{% endif %}/>
           <div id="error-payment-postcode" class="invalid-feedback"></div>
         </div>
         <div class="col mb-3 required">
-          <label for="input-payment-country" class="form-label">{{ entry_country }}</label> <select name="country_id" id="input-payment-country" class="form-select"{% if not logged %} disabled{% endif %}>
+          <label for="input-payment-country" class="form-label">{{ entry_country }}</label>
+          <select name="country_id" id="input-payment-country" class="form-select"{% if not logged %} disabled{% endif %}>
             <option value="">{{ text_select }}</option>
             {% for country in countries %}
               <option value="{{ country.country_id }}"{% if country.country_id == country_id %} selected{% endif %}>{{ country.name }}</option>
@@ -63,7 +70,8 @@
           <div id="error-payment-country" class="invalid-feedback"></div>
         </div>
         <div class="col mb-3 required">
-          <label for="input-payment-zone" class="form-label">{{ entry_zone }}</label> <select name="zone_id" id="input-payment-zone" class="form-select"{% if not logged %} disabled{% endif %}></select>
+          <label for="input-payment-zone" class="form-label">{{ entry_zone }}</label>
+          <select name="zone_id" id="input-payment-zone" class="form-select"{% if not logged %} disabled{% endif %}></select>
           <div id="error-payment-zone" class="invalid-feedback"></div>
         </div>
 
@@ -223,14 +231,10 @@ $('#input-payment-address').on('change', function() {
                 if (json['success']) {
                     $('#alert').after('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-
-                    $('#button-shipping-refresh').trigger('click');
-
                   {% if shipping_required %}
-                    $('#input-shipping-address').prop('disabled', false);
                     $('#form-shipping-address').find(':disabled').prop('disabled', false);
                   {% else %}
-                    $('#input-payment-address').prop('disabled', false);
+                    $('#button-payment-refresh').trigger('click');
                   {% endif %}
                 }
             },
@@ -242,7 +246,7 @@ $('#input-payment-address').on('change', function() {
 });
 
 // New Payment Address
-$('#form-payment-address').submit(function(e) {
+$('#form-payment-address').on('submit', function(e) {
     e.preventDefault();
 
     chain.attach(function() {
@@ -259,14 +263,14 @@ $('#form-payment-address').submit(function(e) {
                 $('#button-payment-address').button('reset');
             },
             success: function(json) {
-                console.log(json);
-                console.log(json['error']);
-
                 $('#form-payment-address').find('.is-invalid').removeClass('is-invalid');
                 $('#form-payment-address').find('.invalid-feedback').removeClass('d-block');
 
+                console.log(json);
+                console.log(json['error']);
+
                 if (json['redirect']) {
-                    location = json['redirect'];
+                    //location = json['redirect'];
                 }
 
                 if (json['error']) {
@@ -285,27 +289,11 @@ $('#form-payment-address').submit(function(e) {
                 if (json['success']) {
                     $('#alert').prepend('<div class="alert alert-success alert-dismissible"> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-
-                    $('#form-payment-address').prop('disabled', false);
-
-
-
-
-
                   {% if shipping_required %}
-                    $('#input-shipping-address').prop('disabled', false);
                     $('#form-shipping-address').find(':disabled').prop('disabled', false);
                   {% else %}
-                    $('#input-payment-address').prop('disabled', false);
+                    $('#button-payment-refresh').trigger('click');
                   {% endif %}
-
-
-                  {% if shipping_required %}
-                    $('#button-shipping-method').trigger('click');
-                  {% else %}
-                    $('#button-payment-method').trigger('click');
-                  {% endif %}
-
                 }
             },
             error: function(xhr, ajaxOptions, thrownError) {

@@ -2,7 +2,7 @@
   <fieldset>
     <legend>{{ text_shipping_method }}</legend>
     <div class="input-group">
-      <select name="shipping_method" id="input-shipping-method" class="form-select" disabled>
+      <select name="shipping_method" id="input-shipping-method" class="form-select"{% if not code %} disabled{% endif %}>
         <option value="">{{ text_select }}</option>
         {% for shipping_method in shipping_methods %}
           <optgroup label="{{ shipping_method.title }}">
@@ -30,10 +30,19 @@
 $('#button-shipping-refresh').on('click', function() {
     var element = this;
 
+    console.log('#button-shipping-refresh');
+
     chain.attach(function() {
+
         return $.ajax({
             url: 'index.php?route=checkout/shipping_method|getMethods',
             dataType: 'json',
+            beforeSend: function() {
+                $(element).prop('disabled', true);
+            },
+            complete: function() {
+                $(element).prop('disabled', false);
+            },
             success: function(json) {
                 $('.alert-dismissible').remove();
 
@@ -44,7 +53,7 @@ $('#button-shipping-refresh').on('click', function() {
                 }
 
                 if (json['error']) {
-                    $('#form-shipping-method').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                 }
 
                 // Shipping Methods
@@ -56,7 +65,7 @@ $('#button-shipping-refresh').on('click', function() {
 
                         if (!json['shipping_methods'][i]['error']) {
                             for (j in json['shipping_methods'][i]['quote']) {
-                                if (json['shipping_methods'][i]['quote'][j]['code'] == $('input-shipping-method').val()) {
+                                if (json['shipping_methods'][i]['quote'][j]['code'] == $('#input-shipping-method').val()) {
                                     html += '<option value="' + json['shipping_methods'][i]['quote'][j]['code'] + '" selected>' + json['shipping_methods'][i]['quote'][j]['title'] + ' - ' + json['shipping_methods'][i]['quote'][j]['text'] + '</option>';
                                 } else {
                                     html += '<option value="' + json['shipping_methods'][i]['quote'][j]['code'] + '">' + json['shipping_methods'][i]['quote'][j]['title'] + ' - ' + json['shipping_methods'][i]['quote'][j]['text'] + '</option>';
@@ -96,24 +105,20 @@ $('#input-shipping-method').on('change', function() {
                 $(element).prop('disabled', false);
             },
             success: function(json) {
-                console.log(json);
-
                 $('.alert-dismissible').remove();
+
+                console.log(json);
 
                 if (json['redirect']) {
                     location = json['redirect'];
                 }
 
                 if (json['error']) {
-                    $('#form-shipping-method').after('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    $('#alert').after('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                 }
 
                 if (json['success']) {
-                    $('#input-payment-method').prop('disabled', false);
-
-                    $('#button-payment-method').prop('disabled', true);
-
-
+                    $('#button-payment-refresh').trigger('click');
                 }
             },
             error: function(xhr, ajaxOptions, thrownError) {

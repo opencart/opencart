@@ -65,7 +65,7 @@ label {
   margin-bottom: 15px;
 }
 
-div.required .col-form-label:before {
+div.required .col-form-label:before, div.required .form-label:before {
   content: '* ';
   color: #F00;
   font-weight: bold;

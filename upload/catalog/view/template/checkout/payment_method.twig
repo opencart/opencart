@@ -1,8 +1,8 @@
 <form id="form-payment-method">
-  <fieldset>
+  <fieldset class="">
     <legend>{{ text_payment_method }}</legend>
     <div class="input-group">
-      <select name="payment_method" id="input-payment-method" class="form-select" disabled>
+      <select name="payment_method" id="input-payment-method" class="form-select"{% if not code %} disabled{% endif %}>
         <option value="">{{ text_select }}</option>
         {% for payment_method in payment_methods %}
           {% if payment_method.code == code or not code %}
@@ -26,6 +26,12 @@ $('#button-payment-refresh').on('click', function() {
         return $.ajax({
             url: 'index.php?route=checkout/payment_method|getMethods',
             dataType: 'json',
+            beforeSend: function() {
+                $(element).prop('disabled', true);
+            },
+            complete: function() {
+                $(element).prop('disabled', false);
+            },
             success: function(json) {
                 $('.alert-dismissible').remove();
 
@@ -56,37 +62,39 @@ $('#button-payment-refresh').on('click', function() {
 $('#input-payment-method').on('change', function() {
     var element = this;
 
-    $.ajax({
-        url: 'index.php?route=checkout/payment_method|save',
-        type: 'post',
-        data: $('#form-payment-method').serialize(),
-        dataType: 'json',
-        beforeSend: function() {
-            $(element).prop('disabled', true);
-        },
-        beforeSend: function() {
-            $(element).prop('disabled', false);
-        },
-        success: function(json) {
-            $('.alert-dismissible').remove();
+    chain.attach(function() {
+        return $.ajax({
+            url: 'index.php?route=checkout/payment_method|save',
+            type: 'post',
+            data: $('#form-payment-method').serialize(),
+            dataType: 'json',
+            beforeSend: function() {
+                $(element).prop('disabled', true);
+            },
+            beforeSend: function() {
+                $(element).prop('disabled', false);
+            },
+            success: function(json) {
+                $('.alert-dismissible').remove();
 
-            console.log(json);
+                console.log(json);
 
-            if (json['redirect']) {
-                location = json['redirect'];
+                if (json['redirect']) {
+                    location = json['redirect'];
+                }
+
+                if (json['error']) {
+                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                }
+
+                if (json['success']) {
+                    $('#checkout-confirm').load('index.php?route=checkout/confirm|confirm');
+                }
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
-
-            if (json['error']) {
-                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-            }
-
-            if (json['success']) {
-                $('#payment').load('index.php?route=checkout/confirm|payment');
-            }
-        },
-        error: function(xhr, ajaxOptions, thrownError) {
-            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-        }
+        });
     });
 });
 //--></script>

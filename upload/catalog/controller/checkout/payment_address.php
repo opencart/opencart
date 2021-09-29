@@ -119,7 +119,6 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-
 			// Customer
 			if (!isset($this->session->data['customer'])) {
 				$json['error']['warning'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
@@ -271,6 +270,17 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 
 			$json['success'] = 'Success: Your address has been successfully created!';
 		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	public function getAddresses(): void {
+		$this->load->language('account/address');
+
+		$json = [];
+
+
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

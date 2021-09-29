@@ -231,9 +231,6 @@ $('#form-register').on('submit', function(e) {
 
     var element = this;
 
-    $('#form-payment-address').find(':disabled').prop('disabled', false);
-    $('#form-shipping-address').find(':disabled').prop('disabled', false);
-
     $.ajax({
         url: 'index.php?route=checkout/register|save&language={{ language }}',
         type: 'post',

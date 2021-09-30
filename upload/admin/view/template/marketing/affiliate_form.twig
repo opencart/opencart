@@ -383,7 +383,6 @@ $('#input-customer-group').on('change', function() {
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
-            oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
@@ -430,7 +429,6 @@ $('#button-history').on('click', function(e) {
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
-            oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
@@ -476,7 +474,6 @@ $('#button-transaction').on('click', function(e) {
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
-            oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });

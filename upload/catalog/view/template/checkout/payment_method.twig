@@ -13,13 +13,13 @@
           {% endif %}
         {% endfor %}
       </select>
-      <button type="button" id="button-payment-refresh" class="btn btn-light"><i class="fas fa-sync"></i></button>
+      <button type="button" id="button-payment-method-refresh" class="btn btn-light"><i class="fas fa-sync"></i></button>
     </div>
   </fieldset>
 </form>
 <script type="text/javascript"><!--
 // Payment Methods
-$('#button-payment-refresh').on('click', function() {
+$('#button-payment-method-refresh').on('click', function() {
     var element = this;
 
     chain.attach(function() {

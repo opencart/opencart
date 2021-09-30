@@ -169,7 +169,7 @@
 
         {% endfor %}
 
-        {% if not logged and shipping_required %}
+        {% if shipping_required %}
           <div class="col mb-3">
             <div class="form-check">
               <input type="checkbox" name="address_match" value="1" id="input-address-match" class="form-check-input" checked{% if not logged %} disabled{% endif %}/> <label for="input-address-match" class="form-check-label">{{ entry_match }}</label>
@@ -266,7 +266,7 @@ $('#input-payment-address').on('change', function() {
                   {% if shipping_required %}
                     $('#form-shipping-address').find(':disabled').prop('disabled', false);
                   {% else %}
-                    $('#button-payment-refresh').trigger('click');
+                    $('#button-payment-method-refresh').trigger('click');
                   {% endif %}
                 }
             },
@@ -324,7 +324,7 @@ $('#form-payment-address').on('submit', function(e) {
                   {% if shipping_required %}
                     $('#form-shipping-address').find(':disabled').prop('disabled', false);
                   {% else %}
-                    $('#button-payment-refresh').trigger('click');
+                    $('#button-payment-method-refresh').trigger('click');
                   {% endif %}
                 }
             },

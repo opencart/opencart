@@ -1290,7 +1290,6 @@ $(document).on('click', '#button-invoice', function() {
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
-            oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
@@ -1399,7 +1398,6 @@ $('#modal-customer select[name=\'customer_group_id\']').on('change', function() 
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
-            oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
@@ -1447,7 +1445,6 @@ $('#modal-customer #button-customer').on('click', function() {
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
-            oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
@@ -1483,7 +1480,6 @@ $('#button-language').on('click', function() {
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
-            oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
@@ -1519,7 +1515,6 @@ $('#button-currency').on('click', function() {
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
-            oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
@@ -1569,7 +1564,6 @@ $('#modal-shipping-method #button-shipping-methods').on('click', function() {
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
-            oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
@@ -1604,7 +1598,6 @@ $('#modal-shipping-method #button-shipping-method').on('click', function() {
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
-            oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
@@ -1643,7 +1636,6 @@ $('#modal-payment-method #button-payment-methods').on('click', function() {
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
-            oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
@@ -1678,7 +1670,6 @@ $('#modal-payment-method #button-payment-method').on('click', function() {
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
-            oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
@@ -1713,8 +1704,6 @@ $('#modal-coupon #button-coupon').on('click', function() {
                 $('#button-refresh').trigger('click');
             }
         },
-        error: function(xhr, ajaxOptions, thrownError) {
-            oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
@@ -1750,7 +1739,6 @@ $('#modal-voucher #button-voucher').on('click', function() {
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
-            oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
@@ -1790,7 +1778,6 @@ $('#modal-reward #button-reward').on('click', function() {
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
-            oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
@@ -1840,7 +1827,6 @@ $(document).on('click', '#button-reward-add, #button-reward-remove, #button-comm
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
-            oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
@@ -1919,7 +1905,6 @@ $('#modal-payment-address select[name=\'payment_address\']').on('change', functi
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
-            oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     }).done(function() {
@@ -1967,7 +1952,6 @@ $('#modal-payment-address select[name=\'country_id\']').on('change', function() 
             $('#modal-payment-address select[name=\'zone_id\']').html(html);
         },
         error: function(xhr, ajaxOptions, thrownError) {
-            oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
@@ -2022,7 +2006,6 @@ $('#modal-payment-address #button-payment-address').on('click', function() {
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
-            oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
@@ -2074,7 +2057,6 @@ $('#modal-shipping-address select[name=\'shipping_address\']').on('change', func
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
-            oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     }).done(function() {
@@ -2122,7 +2104,6 @@ $('#modal-shipping-address select[name=\'country_id\']').on('change', function()
             $('#modal-shipping-address select[name=\'zone_id\']').html(html);
         },
         error: function(xhr, ajaxOptions, thrownError) {
-            oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
@@ -2178,7 +2159,6 @@ $('#modal-shipping-address #button-shipping-address').on('click', function() {
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
-            oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
@@ -2429,7 +2409,6 @@ $('#modal-cart #button-product-add').on('click', function() {
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
-            oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
@@ -2461,7 +2440,6 @@ $('#modal-cart #button-remove').on('click', '.btn-danger', function() {
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
-            oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
@@ -2510,7 +2488,6 @@ $('#modal-cart #button-voucher-add').on('click', function() {
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
-            oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
@@ -2696,7 +2673,6 @@ $('#button-refresh').on('click', function() {
             $('#total').html(html);
         },
         error: function(xhr, ajaxOptions, thrownError) {
-            oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
@@ -2781,7 +2757,6 @@ $('#button-save').on('click', function() {
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
-            oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });

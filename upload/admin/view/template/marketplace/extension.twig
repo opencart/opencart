@@ -53,7 +53,6 @@ $('#input-type').on('change', function() {
             $('#extension').html(html);
         },
         error: function(xhr, ajaxOptions, thrownError) {
-            oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
@@ -94,7 +93,6 @@ $('#extension').on('click', '#recommended .btn-primary', function(e) {
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
-            oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
@@ -123,7 +121,6 @@ $('#extension').on('click', '.dropdown-item', function(e) {
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
-            oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
@@ -158,7 +155,6 @@ $('#extension').on('click', '.btn-success', function(e) {
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
-            oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
@@ -196,7 +192,6 @@ $('#extension').on('click', '.btn-danger, .btn-outline-danger', function(e) {
                 }
             },
             error: function(xhr, ajaxOptions, thrownError) {
-                oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });

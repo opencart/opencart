@@ -114,7 +114,6 @@ $('#button-backup').on('click', function() {
                 }
             },
             error: function(xhr, ajaxOptions, thrownError) {
-                oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 
                 $('#button-backup').button('reset');
@@ -184,7 +183,6 @@ $('#history').on('click', '.btn-warning', function() {
                 }
             },
             error: function(xhr, ajaxOptions, thrownError) {
-                oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 
                 $(element).button('reset');
@@ -241,7 +239,6 @@ $('#button-upload').on('click', function() {
                     }
                 },
                 error: function(xhr, ajaxOptions, thrownError) {
-                    oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
                     console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
                 }
             });
@@ -277,7 +274,6 @@ $('#history').on('click', '.btn-danger', function() {
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
-            oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });

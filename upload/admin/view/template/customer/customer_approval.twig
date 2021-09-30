@@ -103,7 +103,6 @@ $('#button-approve, #button-deny, #button-delete').on('click', function(e) {
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
-            oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
@@ -135,7 +134,6 @@ $('#customer-approval').on('click', '.btn-success, .btn-danger', function(e) {
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
-            oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });

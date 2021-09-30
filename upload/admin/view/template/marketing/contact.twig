@@ -127,7 +127,6 @@ $('#input-customer').autocomplete({
                 }));
             },
             error: function(xhr, ajaxOptions, thrownError) {
-                oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });
@@ -165,7 +164,6 @@ $('#input-affiliate').autocomplete({
                 }));
             },
             error: function(xhr, ajaxOptions, thrownError) {
-                oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });
@@ -203,7 +201,6 @@ $('#input-product').autocomplete({
                 }));
             },
             error: function(xhr, ajaxOptions, thrownError) {
-                oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });
@@ -252,18 +249,19 @@ $('#button-send').on('click', function() {
 
                 if (json['error']) {
                     if (json['error']['warning']) {
-                        oc.alert('danger', json['error']['warning']);
+                        $('#alert').prepend('<div class="alert alert-danger"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                     }
 
                     for (key in json['error']) {
-                        oc.error(key, json['error'][key]);
+                        $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
+                        $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
                     }
 
                     delete json['error'];
                 }
 
                 if (json['success']) {
-                    oc.alert('success', json['success']);
+                    $('#alert').prepend('<div class="alert alert-success"><i class="fas fa-exclamation-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                 }
 
                 if (json['next']) {
@@ -271,7 +269,6 @@ $('#button-send').on('click', function() {
                 }
             },
             error: function(xhr, ajaxOptions, thrownError) {
-                oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });

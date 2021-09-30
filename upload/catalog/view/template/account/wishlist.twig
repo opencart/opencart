@@ -102,7 +102,6 @@ $('#button-payment-address').click(function(e) {
                     for (i in json['error']) {
                         for (key in json['error']) {
                             $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
-
                             $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
                         }
                     }
@@ -110,20 +109,9 @@ $('#button-payment-address').click(function(e) {
 
                 if (json['success']) {
                     $('#alert').prepend('<div class="alert alert-success alert-dismissible"> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-
-
-
-                  {% if shipping_required %}
-                    $('#button-shipping-method').trigger('click');
-                  {% else %}
-                    $('#button-payment-method').trigger('click');
-                  {% endif %}
-
                 }
             },
             error: function(xhr, ajaxOptions, thrownError) {
-                oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });

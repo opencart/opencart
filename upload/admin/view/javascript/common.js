@@ -248,10 +248,7 @@ $(document).submit('form[data-oc-toggle=\'ajax\']', function(e) {
 
                 for (key in json['error']) {
                     for (key in json['error']) {
-                        // Highlight error fields
                         $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
-
-                        // Show errors
                         $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
                     }
                 }

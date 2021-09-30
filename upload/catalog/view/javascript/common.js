@@ -171,7 +171,6 @@ $(document).ready(function() {
                 }
             },
             error: function(xhr, ajaxOptions, thrownError) {
-                oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });
@@ -216,7 +215,6 @@ cart.add = function(product_id, quantity) {
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
-            oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
@@ -242,7 +240,6 @@ cart.update = function(key, quantity) {
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
-            oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
@@ -268,7 +265,6 @@ cart.remove = function(key) {
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
-            oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
@@ -332,7 +328,6 @@ wishlist.add = function(product_id) {
             $('#wishlist-total').attr('title', json['total']);
         },
         error: function(xhr, ajaxOptions, thrownError) {
-            oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
@@ -361,7 +356,6 @@ compare.add = function(product_id) {
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
-            oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
@@ -396,6 +390,14 @@ $(document).on('submit', '[data-oc-toggle=\'ajax\']', function(e) {
     if (typeof enctype == undefined) {
         enctype = 'application/x-www-form-urlencoded';
     }
+
+    console.log(e);
+    console.log(element);
+    console.log(action);
+    console.log(button);
+    console.log(formaction);
+    console.log(method);
+    console.log(enctype);
 
     $.ajax({
         url: action,
@@ -467,7 +469,6 @@ $(document).on('submit', '[data-oc-toggle=\'ajax\']', function(e) {
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
-            oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
@@ -520,11 +521,11 @@ $(document).on('click', '[data-oc-toggle=\'upload\']', function() {
                     $(element).parent().find('.invalid-tooltip').remove();
 
                     if (json['error']) {
-                        $(element).after('<div class="invalid-tooltip d-inline">' + json['error'] + '</div>');
+                        $(element).after('<div class="invalid-tooltip d-block">' + json['error'] + '</div>');
                     }
 
                     if (json['success']) {
-                        oc.alert('success', json['success']);
+                        $('#alert').prepend('<div class="alert alert-success"><i class="fas fa-exclamation-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                         delete json['success'];
                     }
@@ -534,7 +535,6 @@ $(document).on('click', '[data-oc-toggle=\'upload\']', function() {
                     }
                 },
                 error: function(xhr, ajaxOptions, thrownError) {
-                    oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
                     console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
                 }
             });

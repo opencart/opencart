@@ -169,7 +169,7 @@
 
         {% endfor %}
 
-        {% if shipping_required %}
+        {% if shipping_required and not address_total %}
           <div class="col mb-3">
             <div class="form-check">
               <input type="checkbox" name="address_match" value="1" id="input-address-match" class="form-check-input" checked{% if not logged %} disabled{% endif %}/> <label for="input-address-match" class="form-check-label">{{ entry_match }}</label>
@@ -193,46 +193,6 @@ $('input[name=\'payment_existing\']').on('change', function() {
         $('#payment-existing').hide();
         $('#payment-new').show();
     }
-});
-
-// Payment Addresses
-$('#button-payment-address-refresh').on('click', function() {
-    var element = this;
-
-    chain.attach(function() {
-        return $.ajax({
-            url: 'index.php?route=account/address|getAddresses',
-            dataType: 'json',
-            beforeSend: function() {
-                $('#input-payment-method').prop('disabled', true);
-            },
-            complete: function() {
-                $('#input-payment-method').prop('disabled', false);
-            },
-            success: function(json) {
-                $('.alert-dismissible').remove();
-
-                console.log(json);
-
-                html = '<option value="">{{ text_select }}</option>';
-
-                if (json['payment_methods']) {
-                    for (i in json['payment_methods']) {
-                        if (json['payment_methods'][i]['code'] == $('#input-payment-method').val()) {
-                            html += '<option value="' + json['payment_methods'][i]['code'] + '" selected>' + json['payment_methods'][i]['title'] + '</option>';
-                        } else {
-                            html += '<option value="' + json['payment_methods'][i]['code'] + '">' + json['payment_methods'][i]['title'] + '</option>';
-                        }
-                    }
-                }
-
-                $('#input-payment-method').html(html);
-            },
-            error: function(xhr, ajaxOptions, thrownError) {
-                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-            }
-        });
-    });
 });
 
 // Existing Payment Address
@@ -302,7 +262,7 @@ $('#form-payment-address').on('submit', function(e) {
                 console.log(json['error']);
 
                 if (json['redirect']) {
-                    //location = json['redirect'];
+                    location = json['redirect'];
                 }
 
                 if (json['error']) {
@@ -320,6 +280,21 @@ $('#form-payment-address').on('submit', function(e) {
 
                 if (json['success']) {
                     $('#alert').prepend('<div class="alert alert-success alert-dismissible"> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                    html = '<option value="">{{ text_select }}</option>';
+
+                    if (json['addesses']) {
+                        for (i in json['addesses']) {
+                            if (json['addesses'][i]['address_id'] == json['address_id']) {
+                                html += '<option value="' + json['addesses'][i]['address_id'] + '" selected>' + json['addesses'][i]['firstname'] + ' ' + json['addesses'][i]['lastname'] + ', ' + json['addesses'][i]['address_1'] + ', ' + json['addesses'][i]['city'] + ', ' + json['addesses'][i]['zone'] + ', ' + json['addesses'][i]['country'] + '</option>';
+                            } else {
+                                html += '<option value="' + json['addesses'][i]['address_id'] + '">' + json['addesses'][i]['firstname'] + ' ' + json['addesses'][i]['lastname'] + ', ' + json['addesses'][i]['address_1'] + ', ' + json['addesses'][i]['city'] + ', ' + json['addesses'][i]['zone'] + ', ' + json['addesses'][i]['country'] + '</option>';
+                            }
+                        }
+                    }
+
+                    $('#input-payment-address').html(html);
+                    $('#input-shipping-address-address').html(html);
 
                   {% if shipping_required %}
                     $('#form-shipping-address').find(':disabled').prop('disabled', false);

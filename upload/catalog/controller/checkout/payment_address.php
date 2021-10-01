@@ -23,6 +23,8 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('account/address');
 
+		$data['address_total'] = $this->model_account_address->getTotalAddresses();
+
 		$data['addresses'] = $this->model_account_address->getAddresses();
 
 		if (!$this->customer->isLogged() && isset($this->session->data['payment_address'])) {
@@ -177,6 +179,12 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 				$this->load->model('account/address');
 
 				$address_id = $this->model_account_address->addAddress($this->customer->getId(), $this->request->post);
+
+				$json['address_id'] = $address_id;
+
+				$this->load->model('account/address');
+
+				$json['addresses'] = $this->model_account_address->getAddresses();
 			} else {
 				$address_id = 0;
 			}
@@ -270,17 +278,6 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 
 			$json['success'] = 'Success: Your address has been successfully created!';
 		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	public function getAddresses(): void {
-		$this->load->language('account/address');
-
-		$json = [];
-
-
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

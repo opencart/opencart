@@ -105,11 +105,6 @@ class Register extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		// Validate if customer is already logged out.
-		if ($this->customer->isLogged()) {
-			$json['redirect'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'), true);
-		}
-
 		// Validate cart has products and has stock.
 		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
 			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
@@ -177,8 +172,8 @@ class Register extends \Opencart\System\Engine\Controller {
 			}
 
 			$this->load->model('account/customer');
-
-			if ($account && $this->model_account_customer->getTotalCustomersByEmail($this->request->post['email'])) {
+			// If customer already logged in
+			if (!$this->customer->isLogged() && $account && $this->model_account_customer->getTotalCustomersByEmail($this->request->post['email'])) {
 				$json['error']['warning'] = $this->language->get('error_exists');
 			}
 
@@ -186,7 +181,7 @@ class Register extends \Opencart\System\Engine\Controller {
 				$json['error']['telephone'] = $this->language->get('error_telephone');
 			}
 
-			if ($account && (utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) < 4) || (utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) > 40)) {
+			if (!$this->customer->isLogged() && $account && (utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) < 4) || (utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) > 40)) {
 				$json['error']['password'] = $this->language->get('error_password');
 			}
 
@@ -247,11 +242,17 @@ class Register extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			if ($account) {
-				// Create account
-				$customer_id = $this->model_account_customer->addCustomer($this->request->post);
+			if (!$this->customer->isLogged()) {
+				if ($account) {
+					// Create account
+					$customer_id = $this->model_account_customer->addCustomer($this->request->post);
+				} else {
+					$customer_id = 0;
+				}
 			} else {
-				$customer_id = 0;
+				$customer_id = $this->customer->getId();
+
+				$this->model_account_customer->editCustomer($customer_id, $this->request->post);
 			}
 
 			// Check if current customer group requires approval

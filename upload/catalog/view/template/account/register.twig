@@ -173,6 +173,7 @@
 
           {% endfor %}
         </fieldset>
+
         <fieldset>
           <legend>{{ text_your_password }}</legend>
           <div class="row mb-3 required">
@@ -189,15 +190,18 @@
             <label class="col-sm-2 col-form-label">{{ entry_newsletter }}</label>
             <div class="col-sm-10">
               <div class="form-check form-check-inline">
-                <input type="radio" name="newsletter" value="1" id="input-newsletter-yes" class="form-check-input"/> <label for="input-newsletter-yes" class="form-check-label">{{ text_yes }}</label>
+                <input type="radio" name="newsletter" value="1" id="input-newsletter-yes" class="form-check-input"/>
+                <label for="input-newsletter-yes" class="form-check-label">{{ text_yes }}</label>
               </div>
               <div class="form-check form-check-inline">
-                <input type="radio" name="newsletter" value="0" id="input-newsletter-no" class="form-check-input" checked/> <label for="input-newsletter-no" class="form-check-label">{{ text_no }}</label>
+                <input type="radio" name="newsletter" value="0" id="input-newsletter-no" class="form-check-input" checked/>
+                <label for="input-newsletter-no" class="form-check-label">{{ text_no }}</label>
               </div>
             </div>
           </div>
         </fieldset>
         {{ captcha }}
+
         <div class="d-inline-block pt-2 pd-2 w-100">
           <div class="float-end text-right">
             {% if text_agree %}

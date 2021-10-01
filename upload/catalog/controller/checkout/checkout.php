@@ -54,6 +54,10 @@ class Checkout extends \Opencart\System\Engine\Controller {
 		$data['shipping_required'] = $this->cart->hasShipping();
 		$data['config_checkout_address'] = $this->config->get('config_checkout_address');
 
+		$this->load->model('account/address');
+
+		$data['address_total'] = $this->model_account_address->getTotalAddresses();
+
 		$data['register'] = $this->load->controller('checkout/register');
 		$data['shipping_address'] = $this->load->controller('checkout/shipping_address');
 		$data['payment_address'] = $this->load->controller('checkout/payment_address');

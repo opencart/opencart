@@ -184,24 +184,24 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 			if ($this->customer->isLogged()) {
 				$this->load->model('account/address');
 
-				$address_id = $this->model_account_address->addAddress($this->customer->getId(), $this->request->post);
-			} else {
-				$address_id = 0;
-			}
+				$json['address_id'] = $this->model_account_address->addAddress($this->customer->getId(), $this->request->post);
 
-			$this->session->data['shipping_address'] = [
-				'address_id'   => $address_id,
-				'firstname'    => $this->request->post['firstname'],
-				'lastname'     => $this->request->post['lastname'],
-				'company'      => $this->request->post['company'],
-				'address_1'    => $this->request->post['address_1'],
-				'address_2'    => $this->request->post['address_2'],
-				'city'         => $this->request->post['city'],
-				'postcode'     => $this->request->post['postcode'],
-				'country_id'   => $this->request->post['country_id'],
-				'zone_id'      => $this->request->post['zone_id'],
-				'custom_field' => isset($this->request->post['custom_field']) ? $this->request->post['custom_field'] : []
-			];
+				$json['addresses'] = $this->model_account_address->getAddresses();
+			} else {
+				$this->session->data['shipping_address'] = [
+					'address_id'   => 0,
+					'firstname'    => $this->request->post['firstname'],
+					'lastname'     => $this->request->post['lastname'],
+					'company'      => $this->request->post['company'],
+					'address_1'    => $this->request->post['address_1'],
+					'address_2'    => $this->request->post['address_2'],
+					'city'         => $this->request->post['city'],
+					'postcode'     => $this->request->post['postcode'],
+					'country_id'   => $this->request->post['country_id'],
+					'zone_id'      => $this->request->post['zone_id'],
+					'custom_field' => isset($this->request->post['custom_field']) ? $this->request->post['custom_field'] : []
+				];
+			}
 
 			unset($this->session->data['shipping_method']);
 			unset($this->session->data['shipping_methods']);
@@ -213,7 +213,7 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function address() {
+	public function address(): void {
 		$this->load->language('checkout/checkout');
 
 		$json = [];
@@ -224,9 +224,8 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 			$address_id = 0;
 		}
 
-		// Validate customer has been set
-		if (!isset($this->session->data['customer'])) {
-			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
+		if (!$this->customer->isLogged()) {
+			$json['redirect'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'), true);
 		}
 
 		// Validate cart has products and has stock.

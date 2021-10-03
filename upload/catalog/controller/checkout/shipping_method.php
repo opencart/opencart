@@ -91,10 +91,19 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 			$json['redirect'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'), true);
 		}
 
+
+		// Validate if shipping method has been set.
+		if (!isset($this->session->data['customer'])) {
+			$json['error'] = $this->language->get('error_customer');
+		}
+
 		// Validate if shipping address has been set.
 		if (!isset($this->session->data['shipping_address'])) {
 			$json['redirect'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'), true);
 		}
+
+
+
 
 		if (!isset($this->request->post['shipping_method'])) {
 			$json['error'] = $this->language->get('error_shipping');

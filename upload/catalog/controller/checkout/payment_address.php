@@ -76,6 +76,11 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
+		// Validate customer has been set
+		if (!isset($this->session->data['customer'])) {
+			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
+		}
+
 		// Validate cart has products and has stock.
 		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
 			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
@@ -119,11 +124,6 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 				if (!isset($this->request->post[$key])) {
 					$this->request->post[$key] = '';
 				}
-			}
-
-			// Customer
-			if (!isset($this->session->data['customer'])) {
-				$json['error']['warning'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
 			}
 
 			if ((utf8_strlen($this->request->post['firstname']) < 1) || (utf8_strlen($this->request->post['firstname']) > 32)) {
@@ -178,30 +178,24 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 			if ($this->customer->isLogged()) {
 				$this->load->model('account/address');
 
-				$address_id = $this->model_account_address->addAddress($this->customer->getId(), $this->request->post);
-
-				$json['address_id'] = $address_id;
-
-				$this->load->model('account/address');
+				$json['address_id'] = $this->model_account_address->addAddress($this->customer->getId(), $this->request->post);
 
 				$json['addresses'] = $this->model_account_address->getAddresses();
 			} else {
-				$address_id = 0;
+				$this->session->data['payment_address'] = [
+					'address_id'   => 0,
+					'firstname'    => $this->request->post['firstname'],
+					'lastname'     => $this->request->post['lastname'],
+					'company'      => $this->request->post['company'],
+					'address_1'    => $this->request->post['address_1'],
+					'address_2'    => $this->request->post['address_2'],
+					'city'         => $this->request->post['city'],
+					'postcode'     => $this->request->post['postcode'],
+					'country_id'   => $this->request->post['country_id'],
+					'zone_id'      => $this->request->post['zone_id'],
+					'custom_field' => isset($this->request->post['custom_field']) ? $this->request->post['custom_field'] : []
+				];
 			}
-
-			$this->session->data['payment_address'] = [
-				'address_id'   => $address_id,
-				'firstname'    => $this->request->post['firstname'],
-				'lastname'     => $this->request->post['lastname'],
-				'company'      => $this->request->post['company'],
-				'address_1'    => $this->request->post['address_1'],
-				'address_2'    => $this->request->post['address_2'],
-				'city'         => $this->request->post['city'],
-				'postcode'     => $this->request->post['postcode'],
-				'country_id'   => $this->request->post['country_id'],
-				'zone_id'      => $this->request->post['zone_id'],
-				'custom_field' => isset($this->request->post['custom_field']) ? $this->request->post['custom_field'] : []
-			];
 
 			unset($this->session->data['payment_method']);
 			unset($this->session->data['payment_methods']);

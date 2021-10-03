@@ -279,7 +279,16 @@ $('#form-register').on('submit', function(e) {
                 $('#form-payment-address').find(':disabled').prop('disabled', false);
                 $('#form-shipping-address').find(':disabled').prop('disabled', false);
 
+                if ($(element).prop('disabled')) {
+                    $('#form-payment-address').prop('disabled', false);
+                } else {
+
+                }
+
                 $('.account').remove();
+
+
+                $('#checkout-confirm').load('index.php?route=checkout/confirm|confirm');
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {

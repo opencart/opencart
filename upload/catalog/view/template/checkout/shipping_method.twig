@@ -21,13 +21,13 @@
           </optgroup>
         {% endfor %}
       </select>
-      <button type="button" id="button-shipping-method-refresh" class="btn btn-light"><i class="fas fa-sync"></i></button>
+      <button type="button" id="button-shipping-method" class="btn btn-light"><i class="fas fa-sync"></i></button>
     </div>
   </fieldset>
 </form>
 <script type="text/javascript"><!--
 // Shipping Methods
-$('#button-shipping-method-refresh').on('click', function() {
+$('#button-shipping-method').on('click', function() {
     var element = this;
 
     chain.attach(function() {

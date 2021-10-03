@@ -2,7 +2,7 @@
   <fieldset>
     <legend>{{ text_payment_address }}</legend>
 
-    {% if addresses %}
+    <div id="payment-addresses" style="display: {% if not addresses %}none{% endif %};">
       <div class="form-check">
         <input type="radio" name="payment_existing" value="1" id="input-payment-existing" class="form-check-input" checked/> <label for="input-payment-existing" class="form-check-label">{{ text_address_existing }}</label>
       </div>
@@ -10,17 +10,14 @@
         <input type="radio" name="payment_existing" value="0" id="input-payment-new" class="form-check-input"> <label for="input-payment-new" class="form-check-label">{{ text_address_new }}</label>
       </div>
       <div id="payment-existing">
-        <div class="input-group">
-          <select name="address_id" id="input-payment-address" class="form-select">
-            <option value="">{{ text_select }}</option>
-            {% for address in addresses %}
-              <option value="{{ address.address_id }}"{% if address.address_id == address_id %} selected{% endif %}>{{ address.firstname }} {{ address.lastname }}, {{ address.address_1 }}, {{ address.city }}, {{ address.zone }}, {{ address.country }}</option>
-            {% endfor %}
-          </select>
-          <button type="button" id="button-payment-address-refresh" class="btn btn-light"><i class="fas fa-sync"></i></button>
-        </div>
+        <select name="address_id" id="input-payment-address" class="form-select">
+          <option value="">{{ text_select }}</option>
+          {% for address in addresses %}
+            <option value="{{ address.address_id }}"{% if address.address_id == address_id %} selected{% endif %}>{{ address.firstname }} {{ address.lastname }}, {{ address.address_1 }}, {{ address.city }}, {{ address.zone }}, {{ address.country }}</option>
+          {% endfor %}
+        </select>
       </div>
-    {% endif %}
+    </div>
 
     <br/>
     <div id="payment-new" style="display: {% if addresses %}none{% else %}block{% endif %};">
@@ -299,7 +296,7 @@ $('#form-payment-address').on('submit', function(e) {
                   {% if shipping_required %}
                     $('#form-shipping-address').find(':disabled').prop('disabled', false);
                   {% else %}
-                    $('#button-payment-method-refresh').trigger('click');
+                    $('#button-payment-method').trigger('click');
                   {% endif %}
                 }
             },

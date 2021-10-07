@@ -32,7 +32,7 @@ $('#button-shipping-method').on('click', function() {
 
     chain.attach(function() {
         return $.ajax({
-            url: 'index.php?route=checkout/shipping_method|getMethods',
+            url: 'index.php?route=checkout/shipping_method|getMethods&language={{ language }}',
             dataType: 'json',
             beforeSend: function() {
                 $('#input-shipping-method').prop('disabled', true);
@@ -62,11 +62,7 @@ $('#button-shipping-method').on('click', function() {
 
                         if (!json['shipping_methods'][i]['error']) {
                             for (j in json['shipping_methods'][i]['quote']) {
-                                if (json['shipping_methods'][i]['quote'][j]['code'] == $('#input-shipping-method').val()) {
-                                    html += '<option value="' + json['shipping_methods'][i]['quote'][j]['code'] + '" selected>' + json['shipping_methods'][i]['quote'][j]['title'] + ' - ' + json['shipping_methods'][i]['quote'][j]['text'] + '</option>';
-                                } else {
-                                    html += '<option value="' + json['shipping_methods'][i]['quote'][j]['code'] + '">' + json['shipping_methods'][i]['quote'][j]['title'] + ' - ' + json['shipping_methods'][i]['quote'][j]['text'] + '</option>';
-                                }
+                                html += '<option value="' + json['shipping_methods'][i]['quote'][j]['code'] + '">' + json['shipping_methods'][i]['quote'][j]['title'] + ' - ' + json['shipping_methods'][i]['quote'][j]['text'] + '</option>';
                             }
                         } else {
                             html += '<option value="" style="color: #ff0000;" disabled>' + json['shipping_methods'][i]['error'] + '</option>';
@@ -75,6 +71,8 @@ $('#button-shipping-method').on('click', function() {
                         html += '</optgroup>';
                     }
                 }
+
+                //if (json['shipping_methods'][i]['quote'][j]['code'] == $('#input-shipping-method').val()) {
 
                 $('#input-shipping-method').html(html);
             },
@@ -91,7 +89,7 @@ $('#input-shipping-method').on('change', function() {
 
     chain.attach(function() {
         return $.ajax({
-            url: 'index.php?route=checkout/shipping_method|save',
+            url: 'index.php?route=checkout/shipping_method|save&language={{ language }}',
             type: 'post',
             data: $('#form-shipping-method').serialize(),
             dataType: 'json',
@@ -111,11 +109,11 @@ $('#input-shipping-method').on('change', function() {
                 }
 
                 if (json['error']) {
-                    $('#alert').after('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                 }
 
                 if (json['success']) {
-                    $('#button-payment-refresh').trigger('click');
+                    $('#button-payment-method').trigger('click');
                 }
             },
             error: function(xhr, ajaxOptions, thrownError) {

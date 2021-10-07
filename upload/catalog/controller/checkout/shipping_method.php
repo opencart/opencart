@@ -4,6 +4,8 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 	public function index(): string {
 		$this->load->language('checkout/checkout');
 
+		$data['language'] = $this->config->get('config_language');
+
 		if (isset($this->session->data['shipping_methods'])) {
 			$data['shipping_methods'] = $this->session->data['shipping_methods'];
 		} else {
@@ -101,9 +103,6 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 		if (!isset($this->session->data['shipping_address'])) {
 			$json['redirect'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'), true);
 		}
-
-
-
 
 		if (!isset($this->request->post['shipping_method'])) {
 			$json['error'] = $this->language->get('error_shipping');

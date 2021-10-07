@@ -4,6 +4,8 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 	public function index(): string {
 		$this->load->language('checkout/checkout');
 
+		$data['language'] = $this->config->get('config_language');
+
 		if (isset($this->session->data['payment_methods'])) {
 			$data['payment_methods'] = $this->session->data['payment_methods'];
 		} else {

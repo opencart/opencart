@@ -24,7 +24,7 @@ $('#button-payment-method').on('click', function() {
 
     chain.attach(function() {
         return $.ajax({
-            url: 'index.php?route=checkout/payment_method|getMethods',
+            url: 'index.php?route=checkout/payment_method|getMethods&language={{ language }}',
             dataType: 'json',
             beforeSend: function() {
                 $('#input-payment-method').prop('disabled', true);
@@ -45,15 +45,15 @@ $('#button-payment-method').on('click', function() {
 
                 if (json['payment_methods']) {
                     for (i in json['payment_methods']) {
-                        if (json['payment_methods'][i]['code'] == $('#input-payment-method').val()) {
-                            html += '<option value="' + json['payment_methods'][i]['code'] + '" selected>' + json['payment_methods'][i]['title'] + '</option>';
-                        } else {
-                            html += '<option value="' + json['payment_methods'][i]['code'] + '">' + json['payment_methods'][i]['title'] + '</option>';
-                        }
+                        html += '<option value="' + json['payment_methods'][i]['code'] + '">' + json['payment_methods'][i]['title'] + '</option>';
                     }
                 }
 
+                var payment_code = $('#input-payment-method').val();
+                //if (json['payment_methods'][i]['code'] == $('#input-payment-method').val()) {
                 $('#input-payment-method').html(html);
+
+
             },
             error: function(xhr, ajaxOptions, thrownError) {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -68,7 +68,7 @@ $('#input-payment-method').on('change', function() {
 
     chain.attach(function() {
         return $.ajax({
-            url: 'index.php?route=checkout/payment_method|save',
+            url: 'index.php?route=checkout/payment_method|save&language={{ language }}',
             type: 'post',
             data: $('#form-payment-method').serialize(),
             dataType: 'json',
@@ -92,7 +92,7 @@ $('#input-payment-method').on('change', function() {
                 }
 
                 if (json['success']) {
-                    $('#checkout-confirm').load('index.php?route=checkout/confirm|confirm');
+                    $('#checkout-confirm').load('index.php?route=checkout/confirm|confirm&language={{ language }}');
                 }
             },
             error: function(xhr, ajaxOptions, thrownError) {

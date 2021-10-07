@@ -146,6 +146,7 @@
   </fieldset>
 
   <div class="row row-cols-1 row-cols-md-2">
+
     <div id="password" class="col mb-3 required">
       <fieldset>
         <legend>{{ text_your_password }}</legend>
@@ -157,6 +158,7 @@
         </div>
       </fieldset>
     </div>
+
     <div class="col mb-3 required">{{ captcha }}</div>
     <div class="col mb-3">
       <div>
@@ -255,9 +257,6 @@ $('#form-register').on('submit', function(e) {
 
             if (json['redirect']) {
                 location = json['redirect'];
-
-                // Not sure this part works
-                delete json['redirect'];
             }
 
             if (json['error']) {
@@ -269,26 +268,30 @@ $('#form-register').on('submit', function(e) {
                     $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
                     $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
                 }
-
-                delete json['error'];
             }
 
             if (json['success']) {
-                $('#alert').after('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+
+                $('#input-password').prop('disabled', true);
+
+
+              {% if config_checkout_address %}
 
                 $('#form-payment-address').find(':disabled').prop('disabled', false);
+
+              {% elseif shipping_required %}
+
                 $('#form-shipping-address').find(':disabled').prop('disabled', false);
 
-                if ($(element).prop('disabled')) {
-                    $('#form-payment-address').prop('disabled', false);
-                } else {
+              {% else %}
 
-                }
+                $('#button-payment-method').trigger('click');
 
-                $('.account').remove();
+              {% endif %}
 
-
-                $('#checkout-confirm').load('index.php?route=checkout/confirm|confirm');
+                $('#checkout-confirm').load('index.php?route=checkout/confirm|confirm&language={{ language }}');
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {

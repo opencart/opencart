@@ -2,13 +2,18 @@
   <fieldset>
     <legend>{{ text_shipping_address }}</legend>
 
-    <div id="shipping-addresses" style="display: {% if not addresses %}none{% endif %};">
+    <div id="shipping-addresses" style="display: {% if not addresses %}none{% else %}block{% endif %};">
+
       <div class="form-check">
-        <input type="radio" name="shipping_existing" value="1" id="input-shipping-existing" class="form-check-input" checked/> <label for="input-shipping-existing" class="form-check-label">{{ text_address_existing }}</label>
+        <input type="radio" name="shipping_existing" value="1" id="input-shipping-existing" class="form-check-input" checked/>
+        <label for="input-shipping-existing" class="form-check-label">{{ text_address_existing }}</label>
       </div>
+
       <div class="form-check">
-        <input type="radio" name="shipping_existing" value="0" id="input-shipping-new" class="form-check-input"/> <label for="input-shipping-new" class="form-check-label">{{ text_address_new }}</label>
+        <input type="radio" name="shipping_existing" value="0" id="input-shipping-new" class="form-check-input"/>
+        <label for="input-shipping-new" class="form-check-label">{{ text_address_new }}</label>
       </div>
+
       <div id="shipping-existing">
         <select name="address_id" id="input-shipping-address" class="form-select"{% if not config_checkout_address or not address_id %} disabled{% endif %}>
           <option value="">{{ text_select }}</option>
@@ -17,6 +22,7 @@
           {% endfor %}
         </select>
       </div>
+
     </div>
 
     <br/>
@@ -24,34 +30,42 @@
       <div class="row row-cols-1 row-cols-md-2">
         {% if logged or config_checkout_address %}
           <div class="col mb-3 required">
-            <label for="input-shipping-firstname" class="form-label">{{ entry_firstname }}</label> <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-shipping-firstname" class="form-control"{% if config_checkout_address %} disabled{% endif %}/>
+            <label for="input-shipping-firstname" class="form-label">{{ entry_firstname }}</label>
+            <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-shipping-firstname" class="form-control"{% if config_checkout_address %} disabled{% endif %}/>
             <div id="error-shipping-firstname" class="invalid-feedback"></div>
           </div>
           <div class="col mb-3 required">
-            <label for="input-shipping-lastname" class="form-label">{{ entry_lastname }}</label> <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-shipping-lastname" class="form-control"{% if config_checkout_address %} disabled{% endif %}/>
+            <label for="input-shipping-lastname" class="form-label">{{ entry_lastname }}</label>
+            <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-shipping-lastname" class="form-control"{% if config_checkout_address %} disabled{% endif %}/>
             <div id="error-shipping-lastname" class="invalid-feedback"></div>
           </div>
         {% endif %}
         <div class="col mb-3">
-          <label for="input-shipping-company" class="form-label">{{ entry_company }}</label> <input type="text" name="company" value="{{ company }}" placeholder="{{ entry_company }}" id="input-shipping-company" class="form-control"{% if config_checkout_address %} disabled{% endif %}/>
+          <label for="input-shipping-company" class="form-label">{{ entry_company }}</label>
+          <input type="text" name="company" value="{{ company }}" placeholder="{{ entry_company }}" id="input-shipping-company" class="form-control"{% if config_checkout_address %} disabled{% endif %}/>
         </div>
         <div class="col mb-3 required">
-          <label for="input-shipping-address-1" class="form-label">{{ entry_address_1 }}</label> <input type="text" name="address_1" value="{{ address_1 }}" placeholder="{{ entry_address_1 }}" id="input-shipping-address-1" class="form-control"{% if config_checkout_address %} disabled{% endif %}/>
+          <label for="input-shipping-address-1" class="form-label">{{ entry_address_1 }}</label>
+          <input type="text" name="address_1" value="{{ address_1 }}" placeholder="{{ entry_address_1 }}" id="input-shipping-address-1" class="form-control"{% if config_checkout_address %} disabled{% endif %}/>
           <div id="error-shipping-address-1" class="invalid-feedback"></div>
         </div>
         <div class="col mb-3">
-          <label for="input-shipping-address-2" class="form-label">{{ entry_address_2 }}</label> <input type="text" name="address_2" value="{{ address_2 }}" placeholder="{{ entry_address_2 }}" id="input-shipping-address-2" class="form-control"{% if config_checkout_address %} disabled{% endif %}/>
+          <label for="input-shipping-address-2" class="form-label">{{ entry_address_2 }}</label>
+          <input type="text" name="address_2" value="{{ address_2 }}" placeholder="{{ entry_address_2 }}" id="input-shipping-address-2" class="form-control"{% if config_checkout_address %} disabled{% endif %}/>
         </div>
         <div class="col mb-3 required">
-          <label for="input-shipping-city" class="form-label">{{ entry_city }}</label> <input type="text" name="city" value="{{ city }}" placeholder="{{ entry_city }}" id="input-shipping-city" class="form-control"{% if config_checkout_address %} disabled{% endif %}/>
+          <label for="input-shipping-city" class="form-label">{{ entry_city }}</label>
+          <input type="text" name="city" value="{{ city }}" placeholder="{{ entry_city }}" id="input-shipping-city" class="form-control"{% if config_checkout_address %} disabled{% endif %}/>
           <div id="error-shipping-city" class="invalid-feedback"></div>
         </div>
         <div class="col mb-3 required">
-          <label for="input-shipping-postcode" class="form-label">{{ entry_postcode }}</label> <input type="text" name="postcode" value="{{ postcode }}" placeholder="{{ entry_postcode }}" id="input-shipping-postcode" class="form-control"{% if config_checkout_address %} disabled{% endif %}/>
+          <label for="input-shipping-postcode" class="form-label">{{ entry_postcode }}</label>
+          <input type="text" name="postcode" value="{{ postcode }}" placeholder="{{ entry_postcode }}" id="input-shipping-postcode" class="form-control"{% if config_checkout_address %} disabled{% endif %}/>
           <div id="error-shipping-postcode" class="invalid-feedback"></div>
         </div>
         <div class="col mb-3 required">
-          <label for="input-shipping-country" class="form-label">{{ entry_country }}</label> <select name="country_id" id="input-shipping-country" class="form-select"{% if config_checkout_address %} disabled{% endif %}>
+          <label for="input-shipping-country" class="form-label">{{ entry_country }}</label>
+          <select name="country_id" id="input-shipping-country" class="form-select"{% if config_checkout_address %} disabled{% endif %}>
             <option value="">{{ text_select }}</option>
             {% for country in countries %}
               <option value="{{ country.country_id }}"{% if country.country_id == country_id %} selected{% endif %}>{{ country.name }}</option>
@@ -60,7 +74,8 @@
           <div id="error-shipping-country" class="invalid-feedback"></div>
         </div>
         <div class="col mb-3 required">
-          <label for="input-shipping-zone" class="form-label">{{ entry_zone }}</label> <select name="zone_id" id="input-shipping-zone" class="form-select"{% if not logged %} disabled{% endif %}></select>
+          <label for="input-shipping-zone" class="form-label">{{ entry_zone }}</label>
+          <select name="zone_id" id="input-shipping-zone" class="form-select"{% if not logged %} disabled{% endif %}></select>
           <div id="error-shipping-zone" class="invalid-feedback"></div>
         </div>
 
@@ -115,7 +130,8 @@
 
           {% if custom_field.type == 'textarea' %}
             <div class="col mb-3{% if custom_field.required %} required{% endif %} custom-field custom-field-{{ custom_field.custom_field_id }}">
-              <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <textarea name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" rows="5" placeholder="{% if shipping_custom_field[custom_field.custom_field_id] %}{{ shipping_custom_field[custom_field.custom_field_id] }}{% else %}{{ custom_field.value }}{% endif %}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-control"{% if config_checkout_address %} disabled{% endif %}>{{ custom_field.value }}</textarea>
+              <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
+              <textarea name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" rows="5" placeholder="{% if shipping_custom_field[custom_field.custom_field_id] %}{{ shipping_custom_field[custom_field.custom_field_id] }}{% else %}{{ custom_field.value }}{% endif %}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-control"{% if config_checkout_address %} disabled{% endif %}>{{ custom_field.value }}</textarea>
               <div id="error-shipping-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
             </div>
           {% endif %}
@@ -152,6 +168,7 @@
               <div id="error-shipping-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
             </div>
           {% endif %}
+
           {% if custom_field.type == 'datetime' %}
             <div class="col mb-3{% if custom_field.required %} required{% endif %} custom-field custom-field-{{ custom_field.custom_field_id }}">
               <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
@@ -208,9 +225,9 @@ $('#input-shipping-address').on('change', function() {
                 }
 
                 if (json['success']) {
-                    $('#alert').after('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                    $('#button-shipping-refresh').trigger('click');
+                    $('#button-shipping-method').trigger('click');
                 }
             },
             error: function(xhr, ajaxOptions, thrownError) {
@@ -266,15 +283,15 @@ $('#form-shipping-address').on('submit', function(e) {
 
                     if (json['addesses']) {
                         for (i in json['addesses']) {
-                            if (json['addesses'][i]['address_id'] == json['address_id']) {
-                                html += '<option value="' + json['addesses'][i]['address_id'] + '" selected>' + json['addesses'][i]['firstname'] + ' ' + json['addesses'][i]['lastname'] + ', ' + json['addesses'][i]['address_1'] + ', ' + json['addesses'][i]['city'] + ', ' + json['addesses'][i]['zone'] + ', ' + json['addesses'][i]['country'] + '</option>';
-                            } else {
-                                html += '<option value="' + json['addesses'][i]['address_id'] + '">' + json['addesses'][i]['firstname'] + ' ' + json['addesses'][i]['lastname'] + ', ' + json['addesses'][i]['address_1'] + ', ' + json['addesses'][i]['city'] + ', ' + json['addesses'][i]['zone'] + ', ' + json['addesses'][i]['country'] + '</option>';
-                            }
+                            html += '<option value="' + json['addesses'][i]['address_id'] + '">' + json['addesses'][i]['firstname'] + ' ' + json['addesses'][i]['lastname'] + ', ' + json['addesses'][i]['address_1'] + ', ' + json['addesses'][i]['city'] + ', ' + json['addesses'][i]['zone'] + ', ' + json['addesses'][i]['country'] + '</option>';
                         }
                     }
 
+                    //if (json['addesses'][i]['address_id'] == json['address_id']) {
+
+                    $('#input-payment-address').html(html);
                     $('#input-shipping-address').html(html);
+
 
 
 
@@ -292,7 +309,7 @@ $('#input-shipping-country').on('change', function() {
 
     chain.attach(function() {
         return $.ajax({
-            url: 'index.php?route=localisation/country&country_id=' + $('#input-shipping-country').val(),
+            url: 'index.php?route=localisation/country&language={{ language }}&country_id=' + $('#input-shipping-country').val(),
             dataType: 'json',
             beforeSend: function() {
                 $(element).prop('disabled', true);

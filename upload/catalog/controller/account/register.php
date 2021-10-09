@@ -224,6 +224,17 @@ class Register extends \Opencart\System\Engine\Controller {
 				'custom_field'      => $this->request->post['custom_field']
 			];
 
+			// Wishlist
+			if (isset($this->session->data['wishlist']) && is_array($this->session->data['wishlist'])) {
+				$this->load->model('account/wishlist');
+
+				foreach ($this->session->data['wishlist'] as $key => $product_id) {
+					$this->model_account_wishlist->addWishlist($product_id);
+
+					unset($this->session->data['wishlist'][$key]);
+				}
+			}
+
 			// Log the IP info
 			$this->model_account_customer->addLogin($this->customer->getId(), $this->request->server['REMOTE_ADDR']);
 

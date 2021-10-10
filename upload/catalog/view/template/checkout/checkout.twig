@@ -15,38 +15,33 @@
 
           {% if not logged %}
             <div id="checkout-register">{{ register }}</div>
-          {% endif %}
+          {% else %}
 
-          {% if config_checkout_address %}
-            <div id="checkout-payment-address">{{ payment_address }}</div>
-          {% endif %}
+            {% if config_checkout_address %}
+              <div id="checkout-payment-address">{{ payment_address }}</div>
+            {% endif %}
 
-          {% if shipping_required %}
-            <div id="checkout-shipping-address"{% if not logged or not address_total %} style="display: none;"{% endif %}>{{ shipping_address }}</div>
+            {% if shipping_required %}
+              <div id="checkout-shipping-address">{{ shipping_address }}</div>
+            {% endif %}
+
           {% endif %}
 
         </div>
         <div class="col-md-4">
-
           {% if shipping_required %}
             <div id="checkout-shipping-method" class="mb-3">{{ shipping_method }}</div>
           {% endif %}
-
           <div id="checkout-payment-method" class="mb-4">{{ payment_method }}</div>
-
           <div class="mb-2">
-            <label for="input-comment" class="form-label"><strong>{{ text_comments }}</strong></label>
-            <textarea name="comment" rows="3" id="input-comment" class="form-control">{{ comment }}</textarea>
+            <label for="input-comment" class="form-label"><strong>{{ text_comments }}</strong></label> <textarea name="comment" rows="3" id="input-comment" class="form-control">{{ comment }}</textarea>
           </div>
-
           <div class="mb-3">
             {% if text_agree %}
               <div class="text-end">{{ text_agree }} <input type="checkbox" name="agree" value="1" id="input-agree" class="form-check-input"{% if agree %} checked{% endif %}/></div>
             {% endif %}
           </div>
-
           <div id="checkout-confirm">{{ confirm }}</div>
-
         </div>
       </div>
     </div>

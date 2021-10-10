@@ -19,8 +19,6 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 			$data['address_id'] = 0;
 		}
 
-		$data['addresses'] = [];
-
 		$this->load->model('account/address');
 
 		$data['address_total'] = $this->model_account_address->getTotalAddresses();
@@ -76,10 +74,12 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		// Validate customer has been set
+		// Customer
 		if (!isset($this->session->data['customer'])) {
 			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
 		}
+
+
 
 		// Validate cart has products and has stock.
 		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
@@ -175,22 +175,15 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$json['address_id'] = 0;
-
 			if ($this->customer->isLogged()) {
 				$this->load->model('account/address');
 
 				$json['address_id'] = $this->model_account_address->addAddress($this->customer->getId(), $this->request->post);
 
 				$json['addresses'] = $this->model_account_address->getAddresses();
+			} else {
+				$json['address_id'] = 0;
 			}
-
-
-
-
-
-
-
 
 			$this->session->data['payment_address'] = [
 				'address_id'   => $json['address_id'],

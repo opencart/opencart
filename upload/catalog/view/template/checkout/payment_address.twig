@@ -195,6 +195,7 @@
         {% endif %}
 
       </div>
+
       <div class="text-end mb-3">
         <button type="submit" id="button-payment-address" class="btn btn-primary"{% if not logged %} disabled{% endif %}>{{ button_continue }}</button>
       </div>
@@ -263,7 +264,7 @@ $('#form-payment-address').on('submit', function(e) {
         return $.ajax({
             url: 'index.php?route=checkout/payment_address|save&language={{ language }}',
             type: 'post',
-            data: $('{% if not logged %}#input-firstname, #input-lastname, {% endif %}#form-payment-address').serialize(),
+            data: $('#form-payment-address').serialize(),
             dataType: 'json',
             contentType: 'application/x-www-form-urlencoded',
             beforeSend: function() {
@@ -377,12 +378,4 @@ $('#input-payment-country').on('change', function() {
 });
 
 $('#input-payment-country').trigger('change');
-
-$('#input-address-match').on('change', function() {
-    if ($(this).prop('checked')) {
-        $('#checkout-shipping-address').hide();
-    } else {
-        $('#checkout-shipping-address').show();
-    }
-});
 //--></script>

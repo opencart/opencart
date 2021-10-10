@@ -86,19 +86,13 @@ class Confirm extends \Opencart\System\Engine\Controller {
 				$order_data['payment_country_id'] = '';
 				$order_data['payment_address_format'] = '';
 				$order_data['payment_custom_field'] = [];
-				$order_data['payment_method'] = '';
-				$order_data['payment_code'] = '';
 			}
 
-			if (isset($this->session->data['payment_method']['title'])) {
+			if (isset($this->session->data['payment_method'])) {
 				$order_data['payment_method'] = $this->session->data['payment_method']['title'];
-			} else {
-				$order_data['payment_method'] = '';
-			}
-
-			if (isset($this->session->data['payment_method']['code'])) {
 				$order_data['payment_code'] = $this->session->data['payment_method']['code'];
 			} else {
+				$order_data['payment_method'] = '';
 				$order_data['payment_code'] = '';
 			}
 
@@ -117,18 +111,6 @@ class Confirm extends \Opencart\System\Engine\Controller {
 				$order_data['shipping_country_id'] = $this->session->data['shipping_address']['country_id'];
 				$order_data['shipping_address_format'] = $this->session->data['shipping_address']['address_format'];
 				$order_data['shipping_custom_field'] = isset($this->session->data['shipping_address']['custom_field']) ? $this->session->data['shipping_address']['custom_field'] : [];
-
-				if (isset($this->session->data['shipping_method']['title'])) {
-					$order_data['shipping_method'] = $this->session->data['shipping_method']['title'];
-				} else {
-					$order_data['shipping_method'] = '';
-				}
-
-				if (isset($this->session->data['shipping_method']['code'])) {
-					$order_data['shipping_code'] = $this->session->data['shipping_method']['code'];
-				} else {
-					$order_data['shipping_code'] = '';
-				}
 			} else {
 				$order_data['shipping_firstname'] = '';
 				$order_data['shipping_lastname'] = '';
@@ -143,6 +125,12 @@ class Confirm extends \Opencart\System\Engine\Controller {
 				$order_data['shipping_country_id'] = '';
 				$order_data['shipping_address_format'] = '';
 				$order_data['shipping_custom_field'] = [];
+			}
+
+			if (isset($this->session->data['shipping_method'])) {
+				$order_data['shipping_method'] = $this->session->data['shipping_method']['title'];
+				$order_data['shipping_code'] = $this->session->data['shipping_method']['code'];
+			} else {
 				$order_data['shipping_method'] = '';
 				$order_data['shipping_code'] = '';
 			}

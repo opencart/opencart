@@ -18,8 +18,6 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 			$data['address_id'] = 0;
 		}
 
-		$data['addresses'] = [];
-
 		$this->load->model('account/address');
 
 		$data['addresses'] = $this->model_account_address->getAddresses();
@@ -111,6 +109,11 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 				break;
 			}
 		}
+
+
+
+
+
 
 		if (!$json) {
 			$keys = [

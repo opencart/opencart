@@ -209,8 +209,6 @@ class Cart extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-
-
 		$totals = [];
 		$taxes = $this->cart->getTaxes();
 		$total = 0;

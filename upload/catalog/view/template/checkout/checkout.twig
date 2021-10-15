@@ -13,28 +13,27 @@
       <div class="row">
         <div class="col-md-8 mb-3">
 
-          {% if not logged %}
+          {% if register %}
             <div id="checkout-register">{{ register }}</div>
-          {% else %}
+          {% endif %}
 
-            {% if config_checkout_address %}
-              <div id="checkout-payment-address">{{ payment_address }}</div>
-            {% endif %}
+          {% if payment_address %}
+            <div id="checkout-payment-address">{{ payment_address }}</div>
+          {% endif %}
 
-            {% if shipping_required %}
-              <div id="checkout-shipping-address">{{ shipping_address }}</div>
-            {% endif %}
-
+          {% if shipping_address %}
+            <div id="checkout-shipping-address">{{ shipping_address }}</div>
           {% endif %}
 
         </div>
         <div class="col-md-4">
-          {% if shipping_required %}
+          {% if shipping_method %}
             <div id="checkout-shipping-method" class="mb-3">{{ shipping_method }}</div>
           {% endif %}
           <div id="checkout-payment-method" class="mb-4">{{ payment_method }}</div>
           <div class="mb-2">
-            <label for="input-comment" class="form-label"><strong>{{ text_comments }}</strong></label> <textarea name="comment" rows="3" id="input-comment" class="form-control">{{ comment }}</textarea>
+            <label for="input-comment" class="form-label"><strong>{{ text_comments }}</strong></label>
+            <textarea name="comment" rows="3" id="input-comment" class="form-control">{{ comment }}</textarea>
           </div>
           <div class="mb-3">
             {% if text_agree %}
@@ -42,6 +41,7 @@
             {% endif %}
           </div>
           <div id="checkout-confirm">{{ confirm }}</div>
+
         </div>
       </div>
     </div>

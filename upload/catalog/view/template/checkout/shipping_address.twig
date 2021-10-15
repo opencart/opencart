@@ -28,18 +28,16 @@
     <br/>
     <div id="shipping-new" style="display: {% if addresses %}none{% else %}block{% endif %};">
       <div class="row row-cols-1 row-cols-md-2">
-        {% if logged or config_checkout_address %}
-          <div class="col mb-3 required">
-            <label for="input-shipping-firstname" class="form-label">{{ entry_firstname }}</label>
-            <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-shipping-firstname" class="form-control"{% if config_checkout_address %} disabled{% endif %}/>
-            <div id="error-shipping-firstname" class="invalid-feedback"></div>
-          </div>
-          <div class="col mb-3 required">
-            <label for="input-shipping-lastname" class="form-label">{{ entry_lastname }}</label>
-            <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-shipping-lastname" class="form-control"{% if config_checkout_address %} disabled{% endif %}/>
-            <div id="error-shipping-lastname" class="invalid-feedback"></div>
-          </div>
-        {% endif %}
+        <div class="col mb-3 required">
+          <label for="input-shipping-firstname" class="form-label">{{ entry_firstname }}</label>
+          <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-shipping-firstname" class="form-control"{% if config_checkout_address %} disabled{% endif %}/>
+          <div id="error-shipping-firstname" class="invalid-feedback"></div>
+        </div>
+        <div class="col mb-3 required">
+          <label for="input-shipping-lastname" class="form-label">{{ entry_lastname }}</label>
+          <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-shipping-lastname" class="form-control"{% if config_checkout_address %} disabled{% endif %}/>
+          <div id="error-shipping-lastname" class="invalid-feedback"></div>
+        </div>
         <div class="col mb-3">
           <label for="input-shipping-company" class="form-label">{{ entry_company }}</label>
           <input type="text" name="company" value="{{ company }}" placeholder="{{ entry_company }}" id="input-shipping-company" class="form-control"{% if config_checkout_address %} disabled{% endif %}/>
@@ -50,7 +48,7 @@
           <div id="error-shipping-address-1" class="invalid-feedback"></div>
         </div>
         <div class="col mb-3">
-          <label for="input-shipping-address-2" class="form-label">{{ entry_address_2 }}</label>
+          <label for="input-shipping-address-2" class="form-label">{{ entry_address_2 }}</label>s
           <input type="text" name="address_2" value="{{ address_2 }}" placeholder="{{ entry_address_2 }}" id="input-shipping-address-2" class="form-control"{% if config_checkout_address %} disabled{% endif %}/>
         </div>
         <div class="col mb-3 required">
@@ -75,7 +73,7 @@
         </div>
         <div class="col mb-3 required">
           <label for="input-shipping-zone" class="form-label">{{ entry_zone }}</label>
-          <select name="zone_id" id="input-shipping-zone" class="form-select"{% if not logged %} disabled{% endif %}></select>
+          <select name="zone_id" id="input-shipping-zone" class="form-select"></select>
           <div id="error-shipping-zone" class="invalid-feedback"></div>
         </div>
 
@@ -83,7 +81,8 @@
 
           {% if custom_field.type == 'select' %}
             <div class="col mb-3{% if custom_field.required %} required{% endif %} custom-field custom-field-{{ custom_field.custom_field_id }}">
-              <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <select name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-select"{% if config_checkout_address %} disabled{% endif %}>
+              <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
+              <select name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-select"{% if config_checkout_address %} disabled{% endif %}>
                 <option value="">{{ text_select }}</option>
                 {% for custom_field_value in custom_field.custom_field_value %}
                   <option value="{{ custom_field_value.custom_field_value_id }}"{% if shipping_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id == shipping_custom_field[custom_field.custom_field_id] %} selected{% endif %}>{{ custom_field_value.name }}</option>
@@ -99,7 +98,8 @@
               <div id="input-shipping-custom-field-{{ custom_field.custom_field_id }}">
                 {% for custom_field_value in custom_field.custom_field_value %}
                   <div class="form-check">
-                    <input type="radio" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{{ custom_field_value.custom_field_value_id }}" id="input-shipping-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-input"{% if shipping_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id in shipping_custom_field[custom_field.custom_field_id] %} checked{% endif %}{% if config_checkout_address %} disabled{% endif %}/> <label for="input-shipping-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-label">{{ custom_field_value.name }}</label>
+                    <input type="radio" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{{ custom_field_value.custom_field_value_id }}" id="input-shipping-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-input"{% if shipping_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id in shipping_custom_field[custom_field.custom_field_id] %} checked{% endif %}{% if config_checkout_address %} disabled{% endif %}/>
+                    <label for="input-shipping-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-label">{{ custom_field_value.name }}</label>
                   </div>
                 {% endfor %}
               </div>
@@ -113,7 +113,8 @@
               <div id="input-shipping-custom-field-{{ custom_field.custom_field_id }}">
                 {% for custom_field_value in custom_field.custom_field_value %}
                   <div class="form-check">
-                    <input type="checkbox" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" id="input-shipping-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-input"{% if shipping_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id in shipping_custom_field[custom_field.custom_field_id] %} checked{% endif %}{% if config_checkout_address %} disabled{% endif %}/> <label for="input-shipping-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-label">{{ custom_field_value.name }}</label>
+                    <input type="checkbox" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" id="input-shipping-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-input"{% if shipping_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id in shipping_custom_field[custom_field.custom_field_id] %} checked{% endif %}{% if config_checkout_address %} disabled{% endif %}/>
+                    <label for="input-shipping-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-label">{{ custom_field_value.name }}</label>
                   </div>
                 {% endfor %}
               </div>
@@ -123,14 +124,15 @@
 
           {% if custom_field.type == 'text' %}
             <div class="col mb-3{% if custom_field.required %} required{% endif %} custom-field custom-field-{{ custom_field.custom_field_id }}">
-              <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{% if shipping_custom_field[custom_field.custom_field_id] %}{{ shipping_custom_field[custom_field.custom_field_id] }}{% else %}{{ custom_field.value }}{% endif %}" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-control"{% if config_checkout_address %} disabled{% endif %}/>
+              <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
+              <input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{% if shipping_custom_field[custom_field.custom_field_id] %}{{ shipping_custom_field[custom_field.custom_field_id] }}{% else %}{{ custom_field.value }}{% endif %}" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-control"{% if config_checkout_address %} disabled{% endif %}/>
               <div id="error-shipping-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
             </div>
           {% endif %}
 
           {% if custom_field.type == 'textarea' %}
             <div class="col mb-3{% if custom_field.required %} required{% endif %} custom-field custom-field-{{ custom_field.custom_field_id }}">
-              <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
+              <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> \
               <textarea name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" rows="5" placeholder="{% if shipping_custom_field[custom_field.custom_field_id] %}{{ shipping_custom_field[custom_field.custom_field_id] }}{% else %}{{ custom_field.value }}{% endif %}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-control"{% if config_checkout_address %} disabled{% endif %}>{{ custom_field.value }}</textarea>
               <div id="error-shipping-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
             </div>
@@ -179,11 +181,12 @@
               <div id="error-shipping-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
             </div>
           {% endif %}
+
         {% endfor %}
 
       </div>
       <div class="text-end mb-3">
-        <button type="submit" id="button-shipping-address" class="btn btn-primary"{% if not logged %} disabled{% endif %}>{{ button_continue }}</button>
+        <button type="submit" id="button-shipping-address" class="btn btn-primary">{{ button_continue }}</button>
       </div>
     </div>
   </fieldset>
@@ -245,7 +248,7 @@ $('#form-shipping-address').on('submit', function(e) {
         return $.ajax({
             url: 'index.php?route=checkout/shipping_address|save&language={{ language }}',
             type: 'post',
-            data: $('{% if not config_checkout_address or not logged %}#input-firstname, #input-lastname, {% endif %}#form-shipping-address').serialize(),
+            data: $('#form-shipping-address').serialize(),
             dataType: 'json',
             contentType: 'application/x-www-form-urlencoded',
             beforeSend: function() {
@@ -287,14 +290,17 @@ $('#form-shipping-address').on('submit', function(e) {
                         }
                     }
 
-                    //if (json['addesses'][i]['address_id'] == json['address_id']) {
+                    var payment_address_id = $('#input-payment-address').val();
+                    var shipping_address_id = json['address_id'];
+
 
                     $('#input-payment-address').html(html);
+
                     $('#input-shipping-address').html(html);
 
+                    $('#input-payment-address').val(payment_address_id);
 
-
-
+                    $('#input-shipping-address').val(shipping_address_id);
                 }
             },
             error: function(xhr, ajaxOptions, thrownError) {

@@ -61,6 +61,7 @@ $_['entry_city']            = 'City';
 $_['entry_postcode']        = 'Postcode';
 $_['entry_country']         = 'Country';
 $_['entry_zone']            = 'Region / State';
+$_['entry_default']         = 'Default';
 $_['entry_comment']         = 'Comment';
 $_['entry_description']     = 'Description';
 $_['entry_amount']          = 'Amount';

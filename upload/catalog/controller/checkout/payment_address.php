@@ -6,48 +6,20 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 
 		$data['error_upload_size'] = sprintf($this->language->get('error_upload_size'), $this->config->get('config_file_max_size'));
 
-		$data['config_checkout_address'] = $this->config->get('config_checkout_address');
 		$data['config_file_max_size'] = $this->config->get('config_file_max_size');
 
 		$data['language'] = $this->config->get('config_language');
-		$data['logged'] = $this->customer->isLogged();
 		$data['shipping_required'] = $this->cart->hasShipping();
 
 		if (isset($this->session->data['payment_address']['address_id'])) {
 			$data['address_id'] = (int)$this->session->data['payment_address']['address_id'];
 		} else {
-			$data['address_id'] = 0;
+			$data['address_id'] = $this->customer->getAddressId();
 		}
 
 		$this->load->model('account/address');
 
-		$data['address_total'] = $this->model_account_address->getTotalAddresses();
-
 		$data['addresses'] = $this->model_account_address->getAddresses();
-
-		if (!$this->customer->isLogged() && isset($this->session->data['payment_address'])) {
-			$data['firstname'] = $this->session->data['payment_address']['firstname'];
-			$data['lastname'] = $this->session->data['payment_address']['lastname'];
-			$data['company'] = $this->session->data['payment_address']['company'];
-			$data['address_1'] = $this->session->data['payment_address']['address_1'];
-			$data['address_2'] = $this->session->data['payment_address']['address_2'];
-			$data['postcode'] = $this->session->data['payment_address']['postcode'];
-			$data['city'] = $this->session->data['payment_address']['city'];
-			$data['country_id'] = (int)$this->session->data['payment_address']['country_id'];
-			$data['zone_id'] = $this->session->data['payment_address']['zone_id'];
-			$data['payment_custom_field'] = $this->session->data['payment_address']['custom_field'];
-		} else {
-			$data['firstname'] = '';
-			$data['lastname'] = '';
-			$data['company'] = '';
-			$data['address_1'] = '';
-			$data['address_2'] = '';
-			$data['postcode'] = '';
-			$data['city'] = '';
-			$data['country_id'] = $this->config->get('config_country_id');
-			$data['zone_id'] = '';
-			$data['payment_custom_field'] = [];
-		}
 
 		$this->load->model('localisation/country');
 
@@ -78,8 +50,6 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 		if (!isset($this->session->data['customer'])) {
 			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
 		}
-
-
 
 		// Validate cart has products and has stock.
 		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
@@ -116,8 +86,7 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 				'postcode',
 				'country_id',
 				'zone_id',
-				'custom_field',
-				'address_match'
+				'custom_field'
 			];
 
 			foreach ($keys as $key) {
@@ -175,15 +144,11 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			if ($this->customer->isLogged()) {
-				$this->load->model('account/address');
+			$this->load->model('account/address');
 
-				$json['address_id'] = $this->model_account_address->addAddress($this->customer->getId(), $this->request->post);
+			$json['address_id'] = $this->model_account_address->addAddress($this->customer->getId(), $this->request->post);
 
-				$json['addresses'] = $this->model_account_address->getAddresses();
-			} else {
-				$json['address_id'] = 0;
-			}
+			$json['addresses'] = $this->model_account_address->getAddresses();
 
 			$this->session->data['payment_address'] = [
 				'address_id'   => $json['address_id'],
@@ -201,14 +166,6 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 
 			unset($this->session->data['payment_method']);
 			unset($this->session->data['payment_methods']);
-
-			// If shipping address the same
-			if ($this->cart->hasShipping() && $this->request->post['address_match']) {
-				$this->session->data['shipping_address'] = $this->session->data['payment_address'];
-
-				unset($this->session->data['shipping_method']);
-				unset($this->session->data['shipping_methods']);
-			}
 
 			$json['success'] = 'Success: Your address has been successfully created!';
 		}

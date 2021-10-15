@@ -6,45 +6,19 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 
 		$data['error_upload_size'] = sprintf($this->language->get('error_upload_size'), $this->config->get('config_file_max_size'));
 
-		$data['config_checkout_address'] = $this->config->get('config_checkout_address');
 		$data['config_file_max_size'] = $this->config->get('config_file_max_size');
 
 		$data['language'] = $this->config->get('config_language');
-		$data['logged'] = $this->customer->isLogged();
 
 		if (isset($this->session->data['shipping_address']['address_id'])) {
 			$data['address_id'] = (int)$this->session->data['shipping_address']['address_id'];
 		} else {
-			$data['address_id'] = 0;
+			$data['address_id'] = $this->customer->getAddressId();
 		}
 
 		$this->load->model('account/address');
 
 		$data['addresses'] = $this->model_account_address->getAddresses();
-
-		if (!$this->customer->isLogged() && isset($this->session->data['shipping_address'])) {
-			$data['firstname'] = $this->session->data['shipping_address']['firstname'];
-			$data['lastname'] = $this->session->data['shipping_address']['lastname'];
-			$data['company'] = $this->session->data['shipping_address']['company'];
-			$data['address_1'] = $this->session->data['shipping_address']['address_1'];
-			$data['address_2'] = $this->session->data['shipping_address']['address_2'];
-			$data['postcode'] = $this->session->data['shipping_address']['postcode'];
-			$data['city'] = $this->session->data['shipping_address']['city'];
-			$data['country_id'] = (int)$this->session->data['shipping_address']['country_id'];
-			$data['zone_id'] = $this->session->data['shipping_address']['zone_id'];
-			$data['shipping_custom_field'] = $this->session->data['shipping_address']['custom_field'];
-		} else {
-			$data['firstname'] = '';
-			$data['lastname'] = '';
-			$data['company'] = '';
-			$data['address_1'] = '';
-			$data['address_2'] = '';
-			$data['postcode'] = '';
-			$data['city'] = '';
-			$data['country_id'] = $this->config->get('config_country_id');
-			$data['zone_id'] = '';
-			$data['shipping_custom_field'] = [];
-		}
 
 		$this->load->model('localisation/country');
 
@@ -71,17 +45,17 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		// Validate customer has been set
+		// Customer
 		if (!isset($this->session->data['customer'])) {
 			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
 		}
 
-		// Validate if payment address is set if required
+		// Payment Address
 		if ($this->config->get('config_checkout_address') && !$this->session->data['payment_address']) {
 			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
 		}
 
-		// Validate if shipping is required. If not the customer should not have reached this page.
+		// Shipping
 		if (!$this->cart->hasShipping()) {
 			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
 		}
@@ -110,11 +84,6 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-
-
-
-
-
 		if (!$json) {
 			$keys = [
 				'firstname',
@@ -139,7 +108,7 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 				$json['error']['shipping_firstname'] = $this->language->get('error_firstname');
 			}
 
-			if ((utf8_strlen($this->request->post['lastname']) < 1) || (utf8_strlen($this->request->post['lastname']) > 32)) {
+			if ((utf8_strlen($this->request->post['shipping_lastname']) < 1) || (utf8_strlen($this->request->post['lastname']) > 32)) {
 				$json['error']['shipping_lastname'] = $this->language->get('error_lastname');
 			}
 
@@ -184,21 +153,11 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			if ($this->customer->isLogged()) {
-				$this->load->model('account/address');
+			$this->load->model('account/address');
 
-				//if (isset()) {
+			$json['address_id'] = $this->model_account_address->addAddress($this->customer->getId(), $this->request->post);
 
-				//} else {
-
-				//}
-
-				$json['address_id'] = $this->model_account_address->addAddress($this->customer->getId(), $this->request->post);
-
-				$json['addresses'] = $this->model_account_address->getAddresses();
-			} else {
-				$json['address_id'] = 0;
-			}
+			$json['addresses'] = $this->model_account_address->getAddresses();
 
 			$this->session->data['shipping_address'] = [
 				'address_id'   => $json['address_id'],

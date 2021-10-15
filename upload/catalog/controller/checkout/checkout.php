@@ -50,18 +50,30 @@ class Checkout extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'))
 		];
 
-		$data['logged'] = $this->customer->isLogged();
-		$data['shipping_required'] = $this->cart->hasShipping();
-		$data['config_checkout_address'] = $this->config->get('config_checkout_address');
+		if (!$this->customer->isLogged()) {
+			$data['register'] = $this->load->controller('checkout/register');
+		} else {
+			$data['register'] = '';
+		}
 
-		$this->load->model('account/address');
+		if ($this->customer->isLogged() && $this->config->get('config_checkout_address')) {
+			$data['payment_address'] = $this->load->controller('checkout/payment_address');
+		} else {
+			$data['payment_address'] = '';
+		}
 
-		$data['address_total'] = $this->model_account_address->getTotalAddresses();
+		if ($this->customer->isLogged() && $this->cart->hasShipping()) {
+			$data['shipping_address'] = $this->load->controller('checkout/shipping_address');
+		}  else {
+			$data['shipping_address'] = '';
+		}
 
-		$data['register'] = $this->load->controller('checkout/register');
-		$data['shipping_address'] = $this->load->controller('checkout/shipping_address');
-		$data['payment_address'] = $this->load->controller('checkout/payment_address');
-		$data['shipping_method'] = $this->load->controller('checkout/shipping_method');
+		if ($this->cart->hasShipping()) {
+			$data['shipping_method'] = $this->load->controller('checkout/shipping_method');
+		}  else {
+			$data['shipping_method'] = '';
+		}
+
 		$data['payment_method'] = $this->load->controller('checkout/payment_method');
 		$data['confirm'] = $this->load->controller('checkout/confirm');
 

@@ -48,6 +48,7 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 
 
 
+
 		// Validate minimum quantity requirements.
 		$products = $this->cart->getProducts();
 
@@ -66,10 +67,6 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 				break;
 			}
 		}
-
-
-
-
 
 		if (!$json) {
 			// Totals

@@ -298,6 +298,10 @@ class Register extends \Opencart\System\Engine\Controller {
 				}
 			}
 
+
+
+
+
 			if ($this->config->get('config_checkout_address')) {
 				if ((utf8_strlen($this->request->post['payment_address_1']) < 3) || (utf8_strlen($this->request->post['payment_address_1']) > 128)) {
 					$json['error']['payment_address_1'] = $this->language->get('error_address_1');
@@ -334,7 +338,6 @@ class Register extends \Opencart\System\Engine\Controller {
 					}
 				}
 			}
-
 
 
 

@@ -108,7 +108,7 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 				$json['error']['shipping_firstname'] = $this->language->get('error_firstname');
 			}
 
-			if ((utf8_strlen($this->request->post['shipping_lastname']) < 1) || (utf8_strlen($this->request->post['lastname']) > 32)) {
+			if ((utf8_strlen($this->request->post['lastname']) < 1) || (utf8_strlen($this->request->post['lastname']) > 32)) {
 				$json['error']['shipping_lastname'] = $this->language->get('error_lastname');
 			}
 

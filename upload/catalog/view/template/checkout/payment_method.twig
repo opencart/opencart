@@ -54,7 +54,6 @@ $('#button-payment-method').on('click', function() {
 
                 //if (json['payment_methods'][i]['code'] == $('#input-payment-method').val()) {
 
-
                 $('#input-payment-method').html(html);
 
             },
@@ -71,9 +70,7 @@ $('#input-payment-method').on('change', function() {
 
     chain.attach(function() {
         return $.ajax({
-            url: 'index.php?route=checkout/payment_method|save&language={{ language }}',
-            type: 'post',
-            data: $('#form-payment-method').serialize(),
+            url: 'index.php?route=checkout/payment_method|save&language={{ language }}&payment_method=' + $(element).val(),
             dataType: 'json',
             beforeSend: function() {
                 $(element).prop('disabled', true);

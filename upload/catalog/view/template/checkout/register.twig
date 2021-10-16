@@ -586,7 +586,6 @@ $('#form-register').on('submit', function(e) {
             $('#form-register').find('.invalid-feedback').removeClass('d-block');
 
             console.log(json);
-            console.log(json['error']);
 
             if (json['redirect']) {
                 location = json['redirect'];

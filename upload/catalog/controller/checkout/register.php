@@ -4,10 +4,6 @@ class Register extends \Opencart\System\Engine\Controller {
 	public function index(): string {
 		$this->load->language('checkout/checkout');
 
-		if ($this->customer->isLogged()) {
-			$this->response->redirect($this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true));
-		}
-
 		$data['text_login'] = sprintf($this->language->get('text_login'), $this->url->link('account/login', 'language=' . $this->config->get('config_language') . '&redirect=' . urlencode($this->url->link('account/login', 'language=' . $this->config->get('config_language'), true))));
 
 		$data['entry_newsletter'] = sprintf($this->language->get('entry_newsletter'), $this->config->get('config_name'));
@@ -204,66 +200,6 @@ class Register extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-
-			if ((utf8_strlen($this->request->post['firstname']) < 1) || (utf8_strlen($this->request->post['firstname']) > 32)) {
-				$json['error']['firstname'] = $this->language->get('error_firstname');
-			}
-
-			if ((utf8_strlen($this->request->post['lastname']) < 1) || (utf8_strlen($this->request->post['lastname']) > 32)) {
-				$json['error']['lastname'] = $this->language->get('error_lastname');
-			}
-
-			if ((utf8_strlen($this->request->post['email']) > 96) || !filter_var($this->request->post['email'], FILTER_VALIDATE_EMAIL)) {
-				$json['error']['email'] = $this->language->get('error_email');
-			}
-
-
-			// If not guest checkout disabled, login require price or cart has downloads
-			if (!$this->config->get('config_checkout_guest') || $this->config->get('config_customer_price') || $this->cart->hasDownload()) {
-				//$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
-			}
-
-
-			$this->load->model('account/customer');
-
-
-			if ($this->customer->isLogged()) {
-
-
-				if (($this->customer->getEmail() != $this->request->post['email']) && $this->model_account_customer->getTotalCustomersByEmail($this->request->post['email'])) {
-					$json['error']['warning'] = $this->language->get('error_exists');
-				}
-
-
-			}
-
-
-			// If not guest checkout disabled, login require price or cart has downloads
-			if (!$this->config->get('config_checkout_guest') || $this->config->get('config_customer_price') || $this->cart->hasDownload()) {
-				$json['error']['warning'] = $this->language->get('error_exists');
-			}
-
-			//$this->request->post['account'] &&
-
-			// If customer already logged in
-			if ($this->customer->isLogged()) {
-
-				$customer_info = $this->model_account_customer->getCustomerByEmail($this->request->post['email']);
-
-				if ($customer_info['customer_id'] != $this->customer->getId()) {
-					$json['error']['warning'] = $this->language->get('error_exists');
-				}
-
-			} elseif ($this->model_account_customer->getTotalCustomersByEmail($this->request->post['email'])) {
-				$json['error']['warning'] = $this->language->get('error_exists');
-			}
-
-			if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
-				$json['error']['telephone'] = $this->language->get('error_telephone');
-			}
-
-
-
 			// Customer Group
 			if ($this->request->post['customer_group_id']) {
 				$customer_group_id = (int)$this->request->post['customer_group_id'];
@@ -279,8 +215,20 @@ class Register extends \Opencart\System\Engine\Controller {
 				$json['error']['warning'] = $this->language->get('error_customer_group');
 			}
 
-			if ($this->request->post['account'] && $customer_group_info['approval']) {
-				$json['error']['warning'] = $this->language->get('error_customer_approval');
+			if ((utf8_strlen($this->request->post['firstname']) < 1) || (utf8_strlen($this->request->post['firstname']) > 32)) {
+				$json['error']['firstname'] = $this->language->get('error_firstname');
+			}
+
+			if ((utf8_strlen($this->request->post['lastname']) < 1) || (utf8_strlen($this->request->post['lastname']) > 32)) {
+				$json['error']['lastname'] = $this->language->get('error_lastname');
+			}
+
+			if ((utf8_strlen($this->request->post['email']) > 96) || !filter_var($this->request->post['email'], FILTER_VALIDATE_EMAIL)) {
+				$json['error']['email'] = $this->language->get('error_email');
+			}
+
+			if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
+				$json['error']['telephone'] = $this->language->get('error_telephone');
 			}
 
 			// Custom field validation
@@ -297,6 +245,11 @@ class Register extends \Opencart\System\Engine\Controller {
 					}
 				}
 			}
+
+
+
+
+
 
 
 
@@ -341,7 +294,9 @@ class Register extends \Opencart\System\Engine\Controller {
 
 
 
+
 			if ($this->cart->hasShipping() && !$this->request->post['address_match']) {
+
 				// If payment address not required we need to use the firstname and lastname from the account.
 				if (!$this->config->get('config_checkout_address')) {
 					if ((utf8_strlen($this->request->post['shipping_firstname']) < 1) || (utf8_strlen($this->request->post['shipping_firstname']) > 32)) {
@@ -391,10 +346,73 @@ class Register extends \Opencart\System\Engine\Controller {
 			}
 
 
+			// Logged
+			$this->load->model('account/customer');
 
-			if ($this->request->post['account'] && (utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) < 4) || (utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) > 40)) {
-				$json['error']['password'] = $this->language->get('error_password');
+			// If customer already logged in
+			if ($this->customer->isLogged()) {
+
+
+			} elseif ($this->model_account_customer->getTotalCustomersByEmail($this->request->post['email'])) {
+				$json['error']['warning'] = $this->language->get('error_exists');
 			}
+
+
+
+			//$this->request->post['account'] &&
+
+
+			// Logged
+			if ($this->customer->isLogged()) {
+
+
+				$customer_info = $this->model_account_customer->getCustomerByEmail($this->request->post['email']);
+
+				if ($customer_info['customer_id'] != $this->customer->getId()) {
+					$json['error']['warning'] = $this->language->get('error_exists');
+				}
+
+
+				if (($this->customer->getEmail() != $this->request->post['email']) && $this->model_account_customer->getTotalCustomersByEmail($this->request->post['email'])) {
+					$json['error']['warning'] = $this->language->get('error_exists');
+				}
+
+
+
+
+			}
+
+			// Guest
+			if ($this->request->post['account'] == 'guest') {
+
+				// If not guest checkout disabled, login require price or cart has downloads
+				if (!$this->config->get('config_checkout_guest') || $this->config->get('config_customer_price') || $this->cart->hasDownload()) {
+					$json['error']['warning'] = $this->language->get('error_guest');
+				}
+
+
+				if ($customer_group_info['approval']) {
+					$json['error']['warning'] = $this->language->get('error_customer_approval');
+				}
+
+			}
+
+
+
+			// Register
+			if ($this->request->post['account'] == 'register') {
+
+
+
+				if ((utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) < 4) || (utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) > 40)) {
+					$json['error']['password'] = $this->language->get('error_password');
+				}
+			}
+
+
+
+
+
 
 
 			$this->load->model('catalog/information');
@@ -418,6 +436,9 @@ class Register extends \Opencart\System\Engine\Controller {
 				}
 			}
 		}
+
+
+
 
 		if (!$json) {
 
@@ -467,6 +488,11 @@ class Register extends \Opencart\System\Engine\Controller {
 					'custom_field'      => isset($this->request->post['custom_field']) ? $this->request->post['custom_field'] : []
 				];
 
+
+
+
+
+
 				if ($this->config->get('config_checkout_address')) {
 					$this->session->data['payment_address'] = [
 						'address_id'   => $json['address_id'],
@@ -481,25 +507,31 @@ class Register extends \Opencart\System\Engine\Controller {
 						'zone_id'      => $this->request->post['payment_zone_id'],
 						'custom_field' => isset($this->request->post['payment_custom_field']) ? $this->request->post['payment_custom_field'] : []
 					];
+
+
+
+					$payment_address_data = [
+						'address_id'   => $json['address_id'],
+						'firstname'    => $this->request->post['payment_firstname'],
+						'lastname'     => $this->request->post['payment_lastname'],
+						'company'      => $this->request->post['payment_company'],
+						'address_1'    => $this->request->post['payment_address_1'],
+						'address_2'    => $this->request->post['payment_address_2'],
+						'city'         => $this->request->post['payment_city'],
+						'postcode'     => $this->request->post['payment_postcode'],
+						'country_id'   => $this->request->post['payment_country_id'],
+						'zone_id'      => $this->request->post['payment_zone_id'],
+						'custom_field' => isset($this->request->post['payment_custom_field']) ? $this->request->post['payment_custom_field'] : []
+					];
+
+					$this->load->model('account/address');
+
+					$json['address_id'] = $this->model_account_address->addAddress($this->customer->getId(), $payment_address_data);
+
+
 				}
 
-				$payment_address_data = [
-					'address_id'   => $json['address_id'],
-					'firstname'    => $this->request->post['payment_firstname'],
-					'lastname'     => $this->request->post['payment_lastname'],
-					'company'      => $this->request->post['payment_company'],
-					'address_1'    => $this->request->post['payment_address_1'],
-					'address_2'    => $this->request->post['payment_address_2'],
-					'city'         => $this->request->post['payment_city'],
-					'postcode'     => $this->request->post['payment_postcode'],
-					'country_id'   => $this->request->post['payment_country_id'],
-					'zone_id'      => $this->request->post['payment_zone_id'],
-					'custom_field' => isset($this->request->post['payment_custom_field']) ? $this->request->post['payment_custom_field'] : []
-				];
 
-				$this->load->model('account/address');
-
-				$json['address_id'] = $this->model_account_address->addAddress($this->customer->getId(), $payment_address_data);
 
 
 

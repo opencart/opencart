@@ -231,6 +231,8 @@ $('#input-shipping-address').on('change', function() {
                     $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                     $('#button-shipping-method').trigger('click');
+
+                    $('#checkout-confirm').load('index.php?route=checkout/confirm|confirm&language={{ language }}');
                 }
             },
             error: function(xhr, ajaxOptions, thrownError) {
@@ -293,13 +295,10 @@ $('#form-shipping-address').on('submit', function(e) {
                     var payment_address_id = $('#input-payment-address').val();
                     var shipping_address_id = json['address_id'];
 
-
                     $('#input-payment-address').html(html);
-
                     $('#input-shipping-address').html(html);
 
                     $('#input-payment-address').val(payment_address_id);
-
                     $('#input-shipping-address').val(shipping_address_id);
                 }
             },

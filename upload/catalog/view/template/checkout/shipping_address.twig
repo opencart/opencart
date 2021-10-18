@@ -48,7 +48,7 @@
           <div id="error-shipping-address-1" class="invalid-feedback"></div>
         </div>
         <div class="col mb-3">
-          <label for="input-shipping-address-2" class="form-label">{{ entry_address_2 }}</label>s
+          <label for="input-shipping-address-2" class="form-label">{{ entry_address_2 }}</label>
           <input type="text" name="address_2" value="{{ address_2 }}" placeholder="{{ entry_address_2 }}" id="input-shipping-address-2" class="form-control"/>
         </div>
         <div class="col mb-3 required">
@@ -206,6 +206,7 @@ $('input[name=\'shipping_existing\']').on('change', function() {
 $('#input-shipping-address').on('change', function() {
     var element = this;
 
+
     chain.attach(function() {
         return $.ajax({
             url: 'index.php?route=checkout/shipping_address|address&language={{ language }}&address_id=' + $(element).val(),
@@ -220,7 +221,7 @@ $('#input-shipping-address').on('change', function() {
                 console.log(json);
 
                 if (json['redirect']) {
-                    location = json['redirect'];
+                   // location = json['redirect'];
                 }
 
                 if (json['error']) {
@@ -240,6 +241,8 @@ $('#input-shipping-address').on('change', function() {
             }
         });
     });
+
+
 });
 
 // New Shipping Address
@@ -264,7 +267,6 @@ $('#form-shipping-address').on('submit', function(e) {
                 $('#form-shipping-address').find('.invalid-feedback').removeClass('d-block');
 
                 console.log(json);
-                console.log(json['error']);
 
                 if (json['redirect']) {
                     location = json['redirect'];

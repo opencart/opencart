@@ -47,7 +47,7 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		// Customer
-		if (!isset($this->session->data['customer'])) {
+		if (!$this->customer->isLogged()) {
 			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
 		}
 

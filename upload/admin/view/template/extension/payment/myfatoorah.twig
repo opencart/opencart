@@ -1,0 +1,222 @@
+{{ header }}{{ column_left }} 
+<div id="content">
+    <div class="page-header">
+        <div class="container-fluid">
+            <div class="pull-right">
+                <button type="submit" form="form-payment" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
+                <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a>
+            </div>
+            <h1>{{ heading_title }}</h1>
+            <ul class="breadcrumb">
+                {% for breadcrumb in breadcrumbs %}
+                    <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+                    {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div class="container-fluid">
+        {% if (error_warning) %}
+            <div class="alert alert-danger alert-dismissible">
+                <i class="fa fa-exclamation-circle"></i>
+                {{ error_warning }} 
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+            </div>
+        {% endif %}
+        {% if (success is defined) %}
+            <div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> {{ success }}
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+            </div>
+        {% endif %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit }}</h3>
+            </div>
+            <div class="panel-body">
+                <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-payment" class="form-horizontal">
+
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
+                        <div class="col-sm-10">
+                            <select name="{{ ocCode }}_status" id="input-status" class="form-control">
+                                {% if (status) %}
+                                    <option value="1" selected="selected">{{ text_enabled }}</option>
+                                    <option value="0">{{ text_disabled }}</option>
+                                {% else %}
+                                    <option value="1">{{ text_enabled }}</option>
+                                    <option value="0" selected="selected">{{ text_disabled }}</option>
+                                {% endif %}
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="input-test">{{ entry_test }}</label>
+                        <div class="col-sm-10">
+                            <select name="{{ ocCode }}_test" id="input-test" class="form-control">
+                                {% if (test) %}
+                                    <option value="1" selected="selected">{{ text_enabled }}</option>
+                                    <option value="0">{{ text_disabled }}</option>
+                                {% else %}
+                                    <option value="1">{{ text_enabled }}</option>
+                                    <option value="0" selected="selected">{{ text_disabled }}</option>
+                                {% endif %}
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group required">
+                        <label class="col-sm-2 control-label" for="input-apiKey">{{ entry_apiKey }}</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="{{ ocCode }}_apiKey" value="{{ apiKey }}" placeholder="{{ entry_apiKey }}" id="input-apiKey" class="form-control"/>
+                            {% if (error_apiKey) %}
+                                <div class="text-danger">{{ error_apiKey }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="input-webhook_secret_key">{{ entry_webhook_secret_key }}</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="{{ ocCode }}_webhook_secret_key" value="{{ webhook_secret_key }}" placeholder="{{ entry_webhook_secret_key }}" id="input-webhook_secret_key" class="form-control"/>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="input-sort-order">{{ entry_sort_order }}</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="{{ ocCode }}_sort_order" value="{{ sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="input-debug">{{ entry_debug }}</label>
+                        <div class="col-sm-10">
+                            <select name="{{ ocCode }}_debug" id="input-debug" class="form-control">
+                                {% if (debug) %}
+                                    <option value="1" selected="selected">{{ text_enabled }}</option>
+                                    <option value="0">{{ text_disabled }}</option>
+                                {% else %}
+                                    <option value="1">{{ text_enabled }}</option>
+                                    <option value="0" selected="selected">{{ text_disabled }}</option>
+                                {% endif %}
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="input-order-status">{{ entry_initial_order_status }}</label>
+                        <div class="col-sm-10">
+                            <select name="{{ ocCode }}_initial_order_status_id" id="input-order-status" class="form-control">
+                                {% for order_status in order_statuses %}
+                                    {% if (initial_order_status_id == order_status.order_status_id) %}
+                                        <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                                    {% else %}
+                                        <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="input-order-status">{{ entry_order_status }}</label>
+                        <div class="col-sm-10">
+                            <select name="{{ ocCode }}_order_status_id" id="input-order-status" class="form-control">
+                                {% for order_status in order_statuses %}
+                                    {% if (order_status_id == order_status.order_status_id) %}
+                                        <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                                    {% else %}
+                                        <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="input-order-status">{{ entry_failed_order_status }}</label>
+                        <div class="col-sm-10">
+                            <select name="{{ ocCode }}_failed_order_status_id" id="input-order-status" class="form-control">
+                                {% for order_status in order_statuses %}
+                                    {% if (failed_order_status_id == order_status.order_status_id) %}
+                                        <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+                                    {% else %}
+                                        <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+
+                    {% if (ocCode == 'payment_myfatoorah_v2') %}
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="input-payment_type">
+                                <span data-toggle="tooltip" title="{{ tooltip_payment_type }}">{{ entry_payment_type }}</span>
+                            </label>
+                            <div class="col-sm-10">
+                                <select name="{{ ocCode }}_payment_type" id="input-payment_type" class="form-control">
+                                    {% if (payment_myfatoorah_v2_payment_type is not defined or payment_myfatoorah_v2_payment_type == 'myfatoorah') %}
+                                        <option value="myfatoorah" selected="selected">{{ text_myfatoorah_page }}</option>
+                                        <option value="multigateways">{{ text_multigateways_page }}</option>
+                                    {% else %}
+                                        <option value="myfatoorah">{{ text_myfatoorah_page }}</option>
+                                        <option value="multigateways" selected="selected">{{ text_multigateways_page }}</option>
+                                    {% endif %}
+                                </select>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="input-view">
+                                <span data-toggle="tooltip" title="{{ tooltip_view }}">{{ entry_view }}</span>
+                            </label>
+                            <div class="col-sm-10">
+                                <select name="{{ ocCode }}_view" id="input-view" class="form-control">
+                                    {% if (payment_myfatoorah_v2_view is not defined or payment_myfatoorah_v2_view == 'horizontal') %}
+                                        <option value="horizontal" selected="selected">{{ text_horizontal }}</option>
+                                        <option value="vertical">{{ text_vertical }}</option>
+                                    {% else %}
+                                        <option value="horizontal">{{ text_horizontal }}</option>
+                                        <option value="vertical" selected="selected">{{ text_vertical }}</option>
+                                    {% endif %}
+                                </select>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="input-saveCard">
+                                <span data-toggle="tooltip" title="{{ tooltip_saveCard }}">{{ entry_saveCard }}</span>
+                            </label>
+                            <div class="col-sm-10">
+                                <select name="{{ ocCode }}_saveCard" id="input-saveCard" class="form-control">
+                                    {% if (payment_myfatoorah_v2_saveCard) %}
+                                        <option value="1" selected="selected">{{ text_enabled }}</option>
+                                        <option value="0">{{ text_disabled }}</option>
+                                    {% else %}
+                                        <option value="1">{{ text_enabled }}</option>
+                                        <option value="0" selected="selected">{{ text_disabled }}</option>
+                                    {% endif %}
+                                </select>
+                            </div>
+                        </div>
+                    {% endif %}
+
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{{ footer }}

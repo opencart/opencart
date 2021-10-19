@@ -1,0 +1,16 @@
+{% if (error is defined) %}
+    <div class="alert alert-danger">
+        <i class="fa fa-exclamation-circle">
+            &nbsp;{{ error }}
+        </i> 
+        <button type="button" class="close" data-dismiss="alert">×</button>
+    </div>
+{% else %} 
+    <div class="buttons">
+        <div class="pull-right">
+            <form action="{{ action }}" method="post">
+                <input type="submit" value="{{ button_confirm }}" class="btn btn-primary"/>
+            </form>
+        </div>
+    </div>
+{% endif %}

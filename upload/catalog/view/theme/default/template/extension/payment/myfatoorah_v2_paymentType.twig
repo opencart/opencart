@@ -1,0 +1,19 @@
+{% for style in styles %}
+    <link href="{{ style.href }}" type="text/css" rel="{{ style.rel }}" media="{{ style.media }}" />
+{% endfor %}
+{{ title }}
+<div class="mfContainer">
+    {% for gateway in gateways %}
+        {% set alt = (language == 'ar') ? gateway.PaymentMethodAr : gateway.PaymentMethodEn %}
+        <div class="mfDiv">
+            <input type="radio" class="mfInput" id="{{id}}_{{gateway.PaymentMethodId}}" value="{{gateway.PaymentMethodId}}" name="{{id}}_payment">
+            <label for="{{id}}_{{gateway.PaymentMethodId}}" class="mfLabel">
+                {{ alt }}
+                <img src="{{ gateway.ImageUrl }}" width="40px" title="{{ alt }}" alt="{{ alt }}">
+            </label>
+        </div>
+    {% endfor %}
+</div>
+{% for script in scripts %}
+    <script src="{{ script }}" type="text/javascript"></script>
+{% endfor %}

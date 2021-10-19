@@ -470,7 +470,7 @@ class Register extends \Opencart\System\Engine\Controller {
 
 
 
-				$this->request->post['shipping_address']['address_id']
+				//
 
 
 
@@ -484,7 +484,7 @@ class Register extends \Opencart\System\Engine\Controller {
 
 				if ($this->cart->hasShipping() && !$this->request->post['address_match']) {
 
-					$this->model_account_address->editAddress($this->customer->getId(), $shipping_address_data);
+					$this->model_account_address->editAddress($this->request->post['shipping_address']['address_id'], $shipping_address_data);
 
 				}
 

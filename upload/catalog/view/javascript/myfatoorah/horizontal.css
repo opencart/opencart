@@ -1,0 +1,12 @@
+.mfContainer {
+    margin: 5px; display: flex;
+}
+.mfDiv {
+    height: 100%;  display: flex;  align-items: end;  justify-content: center; margin: 10px;
+}
+.mfLabel {
+    margin: 0px 10px; padding: 0px !important; height: 40px; text-align: center;
+}
+.mfInput {
+    margin: 0px !important; padding: 0px;
+}

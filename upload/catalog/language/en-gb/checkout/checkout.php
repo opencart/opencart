@@ -13,7 +13,7 @@ $_['text_checkout_payment_method']   = 'Step %s: Payment Method';
 $_['text_checkout_confirm']          = 'Step %s: Confirm Order';
 $_['text_modify']                    = 'Modify &raquo;';
 
-$_['text_login']                     = 'Already have an account? You can <a href="%s"><strong>login here</strong></a>.';
+$_['text_login']                     = 'If you already have an account with us, please login at the <a href="%s"><strong>login page</strong></a>.';
 $_['text_forgotten']                 = 'Forgotten Password';
 
 $_['text_register']                  = 'Register Account';

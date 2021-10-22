@@ -22,9 +22,12 @@ define('DIR_SYSTEM', DIR_OPENCART . 'system/');
 // Startup
 require_once(DIR_SYSTEM . 'engine/controller.php');
 require_once(DIR_SYSTEM . 'engine/registry.php');
+
 require_once(DIR_SYSTEM . 'library/request.php');
 require_once(DIR_SYSTEM . 'library/response.php');
 require_once(DIR_SYSTEM . 'library/db.php');
+require_once(DIR_SYSTEM . 'library/db/mysqli.php');
+
 require_once(DIR_SYSTEM . 'helper/db_schema.php');
 require_once(DIR_SYSTEM . 'helper/utf8.php');
 
@@ -75,7 +78,7 @@ class CliCloud extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($output);
 	}
 
-	public function install($argv) {
+	public function install($argv): string {
 		// Options
 		$option = [];
 
@@ -266,16 +269,14 @@ class CliCloud extends \Opencart\System\Engine\Controller {
 		return $output;
 	}
 
-	public function usage() {
+	public function usage(): string {
 		$option = implode(' ', [
 			'--username',
 			'admin',
 			'--email',
 			'email@example.com',
 			'--password',
-			'password',
-			'--http_server',
-			'http://localhost/opencart/'
+			'password'
 		]);
 
 		$output  = 'Usage:' . "\n";

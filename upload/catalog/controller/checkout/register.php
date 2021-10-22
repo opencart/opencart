@@ -404,10 +404,10 @@ class Register extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+
+
 			// Logged so edit customer details
 			//if ($this->customer->isLogged())
-
-
 
 
 			// Register
@@ -430,20 +430,18 @@ class Register extends \Opencart\System\Engine\Controller {
 				}
 
 
-
-			// Add customer details into session
-			$this->session->data['customer'] = [
-				'customer_id'       => 0,
-				'customer_group_id' => $customer_group_id,
-				'firstname'         => $this->request->post['firstname'],
-				'lastname'          => $this->request->post['lastname'],
-				'email'             => $this->request->post['email'],
-				'telephone'         => $this->request->post['telephone'],
-				'custom_field'      => isset($this->request->post['custom_field']) ? $this->request->post['custom_field'] : []
-			];
-
-
-
+			if (!$customer_group_info['approval']) {
+				// Add customer details into session
+				$this->session->data['customer'] = [
+					'customer_id'       => 0,
+					'customer_group_id' => $customer_group_id,
+					'firstname'         => $this->request->post['firstname'],
+					'lastname'          => $this->request->post['lastname'],
+					'email'             => $this->request->post['email'],
+					'telephone'         => $this->request->post['telephone'],
+					'custom_field'      => isset($this->request->post['custom_field']) ? $this->request->post['custom_field'] : []
+				];
+			} 
 			$this->load->model('account/address');
 
 			// Payment Address

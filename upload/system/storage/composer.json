@@ -19,7 +19,7 @@
     "docs": "http://docs.opencart.com/"
   },
   "config": {
-    "vendor-dir": "./upload/system/storage/vendor/"
+    "vendor-dir": "vendor/"
   },
   "require": {
     "scssphp/scssphp": "^1.8",

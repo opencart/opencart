@@ -49,7 +49,7 @@ set_error_handler(function($code, $message, $file, $line, array $errcontext) {
 		return false;
 	}
 
-	echo $code . ': ' . $message . ' in ' . $file . ' on line ' . $line . "\n";
+	echo 'ERROR: ' . $code . ' ' . $message . ' in ' . $file . ' on line ' . $line . "\n";
 	exit();
 });
 

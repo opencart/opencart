@@ -164,8 +164,6 @@ class CliCloud extends \Opencart\System\Engine\Controller {
 		}
 
 		// Set up Database structure
-		$this->load->helper('db_schema');
-
 		$tables = db_schema();
 
 		foreach ($tables as $table) {

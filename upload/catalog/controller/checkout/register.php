@@ -441,7 +441,8 @@ class Register extends \Opencart\System\Engine\Controller {
 					'telephone'         => $this->request->post['telephone'],
 					'custom_field'      => isset($this->request->post['custom_field']) ? $this->request->post['custom_field'] : []
 				];
-			} 
+			}
+
 			$this->load->model('account/address');
 
 			// Payment Address

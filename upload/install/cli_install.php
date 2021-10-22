@@ -125,7 +125,7 @@ class CliInstall extends \Opencart\System\Engine\Controller {
 
 		// Command line is sending true and false as strings so used 1 or 0 instead.
 
-		// Cloud Install
+		// Required
 		$required = [
 			'username',    // Already set
 			'email',
@@ -220,7 +220,7 @@ class CliInstall extends \Opencart\System\Engine\Controller {
 		$password = html_entity_decode($option['password'], ENT_QUOTES, 'UTF-8');
 
 		if ((utf8_strlen($password) < 5) || (utf8_strlen($password) > 20)) {
-			$error .= 'ERROR: Password must be between 4 and 20 characters!' . "\n";
+			$error .= 'ERROR: Password must be between 5 and 20 characters!' . "\n";
 		}
 
 		if ($error) {
@@ -329,11 +329,7 @@ class CliInstall extends \Opencart\System\Engine\Controller {
 			$db->query("SET @@session.sql_mode = ''");
 
 			$db->query("DELETE FROM `" . $db_prefix . "user` WHERE user_id = '1'");
-
-			// If cloud we do not need to hash the password as we will be passing the password hash
-			$password = password_hash(html_entity_decode($option['password'], ENT_QUOTES, 'UTF-8'), PASSWORD_DEFAULT);
-
-			$db->query("INSERT INTO `" . $db_prefix . "user` SET `user_id` = '1', `user_group_id` = '1', `username` = '" . $db->escape($option['username']) . "', `password` = '" . $db->escape($password) . "', `firstname` = 'John', `lastname` = 'Doe', `email` = '" . $db->escape($option['email']) . "', `status` = '1', `date_added` = NOW()");
+			$db->query("INSERT INTO `" . $db_prefix . "user` SET `user_id` = '1', `user_group_id` = '1', `username` = '" . $db->escape($option['username']) . "', `password` = '" . $db->escape(password_hash(html_entity_decode($option['password'], ENT_QUOTES, 'UTF-8'), PASSWORD_DEFAULT)) . "', `firstname` = 'John', `lastname` = 'Doe', `email` = '" . $db->escape($option['email']) . "', `status` = '1', `date_added` = NOW()");
 
 			$db->query("DELETE FROM `" . $db_prefix . "setting` WHERE `key` = 'config_email'");
 			$db->query("INSERT INTO `" . $db_prefix . "setting` SET `code` = 'config', `key` = 'config_email', `value` = '" . $db->escape($option['email']) . "'");

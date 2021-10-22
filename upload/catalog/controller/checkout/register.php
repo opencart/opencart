@@ -412,35 +412,36 @@ class Register extends \Opencart\System\Engine\Controller {
 
 			// Register
 			// Check if current customer group requires approval
-			if (!$customer_group_info['approval']) {
-
-				$customer_id = $this->model_account_customer->addCustomer($this->request->post);
-
-			}
-
 			//if (!$customer_group_info['approval']) {
-			// If everything good login
-				$this->customer->login($this->request->post['email'], $this->request->post['password']);
+
+
 			//}
 
-				if (!$this->customer->isLogged()) {
+			// Add customer details into session
+			$customer_data = [
+				'customer_id'       => 0,
+				'customer_group_id' => $customer_group_id,
+				'firstname'         => $this->request->post['firstname'],
+				'lastname'          => $this->request->post['lastname'],
+				'email'             => $this->request->post['email'],
+				'telephone'         => $this->request->post['telephone'],
+				'custom_field'      => isset($this->request->post['custom_field']) ? $this->request->post['custom_field'] : []
+			];
 
-				} else {
-					$this->model_account_customer->editCustomer($this->customer->getId(), $this->request->post);
-				}
+			if ($this->request->post['account'] == 'register') {
+				$customer_id = $this->model_account_customer->addCustomer($this->request->post);
 
+				// If everything good login
+				$this->customer->login($this->request->post['email'], $this->request->post['password']);
+			}
 
+			if ($this->customer->isLogged()) {
+				$this->model_account_customer->editCustomer($this->customer->getId(), $this->request->post);
+			}
+
+			// Requires Approval
 			if (!$customer_group_info['approval']) {
-				// Add customer details into session
-				$this->session->data['customer'] = [
-					'customer_id'       => 0,
-					'customer_group_id' => $customer_group_id,
-					'firstname'         => $this->request->post['firstname'],
-					'lastname'          => $this->request->post['lastname'],
-					'email'             => $this->request->post['email'],
-					'telephone'         => $this->request->post['telephone'],
-					'custom_field'      => isset($this->request->post['custom_field']) ? $this->request->post['custom_field'] : []
-				];
+				$this->session->data['customer'] = $customer_data;
 			}
 
 			$this->load->model('account/address');
@@ -463,7 +464,7 @@ class Register extends \Opencart\System\Engine\Controller {
 
 				// Add
 				if ($this->request->post['account'] == 'register') {
-					$this->session->data['payment_address']['address_id'] = $this->model_account_address->addAddress($customer_id, $payment_address_data);
+					$payment_address_data['address_id'] = $this->model_account_address->addAddress($customer_id, $payment_address_data);
 				}
 
 				// Edit
@@ -503,7 +504,7 @@ class Register extends \Opencart\System\Engine\Controller {
 
 					// Add
 					if ($this->request->post['account'] == 'register') {
-						$this->session->data['shipping_address']['address_id'] = $this->model_account_address->addAddress($customer_id, $shipping_address_data);
+						$shipping_address_data['address_id'] = $this->model_account_address->addAddress($customer_id, $shipping_address_data);
 					}
 
 					// Edit

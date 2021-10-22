@@ -28,6 +28,7 @@ require_once(DIR_SYSTEM . 'library/response.php');
 require_once(DIR_SYSTEM . 'library/db.php');
 require_once(DIR_SYSTEM . 'library/db/mysqli.php');
 
+require_once(DIR_SYSTEM . 'helper/general.php');
 require_once(DIR_SYSTEM . 'helper/db_schema.php');
 require_once(DIR_SYSTEM . 'helper/utf8.php');
 

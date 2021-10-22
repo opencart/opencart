@@ -162,7 +162,7 @@ class CliCloud extends \Opencart\System\Engine\Controller {
 			// Database
 			$db = new \Opencart\System\Library\DB($db_driver, $db_hostname, $db_username, $db_password, $db_database, $db_port);
 		} catch (\Exception $e) {
-			return 'Error: Could not make a database link using ' . $db_username . '@' . $db_hostname . '!' . "\n";
+			return 'ERROR: Could not make a database link using ' . $db_username . '@' . $db_hostname . '!' . "\n";
 		}
 
 		// Set up Database structure

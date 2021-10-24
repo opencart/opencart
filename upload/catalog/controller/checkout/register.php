@@ -204,11 +204,6 @@ class Register extends \Opencart\System\Engine\Controller {
 
 		if (!$json) {
 			// Validate that register or guest is not sent if customer is logged in.
-			if ($this->customer->isLogged()) {
-				$json['warning'] = $this->language->get('error_account');
-			}
-
-
 			// If not guest checkout disabled, login require price or cart has downloads
 			if (!$this->config->get('config_checkout_guest') || $this->config->get('config_customer_price') || $this->cart->hasDownload()) {
 				$json['error']['warning'] = $this->language->get('error_guest');
@@ -260,7 +255,6 @@ class Register extends \Opencart\System\Engine\Controller {
 					}
 				}
 			}
-
 
 			if ($this->config->get('config_checkout_address')) {
 				if ((utf8_strlen($this->request->post['payment_address_1']) < 3) || (utf8_strlen($this->request->post['payment_address_1']) > 128)) {
@@ -368,6 +362,8 @@ class Register extends \Opencart\System\Engine\Controller {
 				$json['error']['warning'] = $this->language->get('error_exists');
 			}
 
+
+
 			$customer_group_info = $this->model_account_customer_group->getCustomerGroup($customer_group_id);
 
 			if ($customer_group_info && $customer_group_info['approval']) {
@@ -381,6 +377,10 @@ class Register extends \Opencart\System\Engine\Controller {
 			} else {
 				$json['error']['warning'] = $this->language->get('error_customer_group');
 			}
+
+
+
+
 
 
 			$this->load->model('catalog/information');

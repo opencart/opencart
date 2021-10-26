@@ -46,7 +46,7 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		// Customer
-		if (!isset($this->session->data['customer'])) {
+		if (!$this->customer->isLogged() || !isset($this->session->data['customer'])) {
 			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
 		}
 
@@ -194,7 +194,7 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 			$address_id = 0;
 		}
 
-		if (!$this->customer->isLogged()) {
+		if (!$this->customer->isLogged() || !isset($this->session->data['customer'])) {
 			$json['redirect'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'), true);
 		}
 

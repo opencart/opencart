@@ -77,8 +77,7 @@ $_['entry_newsletter']               = 'I wish to subscribe to the %s newsletter
 // Error
 $_['error_warning']                  = 'There was a problem while trying to process your order! If the problem persists please try selecting a different payment method or you can contact the store owner by <a href="%s">clicking here</a>.';
 $_['error_login']                    = 'Warning: No match for E-Mail Address and/or Password.';
-$_['error_account']                  = 'Warning: Items in your shopping cart require you to register for an account!';
-
+$_['error_guest']                  = 'Warning: Items in your shopping cart require you to register for an account!';
 
 $_['error_exists']                   = 'Warning: E-Mail Address is already registered!';
 

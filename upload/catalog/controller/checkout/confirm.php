@@ -360,6 +360,9 @@ class Confirm extends \Opencart\System\Engine\Controller {
 	}
 
 	public function confirm(): void {
+
+
+
 		$this->response->setOutput($this->index());
 	}
 

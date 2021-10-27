@@ -5,22 +5,22 @@
     <div id="payment-addresses" style="display: {% if not addresses %}none{% else %}block{% endif %};">
 
       <div class="form-check">
-        <input type="radio" name="payment_existing" value="1" id="input-payment-existing" class="form-check-input" checked/> <label for="input-payment-existing" class="form-check-label">{{ text_address_existing }}</label>
+        <input type="radio" name="payment_existing" value="1" id="input-payment-existing" class="form-check-input" checked/>
+        <label for="input-payment-existing" class="form-check-label">{{ text_address_existing }}</label>
       </div>
 
       <div class="form-check">
-        <input type="radio" name="payment_existing" value="0" id="input-payment-new" class="form-check-input"> <label for="input-payment-new" class="form-check-label">{{ text_address_new }}</label>
+        <input type="radio" name="payment_existing" value="0" id="input-payment-new" class="form-check-input">
+        <label for="input-payment-new" class="form-check-label">{{ text_address_new }}</label>
       </div>
 
       <div id="payment-existing">
-
         <select name="address_id" id="input-payment-address" class="form-select">
           <option value="">{{ text_select }}</option>
           {% for address in addresses %}
             <option value="{{ address.address_id }}"{% if address.address_id == address_id %} selected{% endif %}>{{ address.firstname }} {{ address.lastname }}, {{ address.address_1 }}, {{ address.city }}, {{ address.zone }}, {{ address.country }}</option>
           {% endfor %}
         </select>
-
       </div>
 
     </div>
@@ -203,44 +203,44 @@ $('input[name=\'payment_existing\']').on('change', function() {
 $('#input-payment-address').on('change', function() {
     var element = this;
 
-    if ($(element).val() != 0) {
-        chain.attach(function() {
-            return $.ajax({
-                url: 'index.php?route=checkout/payment_address|address&language={{ language }}&address_id=' + $(element).val(),
-                dataType: 'json',
-                beforeSend: function() {
-                    $(element).prop('disabled', true);
-                },
-                complete: function() {
-                    $(element).prop('disabled', false);
-                },
-                success: function(json) {
-                    console.log(json);
+    chain.attach(function() {
+        return $.ajax({
+            url: 'index.php?route=checkout/payment_address|address&language={{ language }}&address_id=' + $(element).val(),
+            dataType: 'json',
+            beforeSend: function() {
+                $(element).prop('disabled', true);
+            },
+            complete: function() {
+                $(element).prop('disabled', false);
+            },
+            success: function(json) {
+                console.log(json);
 
-                    if (json['redirect']) {
-                       // location = json['redirect'];
-                    }
-
-                    if (json['error']) {
-                        $('#alert').prepend('<div class="alert alert-warning alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-                    }
-
-                    if (json['success']) {
-                        $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                      {% if shipping_required %}
-                        $('#form-shipping-address').find(':disabled').prop('disabled', false);
-                      {% else %}
-                        $('#button-payment-method').trigger('click');
-                      {% endif %}
-                    }
-                },
-                error: function(xhr, ajaxOptions, thrownError) {
-                    console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                if (json['redirect']) {
+                    location = json['redirect'];
                 }
-            });
+
+                if (json['error']) {
+                    $('#alert').prepend('<div class="alert alert-warning alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                }
+
+                if (json['success']) {
+                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                  {% if shipping_required %}
+                    $('#form-shipping-address').find(':disabled').prop('disabled', false);
+                  {% else %}
+                    $('#button-payment-method').trigger('click');
+                  {% endif %}
+
+                    $('#checkout-confirm').load('index.php?route=checkout/confirm|confirm&language={{ language }}');
+                }
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
         });
-    }
+    });
 });
 
 $('#input-payment-address').trigger('change');
@@ -270,7 +270,7 @@ $('#form-payment-address').on('submit', function(e) {
                 console.log(json);
 
                 if (json['redirect']) {
-                   //location = json['redirect'];
+                   location = json['redirect'];
                 }
 
                 if (json['error']) {

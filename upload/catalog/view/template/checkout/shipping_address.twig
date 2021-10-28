@@ -269,6 +269,8 @@ $('#form-shipping-address').on('submit', function(e) {
                 }
 
                 if (json['success']) {
+                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
                     html = '<option value="">{{ text_select }}</option>';
 
                     if (json['addesses']) {

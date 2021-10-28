@@ -38,6 +38,57 @@ class Confirm extends \Opencart\System\Engine\Controller {
 
 		array_multisort($sort_order, SORT_ASC, $totals);
 
+		$status = true;
+
+		// Validate cart has products and has stock.
+		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
+			$status = false;
+		}
+
+		if ($this->cart->hasShipping()) {
+			// Validate if shipping address has been set.
+			if (!isset($this->session->data['shipping_address'])) {
+				$status = false;
+			}
+
+			// Validate if shipping method has been set.
+			if (!isset($this->session->data['shipping_method'])) {
+				$status = false;
+			}
+		} else {
+			unset($this->session->data['shipping_address']);
+			unset($this->session->data['shipping_method']);
+			unset($this->session->data['shipping_methods']);
+		}
+
+		// Validate if payment address has been set.
+		if ($this->config->get('config_checkout_address') && !isset($this->session->data['payment_address'])) {
+			$status = false;
+		}
+
+		$this->load->model('setting/extension');
+
+		if (isset($this->session->data['payment_method'])) {
+			// Validate if payment method has been set.
+			$extension_info = $this->model_setting_extension->getExtensionByCode('payment', $this->session->data['payment_method']['code']);
+
+			if (!$extension_info) {
+				$json['redirect'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'), true);
+			}
+		} else {
+			$json['redirect'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'), true);
+		}
+
+		// Validate cart has products and has stock.
+		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
+			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
+		}
+
+
+
+
+
+
 		// Generate order if payment method is set
 		if (isset($this->session->data['payment_method'])) {
 			$order_data = [];
@@ -392,48 +443,6 @@ class Confirm extends \Opencart\System\Engine\Controller {
 			$json['redirect'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'), true);
 		}
 
-		// Validate cart has products and has stock.
-		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
-			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
-		}
 
-		if ($this->cart->hasShipping()) {
-			// Validate if shipping address has been set.
-			if (!isset($this->session->data['shipping_address'])) {
-				$json['redirect'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'), true);
-			}
-
-			// Validate if shipping method has been set.
-			if (!isset($this->session->data['shipping_method'])) {
-				$json['redirect'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'), true);
-			}
-		} else {
-			unset($this->session->data['shipping_address']);
-			unset($this->session->data['shipping_method']);
-			unset($this->session->data['shipping_methods']);
-		}
-
-		// Validate if payment address has been set.
-		if ($this->config->get('config_checkout_address') && !isset($this->session->data['payment_address'])) {
-			$json['redirect'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'), true);
-		}
-
-		$this->load->model('setting/extension');
-
-		if (isset($this->session->data['payment_method'])) {
-			// Validate if payment method has been set.
-			$extension_info = $this->model_setting_extension->getExtensionByCode('payment', $this->session->data['payment_method']['code']);
-
-			if (!$extension_info) {
-				$json['redirect'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'), true);
-			}
-		} else {
-			$json['redirect'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'), true);
-		}
-
-		// Validate cart has products and has stock.
-		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
-			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
-		}
 	}
 }

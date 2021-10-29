@@ -996,7 +996,8 @@
                       {% set mail_alert_row = 0 %}
                       {% for mail_alert in mail_alerts %}
                         <div class="form-check">
-                          <input type="checkbox" name="config_mail_alert[]" value="{{ mail_alert.value }}" id="input-mail-alert-{{ mail_alert_row }}" class="form-check-input"{% if mail_alert.value in config_mail_alert %} checked{% endif %}/> <label id="input-mail-alert-{{ mail_alert_row }}" class="form-check-label">{{ mail_alert.text }}</label>
+                          <input type="checkbox" name="config_mail_alert[]" value="{{ mail_alert.value }}" id="input-mail-alert-{{ mail_alert_row }}" class="form-check-input"{% if mail_alert.value in config_mail_alert %} checked{% endif %}/>
+                          <label for="input-mail-alert-{{ mail_alert_row }}" class="form-check-label">{{ mail_alert.text }}</label>
                         </div>
                         {% set mail_alert_row = mail_alert_row + 1 %}
                       {% endfor %}
@@ -1007,7 +1008,7 @@
                 <div class="row mb-3">
                   <label for="input-mail-alert-email" class="col-sm-2 col-form-label">{{ entry_mail_alert_email }}</label>
                   <div class="col-sm-10">
-                    <textarea name="config_mail_alert_email" rows="5" placeholder="{{ entry_mail_alert_email }}" id="input-alert-email" class="form-control">{{ config_mail_alert_email }}</textarea>
+                    <textarea name="config_mail_alert_email" rows="5" placeholder="{{ entry_mail_alert_email }}" id="input-mail-alert-email" class="form-control">{{ config_mail_alert_email }}</textarea>
                     <div class="form-text text-muted">{{ help_mail_alert_email }}</div>
                   </div>
                 </div>
@@ -1020,7 +1021,10 @@
                   <label class="col-sm-2 col-form-label">{{ entry_maintenance }}</label>
                   <div class="col-sm-10">
                     <div class="btn-group">
-                      <input type="radio" name="config_maintenance" value="1" id="input-maintenance-yes" class="btn-check"{% if config_maintenance %} checked{% endif %}/> <label for="input-maintenance-yes" class="btn btn-outline-secondary">{{ text_yes }}</label> <input type="radio" name="config_maintenance" value="0" id="input-maintenance-no" class="btn-check"{% if not config_maintenance %} checked{% endif %}/> <label for="input-maintenance-no" class="btn btn-outline-secondary">{{ text_no }}</label>
+                      <input type="radio" name="config_maintenance" value="1" id="input-maintenance-yes" class="btn-check"{% if config_maintenance %} checked{% endif %}/>
+                      <label for="input-maintenance-yes" class="btn btn-outline-secondary">{{ text_yes }}</label>
+                      <input type="radio" name="config_maintenance" value="0" id="input-maintenance-no" class="btn-check"{% if not config_maintenance %} checked{% endif %}/>
+                      <label for="input-maintenance-no" class="btn btn-outline-secondary">{{ text_no }}</label>
                     </div>
                     <div class="form-text text-muted">{{ help_maintenance }}</div>
                   </div>

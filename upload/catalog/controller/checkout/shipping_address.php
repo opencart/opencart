@@ -71,7 +71,7 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 
 		// Validate if customer is logged in or customer session data is not set
 		if (!$this->customer->isLogged() || !isset($this->session->data['customer'])) {
-			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
+			$json['redirect'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'), true);
 		}
 
 		// Validate if payment address is set if required in settings

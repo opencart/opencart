@@ -431,6 +431,8 @@ class Register extends \Opencart\System\Engine\Controller {
 
 				// Add
 				if ($this->request->post['account']) {
+					$payment_address_data['default'] = 1;
+
 					$payment_address_data['address_id'] = $this->model_account_address->addAddress($customer_data['customer_id'], $payment_address_data);
 				}
 

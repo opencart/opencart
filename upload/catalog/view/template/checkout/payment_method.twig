@@ -41,6 +41,10 @@ $('#button-payment-method').on('click', function() {
                     location = json['redirect'];
                 }
 
+                if (json['error']) {
+                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                }
+
                 html = '<option value="">{{ text_select }}</option>';
 
                 if (json['payment_methods']) {
@@ -49,13 +53,11 @@ $('#button-payment-method').on('click', function() {
                     }
                 }
 
-                var payment_code = $('#input-payment-method').val();
-
-
-                //if (json['payment_methods'][i]['code'] == $('#input-payment-method').val()) {
+                var payment_method = $('#input-payment-method').val();
 
                 $('#input-payment-method').html(html);
 
+                $('#input-payment-method').val(payment_method);
             },
             error: function(xhr, ajaxOptions, thrownError) {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);

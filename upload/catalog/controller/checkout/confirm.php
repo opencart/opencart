@@ -45,14 +45,39 @@ class Confirm extends \Opencart\System\Engine\Controller {
 			$status = false;
 		}
 
+		// Validate minimum quantity requirements.
+		$products = $this->cart->getProducts();
+
+		foreach ($products as $product) {
+			$product_total = 0;
+
+			foreach ($products as $product_2) {
+				if ($product_2['product_id'] == $product['product_id']) {
+					$product_total += $product_2['quantity'];
+				}
+			}
+
+			if ($product['minimum'] > $product_total) {
+				$status = false;
+
+				break;
+			}
+		}
+
+		// Validate if shipping address and shipping method has been set
 		if ($this->cart->hasShipping()) {
-			// Validate if shipping address has been set.
 			if (!isset($this->session->data['shipping_address'])) {
 				$status = false;
 			}
 
-			// Validate if shipping method has been set.
-			if (!isset($this->session->data['shipping_method'])) {
+			if (isset($this->session->data['shipping_method'])) {
+				// Validate if payment method has been set.
+				$extension_info = $this->model_setting_extension->getExtensionByCode('shipping', $this->session->data['shipping_method']['code']);
+
+				if (!$extension_info) {
+					$status = false;
+				}
+			} else {
 				$status = false;
 			}
 		} else {
@@ -73,16 +98,12 @@ class Confirm extends \Opencart\System\Engine\Controller {
 			$extension_info = $this->model_setting_extension->getExtensionByCode('payment', $this->session->data['payment_method']['code']);
 
 			if (!$extension_info) {
-				$json['redirect'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'), true);
+				$status = false;
 			}
 		} else {
-			$json['redirect'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'), true);
+			$status = false;
 		}
 
-		// Validate cart has products and has stock.
-		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
-			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
-		}
 
 
 
@@ -90,7 +111,7 @@ class Confirm extends \Opencart\System\Engine\Controller {
 
 
 		// Generate order if payment method is set
-		if (isset($this->session->data['payment_method'])) {
+		if ($status) {
 			$order_data = [];
 
 			// Store Details

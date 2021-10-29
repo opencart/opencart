@@ -28,7 +28,7 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 
 		// Validate cart has products and has stock.
 		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
-			$json['redirect'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'), true);
+			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
 		}
 
 		// Validate minimum quantity requirements.
@@ -52,17 +52,17 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 
 		// Validate if customer session data is not set
 		if (!isset($this->session->data['customer'])) {
-			$json['redirect'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'), true);
+			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
 		}
 
 		// Validate if payment address is set if required in settings
 		if ($this->config->get('config_checkout_address') && !isset($this->session->data['payment_address'])) {
-			$json['redirect'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'), true);
+			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
 		}
 
 		// Validate if shipping address is set if required
 		if ($this->cart->hasShipping() && !isset($this->session->data['shipping_address'])) {
-			$json['redirect'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'), true);
+			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
 		}
 
 		if (!$json) {
@@ -158,9 +158,9 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		// Validate if shipping method has been set.
-		if (!isset($this->session->data['customer'])) {
-			$json['error'] = $this->language->get('error_customer');
+		// Validate cart has products and has stock.
+		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
+			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
 		}
 
 		// Validate minimum quantity requirements.
@@ -176,43 +176,41 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 			}
 
 			if ($product['minimum'] > $product_total) {
-				$json['error'] = $this->language->get('error_stock');
+				$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
 
 				break;
 			}
 		}
 
+		// Validate if shipping method has been set.
+		if (!isset($this->session->data['customer'])) {
+			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
+		}
+
 		// Validate if payment address is set if required in settings
 		if ($this->config->get('config_checkout_address') && !isset($this->session->data['payment_address'])) {
-			$json['redirect'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'), true);
+			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
 		}
 
-		// Validate cart has products and has stock.
-		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
-			$json['error'] = $this->language->get('error_product');
-		}
-
-		// Shipping validation
+		// Validate if shipping address or shipping method has been set.
 		if ($this->cart->hasShipping()) {
-			// Validate if shipping address has been set.
-			if (!isset($this->session->data['shipping_address'])) {
-				$json['error'] = $this->language->get('error_product');
+
+			if ((!isset($this->session->data['shipping_address']) || !isset($this->session->data['shipping_method']))) {
+				$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
 			}
 
-			// Validate if shipping method has been set.
-			if (!isset($this->session->data['shipping_method'])) {
-				$json['error'] = $this->language->get('error_product');
-			}
 		} else {
 			unset($this->session->data['shipping_address']);
 			unset($this->session->data['shipping_method']);
 			unset($this->session->data['shipping_methods']);
 		}
 
-		if (!isset($this->request->post['payment_method'])) {
-			$json['error'] = $this->language->get('error_payment');
-		} elseif (!isset($this->session->data['payment_methods'][$this->request->post['payment_method']])) {
-			$json['error'] = $this->language->get('error_payment');
+		if (!$json) {
+			if (!isset($this->request->post['payment_method'])) {
+				$json['error'] = $this->language->get('error_payment');
+			} elseif (!isset($this->session->data['payment_methods'][$this->request->post['payment_method']])) {
+				$json['error'] = $this->language->get('error_payment');
+			}
 		}
 
 		if (!$json) {

@@ -199,6 +199,7 @@ class Register extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+
 		if (!$json) {
 			// Validate that register or guest is not sent if customer is logged in.
 			if (!$this->request->post['account'] && $this->customer->isLogged()) {
@@ -473,6 +474,10 @@ class Register extends \Opencart\System\Engine\Controller {
 
 					// Add
 					if ($this->request->post['account']) {
+						if ($this->config->get('config_checkout_address')) {
+							$shipping_address_data['default'] = 1;
+						}
+
 						$shipping_address_data['address_id'] = $this->model_account_address->addAddress($customer_data['customer_id'], $shipping_address_data);
 					}
 
@@ -490,9 +495,15 @@ class Register extends \Opencart\System\Engine\Controller {
 				}
 			}
 
+
+
+
 			// If everything good login
 			if (!$customer_group_info['approval']) {
-				!$this->customer->isLogged() ?? $this->customer->login($this->request->post['email'], $this->request->post['password']);
+
+				if (!$this->customer->isLogged()) {
+					$this->customer->login($this->request->post['email'], $this->request->post['password']);
+				}
 
 				$json['success'] = 'Success: Your account has been successfully created!';
 			} else {
@@ -508,6 +519,11 @@ class Register extends \Opencart\System\Engine\Controller {
 			unset($this->session->data['payment_method']);
 			unset($this->session->data['payment_methods']);
 		}
+
+		$this->log->write('POST:');
+		$this->log->write($this->request->post);
+		$this->log->write('SESSION:');
+		$this->log->write($this->session->data);
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

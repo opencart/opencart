@@ -206,15 +206,15 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			if (!isset($this->request->post['payment_method'])) {
+			if (!isset($this->request->get['payment_method'])) {
 				$json['error'] = $this->language->get('error_payment');
-			} elseif (!isset($this->session->data['payment_methods'][$this->request->post['payment_method']])) {
+			} elseif (!isset($this->session->data['payment_methods'][$this->request->get['payment_method']])) {
 				$json['error'] = $this->language->get('error_payment');
 			}
 		}
 
 		if (!$json) {
-			$this->session->data['payment_method'] = $this->session->data['payment_methods'][$this->request->post['payment_method']];
+			$this->session->data['payment_method'] = $this->session->data['payment_methods'][$this->request->get['payment_method']];
 
 			$json['success'] = $this->language->get('text_success');
 		}

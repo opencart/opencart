@@ -5,11 +5,12 @@
     <div id="shipping-addresses" style="display: {% if not addresses %}none{% else %}block{% endif %};">
 
       <div class="form-check">
-        <input type="radio" name="shipping_existing" value="1" id="input-shipping-existing" class="form-check-input" checked/> <label for="input-shipping-existing" class="form-check-label">{{ text_address_existing }}</label>
+        <input type="radio" name="shipping_existing" value="1" id="input-shipping-existing" class="form-check-input" checked/>
+        <label for="input-shipping-existing" class="form-check-label">{{ text_address_existing }}</label>
       </div>
-
       <div class="form-check">
-        <input type="radio" name="shipping_existing" value="0" id="input-shipping-new" class="form-check-input"/> <label for="input-shipping-new" class="form-check-label">{{ text_address_new }}</label>
+        <input type="radio" name="shipping_existing" value="0" id="input-shipping-new" class="form-check-input"/>
+        <label for="input-shipping-new" class="form-check-label">{{ text_address_new }}</label>
       </div>
 
       <div id="shipping-existing">
@@ -26,6 +27,7 @@
     <br/>
     <div id="shipping-new" style="display: {% if addresses %}none{% else %}block{% endif %};">
       <div class="row row-cols-1 row-cols-md-2">
+
         <div class="col mb-3 required">
           <label for="input-shipping-firstname" class="form-label">{{ entry_firstname }}</label>
           <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-shipping-firstname" class="form-control"/>
@@ -282,9 +284,9 @@ $('#form-shipping-address').on('submit', function(e) {
 
                     html = '<option value="">{{ text_select }}</option>';
 
-                    if (json['addesses']) {
-                        for (i in json['addesses']) {
-                            html += '<option value="' + json['addesses'][i]['address_id'] + '">' + json['addesses'][i]['firstname'] + ' ' + json['addesses'][i]['lastname'] + ', ' + json['addesses'][i]['address_1'] + ', ' + json['addesses'][i]['city'] + ', ' + json['addesses'][i]['zone'] + ', ' + json['addesses'][i]['country'] + '</option>';
+                    if (json['addresses']) {
+                        for (i in json['addresses']) {
+                            html += '<option value="' + json['addresses'][i]['address_id'] + '">' + json['addresses'][i]['firstname'] + ' ' + json['addresses'][i]['lastname'] + ', ' + json['addresses'][i]['address_1'] + ', ' + json['addresses'][i]['city'] + ', ' + json['addresses'][i]['zone'] + ', ' + json['addresses'][i]['country'] + '</option>';
                         }
                     }
 
@@ -296,6 +298,12 @@ $('#form-shipping-address').on('submit', function(e) {
 
                     $('#input-payment-address').val(payment_address_id);
                     $('#input-shipping-address').val(shipping_address_id);
+
+                    $('#payment-addresses').css({display: 'block'});
+                    $('#shipping-addresses').css({display: 'block'});
+
+                    $('#payment-new').css({display: 'none'});
+                    $('#shipping-new').css({display: 'none'});
                 }
             },
             error: function(xhr, ajaxOptions, thrownError) {

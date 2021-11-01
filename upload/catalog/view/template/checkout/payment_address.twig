@@ -8,7 +8,6 @@
         <input type="radio" name="payment_existing" value="1" id="input-payment-existing" class="form-check-input" checked/>
         <label for="input-payment-existing" class="form-check-label">{{ text_address_existing }}</label>
       </div>
-
       <div class="form-check">
         <input type="radio" name="payment_existing" value="0" id="input-payment-new" class="form-check-input">
         <label for="input-payment-new" class="form-check-label">{{ text_address_new }}</label>
@@ -30,40 +29,48 @@
       <div class="row row-cols-1 row-cols-md-2">
 
         <div class="col mb-3 required">
-          <label for="input-payment-firstname" class="form-label">{{ entry_firstname }}</label> <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-payment-firstname" class="form-control"/>
+          <label for="input-payment-firstname" class="form-label">{{ entry_firstname }}</label>
+          <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-payment-firstname" class="form-control"/>
           <div id="error-payment-firstname" class="invalid-feedback"></div>
         </div>
 
         <div class="col mb-3 required">
-          <label for="input-payment-lastname" class="form-label">{{ entry_lastname }}</label> <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-payment-lastname" class="form-control"/>
+          <label for="input-payment-lastname" class="form-label">{{ entry_lastname }}</label>
+          <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-payment-lastname" class="form-control"/>
           <div id="error-payment-lastname" class="invalid-feedback"></div>
         </div>
 
         <div class="col mb-3">
-          <label for="input-payment-company" class="form-label">{{ entry_company }}</label> <input type="text" name="company" value="{{ company }}" placeholder="{{ entry_company }}" id="input-payment-company" class="form-control"/>
+          <label for="input-payment-company" class="form-label">{{ entry_company }}</label>
+          <input type="text" name="company" value="{{ company }}" placeholder="{{ entry_company }}" id="input-payment-company" class="form-control"/>
         </div>
 
         <div class="col mb-3 required">
-          <label for="input-payment-address-1" class="form-label">{{ entry_address_1 }}</label> <input type="text" name="address_1" value="{{ address_1 }}" placeholder="{{ entry_address_1 }}" id="input-payment-address-1" class="form-control"/>
+          <label for="input-payment-address-1" class="form-label">{{ entry_address_1 }}</label>
+          <input type="text" name="address_1" value="{{ address_1 }}" placeholder="{{ entry_address_1 }}" id="input-payment-address-1" class="form-control"/>
           <div id="error-payment-address-1" class="invalid-feedback"></div>
         </div>
 
         <div class="col mb-3">
-          <label for="input-payment-address-2" class="form-label">{{ entry_address_2 }}</label> <input type="text" name="address_2" value="{{ address_2 }}" placeholder="{{ entry_address_2 }}" id="input-payment-address-2" class="form-control"/>
+          <label for="input-payment-address-2" class="form-label">{{ entry_address_2 }}</label>
+          <input type="text" name="address_2" value="{{ address_2 }}" placeholder="{{ entry_address_2 }}" id="input-payment-address-2" class="form-control"/>
         </div>
 
         <div class="col mb-3 required">
-          <label for="input-payment-city" class="form-label">{{ entry_city }}</label> <input type="text" name="city" value="{{ city }}" placeholder="{{ entry_city }}" id="input-payment-city" class="form-control"/>
+          <label for="input-payment-city" class="form-label">{{ entry_city }}</label>
+          <input type="text" name="city" value="{{ city }}" placeholder="{{ entry_city }}" id="input-payment-city" class="form-control"/>
           <div id="error-payment-city" class="invalid-feedback"></div>
         </div>
 
         <div class="col mb-3 required">
-          <label for="input-payment-postcode" class="form-label">{{ entry_postcode }}</label> <input type="text" name="postcode" value="{{ postcode }}" placeholder="{{ entry_postcode }}" id="input-payment-postcode" class="form-control"/>
+          <label for="input-payment-postcode" class="form-label">{{ entry_postcode }}</label>
+          <input type="text" name="postcode" value="{{ postcode }}" placeholder="{{ entry_postcode }}" id="input-payment-postcode" class="form-control"/>
           <div id="error-payment-postcode" class="invalid-feedback"></div>
         </div>
 
         <div class="col mb-3 required">
-          <label for="input-payment-country" class="form-label">{{ entry_country }}</label> <select name="country_id" id="input-payment-country" class="form-select">
+          <label for="input-payment-country" class="form-label">{{ entry_country }}</label>
+          <select name="country_id" id="input-payment-country" class="form-select">
             <option value="">{{ text_select }}</option>
             {% for country in countries %}
               <option value="{{ country.country_id }}"{% if country.country_id == country_id %} selected{% endif %}>{{ country.name }}</option>
@@ -73,7 +80,8 @@
         </div>
 
         <div class="col mb-3 required">
-          <label for="input-payment-zone" class="form-label">{{ entry_zone }}</label> <select name="zone_id" id="input-payment-zone" class="form-select"></select>
+          <label for="input-payment-zone" class="form-label">{{ entry_zone }}</label>
+          <select name="zone_id" id="input-payment-zone" class="form-select"></select>
           <div id="error-payment-zone" class="invalid-feedback"></div>
         </div>
 
@@ -290,9 +298,9 @@ $('#form-payment-address').on('submit', function(e) {
 
                     html = '<option value="">{{ text_select }}</option>';
 
-                    if (json['addesses']) {
-                        for (i in json['addesses']) {
-                            html += '<option value="' + json['addesses'][i]['address_id'] + '">' + json['addesses'][i]['firstname'] + ' ' + json['addesses'][i]['lastname'] + ', ' + json['addesses'][i]['address_1'] + ', ' + json['addesses'][i]['city'] + ', ' + json['addesses'][i]['zone'] + ', ' + json['addesses'][i]['country'] + '</option>';
+                    if (json['addresses']) {
+                        for (i in json['addresses']) {
+                            html += '<option value="' + json['addresses'][i]['address_id'] + '">' + json['addresses'][i]['firstname'] + ' ' + json['addresses'][i]['lastname'] + ', ' + json['addresses'][i]['address_1'] + ', ' + json['addresses'][i]['city'] + ', ' + json['addresses'][i]['zone'] + ', ' + json['addresses'][i]['country'] + '</option>';
                         }
                     }
 
@@ -300,6 +308,8 @@ $('#form-payment-address').on('submit', function(e) {
 
                     $('#input-payment-address').html(html);
                     $('#input-payment-address').val(payment_address_id);
+
+                    $('#payment-addresses').css({display: 'block'});
 
                   {% if shipping_required %}
                     var shipping_address_id = $('#input-shipping-address').val();
@@ -309,6 +319,13 @@ $('#form-payment-address').on('submit', function(e) {
                     $('#input-shipping-address').val(shipping_address_id);
 
                     $('#form-shipping-address').find(':disabled').prop('disabled', false);
+
+                    $('#shipping-addresses').css({display: 'block'});
+
+                    $('#payment-new').css({display: 'none'});
+
+
+
                   {% else %}
                     $('#button-payment-method').trigger('click');
                   {% endif %}

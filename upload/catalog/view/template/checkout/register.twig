@@ -289,7 +289,8 @@
       {% if shipping_required %}
         <div class="col mb-3">
           <div class="form-check">
-            <input type="checkbox" name="address_match" value="1" id="input-address-match" class="form-check-input" checked/> <label for="input-address-match" class="form-check-label">{{ entry_match }}</label>
+            <input type="checkbox" name="address_match" value="1" id="input-address-match" class="form-check-input" checked/>
+            <label for="input-address-match" class="form-check-label">{{ entry_match }}</label>
           </div>
         </div>
       {% endif %}
@@ -298,17 +299,19 @@
   </fieldset>
 
 
-  <fieldset id="shipping-address" style="display: {% if config_checkout_address %}none{% else %}block{% endif %};">
+  <fieldset id="shipping-address" style="display: {% if not config_checkout_address %}none{% else %}block{% endif %};">
     <legend>{{ text_shipping_address }}</legend>
     <div class="row row-cols-1 row-cols-md-2">
 
-      {% if config_checkout_address %}
+      {% if not config_checkout_address %}
         <div class="col mb-3 required">
-          <label for="input-shipping-firstname" class="form-label">{{ entry_firstname }}</label> <input type="text" name="shipping_firstname" value="{{ shipping_firstname }}" placeholder="{{ entry_firstname }}" id="input-shipping-firstname" class="form-control"/>
+          <label for="input-shipping-firstname" class="form-label">{{ entry_firstname }}</label>
+          <input type="text" name="shipping_firstname" value="{{ shipping_firstname }}" placeholder="{{ entry_firstname }}" id="input-shipping-firstname" class="form-control"/>
           <div id="error-shipping-firstname" class="invalid-feedback"></div>
         </div>
         <div class="col mb-3 required">
-          <label for="input-shipping-lastname" class="form-label">{{ entry_lastname }}</label> <input type="text" name="shipping_lastname" value="{{ shipping_lastname }}" placeholder="{{ entry_lastname }}" id="input-shipping-lastname" class="form-control"/>
+          <label for="input-shipping-lastname" class="form-label">{{ entry_lastname }}</label>
+          <input type="text" name="shipping_lastname" value="{{ shipping_lastname }}" placeholder="{{ entry_lastname }}" id="input-shipping-lastname" class="form-control"/>
           <div id="error-shipping-lastname" class="invalid-feedback"></div>
         </div>
       {% endif %}

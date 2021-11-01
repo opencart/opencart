@@ -8,7 +8,7 @@ class Customer {
 	private $email = '';
 	private $telephone = '';
 	private $newsletter = false;
-	private $address_id;
+	private $address_id = 0;
 
 	public function __construct(\Opencart\System\Engine\Registry $registry) {
 		$this->config = $registry->get('config');
@@ -120,7 +120,7 @@ class Customer {
 		return $this->newsletter;
 	}
 
-	public function getAddressId() {
+	public function getAddressId(): int {
 		return $this->address_id;
 	}
 

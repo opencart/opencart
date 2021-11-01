@@ -364,7 +364,7 @@ class Address extends \Opencart\System\Engine\Controller {
 		}
 
 		if ($this->customer->getAddressId() == $address_id) {
-			$this->error['warning'] = $this->language->get('error_default');
+			$json['error']['warning'] = $this->language->get('error_default');
 		}
 
 		if (!$json) {

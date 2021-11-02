@@ -299,7 +299,7 @@
   </fieldset>
 
 
-  <fieldset id="shipping-address" style="display: {% if not config_checkout_address %}none{% else %}block{% endif %};">
+  <fieldset id="shipping-address" style="display: {% if config_checkout_address %}none{% else %}block{% endif %};">
     <legend>{{ text_shipping_address }}</legend>
     <div class="row row-cols-1 row-cols-md-2">
 

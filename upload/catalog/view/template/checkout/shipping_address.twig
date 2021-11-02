@@ -14,8 +14,7 @@
       </div>
 
       <div id="shipping-existing">
-        <select name="address_id" id="input-shipping-address" class="form-select"{% if not address_id %} disabled{% endif %}>
-          <option value="">{{ text_select }}</option>
+        <select name="address_id" id="input-shipping-address" class="form-select">
           {% for address in addresses %}
             <option value="{{ address.address_id }}"{% if address.address_id == address_id %} selected{% endif %}>{{ address.firstname }} {{ address.lastname }}, {{ address.address_1 }}, {{ address.city }}, {{ address.zone }}, {{ address.country }}</option>
           {% endfor %}
@@ -236,8 +235,6 @@ $('#input-shipping-address').on('change', function() {
         });
     });
 });
-
-$('#input-shipping-address').trigger('change');
 
 // New Shipping Address
 $('#form-shipping-address').on('submit', function(e) {

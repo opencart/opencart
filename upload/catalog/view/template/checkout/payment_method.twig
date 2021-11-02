@@ -3,7 +3,6 @@
     <legend>{{ text_payment_method }}</legend>
     <div class="input-group">
       <select name="payment_method" id="input-payment-method" class="form-select">
-        <option value="">{{ text_select }}</option>
         {% for payment_method in payment_methods %}
           {% if payment_method.code == code or not code %}
             {% set code = payment_method.code %}

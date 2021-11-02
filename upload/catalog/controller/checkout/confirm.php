@@ -89,8 +89,6 @@ class Confirm extends \Opencart\System\Engine\Controller {
 		// Validate if payment address has been set.
 		if ($this->config->get('config_checkout_address') && !isset($this->session->data['payment_address'])) {
 			$status = false;
-
-			echo 'config_checkout_address && !payment_address';
 		}
 
 		$this->load->model('setting/extension');
@@ -155,9 +153,9 @@ class Confirm extends \Opencart\System\Engine\Controller {
 				$order_data['payment_city'] = '';
 				$order_data['payment_postcode'] = '';
 				$order_data['payment_zone'] = '';
-				$order_data['payment_zone_id'] = '';
+				$order_data['payment_zone_id'] = 0;
 				$order_data['payment_country'] = '';
-				$order_data['payment_country_id'] = '';
+				$order_data['payment_country_id'] = 0;
 				$order_data['payment_address_format'] = '';
 				$order_data['payment_custom_field'] = [];
 			}
@@ -194,9 +192,9 @@ class Confirm extends \Opencart\System\Engine\Controller {
 				$order_data['shipping_city'] = '';
 				$order_data['shipping_postcode'] = '';
 				$order_data['shipping_zone'] = '';
-				$order_data['shipping_zone_id'] = '';
+				$order_data['shipping_zone_id'] = 0;
 				$order_data['shipping_country'] = '';
-				$order_data['shipping_country_id'] = '';
+				$order_data['shipping_country_id'] = 0;
 				$order_data['shipping_address_format'] = '';
 				$order_data['shipping_custom_field'] = [];
 			}

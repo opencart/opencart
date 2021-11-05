@@ -10,16 +10,24 @@ class BankTransfer extends \Opencart\System\Engine\Controller {
 	}
 
 	public function confirm(): void {
+		$this->load->language('extension/opencart/payment/bank_transfer');
+
 		$json = [];
 
-		if (isset($this->session->data['payment_method']['code']) && $this->session->data['payment_method']['code'] == 'bank_transfer') {
-			$this->load->language('extension/opencart/payment/bank_transfer');
+		if (!isset($this->session->data['order_id'])) {
+			$json['error'] = $this->language->get('error_order');
+		}
 
-			$this->load->model('checkout/order');
+		if (!isset($this->session->data['payment_method']) || $this->session->data['payment_method']['code'] != 'bank_transfer') {
+			$json['error'] = $this->language->get('error_payment_method');
+		}
 
+		if (!$json) {
 			$comment  = $this->language->get('text_instruction') . "\n\n";
 			$comment .= $this->config->get('payment_bank_transfer_bank_' . $this->config->get('config_language_id')) . "\n\n";
 			$comment .= $this->language->get('text_payment');
+
+			$this->load->model('checkout/order');
 
 			$this->model_checkout_order->addHistory($this->session->data['order_id'], $this->config->get('payment_bank_transfer_order_status_id'), $comment, true);
 

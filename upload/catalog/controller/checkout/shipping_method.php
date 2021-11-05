@@ -26,81 +26,40 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		// Validate cart has products and has stock.
-		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
-			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
-		}
-
-		// Validate minimum quantity requirements.
-		$products = $this->cart->getProducts();
-
-		foreach ($products as $product) {
-			$product_total = 0;
-
-			foreach ($products as $product_2) {
-				if ($product_2['product_id'] == $product['product_id']) {
-					$product_total += $product_2['quantity'];
-				}
-			}
-
-			if ($product['minimum'] > $product_total) {
-				$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
-
-				break;
-			}
-		}
-
-		// Validate if customer session data is not set
-		if (!isset($this->session->data['customer'])) {
-			//$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
-		}
-
-		// Validate if payment address is set if required in settings
-		if ($this->config->get('config_checkout_address') && !isset($this->session->data['payment_address'])) {
-			//$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
-		}
-
-		// Validate if shipping is not required. If not the customer should not have reached this page.
-		if (!$this->cart->hasShipping() || !isset($this->session->data['shipping_address'])) {
-		//	$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
-		}
-
 		$method_data = [];
 
-		if (!$json) {
-			// Shipping Methods
-			$this->load->model('setting/extension');
+		// Shipping Methods
+		$this->load->model('setting/extension');
 
-			$results = $this->model_setting_extension->getExtensionsByType('shipping');
+		$results = $this->model_setting_extension->getExtensionsByType('shipping');
 
-			foreach ($results as $result) {
-				if ($this->config->get('shipping_' . $result['code'] . '_status')) {
-					$this->load->model('extension/' . $result['extension'] . '/shipping/' . $result['code']);
+		foreach ($results as $result) {
+			if ($this->config->get('shipping_' . $result['code'] . '_status')) {
+				$this->load->model('extension/' . $result['extension'] . '/shipping/' . $result['code']);
 
-					$quote = $this->{'model_extension_' . $result['extension'] . '_shipping_' . $result['code']}->getQuote($this->session->data['shipping_address']);
+				$quote = $this->{'model_extension_' . $result['extension'] . '_shipping_' . $result['code']}->getQuote($this->session->data['shipping_address']);
 
-					if ($quote) {
-						$method_data[$result['code']] = [
-							'title'      => $quote['title'],
-							'quote'      => $quote['quote'],
-							'sort_order' => $quote['sort_order'],
-							'error'      => $quote['error']
-						];
-					}
+				if ($quote) {
+					$method_data[$result['code']] = [
+						'title'      => $quote['title'],
+						'quote'      => $quote['quote'],
+						'sort_order' => $quote['sort_order'],
+						'error'      => $quote['error']
+					];
 				}
 			}
+		}
 
-			$sort_order = [];
+		$sort_order = [];
 
-			foreach ($method_data as $key => $value) {
-				$sort_order[$key] = $value['sort_order'];
-			}
+		foreach ($method_data as $key => $value) {
+			$sort_order[$key] = $value['sort_order'];
+		}
 
-			array_multisort($sort_order, SORT_ASC, $method_data);
+		array_multisort($sort_order, SORT_ASC, $method_data);
 
-			if (!$method_data) {
-				$json['error'] = sprintf($this->language->get('error_no_shipping'), $this->url->link('information/contact', 'language=' . $this->config->get('config_language')));
-			}
+		if (!$method_data) {
+			$json['error'] = sprintf($this->language->get('error_no_shipping'), $this->url->link('information/contact', 'language=' . $this->config->get('config_language')));
 		}
 
 		if (!$json) {

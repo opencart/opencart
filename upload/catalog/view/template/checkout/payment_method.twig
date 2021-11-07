@@ -2,15 +2,10 @@
   <fieldset class="">
     <legend>{{ text_payment_method }}</legend>
     <div class="input-group">
-      <select name="payment_method" id="input-payment-method" class="form-select"{% if not code %} disabled{% endif %}>
-        '<option value="">{{ text_select }}</option>
+      <select name="payment_method" id="input-payment-method" class="form-select"{% if not payment_methods %} disabled{% endif %}>
+        <option value="">{{ text_select }}</option>
         {% for payment_method in payment_methods %}
-          {% if payment_method.code == code or not code %}
-            {% set code = payment_method.code %}
-            <option value="{{ payment_method.code }}" selected>{{ payment_method.title }}</option>
-          {% else %}
-            <option value="{{ payment_method.code }}">{{ payment_method.title }}</option>
-          {% endif %}
+          <option value="{{ payment_method.code }}"{% if payment_method.code == code %} selected{% endif %}>{{ payment_method.title }}</option>
         {% endfor %}
       </select>
       <button type="button" id="button-payment-method" class="btn btn-light"><i class="fas fa-sync"></i></button>
@@ -24,7 +19,7 @@ $('#button-payment-method').on('click', function() {
 
     chain.attach(function() {
         return $.ajax({
-            url: 'index.php?route=checkout/payment_method|getMethods&language={{ language }}',
+            url: 'index.php?route=checkout/payment_method|methods&language={{ language }}',
             dataType: 'json',
             beforeSend: function() {
                 $('#input-payment-method').prop('disabled', true);

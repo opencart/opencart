@@ -169,10 +169,16 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 				'custom_field' => isset($this->request->post['custom_field']) ? $this->request->post['custom_field'] : []
 			];
 
-			unset($this->session->data['payment_method']);
 			unset($this->session->data['payment_methods']);
 
 			$json['success'] = 'Success: Your address has been successfully created!';
+
+			// Payment methods
+			$json['payment_methods'] = $this->load->controller('checkout/payment_methods|getMethods');
+
+			if (!$json['payment_methods']) {
+				$json['error']['warning'] = sprintf($this->language->get('error_no_payment'), $this->url->link('information/contact', 'language=' . $this->config->get('config_language')));
+			}
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -237,10 +243,12 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->session->data['payment_address'] = $address_info;
 
-			unset($this->session->data['payment_method']);
 			unset($this->session->data['payment_methods']);
 
 			$json['success'] = 'Success: Your address has been successfully created!';
+
+			// Payment methods
+			$json['payment_methods'] = $this->load->controller('checkout/payment_methods|getMethods');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

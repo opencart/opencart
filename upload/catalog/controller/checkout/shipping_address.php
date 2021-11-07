@@ -173,10 +173,16 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 				'custom_field' => isset($this->request->post['custom_field']) ? $this->request->post['custom_field'] : []
 			];
 
-			unset($this->session->data['shipping_method']);
 			unset($this->session->data['shipping_methods']);
 
 			$json['success'] = 'Success: Your address has been successfully created!';
+
+			// Shipping Methods
+			$json['shipping_methods'] = $this->load->controller('checkout/shipping_methods|getMethods');
+
+			if (!$json['shipping_methods']) {
+				$json['error']['warning'] = sprintf($this->language->get('error_no_shipping'), $this->url->link('information/contact', 'language=' . $this->config->get('config_language')));
+			}
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -246,8 +252,14 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->session->data['shipping_address'] = $address_info;
 
-			unset($this->session->data['shipping_method']);
 			unset($this->session->data['shipping_methods']);
+
+			// Shipping Methods
+			$json['shipping_methods'] = $this->load->controller('checkout/shipping_methods|getMethods');
+
+			if (!$json['shipping_methods']) {
+				$json['error'] = sprintf($this->language->get('error_no_shipping'), $this->url->link('information/contact', 'language=' . $this->config->get('config_language')));
+			}
 
 			$json['success'] = 'Success: Your address has been successfully created!';
 		}

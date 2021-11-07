@@ -9,11 +9,11 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 		if (isset($this->session->data['payment_methods'])) {
 			$data['payment_methods'] = $this->session->data['payment_methods'];
 		} else {
-			$data['payment_methods'] = [];
+			$data['payment_methods'] = $this->getMethods();
 		}
 
 		if (isset($this->session->data['payment_method'])) {
-			$data['code'] = $this->session->data['payment_method']['code'];
+			$data['code'] = $this->session->data['payment_method'];
 		} else {
 			$data['code'] = '';
 		}
@@ -21,11 +21,7 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 		return $this->load->view('checkout/payment_method', $data);
 	}
 
-	public function getMethods(): void {
-		$this->load->language('checkout/checkout');
-
-		$json = [];
-
+	public function getMethods(): array {
 		// Totals
 		$totals = [];
 		$taxes = $this->cart->getTaxes();
@@ -105,14 +101,29 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 
 		array_multisort($sort_order, SORT_ASC, $method_data);
 
-		if (!$method_data) {
+		// Store payment methods in session
+		$this->session->data['payment_methods'] = $method_data;
+
+		return $method_data;
+	}
+
+	public function methods(): void {
+		$this->load->language('checkout/checkout');
+
+		$json = [];
+
+		if ($this->config->get('config_checkout_address') && !isset($this->session->data['payment_address'])) {
+			$json['error'] = $this->language->get('error_payment_address');
+		}
+
+		$payment_methods = $this->getMethods();
+
+		if (!$payment_methods) {
 			$json['error'] = sprintf($this->language->get('error_no_payment'), $this->url->link('information/contact', 'language=' . $this->config->get('config_language')));
 		}
 
 		if (!$json) {
-			$json['payment_methods'] = $method_data;
-
-			$this->session->data['payment_methods'] = $method_data;
+			$json['payment_methods'] = $payment_methods;
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -172,13 +183,15 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+
+
 			if (!isset($this->request->get['payment_method']) || !isset($this->session->data['payment_methods'][$this->request->get['payment_method']])) {
 				$json['error'] = $this->language->get('error_payment');
 			}
 		}
 
 		if (!$json) {
-			$this->session->data['payment_method'] = $this->session->data['payment_methods'][$this->request->get['payment_method']];
+			$this->session->data['payment_method'] = $this->request->get['payment_method'];
 
 			$json['success'] = $this->language->get('text_success');
 		}

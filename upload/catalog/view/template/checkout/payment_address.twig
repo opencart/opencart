@@ -239,11 +239,15 @@ $('#input-payment-address').on('change', function() {
                     $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                   {% if not shipping_required %}
-                    $('#button-payment-method').trigger('click');
 
-                    $('#button-shipping-method').trigger('click');
+
+                   // $('#button-shipping-method').trigger('click');
 
                   {% endif %}
+
+
+                   // $('#button-payment-method').trigger('click');
+
 
                     $('#checkout-confirm').load('index.php?route=checkout/confirm|confirm&language={{ language }}');
                 }
@@ -254,9 +258,6 @@ $('#input-payment-address').on('change', function() {
         });
     });
 });
-
-
-$('#input-payment-address').trigger('change');
 
 // New Payment Address
 $('#form-payment-address').on('submit', function(e) {
@@ -324,11 +325,37 @@ $('#form-payment-address').on('submit', function(e) {
                     $('#payment-new').css({display: 'none'});
                     $('#shipping-new').css({display: 'none'});
 
+
+
+
+
+
+
+
+
                   {% if shipping_required %}
                     $('#form-shipping-address').find(':disabled').prop('disabled', false);
                   {% else %}
                     $('#button-payment-method').trigger('click');
                   {% endif %}
+
+
+                    html = '<option value="">{{ text_select }}</option>';
+
+                    if (json['payment_methods']) {
+                        for (i in json['payment_methods']) {
+                            html += '<option value="' + json['payment_methods'][i]['code'] + '">' + json['payment_methods'][i]['title'] + '</option>';
+                        }
+                    }
+
+                    var payment_method = $('#input-payment-method').val();
+
+                    $('#input-payment-method').html(html);
+
+                    $('#input-payment-method').val(payment_method);
+
+
+
 
                     $('#checkout-confirm').load('index.php?route=checkout/confirm|confirm&language={{ language }}');
                 }

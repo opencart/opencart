@@ -1921,7 +1921,7 @@ INSERT INTO `oc_setting` (`store_id`, `code`, `key`, `value`, `serialized`) VALU
 (0, 'config', 'config_shared', '0', 0),
 (0, 'config', 'config_fraud_detection', '0', 0),
 (0, 'config', 'config_meta_title', 'Your Store', 0),
-(0, 'config', 'config_session_expire', '3600', 0),
+(0, 'config', 'config_session_expire', '3600000000', 0),
 (0, 'config', 'config_meta_description', 'My Store', 0),
 (0, 'config', 'config_meta_keyword', '', 0),
 (0, 'config', 'config_theme', 'basic', 0),

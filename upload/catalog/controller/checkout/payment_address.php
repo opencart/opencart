@@ -30,7 +30,7 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('account/custom_field');
 
-		$custom_fields = $this->model_account_custom_field->getCustomFields();
+		$custom_fields = $this->model_account_custom_field->getCustomFields($this->customer->getGroupId());
 
 		foreach ($custom_fields as $custom_field) {
 			if ($custom_field['location'] == 'address') {
@@ -45,11 +45,6 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 		$this->load->language('checkout/checkout');
 
 		$json = [];
-
-		// Customer
-		if (!$this->customer->isLogged()) {
-			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
-		}
 
 		// Validate cart has products and has stock.
 		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
@@ -73,6 +68,16 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 
 				break;
 			}
+		}
+
+		// Validate if customer is logged in or customer session data is not set
+		if (!$this->customer->isLogged() || !isset($this->session->data['customer'])) {
+			$json['redirect'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'), true);
+		}
+
+		// Validate if payment address is set if required in settings
+		if (!$this->config->get('config_checkout_address')) {
+			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
 		}
 
 		if (!$json) {
@@ -130,7 +135,7 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 			// Custom field validation
 			$this->load->model('account/custom_field');
 
-			$custom_fields = $this->model_account_custom_field->getCustomFields((int)$this->config->get('config_customer_group_id'));
+			$custom_fields = $this->model_account_custom_field->getCustomFields($this->customer->getGroupId());
 
 			foreach ($custom_fields as $custom_field) {
 				if ($custom_field['location'] == 'address') {
@@ -185,10 +190,6 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 			$address_id = 0;
 		}
 
-		if (!$this->customer->isLogged()) {
-			$json['redirect'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'), true);
-		}
-
 		// Validate cart has products and has stock.
 		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
 			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
@@ -211,6 +212,16 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 
 				break;
 			}
+		}
+
+		// Validate if customer is logged in or customer session data is not set
+		if (!$this->customer->isLogged() || !isset($this->session->data['customer'])) {
+			$json['redirect'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'), true);
+		}
+
+		// Validate if payment address is set if required in settings
+		if (!$this->config->get('config_checkout_address')) {
+			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
 		}
 
 		if (!$json) {

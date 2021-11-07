@@ -21,8 +21,6 @@ class Application extends \Opencart\System\Engine\Controller {
 		} elseif ($this->customer->isLogged()) {
 			// Logged in customers
 			$this->config->set('config_customer_group_id', $this->customer->getGroupId());
-		} elseif (isset($this->session->data['guest']) && isset($this->session->data['guest']['customer_group_id'])) {
-			$this->config->set('config_customer_group_id', $this->session->data['guest']['customer_group_id']);
 		}
 
 		// Currency

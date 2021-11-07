@@ -26,19 +26,9 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		// Customer
-		if (!isset($this->session->data['customer'])) {
-		//	$json['redirect'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'), true);
-		}
-
-		// Payment Address
-		if ($this->config->get('config_checkout_address') && !isset($this->session->data['payment_address'])) {
-		//	$json['redirect'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'), true);
-		}
-
-		// Shipping Address
-		if ($this->cart->hasShipping() && !isset($this->session->data['shipping_address'])) {
-		//	$json['redirect'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'), true);
+		// Validate cart has products and has stock.
+		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
+			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
 		}
 
 		// Validate minimum quantity requirements.
@@ -60,9 +50,20 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		// Validate if customer session data is not set
+		if (!isset($this->session->data['customer'])) {
+			//$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
+		}
 
+		// Validate if payment address is set if required in settings
+		if ($this->config->get('config_checkout_address') && !isset($this->session->data['payment_address'])) {
+			//$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
+		}
 
-
+		// Validate if shipping is not required. If not the customer should not have reached this page.
+		if (!$this->cart->hasShipping() || !isset($this->session->data['shipping_address'])) {
+		//	$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
+		}
 
 		$method_data = [];
 
@@ -98,7 +99,7 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 			array_multisort($sort_order, SORT_ASC, $method_data);
 
 			if (!$method_data) {
-				$json['warning'] = sprintf($this->language->get('error_no_shipping'), $this->url->link('information/contact', 'language=' . $this->config->get('config_language')));
+				$json['error'] = sprintf($this->language->get('error_no_shipping'), $this->url->link('information/contact', 'language=' . $this->config->get('config_language')));
 			}
 		}
 
@@ -117,34 +118,57 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		// Customer
-		if (!isset($this->session->data['customer'])) {
-			//$json['redirect'] = $this->language->get('error_customer');
-		}
-
-		// Payment Address
-		if ($this->config->get('config_checkout_address') && !isset($this->session->data['payment_address'])) {
-			//$json['redirect'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'), true);
-		}
-
-		// Validate if shipping is required. If not the customer should not have reached this page.
-		if ($this->cart->hasShipping() && !isset($this->session->data['shipping_address'])) {
-		//	$json['redirect'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'), true);
-		}
-
 		// Validate cart has products and has stock.
 		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
-		//	$json['redirect'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'), true);
+			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
 		}
 
-		if (!isset($this->request->post['shipping_method'])) {
-			$json['error'] = $this->language->get('error_shipping');
-		} else {
-			$shipping = explode('.', $this->request->post['shipping_method']);
+		// Validate minimum quantity requirements.
+		$products = $this->cart->getProducts();
 
-			if (!isset($shipping[0]) || !isset($shipping[1]) || !isset($this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]])) {
+		foreach ($products as $product) {
+			$product_total = 0;
+
+			foreach ($products as $product_2) {
+				if ($product_2['product_id'] == $product['product_id']) {
+					$product_total += $product_2['quantity'];
+				}
+			}
+
+			if ($product['minimum'] > $product_total) {
+				$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
+
+				break;
+			}
+		}
+
+		// Validate if customer is logged in or customer session data is not set
+		if (!isset($this->session->data['customer'])) {
+			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
+		}
+
+		// Validate if payment address is set if required in settings
+		if ($this->config->get('config_checkout_address') && !isset($this->session->data['payment_address'])) {
+			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
+		}
+
+		// Validate if shipping not required. If not the customer should not have reached this page.
+		if (!$this->cart->hasShipping() || !isset($this->session->data['shipping_address'])) {
+			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
+		}
+
+		if (!$json) {
+
+			if (isset($this->request->get['shipping_method'])) {
+				$shipping = explode('.', $this->request->get['shipping_method']);
+
+				if (!isset($shipping[0]) || !isset($shipping[1]) || !isset($this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]])) {
+					$json['error'] = $this->language->get('error_shipping');
+				}
+			} else {
 				$json['error'] = $this->language->get('error_shipping');
 			}
+
 		}
 
 		if (!$json) {
@@ -152,6 +176,11 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 
 			$json['success'] = $this->language->get('text_success');
 		}
+
+		$this->log->write('GET:');
+		$this->log->write($this->request->get);
+		$this->log->write('SESSION:');
+		$this->log->write($this->session->data);
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

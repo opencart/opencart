@@ -134,7 +134,7 @@ $('#history').on('click', '.btn-warning', function() {
 
     var restore = function(url, element) {
         return $.ajax({
-            url: next,
+            url: url,
             type: 'post',
             dataType: 'json',
             beforeSend: function() {

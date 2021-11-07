@@ -123,6 +123,16 @@ class Login extends \Opencart\System\Engine\Controller {
 				'custom_field'      => $customer_info['custom_field']
 			];
 
+			// Load payment and shipping addresses
+			$this->load->model('account/address');
+
+			$address_info = $this->model_account_address->getAddress($this->customer->getAddressId());
+
+			if ($address_info) {
+				$this->session->data['payment_address'] = $address_info;
+				$this->session->data['shipping_address'] = $address_info;
+			}
+
 			// Wishlist
 			if (isset($this->session->data['wishlist']) && is_array($this->session->data['wishlist'])) {
 				$this->load->model('account/wishlist');
@@ -141,9 +151,6 @@ class Login extends \Opencart\System\Engine\Controller {
 			$this->session->data['customer_token'] = token(26);
 
 			$this->model_account_customer->deleteLoginAttempts($this->request->post['email']);
-
-			// Unset guest
-			unset($this->session->data['guest']);
 
 			// Added strpos check to pass McAfee PCI compliance test (http://forum.opencart.com/viewtopic.php?f=10&t=12043&p=151494#p151295)
 			if (isset($this->request->post['redirect']) && (strpos($this->request->post['redirect'], $this->config->get('config_url')) !== false)) {

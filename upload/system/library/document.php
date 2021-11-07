@@ -104,12 +104,12 @@ class Document {
 	 * @param	string	$rel
 	 * @param	string	$media
      */
-	public function addStyle(string $href, $rel = 'stylesheet', $media = 'screen', $sort = 1): void {
+	public function addStyle(string $href, $rel = 'stylesheet', $media = 'screen', $sort = 10): void {
 		$this->styles[$href] = [
 			'href'  => $href,
 			'rel'   => $rel,
 			'media' => $media,
-			'sort'  => $sort
+			'sort'  => (int)$sort
 		];
 	}
 
@@ -119,13 +119,9 @@ class Document {
 	 * @return	array
      */
 	public function getStyles(): array {
-		$sort_order = [];
-
-		foreach ($this->styles as $key => $value) {
-			$sort_order[$key] = $value['sort'];
-		}
-
-		array_multisort($sort_order, SORT_ASC, $this->styles);
+		usort($this->styles, static function ($a, $b) {
+			return ($a['sort'] <=> $b['sort']);
+		});
 
 		return $this->styles;
 	}
@@ -136,10 +132,10 @@ class Document {
      * @param	string	$href
 	 * @param	string	$position
      */
-	public function addScript(string $href, $position = 'header', $sort = 1): void {
+	public function addScript(string $href, $position = 'header', $sort = 10): void {
 		$this->scripts[$position][$href] = [
 			'href' => $href,
-			'sort' => $sort
+			'sort' => (int)$sort
 		];
 	}
 
@@ -152,13 +148,9 @@ class Document {
      */
 	public function getScripts($position = 'header'): array {
 		if (isset($this->scripts[$position])) {
-			$sort_order = [];
-
-			foreach ($this->scripts[$position] as $key => $value) {
-				$sort_order[$key] = $value['sort'];
-			}
-
-			array_multisort($sort_order, SORT_ASC, $this->scripts[$position]);
+			uasort($this->scripts[$position], static function ($a, $b) {
+				return ($a['sort'] <=> $b['sort']);
+			});
 
 			return $this->scripts[$position];
 		} else {

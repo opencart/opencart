@@ -18,7 +18,7 @@ class BankTransfer extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_order');
 		}
 
-		if (!isset($this->session->data['payment_method']) || $this->session->data['payment_method']['code'] != 'bank_transfer') {
+		if (!isset($this->session->data['payment_method']) || $this->session->data['payment_method'] != 'bank_transfer') {
 			$json['error'] = $this->language->get('error_payment_method');
 		}
 

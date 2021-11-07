@@ -19,7 +19,7 @@ class Cheque extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_order');
 		}
 
-		if (!isset($this->session->data['payment_method']) || $this->session->data['payment_method']['code'] != 'cheque') {
+		if (!isset($this->session->data['payment_method']) || $this->session->data['payment_method'] != 'cheque') {
 			$json['error'] = $this->language->get('error_payment_method');
 		}
 

@@ -1,13 +1,13 @@
-<div class="card">
-  <h4 class="card-header collapsed" data-toggle="collapse" data-target="#collapse-shipping">{{ heading_title }}</h4>
+<div class="accordion-item">
+  <h2 class="accordion-header"><button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapse-shipping">{{ heading_title }}</button></h2>
 
-  <div id="collapse-shipping" class="collapse" data-parent="#accordion">
-    <div class="card-body">
+  <div id="collapse-shipping" class="accordion-collapse collapse" data-bs-parent="#accordion">
+    <div class="accordion-body">
 
-      <div class="form-group row required">
+      <div class="row mb-3 required">
         <label for="input-country" class="col-sm-3 col-form-label">{{ entry_country }}</label>
         <div class="col-md-9">
-          <select name="country_id" id="input-country" class="form-control">
+          <select name="country_id" id="input-country" class="form-select">
             <option value="">{{ text_select }}</option>
             {% for country in countries %}
               <option value="{{ country.country_id }}"{% if country.country_id == country_id %} selected="selected"{% endif %}>{{ country.name }}</option>
@@ -15,13 +15,13 @@
           </select>
         </div>
       </div>
-      <div class="form-group row required">
+      <div class="row mb-3 required">
         <label for="input-zone" class="col-sm-3 col-form-label">{{ entry_zone }}</label>
         <div class="col-md-9">
-          <select name="zone_id" id="input-zone" class="form-control"></select>
+          <select name="zone_id" id="input-zone" class="form-select"></select>
         </div>
       </div>
-      <div class="form-group row required">
+      <div class="row mb-3 required">
         <label for="input-postcode" class="col-md-3 col-form-label">{{ entry_postcode }}</label>
         <div class="col-md-9">
           <input type="text" name="postcode" value="{{ postcode }}" placeholder="{{ entry_postcode }}" id="input-postcode" class="form-control"/>
@@ -33,7 +33,6 @@
         </div>
       </div>
     </div>
-
 
 
   </div>
@@ -148,15 +147,17 @@
           success: function(json) {
               $('.alert-dismissible').remove();
 
+              if (json['redirect']) {
+                  location = json['redirect'];
+              }
+
               if (json['error']) {
                   $('.breadcrumb').after('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + '<button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                   $('html, body').animate({scrollTop: 0}, 'slow');
               }
 
-              if (json['redirect']) {
-                  location = json['redirect'];
-              }
+
           },
           error: function(xhr, ajaxOptions, thrownError) {
               alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);

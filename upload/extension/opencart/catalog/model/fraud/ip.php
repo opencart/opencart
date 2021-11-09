@@ -14,6 +14,7 @@ class Ip extends \Opencart\System\Engine\Model {
 
 				if ($query->num_rows) {
 					$status = true;
+
 					break;
 				}
 			}

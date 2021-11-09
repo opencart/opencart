@@ -9,8 +9,17 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 		if (isset($this->session->data['shipping_methods'])) {
 			$data['shipping_methods'] = $this->session->data['shipping_methods'];
 		} elseif (isset($this->session->data['shipping_address']) && !isset($this->session->data['shipping_methods'])) {
-			$data['shipping_methods'] = $this->getMethods();
+			// Shipping Methods
+			$this->load->model('checkout/shipping_method');
+
+			$data['shipping_methods'] = [];
+
+			$shipping_methods = $this->model_checkout_shipping_method->getMethods($this->session->data['shipping_address']);
+
 		} else {
+
+
+
 			$data['shipping_methods'] = [];
 		}
 
@@ -23,57 +32,24 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 		return $this->load->view('checkout/shipping_method', $data);
 	}
 
-	public function getMethods(): array {
-		$method_data = [];
-
-		// Shipping Methods
-		$this->load->model('setting/extension');
-
-		$results = $this->model_setting_extension->getExtensionsByType('shipping');
-
-		foreach ($results as $result) {
-			if ($this->config->get('shipping_' . $result['code'] . '_status')) {
-				$this->load->model('extension/' . $result['extension'] . '/shipping/' . $result['code']);
-
-				$quote = $this->{'model_extension_' . $result['extension'] . '_shipping_' . $result['code']}->getQuote($this->session->data['shipping_address']);
-
-				if ($quote) {
-					$method_data[$result['code']] = [
-						'title'      => $quote['title'],
-						'quote'      => $quote['quote'],
-						'sort_order' => $quote['sort_order'],
-						'error'      => $quote['error']
-					];
-				}
-			}
-		}
-
-		$sort_order = [];
-
-		foreach ($method_data as $key => $value) {
-			$sort_order[$key] = $value['sort_order'];
-		}
-
-		array_multisort($sort_order, SORT_ASC, $method_data);
-
-		// Store shipping methods in session
-		$this->session->data['shipping_methods'] = $method_data;
-
-		return $method_data;
-	}
-
-	public function methods(): void {
+	public function getMethods(): void {
 		$this->load->language('checkout/checkout');
 
 		$json = [];
 
-		$shipping_methods = $this->getMethods();
+		// Shipping Methods
+		$this->load->model('checkout/shipping_method');
+
+		$shipping_methods = $this->model_checkout_shipping_method->getMethods($this->session->data['shipping_address']);
 
 		if (!$shipping_methods) {
 			$json['error'] = sprintf($this->language->get('error_no_shipping'), $this->url->link('information/contact', 'language=' . $this->config->get('config_language')));
 		}
 
 		if (!$json) {
+			// Store shipping methods in session
+			$this->session->data['shipping_methods'] = $shipping_methods;
+
 			$json['shipping_methods'] = $shipping_methods;
 		}
 

@@ -1,10 +1,20 @@
 <?php
 namespace Opencart\Catalog\Model\Extension\Opencart\Payment;
 class FreeCheckout extends \Opencart\System\Engine\Model {
-	public function getMethod(array $address, float $total): array {
+	public function getMethod(array $address): array {
 		$this->load->language('extension/opencart/payment/free_checkout');
 
-		if ($total <= 0.00) {
+		$this->cart->getTotal();
+
+		if (!empty($this->session->data['vouchers'])) {
+			$amounts = array_column($this->session->data['vouchers'], 'amount');
+		} else {
+			$amounts = [];
+		}
+
+		$total = array_sum($amounts);
+
+		if (($this->cart->getTotal() + $total) <= 0.00) {
 			$status = true;
 		} else {
 			$status = false;

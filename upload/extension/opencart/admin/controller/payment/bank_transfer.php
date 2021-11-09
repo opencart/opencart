@@ -38,7 +38,6 @@ class BankTransfer extends \Opencart\System\Engine\Controller {
 
 		$data['languages'] = $languages;
 
-		$data['payment_bank_transfer_total'] = $this->config->get('payment_bank_transfer_total');
 		$data['payment_bank_transfer_order_status_id'] = $this->config->get('payment_bank_transfer_order_status_id');
 
 		$this->load->model('localisation/order_status');

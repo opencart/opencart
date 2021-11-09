@@ -159,30 +159,60 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 
 			$json['addresses'] = $this->model_account_address->getAddresses();
 
-			$this->session->data['shipping_address'] = [
-				'address_id'   => $json['address_id'],
-				'firstname'    => $this->request->post['firstname'],
-				'lastname'     => $this->request->post['lastname'],
-				'company'      => $this->request->post['company'],
-				'address_1'    => $this->request->post['address_1'],
-				'address_2'    => $this->request->post['address_2'],
-				'city'         => $this->request->post['city'],
-				'postcode'     => $this->request->post['postcode'],
-				'country_id'   => $this->request->post['country_id'],
-				'zone_id'      => $this->request->post['zone_id'],
-				'custom_field' => isset($this->request->post['custom_field']) ? $this->request->post['custom_field'] : []
-			];
+			if ($country_info) {
+				$country = $country_info['name'];
+				$iso_code_2 = $country_info['iso_code_2'];
+				$iso_code_3 = $country_info['iso_code_3'];
+				$address_format = $country_info['address_format'];
+			} else {
+				$country = '';
+				$iso_code_2 = '';
+				$iso_code_3 = '';
+				$address_format = '';
+			}
 
-			unset($this->session->data['shipping_methods']);
+			$this->load->model('localisation/zone');
+
+			$zone_info = $this->model_localisation_zone->getZone($this->request->post['zone_id']);
+
+			if ($zone_info) {
+				$zone = $zone_info['name'];
+				$zone_code = $zone_info['code'];
+			} else {
+				$zone = '';
+				$zone_code = '';
+			}
+
+			$this->session->data['shipping_address'] = [
+				'address_id'     => $json['address_id'],
+				'firstname'      => $this->request->post['firstname'],
+				'lastname'       => $this->request->post['lastname'],
+				'company'        => $this->request->post['company'],
+				'address_1'      => $this->request->post['address_1'],
+				'address_2'      => $this->request->post['address_2'],
+				'city'           => $this->request->post['city'],
+				'postcode'       => $this->request->post['postcode'],
+				'zone_id'        => $this->request->post['zone_id'],
+				'zone'           => $zone,
+				'zone_code'      => $zone_code,
+				'country_id'     => $this->request->post['country_id'],
+				'country'        => $country,
+				'iso_code_2'     => $iso_code_2,
+				'iso_code_3'     => $iso_code_3,
+				'address_format' => $address_format,
+				'custom_field'   => isset($this->request->post['custom_field']) ? $this->request->post['custom_field'] : []
+			];
 
 			$json['success'] = 'Success: Your address has been successfully created!';
 
-			// Shipping Methods
-			$json['shipping_methods'] = $this->load->controller('checkout/shipping_methods|getMethods');
+			unset($this->session->data['shipping_methods']);
 
-			if (!$json['shipping_methods']) {
-				$json['error']['warning'] = sprintf($this->language->get('error_no_shipping'), $this->url->link('information/contact', 'language=' . $this->config->get('config_language')));
-			}
+			// Shipping methods
+			$this->load->model('checkout/shipping_method');
+
+			$json['shipping_methods'] = $this->model_checkout_shipping_method->getMethods($this->session->data['shipping_address']);
+
+			$this->session->data['shipping_methods'] = $json['shipping_methods'];
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -252,16 +282,16 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->session->data['shipping_address'] = $address_info;
 
+			$json['success'] = 'Success: Your address has been successfully created!';
+
 			unset($this->session->data['shipping_methods']);
 
-			// Shipping Methods
-			$json['shipping_methods'] = $this->load->controller('checkout/shipping_methods|getMethods');
+			// Shipping methods
+			$this->load->model('checkout/shipping_method');
 
-			if (!$json['shipping_methods']) {
-				$json['error'] = sprintf($this->language->get('error_no_shipping'), $this->url->link('information/contact', 'language=' . $this->config->get('config_language')));
-			}
+			$json['shipping_methods'] = $this->model_checkout_shipping_method->getMethods($address_info);
 
-			$json['success'] = 'Success: Your address has been successfully created!';
+			$this->session->data['shipping_methods'] = $json['shipping_methods'];
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

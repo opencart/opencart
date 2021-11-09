@@ -284,9 +284,9 @@ class Register extends \Opencart\System\Engine\Controller {
 
 				$this->load->model('localisation/country');
 
-				$country_info = $this->model_localisation_country->getCountry((int)$this->request->post['payment_country_id']);
+				$payment_country_info = $this->model_localisation_country->getCountry((int)$this->request->post['payment_country_id']);
 
-				if ($country_info && $country_info['postcode_required'] && (utf8_strlen($this->request->post['payment_postcode']) < 2 || utf8_strlen($this->request->post['payment_postcode']) > 10)) {
+				if ($payment_country_info && $payment_country_info['postcode_required'] && (utf8_strlen($this->request->post['payment_postcode']) < 2 || utf8_strlen($this->request->post['payment_postcode']) > 10)) {
 					$json['error']['payment_postcode'] = $this->language->get('error_postcode');
 				}
 
@@ -332,9 +332,9 @@ class Register extends \Opencart\System\Engine\Controller {
 
 				$this->load->model('localisation/country');
 
-				$country_info = $this->model_localisation_country->getCountry((int)$this->request->post['shipping_country_id']);
+				$shipping_country_info = $this->model_localisation_country->getCountry((int)$this->request->post['shipping_country_id']);
 
-				if ($country_info && $country_info['postcode_required'] && (utf8_strlen($this->request->post['shipping_postcode']) < 2 || utf8_strlen($this->request->post['shipping_postcode']) > 10)) {
+				if ($shipping_country_info && $shipping_country_info['postcode_required'] && (utf8_strlen($this->request->post['shipping_postcode']) < 2 || utf8_strlen($this->request->post['shipping_postcode']) > 10)) {
 					$json['error']['shipping_postcode'] = $this->language->get('error_postcode');
 				}
 
@@ -416,18 +416,48 @@ class Register extends \Opencart\System\Engine\Controller {
 
 			// Payment Address
 			if ($this->config->get('config_checkout_address')) {
+				if ($payment_country_info) {
+					$country = $payment_country_info['name'];
+					$iso_code_2 = $payment_country_info['iso_code_2'];
+					$iso_code_3 = $payment_country_info['iso_code_3'];
+					$address_format = $payment_country_info['address_format'];
+				} else {
+					$country = '';
+					$iso_code_2 = '';
+					$iso_code_3 = '';
+					$address_format = '';
+				}
+
+				$this->load->model('localisation/zone');
+
+				$zone_info = $this->model_localisation_zone->getZone($this->request->post['payment_zone_id']);
+
+				if ($zone_info) {
+					$zone = $zone_info['name'];
+					$zone_code = $zone_info['code'];
+				} else {
+					$zone = '';
+					$zone_code = '';
+				}
+
 				$payment_address_data = [
-					'address_id'   => 0,
-					'firstname'    => $this->request->post['firstname'],
-					'lastname'     => $this->request->post['lastname'],
-					'company'      => $this->request->post['payment_company'],
-					'address_1'    => $this->request->post['payment_address_1'],
-					'address_2'    => $this->request->post['payment_address_2'],
-					'city'         => $this->request->post['payment_city'],
-					'postcode'     => $this->request->post['payment_postcode'],
-					'country_id'   => $this->request->post['payment_country_id'],
-					'zone_id'      => $this->request->post['payment_zone_id'],
-					'custom_field' => isset($this->request->post['payment_custom_field']) ? $this->request->post['payment_custom_field'] : []
+					'address_id'     => 0,
+					'firstname'      => $this->request->post['firstname'],
+					'lastname'       => $this->request->post['lastname'],
+					'company'        => $this->request->post['payment_company'],
+					'address_1'      => $this->request->post['payment_address_1'],
+					'address_2'      => $this->request->post['payment_address_2'],
+					'city'           => $this->request->post['payment_city'],
+					'postcode'       => $this->request->post['payment_postcode'],
+					'zone_id'        => $this->request->post['payment_zone_id'],
+					'zone'           => $zone,
+					'zone_code'      => $zone_code,
+					'country_id'     => $this->request->post['payment_country_id'],
+					'country'        => $country,
+					'iso_code_2'     => $iso_code_2,
+					'iso_code_3'     => $iso_code_3,
+					'address_format' => $address_format,
+					'custom_field'   => isset($this->request->post['payment_custom_field']) ? $this->request->post['payment_custom_field'] : []
 				];
 
 				// Add
@@ -448,6 +478,7 @@ class Register extends \Opencart\System\Engine\Controller {
 				}
 			}
 
+			// Shipping Address
 			if ($this->cart->hasShipping()) {
 				if (!$this->config->get('config_checkout_address')) {
 					$firstname = $this->request->post['firstname'];
@@ -458,18 +489,48 @@ class Register extends \Opencart\System\Engine\Controller {
 				}
 
 				if (!$this->request->post['address_match']) {
+					if ($shipping_country_info) {
+						$country = $shipping_country_info['name'];
+						$iso_code_2 = $shipping_country_info['iso_code_2'];
+						$iso_code_3 = $shipping_country_info['iso_code_3'];
+						$address_format = $shipping_country_info['address_format'];
+					} else {
+						$country = '';
+						$iso_code_2 = '';
+						$iso_code_3 = '';
+						$address_format = '';
+					}
+
+					$this->load->model('localisation/zone');
+
+					$zone_info = $this->model_localisation_zone->getZone($this->request->post['shipping_zone_id']);
+
+					if ($zone_info) {
+						$zone = $zone_info['name'];
+						$zone_code = $zone_info['code'];
+					} else {
+						$zone = '';
+						$zone_code = '';
+					}
+
 					$shipping_address_data = [
-						'address_id'   => 0,
-						'firstname'    => $firstname,
-						'lastname'     => $lastname,
-						'company'      => $this->request->post['shipping_company'],
-						'address_1'    => $this->request->post['shipping_address_1'],
-						'address_2'    => $this->request->post['shipping_address_2'],
-						'city'         => $this->request->post['shipping_city'],
-						'postcode'     => $this->request->post['shipping_postcode'],
-						'country_id'   => $this->request->post['shipping_country_id'],
-						'zone_id'      => $this->request->post['shipping_zone_id'],
-						'custom_field' => isset($this->request->post['shipping_custom_field']) ? $this->request->post['shipping_custom_field'] : []
+						'address_id'     => 0,
+						'firstname'      => $firstname,
+						'lastname'       => $lastname,
+						'company'        => $this->request->post['shipping_company'],
+						'address_1'      => $this->request->post['shipping_address_1'],
+						'address_2'      => $this->request->post['shipping_address_2'],
+						'city'           => $this->request->post['shipping_city'],
+						'postcode'       => $this->request->post['shipping_postcode'],
+						'zone_id'        => $this->request->post['shipping_zone_id'],
+						'zone'           => $zone,
+						'zone_code'      => $zone_code,
+						'country_id'     => $this->request->post['shipping_country_id'],
+						'country'        => $country,
+						'iso_code_2'     => $iso_code_2,
+						'iso_code_3'     => $iso_code_3,
+						'address_format' => $address_format,
+						'custom_field'   => isset($this->request->post['shipping_custom_field']) ? $this->request->post['shipping_custom_field'] : []
 					];
 
 					// Add
@@ -519,11 +580,6 @@ class Register extends \Opencart\System\Engine\Controller {
 			unset($this->session->data['payment_method']);
 			unset($this->session->data['payment_methods']);
 		}
-
-		$this->log->write('POST:');
-		$this->log->write($this->request->post);
-		$this->log->write('SESSION:');
-		$this->log->write($this->session->data);
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

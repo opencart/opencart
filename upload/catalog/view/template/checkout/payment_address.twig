@@ -8,6 +8,7 @@
         <input type="radio" name="payment_existing" value="1" id="input-payment-existing" class="form-check-input" checked/>
         <label for="input-payment-existing" class="form-check-label">{{ text_address_existing }}</label>
       </div>
+
       <div class="form-check">
         <input type="radio" name="payment_existing" value="0" id="input-payment-new" class="form-check-input">
         <label for="input-payment-new" class="form-check-label">{{ text_address_new }}</label>
@@ -128,14 +129,16 @@
 
           {% if custom_field.type == 'text' %}
             <div class="col mb-3{% if custom_field.required %} required{% endif %} custom-field custom-field-{{ custom_field.custom_field_id }}">
-              <label for="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{% if address_custom_field[custom_field.custom_field_id] %}{{ address_custom_field[custom_field.custom_field_id] }}{% else %}{{ custom_field.value }}{% endif %}" placeholder="{{ custom_field.name }}" id="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
+              <label for="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
+              <input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{% if address_custom_field[custom_field.custom_field_id] %}{{ address_custom_field[custom_field.custom_field_id] }}{% else %}{{ custom_field.value }}{% endif %}" placeholder="{{ custom_field.name }}" id="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
               <div id="error-payment-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
             </div>
           {% endif %}
 
           {% if custom_field.type == 'textarea' %}
             <div class="col mb-3{% if custom_field.required %} required{% endif %} custom-field custom-field-{{ custom_field.custom_field_id }}">
-              <label for="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <textarea name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" rows="5" placeholder="{{ custom_field.name }}" id="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-control">{% if address_custom_field[custom_field.custom_field_id] %}{{ address_custom_field[custom_field.custom_field_id] }}{% else %}{{ custom_field.value }}{% endif %}</textarea>
+              <label for="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
+              <textarea name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" rows="5" placeholder="{{ custom_field.name }}" id="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-control">{% if address_custom_field[custom_field.custom_field_id] %}{{ address_custom_field[custom_field.custom_field_id] }}{% else %}{{ custom_field.value }}{% endif %}</textarea>
               <div id="error-payment-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
             </div>
           {% endif %}
@@ -238,15 +241,20 @@ $('#input-payment-address').on('change', function() {
                 if (json['success']) {
                     $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                  {% if not shipping_required %}
+                    // Payment methods
+                    html = '<option value="">{{ text_select }}</option>';
 
+                    if (json['payment_methods']) {
+                        for (i in json['payment_methods']) {
+                            html += '<option value="' + json['payment_methods'][i]['code'] + '">' + json['payment_methods'][i]['title'] + '</option>';
+                        }
+                    }
 
-                   // $('#button-shipping-method').trigger('click');
+                    var payment_method = $('#input-payment-method').val();
 
-                  {% endif %}
+                    $('#input-payment-method').html(html);
 
-
-                   // $('#button-payment-method').trigger('click');
+                    $('#input-payment-method').val(payment_method);
 
 
                     $('#checkout-confirm').load('index.php?route=checkout/confirm|confirm&language={{ language }}');
@@ -304,6 +312,7 @@ $('#form-payment-address').on('submit', function(e) {
                 if (json['success']) {
                     $('#alert').prepend('<div class="alert alert-success alert-dismissible"> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
+                    // Payment addresses
                     if (json['addresses']) {
                         for (i in json['addresses']) {
                             html += '<option value="' + json['addresses'][i]['address_id'] + '">' + json['addresses'][i]['firstname'] + ' ' + json['addresses'][i]['lastname'] + ', ' + json['addresses'][i]['address_1'] + ', ' + json['addresses'][i]['city'] + ', ' + json['addresses'][i]['zone'] + ', ' + json['addresses'][i]['country'] + '</option>';
@@ -311,12 +320,15 @@ $('#form-payment-address').on('submit', function(e) {
                     }
 
                     var payment_address_id = json['address_id'];
-                    var shipping_address_id = $('#input-shipping-address').val();
 
                     $('#input-payment-address').html(html);
-                    $('#input-shipping-address').html(html);
 
                     $('#input-payment-address').val(payment_address_id);
+
+                    var shipping_address_id = $('#input-shipping-address').val();
+
+                    $('#input-shipping-address').html(html);
+
                     $('#input-shipping-address').val(shipping_address_id);
 
                     $('#payment-addresses').css({display: 'block'});
@@ -325,21 +337,7 @@ $('#form-payment-address').on('submit', function(e) {
                     $('#payment-new').css({display: 'none'});
                     $('#shipping-new').css({display: 'none'});
 
-
-
-
-
-
-
-
-
-                  {% if shipping_required %}
-                    $('#form-shipping-address').find(':disabled').prop('disabled', false);
-                  {% else %}
-                    $('#button-payment-method').trigger('click');
-                  {% endif %}
-
-
+                    // Payment methods
                     html = '<option value="">{{ text_select }}</option>';
 
                     if (json['payment_methods']) {
@@ -353,9 +351,6 @@ $('#form-payment-address').on('submit', function(e) {
                     $('#input-payment-method').html(html);
 
                     $('#input-payment-method').val(payment_method);
-
-
-
 
                     $('#checkout-confirm').load('index.php?route=checkout/confirm|confirm&language={{ language }}');
                 }

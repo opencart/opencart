@@ -8,8 +8,17 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 
 		if (isset($this->session->data['payment_methods'])) {
 			$data['payment_methods'] = $this->session->data['payment_methods'];
+		} elseif (isset($this->session->data['payment_address'])) {
+			// Shipping Methods
+			$this->load->model('checkout/payment_method');
+
+			$data['payment_methods'] = $this->model_checkout_payment_method->getMethods($this->session->data['payment_address']);
+
+
+
+
 		} else {
-			$data['payment_methods'] = $this->getMethods();
+			$data['payment_methods'] = [];
 		}
 
 		if (isset($this->session->data['payment_method'])) {
@@ -21,108 +30,52 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 		return $this->load->view('checkout/payment_method', $data);
 	}
 
-	public function getMethods(): array {
-		// Totals
-		$totals = [];
-		$taxes = $this->cart->getTaxes();
-		$total = 0;
-
-		$this->load->model('setting/extension');
-
-		$sort_order = [];
-
-		$results = $this->model_setting_extension->getExtensionsByType('total');
-
-		foreach ($results as $key => $value) {
-			$sort_order[$key] = $this->config->get('total_' . $value['code'] . '_sort_order');
-		}
-
-		array_multisort($sort_order, SORT_ASC, $results);
-
-		foreach ($results as $result) {
-			if ($this->config->get('total_' . $result['code'] . '_status')) {
-				$this->load->model('extension/' . $result['extension'] . '/total/' . $result['code']);
-
-				// __call can not pass-by-reference so we get PHP to call it as an anonymous function.
-				($this->{'model_extension_' . $result['extension'] . '_total_' . $result['code']}->getTotal)($totals, $taxes, $total);
-			}
-		}
-
-		if (isset($this->session->data['payment_address'])) {
-			$payment_address = $this->session->data['payment_address'];
-		} else {
-			$payment_address = [
-				'address_id'   => 0,
-				'firstname'    => '',
-				'lastname'     => '',
-				'company'      => '',
-				'address_1'    => '',
-				'address_2'    => '',
-				'city'         => '',
-				'postcode'     => '',
-				'country_id'   => 0,
-				'zone_id'      => 0,
-				'custom_field' => []
-			];
-		}
-
-		// Payment Methods
-		$method_data = [];
-
-		$this->load->model('setting/extension');
-
-		$results = $this->model_setting_extension->getExtensionsByType('payment');
-
-		$recurring = $this->cart->hasRecurringProducts();
-
-		foreach ($results as $result) {
-			if ($this->config->get('payment_' . $result['code'] . '_status')) {
-				$this->load->model('extension/' . $result['extension'] . '/payment/' . $result['code']);
-
-				$method = $this->{'model_extension_' . $result['extension'] . '_payment_' . $result['code']}->getMethod($payment_address, $total);
-
-				if ($method) {
-					if ($recurring) {
-						if (property_exists($this->{'model_extension_' . $result['extension'] . '_payment_' . $result['code']}, 'recurringPayments') && $this->{'model_extension_' . $result['extension'] . '_payment_' . $result['code']}->recurringPayments()) {
-							$method_data[$result['code']] = $method;
-						}
-					} else {
-						$method_data[$result['code']] = $method;
-					}
-				}
-			}
-		}
-
-		$sort_order = [];
-
-		foreach ($method_data as $key => $value) {
-			$sort_order[$key] = $value['sort_order'];
-		}
-
-		array_multisort($sort_order, SORT_ASC, $method_data);
-
-		// Store payment methods in session
-		$this->session->data['payment_methods'] = $method_data;
-
-		return $method_data;
-	}
-
-	public function methods(): void {
+	public function getMethods(): void {
 		$this->load->language('checkout/checkout');
 
 		$json = [];
 
-		if ($this->config->get('config_checkout_address') && !isset($this->session->data['payment_address'])) {
+		if (!isset($this->session->data['payment_address'])) {
 			$json['error'] = $this->language->get('error_payment_address');
 		}
 
-		$payment_methods = $this->getMethods();
+		if ($this->config->get('config_checkout_address') && isset($this->session->data['payment_address'])) {
+			$payment_address = $this->session->data['payment_address'];
+		} else {
+			$payment_address = [
+				'address_id'     => 0,
+				'firstname'      => '',
+				'lastname'       => '',
+				'company'        => '',
+				'address_1'      => '',
+				'address_2'      => '',
+				'city'           => '',
+				'postcode'       => '',
+				'zone_id'        => 0,
+				'zone'           => '',
+				'zone_code'      => '',
+				'country_id'     => 0,
+				'country'        => '',
+				'iso_code_2'     => '',
+				'iso_code_3'     => '',
+				'address_format' => '',
+				'custom_field'   => []
+			];
+		}
+
+		// Payment Methods
+		$this->load->model('checkout/payment_method');
+
+		$payment_methods = $this->model_checkout_payment_method->getMethods($payment_address);
 
 		if (!$payment_methods) {
 			$json['error'] = sprintf($this->language->get('error_no_payment'), $this->url->link('information/contact', 'language=' . $this->config->get('config_language')));
 		}
 
-		if (!$json) {
+		if ($payment_methods) {
+			// Store payment methods in session
+			$this->session->data['payment_methods'] = $payment_methods;
+
 			$json['payment_methods'] = $payment_methods;
 		}
 
@@ -184,10 +137,10 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 
 		if (!$json) {
 
-
 			if (!isset($this->request->get['payment_method']) || !isset($this->session->data['payment_methods'][$this->request->get['payment_method']])) {
 				$json['error'] = $this->language->get('error_payment');
 			}
+
 		}
 
 		if (!$json) {

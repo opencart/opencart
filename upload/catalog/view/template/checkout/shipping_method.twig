@@ -8,7 +8,9 @@
           <optgroup label="{{ shipping_method.title }}">
             {% if not shipping_method.error %}
               {% for quote in shipping_method.quote %}
-                <option value="{{ quote.code }}"{% if quote.code == code %} selected{% endif %}>{{ quote.title }} - {{ quote.text }}</option>
+
+                <option value="{{ quote.code }}"{% if quote.code == code %} selected{% endif %}>{{ quote.title }}{% if quote.cost %} - {{ quote.text }}{% endif %}</option>
+
               {% endfor %}
             {% else %}
               <option value="" class="text-danger" disabled>{{ shipping_method.error }}</option>
@@ -27,7 +29,7 @@ $('#button-shipping-method').on('click', function() {
 
     chain.attach(function() {
         return $.ajax({
-            url: 'index.php?route=checkout/shipping_method|methods&language={{ language }}',
+            url: 'index.php?route=checkout/shipping_method|getMethods&language={{ language }}',
             dataType: 'json',
             beforeSend: function() {
                 $('#input-shipping-method').prop('disabled', true);
@@ -57,7 +59,13 @@ $('#button-shipping-method').on('click', function() {
 
                         if (!json['shipping_methods'][i]['error']) {
                             for (j in json['shipping_methods'][i]['quote']) {
-                                html += '<option value="' + json['shipping_methods'][i]['quote'][j]['code'] + '">' + json['shipping_methods'][i]['quote'][j]['title'] + ' - ' + json['shipping_methods'][i]['quote'][j]['text'] + '</option>';
+                                if (json['shipping_methods'][i]['quote'][j]['cost']) {
+                                    cost = ' - ' + json['shipping_methods'][i]['quote'][j]['text'];
+                                } else {
+                                    cost = '';
+                                }
+
+                                html += '<option value="' + json['shipping_methods'][i]['quote'][j]['code'] + '">' + json['shipping_methods'][i]['quote'][j]['title'] + cost + '</option>';
                             }
                         } else {
                             html += '<option value="" style="color: #ff0000;" disabled>' + json['shipping_methods'][i]['error'] + '</option>';

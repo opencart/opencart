@@ -26,7 +26,6 @@ class Cod extends \Opencart\System\Engine\Controller {
 		$data['save'] = $this->url->link('extension/opencart/payment/cod|save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment');
 
-		$data['payment_cod_total'] = $this->config->get('payment_cod_total');
 		$data['payment_cod_order_status_id'] = $this->config->get('payment_cod_order_status_id');
 
 		$this->load->model('localisation/order_status');

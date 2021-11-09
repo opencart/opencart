@@ -49,7 +49,7 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 
 			$results = $this->model_setting_extension->getExtensionsByType('payment');
 
-			$recurring = $this->cart->hasRecurringProducts();
+			$recurring = $this->cart->hasRecurring();
 
 			foreach ($results as $result) {
 				if ($this->config->get('payment_' . $result['code'] . '_status')) {

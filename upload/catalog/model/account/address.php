@@ -33,13 +33,15 @@ class Address extends \Opencart\System\Engine\Model {
 		$address_query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "address` WHERE `address_id` = '" . (int)$address_id . "' AND `customer_id` = '" . (int)$this->customer->getId() . "'");
 
 		if ($address_query->num_rows) {
-			$country_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "country` WHERE `country_id` = '" . (int)$address_query->row['country_id'] . "' AND `status` = '1'");
+			$this->load->model('localisation/country');
 
-			if ($country_query->num_rows) {
-				$country = $country_query->row['name'];
-				$iso_code_2 = $country_query->row['iso_code_2'];
-				$iso_code_3 = $country_query->row['iso_code_3'];
-				$address_format = $country_query->row['address_format'];
+			$country_info = $this->model_localisation_country->getCountry($address_query->row['country_id']);
+
+			if ($country_info) {
+				$country = $country_info['name'];
+				$iso_code_2 = $country_info['iso_code_2'];
+				$iso_code_3 = $country_info['iso_code_3'];
+				$address_format = $country_info['address_format'];
 			} else {
 				$country = '';
 				$iso_code_2 = '';
@@ -47,17 +49,19 @@ class Address extends \Opencart\System\Engine\Model {
 				$address_format = '';
 			}
 
-			$zone_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone` WHERE `zone_id` = '" . (int)$address_query->row['zone_id'] . "'");
+			$this->load->model('localisation/zone');
 
-			if ($zone_query->num_rows) {
-				$zone = $zone_query->row['name'];
-				$zone_code = $zone_query->row['code'];
+			$zone_info = $this->model_localisation_zone->getZone($address_query->row['zone_id']);
+
+			if ($zone_info) {
+				$zone = $zone_info['name'];
+				$zone_code = $zone_info['code'];
 			} else {
 				$zone = '';
 				$zone_code = '';
 			}
 
-			$address_data = [
+			return [
 				'address_id'     => $address_query->row['address_id'],
 				'firstname'      => $address_query->row['firstname'],
 				'lastname'       => $address_query->row['lastname'],
@@ -76,8 +80,6 @@ class Address extends \Opencart\System\Engine\Model {
 				'address_format' => $address_format,
 				'custom_field'   => json_decode($address_query->row['custom_field'], true)
 			];
-
-			return $address_data;
 		} else {
 			return [];
 		}

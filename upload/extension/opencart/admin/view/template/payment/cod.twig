@@ -19,13 +19,6 @@
       <div class="card-body">
         <form id="form-payment" action="{{ save }}" method="post" data-oc-toggle="ajax">
           <div class="row mb-3">
-            <label for="input-total" class="col-sm-2 col-form-label">{{ entry_total }}</label>
-            <div class="col-sm-10">
-              <input type="text" name="payment_cod_total" value="{{ payment_cod_total }}" placeholder="{{ entry_total }}" id="input-total" class="form-control"/>
-              <div class="form-text text-muted">{{ help_total }}</div>
-            </div>
-          </div>
-          <div class="row mb-3">
             <label for="input-order-status" class="col-sm-2 col-form-label">{{ entry_order_status }}</label>
             <div class="col-sm-10">
               <select name="payment_cod_order_status_id" id="input-order-status" class="form-select">

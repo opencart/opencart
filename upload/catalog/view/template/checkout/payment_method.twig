@@ -19,7 +19,7 @@ $('#button-payment-method').on('click', function() {
 
     chain.attach(function() {
         return $.ajax({
-            url: 'index.php?route=checkout/payment_method|methods&language={{ language }}',
+            url: 'index.php?route=checkout/payment_method|getMethods&language={{ language }}',
             dataType: 'json',
             beforeSend: function() {
                 $('#input-payment-method').prop('disabled', true);

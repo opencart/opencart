@@ -317,7 +317,7 @@ class Cart {
 		$this->data = [];
 	}
 
-	public function getRecurringProducts(): array {
+	public function getRecurring(): array {
 		$product_data = [];
 
 		foreach ($this->getProducts() as $value) {
@@ -397,8 +397,8 @@ class Cart {
 		return count($this->getProducts()) ? true : false;
 	}
 
-	public function hasRecurringProducts(): bool {
-		return count($this->getRecurringProducts()) ? true : false;
+	public function hasRecurring(): bool {
+		return count($this->getRecurring()) ? true : false;
 	}
 
 	public function hasStock(): bool {
@@ -409,30 +409,6 @@ class Cart {
 		}
 
 		return true;
-	}
-
-	public function hasMinimum(): bool {
-
-		$product_total = 0;
-
-
-		foreach ($this->getProducts() as $product) {
-
-			foreach ($products as $product_2) {
-				if ($product_2['product_id'] == $product['product_id']) {
-					$product_total += $product_2['quantity'];
-				}
-			}
-
-			if (!$product['stock']) {
-				return false;
-			}
-		}
-
-
-
-
-		return $product_total;
 	}
 
 	public function hasShipping(): bool {

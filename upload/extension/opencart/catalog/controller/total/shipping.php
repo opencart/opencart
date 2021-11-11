@@ -118,7 +118,8 @@ class Shipping extends \Opencart\System\Engine\Controller {
 				'country'        => $country,
 				'iso_code_2'     => $iso_code_2,
 				'iso_code_3'     => $iso_code_3,
-				'address_format' => $address_format
+				'address_format' => $address_format,
+				'custom_field'   => []
 			];
 
 			$this->tax->setShippingAddress($this->request->post['country_id'], $this->request->post['zone_id']);

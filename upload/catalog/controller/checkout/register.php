@@ -201,12 +201,6 @@ class Register extends \Opencart\System\Engine\Controller {
 
 
 		if (!$json) {
-			// Validate that register or guest is not sent if customer is logged in.
-			if (!$this->request->post['account'] && $this->customer->isLogged()) {
-
-
-			}
-
 			// If not guest checkout disabled, login require price or cart has downloads
 			if (!$this->request->post['account'] && (!$this->config->get('config_checkout_guest') || $this->config->get('config_customer_price') || $this->cart->hasDownload())) {
 				$json['error']['warning'] = $this->language->get('error_guest');
@@ -363,12 +357,14 @@ class Register extends \Opencart\System\Engine\Controller {
 				$json['error']['password'] = $this->language->get('error_password');
 			}
 
-			$this->load->model('catalog/information');
+			if ($this->request->post['account']) {
+				$this->load->model('catalog/information');
 
-			$information_info = $this->model_catalog_information->getInformation($this->config->get('config_account_id'));
+				$information_info = $this->model_catalog_information->getInformation($this->config->get('config_account_id'));
 
-			if ($information_info && !$this->request->post['agree']) {
-				$json['error']['warning'] = sprintf($this->language->get('error_agree'), $information_info['title']);
+				if ($information_info && !$this->request->post['agree']) {
+					$json['error']['warning'] = sprintf($this->language->get('error_agree'), $information_info['title']);
+				}
 			}
 
 			// Captcha
@@ -416,6 +412,12 @@ class Register extends \Opencart\System\Engine\Controller {
 
 			// Payment Address
 			if ($this->config->get('config_checkout_address')) {
+				if (isset($this->session->data['payment_address'])) {
+					$address_id = $this->session->data['payment_address']['address_id'];
+				} else {
+					$address_id = 0;
+				}
+
 				if ($payment_country_info) {
 					$country = $payment_country_info['name'];
 					$iso_code_2 = $payment_country_info['iso_code_2'];
@@ -441,7 +443,7 @@ class Register extends \Opencart\System\Engine\Controller {
 				}
 
 				$payment_address_data = [
-					'address_id'     => 0,
+					'address_id'     => $address_id,
 					'firstname'      => $this->request->post['firstname'],
 					'lastname'       => $this->request->post['lastname'],
 					'company'        => $this->request->post['payment_company'],
@@ -468,8 +470,8 @@ class Register extends \Opencart\System\Engine\Controller {
 				}
 
 				// Edit
-				if ($this->customer->isLogged()) {
-					$this->model_account_address->editAddress($this->session->data['payment_address']['address_id'], $payment_address_data);
+				if ($this->customer->isLogged() && $payment_address_data['address_id']) {
+					$this->model_account_address->editAddress($payment_address_data['address_id'], $payment_address_data);
 				}
 
 				// Requires Approval
@@ -480,15 +482,21 @@ class Register extends \Opencart\System\Engine\Controller {
 
 			// Shipping Address
 			if ($this->cart->hasShipping()) {
-				if (!$this->config->get('config_checkout_address')) {
-					$firstname = $this->request->post['firstname'];
-					$lastname = $this->request->post['lastname'];
-				} else {
-					$firstname = $this->request->post['shipping_firstname'];
-					$lastname = $this->request->post['shipping_lastname'];
-				}
-
 				if (!$this->request->post['address_match']) {
+					if (isset($this->session->data['shipping_address'])) {
+						$address_id = $this->session->data['shipping_address']['address_id'];
+					} else {
+						$address_id = 0;
+					}
+
+					if (!$this->config->get('config_checkout_address')) {
+						$firstname = $this->request->post['firstname'];
+						$lastname = $this->request->post['lastname'];
+					} else {
+						$firstname = $this->request->post['shipping_firstname'];
+						$lastname = $this->request->post['shipping_lastname'];
+					}
+
 					if ($shipping_country_info) {
 						$country = $shipping_country_info['name'];
 						$iso_code_2 = $shipping_country_info['iso_code_2'];
@@ -514,7 +522,7 @@ class Register extends \Opencart\System\Engine\Controller {
 					}
 
 					$shipping_address_data = [
-						'address_id'     => 0,
+						'address_id'     => $address_id,
 						'firstname'      => $firstname,
 						'lastname'       => $lastname,
 						'company'        => $this->request->post['shipping_company'],
@@ -543,8 +551,8 @@ class Register extends \Opencart\System\Engine\Controller {
 					}
 
 					// Edit
-					if ($this->customer->isLogged()) {
-						$this->model_account_address->editAddress($this->session->data['shipping_address']['address_id'], $shipping_address_data);
+					if ($this->customer->isLogged() && $shipping_address_data['address_id']) {
+						$this->model_account_address->editAddress($shipping_address_data['address_id'], $shipping_address_data);
 					}
 
 					// Requires Approval
@@ -553,20 +561,35 @@ class Register extends \Opencart\System\Engine\Controller {
 					}
 				} elseif (!$customer_group_info['approval'] && $this->config->get('config_checkout_address')) {
 					$this->session->data['shipping_address'] = $this->session->data['payment_address'];
+
+					// Remove the address id so if the customer changes their mind and requires changing a different shipping address it will create a new address.
+					$this->session->data['shipping_address']['address_id'] = 0;
+				}
+
+				if (!$customer_group_info['approval']) {
+					// Shipping methods
+					$this->load->model('checkout/shipping_method');
+
+					$json['shipping_methods'] = $this->model_checkout_shipping_method->getMethods($this->session->data['shipping_address']);
+
+					$this->session->data['shipping_methods'] = $json['shipping_methods'];
 				}
 			}
 
-
-
-
 			// If everything good login
 			if (!$customer_group_info['approval']) {
-
 				if (!$this->customer->isLogged()) {
 					$this->customer->login($this->request->post['email'], $this->request->post['password']);
 				}
 
 				$json['success'] = 'Success: Your account has been successfully created!';
+
+				// Payment methods
+				$this->load->model('checkout/payment_method');
+
+				$json['payment_methods'] = $this->model_checkout_payment_method->getMethods($this->session->data['payment_address']);
+
+				$this->session->data['payment_methods'] = $json['payment_methods'];
 			} else {
 				// If account needs approval we redirect to the account success / requires approval page.
 				$json['redirect'] = $this->url->link('account/success', 'language=' . $this->config->get('config_language'), true);
@@ -574,11 +597,6 @@ class Register extends \Opencart\System\Engine\Controller {
 
 			// Clear any previous login attempts for unregistered accounts.
 			$this->model_account_customer->deleteLoginAttempts($this->request->post['email']);
-
-			unset($this->session->data['shipping_method']);
-			unset($this->session->data['shipping_methods']);
-			unset($this->session->data['payment_method']);
-			unset($this->session->data['payment_methods']);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

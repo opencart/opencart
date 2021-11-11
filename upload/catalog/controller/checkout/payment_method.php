@@ -9,14 +9,9 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 		if (isset($this->session->data['payment_methods'])) {
 			$data['payment_methods'] = $this->session->data['payment_methods'];
 		} elseif (isset($this->session->data['payment_address'])) {
-			// Shipping Methods
 			$this->load->model('checkout/payment_method');
 
 			$data['payment_methods'] = $this->model_checkout_payment_method->getMethods($this->session->data['payment_address']);
-
-
-
-
 		} else {
 			$data['payment_methods'] = [];
 		}
@@ -136,11 +131,10 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-
+			// Validate payment method
 			if (!isset($this->request->get['payment_method']) || !isset($this->session->data['payment_methods'][$this->request->get['payment_method']])) {
 				$json['error'] = $this->language->get('error_payment');
 			}
-
 		}
 
 		if (!$json) {

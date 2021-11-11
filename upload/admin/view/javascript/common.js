@@ -195,6 +195,7 @@ $(document).submit('form[data-oc-toggle=\'ajax\']', function(e) {
         }
     }
 
+    /*
     console.log(e);
     console.log(element);
     console.log(action);
@@ -202,8 +203,7 @@ $(document).submit('form[data-oc-toggle=\'ajax\']', function(e) {
     console.log(formaction);
     console.log(method);
     console.log(enctype);
-
-   // $('data-loading-text').attr();
+    */
 
     $.ajax({
         url: action,
@@ -224,7 +224,7 @@ $(document).submit('form[data-oc-toggle=\'ajax\']', function(e) {
             $(element).find('.invalid-feedback').removeClass('d-block');
 
            // console.log(json['error']);
-           // console.log(json);
+           console.log(json);
 
             if (json['redirect']) {
                 location = json['redirect'];

@@ -31,12 +31,6 @@ $('#button-shipping-method').on('click', function() {
         return $.ajax({
             url: 'index.php?route=checkout/shipping_method|getMethods&language={{ language }}',
             dataType: 'json',
-            beforeSend: function() {
-                $('#input-shipping-method').prop('disabled', true);
-            },
-            complete: function() {
-                $('#input-shipping-method').prop('disabled', false);
-            },
             success: function(json) {
                 $('.alert-dismissible').remove();
 
@@ -53,19 +47,21 @@ $('#button-shipping-method').on('click', function() {
                 // Shipping Methods
                 html = '<option value="">{{ text_select }}</option>';
 
-                if (json['shipping_methods']) {
-                    for (i in json['shipping_methods']) {
-                        html += '<optgroup label="' + json['shipping_methods'][i]['title'] + '">';
+                var shipping_methods = [];
 
-                        if (!json['shipping_methods'][i]['error']) {
-                            for (j in json['shipping_methods'][i]['quote']) {
-                                if (json['shipping_methods'][i]['quote'][j]['cost']) {
-                                    cost = ' - ' + json['shipping_methods'][i]['quote'][j]['text'];
+                if (shipping_methods) {
+                    for (i in shipping_methods) {
+                        html += '<optgroup label="' + shipping_methods[i]['title'] + '">';
+
+                        if (!shipping_methods[i]['error']) {
+                            for (j in shipping_methods[i]['quote']) {
+                                if (shipping_methods[i]['quote'][j]['cost']) {
+                                    text = shipping_methods[i]['quote'][j]['title'] + ' - ' + json['shipping_methods'][i]['quote'][j]['text'];
                                 } else {
-                                    cost = '';
+                                    text = shipping_methods[i]['quote'][j]['title'];
                                 }
 
-                                html += '<option value="' + json['shipping_methods'][i]['quote'][j]['code'] + '">' + json['shipping_methods'][i]['quote'][j]['title'] + cost + '</option>';
+                                html += '<option value="' + json['shipping_methods'][i]['quote'][j]['code'] + '">' + text + '</option>';
                             }
                         } else {
                             html += '<option value="" style="color: #ff0000;" disabled>' + json['shipping_methods'][i]['error'] + '</option>';

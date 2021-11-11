@@ -4,7 +4,7 @@ class FreeCheckout extends \Opencart\System\Engine\Model {
 	public function getMethod(array $address): array {
 		$this->load->language('extension/opencart/payment/free_checkout');
 
-		$this->cart->getTotal();
+		$total = $this->cart->getTotal();
 
 		if (!empty($this->session->data['vouchers'])) {
 			$amounts = array_column($this->session->data['vouchers'], 'amount');
@@ -12,9 +12,9 @@ class FreeCheckout extends \Opencart\System\Engine\Model {
 			$amounts = [];
 		}
 
-		$total = array_sum($amounts);
+		$total = $total + array_sum($amounts);
 
-		if (($this->cart->getTotal() + $total) <= 0.00) {
+		if ((float)$total <= 0.00) {
 			$status = true;
 		} else {
 			$status = false;

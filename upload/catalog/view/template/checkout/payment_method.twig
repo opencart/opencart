@@ -89,6 +89,8 @@ $('#input-payment-method').on('change', function() {
                 }
 
                 if (json['success']) {
+                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
                     $('#checkout-confirm').load('index.php?route=checkout/confirm|confirm&language={{ language }}');
                 }
             },

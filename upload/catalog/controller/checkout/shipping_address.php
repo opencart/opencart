@@ -203,9 +203,7 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 				'custom_field'   => isset($this->request->post['custom_field']) ? $this->request->post['custom_field'] : []
 			];
 
-			$json['success'] = 'Success: Your address has been successfully created!';
-
-			unset($this->session->data['shipping_methods']);
+			$json['success'] = $this->language->get('text_address_add');
 
 			// Shipping methods
 			$this->load->model('checkout/shipping_method');
@@ -282,9 +280,7 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->session->data['shipping_address'] = $address_info;
 
-			$json['success'] = 'Success: Your address has been successfully created!';
-
-			unset($this->session->data['shipping_methods']);
+			$json['success'] = $this->language->get('text_address_updated');
 
 			// Shipping methods
 			$this->load->model('checkout/shipping_method');

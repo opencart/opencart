@@ -357,8 +357,11 @@ $('#input-recurring, #input-quantity').change(function() {
     $.ajax({
         url: 'index.php?route=product/product|getRecurringDescription',
         type: 'post',
-        data: $('#input-product-id, #input-quantity, #input-recurring'),
         dataType: 'json',
+        data: $('#input-product-id, #input-quantity, #input-recurring'),
+        contentType: 'application/x-www-form-urlencoded',
+        cache: false,
+        processData: false,
         beforeSend: function() {
             $('#recurring-description').html('');
         },
@@ -371,15 +374,16 @@ $('#input-recurring, #input-quantity').change(function() {
 });
 
 $('#button-cart').on('click', function() {
-    var test = $('#form-product').serialize();
-
     console.log(test);
 
     $.ajax({
-        url: 'index.php?route=checkout/cart|add',
+        url: 'index.php?route=checkout/cart|add&language={{ language }}',
         type: 'post',
         dataType: 'json',
-        data: test,
+        data: $('#form-product').serialize(),
+        contentType: 'application/x-www-form-urlencoded',
+        cache: false,
+        processData: false,
         beforeSend: function() {
             $('#button-cart').button('loading');
         },
@@ -395,19 +399,13 @@ $('#button-cart').on('click', function() {
 
             if (json['error']) {
                 for (key in json['error']) {
-                    oc.error(key, json['error'][key]);
+                    $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
+                    $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
                 }
             }
 
             if (json['success']) {
-                html = '<div class="toast">';
-                html += '  <div class="toast-body"><button type="button" class="ml-2 mb-1 btn-close float-end" data-bs-dismiss="toast"></button> ' + json['success'] + '</div>';
-                html += '</div>';
-
-                $('#toast').prepend(html);
-
-                $('#toast .toast:first-child').toast({'delay': 3000});
-                $('#toast .toast:first-child').toast('show');
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                 $('#cart').parent().load('index.php?route=common/cart|info');
             }
@@ -465,10 +463,9 @@ $('#button-review').on('click', function() {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
-                $('#form-review').after('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
                 for (key in json['error']) {
-                    oc.error(key, json['error'][key]);
+                    $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
+                    $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
                 }
             }
 

@@ -161,19 +161,10 @@ class Confirm extends \Opencart\System\Engine\Controller {
 				$order_data['payment_custom_field'] = [];
 			}
 
-			if (isset($this->session->data['payment_methods']) && $this->session->data['payment_method']) {
-				$payment_method_info = $this->session->data['payment_methods'][$this->session->data['payment_method']];
+			$payment_method_info = $this->session->data['payment_methods'][$this->session->data['payment_method']];
 
-
-
-
-				$order_data['payment_method'] = $payment_method_info['title'];
-				$order_data['payment_code'] = $payment_method_info['code'];
-
-			} else {
-				$order_data['payment_method'] = '';
-				$order_data['payment_code'] = '';
-			}
+			$order_data['payment_method'] = $payment_method_info['title'];
+			$order_data['payment_code'] = $payment_method_info['code'];
 
 			// Shipping Details
 			if ($this->cart->hasShipping()) {

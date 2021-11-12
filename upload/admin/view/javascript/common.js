@@ -144,20 +144,6 @@ $(document).ready(function() {
     });
 });
 
-var oc = [];
-
-oc.alert = function(type, message) {
-    $('#alert').prepend('<div class="alert alert-' + type + '"><i class="fas fa-exclamation-circle"></i> ' + message + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-}
-
-oc.error = function(key, message) {
-    // Highlight error fields
-    $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
-
-    // Show errors
-    $('#error-' + key.replaceAll('_', '-')).html(message).addClass('d-block');
-}
-
 // Forms
 $(document).submit('form[data-oc-toggle=\'ajax\']', function(e) {
     e.preventDefault();
@@ -276,8 +262,7 @@ $(document).submit('form[data-oc-toggle=\'ajax\']', function(e) {
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
-           // oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-           // console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+           console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 
@@ -317,6 +302,7 @@ $(document).on('click', '[data-oc-toggle=\'upload\']', function() {
                 type: 'post',
                 dataType: 'json',
                 data: new FormData($('#form-upload')[0]),
+                contentType: 'application/x-www-form-urlencoded',
                 cache: false,
                 contentType: false,
                 processData: false,

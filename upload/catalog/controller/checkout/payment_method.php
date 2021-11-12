@@ -6,12 +6,80 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 
 		$data['language'] = $this->config->get('config_language');
 
+		$status = false;
+
+		if (isset($this->session->data['customer'])) {
+
+
+		}
+
+		if ($this->cart->hasShipping()) {
+
+			// Validate shipping address
+			if (!isset($this->session->data['shipping_address'])) {
+				$status = false;
+
+				echo 'shipping_address not set';
+			}
+
+			// Validate shipping method
+			if (isset($this->session->data['shipping_method']) && isset($this->session->data['shipping_methods'])) {
+				$shipping = explode('.', $this->session->data['shipping_method']);
+
+				if (!isset($shipping[0]) || !isset($shipping[1]) || !isset($this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]])) {
+					$status = false;
+
+					echo 'shipping_method not recognised';
+				}
+			} else {
+				$status = false;
+
+				echo 'shipping_method not set';
+			}
+
+		}
+
+
+
 		if (isset($this->session->data['payment_methods'])) {
 			$data['payment_methods'] = $this->session->data['payment_methods'];
-		} elseif (isset($this->session->data['payment_address'])) {
+		} elseif (isset($this->session->data['customer'])) {
+
+
+
+
+			if ($this->config->get('config_checkout_address') && isset($this->session->data['payment_address'])) {
+				$payment_address = $this->session->data['payment_address'];
+			} else {
+				$payment_address = [
+					'address_id' => 0,
+					'firstname' => '',
+					'lastname' => '',
+					'company' => '',
+					'address_1' => '',
+					'address_2' => '',
+					'city' => '',
+					'postcode' => '',
+					'zone_id' => 0,
+					'zone' => '',
+					'zone_code' => '',
+					'country_id' => 0,
+					'country' => '',
+					'iso_code_2' => '',
+					'iso_code_3' => '',
+					'address_format' => '',
+					'custom_field' => []
+				];
+			}
+
 			$this->load->model('checkout/payment_method');
 
-			$data['payment_methods'] = $this->model_checkout_payment_method->getMethods($this->session->data['payment_address']);
+			$data['payment_methods'] = $this->model_checkout_payment_method->getMethods($payment_address);
+
+			$this->session->data['payment_methods'] = $data['payment_methods'];
+
+
+
 		} else {
 			$data['payment_methods'] = [];
 		}

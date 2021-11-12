@@ -3,25 +3,22 @@
     <legend>{{ text_payment_address }}</legend>
 
     <div id="payment-addresses" style="display: {% if not addresses %}none{% else %}block{% endif %};">
-
       <div class="form-check">
         <input type="radio" name="payment_existing" value="1" id="input-payment-existing" class="form-check-input" checked/>
         <label for="input-payment-existing" class="form-check-label">{{ text_address_existing }}</label>
       </div>
-
       <div class="form-check">
         <input type="radio" name="payment_existing" value="0" id="input-payment-new" class="form-check-input">
         <label for="input-payment-new" class="form-check-label">{{ text_address_new }}</label>
       </div>
+    </div>
 
-      <div id="payment-existing">
-        <select name="address_id" id="input-payment-address" class="form-select">
-          {% for address in addresses %}
-            <option value="{{ address.address_id }}"{% if address.address_id == address_id %} selected{% endif %}>{{ address.firstname }} {{ address.lastname }}, {{ address.address_1 }}, {{ address.city }}, {{ address.zone }}, {{ address.country }}</option>
-          {% endfor %}
-        </select>
-      </div>
-
+    <div id="payment-existing" style="display: {% if not addresses %}none{% else %}block{% endif %};">
+      <select name="address_id" id="input-payment-address" class="form-select">
+        {% for address in addresses %}
+          <option value="{{ address.address_id }}"{% if address.address_id == address_id %} selected{% endif %}>{{ address.firstname }} {{ address.lastname }}, {{ address.address_1 }}, {{ address.city }}, {{ address.zone }}, {{ address.country }}</option>
+        {% endfor %}
+      </select>
     </div>
 
     <br/>
@@ -209,10 +206,6 @@ $('input[name=\'payment_existing\']').on('change', function() {
     }
 });
 
-{% if not addresses %}
-
-{% endif %}
-
 // Existing Payment Address
 $('#input-payment-address').on('change', function() {
     var element = this;
@@ -255,7 +248,6 @@ $('#input-payment-address').on('change', function() {
                     $('#input-payment-method').html(html);
 
                     $('#input-payment-method').val(payment_method);
-
 
                     $('#checkout-confirm').load('index.php?route=checkout/confirm|confirm&language={{ language }}');
                 }
@@ -307,10 +299,12 @@ $('#form-payment-address').on('submit', function(e) {
                     }
                 }
 
-                html = '';
+
 
                 if (json['success']) {
                     $('#alert').prepend('<div class="alert alert-success alert-dismissible"> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                    html = '';
 
                     // Payment addresses
                     if (json['addresses']) {
@@ -319,23 +313,33 @@ $('#form-payment-address').on('submit', function(e) {
                         }
                     }
 
+                    $('#payment-addresses').css({display: 'block'});
+
                     var payment_address_id = json['address_id'];
 
                     $('#input-payment-address').html(html);
 
                     $('#input-payment-address').val(payment_address_id);
 
+                    $('#input-payment-existing').trigger('click');
+
+
+
+
+                    $('#shipping-addresses').css({display: 'block'});
+
                     var shipping_address_id = $('#input-shipping-address').val();
 
                     $('#input-shipping-address').html(html);
 
-                    $('#input-shipping-address').val(shipping_address_id);
+                    if (!shipping_address_id) {
+                        shipping_address_id = payment_address_id
 
-                    $('#payment-addresses').css({display: 'block'});
-                    $('#shipping-addresses').css({display: 'block'});
+                        $('#input-shipping-address').val(shipping_address_id);
+                    }
 
-                    $('#payment-new').css({display: 'none'});
-                    $('#shipping-new').css({display: 'none'});
+
+
 
                     // Payment methods
                     html = '<option value="">{{ text_select }}</option>';

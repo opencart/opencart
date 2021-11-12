@@ -3,7 +3,6 @@
     <legend>{{ text_shipping_address }}</legend>
 
     <div id="shipping-addresses" style="display: {% if not addresses %}none{% else %}block{% endif %};">
-
       <div class="form-check">
         <input type="radio" name="shipping_existing" value="1" id="input-shipping-existing" class="form-check-input" checked/>
         <label for="input-shipping-existing" class="form-check-label">{{ text_address_existing }}</label>
@@ -13,7 +12,8 @@
         <label for="input-shipping-new" class="form-check-label">{{ text_address_new }}</label>
       </div>
 
-      <div id="shipping-existing">
+
+      <div id="shipping-existing" style="display: {% if not addresses %}none{% else %}block{% endif %};">
         <select name="address_id" id="input-shipping-address" class="form-select">
           {% for address in addresses %}
             <option value="{{ address.address_id }}"{% if address.address_id == address_id %} selected{% endif %}>{{ address.firstname }} {{ address.lastname }}, {{ address.address_1 }}, {{ address.city }}, {{ address.zone }}, {{ address.country }}</option>
@@ -23,46 +23,48 @@
 
     </div>
 
+
+
+
     <br/>
     <div id="shipping-new" style="display: {% if addresses %}none{% else %}block{% endif %};">
       <div class="row row-cols-1 row-cols-md-2">
 
         <div class="col mb-3 required">
-          <label for="input-shipping-firstname" class="form-label">{{ entry_firstname }}</label>
-          <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-shipping-firstname" class="form-control"/>
+          <label for="input-shipping-firstname" class="form-label">{{ entry_firstname }}</label> <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-shipping-firstname" class="form-control"/>
           <div id="error-shipping-firstname" class="invalid-feedback"></div>
         </div>
+
         <div class="col mb-3 required">
-          <label for="input-shipping-lastname" class="form-label">{{ entry_lastname }}</label>
-          <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-shipping-lastname" class="form-control"/>
+          <label for="input-shipping-lastname" class="form-label">{{ entry_lastname }}</label> <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-shipping-lastname" class="form-control"/>
           <div id="error-shipping-lastname" class="invalid-feedback"></div>
         </div>
+
         <div class="col mb-3">
-          <label for="input-shipping-company" class="form-label">{{ entry_company }}</label>
-          <input type="text" name="company" value="{{ company }}" placeholder="{{ entry_company }}" id="input-shipping-company" class="form-control"/>
+          <label for="input-shipping-company" class="form-label">{{ entry_company }}</label> <input type="text" name="company" value="{{ company }}" placeholder="{{ entry_company }}" id="input-shipping-company" class="form-control"/>
         </div>
+
         <div class="col mb-3 required">
-          <label for="input-shipping-address-1" class="form-label">{{ entry_address_1 }}</label>
-          <input type="text" name="address_1" value="{{ address_1 }}" placeholder="{{ entry_address_1 }}" id="input-shipping-address-1" class="form-control"/>
+          <label for="input-shipping-address-1" class="form-label">{{ entry_address_1 }}</label> <input type="text" name="address_1" value="{{ address_1 }}" placeholder="{{ entry_address_1 }}" id="input-shipping-address-1" class="form-control"/>
           <div id="error-shipping-address-1" class="invalid-feedback"></div>
         </div>
+
         <div class="col mb-3">
-          <label for="input-shipping-address-2" class="form-label">{{ entry_address_2 }}</label>
-          <input type="text" name="address_2" value="{{ address_2 }}" placeholder="{{ entry_address_2 }}" id="input-shipping-address-2" class="form-control"/>
+          <label for="input-shipping-address-2" class="form-label">{{ entry_address_2 }}</label> <input type="text" name="address_2" value="{{ address_2 }}" placeholder="{{ entry_address_2 }}" id="input-shipping-address-2" class="form-control"/>
         </div>
+
         <div class="col mb-3 required">
-          <label for="input-shipping-city" class="form-label">{{ entry_city }}</label>
-          <input type="text" name="city" value="{{ city }}" placeholder="{{ entry_city }}" id="input-shipping-city" class="form-control"/>
+          <label for="input-shipping-city" class="form-label">{{ entry_city }}</label> <input type="text" name="city" value="{{ city }}" placeholder="{{ entry_city }}" id="input-shipping-city" class="form-control"/>
           <div id="error-shipping-city" class="invalid-feedback"></div>
         </div>
+
         <div class="col mb-3 required">
-          <label for="input-shipping-postcode" class="form-label">{{ entry_postcode }}</label>
-          <input type="text" name="postcode" value="{{ postcode }}" placeholder="{{ entry_postcode }}" id="input-shipping-postcode" class="form-control"/>
+          <label for="input-shipping-postcode" class="form-label">{{ entry_postcode }}</label> <input type="text" name="postcode" value="{{ postcode }}" placeholder="{{ entry_postcode }}" id="input-shipping-postcode" class="form-control"/>
           <div id="error-shipping-postcode" class="invalid-feedback"></div>
         </div>
+
         <div class="col mb-3 required">
-          <label for="input-shipping-country" class="form-label">{{ entry_country }}</label>
-          <select name="country_id" id="input-shipping-country" class="form-select">
+          <label for="input-shipping-country" class="form-label">{{ entry_country }}</label> <select name="country_id" id="input-shipping-country" class="form-select">
             <option value="">{{ text_select }}</option>
             {% for country in countries %}
               <option value="{{ country.country_id }}"{% if country.country_id == country_id %} selected{% endif %}>{{ country.name }}</option>
@@ -70,9 +72,9 @@
           </select>
           <div id="error-shipping-country" class="invalid-feedback"></div>
         </div>
+
         <div class="col mb-3 required">
-          <label for="input-shipping-zone" class="form-label">{{ entry_zone }}</label>
-          <select name="zone_id" id="input-shipping-zone" class="form-select"></select>
+          <label for="input-shipping-zone" class="form-label">{{ entry_zone }}</label> <select name="zone_id" id="input-shipping-zone" class="form-select"></select>
           <div id="error-shipping-zone" class="invalid-feedback"></div>
         </div>
 
@@ -110,8 +112,7 @@
               <div id="input-shipping-custom-field-{{ custom_field.custom_field_id }}">
                 {% for custom_field_value in custom_field.custom_field_value %}
                   <div class="form-check">
-                    <input type="checkbox" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" id="input-shipping-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-input"{% if shipping_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id in shipping_custom_field[custom_field.custom_field_id] %} checked{% endif %}/>
-                    <label for="input-shipping-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-label">{{ custom_field_value.name }}</label>
+                    <input type="checkbox" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" id="input-shipping-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-input"{% if shipping_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id in shipping_custom_field[custom_field.custom_field_id] %} checked{% endif %}/> <label for="input-shipping-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-label">{{ custom_field_value.name }}</label>
                   </div>
                 {% endfor %}
               </div>
@@ -121,16 +122,14 @@
 
           {% if custom_field.type == 'text' %}
             <div class="col mb-3{% if custom_field.required %} required{% endif %} custom-field custom-field-{{ custom_field.custom_field_id }}">
-              <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
-              <input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{% if shipping_custom_field[custom_field.custom_field_id] %}{{ shipping_custom_field[custom_field.custom_field_id] }}{% else %}{{ custom_field.value }}{% endif %}" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
+              <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{% if shipping_custom_field[custom_field.custom_field_id] %}{{ shipping_custom_field[custom_field.custom_field_id] }}{% else %}{{ custom_field.value }}{% endif %}" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
               <div id="error-shipping-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
             </div>
           {% endif %}
 
           {% if custom_field.type == 'textarea' %}
             <div class="col mb-3{% if custom_field.required %} required{% endif %} custom-field custom-field-{{ custom_field.custom_field_id }}">
-              <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
-              <textarea name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" rows="5" placeholder="{% if shipping_custom_field[custom_field.custom_field_id] %}{{ shipping_custom_field[custom_field.custom_field_id] }}{% else %}{{ custom_field.value }}{% endif %}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-control">{{ custom_field.value }}</textarea>
+              <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <textarea name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" rows="5" placeholder="{% if shipping_custom_field[custom_field.custom_field_id] %}{{ shipping_custom_field[custom_field.custom_field_id] }}{% else %}{{ custom_field.value }}{% endif %}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-control">{{ custom_field.value }}</textarea>
               <div id="error-shipping-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
             </div>
           {% endif %}
@@ -313,6 +312,7 @@ $('#form-shipping-address').on('submit', function(e) {
 
                     html = '';
 
+                    // Shipping addresses
                     if (json['addresses']) {
                         for (i in json['addresses']) {
                             html += '<option value="' + json['addresses'][i]['address_id'] + '">' + json['addresses'][i]['firstname'] + ' ' + json['addresses'][i]['lastname'] + ', ' + json['addresses'][i]['address_1'] + ', ' + json['addresses'][i]['city'] + ', ' + json['addresses'][i]['zone'] + ', ' + json['addresses'][i]['country'] + '</option>';
@@ -333,6 +333,8 @@ $('#form-shipping-address').on('submit', function(e) {
 
                     $('#payment-new').css({display: 'none'});
                     $('#shipping-new').css({display: 'none'});
+
+                    $('#input-shipping-existing').trigger('click');
 
                     // Shipping Methods
                     html = '<option value="">{{ text_select }}</option>';

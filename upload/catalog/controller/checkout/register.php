@@ -578,11 +578,17 @@ class Register extends \Opencart\System\Engine\Controller {
 
 			// If everything good login
 			if (!$customer_group_info['approval']) {
-				if (!$this->customer->isLogged()) {
+				if ($this->request->post['account']) {
 					$this->customer->login($this->request->post['email'], $this->request->post['password']);
+
+					$json['success'] = $this->language->get('text_customer_add');
 				}
 
-				$json['success'] = 'Success: Your account has been successfully created!';
+				if ($this->customer->isLogged()) {
+					$json['success'] = $this->language->get('text_customer_edit');
+				}
+
+
 
 				// Payment methods
 				$this->load->model('checkout/payment_method');

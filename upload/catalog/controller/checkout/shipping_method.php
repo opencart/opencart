@@ -12,14 +12,11 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 			// Shipping Methods
 			$this->load->model('checkout/shipping_method');
 
-			$data['shipping_methods'] = [];
+			$data['shipping_methods'] = $this->model_checkout_shipping_method->getMethods($this->session->data['shipping_address']);
 
-			$shipping_methods = $this->model_checkout_shipping_method->getMethods($this->session->data['shipping_address']);
-
+			// Store shipping methods in session
+			$this->session->data['shipping_methods'] = $data['shipping_methods'];
 		} else {
-
-
-
 			$data['shipping_methods'] = [];
 		}
 

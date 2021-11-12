@@ -503,6 +503,7 @@ $(document).on('click', '[data-oc-toggle=\'upload\']', function() {
                 type: 'post',
                 dataType: 'json',
                 data: new FormData($('#form-upload')[0]),
+                contentType: 'application/x-www-form-urlencoded',
                 cache: false,
                 contentType: false,
                 processData: false,

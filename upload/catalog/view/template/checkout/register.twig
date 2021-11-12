@@ -456,7 +456,8 @@
         <legend>{{ text_your_password }}</legend>
         <div class="row">
           <div class="col mb-3 required">
-            <label for="input-password" class="form-label">{{ entry_password }}</label> <input type="password" name="password" value="" placeholder="{{ entry_password }}" id="input-password" class="form-control"/>
+            <label for="input-password" class="form-label">{{ entry_password }}</label>
+            <input type="password" name="password" value="" placeholder="{{ entry_password }}" id="input-password" class="form-control"/>
             <div id="error-password" class="invalid-feedback"></div>
           </div>
         </div>
@@ -468,7 +469,8 @@
     <div class="col mb-3">
 
       <div class="form-check">
-        <label for="input-newsletter" class="form-check-label">{{ entry_newsletter }}</label> <input type="checkbox" name="newsletter" value="1" id="input-newsletter" class="form-check-input"/>
+        <label for="input-newsletter" class="form-check-label">{{ entry_newsletter }}</label>
+        <input type="checkbox" name="newsletter" value="1" id="input-newsletter" class="form-check-input"/>
       </div>
 
       {% if text_agree %}
@@ -605,10 +607,15 @@ $('#form-register').on('submit', function(e) {
 
                     if (json['shipping_methods']) {
                         var shipping_methods = json['shipping_methods'];
+
+
+
                     }
 
                     if (json['payment_methods']) {
                         var payment_methods = json['payment_methods'];
+
+
                     }
 
                     $('#checkout-confirm').load('index.php?route=checkout/confirm|confirm&language={{ language }}');

@@ -199,9 +199,7 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 				'custom_field'   => isset($this->request->post['custom_field']) ? $this->request->post['custom_field'] : []
 			];
 
-			$json['success'] = 'Success: Your address has been successfully created!';
-
-			unset($this->session->data['payment_methods']);
+			$json['success'] = $this->language->get('text_address_add');
 
 			// Payment methods
 			$this->load->model('checkout/payment_method');
@@ -273,9 +271,7 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->session->data['payment_address'] = $address_info;
 
-			$json['success'] = 'Success: Your address has been successfully created!';
-
-			unset($this->session->data['payment_methods']);
+			$json['success'] = $this->language->get('text_address_updated');
 
 			// Payment methods
 			$this->load->model('checkout/payment_method');

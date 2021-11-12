@@ -13,6 +13,14 @@ $_['text_checkout_payment_method']   = 'Step %s: Payment Method';
 $_['text_checkout_confirm']          = 'Step %s: Confirm Order';
 $_['text_modify']                    = 'Modify &raquo;';
 
+$_['text_customer_add']              = 'Success: Your account has been successfully created!';
+$_['text_customer_edit']             = 'Success: Your account has been successfully updated.';
+
+$_['text_address_add']               = 'Success: Your address has been successfully added.';
+$_['text_address_updated']           = 'Success: Your address has been successfully updated.';
+
+
+
 $_['text_login']                     = 'If you already have an account with us, please login at the <a href="%s"><strong>login page</strong></a>.';
 $_['text_forgotten']                 = 'Forgotten Password';
 

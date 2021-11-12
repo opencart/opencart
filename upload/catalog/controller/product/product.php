@@ -237,6 +237,8 @@ class Product extends \Opencart\System\Engine\Controller {
 
 			$data['config_file_max_size'] = $this->config->get('config_file_max_size');
 
+			$data['language'] = $this->config->get('config_language');
+
 			$data['product_id'] = (int)$this->request->get['product_id'];
 			$data['manufacturer'] = $product_info['manufacturer'];
 			$data['manufacturers'] = $this->url->link('product/manufacturer|info', 'language=' . $this->config->get('config_language') . '&manufacturer_id=' . $product_info['manufacturer_id']);

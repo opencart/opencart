@@ -1,7 +1,7 @@
 <form id="form-register">
   <p>{{ text_login }}</p>
   <fieldset>
-    <legend>{{ text_your_details }}</legend>
+    <legend>{{ heading_title }}</legend>
     <div class="row">
 
       {% if config_checkout_guest %}
@@ -456,8 +456,7 @@
         <legend>{{ text_your_password }}</legend>
         <div class="row">
           <div class="col mb-3 required">
-            <label for="input-password" class="form-label">{{ entry_password }}</label>
-            <input type="password" name="password" value="" placeholder="{{ entry_password }}" id="input-password" class="form-control"/>
+            <label for="input-password" class="form-label">{{ entry_password }}</label> <input type="password" name="password" value="" placeholder="{{ entry_password }}" id="input-password" class="form-control"/>
             <div id="error-password" class="invalid-feedback"></div>
           </div>
         </div>
@@ -469,14 +468,12 @@
     <div class="col mb-3">
 
       <div class="form-check">
-        <label for="input-newsletter" class="form-check-label">{{ entry_newsletter }}</label>
-        <input type="checkbox" name="newsletter" value="1" id="input-newsletter" class="form-check-input"/>
+        <label for="input-newsletter" class="form-check-label">{{ entry_newsletter }}</label> <input type="checkbox" name="newsletter" value="1" id="input-newsletter" class="form-check-input"/>
       </div>
 
       {% if text_agree %}
         <div id="agree" class="form-check">
-          <input type="checkbox" name="agree" value="1" id="input-register-agree" class="form-check-input"/>
-          <label class="form-check-label">{{ text_agree }}</label>
+          <input type="checkbox" name="agree" value="1" id="input-register-agree" class="form-check-input"/> <label class="form-check-label">{{ text_agree }}</label>
         </div>
       {% endif %}
 
@@ -522,8 +519,6 @@ $('#input-customer-group').on('change', function() {
                 $(element).prop('disabled', false);
             },
             success: function(json) {
-                console.log(json);
-
                 $('.custom-field').addClass('d-none');
                 $('.custom-field').removeClass('required');
 
@@ -565,8 +560,7 @@ $('#form-register').on('submit', function(e) {
             type: 'post',
             dataType: 'json',
             data: $('#form-register').serialize(),
-            cache: false,
-            processData: false,
+            contentType: 'application/x-www-form-urlencoded',
             beforeSend: function() {
                 $(element).button('loading');
             },
@@ -576,8 +570,6 @@ $('#form-register').on('submit', function(e) {
             success: function(json) {
                 $('#form-register').find('.is-invalid').removeClass('is-invalid');
                 $('#form-register').find('.invalid-feedback').removeClass('d-block');
-
-                console.log(json);
 
                 if (json['redirect']) {
                     location = json['redirect'];
@@ -605,18 +597,11 @@ $('#form-register').on('submit', function(e) {
                         $('#input-register-agree').prop('disabled', true);
                     }
 
-                    if (json['shipping_methods']) {
-                        var shipping_methods = json['shipping_methods'];
-
-
-
-                    }
-
-                    if (json['payment_methods']) {
-                        var payment_methods = json['payment_methods'];
-
-
-                    }
+                  {% if shipping_required %}
+                    $('#button-shipping-method').trigger('click');
+                  {% else %}
+                    $('#button-payment-method').trigger('click');
+                  {% endif %}
 
                     $('#checkout-confirm').load('index.php?route=checkout/confirm|confirm&language={{ language }}');
                 }

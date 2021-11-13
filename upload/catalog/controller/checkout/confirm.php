@@ -2,7 +2,7 @@
 namespace Opencart\Catalog\Controller\Checkout;
 class Confirm extends \Opencart\System\Engine\Controller {
 	public function index(): string {
-		$this->load->language('checkout/checkout');
+		$this->load->language('checkout/confirm');
 
 		// Order Totals
 		$totals = [];

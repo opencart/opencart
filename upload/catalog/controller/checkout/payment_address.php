@@ -2,7 +2,7 @@
 namespace Opencart\Catalog\Controller\Checkout;
 class PaymentAddress extends \Opencart\System\Engine\Controller {
 	public function index(): string {
-		$this->load->language('checkout/checkout');
+		$this->load->language('checkout/payment_address');
 
 		$data['error_upload_size'] = sprintf($this->language->get('error_upload_size'), $this->config->get('config_file_max_size'));
 
@@ -42,7 +42,7 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 	}
 
 	public function save(): void {
-		$this->load->language('checkout/checkout');
+		$this->load->language('checkout/payment_address');
 
 		$json = [];
 
@@ -199,14 +199,7 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 				'custom_field'   => isset($this->request->post['custom_field']) ? $this->request->post['custom_field'] : []
 			];
 
-			$json['success'] = $this->language->get('text_address_add');
-
-			// Payment methods
-			$this->load->model('checkout/payment_method');
-
-			$json['payment_methods'] = $this->model_checkout_payment_method->getMethods($this->session->data['payment_address']);
-
-			$this->session->data['payment_methods'] = $json['payment_methods'];
+			$json['success'] = $this->language->get('text_success');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -214,7 +207,7 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 	}
 
 	public function address(): void {
-		$this->load->language('checkout/checkout');
+		$this->load->language('checkout/payment_address');
 
 		$json = [];
 
@@ -271,14 +264,7 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->session->data['payment_address'] = $address_info;
 
-			$json['success'] = $this->language->get('text_address_updated');
-
-			// Payment methods
-			$this->load->model('checkout/payment_method');
-
-			$json['payment_methods'] = $this->model_checkout_payment_method->getMethods($address_info);
-
-			$this->session->data['payment_methods'] = $json['payment_methods'];
+			$json['success'] = $this->language->get('text_success');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

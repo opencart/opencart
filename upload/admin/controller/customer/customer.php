@@ -509,22 +509,25 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$data['account_custom_field'] = [];
 		}
 
-		if (!empty($customer_info)) {
-			$data['newsletter'] = $customer_info['newsletter'];
-		} else {
-			$data['newsletter'] = '';
-		}
+		$data['password'] = '';
+		$data['confirm'] = '';
 
 		if (!empty($customer_info)) {
 			$data['address_id'] = $customer_info['address_id'];
 		} else {
-			$data['address_id'] = '';
+			$data['address_id'] = 0;
+		}
+
+		if (!empty($customer_info)) {
+			$data['newsletter'] = $customer_info['newsletter'];
+		} else {
+			$data['newsletter'] = 0;
 		}
 
 		if (!empty($customer_info)) {
 			$data['status'] = $customer_info['status'];
 		} else {
-			$data['status'] = true;
+			$data['status'] = 1;
 		}
 
 		if (!empty($customer_info)) {
@@ -532,9 +535,6 @@ class Customer extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['safe'] = 0;
 		}
-
-		$data['password'] = '';
-		$data['confirm'] = '';
 
 		$this->load->model('localisation/country');
 

@@ -2,7 +2,7 @@
 namespace Opencart\Catalog\Controller\Checkout;
 class ShippingAddress extends \Opencart\System\Engine\Controller {
 	public function index(): string {
-		$this->load->language('checkout/checkout');
+		$this->load->language('checkout/shipping_address');
 
 		$data['error_upload_size'] = sprintf($this->language->get('error_upload_size'), $this->config->get('config_file_max_size'));
 
@@ -41,7 +41,7 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 	}
 
 	public function save(): void {
-		$this->load->language('checkout/checkout');
+		$this->load->language('checkout/shipping_address');
 
 		$json = [];
 
@@ -203,14 +203,7 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 				'custom_field'   => isset($this->request->post['custom_field']) ? $this->request->post['custom_field'] : []
 			];
 
-			$json['success'] = $this->language->get('text_address_add');
-
-			// Shipping methods
-			$this->load->model('checkout/shipping_method');
-
-			$json['shipping_methods'] = $this->model_checkout_shipping_method->getMethods($this->session->data['shipping_address']);
-
-			$this->session->data['shipping_methods'] = $json['shipping_methods'];
+			$json['success'] = $this->language->get('text_success');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -218,7 +211,7 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 	}
 
 	public function address(): void {
-		$this->load->language('checkout/checkout');
+		$this->load->language('checkout/shipping_address');
 
 		$json = [];
 
@@ -280,14 +273,7 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->session->data['shipping_address'] = $address_info;
 
-			$json['success'] = $this->language->get('text_address_updated');
-
-			// Shipping methods
-			$this->load->model('checkout/shipping_method');
-
-			$json['shipping_methods'] = $this->model_checkout_shipping_method->getMethods($address_info);
-
-			$this->session->data['shipping_methods'] = $json['shipping_methods'];
+			$json['success'] = $this->language->get('text_success');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

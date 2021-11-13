@@ -10,7 +10,7 @@ class Customer extends \Opencart\System\Engine\Model {
 			foreach ($data['address'] as $key => $address) {
 				$this->db->query("INSERT INTO `" . DB_PREFIX . "address` SET `customer_id` = '" . (int)$customer_id . "', `firstname` = '" . $this->db->escape($address['firstname']) . "', `lastname` = '" . $this->db->escape($address['lastname']) . "', `company` = '" . $this->db->escape($address['company']) . "', `address_1` = '" . $this->db->escape($address['address_1']) . "', `address_2` = '" . $this->db->escape($address['address_2']) . "', `city` = '" . $this->db->escape($address['city']) . "', `postcode` = '" . $this->db->escape($address['postcode']) . "', `country_id` = '" . (int)$address['country_id'] . "', `zone_id` = '" . (int)$address['zone_id'] . "', `custom_field` = '" . $this->db->escape(isset($address['custom_field']) ? json_encode($address['custom_field']) : json_encode([])) . "'");
 
-				if (isset($data['default']) && $data['default'] == $key) {
+				if (isset($data['default']) || $data['default'] == $key) {
 					$address_id = $this->db->getLastId();
 
 					$this->db->query("UPDATE `" . DB_PREFIX . "customer` SET `address_id` = '" . (int)$address_id . "' WHERE `customer_id` = '" . (int)$customer_id . "'");
@@ -34,7 +34,7 @@ class Customer extends \Opencart\System\Engine\Model {
 			foreach ($data['address'] as $key => $address) {
 				$this->db->query("INSERT INTO `" . DB_PREFIX . "address` SET `address_id` = '" . (int)$address['address_id'] . "', `customer_id` = '" . (int)$customer_id . "', `firstname` = '" . $this->db->escape($address['firstname']) . "', `lastname` = '" . $this->db->escape($address['lastname']) . "', `company` = '" . $this->db->escape($address['company']) . "', `address_1` = '" . $this->db->escape($address['address_1']) . "', `address_2` = '" . $this->db->escape($address['address_2']) . "', `city` = '" . $this->db->escape($address['city']) . "', `postcode` = '" . $this->db->escape($address['postcode']) . "', `country_id` = '" . (int)$address['country_id'] . "', `zone_id` = '" . (int)$address['zone_id'] . "', `custom_field` = '" . $this->db->escape(isset($address['custom_field']) ? json_encode($address['custom_field']) : json_encode([])) . "'");
 
-				if (isset($data['default']) && $data['default'] == $key) {
+				if (isset($data['default']) || $data['default'] == $key) {
 					$address_id = $this->db->getLastId();
 
 					$this->db->query("UPDATE `" . DB_PREFIX . "customer` SET `address_id` = '" . (int)$address_id . "' WHERE `customer_id` = '" . (int)$customer_id . "'");
@@ -152,6 +152,56 @@ class Customer extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
+	public function getTotalCustomers(array $data = []): int {
+		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer` c";
+
+		if (!empty($data['filter_affiliate'])) {
+			$sql .= " LEFT JOIN `" . DB_PREFIX . "customer_affiliate` ca ON (ca.`customer_id` = c.`customer_id`)";
+		}
+
+		$implode = [];
+
+		if (!empty($data['filter_name'])) {
+			$implode[] = "CONCAT(c.`firstname`, ' ', c.`lastname`) LIKE '%" . $this->db->escape((string)$data['filter_name']) . "%'";
+		}
+
+		if (!empty($data['filter_email'])) {
+			$implode[] = "c.`email` LIKE '" . $this->db->escape((string)$data['filter_email']) . "%'";
+		}
+
+		if (isset($data['filter_newsletter']) && !is_null($data['filter_newsletter'])) {
+			$implode[] = "c.`newsletter` = '" . (int)$data['filter_newsletter'] . "'";
+		}
+
+		if (!empty($data['filter_customer_group_id'])) {
+			$implode[] = "c.`customer_group_id` = '" . (int)$data['filter_customer_group_id'] . "'";
+		}
+
+		if (!empty($data['filter_affiliate'])) {
+			$implode[] = "ca.`status` = '" . (int)$data['filter_affiliate'] . "'";
+		}
+
+		if (!empty($data['filter_ip'])) {
+			$implode[] = "c.`customer_id` IN (SELECT `customer_id` FROM " . DB_PREFIX . "customer_ip WHERE `ip` = '" . $this->db->escape((string)$data['filter_ip']) . "')";
+		}
+
+		if (isset($data['filter_status']) && $data['filter_status'] !== '') {
+			$implode[] = "c.`status` = '" . (int)$data['filter_status'] . "'";
+		}
+
+		if (!empty($data['filter_date_added'])) {
+			$implode[] = "DATE(c.`date_added`) = DATE('" . $this->db->escape((string)$data['filter_date_added']) . "')";
+		}
+
+		if ($implode) {
+			$sql .= " WHERE " . implode(" AND ", $implode);
+		}
+
+		$query = $this->db->query($sql);
+
+		return (int)$query->row['total'];
+	}
+
 	public function getAddress(int $address_id): array {
 		$address_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "address` WHERE `address_id` = '" . (int)$address_id . "'");
 
@@ -217,56 +267,6 @@ class Customer extends \Opencart\System\Engine\Model {
 		}
 
 		return $address_data;
-	}
-
-	public function getTotalCustomers(array $data = []): int {
-		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer` c";
-
-		if (!empty($data['filter_affiliate'])) {
-			$sql .= " LEFT JOIN `" . DB_PREFIX . "customer_affiliate` ca ON (ca.`customer_id` = c.`customer_id`)";
-		}
-
-		$implode = [];
-
-		if (!empty($data['filter_name'])) {
-			$implode[] = "CONCAT(c.`firstname`, ' ', c.`lastname`) LIKE '%" . $this->db->escape((string)$data['filter_name']) . "%'";
-		}
-
-		if (!empty($data['filter_email'])) {
-			$implode[] = "c.`email` LIKE '" . $this->db->escape((string)$data['filter_email']) . "%'";
-		}
-
-		if (isset($data['filter_newsletter']) && !is_null($data['filter_newsletter'])) {
-			$implode[] = "c.`newsletter` = '" . (int)$data['filter_newsletter'] . "'";
-		}
-
-		if (!empty($data['filter_customer_group_id'])) {
-			$implode[] = "c.`customer_group_id` = '" . (int)$data['filter_customer_group_id'] . "'";
-		}
-
-		if (!empty($data['filter_affiliate'])) {
-			$implode[] = "ca.`status` = '" . (int)$data['filter_affiliate'] . "'";
-		}
-
-		if (!empty($data['filter_ip'])) {
-			$implode[] = "c.`customer_id` IN (SELECT `customer_id` FROM " . DB_PREFIX . "customer_ip WHERE `ip` = '" . $this->db->escape((string)$data['filter_ip']) . "')";
-		}
-
-		if (isset($data['filter_status']) && $data['filter_status'] !== '') {
-			$implode[] = "c.`status` = '" . (int)$data['filter_status'] . "'";
-		}
-
-		if (!empty($data['filter_date_added'])) {
-			$implode[] = "DATE(c.`date_added`) = DATE('" . $this->db->escape((string)$data['filter_date_added']) . "')";
-		}
-
-		if ($implode) {
-			$sql .= " WHERE " . implode(" AND ", $implode);
-		}
-
-		$query = $this->db->query($sql);
-
-		return (int)$query->row['total'];
 	}
 
 	public function getTotalAddressesByCustomerId(int $customer_id): int {

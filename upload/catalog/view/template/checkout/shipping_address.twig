@@ -1,33 +1,23 @@
-<form id="form-shipping-address">
-  <fieldset>
-    <legend>{{ text_shipping_address }}</legend>
-
-    <div id="shipping-addresses" style="display: {% if not addresses %}none{% else %}block{% endif %};">
-      <div class="form-check">
-        <input type="radio" name="shipping_existing" value="1" id="input-shipping-existing" class="form-check-input" checked/>
-        <label for="input-shipping-existing" class="form-check-label">{{ text_address_existing }}</label>
-      </div>
-      <div class="form-check">
-        <input type="radio" name="shipping_existing" value="0" id="input-shipping-new" class="form-check-input"/>
-        <label for="input-shipping-new" class="form-check-label">{{ text_address_new }}</label>
-      </div>
-
-
-      <div id="shipping-existing" style="display: {% if not addresses %}none{% else %}block{% endif %};">
-        <select name="address_id" id="input-shipping-address" class="form-select">
-          {% for address in addresses %}
-            <option value="{{ address.address_id }}"{% if address.address_id == address_id %} selected{% endif %}>{{ address.firstname }} {{ address.lastname }}, {{ address.address_1 }}, {{ address.city }}, {{ address.zone }}, {{ address.country }}</option>
-          {% endfor %}
-        </select>
-      </div>
-
+<fieldset>
+  <legend>{{ text_shipping_address }}</legend>
+  <div id="shipping-addresses" style="display: {% if not addresses %}none{% else %}block{% endif %};">
+    <div class="form-check">
+      <input type="radio" name="shipping_existing" value="1" id="input-shipping-existing" class="form-check-input"{% if addresses %} checked{% endif %}/> <label for="input-shipping-existing" class="form-check-label">{{ text_address_existing }}</label>
     </div>
-
-
-
-
-    <br/>
-    <div id="shipping-new" style="display: {% if addresses %}none{% else %}block{% endif %};">
+    <div class="form-check">
+      <input type="radio" name="shipping_existing" value="0" id="input-shipping-new" class="form-check-input"{% if not addresses %} checked{% endif %}/> <label for="input-shipping-new" class="form-check-label">{{ text_address_new }}</label>
+    </div>
+  </div>
+  <div id="shipping-existing" style="display: {% if not addresses %}none{% else %}block{% endif %};">
+    <select name="address_id" id="input-shipping-address" class="form-select">
+      {% for address in addresses %}
+        <option value="{{ address.address_id }}"{% if address.address_id == address_id %} selected{% endif %}>{{ address.firstname }} {{ address.lastname }}, {{ address.address_1 }}, {{ address.city }}, {{ address.zone }}, {{ address.country }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <br/>
+  <div id="shipping-new" style="display: {% if addresses %}none{% else %}block{% endif %};">
+    <form id="form-shipping-address">
       <div class="row row-cols-1 row-cols-md-2">
 
         <div class="col mb-3 required">
@@ -184,9 +174,9 @@
       <div class="text-end mb-3">
         <button type="submit" id="button-shipping-address" class="btn btn-primary">{{ button_continue }}</button>
       </div>
-    </div>
-  </fieldset>
-</form>
+    </form>
+  </div>
+</fieldset>
 <script type="text/javascript"><!--
 $('input[name=\'shipping_existing\']').on('change', function() {
     if ($(this).val() == 1) {
@@ -220,42 +210,13 @@ $('#input-shipping-address').on('change', function() {
                 }
 
                 if (json['error']) {
-                    $('#alert').prepend('<div class="alert alert-warning alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    $('#alert').prepend('<div class="alert alert-warning alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                 }
 
                 if (json['success']) {
                     $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                    // Shipping Methods
-                    html = '<option value="">{{ text_select }}</option>';
-
-                    if (json['shipping_methods']) {
-                        for (i in json['shipping_methods']) {
-                            html += '<optgroup label="' + json['shipping_methods'][i]['title'] + '">';
-
-                            if (!json['shipping_methods'][i]['error']) {
-                                for (j in json['shipping_methods'][i]['quote']) {
-                                    if (json['shipping_methods'][i]['quote'][j]['cost']) {
-                                        text = json['shipping_methods'][i]['quote'][j]['title'] + ' - ' + json['shipping_methods'][i]['quote'][j]['text'];
-                                    } else {
-                                        text = json['shipping_methods'][i]['quote'][j]['title'];
-                                    }
-
-                                    html += '<option value="' + json['shipping_methods'][i]['quote'][j]['code'] + '">' + text + '</option>';
-                                }
-                            } else {
-                                html += '<option value="" style="color: #ff0000;" disabled>' + json['shipping_methods'][i]['error'] + '</option>';
-                            }
-
-                            html += '</optgroup>';
-                        }
-                    }
-
-                    var shipping_method = $('#input-shipping-method').val();
-
-                    $('#input-shipping-method').html(html);
-
-                    $('#input-shipping-method').val(shipping_method);
+                    $('#button-shipping-method').trigger('click');
 
                     $('#checkout-confirm').load('index.php?route=checkout/confirm|confirm&language={{ language }}');
                 }
@@ -296,7 +257,7 @@ $('#form-shipping-address').on('submit', function(e) {
 
                 if (json['error']) {
                     if (json['error']['warning']) {
-                        $('#alert').prepend('<div class="alert alert-warning alert-dismissible">' + json['error']['warning'] + '<button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                        $('#alert').prepend('<div class="alert alert-warning alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                     }
 
                     for (i in json['error']) {
@@ -308,7 +269,7 @@ $('#form-shipping-address').on('submit', function(e) {
                 }
 
                 if (json['success']) {
-                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                     html = '';
 
@@ -319,53 +280,34 @@ $('#form-shipping-address').on('submit', function(e) {
                         }
                     }
 
+                  {% if config_checkout_address %}
                     var payment_address_id = $('#input-payment-address').val();
-                    var shipping_address_id = json['address_id'];
 
                     $('#input-payment-address').html(html);
-                    $('#input-shipping-address').html(html);
 
                     $('#input-payment-address').val(payment_address_id);
-                    $('#input-shipping-address').val(shipping_address_id);
 
                     $('#payment-addresses').css({display: 'block'});
-                    $('#shipping-addresses').css({display: 'block'});
 
-                    $('#payment-new').css({display: 'none'});
-                    $('#shipping-new').css({display: 'none'});
+                    $('#input-payment-existing').trigger('click');
+                  {% endif %}
+
+                    // Shipping method
+                    var shipping_address_id = json['address_id'];
+
+                    $('#input-shipping-address').html(html);
+
+                    $('#input-shipping-address').val(shipping_address_id);
+
+                    $('#shipping-addresses').css({display: 'block'});
 
                     $('#input-shipping-existing').trigger('click');
 
-                    // Shipping Methods
-                    html = '<option value="">{{ text_select }}</option>';
+                    $('#form-shipping-address')[0].reset();
 
-                    if (json['shipping_methods']) {
-                        for (i in json['shipping_methods']) {
-                            html += '<optgroup label="' + json['shipping_methods'][i]['title'] + '">';
+                    $('#button-shipping-method').trigger('click');
 
-                            if (!json['shipping_methods'][i]['error']) {
-                                for (j in json['shipping_methods'][i]['quote']) {
-                                    if (json['shipping_methods'][i]['quote'][j]['cost']) {
-                                        text = json['shipping_methods'][i]['quote'][j]['title'] + ' - ' + json['shipping_methods'][i]['quote'][j]['text'];
-                                    } else {
-                                        text = json['shipping_methods'][i]['quote'][j]['title'];
-                                    }
-
-                                    html += '<option value="' + json['shipping_methods'][i]['quote'][j]['code'] + '">' + text + '</option>';
-                                }
-                            } else {
-                                html += '<option value="" style="color: #ff0000;" disabled>' + json['shipping_methods'][i]['error'] + '</option>';
-                            }
-
-                            html += '</optgroup>';
-                        }
-                    }
-
-                    var shipping_method = $('#input-shipping-method').val();
-
-                    $('#input-shipping-method').html(html);
-
-                    $('#input-shipping-method').val(shipping_method);
+                    $('#checkout-confirm').load('index.php?route=checkout/confirm|confirm&language={{ language }}');
                 }
             },
             error: function(xhr, ajaxOptions, thrownError) {

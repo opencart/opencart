@@ -2,7 +2,7 @@
 namespace Opencart\Catalog\Controller\Checkout;
 class PaymentMethod extends \Opencart\System\Engine\Controller {
 	public function index(): string {
-		$this->load->language('checkout/checkout');
+		$this->load->language('checkout/payment_method');
 
 		$data['language'] = $this->config->get('config_language');
 
@@ -94,7 +94,7 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 	}
 
 	public function getMethods(): void {
-		$this->load->language('checkout/checkout');
+		$this->load->language('checkout/payment_method');
 
 		$json = [];
 
@@ -147,7 +147,7 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 	}
 
 	public function save(): void {
-		$this->load->language('checkout/checkout');
+		$this->load->language('checkout/payment_method');
 
 		$json = [];
 
@@ -187,11 +187,9 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 
 		// Validate if shipping address or shipping method has been set.
 		if ($this->cart->hasShipping()) {
-
 			if (!isset($this->session->data['shipping_address']) || !isset($this->session->data['shipping_method'])) {
 				$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
 			}
-
 		} else {
 			unset($this->session->data['shipping_address']);
 			unset($this->session->data['shipping_method']);
@@ -200,13 +198,13 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 
 		if (!$json) {
 			// Validate payment method
-			if (!isset($this->request->get['payment_method']) || !isset($this->session->data['payment_methods'][$this->request->get['payment_method']])) {
+			if (!isset($this->request->post['payment_method']) || !isset($this->session->data['payment_methods'][$this->request->post['payment_method']])) {
 				$json['error'] = $this->language->get('error_payment');
 			}
 		}
 
 		if (!$json) {
-			$this->session->data['payment_method'] = $this->request->get['payment_method'];
+			$this->session->data['payment_method'] = $this->request->post['payment_method'];
 
 			$json['success'] = $this->language->get('text_success');
 		}

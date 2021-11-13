@@ -2,7 +2,7 @@
 namespace Opencart\Catalog\Controller\Checkout;
 class Register extends \Opencart\System\Engine\Controller {
 	public function index(): string {
-		$this->load->language('checkout/checkout');
+		$this->load->language('checkout/register');
 
 		$data['text_login'] = sprintf($this->language->get('text_login'), $this->url->link('account/login', 'language=' . $this->config->get('config_language') . '&redirect=' . urlencode($this->url->link('account/login', 'language=' . $this->config->get('config_language'), true))));
 
@@ -587,15 +587,6 @@ class Register extends \Opencart\System\Engine\Controller {
 				if ($this->customer->isLogged()) {
 					$json['success'] = $this->language->get('text_customer_edit');
 				}
-
-
-
-				// Payment methods
-				$this->load->model('checkout/payment_method');
-
-				$json['payment_methods'] = $this->model_checkout_payment_method->getMethods($this->session->data['payment_address']);
-
-				$this->session->data['payment_methods'] = $json['payment_methods'];
 			} else {
 				// If account needs approval we redirect to the account success / requires approval page.
 				$json['redirect'] = $this->url->link('account/success', 'language=' . $this->config->get('config_language'), true);

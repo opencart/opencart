@@ -1,6 +1,6 @@
 <form id="form-payment-method">
   <fieldset class="">
-    <legend>{{ text_payment_method }}</legend>
+    <legend>{{ heading_title }}</legend>
     <div class="input-group">
       <select name="payment_method" id="input-payment-method" class="form-select"{% if not payment_methods %} disabled{% endif %}>
         <option value="">{{ text_select }}</option>
@@ -28,8 +28,6 @@ $('#button-payment-method').on('click', function() {
                 $('#input-payment-method').prop('disabled', false);
             },
             success: function(json) {
-                $('.alert-dismissible').remove();
-
                 console.log(json);
 
                 if (json['redirect']) {
@@ -53,6 +51,8 @@ $('#button-payment-method').on('click', function() {
                 $('#input-payment-method').html(html);
 
                 $('#input-payment-method').val(payment_method);
+
+                $('#checkout-confirm').load('index.php?route=checkout/confirm|confirm&language={{ language }}');
             },
             error: function(xhr, ajaxOptions, thrownError) {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -67,8 +67,11 @@ $('#input-payment-method').on('change', function() {
 
     chain.attach(function() {
         return $.ajax({
-            url: 'index.php?route=checkout/payment_method|save&language={{ language }}&payment_method=' + $(element).val(),
+            url: 'index.php?route=checkout/payment_method|save&language={{ language }}',
+            type: 'post',
+            data: $('#form-payment-method').serialize(),
             dataType: 'json',
+            contentType: 'application/x-www-form-urlencoded',
             beforeSend: function() {
                 $(element).prop('disabled', true);
             },
@@ -76,8 +79,6 @@ $('#input-payment-method').on('change', function() {
                 $(element).prop('disabled', false);
             },
             success: function(json) {
-                $('.alert-dismissible').remove();
-
                 console.log(json);
 
                 if (json['redirect']) {
@@ -89,7 +90,7 @@ $('#input-payment-method').on('change', function() {
                 }
 
                 if (json['success']) {
-                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                     $('#checkout-confirm').load('index.php?route=checkout/confirm|confirm&language={{ language }}');
                 }

@@ -1,6 +1,6 @@
 <form id="form-shipping-method">
   <fieldset>
-    <legend>{{ text_shipping_method }}</legend>
+    <legend>{{ heading_title }}</legend>
     <div class="input-group">
       <select name="shipping_method" id="input-shipping-method" class="form-select"{% if not shipping_methods %} disabled{% endif %}>
         <option value="">{{ text_select }}</option>
@@ -8,9 +8,7 @@
           <optgroup label="{{ shipping_method.title }}">
             {% if not shipping_method.error %}
               {% for quote in shipping_method.quote %}
-
                 <option value="{{ quote.code }}"{% if quote.code == code %} selected{% endif %}>{{ quote.title }}{% if quote.cost %} - {{ quote.text }}{% endif %}</option>
-
               {% endfor %}
             {% else %}
               <option value="" class="text-danger" disabled>{{ shipping_method.error }}</option>
@@ -32,8 +30,6 @@ $('#button-shipping-method').on('click', function() {
             url: 'index.php?route=checkout/shipping_method|getMethods&language={{ language }}',
             dataType: 'json',
             success: function(json) {
-                $('.alert-dismissible').remove();
-
                 console.log(json);
 
                 if (json['redirect']) {
@@ -47,18 +43,16 @@ $('#button-shipping-method').on('click', function() {
                 // Shipping Methods
                 html = '<option value="">{{ text_select }}</option>';
 
-                var shipping_methods = [];
+                if (json['shipping_methods']) {
+                    for (i in json['shipping_methods']) {
+                        html += '<optgroup label="' + json['shipping_methods'][i]['title'] + '">';
 
-                if (shipping_methods) {
-                    for (i in shipping_methods) {
-                        html += '<optgroup label="' + shipping_methods[i]['title'] + '">';
-
-                        if (!shipping_methods[i]['error']) {
-                            for (j in shipping_methods[i]['quote']) {
-                                if (shipping_methods[i]['quote'][j]['cost']) {
-                                    text = shipping_methods[i]['quote'][j]['title'] + ' - ' + json['shipping_methods'][i]['quote'][j]['text'];
+                        if (!json['shipping_methods'][i]['error']) {
+                            for (j in json['shipping_methods'][i]['quote']) {
+                                if (json['shipping_methods'][i]['quote'][j]['cost']) {
+                                    text = json['shipping_methods'][i]['quote'][j]['title'] + ' - ' + json['shipping_methods'][i]['quote'][j]['text'];
                                 } else {
-                                    text = shipping_methods[i]['quote'][j]['title'];
+                                    text = json['shipping_methods'][i]['quote'][j]['title'];
                                 }
 
                                 html += '<option value="' + json['shipping_methods'][i]['quote'][j]['code'] + '">' + text + '</option>';
@@ -76,6 +70,8 @@ $('#button-shipping-method').on('click', function() {
                 $('#input-shipping-method').html(html);
 
                 $('#input-shipping-method').val(shipping_method);
+
+                $('#checkout-confirm').load('index.php?route=checkout/confirm|confirm&language={{ language }}');
             },
             error: function(xhr, ajaxOptions, thrownError) {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -90,8 +86,11 @@ $('#input-shipping-method').on('change', function() {
 
     chain.attach(function() {
         return $.ajax({
-            url: 'index.php?route=checkout/shipping_method|save&language={{ language }}&shipping_method=' + $(element).val(),
+            url: 'index.php?route=checkout/shipping_method|save&language={{ language }}',
+            type: 'post',
+            data: $('#form-shipping-method').serialize(),
             dataType: 'json',
+            contentType: 'application/x-www-form-urlencoded',
             beforeSend: function() {
                 $(element).prop('disabled', true);
             },
@@ -99,8 +98,6 @@ $('#input-shipping-method').on('change', function() {
                 $(element).prop('disabled', false);
             },
             success: function(json) {
-                $('.alert-dismissible').remove();
-
                 console.log(json);
 
                 if (json['redirect']) {
@@ -112,7 +109,7 @@ $('#input-shipping-method').on('change', function() {
                 }
 
                 if (json['success']) {
-                    $('#input-payment-method').prop('disabled', false);
+                    $('#button-payment-method').trigger('click');
 
                     $('#checkout-confirm').load('index.php?route=checkout/confirm|confirm&language={{ language }}');
                 }

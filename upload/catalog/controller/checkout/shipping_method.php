@@ -2,7 +2,7 @@
 namespace Opencart\Catalog\Controller\Checkout;
 class ShippingMethod extends \Opencart\System\Engine\Controller {
 	public function index(): string {
-		$this->load->language('checkout/checkout');
+		$this->load->language('checkout/shipping_method');
 
 		$data['language'] = $this->config->get('config_language');
 
@@ -30,7 +30,7 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 	}
 
 	public function getMethods(): void {
-		$this->load->language('checkout/checkout');
+		$this->load->language('checkout/shipping_method');
 
 		$json = [];
 
@@ -55,7 +55,7 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 	}
 
 	public function save(): void {
-		$this->load->language('checkout/checkout');
+		$this->load->language('checkout/shipping_method');
 
 		$json = [];
 
@@ -99,8 +99,8 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			if (isset($this->request->get['shipping_method'])) {
-				$shipping = explode('.', $this->request->get['shipping_method']);
+			if (isset($this->request->post['shipping_method'])) {
+				$shipping = explode('.', $this->request->post['shipping_method']);
 
 				if (!isset($shipping[0]) || !isset($shipping[1]) || !isset($this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]])) {
 					$json['error'] = $this->language->get('error_shipping');
@@ -111,7 +111,7 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$this->session->data['shipping_method'] = $this->request->get['shipping_method'];
+			$this->session->data['shipping_method'] = $this->request->post['shipping_method'];
 
 			$json['success'] = $this->language->get('text_success');
 		}

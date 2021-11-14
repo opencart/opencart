@@ -277,7 +277,7 @@ $('#form-payment-address').on('submit', function(e) {
 
                 if (json['error']) {
                     if (json['error']['warning']) {
-                        $('#alert').prepend('<div class="alert alert-warning"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                        $('#alert').prepend('<div class="alert alert-warning alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                     }
 
                     for (i in json['error']) {
@@ -289,27 +289,27 @@ $('#form-payment-address').on('submit', function(e) {
                 }
 
                 if (json['success']) {
-                    $('#alert').prepend('<div class="alert alert-success"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                     var addresses = [];
 
                     // Payment addresses
                     if (json['addresses']) {
                         for (i in json['addresses']) {
-                            addresses[i] = [
-                                'text' => json['addresses'][i]['firstname'] + ' ' + json['addresses'][i]['lastname'] + ', ' + json['addresses'][i]['address_1'] + ', ' + json['addresses'][i]['city'] + ', ' + json['addresses'][i]['zone'] + ', ' + json['addresses'][i]['country'],
-                                'value' => json['addresses'][i]['address_id']
-                            ]
+                            addresses[i] = {
+                                text: json['addresses'][i]['firstname'] + ' ' + json['addresses'][i]['lastname'] + ', ' + json['addresses'][i]['address_1'] + ', ' + json['addresses'][i]['city'] + ', ' + json['addresses'][i]['zone'] + ', ' + json['addresses'][i]['country'],
+                                value: json['addresses'][i]['address_id']
+                            };
                         }
                     }
 
                     html = '';
 
                     for (i in addresses) {
-                        if (addresses[i]['address_id'] == json['address_id']) {
-                            html += '<option value="' + json['addresses'][i]['address_id'] + '" selected>' + json['addresses'][i]['text'] + '</option>';
+                        if (addresses[i]['value'] == json['address_id']) {
+                            html += '<option value="' + addresses[i]['value'] + '" selected>' + addresses[i]['text'] + '</option>';
                         } else {
-                            html += '<option value="' + json['addresses'][i]['address_id'] + '">' + json['addresses'][i]['text'] + '</option>';
+                            html += '<option value="' + addresses[i]['value'] + '">' + addresses[i]['text'] + '</option>';
                         }
                     }
 
@@ -323,10 +323,10 @@ $('#form-payment-address').on('submit', function(e) {
                     html = '';
 
                     for (i in addresses) {
-                        if (addresses[i]['address_id'] == $('#input-shipping-address').val()) {
-                            html += '<option value="' + json['addresses'][i]['address_id'] + '" selected>' + json['addresses'][i]['text'] + '</option>';
+                        if (addresses[i]['value'] == $('#input-shipping-address').val()) {
+                            html += '<option value="' + addresses[i]['value'] + '" selected>' + addresses[i]['text'] + '</option>';
                         } else {
-                            html += '<option value="' + json['addresses'][i]['address_id'] + '">' + json['addresses'][i]['text'] + '</option>';
+                            html += '<option value="' + addresses[i]['value'] + '">' + addresses[i]['text'] + '</option>';
                         }
                     }
 

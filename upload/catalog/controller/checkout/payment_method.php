@@ -214,12 +214,20 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 	}
 
 	public function comment(): void {
-		$this->request->post['comment    vb '];
+
 
 		if (!$json) {
-			$this->session->data['payment_method'] = $this->request->post['payment_method'];
+			$this->session->data['comment'] = $this->request->post['comment'];;
 
 			$json['success'] = $this->language->get('text_success');
 		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	public function agree(): void {
+
+
 	}
 }

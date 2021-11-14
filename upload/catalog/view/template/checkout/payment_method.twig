@@ -42,15 +42,15 @@ $('#button-payment-method').on('click', function() {
 
                 if (json['payment_methods']) {
                     for (i in json['payment_methods']) {
-                        html += '<option value="' + json['payment_methods'][i]['code'] + '">' + json['payment_methods'][i]['title'] + '</option>';
+                        if (json['payment_methods'][i]['code'] ==  $('#input-payment-method').val()) {
+                            html += '<option value="' + json['payment_methods'][i]['code'] + '" selected>' + json['payment_methods'][i]['title'] + '</option>';
+                        } else {
+                            html += '<option value="' + json['payment_methods'][i]['code'] + '">' + json['payment_methods'][i]['title'] + '</option>';
+                        }
                     }
                 }
 
-                var payment_method = $('#input-payment-method').val();
-
                 $('#input-payment-method').html(html);
-
-                $('#input-payment-method').val(payment_method);
 
                 $('#checkout-confirm').load('index.php?route=checkout/confirm|confirm&language={{ language }}');
             },
@@ -79,8 +79,6 @@ $('#input-payment-method').on('change', function() {
                 $(element).prop('disabled', false);
             },
             success: function(json) {
-                console.log(json);
-
                 if (json['redirect']) {
                     location = json['redirect'];
                 }

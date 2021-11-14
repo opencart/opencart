@@ -291,35 +291,48 @@ $('#form-payment-address').on('submit', function(e) {
                 if (json['success']) {
                     $('#alert').prepend('<div class="alert alert-success"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                    html = '';
+                    var addresses = [];
 
                     // Payment addresses
                     if (json['addresses']) {
                         for (i in json['addresses']) {
-                            html += '<option value="' + json['addresses'][i]['address_id'] + '">' + json['addresses'][i]['firstname'] + ' ' + json['addresses'][i]['lastname'] + ', ' + json['addresses'][i]['address_1'] + ', ' + json['addresses'][i]['city'] + ', ' + json['addresses'][i]['zone'] + ', ' + json['addresses'][i]['country'] + '</option>';
+                            addresses[i] = [
+                                'text' => json['addresses'][i]['firstname'] + ' ' + json['addresses'][i]['lastname'] + ', ' + json['addresses'][i]['address_1'] + ', ' + json['addresses'][i]['city'] + ', ' + json['addresses'][i]['zone'] + ', ' + json['addresses'][i]['country'],
+                                'value' => json['addresses'][i]['address_id']
+                            ]
                         }
                     }
 
-                    var payment_address_id = json['address_id'];
+                    html = '';
+
+                    for (i in addresses) {
+                        if (addresses[i]['address_id'] == json['address_id']) {
+                            html += '<option value="' + json['addresses'][i]['address_id'] + '" selected>' + json['addresses'][i]['text'] + '</option>';
+                        } else {
+                            html += '<option value="' + json['addresses'][i]['address_id'] + '">' + json['addresses'][i]['text'] + '</option>';
+                        }
+                    }
 
                     $('#input-payment-address').html(html);
-
-                    $('#input-payment-address').val(payment_address_id);
 
                     $('#payment-addresses').css({display: 'block'});
 
                     $('#input-payment-existing').trigger('click');
 
                   {% if shipping_required %}
-                    $('#shipping-addresses').css({display: 'block'});
+                    html = '';
 
-                    var shipping_address_id = $('#input-shipping-address').val();
+                    for (i in addresses) {
+                        if (addresses[i]['address_id'] == $('#input-shipping-address').val()) {
+                            html += '<option value="' + json['addresses'][i]['address_id'] + '" selected>' + json['addresses'][i]['text'] + '</option>';
+                        } else {
+                            html += '<option value="' + json['addresses'][i]['address_id'] + '">' + json['addresses'][i]['text'] + '</option>';
+                        }
+                    }
 
                     $('#input-shipping-address').html(html);
 
-                    if (shipping_address_id) {
-                        $('#input-shipping-address').val(shipping_address_id);
-                    }
+                    $('#shipping-addresses').css({display: 'block'});
 
                     $('#input-shipping-existing').trigger('click');
                   {% endif %}

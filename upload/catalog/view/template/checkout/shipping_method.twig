@@ -55,7 +55,12 @@ $('#button-shipping-method').on('click', function() {
                                     text = json['shipping_methods'][i]['quote'][j]['title'];
                                 }
 
-                                html += '<option value="' + json['shipping_methods'][i]['quote'][j]['code'] + '">' + text + '</option>';
+                                if (json['shipping_methods'][i]['quote'][j]['code'] == $('#input-shipping-method').val()) {
+                                    html += '<option value="' + json['shipping_methods'][i]['quote'][j]['code'] + '" selected>' + text + '</option>';
+                                } else {
+                                    html += '<option value="' + json['shipping_methods'][i]['quote'][j]['code'] + '" selected>' + text + '</option>';
+                                }
+
                             }
                         } else {
                             html += '<option value="" style="color: #ff0000;" disabled>' + json['shipping_methods'][i]['error'] + '</option>';
@@ -65,11 +70,7 @@ $('#button-shipping-method').on('click', function() {
                     }
                 }
 
-                var shipping_method = $('#input-shipping-method').val();
-
                 $('#input-shipping-method').html(html);
-
-                $('#input-shipping-method').val(shipping_method);
 
                 $('#checkout-confirm').load('index.php?route=checkout/confirm|confirm&language={{ language }}');
             },

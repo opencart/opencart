@@ -100,7 +100,6 @@ class Confirm extends \Opencart\System\Engine\Controller {
 			$status = false;
 		}
 
-
 		// Generate order if payment method is set
 		if ($status) {
 			$order_data = [];
@@ -318,9 +317,9 @@ class Confirm extends \Opencart\System\Engine\Controller {
 
 				$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
-
-
-				$this->model_checkout_order->editOrder($this->session->data['order_id'], $order_data);
+				if ($order_info && !$order_info['order_status_id']) {
+					$this->model_checkout_order->editOrder($this->session->data['order_id'], $order_data);
+				}
 			}
 		}
 

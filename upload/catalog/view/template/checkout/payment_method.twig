@@ -58,8 +58,6 @@ $('#button-payment-method').on('click', function() {
                 }
 
                 $('#input-payment-method').html(html);
-
-                $('#checkout-confirm').load('index.php?route=checkout/confirm|confirm&language={{ language }}');
             },
             error: function(xhr, ajaxOptions, thrownError) {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);

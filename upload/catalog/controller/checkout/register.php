@@ -565,15 +565,6 @@ class Register extends \Opencart\System\Engine\Controller {
 					// Remove the address id so if the customer changes their mind and requires changing a different shipping address it will create a new address.
 					$this->session->data['shipping_address']['address_id'] = 0;
 				}
-
-				if (!$customer_group_info['approval']) {
-					// Shipping methods
-					$this->load->model('checkout/shipping_method');
-
-					$json['shipping_methods'] = $this->model_checkout_shipping_method->getMethods($this->session->data['shipping_address']);
-
-					$this->session->data['shipping_methods'] = $json['shipping_methods'];
-				}
 			}
 
 			// If everything good login
@@ -587,6 +578,9 @@ class Register extends \Opencart\System\Engine\Controller {
 				if ($this->customer->isLogged()) {
 					$json['success'] = $this->language->get('text_customer_edit');
 				}
+
+				unset($this->session->data['payment_methods']);
+				unset($this->session->data['shipping_methods']);
 			} else {
 				// If account needs approval we redirect to the account success / requires approval page.
 				$json['redirect'] = $this->url->link('account/success', 'language=' . $this->config->get('config_language'), true);

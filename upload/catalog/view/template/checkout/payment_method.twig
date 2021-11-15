@@ -12,6 +12,15 @@
     </div>
   </fieldset>
 </form>
+<br/>
+<div class="mb-2">
+  <label for="input-comment" class="form-label"><strong>{{ text_comments }}</strong></label> <textarea name="comment" rows="3" id="input-comment" class="form-control">{{ comment }}</textarea>
+</div>
+{% if text_agree %}
+  <div class="mb-2">
+    <div class="text-end">{{ text_agree }} <input type="checkbox" name="agree" value="1" id="input-agree" class="form-check-input"{% if agree %} checked{% endif %}/></div>
+  </div>
+{% endif %}
 <script type="text/javascript"><!--
 // Payment Methods
 $('#button-payment-method').on('click', function() {
@@ -28,8 +37,6 @@ $('#button-payment-method').on('click', function() {
                 $('#input-payment-method').prop('disabled', false);
             },
             success: function(json) {
-                console.log(json);
-
                 if (json['redirect']) {
                     location = json['redirect'];
                 }
@@ -42,7 +49,7 @@ $('#button-payment-method').on('click', function() {
 
                 if (json['payment_methods']) {
                     for (i in json['payment_methods']) {
-                        if (json['payment_methods'][i]['code'] ==  $('#input-payment-method').val()) {
+                        if (json['payment_methods'][i]['code'] == $('#input-payment-method').val()) {
                             html += '<option value="' + json['payment_methods'][i]['code'] + '" selected>' + json['payment_methods'][i]['title'] + '</option>';
                         } else {
                             html += '<option value="' + json['payment_methods'][i]['code'] + '">' + json['payment_methods'][i]['title'] + '</option>';
@@ -99,4 +106,69 @@ $('#input-payment-method').on('change', function() {
         });
     });
 });
+
+// Payment Method
+$('#input-comment').on('focusout', function() {
+    var element = this;
+
+    chain.attach(function() {
+        return $.ajax({
+            url: 'index.php?route=checkout/payment_method|comment&language={{ language }}',
+            type: 'post',
+            data: $('#input-comment').serialize(),
+            dataType: 'json',
+            contentType: 'application/x-www-form-urlencoded',
+            beforeSend: function() {
+                $(element).prop('disabled', true);
+            },
+            complete: function() {
+                $(element).prop('disabled', false);
+            },
+            success: function(json) {
+                if (json['redirect']) {
+                    location = json['redirect'];
+                }
+
+                if (json['error']) {
+                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                }
+
+                if (json['success']) {
+                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                }
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
+        });
+    });
+});
+
+$('#input-agree').on('change', function() {
+    var element = this;
+
+    chain.attach(function() {
+        return $.ajax({
+            url: 'index.php?route=checkout/payment_method|agree&language={{ language }}',
+            type: 'post',
+            data: $('#input-agree').serialize(),
+            dataType: 'json',
+            contentType: 'application/x-www-form-urlencoded',
+            beforeSend: function() {
+                $(element).prop('disabled', true);
+            },
+            complete: function() {
+                $(element).prop('disabled', false);
+            },
+            success: function(json) {
+                $('#checkout-confirm').load('index.php?route=checkout/confirm|confirm&language={{ language }}');
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
+        });
+    });
+});
+
+
 //--></script>

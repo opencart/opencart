@@ -204,6 +204,8 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 			];
 
 			$json['success'] = $this->language->get('text_success');
+
+			unset($this->session->data['shipping_methods']);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -274,6 +276,8 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 			$this->session->data['shipping_address'] = $address_info;
 
 			$json['success'] = $this->language->get('text_success');
+
+			unset($this->session->data['shipping_methods']);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

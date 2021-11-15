@@ -43,8 +43,6 @@ class Confirm extends \Opencart\System\Engine\Controller {
 		// Validate cart has products and has stock.
 		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
 			$status = false;
-
-			echo 'cart has products and has stock.';
 		}
 
 		// Validate minimum quantity requirements.
@@ -61,8 +59,6 @@ class Confirm extends \Opencart\System\Engine\Controller {
 
 			if ($product['minimum'] > $product_total) {
 				$status = false;
-
-				echo 'minimum quantity requirements.';
 
 				break;
 			}
@@ -99,6 +95,11 @@ class Confirm extends \Opencart\System\Engine\Controller {
 		if (!isset($this->session->data['payment_method']) || !isset($this->session->data['payment_methods']) || !isset($this->session->data['payment_methods'][$this->session->data['payment_method']])) {
 			$status = false;
 		}
+
+		if ($this->config->get('config_checkout_id') && !isset($this->session->data['agree'])) {
+			$status = false;
+		}
+
 
 		// Generate order if payment method is set
 		if ($status) {
@@ -259,8 +260,8 @@ class Confirm extends \Opencart\System\Engine\Controller {
 
 			$order_data = array_merge($order_data, $total_data);
 
-			if (isset($this->request->post['comment'])) {
-				$order_data['comment'] = $this->request->post['comment'];
+			if (isset($this->session->data['comment'])) {
+				$order_data['comment'] = $this->session->data['comment'];
 			} else {
 				$order_data['comment'] = '';
 			}
@@ -310,11 +311,15 @@ class Confirm extends \Opencart\System\Engine\Controller {
 				$order_data['accept_language'] = '';
 			}
 
-			$this->load->model('checkout/order');
-
 			if (!isset($this->session->data['order_id'])) {
 				$this->session->data['order_id'] = $this->model_checkout_order->addOrder($order_data);
 			} else {
+				$this->load->model('checkout/order');
+
+				$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
+
+
+
 				$this->model_checkout_order->editOrder($this->session->data['order_id'], $order_data);
 			}
 		}
@@ -413,7 +418,7 @@ class Confirm extends \Opencart\System\Engine\Controller {
 
 		$extension_info = $this->model_setting_extension->getExtensionByCode('payment', $code);
 
-		if ($extension_info) {
+		if ($status && $extension_info) {
 			$data['payment'] = $this->load->controller('extension/' . $extension_info['extension'] . '/payment/' . $extension_info['code']);
 		} else {
 			$data['payment'] = '';
@@ -424,17 +429,5 @@ class Confirm extends \Opencart\System\Engine\Controller {
 
 	public function confirm(): void {
 		$this->response->setOutput($this->index());
-	}
-
-	public function fhdfh(): void {
-		if ($this->config->get('config_checkout_id')) {
-			$this->load->model('catalog/information');
-
-			$information_info = $this->model_catalog_information->getInformation($this->config->get('config_checkout_id'));
-
-			if ($information_info && !isset($this->request->post['agree'])) {
-				$json['error'] = sprintf($this->language->get('error_agree'), $information_info['title']);
-			}
-		}
 	}
 }

@@ -9,7 +9,7 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 		if (isset($this->session->data['shipping_methods'])) {
 			$data['shipping_methods'] = $this->session->data['shipping_methods'];
 		} elseif (isset($this->session->data['shipping_address']) && !isset($this->session->data['shipping_methods'])) {
-			// Shipping Methods
+			// Shipping methods
 			$this->load->model('checkout/shipping_method');
 
 			$data['shipping_methods'] = $this->model_checkout_shipping_method->getMethods($this->session->data['shipping_address']);
@@ -33,6 +33,12 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 		$this->load->language('checkout/shipping_method');
 
 		$json = [];
+
+
+
+		if (!$this->session->data['shipping_address']) {
+			$json['error'] = sprintf($this->language->get('error_no_shipping'), $this->url->link('information/contact', 'language=' . $this->config->get('config_language')));
+		}
 
 		// Shipping Methods
 		$this->load->model('checkout/shipping_method');

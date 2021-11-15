@@ -200,6 +200,8 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 			];
 
 			$json['success'] = $this->language->get('text_success');
+
+			unset($this->session->data['payment_methods']);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -265,6 +267,8 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 			$this->session->data['payment_address'] = $address_info;
 
 			$json['success'] = $this->language->get('text_success');
+
+			unset($this->session->data['payment_methods']);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

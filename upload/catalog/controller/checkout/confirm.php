@@ -40,6 +40,10 @@ class Confirm extends \Opencart\System\Engine\Controller {
 
 		$status = true;
 
+		if (!isset($this->session->data['customer'])) {
+			$status = false;
+		}
+
 		// Validate cart has products and has stock.
 		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
 			$status = false;
@@ -310,11 +314,11 @@ class Confirm extends \Opencart\System\Engine\Controller {
 				$order_data['accept_language'] = '';
 			}
 
+			$this->load->model('checkout/order');
+
 			if (!isset($this->session->data['order_id'])) {
 				$this->session->data['order_id'] = $this->model_checkout_order->addOrder($order_data);
 			} else {
-				$this->load->model('checkout/order');
-
 				$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
 				if ($order_info && !$order_info['order_status_id']) {

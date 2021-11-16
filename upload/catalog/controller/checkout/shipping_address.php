@@ -10,13 +10,20 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 
 		$data['language'] = $this->config->get('config_language');
 
+		$this->load->model('account/address');
+
 		if (isset($this->session->data['shipping_address']['address_id'])) {
 			$data['address_id'] = (int)$this->session->data['shipping_address']['address_id'];
 		} else {
 			$data['address_id'] = $this->customer->getAddressId();
-		}
 
-		$this->load->model('account/address');
+			// Set shipping address
+			$address_info = $this->model_account_address->getAddress($data['address_id']);
+
+			if ($address_info) {
+				$this->session->data['shipping_address'] = $address_info;
+			}
+		}
 
 		$data['addresses'] = $this->model_account_address->getAddresses();
 

@@ -135,7 +135,7 @@ class Register extends \Opencart\System\Engine\Controller {
 	}
 
 	public function save() {
-		$this->load->language('checkout/checkout');
+		$this->load->language('checkout/register');
 
 		$json = [];
 
@@ -543,7 +543,7 @@ class Register extends \Opencart\System\Engine\Controller {
 
 					// Add
 					if ($this->request->post['account']) {
-						if ($this->config->get('config_checkout_address')) {
+						if (!$this->config->get('config_checkout_address')) {
 							$shipping_address_data['default'] = 1;
 						}
 
@@ -573,9 +573,7 @@ class Register extends \Opencart\System\Engine\Controller {
 					$this->customer->login($this->request->post['email'], $this->request->post['password']);
 
 					$json['success'] = $this->language->get('text_customer_add');
-				}
-
-				if ($this->customer->isLogged()) {
+				} elseif ($this->customer->isLogged()) {
 					$json['success'] = $this->language->get('text_customer_edit');
 				}
 

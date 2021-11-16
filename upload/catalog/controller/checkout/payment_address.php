@@ -11,13 +11,20 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 		$data['language'] = $this->config->get('config_language');
 		$data['shipping_required'] = $this->cart->hasShipping();
 
+		$this->load->model('account/address');
+
 		if (isset($this->session->data['payment_address']['address_id'])) {
 			$data['address_id'] = (int)$this->session->data['payment_address']['address_id'];
 		} else {
 			$data['address_id'] = $this->customer->getAddressId();
-		}
 
-		$this->load->model('account/address');
+			// Set payment address
+			$address_info = $this->model_account_address->getAddress($data['address_id']);
+
+			if ($address_info) {
+				$this->session->data['payment_address'] = $address_info;
+			}
+		}
 
 		$data['addresses'] = $this->model_account_address->getAddresses();
 
@@ -217,6 +224,10 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 			$address_id = (int)$this->request->get['address_id'];
 		} else {
 			$address_id = 0;
+		}
+
+		if (!isset($this->session->data['customer'])) {
+			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
 		}
 
 		// Validate cart has products and has stock.

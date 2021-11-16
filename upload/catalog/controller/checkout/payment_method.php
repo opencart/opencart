@@ -6,10 +6,16 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 
 		$data['language'] = $this->config->get('config_language');
 
-		$status = false;
+		$data['payment_methods'] = [];
+
+		$status = true;
 
 		if (isset($this->session->data['customer'])) {
+			$status = false;
+		}
 
+		if ($this->config->get('config_checkout_address') && isset($this->session->data['payment_address'])) {
+			$status = false;
 
 		}
 
@@ -40,35 +46,33 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 		}
 
 
-
 		if (isset($this->session->data['payment_methods'])) {
 			$data['payment_methods'] = $this->session->data['payment_methods'];
+
+
 		} elseif (isset($this->session->data['customer'])) {
 
-
-
-
-			if ($this->config->get('config_checkout_address') && isset($this->session->data['payment_address'])) {
+			if (isset($this->session->data['payment_address'])) {
 				$payment_address = $this->session->data['payment_address'];
 			} else {
 				$payment_address = [
-					'address_id' => 0,
-					'firstname' => '',
-					'lastname' => '',
-					'company' => '',
-					'address_1' => '',
-					'address_2' => '',
-					'city' => '',
-					'postcode' => '',
-					'zone_id' => 0,
-					'zone' => '',
-					'zone_code' => '',
-					'country_id' => 0,
-					'country' => '',
-					'iso_code_2' => '',
-					'iso_code_3' => '',
+					'address_id'     => 0,
+					'firstname'      => '',
+					'lastname'       => '',
+					'company'        => '',
+					'address_1'      => '',
+					'address_2'      => '',
+					'city'           => '',
+					'postcode'       => '',
+					'zone_id'        => 0,
+					'zone'           => '',
+					'zone_code'      => '',
+					'country_id'     => 0,
+					'country'        => '',
+					'iso_code_2'     => '',
+					'iso_code_3'     => '',
 					'address_format' => '',
-					'custom_field' => []
+					'custom_field'   => []
 				];
 			}
 
@@ -77,9 +81,14 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 			$data['payment_methods'] = $this->model_checkout_payment_method->getMethods($payment_address);
 
 			$this->session->data['payment_methods'] = $data['payment_methods'];
-
 		} else {
 			$data['payment_methods'] = [];
+		}
+
+		if (isset($this->session->data['payment_method'])) {
+			$data['code'] = $this->session->data['payment_method'];
+		} else {
+			$data['code'] = '';
 		}
 
 		if (isset($this->session->data['comment'])) {
@@ -104,12 +113,6 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 			$data['agree'] = '';
 		}
 
-		if (isset($this->session->data['payment_method'])) {
-			$data['code'] = $this->session->data['payment_method'];
-		} else {
-			$data['code'] = '';
-		}
-
 		return $this->load->view('checkout/payment_method', $data);
 	}
 
@@ -118,41 +121,74 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		if (!isset($this->session->data['payment_address'])) {
-			$json['error'] = $this->language->get('error_payment_address');
+		$status = true;
+
+		// Validate cart has products and has stock.
+		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
+			$status = false;
 		}
 
-		if ($this->config->get('config_checkout_address') && isset($this->session->data['payment_address'])) {
-			$payment_address = $this->session->data['payment_address'];
-		} else {
-			$payment_address = [
-				'address_id'     => 0,
-				'firstname'      => '',
-				'lastname'       => '',
-				'company'        => '',
-				'address_1'      => '',
-				'address_2'      => '',
-				'city'           => '',
-				'postcode'       => '',
-				'zone_id'        => 0,
-				'zone'           => '',
-				'zone_code'      => '',
-				'country_id'     => 0,
-				'country'        => '',
-				'iso_code_2'     => '',
-				'iso_code_3'     => '',
-				'address_format' => '',
-				'custom_field'   => []
-			];
+		// Validate minimum quantity requirements.
+		$products = $this->cart->getProducts();
+
+		foreach ($products as $product) {
+			$product_total = 0;
+
+			foreach ($products as $product_2) {
+				if ($product_2['product_id'] == $product['product_id']) {
+					$product_total += $product_2['quantity'];
+				}
+			}
+
+			if ($product['minimum'] > $product_total) {
+				$status = false;
+
+				break;
+			}
 		}
 
-		// Payment Methods
-		$this->load->model('checkout/payment_method');
+		if ($this->config->get('config_checkout_address') && !isset($this->session->data['payment_address'])) {
+			$status = false;
+		}
 
-		$payment_methods = $this->model_checkout_payment_method->getMethods($payment_address);
+		// Validate if shipping not required. If not the customer should not have reached this page.
+		if (!$this->cart->hasShipping() || !isset($this->session->data['shipping_address'])) {
+			$status = false;
+		}
 
-		if (!$payment_methods) {
-			$json['error'] = sprintf($this->language->get('error_no_payment'), $this->url->link('information/contact', 'language=' . $this->config->get('config_language')));
+		if ($status) {
+			if (isset($this->session->data['payment_address'])) {
+				$payment_address = $this->session->data['payment_address'];
+			} else {
+				$payment_address = [
+					'address_id' => 0,
+					'firstname' => '',
+					'lastname' => '',
+					'company' => '',
+					'address_1' => '',
+					'address_2' => '',
+					'city' => '',
+					'postcode' => '',
+					'zone_id' => 0,
+					'zone' => '',
+					'zone_code' => '',
+					'country_id' => 0,
+					'country' => '',
+					'iso_code_2' => '',
+					'iso_code_3' => '',
+					'address_format' => '',
+					'custom_field' => []
+				];
+			}
+
+			// Payment Methods
+			$this->load->model('checkout/payment_method');
+
+			$payment_methods = $this->model_checkout_payment_method->getMethods($payment_address);
+
+			if (!$payment_methods) {
+				$json['error'] = sprintf($this->language->get('error_no_payment'), $this->url->link('information/contact', 'language=' . $this->config->get('config_language')));
+			}
 		}
 
 		if ($payment_methods) {
@@ -195,11 +231,6 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		// Validate if shipping method has been set.
-		if (!isset($this->session->data['customer'])) {
-			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
-		}
-
 		// Validate if payment address is set if required in settings
 		if ($this->config->get('config_checkout_address') && !isset($this->session->data['payment_address'])) {
 			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
@@ -219,7 +250,7 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			// Validate payment method
 			if (!isset($this->request->post['payment_method']) || !isset($this->session->data['payment_methods'][$this->request->post['payment_method']])) {
-				$json['error'] = $this->language->get('error_payment');
+				$json['error'] = $this->language->get('error_payment_method');
 			}
 		}
 
@@ -258,8 +289,6 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 		} else {
 			unset($this->session->data['agree']);
 		}
-
-		$json['success'] = $this->language->get('text_success');
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

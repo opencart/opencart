@@ -68,6 +68,11 @@ class Confirm extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		// Validate if payment address has been set.
+		if ($this->config->get('config_checkout_address') && !isset($this->session->data['payment_address'])) {
+			$status = false;
+		}
+
 		// Shipping
 		if ($this->cart->hasShipping()) {
 			// Validate shipping address
@@ -89,11 +94,6 @@ class Confirm extends \Opencart\System\Engine\Controller {
 			unset($this->session->data['shipping_address']);
 			unset($this->session->data['shipping_method']);
 			unset($this->session->data['shipping_methods']);
-		}
-
-		// Validate if payment address has been set.
-		if ($this->config->get('config_checkout_address') && !isset($this->session->data['payment_address'])) {
-			$status = false;
 		}
 
 		if (!isset($this->session->data['payment_method']) || !isset($this->session->data['payment_methods']) || !isset($this->session->data['payment_methods'][$this->session->data['payment_method']])) {

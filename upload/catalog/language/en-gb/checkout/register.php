@@ -8,8 +8,8 @@ $_['text_register']           = 'Register Account';
 $_['text_guest']              = 'Guest Checkout';
 $_['text_your_password']      = 'Your Password';
 $_['text_agree']              = 'I have read and agree to the <a href="%s" class="modal-link"><b>%s</b></a>';
-$_['text_success_add']        = 'Success: Your address has been successfully added.';
-$_['text_success_edit']       = 'Success: Your address has been successfully updated.';
+$_['text_success_add']        = 'Success: Your account has been created!';
+$_['text_success_edit']       = 'Success: Your account has been successfully updated.';
 
 // Entry
 $_['entry_customer_group']    = 'Account Type';

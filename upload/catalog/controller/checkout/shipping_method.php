@@ -50,6 +50,8 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 		}
 
 		if ($status) {
+
+
 			if (isset($this->session->data['shipping_methods'])) {
 				$data['shipping_methods'] = $this->session->data['shipping_methods'];
 			} elseif (isset($this->session->data['shipping_address']) && !isset($this->session->data['shipping_methods'])) {
@@ -61,6 +63,8 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 				// Store shipping methods in session
 				$this->session->data['shipping_methods'] = $data['shipping_methods'];
 			}
+
+
 		}
 
 		if (isset($this->session->data['shipping_method'])) {
@@ -144,7 +148,8 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 		$this->load->language('checkout/shipping_method');
 
 		$json = [];
-				// Validate cart has products and has stock.
+
+		// Validate cart has products and has stock.
 		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
 			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
 		}

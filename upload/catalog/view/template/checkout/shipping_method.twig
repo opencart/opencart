@@ -29,6 +29,12 @@ $('#button-shipping-method').on('click', function() {
         return $.ajax({
             url: 'index.php?route=checkout/shipping_method|getMethods&language={{ language }}',
             dataType: 'json',
+            beforeSend: function() {
+                $('#input-shipping-method').prop('disabled', true);
+            },
+            complete: function() {
+                $('#input-shipping-method').prop('disabled', false);
+            },
             success: function(json) {
                 if (json['redirect']) {
                     location = json['redirect'];
@@ -69,6 +75,8 @@ $('#button-shipping-method').on('click', function() {
                 }
 
                 $('#input-shipping-method').html(html);
+
+                $('#checkout-confirm').load('index.php?route=checkout/confirm|confirm&language={{ language }}');
             },
             error: function(xhr, ajaxOptions, thrownError) {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -105,8 +113,6 @@ $('#input-shipping-method').on('change', function() {
 
                 if (json['success']) {
                     $('#button-payment-method').trigger('click');
-
-                    $('#checkout-confirm').load('index.php?route=checkout/confirm|confirm&language={{ language }}');
                 }
             },
             error: function(xhr, ajaxOptions, thrownError) {

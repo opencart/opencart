@@ -568,8 +568,6 @@ $('#form-register').on('submit', function(e) {
                   {% else %}
                     $('#button-payment-method').trigger('click');
                   {% endif %}
-
-                    $('#checkout-confirm').load('index.php?route=checkout/confirm|confirm&language={{ language }}');
                 }
             },
             error: function(xhr, ajaxOptions, thrownError) {

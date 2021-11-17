@@ -370,13 +370,15 @@ class Register extends \Opencart\System\Engine\Controller {
 			// Captcha
 			$this->load->model('setting/extension');
 
-			$extension_info = $this->model_setting_extension->getExtensionByCode('captcha', $this->config->get('config_captcha'));
+			if (!$this->customer->isLogged()) {
+				$extension_info = $this->model_setting_extension->getExtensionByCode('captcha', $this->config->get('config_captcha'));
 
-			if ($extension_info && $this->config->get('captcha_' . $this->config->get('config_captcha') . '_status') && in_array('register', (array)$this->config->get('config_captcha_page'))) {
-				$captcha = $this->load->controller('extension/' . $extension_info['extension'] . '/captcha/' . $extension_info['code'] . '|validate');
+				if ($extension_info && $this->config->get('captcha_' . $this->config->get('config_captcha') . '_status') && in_array('register', (array)$this->config->get('config_captcha_page'))) {
+					$captcha = $this->load->controller('extension/' . $extension_info['extension'] . '/captcha/' . $extension_info['code'] . '|validate');
 
-				if ($captcha) {
-					$json['error']['captcha'] = $captcha;
+					if ($captcha) {
+						$json['error']['captcha'] = $captcha;
+					}
 				}
 			}
 		}
@@ -572,9 +574,9 @@ class Register extends \Opencart\System\Engine\Controller {
 				if ($this->request->post['account']) {
 					$this->customer->login($this->request->post['email'], $this->request->post['password']);
 
-					$json['success'] = $this->language->get('text_customer_add');
+					$json['success'] = $this->language->get('text_success_add');
 				} elseif ($this->customer->isLogged()) {
-					$json['success'] = $this->language->get('text_customer_edit');
+					$json['success'] = $this->language->get('text_success_edit');
 				}
 
 				unset($this->session->data['payment_methods']);

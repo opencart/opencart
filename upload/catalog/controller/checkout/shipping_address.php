@@ -6,6 +6,7 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 
 		$data['error_upload_size'] = sprintf($this->language->get('error_upload_size'), $this->config->get('config_file_max_size'));
 
+		$data['config_checkout_address'] = $this->config->get('config_checkout_address');
 		$data['config_file_max_size'] = $this->config->get('config_file_max_size');
 
 		$data['language'] = $this->config->get('config_language');

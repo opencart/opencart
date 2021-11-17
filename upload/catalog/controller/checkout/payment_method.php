@@ -16,7 +16,6 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 
 		if ($this->config->get('config_checkout_address') && isset($this->session->data['payment_address'])) {
 			$status = false;
-
 		}
 
 		if ($this->cart->hasShipping()) {
@@ -24,8 +23,6 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 			// Validate shipping address
 			if (!isset($this->session->data['shipping_address'])) {
 				$status = false;
-
-				echo 'shipping_address not set';
 			}
 
 			// Validate shipping method
@@ -34,15 +31,11 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 
 				if (!isset($shipping[0]) || !isset($shipping[1]) || !isset($this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]])) {
 					$status = false;
-
-					echo 'shipping_method not recognised';
 				}
 			} else {
 				$status = false;
 
-				echo 'shipping_method not set';
 			}
-
 		}
 
 

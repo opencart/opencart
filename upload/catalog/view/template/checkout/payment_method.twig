@@ -33,9 +33,6 @@ $('#button-payment-method').on('click', function() {
             beforeSend: function() {
                 $('#input-payment-method').prop('disabled', true);
             },
-            complete: function() {
-                $('#input-payment-method').prop('disabled', false);
-            },
             success: function(json) {
                 if (json['redirect']) {
                     location = json['redirect'];
@@ -43,6 +40,8 @@ $('#button-payment-method').on('click', function() {
 
                 if (json['error']) {
                     $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                    $('#input-shipping-method').prop('disabled', true);
                 }
 
                 html = '<option value="">{{ text_select }}</option>';
@@ -55,6 +54,8 @@ $('#button-payment-method').on('click', function() {
                             html += '<option value="' + json['payment_methods'][i]['code'] + '">' + json['payment_methods'][i]['title'] + '</option>';
                         }
                     }
+
+                    $('#input-payment-method').prop('disabled', false);
                 }
 
                 $('#input-payment-method').html(html);
@@ -169,6 +170,4 @@ $('#input-agree').on('change', function() {
         });
     });
 });
-
-
 //--></script>

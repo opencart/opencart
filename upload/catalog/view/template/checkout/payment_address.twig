@@ -338,8 +338,6 @@ $('#form-payment-address').on('submit', function(e) {
                     $('#form-payment-address')[0].reset();
 
                     $('#button-payment-method').trigger('click');
-
-                    $('#checkout-confirm').load('index.php?route=checkout/confirm|confirm&language={{ language }}');
                 }
             },
             error: function(xhr, ajaxOptions, thrownError) {

@@ -6,8 +6,6 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 
 		$data['language'] = $this->config->get('config_language');
 
-		$data['shipping_methods'] = [];
-
 		$status = true;
 
 		// Validate cart has products and has stock.
@@ -34,7 +32,7 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		// Validate if customer is logged in or customer session data is not set
+		// Validate if customer session data is set
 		if (!isset($this->session->data['customer'])) {
 			$status = false;
 		}
@@ -50,11 +48,9 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 		}
 
 		if ($status) {
-
-
 			if (isset($this->session->data['shipping_methods'])) {
 				$data['shipping_methods'] = $this->session->data['shipping_methods'];
-			} elseif (isset($this->session->data['shipping_address']) && !isset($this->session->data['shipping_methods'])) {
+			} else {
 				// Shipping methods
 				$this->load->model('checkout/shipping_method');
 
@@ -63,8 +59,11 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 				// Store shipping methods in session
 				$this->session->data['shipping_methods'] = $data['shipping_methods'];
 			}
+		} else {
+			$data['shipping_methods'] = [];
 
-
+			// Remove any shipping methods that does not meet checkout validation requirements
+			unset($this->session->data['shipping_methods']);
 		}
 
 		if (isset($this->session->data['shipping_method'])) {
@@ -128,16 +127,14 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 
 			$shipping_methods = $this->model_checkout_shipping_method->getMethods($this->session->data['shipping_address']);
 
-			if (!$shipping_methods) {
+			if ($shipping_methods) {
+				// Store shipping methods in session
+				$this->session->data['shipping_methods'] = $shipping_methods;
+
+				$json['shipping_methods'] = $shipping_methods;
+			} else {
 				$json['error'] = sprintf($this->language->get('error_no_shipping'), $this->url->link('information/contact', 'language=' . $this->config->get('config_language')));
 			}
-		}
-
-		if (!$json) {
-			// Store shipping methods in session
-			$this->session->data['shipping_methods'] = $shipping_methods;
-
-			$json['shipping_methods'] = $shipping_methods;
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

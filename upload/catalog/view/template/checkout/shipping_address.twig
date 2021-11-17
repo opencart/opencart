@@ -203,8 +203,6 @@ $('#input-shipping-address').on('change', function() {
                 $(element).prop('disabled', false);
             },
             success: function(json) {
-                console.log(json);
-
                 if (json['redirect']) {
                     location = json['redirect'];
                 }
@@ -246,8 +244,6 @@ $('#form-shipping-address').on('submit', function(e) {
             success: function(json) {
                 $('#form-shipping-address').find('.is-invalid').removeClass('is-invalid');
                 $('#form-shipping-address').find('.invalid-feedback').removeClass('d-block');
-
-                console.log(json);
 
                 if (json['redirect']) {
                     location = json['redirect'];
@@ -325,8 +321,7 @@ $('#form-shipping-address').on('submit', function(e) {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });
-    })
-    ;
+    });
 });
 
 $('#input-shipping-country').on('change', function() {

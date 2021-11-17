@@ -32,9 +32,6 @@ $('#button-shipping-method').on('click', function() {
             beforeSend: function() {
                 $('#input-shipping-method').prop('disabled', true);
             },
-            complete: function() {
-                $('#input-shipping-method').prop('disabled', false);
-            },
             success: function(json) {
                 if (json['redirect']) {
                     location = json['redirect'];
@@ -62,7 +59,7 @@ $('#button-shipping-method').on('click', function() {
                                 if (json['shipping_methods'][i]['quote'][j]['code'] == $('#input-shipping-method').val()) {
                                     html += '<option value="' + json['shipping_methods'][i]['quote'][j]['code'] + '" selected>' + text + '</option>';
                                 } else {
-                                    html += '<option value="' + json['shipping_methods'][i]['quote'][j]['code'] + '" selected>' + text + '</option>';
+                                    html += '<option value="' + json['shipping_methods'][i]['quote'][j]['code'] + '">' + text + '</option>';
                                 }
 
                             }
@@ -72,6 +69,8 @@ $('#button-shipping-method').on('click', function() {
 
                         html += '</optgroup>';
                     }
+
+                    $('#input-shipping-method').prop('disabled', false);
                 }
 
                 $('#input-shipping-method').html(html);
@@ -112,6 +111,8 @@ $('#input-shipping-method').on('change', function() {
                 }
 
                 if (json['success']) {
+                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
                     $('#button-payment-method').trigger('click');
                 }
             },

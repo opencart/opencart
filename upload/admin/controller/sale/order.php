@@ -482,7 +482,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$data['customer'] = $this->url->link('customer/customer|form', 'user_token=' . $this->session->data['user_token']);
 		$data['customer_add'] = $this->url->link('customer/customer|form', 'user_token=' . $this->session->data['user_token']);
-		
+
 		$data['payment_address'] = $this->url->link('customer/customer|form', 'user_token=' . $this->session->data['user_token']);
 		$data['shipping_address'] = $this->url->link('customer/customer|form', 'user_token=' . $this->session->data['user_token']);
 

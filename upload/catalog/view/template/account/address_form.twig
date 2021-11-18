@@ -260,7 +260,7 @@ $('#input-country').on('change', function() {
                 $('#input-postcode').parent().parent().removeClass('required');
             }
 
-            html = '<option value="">   {{ text_select }}</option>';
+            html = '<option value="">{{ text_select }}</option>';
 
             if (json['zone'] && json['zone'] != '') {
                 for (i = 0; i < json['zone'].length; i++) {

@@ -346,7 +346,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->get['key'])) {
-			$key = (string)$this->request->get['key'];
+			$key = (int)$this->request->get['key'];
 		} else {
 			$key = '';
 		}

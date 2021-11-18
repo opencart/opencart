@@ -17,10 +17,10 @@ class Language extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->session->data['language'] = $this->request->post['language'];
 
+			$json['success'] = $this->language->get('text_success');
+
 			unset($this->session->data['shipping_method']);
 			unset($this->session->data['shipping_methods']);
-
-			$json['success'] = $this->language->get('text_success');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

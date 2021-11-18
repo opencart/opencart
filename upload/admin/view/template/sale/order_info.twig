@@ -35,6 +35,7 @@
                 {% endif %}
               </div>
             </div>
+
             <div class="col">
               <div class="input-group mb-3">
                 <div class="form-control p-0 border rounded-start">
@@ -50,7 +51,6 @@
                 <button type="button" data-bs-toggle="modal" data-bs-target="#modal-customer" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
               </div>
             </div>
-
 
             <div class="col">
               <div class="form-control-plaintext p-0 border rounded mb-3">
@@ -202,6 +202,7 @@
                 <button type="button" data-bs-toggle="modal" data-bs-target="#modal-affiliate" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
               </div>
             </div>
+
             <div class="col">
               <div class="input-group mb-3">
                 <div class="form-control p-0 border rounded-start">
@@ -221,9 +222,16 @@
                 {% endif %}
               </div>
             </div>
+
           </div>
         </div>
+
+
         <button type="button" id="button-collapse" class="btn btn-light btn-lg w-100 mb-3">{{ text_more }} <i class="fas fa-angle-down"></i></button>
+
+
+
+
         <div class="row">
           <div class="col">
             <div class="input-group mb-3">
@@ -471,7 +479,8 @@
             <div class="input-group"><input type="text" name="customer" value="{{ firstname }} {{ lastname }}" placeholder="{{ entry_customer }}" id="input-customer" class="form-control"/> <input type="hidden" name="customer_id" value="{{ customer_id }}"/> <a href="{{ customer_add }}" target="_blank" data-bs-toggle="tooltip" title="{{ button_customer_add }}" class="btn btn-outline-secondary"><i class="fas fa-user-plus"></i></a></div>
           </div>
           <div class="mb-3">
-            <label for="input-customer-group" class="form-label">{{ entry_customer_group }}</label> <select name="customer_group_id" id="input-customer-group" class="form-select">
+            <label for="input-customer-group" class="form-label">{{ entry_customer_group }}</label>
+            <select name="customer_group_id" id="input-customer-group" class="form-select">
               {% for customer_group in customer_groups %}
                 <option value="{{ customer_group.customer_group_id }}"{% if customer_group.customer_group_id == customer_group_id %} selected{% endif %}>{{ customer_group.name }}</option>
               {% endfor %}
@@ -995,7 +1004,8 @@
         <form id="form-shipping-address">
 
           <div class="mb-3">
-            <label for="input-shipping-address" class="form-label">{{ entry_address }}</label> <select name="shipping_address" id="input-shipping-address" class="form-select">
+            <label for="input-shipping-address" class="form-label">{{ entry_address }}</label>
+            <select name="shipping_address" id="input-shipping-address" class="form-select">
               <option value="0" selected="selected">{{ text_none }}</option>
               {% for address in addresses %}
                 <option value="{{ address.address_id }}">{{ address.firstname }} {{ address.lastname }}, {{ address.address_1 }}, {{ address.city }}, {{ address.country }}</option>
@@ -1004,37 +1014,45 @@
           </div>
 
           <div class="mb-3 required">
-            <label for="input-shipping-firstname" class="form-label">{{ entry_firstname }}</label> <input type="text" name="firstname" value="{{ shipping_firstname }}" placeholder="{{ entry_firstname }}" id="input-shipping-firstname" class="form-control"/>
+            <label for="input-shipping-firstname" class="form-label">{{ entry_firstname }}</label>
+            <input type="text" name="firstname" value="{{ shipping_firstname }}" placeholder="{{ entry_firstname }}" id="input-shipping-firstname" class="form-control"/>
             <div id="error-shipping-firstname" class="invalid-feedback"></div>
           </div>
 
           <div class="mb-3 required">
-            <label for="input-shipping-lastname" class="form-label">{{ entry_lastname }}</label> <input type="text" name="lastname" value="{{ shipping_lastname }}" placeholder="{{ entry_lastname }}" id="input-shipping-lastname" class="form-control"/>
+            <label for="input-shipping-lastname" class="form-label">{{ entry_lastname }}</label>
+            <input type="text" name="lastname" value="{{ shipping_lastname }}" placeholder="{{ entry_lastname }}" id="input-shipping-lastname" class="form-control"/>
             <div id="error-shipping-lastname" class="invalid-feedback"></div>
           </div>
 
           <div class="mb-3">
-            <label for="input-shipping-company" class="form-label">{{ entry_company }}</label> <input type="text" name="company" value="{{ shipping_company }}" placeholder="{{ entry_company }}" id="input-shipping-company" class="form-control"/>
+            <label for="input-shipping-company" class="form-label">{{ entry_company }}</label>
+            <input type="text" name="company" value="{{ shipping_company }}" placeholder="{{ entry_company }}" id="input-shipping-company" class="form-control"/>
           </div>
 
           <div class="mb-3 required">
-            <label for="input-shipping-address-1" class="form-label">{{ entry_address_1 }}</label> <input type="text" name="address_1" value="{{ shipping_address_1 }}" placeholder="{{ entry_address_1 }}" id="input-shipping-address-1" class="form-control"/>
+            <label for="input-shipping-address-1" class="form-label">{{ entry_address_1 }}</label>
+            <input type="text" name="address_1" value="{{ shipping_address_1 }}" placeholder="{{ entry_address_1 }}" id="input-shipping-address-1" class="form-control"/>
             <div id="error-shipping-address-1" class="invalid-feedback"></div>
           </div>
 
           <div class="mb-3">
-            <label for="input-shipping-address-2" class="form-label">{{ entry_address_2 }}</label> <input type="text" name="address_2" value="{{ shipping_address_2 }}" placeholder="{{ entry_address_2 }}" id="input-shipping-address-2" class="form-control"/>
+            <label for="input-shipping-address-2" class="form-label">{{ entry_address_2 }}</label>
+            <input type="text" name="address_2" value="{{ shipping_address_2 }}" placeholder="{{ entry_address_2 }}" id="input-shipping-address-2" class="form-control"/>
           </div>
           <div class="mb-3 required">
-            <label for="input-shipping-city" class="form-label">{{ entry_city }}</label> <input type="text" name="city" value="{{ shipping_city }}" placeholder="{{ entry_city }}" id="input-shipping-city" class="form-control"/>
+            <label for="input-shipping-city" class="form-label">{{ entry_city }}</label>
+            <input type="text" name="city" value="{{ shipping_city }}" placeholder="{{ entry_city }}" id="input-shipping-city" class="form-control"/>
             <div id="error-shipping-city" class="invalid-feedback"></div>
           </div>
           <div class="mb-3 required">
-            <label for="input-shipping-postcode" class="form-label">{{ entry_postcode }}</label> <input type="text" name="postcode" value="{{ shipping_postcode }}" placeholder="{{ entry_postcode }}" id="input-shipping-postcode" class="form-control"/>
+            <label for="input-shipping-postcode" class="form-label">{{ entry_postcode }}</label>
+            <input type="text" name="postcode" value="{{ shipping_postcode }}" placeholder="{{ entry_postcode }}" id="input-shipping-postcode" class="form-control"/>
             <div id="error-shipping-postcode" class="invalid-feedback"></div>
           </div>
           <div class="mb-3 required">
-            <label for="input-shipping-country" class="form-label">{{ entry_country }}</label> <select name="country_id" id="input-shipping-country" class="form-select">
+            <label for="input-shipping-country" class="form-label">{{ entry_country }}</label>
+            <select name="country_id" id="input-shipping-country" class="form-select">
               <option value="">{{ text_select }}</option>
               {% for country in countries %}
                 <option value="{{ country.country_id }}"{% if country.country_id == shipping_country_id %} selected="selected"{% endif %}>{{ country.name }}</option>
@@ -1043,7 +1061,8 @@
             <div id="error-shipping-country" class="invalid-feedback"></div>
           </div>
           <div class="mb-3 required">
-            <label for="input-shipping-zone" class="col-form-label">{{ entry_zone }}</label> <select name="zone_id" id="input-shipping-zone" class="form-select"></select>
+            <label for="input-shipping-zone" class="col-form-label">{{ entry_zone }}</label>
+            <select name="zone_id" id="input-shipping-zone" class="form-select"></select>
             <div id="error-shipping-zone" class="invalid-feedback"></div>
           </div>
 
@@ -1147,7 +1166,9 @@
               {% endif %}
 
             {% endif %}
+
           {% endfor %}
+
         </form>
       </div>
       <div class="modal-footer text-end">
@@ -1195,29 +1216,36 @@
               <fieldset>
                 <legend>{{ text_voucher_add }}</legend>
                 <div class="mb-3 required">
-                  <label for="input-to-name" class="col-form-label">{{ entry_to_name }}</label> <input type="text" name="to_name" value="" placeholder="{{ entry_to_name }}" id="input-to-name" class="form-control"/>
+                  <label for="input-to-name" class="col-form-label">{{ entry_to_name }}</label>
+                  <input type="text" name="to_name" value="" placeholder="{{ entry_to_name }}" id="input-to-name" class="form-control"/>
                 </div>
                 <div class="mb-3 required">
-                  <label for="input-to-email" class="col-form-label">{{ entry_to_email }}</label> <input type="text" name="to_email" value="" placeholder="{{ entry_to_email }}" id="input-to-email" class="form-control"/>
+                  <label for="input-to-email" class="col-form-label">{{ entry_to_email }}</label>
+                  <input type="text" name="to_email" value="" placeholder="{{ entry_to_email }}" id="input-to-email" class="form-control"/>
                 </div>
                 <div class="mb-3 required">
-                  <label for="input-from-name" class="col-form-label">{{ entry_from_name }}</label> <input type="text" name="from_name" value="" placeholder="{{ entry_from_name }}" id="input-from-name" class="form-control"/>
+                  <label for="input-from-name" class="col-form-label">{{ entry_from_name }}</label>
+                  <input type="text" name="from_name" value="" placeholder="{{ entry_from_name }}" id="input-from-name" class="form-control"/>
                 </div>
                 <div class="mb-3 required">
-                  <label for="input-from-email" class="col-form-label">{{ entry_from_email }}</label> <input type="text" name="from_email" value="" placeholder="{{ entry_from_email }}" id="input-from-email" class="form-control"/>
+                  <label for="input-from-email" class="col-form-label">{{ entry_from_email }}</label>
+                  <input type="text" name="from_email" value="" placeholder="{{ entry_from_email }}" id="input-from-email" class="form-control"/>
                 </div>
                 <div class="mb-3 required">
-                  <label for="input-theme" class="col-form-label">{{ entry_theme }}</label> <select name="voucher_theme_id" id="input-theme" class="form-select">
+                  <label for="input-theme" class="col-form-label">{{ entry_theme }}</label>
+                  <select name="voucher_theme_id" id="input-theme" class="form-select">
                     {% for voucher_theme in voucher_themes %}
                       <option value="{{ voucher_theme.voucher_theme_id }}">{{ voucher_theme.name }}</option>
                     {% endfor %}
                   </select>
                 </div>
                 <div class="mb-3">
-                  <label for="input-message" class="form-label">{{ entry_message }}</label> <textarea name="message" rows="5" placeholder="{{ entry_message }}" id="input-message" class="form-control"></textarea>
+                  <label for="input-message" class="form-label">{{ entry_message }}</label>
+                  <textarea name="message" rows="5" placeholder="{{ entry_message }}" id="input-message" class="form-control"></textarea>
                 </div>
                 <div class="mb-3 required">
-                  <label for="input-amount" class="form-label">{{ entry_amount }}</label> <input type="text" name="amount" value="{{ voucher_min }}" placeholder="{{ entry_amount }}" id="input-amount" class="form-control"/>
+                  <label for="input-amount" class="form-label">{{ entry_amount }}</label>
+                  <input type="text" name="amount" value="{{ voucher_min }}" placeholder="{{ entry_amount }}" id="input-amount" class="form-control"/>
                 </div>
               </fieldset>
               <div class="text-end">
@@ -1569,7 +1597,7 @@ $('#modal-shipping-method #button-shipping-methods').on('click', function() {
     });
 });
 
-$('#modal-shipping-method #button-shipping-method').on('click', function() {
+$('#button-shipping-method').on('click', function() {
     var element = this;
 
     $.ajax({
@@ -1604,7 +1632,7 @@ $('#modal-shipping-method #button-shipping-method').on('click', function() {
 });
 
 // Payment Method
-$('#modal-payment-method #button-payment-methods').on('click', function() {
+$('#button-payment-methods').on('click', function() {
     var element = this;
 
     $.ajax({
@@ -1641,7 +1669,7 @@ $('#modal-payment-method #button-payment-methods').on('click', function() {
     });
 });
 
-$('#modal-payment-method #button-payment-method').on('click', function() {
+$('#button-payment-method').on('click', function() {
     var element = this;
 
     $.ajax({
@@ -1676,7 +1704,7 @@ $('#modal-payment-method #button-payment-method').on('click', function() {
 });
 
 // Coupon
-$('#modal-coupon #button-coupon').on('click', function() {
+$('#button-coupon').on('click', function() {
     var element = this;
 
     $.ajax({
@@ -1704,13 +1732,14 @@ $('#modal-coupon #button-coupon').on('click', function() {
                 $('#button-refresh').trigger('click');
             }
         },
+        error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 });
 
 // Voucher
-$('#modal-voucher #button-voucher').on('click', function() {
+$('#button-voucher').on('click', function() {
     var element = this;
 
     $.ajax({
@@ -1745,7 +1774,7 @@ $('#modal-voucher #button-voucher').on('click', function() {
 });
 
 // Reward
-$('#modal-reward #button-reward').on('click', function() {
+$('#button-reward').on('click', function() {
     var element = this;
 
     $.ajax({

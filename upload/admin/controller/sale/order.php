@@ -479,7 +479,12 @@ class Order extends \Opencart\System\Engine\Controller {
 		$data['shipping'] = $this->url->link('sale/order|shipping', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $order_id);
 		$data['invoice'] = $this->url->link('sale/order|invoice', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $order_id);
 		$data['back'] = $this->url->link('sale/order', 'user_token=' . $this->session->data['user_token'] . $url);
+
+		$data['customer'] = $this->url->link('customer/customer|form', 'user_token=' . $this->session->data['user_token']);
 		$data['customer_add'] = $this->url->link('customer/customer|form', 'user_token=' . $this->session->data['user_token']);
+		
+		$data['payment_address'] = $this->url->link('customer/customer|form', 'user_token=' . $this->session->data['user_token']);
+		$data['shipping_address'] = $this->url->link('customer/customer|form', 'user_token=' . $this->session->data['user_token']);
 
 		if ($order_id) {
 			$this->load->model('sale/order');
@@ -596,7 +601,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['email'] = $order_info['email'];
 			$data['telephone'] = $order_info['telephone'];
 			$data['account_custom_field'] = $order_info['custom_field'];
-
+/*
 			// Custom Fields
 			$this->load->model('tool/upload');
 
@@ -611,7 +616,7 @@ class Order extends \Opencart\System\Engine\Controller {
 					];
 				}
 			}
-
+*/
 			// Language
 			$data['language_id'] = $order_info['language_id'];
 
@@ -619,7 +624,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 			if ($language_info) {
 				$data['language'] = $language_info['name'];
-				$data['language_code'] = $language_info['language_code'];
+				$data['language_code'] = $language_info['code'];
 			} else {
 				$data['language'] = '';
 				$data['language_code'] = '';
@@ -740,6 +745,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['payment_zone_id'] = $order_info['payment_zone_id'];
 			$data['payment_custom_field'] = $order_info['payment_custom_field'];
 
+			/*
 			if ($custom_field['type'] == 'file') {
 				$upload_info = $this->model_tool_upload->getUploadByCode($order_info['payment_custom_field'][$custom_field['custom_field_id']]);
 
@@ -751,6 +757,7 @@ class Order extends \Opencart\System\Engine\Controller {
 					];
 				}
 			}
+*/
 
 			// Shipping Address
 			if ($order_info['shipping_address_format']) {

@@ -158,19 +158,19 @@ $(document).submit('form[data-oc-toggle=\'ajax\']', function(e) {
 
     var formaction = $(button).attr('formaction');
 
-    if (typeof formaction != 'undefined') {
+    if (formaction !== undefined) {
         action = formaction;
     }
 
     var method = $(form).attr('method');
 
-    if (typeof method == 'undefined') {
+    if (method === undefined) {
         method = 'post';
     }
 
     var enctype = $(element).attr('enctype');
 
-    if (typeof enctype == 'undefined') {
+    if (typeof enctype === undefined) {
         enctype = 'application/x-www-form-urlencoded';
     }
 
@@ -233,10 +233,8 @@ $(document).submit('form[data-oc-toggle=\'ajax\']', function(e) {
                 }
 
                 for (key in json['error']) {
-                    for (key in json['error']) {
-                        $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
-                        $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
-                    }
+                    $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
+                    $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
                 }
 
                 delete json['error'];

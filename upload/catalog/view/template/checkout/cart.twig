@@ -5,26 +5,26 @@
       <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
     {% endfor %}
   </ul>
+
   {% if attention %}
     <div class="alert alert-info"><i class="fas fa-info-circle"></i> {{ attention }} <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>
   {% endif %}
+
   {% if success %}
     <div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> {{ success }} <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>
   {% endif %}
+
   {% if error_warning %}
     <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }} <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>
   {% endif %}
+
   <div class="row">
     {{ column_left }}
     <div id="content" class="col">
-
       {{ content_top }}
-      <h1>{{ heading_title }}
-        {% if weight %}
-          &nbsp;({{ weight }})
-        {% endif %}</h1>
+      <h1>{{ heading_title }}{% if weight %} ({{ weight }}){% endif %}</h1>
 
-      {{ list }}
+      <div id="shopping-cart">{{ list }}</div>
 
       {% if modules %}
         <h2>{{ text_next }}</h2>

@@ -99,6 +99,10 @@ class Cart extends \Opencart\System\Engine\Controller {
 	}
 
 	public function getList(): string {
+		$data['action'] = $this->url->link('checkout/cart|list', 'language=' . $this->config->get('config_language'));
+		$data['edit'] = $this->url->link('checkout/cart|edit', 'language=' . $this->config->get('config_language'));
+		$data['delete'] = $this->url->link('checkout/cart|remove', 'language=' . $this->config->get('config_language'));
+
 		$this->load->model('tool/image');
 		$this->load->model('tool/upload');
 
@@ -345,14 +349,14 @@ class Cart extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		if (isset($this->request->get['key'])) {
-			$key = (int)$this->request->get['key'];
+		if (isset($this->request->post['key'])) {
+			$key = (int)$this->request->post['key'];
 		} else {
-			$key = '';
+			$key = 0;
 		}
 
-		if (isset($this->request->get['quantity'])) {
-			$quantity = (int)$this->request->get['quantity'];
+		if (isset($this->request->post['quantity'])) {
+			$quantity = (int)$this->request->post['quantity'];
 		} else {
 			$quantity = 1;
 		}
@@ -360,7 +364,11 @@ class Cart extends \Opencart\System\Engine\Controller {
 		// Handles single item update
 		$this->cart->update($key, $quantity);
 
-		$json['success'] = $this->language->get('text_update');
+		if ($this->cart->hasProducts() || !empty($this->session->data['vouchers'])) {
+			$json['success'] = $this->language->get('text_update');
+		} else {
+			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
+		}
 
 		unset($this->session->data['shipping_methods']);
 		unset($this->session->data['payment_methods']);
@@ -375,12 +383,14 @@ class Cart extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		// Remove
-		if (isset($this->request->get['key'])) {
-			$this->cart->remove($this->request->get['key']);
+		if (isset($this->request->post['key'])) {
+			$this->cart->remove($this->request->post['key']);
 
-			unset($this->session->data['vouchers'][$this->request->get['key']]);
-
-			$json['success'] = $this->language->get('text_remove');
+			if ($this->cart->hasProducts() || !empty($this->session->data['vouchers'])) {
+				$json['success'] = $this->language->get('text_remove');
+			} else {
+				$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
+			}
 
 			unset($this->session->data['shipping_methods']);
 			unset($this->session->data['payment_methods']);

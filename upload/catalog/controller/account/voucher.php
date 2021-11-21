@@ -133,6 +133,27 @@ class Voucher extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	public function remove() {
+		$this->load->language('account/voucher');
+
+		$json = [];
+
+		if (isset($this->request->get['key'])) {
+			$this->cart->remove($this->request->get['key']);
+
+			unset($this->session->data['vouchers'][$this->request->get['key']]);
+
+			$json['success'] = $this->language->get('text_remove');
+
+			unset($this->session->data['shipping_methods']);
+			unset($this->session->data['payment_methods']);
+			unset($this->session->data['reward']);
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
 	public function success(): void {
 		$this->load->language('account/voucher');
 

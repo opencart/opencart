@@ -362,7 +362,7 @@ compare.add = function(product_id) {
 };
 
 // Forms
-$(document).on('submit', '[data-oc-toggle=\'ajax\']', function(e) {
+$(document).submit('form[data-oc-toggle=\'ajax\']', function(e) {
     e.preventDefault();
 
     var element = this;
@@ -375,35 +375,42 @@ $(document).on('submit', '[data-oc-toggle=\'ajax\']', function(e) {
 
     var formaction = $(button).attr('formaction');
 
-    if (typeof formaction == undefined) {
+    if (formaction !== undefined) {
         action = formaction;
     }
 
     var method = $(form).attr('method');
 
-    if (typeof method == undefined) {
+    if (method === undefined) {
         method = 'post';
     }
 
     var enctype = $(element).attr('enctype');
 
-    if (typeof enctype == undefined) {
+    if (enctype === undefined) {
         enctype = 'application/x-www-form-urlencoded';
     }
 
+    // https://github.com/opencart/opencart/issues/9690
+    if (typeof CKEDITOR != 'undefined') {
+        for (instance in CKEDITOR.instances) {
+            CKEDITOR.instances[instance].updateElement();
+        }
+    }
+
     console.log(e);
-    console.log(element);
-    console.log(action);
-    console.log(button);
-    console.log(formaction);
-    console.log(method);
-    console.log(enctype);
+    console.log('element ' + element);
+    console.log('action ' + action);
+    console.log('button ' + button);
+    console.log('formaction ' + formaction);
+    console.log('method ' + method);
+    console.log('enctype ' + enctype);
 
     $.ajax({
         url: action,
         type: method,
-        dataType: 'json',
         data: $(form).serialize(),
+        dataType: 'json',
         cache: false,
         contentType: enctype,
         processData: false,
@@ -418,7 +425,6 @@ $(document).on('submit', '[data-oc-toggle=\'ajax\']', function(e) {
             $(form).find('.invalid-feedback').removeClass('d-block');
 
             console.log(json);
-            console.log(json['error']);
 
             if (json['redirect']) {
                 location = json['redirect'];
@@ -448,19 +454,20 @@ $(document).on('submit', '[data-oc-toggle=\'ajax\']', function(e) {
             }
 
             if (json['success']) {
-                $(form).after('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<div class="alert alert-success"><i class="fas fa-exclamation-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                // Refresh
+                // Refreshv
                 var url = $(form).attr('data-oc-load');
                 var target = $(form).attr('data-oc-target');
 
-                if (typeof url !== typeof undefined && typeof target !== typeof undefined) {
+                if (url !== typeof undefined && target !== typeof undefined) {
                     $(target).load(url);
                 }
 
                 delete json['success'];
             }
 
+            // Replace any form values that correspond to form names.
             for (key in json) {
                 $(form).find('[name=\'' + key + '\']').val(json[key]);
             }

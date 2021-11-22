@@ -302,7 +302,8 @@
                 {% endif %}
 
                 <div class="mb-3">
-                  <label for="input-quantity" class="form-label">{{ entry_qty }}</label> <input type="text" name="quantity" value="{{ minimum }}" size="2" id="input-quantity" class="form-control"/> <input type="hidden" name="product_id" value="{{ product_id }}" id="input-product-id"/>
+                  <label for="input-quantity" class="form-label">{{ entry_qty }}</label>
+                  <input type="text" name="quantity" value="{{ minimum }}" size="2" id="input-quantity" class="form-control"/> <input type="hidden" name="product_id" value="{{ product_id }}" id="input-product-id"/>
                   <div id="error-quantity" class="form-text"></div>
                   <br/>
                   <button type="submit" id="button-cart" data-loading-text="{{ text_loading }}" class="btn btn-primary btn-lg btn-block">{{ button_cart }}</button>
@@ -314,10 +315,7 @@
 
               {% if review_status %}
                 <div class="rating">
-                  <p>{% for i in 1..5 %}
-                      {% if rating < i %}<span class="fas fa-stack"><i class="far fa-star fa-stack-1x"></i></span>{% else %}<span class="fas fa-stack"><i class="fas fa-star fa-stack-1x"></i><i class="far fa-star fa-stack-1x"></i></span>{% endif %}
-                    {% endfor %}
-                    <a href="" onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;">{{ reviews }}</a> / <a href="" onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;">{{ text_write }}</a></p>
+                  <p>{% for i in 1..5 %}{% if rating < i %}<span class="fas fa-stack"><i class="far fa-star fa-stack-1x"></i></span>{% else %}<span class="fas fa-stack"><i class="fas fa-star fa-stack-1x"></i><i class="far fa-star fa-stack-1x"></i></span>{% endif %}{% endfor %} <a href="" onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;">{{ reviews }}</a> / <a href="" onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;">{{ text_write }}</a></p>
                 </div>
               {% endif %}
 
@@ -431,7 +429,7 @@ $('.datetime').datetimepicker({
     'allowInputToggle': true
 });
 
-$('#review').delegate('.pagination a', 'click', function(e) {
+$('#review').on('click', '.pagination a', function(e) {
     e.preventDefault();
 
     $('#review').fadeOut('slow');

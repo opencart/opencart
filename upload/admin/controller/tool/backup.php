@@ -181,7 +181,7 @@ class Backup extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-			if ($position) {
+			if ($position !== false) {
 				$json['progress'] = round(($position / count($backup)) * 100);
 			} else {
 				$json['progress'] = 0;

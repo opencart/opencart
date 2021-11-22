@@ -20,7 +20,7 @@ class Order extends \Opencart\System\Engine\Model {
 		}
 
 		// Gift Voucher
-		$this->load->model('account/voucher');
+		$this->load->model('checkout/voucher');
 
 		// Vouchers
 		if (isset($data['vouchers'])) {
@@ -29,7 +29,7 @@ class Order extends \Opencart\System\Engine\Model {
 
 				$order_voucher_id = $this->db->getLastId();
 
-				$voucher_id = $this->model_account_voucher->addVoucher($order_id, $voucher);
+				$voucher_id = $this->model_checkout_voucher->addVoucher($order_id, $voucher);
 
 				$this->db->query("UPDATE `" . DB_PREFIX . "order_voucher` SET `voucher_id` = '" . (int)$voucher_id . "' WHERE `order_voucher_id` = '" . (int)$order_voucher_id . "'");
 			}
@@ -80,9 +80,9 @@ class Order extends \Opencart\System\Engine\Model {
 			}
 
 			// Gift Voucher
-			$this->load->model('account/voucher');
+			$this->load->model('checkout/voucher');
 
-			$this->model_account_voucher->disableVoucher($order_id);
+			$this->model_checkout_voucher->disableVoucher($order_id);
 
 			// Vouchers
 			$this->db->query("DELETE FROM `" . DB_PREFIX . "order_voucher` WHERE `order_id` = '" . (int)$order_id . "'");
@@ -93,7 +93,7 @@ class Order extends \Opencart\System\Engine\Model {
 
 					$order_voucher_id = $this->db->getLastId();
 
-					$voucher_id = $this->model_account_voucher->addVoucher($order_id, $voucher);
+					$voucher_id = $this->model_checkout_voucher->addVoucher($order_id, $voucher);
 
 					$this->db->query("UPDATE `" . DB_PREFIX . "order_voucher` SET `voucher_id` = '" . (int)$voucher_id . "' WHERE `order_voucher_id` = '" . (int)$order_voucher_id . "'");
 				}
@@ -124,9 +124,9 @@ class Order extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_transaction` WHERE `order_id` = '" . (int)$order_id . "'");
 
 		// Gift Voucher
-		$this->load->model('account/voucher');
+		$this->load->model('checkout/voucher');
 
-		$this->model_account_voucher->disableVoucher($order_id);
+		$this->model_checkout_voucher->disableVoucher($order_id);
 	}
 
 	public function getOrder(int $order_id): array {

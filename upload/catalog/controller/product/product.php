@@ -572,7 +572,7 @@ class Product extends \Opencart\System\Engine\Controller {
 		$product_info = $this->model_catalog_product->getProduct($product_id);
 
 		if (!$product_info) {
-			$json['error'] = $this->language->get('error_product');
+			$json['error'] = $this->language->get('error_recurring');
 		}
 
 		$recurring_info = $this->model_catalog_product->getProfile($product_id, $recurring_id);

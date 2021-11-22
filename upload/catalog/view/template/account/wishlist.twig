@@ -43,10 +43,17 @@
                           <b>{{ product.special }}</b> <s>{{ product.price }}</s>
                         {% endif %}
                       </div>
-                    {% endif %}</td>
+                    {% endif %}
+                  </td>
                   <td class="text-end">
-                    <button type="button" onclick="cart.add('{{ product.product_id }}');" data-bs-toggle="tooltip" title="{{ button_cart }}" class="btn btn-primary"><i class="fas fa-shopping-cart"></i></button>
-                    <a href="{{ product.remove }}" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-times"></i></a></td>
+
+                    <form action="{{ add_to_cart }}" method="post" data-oc-toggle="ajax" data-oc-load="{{ cart }}" data-oc-target="#cart">
+                      <input type="hidden" name="product_id" value="{{ product.product_id }}"/> <input type="hidden" name="quantity" value="{{ product.minimum }}"/>
+                      <button type="submit" class="btn btn-primary">{{ button_cart }}</button>
+                      <a href="{{ product.remove }}" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-times"></i></a>
+                    </form>
+
+                  </td>
                 </tr>
               {% endfor %}
             </tbody>
@@ -63,59 +70,4 @@
     {{ column_right }}
   </div>
 </div>
-
-<script type="text/javascript"><!--
-// New Payment Address
-$('#button-payment-address').click(function(e) {
-    e.preventDefault();
-
-    chain.attach(function() {
-        return $.ajax({
-            url: 'index.php?route=checkout/payment_address|save&language={{ language }}',
-            type: 'post',
-            data: data,
-            dataType: 'json',
-            contentType: 'application/x-www-form-urlencoded',
-            beforeSend: function() {
-                $('#button-payment-address').button('loading');
-            },
-            complete: function() {
-                $('#button-payment-address').button('reset');
-            },
-            success: function(json) {
-                console.log(json);
-                console.log(json['error']);
-
-
-                $('#form-payment-address').find('.is-invalid').removeClass('is-invalid');
-                $('#form-payment-address').find('.invalid-feedback').removeClass('d-block');
-
-                if (json['redirect']) {
-                    location = json['redirect'];
-                }
-
-                if (json['error']) {
-                    if (json['error']['warning']) {
-                        $('#alert').prepend('<div class="alert alert-warning alert-dismissible"> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-                    }
-
-                    for (i in json['error']) {
-                        for (key in json['error']) {
-                            $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
-                            $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
-                        }
-                    }
-                }
-
-                if (json['success']) {
-                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-                }
-            },
-            error: function(xhr, ajaxOptions, thrownError) {
-                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-            }
-        });
-    });
-});
-//--></script>
 {{ footer }}

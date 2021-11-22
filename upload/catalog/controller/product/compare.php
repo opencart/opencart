@@ -38,6 +38,9 @@ class Compare extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('product/compare', 'language=' . $this->config->get('config_language'))
 		];
 
+		$data['add_to_cart'] = $this->url->link('checkout/cart|add', 'language=' . $this->config->get('config_language'));
+		$data['cart'] = $this->url->link('common/cart|info', 'language=' . $this->config->get('config_language'));
+
 		if (isset($this->session->data['success'])) {
 			$data['success'] = $this->session->data['success'];
 
@@ -155,14 +158,24 @@ class Compare extends \Opencart\System\Engine\Controller {
 
 		$product_info = $this->model_catalog_product->getProduct($product_id);
 
-		if ($product_info) {
-			if (!in_array($this->request->post['product_id'], $this->session->data['compare'])) {
-				if (count($this->session->data['compare']) >= 4) {
-					array_shift($this->session->data['compare']);
-				}
+		if (!$product_info) {
+			$json['error'] = $this->language->get('error_product');
+		}
 
-				$this->session->data['compare'][] = $this->request->post['product_id'];
+		if (!$json) {
+			// If already in array remove the product_id so it will be added to the back of the array
+			$key = array_search($this->request->post['product_id'], $this->session->data['compare']);
+
+			if ($key !== false) {
+				unset($this->session->data['compare'][$key]);
 			}
+
+			// If greater than 4 products then remove the first one
+			if (count($this->session->data['compare']) >= 4) {
+				array_shift($this->session->data['compare']);
+			}
+
+			$this->session->data['compare'][] = $this->request->post['product_id'];
 
 			$json['success'] = sprintf($this->language->get('text_success'), $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $this->request->post['product_id']), $product_info['name'], $this->url->link('product/compare', 'language=' . $this->config->get('config_language')));
 

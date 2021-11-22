@@ -2,7 +2,7 @@
 namespace Opencart\Catalog\Controller\Account;
 class Voucher extends \Opencart\System\Engine\Controller {
 	public function index(): void {
-		$this->load->language('account/voucher');
+		$this->load->language('checkout/voucher');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -24,14 +24,14 @@ class Voucher extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_voucher'),
-			'href' => $this->url->link('account/voucher', 'language=' . $this->config->get('config_language'))
+			'href' => $this->url->link('checkout/voucher', 'language=' . $this->config->get('config_language'))
 		];
 
 		$data['help_amount'] = sprintf($this->language->get('help_amount'), $this->currency->format($this->config->get('config_voucher_min'), $this->session->data['currency']), $this->currency->format($this->config->get('config_voucher_max'), $this->session->data['currency']));
 
 		$this->session->data['voucher_token'] = substr(bin2hex(openssl_random_pseudo_bytes(26)), 0, 26);
 
-		$data['save'] = $this->url->link('account/voucher|add', 'language=' . $this->config->get('config_language') . '&voucher_token=' . $this->session->data['voucher_token']);
+		$data['save'] = $this->url->link('checkout/voucher|add', 'language=' . $this->config->get('config_language') . '&voucher_token=' . $this->session->data['voucher_token']);
 
 		if ($this->customer->isLogged()) {
 			$data['from_name'] = $this->customer->getFirstName() . ' '  . $this->customer->getLastName();
@@ -45,9 +45,9 @@ class Voucher extends \Opencart\System\Engine\Controller {
 			$data['from_email'] = '';
 		}
 
-		$this->load->model('account/voucher_theme');
+		$this->load->model('checkout/voucher_theme');
 
-		$data['voucher_themes'] = $this->model_account_voucher_theme->getVoucherThemes();
+		$data['voucher_themes'] = $this->model_checkout_voucher_theme->getVoucherThemes();
 
 		$data['amount'] = $this->currency->format($this->config->get('config_voucher_min'), $this->config->get('config_currency'), false, false);
 
@@ -58,11 +58,11 @@ class Voucher extends \Opencart\System\Engine\Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
-		$this->response->setOutput($this->load->view('account/voucher', $data));
+		$this->response->setOutput($this->load->view('checkout/voucher', $data));
 	}
 
 	public function add(): void {
-		$this->load->language('account/voucher');
+		$this->load->language('checkout/voucher');
 
 		$json = [];
 
@@ -83,7 +83,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!isset($this->request->get['voucher_token']) || !isset($this->session->data['voucher_token']) || ($this->session->data['voucher_token'] != $this->request->get['voucher_token'])) {
-			$json['redirect'] = $this->url->link('account/voucher', 'language=' . $this->config->get('config_language'), true);
+			$json['redirect'] = $this->url->link('checkout/voucher', 'language=' . $this->config->get('config_language'), true);
 		}
 
 		if ((utf8_strlen($this->request->post['to_name']) < 1) || (utf8_strlen($this->request->post['to_name']) > 64)) {
@@ -126,7 +126,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 				'amount'           => $this->currency->convert($this->request->post['amount'], $this->session->data['currency'], $this->config->get('config_currency'))
 			];
 
-			$json['redirect'] = $this->url->link('account/voucher|success', 'language=' . $this->config->get('config_language'), true);
+			$json['redirect'] = $this->url->link('checkout/voucher|success', 'language=' . $this->config->get('config_language'), true);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -134,13 +134,11 @@ class Voucher extends \Opencart\System\Engine\Controller {
 	}
 
 	public function remove() {
-		$this->load->language('account/voucher');
+		$this->load->language('checkout/voucher');
 
 		$json = [];
 
 		if (isset($this->request->get['key'])) {
-			$this->cart->remove($this->request->get['key']);
-
 			unset($this->session->data['vouchers'][$this->request->get['key']]);
 
 			$json['success'] = $this->language->get('text_remove');
@@ -155,7 +153,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 	}
 
 	public function success(): void {
-		$this->load->language('account/voucher');
+		$this->load->language('checkout/voucher');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -168,7 +166,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('account/voucher', 'language=' . $this->config->get('config_language'))
+			'href' => $this->url->link('checkout/voucher', 'language=' . $this->config->get('config_language'))
 		];
 
 		$data['continue'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'));

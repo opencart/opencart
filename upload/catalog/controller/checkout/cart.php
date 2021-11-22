@@ -99,9 +99,9 @@ class Cart extends \Opencart\System\Engine\Controller {
 	}
 
 	public function getList(): string {
-		$data['action'] = $this->url->link('checkout/cart|list', 'language=' . $this->config->get('config_language'));
+		$data['list'] = $this->url->link('checkout/cart|list', 'language=' . $this->config->get('config_language'));
 		$data['edit'] = $this->url->link('checkout/cart|edit', 'language=' . $this->config->get('config_language'));
-		$data['delete'] = $this->url->link('checkout/cart|remove', 'language=' . $this->config->get('config_language'));
+		$data['remove'] = $this->url->link('checkout/cart|remove', 'language=' . $this->config->get('config_language'));
 
 		$this->load->model('tool/image');
 		$this->load->model('tool/upload');
@@ -272,23 +272,27 @@ class Cart extends \Opencart\System\Engine\Controller {
 			$product_id = 0;
 		}
 
+		if (isset($this->request->post['quantity'])) {
+			$quantity = (int)$this->request->post['quantity'];
+		} else {
+			$quantity = 1;
+		}
+
+		if (isset($this->request->post['option'])) {
+			$option = array_filter($this->request->post['option']);
+		} else {
+			$option = [];
+		}
+
 		$this->load->model('catalog/product');
 
 		$product_info = $this->model_catalog_product->getProduct($product_id);
 
-		if ($product_info) {
-			if (isset($this->request->post['quantity'])) {
-				$quantity = (int)$this->request->post['quantity'];
-			} else {
-				$quantity = 1;
-			}
+		if (!$product_info) {
+			$json['error'] = $this->language->get('error_product');
+		}
 
-			if (isset($this->request->post['option'])) {
-				$option = array_filter($this->request->post['option']);
-			} else {
-				$option = [];
-			}
-
+		if (!$json) {
 			// If variant get master product
 			if ($product_info['master_id']) {
 				$product_id = $product_info['master_id'];
@@ -365,7 +369,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 		$this->cart->update($key, $quantity);
 
 		if ($this->cart->hasProducts() || !empty($this->session->data['vouchers'])) {
-			$json['success'] = $this->language->get('text_update');
+			$json['success'] = $this->language->get('text_edit');
 		} else {
 			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
 		}
@@ -382,75 +386,24 @@ class Cart extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		// Remove
 		if (isset($this->request->post['key'])) {
-			$this->cart->remove($this->request->post['key']);
-
-			if ($this->cart->hasProducts() || !empty($this->session->data['vouchers'])) {
-				$json['success'] = $this->language->get('text_remove');
-			} else {
-				$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
-			}
-
-			unset($this->session->data['shipping_methods']);
-			unset($this->session->data['payment_methods']);
-			unset($this->session->data['reward']);
+			$key = (int)$this->request->post['key'];
+		} else {
+			$key = 0;
 		}
 
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
+		// Remove
+		$this->cart->remove($key);
 
-	public function getTotals(): void {
-		$this->load->language('checkout/cart');
-
-		$json = [];
-
-		// Totals
-		$totals = [];
-		$taxes = $this->cart->getTaxes();
-		$total = 0;
-
-		$json['totals'] = [];
-
-		// Display prices
-		if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
-			$sort_order = [];
-
-			$this->load->model('setting/extension');
-
-			$results = $this->model_setting_extension->getExtensionsByType('total');
-
-			foreach ($results as $key => $value) {
-				$sort_order[$key] = $this->config->get('total_' . $value['code'] . '_sort_order');
-			}
-
-			array_multisort($sort_order, SORT_ASC, $results);
-
-			foreach ($results as $result) {
-				if ($this->config->get('total_' . $result['code'] . '_status')) {
-					$this->load->model('extension/' . $result['extension'] . '/total/' . $result['code']);
-
-					// __call can not pass-by-reference so we get PHP to call it as an anonymous function.
-					($this->{'model_extension_' . $result['extension'] . '_total_' . $result['code']}->getTotal)($totals, $taxes, $total);
-				}
-			}
-
-			$sort_order = [];
-
-			foreach ($totals as $key => $value) {
-				$sort_order[$key] = $value['sort_order'];
-			}
-
-			array_multisort($sort_order, SORT_ASC, $totals);
-
-			foreach ($totals as $total) {
-				$json['totals'][] = [
-					'title' => $total['title'],
-					'text'  => $this->currency->format($total['value'], $this->session->data['currency'])
-				];
-			}
+		if ($this->cart->hasProducts() || !empty($this->session->data['vouchers'])) {
+			$json['success'] = $this->language->get('text_remove');
+		} else {
+			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
 		}
+
+		unset($this->session->data['shipping_methods']);
+		unset($this->session->data['payment_methods']);
+		unset($this->session->data['reward']);
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

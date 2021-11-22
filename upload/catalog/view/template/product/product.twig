@@ -116,6 +116,7 @@
         {% endif %}
 
         <div class="{{ class }}">
+
           <div class="btn-group">
             <button type="button" data-bs-toggle="tooltip" class="btn btn-light" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product_id }}');"><i class="fas fa-heart"></i></button>
             <button type="button" data-bs-toggle="tooltip" class="btn btn-light" title="{{ button_compare }}" onclick="compare.add('{{ product_id }}');"><i class="fas fa-exchange-alt"></i></button>
@@ -167,7 +168,6 @@
             <hr>
               <h3>{{ text_option }}</h3>
               <div>
-
                 {% for option in options %}
 
                   {% if option.type == 'select' %}
@@ -305,7 +305,7 @@
                   <label for="input-quantity" class="form-label">{{ entry_qty }}</label> <input type="text" name="quantity" value="{{ minimum }}" size="2" id="input-quantity" class="form-control"/> <input type="hidden" name="product_id" value="{{ product_id }}" id="input-product-id"/>
                   <div id="error-quantity" class="form-text"></div>
                   <br/>
-                  <button type="button" id="button-cart" data-loading-text="{{ text_loading }}" class="btn btn-primary btn-lg btn-block">{{ button_cart }}</button>
+                  <button type="submit" id="button-cart" data-loading-text="{{ text_loading }}" class="btn btn-primary btn-lg btn-block">{{ button_cart }}</button>
                 </div>
                 {% if minimum > 1 %}
                   <div class="alert alert-info"><i class="fas fa-info-circle"></i> {{ text_minimum }}</div>
@@ -373,9 +373,7 @@ $('#input-recurring, #input-quantity').change(function() {
     });
 });
 
-$('#button-cart').on('click', function() {
-    console.log(test);
-
+$('#form-product').submit(function() {
     $.ajax({
         url: 'index.php?route=checkout/cart|add&language={{ language }}',
         type: 'post',
@@ -391,11 +389,10 @@ $('#button-cart').on('click', function() {
             $('#button-cart').button('reset');
         },
         success: function(json) {
-            console.log(json);
-
-            $('.form-invalid').hide();
-
             $('#form-product').find('.is-invalid').removeClass('is-invalid');
+            $('#form-product').find('.invalid-feedback').removeClass('d-block');
+
+            console.log(json);
 
             if (json['error']) {
                 for (key in json['error']) {
@@ -414,7 +411,6 @@ $('#button-cart').on('click', function() {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
-
 });
 
 $('.date').datetimepicker({

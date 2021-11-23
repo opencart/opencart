@@ -146,7 +146,7 @@ class Smtp {
 			}
 
 			if (!empty($this->smtp_username) && !empty($this->smtp_password)) {
-				fputs($handle, 'EHLO ' . getenv('SERVER_NAME') . "\r\n");
+
 
 				$this->handleReply($handle, 250, 'Error: EHLO not accepted from server!');
 

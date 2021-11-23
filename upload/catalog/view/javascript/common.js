@@ -206,7 +206,7 @@ voucher.remove = function(key) {
 };
 
 // Forms
-$(document).submit('form[data-oc-toggle=\'ajax\']', function(e) {
+$(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function(e) {
     e.preventDefault();
 
     var element = this;
@@ -300,11 +300,11 @@ $(document).submit('form[data-oc-toggle=\'ajax\']', function(e) {
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success"><i class="fas fa-exclamation-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                // Refreshv
+                // Refresh
                 var url = $(form).attr('data-oc-load');
                 var target = $(form).attr('data-oc-target');
 
-                if (url !== typeof undefined && target !== typeof undefined) {
+                if (url !== undefined && target !== undefined) {
                     $(target).load(url);
                 }
 

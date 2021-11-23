@@ -145,7 +145,7 @@ $(document).ready(function() {
 });
 
 // Forms
-$(document).submit('form[data-oc-toggle=\'ajax\']', function(e) {
+$(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function(e) {
     e.preventDefault();
 
     var element = this;
@@ -181,24 +181,20 @@ $(document).submit('form[data-oc-toggle=\'ajax\']', function(e) {
         }
     }
 
-    /*
     console.log(e);
-    console.log(element);
-    console.log(action);
-    console.log(button);
-    console.log(formaction);
-    console.log(method);
-    console.log(enctype);
-    */
+    console.log('element ' + element);
+    console.log('action ' + action);
+    console.log('button ' + button);
+    console.log('formaction ' + formaction);
+    console.log('method ' + method);
+    console.log('enctype ' + enctype);
 
     $.ajax({
         url: action,
         type: method,
         data: $(form).serialize(),
         dataType: 'json',
-        cache: false,
         contentType: enctype,
-        processData: false,
         beforeSend: function() {
             $(button).button('loading');
         },
@@ -230,6 +226,8 @@ $(document).submit('form[data-oc-toggle=\'ajax\']', function(e) {
 
                 if (json['error']['warning']) {
                     $('#alert').prepend('<div class="alert alert-danger"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                    delete json['error']['warning'];
                 }
 
                 for (key in json['error']) {
@@ -260,11 +258,9 @@ $(document).submit('form[data-oc-toggle=\'ajax\']', function(e) {
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
-           console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
-
-
 });
 
 // Upload
@@ -298,12 +294,9 @@ $(document).on('click', '[data-oc-toggle=\'upload\']', function() {
             $.ajax({
                 url: $(element).attr('data-oc-upload'),
                 type: 'post',
-                dataType: 'json',
                 data: new FormData($('#form-upload')[0]),
+                dataType: 'json',
                 contentType: 'application/x-www-form-urlencoded',
-                cache: false,
-                contentType: false,
-                processData: false,
                 beforeSend: function() {
                     $(element).button('loading');
                 },
@@ -328,7 +321,6 @@ $(document).on('click', '[data-oc-toggle=\'upload\']', function() {
                     }
                 },
                 error: function(xhr, ajaxOptions, thrownError) {
-                    oc.alert('danger', thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
                     console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
                 }
             });

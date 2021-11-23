@@ -1,8 +1,8 @@
 <?php
-namespace Opencart\Catalog\Controller\Api;
+namespace Opencart\Catalog\Controller\Api\Order;
 class PaymentMethod extends \Opencart\System\Engine\Controller {
 	public function methods(): void {
-		$this->load->language('api/payment_method');
+		$this->load->language('api/order/payment_method');
 
 		// Delete past shipping methods and method just in case there is an error
 		unset($this->session->data['payment_methods']);

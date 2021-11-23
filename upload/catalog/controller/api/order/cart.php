@@ -1,8 +1,8 @@
 <?php
-namespace Opencart\Catalog\Controller\Api;
+namespace Opencart\Catalog\Controller\Api\Order;
 class Cart extends \Opencart\System\Engine\Controller {
 	public function add(): void {
-		$this->load->language('api/cart');
+		$this->load->language('api/order/cart');
 
 		$json = [];
 
@@ -26,24 +26,26 @@ class Cart extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('catalog/product');
 
-		if ($product_id) {
-			$product_info = $this->model_catalog_product->getProduct($product_id);
+		if (!$product_id) {
+			$json['error']['product'] = $this->language->get('error_product');
+		}
 
-			if (!$product_info) {
-				$json['error']['product'] = $this->language->get('error_product');
-			}
+		$product_info = $this->model_catalog_product->getProduct($product_id);
 
-			$product_options = $this->model_catalog_product->getOptions($product_id);
+		if (!$product_info) {
+			$json['error']['product'] = $this->language->get('error_product');
+		}
 
-			foreach ($product_options as $product_option) {
-				if ($product_option['required'] && empty($option[$product_option['product_option_id']])) {
-					$json['error']['option'][$product_option['product_option_id']] = sprintf($this->language->get('error_required'), $product_option['name']);
-				}
+		$product_options = $this->model_catalog_product->getOptions($product_id);
+
+		foreach ($product_options as $product_option) {
+			if ($product_option['required'] && empty($option[$product_option['product_option_id']])) {
+				$json['error']['option'][$product_option['product_option_id']] = sprintf($this->language->get('error_required'), $product_option['name']);
 			}
 		}
 
 		if (!$json) {
-			$this->cart->add((int)$this->request->post['product_id'], $quantity, $option);
+			$this->cart->add($product_id, $quantity, $option);
 
 			$json['success'] = $this->language->get('text_success');
 
@@ -58,7 +60,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 	}
 
 	public function edit(): void {
-		$this->load->language('api/cart');
+		$this->load->language('api/order/cart');
 
 		$json = [];
 
@@ -79,7 +81,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 	}
 
 	public function remove(): void {
-		$this->load->language('api/cart');
+		$this->load->language('api/order/cart');
 
 		$json = [];
 
@@ -103,7 +105,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 	}
 
 	public function getProducts(): void {
-		$this->load->language('api/cart');
+		$this->load->language('api/order/cart');
 
 		$json = [];
 

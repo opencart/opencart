@@ -1,8 +1,8 @@
 <?php
-namespace Opencart\Catalog\Controller\Api;
+namespace Opencart\Catalog\Controller\Api\Order;
 class Order extends \Opencart\System\Engine\Controller {
 	public function load(): void {
-		$this->load->language('api/order');
+		$this->load->language('api/order/order');
 
 		$json = [];
 
@@ -108,7 +108,7 @@ class Order extends \Opencart\System\Engine\Controller {
 	 * Loads order info
 	 * */
 	public function info(): void {
-		$this->load->language('api/order');
+		$this->load->language('api/order/order');
 
 		$json = [];
 
@@ -136,94 +136,10 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function customer(): void {
-		$this->load->language('api/customer');
 
-		$json = [];
-
-		$keys = [
-			'customer_id',
-			'customer_group_id',
-			'firstname',
-			'lastname',
-			'email',
-			'telephone'
-		];
-
-		foreach ($keys as $key) {
-			if (!isset($this->request->post[$key])) {
-				$this->request->post[$key] = '';
-			}
-		}
-
-		$this->load->model('account/customer');
-
-		if ($this->request->post['customer_id']) {
-			$customer_info = $this->model_account_customer->getCustomer($this->request->post['customer_id']);
-
-			if (!$customer_info) {
-				$json['error'] = $this->language->get('error_customer_not_found');
-			}
-		}
-
-		if ((utf8_strlen($this->request->post['firstname']) < 1) || (utf8_strlen($this->request->post['firstname']) > 32)) {
-			$json['error']['firstname'] = $this->language->get('error_firstname');
-		}
-
-		if ((utf8_strlen($this->request->post['lastname']) < 1) || (utf8_strlen($this->request->post['lastname']) > 32)) {
-			$json['error']['lastname'] = $this->language->get('error_lastname');
-		}
-
-		if ((utf8_strlen($this->request->post['email']) > 96) || !filter_var($this->request->post['email'], FILTER_VALIDATE_EMAIL)) {
-			$json['error']['email'] = $this->language->get('error_email');
-		}
-
-		if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
-			$json['error']['telephone'] = $this->language->get('error_telephone');
-		}
-
-		// Customer Group
-		if (isset($this->request->post['customer_group_id']) && is_array($this->config->get('config_customer_group_display')) && in_array($this->request->post['customer_group_id'], $this->config->get('config_customer_group_display'))) {
-			$customer_group_id = $this->request->post['customer_group_id'];
-		} else {
-			$customer_group_id = $this->config->get('config_customer_group_id');
-		}
-
-		// Custom field validation
-		$this->load->model('account/custom_field');
-
-		$custom_fields = $this->model_account_custom_field->getCustomFields((int)$customer_group_id);
-
-		foreach ($custom_fields as $custom_field) {
-			if ($custom_field['location'] == 'account') {
-				if ($custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['location']][$custom_field['custom_field_id']])) {
-					$json['error']['custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
-				} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !preg_match(html_entity_decode($custom_field['validation'], ENT_QUOTES, 'UTF-8'), $this->request->post['custom_field'][$custom_field['location']][$custom_field['custom_field_id']])) {
-					$json['error']['custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_regex'), $custom_field['name']);
-				}
-			}
-		}
-
-		if (!$json) {
-			$this->session->data['customer'] = [
-				'customer_id'       => $customer_info['customer_id'],
-				'customer_group_id' => $customer_info['customer_group_id'],
-				'firstname'         => $customer_info['firstname'],
-				'lastname'          => $customer_info['lastname'],
-				'email'             => $customer_info['email'],
-				'telephone'         => $customer_info['telephone'],
-				'custom_field'      => $customer_info['custom_field']
-			];
-
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
 
 	public function payment_address(): void {
-		$this->load->language('api/payment_address');
+		$this->load->language('api/order/payment_address');
 
 		$json = [];
 
@@ -351,7 +267,7 @@ class Order extends \Opencart\System\Engine\Controller {
 	}
 
 	public function payment_method(): void {
-		$this->load->language('api/payment_method');
+		$this->load->language('api/order/payment_method');
 
 		// Delete old payment method so not to cause any issues if there is an error
 		unset($this->session->data['payment_method']);
@@ -386,141 +302,8 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function shipping_address(): void {
-		$this->load->language('api/shipping_address');
-
-		$json = [];
-
-		// Add keys for missing post vars
-		$keys = [
-			'firstname',
-			'lastname',
-			'company',
-			'address_1',
-			'address_2',
-			'postcode',
-			'city',
-			'zone_id',
-			'country_id'
-		];
-
-		foreach ($keys as $key) {
-			if (!isset($this->request->post[$key])) {
-				$this->request->post[$key] = '';
-			}
-		}
-
-		if ($this->cart->hasShipping()) {
-			if ((utf8_strlen($this->request->post['firstname']) < 1) || (utf8_strlen($this->request->post['firstname']) > 32)) {
-				$json['error']['firstname'] = $this->language->get('error_firstname');
-			}
-
-			if ((utf8_strlen($this->request->post['lastname']) < 1) || (utf8_strlen($this->request->post['lastname']) > 32)) {
-				$json['error']['lastname'] = $this->language->get('error_lastname');
-			}
-
-			if ((utf8_strlen($this->request->post['address_1']) < 3) || (utf8_strlen($this->request->post['address_1']) > 128)) {
-				$json['error']['address_1'] = $this->language->get('error_address_1');
-			}
-
-			if ((utf8_strlen($this->request->post['city']) < 2) || (utf8_strlen($this->request->post['city']) > 32)) {
-				$json['error']['city'] = $this->language->get('error_city');
-			}
-
-			$this->load->model('localisation/country');
-
-			$country_info = $this->model_localisation_country->getCountry($this->request->post['country_id']);
-
-			if ($country_info && $country_info['postcode_required'] && (utf8_strlen($this->request->post['postcode']) < 2 || utf8_strlen($this->request->post['postcode']) > 10)) {
-				$json['error']['postcode'] = $this->language->get('error_postcode');
-			}
-
-			if (!filter_var($this->request->post['country_id'], FILTER_VALIDATE_INT)) {
-				$json['error']['country'] = $this->language->get('error_country');
-			}
-
-			if (!isset($this->request->post['zone_id']) || filter_var($this->request->post['zone_id'], FILTER_VALIDATE_INT) === false) {
-				$json['error']['zone'] = $this->language->get('error_zone');
-			}
-
-			// Custom field validation
-			$this->load->model('account/custom_field');
-
-			$custom_fields = $this->model_account_custom_field->getCustomFields((int)$this->config->get('config_customer_group_id'));
-
-			foreach ($custom_fields as $custom_field) {
-				if ($custom_field['location'] == 'address') {
-					if ($custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['custom_field_id']])) {
-						$json['error']['custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
-					} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !preg_match(html_entity_decode($custom_field['validation'], ENT_QUOTES, 'UTF-8'), $this->request->post['custom_field'][$custom_field['custom_field_id']])) {
-						$json['error']['custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_regex'), $custom_field['name']);
-					}
-				}
-			}
-		} else {
-			$json['error'] = $this->language->get('error_product');
-		}
-
-		if (!$json) {
-			if ($country_info) {
-				$country = $country_info['name'];
-				$iso_code_2 = $country_info['iso_code_2'];
-				$iso_code_3 = $country_info['iso_code_3'];
-				$address_format = $country_info['address_format'];
-			} else {
-				$country = '';
-				$iso_code_2 = '';
-				$iso_code_3 = '';
-				$address_format = '';
-			}
-
-			$this->load->model('localisation/zone');
-
-			$zone_info = $this->model_localisation_zone->getZone($this->request->post['zone_id']);
-
-			if ($zone_info) {
-				$zone = $zone_info['name'];
-				$zone_code = $zone_info['code'];
-			} else {
-				$zone = '';
-				$zone_code = '';
-			}
-
-			$this->session->data['shipping_address'] = [
-				'firstname'      => $this->request->post['firstname'],
-				'lastname'       => $this->request->post['lastname'],
-				'company'        => $this->request->post['company'],
-				'address_1'      => $this->request->post['address_1'],
-				'address_2'      => $this->request->post['address_2'],
-				'postcode'       => $this->request->post['postcode'],
-				'city'           => $this->request->post['city'],
-				'zone_id'        => $this->request->post['zone_id'],
-				'zone'           => $zone,
-				'zone_code'      => $zone_code,
-				'country_id'     => $this->request->post['country_id'],
-				'country'        => $country,
-				'iso_code_2'     => $iso_code_2,
-				'iso_code_3'     => $iso_code_3,
-				'address_format' => $address_format,
-				'custom_field'   => isset($this->request->post['custom_field']) ? $this->request->post['custom_field'] : []
-			];
-
-			// Delete old shipping address, shipping methods and method so not to cause any issues if there is an error
-			unset($this->session->data['shipping_methods']);
-			unset($this->session->data['shipping_method']);
-
-			$json['success'] = $this->language->get('text_success');
-
-			unset($this->session->data['shipping_method']);
-			unset($this->session->data['shipping_methods']);
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
 	public function shipping_method(): void {
-		$this->load->language('api/shipping_metho');
+		$this->load->language('api/order/shipping_metho');
 
 		// Delete old shipping method so not to cause any issues if there is an error
 		unset($this->session->data['shipping_method']);
@@ -561,7 +344,7 @@ class Order extends \Opencart\System\Engine\Controller {
 	}
 
 	public function save(): void {
-		$this->load->language('api/order');
+		$this->load->language('api/order/order');
 
 		$json = [];
 
@@ -924,7 +707,7 @@ class Order extends \Opencart\System\Engine\Controller {
 	}
 
 	public function delete(): void {
-		$this->load->language('api/order');
+		$this->load->language('api/order/order');
 
 		$json = [];
 
@@ -953,7 +736,7 @@ class Order extends \Opencart\System\Engine\Controller {
 	}
 
 	public function addHistory() {
-		$this->load->language('api/order');
+		$this->load->language('api/order/order');
 
 		$json = [];
 

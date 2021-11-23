@@ -1,13 +1,8 @@
 <?php
-namespace Opencart\Catalog\Controller\Api;
-class PaymentAddress extends \Opencart\System\Engine\Controller {
+namespace Opencart\Catalog\Controller\Api\Order;
+class ShippingAddress extends \Opencart\System\Engine\Controller {
 	public function add(): void {
-		$this->load->language('api/payment_address');
-
-		// Delete old payment address, payment methods and method so not to cause any issues if there is an error
-		unset($this->session->data['payment_address']);
-		unset($this->session->data['payment_methods']);
-		unset($this->session->data['payment_method']);
+		$this->load->language('api/order/shipping_address');
 
 		$json = [];
 
@@ -59,11 +54,11 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 				$json['error']['postcode'] = $this->language->get('error_postcode');
 			}
 
-			if (!filter_var($this->request->post['country_id'], FILTER_VALIDATE_INT)) {
+			if ($this->request->post['shipping_country_id'] == '') {
 				$json['error']['country'] = $this->language->get('error_country');
 			}
 
-			if (!isset($this->request->post['zone_id']) || filter_var($this->request->post['zone_id'], FILTER_VALIDATE_INT) === false) {
+			if ($this->request->post['shipping_zone_id'] == '') {
 				$json['error']['zone'] = $this->language->get('error_zone');
 			}
 
@@ -111,7 +106,7 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 					$zone_code = '';
 				}
 
-				$this->session->data['payment_address'] = [
+				$this->session->data['shipping_address'] = [
 					'firstname'      => $this->request->post['firstname'],
 					'lastname'       => $this->request->post['lastname'],
 					'company'        => $this->request->post['company'],
@@ -132,8 +127,8 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 
 				$json['success'] = $this->language->get('text_success');
 
-				unset($this->session->data['payment_method']);
-				unset($this->session->data['payment_methods']);
+				unset($this->session->data['shipping_method']);
+				unset($this->session->data['shipping_methods']);
 			}
 		}
 

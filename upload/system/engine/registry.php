@@ -23,7 +23,7 @@ class Registry {
 	 *
 	 * @return   object
 	 */
-	public function __get(string $key): object {
+	public function __get(string $key): object|null {
 		return $this->get($key);
 	}
 

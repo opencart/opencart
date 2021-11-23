@@ -1,8 +1,8 @@
 <?php
-namespace Opencart\Catalog\Controller\Api;
+namespace Opencart\Catalog\Controller\Api\Order;
 class Coupon extends \Opencart\System\Engine\Controller {
 	public function index(): void {
-		$this->load->language('api/coupon');
+		$this->load->language('api/order/coupon');
 
 		// Delete past coupon in case there is an error
 		unset($this->session->data['coupon']);

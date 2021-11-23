@@ -1,8 +1,8 @@
 <?php
-namespace Opencart\Catalog\Controller\Api;
+namespace Opencart\Catalog\Controller\Api\Order;
 class Language extends \Opencart\System\Engine\Controller {
 	public function index(): void {
-		$this->load->language('api/language');
+		$this->load->language('api/order/language');
 
 		$json = [];
 

@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Catalog\Controller\Api\Order;
 class ShippingMethod extends \Opencart\System\Engine\Controller {
-	public function methods(): void {
+	public function index(): void {
 		$this->load->language('api/order/shipping');
 
 		// Delete past shipping methods and method just in case there is an error
@@ -56,6 +56,44 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 			} else {
 				$json['error'] = $this->language->get('error_not_shipping');
 			}
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	public function save(): void {
+		$this->load->language('api/order/shipping_metho');
+
+		$json = [];
+
+		if ($this->cart->hasShipping()) {
+			if (!isset($this->session->data['shipping_address'])) {
+				$json['error'] = $this->language->get('error_address');
+			}
+
+			// Shipping Method
+			if (empty($this->session->data['shipping_methods'])) {
+				$json['error'] = $this->language->get('error_no_shipping');
+			}
+
+			if (isset($this->request->post['shipping_method'])) {
+				$shipping = explode('.', $this->request->post['shipping_method']);
+
+				if (!isset($shipping[0]) || !isset($shipping[1]) || !isset($this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]])) {
+					$json['error'] = $this->language->get('error_method');
+				}
+			} else {
+				$json['error'] = $this->language->get('error_method');
+			}
+		} else {
+			$json['error'] = $this->language->get('error_product');
+		}
+
+		if (!$json) {
+			$this->session->data['shipping_method'] = $this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]];
+
+			$json['success'] = $this->language->get('text_success');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

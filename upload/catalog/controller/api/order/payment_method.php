@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Catalog\Controller\Api\Order;
 class PaymentMethod extends \Opencart\System\Engine\Controller {
-	public function methods(): void {
+	public function index(): void {
 		$this->load->language('api/order/payment_method');
 
 		// Delete past shipping methods and method just in case there is an error
@@ -82,6 +82,42 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 			} else {
 				$json['error'] = $this->language->get('error_no_payment');
 			}
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	public function save(): void {
+		$this->load->language('api/order/payment_method');
+
+		// Delete old payment method so not to cause any issues if there is an error
+		unset($this->session->data['payment_method']);
+
+		$json = [];
+
+		// Payment Address
+		if (!isset($this->session->data['payment_address'])) {
+			$json['error'] = $this->language->get('error_address');
+		}
+
+		// Payment Method
+		if (empty($this->session->data['payment_methods'])) {
+			$json['error'] = $this->language->get('error_no_payment');
+		}
+
+		if (!isset($this->request->post['payment_method'])) {
+			$json['error'] = $this->language->get('error_method');
+		}
+
+		if (!isset($this->session->data['payment_methods'][$this->request->post['payment_method']])) {
+			$json['error'] = $this->language->get('error_method');
+		}
+
+		if (!$json) {
+			$this->session->data['payment_method'] = $this->session->data['payment_methods'][$this->request->post['payment_method']];
+
+			$json['success'] = $this->language->get('text_success');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

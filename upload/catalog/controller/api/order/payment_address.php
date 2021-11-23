@@ -1,13 +1,8 @@
 <?php
 namespace Opencart\Catalog\Controller\Api\Order;
 class PaymentAddress extends \Opencart\System\Engine\Controller {
-	public function add(): void {
+	public function index(): void {
 		$this->load->language('api/order/payment_address');
-
-		// Delete old payment address, payment methods and method so not to cause any issues if there is an error
-		unset($this->session->data['payment_address']);
-		unset($this->session->data['payment_methods']);
-		unset($this->session->data['payment_method']);
 
 		$json = [];
 

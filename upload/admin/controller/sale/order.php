@@ -1752,7 +1752,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		// Call the required api controller
 		if (isset($this->request->get['action'])) {
-			$registry->load->controller('api/order/' . $this->request->get['action']);
+		//	$registry->load->controller('api/order/' . $this->request->get['action']);
 		}
 
 		echo $registry->load->controller('api/order/' . $this->request->get['action']);

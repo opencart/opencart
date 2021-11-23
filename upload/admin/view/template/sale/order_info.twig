@@ -429,10 +429,11 @@
                   <textarea name="comment" rows="8" placeholder="{{ entry_comment }}" id="input-comment" class="form-control"></textarea>
                 </div>
               </div>
+              <div class="text-end">
+                <button type="button" id="button-history" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i> {{ button_history_add }}</button>
+              </div>
             </fieldset>
-            <div class="text-end">
-              <button type="button" id="button-history" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i> {{ button_history_add }}</button>
-            </div>
+
           </div>
           <div id="tab-additional" class="tab-pane">
             <div class="table-responsive">
@@ -1051,29 +1052,35 @@
           </div>
 
           <div class="mb-3 required">
-            <label for="input-shipping-firstname" class="form-label">{{ entry_firstname }}</label> <input type="text" name="firstname" value="{{ shipping_firstname }}" placeholder="{{ entry_firstname }}" id="input-shipping-firstname" class="form-control"/>
+            <label for="input-shipping-firstname" class="form-label">{{ entry_firstname }}</label>
+            <input type="text" name="firstname" value="{{ shipping_firstname }}" placeholder="{{ entry_firstname }}" id="input-shipping-firstname" class="form-control"/>
             <div id="error-shipping-firstname" class="invalid-feedback"></div>
           </div>
 
           <div class="mb-3 required">
-            <label for="input-shipping-lastname" class="form-label">{{ entry_lastname }}</label> <input type="text" name="lastname" value="{{ shipping_lastname }}" placeholder="{{ entry_lastname }}" id="input-shipping-lastname" class="form-control"/>
+            <label for="input-shipping-lastname" class="form-label">{{ entry_lastname }}</label>
+            <input type="text" name="lastname" value="{{ shipping_lastname }}" placeholder="{{ entry_lastname }}" id="input-shipping-lastname" class="form-control"/>
             <div id="error-shipping-lastname" class="invalid-feedback"></div>
           </div>
 
           <div class="mb-3">
-            <label for="input-shipping-company" class="form-label">{{ entry_company }}</label> <input type="text" name="company" value="{{ shipping_company }}" placeholder="{{ entry_company }}" id="input-shipping-company" class="form-control"/>
+            <label for="input-shipping-company" class="form-label">{{ entry_company }}</label>
+            <input type="text" name="company" value="{{ shipping_company }}" placeholder="{{ entry_company }}" id="input-shipping-company" class="form-control"/>
           </div>
 
           <div class="mb-3 required">
-            <label for="input-shipping-address-1" class="form-label">{{ entry_address_1 }}</label> <input type="text" name="address_1" value="{{ shipping_address_1 }}" placeholder="{{ entry_address_1 }}" id="input-shipping-address-1" class="form-control"/>
+            <label for="input-shipping-address-1" class="form-label">{{ entry_address_1 }}</label>
+            <input type="text" name="address_1" value="{{ shipping_address_1 }}" placeholder="{{ entry_address_1 }}" id="input-shipping-address-1" class="form-control"/>
             <div id="error-shipping-address-1" class="invalid-feedback"></div>
           </div>
 
           <div class="mb-3">
-            <label for="input-shipping-address-2" class="form-label">{{ entry_address_2 }}</label> <input type="text" name="address_2" value="{{ shipping_address_2 }}" placeholder="{{ entry_address_2 }}" id="input-shipping-address-2" class="form-control"/>
+            <label for="input-shipping-address-2" class="form-label">{{ entry_address_2 }}</label>
+            <input type="text" name="address_2" value="{{ shipping_address_2 }}" placeholder="{{ entry_address_2 }}" id="input-shipping-address-2" class="form-control"/>
           </div>
           <div class="mb-3 required">
-            <label for="input-shipping-city" class="form-label">{{ entry_city }}</label> <input type="text" name="city" value="{{ shipping_city }}" placeholder="{{ entry_city }}" id="input-shipping-city" class="form-control"/>
+            <label for="input-shipping-city" class="form-label">{{ entry_city }}</label>
+            <input type="text" name="city" value="{{ shipping_city }}" placeholder="{{ entry_city }}" id="input-shipping-city" class="form-control"/>
             <div id="error-shipping-city" class="invalid-feedback"></div>
           </div>
 
@@ -1303,7 +1310,6 @@
     </div>
   </div>
 </div>
-
 <script type="text/javascript"><!--
 $(document).on('click', '#button-collapse', function() {
     var element = this;
@@ -1346,11 +1352,6 @@ $(document).on('click', '#button-invoice', function() {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
-});
-
-$('#modal-store #button-store').on('click', function() {
-    // Refresh products, vouchers and totals
-    //$('#button-refresh').trigger('click');
 });
 
 // Customer
@@ -1432,7 +1433,7 @@ $('#input-customer').autocomplete({
 });
 
 // Custom Fields
-$('#modal-customer select[name=\'customer_group_id\']').on('change', function() {
+$('#input-customer-group').on('change', function() {
     $.ajax({
         url: 'index.php?route=customer/customer|customfield&user_token={{ user_token }}&customer_group_id=' + this.value,
         dataType: 'json',
@@ -1456,7 +1457,7 @@ $('#modal-customer select[name=\'customer_group_id\']').on('change', function() 
     });
 });
 
-$('#modal-customer select[name=\'customer_group_id\']').trigger('change');
+$('#input-customer-group').trigger('change');
 
 // Customer
 $('#form-customer').submit(function(e) {
@@ -1499,7 +1500,7 @@ $('#form-customer').submit(function(e) {
             if (json['success']) {
                 $('#modal-customer .modal-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#input-firstname').val($('#input-firstname').val() + ' ' + $('#input-lastname').val());
+                //$('#input-firstname').val($('#input-firstname').val() + ' ' + $('#input-lastname').val());
 
                 // Refresh products, vouchers and totals
                 // $('#button-refresh').trigger('click');
@@ -1509,6 +1510,11 @@ $('#form-customer').submit(function(e) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
+});
+
+$('#modal-store #button-store').on('click', function() {
+    // Refresh products, vouchers and totals
+    //$('#button-refresh').trigger('click');
 });
 
 // Language
@@ -1537,7 +1543,7 @@ $('#button-language').on('click', function() {
                 $('#modal-language .modal-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                 // Refresh products, vouchers and totals
-                $('#button-refresh').trigger('click');
+                //$('#button-refresh').trigger('click');
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
@@ -1551,7 +1557,7 @@ $('#button-currency').on('click', function() {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=sale/order|call|currency&user_token={{ user_token }}&store_id=' + $('#input-store').val(),
+        url: 'index.php?route=sale/order|calluser_token={{ user_token }}&store_id=' + $('#input-store').val() + '&action=currency',
         type: 'post',
         dataType: 'json',
         data: 'currency=' + $('select[name=\'currency\'] option:selected').val(),
@@ -1678,23 +1684,25 @@ $('#button-payment-refresh').on('click', function() {
             $(element).button('reset');
         },
         success: function(json) {
+            $('.alert-dismissible').remove();
+
             if (json['error']) {
                 $('#collapse-payment .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-            } else {
-                html = '<option value="">{{ text_select }}</option>';
+            }
 
-                if (json['payment_methods']) {
-                    for (i in json['payment_methods']) {
-                        if (json['payment_methods'][i]['code'] == $('select[name=\'payment_method\'] option:selected').val()) {
-                            html += '<option value="' + json['payment_methods'][i]['code'] + '" selected="selected">' + json['payment_methods'][i]['title'] + '</option>';
-                        } else {
-                            html += '<option value="' + json['payment_methods'][i]['code'] + '">' + json['payment_methods'][i]['title'] + '</option>';
-                        }
+            html = '<option value="">{{ text_select }}</option>';
+
+            if (json['payment_methods']) {
+                for (i in json['payment_methods']) {
+                    if (json['payment_methods'][i]['code'] == $('select[name=\'payment_method\'] option:selected').val()) {
+                        html += '<option value="' + json['payment_methods'][i]['code'] + '" selected="selected">' + json['payment_methods'][i]['title'] + '</option>';
+                    } else {
+                        html += '<option value="' + json['payment_methods'][i]['code'] + '">' + json['payment_methods'][i]['title'] + '</option>';
                     }
                 }
-
-                $('select[name=\'payment_method\']').html(html);
             }
+
+            $('select[name=\'payment_method\']').html(html);
         },
         error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -1737,7 +1745,7 @@ $('#button-payment-method').on('click', function() {
 });
 
 // Coupon
-$('#button-coupon').on('click', function() {
+$('#form-coupon').on('submit', function() {
     var element = this;
 
     $.ajax({
@@ -1772,7 +1780,7 @@ $('#button-coupon').on('click', function() {
 });
 
 // Voucher
-$('#button-voucher').on('click', function() {
+$('#form-voucher').on('click', function() {
     var element = this;
 
     $.ajax({
@@ -1807,7 +1815,7 @@ $('#button-voucher').on('click', function() {
 });
 
 // Reward
-$('#button-reward').on('click', function() {
+$('#form-reward').on('click', function() {
     var element = this;
 
     $.ajax({
@@ -1895,7 +1903,7 @@ $(document).on('click', '#button-reward-add, #button-reward-remove, #button-comm
 });
 
 // Affiliate
-$('input[name=\'affiliate\']').autocomplete({
+$('#input-affiliate').autocomplete({
     'source': function(request, response) {
         $.ajax({
             url: 'index.php?route=customer/customer|autocomplete&user_token={{ user_token }}&filter_affiliate=1&filter_name=' + encodeURIComponent(request),
@@ -1916,7 +1924,7 @@ $('input[name=\'affiliate\']').autocomplete({
         });
     },
     'select': function(item) {
-        $('input[name=\'affiliate\']').val(item['label']);
+        $('#input-affiliate').val(item['label']);
         $('input[name=\'affiliate_id\']').val(item['value']);
     }
 });
@@ -2014,7 +2022,7 @@ $('#input-payment-country').on('change', function() {
                 html += '<option value="0" selected="selected">{{ text_none }}</option>';
             }
 
-            $('#modal-payment-address select[name=\'zone_id\']').html(html);
+            $('#input-payment-zone').html(html);
         },
         error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -2140,9 +2148,9 @@ $('#input-shipping-country').on('change', function() {
         },
         success: function(json) {
             if (json['postcode_required'] == '1') {
-                $('#modal-shipping-address input[name=\'postcode\']').closest('.row.mb3').addClass('required');
+                $('#input-shipping-postcode').closest('.row.mb3').addClass('required');
             } else {
-                $('#modal-shipping-address input[name=\'postcode\']').closest('.row.mb3').removeClass('required');
+                $('#input-shipping-postcode').closest('.row.mb3').removeClass('required');
             }
 
             html = '<option value="">{{ text_select }}</option>';
@@ -2161,7 +2169,7 @@ $('#input-shipping-country').on('change', function() {
                 html += '<option value="0" selected="selected">{{ text_none }}</option>';
             }
 
-            $('#modal-shipping-address select[name=\'zone_id\']').html(html);
+            $('#input-shipping-zone').html(html);
         },
         error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);

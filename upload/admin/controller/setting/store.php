@@ -172,12 +172,6 @@ class Store extends \Opencart\System\Engine\Controller {
 			$data['config_meta_keyword'] = '';
 		}
 
-		if (isset($store_info['config_theme'])) {
-			$data['config_theme'] = $store_info['config_theme'];
-		} else {
-			$data['config_theme'] = '';
-		}
-
 		$data['themes'] = [];
 
 		$this->load->model('setting/extension');
@@ -195,15 +189,21 @@ class Store extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		if (isset($store_info['config_layout_id'])) {
-			$data['config_layout_id'] = $store_info['config_layout_id'];
+		if (isset($store_info['config_theme'])) {
+			$data['config_theme'] = $store_info['config_theme'];
 		} else {
-			$data['config_layout_id'] = '';
+			$data['config_theme'] = '';
 		}
 
 		$this->load->model('design/layout');
 
 		$data['layouts'] = $this->model_design_layout->getLayouts();
+
+		if (isset($store_info['config_layout_id'])) {
+			$data['config_layout_id'] = $store_info['config_layout_id'];
+		} else {
+			$data['config_layout_id'] = '';
+		}
 
 		if (isset($store_info['config_name'])) {
 			$data['config_name'] = $store_info['config_name'];
@@ -279,15 +279,15 @@ class Store extends \Opencart\System\Engine\Controller {
 			$data['config_location'] = [];
 		}
 
+		$this->load->model('localisation/country');
+
+		$data['countries'] = $this->model_localisation_country->getCountries();
+
 		if (isset($store_info['config_country_id'])) {
 			$data['config_country_id'] = $store_info['config_country_id'];
 		} else {
 			$data['config_country_id'] = $this->config->get('config_country_id');
 		}
-
-		$this->load->model('localisation/country');
-
-		$data['countries'] = $this->model_localisation_country->getCountries();
 
 		if (isset($store_info['config_zone_id'])) {
 			$data['config_zone_id'] = $store_info['config_zone_id'];
@@ -295,25 +295,25 @@ class Store extends \Opencart\System\Engine\Controller {
 			$data['config_zone_id'] = $this->config->get('config_zone_id');
 		}
 
+		$this->load->model('localisation/language');
+
+		$data['languages'] = $this->model_localisation_language->getLanguages();
+
 		if (isset($store_info['config_language'])) {
 			$data['config_language'] = $store_info['config_language'];
 		} else {
 			$data['config_language'] = $this->config->get('config_language');
 		}
 
-		$this->load->model('localisation/language');
+		$this->load->model('localisation/currency');
 
-		$data['languages'] = $this->model_localisation_language->getLanguages();
+		$data['currencies'] = $this->model_localisation_currency->getCurrencies();
 
 		if (isset($store_info['config_currency'])) {
 			$data['config_currency'] = $store_info['config_currency'];
 		} else {
 			$data['config_currency'] = $this->config->get('config_currency');
 		}
-
-		$this->load->model('localisation/currency');
-
-		$data['currencies'] = $this->model_localisation_currency->getCurrencies();
 
 		// Options
 		if (isset($store_info['config_product_description_length'])) {
@@ -364,15 +364,15 @@ class Store extends \Opencart\System\Engine\Controller {
 			$data['config_tax_customer'] = '';
 		}
 
+		$this->load->model('customer/customer_group');
+
+		$data['customer_groups'] = $this->model_customer_customer_group->getCustomerGroups();
+
 		if (isset($store_info['config_customer_group_id'])) {
 			$data['config_customer_group_id'] = $store_info['config_customer_group_id'];
 		} else {
 			$data['config_customer_group_id'] = '';
 		}
-
-		$this->load->model('customer/customer_group');
-
-		$data['customer_groups'] = $this->model_customer_customer_group->getCustomerGroups();
 
 		if (isset($store_info['config_customer_group_display'])) {
 			$data['config_customer_group_display'] = $store_info['config_customer_group_display'];
@@ -386,15 +386,15 @@ class Store extends \Opencart\System\Engine\Controller {
 			$data['config_customer_price'] = '';
 		}
 
+		$this->load->model('catalog/information');
+
+		$data['informations'] = $this->model_catalog_information->getInformations();
+
 		if (isset($store_info['config_account_id'])) {
 			$data['config_account_id'] = $store_info['config_account_id'];
 		} else {
 			$data['config_account_id'] = '';
 		}
-
-		$this->load->model('catalog/information');
-
-		$data['informations'] = $this->model_catalog_information->getInformations();
 
 		if (isset($store_info['config_cart_weight'])) {
 			$data['config_cart_weight'] = $store_info['config_cart_weight'];
@@ -414,15 +414,15 @@ class Store extends \Opencart\System\Engine\Controller {
 			$data['config_checkout_id'] = '';
 		}
 
+		$this->load->model('localisation/order_status');
+
+		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
+
 		if (isset($store_info['config_order_status_id'])) {
 			$data['config_order_status_id'] = $store_info['config_order_status_id'];
 		} else {
 			$data['config_order_status_id'] = '';
 		}
-
-		$this->load->model('localisation/order_status');
-
-		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 
 		if (isset($store_info['config_stock_display'])) {
 			$data['config_stock_display'] = $store_info['config_stock_display'];

@@ -517,20 +517,14 @@ class Returns extends \Opencart\System\Engine\Controller {
 			$data['opened'] = '';
 		}
 
-		if (!empty($return_info)) {
-			$data['return_reason_id'] = $return_info['return_reason_id'];
-		} else {
-			$data['return_reason_id'] = '';
-		}
-
 		$this->load->model('localisation/return_reason');
 
 		$data['return_reasons'] = $this->model_localisation_return_reason->getReturnReasons();
 
 		if (!empty($return_info)) {
-			$data['return_action_id'] = $return_info['return_action_id'];
+			$data['return_reason_id'] = $return_info['return_reason_id'];
 		} else {
-			$data['return_action_id'] = '';
+			$data['return_reason_id'] = 0;
 		}
 
 		$this->load->model('localisation/return_action');
@@ -538,20 +532,26 @@ class Returns extends \Opencart\System\Engine\Controller {
 		$data['return_actions'] = $this->model_localisation_return_action->getReturnActions();
 
 		if (!empty($return_info)) {
+			$data['return_action_id'] = $return_info['return_action_id'];
+		} else {
+			$data['return_action_id'] = 0;
+		}
+
+		if (!empty($return_info)) {
 			$data['comment'] = $return_info['comment'];
 		} else {
 			$data['comment'] = '';
 		}
+
+		$this->load->model('localisation/return_status');
+
+		$data['return_statuses'] = $this->model_localisation_return_status->getReturnStatuses();
 
 		if (!empty($return_info)) {
 			$data['return_status_id'] = $return_info['return_status_id'];
 		} else {
 			$data['return_status_id'] = '';
 		}
-
-		$this->load->model('localisation/return_status');
-
-		$data['return_statuses'] = $this->model_localisation_return_status->getReturnStatuses();
 
 		$data['user_token'] = $this->session->data['user_token'];
 

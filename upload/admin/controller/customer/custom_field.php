@@ -316,6 +316,10 @@ class CustomField extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		$this->load->model('customer/customer_group');
+
+		$data['customer_groups'] = $this->model_customer_customer_group->getCustomerGroups();
+
 		$data['custom_field_required'] = [];
 
 		foreach ($custom_field_customer_groups as $custom_field_customer_group) {
@@ -323,10 +327,6 @@ class CustomField extends \Opencart\System\Engine\Controller {
 				$data['custom_field_required'][] = $custom_field_customer_group['customer_group_id'];
 			}
 		}
-
-		$this->load->model('customer/customer_group');
-
-		$data['customer_groups'] = $this->model_customer_customer_group->getCustomerGroups();
 
 		$data['user_token'] = $this->session->data['user_token'];
 

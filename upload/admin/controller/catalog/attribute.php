@@ -207,15 +207,15 @@ class Attribute extends \Opencart\System\Engine\Controller {
 			$data['attribute_description'] = [];
 		}
 
-		if (!empty($attribute_info)) {
-			$data['attribute_group_id'] = $attribute_info['attribute_group_id'];
-		} else {
-			$data['attribute_group_id'] = '';
-		}
-
 		$this->load->model('catalog/attribute_group');
 
 		$data['attribute_groups'] = $this->model_catalog_attribute_group->getAttributeGroups();
+
+		if (!empty($attribute_info)) {
+			$data['attribute_group_id'] = $attribute_info['attribute_group_id'];
+		} else {
+			$data['attribute_group_id'] = 0;
+		}
 
 		if (!empty($attribute_info)) {
 			$data['sort_order'] = $attribute_info['sort_order'];

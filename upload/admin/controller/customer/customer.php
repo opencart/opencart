@@ -761,8 +761,6 @@ class Customer extends \Opencart\System\Engine\Controller {
 				$store_id = 0;
 			}
 
-			$this->load->model('setting/setting');
-
 			$this->load->model('setting/store');
 
 			$store_info = $this->model_setting_store->getStore($store_id);
@@ -836,7 +834,6 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-
 		if (!$json) {
 			$this->load->model('customer/customer');
 
@@ -908,7 +905,6 @@ class Customer extends \Opencart\System\Engine\Controller {
 		if (!$this->user->hasPermission('modify', 'customer/customer')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
-
 
 		$this->load->model('customer/customer');
 

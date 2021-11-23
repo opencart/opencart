@@ -30,7 +30,6 @@ class Setting extends \Opencart\System\Engine\Controller {
 		$data['config_meta_title'] = $this->config->get('config_meta_title');
 		$data['config_meta_description'] = $this->config->get('config_meta_description');
 		$data['config_meta_keyword'] = $this->config->get('config_meta_keyword');
-		$data['config_theme'] = $this->config->get('config_theme');
 
 		$data['store_url'] = HTTP_CATALOG;
 
@@ -51,11 +50,13 @@ class Setting extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$data['config_layout_id'] = $this->config->get('config_layout_id');
+		$data['config_theme'] = $this->config->get('config_theme');
 
 		$this->load->model('design/layout');
 
 		$data['layouts'] = $this->model_design_layout->getLayouts();
+
+		$data['config_layout_id'] = $this->config->get('config_layout_id');
 
 		// Store Details
 		$data['config_name'] = $this->config->get('config_name');
@@ -90,11 +91,11 @@ class Setting extends \Opencart\System\Engine\Controller {
 		}
 
 		// Localisation
-		$data['config_country_id'] = $this->config->get('config_country_id');
-
 		$this->load->model('localisation/country');
 
 		$data['countries'] = $this->model_localisation_country->getCountries();
+
+		$data['config_country_id'] = $this->config->get('config_country_id');
 
 		$data['config_zone_id'] = $this->config->get('config_zone_id');
 
@@ -123,13 +124,17 @@ class Setting extends \Opencart\System\Engine\Controller {
 
 		date_default_timezone_set($this->config->get('config_timezone'));
 
-		$data['config_language'] = $this->config->get('config_language');
-
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
+		$data['config_language'] = $this->config->get('config_language');
+
 		$data['config_language_admin'] = $this->config->get('config_language_admin');
+
+		$this->load->model('localisation/currency');
+
+		$data['currencies'] = $this->model_localisation_currency->getCurrencies();
 
 		$data['config_currency'] = $this->config->get('config_currency');
 
@@ -153,21 +158,17 @@ class Setting extends \Opencart\System\Engine\Controller {
 		$data['config_currency_engine'] = $this->config->get('config_currency_engine');
 		$data['config_currency_auto'] = $this->config->get('config_currency_auto');
 
-		$this->load->model('localisation/currency');
-
-		$data['currencies'] = $this->model_localisation_currency->getCurrencies();
-
-		$data['config_length_class_id'] = $this->config->get('config_length_class_id');
-
 		$this->load->model('localisation/length_class');
 
 		$data['length_classes'] = $this->model_localisation_length_class->getLengthClasses();
 
-		$data['config_weight_class_id'] = $this->config->get('config_weight_class_id');
+		$data['config_length_class_id'] = $this->config->get('config_length_class_id');
 
 		$this->load->model('localisation/weight_class');
 
 		$data['weight_classes'] = $this->model_localisation_weight_class->getWeightClasses();
+
+		$data['config_weight_class_id'] = $this->config->get('config_weight_class_id');
 
 		// Options
 		if ($this->config->get('config_product_description_length')) {
@@ -215,11 +216,12 @@ class Setting extends \Opencart\System\Engine\Controller {
 
 		$data['config_customer_activity'] = $this->config->get('config_customer_activity');
 		$data['config_customer_search'] = $this->config->get('config_customer_search');
-		$data['config_customer_group_id'] = $this->config->get('config_customer_group_id');
 
 		$this->load->model('customer/customer_group');
 
 		$data['customer_groups'] = $this->model_customer_customer_group->getCustomerGroups();
+
+		$data['config_customer_group_id'] = $this->config->get('config_customer_group_id');
 
 		if ($this->config->get('config_customer_group_display')) {
 			$data['config_customer_group_display'] = $this->config->get('config_customer_group_display');
@@ -235,11 +237,11 @@ class Setting extends \Opencart\System\Engine\Controller {
 			$data['config_login_attempts'] = 5;
 		}
 
-		$data['config_account_id'] = $this->config->get('config_account_id');
-
 		$this->load->model('catalog/information');
 
 		$data['informations'] = $this->model_catalog_information->getInformations();
+
+		$data['config_account_id'] = $this->config->get('config_account_id');
 
 		$data['config_cart_weight'] = $this->config->get('config_cart_weight');
 		$data['config_checkout_guest'] = $this->config->get('config_checkout_guest');
@@ -251,6 +253,10 @@ class Setting extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['config_invoice_prefix'] = 'INV-' . date('Y') . '-00';
 		}
+
+		$this->load->model('localisation/order_status');
+
+		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 
 		$data['config_order_status_id'] = $this->config->get('config_order_status_id');
 
@@ -268,15 +274,12 @@ class Setting extends \Opencart\System\Engine\Controller {
 
 		$data['config_fraud_status_id'] = $this->config->get('config_fraud_status_id');
 
-		$this->load->model('localisation/order_status');
-
-		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
-
-		$data['config_api_id'] = $this->config->get('config_api_id');
-
+		// Api
 		$this->load->model('user/api');
 
 		$data['apis'] = $this->model_user_api->getApis();
+
+		$data['config_api_id'] = $this->config->get('config_api_id');
 
 		$data['config_stock_display'] = $this->config->get('config_stock_display');
 		$data['config_stock_warning'] = $this->config->get('config_stock_warning');
@@ -308,14 +311,17 @@ class Setting extends \Opencart\System\Engine\Controller {
 			$data['config_affiliate_commission'] = '5.00';
 		}
 
+		// Affiliate terms
 		$data['config_affiliate_id'] = $this->config->get('config_affiliate_id');
-		$data['config_return_id'] = $this->config->get('config_return_id');
-
-		$data['config_return_status_id'] = $this->config->get('config_return_status_id');
 
 		$this->load->model('localisation/return_status');
 
 		$data['return_statuses'] = $this->model_localisation_return_status->getReturnStatuses();
+
+		$data['config_return_status_id'] = $this->config->get('config_return_status_id');
+
+		// Return terms
+		$data['config_return_id'] = $this->config->get('config_return_id');
 
 		// Captcha
 		$data['config_captcha'] = $this->config->get('config_captcha');

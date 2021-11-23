@@ -330,7 +330,9 @@ class Api extends \Opencart\System\Engine\Controller {
 
 		if (!$this->user->hasPermission('modify', 'user/api')) {
 			$json['error'] = $this->language->get('error_permission');
-		} else {
+		}
+
+		if (!$json) {
 			$this->load->model('user/api');
 
 			$this->model_user_api->deleteSession($this->request->get['api_session_id']);

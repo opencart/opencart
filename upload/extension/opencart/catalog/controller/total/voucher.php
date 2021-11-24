@@ -30,21 +30,9 @@ class Voucher extends \Opencart\System\Engine\Controller {
 			$voucher = '';
 		}
 
-		if (!$this->config->get('total_voucher_status')) {
-			$json['error'] = $this->language->get('error_status');
-		}
+		$this->load->model('checkout/voucher');
 
-		$this->load->model('account/voucher');
-
-		$voucher_info = $this->model_account_voucher->getVoucher($voucher);
-
-		if (!$voucher_info) {
-			$json['error'] = $this->language->get('error_voucher');
-		}
-
-		$this->load->model('account/voucher');
-
-		$voucher_info = $this->model_account_voucher->getVoucher($voucher);
+		$voucher_info = $this->model_checkout_voucher->getVoucher($voucher);
 
 		if (!$this->config->get('total_voucher_status') || !$voucher_info) {
 			$json['error'] = $this->language->get('error_voucher');

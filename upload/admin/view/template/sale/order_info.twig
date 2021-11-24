@@ -1515,6 +1515,8 @@ $('#form-customer').on('submit', function(e) {
             $('.is-invalid').removeClass('is-invalid');
             $('.invalid-feedback').removeClass('d-block');
 
+            console.log(json);
+
             // Check for errors
             if (json['error']) {
                 if (json['error']['warning']) {

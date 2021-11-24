@@ -30,10 +30,6 @@ class Coupon extends \Opencart\System\Engine\Controller {
 			$coupon = '';
 		}
 
-		if (!$this->config->get('total_coupon_status')) {
-			$json['error'] = $this->language->get('error_status');
-		}
-
 		$this->load->model('extension/opencart/total/coupon');
 
 		$coupon_info = $this->model_extension_opencart_total_coupon->getCoupon($coupon);

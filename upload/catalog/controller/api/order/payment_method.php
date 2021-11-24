@@ -4,10 +4,6 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('api/order/payment_method');
 
-		// Delete past shipping methods and method just in case there is an error
-		unset($this->session->data['payment_methods']);
-		unset($this->session->data['payment_method']);
-
 		$json = [];
 
 		// Payment Address
@@ -107,11 +103,11 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!isset($this->request->post['payment_method'])) {
-			$json['error'] = $this->language->get('error_method');
+			$json['error'] = $this->language->get('error_payment_method');
 		}
 
 		if (!isset($this->session->data['payment_methods'][$this->request->post['payment_method']])) {
-			$json['error'] = $this->language->get('error_method');
+			$json['error'] = $this->language->get('error_payment_method');
 		}
 
 		if (!$json) {
@@ -123,4 +119,6 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
+
+
 }

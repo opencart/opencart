@@ -9,6 +9,6 @@ $_['text_success']          = 'Success: You have changed payment method!';
 $_['text_comment']          = 'Success: Comment added!';
 
 // Error
-$_['error_payment_method']  = 'Warning: Payment method required!';
 $_['error_payment_address'] = 'Warning: Payment address required!';
+$_['error_payment_method']  = 'Warning: Payment method required!';
 $_['error_no_payment']      = 'Warning: No Payment options are available. Please <a href="%s">contact us</a> for assistance!';

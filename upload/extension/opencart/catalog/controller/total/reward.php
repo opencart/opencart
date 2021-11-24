@@ -50,7 +50,7 @@ class Reward extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		if (!$this->config->get('total_status')) {
+		if (!$this->config->get('total_reward_status')) {
 			$json['error'] = $this->language->get('error_reward');
 		}
 

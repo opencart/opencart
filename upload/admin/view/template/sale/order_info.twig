@@ -55,7 +55,7 @@
             </div>
 
             <div class="col">
-              <div class="form-control-plaintext p-0 border rounded mb-3">
+              <div class="form-control p-0 border rounded mb-3">
                 <p class="lead p-2 mb-0"><strong>{{ text_date_added }}</strong>
                   <br/>
                   {{ date_added }}
@@ -364,10 +364,12 @@
           <div class="row">
             <div class="col">
               <div class="input-group mb-3">
-                <div class="form-control-plaintext p-0 border rounded-start">
+                <div class="form-control p-0 border rounded-start">
                   <p class="lead p-2 mb-0"><strong>{{ text_comment }}</strong>
                     <br/>
+
                     {{ comment }}
+
                   </p>
                 </div>
                 <button type="button" data-bs-toggle="modal" data-bs-target="#modal-comment" class="btn btn-outline-primary btn-sm float-end"><i class="fas fa-cog"></i></button>
@@ -408,8 +410,7 @@
                 <label for="input-override" class="col-sm-2 col-form-label">{{ entry_override }}</label>
                 <div class="col-sm-10">
                   <div class="btn-group">
-                    <label class="btn btn-outline-secondary"><input type="radio" name="override" value="1" class="btn-check"/> {{ text_yes }}</label>
-                    <label class="btn btn-outline-secondary active"><input type="radio" name="override" value="0" class="btn-check" checked/> {{ text_no }}</label>
+                    <label class="btn btn-outline-secondary"><input type="radio" name="override" value="1" class="btn-check"/> {{ text_yes }}</label> <label class="btn btn-outline-secondary active"><input type="radio" name="override" value="0" class="btn-check" checked/> {{ text_no }}</label>
                   </div>
                   <div class="form-text text-muted">{{ help_override }}</div>
                 </div>
@@ -418,8 +419,7 @@
                 <label for="input-notify" class="col-sm-2 col-form-label">{{ entry_notify }}</label>
                 <div class="col-sm-10">
                   <div class="btn-group">
-                    <label class="btn btn-outline-secondary"><input type="radio" name="notify" value="1" class="btn-check"/> {{ text_yes }}</label>
-                    <label class="btn btn-outline-secondary active"><input type="radio" name="notify" value="0" class="btn-check" checked/> {{ text_no }}</label>
+                    <label class="btn btn-outline-secondary"><input type="radio" name="notify" value="1" class="btn-check"/> {{ text_yes }}</label> <label class="btn btn-outline-secondary active"><input type="radio" name="notify" value="0" class="btn-check" checked/> {{ text_no }}</label>
                   </div>
                 </div>
               </div>
@@ -492,7 +492,8 @@
             </div>
           </div>
           <div class="mb-3">
-            <label for="input-customer-group" class="form-label">{{ entry_customer_group }}</label> <select name="customer_group_id" id="input-customer-group" class="form-select">
+            <label for="input-customer-group" class="form-label">{{ entry_customer_group }}</label>
+            <select name="customer_group_id" id="input-customer-group" class="form-select">
               {% for customer_group in customer_groups %}
                 <option value="{{ customer_group.customer_group_id }}"{% if customer_group.customer_group_id == customer_group_id %} selected{% endif %}>{{ customer_group.name }}</option>
               {% endfor %}
@@ -1052,35 +1053,29 @@
           </div>
 
           <div class="mb-3 required">
-            <label for="input-shipping-firstname" class="form-label">{{ entry_firstname }}</label>
-            <input type="text" name="firstname" value="{{ shipping_firstname }}" placeholder="{{ entry_firstname }}" id="input-shipping-firstname" class="form-control"/>
+            <label for="input-shipping-firstname" class="form-label">{{ entry_firstname }}</label> <input type="text" name="firstname" value="{{ shipping_firstname }}" placeholder="{{ entry_firstname }}" id="input-shipping-firstname" class="form-control"/>
             <div id="error-shipping-firstname" class="invalid-feedback"></div>
           </div>
 
           <div class="mb-3 required">
-            <label for="input-shipping-lastname" class="form-label">{{ entry_lastname }}</label>
-            <input type="text" name="lastname" value="{{ shipping_lastname }}" placeholder="{{ entry_lastname }}" id="input-shipping-lastname" class="form-control"/>
+            <label for="input-shipping-lastname" class="form-label">{{ entry_lastname }}</label> <input type="text" name="lastname" value="{{ shipping_lastname }}" placeholder="{{ entry_lastname }}" id="input-shipping-lastname" class="form-control"/>
             <div id="error-shipping-lastname" class="invalid-feedback"></div>
           </div>
 
           <div class="mb-3">
-            <label for="input-shipping-company" class="form-label">{{ entry_company }}</label>
-            <input type="text" name="company" value="{{ shipping_company }}" placeholder="{{ entry_company }}" id="input-shipping-company" class="form-control"/>
+            <label for="input-shipping-company" class="form-label">{{ entry_company }}</label> <input type="text" name="company" value="{{ shipping_company }}" placeholder="{{ entry_company }}" id="input-shipping-company" class="form-control"/>
           </div>
 
           <div class="mb-3 required">
-            <label for="input-shipping-address-1" class="form-label">{{ entry_address_1 }}</label>
-            <input type="text" name="address_1" value="{{ shipping_address_1 }}" placeholder="{{ entry_address_1 }}" id="input-shipping-address-1" class="form-control"/>
+            <label for="input-shipping-address-1" class="form-label">{{ entry_address_1 }}</label> <input type="text" name="address_1" value="{{ shipping_address_1 }}" placeholder="{{ entry_address_1 }}" id="input-shipping-address-1" class="form-control"/>
             <div id="error-shipping-address-1" class="invalid-feedback"></div>
           </div>
 
           <div class="mb-3">
-            <label for="input-shipping-address-2" class="form-label">{{ entry_address_2 }}</label>
-            <input type="text" name="address_2" value="{{ shipping_address_2 }}" placeholder="{{ entry_address_2 }}" id="input-shipping-address-2" class="form-control"/>
+            <label for="input-shipping-address-2" class="form-label">{{ entry_address_2 }}</label> <input type="text" name="address_2" value="{{ shipping_address_2 }}" placeholder="{{ entry_address_2 }}" id="input-shipping-address-2" class="form-control"/>
           </div>
           <div class="mb-3 required">
-            <label for="input-shipping-city" class="form-label">{{ entry_city }}</label>
-            <input type="text" name="city" value="{{ shipping_city }}" placeholder="{{ entry_city }}" id="input-shipping-city" class="form-control"/>
+            <label for="input-shipping-city" class="form-label">{{ entry_city }}</label> <input type="text" name="city" value="{{ shipping_city }}" placeholder="{{ entry_city }}" id="input-shipping-city" class="form-control"/>
             <div id="error-shipping-city" class="invalid-feedback"></div>
           </div>
 
@@ -1301,7 +1296,9 @@
       </div>
       <div class="modal-body">
         <form id="form-comment">
-          <textarea name="comment" rows="5" placeholder="{{ entry_comment }}" id="input-comment" class="form-control">{{ comment }}</textarea>
+          <div class="mb-3">
+            <textarea name="comment" rows="5" placeholder="{{ entry_comment }}" id="input-comment" class="form-control">{{ comment }}</textarea>
+          </div>
           <div class="text-end">
             <button type="button" id="button-comment" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
           </div>
@@ -1745,7 +1742,9 @@ $('#button-payment-method').on('click', function() {
 });
 
 // Coupon
-$('#form-coupon').on('submit', function() {
+$('#form-coupon').on('submit', function(e) {
+    e.preventDefault();
+
     var element = this;
 
     $.ajax({
@@ -1959,6 +1958,8 @@ $('#input-payment-address').on('change', function() {
 
             payment_zone_id = json['zone_id'];
 
+            $('#input-payment-country').trigger('change');
+
             for (i in json['custom_field']) {
                 $('#modal-payment-address select[name=\'custom_field[' + i + ']\']').val(json['custom_field'][i]);
                 $('#modal-payment-address textarea[name=\'custom_field[' + i + ']\']').val(json['custom_field'][i]);
@@ -1977,8 +1978,6 @@ $('#input-payment-address').on('change', function() {
         error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
-    }).done(function() {
-        $('#modal-payment-address select[name=\'country_id\']').trigger('change');
     });
 });
 
@@ -2001,6 +2000,8 @@ $('#form-payment-address').on('submit', function(e) {
         success: function(json) {
             $('#form-payment-address').find('.is-invalid').removeClass('is-invalid');
             $('#form-payment-address').find('.invalid-feedback').removeClass('d-block');
+
+            console.log(json);
 
             // Check for errors
             if (json['error']) {
@@ -2036,10 +2037,7 @@ $('#input-payment-country').on('change', function() {
 
     $.ajax({
         url: 'index.php?route=localisation/country|country&user_token={{ user_token }}&country_id=' + this.value,
-        type: 'post',
-        data: $('#form-payment-address').serialize(),
         dataType: 'json',
-        contentType: 'application/x-www-form-urlencoded',
         beforeSend: function() {
             $(element).prop('disabled', true);
         },
@@ -2080,7 +2078,7 @@ $('#input-payment-country').on('change', function() {
 $('#input-payment-country').trigger('change');
 
 // Shipping Address
-$('#form-shipping-address').on('change', function() {
+$('#input-shipping-address').on('change', function() {
     var element = this;
 
     $.ajax({
@@ -2109,6 +2107,8 @@ $('#form-shipping-address').on('change', function() {
 
             shipping_zone_id = json['zone_id'];
 
+            $('#input-shipping-country').trigger('change');
+
             for (i in json['custom_field']) {
                 $('#modal-shipping-address select[name=\'custom_field[' + i + ']\']').val(json['custom_field'][i]);
                 $('#modal-shipping-address textarea[name=\'custom_field[' + i + ']\']').val(json['custom_field'][i]);
@@ -2127,12 +2127,12 @@ $('#form-shipping-address').on('change', function() {
         error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
-    }).done(function() {
-        $('#modal-shipping-address select[name=\'country_id\']').trigger('change');
     });
 });
 
-$('#form-shipping-address').on('submit', function() {
+$('#form-shipping-address').on('submit', function(e) {
+    e.preventDefault();
+
     var element = this;
 
     $.ajax({
@@ -2156,19 +2156,13 @@ $('#form-shipping-address').on('submit', function() {
             if (json['error']) {
                 if (json['error']['warning']) {
                     $('#modal-shipping-address .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                    delete json['error']['warning'];
                 }
 
-                for (i in json['error']) {
-                    var element = $('#modal-shipping-address #input-shipping-' + i.replaceAll('_', '-'));
-
-                    // Highlight any found errors
-                    $(element).addClass('is-invalid');
-
-                    if ($(element).parent().hasClass('input-group')) {
-                        $(element).parent().after('<div class="invalid-tooltip d-inline">' + json['error'][i] + '</div>');
-                    } else {
-                        $(element).after('<div class="invalid-tooltip d-inline">' + json['error'][i] + '</div>');
-                    }
+                for (key in json['error']) {
+                    $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
+                    $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
                 }
             }
 
@@ -2432,7 +2426,9 @@ $('#input-product').autocomplete({
 });
 
 
-$('#form-product-add').on('submit', function() {
+$('#form-product-add').on('submit', function(e) {
+    e.preventDefault();
+
     var element = this;
 
     $.ajax({

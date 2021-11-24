@@ -251,6 +251,8 @@ class Customer extends \Opencart\System\Engine\Model {
 				'custom_field'   => json_decode($address_query->row['custom_field'], true)
 			];
 		}
+
+		return [];
 	}
 
 	public function getAddresses(int $customer_id): array {

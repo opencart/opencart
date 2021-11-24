@@ -1151,12 +1151,26 @@ class Customer extends \Opencart\System\Engine\Controller {
 	}
 
 	public function address(): void {
+		$this->load->language('customer/customer');
+
 		$json = [];
 
-		if (!empty($this->request->get['address_id'])) {
-			$this->load->model('customer/customer');
+		if (isset($this->request->get['address_id'])) {
+			$address_id = (int)$this->request->get['address_id'];
+		} else {
+			$address_id = 0;
+		}
 
-			$json = $this->model_customer_customer->getAddress($this->request->get['address_id']);
+		$this->load->model('customer/customer');
+
+		$address_info = $this->model_customer_customer->getAddress($address_id);
+
+		if (!$address_info) {
+			$json['error'] = $this->language->get('error_address');
+		}
+
+		if (!$json) {
+			$json = $address_info;
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

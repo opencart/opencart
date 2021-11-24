@@ -424,8 +424,8 @@ a {
 }
 
 .row.mb-3 {
-    margin-left: -20px;
-    margin-right: -20px;
+    margin-left: -10px;
+    margin-right: -10px;
 }
 
 .row.mb-3 + .row.mb-3 {
@@ -492,10 +492,10 @@ div.required .col-form-label:not(span):before, td.required:before {
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
-
 .card-body {
 
 }
+
 .bootstrap-datetimepicker-widget {
     position: absolute;
     float: right;
@@ -833,12 +833,4 @@ div.required .col-form-label:not(span):before, td.required:before {
 
 td {
     position: relative;
-}
-
-.invalid-tooltip {
-    position: relative;
-    left: auto;
-    top: 5px;
-    margin-top: 10px;
-    clear: both;
 }

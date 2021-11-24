@@ -975,14 +975,14 @@ class Order extends \Opencart\System\Engine\Controller {
 		if (!empty($order_info)) {
 			$data['comment'] = nl2br($order_info['comment']);
 		} else {
-			$data['comment'] = 0;
+			$data['comment'] = '';
 		}
 
 		// Total
 		if (!empty($order_info)) {
 			$data['total'] = $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value']);
 		} else {
-			$data['total'] = 0;
+			$data['total'] = $this->currency->format(0, $this->config->get('config_currency'));
 		}
 
 		// Order Status
@@ -1037,9 +1037,9 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		// Commission
 		if (!empty($order_info)) {
-			$data['commission'] = $this->currency->format($order_info['commission'], $order_info['currency_code'], $order_info['currency_value']);
+			$data['commission'] = $this->currency->format($order_info['commission'], $this->config->get('config_currency'), $order_info['currency_value']);
 		} else {
-			$data['commission'] = '';
+			$data['commission'] = $this->currency->format(0, $this->config->get('config_currency'));
 		}
 
 		if (!empty($order_info)) {
@@ -1054,7 +1054,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
 		if (!empty($order_info)) {
-			$language_info = $this->model_localisation_language->getLanguage($data['language_id']);
+			$language_info = $this->model_localisation_language->getLanguage($order_info['language_id']);
 		} else {
 			$language_info = $this->model_localisation_language->getLanguageByCode($this->config->get('config_language'));
 		}
@@ -1075,7 +1075,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$data['currencies'] = $this->model_localisation_currency->getCurrencies();
 
 		if (!empty($order_info)) {
-			$currency_info = $this->model_localisation_currency->getCurrency($data['currency_id']);
+			$currency_info = $this->model_localisation_currency->getCurrency($order_info['currency_id']);
 		} else {
 			$currency_info = $this->model_localisation_currency->getCurrencyByCode($this->config->get('config_currency'));
 		}
@@ -1090,23 +1090,10 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['currency_code'] = '';
 		}
 
-		// Reward Points
-		if (!empty($order_info)) {
-			$data['reward'] = $order_info['reward'];
-		} else {
-			$data['reward'] = 0;
-		}
-
-		if (!empty($order_info)) {
-			$data['reward_total'] = $this->model_customer_customer->getTotalRewardsByOrderId($order_id);
-		} else {
-			$data['reward_total'] = 0;
-		}
-
 		// Coupon, Voucher, Reward
 		$data['coupon'] = '';
 		$data['voucher'] = '';
-		$data['reward'] = '';
+		$data['reward'] = 0;
 
 		if ($order_id) {
 			$order_totals = $this->model_sale_order->getTotals($order_id);
@@ -1120,6 +1107,13 @@ class Order extends \Opencart\System\Engine\Controller {
 					$data[$order_total['code']] = substr($order_total['title'], $start, $end - $start);
 				}
 			}
+		}
+
+		// Reward Points
+		if (!empty($order_info)) {
+			$data['reward_total'] = $this->model_customer_customer->getTotalRewardsByOrderId($order_id);
+		} else {
+			$data['reward_total'] = 0;
 		}
 
 		// Additional tabs that are payment gateway specific
@@ -1285,15 +1279,15 @@ class Order extends \Opencart\System\Engine\Controller {
 
 				$replace = [
 					'firstname' => $order_info['payment_firstname'],
-					'lastname' => $order_info['payment_lastname'],
-					'company' => $order_info['payment_company'],
+					'lastname'  => $order_info['payment_lastname'],
+					'company'   => $order_info['payment_company'],
 					'address_1' => $order_info['payment_address_1'],
 					'address_2' => $order_info['payment_address_2'],
-					'city' => $order_info['payment_city'],
-					'postcode' => $order_info['payment_postcode'],
-					'zone' => $order_info['payment_zone'],
+					'city'      => $order_info['payment_city'],
+					'postcode'  => $order_info['payment_postcode'],
+					'zone'      => $order_info['payment_zone'],
 					'zone_code' => $order_info['payment_zone_code'],
-					'country' => $order_info['payment_country']
+					'country'   => $order_info['payment_country']
 				];
 
 				$payment_address = str_replace(["\r\n", "\r", "\n"], '<br />', preg_replace(["/\s\s+/", "/\r\r+/", "/\n\n+/"], '<br />', trim(str_replace($find, $replace, $format))));
@@ -1319,15 +1313,15 @@ class Order extends \Opencart\System\Engine\Controller {
 
 				$replace = [
 					'firstname' => $order_info['shipping_firstname'],
-					'lastname' => $order_info['shipping_lastname'],
-					'company' => $order_info['shipping_company'],
+					'lastname'  => $order_info['shipping_lastname'],
+					'company'   => $order_info['shipping_company'],
 					'address_1' => $order_info['shipping_address_1'],
 					'address_2' => $order_info['shipping_address_2'],
-					'city' => $order_info['shipping_city'],
-					'postcode' => $order_info['shipping_postcode'],
-					'zone' => $order_info['shipping_zone'],
+					'city'      => $order_info['shipping_city'],
+					'postcode'  => $order_info['shipping_postcode'],
+					'zone'      => $order_info['shipping_zone'],
 					'zone_code' => $order_info['shipping_zone_code'],
-					'country' => $order_info['shipping_country']
+					'country'   => $order_info['shipping_country']
 				];
 
 				$shipping_address = str_replace(["\r\n", "\r", "\n"], '<br />', preg_replace(["/\s\s+/", "/\r\r+/", "/\n\n+/"], '<br />', trim(str_replace($find, $replace, $format))));
@@ -1363,12 +1357,12 @@ class Order extends \Opencart\System\Engine\Controller {
 					}
 
 					$product_data[] = [
-						'name' => $product['name'],
-						'model' => $product['model'],
-						'option' => $option_data,
+						'name'     => $product['name'],
+						'model'    => $product['model'],
+						'option'   => $option_data,
 						'quantity' => $product['quantity'],
-						'price' => $this->currency->format($product['price'] + ($this->config->get('config_tax') ? $product['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']),
-						'total' => $this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value'])
+						'price'    => $this->currency->format($product['price'] + ($this->config->get('config_tax') ? $product['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']),
+						'total'    => $this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value'])
 					];
 				}
 
@@ -1379,7 +1373,7 @@ class Order extends \Opencart\System\Engine\Controller {
 				foreach ($vouchers as $voucher) {
 					$voucher_data[] = [
 						'description' => $voucher['description'],
-						'amount' => $this->currency->format($voucher['amount'], $order_info['currency_code'], $order_info['currency_value'])
+						'amount'      => $this->currency->format($voucher['amount'], $order_info['currency_code'], $order_info['currency_value'])
 					];
 				}
 
@@ -1390,29 +1384,29 @@ class Order extends \Opencart\System\Engine\Controller {
 				foreach ($totals as $total) {
 					$total_data[] = [
 						'title' => $total['title'],
-						'text' => $this->currency->format($total['value'], $order_info['currency_code'], $order_info['currency_value'])
+						'text'  => $this->currency->format($total['value'], $order_info['currency_code'], $order_info['currency_value'])
 					];
 				}
 
 				$data['orders'][] = [
-					'order_id' => $order_id,
-					'invoice_no' => $invoice_no,
-					'date_added' => date($this->language->get('date_format_short'), strtotime($order_info['date_added'])),
-					'store_name' => $order_info['store_name'],
-					'store_url' => rtrim($order_info['store_url'], '/'),
-					'store_address' => nl2br($store_address),
-					'store_email' => $store_email,
-					'store_telephone' => $store_telephone,
-					'email' => $order_info['email'],
-					'telephone' => $order_info['telephone'],
+					'order_id'         => $order_id,
+					'invoice_no'       => $invoice_no,
+					'date_added'       => date($this->language->get('date_format_short'), strtotime($order_info['date_added'])),
+					'store_name'       => $order_info['store_name'],
+					'store_url'        => rtrim($order_info['store_url'], '/'),
+					'store_address'    => nl2br($store_address),
+					'store_email'      => $store_email,
+					'store_telephone'  => $store_telephone,
+					'email'            => $order_info['email'],
+					'telephone'        => $order_info['telephone'],
 					'shipping_address' => $shipping_address,
-					'shipping_method' => $order_info['shipping_method'],
-					'payment_address' => $payment_address,
-					'payment_method' => $order_info['payment_method'],
-					'product' => $product_data,
-					'voucher' => $voucher_data,
-					'total' => $total_data,
-					'comment' => nl2br($order_info['comment'])
+					'shipping_method'  => $order_info['shipping_method'],
+					'payment_address'  => $payment_address,
+					'payment_method'   => $order_info['payment_method'],
+					'product'          => $product_data,
+					'voucher'          => $voucher_data,
+					'total'            => $total_data,
+					'comment'          => nl2br($order_info['comment'])
 				];
 			}
 		}

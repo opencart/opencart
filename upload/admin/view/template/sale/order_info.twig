@@ -18,6 +18,7 @@
       <div class="card-body">
 
         <div id="collapse-order" class="overflow-hidden" style="max-height: 78px;">
+
           <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4">
 
             <div class="col">
@@ -41,13 +42,11 @@
                 <div class="form-control p-0 border rounded-start">
                   <p class="lead p-2 mb-0"><strong>{{ text_customer }}</strong>
                     <br/>
-
                     {% if customer %}
                       <span id="customer"><a href="{{ customer }}" target="_blank">{{ firstname }} {{ lastname }}</a></span>
                     {% else %}
                       <span id="customer">{{ firstname }}&nbsp;{{ lastname }}</span>
                     {% endif %}
-
                   </p>
                 </div>
                 <button type="button" data-bs-toggle="modal" data-bs-target="#modal-customer" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
@@ -249,7 +248,7 @@
                     {{ payment_address }}
                   {% else %}
                     &nbsp;
-                    <br/>&nbsp;
+                    <br/>
                   {% endif %}
                 </p>
               </div>
@@ -326,7 +325,10 @@
               {% set voucher_row = 0 %}
               {% for order_voucher in order_vouchers %}
                 <tr>
-                  <td class="text-start"><a href="{{ order_voucher.href }}">{{ order_voucher.description }}</a> <input type="hidden" name="voucher[{{ voucher_row }}][voucher_id]" value="{{ order_voucher.voucher_id }}"/> <input type="hidden" name="voucher[{{ voucher_row }}][description]" value="{{ order_voucher.description }}"/> <input type="hidden" name="voucher[{{ voucher_row }}][code]" value="{{ order_voucher.code }}"/> <input type="hidden" name="voucher[{{ voucher_row }}][from_name]" value="{{ order_voucher.from_name }}"/> <input type="hidden" name="voucher[{{ voucher_row }}][from_email]" value="{{ order_voucher.from_email }}"/> <input type="hidden" name="voucher[{{ voucher_row }}][to_name]" value="{{ order_voucher.to_name }}"/> <input type="hidden" name="voucher[{{ voucher_row }}][to_email]" value="{{ order_voucher.to_email }}"/> <input type="hidden" name="voucher[{{ voucher_row }}][voucher_theme_id]" value="{{ order_voucher.voucher_theme_id }}"/>
+                  <td class="text-start"><a href="{{ order_voucher.href }}">{{ order_voucher.description }}</a> <input type="hidden" name="voucher[{{ voucher_row }}][voucher_id]" value="{{ order_voucher.voucher_id }}"/>
+                    <input type="hidden" name="voucher[{{ voucher_row }}][description]" value="{{ order_voucher.description }}"/> <input type="hidden" name="voucher[{{ voucher_row }}][code]" value="{{ order_voucher.code }}"/>
+                    <input type="hidden" name="voucher[{{ voucher_row }}][from_name]" value="{{ order_voucher.from_name }}"/> <input type="hidden" name="voucher[{{ voucher_row }}][from_email]" value="{{ order_voucher.from_email }}"/>
+                    <input type="hidden" name="voucher[{{ voucher_row }}][to_name]" value="{{ order_voucher.to_name }}"/> <input type="hidden" name="voucher[{{ voucher_row }}][to_email]" value="{{ order_voucher.to_email }}"/> <input type="hidden" name="voucher[{{ voucher_row }}][voucher_theme_id]" value="{{ order_voucher.voucher_theme_id }}"/>
                     <input type="hidden" name="voucher[{{ voucher_row }}][message]" value="{{ order_voucher.message }}"/> <input type="hidden" name="voucher[{{ voucher_row }}][amount]" value="{{ order_voucher.amount }}"/></td>
                   <td class="text-start"></td>
                   <td class="text-end">1</td>
@@ -1203,9 +1205,11 @@
             {% endif %}
 
           {% endfor %}
+
           <div class="text-end">
-            <button type="button" id="button-shipping-address" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
+            <button type="submit" id="button-shipping-address" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
           </div>
+
         </form>
       </div>
 
@@ -1500,7 +1504,7 @@ $('#form-customer').submit(function(e) {
                 //$('#input-firstname').val($('#input-firstname').val() + ' ' + $('#input-lastname').val());
 
                 // Refresh products, vouchers and totals
-                // $('#button-refresh').trigger('click');
+                //$('#button-refresh').trigger('click');
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
@@ -1515,7 +1519,7 @@ $('#modal-store #button-store').on('click', function() {
 });
 
 // Language
-$('#button-language').on('click', function() {
+$('#form-language').on('submit', function() {
     var element = this;
 
     $.ajax({
@@ -1550,7 +1554,7 @@ $('#button-language').on('click', function() {
 });
 
 // Currency
-$('#button-currency').on('click', function() {
+$('#form--currency').on('click', function() {
     var element = this;
 
     $.ajax({
@@ -1633,7 +1637,7 @@ $('#button-shipping-refresh').on('click', function() {
     });
 });
 
-$('#button-shipping-method').on('click', function() {
+$('#form-shipping-method').on('click', function() {
     var element = this;
 
     $.ajax({
@@ -1707,7 +1711,7 @@ $('#button-payment-refresh').on('click', function() {
     });
 });
 
-$('#button-payment-method').on('click', function() {
+$('#form-payment-method').on('click', function() {
     var element = this;
 
     $.ajax({
@@ -2012,8 +2016,8 @@ $('#form-payment-address').on('submit', function(e) {
                 }
 
                 for (key in json['error']) {
-                    $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
-                    $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
+                    $('#input-payment-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
+                    $('#error-payment-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
                 }
             }
 
@@ -2091,31 +2095,37 @@ $('#input-shipping-address').on('change', function() {
             $(element).prop('disabled', false);
         },
         success: function(json) {
-            // Reset all fields
-            $('#modal-shipping-address input[type=\'text\'], #modal-shipping-address input[type=\'text\'], #modal-shipping-address textarea').val('');
-            $('#modal-shipping-address select option').not('#modal-shipping-address select[name=\'shipping_address\']').removeAttr('selected');
-            $('#modal-shipping-address input[type=\'checkbox\'], #modal-shipping-address input[type=\'radio\']').removeAttr('checked');
+            $('.alert-dismissible').remove();
 
-            $('#modal-shipping-address input[name=\'firstname\']').val(json['firstname']);
-            $('#modal-shipping-address input[name=\'lastname\']').val(json['lastname']);
-            $('#modal-shipping-address input[name=\'company\']').val(json['company']);
-            $('#modal-shipping-address input[name=\'address_1\']').val(json['address_1']);
-            $('#modal-shipping-address input[name=\'address_2\']').val(json['address_2']);
-            $('#modal-shipping-address input[name=\'city\']').val(json['city']);
-            $('#modal-shipping-address input[name=\'postcode\']').val(json['postcode']);
-            $('#modal-shipping-address select[name=\'country_id\']').val(json['country_id']);
+            if (json['error']) {
+                $('#modal-shipping-address .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            // Reset all fields
+            $('#form-shipping-address input[type=\'text\'], #modal-shipping-address input[type=\'text\'], #modal-shipping-address textarea').val('');
+            $('#form-shipping-address select option').not('#modal-shipping-address select[name=\'shipping_address\']').removeAttr('selected');
+            $('#form-shipping-address input[type=\'checkbox\'], #modal-shipping-address input[type=\'radio\']').removeAttr('checked');
+
+            $('#form-shipping-address input[name=\'firstname\']').val(json['firstname']);
+            $('#form-shipping-address input[name=\'lastname\']').val(json['lastname']);
+            $('#form-shipping-address input[name=\'company\']').val(json['company']);
+            $('#form-shipping-address input[name=\'address_1\']').val(json['address_1']);
+            $('#form-shipping-address input[name=\'address_2\']').val(json['address_2']);
+            $('#form-shipping-address input[name=\'city\']').val(json['city']);
+            $('#form-shipping-address input[name=\'postcode\']').val(json['postcode']);
+            $('#form-shipping-address select[name=\'country_id\']').val(json['country_id']);
 
             shipping_zone_id = json['zone_id'];
 
             $('#input-shipping-country').trigger('change');
 
             for (i in json['custom_field']) {
-                $('#modal-shipping-address select[name=\'custom_field[' + i + ']\']').val(json['custom_field'][i]);
-                $('#modal-shipping-address textarea[name=\'custom_field[' + i + ']\']').val(json['custom_field'][i]);
-                $('#modal-shipping-address input[name^=\'custom_field[' + i + ']\'][type=\'text\']').val(json['custom_field'][i]);
-                $('#modal-shipping-address input[name^=\'custom_field[' + i + ']\'][type=\'hidden\']').val(json['custom_field'][i]);
-                $('#modal-shipping-address input[name^=\'custom_field[' + i + ']\'][type=\'radio\'][value=\'' + json['custom_field'][i] + '\']').prop('checked', true);
-                $('#modal-shipping-address input[name^=\'custom_field[' + i + ']\'][type=\'checkbox\'][value=\'' + json['custom_field'][i] + '\']').prop('checked', true);
+                $('#form-shipping-address-shipping-address select[name=\'custom_field[' + i + ']\']').val(json['custom_field'][i]);
+                $('#form-shipping-address-shipping-address textarea[name=\'custom_field[' + i + ']\']').val(json['custom_field'][i]);
+                $('#form-shipping-address-shipping-address input[name^=\'custom_field[' + i + ']\'][type=\'text\']').val(json['custom_field'][i]);
+                $('#form-shipping-address-shipping-address input[name^=\'custom_field[' + i + ']\'][type=\'hidden\']').val(json['custom_field'][i]);
+                $('#form-shipping-address-shipping-address input[name^=\'custom_field[' + i + ']\'][type=\'radio\'][value=\'' + json['custom_field'][i] + '\']').prop('checked', true);
+                $('#form-shipping-address-shipping-address input[name^=\'custom_field[' + i + ']\'][type=\'checkbox\'][value=\'' + json['custom_field'][i] + '\']').prop('checked', true);
 
                 if (json['custom_field'][i] instanceof Array) {
                     for (j = 0; j < json['custom_field'][i].length; j++) {
@@ -2141,16 +2151,18 @@ $('#form-shipping-address').on('submit', function(e) {
         data: $('#form-shipping-address').serialize(),
         dataType: 'json',
         beforeSend: function() {
-            $(element).button('loading');
+            $('#button-shipping-address').button('loading');
         },
         complete: function() {
-            $(element).button('reset');
+            $('#button-shipping-address').button('reset');
         },
         success: function(json) {
-            console.log(json);
+            $('.alert-dismissible').remove();
 
-            $('.alert-dismissible, .invalid-tooltip').remove();
-            $('.is-invalid').removeClass('is-invalid');
+            $('#form-shipping-address').find('.is-invalid').removeClass('is-invalid');
+            $('#form-shipping-address').find('.invalid-feedback').removeClass('d-block');
+
+            console.log(json);
 
             // Check for errors
             if (json['error']) {
@@ -2161,8 +2173,8 @@ $('#form-shipping-address').on('submit', function(e) {
                 }
 
                 for (key in json['error']) {
-                    $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
-                    $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
+                    $('#input-shipping-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
+                    $('#error-shipping-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
                 }
             }
 
@@ -2744,47 +2756,6 @@ $('#button-refresh').on('click', function() {
     });
 });
 
-$('#history').on('click', '.pagination a', function(e) {
-    e.preventDefault();
-
-    $('#history').load(this.href);
-});
-
-$('#history').load('index.php?route=sale/order|history&user_token={{ user_token }}&order_id=' + $('input[name=\'order_id\']').val());
-
-$('#button-history').on('click', function(e) {
-    e.preventDefault();
-
-    $.ajax({
-        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&store_id=' + $('#input-store').val() + '&action=order|history&order_id=' + $('#input-order-id').val(),
-        type: 'post',
-        dataType: 'json',
-        data: 'order_id=' + encodeURIComponent($('#tab-history select[name=\'order_id\']').val()) + '&notify=' + ($('input[name=\'notify\']').prop('checked') ? 1 : 0) + '&comment=' + encodeURIComponent($('#tab-history textarea[name=\'comment\']').val()),
-        beforeSend: function() {
-            $('#button-history').button('loading');
-        },
-        complete: function() {
-            $('#button-history').button('reset');
-        },
-        success: function(json) {
-            console.log(json);
-
-            $('.alert-dismissible').remove();
-
-            if (json['error']) {
-                $('#tab-history').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-            }
-
-            if (json['success']) {
-                $('#history').load('index.php?route=sale/order|call|history&user_token={{ user_token }}&return_id=' + $('input[name=\'return_id\']').val());
-
-                $('#tab-history').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                $('#tab-history textarea[name=\'comment\']').val('');
-            }
-        }
-    });
-});
 
 // Checkout
 $('#button-save').on('click', function() {
@@ -2827,5 +2798,64 @@ $('#button-save').on('click', function() {
         }
     });
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+$('#history').on('click', '.pagination a', function(e) {
+    e.preventDefault();
+
+    $('#history').load(this.href);
+});
+
+$('#history').load('index.php?route=sale/order|history&user_token={{ user_token }}&order_id=' + $('input[name=\'order_id\']').val());
+
+$('#button-history').on('click', function(e) {
+    e.preventDefault();
+
+    $.ajax({
+        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&store_id=' + $('#input-store').val() + '&action=order|history&order_id=' + $('#input-order-id').val(),
+        type: 'post',
+        dataType: 'json',
+        data: 'order_id=' + encodeURIComponent($('#tab-history select[name=\'order_id\']').val()) + '&notify=' + ($('input[name=\'notify\']').prop('checked') ? 1 : 0) + '&comment=' + encodeURIComponent($('#tab-history textarea[name=\'comment\']').val()),
+        beforeSend: function() {
+            $('#button-history').button('loading');
+        },
+        complete: function() {
+            $('#button-history').button('reset');
+        },
+        success: function(json) {
+            console.log(json);
+
+            $('.alert-dismissible').remove();
+
+            if (json['error']) {
+                $('#tab-history').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            if (json['success']) {
+                $('#history').load('index.php?route=sale/order|call|history&user_token={{ user_token }}&return_id=' + $('input[name=\'return_id\']').val());
+
+                $('#tab-history').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                $('#tab-history textarea[name=\'comment\']').val('');
+            }
+        }
+    });
+});
+
+
+
+
 //--></script>
 {{ footer }}

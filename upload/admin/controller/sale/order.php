@@ -1161,35 +1161,17 @@ class Order extends \Opencart\System\Engine\Controller {
 		// Additional information
 		if (!empty($order_info)) {
 			$data['ip'] = $order_info['ip'];
-		} else {
-			$data['ip'] = '';
-		}
-
-		if (!empty($order_info)) {
 			$data['forwarded_ip'] = $order_info['forwarded_ip'];
-		} else {
-			$data['forwarded_ip'] = '';
-		}
-		if (!empty($order_info)) {
 			$data['user_agent'] = $order_info['user_agent'];
-		} else {
-			$data['user_agent'] = '';
-		}
-		if (!empty($order_info)) {
 			$data['accept_language'] = $order_info['accept_language'];
-		} else {
-			$data['accept_language'] = '';
-		}
-
-		if (!empty($order_info)) {
 			$data['date_added'] = date($this->language->get('date_format_short'), strtotime($order_info['date_added']));
-		} else {
-			$data['date_added'] = date($this->language->get('date_format_short'), time());
-		}
-
-		if (!empty($order_info)) {
 			$data['date_modified'] = date($this->language->get('date_format_short'), strtotime($order_info['date_modified']));
 		} else {
+			$data['ip'] = '';
+			$data['forwarded_ip'] = '';
+			$data['user_agent'] = '';
+			$data['accept_language'] = '';
+			$data['date_added'] = date($this->language->get('date_format_short'), time());
 			$data['date_modified'] = date($this->language->get('date_format_short'), time());
 		}
 

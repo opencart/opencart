@@ -59,7 +59,7 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 
 					if ($method) {
 						if ($recurring) {
-							if (property_exists($this->{'model_extension_payment_' . $result['code']}, 'recurringPayments') && $this->{'model_extension_payment_' . $result['code']}->recurringPayments()) {
+							if (property_exists($this->{'model_extension_' . $result['extension'] . '_payment_' . $result['code']}, 'recurringPayments') && $this->{'model_extension_' . $result['extension'] . '_payment_' . $result['code']}->recurringPayments()) {
 								$json['payment_methods'][$result['code']] = $method;
 							}
 						} else {

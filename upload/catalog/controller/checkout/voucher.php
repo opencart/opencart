@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Catalog\Controller\Account;
+namespace Opencart\Catalog\Controller\Checkout;
 class Voucher extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('checkout/voucher');

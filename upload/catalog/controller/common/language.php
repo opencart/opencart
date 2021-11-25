@@ -4,8 +4,6 @@ class Language extends \Opencart\System\Engine\Controller {
 	public function index(): string {
 		$this->load->language('common/language');
 
-		$data['code'] = $this->config->get('config_language');
-
 		$url_data = $this->request->get;
 
 		if (isset($url_data['route'])) {
@@ -38,6 +36,8 @@ class Language extends \Opencart\System\Engine\Controller {
 			];
 		}
 
+		$data['code'] = $this->config->get('config_language');
+
 		return $this->load->view('common/language', $data);
 	}
 
@@ -53,14 +53,6 @@ class Language extends \Opencart\System\Engine\Controller {
 		} else {
 			$redirect = '';
 		}
-
-		$option = [
-			'expires'  => time() + 60 * 60 * 24 * 30,
-			'path'     => '/',
-			'SameSite' => 'Lax'
-		];
-
-		setcookie('language', $code, $option);
 
 		if ($redirect && substr($redirect, 0, strlen($this->config->get('config_url'))) == $this->config->get('config_url')) {
 			$this->response->redirect($redirect);

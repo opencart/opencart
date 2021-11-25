@@ -3456,6 +3456,11 @@ function db_schema() {
 				'not_null' => true
 			],
 			[
+				'name' => 'language_code',
+				'type' => 'varchar(5)',
+				'not_null' => true
+			],
+			[
 				'name' => 'currency_id',
 				'type' => 'int(11)',
 				'not_null' => true

@@ -1,0 +1,109 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="pull-right">
+        <button type="submit" form="form-wk_courierguy" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+      <h1>{{ heading_title }}</h1>
+      <ul class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="container-fluid">
+    {% if error_warning %}
+    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    {% endif %}
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit }}</h3>
+      </div>
+      <div class="panel-body">
+        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-wk_courierguy" class="form-horizontal">
+          <div class="form-group">
+            <label class="col-sm-2 control-label text-center" for="input-status">{{ entry_status }}</label>
+            <div class="col-sm-10">
+              <select name="wk_courierguy_status" id="input-status" class="form-control">
+                {% if wk_courierguy_status %}
+                <option value="1" selected="selected">{{ text_enabled }}</option>
+                <option value="0">{{ text_disabled }}</option>
+                {% else %}
+                <option value="1">{{ text_enabled }}</option>
+                <option value="0" selected="selected">{{ text_disabled }}</option>
+                {% endif %}
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-username">
+            <span data-toggle="tooltip" title="{{ help_username }}">{{ entry_username }}
+            </span></label>
+            <div class="col-sm-10">
+              <input type="text" name="wk_courierguy_username" value="{{ wk_courierguy_username }}" placeholder="{{ entry_username }}" id="input-username" class="form-control" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-password"><span data-toggle="tooltip" title="{{ help_password }}">{{ entry_password }}</span></label>
+            <div class="col-sm-10">
+              <input type="password" name="wk_courierguy_password" value="{{ wk_courierguy_password }}" placeholder="{{ entry_password }}" id="input-password" class="form-control" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-account"><span data-toggle="tooltip" title="{{ help_account }}">{{ entry_account }}</span></label>
+            <div class="col-sm-10">
+              <input type="text" name="wk_courierguy_account" value="{{ wk_courierguy_account }}" placeholder="{{ entry_account }}" id="input-account" class="form-control" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-testUrl"><span data-toggle="tooltip" title="{{ help_testUrl }}">{{ entry_testUrl }}</span></label>
+            <div class="col-sm-10">
+              <input type="text" name="wk_courierguy_testUrl" value="{{ wk_courierguy_testUrl }}" placeholder="{{ entry_testUrl }}" id="input-testUrl" class="form-control" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-shopAddress1">{{ entry_shopAddress1 }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="wk_courierguy_shopAddress1" value="{{ wk_courierguy_shopAddress1 }}" placeholder="{{ entry_shopAddress1 }}" id="input-shopAddress1" class="form-control" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-shopAddress2">{{ entry_shopAddress2 }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="wk_courierguy_shopAddress2" value="{{ wk_courierguy_shopAddress2 }}" placeholder="{{ entry_shopAddress2 }}" id="input-shopAddress2" class="form-control" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-shopArea"><span data-toggle="tooltip" title="{{ help_shopArea }}">{{ entry_shopArea }}</span></label>
+            <div class="col-sm-10">
+              <input type="text" name="wk_courierguy_shopArea" value="{{ wk_courierguy_shopArea }}" placeholder="{{ entry_shopArea }}" id="input-shopArea" class="form-control" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-shopPostalCode"><span data-toggle="tooltip" title="{{ help_shopPostalCode }}">{{ entry_shopPostalCode }}</span></label>
+            <div class="col-sm-10">
+              <input type="text" name="wk_courierguy_shopPostalCode" value="{{ wk_courierguy_shopPostalCode }}" placeholder="{{ entry_shopPostalCode }}" id="input-shopPostalCode" class="form-control" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-shopPhone">{{ entry_shopPhone }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="wk_courierguy_shopPhone" value="{{ wk_courierguy_shopPhone }}" placeholder="{{ entry_shopPhone }}" id="input-shopPhone" class="form-control" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-shopPlace"><span data-toggle="tooltip" title="{{ help_shopPlace }}">{{ entry_shopPlace }}</span></label>
+            <div class="col-sm-10">
+              <input type="text" name="wk_courierguy_shopPlace" value="{{ wk_courierguy_shopPlace }}" placeholder="{{ entry_shopPlace }}" id="input-shopPlace" class="form-control" />
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{{ footer }}

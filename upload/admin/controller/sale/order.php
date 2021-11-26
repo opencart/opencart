@@ -1637,10 +1637,17 @@ class Order extends \Opencart\System\Engine\Controller {
 		// Cache
 		$registry->set('cache', $this->cache);
 
-		// Create a dummy session class so we can feed the data to the order editor
-		$session = new \stdClass();
-		$session->data = [];
+		// Session
+		$session = new \Opencart\System\Library\Session($config->get('session_engine'), $registry);
 		$registry->set('session', $session);
+
+		if (isset($request->cookie[$config->get('session_name')])) {
+			$session_id = $request->cookie[$config->get('session_name')];
+		} else {
+			$session_id = '';
+		}
+
+		$session->start($session_id);
 
 		// To use the order API it requires an API ID.
 		$session->data['api_id'] = (int)$this->config->get('config_api_id');
@@ -1651,7 +1658,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$registry->set('template', $template);
 
 
-/*
+		/*
 		// Language
 		$this->load->model('localisation/language');
 
@@ -1660,7 +1667,9 @@ class Order extends \Opencart\System\Engine\Controller {
 		if (!$language_info) {
 
 		}
-*/
+		*/
+
+
 		if (isset($this->request->post['language_id'])) {
 			$config->set('config_language_id', $this->request->post['language_id']);
 		} else {
@@ -1697,6 +1706,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		// 3. Add the default API ID otherwise will not get a response.
 		$session->data['api_id'] = $this->config->get('config_api_id');
 
+		// 4. Run pre actions to load key settings and classes.
 		$pre_actions = [
 			'startup/setting',
 			'startup/extension',
@@ -1716,7 +1726,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		// Call the required api controller
 		if (isset($this->request->get['action'])) {
-			$registry->load->controller('api/order/' . $this->request->get['action']);
+			$loader->controller('api/sale/' . $this->request->get['action']);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -1746,9 +1756,9 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			$data['histories'][] = [
-				'notify'     => $result['notify'] ? $this->language->get('text_yes') : $this->language->get('text_no'),
 				'status'     => $result['status'],
 				'comment'    => nl2br($result['comment']),
+				'notify'     => $result['notify'] ? $this->language->get('text_yes') : $this->language->get('text_no'),
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added']))
 			];
 		}

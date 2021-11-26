@@ -7,8 +7,12 @@ class Voucher extends \Opencart\System\Engine\Model {
 		return $this->db->getLastId();
 	}
 
-	public function disableVoucher(int $order_id): void {
+	public function disableVoucherByOrderId(int $order_id): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "voucher` SET `status` = '0' WHERE `order_id` = '" . (int)$order_id . "'");
+	}
+
+	public function deleteVoucherByOrderId(int $order_id): void {
+		$this->db->query("DELETE `" . DB_PREFIX . "voucher` WHERE `order_id` = '" . (int)$order_id . "'");
 	}
 
 	public function getVoucher(string $code): array {

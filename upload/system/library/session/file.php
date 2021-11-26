@@ -39,7 +39,9 @@ class File {
 		flock($handle, LOCK_EX);
 
 		fwrite($handle, json_encode($data));
+
 		ftruncate($handle, ftell($handle));
+
 		fflush($handle);
 
 		flock($handle, LOCK_UN);

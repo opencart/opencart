@@ -2,7 +2,7 @@
 namespace Opencart\Catalog\Controller\Api;
 class Login extends \Opencart\System\Engine\Controller {
 	public function index(): void {
-		$this->load->language('api/login');
+		$this->load->language('api/account/login');
 
 		$json = [];
 

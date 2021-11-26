@@ -54,10 +54,8 @@ class Order extends \Opencart\System\Engine\Model {
 		if ($order_info) {
 			// 2. Merge the old order data with the new data
 			foreach ($order_info as $key => $value) {
-				if (isset($data[$key])) {
-					$order[$key] = $data[$key];
-				} elseif (isset($order_data[$key])) {
-					$order[$key] = $order_info[$key];
+				if (!isset($data[$key])) {
+					$data[$key] = $value;
 				}
 			}
 
@@ -82,7 +80,7 @@ class Order extends \Opencart\System\Engine\Model {
 			// Gift Voucher
 			$this->load->model('checkout/voucher');
 
-			$this->model_checkout_voucher->disableVoucher($order_id);
+			$this->model_checkout_voucher->deleteVoucherByOrderId($order_id);
 
 			// Vouchers
 			$this->db->query("DELETE FROM `" . DB_PREFIX . "order_voucher` WHERE `order_id` = '" . (int)$order_id . "'");
@@ -126,7 +124,7 @@ class Order extends \Opencart\System\Engine\Model {
 		// Gift Voucher
 		$this->load->model('checkout/voucher');
 
-		$this->model_checkout_voucher->disableVoucher($order_id);
+		$this->model_checkout_voucher->deleteVoucherByOrderId($order_id);
 	}
 
 	public function getOrder(int $order_id): array {
@@ -137,6 +135,8 @@ class Order extends \Opencart\System\Engine\Model {
 
 			$this->load->model('localisation/country');
 			$this->load->model('localisation/zone');
+
+			$order_data['custom_field'] = json_decode($order_query->row['custom_field'], true);
 
 			foreach (['payment', 'shipping'] as $column) {
 				$country_info = $this->model_localisation_country->getCountry($order_query->row[$column . '_country_id']);
@@ -159,18 +159,6 @@ class Order extends \Opencart\System\Engine\Model {
 
 				$order_data[$column . '_custom_field'] = json_decode($order_query->row[$column . '_custom_field'], true);
 			}
-
-			$this->load->model('localisation/language');
-
-			$language_info = $this->model_localisation_language->getLanguage($order_query->row['language_id']);
-
-			if ($language_info) {
-				$order_data['language_code'] = $language_info['code'];
-			} else {
-				$order_data['language_code'] = $this->config->get('config_language');
-			}
-
-			$order_data['custom_field'] = json_decode($order_query->row['custom_field'], true);
 
 			return $order_data;
 		} else {

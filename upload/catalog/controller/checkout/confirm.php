@@ -240,19 +240,7 @@ class Confirm extends \Opencart\System\Engine\Controller {
 			$order_data['vouchers'] = [];
 
 			if (!empty($this->session->data['vouchers'])) {
-				foreach ($this->session->data['vouchers'] as $voucher) {
-					$order_data['vouchers'][] = [
-						'description'      => $voucher['description'],
-						'code'             => token(10),
-						'to_name'          => $voucher['to_name'],
-						'to_email'         => $voucher['to_email'],
-						'from_name'        => $voucher['from_name'],
-						'from_email'       => $voucher['from_email'],
-						'voucher_theme_id' => $voucher['voucher_theme_id'],
-						'message'          => $voucher['message'],
-						'amount'           => $voucher['amount']
-					];
-				}
+				$order_data['vouchers'] = $this->session->data['vouchers'];
 			}
 
 			$total_data = [

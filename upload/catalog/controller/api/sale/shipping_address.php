@@ -1,8 +1,8 @@
 <?php
-namespace Opencart\Catalog\Controller\Api\Order;
+namespace Opencart\Catalog\Controller\Api\Sale;
 class ShippingAddress extends \Opencart\System\Engine\Controller {
 	public function index(): void {
-		$this->load->language('api/order/shipping_address');
+		$this->load->language('api/sale/shipping_address');
 
 		$json = [];
 

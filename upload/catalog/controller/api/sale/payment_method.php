@@ -1,8 +1,8 @@
 <?php
-namespace Opencart\Catalog\Controller\Api\Order;
+namespace Opencart\Catalog\Controller\Api\Sale;
 class PaymentMethod extends \Opencart\System\Engine\Controller {
 	public function index(): void {
-		$this->load->language('api/order/payment_method');
+		$this->load->language('api/sale/payment_method');
 
 		$json = [];
 
@@ -85,7 +85,7 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 	}
 
 	public function save(): void {
-		$this->load->language('api/order/payment_method');
+		$this->load->language('api/sale/payment_method');
 
 		// Delete old payment method so not to cause any issues if there is an error
 		unset($this->session->data['payment_method']);

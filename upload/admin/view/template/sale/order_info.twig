@@ -1566,9 +1566,12 @@ $('#form-customer').on('submit', function(e) {
     });
 });
 
-$('#modal-store #button-store').on('click', function() {
+$('#modal-store #button-store').on('submit', function() {
     // Refresh products, vouchers and totals
     //$('#button-refresh').trigger('click');
+
+
+
 });
 
 // Language
@@ -1604,7 +1607,7 @@ $('#form-language').on('submit', function(e) {
 });
 
 // Currency
-$('#form-currency').on('click', function(e) {
+$('#form-currency').on('submit', function(e) {
     e.preventDefault();
 
     $.ajax({
@@ -1883,55 +1886,6 @@ $('#form-reward').on('submit', function(e) {
     });
 });
 
-// Merged rewards and commission together
-$(document).on('click', '#button-reward-add, #button-reward-remove, #button-commission-add, #button-commission-remove', function(e) {
-    var element = this;
-
-    var part = $(this).attr('id').split('-');
-
-    $.ajax({
-        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=' + part[2] + part[1] + '&order_id=' + $('input[name=\'order_id\']').val(),
-        type: 'post',
-        dataType: 'json',
-        beforeSend: function() {
-            $(element).button('loading');
-        },
-        complete: function() {
-            $(element).button('reset');
-        },
-        success: function(json) {
-            $('.alert-dismissible').remove();
-
-            if (json['error']) {
-                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-            }
-
-            if (json['success']) {
-                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                if (part[1] == 'reward') {
-                    if (part[2] == 'add') {
-                        $(element).replaceWith('<button type="button" id="button-reward-remove" data-bs-toggle="tooltip" title="{{ button_reward_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>');
-                    } else {
-                        $(element).replaceWith('<button type="button" id="button-reward-add" data-bs-toggle="tooltip" title="{{ button_reward_add }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></button>');
-                    }
-                }
-
-                if (part[1] == 'commission') {
-                    if (part[2] == 'add') {
-                        $(element).replaceWith('<button type="button" id="button-commission-remove" data-bs-toggle="tooltip" title="{{ button_commission_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>');
-                    } else {
-                        $(element).replaceWith('<button type="button" id="button-commission-add" data-bs-toggle="tooltip" title="{{ button_commission_add }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></button>');
-                    }
-                }
-            }
-        },
-        error: function(xhr, ajaxOptions, thrownError) {
-            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-        }
-    });
-});
-
 // Affiliate
 $('#input-affiliate').autocomplete({
     'source': function(request, response) {
@@ -1991,6 +1945,56 @@ $('#form-affiliate').on('submit', function(e) {
     });
 });
 
+
+// Merged rewards and commission together
+$(document).on('click', '#button-reward-add, #button-reward-remove, #button-commission-add, #button-commission-remove', function(e) {
+    var element = this;
+
+    var part = $(this).attr('id').split('-');
+
+    $.ajax({
+        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=' + part[2] + part[1] + '&order_id=' + $('input[name=\'order_id\']').val(),
+        type: 'post',
+        dataType: 'json',
+        beforeSend: function() {
+            $(element).button('loading');
+        },
+        complete: function() {
+            $(element).button('reset');
+        },
+        success: function(json) {
+            $('.alert-dismissible').remove();
+
+            if (json['error']) {
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            if (json['success']) {
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                if (part[1] == 'reward') {
+                    if (part[2] == 'add') {
+                        $(element).replaceWith('<button type="button" id="button-reward-remove" data-bs-toggle="tooltip" title="{{ button_reward_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>');
+                    } else {
+                        $(element).replaceWith('<button type="button" id="button-reward-add" data-bs-toggle="tooltip" title="{{ button_reward_add }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></button>');
+                    }
+                }
+
+                if (part[1] == 'commission') {
+                    if (part[2] == 'add') {
+                        $(element).replaceWith('<button type="button" id="button-commission-remove" data-bs-toggle="tooltip" title="{{ button_commission_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>');
+                    } else {
+                        $(element).replaceWith('<button type="button" id="button-commission-add" data-bs-toggle="tooltip" title="{{ button_commission_add }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></button>');
+                    }
+                }
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
 // Payment Address
 $('#input-payment-address').on('change', function() {
     var element = this;
@@ -2008,7 +2012,7 @@ $('#input-payment-address').on('change', function() {
             // Reset all fields
             $('#form-payment-address input[type=\'text\'], #form-payment-address textarea').val('');
             $('#form-payment-address select option').not('#input-payment-address').removeAttr('selected');
-            $('#form-payment-address input[type=\'checkbox\'], #modal-payment-address input[type=\'radio\']').removeAttr('checked');
+            $('#form-payment-address input[type=\'checkbox\'], #form-payment-address input[type=\'radio\']').removeAttr('checked');
 
             $('#input-payment-firstname').val(json['firstname']);
             $('#input-payment-lastname').val(json['lastname']);
@@ -2158,14 +2162,14 @@ $('#input-shipping-address').on('change', function() {
             $('#form-shipping-address select option').not('#input-shipping_address').removeAttr('selected');
             $('#form-shipping-address input[type=\'checkbox\'], #form-shipping-address input[type=\'radio\']').removeAttr('checked');
 
-            $('#form-shipping-firstname').val(json['firstname']);
-            $('#form-shipping-lastname').val(json['lastname']);
-            $('#form-shipping-company').val(json['company']);
-            $('#form-shipping-address_1').val(json['address_1']);
-            $('#form-shipping-address_2').val(json['address_2']);
-            $('#form-shipping-city').val(json['city']);
-            $('#form-shipping-postcode').val(json['postcode']);
-            $('#form-shipping-country').val(json['country_id']);
+            $('#input-shipping-firstname').val(json['firstname']);
+            $('#input-shipping-lastname').val(json['lastname']);
+            $('#input-shipping-company').val(json['company']);
+            $('#input-shipping-address_1').val(json['address_1']);
+            $('#input-shipping-address_2').val(json['address_2']);
+            $('#input-shipping-city').val(json['city']);
+            $('#input-shipping-postcode').val(json['postcode']);
+            $('#input-shipping-country').val(json['country_id']);
 
             shipping_zone_id = json['zone_id'];
 
@@ -2214,7 +2218,7 @@ $('#form-shipping-address').on('submit', function(e) {
             // Check for errors
             if (json['error']) {
                 if (json['error']['warning']) {
-                    $('#form-shipping-address .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    $('#form-shipping-address').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                     delete json['error']['warning'];
                 }
@@ -2226,7 +2230,7 @@ $('#form-shipping-address').on('submit', function(e) {
             }
 
             if (json['success']) {
-                $('#form-shipping-address .modal-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#form-shipping-address').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
@@ -2302,8 +2306,8 @@ $('#input-product').autocomplete({
         });
     },
     'select': function(item) {
-        $('#modal-cart input[name=\'product\']').val(item['label']);
-        $('#modal-cart input[name=\'product_id\']').val(item['value']);
+        $('#input-product').val(item['label']);
+        $('#input-product-id').val(item['value']);
 
         if (item['option'] != '') {
             html = '<fieldset>';
@@ -2365,25 +2369,25 @@ $('#input-product').autocomplete({
                     html += '<div class="mb-3' + (option['required'] == 1 ? ' required' : '') + '">';
                     html += '  <label class="form-label">' + option['name'] + '</label>';
 
-                    html += '  <div id="input-option-' + option['product_option_id'] + '">';
+                    html += '  <div id="input-option-' + option['product_option_id'] + '" class="form-control">';
 
                     for (j = 0; j < option['product_option_value'].length; j++) {
                         option_value = option['product_option_value'][j];
 
                         html += '<div class="form-check">';
-                        html += '  <input type="checkbox" name="option[' + option['product_option_id'] + '][]" value="' + option_value['product_option_value_id'] + '" id="input-option-value-' + option_value['product_option_value_id'] + '" class="form-check-input"/> ' + option_value['name'];
-                        html += '  <label for="input-option-value-' + option_value['product_option_value_id'] + '" class="form-check-label">';
+                        html += '  <input type="checkbox" name="option[' + option['product_option_id'] + '][]" value="' + option_value['product_option_value_id'] + '" id="input-option-value-' + option_value['product_option_value_id'] + '" class="form-check-input"/> ';
+                        html += '  <label for="input-option-value-' + option_value['product_option_value_id'] + '" class="form-check-label">' + option_value['name'];
 
                         if (option_value['price']) {
                             html += ' (' + option_value['price_prefix'] + option_value['price'] + ')';
                         }
 
                         html += '  </label>';
-                        html += '  <div id="error-option-' + option['product_option_id'] + '" class="invalid-feedback"></div>';
                         html += '</div>';
                     }
 
                     html += '  </div>';
+                    html += '  <div id="error-option-' + option['product_option_id'] + '" class="invalid-feedback"></div>';
                     html += '</div>';
                 }
 
@@ -2432,7 +2436,7 @@ $('#input-product').autocomplete({
                     html += '  <label class="form-label">' + option['name'] + '</label>';
                     html += '  <div>';
                     html += '    <button type="button" data-oc-toggle="upload" data-oc-url="index.php?route=tool/upload|upload&user_token={{ user_token }}" data-oc-loading-text="{{ text_loading }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>';
-                    html += '    <input type="hidden" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" id="input-option-' + option['product_option_id'] + '"/></div>';
+                    html += '    <input type="hidden" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" id="input-option-' + option['product_option_id'] + '"/>';
                     html += '  </div>';
                     html += '  <div id="error-option-' + option['product_option_id'] + '" class="invalid-feedback"></div>';
                     html += '</div>';
@@ -2490,7 +2494,6 @@ $('#input-product').autocomplete({
     }
 });
 
-
 $('#form-product-add').on('submit', function(e) {
     e.preventDefault();
 
@@ -2499,6 +2502,7 @@ $('#form-product-add').on('submit', function(e) {
         type: 'post',
         data: $('#form-product-add').serialize(),
         dataType: 'json',
+        contentType: 'application/x-www-form-urlencoded',
         beforeSend: function() {
             $('#button-product-add').button('loading');
         },
@@ -2513,8 +2517,6 @@ $('#form-product-add').on('submit', function(e) {
             if (json['error']) {
                 if (json['error']['warning']) {
                     $('#form-product-add').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                    delete json['error']['warning'];
                 }
 
                 if (json['error']['option']) {
@@ -2567,7 +2569,7 @@ $('#form-voucher-add').on('submit', function(e) {
     e.preventDefault();
 
     $.ajax({
-        url: '{{ catalog }}index.php?route=sale/order|call&user_token={{ user_token }}&action=voucher|add&store_id=' + $('#input-store').val(),
+        url: '{{ catalog }}index.php?route=sale/order|call&user_token={{ user_token }}&store_id=' + $('#input-store').val() + '&action=voucher|add',
         type: 'post',
         data: $('#form-voucher-add').serialize(),
         dataType: 'json',
@@ -2802,7 +2804,7 @@ $('#button-refresh').on('click', function() {
 $('#button-save').on('click', function() {
     var url = 'index.php?route=sale/order|call&user_token={{ user_token }}&store_id=' + $('#input-store').val() + '&action=order|save';
 
-    var order_id = $('input[name=\'order_id\']').val();
+    var order_id = $('#input-order-id').val();
 
     if (order_id != 0) {
         url += '&order_id=' + order_id;
@@ -2868,7 +2870,7 @@ $('#button-history').on('click', function(e) {
         url: 'index.php?route=sale/order|call&user_token={{ user_token }}&store_id=' + $('#input-store').val() + '&action=order|history&order_id=' + $('#input-order-id').val(),
         type: 'post',
         dataType: 'json',
-        data: 'order_id=' + encodeURIComponent($('#tab-history select[name=\'order_id\']').val()) + '&notify=' + ($('input[name=\'notify\']').prop('checked') ? 1 : 0) + '&comment=' + encodeURIComponent($('#tab-history textarea[name=\'comment\']').val()),
+        data: 'order_id=' + encodeURIComponent($('#tab-history #input-order-id').val()) + '&notify=' + $('#input-notify-yes').prop('checked') + '&comment=' + encodeURIComponent($('#tab-history textarea[name=\'comment\']').val()),
         beforeSend: function() {
             $('#button-history').button('loading');
         },
@@ -2894,9 +2896,5 @@ $('#button-history').on('click', function(e) {
         }
     });
 });
-
-
-
-
 //--></script>
 {{ footer }}

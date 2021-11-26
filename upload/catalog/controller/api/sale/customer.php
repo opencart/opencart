@@ -1,8 +1,8 @@
 <?php
-namespace Opencart\Catalog\Controller\Api\Order;
+namespace Opencart\Catalog\Controller\Api\Sale;
 class Customer extends \Opencart\System\Engine\Controller {
 	public function index(): void {
-		$this->load->language('api/order/customer');
+		$this->load->language('api/sale/customer');
 
 		$json = [];
 

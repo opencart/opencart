@@ -1,8 +1,8 @@
 <?php
-namespace Opencart\Catalog\Controller\Api\Order;
+namespace Opencart\Catalog\Controller\Api\Sale;
 class ShippingMethod extends \Opencart\System\Engine\Controller {
 	public function index(): void {
-		$this->load->language('api/order/shipping');
+		$this->load->language('api/sale/shipping');
 
 		// Delete past shipping methods and method just in case there is an error
 		unset($this->session->data['shipping_methods']);
@@ -63,7 +63,7 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 	}
 
 	public function save(): void {
-		$this->load->language('api/order/shipping_metho');
+		$this->load->language('api/sale/shipping_method');
 
 		$json = [];
 

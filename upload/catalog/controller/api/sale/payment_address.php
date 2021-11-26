@@ -1,8 +1,8 @@
 <?php
-namespace Opencart\Catalog\Controller\Api\Order;
+namespace Opencart\Catalog\Controller\Api\Sale;
 class PaymentAddress extends \Opencart\System\Engine\Controller {
 	public function index(): void {
-		$this->load->language('api/order/payment_address');
+		$this->load->language('api/sale/payment_address');
 
 		$json = [];
 

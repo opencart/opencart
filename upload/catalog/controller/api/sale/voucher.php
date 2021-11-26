@@ -1,8 +1,8 @@
 <?php
-namespace Opencart\Catalog\Controller\Api\Order;
+namespace Opencart\Catalog\Controller\Api\Sale;
 class Voucher extends \Opencart\System\Engine\Controller {
 	public function index(): void {
-		$this->load->language('api/order/voucher');
+		$this->load->language('api/sale/voucher');
 
 		// Delete past voucher in case there is an error
 		unset($this->session->data['voucher']);
@@ -34,7 +34,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 	}
 
 	public function add(): void {
-		$this->load->language('api/order/voucher');
+		$this->load->language('api/sale/voucher');
 
 		$json = [];
 

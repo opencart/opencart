@@ -1,8 +1,8 @@
 <?php
-namespace Opencart\Catalog\Controller\Api\Order;
+namespace Opencart\Catalog\Controller\Api\Sale;
 class Cart extends \Opencart\System\Engine\Controller {
 	public function add(): void {
-		$this->load->language('api/order/cart');
+		$this->load->language('api/sale/cart');
 
 		$json = [];
 
@@ -60,7 +60,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 	}
 
 	public function edit(): void {
-		$this->load->language('api/order/cart');
+		$this->load->language('api/sale/cart');
 
 		$json = [];
 
@@ -81,7 +81,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 	}
 
 	public function remove(): void {
-		$this->load->language('api/order/cart');
+		$this->load->language('api/sale/cart');
 
 		$json = [];
 
@@ -105,7 +105,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 	}
 
 	public function getProducts(): void {
-		$this->load->language('api/order/cart');
+		$this->load->language('api/sale/cart');
 
 		$json = [];
 

@@ -35,7 +35,6 @@
             {% endif %}</td>
           <td class="text-start">{{ product.model }}</td>
           <td class="text-start">
-
             <form method="post" data-oc-toggle="ajax" data-oc-load="{{ list }}" data-oc-target="#shopping-cart">
               <div class="input-group">
                 <input type="text" name="quantity" value="{{ product.quantity }}" size="1" class="form-control"> <input type="hidden" name="key" value="{{ product.cart_id }}">
@@ -43,13 +42,11 @@
                 <button type="submit" formaction="{{ remove }}" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-times-circle"></i></button>
               </div>
             </form>
-
           </td>
           <td class="text-end">{{ product.price }}</td>
           <td class="text-end">{{ product.total }}</td>
         </tr>
       {% endfor %}
-
 
       {% for voucher in vouchers %}
         <tr>
@@ -70,9 +67,7 @@
         </tr>
       {% endfor %}
 
-
     </tbody>
-
     <tfoot id="checkout-total">
       {% for total in totals %}
         <tr>
@@ -81,6 +76,5 @@
         </tr>
       {% endfor %}
     </tfoot>
-
   </table>
 </div>

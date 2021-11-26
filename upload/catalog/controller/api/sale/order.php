@@ -1,8 +1,8 @@
 <?php
-namespace Opencart\Catalog\Controller\Api\Order;
+namespace Opencart\Catalog\Controller\Api\Sale;
 class Order extends \Opencart\System\Engine\Controller {
 	public function index(): void {
-		$this->load->language('api/order/order');
+		$this->load->language('api/sale/order');
 
 		$json = [];
 
@@ -21,8 +21,6 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$this->session->data['language'] = [];
-
 			// Customer Details
 			$this->session->data['customer'] = [
 				'customer_id'       => $order_info['customer_id'],
@@ -54,24 +52,30 @@ class Order extends \Opencart\System\Engine\Controller {
 				'custom_field'   => $order_info['payment_custom_field']
 			];
 
-			$this->session->data['shipping_address'] = [
-				'firstname'      => $order_info['shipping_firstname'],
-				'lastname'       => $order_info['shipping_lastname'],
-				'company'        => $order_info['shipping_company'],
-				'address_1'      => $order_info['shipping_address_1'],
-				'address_2'      => $order_info['shipping_address_2'],
-				'postcode'       => $order_info['shipping_postcode'],
-				'city'           => $order_info['shipping_city'],
-				'zone_id'        => $order_info['shipping_zone_id'],
-				'zone'           => $order_info['zone'],
-				'zone_code'      => $order_info['zone_code'],
-				'country_id'     => $order_info['shipping_country_id'],
-				'country'        => $order_info['country'],
-				'iso_code_2'     => $order_info['iso_code_2'],
-				'iso_code_3'     => $order_info['iso_code_3'],
-				'address_format' => $order_info['address_format'],
-				'custom_field'   => $order_info['shipping_custom_field']
-			];
+			if ($order_info['shipping_code']) {
+				$this->session->data['shipping_address'] = [
+					'firstname'      => $order_info['shipping_firstname'],
+					'lastname'       => $order_info['shipping_lastname'],
+					'company'        => $order_info['shipping_company'],
+					'address_1'      => $order_info['shipping_address_1'],
+					'address_2'      => $order_info['shipping_address_2'],
+					'postcode'       => $order_info['shipping_postcode'],
+					'city'           => $order_info['shipping_city'],
+					'zone_id'        => $order_info['shipping_zone_id'],
+					'zone'           => $order_info['zone'],
+					'zone_code'      => $order_info['zone_code'],
+					'country_id'     => $order_info['shipping_country_id'],
+					'country'        => $order_info['country'],
+					'iso_code_2'     => $order_info['iso_code_2'],
+					'iso_code_3'     => $order_info['iso_code_3'],
+					'address_format' => $order_info['address_format'],
+					'custom_field'   => $order_info['shipping_custom_field']
+				];
+
+				$this->session->data['shipping_method'] = $order_info['shipping_code'];
+			}
+
+
 
 			$this->cart->clear();
 
@@ -91,11 +95,38 @@ class Order extends \Opencart\System\Engine\Controller {
 				$this->cart->add($product['product_id'], $product['quantity'], $option);
 			}
 
+
+			$this->session->data['vouchers'] = [];
+
+			$this->load->model('checkout/voucher');
+
 			$vouchers = $this->model_checkout_order->getVouchers($order_id);
 
 			foreach ($vouchers as $voucher) {
-
+				$this->session->data['vouchers'][] = [
+					'description'      => sprintf($this->language->get('text_for'), $this->currency->format($this->request->post['amount'], $this->session->data['currency'], 1.0), $this->request->post['to_name']),
+					'code'             => $voucher['code'],
+					'to_name'          => $voucher['to_name'],
+					'to_email'         => $voucher['to_email'],
+					'from_name'        => $voucher['from_name'],
+					'from_email'       => $voucher['from_email'],
+					'voucher_theme_id' => $voucher['voucher_theme_id'],
+					'message'          => $voucher['message'],
+					'amount'           => $this->currency->convert($this->request->post['amount'], $this->session->data['currency'], $this->config->get('config_currency'))
+				];
 			}
+
+
+
+
+			$this->session->data['language'] = $order_info['language_code'];
+
+
+			$this->session->data['currency'] = $order_info['currency_code'];
+
+
+
+
 
 			$json['success'] = $this->language->get('text_success');
 		}
@@ -107,8 +138,8 @@ class Order extends \Opencart\System\Engine\Controller {
 	/*
 	 * Loads order info
 	 * */
-	public function info(): void {
-		$this->load->language('api/order/order');
+	public function load(): void {
+		$this->load->language('api/sale/order');
 
 		$json = [];
 
@@ -127,9 +158,13 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$this->load->model('checkout/order');
+
 
 			$json['order'] = $order_info;
+
+
+
+
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -137,7 +172,7 @@ class Order extends \Opencart\System\Engine\Controller {
 	}
 
 	public function save(): void {
-		$this->load->language('api/order/order');
+		$this->load->language('api/sale/order');
 
 		$json = [];
 
@@ -166,7 +201,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		// Payment Method
-		if (!$json && !empty($this->request->post['payment_method'])) {
+		if (!empty($this->request->post['payment_method'])) {
 			if (empty($this->session->data['payment_methods'])) {
 				$json['error'] = $this->language->get('error_no_payment');
 			} elseif (!isset($this->session->data['payment_methods'][$this->request->post['payment_method']])) {
@@ -503,7 +538,7 @@ class Order extends \Opencart\System\Engine\Controller {
 	}
 
 	public function delete(): void {
-		$this->load->language('api/order/order');
+		$this->load->language('api/sale/order');
 
 		$json = [];
 
@@ -518,7 +553,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$order_info = $this->model_checkout_order->getOrder($order_id);
 
 		if (!$order_info) {
-			$json['error'] = $this->language->get('error_not_found');
+			$json['error'] = $this->language->get('error_order');
 		}
 
 		if (!$json) {
@@ -532,7 +567,7 @@ class Order extends \Opencart\System\Engine\Controller {
 	}
 
 	public function addHistory() {
-		$this->load->language('api/order/order');
+		$this->load->language('api/sale/order');
 
 		$json = [];
 

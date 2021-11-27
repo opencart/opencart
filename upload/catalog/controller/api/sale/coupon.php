@@ -4,8 +4,6 @@ class Coupon extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('api/sale/coupon');
 
-
-
 		$json = [];
 
 		if (isset($this->request->post['coupon'])) {
@@ -26,6 +24,12 @@ class Coupon extends \Opencart\System\Engine\Controller {
 			$this->session->data['coupon'] = $coupon;
 
 			$json['success'] = $this->language->get('text_success');
+
+			$this->load->model('checkout/cart');
+
+			$json['products'] = $this->model_checkout_cart->getProducts();
+			$json['vouchers'] = $this->model_checkout_cart->getVouchers();
+			$json['totals'] = $this->model_checkout_cart->getTotals();
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

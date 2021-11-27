@@ -78,10 +78,6 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 			}
 
 			if (!$json) {
-				$this->load->model('localisation/country');
-
-				$country_info = $this->model_localisation_country->getCountry((int)$this->request->post['country_id']);
-
 				if ($country_info) {
 					$country = $country_info['name'];
 					$iso_code_2 = $country_info['iso_code_2'];

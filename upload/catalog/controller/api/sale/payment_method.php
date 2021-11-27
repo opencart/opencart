@@ -12,69 +12,39 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Totals
-			$totals = [];
-			$taxes = $this->cart->getTaxes();
-			$total = 0;
-
-			$this->load->model('setting/extension');
-
-			$sort_order = [];
-
-			$results = $this->model_setting_extension->getExtensionsByType('total');
-
-			foreach ($results as $key => $value) {
-				$sort_order[$key] = $this->config->get('total_' . $value['code'] . '_sort_order');
-			}
-
-			array_multisort($sort_order, SORT_ASC, $results);
-
-			foreach ($results as $result) {
-				if ($this->config->get('total_' . $result['code'] . '_status')) {
-					$this->load->model('extension/' . $result['extension'] . '/total/' . $result['code']);
-
-					// __call can not pass-by-reference so we get PHP to call it as an anonymous function.
-					($this->{'model_extension_' . $result['extension'] . '_total_' . $result['code']}->getTotal)($totals, $taxes, $total);
-				}
+			if (isset($this->session->data['payment_address'])) {
+				$payment_address = $this->session->data['payment_address'];
+			} else {
+				$payment_address = [
+					'address_id'     => 0,
+					'firstname'      => '',
+					'lastname'       => '',
+					'company'        => '',
+					'address_1'      => '',
+					'address_2'      => '',
+					'city'           => '',
+					'postcode'       => '',
+					'zone_id'        => 0,
+					'zone'           => '',
+					'zone_code'      => '',
+					'country_id'     => 0,
+					'country'        => '',
+					'iso_code_2'     => '',
+					'iso_code_3'     => '',
+					'address_format' => '',
+					'custom_field'   => []
+				];
 			}
 
 			// Payment Methods
-			$json['payment_methods'] = [];
+			$this->load->model('checkout/payment_method');
 
-			$this->load->model('setting/extension');
+			$payment_methods = $this->model_checkout_payment_method->getMethods($payment_address);
 
-			$results = $this->model_setting_extension->getExtensionsByType('payment');
+			if ($payment_methods) {
+				$this->session->data['payment_methods'] = $payment_methods;
 
-			$recurring = $this->cart->hasRecurring();
-
-			foreach ($results as $result) {
-				if ($this->config->get('payment_' . $result['code'] . '_status')) {
-					$this->load->model('extension/' . $result['extension'] . '/payment/' . $result['code']);
-
-					$method = $this->{'model_extension_' . $result['extension'] . '_payment_' . $result['code']}->getMethod($this->session->data['payment_address']);
-
-					if ($method) {
-						if ($recurring) {
-							if (property_exists($this->{'model_extension_' . $result['extension'] . '_payment_' . $result['code']}, 'recurringPayments') && $this->{'model_extension_' . $result['extension'] . '_payment_' . $result['code']}->recurringPayments()) {
-								$json['payment_methods'][$result['code']] = $method;
-							}
-						} else {
-							$json['payment_methods'][$result['code']] = $method;
-						}
-					}
-				}
-			}
-
-			$sort_order = [];
-
-			foreach ($json['payment_methods'] as $key => $value) {
-				$sort_order[$key] = $value['sort_order'];
-			}
-
-			array_multisort($sort_order, SORT_ASC, $json['payment_methods']);
-
-			if ($json['payment_methods']) {
-				$this->session->data['payment_methods'] = $json['payment_methods'];
+				$json['payment_methods'] = $payment_methods;
 			} else {
 				$json['error'] = $this->language->get('error_no_payment');
 			}

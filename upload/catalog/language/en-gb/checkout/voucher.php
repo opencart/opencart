@@ -25,6 +25,7 @@ $_['help_amount']      = 'Value must be between %s and %s';
 
 // Error
 $_['error_token']      = 'Warning: Voucher token invalid!';
+$_['error_voucher']    = 'Voucher could not be found!';
 $_['error_to_name']    = 'Recipient\'s Name must be between 1 and 64 characters!';
 $_['error_from_name']  = 'Your Name must be between 1 and 64 characters!';
 $_['error_email']      = 'E-Mail Address does not appear to be valid!';

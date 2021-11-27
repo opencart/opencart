@@ -17,16 +17,8 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 		$products = $this->cart->getProducts();
 
 		foreach ($products as $product) {
-			$product_total = 0;
-
-			foreach ($products as $product_2) {
-				if ($product_2['product_id'] == $product['product_id']) {
-					$product_total += $product_2['quantity'];
-				}
-			}
-
-			if ($product['minimum'] > $product_total) {
-				$status = false;
+			if (!$product['minimum']) {
+				$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
 
 				break;
 			}
@@ -91,16 +83,8 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 		$products = $this->cart->getProducts();
 
 		foreach ($products as $product) {
-			$product_total = 0;
-
-			foreach ($products as $product_2) {
-				if ($product_2['product_id'] == $product['product_id']) {
-					$product_total += $product_2['quantity'];
-				}
-			}
-
-			if ($product['minimum'] > $product_total) {
-				$status = false;
+			if (!$product['minimum']) {
+				$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
 
 				break;
 			}
@@ -155,15 +139,7 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 		$products = $this->cart->getProducts();
 
 		foreach ($products as $product) {
-			$product_total = 0;
-
-			foreach ($products as $product_2) {
-				if ($product_2['product_id'] == $product['product_id']) {
-					$product_total += $product_2['quantity'];
-				}
-			}
-
-			if ($product['minimum'] > $product_total) {
+			if (!$product['minimum']) {
 				$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
 
 				break;

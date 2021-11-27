@@ -102,6 +102,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 		$data['list'] = $this->url->link('checkout/cart|list', 'language=' . $this->config->get('config_language'));
 		$data['edit'] = $this->url->link('checkout/cart|edit', 'language=' . $this->config->get('config_language'));
 		$data['remove'] = $this->url->link('checkout/cart|remove', 'language=' . $this->config->get('config_language'));
+		$data['voucher'] = $this->url->link('checkout/voucher|remove', 'language=' . $this->config->get('config_language'));
 
 		$this->load->model('tool/image');
 		$this->load->model('tool/upload');
@@ -116,25 +117,13 @@ class Cart extends \Opencart\System\Engine\Controller {
 
 		$data['products'] = [];
 
-		$products = $this->cart->getProducts();
+		$this->load->model('checkout/cart');
+
+		$products = $this->model_checkout_cart->getProducts();
 
 		foreach ($products as $product) {
-			$product_total = 0;
-
-			foreach ($products as $product_2) {
-				if ($product_2['product_id'] == $product['product_id']) {
-					$product_total += $product_2['quantity'];
-				}
-			}
-
-			if ($product['minimum'] > $product_total) {
+			if (!$product['minimum']) {
 				$data['error_warning'] = sprintf($this->language->get('error_minimum'), $product['name'], $product['minimum']);
-			}
-
-			if ($product['image']) {
-				$image = $this->model_tool_image->resize(html_entity_decode($product['image'], ENT_QUOTES, 'UTF-8'), $this->config->get('config_image_cart_width'), $this->config->get('config_image_cart_height'));
-			} else {
-				$image = $this->model_tool_image->resize('placeholder.png', $this->config->get('config_image_cart_width'), $this->config->get('config_image_cart_height'));
 			}
 
 			$option_data = [];
@@ -185,10 +174,10 @@ class Cart extends \Opencart\System\Engine\Controller {
 
 			$data['products'][] = [
 				'cart_id'   => $product['cart_id'],
-				'thumb'     => $image,
+				'thumb'     => $product['image'],
 				'name'      => $product['name'],
 				'model'     => $product['model'],
-				'option'    => $option_data,
+				'option'    => $product['option'],
 				'recurring' => $recurring,
 				'quantity'  => $product['quantity'],
 				'stock'     => $product['stock'] ? true : !(!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning')),
@@ -202,58 +191,28 @@ class Cart extends \Opencart\System\Engine\Controller {
 		// Gift Voucher
 		$data['vouchers'] = [];
 
-		if (!empty($this->session->data['vouchers'])) {
-			foreach ($this->session->data['vouchers'] as $key => $voucher) {
-				$data['vouchers'][] = [
-					'key'         => $key,
-					'description' => $voucher['description'],
-					'amount'      => $this->currency->format($voucher['amount'], $this->session->data['currency']),
-					'remove'      => $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language') . '&remove=' . $key)
-				];
-			}
-		}
+		$vouchers = $this->model_checkout_cart->getVouchers();
 
-		$totals = [];
-		$taxes = $this->cart->getTaxes();
-		$total = 0;
+		foreach ($vouchers as $key => $voucher) {
+			$data['vouchers'][] = [
+				'key'         => $key,
+				'description' => $voucher['description'],
+				'amount'      => $this->currency->format($voucher['amount'], $this->session->data['currency'])
+			];
+		}
 
 		$data['totals'] = [];
 
 		// Display prices
 		if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
-			$sort_order = [];
-
 			$this->load->model('setting/extension');
 
-			$results = $this->model_setting_extension->getExtensionsByType('total');
-
-			foreach ($results as $key => $value) {
-				$sort_order[$key] = $this->config->get('total_' . $value['code'] . '_sort_order');
-			}
-
-			array_multisort($sort_order, SORT_ASC, $results);
+			$results = $this->model_checkout_cart->getTotals();
 
 			foreach ($results as $result) {
-				if ($this->config->get('total_' . $result['code'] . '_status')) {
-					$this->load->model('extension/' . $result['extension'] . '/total/' . $result['code']);
-
-					// __call can not pass-by-reference so we get PHP to call it as an anonymous function.
-					($this->{'model_extension_' . $result['extension'] . '_total_' . $result['code']}->getTotal)($totals, $taxes, $total);
-				}
-			}
-
-			$sort_order = [];
-
-			foreach ($totals as $key => $value) {
-				$sort_order[$key] = $value['sort_order'];
-			}
-
-			array_multisort($sort_order, SORT_ASC, $totals);
-
-			foreach ($totals as $total) {
 				$data['totals'][] = [
-					'title' => $total['title'],
-					'text'  => $this->currency->format($total['value'], $this->session->data['currency'])
+					'title' => $result['title'],
+					'text'  => $this->currency->format($result['value'], $this->session->data['currency'])
 				];
 			}
 		}
@@ -330,18 +289,18 @@ class Cart extends \Opencart\System\Engine\Controller {
 					$json['error']['recurring'] = $this->language->get('error_recurring_required');
 				}
 			}
+		}
 
-			if (!$json) {
-				$this->cart->add($this->request->post['product_id'], $quantity, $option, $recurring_id);
+		if (!$json) {
+			$this->cart->add($product_id, $quantity, $option, $recurring_id);
 
-				$json['success'] = sprintf($this->language->get('text_success'), $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $this->request->post['product_id']), $product_info['name'], $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language')));
+			$json['success'] = sprintf($this->language->get('text_success'), $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product_id), $product_info['name'], $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language')));
 
-				// Unset all shipping and payment methods
-				unset($this->session->data['shipping_methods']);
-				unset($this->session->data['payment_methods']);
-			} else {
-				$json['redirect'] = $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $this->request->post['product_id'], true);
-			}
+			// Unset all shipping and payment methods
+			unset($this->session->data['shipping_methods']);
+			unset($this->session->data['payment_methods']);
+		} else {
+			$json['redirect'] = $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $this->request->post['product_id'], true);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

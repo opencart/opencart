@@ -203,6 +203,20 @@ class Cart {
 						$price = $product_special_query->row['price'];
 					}
 
+					$product_total = 0;
+
+					foreach ($cart_query->rows as $cart_2) {
+						if ($cart_2['product_id'] == $cart['product_id']) {
+							$product_total += $cart_2['quantity'];
+						}
+					}
+
+					if ($product_query->row['minimum'] > $product_total) {
+						$minimum = false;
+					} else {
+						$minimum = true;
+					}
+
 					// Reward Points
 					$product_reward_query = $this->db->query("SELECT points FROM `" . DB_PREFIX . "product_reward` WHERE `product_id` = '" . (int)$cart['product_id'] . "' AND `customer_group_id` = '" . (int)$this->config->get('config_customer_group_id') . "'");
 
@@ -262,7 +276,7 @@ class Cart {
 						'option'          => $option_data,
 						'download'        => $download_data,
 						'quantity'        => $cart['quantity'],
-						'minimum'         => $product_query->row['minimum'],
+						'minimum'         => $minimum,
 						'subtract'        => $product_query->row['subtract'],
 						'stock'           => $stock,
 						'price'           => ($price + $option_price),

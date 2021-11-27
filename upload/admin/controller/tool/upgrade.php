@@ -172,12 +172,12 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 
 					// Must not have a path before files and directories can be moved
 					if (substr($path, -1) == '/' && mkdir($path, 0777)) {
-						$json['error'] = '';
+						$json['error'] = $this->language->get('error_download');
 					}
 
 					// If check if the path is not directory and check there is no existing file
 					if (substr($path, -1) != '/' && copy('zip://' . $file . '#' . $source, $path)) {
-						$json['error'] ='';
+						$json['error'] = $this->language->get('error_download');
 					}
 				}
 

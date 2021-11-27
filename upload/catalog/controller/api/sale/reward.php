@@ -4,9 +4,6 @@ class Reward extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('api/sale/reward');
 
-		// Delete past reward in case there is an error
-		unset($this->session->data['reward']);
-
 		$json = [];
 
 		$points = $this->customer->getRewardPoints();

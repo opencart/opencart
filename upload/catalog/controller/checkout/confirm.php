@@ -323,28 +323,11 @@ class Confirm extends \Opencart\System\Engine\Controller {
 
 		$data['products'] = [];
 
-		foreach ($this->cart->getProducts() as $product) {
-			$option_data = [];
+		$this->load->model('checkout/cart');
 
-			foreach ($product['option'] as $option) {
-				if ($option['type'] != 'file') {
-					$value = $option['value'];
-				} else {
-					$upload_info = $this->model_tool_upload->getUploadByCode($option['value']);
+		$products = $this->model_checkout_cart->getProducts();
 
-					if ($upload_info) {
-						$value = $upload_info['name'];
-					} else {
-						$value = '';
-					}
-				}
-
-				$option_data[] = [
-					'name'  => $option['name'],
-					'value' => (utf8_strlen($value) > 20 ? utf8_substr($value, 0, 20) . '..' : $value)
-				];
-			}
-
+		foreach ($products as $product) {
 			$recurring = '';
 
 			if ($product['recurring']) {
@@ -364,7 +347,7 @@ class Confirm extends \Opencart\System\Engine\Controller {
 				'product_id' => $product['product_id'],
 				'name'       => $product['name'],
 				'model'      => $product['model'],
-				'option'     => $option_data,
+				'option'     => $product['option'],
 				'recurring'  => $recurring,
 				'quantity'   => $product['quantity'],
 				'subtract'   => $product['subtract'],
@@ -377,16 +360,18 @@ class Confirm extends \Opencart\System\Engine\Controller {
 		// Gift Voucher
 		$data['vouchers'] = [];
 
-		if (!empty($this->session->data['vouchers'])) {
-			foreach ($this->session->data['vouchers'] as $voucher) {
-				$data['vouchers'][] = [
-					'description' => $voucher['description'],
-					'amount'      => $this->currency->format($voucher['amount'], $this->session->data['currency'])
-				];
-			}
+		$vouchers = $this->model_checkout_cart->getVouchers();
+
+		foreach ($vouchers as $voucher) {
+			$data['vouchers'][] = [
+				'description' => $voucher['description'],
+				'amount'      => $this->currency->format($voucher['amount'], $this->session->data['currency'])
+			];
 		}
 
 		$data['totals'] = [];
+
+		$totals = $this->model_checkout_cart->getTotals();
 
 		foreach ($totals as $total) {
 			$data['totals'][] = [

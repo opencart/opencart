@@ -37,7 +37,22 @@ class Coupon extends \Opencart\System\Engine\Controller {
 	}
 
 	public function clear(): void {
+		$this->load->language('api/sale/coupon');
+
+		$json = [];
+
 		// Delete past coupon in case there is an error
 		unset($this->session->data['coupon']);
+
+		$json['success'] = $this->language->get('text_success');
+
+		$this->load->model('checkout/cart');
+
+		$json['products'] = $this->model_checkout_cart->getProducts();
+		$json['vouchers'] = $this->model_checkout_cart->getVouchers();
+		$json['totals'] = $this->model_checkout_cart->getTotals();
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 }

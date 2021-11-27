@@ -77,6 +77,7 @@ class Cart extends \Opencart\System\Engine\Model {
 				'stock'        => $product['stock'] ? true : !(!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning')),
 				'minimum'      => $minimum,
 				'shipping'     => $product['shipping'],
+				'subtract'     => $product['subtract'],
 				'reward'       => $product['reward'],
 				'price'        => $product['price'],
 				'total'        => $product['price'] * $product['quantity'],

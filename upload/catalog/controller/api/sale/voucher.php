@@ -4,9 +4,6 @@ class Voucher extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('api/sale/voucher');
 
-		// Delete past voucher in case there is an error
-		unset($this->session->data['voucher']);
-
 		$json = [];
 
 		if (isset($this->request->post['voucher'])) {

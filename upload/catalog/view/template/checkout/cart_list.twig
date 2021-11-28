@@ -25,14 +25,14 @@
 
             {% if product.reward %}
               <br/>
-              <small>{{ product.reward }}</small>
+              <small>{{ text_points }} {{ product.reward }}</small>
             {% endif %}
-
             {% if product.recurring %}
               <br/>
               <small class="badge badge-warning">{{ text_recurring_item }}</small>
               <small>{{ product.recurring }}</small>
-            {% endif %}</td>
+            {% endif %}
+          </td>
           <td class="text-start">{{ product.model }}</td>
           <td class="text-start">
             <form method="post" data-oc-toggle="ajax" data-oc-load="{{ list }}" data-oc-target="#shopping-cart">

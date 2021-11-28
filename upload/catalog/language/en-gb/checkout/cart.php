@@ -8,7 +8,7 @@ $_['text_edit']                    = 'Success: You have modified your shopping c
 $_['text_remove']                  = 'Success: You have removed an item from your shopping cart!';
 $_['text_login']                   = 'Attention: You must <a href="%s">login</a> or <a href="%s">create an account</a> to view prices!';
 $_['text_items']                   = '%s item(s) - %s';
-$_['text_points']                  = 'Reward Points: %s';
+$_['text_points']                  = 'Reward Points:';
 $_['text_next']                    = 'What would you like to do next?';
 $_['text_next_choice']             = 'Choose if you have a discount code or reward points you want to use or would like to estimate your delivery cost.';
 $_['text_no_results']              = 'Your shopping cart is empty!';
@@ -39,6 +39,4 @@ $_['error_stock']                  = 'Products marked with *** are not available
 $_['error_minimum']                = 'Minimum order amount for %s is %s!';
 $_['error_required']               = '%s required!';
 $_['error_product']                = 'Warning: Product could not be found!';
-$_['error_recurring_required']     = 'Please select a payment recurring!';
-$_['error_quantity_required']      = 'Please enter number!';
-$_['error_quantity_required_zero'] = 'Quantity cannot be 0!';
+$_['error_recurring']              = 'Please select a payment recurring!';

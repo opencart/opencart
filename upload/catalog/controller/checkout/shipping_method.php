@@ -40,6 +40,8 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 		}
 
 		if ($status) {
+			$data['shipping_methods'] = [];
+
 			if (isset($this->session->data['shipping_methods'])) {
 				$data['shipping_methods'] = $this->session->data['shipping_methods'];
 			} else {
@@ -52,8 +54,6 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 				$this->session->data['shipping_methods'] = $data['shipping_methods'];
 			}
 		} else {
-			$data['shipping_methods'] = [];
-
 			// Remove any shipping methods that does not meet checkout validation requirements
 			unset($this->session->data['shipping_methods']);
 		}

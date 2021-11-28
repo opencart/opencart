@@ -6,10 +6,6 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		if (!isset($this->session->data['api_id'])) {
-			$json['error']['warning'] = $this->language->get('error_permission');
-		}
-
 		// Add keys for missing post vars
 		$keys = [
 			'firstname',
@@ -122,8 +118,19 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 
 			$json['success'] = $this->language->get('text_success');
 
-			unset($this->session->data['payment_method']);
 			unset($this->session->data['payment_methods']);
+
+			$totals = [];
+			$taxes = $this->cart->getTaxes();
+			$total = 0;
+
+			$this->load->model('checkout/cart');
+
+			($this->model_checkout_cart->getTotals)($totals, $taxes, $total);
+
+			$json['products'] = $this->model_checkout_cart->getProducts();
+			$json['vouchers'] = $this->model_checkout_cart->getVouchers();
+			$json['totals'] = $totals;
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

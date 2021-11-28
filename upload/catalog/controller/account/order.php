@@ -132,7 +132,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 			$data['breadcrumbs'][] = [
 				'text' => $this->language->get('text_order'),
-				'href' => $this->url->link('account/order|info', 'language=' . $this->config->get('config_language') . '&order_id=' . $this->request->get['order_id'] . $url)
+				'href' => $this->url->link('account/order|info', 'language=' . $this->config->get('config_language') . '&order_id=' . $order_id . $url)
 			];
 
 			if ($order_info['invoice_no']) {
@@ -141,7 +141,7 @@ class Order extends \Opencart\System\Engine\Controller {
 				$data['invoice_no'] = '';
 			}
 
-			$data['order_id'] = (int)$this->request->get['order_id'];
+			$data['order_id'] = $order_id;
 			$data['date_added'] = date($this->language->get('date_format_short'), strtotime($order_info['date_added']));
 
 			if ($order_info['payment_address_format']) {
@@ -222,12 +222,12 @@ class Order extends \Opencart\System\Engine\Controller {
 			// Products
 			$data['products'] = [];
 
-			$products = $this->model_account_order->getProducts($this->request->get['order_id']);
+			$products = $this->model_account_order->getProducts($order_id);
 
 			foreach ($products as $product) {
 				$option_data = [];
 
-				$options = $this->model_account_order->getOptions($this->request->get['order_id'], $product['order_product_id']);
+				$options = $this->model_account_order->getOptions($order_id, $product['order_product_id']);
 
 				foreach ($options as $option) {
 					if ($option['type'] != 'file') {
@@ -271,7 +271,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			// Voucher
 			$data['vouchers'] = [];
 
-			$vouchers = $this->model_account_order->getVouchers($this->request->get['order_id']);
+			$vouchers = $this->model_account_order->getVouchers($order_id);
 
 			foreach ($vouchers as $voucher) {
 				$data['vouchers'][] = [
@@ -283,7 +283,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			// Totals
 			$data['totals'] = [];
 
-			$totals = $this->model_account_order->getTotals($this->request->get['order_id']);
+			$totals = $this->model_account_order->getTotals($order_id);
 
 			foreach ($totals as $total) {
 				$data['totals'][] = [
@@ -297,7 +297,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			// History
 			$data['histories'] = [];
 
-			$results = $this->model_account_order->getHistories($this->request->get['order_id']);
+			$results = $this->model_account_order->getHistories($order_id);
 
 			foreach ($results as $result) {
 				$data['histories'][] = [

@@ -18,7 +18,7 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 
 		foreach ($products as $product) {
 			if (!$product['minimum']) {
-				$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
+				$status = false;
 
 				break;
 			}
@@ -52,6 +52,8 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 		}
 
 		if ($status) {
+			$data['payment_methods'] = [];
+
 			if (isset($this->session->data['payment_methods'])) {
 				$data['payment_methods'] = $this->session->data['payment_methods'];
 			} else {
@@ -86,8 +88,6 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 				$this->session->data['payment_methods'] = $data['payment_methods'];
 			}
 		} else {
-			$data['payment_methods'] = [];
-
 			// Remove any payment methods that does not meet checkout validation requirements
 			unset($this->session->data['payment_methods']);
 		}

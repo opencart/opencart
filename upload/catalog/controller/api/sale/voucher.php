@@ -1,6 +1,7 @@
 <?php
 namespace Opencart\Catalog\Controller\Api\Sale;
 class Voucher extends \Opencart\System\Engine\Controller {
+	// Apply voucher
 	public function index(): void {
 		$this->load->language('api/sale/voucher');
 
@@ -24,6 +25,18 @@ class Voucher extends \Opencart\System\Engine\Controller {
 			$this->session->data['voucher'] = $this->request->post['voucher'];
 
 			$json['success'] = $this->language->get('text_success');
+
+			$totals = [];
+			$taxes = $this->cart->getTaxes();
+			$total = 0;
+
+			$this->load->model('checkout/cart');
+
+			($this->model_checkout_cart->getTotals)($totals, $taxes, $total);
+
+			$json['products'] = $this->model_checkout_cart->getProducts();
+			$json['vouchers'] = $this->model_checkout_cart->getVouchers();
+			$json['totals'] = $totals;
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -92,6 +105,60 @@ class Voucher extends \Opencart\System\Engine\Controller {
 
 			unset($this->session->data['shipping_methods']);
 			unset($this->session->data['payment_methods']);
+
+			$totals = [];
+			$taxes = $this->cart->getTaxes();
+			$total = 0;
+
+			$this->load->model('checkout/cart');
+
+			($this->model_checkout_cart->getTotals)($totals, $taxes, $total);
+
+			$json['products'] = $this->model_checkout_cart->getProducts();
+			$json['vouchers'] = $this->model_checkout_cart->getVouchers();
+			$json['totals'] = $totals;
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	public function remove(): void {
+		$this->load->language('api/sale/cart');
+
+		$json = [];
+
+		if (isset($this->request->post['key'])) {
+			$key = (string)$this->request->post['key'];
+		} else {
+			$key = '';
+		}
+
+		if (!isset($this->session->data['vouchers'][$key])) {
+			$json['error'] = $this->language->get('error_voucher');
+		}
+
+		// Remove
+		if (!$json) {
+			unset($this->session->data['vouchers'][$key]);
+
+			$json['success'] = $this->language->get('text_success');
+
+			unset($this->session->data['shipping_methods']);
+			unset($this->session->data['payment_methods']);
+			unset($this->session->data['reward']);
+
+			$totals = [];
+			$taxes = $this->cart->getTaxes();
+			$total = 0;
+
+			$this->load->model('checkout/cart');
+
+			($this->model_checkout_cart->getTotals)($totals, $taxes, $total);
+
+			$json['products'] = $this->model_checkout_cart->getProducts();
+			$json['vouchers'] = $this->model_checkout_cart->getVouchers();
+			$json['totals'] = $totals;
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

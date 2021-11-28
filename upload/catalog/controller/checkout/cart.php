@@ -126,27 +126,6 @@ class Cart extends \Opencart\System\Engine\Controller {
 				$data['error_warning'] = sprintf($this->language->get('error_minimum'), $product['name'], $product['minimum']);
 			}
 
-			$option_data = [];
-
-			foreach ($product['option'] as $option) {
-				if ($option['type'] != 'file') {
-					$value = $option['value'];
-				} else {
-					$upload_info = $this->model_tool_upload->getUploadByCode($option['value']);
-
-					if ($upload_info) {
-						$value = $upload_info['name'];
-					} else {
-						$value = '';
-					}
-				}
-
-				$option_data[] = [
-					'name'  => $option['name'],
-					'value' => (utf8_strlen($value) > 20 ? utf8_substr($value, 0, 20) . '..' : $value)
-				];
-			}
-
 			// Display prices
 			if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
 				$unit_price = $this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax'));
@@ -180,8 +159,8 @@ class Cart extends \Opencart\System\Engine\Controller {
 				'option'    => $product['option'],
 				'recurring' => $recurring,
 				'quantity'  => $product['quantity'],
-				'stock'     => $product['stock'] ? true : !(!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning')),
-				'reward'    => ($product['reward'] ? sprintf($this->language->get('text_points'), $product['reward']) : ''),
+				'stock'     => $product['stock'],
+				'reward'    => $product['reward'],
 				'price'     => $price,
 				'total'     => $total,
 				'href'      => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product['product_id'])
@@ -203,13 +182,15 @@ class Cart extends \Opencart\System\Engine\Controller {
 
 		$data['totals'] = [];
 
+		$totals = [];
+		$taxes = $this->cart->getTaxes();
+		$total = 0;
+
 		// Display prices
 		if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
-			$this->load->model('setting/extension');
+			($this->model_checkout_cart->getTotals)($totals, $taxes, $total);
 
-			$results = $this->model_checkout_cart->getTotals();
-
-			foreach ($results as $result) {
+			foreach ($totals as $result) {
 				$data['totals'][] = [
 					'title' => $result['title'],
 					'text'  => $this->currency->format($result['value'], $this->session->data['currency'])
@@ -286,7 +267,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 				}
 
 				if (!in_array($recurring_id, $recurring_ids)) {
-					$json['error']['recurring'] = $this->language->get('error_recurring_required');
+					$json['error']['recurring'] = $this->language->get('error_recurring');
 				}
 			}
 		}

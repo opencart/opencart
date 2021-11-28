@@ -4,13 +4,7 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('api/sale/shipping');
 
-		// Delete past shipping methods and method just in case there is an error
-		unset($this->session->data['shipping_methods']);
-		unset($this->session->data['shipping_method']);
-
 		$json = [];
-
-		$json['shipping_methods'] = [];
 
 		if ($this->cart->hasShipping()) {
 			if (!isset($this->session->data['shipping_address'])) {
@@ -71,6 +65,18 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 			$this->session->data['shipping_method'] = $this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]];
 
 			$json['success'] = $this->language->get('text_success');
+
+			$totals = [];
+			$taxes = $this->cart->getTaxes();
+			$total = 0;
+
+			$this->load->model('checkout/cart');
+
+			($this->model_checkout_cart->getTotals)($totals, $taxes, $total);
+
+			$json['products'] = $this->model_checkout_cart->getProducts();
+			$json['vouchers'] = $this->model_checkout_cart->getVouchers();
+			$json['totals'] = $totals;
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

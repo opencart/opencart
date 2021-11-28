@@ -25,7 +25,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->post['voucher'])) {
-			$voucher = $this->request->post['voucher'];
+			$voucher = (string)$this->request->post['voucher'];
 		} else {
 			$voucher = '';
 		}

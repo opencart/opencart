@@ -368,56 +368,31 @@ class Order extends \Opencart\System\Engine\Controller {
 				foreach ($this->session->data['vouchers'] as $voucher) {
 					$order_data['vouchers'][] = [
 						'description' => $voucher['description'],
-						'code' => token(10),
+						'code'        => token(10),
 						'to_name' => $voucher['to_name'],
 						'to_email' => $voucher['to_email'],
 						'from_name' => $voucher['from_name'],
 						'from_email' => $voucher['from_email'],
 						'voucher_theme_id' => $voucher['voucher_theme_id'],
 						'message' => $voucher['message'],
-						'amount' => $voucher['amount']
+						'amount'    => $voucher['amount']
 					];
 				}
 			}
 
 			// Order Totals
-			$this->load->model('setting/extension');
-
 			$totals = [];
 			$taxes = $this->cart->getTaxes();
 			$total = 0;
 
-			$sort_order = [];
+			$this->load->model('checkout/cart');
 
-			$results = $this->model_setting_extension->getExtensionsByType('total');
-
-			foreach ($results as $key => $value) {
-				$sort_order[$key] = $this->config->get('total_' . $value['code'] . '_sort_order');
-			}
-
-			array_multisort($sort_order, SORT_ASC, $results);
-
-			foreach ($results as $result) {
-				if ($this->config->get('total_' . $result['code'] . '_status')) {
-					$this->load->model('extension/' . $result['extension'] . '/total/' . $result['code']);
-
-					// __call can not pass-by-reference so we get PHP to call it as an anonymous function.
-					($this->{'model_extension_' . $result['extension'] . '_total_' . $result['code']}->getTotal)($totals, $taxes, $total);
-				}
-			}
-
-			$sort_order = [];
-
-			foreach ($totals as $key => $value) {
-				$sort_order[$key] = $value['sort_order'];
-			}
-
-			array_multisort($sort_order, SORT_ASC, $totals);
+			$this->model_checkout_cart->getTotals($totals, $taxes, $total);
 
 			$total_data = [
 				'totals' => $totals,
-				'taxes' => $taxes,
-				'total' => $total
+				'taxes'  => $taxes,
+				'total'  => $total
 			];
 
 			$order_data = array_merge($order_data, $total_data);

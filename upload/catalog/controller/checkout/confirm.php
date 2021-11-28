@@ -4,39 +4,18 @@ class Confirm extends \Opencart\System\Engine\Controller {
 	public function index(): string {
 		$this->load->language('checkout/confirm');
 
+		if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
+
+		}
+
 		// Order Totals
 		$totals = [];
 		$taxes = $this->cart->getTaxes();
 		$total = 0;
 
-		$sort_order = [];
+		$this->load->model('checkout/cart');
 
-		$this->load->model('setting/extension');
-
-		$results = $this->model_setting_extension->getExtensionsByType('total');
-
-		foreach ($results as $key => $value) {
-			$sort_order[$key] = $this->config->get('total_' . $value['code'] . '_sort_order');
-		}
-
-		array_multisort($sort_order, SORT_ASC, $results);
-
-		foreach ($results as $result) {
-			if ($this->config->get('total_' . $result['code'] . '_status')) {
-				$this->load->model('extension/' . $result['extension'] . '/total/' . $result['code']);
-
-				// __call can not pass-by-reference so we get PHP to call it as an anonymous function.
-				($this->{'model_extension_' . $result['extension'] . '_total_' . $result['code']}->getTotal)($totals, $taxes, $total);
-			}
-		}
-
-		$sort_order = [];
-
-		foreach ($totals as $key => $value) {
-			$sort_order[$key] = $value['sort_order'];
-		}
-
-		array_multisort($sort_order, SORT_ASC, $totals);
+		($this->model_checkout_cart->getTotals)($totals, $taxes, $total);
 
 		$status = true;
 
@@ -98,6 +77,8 @@ class Confirm extends \Opencart\System\Engine\Controller {
 
 		// Generate order if payment method is set
 		if ($status) {
+
+
 			$order_data = [];
 
 			// Store Details
@@ -352,7 +333,7 @@ class Confirm extends \Opencart\System\Engine\Controller {
 				'quantity'   => $product['quantity'],
 				'subtract'   => $product['subtract'],
 				'price'      => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']),
-				'total'      => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')) * $product['quantity'], $this->session->data['currency']),
+				'total'      => $this->currency->format($this->tax->calculate($product['price'] * $product['quantity'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']),
 				'href'       => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product['product_id'])
 			];
 		}
@@ -370,8 +351,6 @@ class Confirm extends \Opencart\System\Engine\Controller {
 		}
 
 		$data['totals'] = [];
-
-		$totals = $this->model_checkout_cart->getTotals();
 
 		foreach ($totals as $total) {
 			$data['totals'][] = [

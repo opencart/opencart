@@ -45,9 +45,19 @@ class Cart extends \Opencart\System\Engine\Controller {
 
 			$json['success'] = $this->language->get('text_success');
 
-			unset($this->session->data['shipping_method']);
+			$totals = [];
+			$taxes = $this->cart->getTaxes();
+			$total = 0;
+
+			$this->load->model('checkout/cart');
+
+			$this->model_checkout_cart->getTotals($totals, $taxes, $total);
+
+			$json['products'] = $this->model_checkout_cart->getProducts();
+			$json['vouchers'] = $this->model_checkout_cart->getVouchers();
+			$json['totals'] = $totals;
+
 			unset($this->session->data['shipping_methods']);
-			unset($this->session->data['payment_method']);
 			unset($this->session->data['payment_methods']);
 		}
 
@@ -60,15 +70,23 @@ class Cart extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		if (!$json) {
-			$this->cart->update($this->request->post['key'], (int)$this->request->post['quantity']);
-
-			$json['success'] = $this->language->get('text_success');
+		if (isset($this->request->post['key'])) {
+			$key = (string)$this->request->post['key'];
+		} else {
+			$key = '';
 		}
 
-		unset($this->session->data['shipping_method']);
+		if (isset($this->request->post['quantity'])) {
+			$quantity = (int)$this->request->post['quantity'];
+		} else {
+			$quantity = 1;
+		}
+
+		$this->cart->update($key, $quantity);
+
+		$json['success'] = $this->language->get('text_success');
+
 		unset($this->session->data['shipping_methods']);
-		unset($this->session->data['payment_method']);
 		unset($this->session->data['payment_methods']);
 		unset($this->session->data['reward']);
 
@@ -87,22 +105,27 @@ class Cart extends \Opencart\System\Engine\Controller {
 			$key = '';
 		}
 
-		if (!isset($this->session->data['vouchers'][$key])) {
-			$json['error'] = $this->language->get('error_product');
-		}
-
 		// Remove
-		if (!$json) {
-			unset($this->session->data['vouchers'][$key]);
+		$this->cart->remove($key);
 
-			$json['success'] = $this->language->get('text_success');
+		$json['success'] = $this->language->get('text_success');
 
-			unset($this->session->data['shipping_method']);
-			unset($this->session->data['shipping_methods']);
-			unset($this->session->data['payment_method']);
-			unset($this->session->data['payment_methods']);
-			unset($this->session->data['reward']);
-		}
+		unset($this->session->data['shipping_methods']);
+		unset($this->session->data['payment_methods']);
+		unset($this->session->data['reward']);
+
+
+		$totals = [];
+		$taxes = $this->cart->getTaxes();
+		$total = 0;
+
+		$this->load->model('checkout/cart');
+
+		$this->model_checkout_cart->getTotals($totals, $taxes, $total);
+
+		$json['products'] = $this->model_checkout_cart->getProducts();
+		$json['vouchers'] = $this->model_checkout_cart->getVouchers();
+		$json['totals'] = $totals;
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
@@ -118,11 +141,17 @@ class Cart extends \Opencart\System\Engine\Controller {
 			$json['error']['stock'] = $this->language->get('error_stock');
 		}
 
+		$totals = [];
+		$taxes = $this->cart->getTaxes();
+		$total = 0;
+
 		$this->load->model('checkout/cart');
+
+		$this->model_checkout_cart->getTotals($totals, $taxes, $total);
 
 		$json['products'] = $this->model_checkout_cart->getProducts();
 		$json['vouchers'] = $this->model_checkout_cart->getVouchers();
-		$json['totals'] = $this->model_checkout_cart->getTotals();
+		$json['totals'] = $totals;
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

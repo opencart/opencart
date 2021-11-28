@@ -59,6 +59,8 @@ class Cart extends \Opencart\System\Engine\Model {
 				$option_data[] = [
 					'product_option_id'       => $option['product_option_id'],
 					'product_option_value_id' => $option['product_option_value_id'],
+					'option_id'               => $option['option_id'],
+					'option_value_id'         => $option['option_value_id'],
 					'name'                    => $option['name'],
 					'value'                   => $option['value'],
 					'type'                    => $option['type']
@@ -71,7 +73,7 @@ class Cart extends \Opencart\System\Engine\Model {
 				'image'        => $image,
 				'name'         => $product['name'],
 				'model'        => $product['model'],
-				'option'       => $option_data,
+				'option'       => $product['option'],
 				'recurring'    => $product['recurring'],
 				'quantity'     => $product['quantity'],
 				'stock'        => $product['stock'] ? true : !(!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning')),
@@ -79,9 +81,9 @@ class Cart extends \Opencart\System\Engine\Model {
 				'shipping'     => $product['shipping'],
 				'subtract'     => $product['subtract'],
 				'reward'       => $product['reward'],
+				'tax_class_id' => $product['tax_class_id'],
 				'price'        => $product['price'],
-				'total'        => $product['price'] * $product['quantity'],
-				'tax_class_id' => $product['tax_class_id']
+				'total'        => $product['price'] * $product['quantity']
 			];
 		}
 
@@ -110,13 +112,7 @@ class Cart extends \Opencart\System\Engine\Model {
 		return $voucher_data;
 	}
 
-	public function getTotals(): array {
-		$total_data = [];
-
-		$totals = [];
-		$taxes = $this->cart->getTaxes();
-		$total = 0;
-
+	public function getTotals(array &$totals, array &$taxes, int &$total): void {
 		$sort_order = [];
 
 		$this->load->model('setting/extension');
@@ -145,14 +141,5 @@ class Cart extends \Opencart\System\Engine\Model {
 		}
 
 		array_multisort($sort_order, SORT_ASC, $totals);
-
-		foreach ($totals as $total) {
-			$total_data[] = [
-				'title' => $total['title'],
-				'value' => $total['value']
-			];
-		}
-
-		return $total_data;
 	}
 }

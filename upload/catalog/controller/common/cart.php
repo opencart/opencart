@@ -4,9 +4,20 @@ class Cart extends \Opencart\System\Engine\Controller {
 	public function index(): string {
 		$this->load->language('common/cart');
 
-		$data['products'] = [];
+		$totals = [];
+		$taxes = $this->cart->getTaxes();
+		$total = 0;
 
 		$this->load->model('checkout/cart');
+
+		if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
+			($this->model_checkout_cart->getTotals)($totals, $taxes, $total);
+		}
+
+		$data['text_items'] = sprintf($this->language->get('text_items'), $this->cart->countProducts() + (isset($this->session->data['vouchers']) ? count($this->session->data['vouchers']) : 0), $this->currency->format($total, $this->session->data['currency']));
+
+		// Products
+		$data['products'] = [];
 
 		$products = $this->model_checkout_cart->getProducts();
 
@@ -21,7 +32,6 @@ class Cart extends \Opencart\System\Engine\Controller {
 				$price = false;
 				$total = false;
 			}
-
 
 			$data['products'][] = [
 				'cart_id'   => $product['cart_id'],
@@ -50,29 +60,14 @@ class Cart extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-
-		if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
-			$total = $this->currency->format($this->cart->getTotal(), $this->session->data['currency']);
-		} else {
-			$total = $this->currency->format(0, $this->session->data['currency']);
-		}
-
-		$data['text_items'] = sprintf($this->language->get('text_items'), $this->cart->countProducts() + (isset($this->session->data['vouchers']) ? count($this->session->data['vouchers']) : 0), $total);
-
-
-
+		// Totals
 		$data['totals'] = [];
 
-		// Totals
-		if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
-			$totals = $this->model_checkout_cart->getTotals();
-
-			foreach ($totals as $total) {
-				$data['totals'][] = [
-					'title' => $total['title'],
-					'text'  => $this->currency->format($total['value'], $this->session->data['currency'])
-				];
-			}
+		foreach ($totals as $total) {
+			$data['totals'][] = [
+				'title' => $total['title'],
+				'text'  => $this->currency->format($total['value'], $this->session->data['currency'])
+			];
 		}
 
 		$data['cart'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'));

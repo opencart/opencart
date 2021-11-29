@@ -7,23 +7,26 @@ class Currency extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->post['currency'])) {
-			$code = (string)$this->request->post['currency'];
+			$currency = (string)$this->request->post['currency'];
 		} else {
-			$code = '';
+			$currency = '';
 		}
 
 		$this->load->model('localisation/currency');
 
-		$currency_info = $this->model_localisation_currency->getCurrencyByCode($code);
+		$currency_info = $this->model_localisation_currency->getCurrencyByCode($currency);
 
 		if (!$currency_info) {
 			$json['error'] = $this->language->get('error_currency');
 		}
 
 		if (!$json) {
-			$this->session->data['currency'] = $code;
+			$this->session->data['currency'] = $currency;
 
 			$json['success'] = $this->language->get('text_success');
+
+			unset($this->session->data['shipping_methods']);
+			unset($this->session->data['payment_methods']);
 
 			$totals = [];
 			$taxes = $this->cart->getTaxes();
@@ -36,9 +39,6 @@ class Currency extends \Opencart\System\Engine\Controller {
 			$json['products'] = $this->model_checkout_cart->getProducts();
 			$json['vouchers'] = $this->model_checkout_cart->getVouchers();
 			$json['totals'] = $totals;
-
-			unset($this->session->data['shipping_methods']);
-			unset($this->session->data['payment_methods']);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

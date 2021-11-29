@@ -1,27 +1,27 @@
 <?php
 namespace Opencart\Catalog\Controller\Api\Sale;
-class Language extends \Opencart\System\Engine\Controller {
+class Store extends \Opencart\System\Engine\Controller {
 	public function index(): void {
-		$this->load->language('api/sale/language');
+		$this->load->language('api/sale/store');
 
 		$json = [];
 
-		if (isset($this->request->post['language'])) {
-			$language = (string)$this->request->post['language'];
+		if (isset($this->request->post['store_id'])) {
+			$store_id = (int)$this->request->post['store_id'];
 		} else {
-			$language = '';
+			$store_id = 0;
 		}
 
-		$this->load->model('localisation/language');
+		$this->load->model('setting/store');
 
-		$language_info = $this->model_localisation_language->getLanguageByCode($language);
+		$store_info = $this->model_setting_store->getStore($store_id);
 
-		if (!$language_info) {
-			$json['error'] = $this->language->get('error_language');
+		if (!$store_info) {
+			$json['error'] = $this->language->get('error_store');
 		}
 
 		if (!$json) {
-			$this->session->data['language'] = $language;
+			$this->session->data['store_id'] = $store_id;
 
 			$json['success'] = $this->language->get('text_success');
 

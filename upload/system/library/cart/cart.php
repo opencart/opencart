@@ -14,7 +14,7 @@ class Cart {
 		// Remove all the expired carts with no customer ID
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "cart` WHERE (`api_id` > '0' OR `customer_id` = '0') AND `date_added` < DATE_SUB(NOW(), INTERVAL 1 HOUR)");
 
-		if ($this->customer->getId()) {
+		if ($this->customer->isLogged()) {
 			// We want to change the session ID on all the old items in the customers cart
 			$this->db->query("UPDATE `" . DB_PREFIX . "cart` SET `session_id` = '" . $this->db->escape($this->session->getId()) . "' WHERE `api_id` = '0' AND `customer_id` = '" . (int)$this->customer->getId() . "'");
 
@@ -190,14 +190,14 @@ class Cart {
 						}
 					}
 
-					$product_discount_query = $this->db->query("SELECT price FROM `" . DB_PREFIX . "product_discount` WHERE `product_id` = '" . (int)$cart['product_id'] . "' AND `customer_group_id` = '" . (int)$this->config->get('config_customer_group_id') . "' AND `quantity` <= '" . (int)$discount_quantity . "' AND ((`date_start` = '0000-00-00' OR `date_start` < NOW()) AND (`date_end` = '0000-00-00' OR `date_end` > NOW())) ORDER BY `quantity` DESC, `priority` ASC, `price` ASC LIMIT 1");
+					$product_discount_query = $this->db->query("SELECT `price` FROM `" . DB_PREFIX . "product_discount` WHERE `product_id` = '" . (int)$cart['product_id'] . "' AND `customer_group_id` = '" . (int)$this->config->get('config_customer_group_id') . "' AND `quantity` <= '" . (int)$discount_quantity . "' AND ((`date_start` = '0000-00-00' OR `date_start` < NOW()) AND (`date_end` = '0000-00-00' OR `date_end` > NOW())) ORDER BY `quantity` DESC, `priority` ASC, `price` ASC LIMIT 1");
 
 					if ($product_discount_query->num_rows) {
 						$price = $product_discount_query->row['price'];
 					}
 
 					// Product Specials
-					$product_special_query = $this->db->query("SELECT price FROM `" . DB_PREFIX . "product_special` WHERE `product_id` = '" . (int)$cart['product_id'] . "' AND `customer_group_id` = '" . (int)$this->config->get('config_customer_group_id') . "' AND ((`date_start` = '0000-00-00' OR `date_start` < NOW()) AND (`date_end` = '0000-00-00' OR `date_end` > NOW())) ORDER BY `priority` ASC, `price` ASC LIMIT 1");
+					$product_special_query = $this->db->query("SELECT `price` FROM `" . DB_PREFIX . "product_special` WHERE `product_id` = '" . (int)$cart['product_id'] . "' AND `customer_group_id` = '" . (int)$this->config->get('config_customer_group_id') . "' AND ((`date_start` = '0000-00-00' OR `date_start` < NOW()) AND (`date_end` = '0000-00-00' OR `date_end` > NOW())) ORDER BY `priority` ASC, `price` ASC LIMIT 1");
 
 					if ($product_special_query->num_rows) {
 						$price = $product_special_query->row['price'];
@@ -218,7 +218,7 @@ class Cart {
 					}
 
 					// Reward Points
-					$product_reward_query = $this->db->query("SELECT points FROM `" . DB_PREFIX . "product_reward` WHERE `product_id` = '" . (int)$cart['product_id'] . "' AND `customer_group_id` = '" . (int)$this->config->get('config_customer_group_id') . "'");
+					$product_reward_query = $this->db->query("SELECT `points` FROM `" . DB_PREFIX . "product_reward` WHERE `product_id` = '" . (int)$cart['product_id'] . "' AND `customer_group_id` = '" . (int)$this->config->get('config_customer_group_id') . "'");
 
 					if ($product_reward_query->num_rows) {
 						$reward = $product_reward_query->row['points'];

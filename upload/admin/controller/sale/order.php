@@ -735,21 +735,21 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		/*
-	// Custom Fields
-	$this->load->model('tool/upload');
+		// Custom Fields
+		$this->load->model('tool/upload');
 
-	if ($custom_field['type'] == 'file') {
-		$upload_info = $this->model_tool_upload->getUploadByCode($order_info['account_custom_field'][$custom_field['custom_field_id']]);
+		if ($custom_field['type'] == 'file') {
+			$upload_info = $this->model_tool_upload->getUploadByCode($order_info['account_custom_field'][$custom_field['custom_field_id']]);
 
-		if ($upload_info) {
-			$data['account_custom_field'][] = [
-				'name'       => $custom_field['name'],
-				'value'      => $upload_info['name'],
-				'sort_order' => $custom_field['sort_order']
-			];
+			if ($upload_info) {
+				$data['account_custom_field'][] = [
+					'name'       => $custom_field['name'],
+					'value'      => $upload_info['name'],
+					'sort_order' => $custom_field['sort_order']
+				];
+			}
 		}
-	}
-	*/
+		*/
 
 		/*
 		if ($custom_field['type'] == 'file') {
@@ -1641,8 +1641,8 @@ class Order extends \Opencart\System\Engine\Controller {
 		$session = new \Opencart\System\Library\Session($config->get('session_engine'), $registry);
 		$registry->set('session', $session);
 
-		if (isset($request->cookie[$config->get('session_name')])) {
-			$session_id = $request->cookie[$config->get('session_name')];
+		if (isset($request->cookie['admin'])) {
+			$session_id = $request->cookie['admin'];
 		} else {
 			$session_id = '';
 		}
@@ -1657,34 +1657,33 @@ class Order extends \Opencart\System\Engine\Controller {
 		$template->addPath(DIR_CATALOG . 'view/template/');
 		$registry->set('template', $template);
 
-
-		/*
 		// Language
+		if (isset($session->data['language'])) {
+			$language_code = $session->data['language'];
+		} else {
+			$language_code = $this->config->get('config_language');
+		}
+
 		$this->load->model('localisation/language');
 
-		$language_info = $this->model_localisation_language->getLanguageByCode($this->request->post['language']);
+		$language_info = $this->model_localisation_language->getLanguageByCode($language_code);
 
-		if (!$language_info) {
-
-		}
-		*/
-
-
-		if (isset($this->request->post['language_id'])) {
-			$config->set('config_language_id', $this->request->post['language_id']);
+		if ($language_info) {
+			$config->set('config_language_id', $language_info['language_id']);
+			$config->set('config_language', $language_info['code']);
 		} else {
 			$config->set('config_language_id', $this->config->get('config_language_id'));
+			$config->set('config_language', $language_code);
 		}
 
-
-		$language = new \Opencart\System\Library\Language($config->get('language_code'));
+		$language = new \Opencart\System\Library\Language($language_code);
 		$language->addPath(DIR_CATALOG . 'language/');
-		$language->load($config->get('language_code'));
+		$language->load($language_code);
 		$registry->set('language', $language);
 
 		// Store
-		if (isset($this->request->post['store_id'])) {
-			$config->set('config_store_id', $this->request->post['store_id']);
+		if (isset($session->data['store_id'])) {
+			$config->set('config_store_id', $session->data['store_id']);
 		} else {
 			$config->set('config_store_id', 0);
 		}
@@ -1710,6 +1709,9 @@ class Order extends \Opencart\System\Engine\Controller {
 		$pre_actions = [
 			'startup/setting',
 			'startup/extension',
+			'startup/customer',
+			'startup/tax',
+			'startup/currency',
 			'startup/application',
 			'startup/startup',
 			'startup/event'

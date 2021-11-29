@@ -2,6 +2,8 @@
 namespace Opencart\Catalog\Controller\Startup;
 class Api extends \Opencart\System\Engine\Controller {
 	public function index(): void {
+		$json = [];
+
 		if (isset($this->request->get['route'])) {
 			$route = (string)$this->request->get['route'];
 		} else {

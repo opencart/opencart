@@ -63,12 +63,6 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$json['error']['telephone'] = $this->language->get('error_telephone');
 		}
 
-		//echo $this->session->data['language'];
-		//echo $this->config->get('config_language');
-		//echo $this->config->get('config_language_id');
-
-		print_r($this->request->post);
-
 		// Custom field validation
 		$this->load->model('account/custom_field');
 

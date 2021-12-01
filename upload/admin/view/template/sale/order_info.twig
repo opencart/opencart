@@ -576,7 +576,7 @@
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
                   <label class="form-label">{{ custom_field.name }}</label>
                   <div>
-                    <button type="button" data-oc-toggle="upload" data-oc-url="index.php?route=tool/upload|upload&user_token={{ user_token }}" data-oc-target="#input-custom-field-{{ custom_field.custom_field_id }}" data-oc-loading-text="{{ text_loading }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
+                    <button type="button" data-oc-loading-text="{{ text_loading }}" data-oc-toggle="upload" data-oc-url="{{ upload }}" data-oc-size-max="{{ config_file_max_size }}" data-oc-size-error="{{ error_upload_size }}" data-oc-target="#input-custom-field-{{ custom_field.custom_field_id }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
                     <input type="hidden" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] }}" id="input-custom-field-{{ custom_field.custom_field_id }}"/>
                   </div>
                   <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
@@ -977,7 +977,7 @@
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
                   <label class="form-label">{{ custom_field.name }}</label>
                   <div>
-                    <button type="button" data-oc-toggle="upload" data-oc-url="index.php?route=tool/upload|upload&user_token={{ user_token }}" data-oc-target="#input-payment-custom-field-{{ custom_field.custom_field_id }}" data-oc-loading-text="{{ text_loading }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
+                    <button type="button" data-oc-loading-text="{{ text_loading }}" data-oc-toggle="upload" data-oc-url="{{ upload }}" data-oc-size-max="{{ config_file_max_size }}" data-oc-size-error="{{ error_upload_size }}" data-oc-target="#input-payment-custom-field-{{ custom_field.custom_field_id }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
                     <input type="hidden" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ payment_custom_field[custom_field.custom_field_id] ? payment_custom_field[custom_field.custom_field_id] }}" id="input-payment-custom-field-{{ custom_field.custom_field_id }}"/>
                   </div>
                   <div id="error-payment-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
@@ -1163,7 +1163,7 @@
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
                   <label class="form-label">{{ custom_field.name }}</label>
                   <div>
-                    <button type="button" data-oc-toggle="upload" data-oc-url="index.php?route=tool/upload|upload&user_token={{ user_token }}" data-oc-target="#input-shipping-custom-field-{{ custom_field.custom_field_id }}" data-oc-loading-text="{{ text_loading }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
+                    <button type="button" data-oc-loading-text="{{ text_loading }}" data-oc-toggle="upload" data-oc-url="{{ upload }}" data-oc-size-max="{{ config_file_max_size }}" data-oc-size-error="{{ error_upload_size }}" data-oc-target="#input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
                     <input type="hidden" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ shipping_custom_field[custom_field.custom_field_id] ? shipping_custom_field[custom_field.custom_field_id] }}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}"/>
                   </div>
                   <div id="error-shipping-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
@@ -2406,7 +2406,7 @@ $('#input-product').autocomplete({
                     html += '<div class="mb-3' + (option['required'] == 1 ? ' required' : '') + '">';
                     html += '  <label class="form-label">' + option['name'] + '</label>';
                     html += '  <div>';
-                    html += '    <button type="button" data-oc-toggle="upload" data-oc-url="index.php?route=tool/upload|upload&user_token={{ user_token }}" data-oc-loading-text="{{ text_loading }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>';
+                    html += '    <button type="button" data-oc-toggle="upload" data-oc-url="{{ upload }}" data-oc-loading-text="{{ text_loading }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>';
                     html += '    <input type="hidden" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" id="input-option-' + option['product_option_id'] + '"/>';
                     html += '  </div>';
                     html += '  <div id="error-option-' + option['product_option_id'] + '" class="invalid-feedback"></div>';
@@ -2778,7 +2778,7 @@ $('#button-save').on('click', function() {
             $('#button-save').button('reset');
         },
         success: function(json) {
-            $('.alert-dismissible, .invalid-tooltip').remove();
+            $('.alert-dismissible, .invalid-feedback').remove();
 
             if (json['error']) {
                 $('#tab-total .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
@@ -2804,13 +2804,6 @@ $('#button-save').on('click', function() {
 
 
 
-
-
-
-
-
-
-
 $('#history').on('click', '.pagination a', function(e) {
     e.preventDefault();
 
@@ -2826,7 +2819,7 @@ $('#button-history').on('click', function(e) {
         url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=order|history&order_id=' + $('#input-order-id').val(),
         type: 'post',
         dataType: 'json',
-        data: 'order_id=' + encodeURIComponent($('#tab-history #input-order-id').val()) + '&notify=' + $('#input-notify-yes').prop('checked') + '&comment=' + encodeURIComponent($('#tab-history textarea[name=\'comment\']').val()),
+        data: 'order_id=' + encodeURIComponent($('#input-order-id').val()) + '&notify=' + $('#input-notify-yes').prop('checked') + '&comment=' + encodeURIComponent($('#input-comment').val()),
         beforeSend: function() {
             $('#button-history').button('loading');
         },
@@ -2843,7 +2836,7 @@ $('#button-history').on('click', function(e) {
             }
 
             if (json['success']) {
-                $('#history').load('index.php?route=sale/order|call|history&user_token={{ user_token }}&return_id=' + $('input[name=\'return_id\']').val());
+                $('#history').load('index.php?route=sale/order|call|history&user_token={{ user_token }}&order_id=' + $('#input-order-id').val());
 
                 $('#tab-history').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 

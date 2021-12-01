@@ -105,7 +105,7 @@
             <div class="col mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
               <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
               <div>
-                <button type="button" data-oc-toggle="upload" data-oc-url="index.php?route=tool/upload" data-oc-target="#input-custom-field-{{ custom_field.custom_field_id }}" data-loading-text="{{ text_loading }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
+                <button type="button" data-loading-text="{{ text_loading }}" data-oc-toggle="upload" data-oc-url="{{ upload }}" data-oc-size-max="{{ config_file_max_size }}" data-oc-size-error="{{ error_upload_size }}" data-oc-target="#input-custom-field-{{ custom_field.custom_field_id }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
                 <input type="hidden" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{% if account_custom_field[custom_field.custom_field_id] %}{{ account_custom_field[custom_field.custom_field_id] }}{% endif %}" id="input-custom-field-{{ custom_field.custom_field_id }}"/>
               </div>
               <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
@@ -238,7 +238,7 @@
             <div class="col mb-3{% if custom_field.required %} required{% endif %} custom-field custom-field-{{ custom_field.custom_field_id }}">
               <label class="form-label">{{ custom_field.name }}</label>
               <div>
-                <button type="button" data-oc-toggle="upload" data-oc-url="index.php?route=tool/upload" data-oc-target="#input-payment-custom-field-{{ custom_field.custom_field_id }}" data-loading-text="{{ text_loading }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
+                <button type="button" data-loading-text="{{ text_loading }}" data-oc-toggle="upload" data-oc-url="{{ upload }}" data-oc-size-max="{{ config_file_max_size }}" data-oc-size-error="{{ error_upload_size }}" data-oc-target="#input-payment-custom-field-{{ custom_field.custom_field_id }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
                 <input type="hidden" name="payment_custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{% if payment_custom_field[custom_field.custom_field_id] %}{{ payment_custom_field[custom_field.custom_field_id] }}{% endif %}" id="input-payment-custom-field-{{ custom_field.custom_field_id }}"/>
               </div>
               <div id="error-payment-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
@@ -380,16 +380,18 @@
               <div id="error-shipping-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
             </div>
           {% endif %}
+
           {% if custom_field.type == 'file' %}
             <div class="col mb-3{% if custom_field.required %} required{% endif %} custom-field custom-field-{{ custom_field.custom_field_id }}">
               <label class="form-label">{{ custom_field.name }}</label>
               <div>
-                <button type="button" data-oc-toggle="upload" data-oc-url="index.php?route=tool/upload" data-oc-target="#input-shipping-custom-field-{{ custom_field.custom_field_id }}" data-loading-text="{{ text_loading }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
+                <button type="button" data-loading-text="{{ text_loading }}" data-oc-toggle="upload" data-oc-url="{{ upload }}" data-oc-size-max="{{ config_file_max_size }}" data-oc-size-error="{{ error_upload_size }}" data-oc-target="#input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
                 <input type="hidden" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{% if shipping_custom_field[custom_field.custom_field_id] %}{{ shipping_custom_field[custom_field.custom_field_id] }}{% endif %}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}"/>
                 <div id="error-shipping-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
               </div>
             </div>
           {% endif %}
+
           {% if custom_field.type == 'date' %}
             <div class="col mb-3{% if custom_field.required %} required{% endif %} custom-field custom-field-{{ custom_field.custom_field_id }}">
               <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>

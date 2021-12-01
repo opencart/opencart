@@ -2,7 +2,7 @@
 <div id="content">
 	<div class="page-header">
 		<div class="container-fluid">
-			<div class="float-end"><button type="button" id="button-upload" data-bs-toggle="tooltip" title="{{ button_upload }}" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-upload"></i></button></div>
+			<div class="float-end"><button type="button" id="button-upload" data-oc-loading-text="{{ text_loading }}" data-bs-toggle="tooltip" title="{{ button_upload }}" class="btn btn-primary"><i class="fas fa-upload"></i></button></div>
 			<h1>{{ heading_title }}</h1>
 			<ol class="breadcrumb">
 				{% for breadcrumb in breadcrumbs %}
@@ -54,9 +54,9 @@ $('#button-upload').on('click', function() {
 
     $('#form-upload input[name=\'file\']').on('change', function() {
         if (this.files[0].size > {{ config_file_max_size }}) {
-            $(this).val('');
+          	alert('{{ error_upload_size }}');
 
-            alert('{{ error_upload_size }}');
+            $(this).val('');
         }
     });
 

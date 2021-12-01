@@ -37,17 +37,19 @@
                   {% endfor %}
                 </div>
               </div>
+
               <div class="row mb-3 required">
                 <label for="input-filename" class="col-sm-2 col-form-label">{{ entry_filename }}</label>
                 <div class="col-sm-10">
                   <div class="input-group">
+                    <button type="button" id="button-upload" data-oc-loading-text="{{ text_loading }}" data-oc-toggle="upload" data-oc-size-max="{{ config_file_max_size }}" data-oc-size-error="{{ error_upload_size }}" data-oc-target="#input-filename" class="btn btn-primary"><i class="fas fa-upload"></i> {{ button_upload }}</button>
                     <input type="text" name="filename" value="{{ filename }}" placeholder="{{ entry_filename }}" id="input-filename" class="form-control"/>
-                    <button type="button" id="button-upload" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-upload"></i> {{ button_upload }}</button>
                   </div>
                   <div class="form-text text-muted">{{ help_filename }}</div>
                   <div id="error-filename" class="invalid-feedback"></div>
                 </div>
               </div>
+
               <div class="row mb-3 required">
                 <label for="input-mask" class="col-sm-2 col-form-label">{{ entry_mask }}</label>
                 <div class="col-sm-10">
@@ -78,20 +80,23 @@ $('#report').on('click', '.pagination a', function(e) {
 });
 
 $('#report').load('index.php?route=catalog/download|report&user_token={{ user_token }}&download_id=' + $('#input-download-id').val());
-//--></script>
-<script type="text/javascript"><!--
+
 $('#button-upload').on('click', function() {
+    var element = this;
+
     $('#form-upload').remove();
 
     $('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file"/></form>');
 
     $('#form-upload input[name=\'file\']').trigger('click');
 
-    $('#form-upload input[name=\'file\']').on('change', function() {
-        if (this.files[0].size > {{ config_file_max_size }}) {
-            $(this).val('');
+    var size = $(element).attr('data-oc-max-size');
 
-            alert('{{ error_upload_size }}');
+    $('#form-upload input[name=\'file\']').on('change', function(e) {
+        if (this.files[0].size > size) {
+            alert($(element).attr('data-oc-error'));
+
+            $(this).val('');
         }
     });
 
@@ -112,10 +117,10 @@ $('#button-upload').on('click', function() {
                 contentType: false,
                 processData: false,
                 beforeSend: function() {
-                    $('#button-upload').button('loading');
+                    $(element).button('loading');
                 },
                 complete: function() {
-                    $('#button-upload').button('reset');
+                    $(element).button('reset');
                 },
                 success: function(json) {
                     if (json['error']) {
@@ -136,5 +141,6 @@ $('#button-upload').on('click', function() {
         }
     }, 500);
 });
-//--></script>
+//-->
+</script>
 {{ footer }}

@@ -264,22 +264,24 @@ $(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function(e) {
 });
 
 // Upload
-$(document).on('click', '[data-oc-toggle=\'upload\']', function() {
+$(document).on('click', 'button[data-oc-toggle=\'upload\']', function() {
     var element = this;
 
     var target = $(element).attr('data-oc-target');
 
     $('#form-upload').remove();
 
-    $('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" /></form>');
+    $('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file"/></form>');
 
     $('#form-upload input[name=\'file\']').trigger('click');
 
-    $('#form-upload input[name=\'file\']').on('change', function() {
-        if (this.files[0].size > 0) {
-            //$(this).val('');
+    var size = $(element).attr('data-oc-max-size');
 
-            //alert('');
+    $('#form-upload input[name=\'file\']').on('change', function(e) {
+        if (this.files[0].size > size) {
+            alert($(element).attr('data-oc-error'));
+
+            $(this).val('');
         }
     });
 
@@ -306,18 +308,16 @@ $(document).on('click', '[data-oc-toggle=\'upload\']', function() {
                 success: function(json) {
                     console.log(json);
 
-                    $(element).parent().find('.invalid-feedback').remove();
-
                     if (json['error']) {
-                        $(element).after('<div class="invalid-feedback show">' + json['error'] + '</div>');
+                        alert(json['error']);
                     }
 
                     if (json['success']) {
-                        $('#alert').prepend('<div class="alert alert-success"><i class="fas fa-exclamation-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                        alert(json['success']);
+                    }
 
-                        if (json['code']) {
-                            $(target).attr('value', json['code']);
-                        }
+                    if (json['code']) {
+                        $(target).attr('value', json['code']);
                     }
                 },
                 error: function(xhr, ajaxOptions, thrownError) {
@@ -538,4 +538,4 @@ var chain = new Chain();
             $this.after($dropdown);
         });
     }
-})(jQuery);
+})(window.jQuery);

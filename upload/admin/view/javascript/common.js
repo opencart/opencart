@@ -275,11 +275,11 @@ $(document).on('click', 'button[data-oc-toggle=\'upload\']', function() {
 
     $('#form-upload input[name=\'file\']').trigger('click');
 
-    var size = $(element).attr('data-oc-max-size');
+    var size = $(element).attr('data-oc-size-max');
 
     $('#form-upload input[name=\'file\']').on('change', function(e) {
         if (this.files[0].size > size) {
-            alert($(element).attr('data-oc-error'));
+            alert($(element).attr('data-oc-size-error'));
 
             $(this).val('');
         }

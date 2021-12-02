@@ -326,7 +326,7 @@ $(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function(e) {
 $(document).on('click', 'button[data-oc-toggle=\'upload\']', function() {
     var element = this;
 
-    var target = $(element).attr('data-oc-target'):
+    var target = $(element).attr('data-oc-target');
 
     $('#form-upload').remove();
 
@@ -334,11 +334,11 @@ $(document).on('click', 'button[data-oc-toggle=\'upload\']', function() {
 
     $('#form-upload input[name=\'file\']').trigger('click');
 
-    var size = $(element).attr('data-oc-max-size');
+    var size = $(element).attr('data-oc-size-max');
 
     $('#form-upload input[name=\'file\']').on('change', function(e) {
         if (this.files[0].size > size) {
-            alert($(element).attr('data-oc-error'));
+            alert($(element).attr('data-oc-size-error'));
 
             $(this).val('');
         } 

@@ -73,4 +73,13 @@ class DB {
 	public function getLastId() {
 		return $this->adaptor->getLastId();
 	}
+	
+	/**
+     * 
+	 * 
+	 * @return	bool
+     */	
+	public function isConnected() {
+		return $this->adaptor->isConnected();
+	}
 }

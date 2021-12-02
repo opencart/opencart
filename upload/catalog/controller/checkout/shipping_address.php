@@ -9,6 +9,8 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 		$data['config_checkout_address'] = $this->config->get('config_checkout_address');
 		$data['config_file_max_size'] = $this->config->get('config_file_max_size');
 
+		$data['upload'] = $this->url->link('tool/upload', 'language=' . $this->config->get('config_language'));
+
 		$data['language'] = $this->config->get('config_language');
 
 		$this->load->model('account/address');

@@ -29,10 +29,10 @@ class Address extends \Opencart\System\Engine\Controller {
 			$data['success'] = '';
 		}
 
-		$data['list'] = $this->getList();
-
 		$data['add'] = $this->url->link('account/address|form', 'language=' . $this->config->get('config_language'));
 		$data['back'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language'));
+
+		$data['list'] = $this->getList();
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
@@ -151,6 +151,8 @@ class Address extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['save'] = $this->url->link('account/address|save', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&address_id=' . $this->request->get['address_id']);
 		}
+
+		$data['upload'] = $this->url->link('tool/upload', 'language=' . $this->config->get('config_language'));
 
 		if (isset($this->request->get['address_id'])) {
 			$this->load->model('account/address');

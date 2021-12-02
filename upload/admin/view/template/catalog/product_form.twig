@@ -54,7 +54,8 @@
                           {% if master_id %}
                             <div class="input-group-text">
                               <div class="form-check form-switch">
-                                <input type="checkbox" name="override[product_description][{{ language.language_id }}][name]" value="1" id="input-variant-name-{{ language.language_id }}" data-oc-toggle="switch" data-oc-target="#input-name-{{ language.language_id }}" class="form-check-input"/> <label for="input-variant-name-{{ language.language_id }}" class="custom-control-label"></label>
+                                <input type="checkbox" name="override[product_description][{{ language.language_id }}][name]" value="1" id="input-variant-name-{{ language.language_id }}" data-oc-toggle="switch" data-oc-target="#input-name-{{ language.language_id }}" class="form-check-input"/>
+                                <label for="input-variant-name-{{ language.language_id }}" class="form-check-label"></label>
                               </div>
                             </div>
                           {% endif %}
@@ -72,7 +73,7 @@
                           {% if master_id %}
                             <div class="input-group-text">
                               <div class="form-check form-switch">
-                                <input type="checkbox" name="override[product_description][{{ language.language_id }}][description]" value="1" id="input-variant-description-{{ language.language_id }}" data-oc-toggle="switch" data-oc-target="#input-description-{{ language.language_id }}" class="form-check-input"{% if override.product_description[language.language_id].description %} checked{% endif %}/> <label for="input-variant-description-{{ language.language_id }}" class="custom-control-label"></label>
+                                <input type="checkbox" name="override[product_description][{{ language.language_id }}][description]" value="1" id="input-variant-description-{{ language.language_id }}" data-oc-toggle="switch" data-oc-target="#input-description-{{ language.language_id }}" class="form-check-input"{% if override.product_description[language.language_id].description %} checked{% endif %}/> <label for="input-variant-description-{{ language.language_id }}" class="form-check-label"></label>
                               </div>
                             </div>
                           {% endif %}
@@ -87,7 +88,8 @@
                           {% if master_id %}
                             <div class="input-group-text">
                               <div class="form-check form-switch">
-                                <input type="checkbox" name="override[product_description][{{ language.language_id }}][meta_title]" value="1" id="input-variant-meta-title-{{ language.language_id }}" data-oc-toggle="switch" data-oc-target="#input-meta-title-{{ language.language_id }}" class="form-check-input"{% if override.product_description[language.language_id].meta_title %} checked{% endif %}/> <label for="input-variant-meta-title-{{ language.language_id }}" class="custom-control-label"></label>
+                                <input type="checkbox" name="override[product_description][{{ language.language_id }}][meta_title]" value="1" id="input-variant-meta-title-{{ language.language_id }}" data-oc-toggle="switch" data-oc-target="#input-meta-title-{{ language.language_id }}" class="form-check-input"{% if override.product_description[language.language_id].meta_title %} checked{% endif %}/>
+                                <label for="input-variant-meta-title-{{ language.language_id }}" class="form-check-label"></label>
                               </div>
                             </div>
                           {% endif %}
@@ -103,7 +105,7 @@
                           {% if master_id %}
                             <div class="input-group-text">
                               <div class="form-check form-switch">
-                                <input type="checkbox" name="override[product_description][{{ language.language_id }}][meta_description]" value="1" id="input-variant-meta-description-{{ language.language_id }}" data-oc-toggle="switch" data-oc-target="#input-meta-description-{{ language.language_id }}" class="form-check-input"{% if override.product_description[language.language_id].meta_description %} checked{% endif %}/> <label for="input-variant-meta-description-{{ language.language_id }}" class="custom-control-label"></label>
+                                <input type="checkbox" name="override[product_description][{{ language.language_id }}][meta_description]" value="1" id="input-variant-meta-description-{{ language.language_id }}" data-oc-toggle="switch" data-oc-target="#input-meta-description-{{ language.language_id }}" class="form-check-input"{% if override.product_description[language.language_id].meta_description %} checked{% endif %}/> <label for="input-variant-meta-description-{{ language.language_id }}" class="form-check-label"></label>
                               </div>
                             </div>
                           {% endif %}
@@ -118,7 +120,7 @@
                           {% if master_id %}
                             <div class="input-group-text">
                               <div class="form-check form-switch">
-                                <input type="checkbox" name="override[product_description][{{ language.language_id }}][meta_keyword]" value="1" id="input-variant-meta-keyword-{{ language.language_id }}" data-oc-toggle="switch" data-oc-target="#input-meta-keyword-{{ language.language_id }}" class="form-check-input"{% if override.product_description[language.language_id].meta_keyword %} checked{% endif %}/> <label for="input-variant-meta-keyword-{{ language.language_id }}" class="custom-control-label"></label>
+                                <input type="checkbox" name="override[product_description][{{ language.language_id }}][meta_keyword]" value="1" id="input-variant-meta-keyword-{{ language.language_id }}" data-oc-toggle="switch" data-oc-target="#input-meta-keyword-{{ language.language_id }}" class="form-check-input"{% if override.product_description[language.language_id].meta_keyword %} checked{% endif %}/> <label for="input-variant-meta-keyword-{{ language.language_id }}" class="form-check-label"></label>
                               </div>
                             </div>
                           {% endif %}
@@ -133,7 +135,7 @@
                           {% if master_id %}
                             <div class="input-group-text">
                               <div class="form-check form-switch">
-                                <input type="checkbox" name="override[product_description][{{ language.language_id }}][tag]" value="1" id="input-variant-tag-{{ language.language_id }}" data-oc-toggle="switch" data-oc-target="#input-tag-{{ language.language_id }}" class="form-check-input"{% if override.product_description[language.language_id].tag %} checked{% endif %}/> <label for="input-variant-tag-{{ language.language_id }}" class="custom-control-label"></label>
+                                <input type="checkbox" name="override[product_description][{{ language.language_id }}][tag]" value="1" id="input-variant-tag-{{ language.language_id }}" data-oc-toggle="switch" data-oc-target="#input-tag-{{ language.language_id }}" class="form-check-input"{% if override.product_description[language.language_id].tag %} checked{% endif %}/> <label for="input-variant-tag-{{ language.language_id }}" class="form-check-label"></label>
                               </div>
                             </div>
                           {% endif %}
@@ -157,7 +159,7 @@
                       {% if master_id %}
                         <div class="input-group-text">
                           <div class="form-check form-switch">
-                            <input type="checkbox" name="override[model]" value="1" id="input-variant-model" data-oc-toggle="switch" data-oc-target="#input-model" class="form-check-input"{% if override.model %} checked{% endif %}/> <label for="input-variant-model" class="custom-control-label"></label>
+                            <input type="checkbox" name="override[model]" value="1" id="input-variant-model" data-oc-toggle="switch" data-oc-target="#input-model" class="form-check-input"{% if override.model %} checked{% endif %}/> <label for="input-variant-model" class="form-check-label"></label>
                           </div>
                         </div>
                       {% endif %}
@@ -173,7 +175,7 @@
                       {% if master_id %}
                         <div class="input-group-text">
                           <div class="form-check form-switch">
-                            <input type="checkbox" name="override[sku]" value="1" id="input-variant-sku" data-oc-toggle="switch" data-oc-target="#input-sku" class="form-check-input"{% if override.sku %} checked{% endif %}/> <label for="input-variant-sku" class="custom-control-label"></label>
+                            <input type="checkbox" name="override[sku]" value="1" id="input-variant-sku" data-oc-toggle="switch" data-oc-target="#input-sku" class="form-check-input"{% if override.sku %} checked{% endif %}/> <label for="input-variant-sku" class="form-check-label"></label>
                           </div>
                         </div>
                       {% endif %}
@@ -189,7 +191,7 @@
                       {% if master_id %}
                         <div class="input-group-text">
                           <div class="form-check form-switch">
-                            <input type="checkbox" name="override[upc]" value="1" id="input-variant-upc" data-oc-toggle="switch" data-oc-target="#input-upc" class="form-check-input"{% if override.upc %} checked{% endif %}/> <label for="input-variant-upc" class="custom-control-label"></label>
+                            <input type="checkbox" name="override[upc]" value="1" id="input-variant-upc" data-oc-toggle="switch" data-oc-target="#input-upc" class="form-check-input"{% if override.upc %} checked{% endif %}/> <label for="input-variant-upc" class="form-check-label"></label>
                           </div>
                         </div>
                       {% endif %}
@@ -205,7 +207,7 @@
                       {% if master_id %}
                         <div class="input-group-text">
                           <div class="form-check form-switch">
-                            <input type="checkbox" name="override[ean]" value="1" id="input-variant-ean" data-oc-toggle="switch" data-oc-target="#input-ean" class="form-check-input"{% if override.ean %} checked{% endif %}/> <label for="input-variant-ean" class="custom-control-label"></label>
+                            <input type="checkbox" name="override[ean]" value="1" id="input-variant-ean" data-oc-toggle="switch" data-oc-target="#input-ean" class="form-check-input"{% if override.ean %} checked{% endif %}/> <label for="input-variant-ean" class="form-check-label"></label>
                           </div>
                         </div>
                       {% endif %}
@@ -221,7 +223,7 @@
                       {% if master_id %}
                         <div class="input-group-text">
                           <div class="form-check form-switch">
-                            <input type="checkbox" name="override[jan]" value="1" id="input-variant-jan" data-oc-toggle="switch" data-oc-target="#input-jan" class="form-check-input"{% if override.jan %} checked{% endif %}/> <label for="input-variant-jan" class="custom-control-label"></label>
+                            <input type="checkbox" name="override[jan]" value="1" id="input-variant-jan" data-oc-toggle="switch" data-oc-target="#input-jan" class="form-check-input"{% if override.jan %} checked{% endif %}/> <label for="input-variant-jan" class="form-check-label"></label>
                           </div>
                         </div>
                       {% endif %}
@@ -237,7 +239,7 @@
                       {% if master_id %}
                         <div class="input-group-text">
                           <div class="form-check form-switch">
-                            <input type="checkbox" name="override[isbn]" value="1" id="input-variant-isbn" data-oc-toggle="switch" data-oc-target="#input-isbn" class="form-check-input"{% if override.isbn %} checked{% endif %}/> <label for="input-variant-isbn" class="custom-control-label"></label>
+                            <input type="checkbox" name="override[isbn]" value="1" id="input-variant-isbn" data-oc-toggle="switch" data-oc-target="#input-isbn" class="form-check-input"{% if override.isbn %} checked{% endif %}/> <label for="input-variant-isbn" class="form-check-label"></label>
                           </div>
                         </div>
                       {% endif %}
@@ -253,7 +255,7 @@
                       {% if master_id %}
                         <div class="input-group-text">
                           <div class="form-check form-switch">
-                            <input type="checkbox" name="override[mpn]" value="1" id="input-variant-mpn" data-oc-toggle="switch" data-oc-target="#input-mpn" class="form-check-input"{% if override.mpn %} checked{% endif %}/> <label for="input-variant-mpn" class="custom-control-label"></label>
+                            <input type="checkbox" name="override[mpn]" value="1" id="input-variant-mpn" data-oc-toggle="switch" data-oc-target="#input-mpn" class="form-check-input"{% if override.mpn %} checked{% endif %}/> <label for="input-variant-mpn" class="form-check-label"></label>
                           </div>
                         </div>
                       {% endif %}
@@ -269,7 +271,7 @@
                       {% if master_id %}
                         <div class="input-group-text">
                           <div class="form-check form-switch">
-                            <input type="checkbox" name="override[location]" value="1" id="input-variant-location" data-oc-toggle="switch" data-oc-target="#input-location" class="form-check-input"{% if override.location %} checked{% endif %}/> <label for="input-variant-location" class="custom-control-label"></label>
+                            <input type="checkbox" name="override[location]" value="1" id="input-variant-location" data-oc-toggle="switch" data-oc-target="#input-location" class="form-check-input"{% if override.location %} checked{% endif %}/> <label for="input-variant-location" class="form-check-label"></label>
                           </div>
                         </div>
                       {% endif %}
@@ -287,7 +289,7 @@
                       {% if master_id %}
                         <div class="input-group-text">
                           <div class="form-check form-switch">
-                            <input type="checkbox" name="override[price]" value="1" id="input-variant-price" data-oc-toggle="switch" data-oc-target="#input-price" class="form-check-input"{% if override.price %} checked{% endif %}/> <label for="input-variant-price" class="custom-control-label"></label>
+                            <input type="checkbox" name="override[price]" value="1" id="input-variant-price" data-oc-toggle="switch" data-oc-target="#input-price" class="form-check-input"{% if override.price %} checked{% endif %}/> <label for="input-variant-price" class="form-check-label"></label>
                           </div>
                         </div>
                       {% endif %}
@@ -307,7 +309,7 @@
                       {% if master_id %}
                         <div class="input-group-text">
                           <div class="form-check form-switch">
-                            <input type="checkbox" name="override[tax_class_id]" value="1" id="input-variant-tax-class" data-oc-toggle="switch" data-oc-target="#input-tax-class" class="form-check-input"{% if override.tax_class_id %} checked{% endif %}/> <label for="input-variant-tax-class" class="custom-control-label"></label>
+                            <input type="checkbox" name="override[tax_class_id]" value="1" id="input-variant-tax-class" data-oc-toggle="switch" data-oc-target="#input-tax-class" class="form-check-input"{% if override.tax_class_id %} checked{% endif %}/> <label for="input-variant-tax-class" class="form-check-label"></label>
                           </div>
                         </div>
                       {% endif %}
@@ -332,7 +334,7 @@
 
                         <div class="input-group-text">
                           <div class="form-check form-switch">
-                            <input type="checkbox" name="override[minimum]" value="1" id="input-variant-minimum" data-oc-toggle="switch" data-oc-target="#input-minimum" class="form-check-input"{% if override.minimum %} checked{% endif %}/> <label for="input-variant-minimum" class="custom-control-label"></label>
+                            <input type="checkbox" name="override[minimum]" value="1" id="input-variant-minimum" data-oc-toggle="switch" data-oc-target="#input-minimum" class="form-check-input"{% if override.minimum %} checked{% endif %}/> <label for="input-variant-minimum" class="form-check-label"></label>
                           </div>
                         </div>
 
@@ -351,7 +353,7 @@
                       {% if master_id %}
                         <div class="input-group-text">
                           <div class="form-check form-switch">
-                            <input type="checkbox" name="override[subtract]" value="1" id="input-variant-subtract" data-oc-toggle="switch" data-oc-target="#input-subtract" class="form-check-input"{% if override.subtract %} checked{% endif %}/> <label for="input-variant-subtract" class="custom-control-label"></label>
+                            <input type="checkbox" name="override[subtract]" value="1" id="input-variant-subtract" data-oc-toggle="switch" data-oc-target="#input-subtract" class="form-check-input"{% if override.subtract %} checked{% endif %}/> <label for="input-variant-subtract" class="form-check-label"></label>
                           </div>
                         </div>
                       {% endif %}
@@ -370,7 +372,7 @@
                       {% if master_id %}
                         <div class="input-group-text">
                           <div class="form-check form-switch">
-                            <input type="checkbox" name="override[stock_status_id]" value="1" id="input-variant-stock-status" data-oc-toggle="switch" data-oc-target="#input-stock-status" class="form-check-input"{% if override.stock_status_id %} checked{% endif %}/> <label for="input-variant-stock-status" class="custom-control-label"></label>
+                            <input type="checkbox" name="override[stock_status_id]" value="1" id="input-variant-stock-status" data-oc-toggle="switch" data-oc-target="#input-stock-status" class="form-check-input"{% if override.stock_status_id %} checked{% endif %}/> <label for="input-variant-stock-status" class="form-check-label"></label>
                           </div>
                         </div>
                       {% endif %}
@@ -387,7 +389,7 @@
                       {% if master_id %}
                         <div class="input-group-text">
                           <div class="form-check form-switch">
-                            <input type="checkbox" name="override[date_available]" value="1" id="input-variant-date-available" data-oc-toggle="switch" data-oc-target="#input-date-available" class="form-check-input"{% if override.date_available %} checked{% endif %}/> <label for="input-variant-date-available" class="custom-control-label"></label>
+                            <input type="checkbox" name="override[date_available]" value="1" id="input-variant-date-available" data-oc-toggle="switch" data-oc-target="#input-date-available" class="form-check-input"{% if override.date_available %} checked{% endif %}/> <label for="input-variant-date-available" class="form-check-label"></label>
                           </div>
                         </div>
                       {% endif %}
@@ -407,7 +409,7 @@
                       {% if master_id %}
                         <div class="input-group-text">
                           <div class="form-check form-switch">
-                            <input type="checkbox" name="override[shipping]" value="1" id="input-variant-shipping" data-oc-toggle="switch" data-oc-target="#input-shipping" class="form-check-input"{% if override.shipping %} checked{% endif %}/> <label for="input-variant-shipping" class="custom-control-label"></label>
+                            <input type="checkbox" name="override[shipping]" value="1" id="input-variant-shipping" data-oc-toggle="switch" data-oc-target="#input-shipping" class="form-check-input"{% if override.shipping %} checked{% endif %}/> <label for="input-variant-shipping" class="form-check-label"></label>
                           </div>
                         </div>
                       {% endif %}
@@ -422,7 +424,7 @@
                       {% if master_id %}
                         <div class="input-group-text">
                           <div class="form-check form-switch">
-                            <input type="checkbox" name="override[length]" value="1" id="input-variant-length" data-oc-toggle="switch" data-oc-target="#input-length" class="form-check-input"{% if override.length %} checked{% endif %}/> <label for="input-variant-length" class="custom-control-label"></label>
+                            <input type="checkbox" name="override[length]" value="1" id="input-variant-length" data-oc-toggle="switch" data-oc-target="#input-length" class="form-check-input"{% if override.length %} checked{% endif %}/> <label for="input-variant-length" class="form-check-label"></label>
                           </div>
                         </div>
                       {% endif %}
@@ -430,7 +432,7 @@
                       {% if master_id %}
                         <div class="input-group-text">
                           <div class="form-check form-switch">
-                            <input type="checkbox" name="override[width]" value="1" id="input-variant-width" data-oc-toggle="switch" data-oc-target="#input-width" class="form-check-input"{% if override.width %} checked{% endif %}/> <label for="input-variant-width" class="custom-control-label"></label>
+                            <input type="checkbox" name="override[width]" value="1" id="input-variant-width" data-oc-toggle="switch" data-oc-target="#input-width" class="form-check-input"{% if override.width %} checked{% endif %}/> <label for="input-variant-width" class="form-check-label"></label>
                           </div>
                         </div>
                       {% endif %}
@@ -438,7 +440,7 @@
                       {% if master_id %}
                         <div class="input-group-text">
                           <div class="form-check form-switch">
-                            <input type="checkbox" name="override[height]" value="1" id="input-variant-height" data-oc-toggle="switch" data-oc-target="#input-height" class="form-check-input"{% if override.height %} checked{% endif %}/> <label for="input-variant-height" class="custom-control-label"></label>
+                            <input type="checkbox" name="override[height]" value="1" id="input-variant-height" data-oc-toggle="switch" data-oc-target="#input-height" class="form-check-input"{% if override.height %} checked{% endif %}/> <label for="input-variant-height" class="form-check-label"></label>
                           </div>
                         </div>
                       {% endif %}
@@ -457,7 +459,7 @@
                       {% if master_id %}
                         <div class="input-group-text">
                           <div class="form-check form-switch">
-                            <input type="checkbox" name="override[length_class_id]" value="1" id="input-variant-length-class" data-oc-toggle="switch" data-oc-target="#input-length-class" class="form-check-input"{% if override.length_class_id %} checked{% endif %}/> <label for="input-variant-length-class" class="custom-control-label"></label>
+                            <input type="checkbox" name="override[length_class_id]" value="1" id="input-variant-length-class" data-oc-toggle="switch" data-oc-target="#input-length-class" class="form-check-input"{% if override.length_class_id %} checked{% endif %}/> <label for="input-variant-length-class" class="form-check-label"></label>
                           </div>
                         </div>
                       {% endif %}
@@ -472,7 +474,7 @@
                       {% if master_id %}
                         <div class="input-group-text">
                           <div class="form-check form-switch">
-                            <input type="checkbox" name="override[weight]" value="1" id="input-variant-weight" data-oc-toggle="switch" data-oc-target="#input-weight" class="form-check-input"{% if override.weight %} checked{% endif %}/> <label for="input-variant-weight" class="custom-control-label"></label>
+                            <input type="checkbox" name="override[weight]" value="1" id="input-variant-weight" data-oc-toggle="switch" data-oc-target="#input-weight" class="form-check-input"{% if override.weight %} checked{% endif %}/> <label for="input-variant-weight" class="form-check-label"></label>
                           </div>
                         </div>
                       {% endif %}
@@ -491,7 +493,7 @@
                       {% if master_id %}
                         <div class="input-group-text">
                           <div class="form-check form-switch">
-                            <input type="checkbox" name="override[weight_class_id]" value="1" id="input-variant-weight-class" data-oc-toggle="switch" data-oc-target="#input-weight-class" class="form-check-input"{% if override.weight_class_id %} checked{% endif %}/> <label for="input-variant-weight-class" class="custom-control-label"></label>
+                            <input type="checkbox" name="override[weight_class_id]" value="1" id="input-variant-weight-class" data-oc-toggle="switch" data-oc-target="#input-weight-class" class="form-check-input"{% if override.weight_class_id %} checked{% endif %}/> <label for="input-variant-weight-class" class="form-check-label"></label>
                           </div>
                         </div>
                       {% endif %}
@@ -509,7 +511,7 @@
                       {% if master_id %}
                         <div class="input-group-text">
                           <div class="form-check form-switch">
-                            <input type="checkbox" name="override[status]" value="1" id="input-variant-status" data-oc-toggle="switch" data-oc-target="#input-status" class="form-check-input"{% if override.status %} checked{% endif %}/> <label for="input-variant-status" class="custom-control-label"></label>
+                            <input type="checkbox" name="override[status]" value="1" id="input-variant-status" data-oc-toggle="switch" data-oc-target="#input-status" class="form-check-input"{% if override.status %} checked{% endif %}/> <label for="input-variant-status" class="form-check-label"></label>
                           </div>
                         </div>
                       {% endif %}
@@ -524,7 +526,7 @@
                       {% if master_id %}
                         <div class="input-group-text">
                           <div class="form-check form-switch">
-                            <input type="checkbox" name="override[sort_order]" value="1" id="input-variant-sort-order" data-oc-toggle="switch" data-oc-target="#input-sort-order" class="form-check-input"{% if override.sort_order %} checked{% endif %}/> <label for="input-variant-sort-order" class="custom-control-label"></label>
+                            <input type="checkbox" name="override[sort_order]" value="1" id="input-variant-sort-order" data-oc-toggle="switch" data-oc-target="#input-sort-order" class="form-check-input"{% if override.sort_order %} checked{% endif %}/> <label for="input-variant-sort-order" class="form-check-label"></label>
                           </div>
                         </div>
                       {% endif %}
@@ -542,7 +544,7 @@
                     {% if master_id %}
                       <div class="input-group-text">
                         <div class="form-check form-switch">
-                          <input type="checkbox" name="override[manufacturer]" value="1" id="input-variant-manufacturer" data-oc-toggle="switch" data-oc-target="#input-manufacturer" class="form-check-input"{% if override.manufacturer %} checked{% endif %}/> <label for="input-variant-manufacturer" class="custom-control-label"></label>
+                          <input type="checkbox" name="override[manufacturer]" value="1" id="input-variant-manufacturer" data-oc-toggle="switch" data-oc-target="#input-manufacturer" class="form-check-input"{% if override.manufacturer %} checked{% endif %}/> <label for="input-variant-manufacturer" class="form-check-label"></label>
                         </div>
                       </div>
                     {% endif %}
@@ -570,7 +572,7 @@
                     {% if master_id %}
                       <div class="input-group-text">
                         <div class="form-check form-switch">
-                          <input type="checkbox" name="override[product_category]" value="1" id="input-variant-category" data-oc-toggle="switch" data-oc-target="#input-category, #product-category" class="form-check-input"{% if override.product_category %} checked{% endif %}/> <label for="input-variant-category" class="custom-control-label"></label>
+                          <input type="checkbox" name="override[product_category]" value="1" id="input-variant-category" data-oc-toggle="switch" data-oc-target="#input-category, #product-category" class="form-check-input"{% if override.product_category %} checked{% endif %}/> <label for="input-variant-category" class="form-check-label"></label>
                         </div>
                       </div>
                     {% endif %}
@@ -596,7 +598,7 @@
                     {% if master_id %}
                       <div class="input-group-text">
                         <div class="form-check form-switch">
-                          <input type="checkbox" name="override[product_filter]" value="1" id="input-variant-filter" data-oc-toggle="switch" data-oc-target="#input-filter, #product-filter" class="form-check-input"{% if override.product_filter %} checked{% endif %}/> <label for="input-variant-filter" class="custom-control-label"></label>
+                          <input type="checkbox" name="override[product_filter]" value="1" id="input-variant-filter" data-oc-toggle="switch" data-oc-target="#input-filter, #product-filter" class="form-check-input"{% if override.product_filter %} checked{% endif %}/> <label for="input-variant-filter" class="form-check-label"></label>
                         </div>
                       </div>
                     {% endif %}
@@ -618,7 +620,7 @@
                     {% if master_id %}
                       <div class="input-group-text">
                         <div class="form-check form-switch">
-                          <input type="checkbox" name="override[product_store]" value="1" id="input-variant-store" data-oc-toggle="switch" data-oc-target="#product-store" class="form-check-input"{% if override.product_store %} checked{% endif %}/> <label for="input-variant-store" class="custom-control-label"></label>
+                          <input type="checkbox" name="override[product_store]" value="1" id="input-variant-store" data-oc-toggle="switch" data-oc-target="#product-store" class="form-check-input"{% if override.product_store %} checked{% endif %}/> <label for="input-variant-store" class="form-check-label"></label>
                         </div>
                       </div>
                     {% endif %}
@@ -643,7 +645,7 @@
                     {% if master_id %}
                       <div class="input-group-text">
                         <div class="form-check form-switch">
-                          <input type="checkbox" name="override[product_download]" value="1" id="input-variant-download" data-oc-toggle="switch" data-oc-target="#input-download, #product-download" class="form-check-input"{% if override.product_download %} checked{% endif %}/> <label for="input-variant-download" class="custom-control-label"></label>
+                          <input type="checkbox" name="override[product_download]" value="1" id="input-variant-download" data-oc-toggle="switch" data-oc-target="#input-download, #product-download" class="form-check-input"{% if override.product_download %} checked{% endif %}/> <label for="input-variant-download" class="form-check-label"></label>
                         </div>
                       </div>
                     {% endif %}
@@ -669,7 +671,7 @@
                     {% if master_id %}
                       <div class="input-group-text">
                         <div class="form-check form-switch">
-                          <input type="checkbox" name="override[product_related]" value="1" id="input-variant-related" data-oc-toggle="switch" data-oc-target="#input-related, #product-related" class="form-check-input"{% if override.product_related %} checked{% endif %}/> <label for="input-variant-related" class="custom-control-label"></label>
+                          <input type="checkbox" name="override[product_related]" value="1" id="input-variant-related" data-oc-toggle="switch" data-oc-target="#input-related, #product-related" class="form-check-input"{% if override.product_related %} checked{% endif %}/> <label for="input-variant-related" class="form-check-label"></label>
                         </div>
                       </div>
                     {% endif %}
@@ -688,7 +690,7 @@
                       <td>
                         {% if master_id %}
                           <div class="form-check form-switch float-end">
-                            <input type="checkbox" name="override[product_attribute]" value="1" id="input-variant-product-attribute" data-oc-toggle="switch" data-oc-target="#product-attribute" class="form-check-input"{% if override.product_attribute %} checked{% endif %}/> <label for="input-variant-product-attribute" class="custom-control-label"></label>
+                            <input type="checkbox" name="override[product_attribute]" value="1" id="input-variant-product-attribute" data-oc-toggle="switch" data-oc-target="#product-attribute" class="form-check-input"{% if override.product_attribute %} checked{% endif %}/> <label for="input-variant-product-attribute" class="form-check-label"></label>
                           </div>
                         {% endif %}
                       </td>
@@ -897,7 +899,7 @@
                             </select>
                             <div class="input-group-text">
                               <div class="form-check form-switch">
-                                <input type="checkbox" name="override[variant][{{ option.product_option_id }}]" value="1" id="input-variant-option-{{ option.product_option_id }}" data-oc-toggle="switch" data-oc-target="#input-option-{{ option.product_option_id }}" class="form-check-input"{% if override.variant[option.product_option_id] %} checked{% endif %}/> <label for="input-variant-option-{{ option.product_option_id }}" class="custom-control-label"></label>
+                                <input type="checkbox" name="override[variant][{{ option.product_option_id }}]" value="1" id="input-variant-option-{{ option.product_option_id }}" data-oc-toggle="switch" data-oc-target="#input-option-{{ option.product_option_id }}" class="form-check-input"{% if override.variant[option.product_option_id] %} checked{% endif %}/> <label for="input-variant-option-{{ option.product_option_id }}" class="form-check-label"></label>
                               </div>
                             </div>
                           </div>
@@ -926,7 +928,7 @@
                             </div>
                             <div class="input-group-text">
                               <div class="form-check form-switch">
-                                <input type="checkbox" name="override[variant][{{ option.product_option_id }}]" value="1" id="input-variant-option-{{ option.product_option_id }}" data-oc-toggle="switch" data-oc-target="#input-option-{{ option.product_option_id }}" class="form-check-input"{% if override.variant[option.product_option_id] %} checked{% endif %}/> <label for="input-variant-option-{{ option.product_option_id }}" class="custom-control-label"></label>
+                                <input type="checkbox" name="override[variant][{{ option.product_option_id }}]" value="1" id="input-variant-option-{{ option.product_option_id }}" data-oc-toggle="switch" data-oc-target="#input-option-{{ option.product_option_id }}" class="form-check-input"{% if override.variant[option.product_option_id] %} checked{% endif %}/> <label for="input-variant-option-{{ option.product_option_id }}" class="form-check-label"></label>
                               </div>
                             </div>
                           </div>
@@ -954,7 +956,7 @@
                             </div>
                             <div class="input-group-text">
                               <div class="form-check form-switch">
-                                <input type="checkbox" name="override[variant][{{ option.product_option_id }}]" value="1" id="input-variant-option-{{ option.product_option_id }}" data-oc-toggle="switch" data-oc-target="#input-option-{{ option.product_option_id }}" class="form-check-input"{% if override.variant[option.product_option_id] %} checked{% endif %}/> <label for="input-variant-option-{{ option.product_option_id }}" class="custom-control-label"></label>
+                                <input type="checkbox" name="override[variant][{{ option.product_option_id }}]" value="1" id="input-variant-option-{{ option.product_option_id }}" data-oc-toggle="switch" data-oc-target="#input-option-{{ option.product_option_id }}" class="form-check-input"{% if override.variant[option.product_option_id] %} checked{% endif %}/> <label for="input-variant-option-{{ option.product_option_id }}" class="form-check-label"></label>
                               </div>
                             </div>
                           </div>
@@ -971,7 +973,7 @@
                             <input type="text" name="variant[{{ option.product_option_id }}]" value="{{ variant[option.product_option_id] ? variant[option.product_option_id] : option.value }}" placeholder="{{ option.name }}" id="input-option-{{ option.product_option_id }}" class="form-control"/>
                             <div class="input-group-text">
                               <div class="form-check form-switch">
-                                <input type="checkbox" name="override[variant][{{ option.product_option_id }}]" value="1" id="input-variant-option-{{ option.product_option_id }}" data-oc-toggle="switch" data-oc-target="#input-option-{{ option.product_option_id }}" class="form-check-input"{% if override.variant[option.product_option_id] %} checked{% endif %}/> <label for="input-variant-option-{{ option.product_option_id }}" class="custom-control-label"></label>
+                                <input type="checkbox" name="override[variant][{{ option.product_option_id }}]" value="1" id="input-variant-option-{{ option.product_option_id }}" data-oc-toggle="switch" data-oc-target="#input-option-{{ option.product_option_id }}" class="form-check-input"{% if override.variant[option.product_option_id] %} checked{% endif %}/> <label for="input-variant-option-{{ option.product_option_id }}" class="form-check-label"></label>
                               </div>
                             </div>
                           </div>
@@ -988,7 +990,7 @@
                             <textarea name="variant[{{ option.product_option_id }}]" rows="5" placeholder="{{ option.name }}" id="input-option-{{ option.product_option_id }}" class="form-control">{{ variant[option.product_option_id] ? variant[option.product_option_id] : option.value }}</textarea>
                             <div class="input-group-text">
                               <div class="form-check form-switch">
-                                <input type="checkbox" name="override[variant][{{ option.product_option_id }}]" value="1" id="input-variant-option-{{ option.product_option_id }}" data-oc-toggle="switch" data-oc-target="#input-option-{{ option.product_option_id }}" class="form-check-input"{% if override.variant[option.product_option_id] %} checked{% endif %}/> <label for="input-variant-option-{{ option.product_option_id }}" class="custom-control-label"></label>
+                                <input type="checkbox" name="override[variant][{{ option.product_option_id }}]" value="1" id="input-variant-option-{{ option.product_option_id }}" data-oc-toggle="switch" data-oc-target="#input-option-{{ option.product_option_id }}" class="form-check-input"{% if override.variant[option.product_option_id] %} checked{% endif %}/> <label for="input-variant-option-{{ option.product_option_id }}" class="form-check-label"></label>
                               </div>
                             </div>
                           </div>
@@ -1007,7 +1009,7 @@
                             <input type="hidden" name="variant[{{ option.product_option_id }}]" value="{{ variant[option.product_option_id] ? variant[option.product_option_id] : option.value }}" id=""/>
                             <div class="form-check form-switch">
                               <input type="checkbox" name="override[variant][{{ option.product_option_id }}]" value="1" id="input-variant-option-{{ option.product_option_id }}" data-oc-toggle="switch" data-oc-target="#button-upload-{{ option.product_option_id }}" class="form-check-input"{% if override.variant[option.product_option_id] %} checked{% endif %}/>
-                              <label for="input-variant-option-{{ option.product_option_id }}" class="custom-control-label"></label>
+                              <label for="input-variant-option-{{ option.product_option_id }}" class="form-check-label"></label>
                             </div>
                           </div>
 
@@ -1025,7 +1027,7 @@
                             <div class="input-group-text"><i class="fas fa-calendar"></i></div>
                             <div class="input-group-text">
                               <div class="form-check form-switch">
-                                <input type="checkbox" name="override[variant][{{ option.product_option_id }}]" value="1" id="input-variant-option-{{ option.product_option_id }}" data-oc-toggle="switch" data-oc-target="#input-option-{{ option.product_option_id }}" class="form-check-input"{% if override.variant[option.product_option_id] %} checked{% endif %}/> <label for="input-variant-option-{{ option.product_option_id }}" class="custom-control-label"></label>
+                                <input type="checkbox" name="override[variant][{{ option.product_option_id }}]" value="1" id="input-variant-option-{{ option.product_option_id }}" data-oc-toggle="switch" data-oc-target="#input-option-{{ option.product_option_id }}" class="form-check-input"{% if override.variant[option.product_option_id] %} checked{% endif %}/> <label for="input-variant-option-{{ option.product_option_id }}" class="form-check-label"></label>
                               </div>
                             </div>
                           </div>
@@ -1043,7 +1045,7 @@
                             <div class="input-group-text"><i class="fas fa-calendar"></i></div>
                             <div class="input-group-text">
                               <div class="form-check form-switch">
-                                <input type="checkbox" name="override[variant][{{ option.product_option_id }}]" value="1" id="input-variant-option-{{ option.product_option_id }}" data-oc-toggle="switch" data-oc-target="#input-option-{{ option.product_option_id }}" class="form-check-input"{% if override.variant[option.product_option_id] %} checked{% endif %}/> <label for="input-variant-option-{{ option.product_option_id }}" class="custom-control-label"></label>
+                                <input type="checkbox" name="override[variant][{{ option.product_option_id }}]" value="1" id="input-variant-option-{{ option.product_option_id }}" data-oc-toggle="switch" data-oc-target="#input-option-{{ option.product_option_id }}" class="form-check-input"{% if override.variant[option.product_option_id] %} checked{% endif %}/> <label for="input-variant-option-{{ option.product_option_id }}" class="form-check-label"></label>
                               </div>
                             </div>
                           </div>
@@ -1061,7 +1063,7 @@
                             <div class="input-group-text"><i class="fas fa-calendar"></i></div>
                             <div class="input-group-text">
                               <div class="form-check form-switch">
-                                <input type="checkbox" name="override[variant][{{ option.product_option_id }}]" value="1" id="input-variant-option-{{ option.product_option_id }}" data-oc-toggle="switch" data-oc-target="#input-option-{{ option.product_option_id }}" class="form-check-input"{% if override.variant[option.product_option_id] %} checked{% endif %}/> <label for="input-variant-option-{{ option.product_option_id }}" class="custom-control-label"></label>
+                                <input type="checkbox" name="override[variant][{{ option.product_option_id }}]" value="1" id="input-variant-option-{{ option.product_option_id }}" data-oc-toggle="switch" data-oc-target="#input-option-{{ option.product_option_id }}" class="form-check-input"{% if override.variant[option.product_option_id] %} checked{% endif %}/> <label for="input-variant-option-{{ option.product_option_id }}" class="form-check-label"></label>
                               </div>
                             </div>
                           </div>
@@ -1085,7 +1087,7 @@
                       <td>
                         {% if master_id %}
                           <div class="form-check form-switch float-end">
-                            <input type="checkbox" name="override[product_recurring]" value="1" id="input-variant-product-recurring" data-oc-toggle="switch" data-oc-target="#product-recurring" class="form-check-input"{% if override.product_recurring %} checked{% endif %}/> <label for="input-variant-product-recurring" class="custom-control-label"></label>
+                            <input type="checkbox" name="override[product_recurring]" value="1" id="input-variant-product-recurring" data-oc-toggle="switch" data-oc-target="#product-recurring" class="form-check-input"{% if override.product_recurring %} checked{% endif %}/> <label for="input-variant-product-recurring" class="form-check-label"></label>
                           </div>
                         {% endif %}
                       </td>
@@ -1133,7 +1135,7 @@
                       <td class="text-start">{{ entry_date_end }}</td>
                       <td class="text-end">{% if master_id %}
                           <div class="form-check form-switch">
-                            <input type="checkbox" name="override[product_discount]" value="1" id="input-variant-product-discount" data-oc-toggle="switch" data-oc-target="#product-discount" class="form-check-input"{% if override.product_discount %} checked{% endif %}/> <label for="input-variant-product-discount" class="custom-control-label"></label>
+                            <input type="checkbox" name="override[product_discount]" value="1" id="input-variant-product-discount" data-oc-toggle="switch" data-oc-target="#product-discount" class="form-check-input"{% if override.product_discount %} checked{% endif %}/> <label for="input-variant-product-discount" class="form-check-label"></label>
                           </div>
                         {% endif %}</td>
                     </tr>
@@ -1189,7 +1191,7 @@
                       <td class="text-start">{{ entry_date_end }}</td>
                       <td class="text-end">{% if master_id %}
                           <div class="form-check form-switch">
-                            <input type="checkbox" name="override[product_special]" value="1" id="input-variant-special" data-oc-toggle="switch" data-oc-target="#product-special" class="form-check-input"{% if override.product_special %} checked{% endif %}/> <label for="input-variant-special" class="custom-control-label"></label>
+                            <input type="checkbox" name="override[product_special]" value="1" id="input-variant-special" data-oc-toggle="switch" data-oc-target="#product-special" class="form-check-input"{% if override.product_special %} checked{% endif %}/> <label for="input-variant-special" class="form-check-label"></label>
                           </div>
                         {% endif %}</td>
                     </tr>
@@ -1245,7 +1247,7 @@
                         {% if master_id %}
                           <div class="mx-auto w-25">
                             <div class="form-check form-switch">
-                              <input type="checkbox" name="override[product_image]" value="1" id="input-variant-image" data-oc-toggle="switch" data-oc-target="#image" class="form-check-input"{% if override.product_image %} checked{% endif %}/> <label for="input-variant-image" class="custom-control-label"></label>
+                              <input type="checkbox" name="override[product_image]" value="1" id="input-variant-image" data-oc-toggle="switch" data-oc-target="#image" class="form-check-input"{% if override.product_image %} checked{% endif %}/> <label for="input-variant-image" class="form-check-label"></label>
                             </div>
                           </div>
                         {% endif %}
@@ -1264,7 +1266,7 @@
                         <td class="text-start">{{ entry_sort_order }}</td>
                         <td class="text-end">{% if master_id %}
                             <div class="form-check form-switch">
-                              <input type="checkbox" name="override[product_image]" value="1" id="input-variant-product-image" data-oc-toggle="switch" data-oc-target="#product-image" class="form-check-input"{% if override.product_image %} checked{% endif %}/> <label for="input-variant-product-image" class="custom-control-label"></label>
+                              <input type="checkbox" name="override[product_image]" value="1" id="input-variant-product-image" data-oc-toggle="switch" data-oc-target="#product-image" class="form-check-input"{% if override.product_image %} checked{% endif %}/> <label for="input-variant-product-image" class="form-check-label"></label>
                             </div>
                           {% endif %}</td>
                       </tr>
@@ -1310,7 +1312,7 @@
                       {% if master_id %}
                         <div class="input-group-text">
                           <div class="form-check form-switch">
-                            <input type="checkbox" name="override[points]" value="1" id="input-variant-points" data-oc-toggle="switch" data-oc-target="#input-points" class="form-check-input"{% if override.points %} checked{% endif %}/> <label for="input-variant-points" class="custom-control-label"></label>
+                            <input type="checkbox" name="override[points]" value="1" id="input-variant-points" data-oc-toggle="switch" data-oc-target="#input-points" class="form-check-input"{% if override.points %} checked{% endif %}/> <label for="input-variant-points" class="form-check-label"></label>
                           </div>
                         </div>
                       {% endif %}
@@ -1329,7 +1331,7 @@
                         <td class="text-end">{{ entry_reward }}
                           {% if master_id %}
                             <div class="form-check form-switch float-end">
-                              <input type="checkbox" name="override[product_reward]" value="1" id="input-variant-product-reward" data-oc-toggle="switch" data-oc-target="#product-reward" class="form-check-input"{% if override.product_reward %} checked{% endif %}/> <label for="input-variant-product-reward" class="custom-control-label"></label>
+                              <input type="checkbox" name="override[product_reward]" value="1" id="input-variant-product-reward" data-oc-toggle="switch" data-oc-target="#product-reward" class="form-check-input"{% if override.product_reward %} checked{% endif %}/> <label for="input-variant-product-reward" class="form-check-label"></label>
                             </div>
                           {% endif %}
                         </td>
@@ -1385,7 +1387,7 @@
                       <td class="text-start">{{ entry_layout }}
                         {% if master_id %}
                           <div class="form-check form-switch float-end">
-                            <input type="checkbox" name="override[product_layout]" value="1" id="input-variant-product-layout" data-oc-toggle="switch" data-oc-target="#product-layout" class="form-check-input"{% if override.product_layout %} checked{% endif %}/> <label for="input-variant-product-layout" class="custom-control-label"></label>
+                            <input type="checkbox" name="override[product_layout]" value="1" id="input-variant-product-layout" data-oc-toggle="switch" data-oc-target="#product-layout" class="form-check-input"{% if override.product_layout %} checked{% endif %}/> <label for="input-variant-product-layout" class="form-check-label"></label>
                           </div>
                         {% endif %}
                       </td>

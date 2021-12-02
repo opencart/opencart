@@ -321,6 +321,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 
 		$data['save'] = $this->url->link('marketing/affiliate|save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('marketing/affiliate', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['upload'] = $this->url->link('tool/upload|upload', 'user_token=' . $this->session->data['user_token']);
 
 		// Affiliate
 		if (isset($this->request->get['customer_id'])) {

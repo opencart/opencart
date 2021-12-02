@@ -61,4 +61,11 @@ final class PgSQL {
 	public function __destruct() {
 		pg_close($this->link);
 	}
+
+	/**
+	 * @return bool
+	 */
+	public function isConnected() {
+		return pg_connection_status($this->link) === PGSQL_CONNECTION_OK;
+	}
 }

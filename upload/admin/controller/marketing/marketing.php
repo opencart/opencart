@@ -281,7 +281,7 @@ class Marketing extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('marketing/marketing', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		$data['save'] = $this->url->link('marketing/marketing|save', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['save'] = $this->url->link('marketing/marketing|save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('marketing/marketing', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['marketing_id'])) {

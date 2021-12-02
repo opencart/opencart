@@ -174,7 +174,7 @@ class User extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['save'] = $this->url->link('user/user|save', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['save'] = $this->url->link('user/user|save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('user/user', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['user_id'])) {

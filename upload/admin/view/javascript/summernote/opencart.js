@@ -3,12 +3,12 @@ $(document).ready(function() {
 	$('[data-toggle=\'summernote\']').each(function() {
 		var element = this;
 
-		if ($(this).attr('data-lang') && $(this).attr('data-lang')!='en') {
-			$('head').append('<script type="text/javascript" src="view/javascript/summernote/lang/summernote-' + $(this).attr('data-lang') + '-' + $(this).attr('data-lang').toUpperCase() + '.min.js"></script>');
+		if ($(this).attr('data-lang') && $(this).attr('data-lang')!='en-gb') {
+			$('head').append('<script type="text/javascript" src="view/javascript/summernote/lang/summernote-' + $(this).attr('data-lang') + '.min.js"></script>');
 		}
 
 		$(element).summernote({
-			lang: $(this).attr('data-lang') + '-' + $(this).attr('data-lang').toUpperCase(),
+			lang: $(this).attr('data-lang'),
 			disableDragAndDrop: true,
 			height: 300,
 			emptyPara: '',

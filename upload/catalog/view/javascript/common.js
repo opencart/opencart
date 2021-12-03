@@ -326,65 +326,67 @@ $(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function(e) {
 $(document).on('click', 'button[data-oc-toggle=\'upload\']', function() {
     var element = this;
 
-    var target = $(element).attr('data-oc-target');
+    if (!$(element).prop('disabled')) {
+        var target = $(element).attr('data-oc-target');
 
-    $('#form-upload').remove();
+        $('#form-upload').remove();
 
-    $('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file"/></form>');
+        $('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file"/></form>');
 
-    $('#form-upload input[name=\'file\']').trigger('click');
+        $('#form-upload input[name=\'file\']').trigger('click');
 
-    var size = $(element).attr('data-oc-size-max');
+        var size = $(element).attr('data-oc-size-max');
 
-    $('#form-upload input[name=\'file\']').on('change', function(e) {
-        if (this.files[0].size > size) {
-            alert($(element).attr('data-oc-size-error'));
+        $('#form-upload input[name=\'file\']').on('change', function(e) {
+            if (this.files[0].size > size) {
+                alert($(element).attr('data-oc-size-error'));
 
-            $(this).val('');
-        } 
-    });
+                $(this).val('');
+            }
+        });
 
-    if (typeof timer != 'undefined') {
-        clearInterval(timer);
-    }
-
-    timer = setInterval(function() {
-        if ($('#form-upload input[name=\'file\']').val() != '') {
+        if (typeof timer != 'undefined') {
             clearInterval(timer);
-
-            $.ajax({
-                url: $(element).attr('data-oc-url'),
-                type: 'post',
-                data: new FormData($('#form-upload')[0]),
-                dataType: 'json',
-                contentType: 'application/x-www-form-urlencoded',
-                beforeSend: function() {
-                    $(element).button('loading');
-                },
-                complete: function() {
-                    $(element).button('reset');
-                },
-                success: function(json) {
-                    console.log(json);
-
-                    if (json['error']) {
-                        alert(json['error']);
-                    }
-
-                    if (json['success']) {
-                        alert(json['success']);
-                    }
-
-                    if (json['code']) {
-                        $(target).attr('value', json['code']);
-                    }
-                },
-                error: function(xhr, ajaxOptions, thrownError) {
-                    console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-                }
-            });
         }
-    }, 500);
+
+        timer = setInterval(function() {
+            if ($('#form-upload input[name=\'file\']').val() != '') {
+                clearInterval(timer);
+
+                $.ajax({
+                    url: $(element).attr('data-oc-url'),
+                    type: 'post',
+                    data: new FormData($('#form-upload')[0]),
+                    dataType: 'json',
+                    contentType: 'application/x-www-form-urlencoded',
+                    beforeSend: function() {
+                        $(element).button('loading');
+                    },
+                    complete: function() {
+                        $(element).button('reset');
+                    },
+                    success: function(json) {
+                        console.log(json);
+
+                        if (json['error']) {
+                            alert(json['error']);
+                        }
+
+                        if (json['success']) {
+                            alert(json['success']);
+                        }
+
+                        if (json['code']) {
+                            $(target).attr('value', json['code']);
+                        }
+                    },
+                    error: function(xhr, ajaxOptions, thrownError) {
+                        console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                    }
+                });
+            }
+        }, 500);
+    }
 });
 
 // Chain ajax calls.

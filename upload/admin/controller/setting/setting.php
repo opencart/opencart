@@ -574,7 +574,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 		if ($this->config->get('config_file_max_size')) {
 			$data['config_file_max_size'] = $this->config->get('config_file_max_size');
 		} else {
-			$data['config_file_max_size'] = 300000;
+			$data['config_file_max_size'] = 20;
 		}
 
 		$data['config_file_ext_allowed'] = $this->config->get('config_file_ext_allowed');

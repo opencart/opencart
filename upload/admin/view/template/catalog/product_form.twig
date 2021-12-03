@@ -54,8 +54,7 @@
                           {% if master_id %}
                             <div class="input-group-text">
                               <div class="form-check form-switch">
-                                <input type="checkbox" name="override[product_description][{{ language.language_id }}][name]" value="1" id="input-variant-name-{{ language.language_id }}" data-oc-toggle="switch" data-oc-target="#input-name-{{ language.language_id }}" class="form-check-input"/>
-                                <label for="input-variant-name-{{ language.language_id }}" class="form-check-label"></label>
+                                <input type="checkbox" name="override[product_description][{{ language.language_id }}][name]" value="1" id="input-variant-name-{{ language.language_id }}" data-oc-toggle="switch" data-oc-target="#input-name-{{ language.language_id }}" class="form-check-input"/> <label for="input-variant-name-{{ language.language_id }}" class="form-check-label"></label>
                               </div>
                             </div>
                           {% endif %}
@@ -88,8 +87,7 @@
                           {% if master_id %}
                             <div class="input-group-text">
                               <div class="form-check form-switch">
-                                <input type="checkbox" name="override[product_description][{{ language.language_id }}][meta_title]" value="1" id="input-variant-meta-title-{{ language.language_id }}" data-oc-toggle="switch" data-oc-target="#input-meta-title-{{ language.language_id }}" class="form-check-input"{% if override.product_description[language.language_id].meta_title %} checked{% endif %}/>
-                                <label for="input-variant-meta-title-{{ language.language_id }}" class="form-check-label"></label>
+                                <input type="checkbox" name="override[product_description][{{ language.language_id }}][meta_title]" value="1" id="input-variant-meta-title-{{ language.language_id }}" data-oc-toggle="switch" data-oc-target="#input-meta-title-{{ language.language_id }}" class="form-check-input"{% if override.product_description[language.language_id].meta_title %} checked{% endif %}/> <label for="input-variant-meta-title-{{ language.language_id }}" class="form-check-label"></label>
                               </div>
                             </div>
                           {% endif %}
@@ -903,7 +901,7 @@
                               </div>
                             </div>
                           </div>
-                          <div id="error-option-{{ option_row }}" class="invalid-feedback"></div>
+                          <div id="error-option-{{ option.product_option_id }}" class="invalid-feedback"></div>
                         </div>
                       </div>
                     {% endif %}
@@ -932,7 +930,7 @@
                               </div>
                             </div>
                           </div>
-                          <div id="error-option-{{ option_row }}" class="invalid-feedback"></div>
+                          <div id="error-option-{{ option.product_option_id }}" class="invalid-feedback"></div>
                         </div>
                       </div>
                     {% endif %}
@@ -960,7 +958,7 @@
                               </div>
                             </div>
                           </div>
-                          <div id="error-option-{{ option_row }}" class="invalid-feedback"></div>
+                          <div id="error-option-{{ option.product_option_id }}" class="invalid-feedback"></div>
                         </div>
                       </div>
                     {% endif %}
@@ -977,7 +975,7 @@
                               </div>
                             </div>
                           </div>
-                          <div id="error-option-{{ option_row }}" class="invalid-feedback"></div>
+                          <div id="error-option-{{ option.product_option_id }}" class="invalid-feedback"></div>
                         </div>
                       </div>
                     {% endif %}
@@ -994,7 +992,7 @@
                               </div>
                             </div>
                           </div>
-                          <div id="error-option-{{ option_row }}" class="invalid-feedback"></div>
+                          <div id="error-option-{{ option.product_option_id }}" class="invalid-feedback"></div>
                         </div>
                       </div>
                     {% endif %}
@@ -1007,16 +1005,16 @@
                           <div class="input-group">
                             <button type="button" data-oc-loading-text="{{ text_loading }}" data-oc-toggle="upload" data-oc-url="{{ upload }}" data-oc-size-max="{{ config_file_max_size }}" data-oc-size-error="{{ error_upload_size }}" data-oc-target="#input-option-{{ option.product_option_id }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
 
-                            <div class="input-group-text" id="basic-addon1">
-                            <div class="form-check form-switch">
-                              <input type="checkbox" name="override[variant][{{ option.product_option_id }}]" value="1" id="input-variant-option-{{ option.product_option_id }}" data-oc-toggle="switch" data-oc-target="#button-upload-{{ option.product_option_id }}" class="form-check-input"{% if override.variant[option.product_option_id] %} checked{% endif %}/>
-                              <label for="input-variant-option-{{ option.product_option_id }}" class="form-check-label"></label>
-                            </div>
+                            <div class="input-group-text">
+                              <div class="form-check form-switch">
+                                <input type="checkbox" name="override[variant][{{ option.product_option_id }}]" value="1" id="input-variant-option-{{ option.product_option_id }}" data-oc-toggle="switch" data-oc-target="#button-upload-{{ option.product_option_id }}" class="form-check-input"{% if override.variant[option.product_option_id] %} checked{% endif %}/>
+                                <label for="input-variant-option-{{ option.product_option_id }}" class="form-check-label"></label>
+                              </div>
                             </div>
                           </div>
 
                           <input type="hidden" name="variant[{{ option.product_option_id }}]" value="{{ variant[option.product_option_id] ? variant[option.product_option_id] : option.value }}" id="input-option-{{ option.product_option_id }}"/>
-                          <div id="error-option-{{ option_row }}" class="invalid-feedback"></div>
+                          <div id="error-option-{{ option.product_option_id }}" class="invalid-feedback"></div>
                         </div>
                       </div>
                     {% endif %}
@@ -1034,7 +1032,7 @@
                               </div>
                             </div>
                           </div>
-                          <div id="error-option-{{ option_row }}" class="invalid-feedback"></div>
+                          <div id="error-option-{{ option.product_option_id }}" class="invalid-feedback"></div>
                         </div>
                       </div>
                     {% endif %}
@@ -1052,7 +1050,7 @@
                               </div>
                             </div>
                           </div>
-                          <div id="error-option-{{ option_row }}" class="invalid-feedback"></div>
+                          <div id="error-option-{{ option.product_option_id }}" class="invalid-feedback"></div>
                         </div>
                       </div>
                     {% endif %}
@@ -1070,7 +1068,7 @@
                               </div>
                             </div>
                           </div>
-                          <div id="error-option-{{ option_row }}" class="invalid-feedback"></div>
+                          <div id="error-option-{{ option.product_option_id }}" class="invalid-feedback"></div>
                         </div>
                       </div>
                     {% endif %}
@@ -1194,8 +1192,7 @@
                       <td class="text-start">{{ entry_date_end }}</td>
                       <td class="text-center">{% if master_id %}
                           <div class="form-check form-switch">
-                            <input type="checkbox" name="override[product_special]" value="1" id="input-variant-special" data-oc-toggle="switch" data-oc-target="#product-special" class="form-check-input"{% if override.product_special %} checked{% endif %}/>
-                            <label for="input-variant-special" class="form-check-label"></label>
+                            <input type="checkbox" name="override[product_special]" value="1" id="input-variant-special" data-oc-toggle="switch" data-oc-target="#product-special" class="form-check-input"{% if override.product_special %} checked{% endif %}/> <label for="input-variant-special" class="form-check-label"></label>
                           </div>
                         {% endif %}</td>
                     </tr>
@@ -1316,8 +1313,7 @@
                       {% if master_id %}
                         <div class="input-group-text">
                           <div class="form-check form-switch">
-                            <input type="checkbox" name="override[points]" value="1" id="input-variant-points" data-oc-toggle="switch" data-oc-target="#input-points" class="form-check-input"{% if override.points %} checked{% endif %}/>
-                            <label for="input-variant-points" class="form-check-label"></label>
+                            <input type="checkbox" name="override[points]" value="1" id="input-variant-points" data-oc-toggle="switch" data-oc-target="#input-points" class="form-check-input"{% if override.points %} checked{% endif %}/> <label for="input-variant-points" class="form-check-label"></label>
                           </div>
                         </div>
                       {% endif %}
@@ -1336,8 +1332,7 @@
                         <td class="text-end">{{ entry_reward }}&nbsp;&nbsp;
                           {% if master_id %}
                             <div class="form-check form-switch float-end">
-                              <input type="checkbox" name="override[product_reward]" value="1" id="input-variant-product-reward" data-oc-toggle="switch" data-oc-target="#product-reward" class="form-check-input"{% if override.product_reward %} checked{% endif %}/>
-                              <label for="input-variant-product-reward" class="form-check-label"></label>
+                              <input type="checkbox" name="override[product_reward]" value="1" id="input-variant-product-reward" data-oc-toggle="switch" data-oc-target="#product-reward" class="form-check-input"{% if override.product_reward %} checked{% endif %}/> <label for="input-variant-product-reward" class="form-check-label"></label>
                             </div>
                           {% endif %}
                         </td>
@@ -1588,8 +1583,7 @@ $('#input-related').autocomplete({
 $('#product-related').on('click', '.btn', function() {
     $(this).parent().parent().remove();
 });
-//--></script>
-<script type="text/javascript"><!--
+
 var attribute_row = {{ attribute_row }};
 
 $('#button-attribute').on('click', function() {
@@ -1644,8 +1638,7 @@ function attributeautocomplete(attribute_row) {
 $('#product-attribute tr').each(function(index, element) {
     attributeautocomplete(index);
 });
-//--></script>
-<script type="text/javascript"><!--
+
 {% if not master_id %}
 var option_row = {{ option_row }};
 
@@ -1784,8 +1777,7 @@ $('#input-option').autocomplete({
         option_row++;
     }
 });
-//--></script>
-<script type="text/javascript"><!--
+
 var option_value_row = {{ option_value_row }};
 
 $('#option').on('click', '.btn-primary', function() {
@@ -1953,8 +1945,7 @@ $('#option').on('click', '.btn-primary', function() {
     });
 });
 {% endif %}
-//--></script>
-<script type="text/javascript"><!--
+
 var discount_row = {{ discount_row }};
 
 $('#button-discount').on('click', function() {
@@ -1982,8 +1973,7 @@ $('#button-discount').on('click', function() {
 
     discount_row++;
 });
-//--></script>
-<script type="text/javascript"><!--
+
 var special_row = {{ special_row }};
 
 $('#button-special').on('click', function() {
@@ -2010,8 +2000,7 @@ $('#button-special').on('click', function() {
 
     special_row++;
 });
-//--></script>
-<script type="text/javascript"><!--
+
 var image_row = {{ image_row }};
 
 $('#button-image').on('click', function() {
@@ -2031,8 +2020,7 @@ $('#button-image').on('click', function() {
 
     image_row++;
 });
-//--></script>
-<script type="text/javascript"><!--
+
 var recurring_row = {{ recurring_row }};
 
 $('#button-recurring').on('click', function() {
@@ -2083,22 +2071,8 @@ $('input[data-oc-toggle=\'switch\']').on('change', function(e) {
     console.log(target);
 
     // First we need to grab the default values
-    /*
-    $(target).each(function() {
-        // Table
-        if ($(this).is('table')) {
-            if (!$(element).prop('checked')) {
-
-                $(element).html($(this).html());
-            }
-
-            $(this).prop('disabled', !$(element).prop('checked'));
-       }
-    });
-    */
-
     // Now we need to enable or disable any fields in the targets
-    $.merge($(target), $(target).find('input, textarea, select, button')).not('[data-oc-toggle=\'switch\']').each(function() {
+    $.merge($(target), $(target).find('input, textarea, select, button')).not('[data-oc-toggle=\'switch\']').each(function(i, elem) {
         // Text Textarea
         if ($(this).is('input[type=\'text\'], textarea')) {
             $(this).prop('readonly', !$(element).prop('checked'));
@@ -2133,11 +2107,15 @@ $('input[data-oc-toggle=\'switch\']').on('change', function(e) {
             if (!$(element).prop('checked')) {
                 $(this).addClass('.disabled');
 
-                $(this).attr('readonly', 'readonly');
+                $(this).prop('readonly', true);
+
+              //  $(this).attr('readonly', 'readonly');
             } else {
                 $(this).removeClass('disabled');
 
-                $(this).removeAttr('readonly');
+                $(this).prop('readonly', false);
+
+               // $(this).removeAttr('readonly');
             }
 
             $(this).find('option').not(':selected').prop('disabled', !$(element).prop('checked'));
@@ -2145,7 +2123,18 @@ $('input[data-oc-toggle=\'switch\']').on('change', function(e) {
 
         // Button
         if ($(this).is('button')) {
-            $(this).prop('disabled', !$(element).prop('checked'));
+
+
+
+            var test = $(element).prop('checked');
+
+             console.log(test);
+
+            if (!test) {
+                $(this).prop('disabled', true);
+            } else {
+                $(this).prop('disabled', false);
+            }
         }
     });
 });

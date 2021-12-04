@@ -241,11 +241,11 @@ $(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function(e) {
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success"><i class="fas fa-exclamation-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                // Refreshv
+                // Refresh
                 var url = $(form).attr('data-oc-load');
                 var target = $(form).attr('data-oc-target');
 
-                if (url !== typeof undefined && target !== typeof undefined) {
+                if (url !== undefined && target !== undefined) {
                    $(target).load(url);
                 }
 
@@ -264,15 +264,13 @@ $(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function(e) {
 });
 
 // Upload
-$(document).on('click', 'button[data-oc-toggle=\'upload\']', function() {
+$(document).on('click', '[data-oc-toggle=\'upload\']', function() {
     var element = this;
 
-    if ($(element).prop('disabled') == false) {
-        var target = $(element).attr('data-oc-target');
-
+    if (!$(element).prop('disabled')) {
         $('#form-upload').remove();
 
-        $('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file"/></form>');
+        $('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" value=""/></form>');
 
         $('#form-upload input[name=\'file\']').trigger('click');
 
@@ -290,16 +288,18 @@ $(document).on('click', 'button[data-oc-toggle=\'upload\']', function() {
             clearInterval(timer);
         }
 
-        timer = setInterval(function() {
+       var timer = setInterval(function() {
             if ($('#form-upload input[name=\'file\']').val() != '') {
-                clearInterval(timer);
+               clearInterval(timer);
 
                 $.ajax({
                     url: $(element).attr('data-oc-url'),
                     type: 'post',
                     data: new FormData($('#form-upload')[0]),
                     dataType: 'json',
-                    contentType: 'application/x-www-form-urlencoded',
+                    cache: false,
+                    contentType: false,
+                    processData: false,
                     beforeSend: function() {
                         $(element).button('loading');
                     },
@@ -318,7 +318,7 @@ $(document).on('click', 'button[data-oc-toggle=\'upload\']', function() {
                         }
 
                         if (json['code']) {
-                            $(target).attr('value', json['code']);
+                            $($(element).attr('data-oc-target')).attr('value', json['code']);
                         }
                     },
                     error: function(xhr, ajaxOptions, thrownError) {

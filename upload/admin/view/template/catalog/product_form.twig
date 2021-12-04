@@ -1267,7 +1267,8 @@
                         <td class="text-start">{{ entry_sort_order }}</td>
                         <td class="text-end">{% if master_id %}
                             <div class="form-check form-switch">
-                              <input type="checkbox" name="override[product_image]" value="1" id="input-variant-product-image" data-oc-toggle="switch" data-oc-target="#product-image" class="form-check-input"{% if override.product_image %} checked{% endif %}/> <label for="input-variant-product-image" class="form-check-label"></label>
+                              <input type="checkbox" name="override[product_image]" value="1" id="input-variant-product-image" data-oc-toggle="switch" data-oc-target="#product-image" class="form-check-input"{% if override.product_image %} checked{% endif %}/>
+                              <label for="input-variant-product-image" class="form-check-label"></label>
                             </div>
                           {% endif %}</td>
                       </tr>
@@ -1275,18 +1276,19 @@
                     <tbody>
                       {% set image_row = 0 %}
                       {% for product_image in product_images %}
-                        <tr id="image-row-{{ image_row }}">
+                        <tr id="product-image-row-{{ image_row }}">
                           <td>
                             <div class="card image">
-                              <img src="{{ product_image.thumb }}" alt="" title="" id="thumb-image-{{ image_row }}" data-oc-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="product_image[{{ image_row }}][image]" value="{{ product_image.image }}" id="input-image-{{ image_row }}"/>
+                              <img src="{{ product_image.thumb }}" alt="" title="" id="product-image-{{ image_row }}" data-oc-placeholder="{{ placeholder }}" class="card-img-top"/>
+                              <input type="hidden" name="product_image[{{ image_row }}][image]" value="{{ product_image.image }}" id="input-product-image-{{ image_row }}"/>
                               <div class="card-body">
-                                <button type="button" data-oc-toggle="image" data-oc-target="#input-image-{{ image_row }}" data-oc-thumb="#thumb-image-{{ image_row }}" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>
-                                <button type="button" data-oc-toggle="clear" data-oc-target="#input-image-{{ image_row }}" data-oc-thumb="#thumb-image-{{ image_row }}" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>
+                                <button type="button" data-oc-toggle="image" data-oc-target="#input-product-image-{{ image_row }}" data-oc-thumb="#product-image-{{ image_row }}" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>
+                                <button type="button" data-oc-toggle="clear" data-oc-target="#input-product-image-{{ image_row }}" data-oc-thumb="#product-image-{{ image_row }}" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>
                               </div>
                             </div>
                           </td>
                           <td class="text-start"><input type="text" name="product_image[{{ image_row }}][sort_order]" value="{{ product_image.sort_order }}" placeholder="{{ entry_sort_order }}" class="form-control"/></td>
-                          <td class="text-end"><button type="button" onclick="$('#image-row-{{ image_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
+                          <td class="text-end"><button type="button" onclick="$('#product-image-row-{{ image_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
                         </tr>
                         {% set image_row = image_row + 1 %}
                       {% endfor %}
@@ -2004,16 +2006,16 @@ $('#button-special').on('click', function() {
 var image_row = {{ image_row }};
 
 $('#button-image').on('click', function() {
-    html = '<tr id="image-row-' + image_row + '">';
+    html = '<tr id="product-image-row-' + image_row + '">';
     html += '  <td><div class="card image">';
-    html += '    <img src="{{ placeholder }}" alt="" title="" id="thumb-image-' + image_row + '" data-oc-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="product_image[' + image_row + '][image]" value="" id="input-image-' + image_row + '"/>';
+    html += '    <img src="{{ placeholder }}" alt="" title="" id="thumb-image-' + image_row + '" data-oc-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="product_image[' + image_row + '][image]" value="" id="input-product-image-' + image_row + '"/>';
     html += '    <div class="card-body">';
-    html += '      <button type="button" data-oc-toggle="image" data-oc-target="#input-image-' + image_row + '" data-oc-thumb="#thumb-image-' + image_row + '" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>';
-    html += '      <button type="button" data-oc-toggle="clear" data-oc-target="#input-image-' + image_row + '" data-oc-thumb="#thumb-image-' + image_row + '" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>';
+    html += '      <button type="button" data-oc-toggle="image" data-oc-target="#input-product-image-' + image_row + '" data-oc-thumb="#thumb-image-' + image_row + '" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>';
+    html += '      <button type="button" data-oc-toggle="clear" data-oc-target="#input-product-image-' + image_row + '" data-oc-thumb="#thumb-image-' + image_row + '" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>';
     html += '    </div>';
     html += '  </div></td>';
     html += '  <td class="text-start"><input type="text" name="product_image[' + image_row + '][sort_order]" value="0" placeholder="{{ entry_sort_order }}" class="form-control"/></td>';
-    html += '  <td class="text-end"><button type="button" onclick="$(\'#image-row-' + image_row + '\').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
+    html += '  <td class="text-end"><button type="button" onclick="$(\'#product-image-row-' + image_row + '\').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
     html += '</tr>';
 
     $('#product-image').append(html);

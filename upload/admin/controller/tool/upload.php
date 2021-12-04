@@ -290,7 +290,7 @@ class Upload extends \Opencart\System\Engine\Controller {
 	}
 
 	public function upload(): void {
-		$this->load->language('sale/order');
+		$this->load->language('tool/upload');
 
 		$json = [];
 

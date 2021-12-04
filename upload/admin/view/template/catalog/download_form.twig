@@ -98,11 +98,11 @@ $('#button-upload').on('click', function() {
         }
     });
 
-    if (typeof timer != 'undefined') {
+    if (typeof timer !== 'undefined') {
         clearInterval(timer);
     }
 
-    timer = setInterval(function() {
+   var  timer = setInterval(function() {
         if ($('#form-upload input[name=\'file\']').val() != '') {
             clearInterval(timer);
 
@@ -139,6 +139,5 @@ $('#button-upload').on('click', function() {
         }
     }, 500);
 });
-//-->
-</script>
+//--></script>
 {{ footer }}

@@ -22,12 +22,12 @@ function getURLVar(key) {
     }
 }
 
-$(document).ready(function() {
+$(document).ready(function () {
     // tooltips on hover
     $('[data-toggle=\'tooltip\']').tooltip({container: 'body'});
 
     // Makes tooltips work on ajax generated content
-    $(document).ajaxStop(function() {
+    $(document).ajaxStop(function () {
         $('[data-toggle=\'tooltip\']').tooltip({container: 'body'});
     });
 
@@ -52,9 +52,9 @@ $(document).ready(function() {
     */
 });
 
-$(document).ready(function() {
+$(document).ready(function () {
     // Currency
-    $('#form-currency .dropdown-item').on('click', function(e) {
+    $('#form-currency .dropdown-item').on('click', function (e) {
         e.preventDefault();
 
         $('#form-currency input[name=\'code\']').val($(this).attr('href'));
@@ -63,7 +63,7 @@ $(document).ready(function() {
     });
 
     // Search
-    $('#search input[name=\'search\']').parent().find('button').on('click', function() {
+    $('#search input[name=\'search\']').parent().find('button').on('click', function () {
         var url = $('base').attr('href') + 'index.php?route=product/search&language=' + $(this).attr('data-lang');
 
         var value = $('header #search input[name=\'search\']').val();
@@ -75,14 +75,14 @@ $(document).ready(function() {
         location = url;
     });
 
-    $('#search input[name=\'search\']').on('keydown', function(e) {
+    $('#search input[name=\'search\']').on('keydown', function (e) {
         if (e.keyCode == 13) {
             $('header #search input[name=\'search\']').parent().find('button').trigger('click');
         }
     });
 
     // Menu
-    $('#menu .dropdown-menu').each(function() {
+    $('#menu .dropdown-menu').each(function () {
         var menu = $('#menu').offset();
         var dropdown = $(this).parent().offset();
 
@@ -94,7 +94,7 @@ $(document).ready(function() {
     });
 
     // Product List
-    $('#list-view').click(function() {
+    $('#list-view').click(function () {
         $('#content .product-grid > .clearfix').remove();
 
         $('#content .row > .product-grid').attr('class', 'product-layout product-list col-12');
@@ -106,7 +106,7 @@ $(document).ready(function() {
     });
 
     // Product Grid
-    $('#grid-view').click(function() {
+    $('#grid-view').click(function () {
         // What a shame bootstrap does not take into account dynamically loaded columns
         if (cols == 2) {
             $('#content .product-list').attr('class', 'product-layout product-grid');
@@ -131,7 +131,7 @@ $(document).ready(function() {
     }
 
     /* Agree to Terms */
-    $('body').on('click', '.modal-link', function(e) {
+    $('body').on('click', '.modal-link', function (e) {
         e.preventDefault();
 
         var element = this;
@@ -141,7 +141,7 @@ $(document).ready(function() {
         $.ajax({
             url: $(element).attr('href'),
             dataType: 'html',
-            success: function(html) {
+            success: function (html) {
                 $('body').append(html);
 
                 $('#modal-information').modal('show');
@@ -150,27 +150,27 @@ $(document).ready(function() {
     });
 
     // Cookie Policy
-    $('#cookie button').on('click', function() {
+    $('#cookie button').on('click', function () {
         var element = this;
 
         $.ajax({
             url: $(this).val(),
             type: 'get',
             dataType: 'json',
-            beforeSend: function() {
+            beforeSend: function () {
                 $(element).button('loading');
             },
-            complete: function() {
+            complete: function () {
                 $(element).button('reset');
             },
-            success: function(json) {
+            success: function (json) {
                 if (json['success']) {
-                    $('#cookie').fadeOut(400, function() {
+                    $('#cookie').fadeOut(400, function () {
                         $('#cookie').remove();
                     });
                 }
             },
-            error: function(xhr, ajaxOptions, thrownError) {
+            error: function (xhr, ajaxOptions, thrownError) {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });
@@ -180,33 +180,33 @@ $(document).ready(function() {
 // Cart add remove functions
 var voucher = [];
 
-voucher.remove = function(key) {
+voucher.remove = function (key) {
     $.ajax({
         url: 'index.php?route=checkout/cart|remove',
         type: 'post',
         data: 'key=' + key,
         dataType: 'json',
-        beforeSend: function() {
+        beforeSend: function () {
             $('#cart > button').button('loading');
         },
-        complete: function() {
+        complete: function () {
             $('#cart > button').button('reset');
         },
-        success: function(json) {
+        success: function (json) {
             if (getURLVar('route') == 'checkout/cart' || getURLVar('route') == 'checkout/checkout') {
                 location = 'index.php?route=checkout/cart';
             } else {
                 $('#cart').parent().load('index.php?route=common/cart|info');
             }
         },
-        error: function(xhr, ajaxOptions, thrownError) {
+        error: function (xhr, ajaxOptions, thrownError) {
             alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 };
 
 // Forms
-$(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function(e) {
+$(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function (e) {
     e.preventDefault();
 
     var element = this;
@@ -258,13 +258,13 @@ $(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function(e) {
         cache: false,
         contentType: enctype,
         processData: false,
-        beforeSend: function() {
+        beforeSend: function () {
             $(element).button('loading');
         },
-        complete: function() {
+        complete: function () {
             $(element).button('reset');
         },
-        success: function(json) {
+        success: function (json) {
             $(form).find('.is-invalid').removeClass('is-invalid');
             $(form).find('.invalid-feedback').removeClass('d-block');
 
@@ -316,28 +316,26 @@ $(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function(e) {
                 $(form).find('[name=\'' + key + '\']').val(json[key]);
             }
         },
-        error: function(xhr, ajaxOptions, thrownError) {
+        error: function (xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 });
 
 // Upload
-$(document).on('click', 'button[data-oc-toggle=\'upload\']', function() {
+$(document).on('click', 'button[data-oc-toggle=\'upload\']', function () {
     var element = this;
 
     if (!$(element).prop('disabled')) {
-        var target = $(element).attr('data-oc-target');
-
         $('#form-upload').remove();
 
-        $('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file"/></form>');
+        $('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" value=""/></form>');
 
         $('#form-upload input[name=\'file\']').trigger('click');
 
         var size = $(element).attr('data-oc-size-max');
 
-        $('#form-upload input[name=\'file\']').on('change', function(e) {
+        $('#form-upload input[name=\'file\']').on('change', function (e) {
             if (this.files[0].size > size) {
                 alert($(element).attr('data-oc-size-error'));
 
@@ -345,11 +343,11 @@ $(document).on('click', 'button[data-oc-toggle=\'upload\']', function() {
             }
         });
 
-        if (typeof timer != 'undefined') {
+        if (typeof timer !== 'undefined') {
             clearInterval(timer);
         }
 
-        timer = setInterval(function() {
+        var timer = setInterval(function () {
             if ($('#form-upload input[name=\'file\']').val() != '') {
                 clearInterval(timer);
 
@@ -358,14 +356,16 @@ $(document).on('click', 'button[data-oc-toggle=\'upload\']', function() {
                     type: 'post',
                     data: new FormData($('#form-upload')[0]),
                     dataType: 'json',
-                    contentType: 'application/x-www-form-urlencoded',
-                    beforeSend: function() {
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    beforeSend: function () {
                         $(element).button('loading');
                     },
-                    complete: function() {
+                    complete: function () {
                         $(element).button('reset');
                     },
-                    success: function(json) {
+                    success: function (json) {
                         console.log(json);
 
                         if (json['error']) {
@@ -377,10 +377,10 @@ $(document).on('click', 'button[data-oc-toggle=\'upload\']', function() {
                         }
 
                         if (json['code']) {
-                            $(target).attr('value', json['code']);
+                            $($(element).attr('data-oc-target')).attr('value', json['code']);
                         }
                     },
-                    error: function(xhr, ajaxOptions, thrownError) {
+                    error: function (xhr, ajaxOptions, thrownError) {
                         console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
                     }
                 });
@@ -408,7 +408,7 @@ class Chain {
         if (this.data.length) {
             this.start = true;
 
-            (this.data.shift())().done(function() {
+            (this.data.shift())().done(function () {
                 chain.execute();
             });
         } else {
@@ -420,9 +420,9 @@ class Chain {
 var chain = new Chain();
 
 // Autocomplete
-(function($) {
-    $.fn.autocomplete = function(option) {
-        return this.each(function() {
+(function ($) {
+    $.fn.autocomplete = function (option) {
+        return this.each(function () {
             var $this = $(this);
             var $dropdown = $('<div class="dropdown-menu"/>');
 
@@ -441,27 +441,27 @@ var chain = new Chain();
             $this.active = false;
 
             // Focus
-            $this.on('focus', function() {
+            $this.on('focus', function () {
                 this.request();
             });
 
             // Blur
-            $this.on('blur', function(e) {
+            $this.on('blur', function (e) {
                 if (!$this.active) {
                     this.hide();
                 }
             });
 
-            $this.parent().on('mouseover', function(e) {
+            $this.parent().on('mouseover', function (e) {
                 $this.active = true;
             });
 
-            $this.parent().on('mouseout', function(e) {
+            $this.parent().on('mouseout', function (e) {
                 $this.active = false;
             });
 
             // Keydown
-            $this.on('keydown', function(event) {
+            $this.on('keydown', function (event) {
                 switch (event.keyCode) {
                     case 27: // escape
                         this.hide();
@@ -473,7 +473,7 @@ var chain = new Chain();
             });
 
             // Click
-            this.click = function(event) {
+            this.click = function (event) {
                 event.preventDefault();
 
                 var value = $(event.target).attr('href');
@@ -486,26 +486,26 @@ var chain = new Chain();
             }
 
             // Show
-            this.show = function() {
+            this.show = function () {
                 $dropdown.addClass('show');
             }
 
             // Hide
-            this.hide = function() {
+            this.hide = function () {
                 $dropdown.removeClass('show');
             }
 
             // Request
-            this.request = function() {
+            this.request = function () {
                 clearTimeout(this.timer);
 
-                this.timer = setTimeout(function(object) {
+                this.timer = setTimeout(function (object) {
                     object.source($(object).val(), $.proxy(object.response, object));
                 }, 50, this);
             }
 
             // Response
-            this.response = function(json) {
+            this.response = function (json) {
                 var html = '';
                 var category = {};
                 var name;

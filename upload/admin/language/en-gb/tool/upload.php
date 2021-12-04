@@ -22,3 +22,6 @@ $_['entry_date_added']   = 'Date Added';
 $_['error_permission']   = 'Warning: You do not have permission to modify uploads!';
 $_['error_not_found']    = 'Error: Could not find file %s !';
 $_['error_headers_sent'] = 'Error: Headers already sent out!';
+$_['error_upload']       = 'File could not be uploaded!';
+$_['error_filename']     = 'Filename must be between 3 and 128 characters!';
+$_['error_filetype']     = 'Invalid file type!';

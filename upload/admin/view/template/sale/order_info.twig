@@ -1240,7 +1240,7 @@
                 <div class="mb-3">
                   <label for="input-product" class="form-label">{{ entry_product }}</label>
                   <input type="text" name="product" value="" placeholder="{{ entry_product }}" id="input-product" class="form-control"/>
-                  <input type="hidden" name="product_id" value=""/>
+                  <input type="hidden" name="product_id" value="" id="input-product-id"/>
                 </div>
                 <div class="mb-3">
                   <label for="input-quantity" class="form-label">{{ entry_quantity }}</label>
@@ -2510,8 +2510,13 @@ $('#form-product-add').on('submit', function(e) {
 
             if (json['success']) {
                 $('#form-product-add').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-            }
 
+                var products = json['products'];
+                var vouchers = json['vouchers'];
+                var totals = json['totals'];
+
+                cart_info();
+            }
         },
         error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -2601,17 +2606,12 @@ $('#form-voucher-add').on('submit', function(e) {
 });
 
 // Refresh all products, vouchers and totals
-$('#button-refresh').on('click', function() {
-    $.ajax({
-        url: 'index.php?route=sale/order|call/cart|products&user_token={{ user_token }}',
-        dataType: 'json',
-        beforeSend: function() {
-            $('#button-refresh').button('loading');
-        },
-        complete: function() {
-            $('#button-refresh').button('reset');
-        },
-        success: function(json) {
+function refresh() {
+    var products = json['products'];
+    var vouchers = json['vouchers'];
+    var totals = json['totals'];
+
+
             $('.alert-dismissible').remove();
 
             // Check for errors
@@ -2756,10 +2756,7 @@ $('#button-refresh').on('click', function() {
             }
 
             $('#total').html(html);
-        },
-        error: function(xhr, ajaxOptions, thrownError) {
-            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-        }
+
     });
 });
 
@@ -2853,7 +2850,5 @@ $('#button-history').on('click', function(e) {
         }
     });
 });
-//-->
-
-</script>
+//--></script>
 {{ footer }}

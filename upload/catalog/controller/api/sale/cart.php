@@ -6,8 +6,8 @@ class Cart extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		if (isset($this->request->get['product_id'])) {
-			$product_id = (int)$this->request->get['product_id'];
+		if (isset($this->request->post['product_id'])) {
+			$product_id = (int)$this->request->post['product_id'];
 		} else {
 			$product_id = 0;
 		}
@@ -59,6 +59,8 @@ class Cart extends \Opencart\System\Engine\Controller {
 			$json['products'] = $this->model_checkout_cart->getProducts();
 			$json['vouchers'] = $this->model_checkout_cart->getVouchers();
 			$json['totals'] = $totals;
+
+			$json['shipping_required'] = $this->cart->hasShipping();
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -102,6 +104,8 @@ class Cart extends \Opencart\System\Engine\Controller {
 		$json['vouchers'] = $this->model_checkout_cart->getVouchers();
 		$json['totals'] = $totals;
 
+		$json['shipping_required'] = $this->cart->hasShipping();
+
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
@@ -138,6 +142,8 @@ class Cart extends \Opencart\System\Engine\Controller {
 		$json['vouchers'] = $this->model_checkout_cart->getVouchers();
 		$json['totals'] = $totals;
 
+		$json['shipping_required'] = $this->cart->hasShipping();
+
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
@@ -163,6 +169,8 @@ class Cart extends \Opencart\System\Engine\Controller {
 		$json['products'] = $this->model_checkout_cart->getProducts();
 		$json['vouchers'] = $this->model_checkout_cart->getVouchers();
 		$json['totals'] = $totals;
+
+		$json['shipping_required'] = $this->cart->hasShipping();
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

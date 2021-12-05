@@ -96,6 +96,8 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 			$json['products'] = $this->model_checkout_cart->getProducts();
 			$json['vouchers'] = $this->model_checkout_cart->getVouchers();
 			$json['totals'] = $totals;
+
+			$json['shipping_required'] = $this->cart->hasShipping();
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

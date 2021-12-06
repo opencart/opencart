@@ -483,6 +483,24 @@ class Order extends \Opencart\System\Engine\Controller {
 		$data['customer'] = $this->url->link('customer/customer|form', 'user_token=' . $this->session->data['user_token']);
 		$data['customer_add'] = $this->url->link('customer/customer|form', 'user_token=' . $this->session->data['user_token']);
 
+		// API
+		$data['customer'] = $this->url->link('sale/order|call', 'user_token=' . $this->session->data['user_token'] . '&action=customer');
+		$data['store'] = $this->url->link('sale/order|call', 'user_token=' . $this->session->data['user_token'] . '&action=store');
+		$data['language'] = $this->url->link('sale/order|call', 'user_token=' . $this->session->data['user_token'] . '&action=language');
+		$data['currency'] = $this->url->link('sale/order|call', 'user_token=' . $this->session->data['user_token'] . '&action=currency');
+		$data['shipping_method'] = $this->url->link('sale/order|call', 'user_token=' . $this->session->data['user_token'] . '&action=shipping_method|save');
+		$data['payment_method'] = $this->url->link('sale/order|call', 'user_token=' . $this->session->data['user_token'] . '&action=payment_method|save');
+		$data['coupon'] = $this->url->link('sale/order|call', 'user_token=' . $this->session->data['user_token'] . '&action=coupon');
+		$data['voucher'] = $this->url->link('sale/order|call', 'user_token=' . $this->session->data['user_token'] . '&action=voucher');
+		$data['reward'] = $this->url->link('sale/order|call', 'user_token=' . $this->session->data['user_token'] . '&action=reward');
+		$data['affiliate'] = $this->url->link('sale/order|call', 'user_token=' . $this->session->data['user_token'] . '&action=affiliate');
+		$data['payment_address'] = $this->url->link('sale/order|call', 'user_token=' . $this->session->data['user_token'] . '&action=payment_address');
+		$data['shipping_address'] = $this->url->link('sale/order|call', 'user_token=' . $this->session->data['user_token'] . '&action=shipping_address');
+		$data['product_add'] = $this->url->link('sale/order|call', 'user_token=' . $this->session->data['user_token'] . '&action=cart|add');
+		$data['product_remove'] = $this->url->link('sale/order|call', 'user_token=' . $this->session->data['user_token'] . '&action=cart|remove');
+		$data['voucher_add'] = $this->url->link('sale/order|call', 'user_token=' . $this->session->data['user_token'] . '&action=voucher|add');
+		$data['voucher_remove'] = $this->url->link('sale/order|call', 'user_token=' . $this->session->data['user_token'] . '&action=voucher|remove');
+
 		if ($order_id) {
 			$this->load->model('sale/order');
 

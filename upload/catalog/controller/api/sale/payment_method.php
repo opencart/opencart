@@ -84,20 +84,6 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 			$this->session->data['payment_method'] = $this->session->data['payment_methods'][$this->request->post['payment_method']];
 
 			$json['success'] = $this->language->get('text_success');
-
-			$totals = [];
-			$taxes = $this->cart->getTaxes();
-			$total = 0;
-
-			$this->load->model('checkout/cart');
-
-			($this->model_checkout_cart->getTotals)($totals, $taxes, $total);
-
-			$json['products'] = $this->model_checkout_cart->getProducts();
-			$json['vouchers'] = $this->model_checkout_cart->getVouchers();
-			$json['totals'] = $totals;
-
-			$json['shipping_required'] = $this->cart->hasShipping();
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

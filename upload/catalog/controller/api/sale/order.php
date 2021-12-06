@@ -124,12 +124,9 @@ class Order extends \Opencart\System\Engine\Controller {
 			}
 
 
+			//$this->session->data['language'] = $order_info['language_code'];
 
-
-			$this->session->data['language'] = $order_info['language_code'];
-
-
-			$this->session->data['currency'] = $order_info['currency_code'];
+			//$this->session->data['currency'] = $order_info['currency_code'];
 
 			$json['success'] = $this->language->get('text_success');
 		}

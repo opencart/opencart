@@ -28,7 +28,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$customer_info = $this->model_account_customer->getCustomer($this->request->post['customer_id']);
 
 			if (!$customer_info) {
-				$json['error'] = $this->language->get('error_customer_not_found');
+				$json['error'] = $this->language->get('error_customer');
 			}
 		}
 
@@ -86,7 +86,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 				'lastname'          => $this->request->post['lastname'],
 				'email'             => $this->request->post['email'],
 				'telephone'         => $this->request->post['telephone'],
-				'custom_field'      => $this->request->post['custom_field']
+				'custom_field'      => isset($this->request->post['custom_field']) ? $this->request->post['custom_field'] : []
 			];
 
 			$json['success'] = $this->language->get('text_success');

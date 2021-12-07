@@ -122,11 +122,60 @@ class Cart extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('checkout/cart');
 
-		$this->model_checkout_cart->getTotals($totals, $taxes, $total);
+		($this->model_checkout_cart->getTotals)($totals, $taxes, $total);
 
-		$json['products'] = $this->model_checkout_cart->getProducts();
-		$json['vouchers'] = $this->model_checkout_cart->getVouchers();
-		$json['totals'] = $totals;
+		$json['products'] = [];
+
+		$products = $this->model_checkout_cart->getProducts();
+
+		foreach ($products as $product) {
+			$recurring = '';
+
+			if ($product['recurring']) {
+				if ($product['recurring']['trial']) {
+					$recurring = sprintf($this->language->get('text_trial_description'), $this->currency->format($this->tax->calculate($product['recurring']['trial_price'] * $product['quantity'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']), $product['recurring']['trial_cycle'], $frequencies[$product['recurring']['trial_frequency']], $product['recurring']['trial_duration']) . ' ';
+				}
+
+				if ($product['recurring']['duration']) {
+					$recurring .= sprintf($this->language->get('text_payment_description'), $this->currency->format($this->tax->calculate($product['recurring']['price'] * $product['quantity'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']), $product['recurring']['cycle'], $frequencies[$product['recurring']['frequency']], $product['recurring']['duration']);
+				} else {
+					$recurring .= sprintf($this->language->get('text_payment_cancel'), $this->currency->format($this->tax->calculate($product['recurring']['price'] * $product['quantity'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']), $product['recurring']['cycle'], $frequencies[$product['recurring']['frequency']], $product['recurring']['duration']);
+				}
+			}
+
+			$json['products'][] = [
+				'cart_id'    => $product['cart_id'],
+				'product_id' => $product['product_id'],
+				'name'       => $product['name'],
+				'model'      => $product['model'],
+				'option'     => $product['option'],
+				'recurring'  => $recurring,
+				'quantity'   => $product['quantity'],
+				'price'      => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']),
+				'total'      => $this->currency->format($this->tax->calculate($product['price'] * $product['quantity'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']),
+			];
+		}
+
+		$json['vouchers'] = [];
+
+		$vouchers = $this->model_checkout_cart->getVouchers();
+
+		foreach ($vouchers as $voucher) {
+			$json['vouchers'][] = [
+				'key'         => $product['key'],
+				'description' => $voucher['description'],
+				'amount'      => $this->currency->format($voucher['amount'], $this->session->data['currency'])
+			];
+		}
+
+		$json['totals'] = [];
+
+		foreach ($totals as $total) {
+			$json['totals'][] = [
+				'title' => $total['title'],
+				'text'  => $this->currency->format($total['value'], $this->session->data['currency'])
+			];
+		}
 
 		$json['shipping_required'] = $this->cart->hasShipping();
 

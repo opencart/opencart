@@ -3,12 +3,9 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="float-end">
-
-        <button type="button" id="button-refresh" data-bs-toggle="tooltip" title="{{ button_refresh }}" class="btn btn-warning"><i class="fas fa-sync"></i></button>
-
-        <a href="{{ invoice }}" target="_blank" data-bs-toggle="tooltip" title="{{ button_invoice_print }}" class="btn btn-info{% if not order_id %} disabled{% endif %}"><i class="fas fa-print"></i></a>
-        <a href="{{ shipping }}" target="_blank" data-bs-toggle="tooltip" title="{{ button_shipping_print }}" class="btn btn-info{% if not order_id %} disabled{% endif %}"><i class="fas fa-truck"></i></a>
-        <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a>
+        <button type="button" id="button-save" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
+        <button type="button" id="button-refresh" data-bs-toggle="tooltip" title="{{ button_refresh }}" class="btn btn-outline-primary"><i class="fas fa-sync"></i></button>
+        <a href="{{ invoice }}" target="_blank" data-bs-toggle="tooltip" title="{{ button_invoice_print }}" class="btn btn-info{% if not order_id %} disabled{% endif %}"><i class="fas fa-print"></i></a> <a href="{{ shipping }}" target="_blank" data-bs-toggle="tooltip" title="{{ button_shipping_print }}" class="btn btn-info{% if not order_id %} disabled{% endif %}"><i class="fas fa-truck"></i></a> <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a>
       </div>
       <h1>{{ heading_title }}</h1>
       <ol class="breadcrumb">
@@ -279,7 +276,7 @@
           </div>
         </div>
 
-        <table id="cart" class="table table-bordered">
+        <table id="order" class="table table-bordered">
           <thead>
             <tr>
               <td class="text-start">{{ column_product }}</td>
@@ -290,73 +287,18 @@
               <td class="text-end" style="width: 1px;">{{ column_action }}</td>
             </tr>
           </thead>
-          <tbody id="order-products">
-            {% if order_products or order_vouchers %}
-
-              {% set product_row = 0 %}
-              {% for order_product in order_products %}
-                <tr>
-                  <td class="text-start"><a href="{{ order_product.href }}">{{ order_product.name }}</a>
-                    <br/>
-                    {% for option in order_product.option %}
-                      {% if option.type != 'file' %}
-                        &nbsp;
-                        <small> - {{ option.name }}: {{ option.value }}</small>
-                      {% else %}
-                        &nbsp;
-                        <small> - {{ option.name }}: <a href="{{ option.href }}">{{ option.value }}</a></small>
-                      {% endif %}
-                      <br/>
-                    {% endfor %}
-                  </td>
-                  <td class="text-start">{{ order_product.model }}</td>
-                  <td class="text-end">{{ order_product.quantity }}</td>
-                  <td class="text-end">{{ order_product.price }}</td>
-                  <td class="text-end">{{ order_product.total }}</td>
-                  <td class="text-end">
-                    <form action="">
-                      <button type="submit" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>
-                      <input type="hidden" name="product_id" value="{{ order_product.product_id }}"/>
-                    </form>
-                  </td>
-                </tr>
-                {% set product_row = product_row + 1 %}
-              {% endfor %}
-
-              {% set voucher_row = 0 %}
-              {% for order_voucher in order_vouchers %}
-                <tr>
-                  <td class="text-start"><a href="{{ order_voucher.href }}">{{ order_voucher.description }}</a></td>
-                  <td class="text-start"></td>
-                  <td class="text-end">1</td>
-                  <td class="text-end">{{ order_voucher.amount }}</td>
-                  <td class="text-end">{{ order_voucher.amount }}</td>
-                  <td class="text-end"><button type="button" value="{{ order_voucher.voucher_id }}" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
-                </tr>
-                {% set voucher_row = voucher_row + 1 %}
-              {% endfor %}
-
-            {% else %}
-
-              <tr>
-                <td class="text-center" colspan="6">{{ text_no_results }}</td>
-              </tr>
-
-            {% endif %}
-
+          <tbody id="order-items">
+            <tr>
+              <td class="text-center" colspan="6">{{ text_no_results }}</td>
+            </tr>
+          </tbody>
+          <tbody>
             <tr>
               <td colspan="5"></td>
               <td class="text-end"><button type="button" data-bs-toggle="modal" data-bs-target="#modal-cart" class="btn btn-primary"><i class="fas fa-plus-circle"></i></button></td>
             </tr>
-
-            {% for order_total in order_totals %}
-              <tr>
-                <td colspan="5" class="text-end">{{ order_total.title }}</td>
-                <td class="text-end">{{ order_total.text }}</td>
-              </tr>
-            {% endfor %}
-
           </tbody>
+          <tfoot id="order-totals"></tfoot>
         </table>
 
         {% if comment %}
@@ -377,6 +319,7 @@
 
       </div>
     </div>
+
     <div class="card mb-3">
       <div class="card-header"><i class="fas fa-comment"></i> {{ text_history }}</div>
       <div class="card-body">
@@ -483,7 +426,7 @@
       </div>
       <div class="modal-body">
 
-        <form id="form-customer" action="{{ customer }}" method="post" data-oc-toggle="order-edit">
+        <form id="form-customer" action="{{ customer }}" method="post">
           <div class="mb-3">
             <label for="input-customer" class="form-label">{{ entry_customer }}</label>
             <div class="input-group">
@@ -628,6 +571,7 @@
           <div class="text-end">
             <button type="submit" id="button-customer" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
           </div>
+
         </form>
       </div>
     </div>
@@ -667,6 +611,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
+
         <form id="form-language" action="{{ language }}" method="post" data-oc-toggle="order-edit">
           <div class="mb-3">
             <select name="language" id="input-language" class="form-select">
@@ -679,6 +624,7 @@
             <button type="submit" id="button-language" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
           </div>
         </form>
+
       </div>
     </div>
   </div>
@@ -692,6 +638,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
+
         <form id="form-currency" action="{{ currency }}" method="post" data-oc-toggle="order-edit">
           <div class="mb-3">
             <select name="currency" id="input-currency" class="form-select">
@@ -704,6 +651,7 @@
             <button type="submit" id="button-currency" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
           </div>
         </form>
+
       </div>
     </div>
   </div>
@@ -717,9 +665,9 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
+
         <form id="form-shipping-method" action="{{ shipping_method }}" method="post" data-oc-toggle="order-edit">
           <div class="mb-3">
-
             <div class="input-group">
               <select name="shipping_method" id="input-shipping-method" class="form-select">
                 <option value="">{{ text_select }}</option>
@@ -729,12 +677,12 @@
               </select>
               <button type="button" id="button-shipping-refresh" data-oc-loading-text="{{ text_loading }}" class="btn btn-outline-primary"><i class="fas fa-sync"></i></button>
             </div>
-
           </div>
           <div class="text-end">
             <button type="submit" id="button-shipping-method" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
           </div>
         </form>
+
       </div>
     </div>
   </div>
@@ -750,7 +698,6 @@
       <div class="modal-body">
 
         <form id="form-payment-method" action="{{ payment_method }}" method="post" data-oc-toggle="order-edit">
-
           <div class="mb-3">
             <div class="input-group">
               <select name="payment_method" id="input-payment-method" class="form-select">
@@ -762,7 +709,6 @@
               <button type="button" id="button-payment-refresh" data-oc-loading-text="{{ text_loading }}" class="btn btn-outline-primary"><i class="fas fa-sync"></i></button>
             </div>
           </div>
-
           <div class="text-end">
             <button type="submit" id="button-payment-method" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
           </div>
@@ -865,7 +811,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
-        <form id="form-payment-address" action="{{ payment_address }}" method="post" data-oc-toggle="order-edit">
+        <form id="form-payment-address" action="{{ payment_address }}" method="post">
 
           <div class="mb-3">
             <label for="input-payment-address" class="form-label">{{ entry_address }}</label> <select name="payment_address" id="input-payment-address" class="form-select">
@@ -1048,7 +994,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
-        <form id="form-shipping-address" action="{{ shipping_address }}" method="post" data-oc-toggle="order-edit">
+        <form id="form-shipping-address" action="{{ shipping_address }}" method="post">
 
           <div class="mb-3">
             <label for="input-shipping-address" class="form-label">{{ entry_address }}</label> <select name="shipping_address" id="input-shipping-address" class="form-select">
@@ -1245,13 +1191,10 @@
               <fieldset>
                 <legend>{{ text_product_add }}</legend>
                 <div class="mb-3">
-                  <label for="input-product" class="form-label">{{ entry_product }}</label>
-                  <input type="text" name="product" value="" placeholder="{{ entry_product }}" id="input-product" class="form-control"/>
-                  <input type="hidden" name="product_id" value="" id="input-product-id"/>
+                  <label for="input-product" class="form-label">{{ entry_product }}</label> <input type="text" name="product" value="" placeholder="{{ entry_product }}" id="input-product" class="form-control"/> <input type="hidden" name="product_id" value="" id="input-product-id"/>
                 </div>
                 <div class="mb-3">
-                  <label for="input-quantity" class="form-label">{{ entry_quantity }}</label>
-                  <input type="text" name="quantity" placeholder="{{ entry_quantity }}" value="1" id="input-quantity" class="form-control"/>
+                  <label for="input-quantity" class="form-label">{{ entry_quantity }}</label> <input type="text" name="quantity" placeholder="{{ entry_quantity }}" value="1" id="input-quantity" class="form-control"/>
                 </div>
               </fieldset>
               <div id="option"></div>
@@ -1266,20 +1209,16 @@
               <fieldset>
                 <legend>{{ text_voucher_add }}</legend>
                 <div class="mb-3 required">
-                  <label for="input-to-name" class="form-label">{{ entry_to_name }}</label>
-                  <input type="text" name="to_name" value="" placeholder="{{ entry_to_name }}" id="input-to-name" class="form-control"/>
+                  <label for="input-to-name" class="form-label">{{ entry_to_name }}</label> <input type="text" name="to_name" value="" placeholder="{{ entry_to_name }}" id="input-to-name" class="form-control"/>
                 </div>
                 <div class="mb-3 required">
-                  <label for="input-to-email" class="form-label">{{ entry_to_email }}</label>
-                  <input type="text" name="to_email" value="" placeholder="{{ entry_to_email }}" id="input-to-email" class="form-control"/>
+                  <label for="input-to-email" class="form-label">{{ entry_to_email }}</label> <input type="text" name="to_email" value="" placeholder="{{ entry_to_email }}" id="input-to-email" class="form-control"/>
                 </div>
                 <div class="mb-3 required">
-                  <label for="input-from-name" class="form-label">{{ entry_from_name }}</label>
-                  <input type="text" name="from_name" value="" placeholder="{{ entry_from_name }}" id="input-from-name" class="form-control"/>
+                  <label for="input-from-name" class="form-label">{{ entry_from_name }}</label> <input type="text" name="from_name" value="" placeholder="{{ entry_from_name }}" id="input-from-name" class="form-control"/>
                 </div>
                 <div class="mb-3 required">
-                  <label for="input-from-email" class="form-label">{{ entry_from_email }}</label>
-                  <input type="text" name="from_email" value="" placeholder="{{ entry_from_email }}" id="input-from-email" class="form-control"/>
+                  <label for="input-from-email" class="form-label">{{ entry_from_email }}</label> <input type="text" name="from_email" value="" placeholder="{{ entry_from_email }}" id="input-from-email" class="form-control"/>
                 </div>
                 <div class="mb-3 required">
                   <label for="input-theme" class="form-label">{{ entry_theme }}</label> <select name="voucher_theme_id" id="input-theme" class="form-select">
@@ -1289,12 +1228,10 @@
                   </select>
                 </div>
                 <div class="mb-3">
-                  <label for="input-message" class="form-label">{{ entry_message }}</label>
-                  <textarea name="message" rows="5" placeholder="{{ entry_message }}" id="input-message" class="form-control"></textarea>
+                  <label for="input-message" class="form-label">{{ entry_message }}</label> <textarea name="message" rows="5" placeholder="{{ entry_message }}" id="input-message" class="form-control"></textarea>
                 </div>
                 <div class="mb-3 required">
-                  <label for="input-amount" class="form-label">{{ entry_amount }}</label>
-                  <input type="text" name="amount" value="{{ voucher_min }}" placeholder="{{ entry_amount }}" id="input-amount" class="form-control"/>
+                  <label for="input-amount" class="form-label">{{ entry_amount }}</label> <input type="text" name="amount" value="{{ voucher_min }}" placeholder="{{ entry_amount }}" id="input-amount" class="form-control"/>
                 </div>
                 <div class="text-end">
                   <button type="submit" id="button-voucher-add" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
@@ -1466,9 +1403,6 @@ $('#input-customer-group').on('change', function () {
                     $('.custom-field-' + custom_field['custom_field_id']).addClass('required');
                 }
             }
-
-            // Refresh products, vouchers and totals
-            $('#button-refresh').trigger('click');
         },
         error: function (xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -1524,7 +1458,6 @@ $('#form-customer').on('submit', function (e) {
 
                 //$('#input-firstname').val($('#input-firstname').val() + ' ' + $('#input-lastname').val());
 
-                // Refresh products, vouchers and totals
                 $('#button-refresh').trigger('click');
             }
         },
@@ -1534,31 +1467,35 @@ $('#form-customer').on('submit', function (e) {
     });
 });
 
-$('#form-store').on('submit', function (e) {
+
+$('[data-oc-toggle=\'order-edit\']').on('submit', function (e) {
     e.preventDefault();
 
+    var form = this;
+
+    var button = e.originalEvent.submitter;
+
     $.ajax({
-        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=store',
+        url: $(form).attr('action'),
         type: 'post',
-        data: $('#form-store').serialize(),
+        data: $(form).serialize(),
         dataType: 'json',
         beforeSend: function () {
-            $('#button-store').button('loading');
+            $(button).button('loading');
         },
         complete: function () {
-            $('#button-store').button('reset');
+            $(button).button('reset');
         },
         success: function (json) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
-                $('#form-store').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $(form).prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
 
             if (json['success']) {
-                $('#form-store').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $(form).prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                // Refresh products, vouchers and totals
                 $('#button-refresh').trigger('click');
             }
         },
@@ -1568,75 +1505,7 @@ $('#form-store').on('submit', function (e) {
     });
 });
 
-// Language
-$('#form-language').on('submit', function (e) {
-    e.preventDefault();
 
-    $.ajax({
-        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=language',
-        type: 'post',
-        data: $('#form-language').serialize(),
-        dataType: 'json',
-        beforeSend: function () {
-            $('#button-language').button('loading');
-        },
-        complete: function () {
-            $('#button-language').button('reset');
-        },
-        success: function (json) {
-            $('.alert-dismissible').remove();
-
-            if (json['error']) {
-                $('#form-language').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-            }
-
-            if (json['success']) {
-                $('#form-language').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                // Refresh products, vouchers and totals
-                $('#button-refresh').trigger('click');
-            }
-        },
-        error: function (xhr, ajaxOptions, thrownError) {
-            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-        }
-    });
-});
-
-// Currency
-$('#form-currency').on('submit', function (e) {
-    e.preventDefault();
-
-    $.ajax({
-        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=currency',
-        type: 'post',
-        data: $('#form-currency').serialize(),
-        dataType: 'json',
-        beforeSend: function () {
-            $('#button-currency').button('loading');
-        },
-        complete: function () {
-            $('#button-currency').button('reset');
-        },
-        success: function (json) {
-            $('.alert-dismissible').remove();
-
-            if (json['error']) {
-                $('#form-currency').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-            }
-
-            if (json['success']) {
-                $('#form-currency').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                // Refresh products, vouchers and totals
-                $('#button-refresh').trigger('click');
-            }
-        },
-        error: function (xhr, ajaxOptions, thrownError) {
-            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-        }
-    });
-});
 
 // Shipping Method
 $('#button-shipping-refresh').on('click', function () {
@@ -1891,7 +1760,6 @@ $('#form-reward').on('submit', function (e) {
             if (json['success']) {
                 $('#form-reward').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                // Refresh products, vouchers and totals
                 $('#button-refresh').trigger('click');
             }
         },
@@ -2097,6 +1965,8 @@ $('#form-payment-address').on('submit', function (e) {
 
             if (json['success']) {
                 $('#form-payment-address').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                $('#button-refresh').trigger('click');
             }
         },
         error: function (xhr, ajaxOptions, thrownError) {
@@ -2199,9 +2069,6 @@ $('#input-shipping-address').on('change', function () {
                     }
                 }
             }
-
-            // Refresh products, vouchers and totals
-            $('#button-refresh').trigger('click');
         },
         error: function (xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -2583,7 +2450,11 @@ $('#form-product-remove').on('click', '.btn-danger', function () {
             // Check for errors
             if (json['error']) {
                 $('#tab-cart .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-            } else {
+            }
+
+            if (json['success']) {
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
                 // Refresh products, vouchers and totals
                 $('#button-refresh').trigger('click');
             }
@@ -2660,7 +2531,7 @@ $('#button-refresh').on('click', function () {
         success: function (json) {
             console.log(json);
 
-          //  $('.alert-dismissible').remove();
+            //  $('.alert-dismissible').remove();
 
             // Check for errors
             if (json['error']) {
@@ -2704,18 +2575,14 @@ $('#button-refresh').on('click', function () {
                     html += '  <td class="text-end">' + product['price'] + '</td>';
                     html += '  <td class="text-end">' + product['total'] + '</td>';
                     html += '  <td class="text-end">';
-
-                    html += '    <button type="button" value="' + product['cart_id'] + '" data-bs-toggle="tooltip" title="{{ button_remove }}" data-oc-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>';
-                    html += '    <input type="hidden" name="product_id" value="' + product['product_id'] + '"/>';
-
+                    html += '     <form action="{{ product_remove }}" method="post" data-oc-toggle="order-edit">';
+                    html += '      <button type="submit" value="' + product['cart_id'] + '" data-bs-toggle="tooltip" title="{{ button_remove }}" data-oc-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>';
+                    html += '      <input type="hidden" name="cart_id" value="' + product['cart_id'] + '"/>';
+                    html += '    </form>';
                     html += '  </td>';
                     html += '</tr>';
                 }
             }
-
-            $('#order-products').html(html);
-
-            html = '';
 
             if (json['vouchers'].length) {
                 for (i in json['vouchers']) {
@@ -2728,16 +2595,22 @@ $('#button-refresh').on('click', function () {
                     html += '  <td class="text-end">' + voucher['price'] + '</td>';
                     html += '  <td class="text-end">' + voucher['price'] + '</td>';
                     html += '  <td class="text-end-start" style="width: 3px;">';
-
-                    html += '    <button type="button" value="' + voucher['code'] + '" data-bs-toggle="tooltip" title="{{ button_remove }}" data-oc-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>';
-                    html += '    <input type="hidden" name="product_id" value="' + product['product_id'] + '"/>';
-
+                    html += '    <form action="{{ product_remove }}" method="post" data-oc-toggle="order-edit">';
+                    html += '      <button type="button" value="' + voucher['code'] + '" data-bs-toggle="tooltip" title="{{ button_remove }}" data-oc-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>';
+                    html += '      <input type="hidden" name="cart_id" value="' + voucher['cart_id'] + '"/>';
+                    html += '    </form>';
                     html += '  </td>';
                     html += '</tr>';
                 }
             }
 
-            $('#cart-vouchers').html(html);
+            if (!json['products'].length && !json['vouchers'].length) {
+                html += '<tr>';
+                html += '  <td colspan="6" class="text-center">{{ text_no_results }}</td>';
+                html += '</tr>';
+            }
+
+            $('#order-items').html(html);
 
             // Totals
             html = '';
@@ -2746,20 +2619,17 @@ $('#button-refresh').on('click', function () {
                 for (i in json['totals']) {
                     total = json['totals'][i];
 
+                    console.log(total);
+
                     html += '<tr>';
-                    html += '  <td class="text-start" colspan="4">' + total['title'] + ':</td>';
+                    html += '  <td class="text-end" colspan="4"></td>';
+                    html += '  <td class="text-end">' + total['title'] + ':</td>';
                     html += '  <td class="text-end">' + total['text'] + '</td>';
                     html += '</tr>';
                 }
             }
 
-            $('#cart-total').html(html);
-
-            if (!json['totals'].length && !json['products'].length && !json['vouchers'].length) {
-                html += '<tr>';
-                html += '  <td colspan="5" class="text-center">{{ text_no_results }}</td>';
-                html += '</tr>';
-            }
+            $('#order-totals').html(html);
         },
         error: function (xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);

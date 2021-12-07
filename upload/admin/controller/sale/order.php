@@ -1587,7 +1587,8 @@ class Order extends \Opencart\System\Engine\Controller {
 				];
 			}
 		}
-
+print_r($this->session->data);
+		print_r($this->request->cookie);
 		$this->response->setOutput($this->load->view('sale/order_shipping', $data));
 	}
 
@@ -1659,13 +1660,15 @@ class Order extends \Opencart\System\Engine\Controller {
 		$session = new \Opencart\System\Library\Session($config->get('session_engine'), $registry);
 		$registry->set('session', $session);
 
-		if (isset($request->cookie['admin'])) {
-			$session_id = $request->cookie['admin'];
+		if (isset($this->session->data['api_session'])) {
+			$session_id = $this->session->data['api_session'];
 		} else {
 			$session_id = '';
 		}
 
 		$session->start($session_id);
+
+		$this->session->data['api_session'] = $session->getId();
 
 		// To use the order API it requires an API ID.
 		$session->data['api_id'] = (int)$this->config->get('config_api_id');

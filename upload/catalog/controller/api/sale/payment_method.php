@@ -57,9 +57,6 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 	public function save(): void {
 		$this->load->language('api/sale/payment_method');
 
-		// Delete old payment method so not to cause any issues if there is an error
-		unset($this->session->data['payment_method']);
-
 		$json = [];
 
 		// Payment Address

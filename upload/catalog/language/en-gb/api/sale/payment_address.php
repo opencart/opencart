@@ -3,7 +3,6 @@
 $_['text_success']       = 'Success: Payment address has been set!';
 
 // Error
-$_['error_permission']   = 'Warning: You do not have permission to access the API!';
 $_['error_firstname']    = 'First Name must be between 1 and 32 characters!';
 $_['error_lastname']     = 'Last Name must be between 1 and 32 characters!';
 $_['error_address_1']    = 'Address 1 must be between 3 and 128 characters!';

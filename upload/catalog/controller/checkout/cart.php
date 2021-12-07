@@ -212,6 +212,12 @@ class Cart extends \Opencart\System\Engine\Controller {
 			$product_id = 0;
 		}
 
+		if (isset($this->request->post['recurring_id'])) {
+			$recurring_id = $this->request->post['recurring_id'];
+		} else {
+			$recurring_id = 0;
+		}
+
 		if (isset($this->request->post['quantity'])) {
 			$quantity = (int)$this->request->post['quantity'];
 		} else {
@@ -228,11 +234,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 
 		$product_info = $this->model_catalog_product->getProduct($product_id);
 
-		if (!$product_info) {
-			$json['error'] = $this->language->get('error_product');
-		}
-
-		if (!$json) {
+		if ($product_info) {
 			// If variant get master product
 			if ($product_info['master_id']) {
 				$product_id = $product_info['master_id'];
@@ -243,6 +245,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 				$option[$key] = $value;
 			}
 
+			// Validate options
 			$product_options = $this->model_catalog_product->getOptions($product_id);
 
 			foreach ($product_options as $product_option) {
@@ -251,13 +254,8 @@ class Cart extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-			if (isset($this->request->post['recurring_id'])) {
-				$recurring_id = $this->request->post['recurring_id'];
-			} else {
-				$recurring_id = 0;
-			}
-
-			$recurrings = $this->model_catalog_product->getProfiles($product_info['product_id']);
+			// Validate recurring product profile
+			$recurrings = $this->model_catalog_product->getProfiles($product_id);
 
 			if ($recurrings) {
 				$recurring_ids = [];
@@ -270,6 +268,8 @@ class Cart extends \Opencart\System\Engine\Controller {
 					$json['error']['recurring'] = $this->language->get('error_recurring');
 				}
 			}
+		} else {
+			$json['error'] = $this->language->get('error_product');
 		}
 
 		if (!$json) {

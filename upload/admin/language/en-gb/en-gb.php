@@ -49,6 +49,7 @@ $_['button_save']                   = 'Save';
 $_['button_cancel']                 = 'Cancel';
 $_['button_cancel_recurring']       = 'Cancel Recurring Payments';
 $_['button_continue']               = 'Continue';
+$_['button_confirm']                = 'Confirm';
 $_['button_clear']                  = 'Clear';
 $_['button_close']                  = 'Close';
 $_['button_enable']                 = 'Enable';

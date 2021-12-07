@@ -269,7 +269,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 				}
 			}
 		} else {
-			$json['error'] = $this->language->get('error_product');
+			$json['error']['warning'] = $this->language->get('error_product');
 		}
 
 		if (!$json) {
@@ -316,6 +316,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 
 		unset($this->session->data['shipping_methods']);
 		unset($this->session->data['payment_methods']);
+		unset($this->session->data['reward']);
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

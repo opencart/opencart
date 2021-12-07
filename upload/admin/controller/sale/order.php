@@ -1587,8 +1587,7 @@ class Order extends \Opencart\System\Engine\Controller {
 				];
 			}
 		}
-print_r($this->session->data);
-		print_r($this->request->cookie);
+
 		$this->response->setOutput($this->load->view('sale/order_shipping', $data));
 	}
 

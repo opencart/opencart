@@ -4,7 +4,6 @@
     <div class="container-fluid">
       <div class="float-end">
         <button type="button" id="button-refresh" data-bs-toggle="tooltip" title="{{ button_refresh }}" class="btn btn-outline-primary"><i class="fas fa-sync"></i></button>
-        <button type="button" id="button-save" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
         <a href="{{ invoice }}" target="_blank" data-bs-toggle="tooltip" title="{{ button_invoice_print }}" class="btn btn-info{% if not order_id %} disabled{% endif %}"><i class="fas fa-print"></i></a> <a href="{{ shipping }}" target="_blank" data-bs-toggle="tooltip" title="{{ button_shipping_print }}" class="btn btn-info{% if not order_id %} disabled{% endif %}"><i class="fas fa-truck"></i></a> <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a>
       </div>
       <h1>{{ heading_title }}</h1>
@@ -262,7 +261,7 @@
               <div class="form-control p-0 border rounded-start">
                 <p class="lead p-2 mb-0"><strong>{{ text_shipping_address }}</strong>
                   <br/>
-                  {% if shipping_address %}     cbvhb vb nm
+                  {% if shipping_address %}
                     {{ shipping_address }}
                   {% else %}
                     &nbsp;
@@ -300,6 +299,12 @@
           </tbody>
           <tfoot id="order-totals"></tfoot>
         </table>
+
+        <div class="row">
+          <div class="col text-end">
+            <button type="button" id="button-confirm" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_confirm }}</button>
+          </div>
+        </div>
 
         {% if comment %}
           <div class="row">
@@ -358,11 +363,12 @@
               <div class="row mb-3">
                 <label for="input-notify" class="col-sm-2 col-form-label">{{ entry_notify }}</label>
                 <div class="col-sm-10">
-
                   <div class="btn-group">
-                    <input type="radio" name="notify" value="1" id="input-notify-yes" class="btn-check"/> <label for="input-notify-yes" class="btn btn-outline-secondary">{{ text_yes }}</label> <input type="radio" name="notify" value="0" id="input-notify-no" class="btn-check" checked/> <label for="input-notify-no" class="btn btn-outline-secondary">{{ text_no }}</label>
+                    <input type="radio" name="notify" value="1" id="input-notify-yes" class="btn-check"/>
+                    <label for="input-notify-yes" class="btn btn-outline-secondary">{{ text_yes }}</label>
+                    <input type="radio" name="notify" value="0" id="input-notify-no" class="btn-check" checked/>
+                    <label for="input-notify-no" class="btn btn-outline-secondary">{{ text_no }}</label>
                   </div>
-
                 </div>
               </div>
               <div class="row mb-3">
@@ -375,7 +381,6 @@
                 <button type="button" id="button-history" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i> {{ button_history_add }}</button>
               </div>
             </fieldset>
-
           </div>
           <div id="tab-additional" class="tab-pane">
             <div class="table-responsive">
@@ -482,7 +487,8 @@
 
                     {% for custom_field_value in custom_field.custom_field_value %}
                       <div class="form-check">
-                        <input type="radio" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ custom_field_value.custom_field_value_id }}" id="input-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-input"{% if account_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id == account_custom_field[custom_field.custom_field_id] %} checked{% endif %}/> <label for="input-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-label">{{ custom_field_value.name }}</label>
+                        <input type="radio" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ custom_field_value.custom_field_value_id }}" id="input-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-input"{% if account_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id == account_custom_field[custom_field.custom_field_id] %} checked{% endif %}/>
+                        <label for="input-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-label">{{ custom_field_value.name }}</label>
                       </div>
                     {% endfor %}
 
@@ -498,7 +504,8 @@
 
                     {% for custom_field_value in custom_field.custom_field_value %}
                       <div class="form-check">
-                        <input type="checkbox" name="custom_field[{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" id="input-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-input"{% if account_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id in account_custom_field[custom_field.custom_field_id] %} checked{% endif %}/> <label for="input-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-label">{{ custom_field_value.name }}</label>
+                        <input type="checkbox" name="custom_field[{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" id="input-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-input"{% if account_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id in account_custom_field[custom_field.custom_field_id] %} checked{% endif %}/>
+                        <label for="input-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-label">{{ custom_field_value.name }}</label>
                       </div>
                     {% endfor %}
 
@@ -509,14 +516,16 @@
 
               {% if custom_field.type == 'text' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
-                  <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
+                  <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
+                  <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
                   <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               {% endif %}
 
               {% if custom_field.type == 'textarea' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
-                  <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <textarea name="custom_field[{{ custom_field.custom_field_id }}]" rows="5" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control">{{ custom_field.value }}</textarea>
+                  <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
+                  <textarea name="custom_field[{{ custom_field.custom_field_id }}]" rows="5" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control">{{ custom_field.value }}</textarea>
                   <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               {% endif %}
@@ -1209,29 +1218,36 @@
               <fieldset>
                 <legend>{{ text_voucher_add }}</legend>
                 <div class="mb-3 required">
-                  <label for="input-to-name" class="form-label">{{ entry_to_name }}</label> <input type="text" name="to_name" value="" placeholder="{{ entry_to_name }}" id="input-to-name" class="form-control"/>
+                  <label for="input-to-name" class="form-label">{{ entry_to_name }}</label>
+                  <input type="text" name="to_name" value="" placeholder="{{ entry_to_name }}" id="input-to-name" class="form-control"/>
                 </div>
                 <div class="mb-3 required">
-                  <label for="input-to-email" class="form-label">{{ entry_to_email }}</label> <input type="text" name="to_email" value="" placeholder="{{ entry_to_email }}" id="input-to-email" class="form-control"/>
+                  <label for="input-to-email" class="form-label">{{ entry_to_email }}</label>
+                  <input type="text" name="to_email" value="" placeholder="{{ entry_to_email }}" id="input-to-email" class="form-control"/>
                 </div>
                 <div class="mb-3 required">
-                  <label for="input-from-name" class="form-label">{{ entry_from_name }}</label> <input type="text" name="from_name" value="" placeholder="{{ entry_from_name }}" id="input-from-name" class="form-control"/>
+                  <label for="input-from-name" class="form-label">{{ entry_from_name }}</label>
+                  <input type="text" name="from_name" value="" placeholder="{{ entry_from_name }}" id="input-from-name" class="form-control"/>
                 </div>
                 <div class="mb-3 required">
-                  <label for="input-from-email" class="form-label">{{ entry_from_email }}</label> <input type="text" name="from_email" value="" placeholder="{{ entry_from_email }}" id="input-from-email" class="form-control"/>
+                  <label for="input-from-email" class="form-label">{{ entry_from_email }}</label>
+                  <input type="text" name="from_email" value="" placeholder="{{ entry_from_email }}" id="input-from-email" class="form-control"/>
                 </div>
                 <div class="mb-3 required">
-                  <label for="input-theme" class="form-label">{{ entry_theme }}</label> <select name="voucher_theme_id" id="input-theme" class="form-select">
+                  <label for="input-theme" class="form-label">{{ entry_theme }}</label>
+                  <select name="voucher_theme_id" id="input-theme" class="form-select">
                     {% for voucher_theme in voucher_themes %}
                       <option value="{{ voucher_theme.voucher_theme_id }}">{{ voucher_theme.name }}</option>
                     {% endfor %}
                   </select>
                 </div>
                 <div class="mb-3">
-                  <label for="input-message" class="form-label">{{ entry_message }}</label> <textarea name="message" rows="5" placeholder="{{ entry_message }}" id="input-message" class="form-control"></textarea>
+                  <label for="input-message" class="form-label">{{ entry_message }}</label>
+                  <textarea name="message" rows="5" placeholder="{{ entry_message }}" id="input-message" class="form-control"></textarea>
                 </div>
                 <div class="mb-3 required">
-                  <label for="input-amount" class="form-label">{{ entry_amount }}</label> <input type="text" name="amount" value="{{ voucher_min }}" placeholder="{{ entry_amount }}" id="input-amount" class="form-control"/>
+                  <label for="input-amount" class="form-label">{{ entry_amount }}</label>
+                  <input type="text" name="amount" value="{{ voucher_min }}" placeholder="{{ entry_amount }}" id="input-amount" class="form-control"/>
                 </div>
                 <div class="text-end">
                   <button type="submit" id="button-voucher-add" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
@@ -1504,7 +1520,6 @@ $('[data-oc-toggle=\'order-edit\']').on('submit', function (e) {
         }
     });
 });
-
 
 
 // Shipping Method
@@ -2517,21 +2532,19 @@ $('#form-voucher-add').on('submit', function (e) {
 
 // Refresh all products, vouchers and totals
 $('#button-refresh').on('click', function () {
-    console.log('index.php?route=sale/order|call&user_token={{ user_token }}&action=cart|info');
-
     $.ajax({
-        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=cart|info',
+        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=cart',
         dataType: 'json',
         beforeSend: function () {
-            $('#button-save').button('loading');
+            $('#button-confirm').button('loading');
         },
         complete: function () {
-            $('#button-save').button('reset');
+            $('#button-confirm').button('reset');
         },
         success: function (json) {
             console.log(json);
 
-            //  $('.alert-dismissible').remove();
+            $('.alert-dismissible').remove();
 
             // Check for errors
             if (json['error']) {
@@ -2575,7 +2588,7 @@ $('#button-refresh').on('click', function () {
                     html += '  <td class="text-end">' + product['price'] + '</td>';
                     html += '  <td class="text-end">' + product['total'] + '</td>';
                     html += '  <td class="text-end">';
-                    html += '     <form action="{{ product_remove }}" method="post" data-oc-toggle="order-edit">';
+                    html += '    <form action="{{ product_remove }}" method="post" data-oc-toggle="order-edit">';
                     html += '      <button type="submit" value="' + product['cart_id'] + '" data-bs-toggle="tooltip" title="{{ button_remove }}" data-oc-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>';
                     html += '      <input type="hidden" name="cart_id" value="' + product['cart_id'] + '"/>';
                     html += '    </form>';
@@ -2595,7 +2608,7 @@ $('#button-refresh').on('click', function () {
                     html += '  <td class="text-end">' + voucher['price'] + '</td>';
                     html += '  <td class="text-end">' + voucher['price'] + '</td>';
                     html += '  <td class="text-end-start" style="width: 3px;">';
-                    html += '    <form action="{{ product_remove }}" method="post" data-oc-toggle="order-edit">';
+                    html += '    <form action="{{ voucher_remove }}" method="post" data-oc-toggle="order-edit">';
                     html += '      <button type="button" value="' + voucher['code'] + '" data-bs-toggle="tooltip" title="{{ button_remove }}" data-oc-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>';
                     html += '      <input type="hidden" name="cart_id" value="' + voucher['cart_id'] + '"/>';
                     html += '    </form>';
@@ -2638,15 +2651,17 @@ $('#button-refresh').on('click', function () {
 });
 
 // Checkout
-$('#button-save').on('click', function () {
+$('#button-confirm').on('click', function () {
+    var element = this;
+
     $.ajax({
-        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=order|save',
+        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=order|confirm',
         dataType: 'json',
         beforeSend: function () {
-            $('#button-save').button('loading');
+            $(element).button('loading');
         },
         complete: function () {
-            $('#button-save').button('reset');
+            $(element).button('reset');
         },
         success: function (json) {
             $('.alert-dismissible, .invalid-feedback').remove();
@@ -2660,7 +2675,7 @@ $('#button-save').on('click', function () {
             }
 
             if (json['order_id']) {
-                $('input[name=\'order_id\']').val(json['order_id']);
+                $('#input-order-id').val(json['order_id']);
             }
         },
         error: function (xhr, ajaxOptions, thrownError) {

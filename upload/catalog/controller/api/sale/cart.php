@@ -43,6 +43,8 @@ class Cart extends \Opencart\System\Engine\Controller {
 				'product_id' => $product['product_id'],
 				'name'       => $product['name'],
 				'model'      => $product['model'],
+				'stock'      => $product['stock'],
+				'minimum'    => $product['minimum'],
 				'option'     => $product['option'],
 				'recurring'  => $recurring,
 				'quantity'   => $product['quantity'],
@@ -150,7 +152,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$this->cart->add($product_id, $quantity, $option);
+			$this->cart->add($product_id, $quantity, $option, $recurring_id);
 
 			$json['success'] = $this->language->get('text_success');
 
@@ -168,9 +170,9 @@ class Cart extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->post['key'])) {
-			$key = (string)$this->request->post['key'];
+			$key = (int)$this->request->post['key'];
 		} else {
-			$key = '';
+			$key = 0;
 		}
 
 		if (isset($this->request->post['quantity'])) {
@@ -197,9 +199,9 @@ class Cart extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->post['key'])) {
-			$key = (string)$this->request->post['key'];
+			$key = (int)$this->request->post['key'];
 		} else {
-			$key = '';
+			$key = 0;
 		}
 
 		// Remove

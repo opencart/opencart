@@ -1,8 +1,8 @@
 <?php
-namespace Opencart\Catalog\Controller\Api\Sale;
+namespace Opencart\Catalog\Controller\Api\Localisation;
 class Currency extends \Opencart\System\Engine\Controller {
 	public function index(): void {
-		$this->load->language('api/sale/currency');
+		$this->load->language('api/localisation/currency');
 
 		$json = [];
 

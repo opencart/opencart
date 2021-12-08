@@ -1733,7 +1733,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		// Call the required api controller
 		if (isset($this->request->get['action'])) {
-			$loader->controller('api/sale/' . $this->request->get['action']);
+			$loader->controller('api/' . $this->request->get['action']);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

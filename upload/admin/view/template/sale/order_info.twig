@@ -1420,10 +1420,8 @@ $('#input-customer-group').trigger('change');
 $('#form-customer').on('submit', function (e) {
     e.preventDefault();
 
-    console.log(e);
-
     $.ajax({
-        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=customer',
+        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=sale/customer',
         type: 'post',
         data: $('#form-customer').serialize(),
         dataType: 'json',
@@ -1438,8 +1436,6 @@ $('#form-customer').on('submit', function (e) {
             $('.alert-dismissible').remove();
             $('.is-invalid').removeClass('is-invalid');
             $('.invalid-feedback').removeClass('d-block');
-
-            console.log(json);
 
             // Check for errors
             if (json['error']) {
@@ -1475,7 +1471,7 @@ $('#form-store').on('submit', function (e) {
     e.preventDefault();
 
     $.ajax({
-        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=store',
+        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=localisation/store',
         type: 'post',
         data: $('#form-store').serialize(),
         dataType: 'json',
@@ -1510,7 +1506,7 @@ $('#form-language').on('submit', function (e) {
     e.preventDefault();
 
     $.ajax({
-        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=language',
+        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=localisation/language',
         type: 'post',
         data: $('#form-language').serialize(),
         dataType: 'json',
@@ -1545,7 +1541,7 @@ $('#form-currency').on('submit', function (e) {
     e.preventDefault();
 
     $.ajax({
-        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=currency',
+        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=localisation/currency',
         type: 'post',
         data: $('#form-currency').serialize(),
         dataType: 'json',
@@ -1581,7 +1577,7 @@ $('#button-payment-refresh').on('click', function () {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=payment_method',
+        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=sale/payment_method',
         dataType: 'json',
         beforeSend: function () {
             $(element).button('loading');
@@ -1620,7 +1616,7 @@ $('#form-payment-method').on('submit', function (e) {
     e.preventDefault();
 
     $.ajax({
-        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=payment_method|save',
+        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=sale/payment_method|save',
         type: 'post',
         data: $('#form-payment-method').serialize(),
         dataType: 'json',
@@ -1651,13 +1647,12 @@ $('#form-payment-method').on('submit', function (e) {
     });
 });
 
-
 // Shipping Method
 $('#button-shipping-refresh').on('click', function () {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=shipping_method',
+        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=sale/shipping_method',
         dataType: 'json',
         beforeSend: function () {
             $(element).button('loading');
@@ -1706,7 +1701,7 @@ $('#form-shipping-method').on('submit', function (e) {
     e.preventDefault();
 
     $.ajax({
-        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=shipping_method|save',
+        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=sale/shipping_method|save',
         type: 'post',
         data: $('#form-shipping-method').serialize(),
         dataType: 'json',
@@ -1742,7 +1737,7 @@ $('#form-coupon').on('submit', function (e) {
     e.preventDefault();
 
     $.ajax({
-        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=coupon',
+        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=sale/coupon',
         type: 'post',
         data: $('#form-coupon').serialize(),
         dataType: 'json',
@@ -1777,7 +1772,7 @@ $('#form-voucher').on('submit', function (e) {
     e.preventDefault();
 
     $.ajax({
-        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=voucher',
+        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=sale/voucher',
         type: 'post',
         data: $('#form-voucher').serialize(),
         dataType: 'json',
@@ -1812,7 +1807,7 @@ $('#form-reward').on('submit', function (e) {
     e.preventDefault();
 
     $.ajax({
-        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=reward',
+        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=sale/reward',
         type: 'post',
         data: $('#form-reward').serialize(),
         dataType: 'json',
@@ -1873,7 +1868,7 @@ $('#form-affiliate').on('submit', function (e) {
     e.preventDefault();
 
     $.ajax({
-        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=affiliate',
+        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=sale/affiliate',
         type: 'post',
         data: $('#form-affiliate').serialize(),
         dataType: 'json',
@@ -2044,7 +2039,7 @@ $('#form-payment-address').on('submit', function (e) {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=payment_address',
+        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=sale/payment_address',
         type: 'post',
         data: $('#form-payment-address').serialize(),
         dataType: 'json',
@@ -2194,7 +2189,7 @@ $('#form-shipping-address').on('submit', function (e) {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=shipping_address',
+        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=sale/shipping_address',
         type: 'post',
         data: $('#form-shipping-address').serialize(),
         dataType: 'json',
@@ -2498,7 +2493,7 @@ $('#form-product-add').on('submit', function (e) {
     e.preventDefault();
 
     $.ajax({
-        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=cart|add',
+        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=sale/cart|add',
         type: 'post',
         data: $('#form-product-add').serialize(),
         dataType: 'json',
@@ -2546,7 +2541,7 @@ $('#form-product-remove').on('click', '.btn-danger', function () {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=sale/order|call|&user_token={{ user_token }}&action=cart/remove',
+        url: 'index.php?route=sale/order|call|&user_token={{ user_token }}&action=sale/cart/remove',
         type: 'post',
         data: 'key=' + this.value,
         dataType: 'json',
@@ -2582,7 +2577,7 @@ $('#form-voucher-add').on('submit', function (e) {
     e.preventDefault();
 
     $.ajax({
-        url: '{{ catalog }}index.php?route=sale/order|call&user_token={{ user_token }}&action=voucher|add',
+        url: '{{ catalog }}index.php?route=sale/order|call&user_token={{ user_token }}&action=sale/voucher|add',
         type: 'post',
         data: $('#form-voucher-add').serialize(),
         dataType: 'json',
@@ -2631,7 +2626,7 @@ $('#form-voucher-remove').on('click', '.btn-danger', function () {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=sale/order|call|&user_token={{ user_token }}&action=voucher/remove',
+        url: 'index.php?route=sale/order|call|&user_token={{ user_token }}&action=sale/voucher/remove',
         type: 'post',
         data: 'key=' + this.value,
         dataType: 'json',
@@ -2665,7 +2660,7 @@ $('#form-voucher-remove').on('click', '.btn-danger', function () {
 // Refresh all products, vouchers and totals
 $('#button-refresh').on('click', function () {
     $.ajax({
-        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=cart',
+        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=sale/cart',
         dataType: 'json',
         beforeSend: function () {
             $('#button-confirm').button('loading');
@@ -2783,7 +2778,7 @@ $('#button-confirm').on('click', function () {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=order|confirm',
+        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=sale/order|confirm',
         dataType: 'json',
         beforeSend: function () {
             $(element).button('loading');
@@ -2824,7 +2819,7 @@ $('#button-history').on('click', function (e) {
     e.preventDefault();
 
     $.ajax({
-        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=order|history',
+        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=sale/order|history',
         type: 'post',
         dataType: 'json',
         data: 'order_id=' + $('#input-order-id').val() + '&notify=' + $('#input-notify-yes').prop('checked') + '&comment=' + encodeURIComponent($('#input-comment').val()),

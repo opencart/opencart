@@ -82,8 +82,6 @@ class Order extends \Opencart\System\Engine\Controller {
 				$this->session->data['shipping_method'] = $order_info['shipping_code'];
 			}
 
-
-
 			$this->cart->clear();
 
 			$products = $this->model_checkout_order->getProducts($order_id);
@@ -135,72 +133,14 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		if (isset($this->request->get['order_id'])) {
-			$order_id = (int)$this->request->get['order_id'];
-		} else {
-			$order_id = 0;
-		}
-
-		$this->load->model('checkout/order');
-
-		$order_info = $this->model_checkout_order->getOrder($order_id);
-
-		if (!$order_info) {
-			$json['error'] = $this->language->get('error_not_found');
-		}
-
 		// Customer
 		if (!isset($this->session->data['customer'])) {
 			$json['error'] = $this->language->get('error_customer');
 		}
 
-		// Payment Address
-		if (!isset($this->session->data['payment_address'])) {
-			$json['error'] = $this->language->get('error_payment_address');
-		}
-
-		// Payment Method
-		if (!isset($this->session->data['payment_method'])) {
-			$json['error'] = $this->language->get('error_payment_method');
-		}
-
-		// Shipping
-		if ($this->cart->hasShipping()) {
-			// Shipping Address
-			if (!isset($this->session->data['shipping_address'])) {
-				$json['error'] = $this->language->get('error_shipping_address');
-			}
-
-			// Shipping Method
-			if (!$json && !empty($this->request->post['shipping_method'])) {
-				if (empty($this->session->data['shipping_methods'])) {
-					$json['error'] = $this->language->get('error_no_shipping');
-				} else {
-					$shipping = explode('.', $this->request->post['shipping_method']);
-
-					if (!isset($shipping[0]) || !isset($shipping[1]) || !isset($this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]])) {
-						$json['error'] = $this->language->get('error_shipping_method');
-					}
-				}
-
-				if (!$json) {
-					$this->session->data['shipping_method'] = $this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]];
-				}
-			}
-
-			// Shipping Method
-			if (!isset($this->session->data['shipping_method'])) {
-				$json['error'] = $this->language->get('error_shipping_method');
-			}
-		} else {
-			unset($this->session->data['shipping_address']);
-			unset($this->session->data['shipping_method']);
-			unset($this->session->data['shipping_methods']);
-		}
-
-		// Cart
+		// Validate cart has products and has stock.
 		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
-			$json['error'] = $this->language->get('error_stock');
+			$json['error'] = $this->language->get('error_product');
 		}
 
 		// Validate minimum quantity requirements.
@@ -214,9 +154,43 @@ class Order extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		if (!$json) {
-			$json['success'] = $this->language->get('text_success');
+		// Payment Address
+		if ($this->config->get('config_checkout_address') && !isset($this->session->data['payment_address'])) {
+			$json['error'] = $this->language->get('error_payment_address');
+		}
 
+		// Shipping
+		if ($this->cart->hasShipping()) {
+			// Shipping Address
+			if (!isset($this->session->data['shipping_address'])) {
+				$json['error'] = $this->language->get('error_shipping_address');
+			}
+
+			// Validate shipping method
+			if (isset($this->session->data['shipping_method']) && isset($this->session->data['shipping_methods'])) {
+				$shipping = explode('.', $this->session->data['shipping_method']);
+
+				if (!isset($shipping[0]) || !isset($shipping[1]) || !isset($this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]])) {
+					$json['error'] = $this->language->get('error_shipping_method');
+				}
+			} else {
+				$json['error'] = $this->language->get('error_shipping_method');
+			}
+		}
+
+
+
+
+
+		// Payment Method
+		if (!isset($this->session->data['payment_method'])) {
+			$json['error'] = $this->language->get('error_payment_method');
+		}
+
+
+
+
+		if (!$json) {
 			$order_data = [];
 
 			// Store Details
@@ -347,15 +321,15 @@ class Order extends \Opencart\System\Engine\Controller {
 			if (!empty($this->session->data['vouchers'])) {
 				foreach ($this->session->data['vouchers'] as $voucher) {
 					$order_data['vouchers'][] = [
-						'description' => $voucher['description'],
-						'code'        => token(10),
-						'to_name' => $voucher['to_name'],
-						'to_email' => $voucher['to_email'],
-						'from_name' => $voucher['from_name'],
-						'from_email' => $voucher['from_email'],
+						'description'      => $voucher['description'],
+						'code'             => token(10),
+						'to_name'          => $voucher['to_name'],
+						'to_email'         => $voucher['to_email'],
+						'from_name'        => $voucher['from_name'],
+						'from_email'       => $voucher['from_email'],
 						'voucher_theme_id' => $voucher['voucher_theme_id'],
-						'message' => $voucher['message'],
-						'amount'    => $voucher['amount']
+						'message'          => $voucher['message'],
+						'amount'           => $voucher['amount']
 					];
 				}
 			}
@@ -408,6 +382,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			$order_data['currency_id'] = $this->currency->getId($this->session->data['currency']);
 			$order_data['currency_code'] = $this->session->data['currency'];
 			$order_data['currency_value'] = $this->currency->getValue($this->session->data['currency']);
+
 			$order_data['ip'] = $this->request->server['REMOTE_ADDR'];
 
 			if (!empty($this->request->server['HTTP_X_FORWARDED_FOR'])) {
@@ -430,9 +405,22 @@ class Order extends \Opencart\System\Engine\Controller {
 				$order_data['accept_language'] = '';
 			}
 
+
+
+
 			$this->load->model('checkout/order');
 
-			$json['order_id'] = $this->model_checkout_order->addOrder($order_data);
+			if (!isset($this->session->data['order_id'])) {
+				$this->session->data['order_id'] = $this->model_checkout_order->addOrder($order_data);
+			} else {
+				$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
+
+				if ($order_info && !$order_info['order_status_id']) {
+					$this->model_checkout_order->editOrder($this->session->data['order_id'], $order_data);
+				}
+			}
+
+			$json['order_id'] = $this->session->data['order_id'];
 
 			// Set the order history
 			if (isset($this->request->post['order_status_id'])) {
@@ -443,8 +431,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 			$this->model_checkout_order->addHistory($json['order_id'], $order_status_id);
 
-			// clear cart since the order has already been successfully stored.
-			$this->cart->clear();
+			$json['success'] = $this->language->get('text_success');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

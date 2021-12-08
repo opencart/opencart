@@ -12,12 +12,14 @@ class Store extends \Opencart\System\Engine\Controller {
 			$store_id = 0;
 		}
 
-		$this->load->model('setting/store');
+		if ($store_id) {
+			$this->load->model('setting/store');
 
-		$store_info = $this->model_setting_store->getStore($store_id);
+			$store_info = $this->model_setting_store->getStore($store_id);
 
-		if (!$store_info) {
-			$json['error'] = $this->language->get('error_store');
+			if (!$store_info) {
+				$json['error'] = $this->language->get('error_store');
+			}
 		}
 
 		if (!$json) {

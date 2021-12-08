@@ -28,7 +28,7 @@
                 <div class="form-control p-0 border rounded-start">
                   <p class="lead p-2 mb-0"><strong>{{ text_invoice }}</strong>
                     <br/>
-                    {{ invoice_no }}&nbsp;
+                    <span id="invoice">{{ invoice_no }}</span>&nbsp
                   </p>
                 </div>
                 {% if not invoice_no %}
@@ -588,7 +588,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
-        <form id="form-store" action="{{ store }}" method="post" data-oc-toggle="order-edit">
+        <form id="form-store">
           <div class="mb-3">
             <select name="store_id" id="input-store" class="form-select">
               {% for store in stores %}
@@ -614,7 +614,7 @@
       </div>
       <div class="modal-body">
 
-        <form id="form-language" action="{{ language }}" method="post" data-oc-toggle="order-edit">
+        <form id="form-language">
           <div class="mb-3">
             <select name="language" id="input-language" class="form-select">
               {% for language in languages %}
@@ -641,7 +641,7 @@
       </div>
       <div class="modal-body">
 
-        <form id="form-currency" action="{{ currency }}" method="post" data-oc-toggle="order-edit">
+        <form id="form-currency">
           <div class="mb-3">
             <select name="currency" id="input-currency" class="form-select">
               {% for currency in currencies %}
@@ -668,7 +668,7 @@
       </div>
       <div class="modal-body">
 
-        <form id="form-shipping-method" action="{{ shipping_method }}" method="post" data-oc-toggle="order-edit">
+        <form id="form-shipping-method">
           <div class="mb-3">
             <div class="input-group">
               <select name="shipping_method" id="input-shipping-method" class="form-select">
@@ -699,7 +699,7 @@
       </div>
       <div class="modal-body">
 
-        <form id="form-payment-method" action="{{ payment_method }}" method="post" data-oc-toggle="order-edit">
+        <form id="form-payment-method">
           <div class="mb-3">
             <div class="input-group">
               <select name="payment_method" id="input-payment-method" class="form-select">
@@ -729,7 +729,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
-        <form id="form-coupon" action="{{ coupon }}" method="post" data-oc-toggle="order-edit">
+        <form id="form-coupon">
           <div class="mb-3">
             <input type="text" name="coupon" value="{{ coupon }}" placeholder="{{ entry_coupon }}" id="input-coupon" class="form-control"/>
           </div>
@@ -750,7 +750,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
-        <form id="form-voucher" action="{{ voucher }}" method="post" data-oc-toggle="order-edit">
+        <form id="form-voucher">
           <div class="mb-3">
             <input type="text" name="voucher" value="{{ voucher }}" placeholder="{{ entry_voucher }}" id="input-voucher" data-oc-loading-text="{{ text_loading }}" class="form-control"/>
           </div>
@@ -771,7 +771,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
-        <form id="form-reward" action="{{ reward }}" method="post" data-oc-toggle="order-edit">
+        <form id="form-reward">
           <div class="mb-3">
             <input type="text" name="reward" value="{{ reward }}" placeholder="{{ entry_reward }}" id="input-reward" data-oc-loading-text="{{ text_loading }}" class="form-control"/>
           </div>
@@ -792,7 +792,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
-        <form id="form-affiliate" action="{{ affiliate }}" method="post" data-oc-toggle="order-edit">
+        <form id="form-affiliate">
           <div class="mb-3">
             <input type="text" name="affiliate" value="{% if affiliate_id %}{{ affiliate_firstname }} {{ affiliate_lastname }}{% endif %}" placeholder="{{ entry_affiliate }}" id="input-affiliate" class="form-control"/> <input type="hidden" name="affiliate_id" value="{{ affiliate_id }}" id="input-affiliate-id"/>
           </div>
@@ -813,15 +813,17 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
-        <form id="form-payment-address" action="{{ payment_address }}" method="post">
+        <form id="form-payment-address">
 
           <div class="mb-3">
+
             <label for="input-payment-address" class="form-label">{{ entry_address }}</label> <select name="payment_address" id="input-payment-address" class="form-select">
               <option value="0" selected="selected">{{ text_none }}</option>
               {% for address in addresses %}
                 <option value="{{ address.address_id }}">{{ address.firstname }} {{ address.lastname }}, {{ address.address_1 }}, {{ address.city }}, {{ address.country }}</option>
               {% endfor %}
             </select>
+
           </div>
 
           <div class="mb-3 required">
@@ -996,7 +998,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
-        <form id="form-shipping-address" action="{{ shipping_address }}" method="post">
+        <form id="form-shipping-address">
 
           <div class="mb-3">
             <label for="input-shipping-address" class="form-label">{{ entry_address }}</label> <select name="shipping_address" id="input-shipping-address" class="form-select">
@@ -1189,7 +1191,7 @@
         <div class="tab-content">
 
           <div id="tab-product" class="tab-pane active">
-            <form id="form-product-add" action="{{ product_add }}" method="post" data-oc-toggle="order-edit">
+            <form id="form-product-add" action="{{ product_add }}" method="post">
               <fieldset>
                 <legend>{{ text_product_add }}</legend>
                 <div class="mb-3">
@@ -1207,7 +1209,7 @@
           </div>
 
           <div id="tab-voucher" class="tab-pane">
-            <form id="form-voucher-add" action="{{ voucher_add }}" method="post" data-oc-toggle="order-edit">
+            <form id="form-voucher-add" action="{{ voucher_add }}" method="post">
               <fieldset>
                 <legend>{{ text_voucher_add }}</legend>
                 <div class="mb-3 required">
@@ -1256,7 +1258,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
-        <form id="form-comment" action="{{ comment }}" method="post" data-oc-toggle="order-edit">
+        <form id="form-comment" action="{{ comment }}" method="post">
           <div class="mb-3">
             <textarea name="comment" rows="5" placeholder="{{ entry_comment }}" id="input-comment" class="form-control">{{ comment }}</textarea>
           </div>
@@ -1458,7 +1460,7 @@ $('#form-customer').on('submit', function (e) {
             if (json['success']) {
                 $('#form-customer').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                //$('#input-firstname').val($('#input-firstname').val() + ' ' + $('#input-lastname').val());
+                $('#customer').html($('#input-firstname').val() + ' ' + $('#input-lastname').val());
 
                 $('#button-refresh').trigger('click');
             }
@@ -1469,34 +1471,176 @@ $('#form-customer').on('submit', function (e) {
     });
 });
 
-
-$('[data-oc-toggle=\'order-edit\']').on('submit', function (e) {
+$('#form-store').on('submit', function (e) {
     e.preventDefault();
 
-    var form = this;
-
-    var button = e.originalEvent.submitter;
-
     $.ajax({
-        url: $(form).attr('action'),
+        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=store',
         type: 'post',
-        data: $(form).serialize(),
+        data: $('#form-store').serialize(),
         dataType: 'json',
         beforeSend: function () {
-            $(button).button('loading');
+            $('#button-store').button('loading');
         },
         complete: function () {
-            $(button).button('reset');
+            $('#button-store').button('reset');
         },
         success: function (json) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
-                $(form).prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#form-store').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
 
             if (json['success']) {
-                $(form).prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#form-store').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                $('#store').html($('#input-store option:selected').text());
+
+                $('#button-refresh').trigger('click');
+            }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+$('#form-language').on('submit', function (e) {
+    e.preventDefault();
+
+    $.ajax({
+        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=language',
+        type: 'post',
+        data: $('#form-language').serialize(),
+        dataType: 'json',
+        beforeSend: function () {
+            $('#button-language').button('loading');
+        },
+        complete: function () {
+            $('#button-language').button('reset');
+        },
+        success: function (json) {
+            $('.alert-dismissible').remove();
+
+            if (json['error']) {
+                $('#form-language').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            if (json['success']) {
+                $('#form-language').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                $('#language').html($('#input-language option:selected').text());
+
+                $('#button-refresh').trigger('click');
+            }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+$('#form-currency').on('submit', function (e) {
+    e.preventDefault();
+
+    $.ajax({
+        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=currency',
+        type: 'post',
+        data: $('#form-currency').serialize(),
+        dataType: 'json',
+        beforeSend: function () {
+            $('#button-currency').button('loading');
+        },
+        complete: function () {
+            $('#button-currency').button('reset');
+        },
+        success: function (json) {
+            $('.alert-dismissible').remove();
+
+            if (json['error']) {
+                $('#form-currency').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            if (json['success']) {
+                $('#form-currency').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                $('#currency').html($('#input-currency option:selected').text());
+
+                $('#button-refresh').trigger('click');
+            }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+// Payment Method
+$('#button-payment-refresh').on('click', function () {
+    var element = this;
+
+    $.ajax({
+        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=payment_method',
+        dataType: 'json',
+        beforeSend: function () {
+            $(element).button('loading');
+        },
+        complete: function () {
+            $(element).button('reset');
+        },
+        success: function (json) {
+            $('.alert-dismissible').remove();
+
+            if (json['error']) {
+                $('#form-payment-method').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            html = '<option value="">{{ text_select }}</option>';
+
+            if (json['payment_methods']) {
+                for (i in json['payment_methods']) {
+                    if (json['payment_methods'][i]['code'] == $('#input-payment-method').val()) {
+                        html += '<option value="' + json['payment_methods'][i]['code'] + '" selected="selected">' + json['payment_methods'][i]['title'] + '</option>';
+                    } else {
+                        html += '<option value="' + json['payment_methods'][i]['code'] + '">' + json['payment_methods'][i]['title'] + '</option>';
+                    }
+                }
+            }
+
+            $('#input-payment-method').html(html);
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+$('#form-payment-method').on('submit', function (e) {
+    e.preventDefault();
+
+    $.ajax({
+        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=payment_method|save',
+        type: 'post',
+        data: $('#form-payment-method').serialize(),
+        dataType: 'json',
+        beforeSend: function () {
+            $('#button-payment-method').button('loading');
+        },
+        complete: function () {
+            $('#button-payment-method').button('reset');
+        },
+        success: function (json) {
+            $('.alert-dismissible').remove();
+
+            if (json['error']) {
+                $('#form-payment-method').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            if (json['success']) {
+                $('#form-payment-method').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                $('#payment-method').html($('#input-payment-method').text());
 
                 $('#button-refresh').trigger('click');
             }
@@ -1528,7 +1672,7 @@ $('#button-shipping-refresh').on('click', function () {
                 $('#form-shipping-method').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
 
-            html = '';
+            html = '<option value="">{{ text_select }}</option>';
 
             if (json['shipping_methods']) {
                 for (i in json['shipping_methods']) {
@@ -1582,81 +1726,8 @@ $('#form-shipping-method').on('submit', function (e) {
             if (json['success']) {
                 $('#form-shipping-method').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                // Refresh products, vouchers and totals
-                $('#button-refresh').trigger('click');
-            }
-        },
-        error: function (xhr, ajaxOptions, thrownError) {
-            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-        }
-    });
-});
+                $('#shipping-method').html($('#input-shipping-method').text());
 
-// Payment Method
-$('#button-payment-refresh').on('click', function () {
-    var element = this;
-
-    $.ajax({
-        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=payment_method',
-        dataType: 'json',
-        beforeSend: function () {
-            $(element).button('loading');
-        },
-        complete: function () {
-            $(element).button('reset');
-        },
-        success: function (json) {
-            $('.alert-dismissible').remove();
-
-            if (json['error']) {
-                $('#form-payment-method').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-            }
-
-            html = '';
-
-            if (json['payment_methods']) {
-                for (i in json['payment_methods']) {
-                    if (json['payment_methods'][i]['code'] == $('#input-payment-method').val()) {
-                        html += '<option value="' + json['payment_methods'][i]['code'] + '" selected="selected">' + json['payment_methods'][i]['title'] + '</option>';
-                    } else {
-                        html += '<option value="' + json['payment_methods'][i]['code'] + '">' + json['payment_methods'][i]['title'] + '</option>';
-                    }
-                }
-            }
-
-            $('#input-payment-method').html(html);
-        },
-        error: function (xhr, ajaxOptions, thrownError) {
-            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-        }
-    });
-});
-
-$('#form-payment-method').on('submit', function (e) {
-    e.preventDefault();
-
-    $.ajax({
-        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=payment_method|save',
-        type: 'post',
-        data: $('#form-payment-method').serialize(),
-        dataType: 'json',
-        beforeSend: function () {
-            $('#button-payment-method').button('loading');
-        },
-        complete: function () {
-            $('#button-payment-method').button('reset');
-        },
-        success: function (json) {
-            $('.alert-dismissible').remove();
-
-            if (json['error']) {
-                $('#form-payment-method').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-            }
-
-            if (json['success']) {
-                $('#form-payment-method').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                // Refresh products, vouchers and totals
                 $('#button-refresh').trigger('click');
             }
         },
@@ -1829,15 +1900,18 @@ $('#form-affiliate').on('submit', function (e) {
     });
 });
 
-
-// Merged rewards and commission together
-$(document).on('click', '#button-reward-add, #button-reward-remove, #button-commission-add, #button-commission-remove', function (e) {
+// Reward
+$(document).on('click', '#button-reward-add, #button-reward-remove', function (e) {
     var element = this;
 
-    var part = $(this).attr('id').split('-');
+    if ($(element).hasClass('btn-danger')) {
+        var action = 'add';
+    } else {
+        var action = 'remove';
+    }
 
     $.ajax({
-        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=' + part[2] + part[1] + '&order_id=' + $('#input-order-id').val(),
+        url: 'index.php?route=sale/order|' + action + 'Reward&user_token={{ user_token }}&order_id=' + $('#input-order-id').val(),
         type: 'post',
         dataType: 'json',
         beforeSend: function () {
@@ -1856,20 +1930,57 @@ $(document).on('click', '#button-reward-add, #button-reward-remove, #button-comm
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                if (part[1] == 'reward') {
-                    if (part[2] == 'add') {
-                        $(element).replaceWith('<button type="button" id="button-reward-remove" data-bs-toggle="tooltip" title="{{ button_reward_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>');
-                    } else {
-                        $(element).replaceWith('<button type="button" id="button-reward-add" data-bs-toggle="tooltip" title="{{ button_reward_add }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></button>');
-                    }
+                if (action == 'add') {
+                    $(element).replaceWith('<button type="button" id="button-reward-remove" data-bs-toggle="tooltip" title="{{ button_reward_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>');
                 }
 
-                if (part[1] == 'commission') {
-                    if (part[2] == 'add') {
-                        $(element).replaceWith('<button type="button" id="button-commission-remove" data-bs-toggle="tooltip" title="{{ button_commission_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>');
-                    } else {
-                        $(element).replaceWith('<button type="button" id="button-commission-add" data-bs-toggle="tooltip" title="{{ button_commission_add }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></button>');
-                    }
+                if (action == 'remove') {
+                    $(element).replaceWith('<button type="button" id="button-reward-add" data-bs-toggle="tooltip" title="{{ button_reward_add }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></button>');
+                }
+            }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+// Commission
+$(document).on('click', '#button-commission-add, #button-commission-remove', function (e) {
+    var element = this;
+
+    if ($(element).hasClass('btn-danger')) {
+        var action = 'add';
+    } else {
+        var action = 'remove';
+    }
+
+    $.ajax({
+        url: 'index.php?route=sale/order|' + action + 'Commission&user_token={{ user_token }}&order_id=' + $('#input-order-id').val(),
+        type: 'post',
+        dataType: 'json',
+        beforeSend: function () {
+            $(element).button('loading');
+        },
+        complete: function () {
+            $(element).button('reset');
+        },
+        success: function (json) {
+            $('.alert-dismissible').remove();
+
+            if (json['error']) {
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            if (json['success']) {
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                if (action == 'add') {
+                    $(element).replaceWith('<button type="button" id="button-commission-remove" data-bs-toggle="tooltip" title="{{ button_commission_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>');
+                }
+
+                if (action == 'remove') {
+                    $(element).replaceWith('<button type="button" id="button-commission-add" data-bs-toggle="tooltip" title="{{ button_commission_add }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></button>');
                 }
             }
         },
@@ -1901,8 +2012,8 @@ $('#input-payment-address').on('change', function () {
             $('#input-payment-firstname').val(json['firstname']);
             $('#input-payment-lastname').val(json['lastname']);
             $('#input-payment-company').val(json['company']);
-            $('#input-payment-address_1').val(json['address_1']);
-            $('#input-payment-address_2').val(json['address_2']);
+            $('#input-payment-address-1').val(json['address_1']);
+            $('#input-payment-address-2').val(json['address_2']);
             $('#input-payment-city').val(json['city']);
             $('#input-payment-postcode').val(json['postcode']);
             $('#input-payment-country').val(json['country_id']);
@@ -2051,8 +2162,8 @@ $('#input-shipping-address').on('change', function () {
             $('#input-shipping-firstname').val(json['firstname']);
             $('#input-shipping-lastname').val(json['lastname']);
             $('#input-shipping-company').val(json['company']);
-            $('#input-shipping-address_1').val(json['address_1']);
-            $('#input-shipping-address_2').val(json['address_2']);
+            $('#input-shipping-address-1').val(json['address_1']);
+            $('#input-shipping-address-2').val(json['address_2']);
             $('#input-shipping-city').val(json['city']);
             $('#input-shipping-postcode').val(json['postcode']);
             $('#input-shipping-country').val(json['country_id']);
@@ -2437,7 +2548,7 @@ $('#form-product-remove').on('click', '.btn-danger', function () {
     $.ajax({
         url: 'index.php?route=sale/order|call|&user_token={{ user_token }}&action=cart/remove',
         type: 'post',
-        data: 'key=' + encodeURIComponent(this.value),
+        data: 'key=' + this.value,
         dataType: 'json',
         beforeSend: function () {
             $(element).button('loading');
@@ -2450,7 +2561,7 @@ $('#form-product-remove').on('click', '.btn-danger', function () {
 
             // Check for errors
             if (json['error']) {
-                $('#tab-cart .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
 
             if (json['success']) {
@@ -2516,6 +2627,41 @@ $('#form-voucher-add').on('submit', function (e) {
     });
 });
 
+$('#form-voucher-remove').on('click', '.btn-danger', function () {
+    var element = this;
+
+    $.ajax({
+        url: 'index.php?route=sale/order|call|&user_token={{ user_token }}&action=voucher/remove',
+        type: 'post',
+        data: 'key=' + this.value,
+        dataType: 'json',
+        beforeSend: function () {
+            $(element).button('loading');
+        },
+        complete: function () {
+            $(element).button('reset');
+        },
+        success: function (json) {
+            $('.alert-dismissible').remove();
+
+            // Check for errors
+            if (json['error']) {
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            if (json['success']) {
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                // Refresh products, vouchers and totals
+                $('#button-refresh').trigger('click');
+            }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
 // Refresh all products, vouchers and totals
 $('#button-refresh').on('click', function () {
     $.ajax({
@@ -2528,8 +2674,6 @@ $('#button-refresh').on('click', function () {
             $('#button-confirm').button('reset');
         },
         success: function (json) {
-            console.log(json);
-
             $('.alert-dismissible').remove();
 
             // Check for errors
@@ -2594,7 +2738,7 @@ $('#button-refresh').on('click', function () {
                     html += '  <td class="text-end">' + voucher['price'] + '</td>';
                     html += '  <td class="text-end">' + voucher['price'] + '</td>';
                     html += '  <td class="text-end-start" style="width: 3px;">';
-                    html += '    <form action="{{ voucher_remove }}" method="post" data-oc-toggle="order-edit">';
+                    html += '    <form action="{{ voucher_remove }}" method="post">';
                     html += '      <button type="submit" data-bs-toggle="tooltip" title="{{ button_remove }}" data-oc-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>';
                     html += '      <input type="hidden" name="key" value="' + voucher['cart_id'] + '"/>';
                     html += '    </form>';
@@ -2620,7 +2764,7 @@ $('#button-refresh').on('click', function () {
 
                     html += '<tr>';
                     html += '  <td class="text-end" colspan="4"></td>';
-                    html += '  <td class="text-end">' + total['title'] + ':</td>';
+                    html += '  <td class="text-end"><strong>' + total['title'] + '</strong></td>';
                     html += '  <td class="text-end">' + total['text'] + '</td>';
                     html += '</tr>';
                 }
@@ -2648,7 +2792,7 @@ $('#button-confirm').on('click', function () {
             $(element).button('reset');
         },
         success: function (json) {
-            $('.alert-dismissible, .invalid-feedback').remove();
+            $('.alert-dismissible').remove();
 
             if (json['error']) {
                 $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
@@ -2691,8 +2835,6 @@ $('#button-history').on('click', function (e) {
             $('#button-history').button('reset');
         },
         success: function (json) {
-            console.log(json);
-
             $('.alert-dismissible').remove();
 
             if (json['error']) {

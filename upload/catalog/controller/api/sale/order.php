@@ -133,14 +133,9 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		// Customer
-		if (!isset($this->session->data['customer'])) {
-			$json['error'] = $this->language->get('error_customer');
-		}
-
 		// Validate cart has products and has stock.
 		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
-			$json['error'] = $this->language->get('error_product');
+			$json['error'] = $this->language->get('error_stock');
 		}
 
 		// Validate minimum quantity requirements.
@@ -152,6 +147,11 @@ class Order extends \Opencart\System\Engine\Controller {
 
 				break;
 			}
+		}
+
+		// Customer
+		if (!isset($this->session->data['customer'])) {
+			$json['error'] = $this->language->get('error_customer');
 		}
 
 		// Payment Address
@@ -176,19 +176,16 @@ class Order extends \Opencart\System\Engine\Controller {
 			} else {
 				$json['error'] = $this->language->get('error_shipping_method');
 			}
+		} else {
+			unset($this->session->data['shipping_address']);
+			unset($this->session->data['shipping_method']);
+			unset($this->session->data['shipping_methods']);
 		}
-
-
-
-
 
 		// Payment Method
-		if (!isset($this->session->data['payment_method'])) {
+		if (!isset($this->session->data['payment_method']) || !isset($this->session->data['payment_methods']) || !isset($this->session->data['payment_methods'][$this->session->data['payment_method']])) {
 			$json['error'] = $this->language->get('error_payment_method');
 		}
-
-
-
 
 		if (!$json) {
 			$order_data = [];

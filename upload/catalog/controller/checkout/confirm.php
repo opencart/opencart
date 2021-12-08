@@ -5,7 +5,7 @@ class Confirm extends \Opencart\System\Engine\Controller {
 		$this->load->language('checkout/confirm');
 
 		if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
-
+			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
 		}
 
 		// Order Totals
@@ -77,8 +77,6 @@ class Confirm extends \Opencart\System\Engine\Controller {
 
 		// Generate order if payment method is set
 		if ($status) {
-
-
 			$order_data = [];
 
 			// Store Details

@@ -483,24 +483,6 @@ class Order extends \Opencart\System\Engine\Controller {
 		$data['customer'] = $this->url->link('customer/customer|form', 'user_token=' . $this->session->data['user_token']);
 		$data['customer_add'] = $this->url->link('customer/customer|form', 'user_token=' . $this->session->data['user_token']);
 
-		// API
-		$data['customer'] = $this->url->link('sale/order|call', 'user_token=' . $this->session->data['user_token'] . '&action=customer');
-		$data['store'] = $this->url->link('sale/order|call', 'user_token=' . $this->session->data['user_token'] . '&action=store');
-		$data['language'] = $this->url->link('sale/order|call', 'user_token=' . $this->session->data['user_token'] . '&action=language');
-		$data['currency'] = $this->url->link('sale/order|call', 'user_token=' . $this->session->data['user_token'] . '&action=currency');
-		$data['shipping_method'] = $this->url->link('sale/order|call', 'user_token=' . $this->session->data['user_token'] . '&action=shipping_method|save');
-		$data['payment_method'] = $this->url->link('sale/order|call', 'user_token=' . $this->session->data['user_token'] . '&action=payment_method|save');
-		$data['coupon'] = $this->url->link('sale/order|call', 'user_token=' . $this->session->data['user_token'] . '&action=coupon');
-		$data['voucher'] = $this->url->link('sale/order|call', 'user_token=' . $this->session->data['user_token'] . '&action=voucher');
-		$data['reward'] = $this->url->link('sale/order|call', 'user_token=' . $this->session->data['user_token'] . '&action=reward');
-		$data['affiliate'] = $this->url->link('sale/order|call', 'user_token=' . $this->session->data['user_token'] . '&action=affiliate');
-		$data['payment_address'] = $this->url->link('sale/order|call', 'user_token=' . $this->session->data['user_token'] . '&action=payment_address');
-		$data['shipping_address'] = $this->url->link('sale/order|call', 'user_token=' . $this->session->data['user_token'] . '&action=shipping_address');
-		$data['product_add'] = $this->url->link('sale/order|call', 'user_token=' . $this->session->data['user_token'] . '&action=cart|add');
-		$data['product_remove'] = $this->url->link('sale/order|call', 'user_token=' . $this->session->data['user_token'] . '&action=cart|remove');
-		$data['voucher_add'] = $this->url->link('sale/order|call', 'user_token=' . $this->session->data['user_token'] . '&action=voucher|add');
-		$data['voucher_remove'] = $this->url->link('sale/order|call', 'user_token=' . $this->session->data['user_token'] . '&action=voucher|remove');
-
 		if ($order_id) {
 			$this->load->model('sale/order');
 
@@ -723,15 +705,15 @@ class Order extends \Opencart\System\Engine\Controller {
 
 			$replace = [
 				'firstname' => $order_info['payment_firstname'],
-				'lastname' => $order_info['payment_lastname'],
-				'company' => $order_info['payment_company'],
+				'lastname'  => $order_info['payment_lastname'],
+				'company'   => $order_info['payment_company'],
 				'address_1' => $order_info['payment_address_1'],
 				'address_2' => $order_info['payment_address_2'],
-				'city' => $order_info['payment_city'],
-				'postcode' => $order_info['payment_postcode'],
-				'zone' => $order_info['payment_zone'],
+				'city'      => $order_info['payment_city'],
+				'postcode'  => $order_info['payment_postcode'],
+				'zone'      => $order_info['payment_zone'],
 				'zone_code' => $order_info['payment_zone_code'],
-				'country' => $order_info['payment_country']
+				'country'   => $order_info['payment_country']
 			];
 
 			$data['payment_address'] = str_replace(["\r\n", "\r", "\n"], '<br />', preg_replace(["/\s\s+/", "/\r\r+/", "/\n\n+/"], '<br />', trim(str_replace($find, $replace, $format))));
@@ -1195,6 +1177,9 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$data['user_token'] = $this->session->data['user_token'];
 
+		// Create new API session on the
+		$this->session->data['api_session'] = substr(bin2hex(random_bytes(26)), 0, 26);
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -1591,7 +1576,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('sale/order_shipping', $data));
 	}
 
-	// Method to call store front api and return a response.
+	// Method to call the store front API and return a response.
 	public function call(): void {
 		// 1. Create a store instance using loader class to call controllers, models, views, libraries
 
@@ -1985,5 +1970,4 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
-
 }

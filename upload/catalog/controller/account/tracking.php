@@ -6,12 +6,6 @@ class Tracking extends \Opencart\System\Engine\Controller {
 			$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language')));
 		}
 
-		if (!$this->customer->isLogged()) {
-			$this->session->data['redirect'] = $this->url->link('account/tracking', 'language=' . $this->config->get('config_language'));
-
-			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language')));
-		}
-
 		$this->load->model('account/affiliate');
 
 		$affiliate_info = $this->model_account_affiliate->getAffiliate($this->customer->getId());

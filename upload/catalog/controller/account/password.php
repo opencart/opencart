@@ -2,12 +2,6 @@
 namespace Opencart\Catalog\Controller\Account;
 class Password extends \Opencart\System\Engine\Controller {
 	public function index(): void {
-		if (!$this->customer->isLogged()) {
-			$this->session->data['redirect'] = $this->url->link('account/password', 'language=' . $this->config->get('config_language'));
-
-			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language')));
-		}
-
 		$this->load->language('account/password');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -21,16 +15,16 @@ class Password extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_account'),
-			'href' => $this->url->link('account/account', 'language=' . $this->config->get('config_language'))
+			'href' => $this->url->link('account/account', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'])
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('account/password', 'language=' . $this->config->get('config_language'))
+			'href' => $this->url->link('account/password', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'])
 		];
 
-		$data['save'] = $this->url->link('account/password|save', 'language=' . $this->config->get('config_language'));
-		$data['back'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language'));
+		$data['save'] = $this->url->link('account/password|save', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']);
+		$data['back'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']);
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
@@ -73,7 +67,7 @@ class Password extends \Opencart\System\Engine\Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$json['redirect'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language'));
+			$json['redirect'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

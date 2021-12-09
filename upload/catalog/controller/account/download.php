@@ -2,12 +2,6 @@
 namespace Opencart\Catalog\Controller\Account;
 class Download extends \Opencart\System\Engine\Controller {
 	public function index(): void {
-		if (!$this->customer->isLogged()) {
-			$this->session->data['redirect'] = $this->url->link('account/download', 'language=' . $this->config->get('config_language'));
-
-			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language')));
-		}
-
 		$this->load->language('account/download');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -21,12 +15,12 @@ class Download extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_account'),
-			'href' => $this->url->link('account/account', 'language=' . $this->config->get('config_language'))
+			'href' => $this->url->link('account/account', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'])
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_downloads'),
-			'href' => $this->url->link('account/download', 'language=' . $this->config->get('config_language'))
+			'href' => $this->url->link('account/download', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'])
 		];
 
 		$this->load->model('account/download');
@@ -73,7 +67,7 @@ class Download extends \Opencart\System\Engine\Controller {
 					'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 					'name'       => $result['name'],
 					'size'       => round(substr($size, 0, strpos($size, '.') + 4), 2) . $suffix[$i],
-					'href'       => $this->url->link('account/download|download', 'language=' . $this->config->get('config_language') . '&download_id=' . $result['download_id'])
+					'href'       => $this->url->link('account/download|download', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&download_id=' . $result['download_id'])
 				];
 			}
 		}
@@ -82,12 +76,12 @@ class Download extends \Opencart\System\Engine\Controller {
 			'total' => $download_total,
 			'page'  => $page,
 			'limit' => $limit,
-			'url'   => $this->url->link('account/download', 'language=' . $this->config->get('config_language') . '&page={page}')
+			'url'   => $this->url->link('account/download', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($download_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($download_total - $limit)) ? $download_total : ((($page - 1) * $limit) + $limit), $download_total, ceil($download_total / $limit));
 		
-		$data['continue'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language'));
+		$data['continue'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']);
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
@@ -100,12 +94,6 @@ class Download extends \Opencart\System\Engine\Controller {
 	}
 
 	public function download(): void {
-		if (!$this->customer->isLogged()) {
-			$this->session->data['redirect'] = $this->url->link('account/download', 'language=' . $this->config->get('config_language'));
-
-			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language')));
-		}
-
 		$this->load->model('account/download');
 
 		if (isset($this->request->get['download_id'])) {
@@ -145,7 +133,7 @@ class Download extends \Opencart\System\Engine\Controller {
 				exit($this->language->get('error_headers_sent'));
 			}
 		} else {
-			$this->response->redirect($this->url->link('account/download', 'language=' . $this->config->get('config_language')));
+			$this->response->redirect($this->url->link('account/download', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']));
 		}
 	}
 }

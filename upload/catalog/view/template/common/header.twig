@@ -49,15 +49,15 @@
           <div class="dropdown">
             <a href="{{ account }}" class="dropdown-toggle" data-bs-toggle="dropdown"><i class="fas fa-user"></i> <span class="d-none d-md-inline">{{ text_account }}</span> <i class="fas fa-caret-down"></i></a>
             <div class="dropdown-menu dropdown-menu-right">
-              {% if logged %}
+              {% if not logged %}
+                <a href="{{ register }}" class="dropdown-item">{{ text_register }}</a>
+                <a href="{{ login }}" class="dropdown-item">{{ text_login }}</a>
+              {% else %}
                 <a href="{{ account }}" class="dropdown-item">{{ text_account }}</a>
                 <a href="{{ order }}" class="dropdown-item">{{ text_order }}</a>
                 <a href="{{ transaction }}" class="dropdown-item">{{ text_transaction }}</a>
                 <a href="{{ download }}" class="dropdown-item">{{ text_download }}</a>
                 <a href="{{ logout }}" class="dropdown-item">{{ text_logout }}</a>
-              {% else %}
-                <a href="{{ register }}" class="dropdown-item">{{ text_register }}</a>
-                <a href="{{ login }}" class="dropdown-item">{{ text_login }}</a>
               {% endif %}
             </div>
           </div>

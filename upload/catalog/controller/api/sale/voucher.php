@@ -105,7 +105,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->post['key'])) {
-			$key = (string)$this->request->post['key'];
+			$key = (int)$this->request->post['key'];
 		} else {
 			$key = '';
 		}

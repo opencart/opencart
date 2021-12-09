@@ -32,16 +32,16 @@ class Footer extends \Opencart\System\Engine\Controller {
 		$data['voucher'] = $this->url->link('checkout/voucher', 'language=' . $this->config->get('config_language'));
 
 		if ($this->config->get('config_affiliate_status')) {
-			$data['affiliate'] = $this->url->link('account/affiliate', 'language=' . $this->config->get('config_language'));
+			$data['affiliate'] = $this->url->link('account/affiliate', 'language=' . $this->config->get('config_language') . (isset($this->session->data['customer_token']) ? '&customer_token=' . $this->session->data['customer_token'] : ''));
 		} else {
 			$data['affiliate'] = '';
 		}
 
-		$data['special'] = $this->url->link('product/special', 'language=' . $this->config->get('config_language'));
-		$data['account'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language'));
-		$data['order'] = $this->url->link('account/order', 'language=' . $this->config->get('config_language'));
-		$data['wishlist'] = $this->url->link('account/wishlist', 'language=' . $this->config->get('config_language'));
-		$data['newsletter'] = $this->url->link('account/newsletter', 'language=' . $this->config->get('config_language'));
+		$data['special'] = $this->url->link('product/special', 'language=' . $this->config->get('config_language') . (isset($this->session->data['customer_token']) ? '&customer_token=' . $this->session->data['customer_token'] : ''));
+		$data['account'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language') . (isset($this->session->data['customer_token']) ? '&customer_token=' . $this->session->data['customer_token'] : ''));
+		$data['order'] = $this->url->link('account/order', 'language=' . $this->config->get('config_language') . (isset($this->session->data['customer_token']) ? '&customer_token=' . $this->session->data['customer_token'] : ''));
+		$data['wishlist'] = $this->url->link('account/wishlist', 'language=' . $this->config->get('config_language') . (isset($this->session->data['customer_token']) ? '&customer_token=' . $this->session->data['customer_token'] : ''));
+		$data['newsletter'] = $this->url->link('account/newsletter', 'language=' . $this->config->get('config_language') . (isset($this->session->data['customer_token']) ? '&customer_token=' . $this->session->data['customer_token'] : ''));
 
 		$data['powered'] = sprintf($this->language->get('text_powered'), $this->config->get('config_name'), date('Y', time()));
 

@@ -24,15 +24,15 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_account'),
-			'href' => $this->url->link('account/account', 'language=' . $this->config->get('config_language'))
+			'href' => $this->url->link('account/account', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'])
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_affiliate'),
-			'href' => $this->url->link('account/affiliate', 'language=' . $this->config->get('config_language'))
+			'href' => $this->url->link('account/affiliate', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'])
 		];
 
-		$data['save'] = $this->url->link('account/affiliate|save', 'language=' . $this->config->get('config_language'));
+		$data['save'] = $this->url->link('account/affiliate|save', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']);
 		$data['upload'] = $this->url->link('tool/upload', 'language=' . $this->config->get('config_language'));
 
 		$this->load->model('account/affiliate');
@@ -138,7 +138,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			$data['text_agree'] = '';
 		}
 
-		$data['back'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language'));
+		$data['back'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']);
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
@@ -156,7 +156,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (!$this->config->get('config_affiliate_status')) {
-			$json['redirect'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language'));
+			$json['redirect'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']);
 		}
 
 		$keys = [
@@ -226,7 +226,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$json['redirect'] = $this->url->link('account/affiliate', 'language=' . $this->config->get('config_language'), true);
+			$json['redirect'] = $this->url->link('account/affiliate', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'], true);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

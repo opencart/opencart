@@ -39,9 +39,9 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 			$status = false;
 		}
 
-		if ($status) {
-			$data['shipping_methods'] = [];
+		$data['shipping_methods'] = [];
 
+		if ($status) {
 			if (isset($this->session->data['shipping_methods'])) {
 				$data['shipping_methods'] = $this->session->data['shipping_methods'];
 			} else {

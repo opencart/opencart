@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Controller\Account;
 class Login extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		if ($this->customer->isLogged()) {
-			$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language')));
+			$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']));
 		}
 
 		$this->load->language('account/login');
@@ -43,7 +43,6 @@ class Login extends \Opencart\System\Engine\Controller {
 			$data['success'] = '';
 		}
 
-		// Added strpos check to pass McAfee PCI compliance test (http://forum.opencart.com/viewtopic.php?f=10&t=12043&p=151494#p151295)
 		if (isset($this->session->data['redirect'])) {
 			$data['redirect'] = $this->session->data['redirect'];
 
@@ -185,6 +184,7 @@ class Login extends \Opencart\System\Engine\Controller {
 		unset($this->session->data['reward']);
 		unset($this->session->data['voucher']);
 		unset($this->session->data['vouchers']);
+		unset($this->session->data['customer_token']);
 
 		$this->load->model('account/customer');
 

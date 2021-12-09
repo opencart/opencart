@@ -1,8 +1,6 @@
 <?php
 namespace Opencart\Catalog\Controller\Account;
 class Returns extends \Opencart\System\Engine\Controller {
-	private $error = [];
-
 	public function index(): void {
 		$this->load->language('account/return');
 
@@ -10,12 +8,6 @@ class Returns extends \Opencart\System\Engine\Controller {
 			$page = (int)$this->request->get['page'];
 		} else {
 			$page = 1;
-		}
-
-		if (!$this->customer->isLogged()) {
-			$this->session->data['redirect'] = $this->url->link('account/returns', 'language=' . $this->config->get('config_language'));
-
-			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language')));
 		}
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -29,7 +21,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_account'),
-			'href' => $this->url->link('account/account', 'language=' . $this->config->get('config_language'))
+			'href' => $this->url->link('account/account', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'])
 		];
 
 		$url = '';
@@ -40,7 +32,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('account/returns', 'language=' . $this->config->get('config_language') . $url)
+			'href' => $this->url->link('account/returns', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . $url)
 		];
 
 		$data['returns'] = [];
@@ -90,12 +82,6 @@ class Returns extends \Opencart\System\Engine\Controller {
 			$return_id = (int)$this->request->get['return_id'];
 		} else {
 			$return_id = 0;
-		}
-
-		if (!$this->customer->isLogged()) {
-			$this->session->data['redirect'] = $this->url->link('account/returns|info', 'language=' . $this->config->get('config_language') . '&return_id=' . $return_id);
-
-			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language')));
 		}
 
 		$this->document->setTitle($this->language->get('text_return'));

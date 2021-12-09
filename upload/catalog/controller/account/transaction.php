@@ -2,12 +2,6 @@
 namespace Opencart\Catalog\Controller\Account;
 class Transaction extends \Opencart\System\Engine\Controller {
 	public function index(): void {
-		if (!$this->customer->isLogged()) {
-			$this->session->data['redirect'] = $this->url->link('account/transaction', 'language=' . $this->config->get('config_language'));
-
-			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language')));
-		}
-
 		$this->load->language('account/transaction');
 
 		$this->document->setTitle($this->language->get('heading_title'));

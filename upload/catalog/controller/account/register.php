@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Controller\Account;
 class Register extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		if ($this->customer->isLogged()) {
-			$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language')));
+			$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']));
 		}
 
 		$this->load->language('account/register');
@@ -213,24 +213,27 @@ class Register extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$customer_id = $this->model_account_customer->addCustomer($this->request->post);
 
-			$this->customer->login($this->request->post['email'], html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8'));
+			// Login if requires approval
+			if (!$customer_group_info['approval']) {
+				$this->customer->login($this->request->post['email'], html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8'));
 
-			// Add customer details into session
-			$this->session->data['customer'] = [
-				'customer_id'       => $customer_id,
-				'customer_group_id' => $customer_group_id,
-				'firstname'         => $this->request->post['firstname'],
-				'lastname'          => $this->request->post['lastname'],
-				'email'             => $this->request->post['email'],
-				'telephone'         => $this->request->post['telephone'],
-				'custom_field'      => $this->request->post['custom_field']
-			];
+				// Add customer details into session
+				$this->session->data['customer'] = [
+					'customer_id'       => $customer_id,
+					'customer_group_id' => $customer_group_id,
+					'firstname'         => $this->request->post['firstname'],
+					'lastname'          => $this->request->post['lastname'],
+					'email'             => $this->request->post['email'],
+					'telephone'         => $this->request->post['telephone'],
+					'custom_field'      => $this->request->post['custom_field']
+				];
 
-			// Log the IP info
-			$this->model_account_customer->addLogin($this->customer->getId(), $this->request->server['REMOTE_ADDR']);
+				// Log the IP info
+				$this->model_account_customer->addLogin($this->customer->getId(), $this->request->server['REMOTE_ADDR']);
 
-			// Create customer token
-			$this->session->data['customer_token'] = token(26);
+				// Create customer token
+				$this->session->data['customer_token'] = token(26);
+			}
 
 			// Clear any previous login attempts for unregistered accounts.
 			$this->model_account_customer->deleteLoginAttempts($this->request->post['email']);
@@ -238,7 +241,7 @@ class Register extends \Opencart\System\Engine\Controller {
 			unset($this->session->data['guest']);
 			unset($this->session->data['register_token']);
 
-			$json['redirect'] = $this->url->link('account/success', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'], true);
+			$json['redirect'] = $this->url->link('account/success', 'language=' . $this->config->get('config_language') . (isset($this->session->data['customer_token']) ? '&customer_token=' . $this->session->data['customer_token'] : ''), true);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

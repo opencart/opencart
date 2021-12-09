@@ -1,10 +1,10 @@
 {% if addresses %}
   <div class="table-responsive">
     <table class="table table-bordered table-hover">
-      {% for result in addresses %}
+      {% for address in addresses %}
         <tr>
-          <td class="text-start">{{ result.address }}</td>
-          <td class="text-end"><a href="{{ result.edit }}" class="btn btn-outline-primary">{{ button_edit }}</a> <a href="{{ result.delete }}" class="btn btn-danger">{{ button_delete }}</a></td>
+          <td class="text-start">{{ address.address }}</td>
+          <td class="text-end"><a href="{{ address.edit }}" class="btn btn-outline-primary">{{ button_edit }}</a> <a href="{{ address.delete }}" class="btn btn-danger">{{ button_delete }}</a></td>
         </tr>
       {% endfor %}
     </table>
@@ -12,4 +12,3 @@
 {% else %}
   <p>{{ text_no_results }}</p>
 {% endif %}
-

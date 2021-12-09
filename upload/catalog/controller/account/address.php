@@ -4,6 +4,12 @@ class Address extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('account/address');
 
+		if (!$this->customer->isLogged() || (!isset($this->request->get['customer_token']) || !isset($this->session->data['customer_token']) || ($this->request->get['customer_token'] != $this->session->data['customer_token']))) {
+			$this->session->data['redirect'] = $this->url->link('account/address', 'language=' . $this->config->get('config_language'));
+
+			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language')));
+		}
+
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$data['breadcrumbs'][] = [
@@ -46,6 +52,12 @@ class Address extends \Opencart\System\Engine\Controller {
 
 	public function list(): void {
 		$this->load->language('account/address');
+
+		if (!$this->customer->isLogged() || (!isset($this->request->get['customer_token']) || !isset($this->session->data['customer_token']) || ($this->request->get['customer_token'] != $this->session->data['customer_token']))) {
+			$this->session->data['redirect'] = $this->url->link('account/address', 'language=' . $this->config->get('config_language'));
+
+			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language')));
+		}
 
 		$this->response->setOutput($this->getList());
 	}
@@ -103,6 +115,12 @@ class Address extends \Opencart\System\Engine\Controller {
 
 	public function form(): void {
 		$this->load->language('account/address');
+
+		if (!$this->customer->isLogged() || (!isset($this->request->get['customer_token']) || !isset($this->session->data['customer_token']) || ($this->request->get['customer_token'] != $this->session->data['customer_token']))) {
+			$this->session->data['redirect'] = $this->url->link('account/address', 'language=' . $this->config->get('config_language'));
+
+			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language')));
+		}
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -260,66 +278,74 @@ class Address extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		$keys = [
-			'firstname',
-			'lastname',
-			'address_1',
-			'address_2',
-			'city',
-			'postcode',
-			'country_id',
-			'zone_id'
-		];
+		if (!$this->customer->isLogged() || (!isset($this->request->get['customer_token']) || !isset($this->session->data['customer_token']) || ($this->request->get['customer_token'] != $this->session->data['customer_token']))) {
+			$this->session->data['redirect'] = $this->url->link('account/address', 'language=' . $this->config->get('config_language'));
 
-		foreach ($keys as $key) {
-			if (!isset($this->request->post[$key])) {
-				$this->request->post[$key] = '';
+			$json['redirect'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'));
+		}
+
+		if (!$json) {
+			$keys = [
+				'firstname',
+				'lastname',
+				'address_1',
+				'address_2',
+				'city',
+				'postcode',
+				'country_id',
+				'zone_id'
+			];
+
+			foreach ($keys as $key) {
+				if (!isset($this->request->post[$key])) {
+					$this->request->post[$key] = '';
+				}
 			}
-		}
 
-		if ((utf8_strlen($this->request->post['firstname']) < 1) || (utf8_strlen($this->request->post['firstname']) > 32)) {
-			$json['error']['firstname'] = $this->language->get('error_firstname');
-		}
+			if ((utf8_strlen($this->request->post['firstname']) < 1) || (utf8_strlen($this->request->post['firstname']) > 32)) {
+				$json['error']['firstname'] = $this->language->get('error_firstname');
+			}
 
-		if ((utf8_strlen($this->request->post['lastname']) < 1) || (utf8_strlen($this->request->post['lastname']) > 32)) {
-			$json['error']['lastname'] = $this->language->get('error_lastname');
-		}
+			if ((utf8_strlen($this->request->post['lastname']) < 1) || (utf8_strlen($this->request->post['lastname']) > 32)) {
+				$json['error']['lastname'] = $this->language->get('error_lastname');
+			}
 
-		if ((utf8_strlen($this->request->post['address_1']) < 3) || (utf8_strlen($this->request->post['address_1']) > 128)) {
-			$json['error']['address_1'] = $this->language->get('error_address_1');
-		}
+			if ((utf8_strlen($this->request->post['address_1']) < 3) || (utf8_strlen($this->request->post['address_1']) > 128)) {
+				$json['error']['address_1'] = $this->language->get('error_address_1');
+			}
 
-		if ((utf8_strlen($this->request->post['city']) < 2) || (utf8_strlen($this->request->post['city']) > 128)) {
-			$json['error']['city'] = $this->language->get('error_city');
-		}
+			if ((utf8_strlen($this->request->post['city']) < 2) || (utf8_strlen($this->request->post['city']) > 128)) {
+				$json['error']['city'] = $this->language->get('error_city');
+			}
 
-		$this->load->model('localisation/country');
+			$this->load->model('localisation/country');
 
-		$country_info = $this->model_localisation_country->getCountry($this->request->post['country_id']);
+			$country_info = $this->model_localisation_country->getCountry($this->request->post['country_id']);
 
-		if ($country_info && $country_info['postcode_required'] && (utf8_strlen($this->request->post['postcode']) < 2 || utf8_strlen($this->request->post['postcode']) > 10)) {
-			$json['error']['postcode'] = $this->language->get('error_postcode');
-		}
+			if ($country_info && $country_info['postcode_required'] && (utf8_strlen($this->request->post['postcode']) < 2 || utf8_strlen($this->request->post['postcode']) > 10)) {
+				$json['error']['postcode'] = $this->language->get('error_postcode');
+			}
 
-		if ($this->request->post['country_id'] == '') {
-			$json['error']['country'] = $this->language->get('error_country');
-		}
+			if ($this->request->post['country_id'] == '') {
+				$json['error']['country'] = $this->language->get('error_country');
+			}
 
-		if (!isset($this->request->post['zone_id']) || $this->request->post['zone_id'] == '') {
-			$json['error']['zone'] = $this->language->get('error_zone');
-		}
+			if (!isset($this->request->post['zone_id']) || $this->request->post['zone_id'] == '') {
+				$json['error']['zone'] = $this->language->get('error_zone');
+			}
 
-		// Custom field validation
-		$this->load->model('account/custom_field');
+			// Custom field validation
+			$this->load->model('account/custom_field');
 
-		$custom_fields = $this->model_account_custom_field->getCustomFields($this->customer->getGroupId());
+			$custom_fields = $this->model_account_custom_field->getCustomFields($this->customer->getGroupId());
 
-		foreach ($custom_fields as $custom_field) {
-			if ($custom_field['location'] == 'address') {
-				if ($custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['custom_field_id']])) {
-					$json['error']['custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
-				} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !preg_match(html_entity_decode($custom_field['validation'], ENT_QUOTES, 'UTF-8'), $this->request->post['custom_field'][$custom_field['custom_field_id']])) {
-					$json['error']['custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_regex'), $custom_field['name']);
+			foreach ($custom_fields as $custom_field) {
+				if ($custom_field['location'] == 'address') {
+					if ($custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['custom_field_id']])) {
+						$json['error']['custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
+					} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !preg_match(html_entity_decode($custom_field['validation'], ENT_QUOTES, 'UTF-8'), $this->request->post['custom_field'][$custom_field['custom_field_id']])) {
+						$json['error']['custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_regex'), $custom_field['name']);
+					}
 				}
 			}
 		}
@@ -327,11 +353,15 @@ class Address extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('account/address');
 
+			// Add Address
 			if (!isset($this->request->get['address_id'])) {
 				$this->model_account_address->addAddress($this->customer->getId(), $this->request->post);
 
 				$this->session->data['success'] = $this->language->get('text_add');
-			} else {
+			}
+
+			// Edit Address
+			if (isset($this->request->get['address_id'])) {
 				$this->model_account_address->editAddress($this->request->get['address_id'], $this->request->post);
 
 				// If address is in session update it.
@@ -353,7 +383,7 @@ class Address extends \Opencart\System\Engine\Controller {
 				$this->session->data['success'] = $this->language->get('text_edit');
 			}
 
-			$json['redirect'] = $this->url->link('account/address', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']);
+			$json['redirect'] = $this->url->link('account/address', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'], true);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

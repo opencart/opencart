@@ -215,10 +215,12 @@
             <label class="col-sm-2 col-form-label">{{ entry_default }}</label>
             <div class="col-sm-10">
               <div class="form-check-inline">
-                <input type="radio" name="default" value="1" id="input-default-yes" class="form-check-input"{% if default %} checked{% endif %}/> <label for="input-default-yes" class="form-check-label">{{ text_yes }}</label>
+                <input type="radio" name="default" value="1" id="input-default-yes" class="form-check-input"{% if default %} checked{% endif %}/>
+                <label for="input-default-yes" class="form-check-label">{{ text_yes }}</label>
               </div>
               <div class="form-check-inline">
-                <input type="radio" name="default" value="0" id="input-default-no" class="form-check-input"{% if not default %} checked{% endif %}/> <label for="input-default-no" class="form-check-label">{{ text_no }}</label>
+                <input type="radio" name="default" value="0" id="input-default-no" class="form-check-input"{% if not default %} checked{% endif %}/>
+                <label for="input-default-no" class="form-check-label">{{ text_no }}</label>
               </div>
             </div>
           </div>

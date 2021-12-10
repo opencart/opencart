@@ -161,6 +161,12 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
+		if (!$this->customer->isLogged() || (!isset($this->request->get['customer_token']) || !isset($this->session->data['customer_token']) || ($this->request->get['customer_token'] != $this->session->data['customer_token']))) {
+			$this->session->data['redirect'] = $this->url->link('account/affiliate', 'language=' . $this->config->get('config_language'));
+
+			$json['redirect'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'), true);
+		}
+
 		if (!$this->config->get('config_affiliate_status')) {
 			$json['redirect'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'], true);
 		}

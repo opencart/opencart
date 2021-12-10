@@ -47,23 +47,31 @@ class Password extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		$keys = [
-			'password',
-			'confirm'
-		];
+		if (!$this->customer->isLogged() || (!isset($this->request->get['customer_token']) || !isset($this->session->data['customer_token']) || ($this->request->get['customer_token'] != $this->session->data['customer_token']))) {
+			$this->session->data['redirect'] = $this->url->link('account/password', 'language=' . $this->config->get('config_language'));
 
-		foreach ($keys as $key) {
-			if (!isset($this->request->post[$key])) {
-				$this->request->post[$key] = '';
+			$json['redirect'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'));
+		}
+
+		if (!$json) {
+			$keys = [
+				'password',
+				'confirm'
+			];
+
+			foreach ($keys as $key) {
+				if (!isset($this->request->post[$key])) {
+					$this->request->post[$key] = '';
+				}
 			}
-		}
 
-		if ((utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) < 4) || (utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) > 40)) {
-			$json['error']['password'] = $this->language->get('error_password');
-		}
+			if ((utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) < 4) || (utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) > 40)) {
+				$json['error']['password'] = $this->language->get('error_password');
+			}
 
-		if ($this->request->post['confirm'] != $this->request->post['password']) {
-			$json['error']['confirm'] = $this->language->get('error_confirm');
+			if ($this->request->post['confirm'] != $this->request->post['password']) {
+				$json['error']['confirm'] = $this->language->get('error_confirm');
+			}
 		}
 
 		if (!$json) {

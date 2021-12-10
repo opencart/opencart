@@ -50,13 +50,21 @@ class Newsletter extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		$this->load->model('account/customer');
+		if (!$this->customer->isLogged() || (!isset($this->request->get['customer_token']) || !isset($this->session->data['customer_token']) || ($this->request->get['customer_token'] != $this->session->data['customer_token']))) {
+			$this->session->data['redirect'] = $this->url->link('account/newsletter', 'language=' . $this->config->get('config_language'));
 
-		$this->model_account_customer->editNewsletter($this->request->post['newsletter']);
+			$json['redirect'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'));
+		}
 
-		$this->session->data['success'] = $this->language->get('text_success');
+		if (!$json) {
+			$this->load->model('account/customer');
 
-		$json['redirect'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'], true);
+			$this->model_account_customer->editNewsletter($this->request->post['newsletter']);
+
+			$this->session->data['success'] = $this->language->get('text_success');
+
+			$json['redirect'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'], true);
+		}
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

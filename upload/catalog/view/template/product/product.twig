@@ -373,7 +373,9 @@ $('#input-recurring, #input-quantity').change(function() {
     });
 });
 
-$('#form-product').submit(function() {
+$('#form-product').on('submit', function(e) {
+    e.preventDefault();
+
     $.ajax({
         url: 'index.php?route=checkout/cart|add&language={{ language }}',
         type: 'post',

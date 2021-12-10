@@ -5,7 +5,7 @@ class WishList extends \Opencart\System\Engine\Controller {
 		$this->load->language('account/wishlist');
 
 		if (!$this->customer->isLogged() || (!isset($this->request->get['customer_token']) || !isset($this->session->data['customer_token']) || ($this->request->get['customer_token'] != $this->session->data['customer_token']))) {
-			$this->session->data['redirect'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language'));
+			$this->session->data['redirect'] = $this->url->link('account/wishlist', 'language=' . $this->config->get('config_language'));
 
 			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language')));
 		}
@@ -29,8 +29,6 @@ class WishList extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('account/wishlist', 'language=' . $this->config->get('config_language') . (isset($this->session->data['customer_token']) ? '&customer_token=' . $this->session->data['customer_token'] : ''))
 		];
 
-		$data['add_to_cart'] = $this->url->link('checkout/cart|add', 'language=' . $this->config->get('config_language'));
-
 		if (isset($this->session->data['success'])) {
 			$data['success'] = $this->session->data['success'];
 
@@ -38,6 +36,31 @@ class WishList extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['success'] = '';
 		}
+
+		$data['list'] = $this->load->controller('account/wishlist|getList');
+
+		$data['continue'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language') . (isset($this->session->data['customer_token']) ? '&customer_token=' . $this->session->data['customer_token'] : ''));
+
+		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['column_right'] = $this->load->controller('common/column_right');
+		$data['content_top'] = $this->load->controller('common/content_top');
+		$data['content_bottom'] = $this->load->controller('common/content_bottom');
+		$data['footer'] = $this->load->controller('common/footer');
+		$data['header'] = $this->load->controller('common/header');
+
+		$this->response->setOutput($this->load->view('account/wishlist', $data));
+	}
+
+	public function list(): void {
+		$this->load->language('account/wishlist');
+
+		$this->response->setOutput($this->getList());
+	}
+
+	public function getList(): string {
+		$data['wishlist'] = $this->url->link('account/wishlist|list', 'language=' . $this->config->get('config_language'));
+		$data['add_to_cart'] = $this->url->link('checkout/cart|add', 'language=' . $this->config->get('config_language'));
+		$data['remove'] = $this->url->link('checkout/cart|remove', 'language=' . $this->config->get('config_language'));
 
 		$data['products'] = [];
 
@@ -86,24 +109,14 @@ class WishList extends \Opencart\System\Engine\Controller {
 					'price'      => $price,
 					'special'    => $special,
 					'minimum'    => $product_info['minimum'] > 0 ? $product_info['minimum'] : 1,
-					'href'       => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product_info['product_id']),
-					'remove'     => $this->url->link('account/wishlist', 'language=' . $this->config->get('config_language') . '&remove=' . $product_info['product_id'])
+					'href'       => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product_info['product_id'])
 				];
 			} else {
 				$this->model_account_wishlist->deleteWishlist($result['product_id']);
 			}
 		}
 
-		$data['continue'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language'));
-
-		$data['column_left'] = $this->load->controller('common/column_left');
-		$data['column_right'] = $this->load->controller('common/column_right');
-		$data['content_top'] = $this->load->controller('common/content_top');
-		$data['content_bottom'] = $this->load->controller('common/content_bottom');
-		$data['footer'] = $this->load->controller('common/footer');
-		$data['header'] = $this->load->controller('common/header');
-
-		$this->response->setOutput($this->load->view('account/wishlist', $data));
+		return $this->load->view('account/wishlist_list', $data);
 	}
 
 	public function add(): void {
@@ -165,14 +178,12 @@ class WishList extends \Opencart\System\Engine\Controller {
 			$product_id = 0;
 		}
 
-		if (isset($this->request->get['remove'])) {
-			// Remove Wishlist
-			$this->model_account_wishlist->deleteWishlist($this->request->get['remove']);
+		// Remove Wishlist
+		$this->model_account_wishlist->deleteWishlist($product_id);
 
-			$this->session->data['success'] = $this->language->get('text_remove');
+		$this->session->data['success'] = $this->language->get('text_remove');
 
-			$json['redirect'] = $this->url->link('account/wishlist', 'language=' . $this->config->get('config_language'), true);
-		}
+		$json['redirect'] = $this->url->link('account/wishlist', 'language=' . $this->config->get('config_language'), true);
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

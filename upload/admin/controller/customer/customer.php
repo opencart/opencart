@@ -1126,31 +1126,6 @@ class Customer extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function customfield(): void {
-		$json = [];
-
-		// Customer Group
-		if (isset($this->request->get['customer_group_id'])) {
-			$customer_group_id = (int)$this->request->get['customer_group_id'];
-		} else {
-			$customer_group_id = $this->config->get('config_customer_group_id');
-		}
-
-		$this->load->model('customer/custom_field');
-
-		$custom_fields = $this->model_customer_custom_field->getCustomFields(['filter_customer_group_id' => $customer_group_id]);
-
-		foreach ($custom_fields as $custom_field) {
-			$json[] = [
-				'custom_field_id' => $custom_field['custom_field_id'],
-				'required'        => empty($custom_field['required']) || $custom_field['required'] == 0 ? false : true
-			];
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
 	public function address(): void {
 		$this->load->language('customer/customer');
 
@@ -1172,6 +1147,31 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 		if (!$json) {
 			$json = $address_info;
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	public function customfield(): void {
+		$json = [];
+
+		// Customer Group
+		if (isset($this->request->get['customer_group_id'])) {
+			$customer_group_id = (int)$this->request->get['customer_group_id'];
+		} else {
+			$customer_group_id = $this->config->get('config_customer_group_id');
+		}
+
+		$this->load->model('customer/custom_field');
+
+		$custom_fields = $this->model_customer_custom_field->getCustomFields(['filter_customer_group_id' => $customer_group_id]);
+
+		foreach ($custom_fields as $custom_field) {
+			$json[] = [
+				'custom_field_id' => $custom_field['custom_field_id'],
+				'required'        => empty($custom_field['required']) || $custom_field['required'] == 0 ? false : true
+			];
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

@@ -2,10 +2,7 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="float-end">
-        <button type="button" id="button-refresh" data-bs-toggle="tooltip" title="{{ button_refresh }}" class="btn btn-outline-primary"><i class="fas fa-sync"></i></button>
-        <a href="{{ invoice }}" target="_blank" data-bs-toggle="tooltip" title="{{ button_invoice_print }}" class="btn btn-info{% if not order_id %} disabled{% endif %}"><i class="fas fa-print"></i></a> <a href="{{ shipping }}" target="_blank" data-bs-toggle="tooltip" title="{{ button_shipping_print }}" class="btn btn-info{% if not order_id %} disabled{% endif %}"><i class="fas fa-truck"></i></a> <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a>
-      </div>
+      <div class="float-end"><a href="{{ invoice }}" target="_blank" data-bs-toggle="tooltip" title="{{ button_invoice_print }}" class="btn btn-info{% if not order_id %} disabled{% endif %}"><i class="fas fa-print"></i></a> <a href="{{ shipping }}" target="_blank" data-bs-toggle="tooltip" title="{{ button_shipping_print }}" class="btn btn-info{% if not order_id %} disabled{% endif %}"><i class="fas fa-truck"></i></a> <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
       <ol class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -275,6 +272,35 @@
           </div>
         </div>
 
+
+
+        <div class="row row-cols-2">
+          <div class="col">
+
+
+            <div class="input-group mb-3">
+              <div class="form-control p-0 border rounded-start">
+                <p class="lead p-2 mb-0"><strong>{{ text_shipping_method }}</strong>
+                  <br/>
+                  {% if shipping_method %}
+                    <span id="shipping-method">{{ shipping_method }}</span>
+                  {% else %}
+                    <span id="shipping-method">&nbsp;</span>
+                  {% endif %}
+                </p>
+              </div>
+              <button type="button" data-bs-toggle="modal" data-bs-target="#modal-shipping-method" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
+            </div>
+          </div>
+
+          <div class="col">
+            <strong>{{ text_payment_method }}</strong>
+            <br/>
+
+
+
+          </div>
+        </div>
         <table id="order" class="table table-bordered">
           <thead>
             <tr>
@@ -302,9 +328,10 @@
 
         <div class="row">
           <div class="col text-end">
-            <button type="button" id="button-confirm" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_confirm }}</button>
+            <button type="button" id="button-refresh" data-bs-toggle="tooltip" title="{{ button_refresh }}" class="btn btn-outline-primary"><i class="fas fa-sync"></i></button> <button type="button" id="button-confirm" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_confirm }}</button>
           </div>
         </div>
+
 
         {% if comment %}
           <div class="row">
@@ -699,22 +726,7 @@
       </div>
       <div class="modal-body">
 
-        <form id="form-payment-method">
-          <div class="mb-3">
-            <div class="input-group">
-              <select name="payment_method" id="input-payment-method" class="form-select">
-                <option value="">{{ text_select }}</option>
-                {% if payment_code %}
-                  <option value="{{ payment_code }}" selected="selected">{{ payment_method }}</option>
-                {% endif %}
-              </select>
-              <button type="button" id="button-payment-refresh" data-oc-loading-text="{{ text_loading }}" class="btn btn-outline-primary"><i class="fas fa-sync"></i></button>
-            </div>
-          </div>
-          <div class="text-end">
-            <button type="submit" id="button-payment-method" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
-          </div>
-        </form>
+
 
       </div>
     </div>
@@ -2543,7 +2555,7 @@ $('#form-product-remove').on('click', '.btn-danger', function () {
     $.ajax({
         url: 'index.php?route=sale/order|call|&user_token={{ user_token }}&action=sale/cart/remove',
         type: 'post',
-        data: 'key=' + this.value,
+        data: $('#form-product-remove').serialize(),
         dataType: 'json',
         beforeSend: function () {
             $(element).button('loading');
@@ -2588,7 +2600,7 @@ $('#form-voucher-add').on('submit', function (e) {
             $('#button-voucher-add').button('reset');
         },
         success: function (json) {
-            $('.alert-dismissible').remove();
+            $('#form-voucher-add .alert-dismissible').remove();
             $('.is-invalid').removeClass('is-invalid');
             $('.invalid-feedback').removeClass('d-block');
 
@@ -2628,7 +2640,7 @@ $('#form-voucher-remove').on('click', '.btn-danger', function () {
     $.ajax({
         url: 'index.php?route=sale/order|call|&user_token={{ user_token }}&action=sale/voucher/remove',
         type: 'post',
-        data: 'key=' + this.value,
+        data: $('#form-voucher-remove').serialize(),
         dataType: 'json',
         beforeSend: function () {
             $(element).button('loading');
@@ -2669,7 +2681,7 @@ $('#button-refresh').on('click', function () {
             $('#button-confirm').button('reset');
         },
         success: function (json) {
-            $('.alert-dismissible').remove();
+            $('#alert .alert-dismissible').remove();
 
             // Check for errors
             if (json['error']) {

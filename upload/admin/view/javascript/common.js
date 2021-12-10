@@ -205,8 +205,7 @@ $(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function(e) {
             $(element).find('.is-invalid').removeClass('is-invalid');
             $(element).find('.invalid-feedback').removeClass('d-block');
 
-           // console.log(json['error']);
-           console.log(json);
+            console.log(json);
 
             if (json['redirect']) {
                 location = json['redirect'];

@@ -58,7 +58,7 @@ class Header extends \Opencart\System\Engine\Controller {
 		}
 
 		$data['home'] = $this->url->link('common/home', 'language=' . $this->config->get('config_language'));
-		$data['wishlist'] = $this->url->link('account/wishlist', 'language=' . $this->config->get('config_language'));
+		$data['wishlist'] = $this->url->link('account/wishlist', 'language=' . $this->config->get('config_language') . (isset($this->session->data['customer_token']) ? '&customer_token=' . $this->session->data['customer_token'] : ''));
 		$data['logged'] = $this->customer->isLogged();
 
 		if (!$this->customer->isLogged()) {

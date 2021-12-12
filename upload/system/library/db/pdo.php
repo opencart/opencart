@@ -24,7 +24,7 @@ class PDO {
 
 	public function query(string $sql): bool|object {
 		$statement = $this->connection->prepare(preg_replace('/(?:\'\:)([a-z0-9]*.)(?:\')/', ':$1', $sql));
-
+		$result = new \stdClass();
 		try {
 			if ($statement && $statement->execute($this->data)) {
 				$this->data = [];
@@ -32,13 +32,10 @@ class PDO {
 				if ($statement->columnCount()) {
 					$data = $statement->fetchAll(\PDO::FETCH_ASSOC);
 
-					$result = new \stdClass();
 					$result->row = isset($data[0]) ? $data[0] : [];
 					$result->rows = $data;
 					$result->num_rows = count($data);
 					$this->affected = 0;
-
-					return $result;
 				} else {
 					$this->affected = $statement->rowCount();
 				}
@@ -48,6 +45,8 @@ class PDO {
 		} catch (\PDOException $e) {
 			throw new \Exception('Error: ' . $e->getMessage() . ' Error Code : ' . $e->getCode() . ' <br />' . $sql);
 		}
+
+		return $result;
 	}
 
 	public function escape(string $value) {

@@ -41,6 +41,8 @@ $('#button-shipping-method').on('click', function() {
                     $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                 }
 
+                console.log(json);
+
                 // Shipping Methods
                 html = '<option value="">{{ text_select }}</option>';
 

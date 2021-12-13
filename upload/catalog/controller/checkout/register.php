@@ -455,7 +455,7 @@ class Register extends \Opencart\System\Engine\Controller {
 					'iso_code_2'     => $iso_code_2,
 					'iso_code_3'     => $iso_code_3,
 					'address_format' => $address_format,
-					'custom_field'   => isset($this->request->post['payment_custom_field']) ? $this->request->post['payment_custom_field']['address'] : []
+					'custom_field'   => isset($this->request->post['payment_custom_field']) ? $this->request->post['payment_custom_field'] : []
 				];
 
 				// Add

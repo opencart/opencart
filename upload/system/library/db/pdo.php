@@ -49,7 +49,8 @@ class PDO {
 		return $result;
 	}
 
-	public function escape(string $value) {
+	public function escape(string $value): string
+	{
 		$key = ':' . count($this->data);
 
 		$this->data[$key] = $value;

@@ -1,6 +1,6 @@
 <fieldset>
   <legend>{{ heading_title }}</legend>
-  <div id="shipping-addresses" style="display: {% if not addresses %}none{% else %}block{% endif %};">
+  <div id="shipping-addresses" style="display: {% if addresses %}block{% else %}none{% endif %};">
     <div class="form-check">
       <input type="radio" name="shipping_existing" value="1" id="input-shipping-existing" class="form-check-input"{% if addresses %} checked{% endif %}/> <label for="input-shipping-existing" class="form-check-label">{{ text_address_existing }}</label>
     </div>
@@ -8,7 +8,7 @@
       <input type="radio" name="shipping_existing" value="0" id="input-shipping-new" class="form-check-input"{% if not addresses %} checked{% endif %}/> <label for="input-shipping-new" class="form-check-label">{{ text_address_new }}</label>
     </div>
   </div>
-  <div id="shipping-existing" style="display: {% if not addresses %}none{% else %}block{% endif %};">
+  <div id="shipping-existing" style="display: {% if addresses %}block{% else %}none{% endif %};">
     <select name="address_id" id="input-shipping-address" class="form-select">
       {% for address in addresses %}
         <option value="{{ address.address_id }}"{% if address.address_id == address_id %} selected{% endif %}>{{ address.firstname }} {{ address.lastname }}, {{ address.address_1 }}, {{ address.city }}, {{ address.zone }}, {{ address.country }}</option>
@@ -16,7 +16,7 @@
     </select>
   </div>
   <br/>
-  <div id="shipping-new" style="display: {% if addresses %}none{% else %}block{% endif %};">
+  <div id="shipping-new" style="display: {% if not addresses %}block{% else %}none{% endif %};">
     <form id="form-shipping-address">
       <div class="row row-cols-1 row-cols-md-2">
 

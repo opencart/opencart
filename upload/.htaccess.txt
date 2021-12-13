@@ -54,7 +54,7 @@ RewriteRule ^([^?]*) index.php?_route_=$1 [L,QSA]
 # 5. set max time script can take. uncomment this line if you have a lot of product options or are getting errors where forms are not saving all fields
 # php_value max_execution_time 200
 
-# 6. set max time for input to be recieved. Uncomment this line if you have a lot of product options or are getting errors where forms are not saving all fields
+# 6. set max time for input to be received. Uncomment this line if you have a lot of product options or are getting errors where forms are not saving all fields
 # php_value max_input_time 200
 
 # 7. disable open_basedir limitations

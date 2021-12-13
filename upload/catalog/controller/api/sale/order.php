@@ -10,7 +10,7 @@ class Order extends \Opencart\System\Engine\Controller {
 	 * */
 	public function load(): void {
 		$this->load->language('api/sale/order');
-
+echo 'hi';
 		$json = [];
 
 		if (isset($this->request->get['order_id'])) {
@@ -123,6 +123,8 @@ class Order extends \Opencart\System\Engine\Controller {
 
 			$json['success'] = $this->language->get('text_success');
 		}
+
+		$json['success'] = $this->language->get('text_success');
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

@@ -609,6 +609,41 @@ class Order extends \Opencart\System\Engine\Controller {
 			'order'         => 'ASC'
 		];
 
+		$this->load->model('customer/custom_field');
+
+		$custom_fields = $this->model_customer_custom_field->getCustomFields($filter_data);
+
+		foreach ($custom_fields as $custom_field) {
+			$data['custom_fields'][] = [
+				'custom_field_id'    => $custom_field['custom_field_id'],
+				'custom_field_value' => $this->model_customer_custom_field->getValues($custom_field['custom_field_id']),
+				'name'               => $custom_field['name'],
+				'value'              => $custom_field['value'],
+				'type'               => $custom_field['type'],
+				'location'           => $custom_field['location'],
+				'sort_order'         => $custom_field['sort_order']
+			];
+		}
+
+		/*
+		// Custom Fields
+		$this->load->model('tool/upload');
+
+		if ($custom_field['type'] == 'file') {
+			$upload_info = $this->model_tool_upload->getUploadByCode($order_info['account_custom_field'][$custom_field['custom_field_id']]);
+
+			if ($upload_info) {
+				$data['account_custom_field'][] = [
+					'name'       => $custom_field['name'],
+					'value'      => $upload_info['name'],
+					'sort_order' => $custom_field['sort_order']
+				];
+			}
+		}
+		*/
+
+
+
 		// Addresses
 		if (!empty($order_info)) {
 			$this->load->model('customer/customer');
@@ -683,6 +718,20 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['payment_custom_field'] = [];
 		}
 
+		/*
+		if ($custom_field['type'] == 'file') {
+			$upload_info = $this->model_tool_upload->getUploadByCode($order_info['payment_custom_field'][$custom_field['custom_field_id']]);
+
+			if ($upload_info) {
+				$data['payment_custom_fields'][] = [
+					'name'       => $custom_field['name'],
+					'value'      => $upload_info['name'],
+					'sort_order' => $custom_field['sort_order']
+				];
+			}
+		}
+		*/
+
 		if (!empty($order_info)) {
 			if ($order_info['payment_address_format']) {
 				$format = $order_info['payment_address_format'];
@@ -734,36 +783,6 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['payment_code'] = '';
 		}
 
-		/*
-		// Custom Fields
-		$this->load->model('tool/upload');
-
-		if ($custom_field['type'] == 'file') {
-			$upload_info = $this->model_tool_upload->getUploadByCode($order_info['account_custom_field'][$custom_field['custom_field_id']]);
-
-			if ($upload_info) {
-				$data['account_custom_field'][] = [
-					'name'       => $custom_field['name'],
-					'value'      => $upload_info['name'],
-					'sort_order' => $custom_field['sort_order']
-				];
-			}
-		}
-		*/
-
-		/*
-		if ($custom_field['type'] == 'file') {
-			$upload_info = $this->model_tool_upload->getUploadByCode($order_info['payment_custom_field'][$custom_field['custom_field_id']]);
-
-			if ($upload_info) {
-				$data['payment_custom_fields'][] = [
-					'name'       => $custom_field['name'],
-					'value'      => $upload_info['name'],
-					'sort_order' => $custom_field['sort_order']
-				];
-			}
-		}
-		*/
 
 		// Shipping Address
 		if (!empty($order_info)) {
@@ -875,23 +894,6 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['shipping_code'] = $order_info['shipping_code'];
 		} else {
 			$data['shipping_code'] = '';
-		}
-
-		// Custom Fields
-		$this->load->model('customer/custom_field');
-
-		$custom_fields = $this->model_customer_custom_field->getCustomFields($filter_data);
-
-		foreach ($custom_fields as $custom_field) {
-			$data['custom_fields'][] = [
-				'custom_field_id'    => $custom_field['custom_field_id'],
-				'custom_field_value' => $this->model_customer_custom_field->getValues($custom_field['custom_field_id']),
-				'name'               => $custom_field['name'],
-				'value'              => $custom_field['value'],
-				'type'               => $custom_field['type'],
-				'location'           => $custom_field['location'],
-				'sort_order'         => $custom_field['sort_order']
-			];
 		}
 
 		// Products
@@ -1177,14 +1179,187 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$data['user_token'] = $this->session->data['user_token'];
 
-		// Create new API session on the
-		$this->session->data['api_session'] = substr(bin2hex(random_bytes(26)), 0, 26);
+		unset($this->session->data['api_session']);
+
+		if (!empty($order_info)) {
+			echo $this->tcall('sale/order|load', ['order_id' => $order_info['order_id']]);
+		}
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('sale/order_info', $data));
+	}
+
+	// Method to call the store front API and return a response.
+	public function call(): void {
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput($this->tcall($this->request->get['action'], $this->request->get, $this->request->post));
+	}
+
+	private function tcall(string $action, array $get = [], array $post = []): string {
+		// 1. Create a store instance using loader class to call controllers, models, views, libraries
+
+		// Autoloader
+		$autoloader = new \Opencart\System\Engine\Autoloader();
+		$autoloader->register('Opencart\Catalog', DIR_CATALOG);
+		$autoloader->register('Opencart\Extension', DIR_EXTENSION);
+		$autoloader->register('Opencart\System', DIR_SYSTEM);
+
+		// Registry
+		$registry = new \Opencart\System\Engine\Registry();
+		$registry->set('autoloader', $autoloader);
+
+		// Config
+		$config = new \Opencart\System\Engine\Config();
+		$config->addPath(DIR_CONFIG);
+		$registry->set('config', $config);
+
+		// Load the default config
+		$config->load('default');
+		$config->load('catalog');
+		$config->set('application', 'Catalog');
+
+		// Logging
+		$registry->set('log', $this->log);
+
+		// Event
+		$event = new \Opencart\System\Engine\Event($registry);
+		$registry->set('event', $event);
+
+		// Event Register
+		if ($config->has('action_event')) {
+			foreach ($config->get('action_event') as $key => $value) {
+				foreach ($value as $priority => $action) {
+					$event->register($key, new \Opencart\System\Engine\Action($action), $priority);
+				}
+			}
+		}
+
+		// Loader
+		$loader = new \Opencart\System\Engine\Loader($registry);
+		$registry->set('load', $loader);
+
+		// Create a dummy request class so we can feed the data to the order editor
+		$request = new \stdClass();
+		$request->get = $get;
+		$request->post = $post;
+		$request->server = $this->request->server;
+		$request->cookie = [];
+
+		// Request
+		$registry->set('request', $request);
+
+		// Response
+		$response = new \Opencart\System\Library\Response();
+		$registry->set('response', $response);
+
+		// Database
+		$registry->set('db', $this->db);
+
+		// Cache
+		$registry->set('cache', $this->cache);
+
+		// Session
+		$session = new \Opencart\System\Library\Session($config->get('session_engine'), $registry);
+		$registry->set('session', $session);
+
+		if (isset($this->session->data['api_session'])) {
+			$session_id = $this->session->data['api_session'];
+		} else {
+			$session_id = '';
+		}
+
+		$session->start($session_id);
+
+		$this->session->data['api_session'] = $session->getId();
+
+		// To use the order API it requires an API ID.
+		$session->data['api_id'] = (int)$this->config->get('config_api_id');
+
+		// Template
+		$template = new \Opencart\System\Library\Template($config->get('template_engine'));
+		$template->addPath(DIR_CATALOG . 'view/template/');
+		$registry->set('template', $template);
+
+		// Language
+		if (isset($session->data['language'])) {
+			$language_code = $session->data['language'];
+		} else {
+			$language_code = $this->config->get('config_language');
+		}
+
+		$this->load->model('localisation/language');
+
+		$language_info = $this->model_localisation_language->getLanguageByCode($language_code);
+
+		if ($language_info) {
+			$config->set('config_language_id', $language_info['language_id']);
+			$config->set('config_language', $language_info['code']);
+		} else {
+			$config->set('config_language_id', $this->config->get('config_language_id'));
+			$config->set('config_language', $language_code);
+		}
+
+		$language = new \Opencart\System\Library\Language($language_code);
+		$language->addPath(DIR_CATALOG . 'language/');
+		$language->load($language_code);
+		$registry->set('language', $language);
+
+		// Store
+		if (isset($session->data['store_id'])) {
+			$config->set('config_store_id', $session->data['store_id']);
+		} else {
+			$config->set('config_store_id', 0);
+		}
+
+		// Url
+		$registry->set('url', new \Opencart\System\Library\Url($config->get('site_url')));
+
+		// Document
+		$registry->set('document', new \Opencart\System\Library\Document());
+
+		// 2. Add the request vars and remove the unneeded ones
+		//$request->get = $this->request->get;
+
+		unset($request->get['route']);
+		unset($request->get['user_token']);
+
+		//$request->post = $this->request->post;
+
+		// 3. Add the default API ID otherwise will not get a response.
+		$session->data['api_id'] = $this->config->get('config_api_id');
+
+		// 4. Run pre actions to load key settings and classes.
+		$pre_actions = [
+			'startup/setting',
+			'startup/extension',
+			'startup/customer',
+			'startup/tax',
+			'startup/currency',
+			'startup/application',
+			'startup/startup',
+			'startup/event'
+		];
+
+		// Pre Actions
+		foreach ($pre_actions as $pre_action) {
+			$loader->controller($pre_action);
+		}
+
+		// Customer
+		$customer = new \Opencart\System\Library\Cart\Customer($this->registry);
+		$registry->set('customer', $customer);
+
+		// Call the required api controller
+		if (isset($this->request->get['action'])) {
+			$loader->controller('api/' . $action);
+		}
+
+		echo $response->getOutput();
+
+		return $response->getOutput();
 	}
 
 	public function invoice(): void {
@@ -1574,170 +1749,6 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		$this->response->setOutput($this->load->view('sale/order_shipping', $data));
-	}
-
-	// Method to call the store front API and return a response.
-	public function call(): void {
-		// 1. Create a store instance using loader class to call controllers, models, views, libraries
-
-		// Autoloader
-		$autoloader = new \Opencart\System\Engine\Autoloader();
-		$autoloader->register('Opencart\Catalog', DIR_CATALOG);
-		$autoloader->register('Opencart\Extension', DIR_EXTENSION);
-		$autoloader->register('Opencart\System', DIR_SYSTEM);
-
-		// Registry
-		$registry = new \Opencart\System\Engine\Registry();
-		$registry->set('autoloader', $autoloader);
-
-		// Config
-		$config = new \Opencart\System\Engine\Config();
-		$config->addPath(DIR_CONFIG);
-		$registry->set('config', $config);
-
-		// Load the default config
-		$config->load('default');
-		$config->load('catalog');
-		$config->set('application', 'Catalog');
-
-		// Logging
-		$registry->set('log', $this->log);
-
-		// Event
-		$event = new \Opencart\System\Engine\Event($registry);
-		$registry->set('event', $event);
-
-		// Event Register
-		if ($config->has('action_event')) {
-			foreach ($config->get('action_event') as $key => $value) {
-				foreach ($value as $priority => $action) {
-					$event->register($key, new \Opencart\System\Engine\Action($action), $priority);
-				}
-			}
-		}
-
-		// Loader
-		$loader = new \Opencart\System\Engine\Loader($registry);
-		$registry->set('load', $loader);
-
-		// Create a dummy request class so we can feed the data to the order editor
-		$request = new \stdClass();
-		$request->get = [];
-		$request->post = [];
-		$request->server = $this->request->server;
-		$request->cookie = [];
-
-		// Request
-		$registry->set('request', $request);
-
-		// Response
-		$response = new \Opencart\System\Library\Response();
-		$registry->set('response', $response);
-
-		// Database
-		$registry->set('db', $this->db);
-
-		// Cache
-		$registry->set('cache', $this->cache);
-
-		// Session
-		$session = new \Opencart\System\Library\Session($config->get('session_engine'), $registry);
-		$registry->set('session', $session);
-
-		if (isset($this->session->data['api_session'])) {
-			$session_id = $this->session->data['api_session'];
-		} else {
-			$session_id = '';
-		}
-
-		$session->start($session_id);
-
-		$this->session->data['api_session'] = $session->getId();
-
-		// To use the order API it requires an API ID.
-		$session->data['api_id'] = (int)$this->config->get('config_api_id');
-
-		// Template
-		$template = new \Opencart\System\Library\Template($config->get('template_engine'));
-		$template->addPath(DIR_CATALOG . 'view/template/');
-		$registry->set('template', $template);
-
-		// Language
-		if (isset($session->data['language'])) {
-			$language_code = $session->data['language'];
-		} else {
-			$language_code = $this->config->get('config_language');
-		}
-
-		$this->load->model('localisation/language');
-
-		$language_info = $this->model_localisation_language->getLanguageByCode($language_code);
-
-		if ($language_info) {
-			$config->set('config_language_id', $language_info['language_id']);
-			$config->set('config_language', $language_info['code']);
-		} else {
-			$config->set('config_language_id', $this->config->get('config_language_id'));
-			$config->set('config_language', $language_code);
-		}
-
-		$language = new \Opencart\System\Library\Language($language_code);
-		$language->addPath(DIR_CATALOG . 'language/');
-		$language->load($language_code);
-		$registry->set('language', $language);
-
-		// Store
-		if (isset($session->data['store_id'])) {
-			$config->set('config_store_id', $session->data['store_id']);
-		} else {
-			$config->set('config_store_id', 0);
-		}
-
-		// Url
-		$registry->set('url', new \Opencart\System\Library\Url($config->get('site_url')));
-
-		// Document
-		$registry->set('document', new \Opencart\System\Library\Document());
-
-		// 2. Add the request vars and remove the unneeded ones
-		$request->get = $this->request->get;
-
-		unset($request->get['route']);
-		unset($request->get['user_token']);
-
-		$request->post = $this->request->post;
-
-		// 3. Add the default API ID otherwise will not get a response.
-		$session->data['api_id'] = $this->config->get('config_api_id');
-
-		// 4. Run pre actions to load key settings and classes.
-		$pre_actions = [
-			'startup/setting',
-			'startup/extension',
-			'startup/customer',
-			'startup/tax',
-			'startup/currency',
-			'startup/application',
-			'startup/startup',
-			'startup/event'
-		];
-
-		// Pre Actions
-		foreach ($pre_actions as $pre_action) {
-			$loader->controller($pre_action);
-		}
-
-		// Customer
-		$customer = new \Opencart\System\Library\Cart\Customer($this->registry);
-		$registry->set('customer', $customer);
-
-		// Call the required api controller
-		if (isset($this->request->get['action'])) {
-			$loader->controller('api/' . $this->request->get['action']);
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput($response->getOutput());
 	}
 
 	public function history(): void {

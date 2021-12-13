@@ -12,3 +12,4 @@ $_['error_country']      = 'Please select a country!';
 $_['error_zone']         = 'Please select a region / state!';
 $_['error_custom_field'] = '%s required!';
 $_['error_regex']        = '%s not a valid input!';
+$_['error_shipping']     = 'Warning: There are no products that require shipping';

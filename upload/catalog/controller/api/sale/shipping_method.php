@@ -2,16 +2,16 @@
 namespace Opencart\Catalog\Controller\Api\Sale;
 class ShippingMethod extends \Opencart\System\Engine\Controller {
 	public function index(): void {
-		$this->load->language('api/sale/shipping');
+		$this->load->language('api/sale/shipping_method');
 
 		$json = [];
 
 		if ($this->cart->hasShipping()) {
 			if (!isset($this->session->data['shipping_address'])) {
-				$json['error'] = $this->language->get('error_address');
+				$json['error'] = $this->language->get('error_shipping_address');
 			}
 		} else {
-			$json['error'] = $this->language->get('error_product');
+			$json['error'] = $this->language->get('error_shipping');
 		}
 
 		if (!$json) {
@@ -25,7 +25,7 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 
 				$json['shipping_methods'] = $shipping_methods;
 			} else {
-				$json['error'] = $this->language->get('error_not_shipping');
+				$json['error'] = $this->language->get('error_no_shipping');
 			}
 		}
 
@@ -40,10 +40,9 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 
 		if ($this->cart->hasShipping()) {
 			if (!isset($this->session->data['shipping_address'])) {
-				$json['error'] = $this->language->get('error_address');
+				$json['error'] = $this->language->get('error_shipping_address');
 			}
 
-			// Shipping Method
 			if (empty($this->session->data['shipping_methods'])) {
 				$json['error'] = $this->language->get('error_no_shipping');
 			}
@@ -52,13 +51,13 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 				$shipping = explode('.', $this->request->post['shipping_method']);
 
 				if (!isset($shipping[0]) || !isset($shipping[1]) || !isset($this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]])) {
-					$json['error'] = $this->language->get('error_method');
+					$json['error'] = $this->language->get('error_shipping_method');
 				}
 			} else {
-				$json['error'] = $this->language->get('error_method');
+				$json['error'] = $this->language->get('error_shipping_method');
 			}
 		} else {
-			$json['error'] = $this->language->get('error_product');
+			$json['error'] = $this->language->get('error_shipping');
 		}
 
 		if (!$json) {

@@ -163,7 +163,7 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 		}
 
 		if ($this->customer->isLogged()) {
-			$json['redirect'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language'), true);
+			$json['redirect'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'], true);
 		}
 
 		if (!isset($this->request->get['reset_token']) || !isset($this->session->data['reset_token']) || ($this->request->get['reset_token'] != $this->session->data['reset_token'])) {

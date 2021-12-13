@@ -12,7 +12,6 @@
         </tr>
       </thead>
       <tbody>
-
         {% for product in products %}
           <tr>
             <td class="text-center">{% if product.thumb %}<a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}"/></a>{% endif %}</td>
@@ -31,18 +30,14 @@
               {% endif %}
             </td>
             <td class="text-end">
-
               <form method="post" data-oc-toggle="ajax" data-oc-load="{{ wishlist }}" data-oc-target="#wishlist">
-                <input type="hidden" name="product_id" value="{{ product.product_id }}"/>
-                <input type="hidden" name="quantity" value="{{ product.minimum }}"/>
+                <input type="hidden" name="product_id" value="{{ product.product_id }}"/> <input type="hidden" name="quantity" value="{{ product.minimum }}"/>
                 <button type="submit" formaction="{{ add_to_cart }}" data-bs-toggle="tooltip" title="{{ button_cart }}" class="btn btn-primary"><i class="fas fa-shopping-cart fa-fw"></i></button>
                 <button type="submit" formaction="{{ remove }}" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-times fa-fw"></i></button>
               </form>
-
             </td>
           </tr>
         {% endfor %}
-
       </tbody>
     </table>
   </div>

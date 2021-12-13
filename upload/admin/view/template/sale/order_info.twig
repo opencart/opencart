@@ -16,61 +16,102 @@
       <div class="card-header"><i class="fas fa-info-circle"></i> {{ text_form }}</div>
       <div class="card-body">
 
-        <div id="collapse-order" class="overflow-hidden" style="max-height: 78px;">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4">
 
-          <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4">
-
-            <div class="col">
-              <div class="input-group mb-3">
-                <div class="form-control p-0 border rounded-start">
-                  <p class="lead p-2 mb-0"><strong>{{ text_invoice }}</strong>
-                    <br/>
-                    <span id="invoice">{{ invoice_no }}</span>&nbsp
-                  </p>
-                </div>
-                {% if not invoice_no %}
-                  <button type="button" id="button-invoice" data-oc-loading-text="{{ text_loading }}" data-bs-toggle="tooltip" title="{{ button_generate }}" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
-                {% else %}
-                  <button type="button" disabled="disabled" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
-                {% endif %}
-              </div>
-            </div>
-
-            <div class="col">
-              <div class="input-group mb-3">
-                <div class="form-control p-0 border rounded-start">
-                  <p class="lead p-2 mb-0"><strong>{{ text_customer }}</strong>
-                    <br/>
-                    {% if customer %}
-                      <span id="customer"><a href="{{ customer }}" target="_blank">{{ firstname }} {{ lastname }}</a></span>
-                    {% else %}
-                      <span id="customer">{{ firstname }}&nbsp;{{ lastname }}</span>
-                    {% endif %}
-                  </p>
-                </div>
-                <button type="button" data-bs-toggle="modal" data-bs-target="#modal-customer" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
-              </div>
-            </div>
-
-            <div class="col">
-              <div class="form-control p-0 border rounded mb-3">
-                <p class="lead p-2 mb-0"><strong>{{ text_date_added }}</strong>
+          <div class="col">
+            <div class="input-group mb-3">
+              <div class="form-control p-0 border rounded-start">
+                <p class="lead p-2 mb-0"><strong>{{ text_invoice }}</strong>
                   <br/>
-                  {{ date_added }}
+                  <span id="invoice">{{ invoice_no }}</span>&nbsp
                 </p>
               </div>
+              {% if not invoice_no %}
+                <button type="button" id="button-invoice" data-oc-loading-text="{{ text_loading }}" data-bs-toggle="tooltip" title="{{ button_generate }}" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
+              {% else %}
+                <button type="button" disabled="disabled" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
+              {% endif %}
             </div>
+          </div>
 
-            <div class="col">
-              <div class="input-group mb-3">
-                <div class="form-control p-0 border rounded-start">
-                  <p class="lead p-2 mb-0"><strong>{{ text_store }}</strong>
-                    <br/>
-                    <span id="store"><a href="{{ store_url }}" target="_blank">{{ store_name }}</a></span></p>
-                </div>
-                <button type="button" data-bs-toggle="modal" data-bs-target="#modal-store" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
+          <div class="col">
+            <div class="input-group mb-3">
+              <div class="form-control p-0 border rounded-start">
+                <p class="lead p-2 mb-0"><strong>{{ text_customer }}</strong>
+                  <br/>
+                  {% if customer %}
+                    <span id="customer"><a href="{{ customer }}" target="_blank">{{ firstname }} {{ lastname }}</a></span>
+                  {% else %}
+                    <span id="customer">{{ firstname }}&nbsp;{{ lastname }}</span>
+                  {% endif %}
+                </p>
               </div>
+              <button type="button" data-bs-toggle="modal" data-bs-target="#modal-customer" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
             </div>
+          </div>
+
+          <div class="col">
+            <div class="form-control p-0 border rounded mb-3">
+              <p class="lead p-2 mb-0"><strong>{{ text_date_added }}</strong>
+                <br/>
+                {{ date_added }}
+              </p>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="input-group mb-3">
+              <div class="form-control p-0 border rounded-start">
+                <p class="lead p-2 mb-0"><strong>{{ text_store }}</strong>
+                  <br/>
+                  <span id="store"><a href="{{ store_url }}" target="_blank">{{ store_name }}</a></span></p>
+              </div>
+              <button type="button" data-bs-toggle="modal" data-bs-target="#modal-store" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
+            </div>
+          </div>
+        </div>
+
+        <div class="row row-cols-2">
+          <div class="col">
+            <div class="input-group mb-3">
+              <div class="form-control p-0 border rounded-start">
+                <p class="lead p-2 mb-0"><strong>{{ text_payment_address }}</strong>
+                  <br/>
+                  {% if payment_address %}
+                    {{ payment_address }}
+                  {% else %}
+                    &nbsp;
+                    <br/>
+                    <br/>
+                  {% endif %}
+                </p>
+              </div>
+              <button type="button" data-bs-toggle="modal" data-bs-target="#modal-payment-address" class="btn btn-outline-primary btn-sm float-end"><i class="fas fa-cog"></i></button>
+            </div>
+          </div>
+          <div class="col">
+            <div class="input-group mb-3">
+              <div class="form-control p-0 border rounded-start">
+                <p class="lead p-2 mb-0"><strong>{{ text_shipping_address }}</strong>
+                  <br/>
+                  {% if shipping_address %}
+                    {{ shipping_address }}
+                  {% else %}
+                    &nbsp;
+                    <br/>
+                    <br/>
+                  {% endif %}
+                </p>
+              </div>
+              <button type="button" data-bs-toggle="modal" data-bs-target="#modal-shipping-address" class="btn btn-outline-primary btn-sm float-end"><i class="fas fa-cog"></i></button>
+            </div>
+          </div>
+        </div>
+
+
+        <div id="collapse-order" class="collapse">
+          <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4">
+
 
             <div class="col">
               <div class="input-group mb-3">
@@ -93,15 +134,6 @@
                   </p>
                 </div>
                 <button type="button" data-bs-toggle="modal" data-bs-target="#modal-currency" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
-              </div>
-            </div>
-
-            <div class="col">
-              <div class="form-control p-0 border rounded mb-3">
-                <p class="lead p-2 mb-0"><strong>{{ text_total }}</strong>
-                  <br/>
-                  <span id="total">{{ total }}</span>
-                </p>
               </div>
             </div>
 
@@ -235,72 +267,7 @@
 
         <button type="button" id="button-collapse" class="btn btn-light btn-lg w-100 mb-3">{{ text_more }} <i class="fas fa-angle-down"></i></button>
 
-        <div class="row row-cols-2">
-          <div class="col">
-            <div class="input-group mb-3">
-              <div class="form-control p-0 border rounded-start">
-                <p class="lead p-2 mb-0"><strong>{{ text_payment_address }}</strong>
-                  <br/>
-                  {% if payment_address %}
-                    {{ payment_address }}
-                  {% else %}
-                    &nbsp;
-                    <br/>
-                    <br/>
-                  {% endif %}
-                </p>
-              </div>
-              <button type="button" data-bs-toggle="modal" data-bs-target="#modal-payment-address" class="btn btn-outline-primary btn-sm float-end"><i class="fas fa-cog"></i></button>
-            </div>
-          </div>
-          <div class="col">
-            <div class="input-group mb-3">
-              <div class="form-control p-0 border rounded-start">
-                <p class="lead p-2 mb-0"><strong>{{ text_shipping_address }}</strong>
-                  <br/>
-                  {% if shipping_address %}
-                    {{ shipping_address }}
-                  {% else %}
-                    &nbsp;
-                    <br/>
-                    <br/>
-                  {% endif %}
-                </p>
-              </div>
-              <button type="button" data-bs-toggle="modal" data-bs-target="#modal-shipping-address" class="btn btn-outline-primary btn-sm float-end"><i class="fas fa-cog"></i></button>
-            </div>
-          </div>
-        </div>
 
-
-
-        <div class="row row-cols-2">
-          <div class="col">
-
-
-            <div class="input-group mb-3">
-              <div class="form-control p-0 border rounded-start">
-                <p class="lead p-2 mb-0"><strong>{{ text_shipping_method }}</strong>
-                  <br/>
-                  {% if shipping_method %}
-                    <span id="shipping-method">{{ shipping_method }}</span>
-                  {% else %}
-                    <span id="shipping-method">&nbsp;</span>
-                  {% endif %}
-                </p>
-              </div>
-              <button type="button" data-bs-toggle="modal" data-bs-target="#modal-shipping-method" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
-            </div>
-          </div>
-
-          <div class="col">
-            <strong>{{ text_payment_method }}</strong>
-            <br/>
-
-
-
-          </div>
-        </div>
         <table id="order" class="table table-bordered">
           <thead>
             <tr>
@@ -725,7 +692,6 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
-
 
 
       </div>
@@ -1282,19 +1248,20 @@
     </div>
   </div>
 </div>
-
 <script type="text/javascript"><!--
-$(document).on('click', '#button-collapse', function () {
+$('#button-collapse').on('click', function () {
     var element = this;
 
-    if ($('#collapse-order').css('max-height') == '78px') {
-        $('#button-collapse').html('{{ text_less }} <i class="fas fa-angle-up"></i>');
+    var target = $('#collapse-order');
 
-        $('#collapse-order').animate({'max-height': $('#container').height() + 'px'});
+    if (!target.is(':hidden')) {
+        target.slideUp('400', function() {
+            $(element).html('{{ text_more }} <i class="fas fa-angle-down"></i>');
+        });
     } else {
-        $('#button-collapse').html('{{ text_more }} <i class="fas fa-angle-down"></i>');
-
-        $('#collapse-order').animate({'max-height': '78px'});
+        target.slideDown('400', function() {
+            $(element).html('{{ text_less }} <i class="fas fa-angle-up"></i>');
+        });
     }
 });
 

@@ -120,6 +120,10 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 				'custom_field'   => isset($this->request->post['custom_field']) ? $this->request->post['custom_field'] : []
 			];
 
+			if ($this->config->get('config_checkout_address') && !isset($this->session->data['payment_address'])) {
+				$this->session->data['payment_address'] = $this->session->data['shipping_address'];
+			}
+
 			$json['success'] = $this->language->get('text_success');
 
 			unset($this->session->data['shipping_methods']);

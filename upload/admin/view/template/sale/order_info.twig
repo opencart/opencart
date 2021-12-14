@@ -77,7 +77,7 @@
                   {% endif %}
                 </p>
               </div>
-              <button type="button" data-bs-toggle="modal" data-bs-target="#modal-payment-address" class="btn btn-outline-primary btn-sm float-end"><i class="fas fa-cog"></i></button>
+              <button type="button" data-bs-toggle="modal" data-bs-target="#modal-payment-address" class="btn btn-outline-primary float-end"><i class="fas fa-cog"></i></button>
             </div>
           </div>
           <div class="col">
@@ -94,7 +94,7 @@
                   {% endif %}
                 </p>
               </div>
-              <button type="button" data-bs-toggle="modal" data-bs-target="#modal-shipping-address" class="btn btn-outline-primary btn-sm float-end"><i class="fas fa-cog"></i></button>
+              <button type="button" data-bs-toggle="modal" data-bs-target="#modal-shipping-address" class="btn btn-outline-primary float-end"><i class="fas fa-cog"></i></button>
             </div>
           </div>
         </div>
@@ -287,7 +287,7 @@
               <tr>
                 <td class="text-start"><a href="{{ order_product.href }}">{{ order_product.name }}</a>{% if not order_product.stock %} <span class="text-danger">***</span>{% endif %}
                   {% if order_product.option %}
-                    {% for option in product.option %}
+                    {% for option in order_product.option %}
                       <br/>
                       <small>{{ option.name }}: {{ option.value }}</small>
                     {% endfor %}
@@ -305,8 +305,8 @@
 
                 <td class="text-start">{{ order_product.model }}</td>
                 <td class="text-end">{{ order_product.quantity }}</td>
-                <td class="text-end">{{ product.price }}</td>
-                <td class="text-end">{{ product.total }}</td>
+                <td class="text-end">{{ order_product.price }}</td>
+                <td class="text-end">{{ order_product.total }}</td>
 
                 <td class="text-end">
                   <form action="{{ product_remove }}" method="post" data-oc-toggle="order-edit">
@@ -763,6 +763,23 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
+
+        <form id="form-payment-method">
+          <div class="mb-3">
+            <div class="input-group">
+              <select name="payment_method" id="input-payment-method" class="form-select">
+                <option value="">{{ text_select }}</option>
+                {% if payment_code %}
+                  <option value="{{ payment_code }}" selected="selected">{{ payment_method }}</option>
+                {% endif %}
+              </select>
+              <button type="button" id="button-payment-refresh" data-oc-loading-text="{{ text_loading }}" class="btn btn-outline-primary"><i class="fas fa-sync"></i></button>
+            </div>
+          </div>
+          <div class="text-end">
+            <button type="submit" id="button-payment-method" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
+          </div>
+        </form>
 
 
       </div>

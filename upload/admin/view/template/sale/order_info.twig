@@ -16,7 +16,7 @@
       <div class="card-header"><i class="fas fa-info-circle"></i> {{ text_form }}</div>
       <div class="card-body">
 
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4">
+        <div class="row row-cols-1 row-cols-sm-1 row-cols-md-3 row-cols-xl-3">
 
           <div class="col">
             <div class="input-group mb-3">
@@ -59,19 +59,10 @@
             </div>
           </div>
 
-          <div class="col">
-            <div class="input-group mb-3">
-              <div class="form-control p-0 border rounded-start">
-                <p class="lead p-2 mb-0"><strong>{{ text_store }}</strong>
-                  <br/>
-                  <span id="store"><a href="{{ store_url }}" target="_blank">{{ store_name }}</a></span></p>
-              </div>
-              <button type="button" data-bs-toggle="modal" data-bs-target="#modal-store" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
-            </div>
-          </div>
+
         </div>
 
-        <div class="row row-cols-2">
+        <div class="row row-cols-1 row-cols-sm-2">
           <div class="col">
             <div class="input-group mb-3">
               <div class="form-control p-0 border rounded-start">
@@ -108,10 +99,53 @@
           </div>
         </div>
 
+        <div class="row  row-cols-1 row-cols-sm-2">
+          <div class="col">
+            <div class="input-group mb-3">
+              <div class="form-control p-0 border rounded-start">
+                <p class="lead p-2 mb-0"><strong>{{ text_shipping_method }}</strong>
+                  <br/>
+                  {% if shipping_method %}
+                    <span id="shipping-method">{{ shipping_method }}</span>
+                  {% else %}
+                    <span id="shipping-method">&nbsp;</span>
+                  {% endif %}
+                </p>
+              </div>
+              <button type="button" data-bs-toggle="modal" data-bs-target="#modal-shipping-method" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="input-group mb-3">
+              <div class="form-control p-0 border rounded-start">
+                <p class="lead p-2 mb-0"><strong>{{ text_payment_method }}</strong>
+                  <br/>
+                  {% if payment_method %}
+                    <span id="payment-method">{{ payment_method }}</span>
+                  {% else %}
+                    <span id="payment-method">&nbsp;</span>
+                  {% endif %}
+                </p>
+              </div>
+              <button type="button" data-bs-toggle="modal" data-bs-target="#modal-payment-method" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
+            </div>
+          </div>
+        </div>
+
 
         <div id="collapse-order" class="collapse">
           <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4">
-
+            <div class="col">
+              <div class="input-group mb-3">
+                <div class="form-control p-0 border rounded-start">
+                  <p class="lead p-2 mb-0"><strong>{{ text_store }}</strong>
+                    <br/>
+                    <span id="store"><a href="{{ store_url }}" target="_blank">{{ store_name }}</a></span></p>
+                </div>
+                <button type="button" data-bs-toggle="modal" data-bs-target="#modal-store" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
+              </div>
+            </div>
 
             <div class="col">
               <div class="input-group mb-3">
@@ -137,37 +171,6 @@
               </div>
             </div>
 
-            <div class="col">
-              <div class="input-group mb-3">
-                <div class="form-control p-0 border rounded-start">
-                  <p class="lead p-2 mb-0"><strong>{{ text_payment_method }}</strong>
-                    <br/>
-                    {% if payment_method %}
-                      <span id="payment-method">{{ payment_method }}</span>
-                    {% else %}
-                      <span id="payment-method">&nbsp;</span>
-                    {% endif %}
-                  </p>
-                </div>
-                <button type="button" data-bs-toggle="modal" data-bs-target="#modal-payment-method" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
-              </div>
-            </div>
-
-            <div class="col">
-              <div class="input-group mb-3">
-                <div class="form-control p-0 border rounded-start">
-                  <p class="lead p-2 mb-0"><strong>{{ text_shipping_method }}</strong>
-                    <br/>
-                    {% if shipping_method %}
-                      <span id="shipping-method">{{ shipping_method }}</span>
-                    {% else %}
-                      <span id="shipping-method">&nbsp;</span>
-                    {% endif %}
-                  </p>
-                </div>
-                <button type="button" data-bs-toggle="modal" data-bs-target="#modal-shipping-method" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
-              </div>
-            </div>
 
             <div class="col">
               <div class="input-group mb-3">
@@ -267,7 +270,6 @@
 
         <button type="button" id="button-collapse" class="btn btn-light btn-lg w-100 mb-3">{{ text_more }} <i class="fas fa-angle-down"></i></button>
 
-
         <table id="order" class="table table-bordered">
           <thead>
             <tr>
@@ -280,9 +282,70 @@
             </tr>
           </thead>
           <tbody id="order-items">
-            <tr>
-              <td class="text-center" colspan="6">{{ text_no_results }}</td>
-            </tr>
+
+            {% for order_product in order_products %}
+              <tr>
+                <td class="text-start"><a href="{{ order_product.href }}">{{ order_product.name }}</a>{% if not order_product.stock %} <span class="text-danger">***</span>{% endif %}
+                  {% if order_product.option %}
+                    {% for option in product.option %}
+                      <br/>
+                      <small>{{ option.name }}: {{ option.value }}</small>
+                    {% endfor %}
+                  {% endif %}
+                  {% if order_product.reward %}
+                    <br/>
+                    <small>{{ text_points }} {{ product.reward }}</small>
+                  {% endif %}
+                  {% if order_product.recurring %}
+                    <br/>
+                    <small class="badge badge-warning">{{ text_recurring_item }}</small>
+                    <small>{{ order_product.recurring }}</small>
+                  {% endif %}
+                </td>
+
+                <td class="text-start">{{ order_product.model }}</td>
+                <td class="text-end">{{ order_product.quantity }}</td>
+                <td class="text-end">{{ product.price }}</td>
+                <td class="text-end">{{ product.total }}</td>
+
+                <td class="text-end">
+                  <form action="{{ product_remove }}" method="post" data-oc-toggle="order-edit">
+                    <button type="submit" data-bs-toggle="tooltip" title="{{ button_remove }}" data-oc-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>
+                    <input type="hidden" name="key" value="' + product['cart_id'] + '"/>
+                  </form>
+                </td>
+              </tr>
+            {% endfor %}
+
+            {% for voucher in vouchers %}
+              <tr>
+                <td></td>
+                <td class="text-start">{{ voucher.description }}</td>
+                <td class="text-start"></td>
+                <td class="text-start">
+
+                  <form method="post" data-oc-toggle="ajax" data-oc-load="{{ list }}" data-oc-target="#shopping-cart">
+                    <div class="input-group">
+                      <input type="text" name="quantity" value="1" size="1" disabled="disabled" class="form-control"/>
+                      <button type="submit" formaction="{{ voucher_remove }}" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-times-circle"></i></button>
+                      <input type="text" name="key" value="{{ voucher.key }}" size="1" disabled="disabled" class="form-control"/>
+                    </div>
+                  </form>
+
+                </td>
+                <td class="text-end">{{ voucher.amount }}</td>
+                <td class="text-end">{{ voucher.amount }}</td>
+              </tr>
+            {% endfor %}
+
+
+
+            {% if not order_products and not order_vouchers %}
+              <tr>
+                <td colspan="6" class="text-center">{{ text_no_results }}</td
+              </tr>
+            {% endif %}
+
           </tbody>
           <tbody>
             <tr>
@@ -290,7 +353,15 @@
               <td class="text-end"><button type="button" data-bs-toggle="modal" data-bs-target="#modal-cart" class="btn btn-primary"><i class="fas fa-plus-circle"></i></button></td>
             </tr>
           </tbody>
-          <tfoot id="order-totals"></tfoot>
+          <tfoot id="order-totals">
+            {% for order_total in order_totals %}
+              <tr>
+                <td class="text-end" colspan="4"></td>
+                <td class="text-end"><strong>{{ order_total['title'] }}</strong></td>
+                <td class="text-end">{{ order_total['text'] }}</td>
+              </tr>
+            {% endfor %}
+          </tfoot>
         </table>
 
         <div class="row">
@@ -1255,11 +1326,11 @@ $('#button-collapse').on('click', function () {
     var target = $('#collapse-order');
 
     if (!target.is(':hidden')) {
-        target.slideUp('400', function() {
+        target.slideUp('400', function () {
             $(element).html('{{ text_more }} <i class="fas fa-angle-down"></i>');
         });
     } else {
-        target.slideDown('400', function() {
+        target.slideDown('400', function () {
             $(element).html('{{ text_less }} <i class="fas fa-angle-up"></i>');
         });
     }
@@ -2693,7 +2764,7 @@ $('#button-refresh').on('click', function () {
                     html += '  <td class="text-end">' + product['total'] + '</td>';
                     html += '  <td class="text-end">';
                     html += '    <form action="{{ product_remove }}" method="post" data-oc-toggle="order-edit">';
-                    html += '      <button type="submit" value="' + product['cart_id'] + '" data-bs-toggle="tooltip" title="{{ button_remove }}" data-oc-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>';
+                    html += '      <button type="submit" data-bs-toggle="tooltip" title="{{ button_remove }}" data-oc-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>';
                     html += '      <input type="hidden" name="key" value="' + product['cart_id'] + '"/>';
                     html += '    </form>';
                     html += '  </td>';

@@ -282,34 +282,37 @@
             </tr>
           </thead>
           <tbody id="order-items">
-
             {% for order_product in order_products %}
               <tr>
                 <td class="text-start"><a href="{{ order_product.href }}">{{ order_product.name }}</a>{% if not order_product.stock %} <span class="text-danger">***</span>{% endif %}
+
                   {% if order_product.option %}
+
                     {% for option in order_product.option %}
                       <br/>
                       <small>{{ option.name }}: {{ option.value }}</small>
                     {% endfor %}
+
                   {% endif %}
+
                   {% if order_product.reward %}
                     <br/>
                     <small>{{ text_points }} {{ product.reward }}</small>
                   {% endif %}
+
                   {% if order_product.recurring %}
                     <br/>
                     <small class="badge badge-warning">{{ text_recurring_item }}</small>
                     <small>{{ order_product.recurring }}</small>
                   {% endif %}
                 </td>
-
                 <td class="text-start">{{ order_product.model }}</td>
                 <td class="text-end">{{ order_product.quantity }}</td>
                 <td class="text-end">{{ order_product.price }}</td>
                 <td class="text-end">{{ order_product.total }}</td>
 
                 <td class="text-end">
-                  <form action="{{ product_remove }}" method="post" data-oc-toggle="order-edit">
+                  <form action="{{ product_remove }}" method="post">
                     <button type="submit" data-bs-toggle="tooltip" title="{{ button_remove }}" data-oc-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>
                     <input type="hidden" name="key" value="' + product['cart_id'] + '"/>
                   </form>
@@ -324,7 +327,7 @@
                 <td class="text-start"></td>
                 <td class="text-start">
 
-                  <form method="post" data-oc-toggle="ajax" data-oc-load="{{ list }}" data-oc-target="#shopping-cart">
+                  <form method="post" data-oc-toggle="ajax">
                     <div class="input-group">
                       <input type="text" name="quantity" value="1" size="1" disabled="disabled" class="form-control"/>
                       <button type="submit" formaction="{{ voucher_remove }}" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-times-circle"></i></button>

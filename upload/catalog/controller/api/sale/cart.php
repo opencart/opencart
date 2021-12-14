@@ -19,6 +19,14 @@ class Cart extends \Opencart\System\Engine\Controller {
 
 		($this->model_checkout_cart->getTotals)($totals, $taxes, $total);
 
+		$frequencies = [
+			'day'        => $this->language->get('text_day'),
+			'week'       => $this->language->get('text_week'),
+			'semi_month' => $this->language->get('text_semi_month'),
+			'month'      => $this->language->get('text_month'),
+			'year'       => $this->language->get('text_year')
+		];
+
 		$json['products'] = [];
 
 		$products = $this->model_checkout_cart->getProducts();
@@ -34,7 +42,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 				if ($product['recurring']['duration']) {
 					$recurring .= sprintf($this->language->get('text_payment_description'), $this->currency->format($this->tax->calculate($product['recurring']['price'] * $product['quantity'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']), $product['recurring']['cycle'], $frequencies[$product['recurring']['frequency']], $product['recurring']['duration']);
 				} else {
-					$recurring .= sprintf($this->language->get('text_payment_cancel'), $this->currency->format($this->tax->calculate($product['recurring']['price'] * $product['quantity'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']), $product['recurring']['cycle'], $frequencies[$product['recurring']['frequency']], $product['recurring']['duration']);
+					$recurring .= sprintf($this->language->get('text_payment_cancel'), $this->currency->format($this->tax->calculate($product['recurring']['price'], $product['tax_class_id'], $this->config->get('config_tax')) * $product['quantity'], $this->session->data['currency']), $product['recurring']['cycle'], $frequencies[$product['recurring']['frequency']], $product['recurring']['duration']);
 				}
 			}
 
@@ -49,7 +57,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 				'recurring'  => $recurring,
 				'quantity'   => $product['quantity'],
 				'price'      => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']),
-				'total'      => $this->currency->format($this->tax->calculate($product['price'] * $product['quantity'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']),
+				'total'      => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')) * $product['quantity'], $this->session->data['currency']),
 			];
 		}
 

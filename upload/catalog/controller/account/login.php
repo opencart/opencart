@@ -208,7 +208,10 @@ class Login extends \Opencart\System\Engine\Controller {
 
 			$this->model_account_customer->editToken($email, '');
 
-			$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language')));
+			// Create customer token
+			$this->session->data['customer_token'] = token(26);
+
+			$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']));
 		} else {
 			$this->session->data['error'] = $this->language->get('error_login');
 

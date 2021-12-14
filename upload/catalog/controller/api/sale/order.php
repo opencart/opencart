@@ -10,7 +10,7 @@ class Order extends \Opencart\System\Engine\Controller {
 	 * */
 	public function load(): void {
 		$this->load->language('api/sale/order');
-echo 'hi';
+
 		$json = [];
 
 		if (isset($this->request->get['order_id'])) {
@@ -24,7 +24,7 @@ echo 'hi';
 		$order_info = $this->model_checkout_order->getOrder($order_id);
 
 		if (!$order_info) {
-			$json['error'] = $this->language->get('error_not_found');
+			$json['error'] = $this->language->get('error_order');
 		}
 
 		if (!$json) {
@@ -49,13 +49,13 @@ echo 'hi';
 				'postcode'       => $order_info['payment_postcode'],
 				'city'           => $order_info['payment_city'],
 				'zone_id'        => $order_info['payment_zone_id'],
-				'zone'           => $order_info['zone'],
-				'zone_code'      => $order_info['zone_code'],
+				'zone'           => $order_info['payment_zone'],
+				'zone_code'      => $order_info['payment_zone_code'],
 				'country_id'     => $order_info['payment_country_id'],
-				'country'        => $order_info['country'],
-				'iso_code_2'     => $order_info['iso_code_2'],
-				'iso_code_3'     => $order_info['iso_code_3'],
-				'address_format' => $order_info['address_format'],
+				'country'        => $order_info['payment_country'],
+				'iso_code_2'     => $order_info['payment_iso_code_2'],
+				'iso_code_3'     => $order_info['payment_iso_code_3'],
+				'address_format' => $order_info['payment_address_format'],
 				'custom_field'   => $order_info['payment_custom_field']
 			];
 
@@ -69,24 +69,24 @@ echo 'hi';
 					'postcode'       => $order_info['shipping_postcode'],
 					'city'           => $order_info['shipping_city'],
 					'zone_id'        => $order_info['shipping_zone_id'],
-					'zone'           => $order_info['zone'],
-					'zone_code'      => $order_info['zone_code'],
+					'zone'           => $order_info['shipping_zone'],
+					'zone_code'      => $order_info['shipping_zone_code'],
 					'country_id'     => $order_info['shipping_country_id'],
-					'country'        => $order_info['country'],
-					'iso_code_2'     => $order_info['iso_code_2'],
-					'iso_code_3'     => $order_info['iso_code_3'],
-					'address_format' => $order_info['address_format'],
+					'country'        => $order_info['shipping_country'],
+					'iso_code_2'     => $order_info['shipping_iso_code_2'],
+					'iso_code_3'     => $order_info['shipping_iso_code_3'],
+					'address_format' => $order_info['shipping_address_format'],
 					'custom_field'   => $order_info['shipping_custom_field']
 				];
 
 				$this->session->data['shipping_method'] = $order_info['shipping_code'];
 			}
 
-			$this->cart->clear();
-
 			$products = $this->model_checkout_order->getProducts($order_id);
 
 			foreach ($products as $product) {
+				$option = [];
+
 				$options = $this->model_checkout_order->getOptions($order_id, $product['order_product_id']);
 
 				foreach ($options as $option) {
@@ -99,6 +99,10 @@ echo 'hi';
 
 				$this->cart->add($product['product_id'], $product['quantity'], $option);
 			}
+
+
+
+
 
 
 			$this->session->data['vouchers'] = [];
@@ -123,8 +127,6 @@ echo 'hi';
 
 			$json['success'] = $this->language->get('text_success');
 		}
-
-		$json['success'] = $this->language->get('text_success');
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
@@ -209,31 +211,40 @@ echo 'hi';
 			$order_data['custom_field'] = $this->session->data['customer']['custom_field'];
 
 			// Payment Details
-			$order_data['payment_firstname'] = $this->session->data['payment_address']['firstname'];
-			$order_data['payment_lastname'] = $this->session->data['payment_address']['lastname'];
-			$order_data['payment_company'] = $this->session->data['payment_address']['company'];
-			$order_data['payment_address_1'] = $this->session->data['payment_address']['address_1'];
-			$order_data['payment_address_2'] = $this->session->data['payment_address']['address_2'];
-			$order_data['payment_city'] = $this->session->data['payment_address']['city'];
-			$order_data['payment_postcode'] = $this->session->data['payment_address']['postcode'];
-			$order_data['payment_zone'] = $this->session->data['payment_address']['zone'];
-			$order_data['payment_zone_id'] = $this->session->data['payment_address']['zone_id'];
-			$order_data['payment_country'] = $this->session->data['payment_address']['country'];
-			$order_data['payment_country_id'] = $this->session->data['payment_address']['country_id'];
-			$order_data['payment_address_format'] = $this->session->data['payment_address']['address_format'];
-			$order_data['payment_custom_field'] = isset($this->session->data['payment_address']['custom_field']) ? $this->session->data['payment_address']['custom_field'] : [];
-
-			if (isset($this->session->data['payment_method']['title'])) {
-				$order_data['payment_method'] = $this->session->data['payment_method']['title'];
+			if ($this->config->get('config_checkout_address')) {
+				$order_data['payment_firstname'] = $this->session->data['payment_address']['firstname'];
+				$order_data['payment_lastname'] = $this->session->data['payment_address']['lastname'];
+				$order_data['payment_company'] = $this->session->data['payment_address']['company'];
+				$order_data['payment_address_1'] = $this->session->data['payment_address']['address_1'];
+				$order_data['payment_address_2'] = $this->session->data['payment_address']['address_2'];
+				$order_data['payment_city'] = $this->session->data['payment_address']['city'];
+				$order_data['payment_postcode'] = $this->session->data['payment_address']['postcode'];
+				$order_data['payment_zone'] = $this->session->data['payment_address']['zone'];
+				$order_data['payment_zone_id'] = $this->session->data['payment_address']['zone_id'];
+				$order_data['payment_country'] = $this->session->data['payment_address']['country'];
+				$order_data['payment_country_id'] = $this->session->data['payment_address']['country_id'];
+				$order_data['payment_address_format'] = $this->session->data['payment_address']['address_format'];
+				$order_data['payment_custom_field'] = isset($this->session->data['payment_address']['custom_field']) ? $this->session->data['payment_address']['custom_field'] : [];
 			} else {
-				$order_data['payment_method'] = '';
+				$order_data['payment_firstname'] = '';
+				$order_data['payment_lastname'] = '';
+				$order_data['payment_company'] = '';
+				$order_data['payment_address_1'] = '';
+				$order_data['payment_address_2'] = '';
+				$order_data['payment_city'] = '';
+				$order_data['payment_postcode'] = '';
+				$order_data['payment_zone'] = '';
+				$order_data['payment_zone_id'] = 0;
+				$order_data['payment_country'] = '';
+				$order_data['payment_country_id'] = 0;
+				$order_data['payment_address_format'] = '';
+				$order_data['payment_custom_field'] = [];
 			}
 
-			if (isset($this->session->data['payment_method']['code'])) {
-				$order_data['payment_code'] = $this->session->data['payment_method']['code'];
-			} else {
-				$order_data['payment_code'] = '';
-			}
+			$payment_method_info = $this->session->data['payment_methods'][$this->session->data['payment_method']];
+
+			$order_data['payment_method'] = $payment_method_info['title'];
+			$order_data['payment_code'] = $payment_method_info['code'];
 
 			// Shipping Details
 			if ($this->cart->hasShipping()) {
@@ -250,18 +261,6 @@ echo 'hi';
 				$order_data['shipping_country_id'] = $this->session->data['shipping_address']['country_id'];
 				$order_data['shipping_address_format'] = $this->session->data['shipping_address']['address_format'];
 				$order_data['shipping_custom_field'] = isset($this->session->data['shipping_address']['custom_field']) ? $this->session->data['shipping_address']['custom_field'] : [];
-
-				if (isset($this->session->data['shipping_method']['title'])) {
-					$order_data['shipping_method'] = $this->session->data['shipping_method']['title'];
-				} else {
-					$order_data['shipping_method'] = '';
-				}
-
-				if (isset($this->session->data['shipping_method']['code'])) {
-					$order_data['shipping_code'] = $this->session->data['shipping_method']['code'];
-				} else {
-					$order_data['shipping_code'] = '';
-				}
 			} else {
 				$order_data['shipping_firstname'] = '';
 				$order_data['shipping_lastname'] = '';
@@ -276,6 +275,16 @@ echo 'hi';
 				$order_data['shipping_country_id'] = '';
 				$order_data['shipping_address_format'] = '';
 				$order_data['shipping_custom_field'] = [];
+			}
+
+			if (isset($this->session->data['shipping_method'])) {
+				$shipping = explode('.', $this->session->data['shipping_method']);
+
+				$shipping_method_info = $this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]];
+
+				$order_data['shipping_method'] = $shipping_method_info['title'];
+				$order_data['shipping_code'] = $shipping_method_info['code'];
+			} else {
 				$order_data['shipping_method'] = '';
 				$order_data['shipping_code'] = '';
 			}
@@ -288,29 +297,29 @@ echo 'hi';
 
 				foreach ($product['option'] as $option) {
 					$option_data[] = [
-						'product_option_id' => $option['product_option_id'],
+						'product_option_id'       => $option['product_option_id'],
 						'product_option_value_id' => $option['product_option_value_id'],
-						'option_id' => $option['option_id'],
-						'option_value_id' => $option['option_value_id'],
-						'name' => $option['name'],
-						'value' => $option['value'],
-						'type' => $option['type']
+						'option_id'               => $option['option_id'],
+						'option_value_id'         => $option['option_value_id'],
+						'name'                    => $option['name'],
+						'value'                   => $option['value'],
+						'type'                    => $option['type']
 					];
 				}
 
 				$order_data['products'][] = [
 					'product_id' => $product['product_id'],
-					'master_id' => $product['master_id'],
-					'name' => $product['name'],
-					'model' => $product['model'],
-					'option' => $option_data,
-					'download' => $product['download'],
-					'quantity' => $product['quantity'],
-					'subtract' => $product['subtract'],
-					'price' => $product['price'],
-					'total' => $product['total'],
-					'tax' => $this->tax->getTax($product['price'], $product['tax_class_id']),
-					'reward' => $product['reward']
+					'master_id'  => $product['master_id'],
+					'name'       => $product['name'],
+					'model'      => $product['model'],
+					'option'     => $option_data,
+					'download'   => $product['download'],
+					'quantity'   => $product['quantity'],
+					'subtract'   => $product['subtract'],
+					'price'      => $product['price'],
+					'total'      => $product['total'],
+					'tax'        => $this->tax->getTax($product['price'], $product['tax_class_id']),
+					'reward'     => $product['reward']
 				];
 			}
 

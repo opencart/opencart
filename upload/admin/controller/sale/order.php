@@ -373,9 +373,9 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $order_total,
-			'page' => $page,
+			'page'  => $page,
 			'limit' => $this->config->get('config_pagination_admin'),
-			'url' => $this->url->link('sale/order|list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+			'url'   => $this->url->link('sale/order|list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($order_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($order_total - $this->config->get('config_pagination_admin'))) ? $order_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $order_total, ceil($order_total / $this->config->get('config_pagination_admin')));
@@ -1182,7 +1182,9 @@ class Order extends \Opencart\System\Engine\Controller {
 		unset($this->session->data['api_session']);
 
 		if (!empty($order_info)) {
-			echo $this->tcall('sale/order|load', ['order_id' => $order_info['order_id']]);
+			$this->request->get['action'] = 'sale/order|load';
+
+			$this->tcall();
 		}
 
 		$data['header'] = $this->load->controller('common/header');
@@ -1195,10 +1197,10 @@ class Order extends \Opencart\System\Engine\Controller {
 	// Method to call the store front API and return a response.
 	public function call(): void {
 		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput($this->tcall($this->request->get['action'], $this->request->get, $this->request->post));
+		$this->response->setOutput($this->tcall());
 	}
 
-	private function tcall(string $action, array $get = [], array $post = []): string {
+	private function tcall(): string {
 		// 1. Create a store instance using loader class to call controllers, models, views, libraries
 
 		// Autoloader
@@ -1243,8 +1245,8 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		// Create a dummy request class so we can feed the data to the order editor
 		$request = new \stdClass();
-		$request->get = $get;
-		$request->post = $post;
+		$request->get = $this->request->get;
+		$request->post = $this->request->post;
 		$request->server = $this->request->server;
 		$request->cookie = [];
 
@@ -1326,7 +1328,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		unset($request->get['route']);
 		unset($request->get['user_token']);
 
-		//$request->post = $this->request->post;
+		$request->get['route'] = 'api/' . $this->request->get['action'];
 
 		// 3. Add the default API ID otherwise will not get a response.
 		$session->data['api_id'] = $this->config->get('config_api_id');
@@ -1353,11 +1355,9 @@ class Order extends \Opencart\System\Engine\Controller {
 		$registry->set('customer', $customer);
 
 		// Call the required api controller
-		if (isset($this->request->get['action'])) {
-			$loader->controller('api/' . $action);
+		if (isset($request->get['route'])) {
+			$loader->controller($request->get['route']);
 		}
-
-		echo $response->getOutput();
 
 		return $response->getOutput();
 	}

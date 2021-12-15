@@ -414,9 +414,6 @@ class Order extends \Opencart\System\Engine\Controller {
 				$order_data['accept_language'] = '';
 			}
 
-
-
-
 			$this->load->model('checkout/order');
 
 			if (!isset($this->session->data['order_id'])) {

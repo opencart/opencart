@@ -1512,7 +1512,7 @@ $('#form-customer').on('submit', function (e) {
             if (json['success']) {
                 $('#form-customer').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#customer').html($('#input-firstname').val() + ' ' + $('#input-lastname').val());
+                $('#customer-title').html($('#input-firstname').val() + ' ' + $('#input-lastname').val());
 
                 $('#button-refresh').trigger('click');
             }
@@ -1547,7 +1547,7 @@ $('#form-store').on('submit', function (e) {
             if (json['success']) {
                 $('#form-store').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#store').html($('#input-store option:selected').text());
+                $('#store-title').html($('#input-store option:selected').text());
 
                 $('#button-refresh').trigger('click');
             }
@@ -1582,7 +1582,7 @@ $('#form-language').on('submit', function (e) {
             if (json['success']) {
                 $('#form-language').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#language').html($('#input-language option:selected').text());
+                $('#language-title').html($('#input-language option:selected').text());
 
                 $('#button-refresh').trigger('click');
             }
@@ -1617,167 +1617,7 @@ $('#form-currency').on('submit', function (e) {
             if (json['success']) {
                 $('#form-currency').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#currency').html($('#input-currency option:selected').text());
-
-                $('#button-refresh').trigger('click');
-            }
-        },
-        error: function (xhr, ajaxOptions, thrownError) {
-            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-        }
-    });
-});
-
-// Payment Method
-$('#button-payment-refresh').on('click', function () {
-    var element = this;
-
-    $.ajax({
-        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=sale/payment_method',
-        dataType: 'json',
-        beforeSend: function () {
-            $(element).button('loading');
-        },
-        complete: function () {
-            $(element).button('reset');
-        },
-        success: function (json) {
-            $('.alert-dismissible').remove();
-
-            if (json['error']) {
-                $('#form-payment-method').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-            }
-
-            html = '<option value="">{{ text_select }}</option>';
-
-            if (json['payment_methods']) {
-                for (i in json['payment_methods']) {
-                    if (json['payment_methods'][i]['code'] == $('#input-payment-method').val()) {
-                        html += '<option value="' + json['payment_methods'][i]['code'] + '" selected="selected">' + json['payment_methods'][i]['title'] + '</option>';
-                    } else {
-                        html += '<option value="' + json['payment_methods'][i]['code'] + '">' + json['payment_methods'][i]['title'] + '</option>';
-                    }
-                }
-            }
-
-            $('#input-payment-method').html(html);
-        },
-        error: function (xhr, ajaxOptions, thrownError) {
-            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-        }
-    });
-});
-
-$('#form-payment-method').on('submit', function (e) {
-    e.preventDefault();
-
-    $.ajax({
-        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=sale/payment_method|save',
-        type: 'post',
-        data: $('#form-payment-method').serialize(),
-        dataType: 'json',
-        beforeSend: function () {
-            $('#button-payment-method').button('loading');
-        },
-        complete: function () {
-            $('#button-payment-method').button('reset');
-        },
-        success: function (json) {
-            $('.alert-dismissible').remove();
-
-            if (json['error']) {
-                $('#form-payment-method').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-            }
-
-            if (json['success']) {
-                $('#form-payment-method').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                $('#payment-method').html($('#input-payment-method option:selected').text());
-
-                $('#button-refresh').trigger('click');
-            }
-        },
-        error: function (xhr, ajaxOptions, thrownError) {
-            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-        }
-    });
-});
-
-// Shipping Method
-$('#button-shipping-refresh').on('click', function () {
-    var element = this;
-
-    $.ajax({
-        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=sale/shipping_method',
-        dataType: 'json',
-        beforeSend: function () {
-            $(element).button('loading');
-        },
-        complete: function () {
-            $(element).button('reset');
-        },
-        success: function (json) {
-            $('.alert-dismissible').remove();
-
-            if (json['error']) {
-                $('#form-shipping-method').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-            }
-
-            html = '<option value="">{{ text_select }}</option>';
-
-            if (json['shipping_methods']) {
-                for (i in json['shipping_methods']) {
-                    html += '<optgroup label="' + json['shipping_methods'][i]['title'] + '">';
-
-                    if (!json['shipping_methods'][i]['error']) {
-                        for (j in json['shipping_methods'][i]['quote']) {
-                            if (json['shipping_methods'][i]['quote'][j]['code'] == $('#input-shipping-method').val()) {
-                                html += '<option value="' + json['shipping_methods'][i]['quote'][j]['code'] + '" selected="selected">' + json['shipping_methods'][i]['quote'][j]['title'] + ' - ' + json['shipping_methods'][i]['quote'][j]['text'] + '</option>';
-                            } else {
-                                html += '<option value="' + json['shipping_methods'][i]['quote'][j]['code'] + '">' + json['shipping_methods'][i]['quote'][j]['title'] + ' - ' + json['shipping_methods'][i]['quote'][j]['text'] + '</option>';
-                            }
-                        }
-                    } else {
-                        html += '<option value="" style="color: #ff0000;" disabled="disabled">' + json['shipping_methods'][i]['error'] + '</option>';
-                    }
-
-                    html += '</optgroup>';
-                }
-            }
-
-            $('#input-shipping-method').html(html);
-        },
-        error: function (xhr, ajaxOptions, thrownError) {
-            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-        }
-    });
-});
-
-$('#form-shipping-method').on('submit', function (e) {
-    e.preventDefault();
-
-    $.ajax({
-        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=sale/shipping_method|save',
-        type: 'post',
-        data: $('#form-shipping-method').serialize(),
-        dataType: 'json',
-        beforeSend: function () {
-            $('#button-shipping-method').button('loading');
-        },
-        complete: function () {
-            $('#button-shipping-method').button('reset');
-        },
-        success: function (json) {
-            $('.alert-dismissible').remove();
-
-            if (json['error']) {
-                $('#form-shipping-method').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-            }
-
-            if (json['success']) {
-                $('#form-shipping-method').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                $('#shipping-method').html($('#input-shipping-method option:selected').text());
+                $('#currency-title').html($('#input-currency option:selected').text());
 
                 $('#button-refresh').trigger('click');
             }
@@ -1812,6 +1652,8 @@ $('#form-coupon').on('submit', function (e) {
 
             if (json['success']) {
                 $('#form-coupon').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                $('#coupon-title').html($('#input-coupon').val());
 
                 // Refresh products, vouchers and totals
                 $('#button-refresh').trigger('click');
@@ -1848,6 +1690,8 @@ $('#form-voucher').on('submit', function (e) {
             if (json['success']) {
                 $('#form-voucher').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
+                $('#voucher-title').html($('#input-voucher').val());
+
                 // Refresh products, vouchers and totals
                 $('#button-refresh').trigger('click');
             }
@@ -1882,6 +1726,8 @@ $('#form-reward').on('submit', function (e) {
 
             if (json['success']) {
                 $('#form-reward').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                $('#reward-title').html($('#input-reward').val());
 
                 $('#button-refresh').trigger('click');
             }
@@ -1988,6 +1834,8 @@ $('#form-affiliate').on('submit', function (e) {
 
             if (json['success']) {
                 $('#form-affiliate').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                $('#affiliate-title').html($('#input-affiliate').val());
             }
         },
         error: function (xhr, ajaxOptions, thrownError) {
@@ -2712,6 +2560,198 @@ $('#form-voucher-remove').on('submit', function () {
     });
 });
 
+// Payment Method
+$('#button-payment-refresh').on('click', function () {
+    var element = this;
+
+    $.ajax({
+        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=sale/payment_method',
+        dataType: 'json',
+        beforeSend: function () {
+            $(element).button('loading');
+        },
+        complete: function () {
+            $(element).button('reset');
+        },
+        success: function (json) {
+            $('.alert-dismissible').remove();
+
+            if (json['error']) {
+                $('#form-payment-method').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            html = '<option value="">{{ text_select }}</option>';
+
+            if (json['payment_methods']) {
+                for (i in json['payment_methods']) {
+                    if (json['payment_methods'][i]['code'] == $('#input-payment-method').val()) {
+                        html += '<option value="' + json['payment_methods'][i]['code'] + '" selected="selected">' + json['payment_methods'][i]['title'] + '</option>';
+                    } else {
+                        html += '<option value="' + json['payment_methods'][i]['code'] + '">' + json['payment_methods'][i]['title'] + '</option>';
+                    }
+                }
+            }
+
+            $('#input-payment-method').html(html);
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+$('#form-payment-method').on('submit', function (e) {
+    e.preventDefault();
+
+    $.ajax({
+        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=sale/payment_method|save',
+        type: 'post',
+        data: $('#form-payment-method').serialize(),
+        dataType: 'json',
+        beforeSend: function () {
+            $('#button-payment-method').button('loading');
+        },
+        complete: function () {
+            $('#button-payment-method').button('reset');
+        },
+        success: function (json) {
+            $('.alert-dismissible').remove();
+
+            if (json['error']) {
+                $('#form-payment-method').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            if (json['success']) {
+                $('#form-payment-method').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                $('#payment-method').html($('#input-payment-method option:selected').text());
+
+                $('#button-refresh').trigger('click');
+            }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+// Shipping Method
+$('#button-shipping-refresh').on('click', function () {
+    var element = this;
+
+    $.ajax({
+        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=sale/shipping_method',
+        dataType: 'json',
+        beforeSend: function () {
+            $(element).button('loading');
+        },
+        complete: function () {
+            $(element).button('reset');
+        },
+        success: function (json) {
+            $('.alert-dismissible').remove();
+
+            if (json['error']) {
+                $('#form-shipping-method').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            html = '<option value="">{{ text_select }}</option>';
+
+            if (json['shipping_methods']) {
+                for (i in json['shipping_methods']) {
+                    html += '<optgroup label="' + json['shipping_methods'][i]['title'] + '">';
+
+                    if (!json['shipping_methods'][i]['error']) {
+                        for (j in json['shipping_methods'][i]['quote']) {
+                            if (json['shipping_methods'][i]['quote'][j]['code'] == $('#input-shipping-method').val()) {
+                                html += '<option value="' + json['shipping_methods'][i]['quote'][j]['code'] + '" selected="selected">' + json['shipping_methods'][i]['quote'][j]['title'] + ' - ' + json['shipping_methods'][i]['quote'][j]['text'] + '</option>';
+                            } else {
+                                html += '<option value="' + json['shipping_methods'][i]['quote'][j]['code'] + '">' + json['shipping_methods'][i]['quote'][j]['title'] + ' - ' + json['shipping_methods'][i]['quote'][j]['text'] + '</option>';
+                            }
+                        }
+                    } else {
+                        html += '<option value="" style="color: #ff0000;" disabled="disabled">' + json['shipping_methods'][i]['error'] + '</option>';
+                    }
+
+                    html += '</optgroup>';
+                }
+            }
+
+            $('#input-shipping-method').html(html);
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+$('#form-shipping-method').on('submit', function(e) {
+    e.preventDefault();
+
+    $.ajax({
+        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=sale/shipping_method|save',
+        type: 'post',
+        data: $('#form-shipping-method').serialize(),
+        dataType: 'json',
+        beforeSend: function () {
+            $('#button-shipping-method').button('loading');
+        },
+        complete: function () {
+            $('#button-shipping-method').button('reset');
+        },
+        success: function (json) {
+            $('.alert-dismissible').remove();
+
+            if (json['error']) {
+                $('#form-shipping-method').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            if (json['success']) {
+                $('#form-shipping-method').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                $('#shipping-method').html($('#input-shipping-method option:selected').text());
+
+                $('#button-refresh').trigger('click');
+            }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+$('#form-comment').on('submit', function() {
+    var element = this;
+
+    $.ajax({
+        url: 'index.php?route=sale/order|call|&user_token={{ user_token }}&action=sale/order|comment',
+        type: 'post',
+        data: $('#form-comment').serialize(),
+        dataType: 'json',
+        beforeSend: function () {
+            $(element).button('loading');
+        },
+        complete: function () {
+            $(element).button('reset');
+        },
+        success: function (json) {
+            $('.alert-dismissible').remove();
+
+            // Check for errors
+            if (json['error']) {
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            if (json['success']) {
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
 // Refresh all products, vouchers and totals
 $('#button-refresh').on('click', function () {
     $.ajax({
@@ -2843,6 +2883,39 @@ $('#button-confirm').on('click', function () {
         },
         success: function (json) {
             $('.alert-dismissible').remove();
+
+
+            if (json['error']) {
+
+                if (json['error']['warning']) {
+                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                }
+
+                if (json['error']['stock']) {
+                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['stock'] + '</div>');
+                }
+
+                if (json['error']['minimum']) {
+                    for (i in json['error']['minimum']) {
+                        $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['minimum'][i] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    }
+                }
+
+                if (json['error']['payment_address']) {
+                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['payment_address'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                }
+
+                if (json['error']['shipping_address']) {
+                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['shipping_address'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                }
+
+
+
+
+
+            }
+
+
 
             if (json['error']) {
                 $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');

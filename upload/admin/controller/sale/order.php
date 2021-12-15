@@ -1830,7 +1830,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			if ($invoice_no) {
 				$json['invoice_no'] = $invoice_no;
 			} else {
-				$json['error'] = $this->language->get('error_action');
+				$json['error'] = $this->language->get('error_invoice_no');
 			}
 		}
 

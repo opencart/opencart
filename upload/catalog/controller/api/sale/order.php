@@ -384,8 +384,9 @@ class Order extends \Opencart\System\Engine\Controller {
 				}
 			}
 
+			// We use session to store language code for API access
 			$order_data['language_id'] = $this->config->get('config_language_id');
-			$order_data['language_code'] = $this->session->data['language'];
+			$order_data['language_code'] = $this->config->get('config_language');
 
 			$order_data['currency_id'] = $this->currency->getId($this->session->data['currency']);
 			$order_data['currency_code'] = $this->session->data['currency'];
@@ -412,9 +413,6 @@ class Order extends \Opencart\System\Engine\Controller {
 			} else {
 				$order_data['accept_language'] = '';
 			}
-
-
-
 
 			$this->load->model('checkout/order');
 

@@ -1309,6 +1309,10 @@ class Order extends \Opencart\System\Engine\Controller {
 		$language->load($language_code);
 		$registry->set('language', $language);
 
+		if (!isset($session->data['currency'])) {
+			$session->data['currency'] = $this->config->get('config_currency');
+		}
+
 		// Store
 		if (isset($session->data['store_id'])) {
 			$config->set('config_store_id', $session->data['store_id']);

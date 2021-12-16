@@ -9,13 +9,18 @@
     <div id="content" class="col">
       {{ content_top }}
       <h1>{{ heading_title }}</h1>
-      <label for="input-search" class="col-form-label">{{ entry_search }}</label>
       <div class="row">
-        <div class="col-md-4">
-          <input type="text" name="search" value="{{ search }}" placeholder="{{ text_keyword }}" id="input-search" class="form-control"/>
+        <div class="col"><label for="input-search" class="col-form-label">{{ entry_search }}</label></div>
+      </div>
+      <div class="row row-cols-1 row-cols-md-2">
+        <div class="col">
+          <input type="text" name="search" value="{{ search }}" placeholder="{{ text_keyword }}" id="input-search" class="form-control mb-1"/>
+          <div class="form-check">
+            <input type="checkbox" name="description" value="1" id="input-description" class="form-check-input"{% if description %} checked{% endif %}/> <label for="input-description" class="form-check-label">{{ entry_description }}</label>
+          </div>
         </div>
-        <div class="col-md-3">
-          <select name="category_id" id="input-category" class="form-select">
+        <div class="col">
+          <select name="category_id" id="input-category" class="form-select mb-1">
             <option value="0">{{ text_category }}</option>
             {% for category_1 in categories %}
               <option value="{{ category_1.category_id }}"{% if category_1.category_id == category_id %} selected{% endif %}>{{ category_1.name }}</option>
@@ -27,20 +32,16 @@
               {% endfor %}
             {% endfor %}
           </select>
-        </div>
-        <div class="col-md-3">
-          <div class="form-check form-check-inline">
-            <div class="form-check">
-              <input type="checkbox" name="sub_category" value="1" id="input-sub-category" class="form-check-input"{% if sub_category %} checked{% endif %}/> <label for="input-sub-category" class="form-check-label">{{ text_sub_category }}</label>
-            </div>
+          <div class="form-check">
+            <input type="checkbox" name="sub_category" value="1" id="input-sub-category" class="form-check-input"{% if sub_category %} checked{% endif %}/> <label for="input-sub-category" class="form-check-label">{{ text_sub_category }}</label>
           </div>
         </div>
       </div>
-      <div class="form-check mb-3">
-        <input type="checkbox" name="description" value="1" id="input-description" class="form-check-input"{% if description %} checked{% endif %}/>
-        <label for="input-description" class="form-check-label">{{ entry_description }}</label>
+      <div class="row">
+        <div class="col">
+          <button type="button" id="button-search" class="btn btn-primary">{{ button_search }}</button>
+        </div>
       </div>
-      <button type="button" id="button-search" class="btn btn-primary">{{ button_search }}</button>
       <hr/>
       <h2>{{ text_search }}</h2>
       {% if products %}
@@ -60,27 +61,25 @@
 
           <div class="col-md-4 offset-md-1 col-6">
             <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <label for="input-sort" class="input-group-text">{{ text_sort }}</label>
+              <div class="input-group">
+                <label for="input-sort" class="input-group-text">{{ text_sort }}</label> <select id="input-sort" class="form-select" onchange="location = this.value;">
+                  {% for sorts in sorts %}
+                    <option value="{{ sorts.href }}"{% if sorts.value == '%s-%s'|format(sort, order) %} selected{% endif %}>{{ sorts.text }}</option>
+                  {% endfor %}
+                </select>
               </div>
-              <select id="input-sort" class="form-select" onchange="location = this.value;">
-                {% for sorts in sorts %}
-                  <option value="{{ sorts.href }}"{% if sorts.value == '%s-%s'|format(sort, order) %} selected{% endif %}>{{ sorts.text }}</option>
-                {% endfor %}
-              </select>
             </div>
           </div>
 
           <div class="col-md-3 col-6">
             <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <label for="input-limit" class="input-group-text">{{ text_limit }}</label>
+              <div class="input-group">
+                <label for="input-limit" class="input-group-text">{{ text_limit }}</label> <select id="input-limit" class="form-select" onchange="location = this.value;">
+                  {% for limits in limits %}
+                    <option value="{{ limits.href }}"{% if limits.value == limit %} selected{% endif %}>{{ limits.text }}</option>
+                  {% endfor %}
+                </select>
               </div>
-              <select id="input-limit" class="form-select" onchange="location = this.value;">
-                {% for limits in limits %}
-                  <option value="{{ limits.href }}"{% if limits.value == limit %} selected{% endif %}>{{ limits.text }}</option>
-                {% endfor %}
-              </select>
             </div>
           </div>
 
@@ -103,7 +102,7 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#button-search').bind('click', function() {
+$('#button-search').bind('click', function () {
     url = 'index.php?route=product/search&language={{ language }}';
 
     var search = $('#input-search').prop('value');
@@ -124,7 +123,7 @@ $('#button-search').bind('click', function() {
         url += '&sub_category=1';
     }
 
-    var filter_description = $('##input-description:checked').prop('value');
+    var filter_description = $('#input-description:checked').prop('value');
 
     if (filter_description) {
         url += '&description=1';
@@ -133,13 +132,13 @@ $('#button-search').bind('click', function() {
     location = url;
 });
 
-$('#input-search').bind('keydown', function(e) {
+$('#input-search').bind('keydown', function (e) {
     if (e.keyCode == 13) {
         $('#button-search').trigger('click');
     }
 });
 
-$('#input-category').on('change', function() {
+$('#input-category').on('change', function () {
     $('#input-sub-category').prop('disabled', (this.value == '0' ? true : false));
 });
 

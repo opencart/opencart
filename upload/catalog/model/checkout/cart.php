@@ -76,7 +76,7 @@ class Cart extends \Opencart\System\Engine\Model {
 				'option'       => $product['option'],
 				'recurring'    => $product['recurring'],
 				'quantity'     => $product['quantity'],
-				'stock'        => $product['stock'] ? true : !(!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning')),
+				'stock'        => $product['stock'],
 				'minimum'      => $minimum,
 				'shipping'     => $product['shipping'],
 				'subtract'     => $product['subtract'],

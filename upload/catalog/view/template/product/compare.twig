@@ -117,7 +117,7 @@
           <tr>
             <td></td>
             {% for product in products %}
-              <td>
+              <td class="text-center">
                 <form action="{{ add_to_cart }}" method="post" data-oc-toggle="ajax" data-oc-load="{{ cart }}" data-oc-target="#cart">
                   <button type="submit" id="button-confirm" class="btn btn-primary btn-block">{{ button_cart }}</button>
                   <input type="hidden" name="product_id" value="{{ product.product_id }}"/> <input type="hidden" name="quantity" value="{{ product.minimum }}"/>

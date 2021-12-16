@@ -12,9 +12,9 @@ class Coupon extends \Opencart\System\Engine\Controller {
 			$coupon = '';
 		}
 
-		$this->load->model('extension/opencart/total/coupon');
+		$this->load->model('marketing/coupon');
 
-		$coupon_info = $this->model_extension_opencart_total_coupon->getCoupon($coupon);
+		$coupon_info = $this->model_marketing_coupon->getCoupon($coupon);
 
 		if (!$coupon_info) {
 			$json['error'] = $this->language->get('error_coupon');

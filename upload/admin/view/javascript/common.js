@@ -409,17 +409,17 @@ var chain = new Chain();
     $.fn.autocomplete = function(option) {
         return this.each(function() {
             var $this = $(this);
-            var $dropdown = $('<div class="dropdown-menu"/>');
+            var $dropdown = $('<ul class="dropdown-menu"></ul>');
 
             this.timer = null;
             this.items = [];
 
             $.extend(this, option);
 
-            if (!$(this).parent().hasClass('input-group')) {
-                $(this).wrap('<div class="dropdown">');
+            if (!$(this).parent().parent().hasClass('input-group')) {
+                $(this).wrap('<div class="dropdown d-block">');
             } else {
-                $(this).parent().wrap('<div class="dropdown">');
+                $(this).parent().parent().wrap('<div class="dropdown d-block">');
             }
 
             $this.attr('autocomplete', 'off');
@@ -503,7 +503,7 @@ var chain = new Chain();
 
                         if (!json[i]['category']) {
                             // ungrouped items
-                            html += '<a href="' + json[i]['value'] + '" class="dropdown-item">' + json[i]['label'] + '</a>';
+                            html += '<li><a href="' + json[i]['value'] + '" class="dropdown-item">' + json[i]['label'] + '</a></li>';
                         } else {
                             // grouped items
                             name = json[i]['category'];
@@ -517,10 +517,10 @@ var chain = new Chain();
                     }
 
                     for (name in category) {
-                        html += '<h6 class="dropdown-header">' + name + '</h6>';
+                        html += '<li><h6 class="dropdown-header">' + name + '</h6></li>';
 
                         for (j = 0; j < category[name].length; j++) {
-                            html += '<a href="' + category[name][j]['value'] + '" class="dropdown-item">&nbsp;&nbsp;&nbsp;' + category[name][j]['label'] + '</a>';
+                            html += '<li><a href="' + category[name][j]['value'] + '" class="dropdown-item">&nbsp;&nbsp;&nbsp;' + category[name][j]['label'] + '</a></li>';
                         }
                     }
                 }

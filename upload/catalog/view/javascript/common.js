@@ -386,11 +386,11 @@ class Chain {
 var chain = new Chain();
 
 // Autocomplete
-(function ($) {
-    $.fn.autocomplete = function (option) {
-        return this.each(function () {
+(function($) {
+    $.fn.autocomplete = function(option) {
+        return this.each(function() {
             var $this = $(this);
-            var $dropdown = $('<div class="dropdown-menu"/>');
+            var $dropdown = $('<ul class="dropdown-menu"></ul>');
 
             this.timer = null;
             this.items = [];
@@ -407,27 +407,27 @@ var chain = new Chain();
             $this.active = false;
 
             // Focus
-            $this.on('focus', function () {
+            $this.on('focus', function() {
                 this.request();
             });
 
             // Blur
-            $this.on('blur', function (e) {
+            $this.on('blur', function(e) {
                 if (!$this.active) {
                     this.hide();
                 }
             });
 
-            $this.parent().on('mouseover', function (e) {
+            $this.parent().on('mouseover', function(e) {
                 $this.active = true;
             });
 
-            $this.parent().on('mouseout', function (e) {
+            $this.parent().on('mouseout', function(e) {
                 $this.active = false;
             });
 
             // Keydown
-            $this.on('keydown', function (event) {
+            $this.on('keydown', function(event) {
                 switch (event.keyCode) {
                     case 27: // escape
                         this.hide();
@@ -439,7 +439,7 @@ var chain = new Chain();
             });
 
             // Click
-            this.click = function (event) {
+            this.click = function(event) {
                 event.preventDefault();
 
                 var value = $(event.target).attr('href');
@@ -452,26 +452,26 @@ var chain = new Chain();
             }
 
             // Show
-            this.show = function () {
+            this.show = function() {
                 $dropdown.addClass('show');
             }
 
             // Hide
-            this.hide = function () {
+            this.hide = function() {
                 $dropdown.removeClass('show');
             }
 
             // Request
-            this.request = function () {
+            this.request = function() {
                 clearTimeout(this.timer);
 
-                this.timer = setTimeout(function (object) {
+                this.timer = setTimeout(function(object) {
                     object.source($(object).val(), $.proxy(object.response, object));
                 }, 50, this);
             }
 
             // Response
-            this.response = function (json) {
+            this.response = function(json) {
                 var html = '';
                 var category = {};
                 var name;
@@ -484,7 +484,7 @@ var chain = new Chain();
 
                         if (!json[i]['category']) {
                             // ungrouped items
-                            html += '<a href="' + json[i]['value'] + '" class="dropdown-item">' + json[i]['label'] + '</a>';
+                            html += '<li><a href="' + json[i]['value'] + '" class="dropdown-item">' + json[i]['label'] + '</a></li>';
                         } else {
                             // grouped items
                             name = json[i]['category'];
@@ -498,10 +498,10 @@ var chain = new Chain();
                     }
 
                     for (name in category) {
-                        html += '<h6 class="dropdown-header">' + name + '</h6>';
+                        html += '<li><h6 class="dropdown-header">' + name + '</h6></li>';
 
                         for (j = 0; j < category[name].length; j++) {
-                            html += '<a href="' + category[name][j]['value'] + '" class="dropdown-item">&nbsp;&nbsp;&nbsp;' + category[name][j]['label'] + '</a>';
+                            html += '<li><a href="' + category[name][j]['value'] + '" class="dropdown-item">&nbsp;&nbsp;&nbsp;' + category[name][j]['label'] + '</a></li>';
                         }
                     }
                 }

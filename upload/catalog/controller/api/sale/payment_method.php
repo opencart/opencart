@@ -6,6 +6,10 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
+		if (!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) {
+			$json['error'] = $this->language->get('error_product');
+		}
+
 		// Payment Address
 		if ($this->config->get('config_checkout_address') && !isset($this->session->data['payment_address'])) {
 			$json['error'] = $this->language->get('error_payment_address');

@@ -135,8 +135,12 @@ class Order extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		// Validate cart has products and has stock.
-		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
-			$json['error']['stock'] = $this->language->get('error_stock');
+		if (($this->cart->hasProducts() || !empty($this->session->data['vouchers']))) {
+			if (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout')) {
+				$json['error']['stock'] = $this->language->get('error_stock');
+			}
+		} else {
+			$json['error']['product'] = $this->language->get('error_product');
 		}
 
 		// Validate minimum quantity requirements.

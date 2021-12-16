@@ -17,10 +17,9 @@
       <div class="card-body">
 
         <div class="row row-cols-1 row-cols-sm-1 row-cols-md-3 row-cols-xl-3">
-
           <div class="col">
             <div class="input-group mb-3">
-              <div class="form-control p-0 border rounded-start alert-danger">
+              <div class="form-control p-0 border rounded-start">
                 <p class="lead p-2 mb-0"><strong>{{ text_invoice }}</strong>
                   <br/>
                   <span id="invoice">{{ invoice_no }}</span>&nbsp
@@ -33,23 +32,21 @@
               {% endif %}
             </div>
           </div>
-
           <div class="col">
             <div class="input-group mb-3">
               <div class="form-control p-0 border rounded-start">
                 <p class="lead p-2 mb-0"><strong>{{ text_customer }}</strong>
                   <br/>
                   {% if customer %}
-                    <span id="customer"><a href="{{ customer }}" target="_blank">{{ firstname }} {{ lastname }}</a></span>
+                    <span id="customer-value"><a href="{{ customer }}" target="_blank">{{ firstname }} {{ lastname }}</a></span>
                   {% else %}
-                    <span id="customer">{{ firstname }}&nbsp;{{ lastname }}</span>
+                    <span id="customer-value">{{ firstname }}&nbsp;{{ lastname }}</span>
                   {% endif %}
                 </p>
               </div>
               <button type="button" data-bs-toggle="modal" data-bs-target="#modal-customer" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
             </div>
           </div>
-
           <div class="col">
             <div class="form-control p-0 border rounded mb-3">
               <p class="lead p-2 mb-0"><strong>{{ text_date_added }}</strong>
@@ -58,182 +55,7 @@
               </p>
             </div>
           </div>
-
-
         </div>
-
-        <div class="row row-cols-1 row-cols-sm-2">
-          <div class="col">
-            <div class="input-group mb-3">
-              <div class="form-control p-0 border rounded-start">
-                <p class="lead p-2 mb-0"><strong>{{ text_payment_address }}</strong>
-                  <br/>
-                  {% if payment_address %}
-                    {{ payment_address }}
-                  {% else %}
-                    &nbsp;
-                    <br/>
-                    <br/>
-                  {% endif %}
-                </p>
-              </div>
-              <button type="button" data-bs-toggle="modal" data-bs-target="#modal-payment-address" class="btn btn-outline-primary float-end"><i class="fas fa-cog"></i></button>
-            </div>
-          </div>
-          <div class="col">
-            <div class="input-group mb-3">
-              <div class="form-control p-0 border rounded-start">
-                <p class="lead p-2 mb-0"><strong>{{ text_shipping_address }}</strong>
-                  <br/>
-                  {% if shipping_address %}
-                    {{ shipping_address }}
-                  {% else %}
-                    &nbsp;
-                    <br/>
-                    <br/>
-                  {% endif %}
-                </p>
-              </div>
-              <button type="button" data-bs-toggle="modal" data-bs-target="#modal-shipping-address" class="btn btn-outline-primary float-end"><i class="fas fa-cog"></i></button>
-            </div>
-          </div>
-        </div>
-
-        <div id="collapse-order" class="collapse">
-          <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4">
-            <div class="col">
-              <div class="input-group mb-3">
-                <div class="form-control p-0 border rounded-start">
-                  <p class="lead p-2 mb-0"><strong>{{ text_store }}</strong>
-                    <br/>
-                    <span id="store"><a href="{{ store_url }}" target="_blank">{{ store_name }}</a></span></p>
-                </div>
-                <button type="button" data-bs-toggle="modal" data-bs-target="#modal-store" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
-              </div>
-            </div>
-
-            <div class="col">
-              <div class="input-group mb-3">
-                <div class="form-control p-0 border rounded-start">
-                  <p class="lead p-2 mb-0"><strong>{{ text_language }}</strong>
-                    <br/>
-                    <span id="language">{{ language_name }}</span>
-                  </p>
-                </div>
-                <button type="button" data-bs-toggle="modal" data-bs-target="#modal-language" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
-              </div>
-            </div>
-
-            <div class="col">
-              <div class="input-group mb-3">
-                <div class="form-control p-0 border rounded-start">
-                  <p class="lead p-2 mb-0"><strong>{{ text_currency }}</strong>
-                    <br/>
-                    <span id="currency">{{ currency_title }}</span>
-                  </p>
-                </div>
-                <button type="button" data-bs-toggle="modal" data-bs-target="#modal-currency" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
-              </div>
-            </div>
-
-
-            <div class="col">
-              <div class="input-group mb-3">
-                <div class="form-control p-0 border rounded-start">
-                  <p class="lead p-2 mb-0"><strong>{{ text_coupon }}</strong>
-                    <br/>
-                    {% if coupon %}
-                      <span id="coupon">{{ coupon }}</span>
-                    {% else %}
-                      <span id="coupon">&nbsp;</span>
-                    {% endif %}
-                  </p>
-                </div>
-                <button type="button" data-bs-toggle="modal" data-bs-target="#modal-coupon" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
-              </div>
-            </div>
-
-            <div class="col">
-              <div class="input-group mb-3">
-                <div class="form-control p-0 border rounded-start">
-                  <p class="lead p-2 mb-0"><strong>{{ text_voucher }}</strong>
-                    <br/>
-                    {% if voucher %}
-                      <span id="voucher">{{ voucher }}</span>
-                    {% else %}
-                      <span id="voucher">&nbsp;</span>
-                    {% endif %}
-                  </p>
-                </div>
-                <button type="button" data-bs-toggle="modal" data-bs-target="#modal-voucher" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
-              </div>
-            </div>
-
-            <div class="col">
-              <div class="input-group mb-3">
-                <div class="form-control p-0 border rounded-start">
-                  <p class="lead p-2 mb-0"><strong>{{ text_reward }}</strong>
-                    <br/>
-                    {% if reward %}
-                      <span id="reward">{{ reward }}</span>
-                    {% else %}
-                      <span id="reward">&nbsp;</span>
-                    {% endif %}
-                  </p>
-                </div>
-                <button type="button" data-bs-toggle="modal" data-bs-target="#modal-reward" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
-                {% if customer and reward %}
-                  {% if not reward_total %}
-                    <button type="button" id="button-reward-add" data-oc-loading-text="{{ text_loading }}" data-bs-toggle="tooltip" title="{{ button_reward_add }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></button>
-                  {% else %}
-                    <button type="button" id="button-reward-remove" data-oc-loading-text="{{ text_loading }}" data-bs-toggle="tooltip" title="{{ button_reward_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>
-                  {% endif %}
-                {% else %}
-                  <button type="button" disabled="disabled" class="btn btn-success"><i class="fas fa-plus-circle"></i></button>
-                {% endif %}
-              </div>
-            </div>
-
-            <div class="col">
-              <div class="input-group mb-3">
-                <div class="form-control p-0 border rounded-start">
-                  <p class="lead p-2 mb-0"><strong>{{ text_affiliate }}</strong>
-                    <br/>
-                    {% if affiliate %}
-                      <span id="affiliate"><a href="{{ affiliate }}">{{ affiliate_firstname }} {{ affiliate_lastname }}</a></span>
-                    {% else %}
-                      <span id="affiliate">&nbsp;</span>
-                    {% endif %}
-                  </p>
-                </div>
-                <button type="button" data-bs-toggle="modal" data-bs-target="#modal-affiliate" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
-              </div>
-            </div>
-
-            <div class="col">
-              <div class="input-group mb-3">
-                <div class="form-control p-0 border rounded-start">
-                  <p class="lead p-2 mb-0"><strong>{{ text_commission }}</strong>
-                    <br/>
-                    {% if commission %}
-                      <span id="commission">{{ commission }}</span>
-                    {% else %}
-                      <span id="commission">&nbsp;</span>
-                    {% endif %}
-                  </p>
-                </div>
-                {% if not commission_total %}
-                  <button type="button" id="button-commission-add" data-oc-loading-text="{{ text_loading }}" data-bs-toggle="tooltip" title="{{ button_commission_add }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></button>
-                {% else %}
-                  <button type="button" id="button-commission-remove" data-oc-loading-text="{{ text_loading }}" data-bs-toggle="tooltip" title="{{ button_commission_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>
-                {% endif %}
-              </div>
-            </div>
-
-          </div>
-        </div>
-
-        <button type="button" id="button-collapse" class="btn btn-light btn-lg w-100 mb-3">{{ text_more }} <i class="fas fa-angle-down"></i></button>
 
         <table id="order" class="table table-bordered">
           <thead>
@@ -316,47 +138,211 @@
               <td class="text-end"><button type="button" data-bs-toggle="modal" data-bs-target="#modal-cart" class="btn btn-primary"><i class="fas fa-plus-circle"></i></button></td>
             </tr>
           </tbody>
-          <tfoot id="order-totals">
-            {% for order_total in order_totals %}
-              <tr>
-                <td class="text-end" colspan="4"></td>
-                <td class="text-end"><strong>{{ order_total.title }}</strong></td>
-                <td class="text-end">{{ order_total.text }}</td>
-              </tr>
-            {% endfor %}
-          </tfoot>
         </table>
+        <div id="collapse-order" class="collapse">
+          <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4">
+            <div class="col">
+              <div class="input-group mb-3">
+                <div class="form-control p-0 border rounded-start">
+                  <p class="lead p-2 mb-0"><strong>{{ text_store }}</strong>
+                    <br/>
+                    <span id="store"><a href="{{ store_url }}" target="_blank">{{ store_name }}</a></span></p>
+                </div>
+                <button type="button" data-bs-toggle="modal" data-bs-target="#modal-store" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
+              </div>
+            </div>
+
+            <div class="col">
+              <div class="input-group mb-3">
+                <div class="form-control p-0 border rounded-start">
+                  <p class="lead p-2 mb-0"><strong>{{ text_language }}</strong>
+                    <br/>
+                    <span id="language-value">{{ language_name }}</span>
+                  </p>
+                </div>
+                <button type="button" data-bs-toggle="modal" data-bs-target="#modal-language" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
+              </div>
+            </div>
+
+            <div class="col">
+              <div class="input-group mb-3">
+                <div class="form-control p-0 border rounded-start">
+                  <p class="lead p-2 mb-0"><strong>{{ text_currency }}</strong>
+                    <br/>
+                    <span id="currency-value">{{ currency_title }}</span>
+                  </p>
+                </div>
+                <button type="button" data-bs-toggle="modal" data-bs-target="#modal-currency" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
+              </div>
+            </div>
+
+            <div class="col">
+              <div class="input-group mb-3">
+                <div class="form-control p-0 border rounded-start">
+                  <p class="lead p-2 mb-0"><strong>{{ text_coupon }}</strong>
+                    <br/>
+                    {% if coupon %}
+                      <span id="coupon-value">{{ coupon }}</span>
+                    {% else %}
+                      <span id="coupon-value">&nbsp;</span>
+                    {% endif %}
+                  </p>
+                </div>
+                <button type="button" data-bs-toggle="modal" data-bs-target="#modal-coupon" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
+              </div>
+            </div>
+
+            <div class="col">
+              <div class="input-group mb-3">
+                <div class="form-control p-0 border rounded-start">
+                  <p class="lead p-2 mb-0"><strong>{{ text_voucher }}</strong>
+                    <br/>
+                    {% if voucher %}
+                      <span id="voucher-value">{{ voucher }}</span>
+                    {% else %}
+                      <span id="voucher-value">&nbsp;</span>
+                    {% endif %}
+                  </p>
+                </div>
+                <button type="button" data-bs-toggle="modal" data-bs-target="#modal-voucher" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
+              </div>
+            </div>
+
+            <div class="col">
+              <div class="input-group mb-3">
+                <div class="form-control p-0 border rounded-start">
+                  <p class="lead p-2 mb-0"><strong>{{ text_reward }}</strong>
+                    <br/>
+                    {% if reward %}
+                      <span id="reward-value">{{ reward }}</span>
+                    {% else %}
+                      <span id="reward-value">&nbsp;</span>
+                    {% endif %}
+                  </p>
+                </div>
+                <button type="button" data-bs-toggle="modal" data-bs-target="#modal-reward" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
+                {% if customer and reward %}
+                  {% if not reward_total %}
+                    <button type="button" id="button-reward-add" data-oc-loading-text="{{ text_loading }}" data-bs-toggle="tooltip" title="{{ button_reward_add }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></button>
+                  {% else %}
+                    <button type="button" id="button-reward-remove" data-oc-loading-text="{{ text_loading }}" data-bs-toggle="tooltip" title="{{ button_reward_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>
+                  {% endif %}
+                {% else %}
+                  <button type="button" disabled="disabled" class="btn btn-success"><i class="fas fa-plus-circle"></i></button>
+                {% endif %}
+              </div>
+            </div>
+
+            <div class="col">
+              <div class="input-group mb-3">
+                <div class="form-control p-0 border rounded-start">
+                  <p class="lead p-2 mb-0"><strong>{{ text_affiliate }}</strong>
+                    <br/>
+                    {% if affiliate %}
+                      <span id="affiliate-value"><a href="{{ affiliate }}">{{ affiliate_firstname }} {{ affiliate_lastname }}</a></span>
+                    {% else %}
+                      <span id="affiliate-value">&nbsp;</span>
+                    {% endif %}
+                  </p>
+                </div>
+                <button type="button" data-bs-toggle="modal" data-bs-target="#modal-affiliate" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
+              </div>
+            </div>
+
+            <div class="col">
+              <div class="input-group mb-3">
+                <div class="form-control p-0 border rounded-start">
+                  <p class="lead p-2 mb-0"><strong>{{ text_commission }}</strong>
+                    <br/>
+                    {% if commission %}
+                      <span id="commission-value">{{ commission }}</span>
+                    {% else %}
+                      <span id="commission-value">&nbsp;</span>
+                    {% endif %}
+                  </p>
+                </div>
+                {% if not commission_total %}
+                  <button type="button" id="button-commission-add" data-oc-loading-text="{{ text_loading }}" data-bs-toggle="tooltip" title="{{ button_commission_add }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></button>
+                {% else %}
+                  <button type="button" id="button-commission-remove" data-oc-loading-text="{{ text_loading }}" data-bs-toggle="tooltip" title="{{ button_commission_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>
+                {% endif %}
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <button type="button" id="button-collapse" class="btn btn-light btn-lg w-100 mb-3">{{ text_more }} <i class="fas fa-angle-down"></i></button>
+
         <div class="row row-cols-1 row-cols-sm-2">
-          <div id="shipping_method" class="col">
+          <div class="col">
             <div class="input-group mb-3">
               <div class="form-control p-0 border rounded-start">
-                <p class="lead p-2 mb-0"><strong>{{ text_shipping_method }}</strong>
+                <p class="lead p-2 mb-0"><strong>{{ text_payment_address }}</strong>
                   <br/>
-                  {% if shipping_method %}
-                    <span id="shipping-method">{{ shipping_method }}</span>
+                  {% if payment_address %}
+                    <span id="shipping-method-value">{{ payment_address }}</span>
                   {% else %}
-                    <span id="shipping-method">&nbsp;</span>
+                    &nbsp;
+                    <br/>
+                    <br/>
                   {% endif %}
                 </p>
               </div>
-              <button type="button" id="button-shipping-refresh-1" class="btn btn-outline-primary"><i class="fas fa-sync"></i></button>
-              <button type="button" data-bs-toggle="modal" data-bs-target="#modal-shipping-method" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
+              <button type="button" data-bs-toggle="modal" data-bs-target="#modal-payment-address" class="btn btn-outline-primary float-end"><i class="fas fa-cog"></i></button>
             </div>
           </div>
           <div class="col">
             <div class="input-group mb-3">
               <div class="form-control p-0 border rounded-start">
-                <p class="lead p-2 mb-0"><strong>{{ text_payment_method }}</strong>
+                <p class="lead p-2 mb-0"><strong>{{ text_shipping_address }}</strong>
                   <br/>
-                  {% if payment_method %}
-                    <span id="payment-method">{{ payment_method }}</span>
+                  {% if shipping_address %}
+                    {{ shipping_address }}
                   {% else %}
-                    <span id="payment-method">&nbsp;</span>
+                    &nbsp;
+                    <br/>
+                    <br/>
                   {% endif %}
                 </p>
               </div>
-              <button type="button" id="button-payment-refresh-1" class="btn btn-outline-primary"><i class="fas fa-sync"></i></button>
-              <button type="button" data-bs-toggle="modal" data-bs-target="#modal-payment-method" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
+              <button type="button" data-bs-toggle="modal" data-bs-target="#modal-shipping-address" class="btn btn-outline-primary float-end"><i class="fas fa-cog"></i></button>
+            </div>
+          </div>
+        </div>
+        <div class="row row-cols-1 row-cols-sm-2">
+          <div id="shipping-method" class="col">
+            <div class="input-group mb-3">
+              <div class="form-control p-0 border rounded-start">
+                <p class="lead p-2 mb-0"><strong>{{ text_shipping_method }}</strong></p>
+                <div class="dropdown">
+
+                  <a href="#" class="dropdown-toggle" type="button" id="dropdown-shipping" data-bs-toggle="dropdown">{% if shipping_code %}{{ shipping_method }}{% else %}{{ text_select }}{% endif %} <i class="fas fa-caret-down fa-fw"></i></a>
+                  <ul id="dropdown-shipping-method" class="dropdown-menu">
+                    {% if shipping_code %}
+                      <li><a href="{{ shipping_code }}" class="dropdown-item">{{ shipping_method }}</a></li>
+                    {% endif %}
+                  </ul>
+                </div>
+
+              </div>
+              <button type="button" id="button-shipping-method" class="btn btn-outline-primary"><i class="fas fa-sync"></i></button>
+            </div>
+          </div>
+          <div id="payment-method" class="col">
+            <div class="input-group mb-3">
+              <div class="form-control p-0 border rounded-start">
+                <p class="lead p-2 mb-0 dropdown"><strong>{{ text_payment_method }}</strong>
+                  <br/>
+                  <a href="#" class="dropdown-toggle" type="button" id="dropdown-payment" data-bs-toggle="dropdown">{% if payment_code %}{{ payment_method }}{% else %}{{ text_select }}{% endif %} <i class="fas fa-caret-down fa-fw"></i></a>
+                <ul id="dropdown-payment-method" class="dropdown-menu">
+                  {% if payment_code %}
+                    <li><a href="{{ payment_code }}" class="dropdown-item">{{ payment_method }}</a></li>
+                  {% endif %}
+                </ul>
+                </p>
+              </div>
+              <button type="button" id="button-payment-method" class="btn btn-outline-primary"><i class="fas fa-sync"></i></button>
             </div>
           </div>
         </div>
@@ -366,19 +352,37 @@
               <div class="form-control p-0 border rounded-start">
                 <p class="lead p-2 mb-0"><strong>{{ text_comment }}</strong>
                   <br/>
-                  {{ comment }}&nbsp;
+                  {% if comment %}
+                    <span id="comment-value">{{ comment }}</span>
+                  {% else %}
+                    <span id="comment-value">&nbsp;<br/><br/></span>
+                  {% endif %}
                 </p>
               </div>
               <button type="button" data-bs-toggle="modal" data-bs-target="#modal-comment" class="btn btn-outline-primary float-end"><i class="fas fa-cog"></i></button>
             </div>
           </div>
         </div>
+
+        <table class="table table-bordered">
+          <tbody id="order-totals">
+            {% for order_total in order_totals %}
+              <tr>
+                <td class="text-end"><strong>{{ order_total.title }}</strong></td>
+                <td class="text-end" style="width: 1px;">{{ order_total.text }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
         <div class="row">
           <div class="col text-end">
             <button type="button" id="button-refresh" data-bs-toggle="tooltip" title="{{ button_refresh }}" class="btn btn-outline-primary"><i class="fas fa-sync"></i></button> <button type="button" id="button-confirm" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_confirm }}</button>
           </div>
         </div>
+
       </div>
+
     </div>
 
     <div class="card mb-3">
@@ -709,69 +713,6 @@
             <button type="submit" id="button-currency" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
           </div>
         </form>
-
-      </div>
-    </div>
-  </div>
-</div>
-
-<div id="modal-shipping-method" class="modal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">{{ text_shipping_method_edit }}</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body">
-
-        <form id="form-shipping-method">
-          <div class="mb-3">
-            <div class="input-group">
-              <select name="shipping_method" id="input-shipping-method" class="form-select">
-                <option value="">{{ text_select }}</option>
-                {% if shipping_code %}
-                  <option value="{{ shipping_code }}" selected="selected">{{ shipping_method }}</option>
-                {% endif %}
-              </select>
-              <button type="button" id="button-shipping-refresh-2" data-oc-loading-text="{{ text_loading }}" class="btn btn-outline-primary"><i class="fas fa-sync"></i></button>
-            </div>
-          </div>
-          <div class="text-end">
-            <button type="submit" id="button-shipping-method" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
-          </div>
-        </form>
-
-      </div>
-    </div>
-  </div>
-</div>
-
-<div id="modal-payment-method" class="modal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">{{ text_payment_method_edit }}</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body">
-
-        <form id="form-payment-method">
-          <div class="mb-3">
-            <div class="input-group">
-              <select name="payment_method" id="input-payment-method" class="form-select">
-                <option value="">{{ text_select }}</option>
-                {% if payment_code %}
-                  <option value="{{ payment_code }}" selected="selected">{{ payment_method }}</option>
-                {% endif %}
-              </select>
-              <button type="button" id="button-payment-refresh-2" data-oc-loading-text="{{ text_loading }}" class="btn btn-outline-primary"><i class="fas fa-sync"></i></button>
-            </div>
-          </div>
-          <div class="text-end">
-            <button type="submit" id="button-payment-method" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
-          </div>
-        </form>
-
 
       </div>
     </div>
@@ -1514,7 +1455,7 @@ $('#form-customer').on('submit', function (e) {
             if (json['success']) {
                 $('#form-customer').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#customer-title').html($('#input-firstname').val() + ' ' + $('#input-lastname').val());
+                $('#customer-value').html($('#input-firstname').val() + ' ' + $('#input-lastname').val());
 
                 $('#button-refresh').trigger('click');
             }
@@ -1549,7 +1490,7 @@ $('#form-store').on('submit', function (e) {
             if (json['success']) {
                 $('#form-store').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#store-title').html($('#input-store option:selected').text());
+                $('#store-value').html($('#input-store option:selected').text());
 
                 $('#button-refresh').trigger('click');
             }
@@ -1584,7 +1525,7 @@ $('#form-language').on('submit', function (e) {
             if (json['success']) {
                 $('#form-language').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#language-title').html($('#input-language option:selected').text());
+                $('#language-value').html($('#input-language option:selected').text());
 
                 $('#button-refresh').trigger('click');
             }
@@ -1619,7 +1560,7 @@ $('#form-currency').on('submit', function (e) {
             if (json['success']) {
                 $('#form-currency').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#currency-title').html($('#input-currency option:selected').text());
+                $('#currency-value').html($('#input-currency option:selected').text());
 
                 $('#button-refresh').trigger('click');
             }
@@ -1655,7 +1596,7 @@ $('#form-coupon').on('submit', function (e) {
             if (json['success']) {
                 $('#form-coupon').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#coupon-title').html($('#input-coupon').val());
+                $('#coupon-value').html($('#input-coupon').val());
 
                 // Refresh products, vouchers and totals
                 $('#button-refresh').trigger('click');
@@ -1692,7 +1633,7 @@ $('#form-voucher').on('submit', function (e) {
             if (json['success']) {
                 $('#form-voucher').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#voucher-title').html($('#input-voucher').val());
+                $('#voucher-value').html($('#input-voucher').val());
 
                 // Refresh products, vouchers and totals
                 $('#button-refresh').trigger('click');
@@ -1729,7 +1670,7 @@ $('#form-reward').on('submit', function (e) {
             if (json['success']) {
                 $('#form-reward').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#reward-title').html($('#input-reward').val());
+                $('#reward-value').html($('#input-reward').val());
 
                 $('#button-refresh').trigger('click');
             }
@@ -1837,7 +1778,7 @@ $('#form-affiliate').on('submit', function (e) {
             if (json['success']) {
                 $('#form-affiliate').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#affiliate-title').html($('#input-affiliate').val());
+                $('#affiliate-value').html($('#input-affiliate').val());
             }
         },
         error: function (xhr, ajaxOptions, thrownError) {
@@ -2563,7 +2504,7 @@ $('#form-voucher-remove').on('submit', function () {
 });
 
 // Payment Method
-$('#button-payment-refresh-1, #button-payment-refresh-2').on('click', function () {
+$('#button-payment-method').on('click', function () {
     var element = this;
 
     $.ajax({
@@ -2576,25 +2517,21 @@ $('#button-payment-refresh-1, #button-payment-refresh-2').on('click', function (
             $(element).button('reset');
         },
         success: function (json) {
-            $('.alert-dismissible').remove();
+            $('#alert .alert-dismissible').remove();
 
             if (json['error']) {
-                $('#form-payment-method').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
 
-            html = '<option value="">{{ text_select }}</option>';
+            html = '';
 
             if (json['payment_methods']) {
                 for (i in json['payment_methods']) {
-                    if (json['payment_methods'][i]['code'] == $('#input-payment-method').val()) {
-                        html += '<option value="' + json['payment_methods'][i]['code'] + '" selected="selected">' + json['payment_methods'][i]['title'] + '</option>';
-                    } else {
-                        html += '<option value="' + json['payment_methods'][i]['code'] + '">' + json['payment_methods'][i]['title'] + '</option>';
-                    }
+                    html += '<li><a href="' + json['payment_methods'][i]['code'] + '" class="dropdown-item">' + json['payment_methods'][i]['title'] + '</a></li>';
                 }
             }
 
-            $('#input-payment-method').html(html);
+            $('#dropdown-payment-method').html(html);
         },
         error: function (xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -2602,31 +2539,27 @@ $('#button-payment-refresh-1, #button-payment-refresh-2').on('click', function (
     });
 });
 
-$('#form-payment-method').on('submit', function (e) {
+$('#dropdown-payment-method a').on('click', function (e) {
     e.preventDefault();
+
+    var element = this;
 
     $.ajax({
         url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=sale/payment_method|save',
         type: 'post',
-        data: $('#form-payment-method').serialize(),
+        data: 'payment_method=' + $(element).attr('href'),
         dataType: 'json',
-        beforeSend: function () {
-            $('#button-payment-method').button('loading');
-        },
-        complete: function () {
-            $('#button-payment-method').button('reset');
-        },
         success: function (json) {
-            $('.alert-dismissible').remove();
+            $('#alert .alert-dismissible').remove();
 
             if (json['error']) {
-                $('#form-payment-method').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
 
             if (json['success']) {
-                $('#form-payment-method').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#payment-method').html($('#input-payment-method option:selected').text());
+                $('#payment-method').html($(element).text());
 
                 $('#button-refresh').trigger('click');
             }
@@ -2638,7 +2571,7 @@ $('#form-payment-method').on('submit', function (e) {
 });
 
 // Shipping Method
-$('#button-shipping-refresh-1, #bbutton-shipping-refresh-2').on('click', function () {
+$('#button-shipping-method').on('click', function () {
     var element = this;
 
     $.ajax({
@@ -2654,32 +2587,26 @@ $('#button-shipping-refresh-1, #bbutton-shipping-refresh-2').on('click', functio
             $('.alert-dismissible').remove();
 
             if (json['error']) {
-                $('#form-shipping-method').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
 
-            html = '<option value="">{{ text_select }}</option>';
+            html = '';
 
             if (json['shipping_methods']) {
                 for (i in json['shipping_methods']) {
-                    html += '<optgroup label="' + json['shipping_methods'][i]['title'] + '">';
+                    html += '<li><h6 class="dropdown-header">' + json['shipping_methods'][i]['title'] + '</h6></li>';
 
                     if (!json['shipping_methods'][i]['error']) {
                         for (j in json['shipping_methods'][i]['quote']) {
-                            if (json['shipping_methods'][i]['quote'][j]['code'] == $('#input-shipping-method').val()) {
-                                html += '<option value="' + json['shipping_methods'][i]['quote'][j]['code'] + '" selected="selected">' + json['shipping_methods'][i]['quote'][j]['title'] + ' - ' + json['shipping_methods'][i]['quote'][j]['text'] + '</option>';
-                            } else {
-                                html += '<option value="' + json['shipping_methods'][i]['quote'][j]['code'] + '">' + json['shipping_methods'][i]['quote'][j]['title'] + ' - ' + json['shipping_methods'][i]['quote'][j]['text'] + '</option>';
-                            }
+                            html += '<li><a href="' + json['shipping_methods'][i]['quote'][j]['code'] + '" class="dropdown-item">' + json['shipping_methods'][i]['quote'][j]['title'] + ' - ' + json['shipping_methods'][i]['quote'][j]['text'] + '</a></li>';
                         }
                     } else {
-                        html += '<option value="" style="color: #ff0000;" disabled="disabled">' + json['shipping_methods'][i]['error'] + '</option>';
+                        html += '<li><span class="dropdown-item text-danger">' + json['shipping_methods'][i]['error'] + '</span></li>';
                     }
-
-                    html += '</optgroup>';
                 }
             }
 
-            $('#input-shipping-method').html(html);
+            $('#dropdown-shipping-method').html(html);
         },
         error: function (xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -2687,31 +2614,27 @@ $('#button-shipping-refresh-1, #bbutton-shipping-refresh-2').on('click', functio
     });
 });
 
-$('#form-shipping-method').on('submit', function(e) {
+$('#dropdown-shipping-method a').on('click', function (e) {
     e.preventDefault();
+
+    var element = this;
 
     $.ajax({
         url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=sale/shipping_method|save',
         type: 'post',
-        data: $('#form-shipping-method').serialize(),
+        data: 'shipping_method=' + $(element).attr('href'),
         dataType: 'json',
-        beforeSend: function () {
-            $('#button-shipping-method').button('loading');
-        },
-        complete: function () {
-            $('#button-shipping-method').button('reset');
-        },
         success: function (json) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
-                $('#form-shipping-method').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
 
             if (json['success']) {
-                $('#form-shipping-method').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#shipping-method').html($('#input-shipping-method option:selected').text());
+                $('#shipping-method').html($(element).text());
 
                 $('#button-refresh').trigger('click');
             }
@@ -2722,7 +2645,7 @@ $('#form-shipping-method').on('submit', function(e) {
     });
 });
 
-$('#form-comment').on('submit', function() {
+$('#form-comment').on('submit', function () {
     var element = this;
 
     $.ajax({
@@ -2856,9 +2779,8 @@ $('#button-refresh').on('click', function () {
                     total = json['totals'][i];
 
                     html += '<tr>';
-                    html += '  <td class="text-end" colspan="4"></td>';
                     html += '  <td class="text-end"><strong>' + total['title'] + '</strong></td>';
-                    html += '  <td class="text-end">' + total['text'] + '</td>';
+                    html += '  <td class="text-end" style="width: 1px;">' + total['text'] + '</td>';
                     html += '</tr>';
                 }
             }

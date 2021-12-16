@@ -28,6 +28,8 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			$this->session->data['order_id'] = $order_id;
+
 			// Customer Details
 			$this->session->data['customer'] = [
 				'customer_id'       => $order_info['customer_id'],
@@ -100,11 +102,6 @@ class Order extends \Opencart\System\Engine\Controller {
 				$this->cart->add($product['product_id'], $product['quantity'], $option);
 			}
 
-
-
-
-
-
 			$this->session->data['vouchers'] = [];
 
 			$this->load->model('checkout/voucher');
@@ -139,7 +136,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		// Validate cart has products and has stock.
 		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
-			$json['error'] = $this->language->get('error_stock');
+			$json['error']['stock'] = $this->language->get('error_stock');
 		}
 
 		// Validate minimum quantity requirements.
@@ -147,7 +144,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		foreach ($products as $product) {
 			if (!$product['minimum']) {
-				$json['error'] = sprintf($this->language->get('error_minimum'), $product['name'], $product['minimum']);
+				$json['error']['minimum'] = sprintf($this->language->get('error_minimum'), $product['name'], $product['minimum']);
 
 				break;
 			}
@@ -155,19 +152,19 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		// Customer
 		if (!isset($this->session->data['customer'])) {
-			$json['error'] = $this->language->get('error_customer');
+			$json['error']['customer'] = $this->language->get('error_customer');
 		}
 
 		// Payment Address
 		if ($this->config->get('config_checkout_address') && !isset($this->session->data['payment_address'])) {
-			$json['error'] = $this->language->get('error_payment_address');
+			$json['error']['payment_address'] = $this->language->get('error_payment_address');
 		}
 
 		// Shipping
 		if ($this->cart->hasShipping()) {
 			// Shipping Address
 			if (!isset($this->session->data['shipping_address'])) {
-				$json['error'] = $this->language->get('error_shipping_address');
+				$json['error']['shipping_address'] = $this->language->get('error_shipping_address');
 			}
 
 			// Validate shipping method
@@ -175,10 +172,10 @@ class Order extends \Opencart\System\Engine\Controller {
 				$shipping = explode('.', $this->session->data['shipping_method']);
 
 				if (!isset($shipping[0]) || !isset($shipping[1]) || !isset($this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]])) {
-					$json['error'] = $this->language->get('error_shipping_method');
+					$json['error']['shipping_method'] = $this->language->get('error_shipping_method');
 				}
 			} else {
-				$json['error'] = $this->language->get('error_shipping_method');
+				$json['error']['shipping_method'] = $this->language->get('error_shipping_method');
 			}
 		} else {
 			unset($this->session->data['shipping_address']);
@@ -188,7 +185,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		// Payment Method
 		if (!isset($this->session->data['payment_method']) || !isset($this->session->data['payment_methods']) || !isset($this->session->data['payment_methods'][$this->session->data['payment_method']])) {
-			$json['error'] = $this->language->get('error_payment_method');
+			$json['error']['payment_method'] = $this->language->get('error_payment_method');
 		}
 
 		if (!$json) {
@@ -349,7 +346,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 			$this->load->model('checkout/cart');
 
-			$this->model_checkout_cart->getTotals($totals, $taxes, $total);
+			($this->model_checkout_cart->getTotals)($totals, $taxes, $total);
 
 			$total_data = [
 				'totals' => $totals,
@@ -503,7 +500,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$order_info = $this->model_checkout_order->getOrder($order_id);
 
 		if (!$order_info) {
-			$json['error'] = $this->language->get('error_not_found');
+			$json['error'] = $this->language->get('error_order');
 		}
 
 		if (!$json) {

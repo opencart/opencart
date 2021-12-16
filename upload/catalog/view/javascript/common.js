@@ -108,13 +108,7 @@ $(document).ready(function () {
     // Product Grid
     $('#grid-view').click(function () {
         // What a shame bootstrap does not take into account dynamically loaded columns
-        if (cols == 2) {
-            $('#content .product-list').attr('class', 'product-layout product-grid');
-        } else if (cols == 1) {
-            $('#content .product-list').attr('class', 'product-layout product-grid');
-        } else {
-            $('#content .product-list').attr('class', 'product-layout product-grid');
-        }
+        $('#content .product-list').attr('class', 'product-layout product-grid');
 
         $('#list-view').removeClass('active');
         $('#grid-view').addClass('active');
@@ -176,34 +170,6 @@ $(document).ready(function () {
         });
     });
 });
-
-// Cart add remove functions
-var voucher = [];
-
-voucher.remove = function (key) {
-    $.ajax({
-        url: 'index.php?route=checkout/cart|remove',
-        type: 'post',
-        data: 'key=' + key,
-        dataType: 'json',
-        beforeSend: function () {
-            $('#cart > button').button('loading');
-        },
-        complete: function () {
-            $('#cart > button').button('reset');
-        },
-        success: function (json) {
-            if (getURLVar('route') == 'checkout/cart' || getURLVar('route') == 'checkout/checkout') {
-                location = 'index.php?route=checkout/cart';
-            } else {
-                $('#cart').parent().load('index.php?route=common/cart|info');
-            }
-        },
-        error: function (xhr, ajaxOptions, thrownError) {
-            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-        }
-    });
-};
 
 // Forms
 $(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function (e) {

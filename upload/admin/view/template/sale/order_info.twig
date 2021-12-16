@@ -20,7 +20,7 @@
 
           <div class="col">
             <div class="input-group mb-3">
-              <div class="form-control p-0 border rounded-start">
+              <div class="form-control p-0 border rounded-start alert-danger">
                 <p class="lead p-2 mb-0"><strong>{{ text_invoice }}</strong>
                   <br/>
                   <span id="invoice">{{ invoice_no }}</span>&nbsp
@@ -249,7 +249,7 @@
           <tbody id="order-items">
             {% for order_product in order_products %}
               <tr>
-                <td class="text-start"><a href="{{ order_product.href }}">{{ order_product.name }}</a>{% if not order_product.stock %} <span class="text-danger">***</span>{% endif %}
+                <td class="text-start"><a href="{{ order_product.href }}">{{ order_product.name }}</a>
 
                   {% if order_product.option %}
 
@@ -284,24 +284,24 @@
                 </td>
               </tr>
             {% endfor %}
-            {% for voucher in vouchers %}
+            {% for order_voucher in order_vouchers %}
               <tr>
                 <td></td>
-                <td class="text-start">{{ voucher.description }}</td>
+                <td class="text-start">{{ order_voucher.description }}</td>
                 <td class="text-start"></td>
                 <td class="text-start">
 
-                  <form method="post" data-oc-toggle="ajax">
+                  <form>
                     <div class="input-group">
                       <input type="text" name="quantity" value="1" size="1" disabled="disabled" class="form-control"/>
-                      <button type="submit" formaction="{{ voucher_remove }}" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-times-circle"></i></button>
-                      <input type="text" name="key" value="{{ voucher.key }}" size="1" disabled="disabled" class="form-control"/>
+                      <button type="submit" formaction="{{ order_voucher }}" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-times-circle"></i></button>
+                      <input type="text" name="key" value="{{ order_voucher.key }}" size="1" disabled="disabled" class="form-control"/>
                     </div>
                   </form>
 
                 </td>
-                <td class="text-end">{{ voucher.amount }}</td>
-                <td class="text-end">{{ voucher.amount }}</td>
+                <td class="text-end">{{ order_voucher.amount }}</td>
+                <td class="text-end">{{ order_voucher.amount }}</td>
               </tr>
             {% endfor %}
             {% if not order_products and not order_vouchers %}
@@ -320,8 +320,8 @@
             {% for order_total in order_totals %}
               <tr>
                 <td class="text-end" colspan="4"></td>
-                <td class="text-end"><strong>{{ order_total['title'] }}</strong></td>
-                <td class="text-end">{{ order_total['text'] }}</td>
+                <td class="text-end"><strong>{{ order_total.title }}</strong></td>
+                <td class="text-end">{{ order_total.text }}</td>
               </tr>
             {% endfor %}
           </tfoot>
@@ -339,6 +339,7 @@
                   {% endif %}
                 </p>
               </div>
+              <button type="button" id="button-shipping-refresh-1" class="btn btn-outline-primary"><i class="fas fa-sync"></i></button>
               <button type="button" data-bs-toggle="modal" data-bs-target="#modal-shipping-method" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
             </div>
           </div>
@@ -354,6 +355,7 @@
                   {% endif %}
                 </p>
               </div>
+              <button type="button" id="button-payment-refresh-1" class="btn btn-outline-primary"><i class="fas fa-sync"></i></button>
               <button type="button" data-bs-toggle="modal" data-bs-target="#modal-payment-method" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
             </div>
           </div>
@@ -731,7 +733,7 @@
                   <option value="{{ shipping_code }}" selected="selected">{{ shipping_method }}</option>
                 {% endif %}
               </select>
-              <button type="button" id="button-shipping-refresh" data-oc-loading-text="{{ text_loading }}" class="btn btn-outline-primary"><i class="fas fa-sync"></i></button>
+              <button type="button" id="button-shipping-refresh-2" data-oc-loading-text="{{ text_loading }}" class="btn btn-outline-primary"><i class="fas fa-sync"></i></button>
             </div>
           </div>
           <div class="text-end">
@@ -762,7 +764,7 @@
                   <option value="{{ payment_code }}" selected="selected">{{ payment_method }}</option>
                 {% endif %}
               </select>
-              <button type="button" id="button-payment-refresh" data-oc-loading-text="{{ text_loading }}" class="btn btn-outline-primary"><i class="fas fa-sync"></i></button>
+              <button type="button" id="button-payment-refresh-2" data-oc-loading-text="{{ text_loading }}" class="btn btn-outline-primary"><i class="fas fa-sync"></i></button>
             </div>
           </div>
           <div class="text-end">
@@ -2561,7 +2563,7 @@ $('#form-voucher-remove').on('submit', function () {
 });
 
 // Payment Method
-$('#button-payment-refresh').on('click', function () {
+$('#button-payment-refresh-1, #button-payment-refresh-2').on('click', function () {
     var element = this;
 
     $.ajax({
@@ -2636,7 +2638,7 @@ $('#form-payment-method').on('submit', function (e) {
 });
 
 // Shipping Method
-$('#button-shipping-refresh').on('click', function () {
+$('#button-shipping-refresh-1, #bbutton-shipping-refresh-2').on('click', function () {
     var element = this;
 
     $.ajax({
@@ -2768,9 +2770,7 @@ $('#button-refresh').on('click', function () {
 
             // Check for errors
             if (json['error']) {
-                if (json['error']['warning']) {
-                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-                }
+
 
                 if (json['error']['stock']) {
                     $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['stock'] + '</div>');
@@ -2790,6 +2790,9 @@ $('#button-refresh').on('click', function () {
             if (json['products'].length) {
                 for (i = 0; i < json['products'].length; i++) {
                     product = json['products'][i];
+
+                    console.log(product);
+
 
                     html += '<tr>';
                     html += '  <td class="text-start">' + product['name'] + (!product['stock'] ? ' <span class="text-danger">***</span>' : '') + '<br/>';
@@ -2884,45 +2887,14 @@ $('#button-confirm').on('click', function () {
         success: function (json) {
             $('.alert-dismissible').remove();
 
-
             if (json['error']) {
-
-                if (json['error']['warning']) {
-                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                for (i in json['error']) {
+                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'][i] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                 }
-
-                if (json['error']['stock']) {
-                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['stock'] + '</div>');
-                }
-
-                if (json['error']['minimum']) {
-                    for (i in json['error']['minimum']) {
-                        $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['minimum'][i] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-                    }
-                }
-
-                if (json['error']['payment_address']) {
-                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['payment_address'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-                }
-
-                if (json['error']['shipping_address']) {
-                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['shipping_address'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-                }
-
-
-
-
-
-            }
-
-
-
-            if (json['error']) {
-                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
 
             if (json['success']) {
-                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + '  <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
 
             if (json['order_id']) {

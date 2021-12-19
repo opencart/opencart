@@ -507,7 +507,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$data['stores'][] = [
 			'store_id' => 0,
-			'name'     => $this->config->get('config_name')
+			'name'     => sprintf($this->language->get('text_default'), $this->config->get('config_name'))
 		];
 
 		$this->load->model('setting/store');

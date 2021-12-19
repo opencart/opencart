@@ -61,6 +61,10 @@ class Order extends \Opencart\System\Engine\Controller {
 				'custom_field'   => $order_info['payment_custom_field']
 			];
 
+			if ($order_info['payment_code']) {
+				$this->session->data['payment_method'] = $order_info['payment_code'];
+			}
+
 			if ($order_info['shipping_code']) {
 				$this->session->data['shipping_address'] = [
 					'firstname'      => $order_info['shipping_firstname'],
@@ -84,6 +88,16 @@ class Order extends \Opencart\System\Engine\Controller {
 				$this->session->data['shipping_method'] = $order_info['shipping_code'];
 			}
 
+			$this->session->data['comment'] = $order_info['comment'];
+
+			if ($order_info['language_code']) {
+				$this->session->data['language'] = $order_info['language_code'];
+			}
+
+			if ($order_info['currency_code']) {
+				$this->session->data['currency'] = $order_info['currency_code'];
+			}
+
 			$products = $this->model_checkout_order->getProducts($order_id);
 
 			foreach ($products as $product) {
@@ -93,7 +107,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 				foreach ($options as $option) {
 					if (isset($option['product_option_id'])) {
-						$option[$option['key']] = $option['value'];
+						$option[$option['product_option_id']] = $option['value'];
 					} else {
 						$option = [];
 					}
@@ -111,16 +125,35 @@ class Order extends \Opencart\System\Engine\Controller {
 			foreach ($vouchers as $voucher) {
 				$this->session->data['vouchers'][] = [
 					'code'             => $voucher['code'],
-					'description'      => sprintf($this->language->get('text_for'), $this->currency->format($this->request->post['amount'], $this->session->data['currency'], 1.0), $this->request->post['to_name']),
+					'description'      => sprintf($this->language->get('text_for'), $this->currency->format($voucher['amount'], $this->session->data['currency'], 1.0),$voucher['to_name']),
 					'to_name'          => $voucher['to_name'],
 					'to_email'         => $voucher['to_email'],
 					'from_name'        => $voucher['from_name'],
 					'from_email'       => $voucher['from_email'],
 					'voucher_theme_id' => $voucher['voucher_theme_id'],
 					'message'          => $voucher['message'],
-					'amount'           => $this->currency->convert($this->request->post['amount'], $this->session->data['currency'], $this->config->get('config_currency'))
+					'amount'           => $this->currency->convert($voucher['amount'], $this->session->data['currency'], $this->config->get('config_currency'))
 				];
 			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	public function comment(): void {
+		$this->load->language('api/sale/order');
+
+		$json = [];
+
+		if (!isset($this->request->post['comment'])) {
+			$json['error'] = $this->language->get('error_comment');
+		}
+
+		if (!$json) {
+			$this->session->data['comment'] = $this->request->post['comment'];
 
 			$json['success'] = $this->language->get('text_success');
 		}
@@ -360,8 +393,8 @@ class Order extends \Opencart\System\Engine\Controller {
 
 			$order_data = array_merge($order_data, $total_data);
 
-			if (isset($this->request->post['comment'])) {
-				$order_data['comment'] = $this->request->post['comment'];
+			if (isset($this->session->data['comment'])) {
+				$order_data['comment'] = $this->session->data['comment'];
 			} else {
 				$order_data['comment'] = '';
 			}
@@ -422,7 +455,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			} else {
 				$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
-				if ($order_info && !$order_info['order_status_id']) {
+				if ($order_info) {
 					$this->model_checkout_order->editOrder($this->session->data['order_id'], $order_data);
 				}
 			}
@@ -479,14 +512,9 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		if (isset($this->request->get['order_id'])) {
-			$order_id = (int)$this->request->get['order_id'];
-		} else {
-			$order_id = 0;
-		}
-
 		// Add keys for missing post vars
 		$keys = [
+			'order_id',
 			'order_status_id',
 			'comment',
 			'notify',
@@ -501,14 +529,14 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('checkout/order');
 
-		$order_info = $this->model_checkout_order->getOrder($order_id);
+		$order_info = $this->model_checkout_order->getOrder((int)$this->request->post['order_id']);
 
 		if (!$order_info) {
 			$json['error'] = $this->language->get('error_order');
 		}
 
 		if (!$json) {
-			$this->model_checkout_order->addHistory($order_id, $this->request->post['order_status_id'], $this->request->post['comment'], $this->request->post['notify'], $this->request->post['override']);
+			$this->model_checkout_order->addHistory((int)$this->request->post['order_id'], (int)$this->request->post['order_status_id'], $this->request->post['comment'], (bool)$this->request->post['notify'], (bool)$this->request->post['override']);
 
 			$json['success'] = $this->language->get('text_success');
 		}

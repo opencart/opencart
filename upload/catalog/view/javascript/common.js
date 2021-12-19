@@ -390,18 +390,13 @@ var chain = new Chain();
     $.fn.autocomplete = function(option) {
         return this.each(function() {
             var $this = $(this);
+            var $menu = $('<div class="dropdown d-block">');
             var $dropdown = $('<ul class="dropdown-menu"></ul>');
 
             this.timer = null;
             this.items = [];
 
             $.extend(this, option);
-
-            if (!$(this).parent().hasClass('input-group')) {
-                $(this).wrap('<div class="dropdown">');
-            } else {
-                $(this).parent().wrap('<div class="dropdown">');
-            }
 
             $this.attr('autocomplete', 'off');
             $this.active = false;
@@ -515,9 +510,13 @@ var chain = new Chain();
                 $dropdown.html(html);
             }
 
-            $dropdown.on('click', '> a', $.proxy(this.click, this));
+            if (!$this.parent().hasClass('input-group')) {
+                $this.after($menu.append($dropdown));
+            } else {
+                $this.parent().after($menu.append($dropdown));
+            }
 
-            $this.after($dropdown);
+            $dropdown.on('click', 'a', $.proxy(this.click, this));
         });
     }
 })(window.jQuery);

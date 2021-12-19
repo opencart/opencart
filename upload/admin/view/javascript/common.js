@@ -335,16 +335,6 @@ $(document).on('click', '[data-oc-toggle=\'image\']', function(e) {
 
     var element = this;
 
-    console.log(element);
-
-    // var test = document.querySelector('#modal-image');
-
-    // var modal = new bootstrap.Modal(test);
-
-    //  if () {
-    //     $('#modal-image').remove();
-    //  }
-
     $.ajax({
         url: 'index.php?route=common/filemanager&user_token=' + getURLVar('user_token') + '&target=' + encodeURIComponent($(this).attr('data-oc-target')) + '&thumb=' + encodeURIComponent($(this).attr('data-oc-thumb')),
         dataType: 'html',
@@ -409,18 +399,13 @@ var chain = new Chain();
     $.fn.autocomplete = function(option) {
         return this.each(function() {
             var $this = $(this);
+            var $menu = $('<div class="dropdown d-block">');
             var $dropdown = $('<ul class="dropdown-menu"></ul>');
 
             this.timer = null;
             this.items = [];
 
             $.extend(this, option);
-
-            if (!$(this).parent().parent().hasClass('input-group')) {
-                $(this).wrap('<div class="dropdown d-block">');
-            } else {
-                $(this).parent().parent().wrap('<div class="dropdown d-block">');
-            }
 
             $this.attr('autocomplete', 'off');
             $this.active = false;
@@ -446,8 +431,8 @@ var chain = new Chain();
             });
 
             // Keydown
-            $this.on('keydown', function(event) {
-                switch (event.keyCode) {
+            $this.on('keydown', function(e) {
+                switch (e.keyCode) {
                     case 27: // escape
                         this.hide();
                         break;
@@ -458,10 +443,10 @@ var chain = new Chain();
             });
 
             // Click
-            this.click = function(event) {
-                event.preventDefault();
+            this.click = function(e) {
+                e.preventDefault();
 
-                var value = $(event.target).attr('href');
+                var value = $(e.target).attr('href');
 
                 if (value && this.items[value]) {
                     this.select(this.items[value]);
@@ -534,9 +519,13 @@ var chain = new Chain();
                 $dropdown.html(html);
             }
 
-            $dropdown.on('click', '> a', $.proxy(this.click, this));
+            if (!$this.parent().hasClass('input-group')) {
+                $this.after($menu.append($dropdown));
+            } else {
+                $this.parent().after($menu.append($dropdown));
+            }
 
-            $this.after($dropdown);
+            $dropdown.on('click', 'a', $.proxy(this.click, this));
         });
     }
 })(window.jQuery);

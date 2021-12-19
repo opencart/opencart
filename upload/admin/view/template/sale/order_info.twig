@@ -290,7 +290,7 @@
               <button type="button" data-bs-toggle="modal" data-bs-target="#modal-payment-address" class="btn btn-outline-primary float-end"><i class="fas fa-cog"></i></button>
             </div>
           </div>
-          <div id="shipping-address" class="col">
+          <div id="shipping-address" class="col{% if not shipping_method %} d-none{% endif %}">
             <div class="input-group mb-3">
               <div class="form-control p-0 border rounded-start">
                 <p class="lead p-2 mb-0"><strong>{{ text_shipping_address }}</strong>
@@ -310,10 +310,11 @@
         </div>
         <div class="row mb-3">
 
-          <div id="shipping-method" class="col-md">
+          <div id="shipping-method" class="col-md{% if not shipping_method %} d-none{% endif %}">
             <form id="form-shipping-method">
               <div class="input-group form-floating">
                 <select id="input-shipping-method" class="form-select">
+                  <option value="">{{ text_select }}</option>
                   {% if shipping_code %}
                     <option value="{{ shipping_code }}">{{ shipping_method }}</option>
                   {% endif %}
@@ -327,6 +328,7 @@
             <form id="form-payment-method">
               <div class="input-group form-floating">
                 <select id="input-payment-method" class="form-select">
+                  <option value="">{{ text_select }}</option>
                   {% if payment_code %}
                     <option value="{{ payment_code }}">{{ payment_method }}</option>
                   {% endif %}
@@ -2532,7 +2534,7 @@ $('#button-payment-method').on('click', function () {
                 $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
 
-            html = '';
+            html = '<option value="">{{ text_select }}</option>';
 
             if (json['payment_methods']) {
                 for (i in json['payment_methods']) {
@@ -2602,13 +2604,13 @@ $('#button-shipping-method').on('click', function () {
             $(element).button('reset');
         },
         success: function (json) {
-            $('.alert-dismissible').remove();
+            $('#alert .alert-dismissible').remove();
 
             if (json['error']) {
                 $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
 
-            html = '';
+            html = '<option value="">{{ text_select }}</option>';
 
             if (json['shipping_methods']) {
                 for (i in json['shipping_methods']) {
@@ -2654,7 +2656,7 @@ $('#input-shipping-method').on('change', function (e) {
             $(element).prop('disabled', false);
         },
         success: function (json) {
-            $('.alert-dismissible').remove();
+            $('#alert .alert-dismissible').remove();
 
             if (json['error']) {
                 $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
@@ -2721,8 +2723,6 @@ $('#button-refresh').on('click', function () {
             $('#button-confirm').button('reset');
         },
         success: function (json) {
-            var shipping = false;
-
             html = '';
 
             if (json['products'].length) {
@@ -2800,8 +2800,6 @@ $('#button-refresh').on('click', function () {
             }
 
             $('#order-totals').html(html);
-
-            console.log(json['shipping_required']);
 
             if (json['shipping_required']) {
                 $('#shipping-address').removeClass('d-none');

@@ -311,29 +311,29 @@
         <div class="row mb-3">
 
           <div id="shipping-method" class="col-md">
-            <div class="input-group form-floating">
-              <select id="input-shipping-method" class="form-select">
-                {% if shipping_code %}
-                  <option value="{{ shipping_code }}">{{ shipping_method }}</option>
-                {% endif %}
-              </select> <label for="input-shipping-method">{{ text_shipping_method }}</label>
-              <button type="button" id="button-shipping-method" class="btn btn-outline-primary"><i class="fas fa-sync"></i></button>
-            </div>
+            <form id="form-shipping-method">
+              <div class="input-group form-floating">
+                <select id="input-shipping-method" class="form-select">
+                  {% if shipping_code %}
+                    <option value="{{ shipping_code }}">{{ shipping_method }}</option>
+                  {% endif %}
+                </select> <label for="input-shipping-method">{{ text_shipping_method }}</label>
+                <button type="button" id="button-shipping-method" class="btn btn-outline-primary"><i class="fas fa-sync"></i></button>
+              </div>
+            </form>
           </div>
 
           <div id="payment-method" class="col-md">
-
+            <form id="form-payment-method">
               <div class="input-group form-floating">
                 <select id="input-payment-method" class="form-select">
                   {% if payment_code %}
                     <option value="{{ payment_code }}">{{ payment_method }}</option>
                   {% endif %}
-                </select>
-                <label for="input-payment-method">{{ text_payment_method }}</label>
+                </select> <label for="input-payment-method">{{ text_payment_method }}</label>
                 <button type="button" id="button-payment-method" class="btn btn-outline-primary"><i class="fas fa-sync"></i></button>
               </div>
-
-
+            </form>
           </div>
 
         </div>
@@ -2536,11 +2536,15 @@ $('#button-payment-method').on('click', function () {
 
             if (json['payment_methods']) {
                 for (i in json['payment_methods']) {
-                    html += '<li><a href="' + json['payment_methods'][i]['code'] + '" class="dropdown-item">' + json['payment_methods'][i]['title'] + '</a></li>';
+                    if (json['payment_methods'][i]['code'] == $('#input-payment-method').val()) {
+                        html += '<option value="' + json['payment_methods'][i]['code'] + '" selected>' + json['payment_methods'][i]['title'] + '</option>';
+                    } else {
+                        html += '<option value="' + json['payment_methods'][i]['code'] + '">' + json['payment_methods'][i]['title'] + '</option>';
+                    }
                 }
             }
 
-            $('#dropdown-payment-method').html(html);
+            $('#input-payment-method').html(html);
         },
         error: function (xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -2548,7 +2552,7 @@ $('#button-payment-method').on('click', function () {
     });
 });
 
-$('#dropdown-payment-method').on('click', 'a', function (e) {
+$('#input-payment-method').on('change', function (e) {
     e.preventDefault();
 
     var element = this;
@@ -2556,9 +2560,15 @@ $('#dropdown-payment-method').on('click', 'a', function (e) {
     $.ajax({
         url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=sale/payment_method|save',
         type: 'post',
-        data: 'payment_method=' + $(element).attr('href'),
+        data: $('#form-payment-method').serialize(),
         dataType: 'json',
         contentType: 'application/x-www-form-urlencoded',
+        beforeSend: function () {
+            $(element).prop('disabled', true);
+        },
+        complete: function () {
+            $(element).prop('disabled', false);
+        },
         success: function (json) {
             $('#alert .alert-dismissible').remove();
 
@@ -2631,14 +2641,18 @@ $('#button-shipping-method').on('click', function () {
 $('#input-shipping-method').on('change', function (e) {
     var element = this;
 
-    console.log($(element).attr('href'));
-
     $.ajax({
         url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=sale/shipping_method|save',
         type: 'post',
         data: $('#form-shipping-method').serialize(),
         dataType: 'json',
         contentType: 'application/x-www-form-urlencoded',
+        beforeSend: function () {
+            $(element).prop('disabled', true);
+        },
+        complete: function () {
+            $(element).prop('disabled', false);
+        },
         success: function (json) {
             $('.alert-dismissible').remove();
 

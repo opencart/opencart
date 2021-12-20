@@ -464,7 +464,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 			// Set the order history
 			if (isset($this->request->post['order_status_id'])) {
-				$order_status_id = $this->request->post['order_status_id'];
+				$order_status_id = (int)$this->request->post['order_status_id'];
 			} else {
 				$order_status_id = $this->config->get('config_order_status_id');
 			}

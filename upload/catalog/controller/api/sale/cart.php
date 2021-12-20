@@ -67,7 +67,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 
 		foreach ($vouchers as $voucher) {
 			$json['vouchers'][] = [
-				'key'         => $product['key'],
+				'key'         => $voucher['key'],
 				'description' => $voucher['description'],
 				'amount'      => $this->currency->format($voucher['amount'], $this->session->data['currency'])
 			];

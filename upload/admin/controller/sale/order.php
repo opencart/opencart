@@ -507,7 +507,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$data['stores'][] = [
 			'store_id' => 0,
-			'name'     => $this->language->get('text_default')
+			'name'     => $this->config->get('config_name')
 		];
 
 		$this->load->model('setting/store');
@@ -541,7 +541,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		// Customer
 		if (!empty($order_info) && $order_info['customer_id']) {
-			$data['customer'] = $this->url->link('customer/customer|form', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $order_info['customer_id']);
+			$data['customer'] = $order_info['customer'];
 		} else {
 			$data['customer'] = '';
 		}
@@ -1007,12 +1007,6 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		// Affiliate
-		if (!empty($order_info) && $order_info['affiliate_id']) {
-			$data['affiliate'] = $this->url->link('marketing/affiliate|form', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $order_info['affiliate_id']);
-		} else {
-			$data['affiliate'] = '';
-		}
-
 		if (!empty($order_info)) {
 			$data['affiliate_id'] = $order_info['affiliate_id'];
 		} else {
@@ -1020,21 +1014,9 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!empty($order_info)) {
-			$data['affiliate_firstname'] = $order_info['affiliate_firstname'];
+			$data['affiliate'] = $order_info['affiliate'];
 		} else {
-			$data['affiliate_firstname'] = '';
-		}
-
-		if (!empty($order_info)) {
-			$data['affiliate_lastname'] = $order_info['affiliate_lastname'];
-		} else {
-			$data['affiliate_lastname'] = '';
-		}
-
-		if (!empty($order_info)) {
-			$data['affiliate_lastname'] = $order_info['affiliate_lastname'];
-		} else {
-			$data['affiliate_lastname'] = '';
+			$data['affiliate'] = '';
 		}
 
 		// Commission

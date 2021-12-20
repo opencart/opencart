@@ -53,15 +53,13 @@
           <td class="text-start">{{ voucher.description }}</td>
           <td class="text-start"></td>
           <td class="text-start">
-
             <form method="post" data-oc-toggle="ajax" data-oc-load="{{ list }}" data-oc-target="#shopping-cart">
               <div class="input-group">
                 <input type="text" name="quantity" value="1" size="1" disabled="disabled" class="form-control"/>
                 <button type="submit" formaction="{{ voucher_remove }}" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-times-circle"></i></button>
-                <input type="text" name="key" value="{{ voucher.key }}" size="1" disabled="disabled" class="form-control"/>
               </div>
+              <input type="hidden" name="key" value="{{ voucher.key }}" size="1" disabled="disabled" class="form-control"/>
             </form>
-
           </td>
           <td class="text-end">{{ voucher.amount }}</td>
           <td class="text-end">{{ voucher.amount }}</td>

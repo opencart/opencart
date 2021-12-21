@@ -160,6 +160,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 				'recurring' => $recurring,
 				'quantity'  => $product['quantity'],
 				'stock'     => $product['stock'] ? true : !(!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning')),
+				'minimum'   => $product['minimum'],
 				'reward'    => $product['reward'],
 				'price'     => $price,
 				'total'     => $total,

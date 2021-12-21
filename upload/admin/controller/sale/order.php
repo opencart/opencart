@@ -642,8 +642,6 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 		*/
 
-
-
 		// Addresses
 		if (!empty($order_info)) {
 			$this->load->model('customer/customer');
@@ -782,7 +780,6 @@ class Order extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['payment_code'] = '';
 		}
-
 
 		// Shipping Address
 		if (!empty($order_info)) {
@@ -1006,6 +1003,39 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['order_status'] = '';
 		}
 
+		// Coupon, Voucher, Reward
+		$data['coupon'] = '';
+		$data['voucher'] = '';
+		$data['reward'] = 0;
+
+		if ($order_id) {
+			$order_totals = $this->model_sale_order->getTotals($order_id);
+
+			foreach ($order_totals as $order_total) {
+				// If coupon, voucher or reward points
+				$start = strpos($order_total['title'], '(') + 1;
+				$end = strrpos($order_total['title'], ')');
+
+				if ($start && $end) {
+					$data[$order_total['code']] = substr($order_total['title'], $start, $end - $start);
+				}
+			}
+		}
+
+		// Reward Points
+		if (!empty($order_info)) {
+			$data['reward_total'] = $this->model_sale_order->getTotalReward($order_id);
+		} else {
+			$data['reward_total'] = 0;
+		}
+
+		// Reward Points
+		if (!empty($order_info)) {
+			$data['reward_total'] = $this->model_customer_customer->getTotalRewardsByOrderId($order_id);
+		} else {
+			$data['reward_total'] = 0;
+		}
+
 		// Affiliate
 		if (!empty($order_info)) {
 			$data['affiliate_id'] = $order_info['affiliate_id'];
@@ -1072,32 +1102,6 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['currency_id'] = 0;
 			$data['currency_title'] = '';
 			$data['currency_code'] = '';
-		}
-
-		// Coupon, Voucher, Reward
-		$data['coupon'] = '';
-		$data['voucher'] = '';
-		$data['reward'] = 0;
-
-		if ($order_id) {
-			$order_totals = $this->model_sale_order->getTotals($order_id);
-
-			foreach ($order_totals as $order_total) {
-				// If coupon, voucher or reward points
-				$start = strpos($order_total['title'], '(') + 1;
-				$end = strrpos($order_total['title'], ')');
-
-				if ($start && $end) {
-					$data[$order_total['code']] = substr($order_total['title'], $start, $end - $start);
-				}
-			}
-		}
-
-		// Reward Points
-		if (!empty($order_info)) {
-			$data['reward_total'] = $this->model_customer_customer->getTotalRewardsByOrderId($order_id);
-		} else {
-			$data['reward_total'] = 0;
 		}
 
 		// Additional tabs that are payment gateway specific
@@ -1840,17 +1844,19 @@ class Order extends \Opencart\System\Engine\Controller {
 		$order_info = $this->model_sale_order->getOrder($order_id);
 
 		if ($order_info && $order_info['customer_id'] && ($order_info['reward'] > 0)) {
+			$json['error'] = $this->language->get('error_reward_total');
+		}
 
+		$this->load->model('customer/customer');
+
+		$reward_total = $this->model_customer_customer->getTotalRewardsByOrderId($order_id);
+
+		if (!$reward_total) {
+			$json['error'] = $this->language->get('error_reward_total');
 		}
 
 		if (!$json) {
-			$this->load->model('customer/customer');
-
-			$reward_total = $this->model_customer_customer->getTotalRewardsByOrderId($order_id);
-
-			if (!$reward_total) {
-				$this->model_customer_customer->addReward($order_info['customer_id'], $this->language->get('text_order_id') . ' #' . $order_id, $order_info['reward'], $order_id);
-			}
+			$this->model_customer_customer->addReward($order_info['customer_id'], $this->language->get('text_order_id') . ' #' . $order_id, $order_info['reward'], $order_id);
 
 			$json['success'] = $this->language->get('text_reward_added');
 		}
@@ -1913,18 +1919,26 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$order_info = $this->model_sale_order->getOrder($order_id);
 
-		if (!$order_info) {
-			$json['error'] = $this->language->get('error_order');
-		}
-
-		if (!$json) {
+		if ($order_info) {
 			$this->load->model('customer/customer');
+
+			$customer_info = $this->model_customer_customer->getCustomer($order_info['affiliate_id']);
+
+			if (!$customer_info) {
+				$json['error'] = $this->language->get('error_affiliate');
+			}
 
 			$affiliate_total = $this->model_customer_customer->getTotalTransactionsByOrderId($order_id);
 
 			if (!$affiliate_total) {
-				$this->model_customer_customer->addTransaction($order_info['affiliate_id'], $this->language->get('text_order_id') . ' #' . $order_id, $order_info['commission'], $order_id);
+				$json['error'] = $this->language->get('error_order');
 			}
+		} else {
+			$json['error'] = $this->language->get('error_commission');
+		}
+
+		if (!$json) {
+			$this->model_customer_customer->addTransaction($order_info['affiliate_id'], $this->language->get('text_order_id') . ' #' . $order_id, $order_info['commission'], $order_id);
 
 			$json['success'] = $this->language->get('text_commission_added');
 		}

@@ -71,20 +71,18 @@
           <tbody id="order-items">
             {% for order_product in order_products %}
               <tr>
-                <td class="text-start"><a href="{{ order_product.href }}">{{ order_product.name }}</a>
+                <td class="text-start"><a href="{{ order_product.href }}" target="_blank">{{ order_product.name }}</a>
 
                   {% if order_product.option %}
-
                     {% for option in order_product.option %}
                       <br/>
                       <small>{{ option.name }}: {{ option.value }}</small>
                     {% endfor %}
-
                   {% endif %}
 
                   {% if order_product.reward %}
                     <br/>
-                    <small>{{ text_points }} {{ product.reward }}</small>
+                    <small>{{ text_points }} {{ order_product.reward }}</small>
                   {% endif %}
 
                   {% if order_product.recurring %}
@@ -130,13 +128,14 @@
               </tr>
             {% endif %}
           </tbody>
-          <tbody>
+          <tfoot>
             <tr>
               <td colspan="5"></td>
               <td class="text-end"><button type="button" data-bs-toggle="modal" data-bs-target="#modal-cart" class="btn btn-primary"><i class="fas fa-plus-circle"></i></button></td>
             </tr>
-          </tbody>
+          </tfoot>
         </table>
+
         <div id="collapse-order" class="collapse">
           <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4">
             <div class="col">
@@ -216,15 +215,18 @@
                     {% else %}
                       <span id="reward-value">&nbsp;</span>
                     {% endif %}
+                    {{ reward_total }}
                   </p>
                 </div>
                 <button type="button" data-bs-toggle="modal" data-bs-target="#modal-reward" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
-                {% if customer and reward %}
+                {% if customer_id and reward_total %}
+
                   {% if not reward_total %}
                     <button type="button" id="button-reward-add" data-oc-loading-text="{{ text_loading }}" data-bs-toggle="tooltip" title="{{ button_reward_add }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></button>
                   {% else %}
                     <button type="button" id="button-reward-remove" data-oc-loading-text="{{ text_loading }}" data-bs-toggle="tooltip" title="{{ button_reward_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>
                   {% endif %}
+
                 {% else %}
                   <button type="button" disabled="disabled" class="btn btn-success"><i class="fas fa-plus-circle"></i></button>
                 {% endif %}
@@ -259,11 +261,19 @@
                     {% endif %}
                   </p>
                 </div>
-                {% if not commission_total %}
-                  <button type="button" id="button-commission-add" data-oc-loading-text="{{ text_loading }}" data-bs-toggle="tooltip" title="{{ button_commission_add }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></button>
+
+                {% if affiliate_id %}
+
+                  {% if not commission_total %}
+                    <button type="button" id="button-commission-add" data-oc-loading-text="{{ text_loading }}" data-bs-toggle="tooltip" title="{{ button_commission_add }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></button>
+                  {% else %}
+                    <button type="button" id="button-commission-remove" data-oc-loading-text="{{ text_loading }}" data-bs-toggle="tooltip" title="{{ button_commission_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>
+                  {% endif %}
+
                 {% else %}
-                  <button type="button" id="button-commission-remove" data-oc-loading-text="{{ text_loading }}" data-bs-toggle="tooltip" title="{{ button_commission_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>
+                  <button type="button" disabled="disabled" class="btn btn-success"><i class="fas fa-plus-circle"></i></button>
                 {% endif %}
+
               </div>
             </div>
 
@@ -318,8 +328,7 @@
                   {% if shipping_code %}
                     <option value="{{ shipping_code }}" selected>{{ shipping_method }}</option>
                   {% endif %}
-                </select>
-                <label for="input-shipping-method">{{ text_shipping_method }}</label>
+                </select> <label for="input-shipping-method">{{ text_shipping_method }}</label>
                 <button type="button" id="button-shipping-method" class="btn btn-outline-primary"><i class="fas fa-sync"></i></button>
               </div>
             </form>
@@ -333,8 +342,7 @@
                   {% if payment_code %}
                     <option value="{{ payment_code }}" selected>{{ payment_method }}</option>
                   {% endif %}
-                </select>
-                <label for="input-payment-method">{{ text_payment_method }}</label>
+                </select> <label for="input-payment-method">{{ text_payment_method }}</label>
                 <button type="button" id="button-payment-method" class="btn btn-outline-primary"><i class="fas fa-sync"></i></button>
               </div>
             </form>
@@ -1806,7 +1814,7 @@ $('#form-affiliate').on('submit', function (e) {
 $(document).on('click', '#button-commission-add, #button-commission-remove', function (e) {
     var element = this;
 
-    if ($(element).hasClass('btn-danger')) {
+    if ($(element).hasClass('btn-success')) {
         var action = 'add';
     } else {
         var action = 'remove';
@@ -1833,11 +1841,11 @@ $(document).on('click', '#button-commission-add, #button-commission-remove', fun
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                 if (action == 'add') {
-                    $(element).replaceWith('<button type="button" id="button-commission-add" data-bs-toggle="tooltip" title="{{ button_commission_add }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></button>');
+                    $(element).replaceWith('<button type="button" id="button-commission-remove" data-bs-toggle="tooltip" title="{{ button_commission_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>');
                 }
 
                 if (action == 'remove') {
-                    $(element).replaceWith('<button type="button" id="button-commission-remove" data-bs-toggle="tooltip" title="{{ button_commission_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>');
+                    $(element).replaceWith('<button type="button" id="button-commission-add" data-bs-toggle="tooltip" title="{{ button_commission_add }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></button>');
                 }
             }
         },
@@ -2734,7 +2742,7 @@ $('#button-refresh').on('click', function () {
                     console.log(product);
 
                     html += '<tr>';
-                    html += '  <td class="text-start">' + product['name'] + (!product['stock'] ? ' <span class="text-danger">***</span>' : '') + '<br/>';
+                    html += '  <td class="text-start"><a href="index.php?route=catalog/product|form&user_token={{ user_token }}&product_id=' + product['product_id'] + '" target="_blank">' + product['name'] + '</a>' + (!product['stock'] ? ' <span class="text-danger">***</span>' : '') + '<br/>';
 
                     if (product['option']) {
                         for (j = 0; j < product['option'].length; j++) {
@@ -2742,6 +2750,15 @@ $('#button-refresh').on('click', function () {
 
                             html += '  - <small>' + option['name'] + ': ' + option['value'] + '</small><br />';
                         }
+                    }
+
+                    if (product['reward']) {
+                        html += '<small>{{ text_points }} ' + product['reward'] + '</small><br/>';
+                    }
+
+                    if (product['recurring']) {
+                        html += ' <small class="badge badge-warning">{{ text_recurring_item }}</small>';
+                        html += ' <small>{{ order_product.recurring }}</small>';
                     }
 
                     html += '  </td>';
@@ -2769,11 +2786,13 @@ $('#button-refresh').on('click', function () {
                     html += '  <td class="text-end">1</td>';
                     html += '  <td class="text-end">' + voucher['price'] + '</td>';
                     html += '  <td class="text-end">' + voucher['price'] + '</td>';
-                    html += '  <td class="text-end-start" style="width: 3px;">';
+                    html += '  <td class="text-end">';
+
                     html += '    <form action="{{ voucher_remove }}" method="post">';
                     html += '      <button type="submit" data-bs-toggle="tooltip" title="{{ button_remove }}" data-oc-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>';
                     html += '      <input type="hidden" name="key" value="' + voucher['cart_id'] + '"/>';
                     html += '    </form>';
+
                     html += '  </td>';
                     html += '</tr>';
                 }

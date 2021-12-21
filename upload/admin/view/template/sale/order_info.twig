@@ -311,14 +311,15 @@
         <div class="row mb-3">
 
           <div id="shipping-method" class="col-md{% if not shipping_method %} d-none{% endif %}">
-            <form id="form-shipping-method">
+            <form name="shipping_method" id="form-shipping-method">
               <div class="input-group form-floating">
                 <select id="input-shipping-method" class="form-select">
                   <option value="">{{ text_select }}</option>
                   {% if shipping_code %}
-                    <option value="{{ shipping_code }}">{{ shipping_method }}</option>
+                    <option value="{{ shipping_code }}" selected>{{ shipping_method }}</option>
                   {% endif %}
-                </select> <label for="input-shipping-method">{{ text_shipping_method }}</label>
+                </select>
+                <label for="input-shipping-method">{{ text_shipping_method }}</label>
                 <button type="button" id="button-shipping-method" class="btn btn-outline-primary"><i class="fas fa-sync"></i></button>
               </div>
             </form>
@@ -327,12 +328,13 @@
           <div id="payment-method" class="col-md">
             <form id="form-payment-method">
               <div class="input-group form-floating">
-                <select id="input-payment-method" class="form-select">
+                <select name="payment_method" id="input-payment-method" class="form-select">
                   <option value="">{{ text_select }}</option>
                   {% if payment_code %}
-                    <option value="{{ payment_code }}">{{ payment_method }}</option>
+                    <option value="{{ payment_code }}" selected>{{ payment_method }}</option>
                   {% endif %}
-                </select> <label for="input-payment-method">{{ text_payment_method }}</label>
+                </select>
+                <label for="input-payment-method">{{ text_payment_method }}</label>
                 <button type="button" id="button-payment-method" class="btn btn-outline-primary"><i class="fas fa-sync"></i></button>
               </div>
             </form>
@@ -2830,6 +2832,8 @@ $('#button-confirm').on('click', function () {
         },
         success: function (json) {
             $('.alert-dismissible').remove();
+
+            console.log(json);
 
             if (json['error']) {
                 for (i in json['error']) {

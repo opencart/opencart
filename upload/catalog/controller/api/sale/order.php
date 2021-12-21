@@ -136,6 +136,23 @@ class Order extends \Opencart\System\Engine\Controller {
 				];
 			}
 
+			if ($order_info['tracking']) {
+				$this->session->data['tracking'] = $order_info['tracking'];
+			}
+
+			// Coupon, Voucher, Reward
+			$order_totals = $this->model_checkout_order->getTotals($order_id);
+
+			foreach ($order_totals as $order_total) {
+				// If coupon, voucher or reward points
+				$start = strpos($order_total['title'], '(') + 1;
+				$end = strrpos($order_total['title'], ')');
+
+				if ($start && $end) {
+					$this->session->data[$order_total['code']] = substr($order_total['title'], $start, $end - $start);
+				}
+			}
+
 			$json['success'] = $this->language->get('text_success');
 		}
 

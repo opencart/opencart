@@ -37,10 +37,11 @@
               <div class="form-control p-0 border rounded-start">
                 <p class="lead p-2 mb-0"><strong>{{ text_customer }}</strong>
                   <br/>
-                  {% if customer %}
-                    <span id="customer-value"><a href="{{ customer }}" target="_blank">{{ firstname }} {{ lastname }}</a></span>
+
+                  {% if customer_id %}
+                    <span id="customer-value"><a href="index.php?route=customer/customer&user_token={{ user_token }}&" target="_blank">{{ customer }}</a></span>
                   {% else %}
-                    <span id="customer-value">{{ firstname }}&nbsp;{{ lastname }}</span>
+                    <span id="customer-value">{{ customer }}</span>
                   {% endif %}
                 </p>
               </div>
@@ -143,7 +144,7 @@
                 <div class="form-control p-0 border rounded-start">
                   <p class="lead p-2 mb-0"><strong>{{ text_store }}</strong>
                     <br/>
-                    <span id="store-value"><a href="index.php?route=setting/store" target="_blank">{{ store_name }}</a></span></p>
+                    <span id="store-value"><a href="index.php?route=setting/setting" target="_blank">{{ store_name }}</a></span></p>
                 </div>
                 <button type="button" data-bs-toggle="modal" data-bs-target="#modal-store" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
               </div>
@@ -215,11 +216,10 @@
                     {% else %}
                       <span id="reward-value">&nbsp;</span>
                     {% endif %}
-                    {{ reward_total }}
                   </p>
                 </div>
                 <button type="button" data-bs-toggle="modal" data-bs-target="#modal-reward" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
-                {% if customer_id and reward_total %}
+                {% if customer_id and points %}
 
                   {% if not reward_total %}
                     <button type="button" id="button-reward-add" data-oc-loading-text="{{ text_loading }}" data-bs-toggle="tooltip" title="{{ button_reward_add }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></button>
@@ -1708,7 +1708,7 @@ $('#form-reward').on('submit', function (e) {
 $(document).on('click', '#button-reward-add, #button-reward-remove', function (e) {
     var element = this;
 
-    if ($(element).hasClass('btn-danger')) {
+    if ($(element).hasClass('btn-success')) {
         var action = 'add';
     } else {
         var action = 'remove';
@@ -1735,11 +1735,11 @@ $(document).on('click', '#button-reward-add, #button-reward-remove', function (e
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                 if (action == 'add') {
-                    $(element).replaceWith('<button type="button" id="button-reward-add" data-bs-toggle="tooltip" title="{{ button_reward_add }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></button>');
+                    $(element).replaceWith('<button type="button" id="button-reward-remove" data-bs-toggle="tooltip" title="{{ button_reward_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>');
                 }
 
                 if (action == 'remove') {
-                    $(element).replaceWith('<button type="button" id="button-reward-remove" data-bs-toggle="tooltip" title="{{ button_reward_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>');
+                    $(element).replaceWith('<button type="button" id="button-reward-add" data-bs-toggle="tooltip" title="{{ button_reward_add }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></button>');
                 }
             }
         },

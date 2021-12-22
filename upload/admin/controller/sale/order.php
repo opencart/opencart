@@ -1024,9 +1024,9 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		// Reward Points
 		if (!empty($order_info)) {
-			$data['reward_total'] = $this->model_sale_order->getTotalReward($order_id);
+			$data['points'] = $this->model_sale_order->getRewardTotal($order_id);
 		} else {
-			$data['reward_total'] = 0;
+			$data['points'] = 0;
 		}
 
 		// Reward Points
@@ -1843,15 +1843,19 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$order_info = $this->model_sale_order->getOrder($order_id);
 
-		if ($order_info && $order_info['customer_id'] && ($order_info['reward'] > 0)) {
-			$json['error'] = $this->language->get('error_reward_total');
+		if ($order_info) {
+			if (!$order_info['customer_id']) {
+				$json['error'] = $this->language->get('error_customer');
+			}
+		} else {
+			$json['error'] = $this->language->get('error_order');
 		}
 
 		$this->load->model('customer/customer');
 
 		$reward_total = $this->model_customer_customer->getTotalRewardsByOrderId($order_id);
 
-		if (!$reward_total) {
+		if ($reward_total) {
 			$json['error'] = $this->language->get('error_reward_total');
 		}
 

@@ -42,7 +42,9 @@ class Voucher extends \Opencart\System\Engine\Model {
 		}
 
 		if ($code) {
-			$voucher_info = $this->getVoucher($code);
+			$this->load->model('checkout/voucher');
+
+			$voucher_info = $this->model_checkout_voucher->getVoucher($code);
 
 			if ($voucher_info) {
 				$this->db->query("INSERT INTO `" . DB_PREFIX . "voucher_history` SET `voucher_id` = '" . (int)$voucher_info['voucher_id'] . "', `order_id` = '" . (int)$order_info['order_id'] . "', `amount` = '" . (float)$order_total['value'] . "', `date_added` = NOW()");

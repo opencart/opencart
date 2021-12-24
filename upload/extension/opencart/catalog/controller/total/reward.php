@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Controller\Extension\Opencart\Total;
 class Reward extends \Opencart\System\Engine\Controller {
 	public function index(): string {
 		if ($this->config->get('total_reward_status')) {
-			$points = $this->customer->getRewardPoints();
+			$available = $this->customer->getRewardPoints();
 
 			$points_total = 0;
 
@@ -13,7 +13,7 @@ class Reward extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-			if ($points && $points_total) {
+			if ($available && $points_total) {
 				$this->load->language('extension/opencart/total/reward');
 
 				$data['heading_title'] = sprintf($this->language->get('heading_title'), $points);

@@ -6,7 +6,13 @@ class Reward extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		$points = $this->customer->getRewardPoints();
+		if (isset($this->request->post['reward'])) {
+			$reward = abs((int)$this->request->post['reward']);
+		} else {
+			$reward = 0;
+		}
+
+		$available = $this->customer->getRewardPoints();
 
 		$points_total = 0;
 
@@ -16,22 +22,26 @@ class Reward extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		if (empty($this->request->post['reward'])) {
-			$json['error'] = $this->language->get('error_reward');
-		}
+		if ($reward) {
+			if ($reward > $available) {
+				$json['error'] = sprintf($this->language->get('error_points'), $this->request->post['reward']);
+			}
 
-		if ($this->request->post['reward'] > $points) {
-			$json['error'] = sprintf($this->language->get('error_points'), $this->request->post['reward']);
-		}
-
-		if ($this->request->post['reward'] > $points_total) {
-			$json['error'] = sprintf($this->language->get('error_maximum'), $points_total);
+			if ($reward > $points_total) {
+				$json['error'] = sprintf($this->language->get('error_maximum'), $points_total);
+			}
 		}
 
 		if (!$json) {
-			$this->session->data['reward'] = abs($this->request->post['reward']);
+			if ($reward) {
+				$this->session->data['reward'] = $reward;
 
-			$json['success'] = $this->language->get('text_success');
+				$json['success'] = $this->language->get('text_success');
+			} else {
+				unset($this->session->data['reward']);
+
+				$json['success'] = $this->language->get('text_reward');
+			}
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -58,14 +68,5 @@ class Reward extends \Opencart\System\Engine\Controller {
 	public function available(): void {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode(['points' => $this->customer->getRewardPoints()]));
-	}
-
-	public function clear(): void {
-		unset($this->session->data['reward']);
-
-		$json['success'] = $this->language->get('text_success');
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
 	}
 }

@@ -416,12 +416,15 @@ class Order extends \Opencart\System\Engine\Controller {
 				$order_data['comment'] = '';
 			}
 
+
+
+
 			$order_data['tracking'] = '';
 			$order_data['affiliate_id'] = 0;
 			$order_data['commission'] = 0;
 			$order_data['marketing_id'] = 0;
 
-			if (isset($this->request->post['affiliate_id']) && $this->config->get('config_affiliate_status')) {
+			if (isset($this->request->post['affiliate_id'])) {
 				$subtotal = $this->cart->getSubTotal();
 
 				// Affiliate
@@ -434,6 +437,14 @@ class Order extends \Opencart\System\Engine\Controller {
 					$order_data['commission'] = ($subtotal / 100) * $affiliate_info['commission'];
 				}
 			}
+
+
+
+
+
+
+
+
 
 			// We use session to store language code for API access
 			$order_data['language_id'] = $this->config->get('config_language_id');

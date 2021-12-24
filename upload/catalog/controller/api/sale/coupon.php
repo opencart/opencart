@@ -12,33 +12,27 @@ class Coupon extends \Opencart\System\Engine\Controller {
 			$coupon = '';
 		}
 
-		$this->load->model('marketing/coupon');
+		if ($coupon) {
+			$this->load->model('marketing/coupon');
 
-		$coupon_info = $this->model_marketing_coupon->getCoupon($coupon);
+			$coupon_info = $this->model_marketing_coupon->getCoupon($coupon);
 
-		if (!$coupon_info) {
-			$json['error'] = $this->language->get('error_coupon');
+			if (!$coupon_info) {
+				$json['error'] = $this->language->get('error_coupon');
+			}
 		}
 
 		if (!$json) {
-			$this->session->data['coupon'] = $coupon;
+			if ($coupon) {
+				$this->session->data['coupon'] = $coupon;
 
-			$json['success'] = $this->language->get('text_success');
+				$json['success'] = $this->language->get('text_success');
+			} else {
+				unset($this->session->data['coupon']);
+
+				$json['success'] = $this->language->get('text_remove');
+			}
 		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	public function clear(): void {
-		$this->load->language('api/sale/coupon');
-
-		$json = [];
-
-		// Delete past coupon in case there is an error
-		unset($this->session->data['coupon']);
-
-		$json['success'] = $this->language->get('text_success');
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

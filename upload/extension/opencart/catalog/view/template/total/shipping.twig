@@ -1,6 +1,5 @@
 <div class="accordion-item">
   <h2 class="accordion-header"><button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapse-shipping">{{ heading_title }}</button></h2>
-
   <div id="collapse-shipping" class="accordion-collapse collapse" data-bs-parent="#accordion">
     <div class="accordion-body">
 
@@ -13,43 +12,47 @@
               <option value="{{ country.country_id }}"{% if country.country_id == country_id %} selected="selected"{% endif %}>{{ country.name }}</option>
             {% endfor %}
           </select>
+          <div id="error-country" class="invalid-feedback"></div>
         </div>
       </div>
+
       <div class="row mb-3 required">
         <label for="input-zone" class="col-sm-3 col-form-label">{{ entry_zone }}</label>
         <div class="col-md-9">
           <select name="zone_id" id="input-zone" class="form-select"></select>
+          <div id="error-zone" class="invalid-feedback"></div>
         </div>
       </div>
+
       <div class="row mb-3 required">
         <label for="input-postcode" class="col-md-3 col-form-label">{{ entry_postcode }}</label>
         <div class="col-md-9">
           <input type="text" name="postcode" value="{{ postcode }}" placeholder="{{ entry_postcode }}" id="input-postcode" class="form-control"/>
+          <div id="error-postcode" class="invalid-feedback"></div>
         </div>
       </div>
+
       <div class="d-inline-block pt-2 pd-2 w-100">
         <div class="float-end">
           <button type="button" id="button-quote" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_quote }}</button>
         </div>
       </div>
     </div>
-
-
   </div>
   <script type="text/javascript"><!--
-  $('#button-quote').on('click', function() {
+  $('#button-quote').on('click', function () {
       $.ajax({
           url: 'index.php?route=extension/opencart/total/shipping|quote',
           type: 'post',
-          data: 'country_id=' + $('select[name=\'country_id\']').val() + '&zone_id=' + $('select[name=\'zone_id\']').val() + '&postcode=' + encodeURIComponent($('input[name=\'postcode\']').val()),
+          data: 'country_id=' + $('#input-country').val() + '&zone_id=' + $('#input-zone').val() + '&postcode=' + $('#input-postcode').val(),
           dataType: 'json',
-          beforeSend: function() {
+          beforeSend: function () {
               $('#button-quote').button('loading');
           },
-          complete: function() {
+          complete: function () {
               $('#button-quote').button('reset');
           },
-          success: function(json) {
+          success: function (json) {
               $('.alert-dismissible, .text-danger').remove();
 
               if (json['error']) {
@@ -57,16 +60,9 @@
                       $('#collapse-shipping .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                   }
 
-                  if (json['error']['country']) {
-                      $('select[name=\'country_id\']').after('<div class="text-danger">' + json['error']['country'] + '</div>');
-                  }
-
-                  if (json['error']['zone']) {
-                      $('select[name=\'zone_id\']').after('<div class="text-danger">' + json['error']['zone'] + '</div>');
-                  }
-
-                  if (json['error']['postcode']) {
-                      $('input[name=\'postcode\']').after('<div class="text-danger">' + json['error']['postcode'] + '</div>');
+                  for (key in json['error']) {
+                      $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
+                      $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
                   }
               }
 
@@ -121,30 +117,30 @@
 
                   $('#modal-shipping').modal('show');
 
-                  $('input[name=\'shipping_method\']').on('change', function() {
+                  $('input[name=\'shipping_method\']').on('change', function () {
                       $('#button-shipping').prop('disabled', false);
                   });
               }
           },
-          error: function(xhr, ajaxOptions, thrownError) {
+          error: function (xhr, ajaxOptions, thrownError) {
               alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
           }
       });
   });
 
-  $(document).delegate('#button-shipping', 'click', function() {
+  $(document).on('#button-shipping', 'click', function () {
       $.ajax({
           url: 'index.php?route=extension/opencart/total/shipping|save',
           type: 'post',
-          data: 'shipping_method=' + encodeURIComponent($('input[name=\'shipping_method\']:checked').val()),
+          data: 'shipping_method=' + $('input[name=\'shipping_method\']:checked').val(),
           dataType: 'json',
-          beforeSend: function() {
+          beforeSend: function () {
               $('#button-shipping').button('loading');
           },
-          complete: function() {
+          complete: function () {
               $('#button-shipping').button('reset');
           },
-          success: function(json) {
+          success: function (json) {
               $('.alert-dismissible').remove();
 
               if (json['redirect']) {
@@ -159,28 +155,29 @@
 
 
           },
-          error: function(xhr, ajaxOptions, thrownError) {
+          error: function (xhr, ajaxOptions, thrownError) {
               alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
           }
       });
   });
-  //--></script>
-  <script type="text/javascript"><!--
-  $('select[name=\'country_id\']').on('change', function() {
+
+  $('#input-country').on('change', function () {
+      var element = this;
+
       $.ajax({
           url: 'index.php?route=localisation/country&country_id=' + this.value,
           dataType: 'json',
-          beforeSend: function() {
-              $('select[name=\'country_id\']').prop('disabled', true);
+          beforeSend: function () {
+              $(element).prop('disabled', true);
           },
-          complete: function() {
-              $('select[name=\'country_id\']').prop('disabled', false);
+          complete: function () {
+              $(element).prop('disabled', false);
           },
-          success: function(json) {
+          success: function (json) {
               if (json['postcode_required'] == '1') {
-                  $('input[name=\'postcode\']').parent().parent().addClass('required');
+                  $('#input-postcode').parent().parent().addClass('required');
               } else {
-                  $('input[name=\'postcode\']').parent().parent().removeClass('required');
+                  $('#input-postcode').parent().parent().removeClass('required');
               }
 
               html = '<option value="">{{ text_select }}</option>';
@@ -199,14 +196,14 @@
                   html += '<option value="0" selected="selected">{{ text_none }}</option>';
               }
 
-              $('select[name=\'zone_id\']').html(html);
+              $('#input-zone').html(html);
           },
-          error: function(xhr, ajaxOptions, thrownError) {
+          error: function (xhr, ajaxOptions, thrownError) {
               alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
           }
       });
   });
 
-  $('select[name=\'country_id\']').trigger('change');
+  $('#input-country').trigger('change');
   //--></script>
 </div>

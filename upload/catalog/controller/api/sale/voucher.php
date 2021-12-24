@@ -13,18 +13,26 @@ class Voucher extends \Opencart\System\Engine\Controller {
 			$voucher = '';
 		}
 
-		$this->load->model('extension/opencart/total/voucher');
+		if ($voucher) {
+			$this->load->model('checkout/voucher');
 
-		$voucher_info = $this->model_extension_opencart_total_voucher->getVoucher($voucher);
+			$voucher_info = $this->model_checkout_voucher->getVoucher($voucher);
 
-		if (!$voucher_info) {
-			$json['error'] = $this->language->get('error_voucher');
+			if (!$voucher_info) {
+				$json['error'] = $this->language->get('error_voucher');
+			}
 		}
 
 		if (!$json) {
-			$this->session->data['voucher'] = $this->request->post['voucher'];
+			if ($voucher) {
+				$this->session->data['voucher'] = $this->request->post['voucher'];
 
-			$json['success'] = $this->language->get('text_success');
+				$json['success'] = $this->language->get('text_success');
+			} else {
+				unset($this->session->data['voucher']);
+
+				$json['success'] = $this->language->get('text_remove');
+			}
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

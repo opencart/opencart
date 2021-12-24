@@ -6,6 +6,7 @@ class Coupon extends \Opencart\System\Engine\Controller {
 			$this->load->language('extension/opencart/total/coupon');
 
 			$data['save'] = $this->url->link('extension/opencart/total/coupon|save', 'language=' . $this->config->get('config_language'), true);
+			$data['list'] = $this->url->link('checkout/cart|list', 'language=' . $this->config->get('config_language'), true);
 
 			if (isset($this->session->data['coupon'])) {
 				$data['coupon'] = $this->session->data['coupon'];
@@ -30,36 +31,31 @@ class Coupon extends \Opencart\System\Engine\Controller {
 			$coupon = '';
 		}
 
-		$this->load->model('extension/opencart/total/coupon');
+		if (!$this->config->get('total_coupon_status')) {
+			$json['error'] = $this->language->get('error_status');
+		}
 
-		$coupon_info = $this->model_extension_opencart_total_coupon->getCoupon($coupon);
+		if ($coupon) {
+			$this->load->model('marketing/coupon');
 
-		if (!$this->config->get('total_coupon_status') || !$coupon_info) {
-			$json['error'] = $this->language->get('error_coupon');
+			$coupon_info = $this->model_marketing_coupon->getCoupon($coupon);
+
+			if (!$coupon_info) {
+				$json['error'] = $this->language->get('error_coupon');
+			}
 		}
 
 		if (!$json) {
-			$this->session->data['coupon'] = $this->request->post['coupon'];
+			if ($coupon) {
+				$this->session->data['coupon'] = $coupon;
 
-			$this->session->data['success'] = $this->language->get('text_success');
+				$json['success'] = $this->language->get('text_success');
+			} else {
+				unset($this->session->data['coupon']);
 
-			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
+				$json['success'] = $this->language->get('text_remove');
+			}
 		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	public function remove(): void {
-		$this->load->language('extension/opencart/total/coupon');
-
-		$json = [];
-
-		unset($this->session->data['coupon']);
-
-		$this->session->data['success'] = $this->language->get('text_remove');
-
-		$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

@@ -7,12 +7,8 @@ class Voucher extends \Opencart\System\Engine\Model {
 		return $this->db->getLastId();
 	}
 
-	public function disableVoucherByOrderId(int $order_id): void {
+	public function disableVoucher(int $order_id): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "voucher` SET `status` = '0' WHERE `order_id` = '" . (int)$order_id . "'");
-	}
-
-	public function deleteVoucherByOrderId(int $order_id): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "voucher` WHERE `order_id` = '" . (int)$order_id . "'");
 	}
 
 	public function getVoucher(string $code): array {
@@ -24,7 +20,7 @@ class Voucher extends \Opencart\System\Engine\Model {
 			if ($voucher_query->row['order_id']) {
 				$implode = [];
 
-				foreach ((array)$this->config->get('config_complete_status') as $order_status_id) {
+				foreach ($this->config->get('config_complete_status') as $order_status_id) {
 					$implode[] = "'" . (int)$order_status_id . "'";
 				}
 
@@ -75,5 +71,9 @@ class Voucher extends \Opencart\System\Engine\Model {
 		} else {
 			return [];
 		}
+	}
+
+	public function deleteVoucherByOrderId(int $order_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "voucher` WHERE `order_id` = '" . (int)$order_id . "'");
 	}
 }

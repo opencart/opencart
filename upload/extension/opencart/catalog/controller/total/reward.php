@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Controller\Extension\Opencart\Total;
 class Reward extends \Opencart\System\Engine\Controller {
 	public function index(): string {
 		if ($this->config->get('total_reward_status')) {
-			$points = $this->customer->getRewardPoints();
+			$available = $this->customer->getRewardPoints();
 
 			$points_total = 0;
 
@@ -13,7 +13,7 @@ class Reward extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-			if ($points && $points_total) {
+			if ($available && $points_total) {
 				$this->load->language('extension/opencart/total/reward');
 
 				$data['heading_title'] = sprintf($this->language->get('heading_title'), $points);
@@ -21,6 +21,7 @@ class Reward extends \Opencart\System\Engine\Controller {
 				$data['entry_reward'] = sprintf($this->language->get('entry_reward'), $points_total);
 
 				$data['save'] = $this->url->link('extension/opencart/total/reward|save', 'language=' . $this->config->get('config_language'), true);
+				$data['list'] = $this->url->link('checkout/cart|list', 'language=' . $this->config->get('config_language'), true);
 
 				if (isset($this->session->data['reward'])) {
 					$data['reward'] = $this->session->data['reward'];
@@ -40,7 +41,13 @@ class Reward extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		$points = $this->customer->getRewardPoints();
+		if (isset($this->request->post['reward'])) {
+			$reward = abs((int)$this->request->post['reward']);
+		} else {
+			$reward = 0;
+		}
+
+		$available = $this->customer->getRewardPoints();
 
 		$points_total = 0;
 
@@ -54,24 +61,24 @@ class Reward extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_reward');
 		}
 
-		if (!empty($this->request->post['reward'])) {
-			$json['error'] = $this->language->get('error_reward');
+		if ($reward > $available) {
+			$json['error'] = sprintf($this->language->get('error_points'), $reward);
 		}
 
-		if ($this->request->post['reward'] > $points) {
-			$json['error'] = sprintf($this->language->get('error_points'), $this->request->post['reward']);
-		}
-
-		if ($this->request->post['reward'] > $points_total) {
+		if ($reward > $points_total) {
 			$json['error'] = sprintf($this->language->get('error_maximum'), $points_total);
 		}
 
 		if (!$json) {
-			$this->session->data['reward'] = abs($this->request->post['reward']);
+			if ($reward) {
+				$this->session->data['reward'] = $reward;
 
-			$this->session->data['success'] = $this->language->get('text_success');
+				$json['success'] = $this->language->get('text_success');
+			} else {
+				unset($this->session->data['reward']);
 
-			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
+				$json['success'] = $this->language->get('text_remove');
+			}
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

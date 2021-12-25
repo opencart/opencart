@@ -40,7 +40,7 @@ class Reward extends \Opencart\System\Engine\Controller {
 			} else {
 				unset($this->session->data['reward']);
 
-				$json['success'] = $this->language->get('text_reward');
+				$json['success'] = $this->language->get('text_remove');
 			}
 		}
 

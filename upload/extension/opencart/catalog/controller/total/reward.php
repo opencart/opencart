@@ -16,7 +16,7 @@ class Reward extends \Opencart\System\Engine\Controller {
 			if ($available && $points_total) {
 				$this->load->language('extension/opencart/total/reward');
 
-				$data['heading_title'] = sprintf($this->language->get('heading_title'), $points);
+				$data['heading_title'] = sprintf($this->language->get('heading_title'), $available);
 
 				$data['entry_reward'] = sprintf($this->language->get('entry_reward'), $points_total);
 

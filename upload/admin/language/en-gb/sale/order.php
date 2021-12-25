@@ -26,13 +26,13 @@ $_['text_voucher_edit']          = 'Edit Voucher';
 $_['text_reward']                = 'Reward Points';
 $_['text_points']                = 'Points';
 $_['text_reward_edit']           = 'Use Reward Points';
-$_['text_reward_added']          = 'Success: Reward points added!';
-$_['text_reward_removed']        = 'Success: Reward points removed!';
+$_['text_reward_add']            = 'Success: Reward points added!';
+$_['text_reward_remove']         = 'Success: Reward points removed!';
 $_['text_affiliate_edit']        = 'Edit Affiliate';
 $_['text_affiliate']             = 'Affiliate';
 $_['text_commission']            = 'Commission';
-$_['text_commission_added']      = 'Success: Commission added!';
-$_['text_commission_removed']    = 'Success: Commission removed!';
+$_['text_commission_add']        = 'Success: Commission added!';
+$_['text_commission_remove']     = 'Success: Commission removed!';
 $_['text_restock']               = 'Success: Products have been restocked!';
 $_['text_upload']                = 'Your file was successfully uploaded!';
 $_['text_contact']               = 'Contact Tel';
@@ -143,3 +143,7 @@ $_['error_permission']           = 'Warning: You do not have permission to modif
 $_['error_invoice_no']           = 'Warning: Could not complete this action!';
 $_['error_order']                = 'Warning: Order does not exist!';
 $_['error_affiliate']            = 'Warning: Affiliate does not exist!';
+$_['error_reward_add']           = 'Warning: Reward points for this order has already been added!';
+$_['error_commission_add']       = 'Warning: Affiliate commission for this order has already been added!';
+
+

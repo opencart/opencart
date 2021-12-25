@@ -321,9 +321,9 @@
         <div class="row mb-3">
 
           <div id="shipping-method" class="col-md{% if not shipping_method %} d-none{% endif %}">
-            <form name="shipping_method" id="form-shipping-method">
+            <form id="form-shipping-method">
               <div class="input-group form-floating">
-                <select id="input-shipping-method" class="form-select">
+                <select name="shipping_method" id="input-shipping-method" class="form-select">
                   <option value="">{{ text_select }}</option>
                   {% if shipping_code %}
                     <option value="{{ shipping_code }}" selected>{{ shipping_method }}</option>

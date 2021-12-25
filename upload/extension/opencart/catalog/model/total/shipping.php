@@ -13,7 +13,7 @@ class Shipping extends \Opencart\System\Engine\Model {
 					'code'       => 'shipping',
 					'title'      => $shipping_method_info['title'],
 					'value'      => $shipping_method_info['cost'],
-					'sort_order' => $this->config->get('total_shipping_sort_order')
+					'sort_order' => (int)$this->config->get('total_shipping_sort_order')
 				];
 
 				if (isset($this->session->data['shipping_method']['tax_class_id'])) {

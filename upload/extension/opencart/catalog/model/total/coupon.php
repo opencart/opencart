@@ -83,7 +83,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 						'code'       => 'coupon',
 						'title'      => sprintf($this->language->get('coupon_text_coupon'), $this->session->data['coupon']),
 						'value'      => -$discount_total,
-						'sort_order' => $this->config->get('total_coupon_sort_order')
+						'sort_order' => (int)$this->config->get('total_coupon_sort_order')
 					];
 
 					$total -= $discount_total;

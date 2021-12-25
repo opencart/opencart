@@ -10,7 +10,7 @@ class Handling extends \Opencart\System\Engine\Model {
 				'code'       => 'handling',
 				'title'      => $this->language->get('text_handling'),
 				'value'      => (float)$this->config->get('total_handling_fee'),
-				'sort_order' => $this->config->get('total_handling_sort_order')
+				'sort_order' => (int)$this->config->get('total_handling_sort_order')
 			];
 
 			if ($this->config->get('total_handling_tax_class_id')) {

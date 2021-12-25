@@ -429,7 +429,7 @@ class Order extends \Opencart\System\Engine\Controller {
 				// Affiliate
 				$this->load->model('account/affiliate');
 
-				$affiliate_info = $this->model_account_affiliate->getAffiliate($this->request->post['affiliate_id']);
+				$affiliate_info = $this->model_account_affiliate->getAffiliateByTracking($this->request->post['affiliate_id']);
 
 				if ($affiliate_info) {
 					$order_data['affiliate_id'] = $affiliate_info['customer_id'];

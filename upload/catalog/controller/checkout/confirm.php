@@ -243,7 +243,7 @@ class Confirm extends \Opencart\System\Engine\Controller {
 				// Affiliate
 				$this->load->model('account/affiliate');
 
-				$affiliate_info = $this->model_account_affiliate->getAffiliatebyCode($this->session->data['tracking']);
+				$affiliate_info = $this->model_account_affiliate->getAffiliateByTracking($this->session->data['tracking']);
 
 				if ($affiliate_info) {
 					$order_data['affiliate_id'] = $affiliate_info['customer_id'];

@@ -9,7 +9,7 @@ class Total extends \Opencart\System\Engine\Model {
 			'code'       => 'total',
 			'title'      => $this->language->get('text_total'),
 			'value'      => $total,
-			'sort_order' => $this->config->get('total_total_sort_order')
+			'sort_order' => (int)$this->config->get('total_total_sort_order')
 		];
 	}
 }

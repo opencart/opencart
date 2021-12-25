@@ -11,6 +11,7 @@
       </tr>
     </thead>
     <tbody>
+
       {% for product in products %}
         <tr>
           <td class="text-center">{% if product.thumb %} <a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-thumbnail"/></a> {% endif %}</td>
@@ -47,6 +48,7 @@
           <td class="text-end">{{ product.total }}</td>
         </tr>
       {% endfor %}
+
       {% for voucher in vouchers %}
         <tr>
           <td></td>
@@ -67,6 +69,7 @@
           <td class="text-end">{{ voucher.amount }}</td>
         </tr>
       {% endfor %}
+
     </tbody>
     <tfoot id="checkout-total">
       {% for total in totals %}

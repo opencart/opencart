@@ -311,6 +311,12 @@ class Setting extends \Opencart\System\Engine\Controller {
 			$data['config_affiliate_commission'] = '5.00';
 		}
 
+		if ($this->config->has('config_affiliate_expire')) {
+			$data['config_affiliate_expire'] = $this->config->get('config_affiliate_expire');
+		} else {
+			$data['config_affiliate_expire'] = 0;
+		}
+
 		// Affiliate terms
 		$data['config_affiliate_id'] = $this->config->get('config_affiliate_id');
 

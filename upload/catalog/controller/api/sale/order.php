@@ -395,6 +395,12 @@ class Order extends \Opencart\System\Engine\Controller {
 				}
 			}
 
+			if (isset($this->session->data['comment'])) {
+				$order_data['comment'] = $this->session->data['comment'];
+			} else {
+				$order_data['comment'] = '';
+			}
+
 			// Order Totals
 			$totals = [];
 			$taxes = $this->cart->getTaxes();
@@ -411,15 +417,6 @@ class Order extends \Opencart\System\Engine\Controller {
 			];
 
 			$order_data = array_merge($order_data, $total_data);
-
-			if (isset($this->session->data['comment'])) {
-				$order_data['comment'] = $this->session->data['comment'];
-			} else {
-				$order_data['comment'] = '';
-			}
-
-
-
 
 			$order_data['tracking'] = '';
 			$order_data['affiliate_id'] = 0;
@@ -439,11 +436,6 @@ class Order extends \Opencart\System\Engine\Controller {
 					$order_data['commission'] = ($subtotal / 100) * $affiliate_info['commission'];
 				}
 			}
-
-
-
-
-
 
 
 

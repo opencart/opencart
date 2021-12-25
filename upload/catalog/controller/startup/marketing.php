@@ -22,25 +22,29 @@ class Marketing extends \Opencart\System\Engine\Controller {
 				$this->model_marketing_marketing->addReport($marketing_info['marketing_id'], $this->request->server['REMOTE_ADDR']);
 			}
 
-			$this->load->model('account/affiliate');
 
-			$affiliate_info = $this->model_account_affiliate->getAffiliateByTracking($tracking);
+			if ($this->config->get('config_affiliate_status')) {
 
-			if ($affiliate_info && $affiliate_info['status']) {
-				$this->model_account_affiliate->addReport($affiliate_info['customer_id'], $this->request->server['REMOTE_ADDR']);
-			}
+				$this->load->model('account/affiliate');
 
-			if ($marketing_info || ($affiliate_info && $affiliate_info['status'])) {
-				$this->session->data['tracking'] = $tracking;
+				$affiliate_info = $this->model_account_affiliate->getAffiliateByTracking($tracking);
 
-				if (!isset($this->request->cookie['tracking'])) {
-					$option = [
-						'expires'  => time() + 3600 * 24 * 1000,
-						'path'     => '/',
-						'SameSite' => $this->config->get('session_samesite')
-					];
+				if ($affiliate_info && $affiliate_info['status']) {
+					$this->model_account_affiliate->addReport($affiliate_info['customer_id'], $this->request->server['REMOTE_ADDR']);
+				}
 
-					setcookie('tracking', $tracking, $option);
+				if ($marketing_info || ($affiliate_info && $affiliate_info['status'])) {
+					$this->session->data['tracking'] = $tracking;
+
+					if (!isset($this->request->cookie['tracking'])) {
+						$option = [
+							'expires'  => $this->config->get('config_affiliate_expire') ? time() + (int)$this->config->get('config_affiliate_expire') : 0,
+							'path'     => '/',
+							'SameSite' => $this->config->get('session_samesite')
+						];
+
+						setcookie('tracking', $tracking, $option);
+					}
 				}
 			}
 		}

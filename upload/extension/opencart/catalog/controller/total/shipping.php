@@ -13,7 +13,7 @@ class Shipping extends \Opencart\System\Engine\Controller {
 				$data['zone_id'] = $shipping_address['zone_id'];
 			} else {
 				$data['postcode'] = '';
-				$data['country_id'] = $this->config->get('config_country_id');
+				$data['country_id'] = (int)$this->config->get('config_country_id');
 				$data['zone_id'] = '';
 			}
 
@@ -64,7 +64,7 @@ class Shipping extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('localisation/country');
 
-		$country_info = $this->model_localisation_country->getCountry($this->request->post['country_id']);
+		$country_info = $this->model_localisation_country->getCountry((int)$this->request->post['country_id']);
 
 		if ($country_info && $country_info['postcode_required'] && (utf8_strlen($this->request->post['postcode']) < 2 || utf8_strlen($this->request->post['postcode']) > 10)) {
 			$json['error']['postcode'] = $this->language->get('error_postcode');
@@ -160,9 +160,7 @@ class Shipping extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->session->data['shipping_method'] = $this->request->post['shipping_method'];
 
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
+			$json['success'] = $this->language->get('text_success');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

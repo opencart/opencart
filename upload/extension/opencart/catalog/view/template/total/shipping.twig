@@ -2,45 +2,50 @@
   <h2 class="accordion-header"><button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapse-shipping">{{ heading_title }}</button></h2>
   <div id="collapse-shipping" class="accordion-collapse collapse" data-bs-parent="#accordion">
     <div class="accordion-body">
+      <form id="form-quote">
 
-      <div class="row mb-3 required">
-        <label for="input-country" class="col-sm-3 col-form-label">{{ entry_country }}</label>
-        <div class="col-md-9">
-          <select name="country_id" id="input-country" class="form-select">
-            <option value="">{{ text_select }}</option>
-            {% for country in countries %}
-              <option value="{{ country.country_id }}"{% if country.country_id == country_id %} selected="selected"{% endif %}>{{ country.name }}</option>
-            {% endfor %}
-          </select>
-          <div id="error-country" class="invalid-feedback"></div>
-        </div>
-      </div>
+        <p>{{ text_destination }}</p>
 
-      <div class="row mb-3 required">
-        <label for="input-zone" class="col-sm-3 col-form-label">{{ entry_zone }}</label>
-        <div class="col-md-9">
-          <select name="zone_id" id="input-zone" class="form-select"></select>
-          <div id="error-zone" class="invalid-feedback"></div>
+        <div class="row mb-3 required">
+          <label for="input-country" class="col-md-4 col-form-label">{{ entry_country }}</label>
+          <div class="col-md-8">
+            <select name="country_id" id="input-country" class="form-select">
+              <option value="">{{ text_select }}</option>
+              {% for country in countries %}
+                <option value="{{ country.country_id }}"{% if country.country_id == country_id %} selected="selected"{% endif %}>{{ country.name }}</option>
+              {% endfor %}
+            </select>
+            <div id="error-country" class="invalid-feedback"></div>
+          </div>
         </div>
-      </div>
 
-      <div class="row mb-3 required">
-        <label for="input-postcode" class="col-md-3 col-form-label">{{ entry_postcode }}</label>
-        <div class="col-md-9">
-          <input type="text" name="postcode" value="{{ postcode }}" placeholder="{{ entry_postcode }}" id="input-postcode" class="form-control"/>
-          <div id="error-postcode" class="invalid-feedback"></div>
+        <div class="row mb-3 required">
+          <label for="input-zone" class="col-md-4 col-form-label">{{ entry_zone }}</label>
+          <div class="col-md-8">
+            <select name="zone_id" id="input-zone" class="form-select"></select>
+            <div id="error-zone" class="invalid-feedback"></div>
+          </div>
         </div>
-      </div>
 
-      <div class="d-inline-block pt-2 pd-2 w-100">
-        <div class="float-end">
-          <button type="button" id="button-quote" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_quote }}</button>
+        <div class="row required">
+          <label for="input-postcode" class="col-md-4 col-form-label">{{ entry_postcode }}</label>
+          <div class="col-md-8">
+            <input type="text" name="postcode" value="{{ postcode }}" placeholder="{{ entry_postcode }}" id="input-postcode" class="form-control"/>
+            <div id="error-postcode" class="invalid-feedback"></div>
+          </div>
         </div>
-      </div>
+
+        <div class="text-end">
+          <button type="submit" id="button-quote" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_quote }}</button>
+        </div>
+
+      </form>
     </div>
   </div>
   <script type="text/javascript"><!--
-  $('#button-quote').on('click', function () {
+  $('#form-quote').on('click', function (e) {
+      e.preventDefault();
+
       $.ajax({
           url: 'index.php?route=extension/opencart/total/shipping|quote',
           type: 'post',
@@ -53,11 +58,13 @@
               $('#button-quote').button('reset');
           },
           success: function (json) {
-              $('.alert-dismissible, .text-danger').remove();
+              $('.alert-dismissible').remove();
+              $('#form-shipping').find('.is-invalid').removeClass('is-invalid');
+              $('#form-shipping').find('.invalid-feedback').removeClass('d-block');
 
               if (json['error']) {
                   if (json['error']['warning']) {
-                      $('#collapse-shipping .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                      $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                   }
 
                   for (key in json['error']) {
@@ -74,8 +81,11 @@
                   html += '    <div class="modal-content">';
                   html += '      <div class="modal-header">';
                   html += '        <h4 class="modal-title">{{ text_shipping_method }}</h4>';
+                  html += '        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>';
                   html += '      </div>';
                   html += '      <div class="modal-body">';
+                  html += '        <form id="form-shipping">';
+                  html += '          <p>{{ text_estimate }}</p>';
 
                   for (i in json['shipping_method']) {
                       html += '<p><strong>' + json['shipping_method'][i]['title'] + '</strong></p>';
@@ -83,31 +93,25 @@
                       if (!json['shipping_method'][i]['error']) {
                           for (j in json['shipping_method'][i]['quote']) {
                               html += '<div class="form-check">';
-                              html += '  <label>';
 
                               if (json['shipping_method'][i]['quote'][j]['code'] == '{{ shipping_method }}') {
-                                  html += '<input type="radio" name="shipping_method" value="' + json['shipping_method'][i]['quote'][j]['code'] + '" checked/> ';
+                                  html += '<input type="radio" name="shipping_method" value="' + json['shipping_method'][i]['quote'][j]['code'] + '" id="input-shipping-method-' + i + '" checked/>';
                               } else {
-                                  html += '<input type="radio" name="shipping_method" value="' + json['shipping_method'][i]['quote'][j]['code'] + '" /> ';
+                                  html += '<input type="radio" name="shipping_method" value="' + json['shipping_method'][i]['quote'][j]['code'] + '" id="input-shipping-method-' + i + '"/>';
                               }
 
-                              html += json['shipping_method'][i]['quote'][j]['title'] + ' - ' + json['shipping_method'][i]['quote'][j]['text'] + '</label></div>';
+                              html += '  <label for="input-shipping-method-' + i + '">' + json['shipping_method'][i]['quote'][j]['title'] + ' - ' + json['shipping_method'][i]['quote'][j]['text'] + '</label>';
+                              html += '</div>';
                           }
                       } else {
                           html += '<div class="alert alert-danger alert-dismissible">' + json['shipping_method'][i]['error'] + '</div>';
                       }
                   }
 
-                  html += '      </div>';
-                  html += '      <div class="modal-footer">';
-                  html += '        <button type="button" class="btn btn-light" data-bs-dismiss="modal">{{ button_cancel }}</button>';
-
-                {% if shipping_method %}
-                  html += '        <button type="button" id="button-shipping" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_shipping }}</button>';
-                {% else %}
-                  html += '        <button type="button" id="button-shipping" data-loading-text="{{ text_loading }}" disabled="disabled" class="btn btn-primary">{{ button_shipping }}</button>';
-                {% endif %}
-
+                  html += '          <div class="text-end">';
+                  html += '            <button type="submit" id="button-shipping" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_shipping }}</button>';
+                  html += '          </div>';
+                  html += '        </form>';
                   html += '      </div>';
                   html += '    </div>';
                   html += '  </div>';
@@ -116,10 +120,6 @@
                   $('body').append(html);
 
                   $('#modal-shipping').modal('show');
-
-                  $('input[name=\'shipping_method\']').on('change', function () {
-                      $('#button-shipping').prop('disabled', false);
-                  });
               }
           },
           error: function (xhr, ajaxOptions, thrownError) {
@@ -128,12 +128,13 @@
       });
   });
 
-  $(document).on('#button-shipping', 'click', function () {
+  $(document).on('#form-shipping', 'submit', function () {
       $.ajax({
           url: 'index.php?route=extension/opencart/total/shipping|save',
           type: 'post',
           data: 'shipping_method=' + $('input[name=\'shipping_method\']:checked').val(),
           dataType: 'json',
+          contentType: 'application/x-www-form-urlencoded',
           beforeSend: function () {
               $('#button-shipping').button('loading');
           },
@@ -143,17 +144,15 @@
           success: function (json) {
               $('.alert-dismissible').remove();
 
-              if (json['redirect']) {
-                  location = json['redirect'];
-              }
-
               if (json['error']) {
-                  $('.breadcrumb').after('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + '<button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                  $('html, body').animate({scrollTop: 0}, 'slow');
+                  $('#form-shipping').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
               }
 
+              if (json['success']) {
+                  $('#alert').prepend('<div class="alert alert-success"><i class="fas fa-exclamation-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
+                  $('#shopping-cart').load('index.php?route=checkout/cart|list&language={{ language }}');
+              }
           },
           error: function (xhr, ajaxOptions, thrownError) {
               alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);

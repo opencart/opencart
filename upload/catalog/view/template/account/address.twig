@@ -46,7 +46,7 @@ $('#address').on('click', '.btn-danger', function(e) {
             }
 
             if (json['success']) {
-                $('#address').before('<div class="alert alert-success alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#address').before('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                 $('#address').load('index.php?route=account/address|list');
             }

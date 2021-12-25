@@ -49,7 +49,7 @@
       $.ajax({
           url: 'index.php?route=extension/opencart/total/shipping|quote',
           type: 'post',
-          data: 'country_id=' + $('#input-country').val() + '&zone_id=' + $('#input-zone').val() + '&postcode=' + $('#input-postcode').val(),
+          data: $('#form-quote').serialize(),
           dataType: 'json',
           beforeSend: function () {
               $('#button-quote').button('loading');
@@ -130,13 +130,13 @@
       });
   });
 
-  $('body').on('#form-shipping', 'submit', function (e) {
+  $(document).on('submit', '#form-shipping', function (e) {
       e.preventDefault();
 
       $.ajax({
           url: 'index.php?route=extension/opencart/total/shipping|save',
           type: 'post',
-          data: 'shipping_method=' + $('input[name=\'shipping_method\']:checked').val(),
+          data: $('#form-shipping').serialize(),
           dataType: 'json',
           contentType: 'application/x-www-form-urlencoded',
           beforeSend: function () {
@@ -149,13 +149,17 @@
               $('.alert-dismissible').remove();
 
               if (json['error']) {
-                  $('#form-shipping').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                  $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
               }
 
               if (json['success']) {
                   $('#alert').prepend('<div class="alert alert-success"><i class="fas fa-exclamation-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                   $('#shopping-cart').load('index.php?route=checkout/cart|list&language={{ language }}');
+
+                  var modal = bootstrap.Modal.getInstance(document.querySelector('#modal-shipping'));
+
+                  modal.hide();
               }
           },
           error: function (xhr, ajaxOptions, thrownError) {

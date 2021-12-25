@@ -437,9 +437,6 @@ class Order extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-
-
-
 			// We use session to store language code for API access
 			$order_data['language_id'] = $this->config->get('config_language_id');
 			$order_data['language_code'] = $this->config->get('config_language');

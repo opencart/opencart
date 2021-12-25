@@ -27,7 +27,7 @@
           </div>
         </div>
 
-        <div class="row required">
+        <div class="row mb-3 required">
           <label for="input-postcode" class="col-md-4 col-form-label">{{ entry_postcode }}</label>
           <div class="col-md-8">
             <input type="text" name="postcode" value="{{ postcode }}" placeholder="{{ entry_postcode }}" id="input-postcode" class="form-control"/>
@@ -43,7 +43,7 @@
     </div>
   </div>
   <script type="text/javascript"><!--
-  $('#form-quote').on('click', function (e) {
+  $('#form-quote').on('submit', function (e) {
       e.preventDefault();
 
       $.ajax({
@@ -72,6 +72,8 @@
                       $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
                   }
               }
+
+              console.log(json);
 
               if (json['shipping_method']) {
                   $('#modal-shipping').remove();
@@ -128,7 +130,9 @@
       });
   });
 
-  $(document).on('#form-shipping', 'submit', function () {
+  $('body').on('#form-shipping', 'submit', function (e) {
+      e.preventDefault();
+
       $.ajax({
           url: 'index.php?route=extension/opencart/total/shipping|save',
           type: 'post',

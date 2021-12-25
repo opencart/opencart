@@ -47,7 +47,6 @@
           <td class="text-end">{{ product.total }}</td>
         </tr>
       {% endfor %}
-
       {% for voucher in vouchers %}
         <tr>
           <td></td>
@@ -68,7 +67,6 @@
           <td class="text-end">{{ voucher.amount }}</td>
         </tr>
       {% endfor %}
-
     </tbody>
     <tfoot id="checkout-total">
       {% for total in totals %}

@@ -1856,13 +1856,13 @@ class Order extends \Opencart\System\Engine\Controller {
 		$reward_total = $this->model_customer_customer->getTotalRewardsByOrderId($order_id);
 
 		if ($reward_total) {
-			$json['error'] = $this->language->get('error_reward_total');
+			$json['error'] = $this->language->get('error_reward_add');
 		}
 
 		if (!$json) {
 			$this->model_customer_customer->addReward($order_info['customer_id'], $this->language->get('text_order_id') . ' #' . $order_id, $order_info['reward'], $order_id);
 
-			$json['success'] = $this->language->get('text_reward_added');
+			$json['success'] = $this->language->get('text_reward_add');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -1897,7 +1897,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 			$this->model_customer_customer->deleteReward($order_id);
 
-			$json['success'] = $this->language->get('text_reward_removed');
+			$json['success'] = $this->language->get('text_reward_remove');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -1934,17 +1934,17 @@ class Order extends \Opencart\System\Engine\Controller {
 
 			$affiliate_total = $this->model_customer_customer->getTotalTransactionsByOrderId($order_id);
 
-			if (!$affiliate_total) {
-				$json['error'] = $this->language->get('error_order');
+			if ($affiliate_total) {
+				$json['error'] = $this->language->get('error_commission_add');
 			}
 		} else {
-			$json['error'] = $this->language->get('error_commission');
+			$json['error'] = $this->language->get('error_order');
 		}
 
 		if (!$json) {
 			$this->model_customer_customer->addTransaction($order_info['affiliate_id'], $this->language->get('text_order_id') . ' #' . $order_id, $order_info['commission'], $order_id);
 
-			$json['success'] = $this->language->get('text_commission_added');
+			$json['success'] = $this->language->get('text_commission_add');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -1979,7 +1979,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 			$this->model_customer_customer->deleteTransactionByOrderId($order_id);
 
-			$json['success'] = $this->language->get('text_commission_removed');
+			$json['success'] = $this->language->get('text_commission_remove');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

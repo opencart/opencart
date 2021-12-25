@@ -42,24 +42,26 @@ class Order extends \Opencart\System\Engine\Controller {
 			];
 
 			// Payment Details
-			$this->session->data['payment_address'] = [
-				'firstname'      => $order_info['payment_firstname'],
-				'lastname'       => $order_info['payment_lastname'],
-				'company'        => $order_info['payment_company'],
-				'address_1'      => $order_info['payment_address_1'],
-				'address_2'      => $order_info['payment_address_2'],
-				'postcode'       => $order_info['payment_postcode'],
-				'city'           => $order_info['payment_city'],
-				'zone_id'        => $order_info['payment_zone_id'],
-				'zone'           => $order_info['payment_zone'],
-				'zone_code'      => $order_info['payment_zone_code'],
-				'country_id'     => $order_info['payment_country_id'],
-				'country'        => $order_info['payment_country'],
-				'iso_code_2'     => $order_info['payment_iso_code_2'],
-				'iso_code_3'     => $order_info['payment_iso_code_3'],
-				'address_format' => $order_info['payment_address_format'],
-				'custom_field'   => $order_info['payment_custom_field']
-			];
+			if ($this->config->get('config_checkout_address')) {
+				$this->session->data['payment_address'] = [
+					'firstname'      => $order_info['payment_firstname'],
+					'lastname'       => $order_info['payment_lastname'],
+					'company'        => $order_info['payment_company'],
+					'address_1'      => $order_info['payment_address_1'],
+					'address_2'      => $order_info['payment_address_2'],
+					'postcode'       => $order_info['payment_postcode'],
+					'city'           => $order_info['payment_city'],
+					'zone_id'        => $order_info['payment_zone_id'],
+					'zone'           => $order_info['payment_zone'],
+					'zone_code'      => $order_info['payment_zone_code'],
+					'country_id'     => $order_info['payment_country_id'],
+					'country'        => $order_info['payment_country'],
+					'iso_code_2'     => $order_info['payment_iso_code_2'],
+					'iso_code_3'     => $order_info['payment_iso_code_3'],
+					'address_format' => $order_info['payment_address_format'],
+					'custom_field'   => $order_info['payment_custom_field']
+				];
+			}
 
 			if ($order_info['payment_code']) {
 				$this->session->data['payment_method'] = $order_info['payment_code'];

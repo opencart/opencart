@@ -1,8 +1,9 @@
 <?php
 // Text
-$_['text_success']    = 'Success: Your gift voucher discount has been applied!';
 $_['text_cart']       = 'Success: You have modified your shopping cart!';
 $_['text_for']        = '%s Gift certificate for %s';
+$_['text_success']    = 'Success: Your gift voucher discount has been applied!';
+$_['text_remove']     = 'Success: Your gift voucher discount has been removed!';
 
 // Error
 $_['error_voucher']   = 'Warning: Gift voucher is either invalid or the balance has been used up!';

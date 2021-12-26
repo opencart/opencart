@@ -47,7 +47,7 @@ $('#button-repair').on('click', function(e) {
             }
 
             if (json['success']) {
-                $('#alert').prepend('<div class="alert alert-success"><i class="fas fa-exclamation-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<div class="alert alert-success"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                 $('#category').load('index.php?route=catalog/category|list&user_token={{ user_token }}');
             }

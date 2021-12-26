@@ -18,7 +18,7 @@ class Voucher extends \Opencart\System\Engine\Model {
 						'code'       => 'voucher',
 						'title'      => sprintf($this->language->get('voucher_text_voucher'), $this->session->data['voucher']),
 						'value'      => -$amount,
-						'sort_order' => $this->config->get('total_voucher_sort_order')
+						'sort_order' => (int)$this->config->get('total_voucher_sort_order')
 					];
 
 					$total -= $amount;

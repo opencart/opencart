@@ -10,7 +10,7 @@ class LowOrderFee extends \Opencart\System\Engine\Model {
 				'code'       => 'low_order_fee',
 				'title'      => $this->language->get('text_low_order_fee'),
 				'value'      => (float)$this->config->get('total_low_order_fee_fee'),
-				'sort_order' => $this->config->get('total_low_order_fee_sort_order')
+				'sort_order' => (int)$this->config->get('total_low_order_fee_sort_order')
 			];
 
 			if ($this->config->get('total_low_order_fee_tax_class_id')) {

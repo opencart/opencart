@@ -214,6 +214,12 @@ class Confirm extends \Opencart\System\Engine\Controller {
 				$order_data['vouchers'] = $this->session->data['vouchers'];
 			}
 
+			if (isset($this->session->data['comment'])) {
+				$order_data['comment'] = $this->session->data['comment'];
+			} else {
+				$order_data['comment'] = '';
+			}
+
 			$total_data = [
 				'totals' => $totals,
 				'taxes'  => $taxes,
@@ -221,13 +227,6 @@ class Confirm extends \Opencart\System\Engine\Controller {
 			];
 
 			$order_data = array_merge($order_data, $total_data);
-
-			if (isset($this->session->data['comment'])) {
-				$order_data['comment'] = $this->session->data['comment'];
-			} else {
-				$order_data['comment'] = '';
-			}
-
 
 
 
@@ -244,19 +243,13 @@ class Confirm extends \Opencart\System\Engine\Controller {
 				// Affiliate
 				$this->load->model('account/affiliate');
 
-				$affiliate_info = $this->model_account_affiliate->getAffiliatebyCode($this->session->data['tracking']);
+				$affiliate_info = $this->model_account_affiliate->getAffiliateByTracking($this->session->data['tracking']);
 
 				if ($affiliate_info) {
 					$order_data['affiliate_id'] = $affiliate_info['customer_id'];
 					$order_data['commission'] = ($subtotal / 100) * $affiliate_info['commission'];
 				}
 			}
-
-
-
-
-
-
 
 
 

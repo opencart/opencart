@@ -220,7 +220,7 @@ $('body').on('click', '#modal-purchase #button-purchase', function(e) {
             if (json['success']) {
                 $('#modal-purchase').modal('hide');
 
-                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                 $('#download').load('index.php?route=marketplace/marketplace|extension&user_token={{ user_token }}&extension_id={{ extension_id }}');
             }

@@ -279,7 +279,7 @@ $('.tab-content').on('click', '.btn-primary', function(e) {
             }
 
             if (json['success']) {
-                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['success'] + '  <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + '  <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                 $('#history').load('index.php?route=design/theme|history&user_token={{ user_token }}');
             }
@@ -311,7 +311,7 @@ $('.tab-content').on('click', '.btn-danger', function(e) {
                 }
 
                 if (json['success']) {
-                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['success'] + '  <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + '  <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                 }
 
                 var codemirror = $('.tab-content .active .CodeMirror')[0].CodeMirror;
@@ -419,7 +419,7 @@ $('#history').on('click', '.btn-danger', function(e) {
                 }
 
                 if (json['success']) {
-                    $('#history').before('<div class="alert alert-success alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    $('#history').before('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                     $('#history').load('index.php?route=design/theme|history&user_token={{ user_token }}');
                 }

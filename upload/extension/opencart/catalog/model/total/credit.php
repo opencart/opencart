@@ -15,7 +15,7 @@ class Credit extends \Opencart\System\Engine\Model {
 					'code'       => 'credit',
 					'title'      => $this->language->get('text_credit'),
 					'value'      => -$credit,
-					'sort_order' => $this->config->get('total_credit_sort_order')
+					'sort_order' => (int)$this->config->get('total_credit_sort_order')
 				];
 
 				$total -= $credit;

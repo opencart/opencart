@@ -43,10 +43,6 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 				$json['error'] = $this->language->get('error_shipping_address');
 			}
 
-			if (empty($this->session->data['shipping_methods'])) {
-				$json['error'] = $this->language->get('error_no_shipping');
-			}
-
 			if (isset($this->request->post['shipping_method'])) {
 				$shipping = explode('.', $this->request->post['shipping_method']);
 

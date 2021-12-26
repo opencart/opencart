@@ -418,22 +418,23 @@ class Order extends \Opencart\System\Engine\Controller {
 
 			$order_data = array_merge($order_data, $total_data);
 
-			$order_data['tracking'] = '';
 			$order_data['affiliate_id'] = 0;
 			$order_data['commission'] = 0;
 			$order_data['marketing_id'] = 0;
+			$order_data['tracking'] = '';
 
-			if (isset($this->request->post['affiliate_id'])) {
+			if (isset($this->session->data['affiliate_id'])) {
 				$subtotal = $this->cart->getSubTotal();
 
 				// Affiliate
 				$this->load->model('account/affiliate');
 
-				$affiliate_info = $this->model_account_affiliate->getAffiliateByTracking($this->request->post['affiliate_id']);
+				$affiliate_info = $this->model_account_affiliate->getAffiliate($this->session->data['affiliate_id']);
 
 				if ($affiliate_info) {
 					$order_data['affiliate_id'] = $affiliate_info['customer_id'];
 					$order_data['commission'] = ($subtotal / 100) * $affiliate_info['commission'];
+					$order_data['tracking'] = $affiliate_info['tracking'];
 				}
 			}
 

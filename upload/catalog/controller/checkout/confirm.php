@@ -228,14 +228,10 @@ class Confirm extends \Opencart\System\Engine\Controller {
 
 			$order_data = array_merge($order_data, $total_data);
 
-
-
-
-
-			$order_data['tracking'] = '';
 			$order_data['affiliate_id'] = 0;
 			$order_data['commission'] = 0;
 			$order_data['marketing_id'] = 0;
+			$order_data['tracking'] = '';
 
 			if ($this->config->get('config_affiliate_status') && isset($this->session->data['tracking'])) {
 				$subtotal = $this->cart->getSubTotal();
@@ -248,10 +244,9 @@ class Confirm extends \Opencart\System\Engine\Controller {
 				if ($affiliate_info) {
 					$order_data['affiliate_id'] = $affiliate_info['customer_id'];
 					$order_data['commission'] = ($subtotal / 100) * $affiliate_info['commission'];
+					$order_data['tracking'] = $this->session->data['tracking'];
 				}
 			}
-
-
 
 			$order_data['language_id'] = $this->config->get('config_language_id');
 			$order_data['language_code'] = $this->config->get('config_language');

@@ -399,8 +399,8 @@ var chain = new Chain();
     $.fn.autocomplete = function(option) {
         return this.each(function() {
             var $this = $(this);
-            var $menu = $('<div class="dropdown d-block">');
-            var $dropdown = $('<ul class="dropdown-menu"></ul>');
+            var $dropdown = $('<div class="dropdown d-block">');
+            var $menu = $('<ul class="dropdown-menu"></ul>');
 
             this.timer = null;
             this.items = [];
@@ -457,12 +457,12 @@ var chain = new Chain();
 
             // Show
             this.show = function() {
-                $dropdown.addClass('show');
+                $menu.addClass('d-block');
             }
 
             // Hide
             this.hide = function() {
-                $dropdown.removeClass('show');
+                $menu.removeClass('d-none');
             }
 
             // Request
@@ -516,13 +516,13 @@ var chain = new Chain();
                     this.hide();
                 }
 
-                $dropdown.html(html);
+                $menu.html(html);
             }
 
             if (!$this.parent().hasClass('input-group')) {
-                $this.after($menu.append($dropdown));
+                $this.wrap($dropdown).parent().append($menu);
             } else {
-                $this.parent().after($menu.append($dropdown));
+                $this.parent().wrap($dropdown).parent().append($menu);
             }
 
             $dropdown.on('click', 'a', $.proxy(this.click, this));

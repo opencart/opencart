@@ -24,22 +24,15 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 
 		if (!$json) {
 			if ($affiliate_id) {
-				$this->session->data['affiliate'] = $this->request->post['affiliate'];
+				$this->session->data['affiliate_id'] = $affiliate_id;
+
+				$json['success'] = $this->language->get('text_success');
 			} else {
-				unset($this->session->data['affiliate']);
+				unset($this->session->data['affiliate_id']);
+
+				$json['success'] = $this->language->get('text_remove');
 			}
-
-			$json['success'] = $this->language->get('text_success');
 		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	public function clear(): void {
-		unset($this->session->data['affiliate']);
-
-		$json['success'] = $this->language->get('text_success');
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

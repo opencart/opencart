@@ -144,7 +144,7 @@
                 <div class="form-control p-0 border rounded-start">
                   <p class="lead p-2 mb-0"><strong>{{ text_store }}</strong>
                     <br/>
-                    <span id="store-value"><a href="index.php?route=setting/setting" target="_blank">{{ store_name }}</a></span></p>
+                    <span id="store-value"><a href="index.php?route=setting/setting&user_token={{ user_token  }}" target="_blank">{{ store_name }}</a></span></p>
                 </div>
                 <button type="button" data-bs-toggle="modal" data-bs-target="#modal-store" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
               </div>
@@ -239,7 +239,7 @@
                   <p class="lead p-2 mb-0"><strong>{{ text_affiliate }}</strong>
                     <br/>
                     {% if affiliate %}
-                      <span id="affiliate-value"><a href="{{ affiliate }}">{{ affiliate_firstname }} {{ affiliate_lastname }}</a></span>
+                      <span id="affiliate-value"><a href="{{ affiliate }}">{{ affiliate }}</a></span>
                     {% else %}
                       <span id="affiliate-value">&nbsp;</span>
                     {% endif %}
@@ -1208,7 +1208,7 @@
 
           <div id="tab-product" class="tab-pane active">
             <form id="form-product-add" action="{{ product_add }}" method="post">
-              <fieldset>
+              <fieldset class="mb-0">
                 <legend>{{ text_product_add }}</legend>
                 <div class="mb-3">
                   <label for="input-product" class="form-label">{{ entry_product }}</label> <input type="text" name="product" value="" placeholder="{{ entry_product }}" id="input-product" class="form-control"/> <input type="hidden" name="product_id" value="" id="input-product-id"/>
@@ -1226,7 +1226,7 @@
 
           <div id="tab-voucher" class="tab-pane">
             <form id="form-voucher-add" action="{{ voucher_add }}" method="post">
-              <fieldset>
+              <fieldset class="mb-0">
                 <legend>{{ text_voucher_add }}</legend>
                 <div class="mb-3 required">
                   <label for="input-to-name" class="form-label">{{ entry_to_name }}</label> <input type="text" name="to_name" value="" placeholder="{{ entry_to_name }}" id="input-to-name" class="form-control"/>
@@ -1253,13 +1253,12 @@
                 <div class="mb-3 required">
                   <label for="input-amount" class="form-label">{{ entry_amount }}</label> <input type="text" name="amount" value="{{ voucher_min }}" placeholder="{{ entry_amount }}" id="input-amount" class="form-control"/>
                 </div>
-                <div class="text-end">
-                  <button type="submit" id="button-voucher-add" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
-                </div>
               </fieldset>
+              <div class="text-end">
+                <button type="submit" id="button-voucher-add" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
+              </div>
             </form>
           </div>
-
         </div>
       </div>
     </div>
@@ -2175,7 +2174,7 @@ $('#input-product').autocomplete({
         $('#input-product-id').val(item['value']);
 
         if (item['option'] != '') {
-            html = '<fieldset>';
+            html = '<fieldset class="mb-0">';
             html += '  <legend>{{ entry_option }}</legend>';
 
             for (i = 0; i < item['option'].length; i++) {

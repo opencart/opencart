@@ -525,7 +525,7 @@ var chain = new Chain();
                 $this.parent().wrap($dropdown).parent().append($menu);
             }
 
-            $dropdown.on('click', 'a', $.proxy(this.click, this));
+            $menu.on('click', 'a', $.proxy(this.click, this));
         });
     }
 })(window.jQuery);

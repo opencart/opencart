@@ -2701,7 +2701,7 @@ $('#form-comment').on('submit', function (e) {
             $('#button-comment').button('reset');
         },
         success: function (json) {
-            $('.alert-dismissible').remove();
+            $('#form-comment .alert-dismissible').remove();
 
             // Check for errors
             if (json['error']) {

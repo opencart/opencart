@@ -1007,8 +1007,7 @@
 
                             <div class="input-group-text">
                               <div class="form-check form-switch">
-                                <input type="checkbox" name="override[variant][{{ option.product_option_id }}]" value="1" id="input-variant-option-{{ option.product_option_id }}" data-oc-toggle="switch" data-oc-target="#button-upload-{{ option.product_option_id }}" class="form-check-input"{% if override.variant[option.product_option_id] %} checked{% endif %}/>
-                                <label for="input-variant-option-{{ option.product_option_id }}" class="form-check-label"></label>
+                                <input type="checkbox" name="override[variant][{{ option.product_option_id }}]" value="1" id="input-variant-option-{{ option.product_option_id }}" data-oc-toggle="switch" data-oc-target="#button-upload-{{ option.product_option_id }}" class="form-check-input"{% if override.variant[option.product_option_id] %} checked{% endif %}/> <label for="input-variant-option-{{ option.product_option_id }}" class="form-check-label"></label>
                               </div>
                             </div>
                           </div>
@@ -1267,8 +1266,7 @@
                         <td class="text-start">{{ entry_sort_order }}</td>
                         <td class="text-end">{% if master_id %}
                             <div class="form-check form-switch">
-                              <input type="checkbox" name="override[product_image]" value="1" id="input-variant-product-image" data-oc-toggle="switch" data-oc-target="#product-image" class="form-check-input"{% if override.product_image %} checked{% endif %}/>
-                              <label for="input-variant-product-image" class="form-check-label"></label>
+                              <input type="checkbox" name="override[product_image]" value="1" id="input-variant-product-image" data-oc-toggle="switch" data-oc-target="#product-image" class="form-check-input"{% if override.product_image %} checked{% endif %}/> <label for="input-variant-product-image" class="form-check-label"></label>
                             </div>
                           {% endif %}</td>
                       </tr>
@@ -1279,8 +1277,7 @@
                         <tr id="product-image-row-{{ image_row }}">
                           <td>
                             <div class="card image">
-                              <img src="{{ product_image.thumb }}" alt="" title="" id="product-image-{{ image_row }}" data-oc-placeholder="{{ placeholder }}" class="card-img-top"/>
-                              <input type="hidden" name="product_image[{{ image_row }}][image]" value="{{ product_image.image }}" id="input-product-image-{{ image_row }}"/>
+                              <img src="{{ product_image.thumb }}" alt="" title="" id="product-image-{{ image_row }}" data-oc-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="product_image[{{ image_row }}][image]" value="{{ product_image.image }}" id="input-product-image-{{ image_row }}"/>
                               <div class="card-body">
                                 <button type="button" data-oc-toggle="image" data-oc-target="#input-product-image-{{ image_row }}" data-oc-thumb="#product-image-{{ image_row }}" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>
                                 <button type="button" data-oc-toggle="clear" data-oc-target="#input-product-image-{{ image_row }}" data-oc-thumb="#product-image-{{ image_row }}" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>
@@ -1425,17 +1422,17 @@ $('textarea[data-oc-toggle=\'ckeditor\']').ckeditor();
 
 // Manufacturer
 $('#input-manufacturer').autocomplete({
-    'source': function(request, response) {
+    'source': function (request, response) {
         $.ajax({
             url: 'index.php?route=catalog/manufacturer|autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
-            success: function(json) {
+            success: function (json) {
                 json.unshift({
                     manufacturer_id: 0,
                     name: '{{ text_none }}'
                 });
 
-                response($.map(json, function(item) {
+                response($.map(json, function (item) {
                     return {
                         label: item['name'],
                         value: item['manufacturer_id']
@@ -1444,7 +1441,7 @@ $('#input-manufacturer').autocomplete({
             }
         });
     },
-    'select': function(item) {
+    'select': function (item) {
         $('#input-manufacturer').val(item['label']);
         $('#input-manufacturer-id').val(item['value']);
     }
@@ -1452,12 +1449,12 @@ $('#input-manufacturer').autocomplete({
 
 // Category
 $('#input-category').autocomplete({
-    'source': function(request, response) {
+    'source': function (request, response) {
         $.ajax({
             url: 'index.php?route=catalog/category|autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
-            success: function(json) {
-                response($.map(json, function(item) {
+            success: function (json) {
+                response($.map(json, function (item) {
                     return {
                         label: item['name'],
                         value: item['category_id']
@@ -1466,7 +1463,7 @@ $('#input-category').autocomplete({
             }
         });
     },
-    'select': function(item) {
+    'select': function (item) {
         $('#input-category').val('');
 
         $('#product-category-' + item['value']).remove();
@@ -1480,18 +1477,18 @@ $('#input-category').autocomplete({
     }
 });
 
-$('#product-category').on('click', '.btn', function() {
+$('#product-category').on('click', '.btn', function () {
     $(this).parent().parent().remove();
 });
 
 // Filter
 $('#input-filter').autocomplete({
-    'source': function(request, response) {
+    'source': function (request, response) {
         $.ajax({
             url: 'index.php?route=catalog/filter|autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
-            success: function(json) {
-                response($.map(json, function(item) {
+            success: function (json) {
+                response($.map(json, function (item) {
                     return {
                         label: item['name'],
                         value: item['filter_id']
@@ -1500,7 +1497,7 @@ $('#input-filter').autocomplete({
             }
         });
     },
-    'select': function(item) {
+    'select': function (item) {
         $('#input-filter').val('');
 
         $('#product-filter-' + item['value']).remove();
@@ -1514,18 +1511,18 @@ $('#input-filter').autocomplete({
     }
 });
 
-$('#product-filter').on('click', '.btn', function() {
+$('#product-filter').on('click', '.btn', function () {
     $(this).parent().parent().remove();
 });
 
 // Downloads
 $('#input-download').autocomplete({
-    'source': function(request, response) {
+    'source': function (request, response) {
         $.ajax({
             url: 'index.php?route=catalog/download|autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
-            success: function(json) {
-                response($.map(json, function(item) {
+            success: function (json) {
+                response($.map(json, function (item) {
                     return {
                         label: item['name'],
                         value: item['download_id']
@@ -1534,7 +1531,7 @@ $('#input-download').autocomplete({
             }
         });
     },
-    'select': function(item) {
+    'select': function (item) {
         $('#input-download').val('');
 
         $('#product-download-' + item['value']).remove();
@@ -1548,18 +1545,18 @@ $('#input-download').autocomplete({
     }
 });
 
-$('#product-download').on('click', '.btn', function() {
+$('#product-download').on('click', '.btn', function () {
     $(this).parent().parent().remove();
 });
 
 // Related
 $('#input-related').autocomplete({
-    'source': function(request, response) {
+    'source': function (request, response) {
         $.ajax({
             url: 'index.php?route=catalog/product|autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
-            success: function(json) {
-                response($.map(json, function(item) {
+            success: function (json) {
+                response($.map(json, function (item) {
                     return {
                         label: item['name'],
                         value: item['product_id']
@@ -1568,7 +1565,7 @@ $('#input-related').autocomplete({
             }
         });
     },
-    'select': function(item) {
+    'select': function (item) {
         $('#input-related').val('');
 
         $('#product-related-' + item['value']).remove();
@@ -1582,13 +1579,13 @@ $('#input-related').autocomplete({
     }
 });
 
-$('#product-related').on('click', '.btn', function() {
+$('#product-related').on('click', '.btn', function () {
     $(this).parent().parent().remove();
 });
 
 var attribute_row = {{ attribute_row }};
 
-$('#button-attribute').on('click', function() {
+$('#button-attribute').on('click', function () {
     html = '<tr id="attribute-row-' + attribute_row + '">';
     html += '  <td class="text-start"><input type="text" name="product_attribute[' + attribute_row + '][name]" value="" placeholder="{{ entry_attribute }}" class="form-control"/><input type="hidden" name="product_attribute[' + attribute_row + '][attribute_id]" value="" /></td>';
     html += '  <td class="text-start">';
@@ -1615,12 +1612,12 @@ $('#button-attribute').on('click', function() {
 
 function attributeautocomplete(attribute_row) {
     $('input[name=\'product_attribute[' + attribute_row + '][name]\']').autocomplete({
-        'source': function(request, response) {
+        'source': function (request, response) {
             $.ajax({
                 url: 'index.php?route=catalog/attribute|autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
                 dataType: 'json',
-                success: function(json) {
-                    response($.map(json, function(item) {
+                success: function (json) {
+                    response($.map(json, function (item) {
                         return {
                             category: item.attribute_group,
                             label: item.name,
@@ -1630,14 +1627,14 @@ function attributeautocomplete(attribute_row) {
                 }
             });
         },
-        'select': function(item) {
+        'select': function (item) {
             $('input[name=\'product_attribute[' + attribute_row + '][name]\']').val(item['label']);
             $('input[name=\'product_attribute[' + attribute_row + '][attribute_id]\']').val(item['value']);
         }
     });
 }
 
-$('#product-attribute tr').each(function(index, element) {
+$('#product-attribute tr').each(function (index, element) {
     attributeautocomplete(index);
 });
 
@@ -1645,12 +1642,12 @@ $('#product-attribute tr').each(function(index, element) {
 var option_row = {{ option_row }};
 
 $('#input-option').autocomplete({
-    'source': function(request, response) {
+    'source': function (request, response) {
         $.ajax({
             url: 'index.php?route=catalog/option|autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
-            success: function(json) {
-                response($.map(json, function(item) {
+            success: function (json) {
+                response($.map(json, function (item) {
                     return {
                         category: item['category'],
                         label: item['name'],
@@ -1662,7 +1659,7 @@ $('#input-option').autocomplete({
             }
         });
     },
-    'select': function(item) {
+    'select': function (item) {
         html = '<fieldset id="option-row- ' + option_row + '">';
         html += '  <legend>' + item['label'] + ' <button type="button" class="btn btn-danger btn-sm float-end" onclick="$(\'#option-row-' + option_row + '\').remove();"><i class="fas fa-minus-circle"></i></button></legend>';
         html += '  <input type="hidden" name="product_option[' + option_row + '][product_option_id]" value="" />';
@@ -1782,7 +1779,7 @@ $('#input-option').autocomplete({
 
 var option_value_row = {{ option_value_row }};
 
-$('#option').on('click', '.btn-primary', function() {
+$('#option').on('click', '.btn-primary', function () {
     var element = this;
 
     if ($(element).attr('data-option-value-row')) {
@@ -1920,7 +1917,7 @@ $('#option').on('click', '.btn-primary', function() {
 
     $('#modal-option').modal('show');
 
-    $('#modal-option #button-save').on('click', function() {
+    $('#modal-option #button-save').on('click', function () {
         html = '<tr id="option-value-row-' + element.option_value_row + '">';
         html += '  <td class="text-start">' + $('#modal-option select[name=\'option_value_id\'] option:selected').text() + '<input type="hidden" name="product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][option_value_id]" value="' + $('#modal-option select[name=\'option_value_id\']').val() + '"/><input type="hidden" name="product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][product_option_value_id]" value="' + $('#modal-option input[name=\'product_option_value_id\']').val() + '"/></td>';
         html += '  <td class="text-end">' + $('#modal-option input[name=\'quantity\']').val() + '<input type="hidden" name="product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][quantity]" value="' + $('#modal-option input[name=\'quantity\']').val() + '"/></td>';
@@ -1950,7 +1947,7 @@ $('#option').on('click', '.btn-primary', function() {
 
 var discount_row = {{ discount_row }};
 
-$('#button-discount').on('click', function() {
+$('#button-discount').on('click', function () {
     html = '<tr id="discount-row-' + discount_row + '">';
     html += '  <td class="text-start"><select name="product_discount[' + discount_row + '][customer_group_id]" class="form-select">';
   {% for customer_group in customer_groups %}
@@ -1978,7 +1975,7 @@ $('#button-discount').on('click', function() {
 
 var special_row = {{ special_row }};
 
-$('#button-special').on('click', function() {
+$('#button-special').on('click', function () {
     html = '<tr id="special-row-' + special_row + '">';
     html += '  <td class="text-start"><select name="product_special[' + special_row + '][customer_group_id]" class="form-select">';
   {% for customer_group in customer_groups %}
@@ -2005,7 +2002,7 @@ $('#button-special').on('click', function() {
 
 var image_row = {{ image_row }};
 
-$('#button-image').on('click', function() {
+$('#button-image').on('click', function () {
     html = '<tr id="product-image-row-' + image_row + '">';
     html += '  <td><div class="card image">';
     html += '    <img src="{{ placeholder }}" alt="" title="" id="thumb-image-' + image_row + '" data-oc-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="product_image[' + image_row + '][image]" value="" id="input-product-image-' + image_row + '"/>';
@@ -2025,7 +2022,7 @@ $('#button-image').on('click', function() {
 
 var recurring_row = {{ recurring_row }};
 
-$('#button-recurring').on('click', function() {
+$('#button-recurring').on('click', function () {
     html = '<tr id="recurring-row-' + recurring_row + '">';
     html += '  <td class="text-start"><select name="product_recurring[' + recurring_row + '][recurring_id]" class="form-select">';
   {% for recurring in recurrings %}
@@ -2065,7 +2062,7 @@ $('.datetime').datetimepicker({
 
 {% if master_id %}
 // Variable products
-$('input[data-oc-toggle=\'switch\']').on('change', function(e) {
+$('input[data-oc-toggle=\'switch\']').on('change', function (e) {
     var element = this;
 
     var target = $(this).attr('data-oc-target');
@@ -2074,7 +2071,7 @@ $('input[data-oc-toggle=\'switch\']').on('change', function(e) {
 
     // First we need to grab the default values
     // Now we need to enable or disable any fields in the targets
-    $.merge($(target), $(target).find('input, textarea, select, button')).not('[data-oc-toggle=\'switch\']').each(function(i, elem) {
+    $.merge($(target), $(target).find('input, textarea, select, button')).not('[data-oc-toggle=\'switch\']').each(function (i, elem) {
         // Text Textarea
         if ($(this).is('input[type=\'text\'], textarea')) {
             $(this).prop('readonly', !$(element).prop('checked'));
@@ -2085,7 +2082,7 @@ $('input[data-oc-toggle=\'switch\']').on('change', function(e) {
             var editor = CKEDITOR.instances[$(this).attr('id')];
 
             if (editor.editable() == undefined) {
-                editor.on('instanceReady', function() {
+                editor.on('instanceReady', function () {
                     this.setReadOnly(!$(element).prop('checked'));
                 });
             } else {
@@ -2096,7 +2093,7 @@ $('input[data-oc-toggle=\'switch\']').on('change', function(e) {
         // Radio Checkbox
         if ($(this).is('input[type=\'radio\'], input[type=\'checkbox\'], div[data-bs-toggle=\'buttons\']')) {
             if (!$(element).prop('checked')) {
-                $(this).on('click', function(e) {
+                $(this).on('click', function (e) {
                     return false;
                 });
             } else {
@@ -2111,13 +2108,13 @@ $('input[data-oc-toggle=\'switch\']').on('change', function(e) {
 
                 $(this).prop('readonly', true);
 
-              //  $(this).attr('readonly', 'readonly');
+                //  $(this).attr('readonly', 'readonly');
             } else {
                 $(this).removeClass('disabled');
 
                 $(this).prop('readonly', false);
 
-               // $(this).removeAttr('readonly');
+                // $(this).removeAttr('readonly');
             }
 
             $(this).find('option').not(':selected').prop('disabled', !$(element).prop('checked'));
@@ -2125,14 +2122,7 @@ $('input[data-oc-toggle=\'switch\']').on('change', function(e) {
 
         // Button
         if ($(this).is('button')) {
-
-
-
-            var test = $(element).prop('checked');
-
-             console.log(test);
-
-            if (!test) {
+            if (!$(element).prop('checked')) {
                 $(this).prop('disabled', true);
             } else {
                 $(this).prop('disabled', false);

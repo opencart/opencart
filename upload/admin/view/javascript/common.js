@@ -80,49 +80,37 @@ $(document).ready(function() {
 $(document).ready(function() {
     // Apply to all on current page
     $('[data-bs-toggle=\'tooltip\']').each(function(i, element) {
-        var handler = bootstrap.Tooltip.getInstance(element);
-
-        if (!handler) {
-            var option = [];
-
-            var handler = new bootstrap.Tooltip(element, option);
-
-            $.extend(element, option);
-        }
+       bootstrap.Tooltip.getOrCreateInstance(element);
     });
-/*
+
     // Makes tooltips work on ajax generated content
     $(document).ajaxStop(function() {
         $('[data-bs-toggle=\'tooltip\']').each(function(i, element) {
-            handler = bootstrap.Tooltip.getInstance(element);
-
-            if (!handler) {
-                var option = []
-
-                new bootstrap.Tooltip(element, option);
-            } else {
-                console.log(handler);
-            }
+            bootstrap.Tooltip.getOrCreateInstance(element);
         });
     });
-*/
-// Apply to all js generated content
-    $(document).on('click', '[data-bs-toggle=\'tooltip\']', function(e) {
-        var element = this;
+});
 
-        var handler = bootstrap.Tooltip.getInstance(element);
-
-        if (!handler) {
-            var option = [];
-
-            var handler = new bootstrap.Tooltip(element, option);
-
-            $.extend(element, option);
-        }
-
-        // remove fix
-        $('body > .tooltip').remove();
+$(document).ready(function () {
+    /*
+    $('.date').datetimepicker({
+        'format': 'YYYY-MM-DD',
+        'locale': '{{ datepicker }}',
+        'allowInputToggle': true
     });
+
+    $('.time').datetimepicker({
+        'format': 'HH:mm',
+        'locale': '{{ datepicker }}',
+        'allowInputToggle': true
+    });
+
+    $('.datetime').datetimepicker({
+        'format': 'YYYY-MM-DD HH:mm',
+        'locale': '{{ datepicker }}',
+        'allowInputToggle': true
+    });
+    */
 });
 
 // Buttons

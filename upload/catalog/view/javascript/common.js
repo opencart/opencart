@@ -22,15 +22,21 @@ function getURLVar(key) {
     }
 }
 
-$(document).ready(function () {
-    // tooltips on hover
-    $('[data-toggle=\'tooltip\']').tooltip({container: 'body'});
-
-    // Makes tooltips work on ajax generated content
-    $(document).ajaxStop(function () {
-        $('[data-toggle=\'tooltip\']').tooltip({container: 'body'});
+$(document).ready(function() {
+    // Apply to all on current page
+    $('[data-bs-toggle=\'tooltip\']').each(function(i, element) {
+        bootstrap.Tooltip.getOrCreateInstance(element);
     });
 
+    // Makes tooltips work on ajax generated content
+    $(document).ajaxStop(function() {
+        $('[data-bs-toggle=\'tooltip\']').each(function(i, element) {
+            bootstrap.Tooltip.getOrCreateInstance(element);
+        });
+    });
+});
+
+$(document).ready(function () {
     /*
     $('.date').datetimepicker({
         'format': 'YYYY-MM-DD',
@@ -390,8 +396,8 @@ var chain = new Chain();
     $.fn.autocomplete = function(option) {
         return this.each(function() {
             var $this = $(this);
-            var $menu = $('<div class="dropdown d-block">');
-            var $dropdown = $('<ul class="dropdown-menu"></ul>');
+            var $dropdown = $('<div class="dropdown d-block">');
+            var $menu = $('<ul class="dropdown-menu"></ul>');
 
             this.timer = null;
             this.items = [];
@@ -422,8 +428,8 @@ var chain = new Chain();
             });
 
             // Keydown
-            $this.on('keydown', function(event) {
-                switch (event.keyCode) {
+            $this.on('keydown', function(e) {
+                switch (e.keyCode) {
                     case 27: // escape
                         this.hide();
                         break;
@@ -434,10 +440,10 @@ var chain = new Chain();
             });
 
             // Click
-            this.click = function(event) {
-                event.preventDefault();
+            this.click = function(e) {
+                e.preventDefault();
 
-                var value = $(event.target).attr('href');
+                var value = $(e.target).attr('href');
 
                 if (value && this.items[value]) {
                     this.select(this.items[value]);
@@ -448,12 +454,12 @@ var chain = new Chain();
 
             // Show
             this.show = function() {
-                $dropdown.addClass('show');
+                $menu.addClass('d-block');
             }
 
             // Hide
             this.hide = function() {
-                $dropdown.removeClass('show');
+                $menu.removeClass('d-none');
             }
 
             // Request
@@ -507,16 +513,16 @@ var chain = new Chain();
                     this.hide();
                 }
 
-                $dropdown.html(html);
+                $menu.html(html);
             }
 
             if (!$this.parent().hasClass('input-group')) {
-                $this.after($menu.append($dropdown));
+                $this.wrap($dropdown).parent().append($menu);
             } else {
-                $this.parent().after($menu.append($dropdown));
+                $this.parent().wrap($dropdown).parent().append($menu);
             }
 
-            $dropdown.on('click', 'a', $.proxy(this.click, this));
+            $menu.on('click', 'a', $.proxy(this.click, this));
         });
     }
 })(window.jQuery);

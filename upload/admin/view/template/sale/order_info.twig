@@ -57,7 +57,6 @@
             </div>
           </div>
         </div>
-
         <table id="order" class="table table-bordered">
           <thead>
             <tr>
@@ -69,7 +68,7 @@
               <td class="text-end" style="width: 1px;">{{ column_action }}</td>
             </tr>
           </thead>
-          <tbody id="order-items">
+          <tbody id="order-products">
             {% for order_product in order_products %}
               <tr>
                 <td class="text-start"><a href="{{ order_product.href }}" target="_blank">{{ order_product.name }}</a>
@@ -106,6 +105,8 @@
                 </td>
               </tr>
             {% endfor %}
+          </tbody>
+          <tbody id="order-vouchers">
             {% for order_voucher in order_vouchers %}
               <tr>
                 <td class="text-start">{{ order_voucher.description }}</td>
@@ -254,7 +255,6 @@
                   {% else %}
                     <button type="button" id="button-commission-remove" data-oc-loading-text="{{ text_loading }}" data-bs-toggle="tooltip" title="{{ button_commission_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>
                   {% endif %}
-
 
                 {% else %}
                   <button type="button" disabled="disabled" class="btn btn-success"><i class="fas fa-plus-circle"></i></button>
@@ -721,7 +721,6 @@
     </div>
   </div>
 </div>
-
 
 <div id="modal-affiliate" class="modal">
   <div class="modal-dialog">
@@ -1300,9 +1299,9 @@ $('#form-customer').on('submit', function (e) {
             $('#button-customer').button('reset');
         },
         success: function (json) {
-            $('#form-customer .alert-dismissible').remove();
-            $('#form-customer .is-invalid').removeClass('is-invalid');
-            $('#form-customer .invalid-feedback').removeClass('d-block');
+            $('.alert-dismissible').remove();
+            $('.is-invalid').removeClass('is-invalid');
+            $('.invalid-feedback').removeClass('d-block');
 
             // Check for errors
             if (json['error']) {
@@ -1553,7 +1552,7 @@ $('#form-product-add').on('submit', function (e) {
             $('#button-product-add').button('reset');
         },
         success: function (json) {
-            $('#form-product-add .alert-dismissible').remove();
+            $('.alert-dismissible').remove();
             $('.is-invalid').removeClass('is-invalid');
             $('.invalid-feedback').removeClass('d-block');
 
@@ -1585,19 +1584,22 @@ $('#form-product-add').on('submit', function (e) {
     });
 });
 
-$('#form-product-remove').on('submit', function () {
+// Remove product
+$('#order-products').on('submit', 'form', function (e) {
+    e.preventDefault();
+
     var element = this;
-    //order-items
+
     $.ajax({
-        url: 'index.php?route=sale/order|call|&user_token={{ user_token }}&action=sale/cart/remove',
+        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=sale/cart|remove',
         type: 'post',
-        data: $('#form-product-remove').serialize(),
+        data: $(element).serialize(),
         dataType: 'json',
         beforeSend: function () {
-            $(element).button('loading');
+           $(e.target).button('loading');
         },
         complete: function () {
-            $(element).button('reset');
+           $(e.target).button('reset');
         },
         success: function (json) {
             $('.alert-dismissible').remove();
@@ -1625,7 +1627,7 @@ $('#form-voucher-add').on('submit', function (e) {
     e.preventDefault();
 
     $.ajax({
-        url: '{{ catalog }}index.php?route=sale/order|call&user_token={{ user_token }}&action=sale/voucher|add',
+        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=sale/voucher|add',
         type: 'post',
         data: $('#form-voucher-add').serialize(),
         dataType: 'json',
@@ -1636,7 +1638,7 @@ $('#form-voucher-add').on('submit', function (e) {
             $('#button-voucher-add').button('reset');
         },
         success: function (json) {
-            $('#form-voucher-add .alert-dismissible').remove();
+            $('.alert-dismissible').remove();
             $('.is-invalid').removeClass('is-invalid');
             $('.invalid-feedback').removeClass('d-block');
 
@@ -1668,19 +1670,22 @@ $('#form-voucher-add').on('submit', function (e) {
     });
 });
 
-$('#form-voucher-remove').on('submit', function () {
+// Remove voucher
+$('#order-vouchers').on('submit', 'form', function (e) {
+    e.preventDefault();
+
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=sale/order|call|&user_token={{ user_token }}&action=sale/voucher/remove',
+        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=sale/voucher|remove',
         type: 'post',
-        data: $('#form-voucher-remove').serialize(),
+        data: $(element).serialize(),
         dataType: 'json',
         beforeSend: function () {
-            $(element).button('loading');
+            $(e.target).button('loading');
         },
         complete: function () {
-            $(element).button('reset');
+            $(e.target).button('reset');
         },
         success: function (json) {
             $('.alert-dismissible').remove();
@@ -2033,7 +2038,7 @@ $(document).on('click', '#button-commission-add, #button-commission-remove', fun
             $(element).button('reset');
         },
         success: function (json) {
-            $('#alert .alert-dismissible').remove();
+            $('.alert-dismissible').remove();
 
             if (json['error']) {
                 $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
@@ -2071,6 +2076,12 @@ $('#input-payment-address').on('change', function () {
             $(element).prop('disabled', false);
         },
         success: function (json) {
+            $('.alert-dismissible').remove();
+
+            if (json['error']) {
+                $('#form-payment-address').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
             // Reset all fields
             $('#form-payment-address input[type=\'text\'], #form-payment-address textarea').val('');
             $('#form-payment-address select option').not('#input-payment-address').removeAttr('selected');
@@ -2108,8 +2119,6 @@ $('#input-payment-address').on('change', function () {
 $('#form-payment-address').on('submit', function (e) {
     e.preventDefault();
 
-    var element = this;
-
     $.ajax({
         url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=sale/payment_address',
         type: 'post',
@@ -2122,11 +2131,9 @@ $('#form-payment-address').on('submit', function (e) {
             $('#button-payment-address').button('reset');
         },
         success: function (json) {
-            $('#form-payment-address .alert-dismissible').remove();
-            $('#form-payment-address .is-invalid').removeClass('is-invalid');
-            $('#form-payment-address .invalid-feedback').removeClass('d-block');
-
-            console.log(json);
+            $('.alert-dismissible').remove();
+            $('.is-invalid').removeClass('is-invalid');
+            $('.invalid-feedback').removeClass('d-block');
 
             // Check for errors
             if (json['error']) {
@@ -2146,13 +2153,31 @@ $('#form-payment-address').on('submit', function (e) {
                 var address = '';
 
                 address += $('#input-payment-firstname').val() + ' ' + $('#input-payment-lastname').val() + "<br/>";
-                address += $('#input-payment-company').val() + "<br/>";
+
+                var company = $('#input-payment-company').val()
+
+                if (company) {
+                    address += $('#input-payment-company').val() + "<br/>";
+                }
+
                 address += $('#input-payment-address-1').val() + "<br/>";
-                address += $('#input-payment-address-2').val() + "<br/>";
+
+                var address_2 = $('#input-payment-address-2').val()
+
+                if (address_2) {
+                    address += $('#input-payment-address-2').val() + "<br/>";
+                }
+
                 address += $('#input-payment-city').val() + "<br/>";
-                address += $('#input-payment-postcode').val() + "<br/>";
-                address += $('#input-payment-zone').text() + "<br/>";
-                address += $('#input-payment-country').text();
+
+                var postcode = $('#input-payment-postcode').val();
+
+                if (postcode) {
+                    address += postcode + "<br/>";
+                }
+
+                address += $('#input-payment-zone option:selected').text() + "<br/>";
+                address += $('#input-payment-country option:selected').text();
 
                 $('#payment-address-value').html(address);
 
@@ -2229,26 +2254,22 @@ $('#input-shipping-address').on('change', function () {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
-                $('#form-shipping-address').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#form-shipping-address').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
 
             // Reset all fields
             $('#form-shipping-address input[type=\'text\'], #form-shipping-address input[type=\'text\'], #form-shipping-address textarea').val('');
-            $('#form-shipping-address select option').not('#input-shipping_address').removeAttr('selected');
+            $('#form-shipping-address select option').not('#input-shipping-address').removeAttr('selected');
             $('#form-shipping-address input[type=\'checkbox\'], #form-shipping-address input[type=\'radio\']').removeAttr('checked');
 
-            var address = '';
-
-            address += $('#input-shipping-firstname').val() + ' ' + $('#input-shipping-lastname').val() + "<br/>";
-            address += $('#input-shipping-company').val() + "<br/>";
-            address += $('#input-shipping-address-1').val() + "<br/>";
-            address += $('#input-shipping-address-2').val() + "<br/>";
-            address += $('#input-shipping-city').val() + "<br/>";
-            address += $('#input-shipping-postcode').val() + "<br/>";
-            address += $('#input-shipping-zone').text() + "<br/>";
-            address += $('#input-shipping-country').text();
-
-            $('#shipping-address-value').html(address);
+            $('#input-shipping-firstname').val(json['firstname']);
+            $('#input-shipping-lastname').val(json['lastname']);
+            $('#input-shipping-company').val(json['company']);
+            $('#input-shipping-address-1').val(json['address_1']);
+            $('#input-shipping-address-2').val(json['address_2']);
+            $('#input-shipping-city').val(json['city']);
+            $('#input-shipping-postcode').val(json['postcode']);
+            $('#input-shipping-country').val(json['country_id']);
 
             shipping_zone_id = json['zone_id'];
 
@@ -2272,8 +2293,6 @@ $('#input-shipping-address').on('change', function () {
 
 $('#form-shipping-address').on('submit', function (e) {
     e.preventDefault();
-
-    var element = this;
 
     $.ajax({
         url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=sale/shipping_address',
@@ -2306,6 +2325,37 @@ $('#form-shipping-address').on('submit', function (e) {
 
             if (json['success']) {
                 $('#form-shipping-address').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                var address = '';
+
+                address += $('#input-shipping-firstname').val() + ' ' + $('#input-shipping-lastname').val() + "<br/>";
+
+                var company = $('#input-shipping-company').val()
+
+                if (company) {
+                    address += $('#input-shipping-company').val() + "<br/>";
+                }
+
+                address += $('#input-shipping-address-1').val() + "<br/>";
+
+                var address_2 = $('#input-shipping-address-2').val()
+
+                if (address_2) {
+                    address += $('#input-shipping-address-2').val() + "<br/>";
+                }
+
+                address += $('#input-shipping-city').val() + "<br/>";
+
+                var postcode = $('#input-shipping-postcode').val();
+
+                if (postcode) {
+                    address += postcode + "<br/>";
+                }
+
+                address += $('#input-shipping-zone option:selected').text() + "<br/>";
+                address += $('#input-shipping-country option:selected').text();
+
+                $('#shipping-address-value').html(address);
 
                 // Refresh products, vouchers and totals
                 $('#button-refresh').trigger('click');
@@ -2622,6 +2672,10 @@ $('#button-refresh').on('click', function () {
                 }
             }
 
+            $('#order-products').html(html);
+
+            html = '';
+
             if (json['vouchers'].length) {
                 for (i in json['vouchers']) {
                     voucher = json['vouchers'][i];
@@ -2650,7 +2704,7 @@ $('#button-refresh').on('click', function () {
                 html += '</tr>';
             }
 
-            $('#order-items').html(html);
+            $('#order-vouchers').html(html);
 
             // Totals
             html = '';

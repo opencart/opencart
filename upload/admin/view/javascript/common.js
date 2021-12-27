@@ -387,7 +387,7 @@ var chain = new Chain();
     $.fn.autocomplete = function(option) {
         return this.each(function() {
             var $this = $(this);
-            var $dropdown = $('<div class="dropdown d-block">');
+            var $dropdown = $('<div class="dropdown">');
             var $menu = $('<ul class="dropdown-menu"></ul>');
 
             this.timer = null;

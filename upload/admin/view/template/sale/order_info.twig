@@ -225,8 +225,8 @@
                 <div class="form-control p-0 border rounded-start">
                   <div class="lead p-2"><strong>{{ text_affiliate }}</strong>
                     <br/>
-                    {% if affiliate %}
-                      <div id="affiliate-value"><a href="index.php?route=sale/affiliate|form&user_token={{ user_token }}&affiliate_id={{ affiliate_id }}">{{ affiliate }}</a></div>
+                    {% if affiliate_id %}
+                      <div id="affiliate-value"><a href="index.php?route=marketing/affiliate|form&user_token={{ user_token }}&customer_id={{ affiliate_id }}" target="_blank">{{ affiliate }}</a></div>
                     {% else %}
                       <div id="affiliate-value">&nbsp;</div>
                     {% endif %}

@@ -893,6 +893,16 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['shipping_code'] = '';
 		}
 
+
+
+		unset($this->session->data['api_session']);
+
+		if (!empty($order_info)) {
+			$this->request->get['action'] = 'sale/order|load';
+
+			$this->tcall();
+		}
+
 		// Products
 		$data['order_products'] = [];
 
@@ -1164,14 +1174,6 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		$data['user_token'] = $this->session->data['user_token'];
-
-		unset($this->session->data['api_session']);
-
-		if (!empty($order_info)) {
-			$this->request->get['action'] = 'sale/order|load';
-
-			$this->tcall();
-		}
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

@@ -96,12 +96,10 @@
                 <td class="text-end">{{ order_product.price }}</td>
                 <td class="text-end">{{ order_product.total }}</td>
                 <td class="text-end">
-
                   <form>
                     <button type="submit" data-bs-toggle="tooltip" title="{{ button_remove }}" data-oc-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>
                     <input type="hidden" name="key" value="{{ order_product.cart_id }}"/>
                   </form>
-
                 </td>
               </tr>
             {% endfor %}
@@ -115,12 +113,10 @@
                 <td class="text-end">{{ order_voucher.amount }}</td>
                 <td class="text-end">{{ order_voucher.amount }}</td>
                 <td class="text-end">
-
                   <form>
-                    <button type="submit" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-times-circle"></i></button>
+                    <button type="submit" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>
                     <input type="hidden" name="key" value="{{ order_voucher.key }}"/>
                   </form>
-
                 </td>
               </tr>
             {% endfor %}
@@ -724,13 +720,10 @@
               <fieldset class="mb-0">
                 <legend>{{ text_product_add }}</legend>
                 <div class="mb-3">
-                  <label for="input-product" class="form-label">{{ entry_product }}</label>
-                  <input type="text" name="product" value="" placeholder="{{ entry_product }}" id="input-product" class="form-control"/>
-                  <input type="hidden" name="product_id" value="" id="input-product-id"/>
+                  <label for="input-product" class="form-label">{{ entry_product }}</label> <input type="text" name="product" value="" placeholder="{{ entry_product }}" id="input-product" class="form-control"/> <input type="hidden" name="product_id" value="" id="input-product-id"/>
                 </div>
                 <div class="mb-3">
-                  <label for="input-quantity" class="form-label">{{ entry_quantity }}</label>
-                  <input type="text" name="quantity" placeholder="{{ entry_quantity }}" value="1" id="input-quantity" class="form-control"/>
+                  <label for="input-quantity" class="form-label">{{ entry_quantity }}</label> <input type="text" name="quantity" placeholder="{{ entry_quantity }}" value="1" id="input-quantity" class="form-control"/>
                 </div>
               </fieldset>
               <div id="option"></div>
@@ -744,23 +737,19 @@
               <fieldset class="mb-0">
                 <legend>{{ text_voucher_add }}</legend>
                 <div class="mb-3 required">
-                  <label for="input-to-name" class="form-label">{{ entry_to_name }}</label>
-                  <input type="text" name="to_name" value="" placeholder="{{ entry_to_name }}" id="input-to-name" class="form-control"/>
+                  <label for="input-to-name" class="form-label">{{ entry_to_name }}</label> <input type="text" name="to_name" value="" placeholder="{{ entry_to_name }}" id="input-to-name" class="form-control"/>
                   <div id="error-to-name" class="invalid-feedback"></div>
                 </div>
                 <div class="mb-3 required">
-                  <label for="input-to-email" class="form-label">{{ entry_to_email }}</label>
-                  <input type="text" name="to_email" value="" placeholder="{{ entry_to_email }}" id="input-to-email" class="form-control"/>
+                  <label for="input-to-email" class="form-label">{{ entry_to_email }}</label> <input type="text" name="to_email" value="" placeholder="{{ entry_to_email }}" id="input-to-email" class="form-control"/>
                   <div id="error-to-email" class="invalid-feedback"></div>
                 </div>
                 <div class="mb-3 required">
-                  <label for="input-from-name" class="form-label">{{ entry_from_name }}</label>
-                  <input type="text" name="from_name" value="" placeholder="{{ entry_from_name }}" id="input-from-name" class="form-control"/>
+                  <label for="input-from-name" class="form-label">{{ entry_from_name }}</label> <input type="text" name="from_name" value="" placeholder="{{ entry_from_name }}" id="input-from-name" class="form-control"/>
                   <div id="error-from-name" class="invalid-feedback"></div>
                 </div>
                 <div class="mb-3 required">
-                  <label for="input-from-email" class="form-label">{{ entry_from_email }}</label>
-                  <input type="text" name="from_email" value="" placeholder="{{ entry_from_email }}" id="input-from-email" class="form-control"/>
+                  <label for="input-from-email" class="form-label">{{ entry_from_email }}</label> <input type="text" name="from_email" value="" placeholder="{{ entry_from_email }}" id="input-from-email" class="form-control"/>
                   <div id="error-from-email" class="invalid-feedback"></div>
                 </div>
                 <div class="mb-3 required">
@@ -774,8 +763,7 @@
                   <label for="input-message" class="form-label">{{ entry_message }}</label> <textarea name="message" rows="5" placeholder="{{ entry_message }}" id="input-message" class="form-control"></textarea>
                 </div>
                 <div class="mb-3 required">
-                  <label for="input-amount" class="form-label">{{ entry_amount }}</label>
-                  <input type="text" name="amount" value="{{ voucher_min }}" placeholder="{{ entry_amount }}" id="input-amount" class="form-control"/>
+                  <label for="input-amount" class="form-label">{{ entry_amount }}</label> <input type="text" name="amount" value="{{ voucher_min }}" placeholder="{{ entry_amount }}" id="input-amount" class="form-control"/>
                   <div id="error-amount" class="invalid-feedback"></div>
                 </div>
               </fieldset>
@@ -1623,8 +1611,6 @@ $('#form-product-add').on('submit', function (e) {
             $('.alert-dismissible').remove();
             $('.is-invalid').removeClass('is-invalid');
             $('.invalid-feedback').removeClass('d-block');
-
-            console.log(json);
 
             if (json['error']) {
                 if (json['error']['warning']) {
@@ -2702,8 +2688,6 @@ $('#button-refresh').on('click', function () {
                 for (i = 0; i < json['products'].length; i++) {
                     product = json['products'][i];
 
-                    console.log(product);
-
                     html += '<tr>';
                     html += '  <td class="text-start"><a href="index.php?route=catalog/product|form&user_token={{ user_token }}&product_id=' + product['product_id'] + '" target="_blank">' + product['name'] + '</a>' + (!product['stock'] ? ' <span class="text-danger">***</span>' : '') + '<br/>';
 
@@ -2872,9 +2856,9 @@ $('#form-history').on('submit', function (e) {
             }
 
             if (json['success']) {
-                $('#history').load('index.php?route=sale/order|history&user_token={{ user_token }}&order_id=' + $('#input-order-id').val());
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#tab-history').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#history').load('index.php?route=sale/order|history&user_token={{ user_token }}&order_id=' + $('#input-order-id').val());
 
                 $('#input-history').val('');
             }

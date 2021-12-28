@@ -634,70 +634,8 @@ class Order extends \Opencart\System\Engine\Controller {
 			$cart_info = json_decode($store->response->getOutput(), true);
 
 			$data['order_products'] = $cart_info['products'];
-
 			$data['order_vouchers'] = $cart_info['vouchers'];
 		}
-
-		/*
-		$this->load->model('sale/order');
-
-		$products = $this->model_sale_order->getProducts($order_id);
-
-		foreach ($products as $product) {
-			$option_data = [];
-
-			$options = $this->model_sale_order->getOptions($order_id, $product['order_product_id']);
-
-			foreach ($options as $option) {
-				if ($option['type'] != 'file') {
-					$option_data[] = [
-						'name'  => $option['name'],
-						'value' => $option['value'],
-						'type'  => $option['type']
-					];
-				} else {
-					$upload_info = $this->model_tool_upload->getUploadByCode($option['value']);
-
-					if ($upload_info) {
-						$option_data[] = [
-							'name'  => $option['name'],
-							'value' => $upload_info['name'],
-							'type'  => $option['type'],
-							'href'  => $this->url->link('tool/upload|download', 'user_token=' . $this->session->data['user_token'] . '&code=' . $upload_info['code'])
-						];
-					}
-				}
-			}
-
-			$data['order_products'][] = [
-				'order_product_id' => $product['order_product_id'],
-				'product_id'       => $product['product_id'],
-				'name'             => $product['name'],
-				'model'            => $product['model'],
-				'option'           => $option_data,
-				'quantity'         => $product['quantity'],
-				'price'            => $this->currency->format($product['price'] + ($this->config->get('config_tax') ? $product['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']),
-				'total'            => $this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value']),
-				'reward'           => $product['reward'],
-				'href'             => $this->url->link('catalog/product|form', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $product['product_id'])
-			];
-		}
-
-
-		// Vouchers
-		$data['order_vouchers'] = [];
-
-		$vouchers = $this->model_sale_order->getVouchers($order_id);
-
-		foreach ($vouchers as $key => $voucher) {
-			$data['order_vouchers'][] = [
-				'key'         => $key,
-				'description' => $voucher['description'],
-				'amount'      => $this->currency->format($voucher['amount'], $order_info['currency_code'], $order_info['currency_value']),
-				'href'        => $this->url->link('sale/voucher|form', 'user_token=' . $this->session->data['user_token'] . '&voucher_id=' . $voucher['voucher_id'])
-			];
-		}
-		*/
 
 		// Voucher themes
 		$this->load->model('sale/voucher_theme');

@@ -39,7 +39,7 @@
                   <br/>
 
                   {% if customer_id %}
-                    <span id="customer-value"><a href="index.php?route=customer/customer&user_token={{ user_token }}&" target="_blank">{{ customer }}</a></span>
+                    <span id="customer-value"><a href="index.php?route=customer/customer|form&user_token={{ user_token }}&customer_id={{ customer_id }}" target="_blank">{{ customer }}</a></span>
                   {% else %}
                     <span id="customer-value">{{ customer }}</span>
                   {% endif %}

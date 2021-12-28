@@ -71,7 +71,7 @@
           <tbody id="order-products">
             {% for order_product in order_products %}
               <tr>
-                <td class="text-start"><a href="{{ order_product.href }}" target="_blank">{{ order_product.name }}</a>
+                <td class="text-start"><a href="index.php?route=catalog/product|form&user_token={{ user_token }}&product_id={{ order_product.product_id }}" target="_blank">{{ order_product.name }}</a>
 
                   {% if order_product.option %}
                     {% for option in order_product.option %}
@@ -99,7 +99,7 @@
 
                   <form>
                     <button type="submit" data-bs-toggle="tooltip" title="{{ button_remove }}" data-oc-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>
-                    <input type="hidden" name="key" value="' + product['cart_id'] + '"/>
+                    <input type="hidden" name="key" value="{{ order_product.cart_id }}"/>
                   </form>
 
                 </td>
@@ -118,7 +118,7 @@
 
                   <form>
                     <button type="submit" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-times-circle"></i></button>
-                    <input type="hidden" name="key" value="{{ order_voucher.key }}" size="1" disabled="disabled" class="form-control"/>
+                    <input type="hidden" name="key" value="{{ order_voucher.key }}"/>
                   </form>
 
                 </td>
@@ -275,13 +275,48 @@
                 <p class="lead p-2 mb-0"><strong>{{ text_payment_address }}</strong>
                   <br/>
 
-                  {% if payment_address %}
-                    <span id="payment-address-value">{{ payment_address }}</span>
-                  {% else %}
-                    &nbsp;
-                    <br/>
+                  <span id="payment-address-value">
+                  {% if payment_firstname %}
+                    {{ payment_firstname }} {{ payment_lastname }}
                     <br/>
                   {% endif %}
+
+                    {% if payment_company %}
+                      {{ payment_company }}
+                      <br/>
+                    {% endif %}
+
+                    {% if payment_address_1 %}
+                      {{ payment_address_1 }}
+                      <br/>
+                    {% endif %}
+
+                    {% if payment_address_2 %}
+                      {{ payment_address_2 }}
+                      <br/>
+                    {% endif %}
+
+                    {% if payment_city %}
+                      {{ payment_city }}
+                      <br/>
+                    {% endif %}
+
+                    {% if payment_postcode %}
+                      {{ payment_postcode }}
+                      <br/>
+                    {% endif %}
+
+                    {% if payment_zone %}
+                      {{ payment_zone }}
+                      <br/>
+                    {% endif %}
+
+                    {% if payment_country %}
+                      {{ payment_country }}
+                      <br/>
+                    {% endif %}
+                  </span>
+
 
                 </p>
               </div>
@@ -293,18 +328,42 @@
               <div class="form-control p-0 border rounded-start">
                 <p class="lead p-2 mb-0"><strong>{{ text_shipping_address }}</strong>
                   <br/>
+                  <span id="shipping-address-value">
 
-                  {% if shipping_address %}
-
-                    <span id="shipping-address">{{ shipping_address }}</span>
-
-                  {% else %}
-                    <span id="shipping-address">&nbsp;
+                  {% if shipping_firstname %}
+                    {{ shipping_firstname }} {{ shipping_lastname }}
                     <br/>
-                    <br/>
-                  </span>
                   {% endif %}
 
+                    {% if shipping_company %}
+                      {{ shipping_company }}
+                      <br/>
+                    {% endif %}
+                    {% if shipping_address_1 %}
+                      {{ shipping_address_1 }}
+                      <br/>
+                    {% endif %}
+                    {% if shipping_address_2 %}
+                      {{ shipping_address_2 }}
+                      <br/>
+                    {% endif %}
+                    {% if shipping_city %}
+                      {{ shipping_city }}
+                      <br/>
+                    {% endif %}
+                    {% if shipping_postcode %}
+                      {{ shipping_postcode }}
+                      <br/>
+                    {% endif %}
+                    {% if shipping_zone %}
+                      {{ shipping_zone }}
+                      <br/>
+                    {% endif %}
+                    {% if shipping_country %}
+                      {{ shipping_country }}
+                      <br/>
+                    {% endif %}
+                    </span>
                 </p>
               </div>
               <button type="button" data-bs-toggle="modal" data-bs-target="#modal-shipping-address" class="btn btn-outline-primary float-end"><i class="fas fa-cog"></i></button>
@@ -403,8 +462,8 @@
                   <label for="input-order-status" class="col-sm-2 col-form-label">{{ entry_order_status }}</label>
                   <div class="col-sm-10">
                     <select name="order_status_id" id="input-order-status" class="form-select">
-                      {% for order_statuses in order_statuses %}
-                        <option value="{{ order_statuses.order_status_id }}"{% if order_statuses.order_status_id == order_status_id %} selected{% endif %}>{{ order_statuses.name }}</option>
+                      {% for order_status in order_statuses %}
+                        <option value="{{ order_status.order_status_id }}"{% if order_status.order_status_id == order_status_id %} selected{% endif %}>{{ order_status.name }}</option>
                       {% endfor %}
                     </select>
                   </div>
@@ -655,22 +714,23 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
-
         <ul class="nav nav-tabs">
           <li class="nav-item"><a href="#tab-product" data-bs-toggle="tab" class="nav-link active">{{ tab_product }}</a></li>
           <li class="nav-item"><a href="#tab-voucher" data-bs-toggle="tab" class="nav-link">{{ tab_voucher }}</a></li>
         </ul>
         <div class="tab-content">
-
           <div id="tab-product" class="tab-pane active">
             <form id="form-product-add">
               <fieldset class="mb-0">
                 <legend>{{ text_product_add }}</legend>
                 <div class="mb-3">
-                  <label for="input-product" class="form-label">{{ entry_product }}</label> <input type="text" name="product" value="" placeholder="{{ entry_product }}" id="input-product" class="form-control"/> <input type="hidden" name="product_id" value="" id="input-product-id"/>
+                  <label for="input-product" class="form-label">{{ entry_product }}</label>
+                  <input type="text" name="product" value="" placeholder="{{ entry_product }}" id="input-product" class="form-control"/>
+                  <input type="hidden" name="product_id" value="" id="input-product-id"/>
                 </div>
                 <div class="mb-3">
-                  <label for="input-quantity" class="form-label">{{ entry_quantity }}</label> <input type="text" name="quantity" placeholder="{{ entry_quantity }}" value="1" id="input-quantity" class="form-control"/>
+                  <label for="input-quantity" class="form-label">{{ entry_quantity }}</label>
+                  <input type="text" name="quantity" placeholder="{{ entry_quantity }}" value="1" id="input-quantity" class="form-control"/>
                 </div>
               </fieldset>
               <div id="option"></div>
@@ -679,22 +739,29 @@
               </div>
             </form>
           </div>
-
           <div id="tab-voucher" class="tab-pane">
             <form id="form-voucher-add">
               <fieldset class="mb-0">
                 <legend>{{ text_voucher_add }}</legend>
                 <div class="mb-3 required">
-                  <label for="input-to-name" class="form-label">{{ entry_to_name }}</label> <input type="text" name="to_name" value="" placeholder="{{ entry_to_name }}" id="input-to-name" class="form-control"/>
+                  <label for="input-to-name" class="form-label">{{ entry_to_name }}</label>
+                  <input type="text" name="to_name" value="" placeholder="{{ entry_to_name }}" id="input-to-name" class="form-control"/>
+                  <div id="error-to-name" class="invalid-feedback"></div>
                 </div>
                 <div class="mb-3 required">
-                  <label for="input-to-email" class="form-label">{{ entry_to_email }}</label> <input type="text" name="to_email" value="" placeholder="{{ entry_to_email }}" id="input-to-email" class="form-control"/>
+                  <label for="input-to-email" class="form-label">{{ entry_to_email }}</label>
+                  <input type="text" name="to_email" value="" placeholder="{{ entry_to_email }}" id="input-to-email" class="form-control"/>
+                  <div id="error-to-email" class="invalid-feedback"></div>
                 </div>
                 <div class="mb-3 required">
-                  <label for="input-from-name" class="form-label">{{ entry_from_name }}</label> <input type="text" name="from_name" value="" placeholder="{{ entry_from_name }}" id="input-from-name" class="form-control"/>
+                  <label for="input-from-name" class="form-label">{{ entry_from_name }}</label>
+                  <input type="text" name="from_name" value="" placeholder="{{ entry_from_name }}" id="input-from-name" class="form-control"/>
+                  <div id="error-from-name" class="invalid-feedback"></div>
                 </div>
                 <div class="mb-3 required">
-                  <label for="input-from-email" class="form-label">{{ entry_from_email }}</label> <input type="text" name="from_email" value="" placeholder="{{ entry_from_email }}" id="input-from-email" class="form-control"/>
+                  <label for="input-from-email" class="form-label">{{ entry_from_email }}</label>
+                  <input type="text" name="from_email" value="" placeholder="{{ entry_from_email }}" id="input-from-email" class="form-control"/>
+                  <div id="error-from-email" class="invalid-feedback"></div>
                 </div>
                 <div class="mb-3 required">
                   <label for="input-theme" class="form-label">{{ entry_theme }}</label> <select name="voucher_theme_id" id="input-theme" class="form-select">
@@ -707,14 +774,15 @@
                   <label for="input-message" class="form-label">{{ entry_message }}</label> <textarea name="message" rows="5" placeholder="{{ entry_message }}" id="input-message" class="form-control"></textarea>
                 </div>
                 <div class="mb-3 required">
-                  <label for="input-amount" class="form-label">{{ entry_amount }}</label> <input type="text" name="amount" value="{{ voucher_min }}" placeholder="{{ entry_amount }}" id="input-amount" class="form-control"/>
+                  <label for="input-amount" class="form-label">{{ entry_amount }}</label>
+                  <input type="text" name="amount" value="{{ voucher_min }}" placeholder="{{ entry_amount }}" id="input-amount" class="form-control"/>
+                  <div id="error-amount" class="invalid-feedback"></div>
                 </div>
               </fieldset>
               <div class="text-end">
                 <button type="submit" id="button-voucher-add" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
               </div>
             </form>
-
           </div>
         </div>
       </div>
@@ -1118,7 +1186,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">{{ text_comment_edit }}</h5>
+        <h5 class="modal-title">{{ text_comment }}</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
@@ -1596,10 +1664,10 @@ $('#order-products').on('submit', 'form', function (e) {
         data: $(element).serialize(),
         dataType: 'json',
         beforeSend: function () {
-           $(e.target).button('loading');
+            $(e.target).button('loading');
         },
         complete: function () {
-           $(e.target).button('reset');
+            $(e.target).button('reset');
         },
         success: function (json) {
             $('.alert-dismissible').remove();
@@ -1648,7 +1716,7 @@ $('#form-voucher-add').on('submit', function (e) {
                 }
 
                 if (json['error']) {
-                    for (key in json['error']['option']) {
+                    for (key in json['error']) {
                         $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
                         $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
                     }
@@ -1656,12 +1724,17 @@ $('#form-voucher-add').on('submit', function (e) {
             }
 
             if (json['success']) {
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
                 $('#input-to-name').val('');
                 $('#input-to-email').val('');
                 $('#input-from-name').val('');
                 $('#input-from-email').val('');
                 $('#input-message').val('');
                 $('#input-amount').val('{{ voucher_min|escape('js') }}');
+
+                // Refresh products, vouchers and totals
+                $('#button-refresh').trigger('click');
             }
         },
         error: function (xhr, ajaxOptions, thrownError) {
@@ -2150,11 +2223,9 @@ $('#form-payment-address').on('submit', function (e) {
             if (json['success']) {
                 $('#form-payment-address').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                var address = '';
+                var address = $('#input-payment-firstname').val() + ' ' + $('#input-payment-lastname').val() + "<br/>";
 
-                address += $('#input-payment-firstname').val() + ' ' + $('#input-payment-lastname').val() + "<br/>";
-
-                var company = $('#input-payment-company').val()
+                var company = $('#input-payment-company').val();
 
                 if (company) {
                     address += $('#input-payment-company').val() + "<br/>";
@@ -2162,7 +2233,7 @@ $('#form-payment-address').on('submit', function (e) {
 
                 address += $('#input-payment-address-1').val() + "<br/>";
 
-                var address_2 = $('#input-payment-address-2').val()
+                var address_2 = $('#input-payment-address-2').val();
 
                 if (address_2) {
                     address += $('#input-payment-address-2').val() + "<br/>";
@@ -2326,11 +2397,9 @@ $('#form-shipping-address').on('submit', function (e) {
             if (json['success']) {
                 $('#form-shipping-address').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                var address = '';
+                var address = $('#input-shipping-firstname').val() + ' ' + $('#input-shipping-lastname').val() + "<br/>";
 
-                address += $('#input-shipping-firstname').val() + ' ' + $('#input-shipping-lastname').val() + "<br/>";
-
-                var company = $('#input-shipping-company').val()
+                var company = $('#input-shipping-company').val();
 
                 if (company) {
                     address += $('#input-shipping-company').val() + "<br/>";
@@ -2338,7 +2407,7 @@ $('#form-shipping-address').on('submit', function (e) {
 
                 address += $('#input-shipping-address-1').val() + "<br/>";
 
-                var address_2 = $('#input-shipping-address-2').val()
+                var address_2 = $('#input-shipping-address-2').val();
 
                 if (address_2) {
                     address += $('#input-shipping-address-2').val() + "<br/>";
@@ -2474,7 +2543,7 @@ $('#input-payment-method').on('change', function (e) {
             $(element).prop('disabled', false);
         },
         success: function (json) {
-            $('#alert .alert-dismissible').remove();
+            $('.alert-dismissible').remove();
 
             if (json['error']) {
                 $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
@@ -2506,7 +2575,7 @@ $('#button-shipping-method').on('click', function () {
             $(element).button('reset');
         },
         success: function (json) {
-            $('#alert .alert-dismissible').remove();
+            $('.alert-dismissible').remove();
 
             if (json['error']) {
                 $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
@@ -2560,7 +2629,7 @@ $('#input-shipping-method').on('change', function (e) {
             $(element).prop('disabled', false);
         },
         success: function (json) {
-            $('#alert .alert-dismissible').remove();
+            $('.alert-dismissible').remove();
 
             if (json['error']) {
                 $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
@@ -2596,7 +2665,7 @@ $('#form-comment').on('submit', function (e) {
             $('#button-comment').button('reset');
         },
         success: function (json) {
-            $('#form-comment .alert-dismissible').remove();
+            $('.alert-dismissible').remove();
 
             // Check for errors
             if (json['error']) {
@@ -2662,7 +2731,7 @@ $('#button-refresh').on('click', function () {
                     html += '  <td class="text-end">' + product['total'] + '</td>';
                     html += '  <td class="text-end">';
 
-                    html += '    <form action="{{ product_remove }}" method="post" data-oc-toggle="order-edit">';
+                    html += '    <form>';
                     html += '      <button type="submit" data-bs-toggle="tooltip" title="{{ button_remove }}" data-oc-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>';
                     html += '      <input type="hidden" name="key" value="' + product['cart_id'] + '"/>';
                     html += '    </form>';
@@ -2684,13 +2753,13 @@ $('#button-refresh').on('click', function () {
                     html += '  <td class="text-start">' + voucher['description'] + '</td>';
                     html += '  <td class="text-start"></td>';
                     html += '  <td class="text-end">1</td>';
-                    html += '  <td class="text-end">' + voucher['price'] + '</td>';
-                    html += '  <td class="text-end">' + voucher['price'] + '</td>';
+                    html += '  <td class="text-end">' + voucher['amount'] + '</td>';
+                    html += '  <td class="text-end">' + voucher['amount'] + '</td>';
                     html += '  <td class="text-end">';
 
-                    html += '    <form action="{{ voucher_remove }}" method="post">';
+                    html += '    <form>';
                     html += '      <button type="submit" data-bs-toggle="tooltip" title="{{ button_remove }}" data-oc-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>';
-                    html += '      <input type="hidden" name="key" value="' + voucher['cart_id'] + '"/>';
+                    html += '      <input type="hidden" name="key" value="' + voucher['key'] + '"/>';
                     html += '    </form>';
 
                     html += '  </td>';

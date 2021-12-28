@@ -103,19 +103,21 @@ class Order extends \Opencart\System\Engine\Controller {
 			$products = $this->model_checkout_order->getProducts($order_id);
 
 			foreach ($products as $product) {
-				$option = [];
+				$option_data = [];
 
 				$options = $this->model_checkout_order->getOptions($order_id, $product['order_product_id']);
 
 				foreach ($options as $option) {
-					if (isset($option['product_option_id'])) {
-						$option[$option['product_option_id']] = $option['value'];
-					} else {
-						$option = [];
+					if ($option['type'] == 'text' || $option['type'] == 'textarea' || $option['type'] == 'file' || $option['type'] == 'date' || $option['type'] == 'datetime' || $option['type'] == 'time') {
+						$option_data[$option['product_option_id']] = $option['value'];
+					} elseif ($option['type'] == 'select' || $option['type'] == 'radio') {
+						$option_data[$option['product_option_id']] = $option['product_option_value_id'];
+					} elseif ($option['type'] == 'checkbox') {
+						$option_data[$option['product_option_id']][] = $option['value'];
 					}
 				}
 
-				$this->cart->add($product['product_id'], $product['quantity'], $option);
+				$this->cart->add($product['product_id'], $product['quantity'], $option_data);
 			}
 
 			$this->session->data['vouchers'] = [];

@@ -66,10 +66,10 @@ class Cart extends \Opencart\System\Engine\Controller {
 
 		$vouchers = $this->model_checkout_cart->getVouchers();
 
-		foreach ($vouchers as $voucher) {
+		foreach ($vouchers as $key => $voucher) {
 			$json['vouchers'][] = [
-				'key'         => $voucher['key'],
-				'description' => $voucher['description'],
+				'key'         => $key,
+				'description' => sprintf($this->language->get('text_for'), $this->currency->format($voucher['amount'], $this->session->data['currency']), $voucher['to_name']),
 				'amount'      => $this->currency->format($voucher['amount'], $this->session->data['currency'])
 			];
 		}

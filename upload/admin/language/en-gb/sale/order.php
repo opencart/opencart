@@ -14,6 +14,7 @@ $_['text_date_added']        = 'Date Added';
 $_['text_customer']          = 'Customer';
 $_['text_cart_add']          = 'Add Item';
 $_['text_points']            = 'Points';
+$_['text_reward']            = 'Reward Points';
 $_['text_reward_add']        = 'Success: Reward points added!';
 $_['text_reward_remove']     = 'Success: Reward points removed!';
 $_['text_affiliate']         = 'Affiliate';

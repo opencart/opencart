@@ -20,10 +20,10 @@
           <div class="col">
             <div class="input-group mb-3">
               <div class="form-control p-0 border rounded-start">
-                <p class="lead p-2 mb-0"><strong>{{ text_invoice }}</strong>
+                <div class="lead p-2"><strong>{{ text_invoice }}</strong>
                   <br/>
-                  <span id="invoice">{{ invoice_no }}</span>&nbsp
-                </p>
+                  <span id="invoice-value">{{ invoice_no }}</span>
+                </div>
               </div>
               {% if not invoice_no %}
                 <button type="button" id="button-invoice" data-oc-loading-text="{{ text_loading }}" data-bs-toggle="tooltip" title="{{ button_generate }}" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
@@ -35,25 +35,24 @@
           <div class="col">
             <div class="input-group mb-3">
               <div class="form-control p-0 border rounded-start">
-                <p class="lead p-2 mb-0"><strong>{{ text_customer }}</strong>
+                <div class="lead p-2"><strong>{{ text_customer }}</strong>
                   <br/>
-
                   {% if customer_id %}
-                    <span id="customer-value"><a href="index.php?route=customer/customer|form&user_token={{ user_token }}&customer_id={{ customer_id }}" target="_blank">{{ customer }}</a></span>
+                    <div id="customer-value"><a href="index.php?route=customer/customer|form&user_token={{ user_token }}&customer_id={{ customer_id }}" target="_blank">{{ customer }}</a></div>
                   {% else %}
-                    <span id="customer-value">{{ customer }}</span>
+                    <div id="customer-value">{{ customer }}</div>
                   {% endif %}
-                </p>
+                </div>
               </div>
               <button type="button" data-bs-toggle="modal" data-bs-target="#modal-customer" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
             </div>
           </div>
           <div class="col">
             <div class="form-control p-0 border rounded mb-3">
-              <p class="lead p-2 mb-0"><strong>{{ text_date_added }}</strong>
+              <div class="lead p-2"><strong>{{ text_date_added }}</strong>
                 <br/>
                 {{ date_added }}
-              </p>
+              </div>
             </div>
           </div>
         </div>
@@ -114,7 +113,7 @@
                 <td class="text-end">{{ order_voucher.amount }}</td>
                 <td class="text-end">
                   <form>
-                    <button type="submit" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>
+                    <button type="submit" data-bs-toggle="tooltip" title="{{ button_remove }}" data-oc-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>
                     <input type="hidden" name="key" value="{{ order_voucher.key }}"/>
                   </form>
                 </td>
@@ -187,7 +186,7 @@
             <div class="col">
               <form id="form-voucher">
                 <div class="input-group form-floating">
-                  <input type="text" name="voucher" value="{{ voucher }}" placeholder="{{ entry_voucher }}" id="input-voucher" data-oc-loading-text="{{ text_loading }}" class="form-control"/> <label for="input-voucher">{{ entry_voucher }}</label>
+                  <input type="text" name="voucher" value="{{ voucher }}" placeholder="{{ entry_voucher }}" id="input-voucher" class="form-control"/> <label for="input-voucher">{{ entry_voucher }}</label>
                   <button type="submit" id="button-voucher" data-bs-toogle="tooltip" title="{{ button_apply }}" class="btn btn-outline-primary"><i class="fas fa-check"></i></button>
                 </div>
               </form>
@@ -196,36 +195,42 @@
             <div class="col">
               <form id="form-reward" class="mb-3">
                 <div class="input-group form-floating">
-                  <input type="text" name="reward" value="{{ reward }}" placeholder="{{ entry_reward }}" id="input-reward" data-oc-loading-text="{{ text_loading }}" class="form-control"/> <label for="input-reward">{{ entry_reward }}</label>
-
+                  <input type="text" name="reward" value="{{ reward }}" placeholder="{{ entry_reward }}" id="input-reward" class="form-control"/> <label for="input-reward">{{ entry_reward }}</label>
                   <button type="submit" id="button-reward" data-oc-loading-text="{{ text_loading }}" class="btn btn-outline-primary"><i class="fas fa-check"></i></button>
-                  {% if customer_id and points %}
-
-                    {% if not reward_total %}
-                      <button type="button" id="button-reward-add" data-oc-loading-text="{{ text_loading }}" data-bs-toggle="tooltip" title="{{ button_reward_add }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></button>
-                    {% else %}
-                      <button type="button" id="button-reward-remove" data-oc-loading-text="{{ text_loading }}" data-bs-toggle="tooltip" title="{{ button_reward_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>
-                    {% endif %}
-
-                  {% else %}
-                    <button type="button" disabled="disabled" class="btn btn-success"><i class="fas fa-plus-circle"></i></button>
-                  {% endif %}
-
                 </div>
               </form>
+            </div>
+            <div class="col">
+              <div class="input-group">
+                <div class="form-control p-0 border rounded-start">
+                  <div class="lead p-2"><strong>{{ text_reward }}</strong>
+                    <br/>
+                    {{ points }}
+                  </div>
+                </div>
+                {% if customer_id and points %}
+                  {% if not reward_total %}
+                    <button type="button" id="button-reward-add" data-oc-loading-text="{{ text_loading }}" data-bs-toggle="tooltip" title="{{ button_reward_add }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></button>
+                  {% else %}
+                    <button type="button" id="button-reward-remove" data-oc-loading-text="{{ text_loading }}" data-bs-toggle="tooltip" title="{{ button_reward_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>
+                  {% endif %}
+                {% else %}
+                  <button type="button" disabled="disabled" class="btn btn-success"><i class="fas fa-plus-circle"></i></button>
+                {% endif %}
+              </div>
             </div>
 
             <div class="col">
               <div class="input-group mb-3">
                 <div class="form-control p-0 border rounded-start">
-                  <p class="lead p-2 mb-0"><strong>{{ text_affiliate }}</strong>
+                  <div class="lead p-2"><strong>{{ text_affiliate }}</strong>
                     <br/>
                     {% if affiliate %}
-                      <span id="affiliate-value"><a href="{{ affiliate }}">{{ affiliate }}</a></span>
+                      <div id="affiliate-value"><a href="index.php?route=sale/affiliate|form&user_token={{ user_token }}&affiliate_id={{ affiliate_id }}">{{ affiliate }}</a></div>
                     {% else %}
-                      <span id="affiliate-value">&nbsp;</span>
+                      <div id="affiliate-value">&nbsp;</div>
                     {% endif %}
-                  </p>
+                  </div>
                 </div>
                 <button type="button" data-bs-toggle="modal" data-bs-target="#modal-affiliate" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
               </div>
@@ -234,14 +239,14 @@
             <div class="col">
               <div class="input-group mb-3">
                 <div class="form-control p-0 border rounded-start">
-                  <p class="lead p-2 mb-0"><strong>{{ text_commission }}</strong>
+                  <div class="lead p-2"><strong>{{ text_commission }}</strong>
                     <br/>
                     {% if commission %}
                       <span id="commission-value">{{ commission }}</span>
                     {% else %}
                       <span id="commission-value">&nbsp;</span>
                     {% endif %}
-                  </p>
+                  </div>
                 </div>
 
                 {% if affiliate_id %}
@@ -268,14 +273,13 @@
           <div class="col-md">
             <div class="input-group mb-3">
               <div class="form-control p-0 border rounded-start">
-                <p class="lead p-2 mb-0"><strong>{{ text_payment_address }}</strong>
+                <div class="lead p-2"><strong>{{ text_payment_address }}</strong>
                   <br/>
-
-                  <span id="payment-address-value">
-                  {% if payment_firstname %}
-                    {{ payment_firstname }} {{ payment_lastname }}
-                    <br/>
-                  {% endif %}
+                  <div id="payment-address-value">
+                    {% if payment_firstname %}
+                      {{ payment_firstname }} {{ payment_lastname }}
+                      <br/>
+                    {% endif %}
 
                     {% if payment_company %}
                       {{ payment_company }}
@@ -306,15 +310,11 @@
                       {{ payment_zone }}
                       <br/>
                     {% endif %}
-
                     {% if payment_country %}
                       {{ payment_country }}
-                      <br/>
                     {% endif %}
-                  </span>
-
-
-                </p>
+                  </div>
+                </div>
               </div>
               <button type="button" data-bs-toggle="modal" data-bs-target="#modal-payment-address" class="btn btn-outline-primary float-end"><i class="fas fa-cog"></i></button>
             </div>
@@ -322,15 +322,13 @@
           <div id="shipping-address" class="col{% if not shipping_method %} d-none{% endif %}">
             <div class="input-group mb-3">
               <div class="form-control p-0 border rounded-start">
-                <p class="lead p-2 mb-0"><strong>{{ text_shipping_address }}</strong>
+                <div class="lead p-2"><strong>{{ text_shipping_address }}</strong>
                   <br/>
-                  <span id="shipping-address-value">
-
-                  {% if shipping_firstname %}
-                    {{ shipping_firstname }} {{ shipping_lastname }}
-                    <br/>
-                  {% endif %}
-
+                  <div id="shipping-address-value">
+                    {% if shipping_firstname %}
+                      {{ shipping_firstname }} {{ shipping_lastname }}
+                      <br/>
+                    {% endif %}
                     {% if shipping_company %}
                       {{ shipping_company }}
                       <br/>
@@ -357,10 +355,9 @@
                     {% endif %}
                     {% if shipping_country %}
                       {{ shipping_country }}
-                      <br/>
                     {% endif %}
-                    </span>
-                </p>
+                  </div>
+                </div>
               </div>
               <button type="button" data-bs-toggle="modal" data-bs-target="#modal-shipping-address" class="btn btn-outline-primary float-end"><i class="fas fa-cog"></i></button>
             </div>
@@ -402,7 +399,7 @@
           <div class="col">
             <div class="input-group mb-3">
               <div class="form-control p-0 border rounded-start">
-                <p class="lead p-2 mb-0"><strong>{{ text_comment }}</strong>
+                <p class="lead p-2"><strong>{{ text_comment }}</strong>
                   <br/>
                   {% if comment %}
                     <span id="comment-value">{{ comment }}</span>
@@ -549,9 +546,7 @@
 
             <label for="input-customer" class="form-label">{{ entry_customer }}</label>
             <div class="input-group">
-              <input type="text" name="customer" value="{{ customer }}" placeholder="{{ entry_customer }}" id="input-customer" class="form-control"/>
-              <button type="button" onclick="location = 'index.php?route=customer/customer|form&user_token={{ user_token }}' + ($('#input-customer-id').val() != 0 ? '&customer_id=' + $('#input-customer-id').val() : '');" class="btn btn-outline-secondary"><i class="fas fa-link"></i></button>
-              <a href="{{ customer_add }}" target="_blank" data-bs-toggle="tooltip" title="{{ button_customer_add }}" class="btn btn-outline-secondary"><i class="fas fa-user-plus"></i></a>
+              <input type="text" name="customer" value="{{ customer }}" placeholder="{{ entry_customer }}" id="input-customer" class="form-control"/> <a href="{{ customer_add }}" target="_blank" data-bs-toggle="tooltip" title="{{ button_customer_add }}" class="btn btn-outline-secondary"><i class="fas fa-user-plus"></i></a>
             </div>
             <input type="hidden" name="customer_id" value="{{ customer_id }}" id="input-customer-id"/>
 
@@ -745,25 +740,30 @@
                   <div id="error-to-email" class="invalid-feedback"></div>
                 </div>
                 <div class="mb-3 required">
-                  <label for="input-from-name" class="form-label">{{ entry_from_name }}</label> <input type="text" name="from_name" value="" placeholder="{{ entry_from_name }}" id="input-from-name" class="form-control"/>
+                  <label for="input-from-name" class="form-label">{{ entry_from_name }}</label>
+                  <input type="text" name="from_name" value="" placeholder="{{ entry_from_name }}" id="input-from-name" class="form-control"/>
                   <div id="error-from-name" class="invalid-feedback"></div>
                 </div>
                 <div class="mb-3 required">
-                  <label for="input-from-email" class="form-label">{{ entry_from_email }}</label> <input type="text" name="from_email" value="" placeholder="{{ entry_from_email }}" id="input-from-email" class="form-control"/>
+                  <label for="input-from-email" class="form-label">{{ entry_from_email }}</label>
+                  <input type="text" name="from_email" value="" placeholder="{{ entry_from_email }}" id="input-from-email" class="form-control"/>
                   <div id="error-from-email" class="invalid-feedback"></div>
                 </div>
                 <div class="mb-3 required">
-                  <label for="input-theme" class="form-label">{{ entry_theme }}</label> <select name="voucher_theme_id" id="input-theme" class="form-select">
+                  <label for="input-theme" class="form-label">{{ entry_theme }}</label>
+                  <select name="voucher_theme_id" id="input-theme" class="form-select">
                     {% for voucher_theme in voucher_themes %}
                       <option value="{{ voucher_theme.voucher_theme_id }}">{{ voucher_theme.name }}</option>
                     {% endfor %}
                   </select>
                 </div>
                 <div class="mb-3">
-                  <label for="input-message" class="form-label">{{ entry_message }}</label> <textarea name="message" rows="5" placeholder="{{ entry_message }}" id="input-message" class="form-control"></textarea>
+                  <label for="input-message" class="form-label">{{ entry_message }}</label>
+                  <textarea name="message" rows="5" placeholder="{{ entry_message }}" id="input-message" class="form-control"></textarea>
                 </div>
                 <div class="mb-3 required">
-                  <label for="input-amount" class="form-label">{{ entry_amount }}</label> <input type="text" name="amount" value="{{ voucher_min }}" placeholder="{{ entry_amount }}" id="input-amount" class="form-control"/>
+                  <label for="input-amount" class="form-label">{{ entry_amount }}</label>
+                  <input type="text" name="amount" value="{{ voucher_min }}" placeholder="{{ entry_amount }}" id="input-amount" class="form-control"/>
                   <div id="error-amount" class="invalid-feedback"></div>
                 </div>
               </fieldset>
@@ -787,9 +787,8 @@
       </div>
       <div class="modal-body">
         <form id="form-affiliate">
-          <div class="input-group mb-3">
+          <div class="mb-3">
             <input type="text" name="affiliate" value="{{ affiliate }}" placeholder="{{ entry_affiliate }}" id="input-affiliate" class="form-control"/>
-            <button type="button" class="btn btn-outline-secondary" onclick="location = 'index.php?route=marketing/affiliate|form&user_token={{ user_token }}' + ($('#input-affiliate-id').val() != 0 ? '&affiliate_id=' + $('#input-affiliate-id').val() : '');"><i class="fas fa-link"></i></button>
           </div>
           <input type="hidden" name="affiliate_id" value="{{ affiliate_id }}" id="input-affiliate-id"/>
           <div class="text-end">
@@ -2067,7 +2066,7 @@ $('#form-affiliate').on('submit', function (e) {
             if (json['success']) {
                 $('#form-affiliate').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#affiliate-value').html($('#input-affiliate').val());
+                $('#affiliate-value').html('<a href="index.php?route=marketing/affiliate|form&user_token={{ user_token }}&customer_id=' + $('#input-affiliate-id').val() + '" target="_blank">' + $('#input-affiliate').val() + '</a>');
             }
         },
         error: function (xhr, ajaxOptions, thrownError) {

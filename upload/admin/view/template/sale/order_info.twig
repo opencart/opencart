@@ -205,7 +205,7 @@
                 <div class="form-control p-0 border rounded-start">
                   <div class="lead p-2"><strong>{{ text_reward }}</strong>
                     <br/>
-                    {{ points }}
+                    <div id="reward-value">{{ points }}</div>
                   </div>
                 </div>
                 {% if customer_id and points %}
@@ -242,9 +242,9 @@
                   <div class="lead p-2"><strong>{{ text_commission }}</strong>
                     <br/>
                     {% if commission %}
-                      <span id="commission-value">{{ commission }}</span>
+                      <div id="commission-value">{{ commission }}</div>
                     {% else %}
-                      <span id="commission-value">&nbsp;</span>
+                      <div id="commission-value">&nbsp;</div>
                     {% endif %}
                   </div>
                 </div>
@@ -2781,6 +2781,12 @@ $('#button-refresh').on('click', function () {
                 $('#shipping-address').addClass('d-none');
                 $('#shipping-method').addClass('d-none');
             }
+
+            console.log(json);
+
+
+            $('#commission-value').html(json['commission']);
+            $('#reward-value').html(json['points']);
         },
         error: function (xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);

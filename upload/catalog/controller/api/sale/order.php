@@ -140,8 +140,8 @@ class Order extends \Opencart\System\Engine\Controller {
 				];
 			}
 
-			if ($order_info['tracking']) {
-				$this->session->data['tracking'] = $order_info['tracking'];
+			if ($order_info['affiliate_id']) {
+				$this->session->data['affiliate_id'] = $order_info['affiliate_id'];
 			}
 
 			// Coupon, Voucher, Reward

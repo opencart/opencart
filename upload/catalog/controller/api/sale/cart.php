@@ -19,8 +19,6 @@ class Cart extends \Opencart\System\Engine\Controller {
 
 		($this->model_checkout_cart->getTotals)($totals, $taxes, $total);
 
-		$points = 0;
-
 		$frequencies = [
 			'day'        => $this->language->get('text_day'),
 			'week'       => $this->language->get('text_week'),
@@ -47,8 +45,6 @@ class Cart extends \Opencart\System\Engine\Controller {
 					$recurring .= sprintf($this->language->get('text_payment_cancel'), $this->currency->format($this->tax->calculate($product['recurring']['price'], $product['tax_class_id'], $this->config->get('config_tax')) * $product['quantity'], $this->session->data['currency']), $product['recurring']['cycle'], $frequencies[$product['recurring']['frequency']], $product['recurring']['duration']);
 				}
 			}
-
-			$points += $product['reward'];
 
 			$json['products'][] = [
 				'cart_id'    => $product['cart_id'],
@@ -88,20 +84,6 @@ class Cart extends \Opencart\System\Engine\Controller {
 		}
 
 		$json['shipping_required'] = $this->cart->hasShipping();
-		$json['points'] = $points;
-
-		if (isset($this->session->data['affiliate_id'])) {
-			$subtotal = $this->cart->getSubTotal();
-
-			// Affiliate
-			$this->load->model('account/affiliate');
-
-			$affiliate_info = $this->model_account_affiliate->getAffiliate($this->session->data['affiliate_id']);
-
-			if ($affiliate_info) {
-				$json['commission'] = ($subtotal / 100) * $affiliate_info['commission'];
-			}
-		}
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

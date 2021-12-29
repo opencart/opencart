@@ -495,9 +495,15 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		// Invoice
 		if (!empty($order_info)) {
-			$data['invoice_no'] = $order_info['invoice_prefix'] . $order_info['invoice_no'];
+			$data['invoice_no'] = $order_info['invoice_no'];
 		} else {
 			$data['invoice_no'] = '';
+		}
+
+		if (!empty($order_info)) {
+			$data['invoice_prefix'] = $order_info['invoice_prefix'];
+		} else {
+			$data['invoice_prefix'] = '';
 		}
 
 		// Customer
@@ -737,7 +743,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		// Commission
 		if (!empty($order_info)) {
-			$data['commission'] = $this->currency->format($order_info['commission'], $this->config->get('config_currency'), $order_info['currency_value']);
+			$data['commission'] = $this->currency->format($order_info['commission'], $this->config->get('config_currency'));
 		} else {
 			$data['commission'] = $this->currency->format(0, $this->config->get('config_currency'));
 		}
@@ -1677,20 +1683,20 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$order_info = $this->model_sale_order->getOrder($order_id);
 
-		if (!$order_info || $order_info['invoice_no']) {
+		if ($order_info) {
+			if ($order_info['invoice_no']) {
+				$json['error'] = $this->language->get('error_invoice_no');
+			}
+		} else {
 			$json['error'] = $this->language->get('error_order');
 		}
 
 		if (!$json) {
+			$json['success'] = $this->language->get('text_success');
+
 			$this->load->model('sale/order');
 
-			$invoice_no = $this->model_sale_order->createInvoiceNo($order_id);
-
-			if ($invoice_no) {
-				$json['invoice_no'] = $invoice_no;
-			} else {
-				$json['error'] = $this->language->get('error_invoice_no');
-			}
+			$json['invoice_no'] = $this->model_sale_order->createInvoiceNo($order_id);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

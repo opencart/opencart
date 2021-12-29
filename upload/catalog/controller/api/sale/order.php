@@ -344,6 +344,8 @@ class Order extends \Opencart\System\Engine\Controller {
 				$order_data['shipping_code'] = '';
 			}
 
+			$points = 0;
+
 			// Products
 			$order_data['products'] = [];
 
@@ -376,6 +378,8 @@ class Order extends \Opencart\System\Engine\Controller {
 					'tax'        => $this->tax->getTax($product['price'], $product['tax_class_id']),
 					'reward'     => $product['reward']
 				];
+
+				$points += $product['reward'];
 			}
 
 			// Gift Voucher
@@ -494,6 +498,12 @@ class Order extends \Opencart\System\Engine\Controller {
 			$this->model_checkout_order->addHistory($json['order_id'], $order_status_id);
 
 			$json['success'] = $this->language->get('text_success');
+
+			$json['points'] = $points;
+
+			if (isset($order_data['affiliate_id'])) {
+				$json['commission'] = $this->currency->format($order_data['commission'], $this->config->get('config_currency'));
+			}
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -558,7 +568,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$this->model_checkout_order->addHistory((int)$this->request->post['order_id'], (int)$this->request->post['order_status_id'], $this->request->post['comment'], (bool)$this->request->post['notify'], (bool)$this->request->post['override']);
+			$this->model_checkout_order->addHistory((int)$this->request->post['order_id'], (int)$this->request->post['order_status_id'], (string)$this->request->post['comment'], (bool)$this->request->post['notify'], (bool)$this->request->post['override']);
 
 			$json['success'] = $this->language->get('text_success');
 		}

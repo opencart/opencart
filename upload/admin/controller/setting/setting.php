@@ -43,6 +43,8 @@ class Setting extends \Opencart\System\Engine\Controller {
 			if ($this->config->get('theme_' . $extension['code'] . '_status')) {
 				$this->load->language('extension/' . $extension['extension'] . '/theme/' . $extension['code'], 'extension');
 
+				//Missing a default theme name
+				//https://cdn.imageupload.workers.dev/wdDR9IXk_missing-theme-name.png
 				$data['themes'][] = [
 					'text'  => $this->language->get('extension_heading_title'),
 					'value' => $extension['code']

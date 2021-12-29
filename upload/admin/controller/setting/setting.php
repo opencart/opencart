@@ -35,16 +35,20 @@ class Setting extends \Opencart\System\Engine\Controller {
 
 		$data['themes'] = [];
 
+		$data['themes'][] = [
+			'text'  => $this->language->get('text_default_theme'),
+			'value' => 'basic'
+		];
+
 		$this->load->model('setting/extension');
 
 		$extensions = $this->model_setting_extension->getExtensionsByType('theme');
 
 		foreach ($extensions as $extension) {
 			if ($this->config->get('theme_' . $extension['code'] . '_status')) {
+
 				$this->load->language('extension/' . $extension['extension'] . '/theme/' . $extension['code'], 'extension');
 
-				//Missing a default theme name
-				//https://cdn.imageupload.workers.dev/wdDR9IXk_missing-theme-name.png
 				$data['themes'][] = [
 					'text'  => $this->language->get('extension_heading_title'),
 					'value' => $extension['code']

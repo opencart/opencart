@@ -19,9 +19,9 @@ class Installer extends \Opencart\System\Engine\Controller {
 		];
 
 		// Use the ini_get('upload_max_filesize') for the max file size
-		$data['error_upload_size'] = sprintf($this->language->get('error_upload_size'), ini_get('upload_max_filesize'));
+		$data['error_upload_size'] = sprintf($this->language->get('error_upload_size'), (int)preg_filter('/[^0-9]/', '', ini_get('upload_max_filesize')));
 
-		$data['config_file_max_size'] = ((int)preg_filter('/[^0-9]/', '', ini_get('upload_max_filesize')) * 1000);
+		$data['config_file_max_size'] = ((int)preg_filter('/[^0-9]/', '', ini_get('upload_max_filesize')) * 1024 * 1024);
 
 		$data['upload'] = $this->url->link('tool/installer|upload', 'user_token=' . $this->session->data['user_token']);
 
@@ -36,7 +36,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
-		
+
 		$this->response->setOutput($this->load->view('marketplace/installer', $data));
 	}
 
@@ -68,7 +68,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 		}
 
 		$data['extensions'] = [];
-		
+
 		$this->load->model('setting/extension');
 
 		$filter_data = [
@@ -82,7 +82,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 		$extension_total = $this->model_setting_extension->getTotalInstalls($filter_data);
 
 		$results = $this->model_setting_extension->getInstalls($filter_data);
-		
+
 		foreach ($results as $result) {
 			if ($result['extension_id']) {
 				$link = $this->url->link('marketplace/marketplace|info', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $result['extension_id']);

@@ -742,10 +742,10 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		// Commission
-		if (!empty($order_info)) {
+		if (!empty($order_info) && (float)$order_info['commission']) {
 			$data['commission'] = $this->currency->format($order_info['commission'], $this->config->get('config_currency'));
 		} else {
-			$data['commission'] = $this->currency->format(0, $this->config->get('config_currency'));
+			$data['commission'] = '';
 		}
 
 		if (!empty($order_info)) {

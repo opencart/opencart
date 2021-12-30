@@ -3,6 +3,7 @@
   <ul class="dropdown-menu dropdown-menu-right">
     {% if products or vouchers %}
     <li>
+
       <table class="table table-sm table-striped">
         {% for product in products %}
         <tr>
@@ -42,6 +43,7 @@
         </table>
         <p class="text-end"><a href="{{ cart }}"><strong><i class="fas fa-shopping-cart"></i> {{ text_cart }}</strong></a>&nbsp;&nbsp;&nbsp;<a href="{{ checkout }}"><strong><i class="fas fa-share"></i> {{ text_checkout }}</strong></a></p>
       </div>
+
     </li>
     {% else %}
     <li>

@@ -200,6 +200,7 @@
                 </div>
               </form>
             </div>
+
             <div class="col">
               <div class="input-group">
                 <div class="form-control p-0 border rounded-start">
@@ -208,16 +209,10 @@
                     <div id="reward-value">{{ points }}</div>
                   </div>
                 </div>
-                {% if customer_id and points %}
-
-                  {% if not reward_total %}
-                    <button type="button" id="button-reward-add" data-oc-loading-text="{{ text_loading }}" data-bs-toggle="tooltip" title="{{ button_reward_add }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></button>
-                  {% else %}
-                    <button type="button" id="button-reward-remove" data-oc-loading-text="{{ text_loading }}" data-bs-toggle="tooltip" title="{{ button_reward_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>
-                  {% endif %}
-
+                {% if not reward_total %}
+                  <button type="button" id="button-reward-add" data-oc-loading-text="{{ text_loading }}" data-bs-toggle="tooltip" title="{{ button_reward_add }}" class="btn btn-success"{% if not customer_id or not points %} disabled{% endif %}><i class="fas fa-plus-circle"></i></button>
                 {% else %}
-                  <button type="button" disabled="disabled" class="btn btn-success"><i class="fas fa-plus-circle"></i></button>
+                  <button type="button" id="button-reward-remove" data-oc-loading-text="{{ text_loading }}" data-bs-toggle="tooltip" title="{{ button_reward_remove }}" class="btn btn-danger"{% if not customer_id and not points %} disabled{% endif %}><i class="fas fa-minus-circle"></i></button>
                 {% endif %}
               </div>
             </div>
@@ -250,19 +245,11 @@
                     {% endif %}
                   </div>
                 </div>
-
-                {% if affiliate_id %}
-
-                  {% if not commission_total %}
-                    <button type="button" id="button-commission-add" data-oc-loading-text="{{ text_loading }}" data-bs-toggle="tooltip" title="{{ button_commission_add }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></button>
-                  {% else %}
-                    <button type="button" id="button-commission-remove" data-oc-loading-text="{{ text_loading }}" data-bs-toggle="tooltip" title="{{ button_commission_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>
-                  {% endif %}
-
+                {% if not commission_total %}
+                  <button type="button" id="button-commission-add" data-oc-loading-text="{{ text_loading }}" data-bs-toggle="tooltip" title="{{ button_commission_add }}" class="btn btn-success"{% if not affiliate_id %} disabled{% endif %}><i class="fas fa-plus-circle"></i></button>
                 {% else %}
-                  <button type="button" disabled="disabled" class="btn btn-success"><i class="fas fa-plus-circle"></i></button>
+                  <button type="button" id="button-commission-remove" data-oc-loading-text="{{ text_loading }}" data-bs-toggle="tooltip" title="{{ button_commission_remove }}" class="btn btn-danger"{% if not affiliate_id %} disabled{% endif %}><i class="fas fa-minus-circle"></i></button>
                 {% endif %}
-
               </div>
             </div>
 
@@ -2773,14 +2760,22 @@ $('#button-confirm').on('click', function () {
 
                 if (json['points']) {
                     $('#reward-value').html(json['points']);
+                    $('#button-reward-add').prop('disabled', false);
+                    $('#button-reward-remove').prop('disabled', false);
                 } else {
                     $('#reward-value').html(0);
+                    $('#button-reward-add').prop('disabled', true);
+                    $('#button-reward-remove').prop('disabled', true);
                 }
 
                 if (json['commission']) {
                     $('#commission-value').html(json['commission']);
+                    $('#button-commission-add').prop('disabled', false);
+                    $('#button-commission-remove').prop('disabled', false);
                 } else {
                     $('#commission-value').html('&nbsp;');
+                    $('#button-commission-add').prop('disabled', true);
+                    $('#button-commission-remove').prop('disabled', true);
                 }
             }
         },

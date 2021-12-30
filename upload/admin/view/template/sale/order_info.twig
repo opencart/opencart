@@ -2,7 +2,7 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="float-end"><a href="{{ invoice }}" target="_blank" data-bs-toggle="tooltip" title="{{ button_invoice_print }}" class="btn btn-info{% if not order_id %} disabled{% endif %}"><i class="fas fa-print"></i></a> <a href="{{ shipping }}" target="_blank" data-bs-toggle="tooltip" title="{{ button_shipping_print }}" class="btn btn-info{% if not order_id %} disabled{% endif %}"><i class="fas fa-truck"></i></a> <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
+      <div class="float-end"><a href="{{ invoice }}" target="_blank" data-bs-toggle="tooltip" title="{{ button_invoice_print }}" class="btn btn-info{% if not order_id %} disabled{% endif %}"><i class="fas fa-print"></i></a> <a href="{{ shipping }}" target="_blank" data-bs-toggle="tooltip" title="{{ button_shipping_print }}" class="btn btn-info{% if not shipping_code %} disabled{% endif %}"><i class="fas fa-truck"></i></a> <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
       <ol class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -19,8 +19,8 @@
         <div class="row row-cols-1 row-cols-sm-1 row-cols-md-3 row-cols-xl-3">
           <div class="col">
             <div class="input-group mb-3">
-              <div class="form-control p-0 border rounded-start">
-                <div class="lead p-2"><strong>{{ text_invoice }}</strong>
+              <div class="form-control border rounded-start">
+                <div class="lead"><strong>{{ text_invoice }}</strong>
                   <br/>
                   <span id="invoice-value">{{ invoice_prefix }}{{ invoice_no }}</span>
                 </div>
@@ -34,8 +34,8 @@
           </div>
           <div class="col">
             <div class="input-group mb-3">
-              <div class="form-control p-0 border rounded-start">
-                <div class="lead p-2"><strong>{{ text_customer }}</strong>
+              <div class="form-control border rounded-start">
+                <div class="lead"><strong>{{ text_customer }}</strong>
                   <br/>
                   {% if customer_id %}
                     <div id="customer-value"><a href="index.php?route=customer/customer|form&user_token={{ user_token }}&customer_id={{ customer_id }}" target="_blank">{{ customer }}</a></div>
@@ -203,8 +203,8 @@
 
             <div class="col">
               <div class="input-group">
-                <div class="form-control p-0 border rounded-start">
-                  <div class="lead p-2"><strong>{{ text_reward }}</strong>
+                <div class="form-control border rounded-start">
+                  <div class="lead p-0"><strong>{{ text_reward }}</strong>
                     <br/>
                     <div id="reward-value">{{ points }}</div>
                   </div>
@@ -212,15 +212,15 @@
                 {% if not reward_total %}
                   <button type="button" id="button-reward-add" data-oc-loading-text="{{ text_loading }}" data-bs-toggle="tooltip" title="{{ button_reward_add }}" class="btn btn-success"{% if not customer_id or not points %} disabled{% endif %}><i class="fas fa-plus-circle"></i></button>
                 {% else %}
-                  <button type="button" id="button-reward-remove" data-oc-loading-text="{{ text_loading }}" data-bs-toggle="tooltip" title="{{ button_reward_remove }}" class="btn btn-danger"{% if not customer_id and not points %} disabled{% endif %}><i class="fas fa-minus-circle"></i></button>
+                  <button type="button" id="button-reward-remove" data-oc-loading-text="{{ text_loading }}" data-bs-toggle="tooltip" title="{{ button_reward_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>
                 {% endif %}
               </div>
             </div>
 
             <div class="col">
               <div class="input-group mb-3">
-                <div class="form-control p-0 border rounded-start">
-                  <div class="lead p-2"><strong>{{ text_affiliate }}</strong>
+                <div class="form-control border rounded-start">
+                  <div class="lead"><strong>{{ text_affiliate }}</strong>
                     <br/>
                     {% if affiliate_id %}
                       <div id="affiliate-value"><a href="index.php?route=marketing/affiliate|form&user_token={{ user_token }}&customer_id={{ affiliate_id }}" target="_blank">{{ affiliate }}</a></div>
@@ -235,8 +235,8 @@
 
             <div class="col">
               <div class="input-group mb-3">
-                <div class="form-control p-0 border rounded-start">
-                  <div class="lead p-2"><strong>{{ text_commission }}</strong>
+                <div class="form-control border rounded-start">
+                  <div class="lead"><strong>{{ text_commission }}</strong>
                     <br/>
                     {% if commission %}
                       <div id="commission-value">{{ commission }}</div>
@@ -248,7 +248,7 @@
                 {% if not commission_total %}
                   <button type="button" id="button-commission-add" data-oc-loading-text="{{ text_loading }}" data-bs-toggle="tooltip" title="{{ button_commission_add }}" class="btn btn-success"{% if not affiliate_id %} disabled{% endif %}><i class="fas fa-plus-circle"></i></button>
                 {% else %}
-                  <button type="button" id="button-commission-remove" data-oc-loading-text="{{ text_loading }}" data-bs-toggle="tooltip" title="{{ button_commission_remove }}" class="btn btn-danger"{% if not affiliate_id %} disabled{% endif %}><i class="fas fa-minus-circle"></i></button>
+                  <button type="button" id="button-commission-remove" data-oc-loading-text="{{ text_loading }}" data-bs-toggle="tooltip" title="{{ button_commission_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>
                 {% endif %}
               </div>
             </div>
@@ -261,8 +261,8 @@
         <div class="row">
           <div class="col-md">
             <div class="input-group mb-3">
-              <div class="form-control p-0 border rounded-start">
-                <div class="lead p-2"><strong>{{ text_payment_address }}</strong>
+              <div class="form-control border rounded-start">
+                <div class="lead"><strong>{{ text_payment_address }}</strong>
                   <br/>
                   <div id="payment-address-value">
                     {% if payment_firstname %}
@@ -310,8 +310,8 @@
           </div>
           <div id="shipping-address" class="col{% if not shipping_method %} d-none{% endif %}">
             <div class="input-group mb-3">
-              <div class="form-control p-0 border rounded-start">
-                <div class="lead p-2"><strong>{{ text_shipping_address }}</strong>
+              <div class="form-control border rounded-start">
+                <div class="lead"><strong>{{ text_shipping_address }}</strong>
                   <br/>
                   <div id="shipping-address-value">
                     {% if shipping_firstname %}
@@ -387,15 +387,15 @@
         <div class="row">
           <div class="col">
             <div class="input-group mb-3">
-              <div class="form-control p-0 border rounded-start">
-                <p class="lead p-2"><strong>{{ text_comment }}</strong>
+              <div class="form-control border rounded-start">
+                <div class="lead"><strong>{{ text_comment }}</strong>
                   <br/>
                   {% if comment %}
                     <span id="comment-value">{{ comment }}</span>
                   {% else %}
-                    <span id="comment-value">&nbsp;<br/><br/></span>
+                    <span id="comment-value"></span>
                   {% endif %}
-                </p>
+                </div>
               </div>
               <button type="button" data-bs-toggle="modal" data-bs-target="#modal-comment" class="btn btn-outline-primary float-end"><i class="fas fa-cog"></i></button>
             </div>
@@ -2654,12 +2654,10 @@ $('#button-refresh').on('click', function () {
                     html += '  <td class="text-end">' + product['price'] + '</td>';
                     html += '  <td class="text-end">' + product['total'] + '</td>';
                     html += '  <td class="text-end">';
-
                     html += '    <form>';
                     html += '      <button type="submit" data-bs-toggle="tooltip" title="{{ button_remove }}" data-oc-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>';
                     html += '      <input type="hidden" name="key" value="' + product['cart_id'] + '"/>';
                     html += '    </form>';
-
                     html += '  </td>';
                     html += '</tr>';
                 }
@@ -2680,12 +2678,10 @@ $('#button-refresh').on('click', function () {
                     html += '  <td class="text-end">' + voucher['amount'] + '</td>';
                     html += '  <td class="text-end">' + voucher['amount'] + '</td>';
                     html += '  <td class="text-end">';
-
                     html += '    <form>';
                     html += '      <button type="submit" data-bs-toggle="tooltip" title="{{ button_remove }}" data-oc-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>';
                     html += '      <input type="hidden" name="key" value="' + voucher['key'] + '"/>';
                     html += '    </form>';
-
                     html += '  </td>';
                     html += '</tr>';
                 }
@@ -2718,9 +2714,11 @@ $('#button-refresh').on('click', function () {
             if (json['shipping_required']) {
                 $('#shipping-address').removeClass('d-none');
                 $('#shipping-method').removeClass('d-none');
+                $('#button-shipping').prop('disabled', false);
             } else {
                 $('#shipping-address').addClass('d-none');
                 $('#shipping-method').addClass('d-none');
+                $('#button-shipping').prop('disabled', true);
             }
         },
         error: function (xhr, ajaxOptions, thrownError) {

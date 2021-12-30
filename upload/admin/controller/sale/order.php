@@ -235,6 +235,8 @@ class Order extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
+		$data['action'] = $this->url->link('sale/order|list', 'user_token=' . $this->session->data['user_token'] . $url);
+
 		$data['orders'] = [];
 
 		$filter_data = [

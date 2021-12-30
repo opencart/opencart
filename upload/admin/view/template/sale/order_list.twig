@@ -1,9 +1,9 @@
-<form id="form-order" method="post" data-oc-toggle="ajax" data-oc-load="{{ action }}" data-oc-target="#order">
+<form id="form-order" method="post" action="{{ action }}" data-oc-target="#order">
   <div class="table-responsive">
     <table class="table table-bordered table-hover">
       <thead>
         <tr>
-          <td class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></td>
+          <td class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').trigger('click');" class="form-check-input"/></td>
           <td class="text-end"><a href="{{ sort_order }}"{% if sort == 'o.order_id' %} class="{{ order|lower }}"{% endif %}>{{ column_order_id }}</a></td>
           <td class="text-start"><a href="{{ sort_store_name }}"{% if sort == 'o.store_name' %} class="{{ order|lower }}"{% endif %}>{{ column_store }}</a></td>
           <td class="text-start"><a href="{{ sort_customer }}"{% if sort == 'customer' %} class="{{ order|lower }}"{% endif %}>{{ column_customer }}</a></td>
@@ -18,7 +18,8 @@
         {% if orders %}
           {% for order in orders %}
             <tr>
-              <td class="text-center"><input type="checkbox" name="selected[]" value="{{ order.order_id }}" class="form-check-input"/><input type="hidden" name="shipping_code[]" value="{{ order.shipping_code }}"/></td>
+              <td class="text-center"><input type="checkbox" name="selected[]" value="{{ order.order_id }}" class="form-check-input"/>
+                <input type="hidden" name="shipping_code[]" value="{{ order.shipping_code }}"/></td>
               <td class="text-end">{{ order.order_id }}</td>
               <td class="text-start">{{ order.store_name }}</td>
               <td class="text-start">{{ order.customer }}</td>
@@ -26,7 +27,8 @@
               <td class="text-end d-none d-lg-table-cell">{{ order.total }}</td>
               <td class="text-start d-none d-lg-table-cell">{{ order.date_added }}</td>
               <td class="text-start d-none d-xl-table-cell">{{ order.date_modified }}</td>
-              <td class="text-end"><a href="{{ order.view }}" data-bs-toggle="tooltip" title="{{ button_view }}" class="btn btn-primary"><i class="fas fa-eye"></i></a></td>
+              <td class="text-end text-nowrap"><a href="{{ order.view }}" data-bs-toggle="tooltip" title="{{ button_view }}" class="btn btn-primary"><i class="fas fa-eye"></i></a>
+                <button type="button" value="{{ order.order_id }}" data-bs-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button></td>
             </tr>
           {% endfor %}
         {% else %}

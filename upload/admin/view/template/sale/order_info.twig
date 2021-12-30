@@ -2,7 +2,7 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="float-end"><a href="{{ invoice }}" target="_blank" data-bs-toggle="tooltip" title="{{ button_invoice_print }}" class="btn btn-info{% if not order_id %} disabled{% endif %}"><i class="fas fa-print"></i></a> <a href="{{ shipping }}" target="_blank" data-bs-toggle="tooltip" title="{{ button_shipping_print }}" class="btn btn-info{% if not order_id %} disabled{% endif %}"><i class="fas fa-truck"></i></a> <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
+      <div class="float-end"><a href="{{ invoice }}" target="_blank" data-bs-toggle="tooltip" title="{{ button_invoice_print }}" class="btn btn-info{% if not order_id %} disabled{% endif %}"><i class="fas fa-print"></i></a> <a href="{{ shipping }}" target="_blank" data-bs-toggle="tooltip" title="{{ button_shipping_print }}" class="btn btn-info{% if not shipping_code %} disabled{% endif %}"><i class="fas fa-truck"></i></a> <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
       <ol class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -19,11 +19,11 @@
         <div class="row row-cols-1 row-cols-sm-1 row-cols-md-3 row-cols-xl-3">
           <div class="col">
             <div class="input-group mb-3">
-              <div class="form-control p-0 border rounded-start">
-                <p class="lead p-2 mb-0"><strong>{{ text_invoice }}</strong>
+              <div class="form-control border rounded-start">
+                <div class="lead"><strong>{{ text_invoice }}</strong>
                   <br/>
-                  <span id="invoice">{{ invoice_no }}</span>&nbsp
-                </p>
+                  <span id="invoice-value">{{ invoice_prefix }}{{ invoice_no }}</span>
+                </div>
               </div>
               {% if not invoice_no %}
                 <button type="button" id="button-invoice" data-oc-loading-text="{{ text_loading }}" data-bs-toggle="tooltip" title="{{ button_generate }}" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
@@ -34,26 +34,25 @@
           </div>
           <div class="col">
             <div class="input-group mb-3">
-              <div class="form-control p-0 border rounded-start">
-                <p class="lead p-2 mb-0"><strong>{{ text_customer }}</strong>
+              <div class="form-control border rounded-start">
+                <div class="lead"><strong>{{ text_customer }}</strong>
                   <br/>
-
                   {% if customer_id %}
-                    <span id="customer-value"><a href="index.php?route=customer/customer&user_token={{ user_token }}&" target="_blank">{{ customer }}</a></span>
+                    <div id="customer-value"><a href="index.php?route=customer/customer|form&user_token={{ user_token }}&customer_id={{ customer_id }}" target="_blank">{{ customer }}</a></div>
                   {% else %}
-                    <span id="customer-value">{{ customer }}</span>
+                    <div id="customer-value">{{ customer }}</div>
                   {% endif %}
-                </p>
+                </div>
               </div>
               <button type="button" data-bs-toggle="modal" data-bs-target="#modal-customer" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
             </div>
           </div>
           <div class="col">
             <div class="form-control p-0 border rounded mb-3">
-              <p class="lead p-2 mb-0"><strong>{{ text_date_added }}</strong>
+              <div class="lead p-2"><strong>{{ text_date_added }}</strong>
                 <br/>
                 {{ date_added }}
-              </p>
+              </div>
             </div>
           </div>
         </div>
@@ -71,7 +70,7 @@
           <tbody id="order-products">
             {% for order_product in order_products %}
               <tr>
-                <td class="text-start"><a href="{{ order_product.href }}" target="_blank">{{ order_product.name }}</a>
+                <td class="text-start"><a href="index.php?route=catalog/product|form&user_token={{ user_token }}&product_id={{ order_product.product_id }}" target="_blank">{{ order_product.name }}</a>
 
                   {% if order_product.option %}
                     {% for option in order_product.option %}
@@ -96,12 +95,10 @@
                 <td class="text-end">{{ order_product.price }}</td>
                 <td class="text-end">{{ order_product.total }}</td>
                 <td class="text-end">
-
                   <form>
                     <button type="submit" data-bs-toggle="tooltip" title="{{ button_remove }}" data-oc-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>
-                    <input type="hidden" name="key" value="' + product['cart_id'] + '"/>
+                    <input type="hidden" name="key" value="{{ order_product.cart_id }}"/>
                   </form>
-
                 </td>
               </tr>
             {% endfor %}
@@ -115,12 +112,10 @@
                 <td class="text-end">{{ order_voucher.amount }}</td>
                 <td class="text-end">{{ order_voucher.amount }}</td>
                 <td class="text-end">
-
                   <form>
-                    <button type="submit" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-times-circle"></i></button>
-                    <input type="hidden" name="key" value="{{ order_voucher.key }}" size="1" disabled="disabled" class="form-control"/>
+                    <button type="submit" data-bs-toggle="tooltip" title="{{ button_remove }}" data-oc-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>
+                    <input type="hidden" name="key" value="{{ order_voucher.key }}"/>
                   </form>
-
                 </td>
               </tr>
             {% endfor %}
@@ -191,7 +186,7 @@
             <div class="col">
               <form id="form-voucher">
                 <div class="input-group form-floating">
-                  <input type="text" name="voucher" value="{{ voucher }}" placeholder="{{ entry_voucher }}" id="input-voucher" data-oc-loading-text="{{ text_loading }}" class="form-control"/> <label for="input-voucher">{{ entry_voucher }}</label>
+                  <input type="text" name="voucher" value="{{ voucher }}" placeholder="{{ entry_voucher }}" id="input-voucher" class="form-control"/> <label for="input-voucher">{{ entry_voucher }}</label>
                   <button type="submit" id="button-voucher" data-bs-toogle="tooltip" title="{{ button_apply }}" class="btn btn-outline-primary"><i class="fas fa-check"></i></button>
                 </div>
               </form>
@@ -200,36 +195,39 @@
             <div class="col">
               <form id="form-reward" class="mb-3">
                 <div class="input-group form-floating">
-                  <input type="text" name="reward" value="{{ reward }}" placeholder="{{ entry_reward }}" id="input-reward" data-oc-loading-text="{{ text_loading }}" class="form-control"/> <label for="input-reward">{{ entry_reward }}</label>
-
+                  <input type="text" name="reward" value="{{ reward }}" placeholder="{{ entry_reward }}" id="input-reward" class="form-control"/> <label for="input-reward">{{ entry_reward }}</label>
                   <button type="submit" id="button-reward" data-oc-loading-text="{{ text_loading }}" class="btn btn-outline-primary"><i class="fas fa-check"></i></button>
-                  {% if customer_id and points %}
-
-                    {% if not reward_total %}
-                      <button type="button" id="button-reward-add" data-oc-loading-text="{{ text_loading }}" data-bs-toggle="tooltip" title="{{ button_reward_add }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></button>
-                    {% else %}
-                      <button type="button" id="button-reward-remove" data-oc-loading-text="{{ text_loading }}" data-bs-toggle="tooltip" title="{{ button_reward_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>
-                    {% endif %}
-
-                  {% else %}
-                    <button type="button" disabled="disabled" class="btn btn-success"><i class="fas fa-plus-circle"></i></button>
-                  {% endif %}
-
                 </div>
               </form>
             </div>
 
             <div class="col">
-              <div class="input-group mb-3">
-                <div class="form-control p-0 border rounded-start">
-                  <p class="lead p-2 mb-0"><strong>{{ text_affiliate }}</strong>
+              <div class="input-group">
+                <div class="form-control border rounded-start">
+                  <div class="lead p-0"><strong>{{ text_reward }}</strong>
                     <br/>
-                    {% if affiliate %}
-                      <span id="affiliate-value"><a href="{{ affiliate }}">{{ affiliate }}</a></span>
+                    <div id="reward-value">{{ points }}</div>
+                  </div>
+                </div>
+                {% if not reward_total %}
+                  <button type="button" id="button-reward-add" data-oc-loading-text="{{ text_loading }}" data-bs-toggle="tooltip" title="{{ button_reward_add }}" class="btn btn-success"{% if not customer_id or not points %} disabled{% endif %}><i class="fas fa-plus-circle"></i></button>
+                {% else %}
+                  <button type="button" id="button-reward-remove" data-oc-loading-text="{{ text_loading }}" data-bs-toggle="tooltip" title="{{ button_reward_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>
+                {% endif %}
+              </div>
+            </div>
+
+            <div class="col">
+              <div class="input-group mb-3">
+                <div class="form-control border rounded-start">
+                  <div class="lead"><strong>{{ text_affiliate }}</strong>
+                    <br/>
+                    {% if affiliate_id %}
+                      <div id="affiliate-value"><a href="index.php?route=marketing/affiliate|form&user_token={{ user_token }}&customer_id={{ affiliate_id }}" target="_blank">{{ affiliate }}</a></div>
                     {% else %}
-                      <span id="affiliate-value">&nbsp;</span>
+                      <div id="affiliate-value">&nbsp;</div>
                     {% endif %}
-                  </p>
+                  </div>
                 </div>
                 <button type="button" data-bs-toggle="modal" data-bs-target="#modal-affiliate" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
               </div>
@@ -237,29 +235,21 @@
 
             <div class="col">
               <div class="input-group mb-3">
-                <div class="form-control p-0 border rounded-start">
-                  <p class="lead p-2 mb-0"><strong>{{ text_commission }}</strong>
+                <div class="form-control border rounded-start">
+                  <div class="lead"><strong>{{ text_commission }}</strong>
                     <br/>
                     {% if commission %}
-                      <span id="commission-value">{{ commission }}</span>
+                      <div id="commission-value">{{ commission }}</div>
                     {% else %}
-                      <span id="commission-value">&nbsp;</span>
+                      <div id="commission-value">&nbsp;</div>
                     {% endif %}
-                  </p>
+                  </div>
                 </div>
-
-                {% if affiliate_id %}
-
-                  {% if not commission_total %}
-                    <button type="button" id="button-commission-add" data-oc-loading-text="{{ text_loading }}" data-bs-toggle="tooltip" title="{{ button_commission_add }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></button>
-                  {% else %}
-                    <button type="button" id="button-commission-remove" data-oc-loading-text="{{ text_loading }}" data-bs-toggle="tooltip" title="{{ button_commission_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>
-                  {% endif %}
-
+                {% if not commission_total %}
+                  <button type="button" id="button-commission-add" data-oc-loading-text="{{ text_loading }}" data-bs-toggle="tooltip" title="{{ button_commission_add }}" class="btn btn-success"{% if not affiliate_id %} disabled{% endif %}><i class="fas fa-plus-circle"></i></button>
                 {% else %}
-                  <button type="button" disabled="disabled" class="btn btn-success"><i class="fas fa-plus-circle"></i></button>
+                  <button type="button" id="button-commission-remove" data-oc-loading-text="{{ text_loading }}" data-bs-toggle="tooltip" title="{{ button_commission_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>
                 {% endif %}
-
               </div>
             </div>
 
@@ -271,41 +261,92 @@
         <div class="row">
           <div class="col-md">
             <div class="input-group mb-3">
-              <div class="form-control p-0 border rounded-start">
-                <p class="lead p-2 mb-0"><strong>{{ text_payment_address }}</strong>
+              <div class="form-control border rounded-start">
+                <div class="lead"><strong>{{ text_payment_address }}</strong>
                   <br/>
+                  <div id="payment-address-value">
+                    {% if payment_firstname %}
+                      {{ payment_firstname }} {{ payment_lastname }}
+                      <br/>
+                    {% endif %}
 
-                  {% if payment_address %}
-                    <span id="payment-address-value">{{ payment_address }}</span>
-                  {% else %}
-                    &nbsp;
-                    <br/>
-                    <br/>
-                  {% endif %}
+                    {% if payment_company %}
+                      {{ payment_company }}
+                      <br/>
+                    {% endif %}
 
-                </p>
+                    {% if payment_address_1 %}
+                      {{ payment_address_1 }}
+                      <br/>
+                    {% endif %}
+
+                    {% if payment_address_2 %}
+                      {{ payment_address_2 }}
+                      <br/>
+                    {% endif %}
+
+                    {% if payment_city %}
+                      {{ payment_city }}
+                      <br/>
+                    {% endif %}
+
+                    {% if payment_postcode %}
+                      {{ payment_postcode }}
+                      <br/>
+                    {% endif %}
+
+                    {% if payment_zone %}
+                      {{ payment_zone }}
+                      <br/>
+                    {% endif %}
+                    {% if payment_country %}
+                      {{ payment_country }}
+                    {% endif %}
+                  </div>
+                </div>
               </div>
               <button type="button" data-bs-toggle="modal" data-bs-target="#modal-payment-address" class="btn btn-outline-primary float-end"><i class="fas fa-cog"></i></button>
             </div>
           </div>
           <div id="shipping-address" class="col{% if not shipping_method %} d-none{% endif %}">
             <div class="input-group mb-3">
-              <div class="form-control p-0 border rounded-start">
-                <p class="lead p-2 mb-0"><strong>{{ text_shipping_address }}</strong>
+              <div class="form-control border rounded-start">
+                <div class="lead"><strong>{{ text_shipping_address }}</strong>
                   <br/>
-
-                  {% if shipping_address %}
-
-                    <span id="shipping-address">{{ shipping_address }}</span>
-
-                  {% else %}
-                    <span id="shipping-address">&nbsp;
-                    <br/>
-                    <br/>
-                  </span>
-                  {% endif %}
-
-                </p>
+                  <div id="shipping-address-value">
+                    {% if shipping_firstname %}
+                      {{ shipping_firstname }} {{ shipping_lastname }}
+                      <br/>
+                    {% endif %}
+                    {% if shipping_company %}
+                      {{ shipping_company }}
+                      <br/>
+                    {% endif %}
+                    {% if shipping_address_1 %}
+                      {{ shipping_address_1 }}
+                      <br/>
+                    {% endif %}
+                    {% if shipping_address_2 %}
+                      {{ shipping_address_2 }}
+                      <br/>
+                    {% endif %}
+                    {% if shipping_city %}
+                      {{ shipping_city }}
+                      <br/>
+                    {% endif %}
+                    {% if shipping_postcode %}
+                      {{ shipping_postcode }}
+                      <br/>
+                    {% endif %}
+                    {% if shipping_zone %}
+                      {{ shipping_zone }}
+                      <br/>
+                    {% endif %}
+                    {% if shipping_country %}
+                      {{ shipping_country }}
+                    {% endif %}
+                  </div>
+                </div>
               </div>
               <button type="button" data-bs-toggle="modal" data-bs-target="#modal-shipping-address" class="btn btn-outline-primary float-end"><i class="fas fa-cog"></i></button>
             </div>
@@ -346,15 +387,15 @@
         <div class="row">
           <div class="col">
             <div class="input-group mb-3">
-              <div class="form-control p-0 border rounded-start">
-                <p class="lead p-2 mb-0"><strong>{{ text_comment }}</strong>
+              <div class="form-control border rounded-start">
+                <div class="lead"><strong>{{ text_comment }}</strong>
                   <br/>
                   {% if comment %}
                     <span id="comment-value">{{ comment }}</span>
                   {% else %}
-                    <span id="comment-value">&nbsp;<br/><br/></span>
+                    <span id="comment-value"></span>
                   {% endif %}
-                </p>
+                </div>
               </div>
               <button type="button" data-bs-toggle="modal" data-bs-target="#modal-comment" class="btn btn-outline-primary float-end"><i class="fas fa-cog"></i></button>
             </div>
@@ -403,8 +444,8 @@
                   <label for="input-order-status" class="col-sm-2 col-form-label">{{ entry_order_status }}</label>
                   <div class="col-sm-10">
                     <select name="order_status_id" id="input-order-status" class="form-select">
-                      {% for order_statuses in order_statuses %}
-                        <option value="{{ order_statuses.order_status_id }}"{% if order_statuses.order_status_id == order_status_id %} selected{% endif %}>{{ order_statuses.name }}</option>
+                      {% for order_status in order_statuses %}
+                        <option value="{{ order_status.order_status_id }}"{% if order_status.order_status_id == order_status_id %} selected{% endif %}>{{ order_status.name }}</option>
                       {% endfor %}
                     </select>
                   </div>
@@ -478,7 +519,6 @@
     </div>
   </div>
 </div>
-
 <div id="modal-customer" class="modal">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -487,21 +527,14 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
-
         <form id="form-customer">
-
           <div class="mb-3">
-
             <label for="input-customer" class="form-label">{{ entry_customer }}</label>
             <div class="input-group">
-              <input type="text" name="customer" value="{{ customer }}" placeholder="{{ entry_customer }}" id="input-customer" class="form-control"/>
-              <button type="button" onclick="location = 'index.php?route=customer/customer|form&user_token={{ user_token }}' + ($('#input-customer-id').val() != 0 ? '&customer_id=' + $('#input-customer-id').val() : '');" class="btn btn-outline-secondary"><i class="fas fa-link"></i></button>
-              <a href="{{ customer_add }}" target="_blank" data-bs-toggle="tooltip" title="{{ button_customer_add }}" class="btn btn-outline-secondary"><i class="fas fa-user-plus"></i></a>
+              <input type="text" name="customer" value="{{ customer }}" placeholder="{{ entry_customer }}" id="input-customer" class="form-control"/> <a href="{{ customer_add }}" target="_blank" data-bs-toggle="tooltip" title="{{ button_customer_add }}" class="btn btn-outline-secondary"><i class="fas fa-user-plus"></i></a>
             </div>
             <input type="hidden" name="customer_id" value="{{ customer_id }}" id="input-customer-id"/>
-
           </div>
-
           <div class="mb-3">
             <label for="input-customer-group" class="form-label">{{ entry_customer_group }}</label> <select name="customer_group_id" id="input-customer-group" class="form-select">
               {% for customer_group in customer_groups %}
@@ -528,10 +561,8 @@
             <label for="input-telephone" class="form-label">{{ entry_telephone }}</label> <input type="text" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control"/>
             <div id="error-telephone" class="invalid-feedback"></div>
           </div>
-
           {% for custom_field in custom_fields %}
             {% if custom_field.location == 'account' %}
-
               {% if custom_field.type == 'select' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
                   <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <select name="custom_field[{{ custom_field.custom_field_id }}]" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-select">
@@ -543,7 +574,6 @@
                   <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               {% endif %}
-
               {% if custom_field.type == 'radio' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
                   <label class="form-label">{{ custom_field.name }}</label>
@@ -559,37 +589,31 @@
                   <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               {% endif %}
-
               {% if custom_field.type == 'checkbox' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
                   <label class="form-label">{{ custom_field.name }}</label>
                   <div id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control" style="height: 150px; overflow: auto;">
-
                     {% for custom_field_value in custom_field.custom_field_value %}
                       <div class="form-check">
                         <input type="checkbox" name="custom_field[{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" id="input-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-input"{% if account_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id in account_custom_field[custom_field.custom_field_id] %} checked{% endif %}/> <label for="input-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-label">{{ custom_field_value.name }}</label>
                       </div>
                     {% endfor %}
-
                   </div>
                   <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               {% endif %}
-
               {% if custom_field.type == 'text' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
                   <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
                   <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               {% endif %}
-
               {% if custom_field.type == 'textarea' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
                   <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <textarea name="custom_field[{{ custom_field.custom_field_id }}]" rows="5" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control">{{ custom_field.value }}</textarea>
                   <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               {% endif %}
-
               {% if custom_field.type == 'file' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
                   <label class="form-label">{{ custom_field.name }}</label>
@@ -600,7 +624,6 @@
                   <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               {% endif %}
-
               {% if custom_field.type == 'date' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
                   <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
@@ -611,7 +634,6 @@
                   <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               {% endif %}
-
               {% if custom_field.type == 'time' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
                   <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
@@ -622,7 +644,6 @@
                   <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               {% endif %}
-
               {% if custom_field.type == 'datetime' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
                   <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
@@ -633,20 +654,16 @@
                   <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               {% endif %}
-
             {% endif %}
           {% endfor %}
-
           <div class="text-end">
             <button type="submit" id="button-customer" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
           </div>
-
         </form>
       </div>
     </div>
   </div>
 </div>
-
 <div id="modal-cart" class="modal">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -655,13 +672,11 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
-
         <ul class="nav nav-tabs">
           <li class="nav-item"><a href="#tab-product" data-bs-toggle="tab" class="nav-link active">{{ tab_product }}</a></li>
           <li class="nav-item"><a href="#tab-voucher" data-bs-toggle="tab" class="nav-link">{{ tab_voucher }}</a></li>
         </ul>
         <div class="tab-content">
-
           <div id="tab-product" class="tab-pane active">
             <form id="form-product-add">
               <fieldset class="mb-0">
@@ -679,22 +694,25 @@
               </div>
             </form>
           </div>
-
           <div id="tab-voucher" class="tab-pane">
             <form id="form-voucher-add">
               <fieldset class="mb-0">
                 <legend>{{ text_voucher_add }}</legend>
                 <div class="mb-3 required">
                   <label for="input-to-name" class="form-label">{{ entry_to_name }}</label> <input type="text" name="to_name" value="" placeholder="{{ entry_to_name }}" id="input-to-name" class="form-control"/>
+                  <div id="error-to-name" class="invalid-feedback"></div>
                 </div>
                 <div class="mb-3 required">
                   <label for="input-to-email" class="form-label">{{ entry_to_email }}</label> <input type="text" name="to_email" value="" placeholder="{{ entry_to_email }}" id="input-to-email" class="form-control"/>
+                  <div id="error-to-email" class="invalid-feedback"></div>
                 </div>
                 <div class="mb-3 required">
                   <label for="input-from-name" class="form-label">{{ entry_from_name }}</label> <input type="text" name="from_name" value="" placeholder="{{ entry_from_name }}" id="input-from-name" class="form-control"/>
+                  <div id="error-from-name" class="invalid-feedback"></div>
                 </div>
                 <div class="mb-3 required">
                   <label for="input-from-email" class="form-label">{{ entry_from_email }}</label> <input type="text" name="from_email" value="" placeholder="{{ entry_from_email }}" id="input-from-email" class="form-control"/>
+                  <div id="error-from-email" class="invalid-feedback"></div>
                 </div>
                 <div class="mb-3 required">
                   <label for="input-theme" class="form-label">{{ entry_theme }}</label> <select name="voucher_theme_id" id="input-theme" class="form-select">
@@ -708,20 +726,19 @@
                 </div>
                 <div class="mb-3 required">
                   <label for="input-amount" class="form-label">{{ entry_amount }}</label> <input type="text" name="amount" value="{{ voucher_min }}" placeholder="{{ entry_amount }}" id="input-amount" class="form-control"/>
+                  <div id="error-amount" class="invalid-feedback"></div>
                 </div>
               </fieldset>
               <div class="text-end">
                 <button type="submit" id="button-voucher-add" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
               </div>
             </form>
-
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-
 <div id="modal-affiliate" class="modal">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -731,9 +748,8 @@
       </div>
       <div class="modal-body">
         <form id="form-affiliate">
-          <div class="input-group mb-3">
+          <div class="mb-3">
             <input type="text" name="affiliate" value="{{ affiliate }}" placeholder="{{ entry_affiliate }}" id="input-affiliate" class="form-control"/>
-            <button type="button" class="btn btn-outline-secondary" onclick="location = 'index.php?route=marketing/affiliate|form&user_token={{ user_token }}' + ($('#input-affiliate-id').val() != 0 ? '&affiliate_id=' + $('#input-affiliate-id').val() : '');"><i class="fas fa-link"></i></button>
           </div>
           <input type="hidden" name="affiliate_id" value="{{ affiliate_id }}" id="input-affiliate-id"/>
           <div class="text-end">
@@ -744,7 +760,6 @@
     </div>
   </div>
 </div>
-
 <div id="modal-payment-address" class="modal">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -754,7 +769,6 @@
       </div>
       <div class="modal-body">
         <form id="form-payment-address">
-
           <div class="mb-3">
             <label for="input-payment-address" class="form-label">{{ entry_address }}</label> <select name="payment_address" id="input-payment-address" class="form-select">
               <option value="0" selected="selected">{{ text_none }}</option>
@@ -763,40 +777,32 @@
               {% endfor %}
             </select>
           </div>
-
           <div class="mb-3 required">
             <label for="input-payment-firstname" class="form-label">{{ entry_firstname }}</label> <input type="text" name="firstname" value="{{ payment_firstname }}" placeholder="{{ entry_firstname }}" id="input-payment-firstname" class="form-control"/>
             <div id="error-payment-firstname" class="invalid-feedback"></div>
           </div>
-
           <div class="mb-3 required">
             <label for="input-payment-lastname" class="form-label">{{ entry_lastname }}</label> <input type="text" name="lastname" value="{{ payment_lastname }}" placeholder="{{ entry_lastname }}" id="input-payment-lastname" class="form-control"/>
             <div id="error-payment-lastname" class="invalid-feedback"></div>
           </div>
-
           <div class="mb-3">
             <label for="input-payment-company" class="form-label">{{ entry_company }}</label> <input type="text" name="company" value="{{ payment_company }}" placeholder="{{ entry_company }}" id="input-payment-company" class="form-control"/>
           </div>
-
           <div class="mb-3 required">
             <label for="input-payment-address-1" class="form-label">{{ entry_address_1 }}</label> <input type="text" name="address_1" value="{{ payment_address_1 }}" placeholder="{{ entry_address_1 }}" id="input-payment-address-1" class="form-control"/>
             <div id="error-payment-address-1" class="invalid-feedback"></div>
           </div>
-
           <div class="mb-3">
             <label for="input-payment-address-2" class="form-label">{{ entry_address_2 }}</label> <input type="text" name="address_2" value="{{ payment_address_2 }}" placeholder="{{ entry_address_2 }}" id="input-payment-address-2" class="form-control"/>
           </div>
-
           <div class="mb-3 required">
             <label for="input-payment-city" class="form-label">{{ entry_city }}</label> <input type="text" name="city" value="{{ payment_city }}" placeholder="{{ entry_city }}" id="input-payment-city" class="form-control"/>
             <div id="error-payment-city" class="invalid-feedback"></div>
           </div>
-
           <div class="mb-3 required">
             <label for="input-payment-postcode" class="form-label">{{ entry_postcode }}</label> <input type="text" name="postcode" value="{{ payment_postcode }}" placeholder="{{ entry_postcode }}" id="input-payment-postcode" class="form-control"/>
             <div id="error-payment-postcode" class="invalid-feedback"></div>
           </div>
-
           <div class="mb-3 required">
             <label for="input-payment-country" class="form-label">{{ entry_country }}</label> <select name="country_id" id="input-payment-country" class="form-select">
               <option value="">{{ text_select }}</option>
@@ -806,15 +812,12 @@
             </select>
             <div id="error-payment-country" class="invalid-feedback"></div>
           </div>
-
           <div class="mb-3 required">
             <label for="input-payment-zone" class="form-label">{{ entry_zone }}</label> <select name="zone_id" id="input-payment-zone" class="form-select"></select>
             <div id="error-payment-zone" class="invalid-feedback"></div>
           </div>
-
           {% for custom_field in custom_fields %}
             {% if custom_field.location == 'address' %}
-
               {% if custom_field.type == 'select' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
                   <label for="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <select name="custom_field[{{ custom_field.custom_field_id }}]" id="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-select">
@@ -826,7 +829,6 @@
                   <div id="error-payment-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               {% endif %}
-
               {% if custom_field.type == 'radio' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
                   <label class="form-label">{{ custom_field.name }}</label>
@@ -840,7 +842,6 @@
                   <div id="error-payment-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               {% endif %}
-
               {% if custom_field.type == 'checkbox' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
                   <label class="form-label">{{ custom_field.name }}</label>
@@ -854,21 +855,18 @@
                   <div id="error-payment-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               {% endif %}
-
               {% if custom_field.type == 'text' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
                   <label for="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ payment_custom_field[custom_field.custom_field_id] ? payment_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
                   <div id="error-payment-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               {% endif %}
-
               {% if custom_field.type == 'textarea' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
                   <label for="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <textarea name="custom_field[{{ custom_field.custom_field_id }}]" rows="5" placeholder="{{ custom_field.name }}" id="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-control">{{ payment_custom_field[custom_field.custom_field_id] ? payment_custom_field[custom_field.custom_field_id] : custom_field.value }}</textarea>
                   <div id="error-payment-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               {% endif %}
-
               {% if custom_field.type == 'file' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
                   <label class="form-label">{{ custom_field.name }}</label>
@@ -879,7 +877,6 @@
                   <div id="error-payment-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               {% endif %}
-
               {% if custom_field.type == 'date' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
                   <label for="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
@@ -890,7 +887,6 @@
                   <div id="error-payment-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               {% endif %}
-
               {% if custom_field.type == 'time' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
                   <label for="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
@@ -901,7 +897,6 @@
                   <div id="error-payment-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               {% endif %}
-
               {% if custom_field.type == 'datetime' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
                   <label for="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
@@ -912,18 +907,13 @@
                   <div id="error-payment-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               {% endif %}
-
             {% endif %}
-
           {% endfor %}
-
           <div class="text-end">
             <button type="submit" id="button-payment-address" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
           </div>
-
         </form>
       </div>
-
     </div>
   </div>
 </div>
@@ -1118,7 +1108,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">{{ text_comment_edit }}</h5>
+        <h5 class="modal-title">{{ text_comment }}</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
@@ -1169,10 +1159,12 @@ $(document).on('click', '#button-invoice', function () {
                 $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
 
-            if (json['invoice_no']) {
-                $('#invoice').html(json['invoice_no']);
+            if (json['success']) {
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#button-invoice').replaceWith('<button disabled="disabled" class="btn btn-success"><i class="fas fa-cog"></i></button>');
+                $('#invoice-value').html(json['invoice_no']);
+
+                $('#button-invoice').replaceWith('<button disabled="disabled" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>');
             }
         },
         error: function (xhr, ajaxOptions, thrownError) {
@@ -1556,8 +1548,6 @@ $('#form-product-add').on('submit', function (e) {
             $('.is-invalid').removeClass('is-invalid');
             $('.invalid-feedback').removeClass('d-block');
 
-            console.log(json);
-
             if (json['error']) {
                 if (json['error']['warning']) {
                     $('#form-product-add').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
@@ -1596,10 +1586,10 @@ $('#order-products').on('submit', 'form', function (e) {
         data: $(element).serialize(),
         dataType: 'json',
         beforeSend: function () {
-           $(e.target).button('loading');
+            $(e.target).button('loading');
         },
         complete: function () {
-           $(e.target).button('reset');
+            $(e.target).button('reset');
         },
         success: function (json) {
             $('.alert-dismissible').remove();
@@ -1648,7 +1638,7 @@ $('#form-voucher-add').on('submit', function (e) {
                 }
 
                 if (json['error']) {
-                    for (key in json['error']['option']) {
+                    for (key in json['error']) {
                         $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
                         $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
                     }
@@ -1656,12 +1646,17 @@ $('#form-voucher-add').on('submit', function (e) {
             }
 
             if (json['success']) {
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
                 $('#input-to-name').val('');
                 $('#input-to-email').val('');
                 $('#input-from-name').val('');
                 $('#input-from-email').val('');
                 $('#input-message').val('');
                 $('#input-amount').val('{{ voucher_min|escape('js') }}');
+
+                // Refresh products, vouchers and totals
+                $('#button-refresh').trigger('click');
             }
         },
         error: function (xhr, ajaxOptions, thrownError) {
@@ -2008,7 +2003,11 @@ $('#form-affiliate').on('submit', function (e) {
             if (json['success']) {
                 $('#form-affiliate').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#affiliate-value').html($('#input-affiliate').val());
+                if ($('#input-affiliate-id').val()) {
+                    $('#affiliate-value').html('<a href="index.php?route=marketing/affiliate|form&user_token={{ user_token }}&customer_id=' + $('#input-affiliate-id').val() + '" target="_blank">' + $('#input-affiliate').val() + '</a>');
+                } else {
+                    $('#affiliate-value').html('&nbsp;');
+                }
             }
         },
         error: function (xhr, ajaxOptions, thrownError) {
@@ -2150,11 +2149,9 @@ $('#form-payment-address').on('submit', function (e) {
             if (json['success']) {
                 $('#form-payment-address').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                var address = '';
+                var address = $('#input-payment-firstname').val() + ' ' + $('#input-payment-lastname').val() + "<br/>";
 
-                address += $('#input-payment-firstname').val() + ' ' + $('#input-payment-lastname').val() + "<br/>";
-
-                var company = $('#input-payment-company').val()
+                var company = $('#input-payment-company').val();
 
                 if (company) {
                     address += $('#input-payment-company').val() + "<br/>";
@@ -2162,7 +2159,7 @@ $('#form-payment-address').on('submit', function (e) {
 
                 address += $('#input-payment-address-1').val() + "<br/>";
 
-                var address_2 = $('#input-payment-address-2').val()
+                var address_2 = $('#input-payment-address-2').val();
 
                 if (address_2) {
                     address += $('#input-payment-address-2').val() + "<br/>";
@@ -2326,11 +2323,9 @@ $('#form-shipping-address').on('submit', function (e) {
             if (json['success']) {
                 $('#form-shipping-address').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                var address = '';
+                var address = $('#input-shipping-firstname').val() + ' ' + $('#input-shipping-lastname').val() + "<br/>";
 
-                address += $('#input-shipping-firstname').val() + ' ' + $('#input-shipping-lastname').val() + "<br/>";
-
-                var company = $('#input-shipping-company').val()
+                var company = $('#input-shipping-company').val();
 
                 if (company) {
                     address += $('#input-shipping-company').val() + "<br/>";
@@ -2338,7 +2333,7 @@ $('#form-shipping-address').on('submit', function (e) {
 
                 address += $('#input-shipping-address-1').val() + "<br/>";
 
-                var address_2 = $('#input-shipping-address-2').val()
+                var address_2 = $('#input-shipping-address-2').val();
 
                 if (address_2) {
                     address += $('#input-shipping-address-2').val() + "<br/>";
@@ -2474,7 +2469,7 @@ $('#input-payment-method').on('change', function (e) {
             $(element).prop('disabled', false);
         },
         success: function (json) {
-            $('#alert .alert-dismissible').remove();
+            $('.alert-dismissible').remove();
 
             if (json['error']) {
                 $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
@@ -2506,7 +2501,7 @@ $('#button-shipping-method').on('click', function () {
             $(element).button('reset');
         },
         success: function (json) {
-            $('#alert .alert-dismissible').remove();
+            $('.alert-dismissible').remove();
 
             if (json['error']) {
                 $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
@@ -2560,7 +2555,7 @@ $('#input-shipping-method').on('change', function (e) {
             $(element).prop('disabled', false);
         },
         success: function (json) {
-            $('#alert .alert-dismissible').remove();
+            $('.alert-dismissible').remove();
 
             if (json['error']) {
                 $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
@@ -2596,7 +2591,7 @@ $('#form-comment').on('submit', function (e) {
             $('#button-comment').button('reset');
         },
         success: function (json) {
-            $('#form-comment .alert-dismissible').remove();
+            $('.alert-dismissible').remove();
 
             // Check for errors
             if (json['error']) {
@@ -2633,8 +2628,6 @@ $('#button-refresh').on('click', function () {
                 for (i = 0; i < json['products'].length; i++) {
                     product = json['products'][i];
 
-                    console.log(product);
-
                     html += '<tr>';
                     html += '  <td class="text-start"><a href="index.php?route=catalog/product|form&user_token={{ user_token }}&product_id=' + product['product_id'] + '" target="_blank">' + product['name'] + '</a>' + (!product['stock'] ? ' <span class="text-danger">***</span>' : '') + '<br/>';
 
@@ -2661,12 +2654,10 @@ $('#button-refresh').on('click', function () {
                     html += '  <td class="text-end">' + product['price'] + '</td>';
                     html += '  <td class="text-end">' + product['total'] + '</td>';
                     html += '  <td class="text-end">';
-
-                    html += '    <form action="{{ product_remove }}" method="post" data-oc-toggle="order-edit">';
+                    html += '    <form>';
                     html += '      <button type="submit" data-bs-toggle="tooltip" title="{{ button_remove }}" data-oc-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>';
                     html += '      <input type="hidden" name="key" value="' + product['cart_id'] + '"/>';
                     html += '    </form>';
-
                     html += '  </td>';
                     html += '</tr>';
                 }
@@ -2684,15 +2675,13 @@ $('#button-refresh').on('click', function () {
                     html += '  <td class="text-start">' + voucher['description'] + '</td>';
                     html += '  <td class="text-start"></td>';
                     html += '  <td class="text-end">1</td>';
-                    html += '  <td class="text-end">' + voucher['price'] + '</td>';
-                    html += '  <td class="text-end">' + voucher['price'] + '</td>';
+                    html += '  <td class="text-end">' + voucher['amount'] + '</td>';
+                    html += '  <td class="text-end">' + voucher['amount'] + '</td>';
                     html += '  <td class="text-end">';
-
-                    html += '    <form action="{{ voucher_remove }}" method="post">';
+                    html += '    <form>';
                     html += '      <button type="submit" data-bs-toggle="tooltip" title="{{ button_remove }}" data-oc-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>';
-                    html += '      <input type="hidden" name="key" value="' + voucher['cart_id'] + '"/>';
+                    html += '      <input type="hidden" name="key" value="' + voucher['key'] + '"/>';
                     html += '    </form>';
-
                     html += '  </td>';
                     html += '</tr>';
                 }
@@ -2725,9 +2714,11 @@ $('#button-refresh').on('click', function () {
             if (json['shipping_required']) {
                 $('#shipping-address').removeClass('d-none');
                 $('#shipping-method').removeClass('d-none');
+                $('#button-shipping').prop('disabled', false);
             } else {
                 $('#shipping-address').addClass('d-none');
                 $('#shipping-method').addClass('d-none');
+                $('#button-shipping').prop('disabled', true);
             }
         },
         error: function (xhr, ajaxOptions, thrownError) {
@@ -2760,10 +2751,30 @@ $('#button-confirm').on('click', function () {
 
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-            }
 
-            if (json['order_id']) {
-                $('#input-order-id').val(json['order_id']);
+                if (json['order_id']) {
+                    $('#input-order-id').val(json['order_id']);
+                }
+
+                if (json['points']) {
+                    $('#reward-value').html(json['points']);
+                    $('#button-reward-add').prop('disabled', false);
+                    $('#button-reward-remove').prop('disabled', false);
+                } else {
+                    $('#reward-value').html(0);
+                    $('#button-reward-add').prop('disabled', true);
+                    $('#button-reward-remove').prop('disabled', true);
+                }
+
+                if (json['commission']) {
+                    $('#commission-value').html(json['commission']);
+                    $('#button-commission-add').prop('disabled', false);
+                    $('#button-commission-remove').prop('disabled', false);
+                } else {
+                    $('#commission-value').html('&nbsp;');
+                    $('#button-commission-add').prop('disabled', true);
+                    $('#button-commission-remove').prop('disabled', true);
+                }
             }
         },
         error: function (xhr, ajaxOptions, thrownError) {
@@ -2803,9 +2814,9 @@ $('#form-history').on('submit', function (e) {
             }
 
             if (json['success']) {
-                $('#history').load('index.php?route=sale/order|history&user_token={{ user_token }}&order_id=' + $('#input-order-id').val());
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#tab-history').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#history').load('index.php?route=sale/order|history&user_token={{ user_token }}&order_id=' + $('#input-order-id').val());
 
                 $('#input-history').val('');
             }

@@ -3800,6 +3800,14 @@ function db_schema() {
 		'primary' => [
 			'order_recurring_id'
 		],
+		'index' => [
+			[
+				'name' => 'order_id',
+				'key' => [
+					'order_id'
+				]
+			]
+		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
@@ -3816,6 +3824,11 @@ function db_schema() {
 			],
 			[
 				'name' => 'order_recurring_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'order_id',
 				'type' => 'int(11)',
 				'not_null' => true
 			],
@@ -3842,6 +3855,14 @@ function db_schema() {
 		],
 		'primary' => [
 			'order_recurring_transaction_id'
+		],
+		'index' => [
+			[
+				'name' => 'order_id',
+				'key' => [
+					'order_id'
+				]
+			]
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',

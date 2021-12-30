@@ -39,8 +39,8 @@ class Recurring extends \Opencart\System\Engine\Model {
 		return $query->row['total'];
 	}
 	
-	public function addRecurringTransaction(int $order_recurring_id, string $type): void {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "order_recurring_transaction` SET `order_recurring_id` = '" . (int)$order_recurring_id . "', `type` = '" . (int)$type . "', `date_added` = NOW()");
+	public function addRecurringTransaction(int $order_recurring_id, int $order_id, string $type): void {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "order_recurring_transaction` SET `order_recurring_id` = '" . (int)$order_recurring_id . "', `order_id` = '" . (int)$order_id . "', `type` = '" . (int)$type . "', `date_added` = NOW()");
 	}	
 	
 	public function editRecurringStatus(int $order_recurring_id, bool $status): void {

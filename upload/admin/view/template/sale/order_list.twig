@@ -1,4 +1,4 @@
-<form id="form-order" method="post" action="{{ action }}" data-oc-target="#order">
+<form id="form-order" method="post" enctype="application/x-www-form-urlencoded" data-load="{{ action }}">
   <div class="table-responsive">
     <table class="table table-bordered table-hover">
       <thead>
@@ -27,8 +27,7 @@
               <td class="text-end d-none d-lg-table-cell">{{ order.total }}</td>
               <td class="text-start d-none d-lg-table-cell">{{ order.date_added }}</td>
               <td class="text-start d-none d-xl-table-cell">{{ order.date_modified }}</td>
-              <td class="text-end text-nowrap"><a href="{{ order.view }}" data-bs-toggle="tooltip" title="{{ button_view }}" class="btn btn-primary"><i class="fas fa-eye"></i></a>
-                <button type="button" value="{{ order.order_id }}" data-bs-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button></td>
+              <td class="text-end"><a href="{{ order.view }}" data-bs-toggle="tooltip" title="{{ button_view }}" class="btn btn-primary"><i class="fas fa-eye"></i></a></td>
             </tr>
           {% endfor %}
         {% else %}

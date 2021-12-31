@@ -4,9 +4,10 @@
     <div class="container-fluid">
       <div class="float-end">
         <button type="button" data-bs-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-order').toggleClass('d-none');" class="btn btn-light d-lg-none"><i class="fas fa-filter"></i></button>
-        <button type="submit" id="button-shipping" form="form-order" formaction="{{ shipping }}" formtarget="_blank" data-bs-toggle="tooltip" title="{{ button_shipping_print }}" class="btn btn-info"><i class="fas fa-truck"></i></button>
         <button type="submit" id="button-invoice" form="form-order" formaction="{{ invoice }}" formtarget="_blank" data-bs-toggle="tooltip" title="{{ button_invoice_print }}" class="btn btn-info"><i class="fas fa-print"></i></button>
+        <button type="submit" id="button-shipping" form="form-order" formaction="{{ shipping }}" formtarget="_blank" data-bs-toggle="tooltip" title="{{ button_shipping_print }}" class="btn btn-info"><i class="fas fa-truck"></i></button>
         <a href="{{ add }}" data-bs-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+        <button type="button" id="button-delete" data-bs-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
       </div>
       <h1>{{ heading_title }}</h1>
       <ol class="breadcrumb">
@@ -172,16 +173,16 @@ $('input[name^=\'selected\']').on('change', function() {
 
 $('#button-shipping, #button-invoice').prop('disabled', true);
 
-$('input[name^=\'selected\']:first').trigger('change');
-
-$('#form-order a.delete').on('click', function(e) {
+$('#button-delete').on('click', function(e) {
     e.preventDefault();
 
     var element = this;
 
     if (confirm('{{ text_confirm }}')) {
         $.ajax({
-            url: 'index.php?route=sale/order|call|delete&user_token={{ user_token }}&order_id=' + $(element).val(),
+            url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=sale/order|delete',
+            type: 'post',
+            data: $('#form-order').serialize(),
             dataType: 'json',
             beforeSend: function() {
                 $(element).button('loading');
@@ -197,9 +198,9 @@ $('#form-order a.delete').on('click', function(e) {
                 }
 
                 if (json['success']) {
-                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                    location = '{{ delete }}';
+                    $('#order').load($('#form-order').attr('data-load'));
                 }
             },
             error: function(xhr, ajaxOptions, thrownError) {

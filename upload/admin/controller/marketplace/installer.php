@@ -303,13 +303,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 					$source = $zip->getNameIndex($i);
 
 					// Only extract the contents of the upload folder
-					if (substr($source, 0, strlen($extension_install_info['code'])) == $extension_install_info['code']) {
-						$remove = strlen($extension_install_info['code'] . '/upload/');
-					} else {
-						$remove = strlen('upload/');
-					}
-
-					$destination = str_replace('\\', '/', substr($source, $remove));
+					$destination = str_replace('\\', '/', $source);
 
 					$path = '';
 					$base = '';
@@ -360,6 +354,12 @@ class Installer extends \Opencart\System\Engine\Controller {
 					if (substr($destination, 0, 22) == 'system/storage/vendor/') {
 						$path = substr($destination, 15);
 						$base = DIR_STORAGE;
+					}
+
+					// Include install xml file
+					if ($destination == 'install.xml') {
+						$path = $extension_install_info['code'] . '/' . $destination;
+						$base = DIR_EXTENSION;
 					}
 
 					if ($path) {

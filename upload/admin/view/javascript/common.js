@@ -182,7 +182,7 @@ $(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function(e) {
         type: method,
         data: $(form).serialize(),
         dataType: 'json',
-        contentType: enctype,
+        contentType: 'application/x-www-form-urlencoded',
         beforeSend: function() {
             $(button).button('loading');
         },

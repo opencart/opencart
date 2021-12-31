@@ -524,7 +524,7 @@ function twig_replace_filter($str, $from)
  *
  * @return int|float The rounded number
  */
-function twig_round($value, $precision = 0, $method = 'common')
+function twig_round($value=0, $precision = 0, $method = 'common')
 {
     if ('common' === $method) {
         return round($value, $precision);

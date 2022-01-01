@@ -1,16 +1,14 @@
 <?php
 /*
-Installed version
-Current version
-Latest version
-
-Upgrade
+Upgrade Process
 
 1. Check for latest version
 
 2. Download a copy of the latest version
 
 3. Add and replace the files with the ones from latest version
+
+4. Redirect to upgrade page
 */
 namespace Opencart\Admin\Controller\Tool;
 class Upgrade extends \Opencart\System\Engine\Controller {
@@ -114,7 +112,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 			if ($status == 200) {
 				$json['text'] = $this->language->get('text_unzip');
 
-				$json['next'] = str_replace('&amp;', '&', $this->url->link('tool/upgrade|install', 'user_token=' . $this->session->data['user_token'] . '&version=' . $version));
+				$json['next'] = $this->url->link('tool/upgrade|install', 'user_token=' . $this->session->data['user_token'] . '&version=' . $version, true);
 			} else {
 				$json['error'] = $this->language->get('error_download');
 			}
@@ -154,30 +152,38 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 				for ($i = 0; $i < $zip->numFiles; $i++) {
 					$source = $zip->getNameIndex($i);
 
-					// Only extract the contents of the upload folder
-					$destination = str_replace('\\', '/', substr($source, strlen('upload/')));
+					$remove = 'opencart-' . $version . '/upload/';
 
-					// Extension
-					$path = DIR_OPENCART . $destination;
+					if (substr($source, 0, strlen($remove)) == $remove) {
+						// Only extract the contents of the upload folder
+						$destination = str_replace('\\', '/', substr($source, strlen($remove)));
 
-					// Fixes admin folder being under a different name
-					if (substr($destination, 0, 6) == 'admin/') {
-						$path = DIR_APPLICATION . substr($destination, 6);
-					}
+						// Default copy location
+						$path = DIR_OPENCART . $destination;
 
-					// We need to use a different path for vendor folders.
-					if (substr($destination, 0, 15) == 'system/storage/') {
-						$path = DIR_STORAGE . substr($destination, 15);
-					}
+						// Fixes admin folder being under a different name
+						if (substr($destination, 0, 6) == 'admin/') {
+							$path = DIR_APPLICATION . substr($destination, 6);
+						}
 
-					// Must not have a path before files and directories can be moved
-					if (substr($path, -1) == '/' && mkdir($path, 0777)) {
-						$json['error'] = $this->language->get('error_download');
-					}
+						// We need to use a different path for vendor folders.
+						if (substr($destination, 0, 15) == 'system/storage/') {
+							$path = DIR_STORAGE . substr($destination, 15);
+						}
 
-					// If check if the path is not directory and check there is no existing file
-					if (substr($path, -1) != '/' && copy('zip://' . $file . '#' . $source, $path)) {
-						$json['error'] = $this->language->get('error_download');
+						echo '$source ' . $source . "\n";
+						echo '$destination ' . $destination . "\n";
+						echo '$path ' . $path . "\n";
+
+						// Must not have a path before files and directories can be moved
+						if (substr($path, -1) == '/' && mkdir($path, 0777)) {
+							$json['error'] = $this->language->get('error_download');
+						}
+
+						// If check if the path is not directory and check there is no existing file
+						if (substr($path, -1) != '/' && copy('zip://' . $file . '#' . $source, $path)) {
+							$json['error'] = $this->language->get('error_download');
+						}
 					}
 				}
 
@@ -195,4 +201,8 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
+
+
+
+
 }

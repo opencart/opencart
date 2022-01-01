@@ -171,10 +171,6 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 							$path = DIR_STORAGE . substr($destination, 15);
 						}
 
-						echo '$source ' . $source . "\n";
-						echo '$destination ' . $destination . "\n";
-						echo '$path ' . $path . "\n";
-
 						// Must not have a path before files and directories can be moved
 						if (substr($path, -1) == '/' && mkdir($path, 0777)) {
 							$json['error'] = $this->language->get('error_download');
@@ -201,8 +197,4 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
-
-
-
-
 }

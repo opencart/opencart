@@ -37,7 +37,7 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 
 		// Stop any undefined index messages.
 		if ($this->user->isLogged()) {
-			$json['redirect'] = $this->url->link('common/login');
+			$json['redirect'] = $this->url->link('common/login', '', true);
 		}
 
 		$keys = ['email'];
@@ -61,7 +61,7 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$json['redirect'] = $this->url->link('common/login');
+			$json['redirect'] = $this->url->link('common/login', '', true);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -155,7 +155,7 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 		if (!isset($this->request->get['reset_token']) || !isset($this->session->data['reset_token']) || ($this->session->data['reset_token'] != $this->request->get['reset_token'])) {
 			$this->session->data['error'] = $this->language->get('error_session');
 
-			$json['redirect'] = $this->url->link('account/forgotten', 'language=' . $this->config->get('config_language'), true);
+			$json['redirect'] = $this->url->link('account/forgotten', true);
 		}
 
 		$this->load->model('user/user');
@@ -167,7 +167,7 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 
 			$this->session->data['error'] = $this->language->get('error_code');
 
-			$json['redirect'] = $this->url->link('common/login');
+			$json['redirect'] = $this->url->link('common/login', '', true);
 		}
 
 		if (!$json) {
@@ -187,7 +187,7 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 
 			unset($this->session->data['reset_token']);
 
-			$json['redirect'] = $this->url->link('common/login');
+			$json['redirect'] = $this->url->link('common/login', '', true);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

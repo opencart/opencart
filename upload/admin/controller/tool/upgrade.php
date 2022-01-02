@@ -148,11 +148,11 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 			$zip = new \ZipArchive();
 
 			if ($zip->open($file)) {
+				$remove = 'opencart-' . $version . '/upload/';
+
 				// Check if any of the files already exist.
 				for ($i = 0; $i < $zip->numFiles; $i++) {
 					$source = $zip->getNameIndex($i);
-
-					$remove = 'opencart-' . $version . '/upload/';
 
 					if (substr($source, 0, strlen($remove)) == $remove) {
 						// Only extract the contents of the upload folder
@@ -172,14 +172,14 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 						}
 
 						// Must not have a path before files and directories can be moved
-						if (substr($path, -1) == '/' && mkdir($path, 0777)) {
-							$json['error'] = $this->language->get('error_download');
-						}
+						//if (substr($path, -1) == '/' && mkdir($path, 0777)) {
+						//	$json['error'] = $this->language->get('error_download');
+						//}
 
 						// If check if the path is not directory and check there is no existing file
-						if (substr($path, -1) != '/' && copy('zip://' . $file . '#' . $source, $path)) {
-							$json['error'] = $this->language->get('error_download');
-						}
+						//if (substr($path, -1) != '/' && copy('zip://' . $file . '#' . $source, $path)) {
+						//	$json['error'] = $this->language->get('error_download');
+						//}
 					}
 				}
 

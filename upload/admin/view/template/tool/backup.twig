@@ -34,7 +34,8 @@
             <div class="col-sm-10">
               <div class="form-control" style="height: 150px; overflow: auto;">
                 <div class="form-check">
-                  <input type="checkbox" class="form-check-input" id="input-backup-all" onchange="$(this).parent().parent().find(':checkbox').not(this).prop('checked', $(this).prop('checked'));"/> <label for="input-backup-all" class="form-check-label">{{ text_all }}</label>
+                  <input type="checkbox" class="form-check-input" id="input-backup-all" onchange="$(this).parent().parent().find(':checkbox').not(this).prop('checked', $(this).prop('checked'));"/>
+                  <label for="input-backup-all" class="form-check-label">{{ text_all }}</label>
                 </div>
                 {% set table_row = 0 %}
                 {% for table in tables %}
@@ -68,7 +69,9 @@ $('#button-backup').on('click', function() {
     $('#progress-bar').css('width', '0%');
     $('#progress-bar').removeClass('progress-bar-danger progress-bar-success');
 
-    var backup = function(next) {
+    var next = 'index.php?route=tool/backup|backup&user_token={{ user_token }}&table=' + $('input[name^=\'backup\']:checked').first().val();
+
+    var backup = function() {
         return $.ajax({
             url: next,
             type: 'post',
@@ -110,7 +113,9 @@ $('#button-backup').on('click', function() {
                 }
 
                 if (json['next']) {
-                    chain.attach(backup(json['next']));
+                    next = json['next'];
+
+                    chain.attach(backup);
                 }
             },
             error: function(xhr, ajaxOptions, thrownError) {
@@ -122,8 +127,8 @@ $('#button-backup').on('click', function() {
         });
     };
 
-    chain.attach(backup('index.php?route=tool/backup|backup&user_token={{ user_token }}&table=' + $('input[name^=\'backup\']:checked').first().val()));
-})
+    chain.attach(backup);
+});
 
 // Restore
 $('#history').on('click', '.btn-warning', function() {
@@ -132,9 +137,11 @@ $('#history').on('click', '.btn-warning', function() {
     $('#progress-bar').css('width', '0%');
     $('#progress-bar').removeClass('progress-bar-danger progress-bar-success');
 
-    var restore = function(url, element) {
+    var next = 'index.php?route=tool/backup|restore&user_token={{ user_token }}&filename=' + encodeURIComponent($(this).val());
+
+    var restore = function() {
         return $.ajax({
-            url: url,
+            url: next,
             type: 'post',
             dataType: 'json',
             beforeSend: function() {
@@ -179,7 +186,9 @@ $('#history').on('click', '.btn-warning', function() {
                 }
 
                 if (json['next']) {
-                    chain.attach(restore(json['next']));
+                    next =  json['next'];
+
+                    chain.attach(restore);
                 }
             },
             error: function(xhr, ajaxOptions, thrownError) {
@@ -192,7 +201,7 @@ $('#history').on('click', '.btn-warning', function() {
         });
     }
 
-    chain.attach(restore('index.php?route=tool/backup|restore&user_token={{ user_token }}&filename=' + encodeURIComponent($(this).val())));
+    chain.attach(restore);
 });
 
 // Upload

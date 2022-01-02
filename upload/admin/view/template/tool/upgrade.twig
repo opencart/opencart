@@ -11,31 +11,27 @@
     </div>
   </div>
   <div class="container-fluid">
-
     {% if error_warning %}
       <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }} <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>
     {% endif %}
-
     <div class="card">
       <div class="card-header"><i class="fas fa-sync"></i> {{ text_version }}</div>
       <div class="card-body">
 
         <fieldset>
-          <legend id="btn-version"{% if error_warning %} class="text-danger"{% endif %}>{{ text_update }}</legend>
+          <legend id="btn-version">{{ text_update }}</legend>
+          <div class="alert alert-info">
+            <p><strong><i class="fas fa-exclamation-circle"></i> {{ text_tips }}</strong></p>
+            <ol>
+              <li>{{ text_make }}
+                <br/>
+                {{ text_backup }} <a href="{{ backup }}">{{ text_here }}</a>;
+              </li>
+              <li>{{ text_check }}</li>
+              <li>{{ text_better }}</li>
+            </ol>
+          </div>
         </fieldset>
-
-        <div class="alert alert-info">
-          <p><strong><i class="fas fa-exclamation-circle"></i> {{ text_tips }}</strong></p>
-          <ol>
-            <li>{{ text_make }}
-              <br/>
-              {{ text_backup }} <a href="{{ backup }}">{{ text_here }}</a>;
-            </li>
-            <li>{{ text_check }}</li>
-            <li>{{ text_better }}</li>
-          </ol>
-        </div>
-        <br/>
 
         <fieldset>
           <legend>{{ text_progress }}</legend>
@@ -104,7 +100,6 @@ $('#button-upgrade').on('click', function() {
             },
             error: function(xhr, ajaxOptions, thrownError) {
                 $('#log').append(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });
     };

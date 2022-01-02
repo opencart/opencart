@@ -11,9 +11,11 @@
     </div>
   </div>
   <div class="container-fluid">
+
     {% if error_warning %}
       <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }} <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>
     {% endif %}
+
     <div class="card">
       <div class="card-header"><i class="fas fa-sync"></i> {{ text_version }}</div>
       <div class="card-body">
@@ -35,7 +37,6 @@
 
         <fieldset>
           <legend>{{ text_progress }}</legend>
-
           <div class="row mb-3">
             <label class="col-sm-2 col-form-label">{{ text_progress_short }}</label>
             <div class="col-sm-10">
@@ -48,7 +49,6 @@
               <div id="progress-text"></div>
             </div>
           </div>
-
         </fieldset>
 
       </div>
@@ -65,8 +65,10 @@ $('#button-upgrade').on('click', function() {
     $('#progress-text').html('{{ text_download }}');
     $('#log').append('{{ text_download }}' + "\n");
 
-    var upgrade = function(next) {
-        return $.ajax({
+    var next = 'index.php?route=tool/upgrade|download&user_token={{ user_token }}&version={{ version }}';
+
+    var upgrade = function() {
+          return $.ajax({
             url: next,
             dataType: 'json',
             beforeSend: function() {
@@ -95,7 +97,9 @@ $('#button-upgrade').on('click', function() {
                 }
 
                 if (json['next']) {
-                    chain.attach(upgrade(json['next']));
+                    next = json['next'];
+
+                    chain.attach(upgrade);
                 }
             },
             error: function(xhr, ajaxOptions, thrownError) {
@@ -104,7 +108,7 @@ $('#button-upgrade').on('click', function() {
         });
     };
 
-    chain.attach(upgrade('index.php?route=tool/upgrade|download&user_token={{ user_token }}&version={{ version }}'));
+    chain.attach(upgrade);
 });
 //--></script>
 {{ footer }}

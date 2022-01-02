@@ -85,7 +85,7 @@ class Login extends \Opencart\System\Engine\Controller {
 		if (!isset($this->request->get['login_token']) || !isset($this->session->data['login_token']) || $this->request->get['login_token'] != $this->session->data['login_token']) {
 			$this->session->data['error'] = $this->language->get('error_login');
 
-			$json['redirect'] = $this->url->link('common/login');
+			$json['redirect'] = $this->url->link('common/login', '', true);
 		}
 
 		if (!$json && !$this->user->login($this->request->post['username'], html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8'))) {

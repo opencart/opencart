@@ -216,14 +216,6 @@ class Installer extends \Opencart\System\Engine\Controller {
 						} else {
 							$link = '';
 						}
-
-						$composer = $dom->getElementsByTagName('composer')->item(0);
-
-						if ($composer) {
-							$composer = $composer->nodeValue;
-						} else {
-							$composer = '';
-						}
 					} catch (\Exception $exception) {
 						$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
 					}
@@ -236,8 +228,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 							'code'              	=> basename($filename, '.ocmod.zip'),
 							'version'               => $version,
 							'author'                => $author,
-							'link'                  => $link,
-							'composer'              => $composer
+							'link'                  => $link
 						];
 
 						$this->load->model('setting/extension');
@@ -406,19 +397,6 @@ class Installer extends \Opencart\System\Engine\Controller {
 
 			$json['success'] = $this->language->get('text_install');
 		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	public function composer(): void {
-		$this->load->language('marketplace/installer');
-
-		$json = [];
-
-
-
-
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

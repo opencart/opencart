@@ -371,7 +371,11 @@ class Chain {
         if (this.data.length) {
             this.start = true;
 
-            (this.data.shift())().done(function() {
+            var call = this.data.shift();
+
+            var jqxhr = call();
+
+            jqxhr.done(function() {
                 chain.execute();
             });
         } else {

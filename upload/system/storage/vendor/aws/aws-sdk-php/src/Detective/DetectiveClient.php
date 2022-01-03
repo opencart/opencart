@@ -25,9 +25,15 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listInvitationsAsync(array $args = [])
  * @method \Aws\Result listMembers(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listMembersAsync(array $args = [])
+ * @method \Aws\Result listTagsForResource(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array $args = [])
  * @method \Aws\Result rejectInvitation(array $args = [])
  * @method \GuzzleHttp\Promise\Promise rejectInvitationAsync(array $args = [])
  * @method \Aws\Result startMonitoringMember(array $args = [])
  * @method \GuzzleHttp\Promise\Promise startMonitoringMemberAsync(array $args = [])
+ * @method \Aws\Result tagResource(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise tagResourceAsync(array $args = [])
+ * @method \Aws\Result untagResource(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise untagResourceAsync(array $args = [])
  */
 class DetectiveClient extends AwsClient {}

@@ -17,11 +17,23 @@ class JsonParser
 
         switch ($shape['type']) {
             case 'structure':
+                if (isset($shape['document']) && $shape['document']) {
+                    return $value;
+                }
                 $target = [];
                 foreach ($shape->getMembers() as $name => $member) {
                     $locationName = $member['locationName'] ?: $name;
                     if (isset($value[$locationName])) {
                         $target[$name] = $this->parse($member, $value[$locationName]);
+                    }
+                }
+                if (isset($shape['union'])
+                    && $shape['union']
+                    && is_array($value)
+                    && empty($target)
+                ) {
+                    foreach ($value as $key => $val) {
+                        $target['Unknown'][$key] = $val;
                     }
                 }
                 return $target;

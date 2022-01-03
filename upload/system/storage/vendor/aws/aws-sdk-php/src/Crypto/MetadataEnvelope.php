@@ -49,6 +49,7 @@ class MetadataEnvelope implements ArrayAccess, IteratorAggregate, JsonSerializab
         $this->data[$name] = $value;
     }
 
+    #[\ReturnTypeWillChange]
     public function jsonSerialize()
     {
         return $this->data;

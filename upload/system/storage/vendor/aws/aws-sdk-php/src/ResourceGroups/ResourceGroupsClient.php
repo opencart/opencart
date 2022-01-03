@@ -23,6 +23,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listGroupResourcesAsync(array $args = [])
  * @method \Aws\Result listGroups(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listGroupsAsync(array $args = [])
+ * @method \Aws\Result putGroupConfiguration(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise putGroupConfigurationAsync(array $args = [])
  * @method \Aws\Result searchResources(array $args = [])
  * @method \GuzzleHttp\Promise\Promise searchResourcesAsync(array $args = [])
  * @method \Aws\Result tag(array $args = [])

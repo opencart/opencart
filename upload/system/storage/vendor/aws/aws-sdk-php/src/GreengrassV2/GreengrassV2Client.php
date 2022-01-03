@@ -5,6 +5,10 @@ use Aws\AwsClient;
 
 /**
  * This client is used to interact with the **AWS IoT Greengrass V2** service.
+ * @method \Aws\Result batchAssociateClientDeviceWithCoreDevice(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise batchAssociateClientDeviceWithCoreDeviceAsync(array $args = [])
+ * @method \Aws\Result batchDisassociateClientDeviceFromCoreDevice(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise batchDisassociateClientDeviceFromCoreDeviceAsync(array $args = [])
  * @method \Aws\Result cancelDeployment(array $args = [])
  * @method \GuzzleHttp\Promise\Promise cancelDeploymentAsync(array $args = [])
  * @method \Aws\Result createComponentVersion(array $args = [])
@@ -25,6 +29,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getCoreDeviceAsync(array $args = [])
  * @method \Aws\Result getDeployment(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getDeploymentAsync(array $args = [])
+ * @method \Aws\Result listClientDevicesAssociatedWithCoreDevice(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listClientDevicesAssociatedWithCoreDeviceAsync(array $args = [])
  * @method \Aws\Result listComponentVersions(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listComponentVersionsAsync(array $args = [])
  * @method \Aws\Result listComponents(array $args = [])

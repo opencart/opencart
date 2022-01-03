@@ -16,7 +16,7 @@ trait ResourceTypeAndIdTrait
         return $this->data['resource_id'];
     }
 
-    private static function parseResourceTypeAndId(array $data)
+    protected static function parseResourceTypeAndId(array $data)
     {
         $resourceData = preg_split("/[\/:]/", $data['resource'], 2);
         $data['resource_type'] = isset($resourceData[0])

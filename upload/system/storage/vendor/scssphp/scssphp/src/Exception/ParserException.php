@@ -16,6 +16,8 @@ namespace ScssPhp\ScssPhp\Exception;
  * Parser Exception
  *
  * @author Oleksandr Savchenko <traveltino@gmail.com>
+ *
+ * @internal
  */
 class ParserException extends \Exception implements SassException
 {

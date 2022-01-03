@@ -720,6 +720,8 @@ class Setting extends \Opencart\System\Engine\Controller {
 
 		if (!$this->request->post['config_file_max_size']) {
 			$json['error']['file_max_size'] = $this->language->get('error_file_max_size');
+		} elseif ($this->request->post['config_file_max_size'] > (int)preg_filter('/[^0-9]/', '', ini_get('upload_max_filesize'))) {
+			$json['error']['file_max_size'] = sprintf($this->language->get('error_upload_max_filesize'), ini_get('upload_max_filesize'));
 		}
 
 		$disallowed = [

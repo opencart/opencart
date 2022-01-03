@@ -108,7 +108,7 @@ class ConfigurationProvider extends AbstractConfigurationProvider
             // Use credentials from environment variables, if available
             $enabled = getenv(self::ENV_ENABLED);
             if ($enabled !== false) {
-                return Promise\promise_for(
+                return Promise\Create::promiseFor(
                     new Configuration(
                         $enabled,
                         getenv(self::ENV_HOST) ?: self::DEFAULT_HOST,
@@ -132,7 +132,7 @@ class ConfigurationProvider extends AbstractConfigurationProvider
     public static function fallback()
     {
         return function() {
-            return Promise\promise_for(
+            return Promise\Create::promiseFor(
                 new Configuration(
                     self::DEFAULT_ENABLED,
                     self::DEFAULT_HOST,
@@ -191,7 +191,7 @@ class ConfigurationProvider extends AbstractConfigurationProvider
                 $data[$profile]['csm_client_id'] = self::DEFAULT_CLIENT_ID;
             }
 
-            return Promise\promise_for(
+            return Promise\Create::promiseFor(
                 new Configuration(
                     $data[$profile]['csm_enabled'],
                     $data[$profile]['csm_host'],

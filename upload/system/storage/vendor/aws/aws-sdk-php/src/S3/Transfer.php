@@ -300,7 +300,7 @@ class Transfer implements PromisorInterface
 
         // Create an EachPromise, that will concurrently handle the upload
         // operations' yielded promises from the iterator.
-        return Promise\each_limit_all($files, $this->concurrency);
+        return Promise\Each::ofLimitAll($files, $this->concurrency);
     }
 
     /** @return Iterator */

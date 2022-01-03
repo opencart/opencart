@@ -7,9 +7,11 @@ class Backup extends \Opencart\System\Engine\Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		// Use the ini_get('upload_max_filesize') for the max file size
-		$data['error_upload_size'] = sprintf($this->language->get('error_upload_size'), ini_get('upload_max_filesize'));
+		$upload_max_filesize = (int)preg_filter('/[^0-9]/', '', ini_get('upload_max_filesize'));
 
-		$data['config_file_max_size'] = ((int)preg_filter('/[^0-9]/', '', ini_get('upload_max_filesize')) * 1000);
+		$data['error_upload_size'] = sprintf($this->language->get('error_upload_size'), $upload_max_filesize);
+
+		$data['config_file_max_size'] = ($upload_max_filesize * 1024 * 1024);
 
 		$data['breadcrumbs'] = [];
 

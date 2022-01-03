@@ -16,6 +16,8 @@ namespace ScssPhp\ScssPhp;
  * Block
  *
  * @author Anthon Pang <anthon.pang@gmail.com>
+ *
+ * @internal
  */
 class Block
 {
@@ -65,7 +67,7 @@ class Block
     public $children;
 
     /**
-     * @var \ScssPhp\ScssPhp\Block
+     * @var \ScssPhp\ScssPhp\Block|null
      */
     public $selfParent;
 }

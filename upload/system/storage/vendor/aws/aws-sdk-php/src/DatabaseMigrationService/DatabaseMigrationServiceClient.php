@@ -45,6 +45,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise describeCertificatesAsync(array $args = [])
  * @method \Aws\Result describeConnections(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeConnectionsAsync(array $args = [])
+ * @method \Aws\Result describeEndpointSettings(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeEndpointSettingsAsync(array $args = [])
  * @method \Aws\Result describeEndpointTypes(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeEndpointTypesAsync(array $args = [])
  * @method \Aws\Result describeEndpoints(array $args = [])

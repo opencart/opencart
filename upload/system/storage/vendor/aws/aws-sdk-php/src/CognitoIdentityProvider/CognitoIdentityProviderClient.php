@@ -164,6 +164,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise resendConfirmationCodeAsync(array $args = [])
  * @method \Aws\Result respondToAuthChallenge(array $args = [])
  * @method \GuzzleHttp\Promise\Promise respondToAuthChallengeAsync(array $args = [])
+ * @method \Aws\Result revokeToken(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise revokeTokenAsync(array $args = [])
  * @method \Aws\Result setRiskConfiguration(array $args = [])
  * @method \GuzzleHttp\Promise\Promise setRiskConfigurationAsync(array $args = [])
  * @method \Aws\Result setUICustomization(array $args = [])

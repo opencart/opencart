@@ -454,7 +454,7 @@ var chain = new Chain();
 
             // Hide
             this.hide = function() {
-                $menu.removeClass('d-none');
+                $menu.removeClass('d-block');
             }
 
             // Request

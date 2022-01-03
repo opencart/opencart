@@ -14,7 +14,7 @@ class Product extends \Opencart\System\Engine\Model {
 			$product_data['variant'] = (array)json_decode($query->row['variant'], true);
 			$product_data['override'] = (array)json_decode($query->row['override'], true);
 			$product_data['price'] = ($query->row['discount'] ? $query->row['discount'] : $query->row['price']);
-			$product_data['rating'] = round($query->row['rating']);
+			$product_data['rating'] = round($query->row['rating']??0);
 			$product_data['reviews'] = $query->row['reviews'] ? $query->row['reviews'] : 0;
 
 			return $product_data;

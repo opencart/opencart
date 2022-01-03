@@ -245,7 +245,6 @@ $_['error_image_wishlist']             = 'Wish List Image Size dimensions requir
 $_['error_image_cart']                 = 'Cart Image Size dimensions required!';
 $_['error_image_location']             = 'Store Image Size dimensions required!';
 $_['error_file_max_size']              = 'Max File Size required!';
-$_['error_upload_max_filesize']        = 'Max File Size cannot be greater than %s!';
 $_['error_extension']                  = 'PHP uploads are not allowed!';
 $_['error_mime']                       = 'PHP uploads are not allowed!';
 $_['error_log_required']               = 'Error Log Filename required!';

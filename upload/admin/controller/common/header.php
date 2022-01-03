@@ -9,6 +9,16 @@ class ControllerCommonHeader extends Controller {
 			$data['base'] = HTTP_SERVER;
 		}
 
+		if ($this->request->server['HTTPS']) {
+            $server = HTTPS_CATALOG;
+        } else {
+            $server = HTTP_CATALOG;
+        }
+
+        if (is_file(DIR_IMAGE . $this->config->get('config_icon'))) {
+			$this->document->addLink($server . 'image/' . $this->config->get('config_icon'), 'icon');
+        }
+
 		$data['description'] = $this->document->getDescription();
 		$data['keywords'] = $this->document->getKeywords();
 		$data['links'] = $this->document->getLinks();

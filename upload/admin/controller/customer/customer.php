@@ -894,7 +894,7 @@ class ControllerCustomerCustomer extends Controller {
 		} elseif (!empty($affiliate_info)) {
 			$data['tracking'] = $affiliate_info['tracking'];
 		} else {
-			$data['tracking'] = '';
+			$data['tracking'] = token(10);
 		}
 
 		if (isset($this->request->post['commission'])) {
@@ -1115,7 +1115,7 @@ class ControllerCustomerCustomer extends Controller {
 				$this->error['tracking'] = $this->language->get('error_tracking');
 			}
 
-			$affiliate_info = $this->model_customer_customer->getAffliateByTracking($this->request->post['tracking']);
+			$affiliate_info = $this->model_customer_customer->getAffiliateByTracking($this->request->post['tracking']);
 
 			if (!isset($this->request->get['customer_id'])) {
 				if ($affiliate_info) {

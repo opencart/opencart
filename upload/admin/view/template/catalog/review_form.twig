@@ -104,20 +104,14 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
             <div class="col-sm-10">
-              <select name="status" id="input-status" class="form-control">
-                
-                {% if status %}
-                
+              <select name="status" id="input-status" class="form-control">                
+                {% if status %}                
                 <option value="1" selected="selected">{{ text_enabled }}</option>
-                <option value="0">{{ text_disabled }}</option>
-                
-                {% else %}
-                
+                <option value="0">{{ text_disabled }}</option>                
+                {% else %}                
                 <option value="1">{{ text_enabled }}</option>
-                <option value="0" selected="selected">{{ text_disabled }}</option>
-                
+                <option value="0" selected="selected">{{ text_disabled }}</option>                
                 {% endif %}
-              
               </select>
             </div>
           </div>

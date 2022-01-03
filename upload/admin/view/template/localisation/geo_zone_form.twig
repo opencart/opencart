@@ -55,20 +55,14 @@
               {% set zone_to_geo_zone_row = 0 %}
               {% for zone_to_geo_zone in zone_to_geo_zones %}
               <tr id="zone-to-geo-zone-row{{ zone_to_geo_zone_row }}">
-                <td class="text-left"><select name="zone_to_geo_zone[{{ zone_to_geo_zone_row }}][country_id]" class="form-control" data-index="{{ zone_to_geo_zone_row }}" data-zone-id="{{ zone_to_geo_zone.zone_id }}" disabled="disabled">
-                    
+                <td class="text-left"><select name="zone_to_geo_zone[{{ zone_to_geo_zone_row }}][country_id]" class="form-control" data-index="{{ zone_to_geo_zone_row }}" data-zone-id="{{ zone_to_geo_zone.zone_id }}" disabled="disabled">                    
                     {% for country in countries %}
-                    {% if country.country_id == zone_to_geo_zone.country_id %}
-                    
-                    <option value="{{ country.country_id }}" selected="selected">{{ country.name }}</option>
-                    
-                    {% else %}
-                    
-                    <option value="{{ country.country_id }}">{{ country.name }}</option>
-                    
+                    {% if country.country_id == zone_to_geo_zone.country_id %}                    
+                    <option value="{{ country.country_id }}" selected="selected">{{ country.name }}</option>                    
+                    {% else %}                    
+                    <option value="{{ country.country_id }}">{{ country.name }}</option>                    
                     {% endif %}
-                    {% endfor %}
-                  
+                    {% endfor %}                  
                   </select></td>
                 <td class="text-left"><select name="zone_to_geo_zone[{{ zone_to_geo_zone_row }}][zone_id]" class="form-control" disabled="disabled">
                   </select></td>
@@ -84,6 +78,7 @@
                   <td class="text-left"><button type="button" id="button-geo-zone" data-toggle="tooltip" title="{{ button_geo_zone_add }}" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
                 </tr>
               </tfoot>
+	      
             </table>
           </fieldset>
         </form>

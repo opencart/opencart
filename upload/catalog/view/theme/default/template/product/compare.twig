@@ -69,7 +69,7 @@
           {% for product in products %}
           <td class="rating"> {% for i in 1..5 %}
             {% if product.rating < i %} <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span> {% else %} <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span> {% endif %}
-            {% endfor %} <br />
+            {% endfor %} <br/>
             {{ product.reviews }}</td>
           {% endfor %} </tr>
         {% endif %}

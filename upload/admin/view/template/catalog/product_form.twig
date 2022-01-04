@@ -538,7 +538,7 @@
                 <label class="col-sm-2 col-form-label">{{ entry_manufacturer }}</label>
                 <div class="col-sm-10">
                   <div class="input-group">
-                    <input type="text" name="manufacturer" value="{{ manufacturer }}" placeholder="{{ entry_manufacturer }}" id="input-manufacturer" class="form-control"/> <input type="hidden" name="manufacturer_id" value="{{ manufacturer_id }}" id="input-manufacturer-id"/>
+                    <input type="text" name="manufacturer" value="{{ manufacturer }}" placeholder="{{ entry_manufacturer }}" id="input-manufacturer" list="list-manufacturer" class="form-control"/>
                     {% if master_id %}
                       <div class="input-group-text">
                         <div class="form-check form-switch">
@@ -547,13 +547,16 @@
                       </div>
                     {% endif %}
                   </div>
+                  <input type="hidden" name="manufacturer_id" value="{{ manufacturer_id }}" id="input-manufacturer-id"/>
+                  <datalist id="list-manufacturer"></datalist>
                   <div class="form-text text-muted">{{ help_manufacturer }}</div>
                 </div>
               </div>
               <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">{{ entry_category }}</label>
                 <div class="col-sm-10">
-                  <input type="text" name="category" value="" placeholder="{{ entry_category }}" id="input-category" class="form-control"/>
+                  <input type="text" name="category" value="" placeholder="{{ entry_category }}" id="input-category" list="list-category" class="form-control"/>
+                  <datalist id="list-category"></datalist>
                   <div class="input-group">
                     <div class="form-control p-0" style="height: 150px; overflow: auto;">
                       <table id="product-category" class="table table-sm m-0">
@@ -581,7 +584,8 @@
               <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">{{ entry_filter }}</label>
                 <div class="col-sm-10">
-                  <input type="text" name="filter" value="" placeholder="{{ entry_filter }}" id="input-filter" class="form-control"/>
+                  <input type="text" name="filter" value="" placeholder="{{ entry_filter }}" id="input-filter" list="list-filter" class="form-control"/>
+                  <datalist id="list-filter"></datalist>
                   <div class="input-group">
                     <div class="form-control p-0" style="height: 150px; overflow: auto;">
                       <table id="product-filter" class="table table-sm m-0">
@@ -628,7 +632,8 @@
               <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">{{ entry_download }}</label>
                 <div class="col-sm-10">
-                  <input type="text" name="download" value="" placeholder="{{ entry_download }}" id="input-download" class="form-control"/>
+                  <input type="text" name="download" value="" placeholder="{{ entry_download }}" id="input-download" list="list-download" class="form-control"/>
+                  <datalist id="list-download"></datalist>
                   <div class="input-group">
                     <div class="form-control p-0" style="height: 150px; overflow: auto;">
                       <table id="product-download" class="table table-sm m-0">
@@ -654,7 +659,8 @@
               <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">{{ entry_related }}</label>
                 <div class="col-sm-10">
-                  <input type="text" name="related" value="" placeholder="{{ entry_related }}" id="input-related" class="form-control"/>
+                  <input type="text" name="related" value="" placeholder="{{ entry_related }}" id="input-related" list="list-related" class="form-control"/>
+                  <datalist id="list-related"></datalist>
                   <div class="input-group">
                     <div class="form-control p-0" style="height: 150px; overflow: auto;">
                       <table id="product-related" class="table table-sm m-0">
@@ -698,7 +704,10 @@
                     {% set attribute_row = 0 %}
                     {% for product_attribute in product_attributes %}
                       <tr id="attribute-row-{{ attribute_row }}">
-                        <td class="text-start"><input type="text" name="product_attribute[{{ attribute_row }}][name]" value="{{ product_attribute.name }}" placeholder="{{ entry_attribute }}" id="input-name-{{ attribute_row }}-{{ language.language_id }}" class="form-control"/> <input type="hidden" name="product_attribute[{{ attribute_row }}][attribute_id]" value="{{ product_attribute.attribute_id }}"/></td>
+                        <td class="text-start"><input type="text" name="product_attribute[{{ attribute_row }}][name]" value="{{ product_attribute.name }}" placeholder="{{ entry_attribute }}" id="input-name-{{ attribute_row }}-{{ language.language_id }}" list="list-input-name-{{ attribute_row }}-{{ language.language_id }}" class="form-control"/>
+                          <input type="hidden" name="product_attribute[{{ attribute_row }}][attribute_id]" value="{{ product_attribute.attribute_id }}"/>
+                          <datalist id="list-input-name-{{ attribute_row }}-{{ language.language_id }}"></datalist>
+                        </td>
                         <td class="text-start">
                           {% for language in languages %}
                             <div class="input-group mb-12">
@@ -867,7 +876,8 @@
                   <div class="row mb-3">
                     <label for="input-option" class="col-sm-2 col-form-label">{{ entry_option }}</label>
                     <div class="col-sm-10">
-                      <input type="text" name="option" value="" placeholder="{{ entry_option }}" id="input-option" class="form-control"/>
+                      <input type="text" name="option" value="" placeholder="{{ entry_option }}" id="input-option" list="list-option" class="form-control"/>
+                      <datalist id="list-option"></datalist>
                       <div class="form-text text-muted">{{ help_option }}</div>
                     </div>
                   </div>
@@ -1442,7 +1452,7 @@ $('#input-manufacturer').autocomplete({
         });
     },
     'select': function (item) {
-        $('#input-manufacturer').val(item['label']);
+        //$('#input-manufacturer').val(item['label']);
         $('#input-manufacturer-id').val(item['value']);
     }
 });
@@ -1660,7 +1670,7 @@ $('#input-option').autocomplete({
         });
     },
     'select': function (item) {
-        html = '<fieldset id="option-row- ' + option_row + '">';
+        html = '<fieldset id="option-row-' + option_row + '">';
         html += '  <legend>' + item['label'] + ' <button type="button" class="btn btn-danger btn-sm float-end" onclick="$(\'#option-row-' + option_row + '\').remove();"><i class="fas fa-minus-circle"></i></button></legend>';
         html += '  <input type="hidden" name="product_option[' + option_row + '][product_option_id]" value="" />';
         html += '  <input type="hidden" name="product_option[' + option_row + '][name]" value="' + item['label'] + '" />';

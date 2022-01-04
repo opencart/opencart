@@ -197,15 +197,10 @@ $(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function(e) {
 
             if (json['redirect']) {
                 location = json['redirect'];
-
-                // Not sure this part works
-                delete json['redirect'];
             }
 
             if (typeof json['error'] == 'string') {
                 $('#alert').prepend('<div class="alert alert-danger"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                delete json['error'];
             }
 
             if (typeof json['error'] == 'object') {
@@ -213,16 +208,12 @@ $(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function(e) {
 
                 if (json['error']['warning']) {
                     $('#alert').prepend('<div class="alert alert-danger"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                    delete json['error']['warning'];
                 }
 
                 for (key in json['error']) {
                     $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
                     $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
                 }
-
-                delete json['error'];
             }
 
             if (json['success']) {
@@ -235,8 +226,6 @@ $(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function(e) {
                 if (url !== undefined && target !== undefined) {
                    $(target).load(url);
                 }
-
-                delete json['success'];
             }
 
             // Replace any form values that correspond to form names.
@@ -391,71 +380,28 @@ var chain = new Chain();
     $.fn.autocomplete = function(option) {
         return this.each(function() {
             var $this = $(this);
-            var $dropdown = $('<div class="dropdown"/>');
-            var $menu = $('<ul class="dropdown-menu"></ul>');
+            var $dropdown = $('#' + $this.attr('list'));
 
             this.timer = null;
             this.items = [];
 
             $.extend(this, option);
 
-            $this.attr('autocomplete', 'off');
-            $this.active = false;
-
             // Focus
             $this.on('focus', function() {
                 this.request();
             });
 
-            // Blur
-            $this.on('blur', function(e) {
-                if (!$this.active) {
-                    this.hide();
-                }
-            });
-
-            $this.parent().on('mouseover', function(e) {
-                $this.active = true;
-            });
-
-            $this.parent().on('mouseout', function(e) {
-                $this.active = false;
-            });
-
             // Keydown
-            $this.on('keydown', function(e) {
-                switch (e.keyCode) {
-                    case 27: // escape
-                        this.hide();
-                        break;
-                    default:
-                        this.request();
-                        break;
-                }
-            });
+            $this.on('input', function(e) {
+                this.request();
 
-            // Click
-            this.click = function(e) {
-                e.preventDefault();
-
-                var value = $(e.target).attr('href');
+                var value = $this.val();
 
                 if (value && this.items[value]) {
                     this.select(this.items[value]);
-
-                    this.hide();
                 }
-            }
-
-            // Show
-            this.show = function() {
-                $menu.addClass('d-block');
-            }
-
-            // Hide
-            this.hide = function() {
-                $menu.removeClass('d-none');
-            }
+            });
 
             // Request
             this.request = function() {
@@ -473,14 +419,16 @@ var chain = new Chain();
                 var name;
                 var i = 0, j = 0;
 
+               console.log(json);
+
                 if (json.length) {
                     for (i = 0; i < json.length; i++) {
                         // update element items
-                        this.items[json[i]['value']] = json[i];
+                        this.items[json[i]['label']] = json[i];
 
                         if (!json[i]['category']) {
                             // ungrouped items
-                            html += '<li><a href="' + json[i]['value'] + '" class="dropdown-item">' + json[i]['label'] + '</a></li>';
+                            html += '<option>' + json[i]['label'] + '</option>';
                         } else {
                             // grouped items
                             name = json[i]['category'];
@@ -494,30 +442,16 @@ var chain = new Chain();
                     }
 
                     for (name in category) {
-                        html += '<li><h6 class="dropdown-header">' + name + '</h6></li>';
+                        //html += '<li><h6 class="dropdown-header">' + name + '</h6></li>';
 
                         for (j = 0; j < category[name].length; j++) {
-                            html += '<li><a href="' + category[name][j]['value'] + '" class="dropdown-item">&nbsp;&nbsp;&nbsp;' + category[name][j]['label'] + '</a></li>';
+                            html += '<option>' + category[name][j]['label'] + '</option>';
                         }
                     }
                 }
 
-                if (html) {
-                    this.show();
-                } else {
-                    this.hide();
-                }
-
-                $menu.html(html);
+                $dropdown.html(html);
             }
-
-            if (!$this.parent().hasClass('input-group')) {
-                $this.wrap($dropdown).parent().append($menu);
-            } else {
-                $this.parent().wrap($dropdown).parent().append($menu);
-            }
-
-            $menu.on('click', 'a', $.proxy(this.click, this));
         });
     }
 })(window.jQuery);

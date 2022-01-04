@@ -47,7 +47,9 @@
                 <div class="row mb-3">
                   <label class="col-sm-2 col-form-label">{{ entry_customer }}</label>
                   <div class="col-sm-10">
-                    <input type="text" name="customer" value="{{ customer }}" placeholder="{{ entry_customer }}" id="input-customer" class="form-control"/> <input type="hidden" name="customer_id" value="{{ customer_id }}"/>
+                    <input type="text" name="customer" value="{{ customer }}" placeholder="{{ entry_customer }}" id="input-customer" list="list-customer" class="form-control"/>
+                    <datalist id="list-customer"></datalist>
+                    <input type="hidden" name="customer_id" value="{{ customer_id }}"/>
                   </div>
                 </div>
                 <div class="row mb-3 required">
@@ -84,7 +86,8 @@
                 <div class="row mb-3 required">
                   <label class="col-sm-2 col-form-label">{{ entry_product }}</label>
                   <div class="col-sm-10">
-                    <input type="text" name="product" value="{{ product }}" placeholder="{{ entry_product }}" id="input-product" class="form-control"/>
+                    <input type="text" name="product" value="{{ product }}" placeholder="{{ entry_product }}" id="input-product" list="list-product" class="form-control"/>
+                    <datalist id="list-product"></datalist>
                     <input type="hidden" name="product_id" value="{{ product_id }}" id="input-product-id"/>
                     <div class="form-text text-muted">{{ help_product }}</div>
                     <div id="error-product" class="invalid-feedback"></div>

@@ -27,7 +27,9 @@
               <label for="input-order-id" class="form-label">{{ entry_order_id }}</label> <input type="text" name="filter_order_id" value="{{ filter_order_id }}" placeholder="{{ entry_order_id }}" id="input-order-id" class="form-control"/>
             </div>
             <div class="mb-3">
-              <label class="form-label">{{ entry_customer }}</label> <input type="text" name="filter_customer" value="{{ filter_customer }}" placeholder="{{ entry_customer }}" id="input-customer" class="form-control"/>
+              <label class="form-label">{{ entry_customer }}</label>
+              <input type="text" name="filter_customer" value="{{ filter_customer }}" placeholder="{{ entry_customer }}" id="input-customer" list="list-customer" class="form-control"/>
+              <datalist id="list-customer"></datalist>
             </div>
             <div class="mb-3">
               <label for="input-store" class="form-label">{{ entry_store }}</label> <select name="filter_store_id" id="input-store" class="form-select">
@@ -148,9 +150,7 @@ $('#input-customer').autocomplete({
             }
         });
     },
-    'select': function(item) {
-        $('#input-customer').val(item['label']);
-    }
+    'select': function(item) {}
 });
 
 $('input[name^=\'selected\']').on('change', function() {

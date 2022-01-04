@@ -55,7 +55,8 @@
 					<div class="row mb-3 to" id="to-customer">
 						<label class="col-sm-2 col-form-label">{{ entry_customer }}</label>
 						<div class="col-sm-10">
-							<input type="text" name="customers" value="" placeholder="{{ entry_customer }}" id="input-customer" class="form-control"/>
+							<input type="text" name="customers" value="" placeholder="{{ entry_customer }}" id="input-customer" list="list-customer" class="form-control"/>
+              <datalist id="list-customer"></datalist>
 							<div class="form-control p-0" style="height: 150px; overflow: auto;">
 								<table id="mail-customer" class="table table-sm m-0"></table>
 							</div>
@@ -65,7 +66,8 @@
 					<div class="row mb-3 to" id="to-affiliate">
 						<label class="col-sm-2 col-form-label">{{ entry_affiliate }}</label>
 						<div class="col-sm-10">
-							<input type="text" name="affiliates" value="" placeholder="{{ entry_affiliate }}" id="input-affiliate" class="form-control"/>
+							<input type="text" name="affiliates" value="" placeholder="{{ entry_affiliate }}" id="input-affiliate" list="list-affiliate" class="form-control"/>
+              <datalist id="list-affiliate"></datalist>
 							<div class="form-control p-0" style="height: 150px; overflow: auto;">
 								<table id="mail-affiliate" class="table table-sm m-0"></table>
 							</div>
@@ -75,7 +77,8 @@
 					<div class="row mb-3 to" id="to-product">
 						<label class="col-sm-2 col-form-label">{{ entry_product }}</label>
 						<div class="col-sm-10">
-							<input type="text" name="products" value="" placeholder="{{ entry_product }}" id="input-product" class="form-control"/>
+							<input type="text" name="products" value="" placeholder="{{ entry_product }}" id="input-product" list="list-product" class="form-control"/>
+              <datalist id="list-product"></datalist>
 							<div class="form-control p-0" style="height: 150px; overflow: auto;">
 								<table id="mail-product" class="table table-sm m-0"></table>
 							</div>

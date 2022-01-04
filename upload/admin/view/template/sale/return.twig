@@ -31,15 +31,18 @@
             </div>
             <div class="mb-3">
               <label class="form-label">{{ entry_customer }}</label>
-              <input type="text" name="filter_customer" value="{{ filter_customer }}" placeholder="{{ entry_customer }}" id="input-customer" class="form-control"/>
+              <input type="text" name="filter_customer" value="{{ filter_customer }}" placeholder="{{ entry_customer }}" id="input-customer" list="list-customer" class="form-control"/>
+              <datalist id="list-customer"></datalist>
             </div>
             <div class="mb-3">
               <label class="form-label">{{ entry_product }}</label>
-              <input type="text" name="filter_product" value="{{ filter_product }}" placeholder="{{ entry_product }}" id="input-product" class="form-control"/>
+              <input type="text" name="filter_product" value="{{ filter_product }}" placeholder="{{ entry_product }}" id="input-product" list="list-product" class="form-control"/>
+              <datalist id="list-product"></datalist>
             </div>
             <div class="mb-3">
               <label class="form-label">{{ entry_model }}</label>
-              <input type="text" name="filter_model" value="{{ filter_model }}" placeholder="{{ entry_model }}" id="input-model" class="form-control"/>
+              <input type="text" name="filter_model" value="{{ filter_model }}" placeholder="{{ entry_model }}" id="input-model" list="list-model" class="form-control"/>
+              <datalist id="list-model"></datalist>
             </div>
             <div class="mb-3">
               <label for="input-return-status" class="form-label">{{ entry_return_status }}</label> <select name="filter_return_status_id" id="input-return-status" class="form-select">

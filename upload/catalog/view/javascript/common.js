@@ -395,6 +395,7 @@ class Chain {
 
 var chain = new Chain();
 
+
 // Autocomplete
 (function($) {
     $.fn.autocomplete = function(option) {
@@ -438,6 +439,8 @@ var chain = new Chain();
                 var category = {};
                 var name;
                 var i = 0, j = 0;
+
+                console.log(json);
 
                 if (json.length) {
                     for (i = 0; i < json.length; i++) {

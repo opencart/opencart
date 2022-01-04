@@ -84,7 +84,7 @@ $('#customer-approval').on('click', '.btn-success, .btn-danger', function(e) {
     var element = this;
 
     $.ajax({
-        url: $(element).attr('href'),
+        url: $(element).val(),
         dataType: 'json',
         beforeSend: function() {
             $(element).button('loading');

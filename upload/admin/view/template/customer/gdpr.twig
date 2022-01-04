@@ -83,8 +83,10 @@ $('#gdpr').on('click', '.btn-success, .btn-warning, .btn-danger', function(e) {
 
     var element = this;
 
+    console.log($(element).val());
+
     $.ajax({
-        url: $(element).attr('href'),
+        url: $(element).val(),
         dataType: 'json',
         beforeSend: function() {
             $(element).button('loading');
@@ -102,7 +104,7 @@ $('#gdpr').on('click', '.btn-success, .btn-warning, .btn-danger', function(e) {
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#gdpr').load('index.php?route=customer/gdpr|list&user_token={{ user_token }}');
+                $('#gdpr').load($('#form-gdpr').attr('data-oc-load'));
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {

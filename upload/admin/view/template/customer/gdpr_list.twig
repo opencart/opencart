@@ -8,7 +8,7 @@
           <td class="text-start">{{ column_request }}</td>
           <td class="text-start">{{ column_status }}</td>
           <td class="text-start d-none d-lg-table-cell">{{ column_date_added }}</td>
-          <td class="text-end" style="min-width: 150px;">{{ column_action }}</td>
+          <td class="text-end">{{ column_action }}</td>
         </tr>
       </thead>
       <tbody>
@@ -37,7 +37,9 @@
                   <span class="badge bg-success">{{ text_complete }}</span>
                 {% endif %}</td>
               <td class="text-start d-none d-lg-table-cell">{{ gdpr.date_added }}</td>
-              <td class="text-end"><a href="{{ gdpr.approve }}" data-bs-toggle="tooltip" title="{{ text_approve }}" class="btn btn-success"><i class="fas fa-check"></i></a> <a href="{{ gdpr.deny }}" data-bs-toggle="tooltip" title="{{ text_deny }}" class="btn btn-warning"><i class="fas fa-times"></i></a> <a href="{{ gdpr.delete }}" data-bs-toggle="tooltip" title="{{ text_delete }}" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a></td>
+              <td class="text-end wra"><button type="button" value="{{ gdpr.approve }}" data-bs-toggle="tooltip" title="{{ text_approve }}" class="btn btn-success"><i class="fas fa-check"></i></button>
+                <button type="button" value="{{ gdpr.deny }}" data-bs-toggle="tooltip" title="{{ text_deny }}" class="btn btn-warning"><i class="fas fa-times"></i></button>
+                <button type="button" value="{{ gdpr.delete }}" data-bs-toggle="tooltip" title="{{ text_delete }}" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button></td>
             </tr>
           {% endfor %}
         {% else %}

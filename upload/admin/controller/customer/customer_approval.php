@@ -77,7 +77,35 @@ class CustomerApproval extends \Opencart\System\Engine\Controller {
 			$page = (int)$this->request->get['page'];
 		} else {
 			$page = 1;
-		}		
+		}
+
+		$url = '';
+
+		if (isset($this->request->get['filter_customer'])) {
+			$url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['filter_email'])) {
+			$url .= '&filter_email=' . urlencode(html_entity_decode($this->request->get['filter_email'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['filter_customer_group_id'])) {
+			$url .= '&filter_customer_group_id=' . $this->request->get['filter_customer_group_id'];
+		}
+
+		if (isset($this->request->get['filter_type'])) {
+			$url .= '&filter_type=' . $this->request->get['filter_type'];
+		}
+
+		if (isset($this->request->get['filter_date_added'])) {
+			$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
+		}
+
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
+		}
+
+		$data['action'] = $this->url->link('customer/customer_approval|list', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$data['customer_approvals'] = [];
 

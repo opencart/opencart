@@ -71,7 +71,12 @@ final class Utils
             return \STDOUT;
         }
 
-        return \GuzzleHttp\Psr7\Utils::tryFopen('php://output', 'w');
+        $resource = \fopen('php://output', 'w');
+        if (false === $resource) {
+            throw new \RuntimeException('Can not open php output for writing to debug the resource.');
+        }
+
+        return $resource;
     }
 
     /**
@@ -225,20 +230,20 @@ EOT
         }
 
         // Strip port if present.
-        [$host] = \explode(':', $host, 2);
+        if (\strpos($host, ':')) {
+            /** @var string[] $hostParts will never be false because of the checks above */
+            $hostParts = \explode($host, ':', 2);
+            $host = $hostParts[0];
+        }
 
         foreach ($noProxyArray as $area) {
             // Always match on wildcards.
             if ($area === '*') {
                 return true;
-            }
-
-            if (empty($area)) {
+            } elseif (empty($area)) {
                 // Don't match on empty values.
                 continue;
-            }
-
-            if ($area === $host) {
+            } elseif ($area === $host) {
                 // Exact matches.
                 return true;
             }
@@ -325,7 +330,7 @@ EOT
             if ($asciiHost === false) {
                 $errorBitSet = $info['errors'] ?? 0;
 
-                $errorConstants = array_filter(array_keys(get_defined_constants()), static function (string $name): bool {
+                $errorConstants = array_filter(array_keys(get_defined_constants()), static function ($name) {
                     return substr($name, 0, 11) === 'IDNA_ERROR_';
                 });
 

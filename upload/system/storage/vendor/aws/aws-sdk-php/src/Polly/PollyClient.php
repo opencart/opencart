@@ -58,11 +58,11 @@ class PollyClient extends AwsClient
         );
 
         // Mocking a 'GET' request in pre-signing the Url
-        $query = Psr7\Query::build($queryArray);
+        $query = Psr7\build_query($queryArray);
         $uri = $uri->withQuery($query);
 
         $request = new Request('GET', $uri);
-        $request = $request->withBody(Psr7\Utils::streamFor(''));
+        $request = $request->withBody(Psr7\stream_for(''));
         $signer = new SignatureV4('polly', $this->getRegion());
         return (string) $signer->presign(
             $request,

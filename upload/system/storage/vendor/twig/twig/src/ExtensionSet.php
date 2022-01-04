@@ -39,7 +39,6 @@ final class ExtensionSet
     private $globals;
     private $functionCallbacks = [];
     private $filterCallbacks = [];
-    private $parserCallbacks = [];
     private $lastModified = 0;
 
     public function __construct()
@@ -281,30 +280,6 @@ final class ExtensionSet
         return $this->parsers;
     }
 
-    public function getTokenParser(string $name): ?TokenParserInterface
-    {
-        if (!$this->initialized) {
-            $this->initExtensions();
-        }
-
-        if (isset($this->parsers[$name])) {
-            return $this->parsers[$name];
-        }
-
-        foreach ($this->parserCallbacks as $callback) {
-            if (false !== $parser = $callback($name)) {
-                return $parser;
-            }
-        }
-
-        return null;
-    }
-
-    public function registerUndefinedTokenParserCallback(callable $callable): void
-    {
-        $this->parserCallbacks[] = $callable;
-    }
-
     public function getGlobals(): array
     {
         if (null !== $this->globals) {
@@ -438,7 +413,7 @@ final class ExtensionSet
                 throw new \LogicException('getTokenParsers() must return an array of \Twig\TokenParser\TokenParserInterface.');
             }
 
-            $this->parsers[$parser->getTag()] = $parser;
+            $this->parsers[] = $parser;
         }
 
         // node visitors

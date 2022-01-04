@@ -26,8 +26,6 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise disableStageTransitionAsync(array $args = [])
  * @method \Aws\Result enableStageTransition(array $args = [])
  * @method \GuzzleHttp\Promise\Promise enableStageTransitionAsync(array $args = [])
- * @method \Aws\Result getActionType(array $args = [])
- * @method \GuzzleHttp\Promise\Promise getActionTypeAsync(array $args = [])
  * @method \Aws\Result getJobDetails(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getJobDetailsAsync(array $args = [])
  * @method \Aws\Result getPipeline(array $args = [])
@@ -80,8 +78,6 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise tagResourceAsync(array $args = [])
  * @method \Aws\Result untagResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise untagResourceAsync(array $args = [])
- * @method \Aws\Result updateActionType(array $args = [])
- * @method \GuzzleHttp\Promise\Promise updateActionTypeAsync(array $args = [])
  * @method \Aws\Result updatePipeline(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updatePipelineAsync(array $args = [])
  */

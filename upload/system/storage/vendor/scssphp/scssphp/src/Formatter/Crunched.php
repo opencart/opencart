@@ -20,8 +20,6 @@ use ScssPhp\ScssPhp\Formatter;
  * @author Anthon Pang <anthon.pang@gmail.com>
  *
  * @deprecated since 1.4.0. Use the Compressed formatter instead.
- *
- * @internal
  */
 class Crunched extends Formatter
 {
@@ -71,8 +69,6 @@ class Crunched extends Formatter
      */
     protected function blockSelectors(OutputBlock $block)
     {
-        assert(! empty($block->selectors));
-
         $inner = $this->indentStr();
 
         $this->write(

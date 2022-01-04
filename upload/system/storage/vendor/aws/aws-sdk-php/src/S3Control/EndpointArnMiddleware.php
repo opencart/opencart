@@ -155,7 +155,7 @@ class EndpointArnMiddleware
 
                         // Replace ARN in the payload
                         $req->getBody()->seek(0);
-                        $body = Psr7\Utils::streamFor(str_replace(
+                        $body = Psr7\stream_for(str_replace(
                             $cmd[$accesspointNameMember],
                             $arn->getAccesspointName(),
                             $req->getBody()->getContents()
@@ -179,7 +179,7 @@ class EndpointArnMiddleware
                             $arn->getBucketName(),
                             $req->getBody()->getContents()
                         );
-                        $body = Psr7\Utils::streamFor($newBody);
+                        $body = Psr7\stream_for($newBody);
 
                         // Replace ARN in the command
                         $cmd[$bucketNameMember] = $arn->getBucketName();
@@ -249,11 +249,8 @@ class EndpointArnMiddleware
         } else {
             $region = $this->region;
         }
-        $fipsString = $this->config['use_fips_endpoint']->isUseFipsEndpoint()
-            ? "-fips"
-            : "";
         $suffix = $this->getPartitionSuffix($arn, $this->partitionProvider);
-        return "s3-outposts{$fipsString}.{$region}.{$suffix}";
+        return "s3-outposts.{$region}.{$suffix}";
     }
 
     private function generateOutpostIdHost()
@@ -316,7 +313,7 @@ class EndpointArnMiddleware
         // If client partition not found, try removing pseudo-region qualifiers
         if (!($clientPart->isRegionMatch($this->region, 's3'))) {
             $clientPart = $this->partitionProvider->getPartition(
-                \Aws\strip_fips_pseudo_regions($this->region),
+                $this->stripPseudoRegions($this->region),
                 's3'
             );
         }
@@ -337,7 +334,7 @@ class EndpointArnMiddleware
         $this->validateMatchingRegion($arn);
 
         // Ensure it is not resolved to fips pseudo-region for S3 Outposts
-        $this->validateFipsConfigurations($arn);
+        $this->validateFipsNotUsedWithOutposts($arn);
 
         return $arnPart;
     }

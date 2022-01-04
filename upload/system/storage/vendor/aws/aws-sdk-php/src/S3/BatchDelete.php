@@ -76,7 +76,7 @@ class BatchDelete implements PromisorInterface
                         }
                     }
                 }
-                return $promises ? Promise\Utils::all($promises) : null;
+                return $promises ? Promise\all($promises) : null;
             });
         };
 
@@ -100,7 +100,7 @@ class BatchDelete implements PromisorInterface
         array $options = []
     ) {
         $fn = function (BatchDelete $that) use ($iter) {
-            return Promise\Coroutine::of(function () use ($that, $iter) {
+            return Promise\coroutine(function () use ($that, $iter) {
                 foreach ($iter as $obj) {
                     if ($promise = $that->enqueue($obj)) {
                         yield $promise;
@@ -225,12 +225,12 @@ class BatchDelete implements PromisorInterface
         // When done, ensure cleanup and that any remaining are processed.
         return $promise->then(
             function () use ($cleanup)  {
-                return Promise\Create::promiseFor($this->flushQueue())
+                return Promise\promise_for($this->flushQueue())
                     ->then($cleanup);
             },
             function ($reason) use ($cleanup)  {
                 $cleanup();
-                return Promise\Create::rejectionFor($reason);
+                return Promise\rejection_for($reason);
             }
         );
     }

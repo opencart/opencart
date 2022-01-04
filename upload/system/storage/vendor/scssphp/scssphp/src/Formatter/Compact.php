@@ -20,8 +20,6 @@ use ScssPhp\ScssPhp\Formatter;
  * @author Leaf Corcoran <leafot@gmail.com>
  *
  * @deprecated since 1.4.0. Use the Compressed formatter instead.
- *
- * @internal
  */
 class Compact extends Formatter
 {

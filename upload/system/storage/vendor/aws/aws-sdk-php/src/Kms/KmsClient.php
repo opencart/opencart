@@ -78,8 +78,6 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise putKeyPolicyAsync(array $args = [])
  * @method \Aws\Result reEncrypt(array $args = [])
  * @method \GuzzleHttp\Promise\Promise reEncryptAsync(array $args = [])
- * @method \Aws\Result replicateKey(array $args = [])
- * @method \GuzzleHttp\Promise\Promise replicateKeyAsync(array $args = [])
  * @method \Aws\Result retireGrant(array $args = [])
  * @method \GuzzleHttp\Promise\Promise retireGrantAsync(array $args = [])
  * @method \Aws\Result revokeGrant(array $args = [])
@@ -98,8 +96,6 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise updateCustomKeyStoreAsync(array $args = [])
  * @method \Aws\Result updateKeyDescription(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateKeyDescriptionAsync(array $args = [])
- * @method \Aws\Result updatePrimaryRegion(array $args = [])
- * @method \GuzzleHttp\Promise\Promise updatePrimaryRegionAsync(array $args = [])
  * @method \Aws\Result verify(array $args = [])
  * @method \GuzzleHttp\Promise\Promise verifyAsync(array $args = [])
  */

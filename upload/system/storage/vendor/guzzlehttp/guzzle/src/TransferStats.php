@@ -128,6 +128,6 @@ final class TransferStats
      */
     public function getHandlerStat(string $stat)
     {
-        return $this->handlerStats[$stat] ?? null;
+        return isset($this->handlerStats[$stat]) ? $this->handlerStats[$stat] : null;
     }
 }

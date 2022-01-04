@@ -99,15 +99,11 @@ class StreamHandler
     {
         $hdrs = $this->lastHeaders;
         $this->lastHeaders = [];
-
-        try {
-            [$ver, $status, $reason, $headers] = HeaderProcessor::parseHeaders($hdrs);
-        } catch (\Exception $e) {
-            return P\Create::rejectionFor(
-                new RequestException('An error was encountered while creating the response', $request, null, $e)
-            );
-        }
-
+        $parts = \explode(' ', \array_shift($hdrs), 3);
+        $ver = \explode('/', $parts[0])[1];
+        $status = (int) $parts[1];
+        $reason = $parts[2] ?? null;
+        $headers = Utils::headersFromLines($hdrs);
         [$stream, $headers] = $this->checkDecode($options, $headers, $stream);
         $stream = Psr7\Utils::streamFor($stream);
         $sink = $stream;
@@ -116,21 +112,15 @@ class StreamHandler
             $sink = $this->createSink($stream, $options);
         }
 
-        try {
-            $response = new Psr7\Response($status, $headers, $sink, $ver, $reason);
-        } catch (\Exception $e) {
-            return P\Create::rejectionFor(
-                new RequestException('An error was encountered while creating the response', $request, null, $e)
-            );
-        }
+        $response = new Psr7\Response($status, $headers, $sink, $ver, $reason);
 
         if (isset($options['on_headers'])) {
             try {
                 $options['on_headers']($response);
             } catch (\Exception $e) {
-                return P\Create::rejectionFor(
-                    new RequestException('An error was encountered during the on_headers event', $request, $response, $e)
-                );
+                $msg = 'An error was encountered during the on_headers event';
+                $ex = new RequestException($msg, $request, $response, $e);
+                return P\Create::rejectionFor($ex);
             }
         }
 
@@ -151,7 +141,7 @@ class StreamHandler
             return $stream;
         }
 
-        $sink = $options['sink'] ?? Psr7\Utils::tryFopen('php://temp', 'r+');
+        $sink = $options['sink'] ?? \fopen('php://temp', 'r+');
 
         return \is_string($sink) ? new Psr7\LazyOpenStream($sink, 'w+') : Psr7\Utils::streamFor($sink);
     }
@@ -237,11 +227,8 @@ class StreamHandler
             return true;
         });
 
-        try {
-            $resource = $callback();
-        } finally {
-            \restore_error_handler();
-        }
+        $resource = $callback();
+        \restore_error_handler();
 
         if (!$resource) {
             $message = 'Error creating resource: ';
@@ -317,7 +304,7 @@ class StreamHandler
 
         return $this->createResource(
             function () use ($uri, &$http_response_header, $contextResource, $context, $options, $request) {
-                $resource = @\fopen((string) $uri, 'r', false, $contextResource);
+                $resource = \fopen((string) $uri, 'r', false, $contextResource);
                 $this->lastHeaders = $http_response_header;
 
                 if (false === $resource) {
@@ -399,60 +386,16 @@ class StreamHandler
      */
     private function add_proxy(RequestInterface $request, array &$options, $value, array &$params): void
     {
-        $uri = null;
-
         if (!\is_array($value)) {
-            $uri = $value;
+            $options['http']['proxy'] = $value;
         } else {
             $scheme = $request->getUri()->getScheme();
             if (isset($value[$scheme])) {
                 if (!isset($value['no']) || !Utils::isHostInNoProxy($request->getUri()->getHost(), $value['no'])) {
-                    $uri = $value[$scheme];
+                    $options['http']['proxy'] = $value[$scheme];
                 }
             }
         }
-
-        if (!$uri) {
-            return;
-        }
-
-        $parsed = $this->parse_proxy($uri);
-        $options['http']['proxy'] = $parsed['proxy'];
-
-        if ($parsed['auth']) {
-            if (!isset($options['http']['header'])) {
-                $options['http']['header'] = [];
-            }
-            $options['http']['header'] .= "\r\nProxy-Authorization: {$parsed['auth']}";
-        }
-    }
-
-    /**
-     * Parses the given proxy URL to make it compatible with the format PHP's stream context expects.
-     */
-    private function parse_proxy(string $url): array
-    {
-        $parsed = \parse_url($url);
-
-        if ($parsed !== false && isset($parsed['scheme']) && $parsed['scheme'] === 'http') {
-            if (isset($parsed['host']) && isset($parsed['port'])) {
-                $auth = null;
-                if (isset($parsed['user']) && isset($parsed['pass'])) {
-                    $auth = \base64_encode("{$parsed['user']}:{$parsed['pass']}");
-                }
-
-                return [
-                    'proxy' => "tcp://{$parsed['host']}:{$parsed['port']}",
-                    'auth' => $auth ? "Basic {$auth}" : null,
-                ];
-            }
-        }
-
-        // Return proxy as-is.
-        return [
-            'proxy' => $url,
-            'auth' => null,
-        ];
     }
 
     /**
@@ -517,9 +460,7 @@ class StreamHandler
             $params,
             static function ($code, $a, $b, $c, $transferred, $total) use ($value) {
                 if ($code == \STREAM_NOTIFY_PROGRESS) {
-                    // The upload progress cannot be determined. Use 0 for cURL compatibility:
-                    // https://curl.se/libcurl/c/CURLOPT_PROGRESSFUNCTION.html
-                    $value($total, $transferred, 0, 0);
+                    $value($total, $transferred, null, null);
                 }
             }
         );

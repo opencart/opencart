@@ -18,8 +18,6 @@ use ScssPhp\ScssPhp\Formatter;
  * Expanded formatter
  *
  * @author Leaf Corcoran <leafot@gmail.com>
- *
- * @internal
  */
 class Expanded extends Formatter
 {

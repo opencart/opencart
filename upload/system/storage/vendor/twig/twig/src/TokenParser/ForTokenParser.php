@@ -25,8 +25,6 @@ use Twig\Token;
  *      <li>{{ user.username|e }}</li>
  *    {% endfor %}
  *   </ul>
- *
- * @internal
  */
 final class ForTokenParser extends AbstractTokenParser
 {
@@ -52,11 +50,12 @@ final class ForTokenParser extends AbstractTokenParser
             $keyTarget = $targets->getNode(0);
             $keyTarget = new AssignNameExpression($keyTarget->getAttribute('name'), $keyTarget->getTemplateLine());
             $valueTarget = $targets->getNode(1);
+            $valueTarget = new AssignNameExpression($valueTarget->getAttribute('name'), $valueTarget->getTemplateLine());
         } else {
             $keyTarget = new AssignNameExpression('_key', $lineno);
             $valueTarget = $targets->getNode(0);
+            $valueTarget = new AssignNameExpression($valueTarget->getAttribute('name'), $valueTarget->getTemplateLine());
         }
-        $valueTarget = new AssignNameExpression($valueTarget->getAttribute('name'), $valueTarget->getTemplateLine());
 
         return new ForNode($keyTarget, $valueTarget, $seq, null, $body, $else, $lineno, $this->getTag());
     }

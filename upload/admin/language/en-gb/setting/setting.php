@@ -37,7 +37,6 @@ $_['text_affiliate']                   = 'Affiliate';
 $_['text_return']                      = 'Return';
 $_['text_captcha']                     = 'Captcha';
 $_['text_hour']                        = 'Hour(s)';
-$_['text_second']                      = 'Second(s)';
 
 // Entry
 $_['entry_meta_title']                 = 'Meta Title';

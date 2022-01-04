@@ -16,8 +16,6 @@ namespace ScssPhp\ScssPhp;
  * Base node
  *
  * @author Anthon Pang <anthon.pang@gmail.com>
- *
- * @internal
  */
 abstract class Node
 {
@@ -32,12 +30,12 @@ abstract class Node
     public $sourceIndex;
 
     /**
-     * @var int|null
+     * @var integer
      */
     public $sourceLine;
 
     /**
-     * @var int|null
+     * @var integer
      */
     public $sourceColumn;
 }

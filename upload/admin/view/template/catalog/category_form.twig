@@ -75,16 +75,18 @@
               <div class="row mb-3">
                 <label for="input-parent" class="col-sm-2 col-form-label">{{ entry_parent }}</label>
                 <div class="col-sm-10">
-                  <input type="text" name="path" value="{{ path }}" placeholder="{{ entry_parent }}" id="input-parent" class="form-control"/>
-                  <input type="hidden" name="parent_id" value="{{ parent_id }}"/>
+                  <input type="text" name="path" value="{{ path }}" placeholder="{{ entry_parent }}" id="input-parent" list="list-parent" class="form-control"/>
+                  <input type="hidden" name="parent_id" value="{{ parent_id }}" id="input-parent-id"/>
+                  <datalist id="list-parent"></datalist>
                   <div class="form-text text-muted">{{ help_parent }}</div>
-                  <div id="error-parent-{{ language.language_id }}" class="invalid-feedback"></div>
+                  <div id="error-parent" class="invalid-feedback"></div>
                 </div>
               </div>
               <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">{{ entry_filter }}</label>
                 <div class="col-sm-10">
-                  <input type="text" name="filter" value="" placeholder="{{ entry_filter }}" id="input-filter" class="form-control"/>
+                  <input type="text" name="filter" value="" placeholder="{{ entry_filter }}" id="input-filter" list="list-filter" class="form-control"/>
+                  <datalist id="list-filter"></datalist>
                   <div class="form-control p-0" style="height: 150px; overflow: auto;">
                     <table id="category-filter" class="table table-sm m-0">
                       {% for category_filter in category_filters %}
@@ -104,8 +106,7 @@
                   <div class="form-control" style="height: 150px; overflow: auto;">
                     {% for store in stores %}
                       <div class="form-check">
-                        <input type="checkbox" name="category_store[]" value="{{ store.store_id }}" id="input-store-{{ store.store_id }}" class="form-check-input"{% if store.store_id in category_store %} checked{% endif %}/>
-                        <label for="input-store-{{ store.store_id }}" class="form-check-label">{{ store.name }}</label>
+                        <input type="checkbox" name="category_store[]" value="{{ store.store_id }}" id="input-store-{{ store.store_id }}" class="form-check-input"{% if store.store_id in category_store %} checked{% endif %}/> <label for="input-store-{{ store.store_id }}" class="form-check-label">{{ store.name }}</label>
                       </div>
                     {% endfor %}
                   </div>
@@ -157,67 +158,67 @@
                 </div>
               </div>
             </div>
-   
 
-          <div id="tab-seo" class="tab-pane">
-            <div class="alert alert-info"><i class="fas fa-info-circle"></i> {{ text_keyword }}</div>
-            <div class="table-responsive">
-              <table class="table table-bordered table-hover">
-                <thead>
-                  <tr>
-                    <td class="text-start">{{ entry_store }}</td>
-                    <td class="text-start">{{ entry_keyword }}</td>
-                  </tr>
-                </thead>
-                <tbody>
-                  {% for store in stores %}
+
+            <div id="tab-seo" class="tab-pane">
+              <div class="alert alert-info"><i class="fas fa-info-circle"></i> {{ text_keyword }}</div>
+              <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                  <thead>
                     <tr>
-                      <td class="text-start">{{ store.name }}</td>
-                      <td class="text-start">
-                        {% for language in languages %}
-                          <div class="input-group">
-                            <div class="input-group-text"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/></div>
-                            <input type="text" name="category_seo_url[{{ store.store_id }}][{{ language.language_id }}]" value="{% if category_seo_url[store.store_id][language.language_id] %}{{ category_seo_url[store.store_id][language.language_id] }}{% endif %}" placeholder="{{ entry_keyword }}" id="input-keyword-{{ store.store_id }}-{{ language.language_id }}" class="form-control"/>
-                          </div>
-                          <div id="error-keyword-{{ store.store_id }}-{{ language.language_id }}" class="invalid-feedback"></div>
-                        {% endfor %}
-                      </td>
+                      <td class="text-start">{{ entry_store }}</td>
+                      <td class="text-start">{{ entry_keyword }}</td>
                     </tr>
-                  {% endfor %}
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <div id="tab-design" class="tab-pane">
-            <div class="table-responsive">
-              <table class="table table-bordered table-hover">
-                <thead>
-                  <tr>
-                    <td class="text-start">{{ entry_store }}</td>
-                    <td class="text-start">{{ entry_layout }}</td>
-                  </tr>
-                </thead>
-                <tbody>
-                  {% for store in stores %}
-                    <tr>
-                      <td class="text-start">{{ store.name }}</td>
-                      <td class="text-start"><select name="category_layout[{{ store.store_id }}]" class="form-select">
-                          <option value=""></option>
-                          {% for layout in layouts %}
-                            <option value="{{ layout.layout_id }}"{% if category_layout[store.store_id] and category_layout[store.store_id] == layout.layout_id %} selected="selected"{% endif %}>{{ layout.name }}</option>
+                  </thead>
+                  <tbody>
+                    {% for store in stores %}
+                      <tr>
+                        <td class="text-start">{{ store.name }}</td>
+                        <td class="text-start">
+                          {% for language in languages %}
+                            <div class="input-group">
+                              <div class="input-group-text"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/></div>
+                              <input type="text" name="category_seo_url[{{ store.store_id }}][{{ language.language_id }}]" value="{% if category_seo_url[store.store_id][language.language_id] %}{{ category_seo_url[store.store_id][language.language_id] }}{% endif %}" placeholder="{{ entry_keyword }}" id="input-keyword-{{ store.store_id }}-{{ language.language_id }}" class="form-control"/>
+                            </div>
+                            <div id="error-keyword-{{ store.store_id }}-{{ language.language_id }}" class="invalid-feedback"></div>
                           {% endfor %}
-                        </select></td>
+                        </td>
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div id="tab-design" class="tab-pane">
+              <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <td class="text-start">{{ entry_store }}</td>
+                      <td class="text-start">{{ entry_layout }}</td>
                     </tr>
-                  {% endfor %}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {% for store in stores %}
+                      <tr>
+                        <td class="text-start">{{ store.name }}</td>
+                        <td class="text-start"><select name="category_layout[{{ store.store_id }}]" class="form-select">
+                            <option value=""></option>
+                            {% for layout in layouts %}
+                              <option value="{{ layout.layout_id }}"{% if category_layout[store.store_id] and category_layout[store.store_id] == layout.layout_id %} selected="selected"{% endif %}>{{ layout.name }}</option>
+                            {% endfor %}
+                          </select></td>
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
+          <input type="hidden" name="category_id" value="{{ category_id }}" id="input-category-id"/></form>
       </div>
-      <input type="hidden" name="category_id" value="{{ category_id }}" id="input-category-id"/></form>
     </div>
   </div>
-</div>
 </div>
 <script type="text/javascript"><!--
 $('textarea[data-oc-toggle=\'ckeditor\']').ckeditor();
@@ -229,8 +230,8 @@ $('#input-parent').autocomplete({
             dataType: 'json',
             success: function(json) {
                 json.unshift({
-                    category_id: 0,
-                    name: '{{ text_none }}'
+                    name: '{{ text_none }}',
+                    category_id: 0
                 });
 
                 response($.map(json, function(item) {
@@ -243,18 +244,17 @@ $('#input-parent').autocomplete({
         });
     },
     'select': function(item) {
-        $('#input-parent').val(item['label']);
         $('#input-parent-id').val(item['value']);
     }
 });
 
 $('#input-filter').autocomplete({
-    'source': function(request, response) {
+    'source': function (request, response) {
         $.ajax({
             url: 'index.php?route=catalog/filter|autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
-            success: function(json) {
-                response($.map(json, function(item) {
+            success: function (json) {
+                response($.map(json, function (item) {
                     return {
                         label: item['name'],
                         value: item['filter_id']
@@ -263,12 +263,12 @@ $('#input-filter').autocomplete({
             }
         });
     },
-    'select': function(item) {
+    'select': function (item) {
         $('#input-filter').val('');
 
         $('#category-filter-' + item['value']).remove();
 
-        html = '<tr id="category-filter-' + item['value'] + '">';
+        html  = '<tr id="category-filter-' + item['value'] + '">';
         html += '  <td>' + item['label'] + '<input type="hidden" name="category_filter[]" value="' + item['value'] + '"/></td>';
         html += '  <td class="end"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>';
         html += '</tr>';
@@ -277,7 +277,7 @@ $('#input-filter').autocomplete({
     }
 });
 
-$('#category-filter').on('click', '.btn', function() {
+$('#category-filter').on('click', '.btn', function () {
     $(this).parent().parent().remove();
 });
 //--></script>

@@ -34,15 +34,13 @@ use Twig\Node\PrintNode;
  * optimizer mode.
  *
  * @author Fabien Potencier <fabien@symfony.com>
- *
- * @internal
  */
 final class OptimizerNodeVisitor implements NodeVisitorInterface
 {
-    public const OPTIMIZE_ALL = -1;
-    public const OPTIMIZE_NONE = 0;
-    public const OPTIMIZE_FOR = 2;
-    public const OPTIMIZE_RAW_FILTER = 4;
+    const OPTIMIZE_ALL = -1;
+    const OPTIMIZE_NONE = 0;
+    const OPTIMIZE_FOR = 2;
+    const OPTIMIZE_RAW_FILTER = 4;
 
     private $loops = [];
     private $loopsTargets = [];
@@ -53,7 +51,7 @@ final class OptimizerNodeVisitor implements NodeVisitorInterface
      */
     public function __construct(int $optimizers = -1)
     {
-        if ($optimizers > (self::OPTIMIZE_FOR | self::OPTIMIZE_RAW_FILTER)) {
+        if (!\is_int($optimizers) || $optimizers > (self::OPTIMIZE_FOR | self::OPTIMIZE_RAW_FILTER)) {
             throw new \InvalidArgumentException(sprintf('Optimizer mode "%s" is not valid.', $optimizers));
         }
 

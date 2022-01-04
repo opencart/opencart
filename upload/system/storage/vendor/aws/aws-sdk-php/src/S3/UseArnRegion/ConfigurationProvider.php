@@ -103,7 +103,7 @@ class ConfigurationProvider extends AbstractConfigurationProvider
             // Use config from environment variables, if available
             $useArnRegion = getenv(self::ENV_USE_ARN_REGION);
             if (!empty($useArnRegion)) {
-                return Promise\Create::promiseFor(
+                return Promise\promise_for(
                     new Configuration($useArnRegion)
                 );
             }
@@ -153,7 +153,7 @@ class ConfigurationProvider extends AbstractConfigurationProvider
                 $data[$profile][self::INI_USE_ARN_REGION] = false;
             }
 
-            return Promise\Create::promiseFor(
+            return Promise\promise_for(
                 new Configuration($data[$profile][self::INI_USE_ARN_REGION])
             );
         };
@@ -167,7 +167,7 @@ class ConfigurationProvider extends AbstractConfigurationProvider
     public static function fallback()
     {
         return function () {
-            return Promise\Create::promiseFor(
+            return Promise\promise_for(
                 new Configuration(self::DEFAULT_USE_ARN_REGION)
             );
         };

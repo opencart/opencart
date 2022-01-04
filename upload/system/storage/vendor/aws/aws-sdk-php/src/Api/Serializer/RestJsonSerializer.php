@@ -33,10 +33,7 @@ class RestJsonSerializer extends RestSerializer
 
     protected function payload(StructureShape $member, array $value, array &$opts)
     {
-        $body = isset($value) ?
-            ((string) $this->jsonFormatter->build($member, $value))
-            : "{}";
         $opts['headers']['Content-Type'] = $this->contentType;
-        $opts['body'] = $body;
+        $opts['body'] = (string) $this->jsonFormatter->build($member, $value);
     }
 }

@@ -74,6 +74,26 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
+		$url = '';
+
+		if (isset($this->request->get['filter_email'])) {
+			$url .= '&filter_email=' . urlencode(html_entity_decode($this->request->get['filter_email'], ENT_QUOTES, 'UTF-8'));
+		}
+
+		if (isset($this->request->get['filter_action'])) {
+			$url .= '&filter_action=' . $this->request->get['filter_action'];
+		}
+
+		if (isset($this->request->get['filter_status'])) {
+			$url .= '&filter_status=' . $this->request->get['filter_status'];
+		}
+
+		if (isset($this->request->get['filter_date_added'])) {
+			$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
+		}
+
+		$data['action'] = $this->url->link('customer/gdpr|list', 'user_token=' . $this->session->data['user_token'] . $url);
+
 		$data['gdprs'] = [];
 
 		$filter_data = [

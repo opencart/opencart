@@ -34,8 +34,6 @@ namespace ScssPhp\ScssPhp\SourceMap;
  *
  * @author John Lenz <johnlenz@google.com>
  * @author Anthon Pang <anthon.pang@gmail.com>
- *
- * @internal
  */
 class Base64VLQ
 {

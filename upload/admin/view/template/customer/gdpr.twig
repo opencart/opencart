@@ -4,9 +4,9 @@
 		<div class="container-fluid">
 			<div class="float-end">
 				<button type="button" data-bs-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-gdpr').toggleClass('d-none');" class="btn btn-light d-md-none d-lg-none"><i class="fas fa-filter"></i></button>
-				<button type="button" id="button-approve" value="{{ approve }}" data-bs-toggle="tooltip" title="{{ text_approve }}" class="btn btn-success"><i class="fas fa-check"></i></button>
-				<button type="button" id="button-deny" value="{{ deny }}" data-bs-toggle="tooltip" title="{{ text_deny }}" class="btn btn-warning"><i class="fas fa-times"></i></button>
-				<button type="button" id="button-delete" value="{{ delete }}" data-bs-toggle="tooltip" title="{{ text_delete }}" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+				<button type="submit" form="form-gdpr" foraction="{{ approve }}" data-bs-toggle="tooltip" title="{{ text_approve }}" class="btn btn-success"><i class="fas fa-check"></i></button>
+				<button type="submit" form="form-gdpr" foraction="{{ deny }}" data-bs-toggle="tooltip" title="{{ text_deny }}" class="btn btn-warning"><i class="fas fa-times"></i></button>
+				<button type="submit" form="form-gdpr" foraction="{{ delete }}" data-bs-toggle="tooltip" title="{{ text_delete }}" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
 			</div>
 			<h1>{{ heading_title }}</h1>
 			<ol class="breadcrumb">
@@ -24,17 +24,21 @@
 					<div class="card-header"><i class="fas fa-filter"></i> {{ text_filter }}</div>
 					<div class="card-body">
 						<div class="mb-3">
-							<label class="form-label">{{ entry_email }}</label> <input type="text" name="filter_email" value="" placeholder="{{ entry_email }}" id="input-email" class="form-control"/>
+							<label class="form-label">{{ entry_email }}</label>
+              <input type="text" name="filter_email" value="" placeholder="{{ entry_email }}" id="input-email" list="list-email" class="form-control"/>
+              <datalist id="list-email"></datalist>
 						</div>
 						<div class="mb-3">
-							<label for="input-action" class="col-form-label">{{ entry_action }}</label> <select name="filter_action" id="input-action" class="form-select">
+							<label for="input-action" class="col-form-label">{{ entry_action }}</label>
+              <select name="filter_action" id="input-action" class="form-select">
 								<option value=""></option>
 								<option value="export">{{ text_export }}</option>
 								<option value="remove">{{ text_remove }}</option>
 							</select>
 						</div>
 						<div class="mb-3">
-							<label for="input-status" class="form-label">{{ entry_status }}</label> <select name="filter_status" id="input-status" class="form-select">
+							<label for="input-status" class="form-label">{{ entry_status }}</label>
+              <select name="filter_status" id="input-status" class="form-select">
 								<option value=""></option>
 								<option value="0">{{ text_unverified }}</option>
 								<option value="1">{{ text_pending }}</option>
@@ -43,6 +47,9 @@
 								<option value="-1">{{ text_denied }}</option>
 							</select>
 						</div>
+
+
+
 						<div class="mb-3">
 							<label for="input-date-added" class="form-label">{{ entry_date_added }}</label>
 							<div class="input-group date">
@@ -72,41 +79,6 @@ $('#gdpr').on('click', '.pagination a', function(e) {
     e.preventDefault();
 
     $('#gdpr').load(this.href);
-});
-
-$('#button-approve, #button-deny, #button-delete').on('click', function(e) {
-    e.preventDefault();
-
-    var element = this;
-
-    $.ajax({
-        url: $(element).val(),
-        type: 'post',
-        dataType: 'json',
-        data: $('#gdpr input[name=\'selected[]\']:checked'),
-        beforeSend: function() {
-            $(element).button('loading');
-        },
-        complete: function() {
-            $(element).button('reset');
-        },
-        success: function(json) {
-            $('.alert-dismissible').remove();
-
-            if (json['error']) {
-                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-            }
-
-            if (json['success']) {
-                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                $('#gdpr').load('index.php?route=customer/gdpr|list&user_token={{ user_token }}');
-            }
-        },
-        error: function(xhr, ajaxOptions, thrownError) {
-            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-        }
-    });
 });
 
 $('#gdpr').on('click', '.btn-success, .btn-warning, .btn-danger', function(e) {
@@ -171,8 +143,7 @@ $('#button-filter').on('click', function() {
 
     $('#gdpr').load('index.php?route=customer/gdpr|list&user_token={{ user_token }}' + url);
 });
-//--></script>
-<script type="text/javascript"><!--
+
 $('#input-email').autocomplete({
     'source': function(request, response) {
         $.ajax({
@@ -188,12 +159,9 @@ $('#input-email').autocomplete({
             }
         });
     },
-    'select': function(item) {
-        $('#input-email').val(item['label']);
-    }
+    'select': function(item) {}
 });
-//--></script>
-<script type="text/javascript"><!--
+
 $('.date').datetimepicker({
     'format': 'YYYY-MM-DD',
     'locale': '{{ datepicker }}',

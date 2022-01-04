@@ -64,7 +64,7 @@ class OutpostsAccessPointArn extends BaseAccessPointArn implements
      *
      * @param array $data
      */
-    public static function validate(array $data)
+    protected static function validate(array $data)
     {
         Arn::validate($data);
 

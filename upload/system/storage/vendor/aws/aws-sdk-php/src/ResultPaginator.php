@@ -68,7 +68,7 @@ class ResultPaginator implements \Iterator
      */
     public function each(callable $handleResult)
     {
-        return Promise\Coroutine::of(function () use ($handleResult) {
+        return Promise\coroutine(function () use ($handleResult) {
             $nextToken = null;
             do {
                 $command = $this->createNextCommand($this->args, $nextToken);
@@ -76,7 +76,7 @@ class ResultPaginator implements \Iterator
                 $nextToken = $this->determineNextToken($result);
                 $retVal = $handleResult($result);
                 if ($retVal !== null) {
-                    yield Promise\Create::promiseFor($retVal);
+                    yield Promise\promise_for($retVal);
                 }
             } while ($nextToken);
         });
@@ -101,25 +101,21 @@ class ResultPaginator implements \Iterator
     /**
      * @return Result
      */
-    #[\ReturnTypeWillChange]
     public function current()
     {
         return $this->valid() ? $this->result : false;
     }
 
-    #[\ReturnTypeWillChange]
     public function key()
     {
         return $this->valid() ? $this->requestCount - 1 : null;
     }
 
-    #[\ReturnTypeWillChange]
     public function next()
     {
         $this->result = null;
     }
 
-    #[\ReturnTypeWillChange]
     public function valid()
     {
         if ($this->result) {
@@ -138,7 +134,6 @@ class ResultPaginator implements \Iterator
         return false;
     }
 
-    #[\ReturnTypeWillChange]
     public function rewind()
     {
         $this->requestCount = 0;

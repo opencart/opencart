@@ -84,7 +84,7 @@ class WrappedHttpHandler
                 . ' receiver to Aws\WrappedHttpHandler is not supported.');
         }
 
-        return Promise\Create::promiseFor($fn($request, $options))
+        return Promise\promise_for($fn($request, $options))
             ->then(
                 function (
                     ResponseInterface $res

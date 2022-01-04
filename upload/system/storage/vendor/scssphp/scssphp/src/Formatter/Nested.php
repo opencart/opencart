@@ -21,8 +21,6 @@ use ScssPhp\ScssPhp\Type;
  * @author Leaf Corcoran <leafot@gmail.com>
  *
  * @deprecated since 1.4.0. Use the Expanded formatter instead.
- *
- * @internal
  */
 class Nested extends Formatter
 {

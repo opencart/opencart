@@ -39,7 +39,7 @@ abstract class AbstractConfigurationProvider
         return function () use ($provider, $cache, $cacheKey) {
             $found = $cache->get($cacheKey);
             if ($found instanceof static::$interfaceClass) {
-                return Promise\Create::promiseFor($found);
+                return Promise\promise_for($found);
             }
 
             return $provider()

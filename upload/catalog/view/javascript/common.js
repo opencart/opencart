@@ -244,19 +244,13 @@ $(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function (e) {
 
             if (json['redirect']) {
                 location = json['redirect'];
-
-                // Not sure this part works
-                delete json['redirect'];
             }
 
             if (typeof json['error'] == 'string') {
                 $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                delete json['error'];
             }
 
             if (typeof json['error'] == 'object') {
-
                 if (json['error']['warning']) {
                     $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                 }
@@ -265,8 +259,6 @@ $(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function (e) {
                     $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
                     $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
                 }
-
-                delete json['error'];
             }
 
             if (json['success']) {
@@ -279,8 +271,6 @@ $(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function (e) {
                 if (url !== undefined && target !== undefined) {
                     $(target).load(url);
                 }
-
-                delete json['success'];
             }
 
             // Replace any form values that correspond to form names.

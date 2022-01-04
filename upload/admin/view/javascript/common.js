@@ -419,8 +419,6 @@ var chain = new Chain();
                 var name;
                 var i = 0, j = 0;
 
-               console.log(json);
-
                 if (json.length) {
                     for (i = 0; i < json.length; i++) {
                         // update element items

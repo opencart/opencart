@@ -33,35 +33,31 @@
   {% endfor %}
 </head>
 <body>
-<div id="toast-container">
-  <div class="container">
-    <div id="toast"></div>
-  </div>
-</div>
 <nav id="top">
+  <div id="alert" class="position-fixed top-0 end-0 p-3" style="z-index: 9999;"></div>
   <div class="container">
-    <div class="nav float-left">
+    <div class="nav float-start">
       <ul class="list-inline">
         <li class="list-inline-item">{{ currency }}</li>
         <li class="list-inline-item">{{ language }}</li>
       </ul>
     </div>
-    <div class="nav float-right">
+    <div class="nav float-end">
       <ul class="list-inline">
         <li class="list-inline-item"><a href="{{ contact }}"><i class="fas fa-phone"></i></a> <span class="d-none d-md-inline">{{ telephone }}</span></li>
         <li class="list-inline-item">
           <div class="dropdown">
-            <a href="{{ account }}" class="dropdown-toggle" data-toggle="dropdown"><i class="fas fa-user"></i> <span class="d-none d-md-inline">{{ text_account }}</span> <i class="fas fa-caret-down"></i></a>
+            <a href="{{ account }}" class="dropdown-toggle" data-bs-toggle="dropdown"><i class="fas fa-user"></i> <span class="d-none d-md-inline">{{ text_account }}</span> <i class="fas fa-caret-down"></i></a>
             <div class="dropdown-menu dropdown-menu-right">
-              {% if logged %}
+              {% if not logged %}
+                <a href="{{ register }}" class="dropdown-item">{{ text_register }}</a>
+                <a href="{{ login }}" class="dropdown-item">{{ text_login }}</a>
+              {% else %}
                 <a href="{{ account }}" class="dropdown-item">{{ text_account }}</a>
                 <a href="{{ order }}" class="dropdown-item">{{ text_order }}</a>
                 <a href="{{ transaction }}" class="dropdown-item">{{ text_transaction }}</a>
                 <a href="{{ download }}" class="dropdown-item">{{ text_download }}</a>
                 <a href="{{ logout }}" class="dropdown-item">{{ text_logout }}</a>
-              {% else %}
-                <a href="{{ register }}" class="dropdown-item">{{ text_register }}</a>
-                <a href="{{ login }}" class="dropdown-item">{{ text_login }}</a>
               {% endif %}
             </div>
           </div>
@@ -91,4 +87,4 @@
   </div>
 </header>
 <main>
-  {{ menu }}
+{{ menu }}

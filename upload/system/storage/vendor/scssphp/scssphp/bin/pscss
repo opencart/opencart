@@ -26,12 +26,14 @@ use ScssPhp\ScssPhp\Parser;
 use ScssPhp\ScssPhp\Version;
 
 $style = null;
-$loadPaths = null;
+$loadPaths = [];
 $dumpTree = false;
 $inputFile = null;
 $changeDir = false;
 $encoding = false;
 $sourceMap = false;
+$embedSources = false;
+$embedSourceMap = false;
 
 /**
  * Parse argument
@@ -60,24 +62,28 @@ function parseArgument(&$i, $options) {
     }
 }
 
+$arguments = [];
+
 for ($i = 1; $i < $argc; $i++) {
     if ($argv[$i] === '-?' || $argv[$i] === '-h' || $argv[$i] === '--help') {
         $exe = $argv[0];
 
         $HELP = <<<EOT
-Usage: $exe [options] [input-file]
+Usage: $exe [options] [input-file] [output-file]
 
 Options include:
 
     --help              Show this message [-h, -?]
     --continue-on-error [deprecated] Ignored
     --debug-info        [deprecated] Ignored [-g]
-    --dump-tree         Dump formatted parse tree [-T]
+    --dump-tree         [deprecated] Dump formatted parse tree [-T]
     --iso8859-1         Use iso8859-1 encoding instead of default utf-8
     --line-numbers      [deprecated] Ignored [--line-comments]
     --load-path=PATH    Set import path [-I]
     --precision=N       [deprecated] Ignored. (default 10) [-p]
     --sourcemap         Create source map file
+    --embed-sources     Embed source file contents in source maps
+    --embed-source-map  Embed the source map contents in CSS (default if writing to stdout)
     --style=FORMAT      Set the output style (compressed or expanded) [-s, -t]
     --version           Print the version [-v]
 
@@ -117,6 +123,16 @@ EOT;
         continue;
     }
 
+    if ($argv[$i] === '--embed-sources') {
+        $embedSources = true;
+        continue;
+    }
+
+    if ($argv[$i] === '--embed-source-map') {
+        $embedSourceMap = true;
+        continue;
+    }
+
     if ($argv[$i] === '-T' || $argv[$i] === '--dump-tree') {
         $dumpTree = true;
         continue;
@@ -132,7 +148,7 @@ EOT;
     $value = parseArgument($i, array('-I', '--load-path'));
 
     if (isset($value)) {
-        $loadPaths = $value;
+        $loadPaths[] = $value;
         continue;
     }
 
@@ -144,14 +160,12 @@ EOT;
         continue;
     }
 
-    if (file_exists($argv[$i])) {
-        $inputFile = $argv[$i];
-        continue;
-    }
+    $arguments[] = $argv[$i];
 }
 
 
-if ($inputFile) {
+if (isset($arguments[0]) && file_exists($arguments[0])) {
+    $inputFile = $arguments[0];
     $data = file_get_contents($inputFile);
 } else {
     $data = '';
@@ -166,13 +180,15 @@ if ($dumpTree) {
 
     print_r(json_decode(json_encode($parser->parse($data)), true));
 
+    fwrite(STDERR, 'Warning: the --dump-tree option is deprecated. Use proper debugging tools instead.');
+
     exit();
 }
 
 $scss = new Compiler();
 
 if ($loadPaths) {
-    $scss->setImportPaths(explode(PATH_SEPARATOR, $loadPaths));
+    $scss->setImportPaths($loadPaths);
 }
 
 if ($style) {
@@ -184,8 +200,26 @@ if ($style) {
     }
 }
 
+$outputFile = isset($arguments[1]) ? $arguments[1] : null;
+$sourceMapFile = null;
+
 if ($sourceMap) {
-    $scss->setSourceMap(Compiler::SOURCE_MAP_INLINE);
+    $sourceMapOptions = array(
+        'outputSourceFiles' => $embedSources,
+    );
+    if ($embedSourceMap || $outputFile === null) {
+        $scss->setSourceMap(Compiler::SOURCE_MAP_INLINE);
+    } else {
+        $sourceMapFile = $outputFile . '.map';
+        $sourceMapOptions['sourceMapWriteTo'] = $sourceMapFile;
+        $sourceMapOptions['sourceMapURL'] = basename($sourceMapFile);
+        $sourceMapOptions['sourceMapBasepath'] = getcwd();
+        $sourceMapOptions['sourceMapFilename'] = basename($outputFile);
+
+        $scss->setSourceMap(Compiler::SOURCE_MAP_FILE);
+    }
+
+    $scss->setSourceMapOptions($sourceMapOptions);
 }
 
 if ($encoding) {
@@ -193,8 +227,18 @@ if ($encoding) {
 }
 
 try {
-    echo $scss->compile($data, $inputFile);
+    $result = $scss->compileString($data, $inputFile);
 } catch (SassException $e) {
-    fwrite(STDERR, $e->getMessage()."\n");
+    fwrite(STDERR, 'Error: '.$e->getMessage()."\n");
     exit(1);
+}
+
+if ($outputFile) {
+    file_put_contents($outputFile, $result->getCss());
+
+    if ($sourceMapFile !== null && $result->getSourceMap() !== null) {
+        file_put_contents($sourceMapFile, $result->getSourceMap());
+    }
+} else {
+    echo $result->getCss();
 }

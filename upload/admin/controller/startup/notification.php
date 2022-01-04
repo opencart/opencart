@@ -1,7 +1,7 @@
 <?php
-namespace Opencart\Application\Controller\Common;
+namespace Opencart\Admin\Controller\Common;
 class Notification extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): void {
 		if (empty($this->request->cookie['notification'])) {
 			$curl = curl_init();
 
@@ -39,10 +39,10 @@ class Notification extends \Opencart\System\Engine\Controller {
 				'path'     => !empty($_SERVER['PHP_SELF']) ? dirname($_SERVER['PHP_SELF']) . '/' : '',
 				'secure'   => $this->request->server['HTTPS'],
 				'httponly' => false,
-				'SameSite' => 'Strict'
+				'SameSite' => $this->config->get('session_samesite')
 			];
 
-			oc_setcookie('notification', true, $option);
+			setcookie('notification', true, $option);
 		}
 	}
 }

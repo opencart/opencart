@@ -29,6 +29,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getCostAndUsageAsync(array $args = [])
  * @method \Aws\Result getCostAndUsageWithResources(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getCostAndUsageWithResourcesAsync(array $args = [])
+ * @method \Aws\Result getCostCategories(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getCostCategoriesAsync(array $args = [])
  * @method \Aws\Result getCostForecast(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getCostForecastAsync(array $args = [])
  * @method \Aws\Result getDimensionValues(array $args = [])

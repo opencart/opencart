@@ -1,7 +1,7 @@
 <?php
-namespace Opencart\Application\Controller\Common;
+namespace Opencart\Catalog\Controller\Common;
 class Header extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): string {
 		// Analytics
 		$data['analytics'] = [];
 
@@ -15,10 +15,6 @@ class Header extends \Opencart\System\Engine\Controller {
 					$data['analytics'][] = $this->load->controller('extension/' . $analytic['extension'] . '/analytics/' . $analytic['code'], $this->config->get('analytics_' . $analytic['code'] . '_status'));
 				}
 			}
-		}
-
-		if (is_file(DIR_IMAGE . $this->config->get('config_icon'))) {
-			$this->document->addLink($this->config->get('config_url') . 'image/' . $this->config->get('config_icon'), 'icon');
 		}
 
 		$data['lang'] = $this->language->get('code');
@@ -36,8 +32,7 @@ class Header extends \Opencart\System\Engine\Controller {
 		$data['stylesheet'] = 'catalog/view/stylesheet/stylesheet.css';
 
 		// Hard coding scripts so they can be replaced via the events system.
-		$data['jquery'] = 'catalog/view/javascript/jquery/jquery-3.3.1.min.js';
-		$data['bootstrap_js'] = 'catalog/view/javascript/bootstrap/js/bootstrap.bundle.min.js';
+		$data['jquery'] = 'catalog/view/javascript/jquery/jquery-3.6.0.min.js';
 
 		$data['links'] = $this->document->getLinks();
 		$data['styles'] = $this->document->getStyles();
@@ -63,15 +58,20 @@ class Header extends \Opencart\System\Engine\Controller {
 		}
 
 		$data['home'] = $this->url->link('common/home', 'language=' . $this->config->get('config_language'));
-		$data['wishlist'] = $this->url->link('account/wishlist', 'language=' . $this->config->get('config_language'));
+		$data['wishlist'] = $this->url->link('account/wishlist', 'language=' . $this->config->get('config_language') . (isset($this->session->data['customer_token']) ? '&customer_token=' . $this->session->data['customer_token'] : ''));
 		$data['logged'] = $this->customer->isLogged();
-		$data['account'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language'));
-		$data['register'] = $this->url->link('account/register', 'language=' . $this->config->get('config_language'));
-		$data['login'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'));
-		$data['order'] = $this->url->link('account/order', 'language=' . $this->config->get('config_language'));
-		$data['transaction'] = $this->url->link('account/transaction', 'language=' . $this->config->get('config_language'));
-		$data['download'] = $this->url->link('account/download', 'language=' . $this->config->get('config_language'));
-		$data['logout'] = $this->url->link('account/logout', 'language=' . $this->config->get('config_language'));
+
+		if (!$this->customer->isLogged()) {
+			$data['register'] = $this->url->link('account/register', 'language=' . $this->config->get('config_language'));
+			$data['login'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'));
+		} else {
+			$data['account'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']);
+			$data['order'] = $this->url->link('account/order', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']);
+			$data['transaction'] = $this->url->link('account/transaction', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']);
+			$data['download'] = $this->url->link('account/download', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']);
+			$data['logout'] = $this->url->link('account/logout', 'language=' . $this->config->get('config_language'));
+		}
+
 		$data['shopping_cart'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'));
 		$data['checkout'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'));
 		$data['contact'] = $this->url->link('information/contact', 'language=' . $this->config->get('config_language'));

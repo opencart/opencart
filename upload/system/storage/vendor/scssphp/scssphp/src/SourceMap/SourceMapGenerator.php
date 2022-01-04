@@ -21,6 +21,8 @@ use ScssPhp\ScssPhp\Exception\CompilerException;
  *
  * @author Josh Schmidt <oyejorge@gmail.com>
  * @author Nicolas FRANÇOIS <nicolas.francois@frog-labs.com>
+ *
+ * @internal
  */
 class SourceMapGenerator
 {
@@ -33,6 +35,7 @@ class SourceMapGenerator
      * Array of default options
      *
      * @var array
+     * @phpstan-var array{sourceRoot: string, sourceMapFilename: string|null, sourceMapURL: string|null, sourceMapWriteTo: string|null, outputSourceFiles: bool, sourceMapRootpath: string, sourceMapBasepath: string}
      */
     protected $defaultOptions = [
         // an optional source root, useful for relocating source files
@@ -70,6 +73,7 @@ class SourceMapGenerator
      * Array of mappings
      *
      * @var array
+     * @phpstan-var list<array{generated_line: int, generated_column: int, original_line: int, original_column: int, source_file: string}>
      */
     protected $mappings = [];
 
@@ -83,16 +87,24 @@ class SourceMapGenerator
     /**
      * File to content map
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $sources = [];
+
+    /**
+     * @var array<string, int>
+     */
     protected $sourceKeys = [];
 
     /**
      * @var array
+     * @phpstan-var array{sourceRoot: string, sourceMapFilename: string|null, sourceMapURL: string|null, sourceMapWriteTo: string|null, outputSourceFiles: bool, sourceMapRootpath: string, sourceMapBasepath: string}
      */
     private $options;
 
+    /**
+     * @phpstan-param array{sourceRoot?: string, sourceMapFilename?: string|null, sourceMapURL?: string|null, sourceMapWriteTo?: string|null, outputSourceFiles?: bool, sourceMapRootpath?: string, sourceMapBasepath?: string} $options
+     */
     public function __construct(array $options = [])
     {
         $this->options = array_merge($this->defaultOptions, $options);
@@ -107,6 +119,8 @@ class SourceMapGenerator
      * @param integer $originalLine    The line number in original file
      * @param integer $originalColumn  The column number in original file
      * @param string  $sourceFile      The original source file
+     *
+     * @return void
      */
     public function addMapping($generatedLine, $generatedColumn, $originalLine, $originalColumn, $sourceFile)
     {
@@ -129,6 +143,7 @@ class SourceMapGenerator
      * @return string
      *
      * @throws \ScssPhp\ScssPhp\Exception\CompilerException If the file could not be saved
+     * @deprecated
      */
     public function saveMap($content)
     {
@@ -214,7 +229,7 @@ class SourceMapGenerator
     /**
      * Returns the sources contents
      *
-     * @return array|null
+     * @return string[]|null
      */
     protected function getSourcesContent()
     {

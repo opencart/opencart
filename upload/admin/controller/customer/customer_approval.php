@@ -1,7 +1,7 @@
 <?php
-namespace Opencart\Application\Controller\Customer;
+namespace Opencart\Admin\Controller\Customer;
 class CustomerApproval extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): void {
 		$this->load->language('customer/customer_approval');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -18,22 +18,31 @@ class CustomerApproval extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('customer/customer_approval', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		$data['user_token'] = $this->session->data['user_token'];
+		$data['approve'] = $this->url->link('customer/customer_approval|approve', 'user_token=' . $this->session->data['user_token']);
+		$data['deny'] = $this->url->link('customer/customer_approval|deny', 'user_token=' . $this->session->data['user_token']);
 
 		$this->load->model('customer/customer_group');
 
 		$data['customer_groups'] = $this->model_customer_customer_group->getCustomerGroups();
-		
+
+		$data['list'] = $this->getList();
+
+		$data['user_token'] = $this->session->data['user_token'];
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('customer/customer_approval', $data));	
 	}
-				
-	public function customer_approval() {
+
+	public function list(): void {
 		$this->load->language('customer/customer_approval');
-		
+
+		$this->response->setOutput($this->getList());
+	}
+
+	public function getList(): string {
 		if (isset($this->request->get['filter_customer'])) {
 			$filter_customer = $this->request->get['filter_customer'];
 		} else {
@@ -98,7 +107,7 @@ class CustomerApproval extends \Opencart\System\Engine\Controller {
 				'date_added'     => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'approve'        => $this->url->link('customer/customer_approval|approve', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id'] . '&type=' . $result['type']),
 				'deny'           => $this->url->link('customer/customer_approval|deny', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id'] . '&type=' . $result['type']),
-				'edit'           => $this->url->link('customer/customer|edit', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id'])
+				'edit'           => $this->url->link('customer/customer|form', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id'])
 			];
 		}
 
@@ -133,25 +142,39 @@ class CustomerApproval extends \Opencart\System\Engine\Controller {
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($customer_approval_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($customer_approval_total - $this->config->get('config_pagination_admin'))) ? $customer_approval_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $customer_approval_total, ceil($customer_approval_total / $this->config->get('config_pagination_admin')));
 
-		$this->response->setOutput($this->load->view('customer/customer_approval_list', $data));
+		return $this->load->view('customer/customer_approval_list', $data);
 	}
 
-	public function approve() {
+	public function approve(): void {
 		$this->load->language('customer/customer_approval');
 
 		$json = [];
 
 		if (!$this->user->hasPermission('modify', 'customer/customer_approval')) {
 			$json['error'] = $this->language->get('error_permission');
-		} else {
+		}
+
+		if (!$json) {
 			$this->load->model('customer/customer_approval');
-			
-			if ($this->request->get['type'] == 'customer') {
-				$this->model_customer_customer_approval->approveCustomer($this->request->get['customer_id']);
-			} elseif ($this->request->get['type'] == 'affiliate') {
-				$this->model_customer_customer_approval->approveAffiliate($this->request->get['customer_id']);
+
+			$approvals = [];
+
+			if (isset($this->request->post['selected'])) {
+				$approvals = $this->request->post['selected'];
 			}
-			
+
+			if (isset($this->request->get['customer_id'])) {
+				$approvals[] = (int)$this->request->get['customer_id'];
+			}
+
+			foreach ($approvals as $customer_id) {
+				if ($this->request->get['type'] == 'customer') {
+					$this->model_customer_customer_approval->approveCustomer($customer_id);
+				} elseif ($this->request->get['type'] == 'affiliate') {
+					$this->model_customer_customer_approval->approveAffiliate($customer_id);
+				}
+			}
+
 			$json['success'] = $this->language->get('text_success');
 		}
 
@@ -159,22 +182,36 @@ class CustomerApproval extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}	
 	
-	public function deny() {
+	public function deny(): void {
 		$this->load->language('customer/customer_approval');
 
 		$json = [];
 				
 		if (!$this->user->hasPermission('modify', 'customer/customer_approval')) {
 			$json['error'] = $this->language->get('error_permission');
-		} else {
+		}
+
+		if (!$json) {
 			$this->load->model('customer/customer_approval');
-			
-			if ($this->request->get['type'] == 'customer') {
-				$this->model_customer_customer_approval->denyCustomer($this->request->get['customer_id']);
-			} elseif ($this->request->get['type'] == 'affiliate') {
-				$this->model_customer_customer_approval->denyAffiliate($this->request->get['customer_id']);
+
+			$denials = [];
+
+			if (isset($this->request->post['selected'])) {
+				$denials = $this->request->post['selected'];
 			}
-					
+
+			if (isset($this->request->get['customer_id'])) {
+				$denials[] = (int)$this->request->get['customer_id'];
+			}
+
+			foreach ($denials as $customer_id) {
+				if ($this->request->get['type'] == 'customer') {
+					$this->model_customer_customer_approval->denyCustomer($customer_id);
+				} elseif ($this->request->get['type'] == 'affiliate') {
+					$this->model_customer_customer_approval->denyAffiliate($customer_id);
+				}
+			}
+
 			$json['success'] = $this->language->get('text_success');
 		}
 		

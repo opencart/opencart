@@ -1,7 +1,7 @@
 <?php
-namespace Opencart\Application\Controller\Extension\Opencart\Module;
+namespace Opencart\Catalog\Controller\Extension\Opencart\Module;
 class Featured extends \Opencart\System\Engine\Controller {
-	public function index($setting) {
+	public function index(array $setting): string {
 		$this->load->language('extension/opencart/module/featured');
 
 		$this->load->model('catalog/product');
@@ -16,11 +16,9 @@ class Featured extends \Opencart\System\Engine\Controller {
 				$product_info = $this->model_catalog_product->getProduct($product_id);
 
 				if ($product_info) {
-					$product_data[] = $product_info;
+					$products[] = $product_info;
 				}
 			}
-
-			$products = array_slice($product_data, 0, (int)$setting['limit']);
 
 			foreach ($products as $product) {
 				if ($product['image']) {
@@ -66,6 +64,8 @@ class Featured extends \Opencart\System\Engine\Controller {
 
 		if ($data['products']) {
 			return $this->load->view('extension/opencart/module/featured', $data);
+		} else {
+			return '';
 		}
 	}
 }

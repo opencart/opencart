@@ -1,7 +1,7 @@
 <?php
-namespace Opencart\Application\Model\Report;
+namespace Opencart\Admin\Model\Report;
 class Online extends \Opencart\System\Engine\Model {
-	public function getOnline($data = []) {
+	public function getOnline(array $data = []): array {
 		$sql = "SELECT co.`ip`, co.`customer_id`, co.`url`, co.`referer`, co.`date_added` FROM `" . DB_PREFIX . "customer_online` co LEFT JOIN `" . DB_PREFIX . "customer` c ON (co.`customer_id` = c.`customer_id`)";
 
 		$implode = [];
@@ -37,7 +37,7 @@ class Online extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function getTotalOnline($data = []) {
+	public function getTotalOnline(array $data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer_online` co LEFT JOIN `" . DB_PREFIX . "customer` c ON (co.`customer_id` = c.`customer_id`)";
 
 		$implode = [];
@@ -56,6 +56,6 @@ class Online extends \Opencart\System\Engine\Model {
 
 		$query = $this->db->query($sql);
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
 	}
 }

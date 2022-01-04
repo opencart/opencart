@@ -1,7 +1,7 @@
 <?php
-namespace Opencart\Application\Controller\Mail;
+namespace Opencart\Catalog\Controller\Mail;
 class Affiliate extends \Opencart\System\Engine\Controller {
-	public function index(&$route, &$args, &$output) {
+	public function index(string &$route, array &$args, mixed &$output): void {
 		$this->load->language('mail/affiliate');
 
 		$store_name = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
@@ -52,7 +52,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		$mail->send();
 	}
 
-	public function alert(&$route, &$args, &$output) {
+	public function alert(string &$route, array &$args, mixed &$output): void {
 		// Send to main admin email if new affiliate email is enabled
 		if (in_array('affiliate', (array)$this->config->get('config_mail_alert'))) {
 			$this->load->language('mail/affiliate');

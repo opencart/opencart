@@ -49,6 +49,7 @@ $_['button_save']                   = 'Save';
 $_['button_cancel']                 = 'Cancel';
 $_['button_cancel_recurring']       = 'Cancel Recurring Payments';
 $_['button_continue']               = 'Continue';
+$_['button_confirm']                = 'Confirm';
 $_['button_clear']                  = 'Clear';
 $_['button_close']                  = 'Close';
 $_['button_enable']                 = 'Enable';
@@ -89,6 +90,7 @@ $_['button_route_add']              = 'Add Route';
 $_['button_rule_add']               = 'Add Rule';
 $_['button_module_add']             = 'Add Module';
 $_['button_link_add']               = 'Add Link';
+$_['button_customer_add']           = 'Add Customer';
 $_['button_approve']                = 'Approve';
 $_['button_deny']                   = 'Deny';
 $_['button_reset']                  = 'Reset';
@@ -161,7 +163,7 @@ $_['error_upload_6']                = 'Warning: Missing a temporary folder!';
 $_['error_upload_7']                = 'Warning: Failed to write file to disk!';
 $_['error_upload_8']                = 'Warning: File upload stopped by extension!';
 $_['error_upload_999']              = 'Warning: No error code available!';
-$_['error_upload_size']             = 'Warning: The uploaded file exceeds the %smb max file size!';
+$_['error_upload_size']             = 'Warning: The uploaded file exceeds the %sMB max file size!';
 $_['error_curl']                    = 'CURL: Error Code(%s): %s';
 
 /* When doing translations only include the matching language code */

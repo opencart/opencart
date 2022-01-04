@@ -10,6 +10,7 @@ trait HasDataTrait
     /** @var array */
     private $data = [];
 
+    #[\ReturnTypeWillChange]
     public function getIterator()
     {
         return new \ArrayIterator($this->data);
@@ -23,6 +24,7 @@ trait HasDataTrait
      *
      * @return mixed|null
      */
+    #[\ReturnTypeWillChange]
     public function & offsetGet($offset)
     {
         if (isset($this->data[$offset])) {
@@ -33,16 +35,19 @@ trait HasDataTrait
         return $value;
     }
 
+    #[\ReturnTypeWillChange]
     public function offsetSet($offset, $value)
     {
         $this->data[$offset] = $value;
     }
 
+    #[\ReturnTypeWillChange]
     public function offsetExists($offset)
     {
         return isset($this->data[$offset]);
     }
 
+    #[\ReturnTypeWillChange]
     public function offsetUnset($offset)
     {
         unset($this->data[$offset]);
@@ -53,6 +58,7 @@ trait HasDataTrait
         return $this->data;
     }
 
+    #[\ReturnTypeWillChange]
     public function count()
     {
         return count($this->data);

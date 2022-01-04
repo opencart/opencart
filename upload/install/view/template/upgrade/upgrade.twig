@@ -1,5 +1,5 @@
 {{ header }}
-<div class="container">
+<div id="content">
 	<div class="page-header">
 		<div class="container">
 			<div class="float-right">{{ language }}</div>
@@ -33,63 +33,59 @@
 						</div>
 					</div>
 				</fieldset>
-				<div class="buttons">
-					<div class="text-right">
-						<input type="submit" value="{{ button_continue }}" data-loading="{{ text_loading }}" id="button-continue" class="btn btn-primary"/>
-					</div>
+				<div class="row mt-3">
+					<div class="col text-right"><button type="button" id="button-continue" data-loading="{{ text_loading }}" class="btn btn-primary">{{ button_continue }}</button></div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
 <script type="text/javascript"><!--
-var step = 0;
+var step = 1;
 
 $('#button-continue').on('click', function() {
-	$('#progress-bar').addClass('progress-bar-success').css('width', '0%').removeClass('progress-bar-danger');
-	$('#progress-text').html('');
-	$('#button-continue').button('loading');
+    step = 1;
 
-	start('index.php?route=upgrade/upgrade|next');
+    next('index.php?route=upgrade/upgrade_1');
+
+    $('#progress-bar').addClass('progress-bar-success').css('width', '0%').removeClass('progress-bar-danger');
+    $('#progress-text').html('');
 });
 
-function start(url) {
-	setTimeout(function() {
-		$.ajax({
-			url: url,
-			type: 'post',
-			dataType: 'json',
-			success: function(json) {
-				if (json['error']) {
-					$('#progress-bar').addClass('progress-bar-danger');
-					$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
+function next(url) {
+    $.ajax({
+        url: url,
+        dataType: 'json',
+        beforeSend: function() {
+            $('#button-continue').button('loading');
+        },
+        complete: function() {
+            $('#button-continue').button('reset');
+        },
+        success: function(json) {
+            if (json['error']) {
+                $('#progress-bar').addClass('progress-bar-danger');
+                $('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
+            }
 
-					$('#button-continue').prop('disabled', false);
-					$('#button-continue').button('reset');
-				}
+            if (json['success']) {
+                $('#progress-text').html('<span class="text-success">' + json['success'] + '</span>');
+            }
 
-				if (json['success']) {
-					$('#progress-text').html('<span class="text-success">' + json['success'] + '</span>');
-					$('#progress-bar').css('width', ((step / {{ total }}) * 100) + '%');
-				}
+            $('#progress-bar').css('width', Math.round((step / {{ total }}) * 100) + '%');
 
-				if (json['next']) {
-					start(json['next']);
-				} else if (!json['error']) {
-					$('#button-continue').replaceWith('<a href="{{ store }}" class="btn btn-primary">{{ button_continue }}</a>');
-					$('#button-continue').button('reset');
-				}
+            step++;
 
-				step++;
-			},
-			error: function(xhr, ajaxOptions, thrownError) {
-				$('#progress-bar').addClass('progress-bar-danger');
-				$('#progress-text').html('<div class="text-danger">' + (thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText) + '</div>');
-				$('#button-continue').button('reset');
-			}
-		});
-	}, 1000);
+            if (json['next']) {
+                next(json['next']);
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
 }
-
 //--></script>
 {{ footer }}

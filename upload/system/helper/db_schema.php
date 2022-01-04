@@ -1,4 +1,5 @@
 <?php
+//namespace Opencart\System\Helper;
 function db_schema() {
 	$tables = [];
 
@@ -1062,9 +1063,20 @@ function db_schema() {
 				'not_null' => true
 			],
 			[
+				'name' => 'custom_field',
+				'type' => 'text',
+				'not_null' => true
+			],
+			[
 				'name' => 'cart',
 				'type' => 'text',
 				'not_null' => true
+			],
+			[
+				'name' => 'address_id',
+				'type' => 'int(11)',
+				'not_null' => true,
+				'default' => '0'
 			],
 			[
 				'name' => 'wishlist',
@@ -1076,17 +1088,6 @@ function db_schema() {
 				'type' => 'tinyint(1)',
 				'not_null' => true,
 				'default' => '0'
-			],
-			[
-				'name' => 'address_id',
-				'type' => 'int(11)',
-				'not_null' => true,
-				'default' => '0'
-			],
-			[
-				'name' => 'custom_field',
-				'type' => 'text',
-				'not_null' => true
 			],
 			[
 				'name' => 'ip',
@@ -2789,11 +2790,6 @@ function db_schema() {
 				'not_null' => true
 			],
 			[
-				'name' => 'fax',
-				'type' => 'varchar(32)',
-				'not_null' => true
-			],
-			[
 				'name' => 'geocode',
 				'type' => 'varchar(32)',
 				'not_null' => true
@@ -3263,11 +3259,6 @@ function db_schema() {
 				'not_null' => true
 			],
 			[
-				'name' => 'fax',
-				'type' => 'varchar(32)',
-				'not_null' => true
-			],
-			[
 				'name' => 'custom_field',
 				'type' => 'text',
 				'not_null' => true
@@ -3462,6 +3453,11 @@ function db_schema() {
 			[
 				'name' => 'language_id',
 				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'language_code',
+				'type' => 'varchar(5)',
 				'not_null' => true
 			],
 			[
@@ -3804,6 +3800,14 @@ function db_schema() {
 		'primary' => [
 			'order_recurring_id'
 		],
+		'index' => [
+			[
+				'name' => 'order_id',
+				'key' => [
+					'order_id'
+				]
+			]
+		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
 		'collate' => 'utf8_general_ci'
@@ -3820,6 +3824,11 @@ function db_schema() {
 			],
 			[
 				'name' => 'order_recurring_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'order_id',
 				'type' => 'int(11)',
 				'not_null' => true
 			],
@@ -3846,6 +3855,14 @@ function db_schema() {
 		],
 		'primary' => [
 			'order_recurring_transaction_id'
+		],
+		'index' => [
+			[
+				'name' => 'order_id',
+				'key' => [
+					'order_id'
+				]
+			]
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
@@ -5365,6 +5382,14 @@ function db_schema() {
 		],
 		'primary' => [
 			'session_id'
+		],
+		'index' => [
+			[
+				'name' => 'expire',
+				'key' => [
+					'expire'
+				]
+			]
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',

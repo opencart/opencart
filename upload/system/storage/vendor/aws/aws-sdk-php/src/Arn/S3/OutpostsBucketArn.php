@@ -62,7 +62,7 @@ class OutpostsBucketArn extends Arn implements
      *
      * @param array $data
      */
-    protected static function validate(array $data)
+    public static function validate(array $data)
     {
         Arn::validate($data);
 

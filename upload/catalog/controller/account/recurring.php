@@ -1,14 +1,14 @@
 <?php
-namespace Opencart\Application\Controller\Account;
+namespace Opencart\Catalog\Controller\Account;
 class Recurring extends \Opencart\System\Engine\Controller {
-	public function index() {
-		if (!$this->customer->isLogged()) {
+	public function index(): void {
+		$this->load->language('account/recurring');
+
+		if (!$this->customer->isLogged() || (!isset($this->request->get['customer_token']) || !isset($this->session->data['customer_token']) || ($this->request->get['customer_token'] != $this->session->data['customer_token']))) {
 			$this->session->data['redirect'] = $this->url->link('account/recurring', 'language=' . $this->config->get('config_language'));
 
 			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language')));
 		}
-
-		$this->load->language('account/recurring');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -27,12 +27,12 @@ class Recurring extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_account'),
-			'href' => $this->url->link('account/account', 'language=' . $this->config->get('config_language'))
+			'href' => $this->url->link('account/account', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'])
 		];
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('account/recurring', 'language=' . $this->config->get('config_language') . $url)
+			'href' => $this->url->link('account/recurring', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . $url)
 		];
 
 		if (isset($this->request->get['page'])) {
@@ -61,7 +61,7 @@ class Recurring extends \Opencart\System\Engine\Controller {
 				'product'            => $result['product_name'],
 				'status'             => $status,
 				'date_added'         => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'view'               => $this->url->link('account/recurring|info', 'language=' . $this->config->get('config_language') . '&order_recurring_id=' . $result['order_recurring_id']),
+				'view'               => $this->url->link('account/recurring|info', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&order_recurring_id=' . $result['order_recurring_id']),
 			];
 		}
 
@@ -69,10 +69,10 @@ class Recurring extends \Opencart\System\Engine\Controller {
 			'total' => $recurring_total,
 			'page'  => $page,
 			'limit' => 10,
-			'url'   => $this->url->link('account/recurring', 'language=' . $this->config->get('config_language') . '&page={page}')
+			'url'   => $this->url->link('account/recurring', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&page={page}')
 		]);
 
-		$data['continue'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language'));
+		$data['continue'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']);
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
@@ -84,19 +84,19 @@ class Recurring extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('account/recurring_list', $data));
 	}
 
-	public function info() {
+	public function info(): void {
 		$this->load->language('account/recurring');
+
+		if (!$this->customer->isLogged() || (!isset($this->request->get['customer_token']) || !isset($this->session->data['customer_token']) || ($this->request->get['customer_token'] != $this->session->data['customer_token']))) {
+			$this->session->data['redirect'] = $this->url->link('account/recurring', 'language=' . $this->config->get('config_language'));
+
+			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language')));
+		}
 
 		if (isset($this->request->get['order_recurring_id'])) {
 			$order_recurring_id = (int)$this->request->get['order_recurring_id'];
 		} else {
 			$order_recurring_id = 0;
-		}
-
-		if (!$this->customer->isLogged()) {
-			$this->session->data['redirect'] = $this->url->link('account/recurring|info', 'language=' . $this->config->get('config_language') . '&order_recurring_id=' . $order_recurring_id);
-
-			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language')));
 		}
 
 		$this->load->model('account/recurring');
@@ -121,17 +121,17 @@ class Recurring extends \Opencart\System\Engine\Controller {
 
 			$data['breadcrumbs'][] = [
 				'text' => $this->language->get('text_account'),
-				'href' => $this->url->link('account/account', 'language=' . $this->config->get('config_language'))
+				'href' => $this->url->link('account/account', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'])
 			];
 
 			$data['breadcrumbs'][] = [
 				'text' => $this->language->get('heading_title'),
-				'href' => $this->url->link('account/recurring', 'language=' . $this->config->get('config_language') . $url)
+				'href' => $this->url->link('account/recurring', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . $url)
 			];
 
 			$data['breadcrumbs'][] = [
 				'text' => $this->language->get('text_recurring'),
-				'href' => $this->url->link('account/recurring|info', 'language=' . $this->config->get('config_language') . '&order_recurring_id=' . $this->request->get['order_recurring_id'] . $url)
+				'href' => $this->url->link('account/recurring|info', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&order_recurring_id=' . $this->request->get['order_recurring_id'] . $url)
 			];
 
 			$data['order_recurring_id'] = (int)$this->request->get['order_recurring_id'];
@@ -164,8 +164,8 @@ class Recurring extends \Opencart\System\Engine\Controller {
 				];
 			}
 
-			$data['order'] = $this->url->link('account/order|info', 'language=' . $this->config->get('config_language') . '&order_id=' . $recurring_info['order_id']);
-			$data['product'] = $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $recurring_info['product_id']);
+			$data['order'] = $this->url->link('account/order|info', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&order_id=' . $recurring_info['order_id']);
+			$data['product'] = $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&product_id=' . $recurring_info['product_id']);
 
 			$this->load->model('setting/extension');
 
@@ -197,20 +197,20 @@ class Recurring extends \Opencart\System\Engine\Controller {
 
 			$data['breadcrumbs'][] = [
 				'text' => $this->language->get('text_account'),
-				'href' => $this->url->link('account/account', 'language=' . $this->config->get('config_language'))
+				'href' => $this->url->link('account/account', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'])
 			];
 
 			$data['breadcrumbs'][] = [
 				'text' => $this->language->get('heading_title'),
-				'href' => $this->url->link('account/recurring', 'language=' . $this->config->get('config_language'))
+				'href' => $this->url->link('account/recurring', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'])
 			];
 
 			$data['breadcrumbs'][] = [
 				'text' => $this->language->get('text_recurring'),
-				'href' => $this->url->link('account/recurring|info', 'language=' . $this->config->get('config_language') . '&order_recurring_id=' . $order_recurring_id)
+				'href' => $this->url->link('account/recurring|info', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&order_recurring_id=' . $order_recurring_id)
 			];
 
-			$data['continue'] = $this->url->link('account/recurring', 'language=' . $this->config->get('config_language'));
+			$data['continue'] = $this->url->link('account/recurring', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']);
 
 			$data['column_left'] = $this->load->controller('common/column_left');
 			$data['column_right'] = $this->load->controller('common/column_right');

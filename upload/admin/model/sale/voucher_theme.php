@@ -1,7 +1,7 @@
 <?php
-namespace Opencart\Application\Model\Sale;
+namespace Opencart\Admin\Model\Sale;
 class VoucherTheme extends \Opencart\System\Engine\Model {
-	public function addVoucherTheme($data) {
+	public function addVoucherTheme(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "voucher_theme` SET `image` = '" . $this->db->escape((string)$data['image']) . "'");
 
 		$voucher_theme_id = $this->db->getLastId();
@@ -15,7 +15,7 @@ class VoucherTheme extends \Opencart\System\Engine\Model {
 		return $voucher_theme_id;
 	}
 
-	public function editVoucherTheme($voucher_theme_id, $data) {
+	public function editVoucherTheme(int $voucher_theme_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "voucher_theme` SET `image` = '" . $this->db->escape((string)$data['image']) . "' WHERE `voucher_theme_id` = '" . (int)$voucher_theme_id . "'");
 
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "voucher_theme_description` WHERE `voucher_theme_id` = '" . (int)$voucher_theme_id . "'");
@@ -27,20 +27,20 @@ class VoucherTheme extends \Opencart\System\Engine\Model {
 		$this->cache->delete('voucher_theme');
 	}
 
-	public function deleteVoucherTheme($voucher_theme_id) {
+	public function deleteVoucherTheme(int $voucher_theme_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "voucher_theme` WHERE `voucher_theme_id` = '" . (int)$voucher_theme_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "voucher_theme_description` WHERE `voucher_theme_id` = '" . (int)$voucher_theme_id . "'");
 
 		$this->cache->delete('voucher_theme');
 	}
 
-	public function getVoucherTheme($voucher_theme_id) {
+	public function getVoucherTheme(int $voucher_theme_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "voucher_theme` vt LEFT JOIN `" . DB_PREFIX . "voucher_theme_description` vtd ON (vt.`voucher_theme_id` = vtd.`voucher_theme_id`) WHERE vt.`voucher_theme_id` = '" . (int)$voucher_theme_id . "' AND vtd.`language_id` = '" . (int)$this->config->get('config_language_id') . "'");
 
 		return $query->row;
 	}
 
-	public function getVoucherThemes($data = []) {
+	public function getVoucherThemes(array $data = []): array {
 		if ($data) {
 			$sql = "SELECT * FROM `" . DB_PREFIX . "voucher_theme` vt LEFT JOIN `" . DB_PREFIX . "voucher_theme_description` vtd ON (vt.`voucher_theme_id` = vtd.`voucher_theme_id`) WHERE vtd.`language_id` = '" . (int)$this->config->get('config_language_id') . "' ORDER BY vtd.`name`";
 
@@ -80,7 +80,7 @@ class VoucherTheme extends \Opencart\System\Engine\Model {
 		}
 	}
 
-	public function getDescriptions($voucher_theme_id) {
+	public function getDescriptions(int $voucher_theme_id): array {
 		$voucher_theme_data = [];
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "voucher_theme_description` WHERE `voucher_theme_id` = '" . (int)$voucher_theme_id . "'");
@@ -92,9 +92,9 @@ class VoucherTheme extends \Opencart\System\Engine\Model {
 		return $voucher_theme_data;
 	}
 
-	public function getTotalVoucherThemes() {
+	public function getTotalVoucherThemes(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "voucher_theme`");
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
 	}
 }

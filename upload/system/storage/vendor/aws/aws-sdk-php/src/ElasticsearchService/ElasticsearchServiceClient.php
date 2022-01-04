@@ -30,6 +30,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise deleteOutboundCrossClusterSearchConnectionAsync(array $args = [])
  * @method \Aws\Result deletePackage(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deletePackageAsync(array $args = [])
+ * @method \Aws\Result describeDomainAutoTunes(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeDomainAutoTunesAsync(array $args = [])
  * @method \Aws\Result describeElasticsearchDomain(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeElasticsearchDomainAsync(array $args = [])
  * @method \Aws\Result describeElasticsearchDomainConfig(array $args = [])

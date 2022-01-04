@@ -21,7 +21,9 @@ legend {
     border-bottom: 1px solid #e5e5e5;
     margin-bottom: 15px;
 }
-
+a {
+    text-decoration: none;
+}
 #container {
     min-height: 100%;
     width: 100%;
@@ -29,7 +31,6 @@ legend {
     background: #f6f6f6;
     overflow: hidden;
 }
-
 .container-fluid {
     padding: 0 20px;
 }
@@ -381,9 +382,9 @@ legend {
     vertical-align: middle;
     margin: 20px 0 15px 0;
     padding: 0;
+    padding-bottom: 5px;
     border-bottom: 1px solid #e9e9e9;
 }
-
 .page-header h1 {
     font-family: 'Open Sans', sans-serif;
     font-weight: 300;
@@ -409,11 +410,10 @@ legend {
 }
 
 .nav-tabs li.nav-item a.active {
-    font-weight: bold;
     color: #333;
 }
 
-.col-form-label {
+.form-label, .col-form-label {
     font-weight: bold;
 }
 
@@ -423,12 +423,12 @@ legend {
     }
 }
 
-.form-group.row {
-    margin-left: -20px;
-    margin-right: -20px;
+.row.mb-3 {
+    margin-left: -10px;
+    margin-right: -10px;
 }
 
-.form-group.row + .form-group.row {
+.row.mb-3 + .row.mb-3 {
     padding-top: 1rem;
     border-top: 1px solid #ededed;
 }
@@ -450,75 +450,12 @@ div.required .col-form-label:not(span):before, td.required:before {
     width: 12rem;
 }
 
-.table thead td span[data-toggle="tooltip"]:after, label.col-form-label span:after {
+.table thead td span[data-toggle='tooltip']:after, label.form-label span:after {
     font-family: 'Font Awesome 5 Free';
     font-weight: 600;
     content: "\f059";
     color: #1E91CF;
     margin-left: 4px;
-}
-
-input[type="radio"], .radio input[type="radio"], .radio-inline input[type="radio"], input[type="checkbox"], .checkbox input[type="checkbox"], .checkbox-inline input[type="checkbox"] {
-    position: relative;
-    width: 13px;
-    width: 16px \0;
-    height: 13px;
-    height: 16px \0;
-    -webkit-appearance: none;
-    background: white;
-    border: 1px solid #dcdcdc;
-    border: 1px solid transparent \0;
-    border-radius: 1px;
-}
-
-input[type="radio"]:focus, .radio input[type="radio"]:focus, .radio-inline input[type="radio"]:focus, input[type="checkbox"]:focus, .checkbox input[type="checkbox"]:focus, .checkbox-inline input[type="checkbox"]:focus {
-    border-color: #4d90fe;
-    outline: 0;
-}
-
-input[type="radio"]:active, .radio input[type="radio"]:active, .radio-inline input[type="radio"]:active, input[type="checkbox"]:active, .checkbox input[type="checkbox"]:active, .checkbox-inline input[type="checkbox"]:active {
-    background-color: #ebebeb;
-    border-color: #c6c6c6;
-}
-
-input[type="radio"]:checked, .radio input[type="radio"]:checked, .radio-inline input[type="radio"]:checked, input[type="checkbox"]:checked, .checkbox input[type="checkbox"]:checked, .checkbox-inline input[type="checkbox"]:checked {
-    background: #fff;
-}
-
-input[type="radio"], .radio input[type="radio"], .radio-inline input[type="radio"] {
-    width: 15px;
-    width: 18px \0;
-    height: 15px;
-    height: 18px \0;
-    border-radius: 1em;
-}
-
-input[type="radio"]:checked::after, .radio input[type="radio"]:checked::after, .radio-inline input[type="radio"]:checked::after {
-    position: relative;
-    top: 3px;
-    left: 3px;
-    display: block;
-    width: 7px;
-    height: 7px;
-    content: '';
-    background: #666;
-    border-radius: 1em;
-}
-
-input[type="checkbox"]:hover, .checkbox input[type="checkbox"]:hover, .checkbox-inline input[type="checkbox"]:hover {
-    border-color: #c6c6c6;
-    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .1);
-    -webkit-box-shadow: none \9;
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .1);
-    box-shadow: none \9;
-}
-
-input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked::after, .checkbox-inline input[type="checkbox"]:checked::after {
-    position: absolute;
-    top: -6px;
-    left: -5px;
-    display: block;
-    content: url('../image/checkmark.png');
 }
 
 .table thead td {
@@ -555,10 +492,10 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
-
 .card-body {
 
 }
+
 .bootstrap-datetimepicker-widget {
     position: absolute;
     float: right;
@@ -894,6 +831,6 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
     overflow: visible;
 }
 
-.is-invalid ~ .invalid-tooltip, .input-group + .invalid-tooltip, .form-check + .invalid-tooltip {
-    position: static !important;
+td {
+    position: relative;
 }

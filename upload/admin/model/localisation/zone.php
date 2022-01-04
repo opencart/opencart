@@ -1,33 +1,33 @@
 <?php
-namespace Opencart\Application\Model\Localisation;
+namespace Opencart\Admin\Model\Localisation;
 class Zone extends \Opencart\System\Engine\Model {
-	public function addZone($data) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "zone` SET `status` = '" . (int)$data['status'] . "', `name` = '" . $this->db->escape((string)$data['name']) . "', `code` = '" . $this->db->escape((string)$data['code']) . "', `country_id` = '" . (int)$data['country_id'] . "'");
+	public function addZone(array $data): int {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "zone` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `code` = '" . $this->db->escape((string)$data['code']) . "', `country_id` = '" . (int)$data['country_id'] . "', `status` = '" . (bool)$data['status'] . "'");
 
 		$this->cache->delete('zone');
 
 		return $this->db->getLastId();
 	}
 
-	public function editZone($zone_id, $data) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "zone` SET `status` = '" . (int)$data['status'] . "', `name` = '" . $this->db->escape((string)$data['name']) . "', `code` = '" . $this->db->escape((string)$data['code']) . "', `country_id` = '" . (int)$data['country_id'] . "' WHERE `zone_id` = '" . (int)$zone_id . "'");
+	public function editZone(int $zone_id, array $data): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "zone` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `code` = '" . $this->db->escape((string)$data['code']) . "', `country_id` = '" . (int)$data['country_id'] . "', `status` = '" . (bool)$data['status'] . "' WHERE `zone_id` = '" . (int)$zone_id . "'");
 
 		$this->cache->delete('zone');
 	}
 
-	public function deleteZone($zone_id) {
+	public function deleteZone(int $zone_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "zone` WHERE `zone_id` = '" . (int)$zone_id . "'");
 
 		$this->cache->delete('zone');
 	}
 
-	public function getZone($zone_id) {
+	public function getZone(int $zone_id): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "zone` WHERE `zone_id` = '" . (int)$zone_id . "'");
 
 		return $query->row;
 	}
 
-	public function getZones($data = []) {
+	public function getZones(array $data = []): array {
 		$sql = "SELECT *, z.`name`, c.`name` AS country FROM `" . DB_PREFIX . "zone` z LEFT JOIN `" . DB_PREFIX . "country` c ON (z.`country_id` = c.`country_id`)";
 
 		$implode = [];
@@ -83,7 +83,7 @@ class Zone extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function getZonesByCountryId($country_id) {
+	public function getZonesByCountryId(int $country_id): array {
 		$zone_data = $this->cache->get('zone.' . (int)$country_id);
 
 		if (!$zone_data) {
@@ -97,7 +97,7 @@ class Zone extends \Opencart\System\Engine\Model {
 		return $zone_data;
 	}
 
-	public function getTotalZones($data = []) {
+	public function getTotalZones(array $data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "zone` z";
 
 		if (!empty($data['filter_country'])) {
@@ -124,12 +124,12 @@ class Zone extends \Opencart\System\Engine\Model {
 
 		$query = $this->db->query($sql);
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
 	}
 
-	public function getTotalZonesByCountryId($country_id) {
+	public function getTotalZonesByCountryId(int $country_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "zone` WHERE `country_id` = '" . (int)$country_id . "'");
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
 	}
 }

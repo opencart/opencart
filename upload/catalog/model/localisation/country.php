@@ -1,13 +1,13 @@
 <?php
-namespace Opencart\Application\Model\Localisation;
+namespace Opencart\Catalog\Model\Localisation;
 class Country extends \Opencart\System\Engine\Model {
-	public function getCountry($country_id) {
+	public function getCountry(int $country_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "country` WHERE `country_id` = '" . (int)$country_id . "' AND `status` = '1'");
 
 		return $query->row;
 	}
 
-	public function getCountries() {
+	public function getCountries(): array {
 		$country_data = $this->cache->get('country.catalog');
 
 		if (!$country_data) {

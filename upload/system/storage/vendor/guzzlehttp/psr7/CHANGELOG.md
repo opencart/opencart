@@ -1,15 +1,72 @@
 # Change Log
 
-
 All notable changes to this project will be documented in this file.
 
-The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
-and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## Unreleased
 
-## [Unreleased]
+## 2.1.0 - 2021-10-06
 
-## [1.7.0] - 2020-09-30
+### Changed
+
+- Attempting to create a `Uri` object from a malformed URI will no longer throw a generic
+  `InvalidArgumentException`, but rather a `MalformedUriException`, which inherits from the former
+  for backwards compatibility. Callers relying on the exception being thrown to detect invalid
+  URIs should catch the new exception.
+
+### Fixed
+
+- Return `null` in caching stream size if remote size is `null`
+
+## 2.0.0 - 2021-06-30
+
+Identical to the RC release.
+
+## 2.0.0@RC-1 - 2021-04-29
+
+### Fixed
+
+- Handle possibly unset `url` in `stream_get_meta_data`
+
+## 2.0.0@beta-1 - 2021-03-21
+
+### Added
+
+- PSR-17 factories
+- Made classes final
+- PHP7 type hints
+
+### Changed
+
+- When building a query string, booleans are represented as 1 and 0.
+
+### Removed
+
+- PHP < 7.2 support
+- All functions in the Guzzle\Psr7 namespace
+
+## 1.8.1 - 2021-03-21
+
+### Fixed
+
+- Issue parsing IPv6 URLs
+- Issue modifying ServerRequest lost all its attributes
+
+## 1.8.0 - 2021-03-21
+
+### Added
+
+- Locale independent URL parsing
+- Most classes got a `@final` annotation to prepare for 2.0
+
+### Fixed
+
+- Issue when creating stream from `php://input` and curl-ext is not installed
+- Broken `Utils::tryFopen()` on PHP 8
+
+## 1.7.0 - 2020-09-30
 
 ### Added
 
@@ -253,7 +310,6 @@ Currently unsupported:
 
 
 
-[Unreleased]: https://github.com/guzzle/psr7/compare/1.6.0...HEAD
 [1.6.0]: https://github.com/guzzle/psr7/compare/1.5.2...1.6.0
 [1.5.2]: https://github.com/guzzle/psr7/compare/1.5.1...1.5.2
 [1.5.1]: https://github.com/guzzle/psr7/compare/1.5.0...1.5.1

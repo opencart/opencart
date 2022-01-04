@@ -1,7 +1,7 @@
 <?php
-namespace Opencart\Application\Model\Sale;
+namespace Opencart\Admin\Model\Sale;
 class Recurring extends \Opencart\System\Engine\Model {
-	public function getRecurrings($data) {
+	public function getRecurrings(array $data): array {
 		$sql = "SELECT `or`.`order_recurring_id`, `or`.`order_id`, `or`.`reference`, `or`.`status`, `or`.`date_added`, CONCAT(o.`firstname`, ' ', o.`lastname`) AS customer FROM `" . DB_PREFIX . "order_recurring` `or` LEFT JOIN `" . DB_PREFIX . "order` `o` ON (`or`.`order_id` = `o`.`order_id`)";
 
 		$implode = [];
@@ -23,7 +23,7 @@ class Recurring extends \Opencart\System\Engine\Model {
 		}
 
 		if (!empty($data['filter_status'])) {
-			$implode[] = "`or`.`status` = '" . (int)$data['filter_status'] . "'";;
+			$implode[] = "`or`.`status` = '" . (int)$data['filter_status'] . "'";
 		}
 
 		if (!empty($data['filter_date_added'])) {
@@ -72,16 +72,16 @@ class Recurring extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function getRecurring($order_recurring_id) {
+	public function getRecurring(int $order_recurring_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_recurring` WHERE `order_recurring_id` = '" . (int)$order_recurring_id . "'");
 
 		return $query->row;
 	}
 
-	public function getRecurringTransactions($order_recurring_id) {
+	public function getRecurringTransactions(int $order_recurring_id): array {
 		$transactions = [];
 
-		$query = $this->db->query("SELECT `amount`, `type`, `date_added` FROM `" . DB_PREFIX . "order_recurring_transaction` WHERE `order_recurring_id` = '" . (int)$order_recurring_id . "' ORDER BY `date_added` DESC");
+		$query = $this->db->query("SELECT `order_id`, `amount`, `type`, `date_added` FROM `" . DB_PREFIX . "order_recurring_transaction` WHERE `order_recurring_id` = '" . (int)$order_recurring_id . "' ORDER BY `date_added` DESC");
 
 		foreach ($query->rows as $result) {
 			switch ($result['type']) {
@@ -123,14 +123,15 @@ class Recurring extends \Opencart\System\Engine\Model {
 			$transactions[] = [
 				'date_added' => $result['date_added'],
 				'amount'     => $result['amount'],
-				'type'       => $type
+				'type'       => $type,
+				'order_id'   => $result['order_id']
 			];
 		}
 
 		return $transactions;
 	}
 
-	private function getStatus($status) {
+	private function getStatus(int $status): string {
 		switch ($status) {
 			case 1:
 				$result = $this->language->get('text_status_inactive');
@@ -158,7 +159,7 @@ class Recurring extends \Opencart\System\Engine\Model {
 		return $result;
 	}
 
-	public function getTotalRecurrings($data = []) {
+	public function getTotalRecurrings(array $data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "order_recurring` `or` LEFT JOIN `" . DB_PREFIX . "order` `o` ON (`or`.`order_id` = o.`order_id`)";
 
 		$implode = [];
@@ -193,6 +194,6 @@ class Recurring extends \Opencart\System\Engine\Model {
 
 		$query = $this->db->query($sql);
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
 	}
 }

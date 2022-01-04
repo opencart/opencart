@@ -1,7 +1,7 @@
 <?php
-namespace Opencart\Application\Controller\Error;
+namespace Opencart\Admin\Controller\Error;
 class Permission extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): void {
 		$this->load->language('error/permission');
 
 		$this->document->setTitle($this->language->get('heading_title'));

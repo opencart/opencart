@@ -1,7 +1,7 @@
 <?php
-namespace Opencart\Application\Controller\Mail;
+namespace Opencart\Admin\Controller\Mail;
 class Returns extends \Opencart\System\Engine\Controller {
-	public function index($route, $args, $output) {
+	public function index(string &$route, array &$args, mixed &$output): void {
 		if (isset($args[0])) {
 			$return_id = $args[0];
 		} else {
@@ -34,7 +34,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 			if ($return_info) {
 				$this->load->model('sale/order');
 
-				$order_info = $this->model_sale_order->getorder($return_info['order_id']);
+				$order_info = $this->model_sale_order->getOrder($return_info['order_id']);
 
 				if ($order_info) {
 					$store_name = html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8');

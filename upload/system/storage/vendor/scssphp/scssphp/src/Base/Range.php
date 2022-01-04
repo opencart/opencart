@@ -16,10 +16,19 @@ namespace ScssPhp\ScssPhp\Base;
  * Range
  *
  * @author Anthon Pang <anthon.pang@gmail.com>
+ *
+ * @internal
  */
 class Range
 {
+    /**
+     * @var float|int
+     */
     public $first;
+
+    /**
+     * @var float|int
+     */
     public $last;
 
     /**

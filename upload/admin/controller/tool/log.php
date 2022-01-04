@@ -1,30 +1,10 @@
 <?php
-namespace Opencart\Application\Controller\Tool;
+namespace Opencart\Admin\Controller\Tool;
 class Log extends \Opencart\System\Engine\Controller {
-	private $error = [];
-
-	public function index() {		
+	public function index(): void {
 		$this->load->language('tool/log');
 		
 		$this->document->setTitle($this->language->get('heading_title'));
-
-		if (isset($this->session->data['error'])) {
-			$data['error_warning'] = $this->session->data['error'];
-
-			unset($this->session->data['error']);
-		} elseif (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-
-		if (isset($this->session->data['success'])) {
-			$data['success'] = $this->session->data['success'];
-
-			unset($this->session->data['success']);
-		} else {
-			$data['success'] = '';
-		}
 
 		$data['breadcrumbs'] = [];
 
@@ -38,8 +18,13 @@ class Log extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('tool/log', 'user_token=' . $this->session->data['user_token'])
 		];
 
+		if (isset($this->session->data['error'])) {
+			$data['error_warning'] = $this->session->data['error'];
+		} else {
+			$data['error_warning'] = '';
+		}
+
 		$data['download'] = $this->url->link('tool/log|download', 'user_token=' . $this->session->data['user_token']);
-		$data['clear'] = $this->url->link('tool/log|clear', 'user_token=' . $this->session->data['user_token']);
 
 		$data['log'] = '';
 
@@ -78,6 +63,8 @@ class Log extends \Opencart\System\Engine\Controller {
 			fclose($handle);
 		}
 
+		$data['user_token'] = $this->session->data['user_token'];
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -85,12 +72,12 @@ class Log extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('tool/log', $data));
 	}
 
-	public function download() {
+	public function download(): void {
 		$this->load->language('tool/log');
 
 		$file = DIR_LOGS . $this->config->get('config_error_filename');
 
-		if (file_exists($file) && filesize($file) > 0) {
+		if (is_file($file) && filesize($file) > 0) {
 			$this->response->addheader('Pragma: public');
 			$this->response->addheader('Expires: 0');
 			$this->response->addheader('Content-Description: File Transfer');
@@ -106,21 +93,26 @@ class Log extends \Opencart\System\Engine\Controller {
 		}
 	}
 	
-	public function clear() {
+	public function clear(): void {
 		$this->load->language('tool/log');
 
+		$json = [];
+
 		if (!$this->user->hasPermission('modify', 'tool/log')) {
-			$this->session->data['error'] = $this->language->get('error_permission');
-		} else {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
 			$file = DIR_LOGS . $this->config->get('config_error_filename');
 
 			$handle = fopen($file, 'w+');
 
 			fclose($handle);
 
-			$this->session->data['success'] = $this->language->get('text_success');
+			$json['success'] = $this->language->get('text_success');
 		}
 
-		$this->response->redirect($this->url->link('tool/log', 'user_token=' . $this->session->data['user_token']));
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 }

@@ -12,19 +12,19 @@
         <table class="table table-bordered table-hover">
           <thead>
             <tr>
-              <td class="text-left" colspan="2">{{ text_recurring_detail }}</td>
+              <td class="text-start" colspan="2">{{ text_recurring_detail }}</td>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td class="text-left" style="width: 50%;"><b>{{ text_order_recurring_id }}</b> #{{ order_recurring_id }}
+              <td class="text-start" style="width: 50%;"><b>{{ text_order_recurring_id }}</b> #{{ order_recurring_id }}
                 <br/>
                 <b>{{ text_date_added }}</b> {{ date_added }}
                 <br/>
                 <b>{{ text_status }}</b> {{ status }}
                 <br/>
                 <b>{{ text_payment_method }}</b> {{ payment_method }}</td>
-              <td class="text-left" style="width: 50%;"><b>{{ text_order_id }}</b> <a href="{{ order }}">#{{ order_id }}</a>
+              <td class="text-start" style="width: 50%;"><b>{{ text_order_id }}</b> <a href="{{ order }}">#{{ order_id }}</a>
                 <br/>
                 <b>{{ text_product }}</b> <a href="{{ product }}">{{ product_name }}</a>
                 <br/>
@@ -35,14 +35,14 @@
         <table class="table table-bordered table-hover">
           <thead>
             <tr>
-              <td class="text-left">{{ text_description }}</td>
-              <td class="text-left">{{ text_reference }}</td>
+              <td class="text-start">{{ text_description }}</td>
+              <td class="text-start">{{ text_reference }}</td>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td class="text-left" style="width: 50%;">{{ recurring_description }}</td>
-              <td class="text-left" style="width: 50%;">{{ reference }}</td>
+              <td class="text-start" style="width: 50%;">{{ recurring_description }}</td>
+              <td class="text-start" style="width: 50%;">{{ reference }}</td>
             </tr>
           </tbody>
         </table>
@@ -52,18 +52,18 @@
         <table class="table table-bordered table-hover">
           <thead>
             <tr>
-              <td class="text-left">{{ column_date_added }}</td>
-              <td class="text-left">{{ column_type }}</td>
-              <td class="text-right">{{ column_amount }}</td>
+              <td class="text-start">{{ column_date_added }}</td>
+              <td class="text-start">{{ column_type }}</td>
+              <td class="text-end">{{ column_amount }}</td>
             </tr>
           </thead>
           <tbody>
             {% if transactions %}
               {% for transaction in transactions %}
                 <tr>
-                  <td class="text-left">{{ transaction.date_added }}</td>
-                  <td class="text-left">{{ transaction.type }}</td>
-                  <td class="text-right">{{ transaction.amount }}</td>
+                  <td class="text-start">{{ transaction.date_added }}</td>
+                  <td class="text-start">{{ transaction.type }}</td>
+                  <td class="text-end">{{ transaction.amount }}</td>
                 </tr>
               {% endfor %}
             {% else %}

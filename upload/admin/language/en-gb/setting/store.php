@@ -37,7 +37,6 @@ $_['entry_address']                    = 'Address';
 $_['entry_geocode']                    = 'Geocode';
 $_['entry_email']                      = 'E-Mail';
 $_['entry_telephone']                  = 'Telephone';
-$_['entry_fax']                        = 'Fax';
 $_['entry_image']                      = 'Image';
 $_['entry_open']                       = 'Opening Times';
 $_['entry_comment']                    = 'Comment';
@@ -65,7 +64,6 @@ $_['entry_order_status']               = 'Order Status';
 $_['entry_stock_display']              = 'Display Stock';
 $_['entry_stock_checkout']             = 'Stock Checkout';
 $_['entry_logo']                       = 'Store Logo';
-$_['entry_icon']                       = 'Icon';
 $_['entry_image_category']             = 'Category Image Size (W x H)';
 $_['entry_image_thumb']                = 'Product Image Thumb Size (W x H)';
 $_['entry_image_popup']                = 'Product Image Popup Size (W x H)';
@@ -101,7 +99,6 @@ $_['help_checkout']                    = 'Forces people to agree to terms before
 $_['help_order_status']                = 'Set the default order status when an order is processed.';
 $_['help_stock_display']               = 'Display stock quantity on the product page.';
 $_['help_stock_checkout']              = 'Allow customers to still checkout if the products they are ordering are not in stock.';
-$_['help_icon']                        = 'The icon should be a PNG that is 16px x 16px.';
 
 // Error
 $_['error_warning']                    = 'Warning: Please check the form carefully for errors!';

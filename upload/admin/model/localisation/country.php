@@ -1,33 +1,33 @@
 <?php
-namespace Opencart\Application\Model\Localisation;
+namespace Opencart\Admin\Model\Localisation;
 class Country extends \Opencart\System\Engine\Model {
-	public function addCountry($data) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "country` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `iso_code_2` = '" . $this->db->escape((string)$data['iso_code_2']) . "', `iso_code_3` = '" . $this->db->escape((string)$data['iso_code_3']) . "', `address_format` = '" . $this->db->escape((string)$data['address_format']) . "', `postcode_required` = '" . (int)$data['postcode_required'] . "', `status` = '" . (int)$data['status'] . "'");
+	public function addCountry(array $data): int {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "country` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `iso_code_2` = '" . $this->db->escape((string)$data['iso_code_2']) . "', `iso_code_3` = '" . $this->db->escape((string)$data['iso_code_3']) . "', `address_format` = '" . $this->db->escape((string)$data['address_format']) . "', `postcode_required` = '" . (int)$data['postcode_required'] . "', `status` = '" . (bool)$data['status'] . "'");
 
 		$this->cache->delete('country');
 
 		return $this->db->getLastId();
 	}
 
-	public function editCountry($country_id, $data) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "country` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `iso_code_2` = '" . $this->db->escape((string)$data['iso_code_2']) . "', `iso_code_3` = '" . $this->db->escape((string)$data['iso_code_3']) . "', `address_format` = '" . $this->db->escape((string)$data['address_format']) . "', `postcode_required` = '" . (int)$data['postcode_required'] . "', `status` = '" . (int)$data['status'] . "' WHERE `country_id` = '" . (int)$country_id . "'");
+	public function editCountry(int $country_id, array $data): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "country` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `iso_code_2` = '" . $this->db->escape((string)$data['iso_code_2']) . "', `iso_code_3` = '" . $this->db->escape((string)$data['iso_code_3']) . "', `address_format` = '" . $this->db->escape((string)$data['address_format']) . "', `postcode_required` = '" . (int)$data['postcode_required'] . "', `status` = '" . (bool)$data['status'] . "' WHERE `country_id` = '" . (int)$country_id . "'");
 
 		$this->cache->delete('country');
 	}
 
-	public function deleteCountry($country_id) {
+	public function deleteCountry(int $country_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "country` WHERE `country_id` = '" . (int)$country_id . "'");
 
 		$this->cache->delete('country');
 	}
 
-	public function getCountry($country_id) {
+	public function getCountry(int $country_id): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "country` WHERE `country_id` = '" . (int)$country_id . "'");
 
 		return $query->row;
 	}
 
-	public function getCountries($data = []) {
+	public function getCountries(array $data = []): array {
 		if ($data) {
 			$sql = "SELECT * FROM `" . DB_PREFIX . "country`";
 
@@ -56,7 +56,7 @@ class Country extends \Opencart\System\Engine\Model {
 			];
 
 			if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
-				$sql .= " ORDER BY " . $data['sort'];
+				$sql .= " ORDER BY `" . $data['sort'] . "`";
 			} else {
 				$sql .= " ORDER BY `name`";
 			}
@@ -97,7 +97,7 @@ class Country extends \Opencart\System\Engine\Model {
 		}
 	}
 
-	public function getTotalCountries($data = []) {
+	public function getTotalCountries(array $data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "country`";
 
 		$implode = [];
@@ -120,6 +120,6 @@ class Country extends \Opencart\System\Engine\Model {
 
 		$query = $this->db->query($sql);
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
 	}
 }

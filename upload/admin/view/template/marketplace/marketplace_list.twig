@@ -2,10 +2,10 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="float-right">{% if not error_signature %}
-          <button type="button" id="button-opencart" data-toggle="tooltip" title="{{ button_opencart }}" class="btn btn-info"><i class="fas fa-cog"></i></button>
+      <div class="float-end">{% if not error_signature %}
+          <button type="button" id="button-opencart" data-bs-toggle="tooltip" title="{{ button_opencart }}" class="btn btn-info"><i class="fas fa-cog"></i></button>
         {% else %}
-          <button type="button" id="button-opencart" data-toggle="tooltip" title="{{ error_signature }}" data-placement="left" class="btn btn-danger"><i class="fas fa-exclamation-triangle"></i></button>
+          <button type="button" id="button-opencart" data-bs-toggle="tooltip" title="{{ error_signature }}" data-placement="left" class="btn btn-danger"><i class="fas fa-exclamation-triangle"></i></button>
         {% endif %}</div>
       <h1>{{ heading_title }}</h1>
       <ol class="breadcrumb">
@@ -21,28 +21,24 @@
       <div class="card-body">
         <div class="card bg-light">
           <div class="card-body">
-            <div id="extension-filter" class="input-group">
-              <input type="text" name="filter_search" value="{{ filter_search }}" placeholder="{{ text_search }}" class="form-control"/>
-              <div class="input-group-append dropdown">
+            <div id="extension-filter" class="input-group dropdown">
+              <input type="text" name="filter_search" value="{{ filter_search }}" placeholder="{{ text_search }}" id="input-search" class="form-control"/>
+              {% for category in categories %}
+                {% if category.value == filter_category %}
+                  <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown">{{ text_category }} ({{ category.text }}) <i class="fas fa-caret-down"></i></button>
+                {% endif %}
+              {% endfor %}
+              <div class="dropdown-menu dropdown-menu-right">
                 {% for category in categories %}
-                  {% if category.value == filter_category %}
-                    <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown">{{ text_category }} ({{ category.text }}) <i class="fas fa-caret-down"></i></button>
-                  {% endif %}
+                  <a href="{{ category.href }}" class="dropdown-item">{{ category.text }}</a>
                 {% endfor %}
-                <div class="dropdown-menu dropdown-menu-right">
-                  {% for category in categories %}
-                    <a href="{{ category.href }}" class="dropdown-item">{{ category.text }}</a>
-                  {% endfor %}
-                </div>
               </div>
-              <div class="input-group-append">
-                <button type="button" id="button-filter" data-toggle="tooltip" data-title="{{ button_filter }}" class="btn btn-primary"><i class="fas fa-filter"></i></button>
-              </div>
+              <button type="button" id="button-filter" data-bs-toggle="tooltip" title="{{ button_filter }}" class="btn btn-primary"><i class="fas fa-filter"></i></button>
             </div>
             <input type="hidden" name="filter_category_id" value="{{ filter_category_id }}" class="form-control"/> <input type="hidden" name="filter_download_id" value="{{ filter_download_id }}" class="form-control"/> <input type="hidden" name="filter_rating" value="{{ filter_rating }}" class="form-control"/> <input type="hidden" name="filter_license" value="{{ filter_license }}" class="form-control"/> <input type="hidden" name="filter_partner" value="{{ filter_partner }}" class="form-control"/> <input type="hidden" name="sort" value="{{ sort }}" class="form-control"/>
           </div>
         </div>
-        <br>
+        <br/>
         <div class="row mb-4">
           <div class="col-sm-auto mr-sm-auto mb-2 mb-lg-0">
             <div class="btn-group">{% for license in licenses %}
@@ -50,21 +46,17 @@
               {% endfor %}</div>
           </div>
           <div class="col-xl-3 col-lg-5 col-sm-auto">
-            <div class="input-group float-right">
-              <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-sort-amount-down"></i></span></div>
-              <select onchange="location = this.value;" class="form-control">
+            <div class="input-group float-end">
+              <div class="input-group-text"><i class="fas fa-sort-amount-down"></i></div>
+              <select onchange="location = this.value;" class="form-select">
                 {% for sorts in sorts %}
-                  {% if sorts.value == sort %}
-                    <option value="{{ sorts.href }}" selected="selected">{{ sorts.text }}</option>
-                  {% else %}
-                    <option value="{{ sorts.href }}">{{ sorts.text }}</option>
-                  {% endif %}
+                  <option value="{{ sorts.href }}"{% if sorts.value == sort %} selected{% endif %}>{{ sorts.text }}</option>
                 {% endfor %}
               </select>
             </div>
           </div>
         </div>
-        <div id="extension-list">
+        <div>
           {% if promotions %}
             <h3>{{ text_featured }}</h3>
             <div class="row">
@@ -72,9 +64,16 @@
                 {% if extension %}
                   <div class="col-lg-3 col-md-4 col-sm-6 col-12">
                     <section>
-                      <div class="extension-preview text-center"><a href="{{ extension.href }}">
-                          <div class="extension-description"></div>
+                      <div class="extension-preview text-center">
+
+                        <a href="{{ extension.href }}">
+                          <div class="extension-description">
+
+                          </div>
                           <img src="{{ extension.image }}" alt="{{ extension.name }}" title="{{ extension.name }}" class="img-fluid"/></a></div>
+
+
+
                       <div class="extension-name">
                         <h4><a href="{{ extension.href }}">{{ extension.name }}</a></h4>
                         {{ extension.price }}</div>
@@ -84,7 +83,7 @@
                               {% if extension.rating >= i %}<i class="fas fa-star"></i>{% else %}<i class="far fa-star"></i>{% endif %}
                             {% endfor %}</div>
                           <div class="col-6">
-                            <div class="text-right">{{ extension.rating_total }} {{ text_reviews }}</div>
+                            <div class="text-end">{{ extension.rating_total }} {{ text_reviews }}</div>
                           </div>
                         </div>
                       </div>
@@ -113,7 +112,7 @@
                               {% if extension.rating >= i %}<i class="fas fa-star"></i>{% else %}<i class="fas fa-star-o"></i>{% endif %}
                             {% endfor %}</div>
                           <div class="col-6">
-                            <div class="text-right">{{ extension.rating_total }} {{ text_reviews }}</div>
+                            <div class="text-end">{{ extension.rating_total }} {{ text_reviews }}</div>
                           </div>
                         </div>
                       </div>
@@ -134,49 +133,49 @@
 </div>
 <script type="text/javascript"><!--
 $('#button-opencart').on('click', function(e) {
-	$('#modal-opencart').remove();
+    $('#modal-opencart').remove();
 
-	$.ajax({
-		url: 'index.php?route=marketplace/api&user_token={{ user_token }}',
-		dataType: 'html',
-		beforeSend: function() {
-			$('#button-opencart').button('loading');
-		},
-		complete: function() {
-			$('#button-opencart').button('reset');
-		},
-		success: function(html) {
-			$('body').append(html);
+    $.ajax({
+        url: 'index.php?route=marketplace/api&user_token={{ user_token }}',
+        dataType: 'html',
+        beforeSend: function() {
+            $('#button-opencart').button('loading');
+        },
+        complete: function() {
+            $('#button-opencart').button('reset');
+        },
+        success: function(html) {
+            $('body').append(html);
 
-			$('#modal-opencart').modal('show');
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});
+            $('#modal-opencart').modal('show');
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
 });
 //--></script>
 <script type="text/javascript"><!--
 $('#button-filter').on('click', function(e) {
-	var url = 'index.php?route=marketplace/marketplace&user_token={{ user_token }}';
+    var url = 'index.php?route=marketplace/marketplace&user_token={{ user_token }}';
 
-	var input = $('#extension-filter :input');
+    var input = $('#extension-filter :input');
 
-	for (i = 0; i < input.length; i++) {
-		if ($(input[i]).val() != '' && $(input[i]).val() != null) {
-			url += '&' + $(input[i]).attr('name') + '=' + $(input[i]).val()
-		}
-	}
+    for (i = 0; i < input.length; i++) {
+        if ($(input[i]).val() != '' && $(input[i]).val() != null) {
+            url += '&' + $(input[i]).attr('name') + '=' + $(input[i]).val()
+        }
+    }
 
-	location = url;
+    location = url;
 });
 
-$('input[name=\'filter_search\']').keydown(function(e) {
-	if (e.keyCode == 13) {
-		e.preventDefault();
+$('#input-search').keydown(function(e) {
+    if (e.keyCode == 13) {
+        e.preventDefault();
 
-		$('#button-filter').trigger('click');
-	}
+        $('#button-filter').trigger('click');
+    }
 });
 //--></script>
 {{ footer }}

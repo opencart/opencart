@@ -1,22 +1,22 @@
 <?php
-namespace Opencart\Application\Controller\Event;
+namespace Opencart\Catalog\Controller\Event;
 class Statistics extends \Opencart\System\Engine\Controller {
 	// catalog/model/catalog/review/addReview/after
-	public function addReview(&$route, &$args, &$output) {
+	public function addReview(string &$route, array &$args, mixed &$output): void {
 		$this->load->model('report/statistics');
 
 		$this->model_report_statistics->addValue('review', 1);	
 	}
 		
 	// catalog/model/account/returns/addReturn/after
-	public function addReturn(&$route, &$args, &$output) {
+	public function addReturn(string &$route, array &$args, mixed &$output): void {
 		$this->load->model('report/statistics');
 
 		$this->model_report_statistics->addValue('return', 1);
 	}
 	
 	// catalog/model/checkout/order/addHistory/before
-	public function addHistory(&$route, &$args) {
+	public function addHistory(string &$route, array &$args): void {
 		$this->load->model('checkout/order');
 				
 		$order_info = $this->model_checkout_order->getOrder($args[0]);

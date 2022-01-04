@@ -14,11 +14,14 @@ namespace ScssPhp\ScssPhp;
 
 use ScssPhp\ScssPhp\Base\Range;
 use ScssPhp\ScssPhp\Exception\RangeException;
+use ScssPhp\ScssPhp\Node\Number;
 
 /**
- * Utilty functions
+ * Utility functions
  *
  * @author Anthon Pang <anthon.pang@gmail.com>
+ *
+ * @internal
  */
 class Util
 {
@@ -26,10 +29,10 @@ class Util
      * Asserts that `value` falls within `range` (inclusive), leaving
      * room for slight floating-point errors.
      *
-     * @param string                    $name  The name of the value. Used in the error message.
-     * @param \ScssPhp\ScssPhp\Base\Range $range Range of values.
-     * @param array                     $value The value to check.
-     * @param string                    $unit  The unit of the value. Used in error reporting.
+     * @param string       $name  The name of the value. Used in the error message.
+     * @param Range        $range Range of values.
+     * @param array|Number $value The value to check.
+     * @param string       $unit  The unit of the value. Used in error reporting.
      *
      * @return mixed `value` adjusted to fall within range, if it was outside by a floating-point margin.
      *
@@ -115,10 +118,10 @@ class Util
         }
 
         if (\function_exists('iconv_strlen')) {
-            return @iconv_strlen($string, 'UTF-8');
+            return (int) @iconv_strlen($string, 'UTF-8');
         }
 
-        return strlen($string);
+        throw new \LogicException('Either mbstring (recommended) or iconv is necessary to use Scssphp.');
     }
 
     /**
@@ -155,7 +158,7 @@ class Util
             return (string)iconv_substr($string, $start, $length, 'UTF-8');
         }
 
-        return substr($string, $start, $length);
+        throw new \LogicException('Either mbstring (recommended) or iconv is necessary to use Scssphp.');
     }
 
     /**
@@ -176,6 +179,6 @@ class Util
             return iconv_strpos($haystack, $needle, $offset, 'UTF-8');
         }
 
-        return strpos($haystack, $needle, $offset);
+        throw new \LogicException('Either mbstring (recommended) or iconv is necessary to use Scssphp.');
     }
 }

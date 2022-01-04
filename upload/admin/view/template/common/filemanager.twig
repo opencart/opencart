@@ -1,228 +1,232 @@
 <div id="modal-image" class="modal">
-	<div id="filemanager" class="modal-dialog modal-lg">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title">{{ heading_title }}</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span aria-hidden="true">&times;</span></button>
-			</div>
-			<div class="modal-body"></div>
-		</div>
-	</div>
-	<script type="text/javascript"><!--
+  <div id="filemanager" class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ heading_title }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body"></div>
+    </div>
+  </div>
+  <script type="text/javascript"><!--
   $('#modal-image .modal-body').load('index.php?route=common/filemanager|list&user_token={{ user_token }}');
 
   $('#modal-image').on('click', '#button-parent', function(e) {
-	  e.preventDefault();
+      e.preventDefault();
 
-	  $('#modal-image .modal-body').load($(this).attr('href'));
+      $('#modal-image .modal-body').load($(this).attr('href'));
   });
 
   $('#modal-image').on('click', '#button-refresh', function(e) {
-	  e.preventDefault();
+      e.preventDefault();
 
-	  $('#modal-image .modal-body').load($(this).attr('href'));
+      $('#modal-image .modal-body').load($(this).attr('href'));
   });
 
-  $('#modal-image').on('keydown', 'input[name=\'search\']', function(e) {
-	  if (e.which == 13) {
-		  $('#button-search').trigger('click');
-	  }
+  $('#modal-image').on('keydown', '#input-search', function(e) {
+      if (e.which == 13) {
+          $('#button-search').trigger('click');
+      }
   });
 
   $('#modal-image').on('click', '#button-search', function(e) {
-	  var url = 'index.php?route=common/filemanager|list&user_token={{ user_token }}';
+      var url = 'index.php?route=common/filemanager|list&user_token={{ user_token }}';
 
-	  var directory = $('#modal-image input[name=\'directory\']').val();
+      var directory = $('##input-directory').val();
 
-	  if (directory) {
-		  url += '&directory=' + encodeURIComponent(directory);
-	  }
+      if (directory) {
+          url += '&directory=' + encodeURIComponent(directory);
+      }
 
-	  var filter_name = $('#modal-image input[name=\'search\']').val();
+      var filter_name = $('##input-search').val();
 
-	  if (filter_name) {
-		  url += '&filter_name=' + encodeURIComponent(filter_name);
-	  }
+      if (filter_name) {
+          url += '&filter_name=' + encodeURIComponent(filter_name);
+      }
 
-		{% if thumb %}
-	  url += '&thumb={{ thumb|escape('js') }}';
-		{% endif %}
+    {% if thumb %}
+      url += '&thumb={{ thumb|escape('js') }}';
+    {% endif %}
 
-		{% if target %}
-	  url += '&target={{ target|escape('js') }}';
-		{% endif %}
+    {% if target %}
+      url += '&target={{ target|escape('js') }}';
+    {% endif %}
 
-		{% if ckeditor %}
-	  url += '&ckeditor={{ ckeditor|escape('js') }}';
-		{% endif %}
+    {% if ckeditor %}
+      url += '&ckeditor={{ ckeditor|escape('js') }}';
+    {% endif %}
 
-	  $('#modal-image .modal-body').load(url);
+      $('#modal-image .modal-body').load(url);
   });
 
   $('#modal-image').on('click', '#button-upload', function() {
-	  $('#form-upload').remove();
+      $('#form-upload').remove();
 
-	  $('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file[]" value="" multiple="multiple" /></form>');
+      $('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file[]" value="" multiple="multiple"/></form>');
 
-	  $('#form-upload input[name=\'file[]\']').trigger('click');
+      $('#form-upload input[name=\'file[]\']').trigger('click');
 
-	  $('#form-upload input[name=\'file[]\']').on('change', function() {
-		  if (this.files[0].size > {{ config_file_max_size }}) {
-			  alert('{{ error_upload_size }}');
-		  }
-	  });
+      $('#form-upload input[name=\'file[]\']').on('change', function() {
+          for (i = 0; i < this.files.length; i++) {
+              if (this.files[i].size > {{ config_file_max_size }}) {
+                  $(this).val('');
 
-	  if (typeof timer != 'undefined') {
-		  clearInterval(timer);
-	  }
+                  alert('{{ error_upload_size }}');
+              }
+          }
+      });
 
-	  timer = setInterval(function() {
-		  if ($('#form-upload input[name=\'file[]\']').val() != '') {
-			  clearInterval(timer);
+      if (typeof timer != 'undefined') {
+          clearInterval(timer);
+      }
 
-			  var url = 'index.php?route=common/filemanager|upload&user_token={{ user_token }}';
+      timer = setInterval(function() {
+          if ($('#form-upload input[name=\'file[]\']').val() != '') {
+              clearInterval(timer);
 
-			  var directory = $('#modal-image input[name=\'directory\']').val();
+              var url = 'index.php?route=common/filemanager|upload&user_token={{ user_token }}';
 
-			  if (directory) {
-				  url += '&directory=' + encodeURIComponent(directory);
-			  }
+              var directory = $('#input-directory').val();
 
-			  $.ajax({
-				  url: url,
-				  type: 'post',
-				  dataType: 'json',
-				  data: new FormData($('#form-upload')[0]),
-				  cache: false,
-				  contentType: false,
-				  processData: false,
-				  beforeSend: function() {
-					  $('#button-upload i').replaceWith('<i class="fas fa-circle-notch fa-spin fa-fw"></i>');
-					  $('#button-upload').prop('disabled', true);
-				  },
-				  complete: function() {
-					  $('#button-upload i').replaceWith('<i class="fas fa-upload fa-fw"></i>');
-					  $('#button-upload').prop('disabled', false);
-				  },
-				  success: function(json) {
-					  if (json['error']) {
-						  alert(json['error']);
-					  }
+              if (directory) {
+                  url += '&directory=' + encodeURIComponent(directory);
+              }
 
-					  if (json['success']) {
-						  alert(json['success']);
+              $.ajax({
+                  url: url,
+                  type: 'post',
+                  dataType: 'json',
+                  data: new FormData($('#form-upload')[0]),
+                  cache: false,
+                  contentType: false,
+                  processData: false,
+                  beforeSend: function() {
+                      $('#button-upload i').replaceWith('<i class="fas fa-circle-notch fa-spin fa-fw"></i>');
+                      $('#button-upload').prop('disabled', true);
+                  },
+                  complete: function() {
+                      $('#button-upload i').replaceWith('<i class="fas fa-upload fa-fw"></i>');
+                      $('#button-upload').prop('disabled', false);
+                  },
+                  success: function(json) {
+                      if (json['error']) {
+                          alert(json['error']);
+                      }
 
-						  $('#button-refresh').trigger('click');
-					  }
-				  },
-				  error: function(xhr, ajaxOptions, thrownError) {
-					  alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-				  }
-			  });
-		  }
-	  }, 500);
+                      if (json['success']) {
+                          alert(json['success']);
+
+                          $('#button-refresh').trigger('click');
+                      }
+                  },
+                  error: function(xhr, ajaxOptions, thrownError) {
+                      console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                  }
+              });
+          }
+      }, 500);
   });
 
   $('#modal-image').on('click', '#button-folder', function() {
-		$('#modal-folder').slideToggle();
+      $('#modal-folder').slideToggle();
   });
 
   $('#modal-image').on('click', '#button-create', function() {
-	  var url = 'index.php?route=common/filemanager|folder&user_token={{ user_token }}';
+      var url = 'index.php?route=common/filemanager|folder&user_token={{ user_token }}';
 
-	  var directory = $('#modal-image input[name=\'directory\']').val();
+      var directory = $('#input-directory').val();
 
-	  if (directory) {
-		  url += '&directory=' + encodeURIComponent(directory);
-	  }
+      if (directory) {
+          url += '&directory=' + encodeURIComponent(directory);
+      }
 
-	  $.ajax({
-		  url: url,
-		  type: 'post',
-		  dataType: 'json',
-		  data: 'folder=' + encodeURIComponent($('#modal-image input[name=\'folder\']').val()),
-		  beforeSend: function() {
-			  $('#button-create').prop('disabled', true);
-		  },
-		  complete: function() {
-			  $('#button-create').prop('disabled', false);
-		  },
-		  success: function(json) {
-			  if (json['error']) {
-				  alert(json['error']);
-			  }
+      $.ajax({
+          url: url,
+          type: 'post',
+          dataType: 'json',
+          data: 'folder=' + encodeURIComponent($('#input-folder').val()),
+          beforeSend: function() {
+              $('#button-create').prop('disabled', true);
+          },
+          complete: function() {
+              $('#button-create').prop('disabled', false);
+          },
+          success: function(json) {
+              if (json['error']) {
+                  alert(json['error']);
+              }
 
-			  if (json['success']) {
-				  alert(json['success']);
+              if (json['success']) {
+                  alert(json['success']);
 
-				  $('#button-refresh').trigger('click');
-			  }
-		  },
-		  error: function(xhr, ajaxOptions, thrownError) {
-			  alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		  }
-	  });
+                  $('#button-refresh').trigger('click');
+              }
+          },
+          error: function(xhr, ajaxOptions, thrownError) {
+              console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+          }
+      });
   });
 
   $('#modal-image').on('click', '#button-delete', function(e) {
-	  if (confirm('{{ text_confirm }}')) {
-		  $.ajax({
-			  url: 'index.php?route=common/filemanager|delete&user_token={{ user_token }}',
-			  type: 'post',
-			  dataType: 'json',
-			  data: $('input[name^=\'path\']:checked'),
-			  beforeSend: function() {
-				  $('#button-delete i').replaceWith('<i class="fas fa-circle-notch fa-spin fa-fw"></i>');
-				  $('#button-delete').prop('disabled', true);
-			  },
-			  complete: function() {
-				  $('#button-delete i').replaceWith('<i class="fas fa-trash-alt fa-fw"></i>');
-				  $('#button-delete').prop('disabled', false);
-			  },
-			  success: function(json) {
-				  if (json['error']) {
-					  alert(json['error']);
-				  }
+      if (confirm('{{ text_confirm }}')) {
+          $.ajax({
+              url: 'index.php?route=common/filemanager|delete&user_token={{ user_token }}',
+              type: 'post',
+              dataType: 'json',
+              data: $('input[name^=\'path\']:checked'),
+              beforeSend: function() {
+                  $('#button-delete i').replaceWith('<i class="fas fa-circle-notch fa-spin fa-fw"></i>');
+                  $('#button-delete').prop('disabled', true);
+              },
+              complete: function() {
+                  $('#button-delete i').replaceWith('<i class="fas fa-trash-alt fa-fw"></i>');
+                  $('#button-delete').prop('disabled', false);
+              },
+              success: function(json) {
+                  if (json['error']) {
+                      alert(json['error']);
+                  }
 
-				  if (json['success']) {
-					  alert(json['success']);
+                  if (json['success']) {
+                      alert(json['success']);
 
-					  $('#button-refresh').trigger('click');
-				  }
-			  },
-			  error: function(xhr, ajaxOptions, thrownError) {
-				  alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-			  }
-		  });
-	  }
+                      $('#button-refresh').trigger('click');
+                  }
+              },
+              error: function(xhr, ajaxOptions, thrownError) {
+                  console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+              }
+          });
+      }
   });
 
   $('#modal-image').on('click', 'a.directory', function(e) {
-	  e.preventDefault();
+      e.preventDefault();
 
-	  $('#modal-image .modal-body').load($(this).attr('href'));
+      $('#modal-image .modal-body').load($(this).attr('href'));
   });
 
   $('#modal-image').on('click', 'a.thumbnail', function(e) {
-	  e.preventDefault();
+      e.preventDefault();
 
-		{% if thumb %}
-	  $('{{ thumb|escape('js') }}').attr('src', $(this).find('img').attr('src'));
+    {% if thumb %}
+      $('{{ thumb|escape('js') }}').attr('src', $(this).find('img').attr('src'));
 
-	  $('{{ target|escape('js') }}').val($(this).parent().find('input').val());
-		{% endif %}
+      $('{{ target|escape('js') }}').val($(this).parent().find('input').val());
+    {% endif %}
 
-		{% if ckeditor %}
-	  CKEDITOR.instances['{{ ckeditor|escape('js') }}'].insertHtml('<img src="' + $(this).attr('href') + '" alt="" title="" />');
-		{% endif %}
+    {% if ckeditor %}
+      CKEDITOR.instances['{{ ckeditor|escape('js') }}'].insertHtml('<img src="' + $(this).attr('href') + '" alt="" title="" />');
+    {% endif %}
 
-	  $('#modal-image').modal('hide');
+      $('#modal-image').modal('hide');
   });
 
   $('#modal-image').on('click', '.pagination a', function(e) {
-	  e.preventDefault();
+      e.preventDefault();
 
-	  $('#modal-image .modal-body').load($(this).attr('href'));
+      $('#modal-image .modal-body').load($(this).attr('href'));
   });
   //--></script>
 </div>

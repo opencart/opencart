@@ -1,7 +1,7 @@
 <?php
 // Autoloader
 $autoloader = new \Opencart\System\Engine\Autoloader();
-$autoloader->register('Opencart\Application', DIR_APPLICATION);
+$autoloader->register('Opencart\\' . APPLICATION, DIR_APPLICATION);
 $autoloader->register('Opencart\Extension', DIR_EXTENSION);
 $autoloader->register('Opencart\System', DIR_SYSTEM);
 
@@ -15,7 +15,10 @@ $config->addPath(DIR_CONFIG);
 
 // Load the default config
 $config->load('default');
-$config->load(basename(DIR_APPLICATION));
+$config->load(strtolower(APPLICATION));
+
+// Set the default application
+$config->set('application', APPLICATION);
 $registry->set('config', $config);
 
 // Set the default time zone
@@ -26,7 +29,7 @@ $log = new \Opencart\System\Library\Log($config->get('error_filename'));
 $registry->set('log', $log);
 
 // Error Handler
-set_error_handler(function($code, $message, $file, $line) use ($log, $config) {
+set_error_handler(function(string $code, string $message, string $file, string $line) use ($log, $config) {
 	// error suppressed with @
 	if (@error_reporting() === 0) {
 		return false;
@@ -65,7 +68,7 @@ set_error_handler(function($code, $message, $file, $line) use ($log, $config) {
 });
 
 // Exception Handler
-set_exception_handler(function($e) use ($log, $config)  {
+set_exception_handler(function(\Throwable $e) use ($log, $config)  {
 	if ($config->get('error_log')) {
 		$log->write(get_class($e) . ':  ' . $e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine());
 	}
@@ -106,6 +109,11 @@ foreach ($config->get('response_header') as $header) {
 	$response->addHeader($header);
 }
 
+$response->addHeader('Access-Control-Allow-Origin: *');
+$response->addHeader('Access-Control-Allow-Credentials: true');
+$response->addHeader('Access-Control-Max-Age: 1000');
+$response->addHeader('Access-Control-Allow-Headers: X-Requested-With, Content-Type, Origin, Cache-Control, Pragma, Authorization, Accept, Accept-Encoding');
+$response->addHeader('Access-Control-Allow-Methods: PUT, POST, GET, OPTIONS, DELETE');
 $response->setCompression($config->get('response_compression'));
 $registry->set('response', $response);
 
@@ -138,15 +146,15 @@ if ($config->get('session_autostart')) {
 
 	// Require higher security for session cookies
 	$option = [
-		'expires'  => time() + $config->get('session_expire'),
+		'expires'  => 0,
 		'path'     => $config->get('session_path'),
 		'domain'   => $config->get('session_domain'),
 		'secure'   => $request->server['HTTPS'],
 		'httponly' => false,
-		'SameSite' => 'Strict'
+		'SameSite' => $config->get('session_samesite')
 	];
 
-	oc_setcookie($config->get('session_name'), $session->getId(), $option);
+	setcookie($config->get('session_name'), $session->getId(), $option);
 }
 
 // Cache
@@ -162,6 +170,12 @@ $language = new \Opencart\System\Library\Language($config->get('language_code'))
 $language->addPath(DIR_LANGUAGE);
 $language->load($config->get('language_code'));
 $registry->set('language', $language);
+
+// Url
+$registry->set('url', new \Opencart\System\Library\Url($config->get('site_url')));
+
+// Document
+$registry->set('document', new \Opencart\System\Library\Document());
 
 // Action error object to execute if any other actions can not be executed.
 $error = new \Opencart\System\Engine\Action($config->get('action_error'));
@@ -185,6 +199,7 @@ foreach ($config->get('action_pre_action') as $pre_action) {
 		$action = $error;
 
 		$error = '';
+		
 		break;
 	}
 }

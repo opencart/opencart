@@ -2,9 +2,9 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="float-right">
-        <button type="submit" form="form-tax-rate" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
-        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
+      <div class="float-end">
+        <button type="submit" form="form-tax-rate" formaction="{{ save }}" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
+        <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
       <ol class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -14,37 +14,28 @@
     </div>
   </div>
   <div class="container-fluid">
-    {% if error_warning %}
-      <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-      </div>
-    {% endif %}
     <div class="card">
       <div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_form }}</div>
       <div class="card-body">
-        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-tax-rate">
-          <div class="form-group row required">
+        <form id="form-tax-rate" action="{{ save }}" method="post" data-oc-toggle="ajax">
+          <div class="row mb-3 required">
             <label for="input-name" class="col-sm-2 col-form-label">{{ entry_name }}</label>
             <div class="col-sm-10">
               <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
-              {% if error_name %}
-                <div class="invalid-tooltip">{{ error_name }}</div>
-              {% endif %}
+              <div id="error-name" class="invalid-feedback"></div>
             </div>
           </div>
-          <div class="form-group row required">
+          <div class="row mb-3 required">
             <label for="input-rate" class="col-sm-2 col-form-label">{{ entry_rate }}</label>
             <div class="col-sm-10">
               <input type="text" name="rate" value="{{ rate }}" placeholder="{{ entry_rate }}" id="input-rate" class="form-control"/>
-              {% if error_rate %}
-                <div class="invalid-tooltip">{{ error_rate }}</div>
-              {% endif %}
+              <div id="error-rate" class="invalid-feedback"></div>
             </div>
           </div>
-          <div class="form-group row">
+          <div class="row mb-3">
             <label for="input-type" class="col-sm-2 col-form-label">{{ entry_type }}</label>
             <div class="col-sm-10">
-              <select name="type" id="input-type" class="form-control">
+              <select name="type" id="input-type" class="form-select">
                 {% if type == 'P' %}
                   <option value="P" selected="selected">{{ text_percent }}</option>
                 {% else %}
@@ -58,37 +49,29 @@
               </select>
             </div>
           </div>
-          <div class="form-group row">
+          <div class="row mb-3">
             <label class="col-sm-2 col-form-label">{{ entry_customer_group }}</label>
             <div class="col-sm-10">
               <div id="product-store" class="form-control" style="height: 150px; overflow: auto;">
                 {% for customer_group in customer_groups %}
-                  <label class="form-check">
-                    {% if customer_group.customer_group_id in tax_rate_customer_group %}
-                      <input type="checkbox" name="tax_rate_customer_group[]" value="{{ customer_group.customer_group_id }}" checked="checked" class="form-check-input"/>
-                      {{ customer_group.name }}
-                    {% else %}
-                      <input type="checkbox" name="tax_rate_customer_group[]" value="{{ customer_group.customer_group_id }}" class="form-check-input"/>
-                      {{ customer_group.name }}
-                    {% endif %}
-                  </label>
-                {% endfor %}    </div>
+                  <div class="form-check">
+                    <input type="checkbox" name="tax_rate_customer_group[]" value="{{ customer_group.customer_group_id }}" id="input-customer-group-{{ customer_group.customer_group_id }}" class="form-check-input"{% if customer_group.customer_group_id in tax_rate_customer_group %} checked{% endif %}/> <label for="input-customer-group-{{ customer_group.customer_group_id }}" class="form-check-label">{{ customer_group.name }}</label>
+                  </div>
+                {% endfor %}
+              </div>
             </div>
           </div>
-          <div class="form-group row">
+          <div class="row mb-3">
             <label for="input-geo-zone" class="col-sm-2 col-form-label">{{ entry_geo_zone }}</label>
             <div class="col-sm-10">
-              <select name="geo_zone_id" id="input-geo-zone" class="form-control">
+              <select name="geo_zone_id" id="input-geo-zone" class="form-select">
                 {% for geo_zone in geo_zones %}
-                  {% if geo_zone.geo_zone_id == geo_zone_id %}
-                    <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
-                  {% else %}
-                    <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
-                  {% endif %}
+                  <option value="{{ geo_zone.geo_zone_id }}"{% if geo_zone.geo_zone_id == geo_zone_id %} selected="selected"{% endif %}>{{ geo_zone.name }}</option>
                 {% endfor %}
               </select>
             </div>
           </div>
+          <input type="hidden" name="tax_rate_id" value="{{ tax_rate_id }}" id="input-tax-rate-id"/>
         </form>
       </div>
     </div>

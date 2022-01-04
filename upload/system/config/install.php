@@ -1,7 +1,6 @@
 <?php
 // Site
-$_['site_base']         = HTTP_SERVER;
-$_['site_ssl']          = HTTP_SERVER;
+$_['site_url']          = HTTP_SERVER;
 
 // Language
 $_['language_code']     = 'en-gb';
@@ -10,7 +9,7 @@ $_['language_code']     = 'en-gb';
 $_['template_engine']   = 'twig';
 
 // Error
-$_['error_display']     = false;
+$_['error_display']     = true;
 
 // Actions
 $_['action_default']    = 'install/step_1';

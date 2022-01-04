@@ -1,42 +1,5 @@
 <?php
-/* Compatibility function Due to PHP 7.3 only being the PHP version to be able to use samesite attribute */
-function oc_setcookie(string $key, string $value, $option = []) {
-	if (version_compare(phpversion(), '7.3.0', '>=')) {
-		// PHP needs to update their setcookie function.
-		setcookie($key, $value, $option);
-	} else {
-		$string = '';
-
-		if (isset($option['expires'])) {
-			$string .= '; expires=' . $option['expires'];
-		} else {
-			$string .= '; expires=0';
-		}
-
-		if (!empty($option['path'])) {
-			$string .= '; path=' . $option['path'];
-		}
-
-		if (!empty($option['domain'])) {
-			$string .= '; domain=' . $option['domain'];
-		}
-
-		if (!empty($option['HttpOnly'])) {
-			$string .= '; HttpOnly';
-		}
-
-		if (!empty($option['Secure'])) {
-			$string .= '; Secure';
-		}
-
-		if (isset($option['SameSite'])) {
-			$string .= '; SameSite=' . $option['SameSite'];
-		}
-
-		header('Set-Cookie: ' . rawurlencode($key) . '=' . rawurlencode($value) . $string);
-	}
-}
-
+//namespace Opencart\System\Helper;
 function token($length = 32) {
 	if (intval($length) <= 8) {
 		$length = 32;
@@ -60,9 +23,9 @@ function token($length = 32) {
  */
 
 if (!function_exists('hash_equals')) {
-	function hash_equals($known_string, $user_string) {
-		$known_string = (string)$known_string;
-		$user_string = (string)$user_string;
+	function hash_equals(string $known_string, string $user_string) {
+		$known_string = $known_string;
+		$user_string = $user_string;
 
 		if (strlen($known_string) != strlen($user_string)) {
 			return false;

@@ -1,11 +1,11 @@
 <?php
-namespace Opencart\Application\Controller\Localisation;
+namespace Opencart\Catalog\Controller\Localisation;
 class Country extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): void {
 		$json = [];
 
 		if (isset($this->request->get['country_id'])) {
-			$country_id = $this->request->get['country_id'];
+			$country_id = (int)$this->request->get['country_id'];
 		} else {
 			$country_id = 0;
 		}

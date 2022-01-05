@@ -92,25 +92,32 @@ $(document).ready(function() {
 });
 
 $(document).ready(function () {
-    /*
-    $('.date').datetimepicker({
-        'format': 'YYYY-MM-DD',
-        'locale': '{{ datepicker }}',
-        'allowInputToggle': true
+
+    $('.date').daterangepicker({
+        singleDatePicker: true,
+        startDate: moment().subtract(6, 'days')
     });
 
-    $('.time').datetimepicker({
-        'format': 'HH:mm',
-        'locale': '{{ datepicker }}',
-        'allowInputToggle': true
+
+
+    $('.date').daterangepicker({
+       // 'format': 'YYYY-MM-DD',
+      //  'locale': '{{ datepicker }}',
+        //'allowInputToggle': true
     });
 
-    $('.datetime').datetimepicker({
-        'format': 'YYYY-MM-DD HH:mm',
-        'locale': '{{ datepicker }}',
-        'allowInputToggle': true
+    $('.time').daterangepicker({
+       // 'format': 'HH:mm',
+      //  'locale': '{{ datepicker }}',
+      //  'allowInputToggle': true
     });
-    */
+
+    $('.datetime').daterangepicker({
+      //  'format': 'YYYY-MM-DD HH:mm',
+       // 'locale': '{{ datepicker }}',
+      //  'allowInputToggle': true
+    });
+
 });
 
 // Buttons

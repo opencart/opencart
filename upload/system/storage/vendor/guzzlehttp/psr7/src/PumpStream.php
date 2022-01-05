@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace GuzzleHttp\Psr7;
 
 use Psr\Http\Message\StreamInterface;
@@ -16,12 +14,12 @@ use Psr\Http\Message\StreamInterface;
  * the read() function of the PumpStream. The provided callable MUST return
  * false when there is no more data to read.
  */
-final class PumpStream implements StreamInterface
+class PumpStream implements StreamInterface
 {
-    /** @var callable|null */
+    /** @var callable */
     private $source;
 
-    /** @var int|null */
+    /** @var int */
     private $size;
 
     /** @var int */
@@ -34,95 +32,91 @@ final class PumpStream implements StreamInterface
     private $buffer;
 
     /**
-     * @param callable(int): (string|null|false)  $source  Source of the stream data. The callable MAY
-     *                                                     accept an integer argument used to control the
-     *                                                     amount of data to return. The callable MUST
-     *                                                     return a string when called, or false|null on error
-     *                                                     or EOF.
-     * @param array{size?: int, metadata?: array} $options Stream options:
-     *                                                     - metadata: Hash of metadata to use with stream.
-     *                                                     - size: Size of the stream, if known.
+     * @param callable $source Source of the stream data. The callable MAY
+     *                         accept an integer argument used to control the
+     *                         amount of data to return. The callable MUST
+     *                         return a string when called, or false on error
+     *                         or EOF.
+     * @param array $options   Stream options:
+     *                         - metadata: Hash of metadata to use with stream.
+     *                         - size: Size of the stream, if known.
      */
     public function __construct(callable $source, array $options = [])
     {
         $this->source = $source;
-        $this->size = $options['size'] ?? null;
-        $this->metadata = $options['metadata'] ?? [];
+        $this->size = isset($options['size']) ? $options['size'] : null;
+        $this->metadata = isset($options['metadata']) ? $options['metadata'] : [];
         $this->buffer = new BufferStream();
     }
 
-    public function __toString(): string
+    public function __toString()
     {
         try {
             return Utils::copyToString($this);
-        } catch (\Throwable $e) {
-            if (\PHP_VERSION_ID >= 70400) {
-                throw $e;
-            }
-            trigger_error(sprintf('%s::__toString exception: %s', self::class, (string) $e), E_USER_ERROR);
+        } catch (\Exception $e) {
             return '';
         }
     }
 
-    public function close(): void
+    public function close()
     {
         $this->detach();
     }
 
     public function detach()
     {
-        $this->tellPos = 0;
+        $this->tellPos = false;
         $this->source = null;
 
         return null;
     }
 
-    public function getSize(): ?int
+    public function getSize()
     {
         return $this->size;
     }
 
-    public function tell(): int
+    public function tell()
     {
         return $this->tellPos;
     }
 
-    public function eof(): bool
+    public function eof()
     {
-        return $this->source === null;
+        return !$this->source;
     }
 
-    public function isSeekable(): bool
+    public function isSeekable()
     {
         return false;
     }
 
-    public function rewind(): void
+    public function rewind()
     {
         $this->seek(0);
     }
 
-    public function seek($offset, $whence = SEEK_SET): void
+    public function seek($offset, $whence = SEEK_SET)
     {
         throw new \RuntimeException('Cannot seek a PumpStream');
     }
 
-    public function isWritable(): bool
+    public function isWritable()
     {
         return false;
     }
 
-    public function write($string): int
+    public function write($string)
     {
         throw new \RuntimeException('Cannot write to a PumpStream');
     }
 
-    public function isReadable(): bool
+    public function isReadable()
     {
         return true;
     }
 
-    public function read($length): string
+    public function read($length)
     {
         $data = $this->buffer->read($length);
         $readLen = strlen($data);
@@ -138,7 +132,7 @@ final class PumpStream implements StreamInterface
         return $data;
     }
 
-    public function getContents(): string
+    public function getContents()
     {
         $result = '';
         while (!$this->eof()) {
@@ -148,21 +142,16 @@ final class PumpStream implements StreamInterface
         return $result;
     }
 
-    /**
-     * {@inheritdoc}
-     *
-     * @return mixed
-     */
     public function getMetadata($key = null)
     {
         if (!$key) {
             return $this->metadata;
         }
 
-        return $this->metadata[$key] ?? null;
+        return isset($this->metadata[$key]) ? $this->metadata[$key] : null;
     }
 
-    private function pump(int $length): void
+    private function pump($length)
     {
         if ($this->source) {
             do {

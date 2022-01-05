@@ -16,7 +16,7 @@ interface ClientInterface
     /**
      * The Guzzle major version.
      */
-    public const MAJOR_VERSION = 7;
+    const MAJOR_VERSION = 7;
 
     /**
      * Send an HTTP request.

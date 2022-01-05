@@ -18,8 +18,6 @@ use ScssPhp\ScssPhp\Formatter;
  * Compressed formatter
  *
  * @author Leaf Corcoran <leafot@gmail.com>
- *
- * @internal
  */
 class Compressed extends Formatter
 {
@@ -69,8 +67,6 @@ class Compressed extends Formatter
      */
     protected function blockSelectors(OutputBlock $block)
     {
-        assert(! empty($block->selectors));
-
         $inner = $this->indentStr();
 
         $this->write(

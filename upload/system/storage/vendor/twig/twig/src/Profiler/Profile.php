@@ -16,10 +16,10 @@ namespace Twig\Profiler;
  */
 final class Profile implements \IteratorAggregate, \Serializable
 {
-    public const ROOT = 'ROOT';
-    public const BLOCK = 'block';
-    public const TEMPLATE = 'template';
-    public const MACRO = 'macro';
+    const ROOT = 'ROOT';
+    const BLOCK = 'block';
+    const TEMPLATE = 'template';
+    const MACRO = 'macro';
 
     private $template;
     private $name;
@@ -153,12 +153,12 @@ final class Profile implements \IteratorAggregate, \Serializable
         return new \ArrayIterator($this->profiles);
     }
 
-    public function serialize(): string
+    public function serialize()
     {
         return serialize($this->__serialize());
     }
 
-    public function unserialize($data): void
+    public function unserialize($data)
     {
         $this->__unserialize(unserialize($data));
     }
@@ -166,7 +166,7 @@ final class Profile implements \IteratorAggregate, \Serializable
     /**
      * @internal
      */
-    public function __serialize(): array
+    public function __serialize()
     {
         return [$this->template, $this->name, $this->type, $this->starts, $this->ends, $this->profiles];
     }
@@ -174,7 +174,7 @@ final class Profile implements \IteratorAggregate, \Serializable
     /**
      * @internal
      */
-    public function __unserialize(array $data): void
+    public function __unserialize(array $data)
     {
         list($this->template, $this->name, $this->type, $this->starts, $this->ends, $this->profiles) = $data;
     }

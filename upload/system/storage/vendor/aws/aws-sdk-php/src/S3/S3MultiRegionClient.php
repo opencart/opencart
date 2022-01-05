@@ -202,8 +202,6 @@ use GuzzleHttp\Promise;
  * @method \GuzzleHttp\Promise\Promise uploadPartAsync(array $args = [])
  * @method \Aws\Result uploadPartCopy(array $args = [])
  * @method \GuzzleHttp\Promise\Promise uploadPartCopyAsync(array $args = [])
- * @method \Aws\Result writeGetObjectResponse(array $args = [])
- * @method \GuzzleHttp\Promise\Promise writeGetObjectResponseAsync(array $args = [])
  */
 class S3MultiRegionClient extends BaseClient implements S3ClientInterface
 {
@@ -255,7 +253,7 @@ class S3MultiRegionClient extends BaseClient implements S3ClientInterface
                     $command['@region'] = $region;
                 }
 
-                return Promise\Coroutine::of(function () use (
+                return Promise\coroutine(function () use (
                     $handler,
                     $command,
                     $cacheKey
@@ -333,7 +331,7 @@ class S3MultiRegionClient extends BaseClient implements S3ClientInterface
     {
         $cacheKey = $this->getCacheKey($bucketName);
         if ($cached = $this->cache->get($cacheKey)) {
-            return Promise\Create::promiseFor($cached);
+            return Promise\promise_for($cached);
         }
 
         /** @var S3ClientInterface $regionalClient */

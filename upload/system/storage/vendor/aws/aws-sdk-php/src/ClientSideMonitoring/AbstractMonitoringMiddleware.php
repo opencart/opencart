@@ -118,12 +118,12 @@ abstract class AbstractMonitoringMiddleware
                 }
             }
             if ($value instanceof \Exception || $value instanceof \Throwable) {
-                return Promise\Create::rejectionFor($value);
+                return Promise\rejection_for($value);
             }
             return $value;
         };
 
-        return Promise\Create::promiseFor($handler($cmd, $request))->then($g, $g);
+        return Promise\promise_for($handler($cmd, $request))->then($g, $g);
     }
 
     private function getClientId()

@@ -16,8 +16,6 @@ namespace ScssPhp\ScssPhp;
  * CSS Colors
  *
  * @author Leaf Corcoran <leafot@gmail.com>
- *
- * @internal
  */
 class Colors
 {
@@ -26,13 +24,13 @@ class Colors
      *
      * @see http://www.w3.org/TR/css3-color
      *
-     * @var array<string, string>
+     * @var array
      */
     protected static $cssColors = [
         'aliceblue' => '240,248,255',
         'antiquewhite' => '250,235,215',
-        'aqua' => '0,255,255',
         'cyan' => '0,255,255',
+        'aqua' => '0,255,255',
         'aquamarine' => '127,255,212',
         'azure' => '240,255,255',
         'beige' => '245,245,220',
@@ -77,8 +75,8 @@ class Colors
         'firebrick' => '178,34,34',
         'floralwhite' => '255,250,240',
         'forestgreen' => '34,139,34',
-        'fuchsia' => '255,0,255',
         'magenta' => '255,0,255',
+        'fuchsia' => '255,0,255',
         'gainsboro' => '220,220,220',
         'ghostwhite' => '248,248,255',
         'gold' => '255,215,0',
@@ -185,7 +183,7 @@ class Colors
      *
      * @param string $colorName
      *
-     * @return int[]|null
+     * @return array|null
      */
     public static function colorNameToRGBa($colorName)
     {
@@ -207,7 +205,7 @@ class Colors
      * @param integer $r
      * @param integer $g
      * @param integer $b
-     * @param integer|float $a
+     * @param integer $a
      *
      * @return string|null
      */

@@ -23,11 +23,13 @@
           <div class="card-body">
             <div class="mb-3">
               <label class="form-label">{{ entry_name }}</label>
-              <input type="text" name="filter_name" value="{{ filter_name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
+              <input type="text" name="filter_name" value="{{ filter_name }}" placeholder="{{ entry_name }}" id="input-name" list="list-name" class="form-control"/>
+              <datalist id="list-name"></datalist>
             </div>
             <div class="mb-3">
               <label class="form-label">{{ entry_email }}</label>
-              <input type="text" name="filter_email" value="{{ filter_email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control"/>
+              <input type="text" name="filter_email" value="{{ filter_email }}" placeholder="{{ entry_email }}" id="input-email" list="list-email" class="form-control"/>
+              <datalist id="list-email"></datalist>
             </div>
             <div class="mb-3">
               <label for="input-customer-group" class="form-label">{{ entry_customer_group }}</label> <select name="filter_customer_group_id" id="input-customer-group" class="form-select">
@@ -134,10 +136,9 @@ $('#input-name').autocomplete({
             }
         });
     },
-    'select': function(item) {
-        $('#input-name').val(item['label']);
-    }
+    'select': function(item) {}
 });
+
 $('#input-email').autocomplete({
     'source': function(request, response) {
         $.ajax({
@@ -153,12 +154,9 @@ $('#input-email').autocomplete({
             }
         });
     },
-    'select': function(item) {
-        $('#input-email').val(item['label']);
-    }
+    'select': function(item) {}
 });
-//--></script>
-<script type="text/javascript"><!--
+
 $('.date').datetimepicker({
     'format': 'YYYY-MM-DD',
     'locale': '{{ datepicker }}',

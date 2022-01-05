@@ -20,6 +20,28 @@
       <div class="card-header"><i class="fas fa-sync"></i> {{ text_version }}</div>
       <div class="card-body">
 
+
+        <div class="row mb-3">
+          <label for="input-sort-order" class="col-sm-2 col-form-label">{{ entry_version }}</label>
+          <div class="col-sm-10">
+            {{ version }}
+
+            <input type="text" name="sort_order" value="" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/>
+
+          </div>
+        </div>
+
+
+        <div class="row mb-3">
+          <label for="input-sort-order" class="col-sm-2 col-form-label">{{ entry_sort_order }}</label>
+          <div class="col-sm-10">
+            <textarea  value="{{ sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/>
+          </div>
+        </div>
+
+
+
+
         <fieldset>
           <legend id="btn-version">{{ text_update }}</legend>
           <div class="alert alert-info">

@@ -31,7 +31,7 @@ class CognitoIdentityProvider
 
     public function __invoke()
     {
-        return Promise\Coroutine::of(function () {
+        return Promise\coroutine(function () {
             $params = $this->logins ? ['Logins' => $this->logins] : [];
             $getIdParams = $params + ['IdentityPoolId' => $this->identityPoolId];
             if ($this->accountId) {

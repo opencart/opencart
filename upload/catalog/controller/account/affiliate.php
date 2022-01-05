@@ -176,7 +176,8 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			'cheque',
 			'paypal',
 			'bank_account_name',
-			'bank_account_number'
+			'bank_account_number',
+			'agree'
 		];
 
 		foreach ($keys as $key) {
@@ -215,21 +216,23 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-			$this->load->model('catalog/information');
-
-			$information_info = $this->model_catalog_information->getInformation($this->config->get('config_affiliate_id'));
-
-			if ($information_info && !isset($this->request->post['agree'])) {
-				$json['error']['warning'] = sprintf($this->language->get('error_agree'), $information_info['title']);
-			}
-		}
-
-		if (!$json) {
 			// Validate agree only if customer not already an affiliate
 			$this->load->model('account/affiliate');
 
 			$affiliate_info = $this->model_account_affiliate->getAffiliate($this->customer->getId());
 
+			if (!$affiliate_info) {
+				$this->load->model('catalog/information');
+
+				$information_info = $this->model_catalog_information->getInformation($this->config->get('config_affiliate_id'));
+
+				if ($information_info && !$this->request->post['agree']) {
+					$json['error']['warning'] = sprintf($this->language->get('error_agree'), $information_info['title']);
+				}
+			}
+		}
+
+		if (!$json) {
 			if (!$affiliate_info) {
 				$this->model_account_affiliate->addAffiliate($this->customer->getId(), $this->request->post);
 			} else {
@@ -238,7 +241,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$json['redirect'] = $this->url->link('account/affiliate', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'], true);
+			$json['redirect'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'], true);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

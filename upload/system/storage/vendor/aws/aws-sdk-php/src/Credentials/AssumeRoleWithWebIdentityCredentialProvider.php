@@ -93,7 +93,7 @@ class AssumeRoleWithWebIdentityCredentialProvider
      */
     public function __invoke()
     {
-        return Promise\Coroutine::of(function () {
+        return Promise\coroutine(function () {
             $client = $this->client;
             $result = null;
             while ($result == null) {

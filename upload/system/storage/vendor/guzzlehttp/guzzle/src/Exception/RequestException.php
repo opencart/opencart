@@ -99,7 +99,7 @@ class RequestException extends TransferException implements RequestExceptionInte
             '%s: `%s %s` resulted in a `%s %s` response',
             $label,
             $request->getMethod(),
-            $uri->__toString(),
+            $uri,
             $response->getStatusCode(),
             $response->getReasonPhrase()
         );

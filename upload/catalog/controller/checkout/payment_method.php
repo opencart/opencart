@@ -57,7 +57,7 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 			if (isset($this->session->data['payment_methods'])) {
 				$data['payment_methods'] = $this->session->data['payment_methods'];
 			} else {
-				if (isset($this->session->data['payment_address'])) {
+				if (!isset($this->session->data['payment_address'])) {
 					$payment_address = $this->session->data['payment_address'];
 				} else {
 					$payment_address = [

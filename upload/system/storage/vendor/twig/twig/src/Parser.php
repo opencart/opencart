@@ -34,6 +34,7 @@ class Parser
     private $stack = [];
     private $stream;
     private $parent;
+    private $handlers;
     private $visitors;
     private $expressionParser;
     private $blocks;
@@ -60,6 +61,16 @@ class Parser
         $vars = get_object_vars($this);
         unset($vars['stack'], $vars['env'], $vars['handlers'], $vars['visitors'], $vars['expressionParser'], $vars['reservedMacroNames']);
         $this->stack[] = $vars;
+
+        // tag handlers
+        if (null === $this->handlers) {
+            $this->handlers = [];
+            foreach ($this->env->getTokenParsers() as $handler) {
+                $handler->setParser($this);
+
+                $this->handlers[$handler->getTag()] = $handler;
+            }
+        }
 
         // node visitors
         if (null === $this->visitors) {
@@ -150,7 +161,7 @@ class Parser
                         return new Node($rv, [], $lineno);
                     }
 
-                    if (!$subparser = $this->env->getTokenParser($token->getValue())) {
+                    if (!isset($this->handlers[$token->getValue()])) {
                         if (null !== $test) {
                             $e = new SyntaxError(sprintf('Unexpected "%s" tag', $token->getValue()), $token->getLine(), $this->stream->getSourceContext());
 
@@ -159,7 +170,7 @@ class Parser
                             }
                         } else {
                             $e = new SyntaxError(sprintf('Unknown "%s" tag.', $token->getValue()), $token->getLine(), $this->stream->getSourceContext());
-                            $e->addSuggestions($token->getValue(), array_keys($this->env->getTokenParsers()));
+                            $e->addSuggestions($token->getValue(), array_keys($this->env->getTags()));
                         }
 
                         throw $e;
@@ -167,7 +178,7 @@ class Parser
 
                     $this->stream->next();
 
-                    $subparser->setParser($this);
+                    $subparser = $this->handlers[$token->getValue()];
                     $node = $subparser->parse($token);
                     if (null !== $node) {
                         $rv[] = $node;
@@ -193,7 +204,7 @@ class Parser
 
     public function peekBlockStack()
     {
-        return $this->blockStack[\count($this->blockStack) - 1] ?? null;
+        return isset($this->blockStack[\count($this->blockStack) - 1]) ? $this->blockStack[\count($this->blockStack) - 1] : null;
     }
 
     public function popBlockStack(): void

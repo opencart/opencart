@@ -19,8 +19,6 @@ use Twig\Token;
 
 /**
  * Marks a section of a template to be escaped or not.
- *
- * @internal
  */
 final class AutoEscapeTokenParser extends AbstractTokenParser
 {

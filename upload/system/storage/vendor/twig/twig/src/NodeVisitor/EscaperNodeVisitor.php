@@ -29,8 +29,6 @@ use Twig\NodeTraverser;
 
 /**
  * @author Fabien Potencier <fabien@symfony.com>
- *
- * @internal
  */
 final class EscaperNodeVisitor implements NodeVisitorInterface
 {
@@ -196,7 +194,7 @@ final class EscaperNodeVisitor implements NodeVisitorInterface
     {
         $line = $node->getTemplateLine();
         $name = new ConstantExpression('escape', $line);
-        $args = new Node([new ConstantExpression($type, $line), new ConstantExpression(null, $line), new ConstantExpression(true, $line)]);
+        $args = new Node([new ConstantExpression((string) $type, $line), new ConstantExpression(null, $line), new ConstantExpression(true, $line)]);
 
         return new FilterExpression($node, $name, $args, $line);
     }

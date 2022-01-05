@@ -26,8 +26,6 @@ use Twig\Token;
  *    <link rel="stylesheet" href="style.css" />
  *    <title>{% block title %}{% endblock %} - My Webpage</title>
  *  {% endblock %}
- *
- * @internal
  */
 final class BlockTokenParser extends AbstractTokenParser
 {

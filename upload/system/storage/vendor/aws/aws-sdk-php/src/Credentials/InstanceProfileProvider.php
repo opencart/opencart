@@ -69,7 +69,7 @@ class InstanceProfileProvider
      */
     public function __invoke()
     {
-        return Promise\Coroutine::of(function () {
+        return Promise\coroutine(function () {
 
             // Retrieve token or switch out of secure mode
             $token = null;

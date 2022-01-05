@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace GuzzleHttp\Psr7;
 
 use Psr\Http\Message\MessageInterface;
@@ -14,8 +12,10 @@ final class Message
      * Returns the string representation of an HTTP message.
      *
      * @param MessageInterface $message Message to convert to a string.
+     *
+     * @return string
      */
-    public static function toString(MessageInterface $message): string
+    public static function toString(MessageInterface $message)
     {
         if ($message instanceof RequestInterface) {
             $msg = trim($message->getMethod() . ' '
@@ -52,8 +52,10 @@ final class Message
      *
      * @param MessageInterface $message    The message to get the body summary
      * @param int              $truncateAt The maximum allowed size of the summary
+     *
+     * @return string|null
      */
-    public static function bodySummary(MessageInterface $message, int $truncateAt = 120): ?string
+    public static function bodySummary(MessageInterface $message, $truncateAt = 120)
     {
         $body = $message->getBody();
 
@@ -93,7 +95,7 @@ final class Message
      *
      * @throws \RuntimeException
      */
-    public static function rewindBody(MessageInterface $message): void
+    public static function rewindBody(MessageInterface $message)
     {
         $body = $message->getBody();
 
@@ -110,8 +112,10 @@ final class Message
      * array values, and a "body" key containing the body of the message.
      *
      * @param string $message HTTP request or response to parse.
+     *
+     * @return array
      */
-    public static function parseMessage(string $message): array
+    public static function parseMessage($message)
     {
         if (!$message) {
             throw new \InvalidArgumentException('Invalid message');
@@ -125,7 +129,7 @@ final class Message
             throw new \InvalidArgumentException('Invalid message: Missing header delimiter');
         }
 
-        [$rawHeaders, $body] = $messageParts;
+        list($rawHeaders, $body) = $messageParts;
         $rawHeaders .= "\r\n"; // Put back the delimiter we split previously
         $headerParts = preg_split("/\r?\n/", $rawHeaders, 2);
 
@@ -133,7 +137,7 @@ final class Message
             throw new \InvalidArgumentException('Invalid message: Missing status line');
         }
 
-        [$startLine, $rawHeaders] = $headerParts;
+        list($startLine, $rawHeaders) = $headerParts;
 
         if (preg_match("/(?:^HTTP\/|^[A-Z]+ \S+ HTTP\/)(\d+(?:\.\d+)?)/i", $startLine, $matches) && $matches[1] === '1.0') {
             // Header folding is deprecated for HTTP/1.1, but allowed in HTTP/1.0
@@ -171,8 +175,10 @@ final class Message
      *
      * @param string $path    Path from the start-line
      * @param array  $headers Array of headers (each value an array).
+     *
+     * @return string
      */
-    public static function parseRequestUri(string $path, array $headers): string
+    public static function parseRequestUri($path, array $headers)
     {
         $hostKey = array_filter(array_keys($headers), function ($k) {
             return strtolower($k) === 'host';
@@ -193,8 +199,10 @@ final class Message
      * Parses a request message string into a request object.
      *
      * @param string $message Request message string.
+     *
+     * @return Request
      */
-    public static function parseRequest(string $message): RequestInterface
+    public static function parseRequest($message)
     {
         $data = self::parseMessage($message);
         $matches = [];
@@ -219,8 +227,10 @@ final class Message
      * Parses a response message string into a response object.
      *
      * @param string $message Response message string.
+     *
+     * @return Response
      */
-    public static function parseResponse(string $message): ResponseInterface
+    public static function parseResponse($message)
     {
         $data = self::parseMessage($message);
         // According to https://tools.ietf.org/html/rfc7230#section-3.1.2 the space
@@ -236,7 +246,7 @@ final class Message
             $data['headers'],
             $data['body'],
             explode('/', $parts[0])[1],
-            $parts[2] ?? null
+            isset($parts[2]) ? $parts[2] : null
         );
     }
 }

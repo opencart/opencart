@@ -90,19 +90,7 @@ class Validator
 
     private function check_structure(StructureShape $shape, $value)
     {
-        $isDocument = (isset($shape['document']) && $shape['document']);
-        $isUnion = (isset($shape['union']) && $shape['union']);
-        if ($isDocument) {
-            if (!$this->checkDocumentType($value)) {
-                $this->addError("is not a valid document type");
-                return;
-            }
-        } elseif ($isUnion) {
-            if (!$this->checkUnion($value)) {
-                $this->addError("is a union type and must have exactly one non null value");
-                return;
-            }
-        } elseif (!$this->checkAssociativeArray($value)) {
+        if (!$this->checkAssociativeArray($value)) {
             return;
         }
 
@@ -115,16 +103,15 @@ class Validator
                 }
             }
         }
-        if (!$isDocument) {
-            foreach ($value as $name => $v) {
-                if ($shape->hasMember($name)) {
-                    $this->path[] = $name;
-                    $this->dispatch(
-                        $shape->getMember($name),
-                        isset($value[$name]) ? $value[$name] : null
-                    );
-                    array_pop($this->path);
-                }
+
+        foreach ($value as $name => $v) {
+            if ($shape->hasMember($name)) {
+                $this->path[] = $name;
+                $this->dispatch(
+                    $shape->getMember($name),
+                    isset($value[$name]) ? $value[$name] : null
+                );
+                array_pop($this->path);
             }
         }
     }
@@ -245,21 +232,6 @@ class Validator
         }
     }
 
-    private function checkArray($arr)
-    {
-        return $this->isIndexed($arr) || $this->isAssociative($arr);
-    }
-
-    private function isAssociative($arr)
-    {
-        return count(array_filter(array_keys($arr), "is_string")) == count($arr);
-    }
-
-    private function isIndexed(array $arr)
-    {
-        return $arr == array_values($arr);
-    }
-
     private function checkCanString($value)
     {
         static $valid = [
@@ -297,37 +269,6 @@ class Validator
         }
 
         return true;
-    }
-
-    private function checkDocumentType($value)
-    {
-        if (is_array($value)) {
-            $typeOfFirstKey = gettype(key($value));
-            foreach ($value as $key => $val) {
-               if (!$this->checkDocumentType($val) || gettype($key) != $typeOfFirstKey) {
-                   return false;
-               }
-            }
-            return $this->checkArray($value);
-        }
-        return is_null($value)
-            || is_numeric($value)
-            || is_string($value)
-            || is_bool($value);
-    }
-
-    private function checkUnion($value)
-    {
-        if (is_array($value)) {
-            $nonNullCount = 0;
-            foreach ($value as $key => $val) {
-                if (!is_null($val) && !(strpos($key, "@") === 0)) {
-                    $nonNullCount++;
-                }
-            }
-            return $nonNullCount == 1;
-        }
-        return !is_null($value);
     }
 
     private function addError($message)

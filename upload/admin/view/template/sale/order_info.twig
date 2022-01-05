@@ -531,9 +531,10 @@
           <div class="mb-3">
             <label for="input-customer" class="form-label">{{ entry_customer }}</label>
             <div class="input-group">
-              <input type="text" name="customer" value="{{ customer }}" placeholder="{{ entry_customer }}" id="input-customer" class="form-control"/> <a href="{{ customer_add }}" target="_blank" data-bs-toggle="tooltip" title="{{ button_customer_add }}" class="btn btn-outline-secondary"><i class="fas fa-user-plus"></i></a>
+              <input type="text" name="customer" value="{{ customer }}" placeholder="{{ entry_customer }}" id="input-customer" list="list-customer" class="form-control"/> <a href="{{ customer_add }}" target="_blank" data-bs-toggle="tooltip" title="{{ button_customer_add }}" class="btn btn-outline-secondary"><i class="fas fa-user-plus"></i></a>
             </div>
             <input type="hidden" name="customer_id" value="{{ customer_id }}" id="input-customer-id"/>
+            <datalist id="list-customer"></datalist>
           </div>
           <div class="mb-3">
             <label for="input-customer-group" class="form-label">{{ entry_customer_group }}</label> <select name="customer_group_id" id="input-customer-group" class="form-select">
@@ -682,10 +683,14 @@
               <fieldset class="mb-0">
                 <legend>{{ text_product_add }}</legend>
                 <div class="mb-3">
-                  <label for="input-product" class="form-label">{{ entry_product }}</label> <input type="text" name="product" value="" placeholder="{{ entry_product }}" id="input-product" class="form-control"/> <input type="hidden" name="product_id" value="" id="input-product-id"/>
+                  <label for="input-product" class="form-label">{{ entry_product }}</label>
+                  <input type="text" name="product" value="" placeholder="{{ entry_product }}" id="input-product" list="list-product" class="form-control"/>
+                  <datalist id="list-product"></datalist>
+                  <input type="hidden" name="product_id" value="" id="input-product-id"/>
                 </div>
                 <div class="mb-3">
-                  <label for="input-quantity" class="form-label">{{ entry_quantity }}</label> <input type="text" name="quantity" placeholder="{{ entry_quantity }}" value="1" id="input-quantity" class="form-control"/>
+                  <label for="input-quantity" class="form-label">{{ entry_quantity }}</label>
+                  <input type="text" name="quantity" placeholder="{{ entry_quantity }}" value="1" id="input-quantity" class="form-control"/>
                 </div>
               </fieldset>
               <div id="option"></div>
@@ -749,9 +754,10 @@
       <div class="modal-body">
         <form id="form-affiliate">
           <div class="mb-3">
-            <input type="text" name="affiliate" value="{{ affiliate }}" placeholder="{{ entry_affiliate }}" id="input-affiliate" class="form-control"/>
+            <input type="text" name="affiliate" value="{{ affiliate }}" placeholder="{{ entry_affiliate }}" id="input-affiliate" list="list-affiliate" class="form-control"/>
+            <input type="hidden" name="affiliate_id" value="{{ affiliate_id }}" id="input-affiliate-id"/>
+            <datalist id="list-affiliate"></datalist>
           </div>
-          <input type="hidden" name="affiliate_id" value="{{ affiliate_id }}" id="input-affiliate-id"/>
           <div class="text-end">
             <button type="submit" id="button-affiliate" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
           </div>
@@ -1216,7 +1222,6 @@ $('#input-customer').autocomplete({
         $('#form-customer select option').removeAttr('selected');
         $('#form-customer input[type=\'checkbox\'], #form-customer input[type=\'radio\']').removeAttr('checked');
 
-        $('#input-customer').val(item['label']);
         $('#input-customer-id').val(item['value']);
         $('#input-customer-group').val(item['customer_group_id']);
         $('#input-firstname').val(item['firstname']);
@@ -1959,8 +1964,8 @@ $('#input-affiliate').autocomplete({
             dataType: 'json',
             success: function (json) {
                 json.unshift({
-                    customer_id: 0,
-                    name: '{{ text_none }}'
+                    name: '{{ text_none }}',
+                    customer_id: 0
                 });
 
                 response($.map(json, function (item) {
@@ -1973,7 +1978,6 @@ $('#input-affiliate').autocomplete({
         });
     },
     'select': function (item) {
-        $('#input-affiliate').val(item['label']);
         $('#input-affiliate-id').val(item['value']);
     }
 });

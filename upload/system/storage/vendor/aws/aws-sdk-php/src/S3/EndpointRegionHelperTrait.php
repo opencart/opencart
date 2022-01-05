@@ -48,14 +48,19 @@ trait EndpointRegionHelperTrait
         return $region;
     }
 
+    private function isFipsPseudoRegion($region)
+    {
+        return strpos($region, 'fips-') !== false || strpos($region, '-fips') !== false;
+    }
+
     private function isMatchingSigningRegion(
         $arnRegion,
         $clientRegion,
         $service,
         PartitionEndpointProvider $provider
     ) {
-        $arnRegion = \Aws\strip_fips_pseudo_regions(strtolower($arnRegion));
-        $clientRegion = strtolower($clientRegion);
+        $arnRegion = $this->stripPseudoRegions(strtolower($arnRegion));
+        $clientRegion = $this->stripPseudoRegions(strtolower($clientRegion));
         if ($arnRegion === $clientRegion) {
             return true;
         }
@@ -65,9 +70,13 @@ trait EndpointRegionHelperTrait
         return false;
     }
 
-    private function validateFipsConfigurations(ArnInterface $arn)
+    private function stripPseudoRegions($region)
     {
-        $useFipsEndpoint = !empty($this->config['use_fips_endpoint']);
+        return str_replace(['fips-', '-fips'], ['', ''], $region);
+    }
+
+    private function validateFipsNotUsedWithOutposts(ArnInterface $arn)
+    {
         if ($arn instanceof OutpostsArnInterface) {
             if (empty($this->config['use_arn_region'])
                 || !($this->config['use_arn_region']->isUseArnRegion())
@@ -76,7 +85,8 @@ trait EndpointRegionHelperTrait
             } else {
                 $region = $arn->getRegion();
             }
-            if (\Aws\is_fips_pseudo_region($region)) {
+
+            if ($this->isFipsPseudoRegion($region)) {
                 throw new InvalidRegionException(
                     'Fips is currently not supported with S3 Outposts access'
                     . ' points. Please provide a non-fips region or do not supply an'

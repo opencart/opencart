@@ -18,8 +18,6 @@ $_['text_tips']           = 'Tips: Before upgrading it\'s very important to';
 $_['text_here']           = 'here';
 $_['text_backup']         = 'Database Backup';
 $_['text_cloud']          = 'If you are using the cloud version, you can backup with your opencart account';
-
-
 $_['text_change']         = 'Change Log';
 $_['text_progress_short'] = 'Progress';
 $_['text_progress']       = 'Upgrade Progress';

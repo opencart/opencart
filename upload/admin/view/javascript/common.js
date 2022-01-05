@@ -184,10 +184,10 @@ $(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function(e) {
         dataType: 'json',
         contentType: 'application/x-www-form-urlencoded',
         beforeSend: function() {
-            $(button).button('loading');
+           // $(button).button('loading');
         },
         complete: function() {
-           $(button).button('reset');
+           //$(button).button('reset');
         },
         success: function(json) {
             $(element).find('.is-invalid').removeClass('is-invalid');

@@ -20,13 +20,28 @@
       <div class="card-header"><i class="fas fa-sync"></i> {{ text_version }}</div>
       <div class="card-body">
 
+        <div class="row mb-3">
+          <div class="col-sm-4 text-center">
+            <div class="d-inline-block p-3 rounded-circle bg-success text-white fs-5">
+
+
+            </div>
+
+            <div class="p-2">Download Update</div>
+          </div>
+          <div class="col-sm-4 text-center">
+            <div class="d-inline-block p-3 rounded-circle bg-success text-white fs-5"><i class="bi bi-files"></i></div>
+            <div class="p-2">Copy Files</div>
+          </div>
+          <div class="col-sm-4 text-center">
+            <div class="d-inline-block p-3 rounded-circle bg-success text-white fs-5"><i class="fa fa-sync"></i></div>
+            <div class="p-2">Redirect to Upgrader</div>
+          </div>
+        </div>
 
         <div class="row mb-3">
           <label for="input-sort-order" class="col-sm-2 col-form-label">{{ entry_version }}</label>
-          <div class="col-sm-10">
-            {{ version }}
-
-            <input type="text" name="sort_order" value="" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/>
+          <div class="col-sm-10">{{ version }}
 
           </div>
         </div>
@@ -35,11 +50,9 @@
         <div class="row mb-3">
           <label for="input-sort-order" class="col-sm-2 col-form-label">{{ entry_sort_order }}</label>
           <div class="col-sm-10">
-            <textarea  value="{{ sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/>
+            <textarea value="{{ sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/>
           </div>
         </div>
-
-
 
 
         <fieldset>
@@ -80,7 +93,7 @@
 </div>
 
 <script type="text/javascript"><!--
-$('#button-upgrade').on('click', function() {
+$('#button-upgrade').on('click', function () {
     var i = 0;
 
     $('#progress-bar').css('width', '0%').removeClass('progress-bar-danger progress-bar-success');
@@ -89,17 +102,17 @@ $('#button-upgrade').on('click', function() {
 
     var next = 'index.php?route=tool/upgrade|download&user_token={{ user_token }}&version={{ version }}';
 
-    var upgrade = function() {
-          return $.ajax({
+    var upgrade = function () {
+        return $.ajax({
             url: next,
             dataType: 'json',
-            beforeSend: function() {
+            beforeSend: function () {
                 $('#button-upgrade').button('loading');
             },
-            complete: function() {
+            complete: function () {
                 $('#button-upgrade').button('reset');
             },
-            success: function(json) {
+            success: function (json) {
                 if (json['error']) {
                     $('#progress-bar').addClass('progress-bar-danger');
                     $('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
@@ -124,7 +137,7 @@ $('#button-upgrade').on('click', function() {
                     chain.attach(upgrade);
                 }
             },
-            error: function(xhr, ajaxOptions, thrownError) {
+            error: function (xhr, ajaxOptions, thrownError) {
                 $('#log').append(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });

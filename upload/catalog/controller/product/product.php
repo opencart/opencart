@@ -221,10 +221,10 @@ class Product extends \Opencart\System\Engine\Controller {
 			$this->document->addScript('catalog/view/javascript/jquery/magnific/jquery.magnific-popup.min.js');
 			$this->document->addStyle('catalog/view/javascript/jquery/magnific/magnific-popup.css');
 
-			$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment/moment.min.js');
-			$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment/moment-with-locales.min.js');
-			$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js');
-			$this->document->addStyle('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css');
+			$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment.min.js');
+			$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment-with-locales.min.js');
+			$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/daterangepicker.js');
+			$this->document->addStyle('catalog/view/javascript/jquery/datetimepicker/daterangepicker.css');
 
 			$data['heading_title'] = $product_info['name'];
 

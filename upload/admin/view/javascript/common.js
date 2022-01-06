@@ -92,32 +92,33 @@ $(document).ready(function() {
 });
 
 $(document).ready(function () {
-
     $('.date').daterangepicker({
         singleDatePicker: true,
-        startDate: moment().subtract(6, 'days')
-    });
-
-
-
-    $('.date').daterangepicker({
-       // 'format': 'YYYY-MM-DD',
-      //  'locale': '{{ datepicker }}',
-        //'allowInputToggle': true
+        autoApply: true,
+        locale: {
+            format: 'YYYY-MM-DD'
+        }
     });
 
     $('.time').daterangepicker({
-       // 'format': 'HH:mm',
-      //  'locale': '{{ datepicker }}',
-      //  'allowInputToggle': true
+        singleDatePicker: true,
+        autoApply: true,
+        timePicker: true,
+        timePicker24Hour: true,
+        locale: {
+            format: 'HH:mm'
+        }
     });
 
     $('.datetime').daterangepicker({
-      //  'format': 'YYYY-MM-DD HH:mm',
-       // 'locale': '{{ datepicker }}',
-      //  'allowInputToggle': true
+        singleDatePicker: true,
+        autoApply: true,
+        timePicker: true,
+        timePicker24Hour: true,
+        locale: {
+            format: 'YYYY-MM-DD HH:mm'
+        }
     });
-
 });
 
 // Buttons

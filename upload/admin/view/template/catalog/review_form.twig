@@ -68,8 +68,8 @@
           <div class="row mb-3">
             <label for="input-date-added" class="col-sm-2 col-form-label">{{ entry_date_added }}</label>
             <div class="col-sm-10 col-md-4">
-              <div class="input-group datetime">
-                <input type="text" name="date_added" value="{{ date_added }}" placeholder="{{ entry_date_added }}" id="input-date-added" class="form-control"/>
+              <div class="input-group">
+                <input type="text" name="date_added" value="{{ date_added }}" placeholder="{{ entry_date_added }}" id="input-date-added" class="form-control datetime"/>
                 <div class="input-group-text"><i class="fas fa-calendar"></i></div>
               </div>
             </div>
@@ -108,12 +108,6 @@ $('#input-product').autocomplete({
     'select': function(item) {
         $('#input-product-id').val(item['value']);
     }
-});
-
-$('.datetime').datetimepicker({
-    'format': 'YYYY-MM-DD HH:mm',
-    'locale': '{{ datepicker }}',
-    'allowInputToggle': true
 });
 //--></script>
 {{ footer }}

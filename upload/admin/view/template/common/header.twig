@@ -17,12 +17,11 @@
   <link href="{{ icons }}" rel="stylesheet" type="text/css"/>
   <link href="{{ stylesheet }}" rel="stylesheet" type="text/css"/>
   <script src="{{ jquery }}" type="text/javascript"></script>
-
   <script type="text/javascript" src="view/javascript/jquery/datetimepicker/moment.min.js"></script>
+  <script type="text/javascript" src="view/javascript/jquery/datetimepicker/moment-with-locales.min.js"></script>
   <script type="text/javascript" src="view/javascript/jquery/datetimepicker/daterangepicker.js"></script>
   <link href="view/javascript/jquery/datetimepicker/daterangepicker.css" rel="stylesheet" type="text/css"/>
   <script type="text/javascript" src="view/javascript/common.js"></script>
-
   {% for style in styles %}
     <link type="text/css" href="{{ style.href }}" rel="{{ style.rel }}" media="{{ style.media }}"/>
   {% endfor %}

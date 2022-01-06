@@ -1,3 +1,18 @@
+/* Chrome error off/block cookie "'Window': Access is denied for this document." */
+try {
+	window.localStorage.length;
+} catch {
+	delete window.localStorage;
+	window.localStorage = {
+		'getItem':function(a) {},
+		'setItem':function(a, b) {},
+		'key':function(a) {},
+		'removeItem':function(a) {},
+		'clear':function() {},
+		'length':0
+	};
+}
+
 function getURLVar(key) {
 	var value = [];
 

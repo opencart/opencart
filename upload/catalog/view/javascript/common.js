@@ -53,6 +53,8 @@ $(document).ready(function () {
         locale: {
             format: 'HH:mm'
         }
+    }).on('show.daterangepicker', function (ev, picker) {
+        picker.container.find('.calendar-table').hide();
     });
 
     $('.datetime').daterangepicker({

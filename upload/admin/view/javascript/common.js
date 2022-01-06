@@ -102,12 +102,15 @@ $(document).ready(function () {
 
     $('.time').daterangepicker({
         singleDatePicker: true,
+        datePicker: false,
         autoApply: true,
         timePicker: true,
         timePicker24Hour: true,
         locale: {
             format: 'HH:mm'
         }
+    }).on('show.daterangepicker', function (ev, picker) {
+        picker.container.find('.calendar-table').hide();
     });
 
     $('.datetime').daterangepicker({

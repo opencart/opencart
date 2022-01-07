@@ -33,15 +33,21 @@
           </div>
         {% else %}
           <div class="row">
-            {% for category in categories|batch((categories|length / 4)|round(1, 'ceil')) %}
-              <div class="col-sm-3">
-                <ul>
+            <div class="col-sm-3">
+              <ul>
+                {% for category in categories) %}
                   {% for child in category %}
                     <li><a href="{{ child.href }}">{{ child.name }}</a></li>
                   {% endfor %}
-                </ul>
-              </div>
-            {% endfor %}
+                  {% if loop.index is divisible by(4) and not loop.last %}
+                    </ul>
+                  </div>
+                  <div class="col-sm-3">
+                    <ul>
+                  {% endif %}﻿
+                {% endfor %}
+              </ul>
+            </div>
           </div>
           <br/>
         {% endif %}

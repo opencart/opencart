@@ -4687,6 +4687,51 @@ function db_schema() {
 	];
 
 	$tables[] = [
+		'name' => 'product_report',
+		'field' => [
+			[
+				'name' => 'product_report_id',
+				'type' => 'int(11)',
+				'not_null' => true,
+				'auto_increment' => true
+			],
+			[
+				'name' => 'product_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'store_id',
+				'type' => 'int(11)',
+				'not_null' => true,
+				'default'  => 0
+			],
+			[
+				'name' => 'ip',
+				'type' => 'varchar(40)',
+				'not_null' => true
+			],
+			[
+				'name' => 'country',
+				'type' => 'varchar(2)',
+				'not_null' => true
+			],
+			[
+				'name' => 'date_added',
+				'type' => 'datetime',
+				'not_null' => true
+			]
+
+		],
+		'primary' => [
+			'product_report_id'
+		],
+		'engine' => 'InnoDB',
+		'charset' => 'utf8',
+		'collate' => 'utf8_general_ci'
+	];
+
+	$tables[] = [
 		'name' => 'product_reward',
 		'field' => [
 			[

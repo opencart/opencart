@@ -299,7 +299,9 @@
                       <label class="col-sm-2 col-form-label">{{ entry_product_count }}</label>
                       <div class="col-sm-10">
                         <div class="btn-group">
-                          <input type="radio" name="config_product_count" value="1" id="input-product-count-yes" class="btn-check"{% if config_product_count %} checked{% endif %}/> <label for="input-product-count-yes" class="btn btn-outline-secondary">{{ text_yes }}</label> <input type="radio" name="config_product_count" value="0" id="input-product-count-no" class="btn-check"{% if not config_product_count %} checked{% endif %}/> <label for="input-product-count-no" class="btn btn-outline-secondary">{{ text_no }}</label>
+                          <input type="radio" name="config_product_count" value="1" id="input-product-count-yes" class="btn-check"{% if config_product_count %} checked{% endif %}/>
+                          <label for="input-product-count-yes" class="btn btn-outline-secondary">{{ text_yes }}</label>
+                          <input type="radio" name="config_product_count" value="0" id="input-product-count-no" class="btn-check"{% if not config_product_count %} checked{% endif %}/> <label for="input-product-count-no" class="btn btn-outline-secondary">{{ text_no }}</label>
                         </div>
                         <div class="form-text text-muted">{{ help_product_count }}</div>
                       </div>
@@ -312,6 +314,20 @@
                         <div id="error-pagination-admin" class="invalid-feedback"></div>
                       </div>
                     </div>
+
+                    <div class="row mb-3 required">
+                      <label class="col-sm-2 col-form-label">{{ entry_product_report }}</label>
+                      <div class="col-sm-10">
+                        <div class="btn-group">
+                          <input type="radio" name="config_product_report_status" value="1" id="input-product-report-yes" class="btn-check"{% if config_product_report_status %} checked{% endif %}/>
+                          <label for="input-product-report-yes" class="btn btn-outline-secondary">{{ text_yes }}</label>
+                          <input type="radio" name="config_product_report_status" value="0" id="input-product-report-no" class="btn-check"{% if not config_product_report_status %} checked{% endif %}/>
+                          <label for="input-product-report-no" class="btn btn-outline-secondary">{{ text_no }}</label>
+                        </div>
+                        <div class="form-text text-muted">{{ help_product_report }}</div>
+                      </div>
+                    </div>
+
                   </div>
                 </div>
               </div>

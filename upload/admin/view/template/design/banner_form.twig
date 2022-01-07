@@ -73,7 +73,7 @@
                             </div>
                           </td>
                           <td class="text-end" style="width: 10%;"><input type="text" name="banner_image[{{ language.language_id }}][{{ image_row }}][sort_order]" value="{{ banner_image.sort_order }}" placeholder="{{ entry_sort_order }}" id="input-banner-image-{{ language.language_id }}-{{ image_row }}-sort-order" class="form-control"/></td>
-                          <td class="text-end"><button type="button" onclick="$('#image-row-{{ image_row }}, .tooltip').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
+                          <td class="text-end"><button type="button" onclick="$('#image-row-{{ image_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
                         </tr>
                         {% set image_row = image_row + 1 %}
                       {% endfor %}
@@ -116,7 +116,7 @@ $('button[id^=\'button-banner\']').on('click', function() {
     html += '    </div>';
     html += '  </td>';
     html += '  <td class="text-end"><input type="text" name="banner_image[' + $(element).attr('data-language') + '][' + image_row + '][sort_order]" value="" placeholder="{{ entry_sort_order }}" id="input-banner-image-' + $(element).attr('data-language') + '-' + image_row + '-sort-order" class="form-control"/></td>';
-    html += '  <td class="text-end"><button type="button" onclick="$(\'#image-row-' + image_row + ', .tooltip\').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
+    html += '  <td class="text-end"><button type="button" onclick="$(\'#image-row-' + image_row + '\').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
     html += '</tr>';
 
     $('#image-' + $(element).attr('data-language') + ' tbody').append(html);

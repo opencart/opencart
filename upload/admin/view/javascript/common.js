@@ -77,21 +77,21 @@ $(document).ready(function() {
 });
 
 // Tooltip
-$(document).ready(function() {
+var tooltip = function () {
+    $('.tooltip').remove();
+
     // Apply to all on current page
     $('[data-bs-toggle=\'tooltip\']').each(function(i, element) {
-       bootstrap.Tooltip.getOrCreateInstance(element);
+        bootstrap.Tooltip.getOrCreateInstance(element);
     });
+}
 
-    // Makes tooltips work on ajax generated content
-    $(document).ajaxStop(function() {
-        $('[data-bs-toggle=\'tooltip\']').each(function(i, element) {
-            bootstrap.Tooltip.getOrCreateInstance(element);
-        });
-    });
-});
+$(document).ready(tooltip);
+// Makes tooltips work on ajax generated content
+$(document).on('click', 'button', tooltip);
 
-$(document).ready(function () {
+// Daterangepicker
+var datetimepicker = function () {
     $('.date').daterangepicker({
         singleDatePicker: true,
         autoApply: true,
@@ -122,7 +122,10 @@ $(document).ready(function () {
             format: 'YYYY-MM-DD HH:mm'
         }
     });
-});
+}
+
+$(document).ready(datetimepicker);
+$(document).on('click', 'button', datetimepicker);
 
 // Buttons
 $(document).ready(function() {

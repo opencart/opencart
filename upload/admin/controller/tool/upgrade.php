@@ -29,7 +29,10 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('tool/upgrade', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		$data['version'] = VERSION;
+		$data['current_version'] = VERSION;
+		$data['latest_version'] = '';
+		$data['date_added'] = '';
+
 		$data['upgrade'] = false;
 
 		$curl = curl_init(OPENCART_SERVER . 'index.php?route=api/upgrade');
@@ -50,8 +53,9 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 			if (version_compare(VERSION, $response_info['version'], '>=')) {
 				$data['success'] = sprintf($this->language->get('text_success'), $response_info['version']);
 			} else {
-				$data['version'] = $response_info['version'];
+				$data['latest_version'] = $response_info['version'];
 				$data['log'] = $response_info['log'];
+				$data['date_added'] = $response_info['date_added'];
 
 				$data['upgrade'] = true;
 

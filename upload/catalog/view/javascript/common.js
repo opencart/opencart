@@ -22,21 +22,22 @@ function getURLVar(key) {
     }
 }
 
-$(document).ready(function() {
+// Tooltip
+var tooltip = function () {
+   $('.tooltip').remove();
+
     // Apply to all on current page
     $('[data-bs-toggle=\'tooltip\']').each(function(i, element) {
         bootstrap.Tooltip.getOrCreateInstance(element);
     });
+}
 
-    // Makes tooltips work on ajax generated content
-    $(document).ajaxStop(function() {
-        $('[data-bs-toggle=\'tooltip\']').each(function(i, element) {
-            bootstrap.Tooltip.getOrCreateInstance(element);
-        });
-    });
-});
+$(document).ready(tooltip);
+// Makes tooltips work on ajax generated content
+$(document).on('click', 'button', tooltip);
 
-$(document).ready(function () {
+// Daterangepicker
+var datetimepicker = function () {
     $('.date').daterangepicker({
         singleDatePicker: true,
         autoApply: true,
@@ -47,6 +48,7 @@ $(document).ready(function () {
 
     $('.time').daterangepicker({
         singleDatePicker: true,
+        datePicker: false,
         autoApply: true,
         timePicker: true,
         timePicker24Hour: true,
@@ -66,7 +68,10 @@ $(document).ready(function () {
             format: 'YYYY-MM-DD HH:mm'
         }
     });
-});
+}
+
+$(document).ready(datetimepicker);
+$(document).on('click', 'button', datetimepicker);
 
 $(document).ready(function () {
     // Currency

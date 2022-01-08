@@ -465,7 +465,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			$data['recurrings'] = $this->model_catalog_product->getProfiles($this->request->get['product_id']);
 
 			if ($this->config->get('config_product_report_status')) {
-				$this->model_catalog_product->addReport($this->request->get['product_id'], $this->request->server['REMOTE_ADDR']);
+				$this->model_catalog_product->addReport((int)$this->request->get['product_id'], $this->request->server['REMOTE_ADDR']);
 			}
 
 			$data['column_left'] = $this->load->controller('common/column_left');

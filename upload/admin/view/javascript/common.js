@@ -207,7 +207,7 @@ $(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function(e) {
             $(element).find('.is-invalid').removeClass('is-invalid');
             $(element).find('.invalid-feedback').removeClass('d-block');
 
-            console.log(json);
+            console.log('response ' + json);
 
             if (json['redirect']) {
                 location = json['redirect'];
@@ -454,10 +454,8 @@ var chain = new Chain();
                     }
 
                     for (name in category) {
-                        //html += '<li><h6 class="dropdown-header">' + name + '</h6></li>';
-
                         for (j = 0; j < category[name].length; j++) {
-                            html += '<option>' + category[name][j]['label'] + '</option>';
+                            html += '<option value="' + category[name][j]['label'] + '">' + name + '</option>';
                         }
                     }
                 }

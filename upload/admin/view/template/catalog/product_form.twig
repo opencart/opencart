@@ -705,8 +705,9 @@
                     {% set attribute_row = 0 %}
                     {% for product_attribute in product_attributes %}
                       <tr id="attribute-row-{{ attribute_row }}">
-                        <td class="text-start"><input type="text" name="product_attribute[{{ attribute_row }}][name]" value="{{ product_attribute.name }}" placeholder="{{ entry_attribute }}" id="input-name-{{ attribute_row }}-{{ language.language_id }}" list="list-input-name-{{ attribute_row }}-{{ language.language_id }}" class="form-control"/> <input type="hidden" name="product_attribute[{{ attribute_row }}][attribute_id]" value="{{ product_attribute.attribute_id }}"/>
-                          <datalist id="list-input-name-{{ attribute_row }}-{{ language.language_id }}"></datalist>
+                        <td class="text-start"><input type="text" name="product_attribute[{{ attribute_row }}][name]" value="{{ product_attribute.name }}" placeholder="{{ entry_attribute }}" id="input-attribute-{{ attribute_row }}" list="list-attribute-{{ attribute_row }}" class="form-control"/>
+                          <input type="hidden" name="product_attribute[{{ attribute_row }}][attribute_id]" value="{{ product_attribute.attribute_id }}" id="input-attribute-id-{{ attribute_row }}"/>
+                          <datalist id="list-attribute-{{ attribute_row }}"></datalist>
                         </td>
                         <td class="text-start">
                           {% for language in languages %}
@@ -1599,11 +1600,39 @@ $('#product-related').on('click', '.btn', function () {
     $(this).parent().parent().remove();
 });
 
+
+var attributeautocomplete = function (attribute_row) {
+    $('input[name=\'product_attribute[' + attribute_row + '][name]\']').autocomplete({
+        'source': function (request, response) {
+            $.ajax({
+                url: 'index.php?route=catalog/attribute|autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
+                dataType: 'json',
+                success: function (json) {
+                    response($.map(json, function (item) {
+                        return {
+                            category: item.attribute_group,
+                            label: item.name,
+                            value: item.attribute_id
+                        }
+                    }));
+                }
+            });
+        },
+        'select': function (item) {
+            $('input[name=\'product_attribute[' + attribute_row + '][attribute_id]\']').val(item['value']);
+        }
+    });
+}
+
 var attribute_row = {{ attribute_row }};
 
 $('#button-attribute').on('click', function () {
     html = '<tr id="attribute-row-' + attribute_row + '">';
-    html += '  <td class="text-start"><input type="text" name="product_attribute[' + attribute_row + '][name]" value="" placeholder="{{ entry_attribute }}" class="form-control"/><input type="hidden" name="product_attribute[' + attribute_row + '][attribute_id]" value="" /></td>';
+    html += '  <td class="text-start">';
+    html += '    <input type="text" name="product_attribute[' + attribute_row + '][name]" value="" placeholder="{{ entry_attribute }}" id="input-attribute-' + attribute_row + '" list="list-attribute-{{ attribute_row }}" class="form-control"/>';
+    html += '    <input type="hidden" name="product_attribute[' + attribute_row + '][attribute_id]" value="" id="input-attribute-id-' + attribute_row + '"/>';
+    html += '    <datalist id="list-attribute-{{ attribute_row }}"></datalist>';
+    html += '  </td>';
     html += '  <td class="text-start">';
   {% for language in languages %}
     html += '<div class="input-group">';
@@ -1622,31 +1651,7 @@ $('#button-attribute').on('click', function () {
     attribute_row++;
 });
 
-function attributeautocomplete(attribute_row) {
-    $('input[name=\'product_attribute[' + attribute_row + '][name]\']').autocomplete({
-        'source': function (request, response) {
-            $.ajax({
-                url: 'index.php?route=catalog/attribute|autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
-                dataType: 'json',
-                success: function (json) {
-                    response($.map(json, function (item) {
-                        return {
-                            category: item.attribute_group,
-                            label: item.name,
-                            value: item.attribute_id
-                        }
-                    }));
-                }
-            });
-        },
-        'select': function (item) {
-            $('input[name=\'product_attribute[' + attribute_row + '][name]\']').val(item['label']);
-            $('input[name=\'product_attribute[' + attribute_row + '][attribute_id]\']').val(item['value']);
-        }
-    });
-}
-
-$('#product-attribute tr').each(function (index, element) {
+$('#product-attribute tr').each(function (index) {
     attributeautocomplete(index);
 });
 

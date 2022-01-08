@@ -468,10 +468,8 @@ var chain = new Chain();
                     }
 
                     for (name in category) {
-                        //html += '<li><h6 class="dropdown-header">' + name + '</h6></li>';
-
                         for (j = 0; j < category[name].length; j++) {
-                            html += '<option>' + category[name][j]['label'] + '</option>';
+                            html += '<option value="' + category[name][j]['label'] + '">' + name + '</option>';
                         }
                     }
                 }

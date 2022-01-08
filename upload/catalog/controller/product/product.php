@@ -302,7 +302,7 @@ class Product extends \Opencart\System\Engine\Controller {
 				$data['tax'] = false;
 			}
 
-			$discounts = $this->model_catalog_product->getDiscounts($this->request->get['product_id']);
+			$discounts = $this->model_catalog_product->getDiscounts($product_id);
 
 			$data['discounts'] = [];
 
@@ -400,13 +400,13 @@ class Product extends \Opencart\System\Engine\Controller {
 				$data['captcha'] = '';
 			}
 
-			$data['share'] = $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . (int)$this->request->get['product_id']);
+			$data['share'] = $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product_id);
 
-			$data['attribute_groups'] = $this->model_catalog_product->getAttributes($this->request->get['product_id']);
+			$data['attribute_groups'] = $this->model_catalog_product->getAttributes($product_id);
 
 			$data['products'] = [];
 
-			$results = $this->model_catalog_product->getRelated($this->request->get['product_id']);
+			$results = $this->model_catalog_product->getRelated($product_id);
 
 			foreach ($results as $result) {
 				if (is_file(DIR_IMAGE . html_entity_decode($result['image'], ENT_QUOTES, 'UTF-8'))) {
@@ -462,10 +462,10 @@ class Product extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-			$data['recurrings'] = $this->model_catalog_product->getProfiles($this->request->get['product_id']);
+			$data['recurrings'] = $this->model_catalog_product->getProfiles($product_id);
 
 			if ($this->config->get('config_product_report_status')) {
-				$this->model_catalog_product->addReport((int)$this->request->get['product_id'], $this->request->server['REMOTE_ADDR']);
+				$this->model_catalog_product->addReport($product_id, $this->request->server['REMOTE_ADDR']);
 			}
 
 			$data['column_left'] = $this->load->controller('common/column_left');

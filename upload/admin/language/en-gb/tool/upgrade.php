@@ -24,7 +24,7 @@ $_['text_log']            = 'Upgrade Log';
 
 $_['text_download']       = 'Downloading latest version';
 $_['text_unzip']          = 'Extracting files!';
-$_['text_redirect']       = 'Redirecting to upgrade the database ...';
+$_['text_redirect']       = 'Redirecting to upgrade the database...';
 
 // Button
 $_['button_start']        = 'Start';

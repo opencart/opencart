@@ -27,7 +27,7 @@ var tooltip = function () {
    $('.tooltip').remove();
 
     // Apply to all on current page
-    $('[data-bs-toggle=\'tooltip\']').each(function(i, element) {
+    $('[data-bs-toggle=\'tooltip\']').each(function (i, element) {
         bootstrap.Tooltip.getOrCreateInstance(element);
     });
 }
@@ -402,9 +402,9 @@ var chain = new Chain();
 
 
 // Autocomplete
-(function($) {
-    $.fn.autocomplete = function(option) {
-        return this.each(function() {
+(function ($) {
+    $.fn.autocomplete = function (option) {
+        return this.each(function () {
             var $this = $(this);
             var $dropdown = $('#' + $this.attr('list'));
 
@@ -414,12 +414,12 @@ var chain = new Chain();
             $.extend(this, option);
 
             // Focus
-            $this.on('focus', function() {
+            $this.on('focus', function () {
                 this.request();
             });
 
             // Keydown
-            $this.on('input', function(e) {
+            $this.on('input', function (e) {
                 this.request();
 
                 var value = $this.val();
@@ -430,16 +430,16 @@ var chain = new Chain();
             });
 
             // Request
-            this.request = function() {
+            this.request = function () {
                 clearTimeout(this.timer);
 
-                this.timer = setTimeout(function(object) {
+                this.timer = setTimeout(function (object) {
                     object.source($(object).val(), $.proxy(object.response, object));
                 }, 50, this);
             }
 
             // Response
-            this.response = function(json) {
+            this.response = function (json) {
                 var html = '';
                 var category = {};
                 var name;

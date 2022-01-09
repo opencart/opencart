@@ -1626,6 +1626,10 @@ var attributeautocomplete = function (attribute_row) {
 
 var attribute_row = {{ attribute_row }};
 
+$('#product-attribute tr').each(function (index) {
+    attributeautocomplete(index);
+});
+
 $('#button-attribute').on('click', function () {
     html = '<tr id="attribute-row-' + attribute_row + '">';
     html += '  <td class="text-start">';
@@ -1649,10 +1653,6 @@ $('#button-attribute').on('click', function () {
     attributeautocomplete(attribute_row);
 
     attribute_row++;
-});
-
-$('#product-attribute tr').each(function (index) {
-    attributeautocomplete(index);
 });
 
 {% if not master_id %}

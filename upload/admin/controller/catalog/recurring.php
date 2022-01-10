@@ -33,6 +33,7 @@ class Recurring extends \Opencart\System\Engine\Controller {
 		];
 
 		$data['add'] = $this->url->link('catalog/recurring|form', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['copy'] = $this->url->link('catalog/recurring|copy', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['delete'] = $this->url->link('catalog/recurring|delete', 'user_token=' . $this->session->data['user_token']);
 
 		$data['list'] = $this->getList();

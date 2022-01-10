@@ -86,9 +86,9 @@
 
                   {% if order_product.recurring %}
                     <br/>
-                    <small class="badge badge-warning">{{ text_recurring_item }}</small>
-                    <small>{{ order_product.recurring }}</small>
+                    <small>{{ text_recurring_item }}: {{ order_product.recurring }}</small>
                   {% endif %}
+
                 </td>
                 <td class="text-start">{{ order_product.model }}</td>
                 <td class="text-end">{{ order_product.quantity }}</td>
@@ -683,14 +683,12 @@
               <fieldset class="mb-0">
                 <legend>{{ text_product_add }}</legend>
                 <div class="mb-3">
-                  <label for="input-product" class="form-label">{{ entry_product }}</label>
-                  <input type="text" name="product" value="" placeholder="{{ entry_product }}" id="input-product" list="list-product" class="form-control"/>
+                  <label for="input-product" class="form-label">{{ entry_product }}</label> <input type="text" name="product" value="" placeholder="{{ entry_product }}" id="input-product" list="list-product" class="form-control" autocomplete="off"/>
                   <datalist id="list-product"></datalist>
                   <input type="hidden" name="product_id" value="" id="input-product-id"/>
                 </div>
                 <div class="mb-3">
-                  <label for="input-quantity" class="form-label">{{ entry_quantity }}</label>
-                  <input type="text" name="quantity" placeholder="{{ entry_quantity }}" value="1" id="input-quantity" class="form-control"/>
+                  <label for="input-quantity" class="form-label">{{ entry_quantity }}</label> <input type="text" name="quantity" placeholder="{{ entry_quantity }}" value="1" id="input-quantity" class="form-control"/>
                 </div>
               </fieldset>
               <div id="option"></div>
@@ -754,8 +752,7 @@
       <div class="modal-body">
         <form id="form-affiliate">
           <div class="mb-3">
-            <input type="text" name="affiliate" value="{{ affiliate }}" placeholder="{{ entry_affiliate }}" id="input-affiliate" list="list-affiliate" class="form-control"/>
-            <input type="hidden" name="affiliate_id" value="{{ affiliate_id }}" id="input-affiliate-id"/>
+            <input type="text" name="affiliate" value="{{ affiliate }}" placeholder="{{ entry_affiliate }}" id="input-affiliate" list="list-affiliate" class="form-control"/> <input type="hidden" name="affiliate_id" value="{{ affiliate_id }}" id="input-affiliate-id"/>
             <datalist id="list-affiliate"></datalist>
           </div>
           <div class="text-end">
@@ -1508,26 +1505,6 @@ $('#input-product').autocomplete({
             html += '</fieldset>';
 
             $('#option').html(html);
-
-            /*
-            $('.date').datetimepicker({
-                'format': 'YYYY-MM-DD',
-                'locale': '{{ datepicker }}',
-                'allowInputToggle': true
-            });
-
-            $('.time').datetimepicker({
-                'format': 'HH:mm',
-                'locale': '{{ datepicker }}',
-                'allowInputToggle': true
-            });
-
-            $('.datetime').datetimepicker({
-                'format': 'YYYY-MM-DD HH:mm',
-                'locale': '{{ datepicker }}',
-                'allowInputToggle': true
-            });
-            */
         } else {
             $('#option').html('');
         }
@@ -1550,6 +1527,8 @@ $('#form-product-add').on('submit', function (e) {
             $('#button-product-add').button('reset');
         },
         success: function (json) {
+            console.log(json);
+
             $('.alert-dismissible').remove();
             $('.is-invalid').removeClass('is-invalid');
             $('.invalid-feedback').removeClass('d-block');

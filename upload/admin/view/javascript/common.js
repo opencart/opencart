@@ -77,41 +77,55 @@ $(document).ready(function() {
 });
 
 // Tooltip
-$(document).ready(function() {
+var tooltip = function () {
+    $('.tooltip').remove();
+
     // Apply to all on current page
     $('[data-bs-toggle=\'tooltip\']').each(function(i, element) {
-       bootstrap.Tooltip.getOrCreateInstance(element);
+        bootstrap.Tooltip.getOrCreateInstance(element);
+    });
+}
+
+$(document).ready(tooltip);
+// Makes tooltips work on ajax generated content
+$(document).on('click', 'button', tooltip);
+
+// Daterangepicker
+var datetimepicker = function () {
+    $('.date').daterangepicker({
+        singleDatePicker: true,
+        autoApply: true,
+        locale: {
+            format: 'YYYY-MM-DD'
+        }
     });
 
-    // Makes tooltips work on ajax generated content
-    $(document).ajaxStop(function() {
-        $('[data-bs-toggle=\'tooltip\']').each(function(i, element) {
-            bootstrap.Tooltip.getOrCreateInstance(element);
-        });
-    });
-});
-
-$(document).ready(function () {
-    /*
-    $('.date').datetimepicker({
-        'format': 'YYYY-MM-DD',
-        'locale': '{{ datepicker }}',
-        'allowInputToggle': true
+    $('.time').daterangepicker({
+        singleDatePicker: true,
+        datePicker: false,
+        autoApply: true,
+        timePicker: true,
+        timePicker24Hour: true,
+        locale: {
+            format: 'HH:mm'
+        }
+    }).on('show.daterangepicker', function (ev, picker) {
+        picker.container.find('.calendar-table').hide();
     });
 
-    $('.time').datetimepicker({
-        'format': 'HH:mm',
-        'locale': '{{ datepicker }}',
-        'allowInputToggle': true
+    $('.datetime').daterangepicker({
+        singleDatePicker: true,
+        autoApply: true,
+        timePicker: true,
+        timePicker24Hour: true,
+        locale: {
+            format: 'YYYY-MM-DD HH:mm'
+        }
     });
+}
 
-    $('.datetime').datetimepicker({
-        'format': 'YYYY-MM-DD HH:mm',
-        'locale': '{{ datepicker }}',
-        'allowInputToggle': true
-    });
-    */
-});
+$(document).ready(datetimepicker);
+$(document).on('click', 'button', datetimepicker);
 
 // Buttons
 $(document).ready(function() {
@@ -184,16 +198,16 @@ $(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function(e) {
         dataType: 'json',
         contentType: 'application/x-www-form-urlencoded',
         beforeSend: function() {
-            $(button).button('loading');
+           // $(button).button('loading');
         },
         complete: function() {
-           $(button).button('reset');
+           //$(button).button('reset');
         },
         success: function(json) {
             $(element).find('.is-invalid').removeClass('is-invalid');
             $(element).find('.invalid-feedback').removeClass('d-block');
 
-            console.log(json);
+            console.log('response ' + json);
 
             if (json['redirect']) {
                 location = json['redirect'];
@@ -440,10 +454,8 @@ var chain = new Chain();
                     }
 
                     for (name in category) {
-                        //html += '<li><h6 class="dropdown-header">' + name + '</h6></li>';
-
                         for (j = 0; j < category[name].length; j++) {
-                            html += '<option>' + category[name][j]['label'] + '</option>';
+                            html += '<option value="' + category[name][j]['label'] + '">' + name + '</option>';
                         }
                     }
                 }

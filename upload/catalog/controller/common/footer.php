@@ -72,7 +72,7 @@ class Footer extends \Opencart\System\Engine\Controller {
 			$this->model_tool_online->addOnline($ip, $this->customer->getId(), $url, $referer);
 		}
 
-		$data['bootstrap_js'] = 'catalog/view/javascript/bootstrap/js/bootstrap.bundle.min.js';
+		$data['bootstrap'] = 'catalog/view/javascript/bootstrap/js/bootstrap.bundle.min.js';
 
 		$data['scripts'] = $this->document->getScripts('footer');
 

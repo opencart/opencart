@@ -12,10 +12,10 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment/moment.min.js');
-		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment/moment-with-locales.min.js');
-		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js');
-		$this->document->addStyle('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css');
+		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment.min.js');
+		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment-with-locales.min.js');
+		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/daterangepicker.js');
+		$this->document->addStyle('catalog/view/javascript/jquery/datetimepicker/daterangepicker.css');
 
 		$data['error_upload_size'] = sprintf($this->language->get('error_upload_size'), $this->config->get('config_file_max_size'));
 

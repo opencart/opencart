@@ -52,8 +52,8 @@
             </div>
             <div class="mb-3">
               <label for="input-date-added" class="form-label">{{ entry_date_added }}</label>
-              <div class="input-group date">
-                <input type="text" name="filter_date_added" value="{{ filter_date_added }}" placeholder="{{ entry_date_added }}" id="input-date-added" class="form-control"/>
+              <div class="input-group">
+                <input type="text" name="filter_date_added" value="{{ filter_date_added }}" placeholder="{{ entry_date_added }}" id="input-date-added" class="form-control date"/>
                 <div class="input-group-text"><i class="fas fa-calendar"></i></div>
               </div>
             </div>
@@ -155,12 +155,6 @@ $('#input-email').autocomplete({
         });
     },
     'select': function(item) {}
-});
-
-$('.date').datetimepicker({
-    'format': 'YYYY-MM-DD',
-    'locale': '{{ datepicker }}',
-    'allowInputToggle': true
 });
 //--></script>
 {{ footer }}

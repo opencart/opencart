@@ -40,7 +40,8 @@
               </select>
             </div>
             <div class="mb-3">
-              <label for="input-order-status" class="form-label">{{ entry_order_status }}</label> <select name="filter_order_status_id" id="input-order-status" class="form-select">
+              <label for="input-order-status" class="form-label">{{ entry_order_status }}</label>
+              <select name="filter_order_status_id" id="input-order-status" class="form-select">
                 <option value=""></option>
                 <option value="0"{% if filter_order_status_id == '0' %} selected{% endif %}>{{ text_missing }}</option>
                 {% for order_status in order_statuses %}
@@ -53,15 +54,15 @@
             </div>
             <div class="mb-3">
               <label for="input-date-added" class="form-label">{{ entry_date_added }}</label>
-              <div class="input-group date">
-                <input type="text" name="filter_date_added" value="{{ filter_date_added }}" placeholder="{{ entry_date_added }}" id="input-date-added" class="form-control"/>
+              <div class="input-group">
+                <input type="text" name="filter_date_added" value="{{ filter_date_added }}" placeholder="{{ entry_date_added }}" id="input-date-added" class="form-control date"/>
                 <div class="input-group-text"><i class="fas fa-calendar"></i></div>
               </div>
             </div>
             <div class="mb-3">
               <label for="input-date-modified" class="form-label">{{ entry_date_modified }}</label>
-              <div class="input-group date">
-                <input type="text" name="filter_date_modified" value="{{ filter_date_modified }}" placeholder="{{ entry_date_modified }}" id="input-date-modified" class="form-control"/>
+              <div class="input-group">
+                <input type="text" name="filter_date_modified" value="{{ filter_date_modified }}" placeholder="{{ entry_date_modified }}" id="input-date-modified" class="form-control date"/>
                 <div class="input-group-text"><i class="fas fa-calendar"></i></div>
               </div>
             </div>
@@ -208,13 +209,6 @@ $('#button-delete').on('click', function(e) {
             }
         });
     }
-});
-//--></script>
-<script type="text/javascript"><!--
-$('.date').datetimepicker({
-    'format': 'YYYY-MM-DD',
-    'locale': '{{ datepicker }}',
-    'allowInputToggle': true
 });
 //--></script>
 {{ footer }}

@@ -256,8 +256,8 @@
                   {% if option.type == 'date' %}
                     <div class="mb-3{% if option.required %} required{% endif %}">
                       <label for="input-option-{{ option.product_option_id }}" class="form-label">{{ option.name }}</label>
-                      <div class="input-group date">
-                        <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" id="input-option-{{ option.product_option_id }}" class="form-control"/>
+                      <div class="input-group">
+                        <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" id="input-option-{{ option.product_option_id }}" class="form-control date"/>
                         <div class="input-group-text"><i class="fas fa-calendar"></i></div>
                       </div>
                       <div id="error-option-{{ option.product_option_id }}" class="invalid-feedback"></div>
@@ -267,8 +267,8 @@
                   {% if option.type == 'datetime' %}
                     <div class="mb-3{% if option.required %} required{% endif %}">
                       <label for="input-option-{{ option.product_option_id }}" class="form-label">{{ option.name }}</label>
-                      <div class="input-group datetime">
-                        <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" id="input-option-{{ option.product_option_id }}" class="form-control"/>
+                      <div class="input-group">
+                        <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" id="input-option-{{ option.product_option_id }}" class="form-control datetime"/>
                         <div class="input-group-text"><i class="fas fa-calendar"></i></div>
                       </div>
 
@@ -278,8 +278,8 @@
                   {% if option.type == 'time' %}
                     <div class="mb-3{% if option.required %} required{% endif %}">
                       <label for="input-option-{{ option.product_option_id }}" class="form-label">{{ option.name }}</label>
-                      <div class="input-group time">
-                        <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" id="input-option-{{ option.product_option_id }}" class="form-control"/>
+                      <div class="input-group">
+                        <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" id="input-option-{{ option.product_option_id }}" class="form-control time"/>
                         <div class="input-group-text"><i class="fas fa-calendar"></i></div>
                       </div>
                       <div id="error-option-{{ option.product_option_id }}" class="invalid-feedback"></div>
@@ -413,24 +413,6 @@ $('#form-product').on('submit', function(e) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
-});
-
-$('.date').datetimepicker({
-    'format': 'YYYY-MM-DD',
-    'locale': '{{ datepicker }}',
-    'allowInputToggle': true
-});
-
-$('.time').datetimepicker({
-    'format': 'HH:mm',
-    'locale': '{{ datepicker }}',
-    'allowInputToggle': true
-});
-
-$('.datetime').datetimepicker({
-    'format': 'YYYY-MM-DD HH:mm',
-    'locale': '{{ datepicker }}',
-    'allowInputToggle': true
 });
 
 $('#review').on('click', '.pagination a', function(e) {

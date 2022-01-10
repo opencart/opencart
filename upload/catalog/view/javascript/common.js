@@ -22,41 +22,56 @@ function getURLVar(key) {
     }
 }
 
-$(document).ready(function() {
+// Tooltip
+var tooltip = function () {
+   $('.tooltip').remove();
+
     // Apply to all on current page
     $('[data-bs-toggle=\'tooltip\']').each(function(i, element) {
         bootstrap.Tooltip.getOrCreateInstance(element);
     });
+}
 
-    // Makes tooltips work on ajax generated content
-    $(document).ajaxStop(function() {
-        $('[data-bs-toggle=\'tooltip\']').each(function(i, element) {
-            bootstrap.Tooltip.getOrCreateInstance(element);
-        });
-    });
-});
+$(document).ready(tooltip);
+// Makes tooltips work on ajax generated content
+$(document).on('click', 'button', tooltip);
 
-$(document).ready(function () {
-    /*
-    $('.date').datetimepicker({
-        'format': 'YYYY-MM-DD',
-        'locale': '{{ datepicker }}',
-        'allowInputToggle': true
-    });
-
-    $('.time').datetimepicker({
-        'format': 'HH:mm',
-        'locale': '{{ datepicker }}',
-        'allowInputToggle': true
+// Daterangepicker
+var datetimepicker = function () {
+    $('.date').daterangepicker({
+        singleDatePicker: true,
+        autoApply: true,
+        locale: {
+            format: 'YYYY-MM-DD'
+        }
     });
 
-    $('.datetime').datetimepicker({
-        'format': 'YYYY-MM-DD HH:mm',
-        'locale': '{{ datepicker }}',
-        'allowInputToggle': true
+    $('.time').daterangepicker({
+        singleDatePicker: true,
+        datePicker: false,
+        autoApply: true,
+        timePicker: true,
+        timePicker24Hour: true,
+        locale: {
+            format: 'HH:mm'
+        }
+    }).on('show.daterangepicker', function (ev, picker) {
+        picker.container.find('.calendar-table').hide();
     });
-    */
-});
+
+    $('.datetime').daterangepicker({
+        singleDatePicker: true,
+        autoApply: true,
+        timePicker: true,
+        timePicker24Hour: true,
+        locale: {
+            format: 'YYYY-MM-DD HH:mm'
+        }
+    });
+}
+
+$(document).ready(datetimepicker);
+$(document).on('click', 'button', datetimepicker);
 
 $(document).ready(function () {
     // Currency
@@ -453,10 +468,8 @@ var chain = new Chain();
                     }
 
                     for (name in category) {
-                        //html += '<li><h6 class="dropdown-header">' + name + '</h6></li>';
-
                         for (j = 0; j < category[name].length; j++) {
-                            html += '<option>' + category[name][j]['label'] + '</option>';
+                            html += '<option value="' + category[name][j]['label'] + '">' + name + '</option>';
                         }
                     }
                 }

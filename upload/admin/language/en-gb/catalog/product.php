@@ -40,6 +40,10 @@ $_['column_image']           = 'Image';
 $_['column_price']           = 'Price';
 $_['column_quantity']        = 'Quantity';
 $_['column_status']          = 'Status';
+$_['column_ip']              = 'IP';
+$_['column_store']           = 'Store';
+$_['column_country']         = 'Country';
+$_['column_date_added']      = 'Date Added';
 $_['column_action']          = 'Action';
 
 // Entry

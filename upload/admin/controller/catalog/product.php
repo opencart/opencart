@@ -1276,7 +1276,7 @@ class Product extends \Opencart\System\Engine\Controller {
 				'price'      => $result['price']
 			];
 		}
-		
+
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}

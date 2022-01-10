@@ -83,7 +83,7 @@ $('#input-payment-method').on('change', function() {
             beforeSend: function() {
                 $(element).prop('disabled', true);
             },
-            beforeSend: function() {
+            complete: function() {
                 $(element).prop('disabled', false);
             },
             success: function(json) {

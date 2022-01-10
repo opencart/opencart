@@ -153,11 +153,11 @@ class Cart extends \Opencart\System\Engine\Controller {
 				}
 
 				if (!in_array($recurring_id, $recurring_ids)) {
-					$json['error']['recurring'] = $this->language->get('error_recurring');
+					$json['error']['warning'] = $this->language->get('error_recurring');
 				}
 			}
 		} else {
-			$json['error']['product'] = $this->language->get('error_product');
+			$json['error']['warning'] = $this->language->get('error_product');
 		}
 
 		if (!$json) {

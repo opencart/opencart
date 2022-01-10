@@ -305,7 +305,8 @@
 
                 <div class="mb-3">
                   <label for="input-quantity" class="form-label">{{ entry_qty }}</label>
-                  <input type="text" name="quantity" value="{{ minimum }}" size="2" id="input-quantity" class="form-control"/> <input type="hidden" name="product_id" value="{{ product_id }}" id="input-product-id"/>
+                  <input type="text" name="quantity" value="{{ minimum }}" size="2" id="input-quantity" class="form-control"/>
+                  <input type="hidden" name="product_id" value="{{ product_id }}" id="input-product-id"/>
                   <div id="error-quantity" class="form-text"></div>
                   <br/>
                   <button type="submit" id="button-cart" data-loading-text="{{ text_loading }}" class="btn btn-primary btn-lg btn-block">{{ button_cart }}</button>
@@ -353,22 +354,25 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#input-recurring, #input-quantity').change(function() {
+$('#input-recurring').change(function() {
     $.ajax({
         url: 'index.php?route=product/product|getRecurringDescription',
         type: 'post',
+        data: $('#input-product-id, #input-quantity, #input-recurring').serialize(),
         dataType: 'json',
-        data: $('#input-product-id, #input-quantity, #input-recurring'),
         contentType: 'application/x-www-form-urlencoded',
-        cache: false,
         processData: false,
         beforeSend: function() {
             $('#recurring-description').html('');
         },
         success: function(json) {
+            console.log(json);
             if (json['success']) {
                 $('#recurring-description').html(json['success']);
             }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 });
@@ -379,8 +383,8 @@ $('#form-product').on('submit', function(e) {
     $.ajax({
         url: 'index.php?route=checkout/cart|add&language={{ language }}',
         type: 'post',
-        dataType: 'json',
         data: $('#form-product').serialize(),
+        dataType: 'json',
         contentType: 'application/x-www-form-urlencoded',
         cache: false,
         processData: false,

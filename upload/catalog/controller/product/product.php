@@ -576,13 +576,13 @@ class Product extends \Opencart\System\Engine\Controller {
 		$product_info = $this->model_catalog_product->getProduct($product_id);
 
 		if (!$product_info) {
-			$json['error'] = $this->language->get('error_recurring');
+			$json['error'] = $this->language->get('error_product');
 		}
 
 		$recurring_info = $this->model_catalog_product->getProfile($product_id, $recurring_id);
 
 		if (!$recurring_info) {
-			$json['error'] = $this->language->get('error_profile');
+			$json['error'] = $this->language->get('error_recurring');
 		}
 
 		if (!$json) {
@@ -594,23 +594,21 @@ class Product extends \Opencart\System\Engine\Controller {
 				'year'       => $this->language->get('text_year'),
 			];
 
-			if ($recurring_info['trial_status'] == 1) {
-				$price = $this->currency->format($this->tax->calculate($recurring_info['trial_price'] * $quantity, $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
+			$recurring = '';
 
-				$trial_text = sprintf($this->language->get('text_trial_description'), $price, $recurring_info['trial_cycle'], $frequencies[$recurring_info['trial_frequency']], $recurring_info['trial_duration']) . ' ';
-			} else {
-				$trial_text = '';
+			if ($recurring_info['trial_status'] == 1) {
+				$recurring = sprintf($this->language->get('text_recurring_trial'), $this->currency->format($this->tax->calculate($recurring_info['trial_price'] * $quantity, $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']), $recurring_info['trial_cycle'], $frequencies[$recurring_info['trial_frequency']], $recurring_info['trial_duration']) . ' ';
 			}
 
 			$price = $this->currency->format($this->tax->calculate($recurring_info['price'] * $quantity, $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
 
 			if ($recurring_info['duration']) {
-				$text = $trial_text . sprintf($this->language->get('text_payment_description'), $price, $recurring_info['cycle'], $frequencies[$recurring_info['frequency']], $recurring_info['duration']);
+				$recurring .= sprintf($this->language->get('text_recurring_description'), $price, $recurring_info['cycle'], $frequencies[$recurring_info['frequency']], $recurring_info['duration']);
 			} else {
-				$text = $trial_text . sprintf($this->language->get('text_payment_cancel'), $price, $recurring_info['cycle'], $frequencies[$recurring_info['frequency']], $recurring_info['duration']);
+				$recurring .= sprintf($this->language->get('text_recurring_cancel'), $price, $recurring_info['cycle'], $frequencies[$recurring_info['frequency']]);
 			}
 
-			$json['success'] = $text;
+			$json['success'] = $recurring;
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

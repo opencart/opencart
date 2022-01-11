@@ -499,7 +499,7 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	public function getProfiles(int $product_id): array {
-		$query = $this->db->query("SELECT rd.* FROM `" . DB_PREFIX . "product_recurring` pr JOIN `" . DB_PREFIX . "recurring_description` rd ON (rd.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND rd.`recurring_id` = pr.`recurring_id`) JOIN `" . DB_PREFIX . "recurring` r ON r.`recurring_id` = rd.`recurring_id` WHERE pr.`product_id` = '" . (int)$product_id . "' AND r.`status` = '1' AND pr.`customer_group_id` = '" . (int)$this->config->get('config_customer_group_id') . "' ORDER BY r.`sort_order` ASC");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_recurring` pr LEFT JOIN `" . DB_PREFIX . "recurring` r ON (pr.`recurring_id` = r.`recurring_id`) LEFT JOIN `" . DB_PREFIX . "recurring_description` rd ON (r.`recurring_id` = rd.`recurring_id`) WHERE pr.`product_id` = '" . (int)$product_id . "' AND pr.`customer_group_id` = '" . (int)$this->config->get('config_customer_group_id') . "' AND r.`status` = '1' AND rd.`language_id` = '" . (int)$this->config->get('config_language_id') . "' ORDER BY r.`sort_order` ASC");
 
 		return $query->rows;
 	}

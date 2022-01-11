@@ -39,9 +39,15 @@ class Recurring extends \Opencart\System\Engine\Model {
 	}
 
 	public function getRecurring(int $recurring_id): array {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "recurring` WHERE `recurring_id` = '" . (int)$recurring_id . "'");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "recurring` LEFT JOIN `" . DB_PREFIX . "recurring_description` rd ON (r.`recurring_id` = rd.`recurring_id`) WHERE `recurring_id` = '" . (int)$recurring_id . "'");
 
 		return $query->row;
+	}
+
+	public function getProfiles(int $product_id): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_recurring` pr LEFT JOIN `" . DB_PREFIX . "recurring` r ON (pr.`recurring_id` = r.`recurring_id`) LEFT JOIN `" . DB_PREFIX . "recurring_description` rd ON (r.`recurring_id` = rd.`recurring_id`) WHERE pr.`product_id` = '" . (int)$product_id . "' AND pr.`customer_group_id` = '" . (int)$this->config->get('config_customer_group_id') . "' AND r.`status` = '1' AND rd.`language_id` = '" . (int)$this->config->get('config_language_id') . "' ORDER BY r.`sort_order` ASC");
+
+		return $query->rows;
 	}
 
 	public function getDescription(int $recurring_id): array {

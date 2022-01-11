@@ -32,6 +32,9 @@ $_['text_image']             = 'Image';
 $_['text_image_additional']  = 'Additional Images';
 $_['text_reward']            = 'Buy Points';
 $_['text_points']            = 'Reward Points';
+$_['text_recurring_trial']       = '%s every %d %s(s) for %d payment(s) then';
+$_['text_recurring_description'] = '%s every %d %s(s) for %d payment(s)';
+$_['text_recurring_cancel']      = '%s every %d %s(s) until canceled';
 
 // Column
 $_['column_name']            = 'Product Name';

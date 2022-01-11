@@ -298,7 +298,9 @@
                         <option value="{{ recurring.recurring_id }}">{{ recurring.name }}</option>
                       {% endfor %}
                     </select>
-                    <div id="recurring-description" class="form-text"></div>
+                    {% for recurring in recurrings %}
+                    <div id="recurring-description-{{ recurring.recurring_id }}" class="form-text recurring d-none">{{ recurring.description }}</div>
+                    {% endfor %}
                     <div id="error-recurring" class="invalid-feedback"></div>
                   </div>
                 {% endif %}
@@ -354,27 +356,12 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#input-recurring').change(function() {
-    $.ajax({
-        url: 'index.php?route=product/product|getRecurringDescription',
-        type: 'post',
-        data: $('#input-product-id, #input-quantity, #input-recurring').serialize(),
-        dataType: 'json',
-        contentType: 'application/x-www-form-urlencoded',
-        processData: false,
-        beforeSend: function() {
-            $('#recurring-description').html('');
-        },
-        success: function(json) {
-            console.log(json);
-            if (json['success']) {
-                $('#recurring-description').html(json['success']);
-            }
-        },
-        error: function(xhr, ajaxOptions, thrownError) {
-            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-        }
-    });
+$('#input-recurring').on('change', function(e) {
+    var element = this;
+
+    $('.recurring').addClass('d-none');
+
+    $('#recurring-description-' + $(element).val()).removeClass('d-none');
 });
 
 $('#form-product').on('submit', function(e) {

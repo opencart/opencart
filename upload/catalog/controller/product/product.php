@@ -462,7 +462,40 @@ class Product extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-			$data['recurrings'] = $this->model_catalog_product->getProfiles($this->request->get['product_id']);
+			// Recurrings
+			$frequencies = [
+				'day'        => $this->language->get('text_day'),
+				'week'       => $this->language->get('text_week'),
+				'semi_month' => $this->language->get('text_semi_month'),
+				'month'      => $this->language->get('text_month'),
+				'year'       => $this->language->get('text_year'),
+			];
+
+			$data['recurrings']  = [];
+
+			$results = $this->model_catalog_product->getProfiles($this->request->get['product_id']);
+
+			foreach ($results as $result) {
+				$recurring = '';
+
+				if ($result['trial_status']) {
+					$recurring = sprintf($this->language->get('text_recurring_trial'), $this->currency->format($this->tax->calculate($result['trial_price'], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']), $result['trial_cycle'], $frequencies[$result['trial_frequency']], $result['trial_duration']) . ' ';
+				}
+
+				$price = $this->currency->format($this->tax->calculate($result['price'], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
+
+				if ($result['duration']) {
+					$recurring .= sprintf($this->language->get('text_recurring_description'), $price, $result['cycle'], $frequencies[$result['frequency']], $result['duration']);
+				} else {
+					$recurring .= sprintf($this->language->get('text_recurring_cancel'), $price, $result['cycle'], $frequencies[$result['frequency']]);
+				}
+
+				$data['recurrings'][] = [
+					'recurring_id' => $result['recurring_id'],
+					'name'         => $result['name'],
+					'description'  => $recurring
+				];
+			}
 
 			if ($this->config->get('config_product_report_status')) {
 				$this->model_catalog_product->addReport($this->request->get['product_id'], $this->request->server['REMOTE_ADDR']);
@@ -546,72 +579,5 @@ class Product extends \Opencart\System\Engine\Controller {
 			$this->response->addHeader($this->request->server['SERVER_PROTOCOL'] . ' 404 Not Found');
 			$this->response->setOutput($this->load->view('error/not_found', $data));
 		}
-	}
-
-	public function getRecurringDescription(): void {
-		$this->load->language('product/product');
-
-		$json = [];
-
-		if (isset($this->request->post['product_id'])) {
-			$product_id = $this->request->post['product_id'];
-		} else {
-			$product_id = 0;
-		}
-
-		if (isset($this->request->post['recurring_id'])) {
-			$recurring_id = $this->request->post['recurring_id'];
-		} else {
-			$recurring_id = 0;
-		}
-
-		if (isset($this->request->post['quantity'])) {
-			$quantity = $this->request->post['quantity'];
-		} else {
-			$quantity = 1;
-		}
-
-		$this->load->model('catalog/product');
-
-		$product_info = $this->model_catalog_product->getProduct($product_id);
-
-		if (!$product_info) {
-			$json['error'] = $this->language->get('error_product');
-		}
-
-		$recurring_info = $this->model_catalog_product->getProfile($product_id, $recurring_id);
-
-		if (!$recurring_info) {
-			$json['error'] = $this->language->get('error_recurring');
-		}
-
-		if (!$json) {
-			$frequencies = [
-				'day'        => $this->language->get('text_day'),
-				'week'       => $this->language->get('text_week'),
-				'semi_month' => $this->language->get('text_semi_month'),
-				'month'      => $this->language->get('text_month'),
-				'year'       => $this->language->get('text_year'),
-			];
-
-			$recurring = '';
-
-			if ($recurring_info['trial_status'] == 1) {
-				$recurring = sprintf($this->language->get('text_recurring_trial'), $this->currency->format($this->tax->calculate($recurring_info['trial_price'] * $quantity, $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']), $recurring_info['trial_cycle'], $frequencies[$recurring_info['trial_frequency']], $recurring_info['trial_duration']) . ' ';
-			}
-
-			$price = $this->currency->format($this->tax->calculate($recurring_info['price'] * $quantity, $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
-
-			if ($recurring_info['duration']) {
-				$recurring .= sprintf($this->language->get('text_recurring_description'), $price, $recurring_info['cycle'], $frequencies[$recurring_info['frequency']], $recurring_info['duration']);
-			} else {
-				$recurring .= sprintf($this->language->get('text_recurring_cancel'), $price, $recurring_info['cycle'], $frequencies[$recurring_info['frequency']]);
-			}
-
-			$json['success'] = $recurring;
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
 	}
 }

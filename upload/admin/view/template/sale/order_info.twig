@@ -1348,6 +1348,9 @@ $('#input-product').autocomplete({
                         price: item['price']
                     }
                 }));
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });
     },
@@ -1364,7 +1367,6 @@ $('#input-product').autocomplete({
                 if (option['type'] == 'select') {
                     html += '<div class="mb-3' + (option['required'] == 1 ? ' required' : '') + '">';
                     html += '  <label for="input-option-' + option['product_option_id'] + '" class="form-label">' + option['name'] + '</label>';
-
                     html += '  <select name="option[' + option['product_option_id'] + ']" id="input-option-' + option['product_option_id'] + '" class="form-select">';
                     html += '    <option value="">{{ text_select }}</option>';
 
@@ -1517,6 +1519,32 @@ $('#input-product').autocomplete({
             $('#option').html(html);
         } else {
             $('#option').html('');
+        }
+
+        if (item['recurring'] != '') {
+            html = '<fieldset class="mb-0">';
+            html += '  <legend>{{ entry_recurring }}</legend>';
+            html += '  <div class="mb-3 required">';
+            html += '    <select name="recurring_id" id="input-recurring" class="form-select">';
+            html += '      <option value="">{{ text_select }}</option>';
+
+            for (i = 0; i < item['recurring'].length; i++) {
+                html += '<option value="' + item['recurring'][i]['recurring_id'] + '">' + item['recurring'][i]['name'] + '</option>';
+            }
+
+            html += '  </select>';
+
+            for (i = 0; i < item['recurring'].length; i++) {
+                html += '  <div id="recurring-description-' + item['recurring'][i]['recurring_id'] + '" class="form-text recurring">' + item['recurring'][i]['description'] + '</div>';
+            }
+
+            html += '  <div id="error-recurring" class="invalid-feedback"></div>';
+            html += '</div>';
+            html += '</fieldset>';
+
+            $('#recurring').html(html);
+        } else {
+            $('#recurring').html('');
         }
     }
 });

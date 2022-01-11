@@ -16,6 +16,14 @@ class Cart extends \Opencart\System\Engine\Controller {
 
 		$data['text_items'] = sprintf($this->language->get('text_items'), $this->cart->countProducts() + (isset($this->session->data['vouchers']) ? count($this->session->data['vouchers']) : 0), $this->currency->format($total, $this->session->data['currency']));
 
+		$frequencies = [
+			'day'        => $this->language->get('text_day'),
+			'week'       => $this->language->get('text_week'),
+			'semi_month' => $this->language->get('text_semi_month'),
+			'month'      => $this->language->get('text_month'),
+			'year'       => $this->language->get('text_year')
+		];
+
 		// Products
 		$data['products'] = [];
 
@@ -33,13 +41,27 @@ class Cart extends \Opencart\System\Engine\Controller {
 				$total = false;
 			}
 
+			$recurring = '';
+
+			if ($product['recurring']) {
+				if ($product['recurring']['trial']) {
+					$recurring = sprintf($this->language->get('text_trial_description'), $this->currency->format($this->tax->calculate($product['recurring']['trial_price'] * $product['quantity'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']), $product['recurring']['trial_cycle'], $frequencies[$product['recurring']['trial_frequency']], $product['recurring']['trial_duration']) . ' ';
+				}
+
+				if ($product['recurring']['duration']) {
+					$recurring .= sprintf($this->language->get('text_recurring_description'), $this->currency->format($this->tax->calculate($product['recurring']['price'] * $product['quantity'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']), $product['recurring']['cycle'], $frequencies[$product['recurring']['frequency']], $product['recurring']['duration']);
+				} else {
+					$recurring .= sprintf($this->language->get('text_recurring_cancel'), $this->currency->format($this->tax->calculate($product['recurring']['price'], $product['tax_class_id'], $this->config->get('config_tax')) * $product['quantity'], $this->session->data['currency']), $product['recurring']['cycle'], $frequencies[$product['recurring']['frequency']]);
+				}
+			}
+
 			$data['products'][] = [
 				'cart_id'   => $product['cart_id'],
 				'thumb'     => $product['image'],
 				'name'      => $product['name'],
 				'model'     => $product['model'],
 				'option'    => $product['option'],
-				'recurring' => ($product['recurring'] ? $product['recurring']['name'] : ''),
+				'recurring' => $recurring,
 				'quantity'  => $product['quantity'],
 				'price'     => $price,
 				'total'     => $total,

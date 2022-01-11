@@ -40,9 +40,9 @@ class Cart extends \Opencart\System\Engine\Controller {
 				}
 
 				if ($product['recurring']['duration']) {
-					$recurring .= sprintf($this->language->get('text_payment_description'), $this->currency->format($this->tax->calculate($product['recurring']['price'] * $product['quantity'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']), $product['recurring']['cycle'], $frequencies[$product['recurring']['frequency']], $product['recurring']['duration']);
+					$recurring .= sprintf($this->language->get('text_recurring_description'), $this->currency->format($this->tax->calculate($product['recurring']['price'] * $product['quantity'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']), $product['recurring']['cycle'], $frequencies[$product['recurring']['frequency']], $product['recurring']['duration']);
 				} else {
-					$recurring .= sprintf($this->language->get('text_payment_cancel'), $this->currency->format($this->tax->calculate($product['recurring']['price'], $product['tax_class_id'], $this->config->get('config_tax')) * $product['quantity'], $this->session->data['currency']), $product['recurring']['cycle'], $frequencies[$product['recurring']['frequency']], $product['recurring']['duration']);
+					$recurring .= sprintf($this->language->get('text_recurring_cancel'), $this->currency->format($this->tax->calculate($product['recurring']['price'], $product['tax_class_id'], $this->config->get('config_tax')) * $product['quantity'], $this->session->data['currency']), $product['recurring']['cycle'], $frequencies[$product['recurring']['frequency']]);
 				}
 			}
 
@@ -153,11 +153,11 @@ class Cart extends \Opencart\System\Engine\Controller {
 				}
 
 				if (!in_array($recurring_id, $recurring_ids)) {
-					$json['error']['recurring'] = $this->language->get('error_recurring');
+					$json['error']['warning'] = $this->language->get('error_recurring');
 				}
 			}
 		} else {
-			$json['error']['product'] = $this->language->get('error_product');
+			$json['error']['warning'] = $this->language->get('error_product');
 		}
 
 		if (!$json) {

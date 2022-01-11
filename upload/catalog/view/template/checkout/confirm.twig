@@ -17,8 +17,7 @@
             {% endfor %}
             {% if product.recurring %}
               <br/>
-              <small class="badge badge-warning">{{ text_recurring_item }}</small>
-              <small>{{ product.recurring }}</small>
+              <small>{{ text_recurring }} {{ product.recurring }}</small>
             {% endif %}</td>
           <td class="text-end">{{ product.total }}</td>
         </tr>

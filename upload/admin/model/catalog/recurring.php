@@ -28,10 +28,6 @@ class Recurring extends \Opencart\System\Engine\Model {
 
 		$data['recurring_description'] = $this->getDescription($recurring_id);
 
-		foreach ($data['recurring_description'] as &$recurring_description) {
-			$recurring_description['name'] .= ' - 2';
-		}
-
 		$this->addRecurring($data);
 	}
 

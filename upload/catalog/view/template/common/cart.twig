@@ -11,14 +11,15 @@
                 {% if product.option %}
                   {% for option in product.option %}
                     <br/>
-                    -
-                    <small>{{ option.name }} {{ option.value }}</small>
+                    - <small>{{ option.name }} {{ option.value }}</small>
                   {% endfor %}
                 {% endif %}
                 {% if product.recurring %}
                   <br/>
-                  -
-                  <small>{{ text_recurring }} {{ product.recurring }}</small> {% endif %}</td>
+                  - <small>{{ text_recurring }} {{ product.recurring }}</small>
+                {% endif %}
+              </td>
+
               <td class="text-end">x {{ product.quantity }}</td>
               <td class="text-end">{{ product.total }}</td>
               <td class="text-center"><button type="button" onclick="cart.remove('{{ product.cart_id }}');" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-sm"><i class="fas fa-times"></i></button></td>

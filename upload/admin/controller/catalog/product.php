@@ -1268,11 +1268,16 @@ class Product extends \Opencart\System\Engine\Controller {
 				}
 			}
 
+
+
+
+
 			$json[] = [
 				'product_id' => $result['product_id'],
 				'name'       => strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8')),
 				'model'      => $result['model'],
 				'option'     => $option_data,
+				'recurring'  => $option_data,
 				'price'      => $result['price']
 			];
 		}

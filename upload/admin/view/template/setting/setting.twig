@@ -109,7 +109,7 @@
                 <label for="input-geocode" class="col-sm-2 col-form-label">{{ entry_geocode }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="config_geocode" value="{{ config_geocode }}" placeholder="{{ entry_geocode }}" id="input-geocode" class="form-control"/>
-                  <div class="form-text text-muted">{{ help_geocode }}</div>
+                  <div class="form-text">{{ help_geocode }}</div>
                 </div>
               </div>
               <div class="row mb-3 required">
@@ -142,14 +142,14 @@
                 <label for="input-open" class="col-sm-2 col-form-label">{{ entry_open }}</label>
                 <div class="col-sm-10">
                   <textarea name="config_open" rows="5" placeholder="{{ entry_open }}" id="input-open" class="form-control">{{ config_open }}</textarea>
-                  <div class="form-text text-muted">{{ help_open }}</div>
+                  <div class="form-text">{{ help_open }}</div>
                 </div>
               </div>
               <div class="row mb-3">
                 <label for="input-comment" class="col-sm-2 col-form-label">{{ entry_comment }}</label>
                 <div class="col-sm-10">
                   <textarea name="config_comment" rows="5" placeholder="{{ entry_comment }}" id="input-comment" class="form-control">{{ config_comment }}</textarea>
-                  <div class="form-text text-muted">{{ help_comment }}</div>
+                  <div class="form-text">{{ help_comment }}</div>
                 </div>
               </div>
               {% if locations %}
@@ -163,7 +163,7 @@
                         </div>
                       {% endfor %}
                     </div>
-                    <div class="form-text text-muted">{{ help_location }}</div>
+                    <div class="form-text">{{ help_location }}</div>
                   </div>
                 </div>
               {% endif %}
@@ -223,7 +223,7 @@
                       <option value="{{ currency.code }}"{% if currency.code == config_currency %} selected{% endif %}>{{ currency.title }}</option>
                     {% endfor %}
                   </select>
-                  <div class="form-text text-muted">{{ help_currency }}</div>
+                  <div class="form-text">{{ help_currency }}</div>
                 </div>
               </div>
               <div class="row mb-3">
@@ -244,7 +244,7 @@
                       <input type="radio" name="config_currency_auto" value="1" id="input-currency-auto-yes" class="btn-check"{% if config_currency_auto %} checked{% endif %}/> <label for="input-currency-auto-yes" class="btn btn-outline-secondary">{{ text_yes }}</label> <input type="radio" name="config_currency_auto" value="0" id="input-currency-auto-no" class="btn-check"{% if not config_currency_auto %} checked{% endif %}/> <label for="input-currency-auto-no" class="btn btn-outline-secondary">{{ text_no }}</label>
                     </div>
                   </div>
-                  <div class="form-text text-muted">{{ help_currency_auto }}</div>
+                  <div class="form-text">{{ help_currency_auto }}</div>
                 </div>
               </div>
               <div class="row mb-3">
@@ -283,7 +283,7 @@
                       <label for="input-product-description-length" class="col-sm-2 col-form-label">{{ entry_product_description_length }}</label>
                       <div class="col-sm-10">
                         <input type="text" name="config_product_description_length" value="{{ config_product_description_length }}" placeholder="{{ entry_product_description_length }}" id="input-product-description-length" class="form-control"/>
-                        <div class="form-text text-muted">{{ help_product_description_length }}</div>
+                        <div class="form-text">{{ help_product_description_length }}</div>
                         <div id="error-product-description-length" class="invalid-feedback"></div>
                       </div>
                     </div>
@@ -291,7 +291,7 @@
                       <label for="input-pagination" class="col-sm-2 col-form-label">{{ entry_pagination }}</label>
                       <div class="col-sm-10">
                         <input type="text" name="config_pagination" value="{{ config_pagination }}" placeholder="{{ entry_pagination }}" id="input-pagination" class="form-control"/>
-                        <div class="form-text text-muted">{{ help_pagination }}</div>
+                        <div class="form-text">{{ help_pagination }}</div>
                         <div id="error-pagination" class="invalid-feedback"></div>
                       </div>
                     </div>
@@ -303,14 +303,14 @@
                           <label for="input-product-count-yes" class="btn btn-outline-secondary">{{ text_yes }}</label>
                           <input type="radio" name="config_product_count" value="0" id="input-product-count-no" class="btn-check"{% if not config_product_count %} checked{% endif %}/> <label for="input-product-count-no" class="btn btn-outline-secondary">{{ text_no }}</label>
                         </div>
-                        <div class="form-text text-muted">{{ help_product_count }}</div>
+                        <div class="form-text">{{ help_product_count }}</div>
                       </div>
                     </div>
                     <div class="row mb-3 required">
                       <label for="input-pagination-admin" class="col-sm-2 col-form-label">{{ entry_pagination_admin }}</label>
                       <div class="col-sm-10">
                         <input type="text" name="config_pagination_admin" value="{{ config_pagination_admin }}" placeholder="{{ entry_pagination_admin }}" id="input-pagination-admin" class="form-control"/>
-                        <div class="form-text text-muted">{{ help_pagination }}</div>
+                        <div class="form-text">{{ help_pagination }}</div>
                         <div id="error-pagination-admin" class="invalid-feedback"></div>
                       </div>
                     </div>
@@ -324,7 +324,7 @@
                           <input type="radio" name="config_product_report_status" value="0" id="input-product-report-no" class="btn-check"{% if not config_product_report_status %} checked{% endif %}/>
                           <label for="input-product-report-no" class="btn btn-outline-secondary">{{ text_no }}</label>
                         </div>
-                        <div class="form-text text-muted">{{ help_product_report }}</div>
+                        <div class="form-text">{{ help_product_report }}</div>
                       </div>
                     </div>
 
@@ -342,7 +342,7 @@
                         <div class="btn-group">
                           <input type="radio" name="config_review_status" value="1" id="input-review-status-yes" class="btn-check"{% if config_review_status %} checked{% endif %}/> <label for="input-review-status-yes" class="btn btn-outline-secondary">{{ text_yes }}</label> <input type="radio" name="config_review_status" value="0" id="input-review-status-no" class="btn-check"{% if not config_review_status %} checked{% endif %}/> <label for="input-review-status-no" class="btn btn-outline-secondary">{{ text_no }}</label>
                         </div>
-                        <div class="form-text text-muted">{{ help_review }}</div>
+                        <div class="form-text">{{ help_review }}</div>
                       </div>
                     </div>
                     <div class="row mb-3">
@@ -351,7 +351,7 @@
                         <div class="btn-group">
                           <input type="radio" name="config_review_guest" value="1" id="input-review-guest-yes" class="btn-check"{% if config_review_guest %} checked{% endif %}/> <label for="input-review-guest-yes" class="btn btn-outline-secondary">{{ text_yes }}</label> <input type="radio" name="config_review_guest" value="0" id="input-review-guest-no" class="btn-check"{% if not config_review_guest %} checked{% endif %}/> <label for="input-review-guest-no" class="btn btn-outline-secondary">{{ text_no }}</label>
                         </div>
-                        <div class="form-text text-muted">{{ help_review_guest }}</div>
+                        <div class="form-text">{{ help_review_guest }}</div>
                       </div>
                     </div>
                   </div>
@@ -367,7 +367,7 @@
                       <label for="input-voucher-min" class="col-sm-2 col-form-label">{{ entry_voucher_min }}</label>
                       <div class="col-sm-10">
                         <input type="text" name="config_voucher_min" value="{{ config_voucher_min }}" placeholder="{{ entry_voucher_min }}" id="input-voucher-min" class="form-control"/>
-                        <div class="form-text text-muted">{{ help_voucher_min }}</div>
+                        <div class="form-text">{{ help_voucher_min }}</div>
                         <div id="error-voucher-min" class="invalid-feedback"></div>
                       </div>
                     </div>
@@ -376,7 +376,7 @@
                       <label for="input-voucher-max" class="col-sm-2 col-form-label">{{ entry_voucher_max }}</label>
                       <div class="col-sm-10">
                         <input type="text" name="config_voucher_max" value="{{ config_voucher_max }}" placeholder="{{ entry_voucher_max }}" id="input-voucher-max" class="form-control"/>
-                        <div class="form-text text-muted">{{ help_voucher_max }}</div>
+                        <div class="form-text">{{ help_voucher_max }}</div>
                         <div id="error-voucher-max" class="invalid-feedback"></div>
                       </div>
                     </div>
@@ -398,7 +398,7 @@
                             <option value="{{ information.information_id }}"{% if information.information_id == config_cookie_id %} selected{% endif %}>{{ information.title }}</option>
                           {% endfor %}
                         </select>
-                        <div class="form-text text-muted">{{ help_cookie }}</div>
+                        <div class="form-text">{{ help_cookie }}</div>
                       </div>
                     </div>
                     <div class="row mb-3">
@@ -410,14 +410,14 @@
                             <option value="{{ information.information_id }}"{% if information.information_id == config_gdpr_id %} selected{% endif %}>{{ information.title }}</option>
                           {% endfor %}
                         </select>
-                        <div class="form-text text-muted">{{ help_gdpr }}</div>
+                        <div class="form-text">{{ help_gdpr }}</div>
                       </div>
                     </div>
                     <div class="row mb-3">
                       <label for="input-gdpr-limit" class="col-sm-2 col-form-label">{{ entry_gdpr_limit }}</label>
                       <div class="col-sm-10">
                         <input type="text" name="config_gdpr_limit" value="{{ config_gdpr_limit }}" placeholder="{{ entry_gdpr_limit }}" id="input-gdpr-limit" class="form-control"/>
-                        <div class="form-text text-muted">{{ help_gdpr_limit }}</div>
+                        <div class="form-text">{{ help_gdpr_limit }}</div>
                       </div>
                     </div>
                   </div>

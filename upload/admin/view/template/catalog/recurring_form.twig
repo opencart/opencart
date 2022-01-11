@@ -42,14 +42,14 @@
               <label for="input-duration" class="col-sm-2 col-form-label">{{ entry_duration }}</label>
               <div class="col-sm-10">
                 <input type="text" name="duration" value="{{ duration }}" placeholder="{{ entry_duration }}" id="input-duration" class="form-control"/>
-                <div class="form-text text-muted">{{ help_duration }}</div>
+                <div class="form-text">{{ help_duration }}</div>
               </div>
             </div>
             <div class="row mb-3">
               <label for="input-cycle" class="col-sm-2 col-form-label">{{ entry_cycle }}</label>
               <div class="col-sm-10">
                 <input type="text" name="cycle" value="{{ cycle }}" placeholder="{{ entry_cycle }}" id="input-cycle" class="form-control"/>
-                <div class="form-text text-muted">{{ help_cycle }}</div>
+                <div class="form-text">{{ help_cycle }}</div>
               </div>
             </div>
             <div class="row mb-3">
@@ -60,7 +60,7 @@
                     <option value="{{ frequency_option.value }}"{% if frequency == frequency_option.value %} selected="selected"{% endif %}>{{ frequency_option.text }}</option>
                   {% endfor %}
                 </select>
-                <div class="form-text text-muted">{{ help_frequency }}</div>
+                <div class="form-text">{{ help_frequency }}</div>
               </div>
             </div>
             <div class="row mb-3">

@@ -150,7 +150,7 @@ $_['tab_product']                   = 'Products';
 $_['tab_reward']                    = 'Reward Points';
 $_['tab_transaction']               = 'Transactions';
 $_['tab_voucher']                   = 'Vouchers';
-$_['tab_recurring']                 = 'Recurring';
+$_['tab_subscription']              = 'Subscription';
 $_['tab_report']                    = 'Report';
 
 // Error

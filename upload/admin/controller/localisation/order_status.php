@@ -266,12 +266,6 @@ class OrderStatus extends \Opencart\System\Engine\Controller {
 				$json['error'] = $this->language->get('error_default');
 			}
 
-			$store_total = $this->model_setting_store->getTotalStoresByOrderStatusId($order_status_id);
-
-			if ($store_total) {
-				$json['error'] = sprintf($this->language->get('error_store'), $store_total);
-			}
-
 			$order_total = $this->model_sale_order->getTotalOrdersByOrderStatusId($order_status_id);
 
 			if ($order_total) {

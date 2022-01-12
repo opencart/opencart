@@ -414,16 +414,6 @@ class Store extends \Opencart\System\Engine\Controller {
 			$data['config_checkout_id'] = '';
 		}
 
-		$this->load->model('localisation/order_status');
-
-		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
-
-		if (isset($store_info['config_order_status_id'])) {
-			$data['config_order_status_id'] = $store_info['config_order_status_id'];
-		} else {
-			$data['config_order_status_id'] = '';
-		}
-
 		if (isset($store_info['config_stock_display'])) {
 			$data['config_stock_display'] = $store_info['config_stock_display'];
 		} else {

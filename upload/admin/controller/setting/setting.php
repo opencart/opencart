@@ -276,6 +276,13 @@ class Setting extends \Opencart\System\Engine\Controller {
 
 		$data['config_fraud_status_id'] = $this->config->get('config_fraud_status_id');
 
+		// Subscription
+		$this->load->model('localisation/subscription_status');
+
+		$data['subscription_statuses'] = $this->model_localisation_subscription_status->getSubscriptionStatuses();
+
+		$data['config_subscription_status_id'] = $this->config->get('config_subscription_status_id');
+
 		// Api
 		$this->load->model('user/api');
 

@@ -1,21 +1,21 @@
 <?php
 namespace Opencart\Admin\Model\Sale;
-class Recurring extends \Opencart\System\Engine\Model {
-	public function getRecurrings(array $data): array {
-		$sql = "SELECT `or`.`order_recurring_id`, `or`.`order_id`, `or`.`reference`, `or`.`status`, `or`.`date_added`, CONCAT(o.`firstname`, ' ', o.`lastname`) AS customer FROM `" . DB_PREFIX . "order_recurring` `or` LEFT JOIN `" . DB_PREFIX . "order` `o` ON (`or`.`order_id` = `o`.`order_id`)";
+class Subscription extends \Opencart\System\Engine\Model {
+	public function getSubscriptions(array $data): array {
+		$sql = "SELECT `s`.`subscription_id`, `s`.`order_id`, `s`.`reference`, `s`.`status`, `s`.`date_added`, CONCAT(o.`firstname`, ' ', o.`lastname`) AS customer FROM `" . DB_PREFIX . "subscription` `s` LEFT JOIN `" . DB_PREFIX . "order` `o` ON (`s`.`order_id` = `o`.`order_id`)";
 
 		$implode = [];
 
-		if (!empty($data['filter_order_recurring_id'])) {
-			$implode[] = "`or`.`order_recurring_id` = '" . (int)$data['filter_order_recurring_id'] . "'";
+		if (!empty($data['filter_subscription_id'])) {
+			$implode[] = "`s`.`subscription_id` = '" . (int)$data['filter_subscription_id'] . "'";
 		}
 
 		if (!empty($data['filter_order_id'])) {
-			$implode[] = "`or`.`order_id` = '" . (int)$data['filter_order_id'] . "'";
+			$implode[] = "`s`.`order_id` = '" . (int)$data['filter_order_id'] . "'";
 		}
 
 		if (!empty($data['filter_reference'])) {
-			$implode[] = "`or`.`reference` LIKE '" . $this->db->escape((string)$data['filter_reference']) . "%'";
+			$implode[] = "`s`.`reference` LIKE '" . $this->db->escape((string)$data['filter_reference']) . "%'";
 		}
 
 		if (!empty($data['filter_customer'])) {
@@ -23,11 +23,11 @@ class Recurring extends \Opencart\System\Engine\Model {
 		}
 
 		if (!empty($data['filter_status'])) {
-			$implode[] = "`or`.`status` = '" . (int)$data['filter_status'] . "'";
+			$implode[] = "`s`.`status` = '" . (int)$data['filter_status'] . "'";
 		}
 
 		if (!empty($data['filter_date_added'])) {
-			$implode[] = "DATE(`or`.`date_added`) = DATE('" . $this->db->escape((string)$data['filter_date_added']) . "')";
+			$implode[] = "DATE(`s`.`date_added`) = DATE('" . $this->db->escape((string)$data['filter_date_added']) . "')";
 		}
 
 		if ($implode) {
@@ -35,18 +35,18 @@ class Recurring extends \Opencart\System\Engine\Model {
 		}
 
 		$sort_data = [
-			'or.order_recurring_id',
-			'or.order_id',
-			'or.reference',
+			's.subscription_id',
+			's.order_id',
+			's.reference',
 			'customer',
-			'or.status',
-			'or.date_added'
+			's.status',
+			's.date_added'
 		];
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 			$sql .= " ORDER BY " . $data['sort'];
 		} else {
-			$sql .= " ORDER BY `or`.`order_recurring_id`";
+			$sql .= " ORDER BY `s`.`subscription_id`";
 		}
 
 		if (isset($data['order']) && ($data['order'] == 'DESC')) {
@@ -72,16 +72,54 @@ class Recurring extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function getRecurring(int $order_recurring_id): array {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_recurring` WHERE `order_recurring_id` = '" . (int)$order_recurring_id . "'");
+	public function getSubscription(int $subscription_id): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "subscription_transaction` WHERE `subscription_id` = '" . (int)$subscription_id . "'");
 
 		return $query->row;
 	}
 
-	public function getRecurringTransactions(int $order_recurring_id): array {
+	public function getTotalSubscriptions(array $data = []): int {
+		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "subscription` `s` LEFT JOIN `" . DB_PREFIX . "order` `o` ON (`s`.`order_id` = o.`order_id`)";
+
+		$implode = [];
+
+		if (!empty($data['filter_subscription_id'])) {
+			$implode[] .= "`s`.`subscription_id` = '" . (int)$data['filter_subscription_id'] . "'";
+		}
+
+		if (!empty($data['filter_order_id'])) {
+			$implode[] .= "`or`.`order_id` = '" . (int)$data['filter_order_id'] . "'";
+		}
+
+		if (!empty($data['filter_payment_reference'])) {
+			$implode[] .= "`or`.`reference` LIKE '" . $this->db->escape((string)$data['filter_reference']) . "%'";
+		}
+
+		if (!empty($data['filter_customer'])) {
+			$implode[] .= "CONCAT(o.`firstname`, ' ', o.`lastname`) LIKE '" . $this->db->escape((string)$data['filter_customer']) . "%'";
+		}
+
+		if (!empty($data['filter_status'])) {
+			$implode[] .= "`or`.`status` = '" . (int)$data['filter_status'] . "'";
+		}
+
+		if (!empty($data['filter_date_added'])) {
+			$implode[] .= "DATE(`or`.`date_added`) = DATE('" . $this->db->escape((string)$data['filter_date_added']) . "')";
+		}
+
+		if ($implode) {
+			$sql .= " WHERE " . implode(" AND ", $implode);
+		}
+
+		$query = $this->db->query($sql);
+
+		return (int)$query->row['total'];
+	}
+
+	public function getTransactions(int $subscription_id): array {
 		$transactions = [];
 
-		$query = $this->db->query("SELECT `order_id`, `amount`, `type`, `date_added` FROM `" . DB_PREFIX . "order_recurring_transaction` WHERE `order_recurring_id` = '" . (int)$order_recurring_id . "' ORDER BY `date_added` DESC");
+		$query = $this->db->query("SELECT `order_id`, `amount`, `type`, `date_added` FROM `" . DB_PREFIX . "subscription_transaction` WHERE `subscription_id` = '" . (int)$subscription_id . "' ORDER BY `date_added` DESC");
 
 		foreach ($query->rows as $result) {
 			switch ($result['type']) {
@@ -157,43 +195,5 @@ class Recurring extends \Opencart\System\Engine\Model {
 		}
 
 		return $result;
-	}
-
-	public function getTotalRecurrings(array $data = []): int {
-		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "order_recurring` `or` LEFT JOIN `" . DB_PREFIX . "order` `o` ON (`or`.`order_id` = o.`order_id`)";
-
-		$implode = [];
-
-		if (!empty($data['filter_order_recurring_id'])) {
-			$implode[] .= "`or`.`order_recurring_id` = '" . (int)$data['filter_order_recurring_id'] . "'";
-		}
-
-		if (!empty($data['filter_order_id'])) {
-			$implode[] .= "`or`.`order_id` = '" . (int)$data['filter_order_id'] . "'";
-		}
-
-		if (!empty($data['filter_payment_reference'])) {
-			$implode[] .= "`or`.`reference` LIKE '" . $this->db->escape((string)$data['filter_reference']) . "%'";
-		}
-
-		if (!empty($data['filter_customer'])) {
-			$implode[] .= "CONCAT(o.`firstname`, ' ', o.`lastname`) LIKE '" . $this->db->escape((string)$data['filter_customer']) . "%'";
-		}
-
-		if (!empty($data['filter_status'])) {
-			$implode[] .= "`or`.`status` = '" . (int)$data['filter_status'] . "'";
-		}
-
-		if (!empty($data['filter_date_added'])) {
-			$implode[] .= "DATE(`or`.`date_added`) = DATE('" . $this->db->escape((string)$data['filter_date_added']) . "')";
-		}
-
-		if ($implode) {
-			$sql .= " WHERE " . implode(" AND ", $implode);
-		}
-
-		$query = $this->db->query($sql);
-
-		return (int)$query->row['total'];
 	}
 }

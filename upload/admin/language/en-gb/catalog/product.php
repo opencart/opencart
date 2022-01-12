@@ -32,9 +32,9 @@ $_['text_image']             = 'Image';
 $_['text_image_additional']  = 'Additional Images';
 $_['text_reward']            = 'Buy Points';
 $_['text_points']            = 'Reward Points';
-$_['text_recurring_trial']       = '%s every %d %s(s) for %d payment(s) then';
-$_['text_recurring_description'] = '%s every %d %s(s) for %d payment(s)';
-$_['text_recurring_cancel']      = '%s every %d %s(s) until canceled';
+$_['text_subscription_trial']    = '%s every %d %s(s) for %d payment(s) then';
+$_['text_subscription_description'] = '%s every %d %s(s) for %d payment(s)';
+$_['text_subscription_cancel']      = '%s every %d %s(s) until canceled';
 
 // Column
 $_['column_name']            = 'Product Name';
@@ -102,7 +102,7 @@ $_['entry_related']          = 'Related Products';
 $_['entry_tag']              = 'Product Tags';
 $_['entry_reward']           = 'Reward Points';
 $_['entry_layout']           = 'Layout Override';
-$_['entry_recurring']        = 'Recurring Profile';
+$_['entry_subscription']     = 'Subscription Plans';
 
 // Help
 $_['help_tag']               = 'Comma separated';

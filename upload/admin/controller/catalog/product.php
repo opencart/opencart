@@ -867,14 +867,14 @@ class Product extends \Opencart\System\Engine\Controller {
 		}
 
 		// Recurring
-		$this->load->model('catalog/recurring');
+		$this->load->model('catalog/subscription_plan');
 
-		$data['recurrings'] = $this->model_catalog_recurring->getRecurrings();
+		$data['subscription_plans'] = $this->model_catalog_subscription_plan->getSubscriptionPlans();
 
 		if ($product_id) {
-			$data['product_recurrings'] = $this->model_catalog_product->getRecurrings($product_id);
+			$data['product_subscriptions'] = $this->model_catalog_product->getSubscriptions($product_id);
 		} else {
-			$data['product_recurrings'] = [];
+			$data['product_subscriptions'] = [];
 		}
 
 		// Discount

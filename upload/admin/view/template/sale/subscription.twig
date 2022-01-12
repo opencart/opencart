@@ -3,7 +3,7 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="float-end">
-        <button type="button" data-bs-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-recurring').toggleClass('d-none');" class="btn btn-light d-md-none"><i class="fas fa-filter"></i></button>
+        <button type="button" data-bs-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-subscription').toggleClass('d-none');" class="btn btn-light d-md-none"><i class="fas fa-filter"></i></button>
       </div>
       <h1>{{ heading_title }}</h1>
       <ol class="breadcrumb">
@@ -15,34 +15,38 @@
   </div>
   <div class="container-fluid">
     <div class="row">
-      <div id="filter-recurring" class="col-lg-3 col-md-12 order-lg-last d-none d-lg-block mb-3">
+      <div id="filter-subscription" class="col-lg-3 col-md-12 order-lg-last d-none d-lg-block mb-3">
         <div class="card">
           <div class="card-header"><i class="fas fa-filter"></i> {{ text_filter }}</div>
           <div class="card-body">
             <div class="mb-3">
-              <label for="input-order-recurring-id" class="form-label">{{ entry_order_recurring_id }}</label>
-              <input type="text" name="filter_order_recurring_id" value="{{ filter_order_recurring_id }}" placeholder="{{ entry_order_recurring_id }}" id="input-order-recurring-id" class="form-control"/>
-            </div>
-            <div class="mb-3">
-              <label for="input-customer" class="form-label">{{ entry_customer }}</label>
-              <input type="text" name="filter_customer" value="{{ filter_customer }}" placeholder="{{ entry_customer }}" id="input-customer" list="list-customer" class="form-control"/>
-              <datalist id="list-customer"></datalist>
+              <label for="input-order-subscription-id" class="form-label">{{ entry_subscription_id }}</label>
+              <input type="text" name="filter_subscription_id" value="{{ filter_subscription_id }}" placeholder="{{ entry_subscription_id }}" id="input-subscription-id" class="form-control"/>
             </div>
             <div class="mb-3">
               <label for="input-order-id" class="form-label">{{ entry_order_id }}</label>
-              <input type="text" name="filter_order_recurring_id" value="{{ filter_order_recurring_id }}" placeholder="{{ entry_order_id }}" id="input-order-id" class="form-control"/>
-            </div>
-            <div class="mb-3">
-              <label for="input-status" class="form-label">{{ entry_status }}</label> <select name="filter_status" id="input-status" class="form-select">
-                {% for recurring_status in recurring_statuses %}
-                  <option value="{{ recurring_status.value }}"{% if filter_status == recurring_status.value %} selected{% endif %}>{{ recurring_status.text }}</option>
-                {% endfor %}
-              </select>
+              <input type="text" name="filter_subscription_id" value="{{ filter_subscription_id }}" placeholder="{{ entry_order_id }}" id="input-order-id" class="form-control"/>
             </div>
             <div class="mb-3">
               <label for="input-reference" class="form-label">{{ entry_reference }}</label>
               <input type="text" name="filter_reference" value="{{ filter_reference }}" placeholder="{{ entry_reference }}" id="input-reference" class="form-control"/>
             </div>
+
+            <div class="mb-3">
+              <label for="input-customer" class="form-label">{{ entry_customer }}</label>
+              <input type="text" name="filter_customer" value="{{ filter_customer }}" placeholder="{{ entry_customer }}" id="input-customer" list="list-customer" class="form-control"/>
+              <datalist id="list-customer"></datalist>
+            </div>
+
+            <div class="mb-3">
+              <label for="input-status" class="form-label">{{ entry_status }}</label>
+              <select name="filter_status" id="input-status" class="form-select">
+                <option value=""></option>
+                <option value="1"{% if filter_status == '1' %} selected{% endif %}>{{ text_enabled }}</option>
+                <option value="0" {% if filter_status == '0' %} selected{% endif %}>{{ text_disabled }}</option>
+              </select>
+            </div>
+
             <div class="mb-3">
               <label for="input-date-date_added" class="form-label">{{ entry_date_added }}</label>
               <div class="input-group">
@@ -59,26 +63,26 @@
       <div class="col-lg-9 col-md-12">
         <div class="card">
           <div class="card-header"><i class="fas fa-list"></i> {{ text_list }}</div>
-          <div id="recurring" class="card-body">{{ list }}</div>
+          <div id="subscription" class="card-body">{{ list }}</div>
         </div>
       </div>
     </div>
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#recurring').on('click', 'thead a, .pagination a', function(e) {
+$('#subscription').on('click', 'thead a, .pagination a', function (e) {
     e.preventDefault();
 
-    $('#recurring').load(this.href);
+    $('#subscription').load(this.href);
 });
 
-$('#button-filter').on('click', function() {
+$('#button-filter').on('click', function () {
     url = '';
 
-    var filter_order_recurring_id = $('#input-order-recurring-id').val();
+    var filter_subscription_id = $('#input-subscription-id').val();
 
-    if (filter_order_recurring_id) {
-        url += '&filter_order_recurring_id=' + encodeURIComponent(filter_order_recurring_id);
+    if (filter_subscription_id) {
+        url += '&filter_subscription_id=' + encodeURIComponent(filter_subscription_id);
     }
 
     var filter_order_id = $('#input-order_id').val();
@@ -111,22 +115,16 @@ $('#button-filter').on('click', function() {
         url += '&filter_date_added=' + encodeURIComponent(filter_date_added);
     }
 
-    $('#recurring').load('index.php?route=sale/recurring|list&user_token={{ user_token }}' + url);
-});
-
-$('#form input').keydown(function(e) {
-    if (e.keyCode == 13) {
-        filter();
-    }
+    $('#subscription').load('index.php?route=sale/subscription|list&user_token={{ user_token }}' + url);
 });
 
 $('#input-customer').autocomplete({
-    'source': function(request, response) {
+    'source': function (request, response) {
         $.ajax({
             url: 'index.php?route=customer/customer|autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
-            success: function(json) {
-                response($.map(json, function(item) {
+            success: function (json) {
+                response($.map(json, function (item) {
                     return {
                         label: item['name'],
                         value: item['customer_id']
@@ -135,7 +133,8 @@ $('#input-customer').autocomplete({
             }
         });
     },
-    'select': function(item) {}
+    'select': function (item) {
+    }
 });
 //--></script>
 {{ footer }}

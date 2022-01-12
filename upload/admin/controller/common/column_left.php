@@ -36,10 +36,10 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 				];
 			}
 
-			if ($this->user->hasPermission('access', 'catalog/recurring')) {
+			if ($this->user->hasPermission('access', 'catalog/subscription_plan')) {
 				$catalog[] = [
-					'name'	   => $this->language->get('text_recurring'),
-					'href'     => $this->url->link('catalog/recurring', 'user_token=' . $this->session->data['user_token']),
+					'name'	   => $this->language->get('text_subscription_plan'),
+					'href'     => $this->url->link('catalog/subscription_plan', 'user_token=' . $this->session->data['user_token']),
 					'children' => []
 				];
 			}
@@ -272,10 +272,10 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 				];
 			}
 
-			if ($this->user->hasPermission('access', 'sale/recurring')) {
+			if ($this->user->hasPermission('access', 'sale/subscription')) {
 				$sale[] = [
-					'name'	   => $this->language->get('text_order_recurring'),
-					'href'     => $this->url->link('sale/recurring', 'user_token=' . $this->session->data['user_token']),
+					'name'	   => $this->language->get('text_subscription'),
+					'href'     => $this->url->link('sale/subscription', 'user_token=' . $this->session->data['user_token']),
 					'children' => []
 				];
 			}
@@ -508,6 +508,14 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 				$localisation[] = [
 					'name'	   => $this->language->get('text_order_status'),
 					'href'     => $this->url->link('localisation/order_status', 'user_token=' . $this->session->data['user_token']),
+					'children' => []
+				];
+			}
+
+			if ($this->user->hasPermission('access', 'localisation/subscription_status')) {
+				$localisation[] = [
+					'name'	   => $this->language->get('text_subscription_status'),
+					'href'     => $this->url->link('localisation/subscription_status', 'user_token=' . $this->session->data['user_token']),
 					'children' => []
 				];
 			}

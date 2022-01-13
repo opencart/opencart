@@ -94,7 +94,7 @@ $('#button-filter').on('click', function() {
     var filter_order_id = $('#input-order-id').val();
 
     if (filter_order_id) {
-        url += '&filter_order_id=' + encodeURIComponent(filter_order_id);
+        url += '&filter_order_id=' + filter_order_id;
     }
 
     var filter_customer = $('#input-customer').val();
@@ -106,13 +106,13 @@ $('#button-filter').on('click', function() {
     var filter_store_id = $('#input-store').val();
 
     if (filter_store_id !== '') {
-        url += '&filter_store_id=' + encodeURIComponent(filter_store_id);
+        url += '&filter_store_id=' + filter_store_id;
     }
 
     var filter_order_status_id = $('#input-order-status').val();
 
     if (filter_order_status_id !== '') {
-        url += '&filter_order_status_id=' + encodeURIComponent(filter_order_status_id);
+        url += '&filter_order_status_id=' + filter_order_status_id;
     }
 
     var filter_total = $('#input-total').val();

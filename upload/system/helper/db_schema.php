@@ -5452,8 +5452,8 @@ function db_schema() {
 				'not_null' => true
 			],
 			[
-				'name' => 'subscription_status_id',
-				'type' => 'int(11)',
+				'name' => 'status',
+				'type' => 'tinyint(1)',
 				'not_null' => true
 			],
 			[

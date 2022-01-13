@@ -93,13 +93,13 @@ $('#button-filter').on('click', function() {
     var filter_store_id = $('#input-store').val();
 
     if (filter_store_id) {
-        url += '&filter_store_id=' + encodeURIComponent(filter_store_id);
+        url += '&filter_store_id=' + filter_store_id;
     }
 
     var filter_language_id = $('#input-language').val();
 
     if (filter_language_id) {
-        url += '&filter_language_id=' + encodeURIComponent(filter_language_id);
+        url += '&filter_language_id=' + filter_language_id;
     }
 
     $('#seo-url').load('index.php?route=design/seo_url|list&user_token={{ user_token }}' + url);

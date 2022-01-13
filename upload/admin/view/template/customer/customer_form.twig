@@ -993,7 +993,7 @@ $('#button-reward').on('click', function(e) {
         url: 'index.php?route=customer/customer|addreward&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val(),
         type: 'post',
         dataType: 'json',
-        data: 'description=' + encodeURIComponent($('#input-reward-description').val()) + '&points=' + encodeURIComponent($('#input-reward-points').val()),
+        data: 'description=' + encodeURIComponent($('#input-reward-description').val()) + '&points=' + $('#input-reward-points').val(),
         beforeSend: function() {
             $('#button-reward').button('loading');
         },

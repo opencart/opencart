@@ -83,7 +83,7 @@ $('#button-filter').on('click', function () {
     var filter_status = $('#input-status').val();
 
     if (filter_status !== '') {
-        url += '&filter_status=' + encodeURIComponent(filter_status);
+        url += '&filter_status=' + filter_status;
     }
 
     var filter_date_added = $('#input-date-added').val();

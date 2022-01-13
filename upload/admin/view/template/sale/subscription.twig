@@ -31,22 +31,19 @@
               <label for="input-reference" class="form-label">{{ entry_reference }}</label>
               <input type="text" name="filter_reference" value="{{ filter_reference }}" placeholder="{{ entry_reference }}" id="input-reference" class="form-control"/>
             </div>
-
             <div class="mb-3">
               <label for="input-customer" class="form-label">{{ entry_customer }}</label>
               <input type="text" name="filter_customer" value="{{ filter_customer }}" placeholder="{{ entry_customer }}" id="input-customer" list="list-customer" class="form-control"/>
               <datalist id="list-customer"></datalist>
             </div>
-
             <div class="mb-3">
               <label for="input-status" class="form-label">{{ entry_status }}</label>
               <select name="filter_status" id="input-status" class="form-select">
                 <option value=""></option>
                 <option value="1"{% if filter_status == '1' %} selected{% endif %}>{{ text_enabled }}</option>
-                <option value="0" {% if filter_status == '0' %} selected{% endif %}>{{ text_disabled }}</option>
+                <option value="0"{% if filter_status == '0' %} selected{% endif %}>{{ text_disabled }}</option>
               </select>
             </div>
-
             <div class="mb-3">
               <label for="input-date-date_added" class="form-label">{{ entry_date_added }}</label>
               <div class="input-group">
@@ -82,13 +79,13 @@ $('#button-filter').on('click', function () {
     var filter_subscription_id = $('#input-subscription-id').val();
 
     if (filter_subscription_id) {
-        url += '&filter_subscription_id=' + encodeURIComponent(filter_subscription_id);
+        url += '&filter_subscription_id=' + filter_subscription_id;
     }
 
     var filter_order_id = $('#input-order_id').val();
 
     if (filter_order_id) {
-        url += '&filter_order_id=' + encodeURIComponent(filter_order_id);
+        url += '&filter_order_id=' + filter_order_id;
     }
 
     var filter_reference = $('#input-reference').val();
@@ -105,8 +102,8 @@ $('#button-filter').on('click', function () {
 
     var filter_status = $('#input-status').val();
 
-    if (filter_status != 0) {
-        url += '&filter_status=' + encodeURIComponent(filter_status);
+    if (filter_status !== '') {
+        url += '&filter_status=' + filter_status;
     }
 
     var filter_date_added = $('#input-date_added').val();
@@ -133,8 +130,7 @@ $('#input-customer').autocomplete({
             }
         });
     },
-    'select': function (item) {
-    }
+    'select': function (item) {}
 });
 //--></script>
 {{ footer }}

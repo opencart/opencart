@@ -466,7 +466,7 @@ class Product extends \Opencart\System\Engine\Model {
 			// Options
 			// product_option should not be used if variant product
 
-			// Recurring
+			// Subscriptions
 			if (!isset($override['product_subscription'])) {
 				$product_data['product_subscription'] = $this->model_catalog_product->getSubscriptions($master_id);
 			}

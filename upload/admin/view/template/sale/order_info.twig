@@ -84,9 +84,9 @@
                     <small>{{ text_points }} {{ order_product.reward }}</small>
                   {% endif %}
 
-                  {% if order_product.recurring %}
+                  {% if order_product.subscription %}
                     <br/>
-                    <small>{{ text_recurring_item }}: {{ order_product.recurring }}</small>
+                    <small>{{ text_subscription }}: {{ subscription.description }}</small>
                   {% endif %}
 
                 </td>
@@ -1521,30 +1521,30 @@ $('#input-product').autocomplete({
             $('#option').html('');
         }
 
-        if (item['recurring'] != '') {
+        if (item['subscription'] != '') {
             html = '<fieldset class="mb-0">';
-            html += '  <legend>{{ entry_recurring }}</legend>';
+            html += '  <legend>{{ entry_subscription }}</legend>';
             html += '  <div class="mb-3 required">';
-            html += '    <select name="recurring_id" id="input-recurring" class="form-select">';
+            html += '    <select name="subscription_id" id="input-subscription" class="form-select">';
             html += '      <option value="">{{ text_select }}</option>';
 
-            for (i = 0; i < item['recurring'].length; i++) {
-                html += '<option value="' + item['recurring'][i]['recurring_id'] + '">' + item['recurring'][i]['name'] + '</option>';
+            for (i = 0; i < item['subscription'].length; i++) {
+                html += '<option value="' + item['subscription'][i]['subscription_id'] + '">' + item['subscription'][i]['name'] + '</option>';
             }
 
             html += '  </select>';
 
-            for (i = 0; i < item['recurring'].length; i++) {
-                html += '  <div id="recurring-description-' + item['recurring'][i]['recurring_id'] + '" class="form-text recurring">' + item['recurring'][i]['description'] + '</div>';
+            for (i = 0; i < item['subscription'].length; i++) {
+                html += '  <div id="subscription-description-' + item['subscription'][i]['subscription_id'] + '" class="form-text subscription">' + item['subscription'][i]['description'] + '</div>';
             }
 
-            html += '  <div id="error-recurring" class="invalid-feedback"></div>';
+            html += '  <div id="error-subscription" class="invalid-feedback"></div>';
             html += '</div>';
             html += '</fieldset>';
 
-            $('#recurring').html(html);
+            $('#subscription').html(html);
         } else {
-            $('#recurring').html('');
+            $('#subscription').html('');
         }
     }
 });
@@ -2657,17 +2657,19 @@ $('#button-refresh').on('click', function () {
                         for (j = 0; j < product['option'].length; j++) {
                             option = product['option'][j];
 
-                            html += '  - <small>' + option['name'] + ': ' + option['value'] + '</small><br />';
+                            html += '<br/>';
+                            html += '  - <small>' + option['name'] + ': ' + option['value'] + '</small>';
                         }
                     }
 
                     if (product['reward']) {
-                        html += '<small>{{ text_points }} ' + product['reward'] + '</small><br/>';
+                        html += '<br/>';
+                        html += '  - <small>{{ text_points }} ' + product['reward'] + '</small>';
                     }
 
-                    if (product['recurring']) {
-                        html += ' <small class="badge badge-warning">{{ text_recurring_item }}</small>';
-                        html += ' <small>{{ order_product.recurring }}</small>';
+                    if (product['subscription']) {
+                        html += '<br/>';
+                        html += '  - <small>{{ text_subscription }} {{ subscription.description }}</small>';
                     }
 
                     html += '  </td>';

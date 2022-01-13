@@ -866,7 +866,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		// Recurring
+		// Subscriptions
 		$this->load->model('catalog/subscription_plan');
 
 		$data['subscription_plans'] = $this->model_catalog_subscription_plan->getSubscriptionPlans();
@@ -1236,7 +1236,7 @@ class Product extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('catalog/product');
 		$this->load->model('catalog/option');
-		$this->load->model('catalog/recurring');
+		$this->load->model('catalog/subscription');
 
 		$results = $this->model_catalog_product->getProducts($filter_data);
 
@@ -1277,43 +1277,43 @@ class Product extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-			$recurring_data = [];
+			$subscription_data = [];
 
-			$results = $this->model_catalog_product->getRecurrings($result['product_id']);
+			$results = $this->model_catalog_product->getSubscriptions($result['product_id']);
 
 			foreach ($results as $result) {
-				$recurring_info = $this->model_catalog_recurring->getRecurring($result['recurring_id']);
+				$subscription_plan_info = $this->model_catalog_subscription->getSubscriptionPlan($result['subscription_plan_id']);
 
-				if ($recurring_info) {
-					$recurring = '';
+				if ($subscription_plan_info) {
+					$description = '';
 
-					if ($recurring_info['trial_status']) {
-						$recurring = sprintf($this->language->get('text_recurring_trial'), $this->currency->format($recurring_info['trial_price'], $this->session->data['currency']), $recurring_info['trial_cycle'], $frequencies[$recurring_info['trial_frequency']], $recurring_info['trial_duration']) . ' ';
+					if ($subscription_plan_info['trial_status']) {
+						$description = sprintf($this->language->get('text_subscription_trial'), $this->currency->format($subscription_plan_info['trial_price'], $this->session->data['currency']), $subscription_plan_info['trial_cycle'], $frequencies[$subscription_plan_info['trial_frequency']], $subscription_plan_info['trial_duration']) . ' ';
 					}
 
-					$price = $this->currency->format($recurring_info['price'], $this->config->get('config_currency'));
+					$price = $this->currency->format($subscription_plan_info['price'], $this->config->get('config_currency'));
 
-					if ($recurring_info['duration']) {
-						$recurring .= sprintf($this->language->get('text_recurring_description'), $price, $recurring_info['cycle'], $frequencies[$recurring_info['frequency']], $recurring_info['duration']);
+					if ($subscription_plan_info['duration']) {
+						$description .= sprintf($this->language->get('text_subscription_description'), $price, $subscription_plan_info['cycle'], $frequencies[$subscription_plan_info['frequency']], $subscription_plan_info['duration']);
 					} else {
-						$recurring .= sprintf($this->language->get('text_recurring_cancel'), $price, $recurring_info['cycle'], $frequencies[$recurring_info['frequency']]);
+						$description .= sprintf($this->language->get('text_subscription_cancel'), $price, $subscription_plan_info['cycle'], $frequencies[$subscription_plan_info['frequency']]);
 					}
 
-					$recurring_data[] = [
-						'recurring_id' => $recurring_info['recurring_id'],
-						'name'         => $recurring_info['name'],
-						'description'  => $recurring
+					$subscription_data[] = [
+						'subscription_plan_id' => $subscription_plan_info['subscription_plan_id'],
+						'name'                 => $subscription_plan_info['name'],
+						'description'          => $description
 					];
 				}
 			}
 
 			$json[] = [
-				'product_id' => $result['product_id'],
-				'name'       => strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8')),
-				'model'      => $result['model'],
-				'option'     => $option_data,
-				'recurring'  => $recurring_data,
-				'price'      => $result['price']
+				'product_id'   => $result['product_id'],
+				'name'         => strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8')),
+				'model'        => $result['model'],
+				'option'       => $option_data,
+				'subscription' => $subscription_data,
+				'price'        => $result['price']
 			];
 		}
 

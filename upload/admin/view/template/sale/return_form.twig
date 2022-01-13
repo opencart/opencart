@@ -271,7 +271,7 @@ $('#button-history').on('click', function(e) {
         url: 'index.php?route=sale/returns|addhistory&user_token={{ user_token }}&return_id=' + $('#input-return-id').val(),
         type: 'post',
         dataType: 'json',
-        data: 'return_status_id=' + encodeURIComponent($('#input-return-status').val()) + '&notify=' + ($('#input-notify').prop('checked') ? 1 : 0) + '&comment=' + encodeURIComponent($('#input-comment').val()),
+        data: 'return_status_id=' + $('#input-return-status').val() + '&notify=' + ($('#input-notify').prop('checked') ? 1 : 0) + '&comment=' + encodeURIComponent($('#input-comment').val()),
         beforeSend: function() {
             $('#button-history').button('loading');
         },

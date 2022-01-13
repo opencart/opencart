@@ -6,14 +6,16 @@ $_['heading_title']                        = 'Subscriptions';
 $_['text_success']                         = 'Success: You have modified subscriptions!';
 $_['text_list']                            = 'Subscription List';
 $_['text_filter']                          = 'Filter';
+
 $_['text_subscription_detail']             = 'Subscription Details';
 $_['text_order_detail']                    = 'Order Details';
 $_['text_product_detail']                  = 'Product Details';
-$_['text_transaction']                     = 'Transactions';
+
+
+
 $_['text_subscription_id']                 = 'Subscription ID';
 $_['text_reference']                       = 'Payment Reference';
-
-$_['text_recurring_name']                  = 'Recurring Profile';
+$_['text_subscription_name']               = 'Subscription Plan';
 $_['text_recurring_description']           = 'Description';
 $_['text_recurring_status']                = 'Recurring Status';
 $_['text_payment_method']                  = 'Payment Method';
@@ -29,6 +31,11 @@ $_['text_product']                         = 'Product';
 $_['text_quantity']                        = 'Quantity';
 $_['text_amount']                          = 'Amount';
 $_['text_cancel_payment']                  = 'Cancel Payment';
+
+$_['text_transaction']                     = 'Transactions';
+
+
+
 $_['text_status_1']                        = 'Active';
 $_['text_status_2']                        = 'Inactive';
 $_['text_status_3']                        = 'Cancelled';
@@ -73,7 +80,7 @@ $_['entry_type']                           = 'Type';
 
 $_['entry_action']                         = 'Action';
 $_['entry_email']                          = 'Email';
-$_['entry_description']                    = 'Recurring Profile\'s description';
+$_['entry_description']                    = 'Subscription Description';
 $_['entry_product']                        = 'Product';
 $_['entry_quantity']                       = 'Quantity';
 $_['entry_amount']                         = 'Amount';

@@ -94,13 +94,13 @@ $('#button-filter').on('click', function() {
     var filter_return_id = $('#input-return-id').val();
 
     if (filter_return_id) {
-        url += '&filter_return_id=' + encodeURIComponent(filter_return_id);
+        url += '&filter_return_id=' + filter_return_id;
     }
 
     var filter_order_id = $('#input-order-id').val();
 
     if (filter_order_id) {
-        url += '&filter_order_id=' + encodeURIComponent(filter_order_id);
+        url += '&filter_order_id=' + filter_order_id;
     }
 
     var filter_customer = $('#input-customer').val();
@@ -124,7 +124,7 @@ $('#button-filter').on('click', function() {
     var filter_return_status_id = $('#input-return-status').val();
 
     if (filter_return_status_id !== '') {
-        url += '&filter_return_status_id=' + encodeURIComponent(filter_return_status_id);
+        url += '&filter_return_status_id=' + filter_return_status_id;
     }
 
     var filter_date_added = $('#input-date-added').val();

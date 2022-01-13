@@ -386,17 +386,17 @@ class Subscription extends \Opencart\System\Engine\Controller {
 				$data['subscription'] = '';
 			}			
 			
-			$data['recurring_description'] = $order_recurring_info['recurring_description'];
+			$data['subscription_description'] = $subscription_info['description'];
 			
 			if ($subscription_info['status']) {
-				$data['recurring_status'] = $this->language->get('text_status_' . $order_recurring_info['status']);
+				$data['subscription_status'] = $this->language->get('text_status_' . $subscription_info['status']);
 			} else {
-				$data['recurring_status'] = '';
+				$data['subscription_status'] = '';
 			}
 			
 			$this->load->model('sale/order');
 
-			$order_info = $this->model_sale_order->getOrder($recurring_info['order_id']);
+			$order_info = $this->model_sale_order->getOrder($subscription_info['order_id']);
 			
 			$data['payment_method'] = $order_info['payment_method'];
 			

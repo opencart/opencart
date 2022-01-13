@@ -155,7 +155,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 				}
 
 				if (!in_array($subscription_plan_id, $subscription_plan_ids)) {
-					$json['error']['warning'] = $this->language->get('error_subscription_plan');
+					$json['error']['subscription'] = $this->language->get('error_subscription');
 				}
 			}
 		} else {

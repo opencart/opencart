@@ -1279,10 +1279,10 @@ class Product extends \Opencart\System\Engine\Controller {
 
 			$subscription_data = [];
 
-			$results = $this->model_catalog_product->getSubscriptions($result['product_id']);
+			$product_subscriptions = $this->model_catalog_product->getSubscriptions($result['product_id']);
 
-			foreach ($results as $result) {
-				$subscription_plan_info = $this->model_catalog_subscription_plan->getSubscriptionPlan($result['subscription_plan_id']);
+			foreach ($product_subscriptions as $product_subscription) {
+				$subscription_plan_info = $this->model_catalog_subscription_plan->getSubscriptionPlan($product_subscription['subscription_plan_id']);
 
 				if ($subscription_plan_info) {
 					$description = '';

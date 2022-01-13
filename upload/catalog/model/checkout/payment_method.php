@@ -8,7 +8,7 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 
 		$results = $this->model_setting_extension->getExtensionsByType('payment');
 
-		$subscription = $this->cart->hasSubsription();
+		$subscription = $this->cart->hasSubscription();
 
 		foreach ($results as $result) {
 			if ($this->config->get('payment_' . $result['code'] . '_status')) {

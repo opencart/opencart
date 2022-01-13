@@ -695,6 +695,7 @@
                 </div>
               </fieldset>
               <div id="option"></div>
+              <div id="subscription"></div>
               <div class="text-end">
                 <button type="submit" id="button-product-add" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
               </div>
@@ -1345,6 +1346,7 @@ $('#input-product').autocomplete({
                         value: item['product_id'],
                         model: item['model'],
                         option: item['option'],
+                        subscription: item['subscription'],
                         price: item['price']
                     }
                 }));
@@ -1521,6 +1523,8 @@ $('#input-product').autocomplete({
             $('#option').html('');
         }
 
+        console.log(item);
+
         if (item['subscription'] != '') {
             html = '<fieldset class="mb-0">';
             html += '  <legend>{{ entry_subscription }}</legend>';
@@ -1565,8 +1569,6 @@ $('#form-product-add').on('submit', function (e) {
             $('#button-product-add').button('reset');
         },
         success: function (json) {
-            console.log(json);
-
             $('.alert-dismissible').remove();
             $('.is-invalid').removeClass('is-invalid');
             $('.invalid-feedback').removeClass('d-block');
@@ -1576,11 +1578,9 @@ $('#form-product-add').on('submit', function (e) {
                     $('#form-product-add').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                 }
 
-                if (json['error']['option']) {
-                    for (key in json['error']['option']) {
-                        $('#input-option-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
-                        $('#error-option-' + key.replaceAll('_', '-')).html(json['error']['option'][key]).addClass('d-block');
-                    }
+                for (key in json['error']) {
+                    $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
+                    $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
                 }
             }
 
@@ -2651,7 +2651,7 @@ $('#button-refresh').on('click', function () {
                     product = json['products'][i];
 
                     html += '<tr>';
-                    html += '  <td class="text-start"><a href="index.php?route=catalog/product|form&user_token={{ user_token }}&product_id=' + product['product_id'] + '" target="_blank">' + product['name'] + '</a>' + (!product['stock'] ? ' <span class="text-danger">***</span>' : '') + '<br/>';
+                    html += '  <td class="text-start"><a href="index.php?route=catalog/product|form&user_token={{ user_token }}&product_id=' + product['product_id'] + '" target="_blank">' + product['name'] + '</a>' + (!product['stock'] ? ' <span class="text-danger">***</span>' : '');
 
                     if (product['option']) {
                         for (j = 0; j < product['option'].length; j++) {

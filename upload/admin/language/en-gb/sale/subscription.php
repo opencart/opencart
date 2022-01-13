@@ -35,8 +35,6 @@ $_['text_cancel_payment']                  = 'Cancel Payment';
 
 $_['text_transaction']                     = 'Transactions';
 
-
-
 $_['text_status_1']                        = 'Active';
 $_['text_status_2']                        = 'Inactive';
 $_['text_status_3']                        = 'Cancelled';

@@ -1,5 +1,5 @@
 {{ header }}
-<div id="account-recurring" class="container">
+<div id="account-subscription" class="container">
   <ul class="breadcrumb">
     {% for breadcrumb in breadcrumbs %}
       <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
@@ -12,12 +12,12 @@
         <table class="table table-bordered table-hover">
           <thead>
             <tr>
-              <td class="text-start" colspan="2">{{ text_recurring_detail }}</td>
+              <td class="text-start" colspan="2">{{ text_subscription_detail }}</td>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td class="text-start" style="width: 50%;"><b>{{ text_order_recurring_id }}</b> #{{ order_recurring_id }}
+              <td class="text-start" style="width: 50%;"><b>{{ text_subscription_id }}</b> #{{ subscription_id }}
                 <br/>
                 <b>{{ text_date_added }}</b> {{ date_added }}
                 <br/>
@@ -74,7 +74,10 @@
           </tbody>
         </table>
       </div>
-      {{ recurring }}{{ content_bottom }}</div>
+
+      {{ recurring }}
+
+      {{ content_bottom }}</div>
     {{ column_right }}</div>
 </div>
 {{ footer }} 

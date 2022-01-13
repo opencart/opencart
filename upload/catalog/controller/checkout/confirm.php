@@ -29,7 +29,7 @@ class Confirm extends \Opencart\System\Engine\Controller {
 		}
 
 		// Validate minimum quantity requirements.
-		$products = $this->cart->getProducts();
+		$products = $this->model_checkout_cart->getProducts();
 
 		foreach ($products as $product) {
 			if (!$product['minimum']) {
@@ -176,7 +176,7 @@ class Confirm extends \Opencart\System\Engine\Controller {
 			// Products
 			$order_data['products'] = [];
 
-			foreach ($this->cart->getProducts() as $product) {
+			foreach ($products as $product) {
 				$option_data = [];
 
 				foreach ($product['option'] as $option) {
@@ -192,18 +192,19 @@ class Confirm extends \Opencart\System\Engine\Controller {
 				}
 
 				$order_data['products'][] = [
-					'product_id' => $product['product_id'],
-					'master_id'  => $product['master_id'],
-					'name'       => $product['name'],
-					'model'      => $product['model'],
-					'option'     => $option_data,
-					'download'   => $product['download'],
-					'quantity'   => $product['quantity'],
-					'subtract'   => $product['subtract'],
-					'price'      => $product['price'],
-					'total'      => $product['total'],
-					'tax'        => $this->tax->getTax($product['price'], $product['tax_class_id']),
-					'reward'     => $product['reward']
+					'product_id'   => $product['product_id'],
+					'master_id'    => $product['master_id'],
+					'name'         => $product['name'],
+					'model'        => $product['model'],
+					'option'       => $option_data,
+					'subscription' => $product['subscription'],
+					'download'     => $product['download'],
+					'quantity'     => $product['quantity'],
+					'subtract'     => $product['subtract'],
+					'price'        => $product['price'],
+					'total'        => $product['total'],
+					'tax'          => $this->tax->getTax($product['price'], $product['tax_class_id']),
+					'reward'       => $product['reward']
 				];
 			}
 
@@ -302,10 +303,6 @@ class Confirm extends \Opencart\System\Engine\Controller {
 		];
 
 		$data['products'] = [];
-
-		$this->load->model('checkout/cart');
-
-		$products = $this->model_checkout_cart->getProducts();
 
 		foreach ($products as $product) {
 			$description = '';

@@ -18,10 +18,10 @@ class Order extends \Opencart\System\Engine\Model {
 				}
 
 
-				foreach ($product['subscription'] as $option) {
-				if () {
+				foreach ($product['subscription'] as $subscription) {
+
 					addSubscription
-				}
+
 			}
 		}
 

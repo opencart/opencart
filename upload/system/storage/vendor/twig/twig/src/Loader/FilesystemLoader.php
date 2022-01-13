@@ -22,7 +22,7 @@ use Twig\Source;
 class FilesystemLoader implements LoaderInterface
 {
     /** Identifier of the main namespace. */
-    const MAIN_NAMESPACE = '__main__';
+    public const MAIN_NAMESPACE = '__main__';
 
     protected $paths = [];
     protected $cache = [];
@@ -37,7 +37,7 @@ class FilesystemLoader implements LoaderInterface
     public function __construct($paths = [], string $rootPath = null)
     {
         $this->rootPath = (null === $rootPath ? getcwd() : $rootPath).\DIRECTORY_SEPARATOR;
-        if (false !== $realPath = realpath($rootPath)) {
+        if (null !== $rootPath && false !== ($realPath = realpath($rootPath))) {
             $this->rootPath = $realPath.\DIRECTORY_SEPARATOR;
         }
 
@@ -51,7 +51,7 @@ class FilesystemLoader implements LoaderInterface
      */
     public function getPaths(string $namespace = self::MAIN_NAMESPACE): array
     {
-        return isset($this->paths[$namespace]) ? $this->paths[$namespace] : [];
+        return $this->paths[$namespace] ?? [];
     }
 
     /**
@@ -277,7 +277,7 @@ class FilesystemLoader implements LoaderInterface
                 && ':' === $file[1]
                 && strspn($file, '/\\', 2, 1)
             )
-            || null !== parse_url($file, PHP_URL_SCHEME)
+            || null !== parse_url($file, \PHP_URL_SCHEME)
         ;
     }
 }

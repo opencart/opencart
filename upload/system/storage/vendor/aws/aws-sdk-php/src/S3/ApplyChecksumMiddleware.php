@@ -59,7 +59,7 @@ class ApplyChecksumMiddleware
             // Set the content MD5 header for operations that require it.
             $request = $request->withHeader(
                 'Content-MD5',
-                base64_encode(Psr7\hash($body, 'md5', true))
+                base64_encode(Psr7\Utils::hash($body, 'md5', true))
             );
         } elseif (in_array($name, self::$sha256) && $command['ContentSHA256']) {
             // Set the content hash header if provided in the parameters.

@@ -24,7 +24,7 @@
   "require": {
     "scssphp/scssphp": "^1.8",
     "php": ">=8.0.0",
-    "twig/twig": "^3.0",
+    "twig/twig": "^3.3.7",
     "aws/aws-sdk-php": "^3.142.1"
   }
 }

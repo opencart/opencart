@@ -150,7 +150,7 @@ class DecodingEventStreamIterator implements Iterator
                 $numBytes
             ) = $this->parseHeaders($prelude[self::LENGTH_HEADERS]);
 
-            $event[self::PAYLOAD] = Psr7\stream_for(
+            $event[self::PAYLOAD] = Psr7\Utils::streamFor(
                 $this->readAndHashBytes(
                     $prelude[self::LENGTH_TOTAL] - self::BYTES_PRELUDE
                     - $numBytes - self::BYTES_TRAILING
@@ -172,6 +172,7 @@ class DecodingEventStreamIterator implements Iterator
     /**
      * @return array
      */
+    #[\ReturnTypeWillChange]
     public function current()
     {
         return $this->currentEvent;
@@ -180,11 +181,13 @@ class DecodingEventStreamIterator implements Iterator
     /**
      * @return int
      */
+    #[\ReturnTypeWillChange]
     public function key()
     {
         return $this->key;
     }
 
+    #[\ReturnTypeWillChange]
     public function next()
     {
         $this->currentPosition = $this->stream->tell();
@@ -194,6 +197,7 @@ class DecodingEventStreamIterator implements Iterator
         }
     }
 
+    #[\ReturnTypeWillChange]
     public function rewind()
     {
         $this->stream->rewind();
@@ -205,6 +209,7 @@ class DecodingEventStreamIterator implements Iterator
     /**
      * @return bool
      */
+    #[\ReturnTypeWillChange]
     public function valid()
     {
         return $this->currentPosition < $this->stream->getSize();

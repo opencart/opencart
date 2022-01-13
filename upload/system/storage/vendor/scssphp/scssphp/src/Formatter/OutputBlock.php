@@ -16,6 +16,8 @@ namespace ScssPhp\ScssPhp\Formatter;
  * Output block
  *
  * @author Anthon Pang <anthon.pang@gmail.com>
+ *
+ * @internal
  */
 class OutputBlock
 {
@@ -25,22 +27,22 @@ class OutputBlock
     public $type;
 
     /**
-     * @var integer
+     * @var int
      */
     public $depth;
 
     /**
-     * @var array
+     * @var array|null
      */
     public $selectors;
 
     /**
-     * @var array
+     * @var string[]
      */
     public $lines;
 
     /**
-     * @var array
+     * @var OutputBlock[]
      */
     public $children;
 
@@ -50,17 +52,17 @@ class OutputBlock
     public $parent;
 
     /**
-     * @var string
+     * @var string|null
      */
     public $sourceName;
 
     /**
-     * @var integer
+     * @var int|null
      */
     public $sourceLine;
 
     /**
-     * @var integer
+     * @var int|null
      */
     public $sourceColumn;
 }

@@ -45,3 +45,27 @@ To enable the full `sass-spec` compatibility tests:
 Run the following command from the root directory to check the code for "sniffs".
 
     vendor/bin/phpcs --standard=PSR12 --extensions=php bin src tests *.php
+
+## Static Analysis
+
+`scssphp` uses [phpstan](https://phpstan.org/) for static analysis.
+
+Run the following command from the root directory to analyse the codebase:
+
+    make phpstan
+
+As most of the codebase is composed of legacy code which cannot be type-checked
+fully, the setup contains a baseline file with all errors we want to ignore. In
+particular, we ignore all errors related to not specifying the types inside arrays
+when these arrays correspond to the representation of Sass values and Sass AST nodes
+in the parser and compiler.
+When contributing, the proper process to deal with static analysis is the following:
+
+1. Make your change in the codebase
+2. Run `make phpstan`
+3. Fix errors reported by phpstan when possible
+4. Repeat step 2 and 3 until nothing gets fixed anymore at step 3
+5. Run `make phpstan-baseline` to regenerate the phpstan baseline
+
+Additions to the baseline will be reviewed to avoid ignoring errors that should have
+been fixed.

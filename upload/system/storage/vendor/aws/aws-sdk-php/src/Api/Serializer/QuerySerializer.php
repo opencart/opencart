@@ -54,7 +54,7 @@ class QuerySerializer
             );
         }
 
-        $body = http_build_query($body, null, '&', PHP_QUERY_RFC3986);
+        $body = http_build_query($body, '', '&', PHP_QUERY_RFC3986);
 
         return new Request(
             'POST',

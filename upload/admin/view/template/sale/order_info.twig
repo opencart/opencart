@@ -1525,17 +1525,17 @@ $('#input-product').autocomplete({
             html = '<fieldset class="mb-0">';
             html += '  <legend>{{ entry_subscription }}</legend>';
             html += '  <div class="mb-3 required">';
-            html += '    <select name="subscription_id" id="input-subscription" class="form-select">';
+            html += '    <select name="subscription_plan_id" id="input-subscription-plan" class="form-select">';
             html += '      <option value="">{{ text_select }}</option>';
 
             for (i = 0; i < item['subscription'].length; i++) {
-                html += '<option value="' + item['subscription'][i]['subscription_id'] + '">' + item['subscription'][i]['name'] + '</option>';
+                html += '<option value="' + item['subscription'][i]['subscription_plan_id'] + '">' + item['subscription'][i]['name'] + '</option>';
             }
 
             html += '  </select>';
 
             for (i = 0; i < item['subscription'].length; i++) {
-                html += '  <div id="subscription-description-' + item['subscription'][i]['subscription_id'] + '" class="form-text subscription">' + item['subscription'][i]['description'] + '</div>';
+                html += '  <div id="subscription-description-' + item['subscription'][i]['subscription_plan_id'] + '" class="form-text subscription">' + item['subscription'][i]['description'] + '</div>';
             }
 
             html += '  <div id="error-subscription" class="invalid-feedback"></div>';

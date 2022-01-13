@@ -1236,7 +1236,7 @@ class Product extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('catalog/product');
 		$this->load->model('catalog/option');
-		$this->load->model('catalog/subscription');
+		$this->load->model('catalog/subscription_plan');
 
 		$results = $this->model_catalog_product->getProducts($filter_data);
 
@@ -1282,7 +1282,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			$results = $this->model_catalog_product->getSubscriptions($result['product_id']);
 
 			foreach ($results as $result) {
-				$subscription_plan_info = $this->model_catalog_subscription->getSubscriptionPlan($result['subscription_plan_id']);
+				$subscription_plan_info = $this->model_catalog_subscription_plan->getSubscriptionPlan($result['subscription_plan_id']);
 
 				if ($subscription_plan_info) {
 					$description = '';

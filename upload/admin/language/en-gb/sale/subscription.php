@@ -16,6 +16,7 @@ $_['text_product_detail']                  = 'Product Details';
 $_['text_subscription_id']                 = 'Subscription ID';
 $_['text_reference']                       = 'Payment Reference';
 $_['text_subscription_name']               = 'Subscription Plan';
+
 $_['text_recurring_description']           = 'Description';
 $_['text_recurring_status']                = 'Recurring Status';
 $_['text_payment_method']                  = 'Payment Method';

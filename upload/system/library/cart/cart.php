@@ -25,7 +25,7 @@ class Cart {
 				$this->db->query("DELETE FROM `" . DB_PREFIX . "cart` WHERE `cart_id` = '" . (int)$cart['cart_id'] . "'");
 
 				// The advantage of using $this->add is that it will check if the products already exist and increase the quantity if necessary.
-				$this->add($cart['product_id'], $cart['quantity'], json_decode($cart['option'], true), $cart['recurring_id']);
+				$this->add($cart['product_id'], $cart['quantity'], json_decode($cart['option'], true), $cart['subscription_plan_id']);
 			}
 		}
 	}
@@ -245,24 +245,24 @@ class Cart {
 						$stock = false;
 					}
 
-					$recurring_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "recurring` r LEFT JOIN `" . DB_PREFIX . "product_recurring` pr ON (r.`recurring_id` = pr.`recurring_id`) LEFT JOIN `" . DB_PREFIX . "recurring_description` rd ON (r.`recurring_id` = rd.`recurring_id`) WHERE r.`recurring_id` = '" . (int)$cart['recurring_id'] . "' AND pr.`product_id` = '" . (int)$cart['product_id'] . "' AND rd.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND r.`status` = 1 AND pr.`customer_group_id` = '" . (int)$this->config->get('config_customer_group_id') . "'");
+					$subscription_data = [];
 
-					if ($recurring_query->num_rows) {
-						$recurring = [
-							'recurring_id'    => $cart['recurring_id'],
-							'name'            => $recurring_query->row['name'],
-							'frequency'       => $recurring_query->row['frequency'],
-							'price'           => $recurring_query->row['price'],
-							'cycle'           => $recurring_query->row['cycle'],
-							'duration'        => $recurring_query->row['duration'],
-							'trial'           => $recurring_query->row['trial_status'],
-							'trial_frequency' => $recurring_query->row['trial_frequency'],
-							'trial_price'     => $recurring_query->row['trial_price'],
-							'trial_cycle'     => $recurring_query->row['trial_cycle'],
-							'trial_duration'  => $recurring_query->row['trial_duration']
+					$subscription_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_subscription` ps LEFT JOIN `" . DB_PREFIX . "subscription_plan` sp ON (ps.`subscription_plan_id` = sp.`subscription_plan_id`) LEFT JOIN `" . DB_PREFIX . "subscription_plan_description` spd ON (sp.`subscription_plan_id` = spd.`subscription_plan_id`) WHERE ps.`product_id` = '" . (int)$cart['product_id'] . "' AND ps.`subscription_plan_id` = '" . (int)$cart['subscription_plan_id'] . "' AND ps.`customer_group_id` = '" . (int)$this->config->get('config_customer_group_id') . "' AND spd.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND sp.`status` = '1'");
+
+					if ($subscription_query->num_rows) {
+						$subscription_data = [
+							'subscription_plan_id' => $subscription_query->row['subscription_plan_id'],
+							'name'                 => $subscription_query->row['name'],
+							'trial_price'          => $subscription_query->row['trial_price'],
+							'trial_frequency'      => $subscription_query->row['trial_frequency'],
+							'trial_cycle'          => $subscription_query->row['trial_cycle'],
+							'trial_duration'       => $subscription_query->row['trial_duration'],
+							'trial_status'         => $subscription_query->row['trial_status'],
+							'price'                => $subscription_query->row['price'],
+							'frequency'            => $subscription_query->row['frequency'],
+							'cycle'                => $subscription_query->row['cycle'],
+							'duration'             => $subscription_query->row['duration']
 						];
-					} else {
-						$recurring = false;
 					}
 
 					$this->data[] = [
@@ -274,6 +274,7 @@ class Cart {
 						'shipping'        => $product_query->row['shipping'],
 						'image'           => $product_query->row['image'],
 						'option'          => $option_data,
+						'subscription'    => $subscription_data,
 						'download'        => $download_data,
 						'quantity'        => $cart['quantity'],
 						'minimum'         => $minimum,
@@ -289,8 +290,7 @@ class Cart {
 						'length'          => $product_query->row['length'],
 						'width'           => $product_query->row['width'],
 						'height'          => $product_query->row['height'],
-						'length_class_id' => $product_query->row['length_class_id'],
-						'recurring'       => $recurring
+						'length_class_id' => $product_query->row['length_class_id']
 					];
 				} else {
 					$this->remove($cart['cart_id']);
@@ -301,13 +301,13 @@ class Cart {
 		return $this->data;
 	}
 
-	public function add(int $product_id, int $quantity = 1, array $option = [], int $recurring_id = 0): void {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "cart` WHERE `api_id` = '" . (isset($this->session->data['api_id']) ? (int)$this->session->data['api_id'] : 0) . "' AND `customer_id` = '" . (int)$this->customer->getId() . "' AND `session_id` = '" . $this->db->escape($this->session->getId()) . "' AND `product_id` = '" . (int)$product_id . "' AND `recurring_id` = '" . (int)$recurring_id . "' AND `option` = '" . $this->db->escape(json_encode($option)) . "'");
+	public function add(int $product_id, int $quantity = 1, array $option = [], int $subscription_plan_id = 0): void {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "cart` WHERE `api_id` = '" . (isset($this->session->data['api_id']) ? (int)$this->session->data['api_id'] : 0) . "' AND `customer_id` = '" . (int)$this->customer->getId() . "' AND `session_id` = '" . $this->db->escape($this->session->getId()) . "' AND `product_id` = '" . (int)$product_id . "' AND `subscription_plan_id` = '" . (int)$subscription_plan_id . "' AND `option` = '" . $this->db->escape(json_encode($option)) . "'");
 
 		if (!$query->row['total']) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "cart` SET `api_id` = '" . (isset($this->session->data['api_id']) ? (int)$this->session->data['api_id'] : 0) . "', `customer_id` = '" . (int)$this->customer->getId() . "', `session_id` = '" . $this->db->escape($this->session->getId()) . "', `product_id` = '" . (int)$product_id . "', `recurring_id` = '" . (int)$recurring_id . "', `option` = '" . $this->db->escape(json_encode($option)) . "', `quantity` = '" . (int)$quantity . "', `date_added` = NOW()");
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "cart` SET `api_id` = '" . (isset($this->session->data['api_id']) ? (int)$this->session->data['api_id'] : 0) . "', `customer_id` = '" . (int)$this->customer->getId() . "', `session_id` = '" . $this->db->escape($this->session->getId()) . "', `product_id` = '" . (int)$product_id . "', `subscription_plan_id` = '" . (int)$subscription_plan_id . "', `option` = '" . $this->db->escape(json_encode($option)) . "', `quantity` = '" . (int)$quantity . "', `date_added` = NOW()");
 		} else {
-			$this->db->query("UPDATE `" . DB_PREFIX . "cart` SET `quantity` = (`quantity` + " . (int)$quantity . ") WHERE `api_id` = '" . (isset($this->session->data['api_id']) ? (int)$this->session->data['api_id'] : 0) . "' AND `customer_id` = '" . (int)$this->customer->getId() . "' AND `session_id` = '" . $this->db->escape($this->session->getId()) . "' AND `product_id` = '" . (int)$product_id . "' AND `recurring_id` = '" . (int)$recurring_id . "' AND `option` = '" . $this->db->escape(json_encode($option)) . "'");
+			$this->db->query("UPDATE `" . DB_PREFIX . "cart` SET `quantity` = (`quantity` + " . (int)$quantity . ") WHERE `api_id` = '" . (isset($this->session->data['api_id']) ? (int)$this->session->data['api_id'] : 0) . "' AND `customer_id` = '" . (int)$this->customer->getId() . "' AND `session_id` = '" . $this->db->escape($this->session->getId()) . "' AND `product_id` = '" . (int)$product_id . "' AND `subscription_plan_id` = '" . (int)$subscription_plan_id . "' AND `option` = '" . $this->db->escape(json_encode($option)) . "'");
 		}
 
 		$this->data = [];
@@ -331,11 +331,11 @@ class Cart {
 		$this->data = [];
 	}
 
-	public function getRecurring(): array {
+	public function getSubscription(): array {
 		$product_data = [];
 
 		foreach ($this->getProducts() as $value) {
-			if ($value['recurring']) {
+			if ($value['subscription']) {
 				$product_data[] = $value;
 			}
 		}
@@ -411,8 +411,8 @@ class Cart {
 		return count($this->getProducts()) ? true : false;
 	}
 
-	public function hasRecurring(): bool {
-		return count($this->getRecurring()) ? true : false;
+	public function hasSubscription(): bool {
+		return count($this->getSubscription()) ? true : false;
 	}
 
 	public function hasStock(): bool {

@@ -462,7 +462,7 @@ class Product extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-			// Recurrings
+			// Subscriptions
 			$frequencies = [
 				'day'        => $this->language->get('text_day'),
 				'week'       => $this->language->get('text_week'),
@@ -471,29 +471,29 @@ class Product extends \Opencart\System\Engine\Controller {
 				'year'       => $this->language->get('text_year'),
 			];
 
-			$data['recurrings']  = [];
+			$data['subscription_plans']  = [];
 
-			$results = $this->model_catalog_product->getProfiles($this->request->get['product_id']);
+			$results = $this->model_catalog_product->getSubscriptions($this->request->get['product_id']);
 
 			foreach ($results as $result) {
-				$recurring = '';
+				$description = '';
 
 				if ($result['trial_status']) {
-					$recurring = sprintf($this->language->get('text_recurring_trial'), $this->currency->format($this->tax->calculate($result['trial_price'], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']), $result['trial_cycle'], $frequencies[$result['trial_frequency']], $result['trial_duration']) . ' ';
+					$description = sprintf($this->language->get('text_subscription_trial'), $this->currency->format($this->tax->calculate($result['trial_price'], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']), $result['trial_cycle'], $frequencies[$result['trial_frequency']], $result['trial_duration']) . ' ';
 				}
 
 				$price = $this->currency->format($this->tax->calculate($result['price'], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
 
 				if ($result['duration']) {
-					$recurring .= sprintf($this->language->get('text_recurring_description'), $price, $result['cycle'], $frequencies[$result['frequency']], $result['duration']);
+					$description .= sprintf($this->language->get('text_subscription_description'), $price, $result['cycle'], $frequencies[$result['frequency']], $result['duration']);
 				} else {
-					$recurring .= sprintf($this->language->get('text_recurring_cancel'), $price, $result['cycle'], $frequencies[$result['frequency']]);
+					$description .= sprintf($this->language->get('text_subscription_cancel'), $price, $result['cycle'], $frequencies[$result['frequency']]);
 				}
 
-				$data['recurrings'][] = [
-					'recurring_id' => $result['recurring_id'],
-					'name'         => $result['name'],
-					'description'  => $recurring
+				$data['subscription_plans'][] = [
+					'subscription_plan_id' => $result['subscription_plan_id'],
+					'name'                 => $result['name'],
+					'description'          => $description
 				];
 			}
 

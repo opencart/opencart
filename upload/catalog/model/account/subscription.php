@@ -1,13 +1,17 @@
 <?php
 namespace Opencart\Catalog\Model\Account;
 class Subscription extends \Opencart\System\Engine\Model {
-	public function getRecurring(int $order_recurring_id): array {
-		$query = $this->db->query("SELECT `or`.*, `o`.`payment_method`, `o`.`payment_code`, `o`.`currency_code` FROM `" . DB_PREFIX . "order_recurring` `or` LEFT JOIN `" . DB_PREFIX . "order` `o` ON (`or`.`order_id` = `o`.`order_id`) WHERE `or`.`order_recurring_id` = '" . (int)$order_recurring_id . "' AND `o`.`customer_id` = '" . (int)$this->customer->getId() . "'");
+	public function editStatus(int $subscription_id, bool $status): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "subscription` SET `status` = '" . (bool)$status . "' WHERE `subscription_id` = '" . (int)$subscription_id . "'");
+	}
+
+	public function getSubscription(int $subscription_id): array {
+		$query = $this->db->query("SELECT `s`.*, `o`.`payment_method`, `o`.`payment_code`, `o`.`currency_code` FROM `" . DB_PREFIX . "subscription` `s` LEFT JOIN `" . DB_PREFIX . "order` `o` ON (`s`.`order_id` = `o`.`order_id`) WHERE `s`.`subscription_id` = '" . (int)$subscription_id . "' AND `o`.`customer_id` = '" . (int)$this->customer->getId() . "'");
 
 		return $query->row;
 	}
 
-	public function getRecurrings(int $start = 0, int $limit = 20): array {
+	public function getSubscriptions(int $start = 0, int $limit = 20): array {
 		if ($start < 0) {
 			$start = 0;
 		}
@@ -16,34 +20,30 @@ class Subscription extends \Opencart\System\Engine\Model {
 			$limit = 1;
 		}
 
-		$query = $this->db->query("SELECT `o`.*, `o`.`payment_method`, `o`.`currency_id`, `o`.`currency_value` FROM `" . DB_PREFIX . "order_recurring` `or` LEFT JOIN `" . DB_PREFIX . "order` `o` ON (`or`.`order_id` = o.`order_id`) WHERE `o`.`customer_id` = '" . (int)$this->customer->getId() . "' ORDER BY `o`.`order_id` DESC LIMIT " . (int)$start . "," . (int)$limit);
+		$query = $this->db->query("SELECT `o`.*, `o`.`payment_method`, `o`.`currency_id`, `o`.`currency_value` FROM `" . DB_PREFIX . "subscription` `s` LEFT JOIN `" . DB_PREFIX . "order` `o` ON (`s`.`order_id` = o.`order_id`) WHERE `o`.`customer_id` = '" . (int)$this->customer->getId() . "' ORDER BY `o`.`order_id` DESC LIMIT " . (int)$start . "," . (int)$limit);
 
 		return $query->rows;
 	}
 	
-	public function getRecurringByReference(string $reference): array {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_recurring` WHERE `reference` = '" . $this->db->escape($reference) . "'");
+	public function getSubscriptionByReference(string $reference): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "subscription` WHERE `reference` = '" . $this->db->escape($reference) . "'");
 
 		return $query->row;
 	}
 
-	public function getRecurringTransactions(int $order_recurring_id): array {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_recurring_transaction` WHERE `order_recurring_id` = '" . (int)$order_recurring_id . "'");
+	public function getTotalSubscriptions(): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "subscription` `s` LEFT JOIN `" . DB_PREFIX . "order` `o` ON (`s`.`order_id` = `o`.`order_id`) WHERE `o`.`customer_id` = '" . (int)$this->customer->getId() . "'");
+
+		return $query->row['total'];
+	}
+
+	public function getTransactions(int $subscription_id): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "subscription_transaction` WHERE `subscription_id` = '" . (int)$subscription_id . "'");
 
 		return $query->rows;
 	}
 
-	public function getTotalRecurrings(): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "order_recurring` `or` LEFT JOIN `" . DB_PREFIX . "order` `o` ON (`or`.`order_id` = `o`.`order_id`) WHERE `o`.`customer_id` = '" . (int)$this->customer->getId() . "'");
-
-		return $query->row['total'];
+	public function addTransaction(int $subscription_id, int $order_id, string $type): void {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "subscription_transaction` SET `subscription_id` = '" . (int)$subscription_id . "', `order_id` = '" . (int)$order_id . "', `type` = '" . (int)$type . "', `date_added` = NOW()");
 	}
-	
-	public function addRecurringTransaction(int $order_recurring_id, int $order_id, string $type): void {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "order_recurring_transaction` SET `order_recurring_id` = '" . (int)$order_recurring_id . "', `order_id` = '" . (int)$order_id . "', `type` = '" . (int)$type . "', `date_added` = NOW()");
-	}	
-	
-	public function editRecurringStatus(int $order_recurring_id, bool $status): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "order_recurring` SET `status` = '" . (bool)$status . "' WHERE `order_recurring_id` = '" . (int)$order_recurring_id . "'");
-	}	
 }

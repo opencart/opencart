@@ -288,20 +288,20 @@
                 {% endfor %}
                 {% endif %}
 
-                {% if recurrings %}
+                {% if subscription_plans %}
                   <hr/>
-                  <h3>{{ text_payment_recurring }}</h3>
+                  <h3>{{ text_subscription }}</h3>
                   <div class="mb-3 required">
-                    <select name="recurring_id" id="input-recurring" class="form-select">
+                    <select name="subscription_plan_id" id="input-subscription" class="form-select">
                       <option value="">{{ text_select }}</option>
-                      {% for recurring in recurrings %}
-                        <option value="{{ recurring.recurring_id }}">{{ recurring.name }}</option>
+                      {% for subscription_plan in subscription_plans %}
+                        <option value="{{ subscription_plan.subscription_plan_id }}">{{ subscription_plan.name }}</option>
                       {% endfor %}
                     </select>
-                    {% for recurring in recurrings %}
-                    <div id="recurring-description-{{ recurring.recurring_id }}" class="form-text recurring d-none">{{ recurring.description }}</div>
+                    {% for subscription_plan in subscription_plans %}
+                    <div id="subscription-description-{{ subscription_plan.subscription_plan_id }}" class="form-text subscription d-none">{{ subscription_plan.description }}</div>
                     {% endfor %}
-                    <div id="error-recurring" class="invalid-feedback"></div>
+                    <div id="error-subscription" class="invalid-feedback"></div>
                   </div>
                 {% endif %}
 
@@ -356,12 +356,12 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#input-recurring').on('change', function(e) {
+$('#input-subscription').on('change', function(e) {
     var element = this;
 
-    $('.recurring').addClass('d-none');
+    $('.subscription').addClass('d-none');
 
-    $('#recurring-description-' + $(element).val()).removeClass('d-none');
+    $('#subscription-description-' + $(element).val()).removeClass('d-none');
 });
 
 $('#form-product').on('submit', function(e) {

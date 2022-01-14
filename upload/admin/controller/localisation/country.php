@@ -292,10 +292,14 @@ class Country extends \Opencart\System\Engine\Controller {
 			$data['iso_code_3'] = '';
 		}
 
+		$this->load->model('localisation/address_format');
+
+		$data['address_formats'] = $this->model_localisation_address_format->getAddressFormats();
+
 		if (!empty($country_info)) {
-			$data['address_format'] = $country_info['address_format'];
+			$data['address_format_id'] = $country_info['address_format_id'];
 		} else {
-			$data['address_format'] = '';
+			$data['address_format_id'] = '';
 		}
 
 		if (!empty($country_info)) {
@@ -431,7 +435,7 @@ class Country extends \Opencart\System\Engine\Controller {
 				'name'              => $country_info['name'],
 				'iso_code_2'        => $country_info['iso_code_2'],
 				'iso_code_3'        => $country_info['iso_code_3'],
-				'address_format'    => $country_info['address_format'],
+				'address_format_id' => $country_info['address_format_id'],
 				'postcode_required' => $country_info['postcode_required'],
 				'zone'              => $this->model_localisation_zone->getZonesByCountryId($country_id),
 				'status'            => $country_info['status']

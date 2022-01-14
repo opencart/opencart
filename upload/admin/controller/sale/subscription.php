@@ -61,6 +61,11 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 		$data['list'] = $this->getList();
 
+		// Subscription
+		$this->load->model('localisation/subscription_status');
+
+		$data['subscription_statuses'] = $this->model_localisation_subscription_status->getSubscriptionStatuses();
+
 		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');

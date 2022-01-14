@@ -170,6 +170,12 @@ class Setting extends \Opencart\System\Engine\Controller {
 
 		$data['config_weight_class_id'] = $this->config->get('config_weight_class_id');
 
+		$this->load->model('localisation/address_format');
+
+		$data['address_formats'] = $this->model_localisation_address_format->getAddressFormats();
+
+		$data['config_address_format_id'] = $this->config->get('config_address_format_id');
+
 		// Options
 		if ($this->config->get('config_product_description_length')) {
 			$data['config_product_description_length'] = $this->config->get('config_product_description_length');

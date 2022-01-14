@@ -405,7 +405,7 @@ class SubscriptionPlan extends \Opencart\System\Engine\Controller {
 			$this->load->model('catalog/subscription_plan');
 
 			foreach ($selected as $subscription_plan_id) {
-				$this->model_catalog_subscription->deleteSubscriptionPlan($subscription_plan_id);
+				$this->model_catalog_subscription_plan->deleteSubscriptionPlan($subscription_plan_id);
 			}
 
 			$json['success'] = $this->language->get('text_success');

@@ -17,11 +17,12 @@ $_['text_year']             = 'Year';
 
 // Entry
 $_['entry_name']            = 'Subscription Plan Name';
-$_['entry_trial_price']     = 'Trial price';
-$_['entry_trial_duration']  = 'Trial duration';
-$_['entry_trial_status']    = 'Trial status';
-$_['entry_trial_cycle']     = 'Trial cycle';
-$_['entry_trial_frequency'] = 'Trial frequency';
+$_['entry_description']     = 'Description';
+$_['entry_trial_price']     = 'Trial Price';
+$_['entry_trial_duration']  = 'Trial Duration';
+$_['entry_trial_cycle']     = 'Trial Cycle';
+$_['entry_trial_frequency'] = 'Trial Frequency';
+$_['entry_trial_status']    = 'Trial Status';
 $_['entry_price']           = 'Price';
 $_['entry_duration']        = 'Duration';
 $_['entry_cycle']           = 'Cycle';
@@ -30,11 +31,12 @@ $_['entry_status']          = 'Status';
 $_['entry_sort_order']      = 'Sort Order';
 
 // Column
-$_['column_name']           = 'Name';
+$_['column_name']           = 'Subscription Plan Name';
 $_['column_sort_order']     = 'Sort Order';
 $_['column_action']         = 'Action';
 
 // Help
+$_['help_description']      = 'Trial Price = {trial_price}<br />Trial Duration = {trial_duration}<br />Trial Cycle = {trial_cycle}<br />Trial Frequency = {trial_frequency}<br />Price = {price}<br />Duration = {duration}<br />Cycle = {cycle}<br />Frequency = {frequency}';
 $_['help_duration']         = 'The duration is the number of times the user will make a payment, set this to 0 if you want payments until they are cancelled.';
 $_['help_cycle']            = 'Subscription amounts are calculated by the frequency and cycles.';
 $_['help_frequency']        = 'If you use a frequency of "week" and a cycle of "2", then the user will be billed every 2 weeks.';

@@ -1285,24 +1285,9 @@ class Product extends \Opencart\System\Engine\Controller {
 				$subscription_plan_info = $this->model_catalog_subscription_plan->getSubscriptionPlan($product_subscription['subscription_plan_id']);
 
 				if ($subscription_plan_info) {
-					$description = '';
-
-					if ($subscription_plan_info['trial_status']) {
-						$description = sprintf($this->language->get('text_subscription_trial'), $this->currency->format($subscription_plan_info['trial_price'], $this->session->data['currency']), $subscription_plan_info['trial_cycle'], $frequencies[$subscription_plan_info['trial_frequency']], $subscription_plan_info['trial_duration']) . ' ';
-					}
-
-					$price = $this->currency->format($subscription_plan_info['price'], $this->config->get('config_currency'));
-
-					if ($subscription_plan_info['duration']) {
-						$description .= sprintf($this->language->get('text_subscription_description'), $price, $subscription_plan_info['cycle'], $frequencies[$subscription_plan_info['frequency']], $subscription_plan_info['duration']);
-					} else {
-						$description .= sprintf($this->language->get('text_subscription_cancel'), $price, $subscription_plan_info['cycle'], $frequencies[$subscription_plan_info['frequency']]);
-					}
-
 					$subscription_data[] = [
 						'subscription_plan_id' => $subscription_plan_info['subscription_plan_id'],
-						'name'                 => $subscription_plan_info['name'],
-						'description'          => $description
+						'name'                 => $subscription_plan_info['name']
 					];
 				}
 			}

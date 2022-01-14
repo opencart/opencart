@@ -1,8 +1,14 @@
 <?php
 namespace Opencart\Admin\Model\Sale;
 class Subscription extends \Opencart\System\Engine\Model {
+	public function getSubscription(int $subscription_id): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "subscription` WHERE `subscription_id` = '" . (int)$subscription_id . "'");
+
+		return $query->row;
+	}
+
 	public function getSubscriptions(array $data): array {
-		$sql = "SELECT `s`.`subscription_id`, `s`.`order_id`, `s`.`reference`, `s`.`status`, `s`.`date_added`, CONCAT(o.`firstname`, ' ', o.`lastname`) AS customer FROM `" . DB_PREFIX . "subscription` `s` LEFT JOIN `" . DB_PREFIX . "order` `o` ON (`s`.`order_id` = `o`.`order_id`)";
+		$sql = "SELECT `s`.`subscription_id`, `s`.`order_id`, `s`.`reference`, CONCAT(o.`firstname`, ' ', o.`lastname`) AS customer, (SELECT ss.`name` FROM `" . DB_PREFIX . "subscription_status` ss WHERE ss.`subscription_status_id` = s.`subscription_status_id` AND ss.`language_id` = '" . (int)$this->config->get('config_language_id') . "') AS subscription_status, `s`.`date_added`, `s`.`date_modified` FROM `" . DB_PREFIX . "subscription` `s` LEFT JOIN `" . DB_PREFIX . "order` `o` ON (`s`.`order_id` = `o`.`order_id`)";
 
 		$implode = [];
 
@@ -22,8 +28,8 @@ class Subscription extends \Opencart\System\Engine\Model {
 			$implode[] = "CONCAT(o.`firstname`, ' ', o.`lastname`) LIKE '" . $this->db->escape((string)$data['filter_customer']) . "%'";
 		}
 
-		if (!empty($data['filter_status'])) {
-			$implode[] = "`s`.`status` = '" . (int)$data['filter_status'] . "'";
+		if (!empty($data['filter_subscription_status_id'])) {
+			$implode[] = "`ss`.`subscription_status_id` = '" . (int)$data['filter_subscription_status_id'] . "'";
 		}
 
 		if (!empty($data['filter_date_added'])) {
@@ -39,7 +45,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 			's.order_id',
 			's.reference',
 			'customer',
-			's.status',
+			's.subscription_status',
 			's.date_added'
 		];
 
@@ -72,12 +78,6 @@ class Subscription extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function getSubscription(int $subscription_id): array {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "subscription_transaction` WHERE `subscription_id` = '" . (int)$subscription_id . "'");
-
-		return $query->row;
-	}
-
 	public function getTotalSubscriptions(array $data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "subscription` `s` LEFT JOIN `" . DB_PREFIX . "order` `o` ON (`s`.`order_id` = o.`order_id`)";
 
@@ -88,23 +88,23 @@ class Subscription extends \Opencart\System\Engine\Model {
 		}
 
 		if (!empty($data['filter_order_id'])) {
-			$implode[] .= "`or`.`order_id` = '" . (int)$data['filter_order_id'] . "'";
+			$implode[] .= "`s`.`order_id` = '" . (int)$data['filter_order_id'] . "'";
 		}
 
 		if (!empty($data['filter_payment_reference'])) {
-			$implode[] .= "`or`.`reference` LIKE '" . $this->db->escape((string)$data['filter_reference']) . "%'";
+			$implode[] .= "`s`.`reference` LIKE '" . $this->db->escape((string)$data['filter_reference']) . "%'";
 		}
 
 		if (!empty($data['filter_customer'])) {
 			$implode[] .= "CONCAT(o.`firstname`, ' ', o.`lastname`) LIKE '" . $this->db->escape((string)$data['filter_customer']) . "%'";
 		}
 
-		if (!empty($data['filter_status'])) {
-			$implode[] .= "`or`.`status` = '" . (int)$data['filter_status'] . "'";
+		if (!empty($data['filter_subscription_status_id'])) {
+			$implode[] .= "`ss`.`subscription_status_id` = '" . (int)$data['filter_subscription_status_id'] . "'";
 		}
 
 		if (!empty($data['filter_date_added'])) {
-			$implode[] .= "DATE(`or`.`date_added`) = DATE('" . $this->db->escape((string)$data['filter_date_added']) . "')";
+			$implode[] .= "DATE(`s`.`date_added`) = DATE('" . $this->db->escape((string)$data['filter_date_added']) . "')";
 		}
 
 		if ($implode) {
@@ -116,84 +116,57 @@ class Subscription extends \Opencart\System\Engine\Model {
 		return (int)$query->row['total'];
 	}
 
-	public function getTransactions(int $subscription_id): array {
-		$transactions = [];
+	public function getTotalSubscriptionsBySubscriptionStatusId(int $subscription_status_id): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "subscription` WHERE `subscription_status_id` = '" . (int)$subscription_status_id . "'");
 
-		$query = $this->db->query("SELECT `order_id`, `amount`, `type`, `date_added` FROM `" . DB_PREFIX . "subscription_transaction` WHERE `subscription_id` = '" . (int)$subscription_id . "' ORDER BY `date_added` DESC");
+		return (int)$query->row['total'];
+	}
+
+	public function getTransactions(int $subscription_id): array {
+		$transaction_data = [];
+
+		$query = $this->db->query("SELECT `order_id`, `amount`, `date_added` FROM `" . DB_PREFIX . "subscription_transaction` WHERE `subscription_id` = '" . (int)$subscription_id . "' ORDER BY `date_added` DESC");
 
 		foreach ($query->rows as $result) {
-			switch ($result['type']) {
-				case 0:
-					$type = $this->language->get('text_transaction_date_added');
-					break;
-				case 1:
-					$type = $this->language->get('text_transaction_payment');
-					break;
-				case 2:
-					$type = $this->language->get('text_transaction_outstanding_payment');
-					break;
-				case 3:
-					$type = $this->language->get('text_transaction_skipped');
-					break;
-				case 4:
-					$type = $this->language->get('text_transaction_failed');
-					break;
-				case 5:
-					$type = $this->language->get('text_transaction_cancelled');
-					break;
-				case 6:
-					$type = $this->language->get('text_transaction_suspended');
-					break;
-				case 7:
-					$type = $this->language->get('text_transaction_suspended_failed');
-					break;
-				case 8:
-					$type = $this->language->get('text_transaction_outstanding_failed');
-					break;
-				case 9:
-					$type = $this->language->get('text_transaction_expired');
-					break;
-				default:
-					$type = '';
-					break;
-			}
-
-			$transactions[] = [
+			$transaction_data[] = [
 				'date_added' => $result['date_added'],
 				'amount'     => $result['amount'],
-				'type'       => $type,
 				'order_id'   => $result['order_id']
 			];
 		}
 
-		return $transactions;
+		return $transaction_data;
 	}
 
-	private function getStatus(int $status): string {
-		switch ($status) {
-			case 1:
-				$result = $this->language->get('text_status_inactive');
-				break;
-			case 2:
-				$result = $this->language->get('text_status_active');
-				break;
-			case 3:
-				$result = $this->language->get('text_status_suspended');
-				break;
-			case 4:
-				$result = $this->language->get('text_status_cancelled');
-				break;
-			case 5:
-				$result = $this->language->get('text_status_expired');
-				break;
-			case 6:
-				$result = $this->language->get('text_status_pending');
-				break;
-			default:
-				$result = '';
-				break;
+	public function getTotalTransactions(int $subscription_id): array {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "subscription_transaction` WHERE `subscription_id` = '" . (int)$subscription_id . "'");
+
+		return (int)$query->row['total'];
+	}
+
+	public function getHistories(int $subscription_id, int $start = 0, int $limit = 10) {
+		if ($start < 0) {
+			$start = 0;
 		}
 
-		return $result;
+		if ($limit < 1) {
+			$limit = 10;
+		}
+
+		$query = $this->db->query("SELECT sh.`date_added`, ss.`name` AS status, sh.`comment`, sh.`notify` FROM `" . DB_PREFIX . "subscription_history` sh LEFT JOIN `" . DB_PREFIX . "subscription_status` ss ON sh.`subscription_status_id` = ss.`subscription_status_id` WHERE sh.`subscription_id` = '" . (int)$subscription_id . "' AND ss.`language_id` = '" . (int)$this->config->get('config_language_id') . "' ORDER BY sh.`date_added` DESC LIMIT " . (int)$start . "," . (int)$limit);
+
+		return $query->rows;
+	}
+
+	public function getTotalHistories(int $subscription_id): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "subscription_history` WHERE `subscription_id` = '" . (int)$subscription_id . "'");
+
+		return (int)$query->row['total'];
+	}
+
+	public function getTotalHistoriesBySubscriptionStatusId(int $subscription_status_id): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "subscription_history` WHERE `subscription_status_id` = '" . (int)$subscription_status_id . "'");
+
+		return (int)$query->row['total'];
 	}
 }

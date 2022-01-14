@@ -367,6 +367,41 @@ class Product extends \Opencart\System\Engine\Controller {
 				}
 			}
 
+			// Subscriptions
+			$frequencies = [
+				'day'        => $this->language->get('text_day'),
+				'week'       => $this->language->get('text_week'),
+				'semi_month' => $this->language->get('text_semi_month'),
+				'month'      => $this->language->get('text_month'),
+				'year'       => $this->language->get('text_year'),
+			];
+
+			$data['subscription_plans']  = [];
+
+			$results = $this->model_catalog_product->getSubscriptions($this->request->get['product_id']);
+
+			foreach ($results as $result) {
+				$description = '';
+
+				if ($result['trial_status']) {
+					$description = sprintf($this->language->get('text_subscription_trial'), $this->currency->format($this->tax->calculate($result['trial_price'], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']), $result['trial_cycle'], $frequencies[$result['trial_frequency']], $result['trial_duration']) . ' ';
+				}
+
+				$price = $this->currency->format($this->tax->calculate($result['price'], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
+
+				if ($result['duration']) {
+					$description .= sprintf($this->language->get('text_subscription_description'), $price, $result['cycle'], $frequencies[$result['frequency']], $result['duration']);
+				} else {
+					$description .= sprintf($this->language->get('text_subscription_cancel'), $price, $result['cycle'], $frequencies[$result['frequency']]);
+				}
+
+				$data['subscription_plans'][] = [
+					'subscription_plan_id' => $result['subscription_plan_id'],
+					'name'                 => $result['name'],
+					'description'          => sprintf($result['name'], $result)
+				];
+			}
+
 			if ($product_info['minimum']) {
 				$data['minimum'] = $product_info['minimum'];
 			} else {
@@ -460,41 +495,6 @@ class Product extends \Opencart\System\Engine\Controller {
 						'href' => $this->url->link('product/search', 'language=' . $this->config->get('config_language') . '&tag=' . trim($tag))
 					];
 				}
-			}
-
-			// Subscriptions
-			$frequencies = [
-				'day'        => $this->language->get('text_day'),
-				'week'       => $this->language->get('text_week'),
-				'semi_month' => $this->language->get('text_semi_month'),
-				'month'      => $this->language->get('text_month'),
-				'year'       => $this->language->get('text_year'),
-			];
-
-			$data['subscription_plans']  = [];
-
-			$results = $this->model_catalog_product->getSubscriptions($this->request->get['product_id']);
-
-			foreach ($results as $result) {
-				$description = '';
-
-				if ($result['trial_status']) {
-					$description = sprintf($this->language->get('text_subscription_trial'), $this->currency->format($this->tax->calculate($result['trial_price'], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']), $result['trial_cycle'], $frequencies[$result['trial_frequency']], $result['trial_duration']) . ' ';
-				}
-
-				$price = $this->currency->format($this->tax->calculate($result['price'], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
-
-				if ($result['duration']) {
-					$description .= sprintf($this->language->get('text_subscription_description'), $price, $result['cycle'], $frequencies[$result['frequency']], $result['duration']);
-				} else {
-					$description .= sprintf($this->language->get('text_subscription_cancel'), $price, $result['cycle'], $frequencies[$result['frequency']]);
-				}
-
-				$data['subscription_plans'][] = [
-					'subscription_plan_id' => $result['subscription_plan_id'],
-					'name'                 => $result['name'],
-					'description'          => $description
-				];
 			}
 
 			if ($this->config->get('config_product_report_status')) {

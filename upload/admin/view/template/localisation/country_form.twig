@@ -17,7 +17,6 @@
       <div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_form }}</div>
       <div class="card-body">
         <form id="form-country" action="{{ save }}" method="post" data-oc-toggle="ajax">
-          <input type="hidden" name="country_id" value="{{ country_id }}" id="input-country-id"/>
           <div class="row mb-3 required">
             <label for="input-name" class="col-sm-2 col-form-label">{{ entry_name }}</label>
             <div class="col-sm-10">
@@ -40,8 +39,11 @@
           <div class="row mb-3">
             <label for="input-address-format" class="col-sm-2 col-form-label">{{ entry_address_format }}</label>
             <div class="col-sm-10">
-              <textarea name="address_format" rows="5" placeholder="{{ entry_address_format }}" id="input-address-format" class="form-control">{{ address_format }}</textarea>
-              <div class="form-text">{{ help_address_format }}</div>
+              <select name="address_format_id" id="input-address-format" class="form-select">
+                {% for address_format in address_formats %}
+                  <option value="{{ address_format.address_format_id }}"{% if address_format.address_format_id == address_format_id %} selected{% endif %}>{{ address_format.name }}</option>
+                {% endfor %}
+              </select>
             </div>
           </div>
           <div class="row mb-3">
@@ -61,6 +63,7 @@
               </select>
             </div>
           </div>
+          <input type="hidden" name="country_id" value="{{ country_id }}" id="input-country-id"/>
         </form>
       </div>
     </div>

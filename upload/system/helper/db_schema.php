@@ -87,6 +87,34 @@ function db_schema() {
 	];
 
 	$tables[] = [
+		'name' => 'address_format',
+		'field' => [
+			[
+				'name' => 'address_format_id',
+				'type' => 'int(11)',
+				'not_null' => true,
+				'auto_increment' => true
+			],
+			[
+				'name' => 'name',
+				'type' => 'varchar(128)',
+				'not_null' => true
+			],
+			[
+				'name' => 'address_format',
+				'type' => 'text',
+				'not_null' => true
+			]
+		],
+		'primary' => [
+			'address_format_id'
+		],
+		'engine' => 'InnoDB',
+		'charset' => 'utf8',
+		'collate' => 'utf8_general_ci'
+	];
+
+	$tables[] = [
 		'name' => 'api',
 		'field' => [
 			[
@@ -705,8 +733,8 @@ function db_schema() {
 				'not_null' => true
 			],
 			[
-				'name' => 'address_format',
-				'type' => 'text',
+				'name' => 'address_format_id',
+				'type' => 'int(11)',
 				'not_null' => true
 			],
 			[
@@ -4690,108 +4718,6 @@ function db_schema() {
 	];
 
 	$tables[] = [
-		'name' => 'subscription_plan',
-		'field' => [
-			[
-				'name' => 'subscription_plan_id',
-				'type' => 'int(11)',
-				'not_null' => true,
-				'auto_increment' => true
-			],
-
-			[
-				'name' => 'trial_price',
-				'type' => 'decimal(10,4)',
-				'not_null' => true
-			],
-			[
-				'name' => 'trial_frequency',
-				'type' => 'enum(\'day\',\'week\',\'semi_month\',\'month\',\'year\')',
-				'not_null' => true
-			],
-			[
-				'name' => 'trial_duration',
-				'type' => 'int(10)',
-				'not_null' => true
-			],
-			[
-				'name' => 'trial_cycle',
-				'type' => 'int(10)',
-				'not_null' => true
-			],
-			[
-				'name' => 'trial_status',
-				'type' => 'tinyint(4)',
-				'not_null' => true
-			],
-			[
-				'name' => 'price',
-				'type' => 'decimal(10,4)',
-				'not_null' => true
-			],
-			[
-				'name' => 'frequency',
-				'type' => 'enum(\'day\',\'week\',\'semi_month\',\'month\',\'year\')',
-				'not_null' => true
-			],
-			[
-				'name' => 'duration',
-				'type' => 'int(10)',
-				'not_null' => true
-			],
-			[
-				'name' => 'cycle',
-				'type' => 'int(10)',
-				'not_null' => true
-			],
-			[
-				'name' => 'status',
-				'type' => 'tinyint(1)',
-				'not_null' => true
-			],
-			[
-				'name' => 'sort_order',
-				'type' => 'int(3)',
-				'not_null' => true
-			]
-		],
-		'primary' => [
-			'subscription_plan_id'
-		],
-		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
-	];
-
-	$tables[] = [
-		'name' => 'subscription_plan_description',
-		'field' => [
-			[
-				'name' => 'subscription_plan_id',
-				'type' => 'int(11)',
-				'not_null' => true
-			],
-			[
-				'name' => 'language_id',
-				'type' => 'int(11)',
-				'not_null' => true
-			],
-			[
-				'name' => 'name',
-				'type' => 'varchar(255)',
-				'not_null' => true
-			]
-		],
-		'primary' => [
-			'subscription_plan_id',
-			'language_id'
-		],
-		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
-	];
-
-	$tables[] = [
 		'name' => 'return',
 		'field' => [
 			[
@@ -5338,7 +5264,7 @@ function db_schema() {
 			],
 			[
 				'name' => 'description',
-				'type' => 'varchar(255)',
+				'type' => 'text',
 				'not_null' => true
 			],
 			[
@@ -5387,8 +5313,8 @@ function db_schema() {
 				'not_null' => true
 			],
 			[
-				'name' => 'status',
-				'type' => 'tinyint(1)',
+				'name' => 'subscription_status_id',
+				'type' => 'int(11)',
 				'not_null' => true
 			],
 			[
@@ -5412,6 +5338,186 @@ function db_schema() {
 					'order_id'
 				]
 			]
+		],
+		'engine' => 'InnoDB',
+		'charset' => 'utf8',
+		'collate' => 'utf8_general_ci'
+	];
+
+	$tables[] = [
+		'name' => 'subscription_history',
+		'field' => [
+			[
+				'name' => 'subscription_history_id',
+				'type' => 'int(11)',
+				'not_null' => true,
+				'auto_increment' => true
+			],
+			[
+				'name' => 'subscription_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'subscription_status_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'notify',
+				'type' => 'tinyint(1)',
+				'not_null' => true,
+				'default' => '0'
+			],
+			[
+				'name' => 'comment',
+				'type' => 'text',
+				'not_null' => true
+			],
+			[
+				'name' => 'date_added',
+				'type' => 'datetime',
+				'not_null' => true
+			]
+		],
+		'primary' => [
+			'subscription_history_id'
+		],
+		'engine' => 'InnoDB',
+		'charset' => 'utf8',
+		'collate' => 'utf8_general_ci'
+	];
+
+	$tables[] = [
+		'name' => 'subscription_plan',
+		'field' => [
+			[
+				'name' => 'subscription_plan_id',
+				'type' => 'int(11)',
+				'not_null' => true,
+				'auto_increment' => true
+			],
+
+			[
+				'name' => 'trial_price',
+				'type' => 'decimal(10,4)',
+				'not_null' => true
+			],
+			[
+				'name' => 'trial_frequency',
+				'type' => 'enum(\'day\',\'week\',\'semi_month\',\'month\',\'year\')',
+				'not_null' => true
+			],
+			[
+				'name' => 'trial_duration',
+				'type' => 'int(10)',
+				'not_null' => true
+			],
+			[
+				'name' => 'trial_cycle',
+				'type' => 'int(10)',
+				'not_null' => true
+			],
+			[
+				'name' => 'trial_status',
+				'type' => 'tinyint(4)',
+				'not_null' => true
+			],
+			[
+				'name' => 'price',
+				'type' => 'decimal(10,4)',
+				'not_null' => true
+			],
+			[
+				'name' => 'frequency',
+				'type' => 'enum(\'day\',\'week\',\'semi_month\',\'month\',\'year\')',
+				'not_null' => true
+			],
+			[
+				'name' => 'duration',
+				'type' => 'int(10)',
+				'not_null' => true
+			],
+			[
+				'name' => 'cycle',
+				'type' => 'int(10)',
+				'not_null' => true
+			],
+			[
+				'name' => 'status',
+				'type' => 'tinyint(1)',
+				'not_null' => true
+			],
+			[
+				'name' => 'sort_order',
+				'type' => 'int(3)',
+				'not_null' => true
+			]
+		],
+		'primary' => [
+			'subscription_plan_id'
+		],
+		'engine' => 'InnoDB',
+		'charset' => 'utf8',
+		'collate' => 'utf8_general_ci'
+	];
+
+	$tables[] = [
+		'name' => 'subscription_plan_description',
+		'field' => [
+			[
+				'name' => 'subscription_plan_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'language_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'name',
+				'type' => 'varchar(255)',
+				'not_null' => true
+			],
+			[
+				'name' => 'description',
+				'type' => 'text',
+				'not_null' => true
+			]
+		],
+		'primary' => [
+			'subscription_plan_id',
+			'language_id'
+		],
+		'engine' => 'InnoDB',
+		'charset' => 'utf8',
+		'collate' => 'utf8_general_ci'
+	];
+
+	$tables[] = [
+		'name' => 'subscription_status',
+		'field' => [
+			[
+				'name' => 'subscription_status_id',
+				'type' => 'int(11)',
+				'not_null' => true,
+				'auto_increment' => true
+			],
+			[
+				'name' => 'language_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'name',
+				'type' => 'varchar(32)',
+				'not_null' => true
+			]
+		],
+		'primary' => [
+			'subscription_status_id',
+			'language_id'
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
@@ -5443,11 +5549,6 @@ function db_schema() {
 				'not_null' => true
 			],
 			[
-				'name' => 'type',
-				'type' => 'int(11)',
-				'not_null' => true
-			],
-			[
 				'name' => 'amount',
 				'type' => 'decimal(10,4)',
 				'not_null' => true
@@ -5463,40 +5564,17 @@ function db_schema() {
 		],
 		'index' => [
 			[
+				'name' => 'subscription_id',
+				'key' => [
+					'subscription_id'
+				]
+			],
+			[
 				'name' => 'order_id',
 				'key' => [
 					'order_id'
 				]
 			]
-		],
-		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
-	];
-
-	$tables[] = [
-		'name' => 'subscription_status',
-		'field' => [
-			[
-				'name' => 'subscription_status_id',
-				'type' => 'int(11)',
-				'not_null' => true,
-				'auto_increment' => true
-			],
-			[
-				'name' => 'language_id',
-				'type' => 'int(11)',
-				'not_null' => true
-			],
-			[
-				'name' => 'name',
-				'type' => 'varchar(32)',
-				'not_null' => true
-			]
-		],
-		'primary' => [
-			'subscription_status_id',
-			'language_id'
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',

@@ -25,7 +25,7 @@
             </div>
             <div class="mb-3">
               <label for="input-order-id" class="form-label">{{ entry_order_id }}</label>
-              <input type="text" name="filter_subscription_id" value="{{ filter_subscription_id }}" placeholder="{{ entry_order_id }}" id="input-order-id" class="form-control"/>
+              <input type="text" name="filter_order_id" value="{{ filter_order_id }}" placeholder="{{ entry_order_id }}" id="input-order-id" class="form-control"/>
             </div>
             <div class="mb-3">
               <label for="input-reference" class="form-label">{{ entry_reference }}</label>
@@ -38,10 +38,12 @@
             </div>
             <div class="mb-3">
               <label for="input-status" class="form-label">{{ entry_status }}</label>
-              <select name="filter_status" id="input-status" class="form-select">
-                <option value=""></option>
-                <option value="1"{% if filter_status == '1' %} selected{% endif %}>{{ text_enabled }}</option>
-                <option value="0"{% if filter_status == '0' %} selected{% endif %}>{{ text_disabled }}</option>
+                <select name="filter_subscription_status_id" id="input-subscription-status" class="form-select">
+                  <option value=""></option>
+                  {% for subscription_status in subscription_statuses %}
+                    <option value="{{ subscription_status.subscription_status_id }}"{% if subscription_status.subscription_status_id == filter_subscription_status_id %} selected="selected"{% endif %}>{{ subscription_status.name }}</option>
+                  {% endfor %}
+                </select>
               </select>
             </div>
             <div class="mb-3">
@@ -100,10 +102,10 @@ $('#button-filter').on('click', function () {
         url += '&filter_customer=' + encodeURIComponent(filter_customer);
     }
 
-    var filter_status = $('#input-status').val();
+    var filter_subscription_status_id = $('#input-subscription-status').val();
 
-    if (filter_status !== '') {
-        url += '&filter_status=' + filter_status;
+    if (filter_subscription_status_id !== '') {
+        url += '&filter_subscription_status_id=' + filter_subscription_status_id;
     }
 
     var filter_date_added = $('#input-date_added').val();

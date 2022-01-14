@@ -7,7 +7,7 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 		$subscription_plan_id = $this->db->getLastId();
 
 		foreach ($data['subscription_plan_description'] as $language_id => $subscription_plan_description) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "subscription_plan_description` SET `subscription_plan_id` = '" . (int)$subscription_plan_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($subscription_plan_description['name']) . "'");
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "subscription_plan_description` SET `subscription_plan_id` = '" . (int)$subscription_plan_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($subscription_plan_description['name']) . "', `description` = '" . $this->db->escape($subscription_plan_description['description']) . "'");
 		}
 
 		return $subscription_plan_id;
@@ -19,7 +19,7 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "subscription_plan_description` WHERE `subscription_plan_id` = '" . (int)$subscription_plan_id . "'");
 
 		foreach ($data['subscription_plan_description'] as $language_id => $subscription_plan_description) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "subscription_plan_description` SET `subscription_plan_id` = '" . (int)$subscription_plan_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($subscription_plan_description['name']) . "'");
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "subscription_plan_description` SET `subscription_plan_id` = '" . (int)$subscription_plan_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($subscription_plan_description['name']) . "', `description` = '" . $this->db->escape($subscription_plan_description['description']) . "'");
 		}
 	}
 
@@ -34,7 +34,7 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 	public function deleteSubscriptionPlan(int $subscription_plan_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "subscription_plan` WHERE `subscription_plan_id` = '" . (int)$subscription_plan_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "subscription_plan_description` WHERE `subscription_plan_id` = '" . (int)$subscription_plan_id . "'");
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_subscription_plan` WHERE `subscription_plan_id` = '" . (int)$subscription_plan_id . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_subscription` WHERE `subscription_plan_id` = '" . (int)$subscription_plan_id . "'");
 		$this->db->query("UPDATE `" . DB_PREFIX . "subscription` SET `subscription_plan_id` = '0' WHERE `subscription_plan_id` = '" . (int)$subscription_plan_id . "'");
 	}
 
@@ -50,7 +50,10 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "subscription_plan_description` WHERE `subscription_plan_id` = '" . (int)$subscription_plan_id . "'");
 
 		foreach ($query->rows as $result) {
-			$subscription_plan_description_data[$result['language_id']] = ['name' => $result['name']];
+			$subscription_plan_description_data[$result['language_id']] = [
+				'name'        => $result['name'],
+				'description' => $result['description']
+			];
 		}
 
 		return $subscription_plan_description_data;

@@ -252,6 +252,7 @@ $(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function (e) {
             $(element).button('reset');
         },
         success: function (json) {
+            $('.alert-dismissible').remove();
             $(form).find('.is-invalid').removeClass('is-invalid');
             $(form).find('.invalid-feedback').removeClass('d-block');
 

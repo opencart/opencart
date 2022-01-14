@@ -61,6 +61,34 @@ class Address extends \Opencart\System\Engine\Model {
 				$zone_code = '';
 			}
 
+			$find = [
+				'{firstname}',
+				'{lastname}',
+				'{company}',
+				'{address_1}',
+				'{address_2}',
+				'{city}',
+				'{postcode}',
+				'{zone}',
+				'{zone_code}',
+				'{country}'
+			];
+
+			$replace = [
+				'firstname' => $address_query->row['firstname'],
+				'lastname'  => $address_query->row['lastname'],
+				'company'   => $address_query->row['company'],
+				'address_1' => $address_query->row['address_1'],
+				'address_2' => $address_query->row['address_2'],
+				'city'      => $address_query->row['city'],
+				'postcode'  => $address_query->row['postcode'],
+				'zone'      => $zone,
+				'zone_code' => $zone_code,
+				'country'   => $country
+			];
+
+			$address_format = str_replace(["\r\n", "\r", "\n"], '<br />', preg_replace(["/\s\s+/", "/\r\r+/", "/\n\n+/"], '<br />', trim(str_replace($find, $replace, $address_format))));
+
 			return [
 				'address_id'     => $address_query->row['address_id'],
 				'firstname'      => $address_query->row['firstname'],

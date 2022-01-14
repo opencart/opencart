@@ -19,14 +19,6 @@ class Cart extends \Opencart\System\Engine\Controller {
 
 		($this->model_checkout_cart->getTotals)($totals, $taxes, $total);
 
-		$frequencies = [
-			'day'        => $this->language->get('text_day'),
-			'week'       => $this->language->get('text_week'),
-			'semi_month' => $this->language->get('text_semi_month'),
-			'month'      => $this->language->get('text_month'),
-			'year'       => $this->language->get('text_year')
-		];
-
 		$json['products'] = [];
 
 		$products = $this->model_checkout_cart->getProducts();
@@ -35,17 +27,18 @@ class Cart extends \Opencart\System\Engine\Controller {
 			$description = '';
 
 			if ($product['subscription']) {
-				if ($product['subscription']['trial_status']) {
-					$description = sprintf($this->language->get('text_subscription_trial'), $this->currency->format($this->tax->calculate($product['subscription']['trial_price'] * $product['quantity'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']), $product['subscription']['trial_cycle'], $frequencies[$product['subscription']['trial_frequency']], $product['subscription']['trial_duration']) . ' ';
-				}
+				$subscription_data = [
+					'trial_price'     => $this->currency->format($this->tax->calculate($product['subscription']['trial_price'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']),
+					'trial_cycle'     => $product['subscription']['trial_cycle'],
+					'trial_frequency' => $this->language->get('text_' . $product['subscription']['trial_frequency']),
+					'trial_duration'  => $product['subscription']['trial_duration'],
+					'price'           => $this->currency->format($this->tax->calculate($product['subscription']['price'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']),
+					'cycle'           => $product['subscription']['cycle'],
+					'frequency'       => $this->language->get('text_' . $product['subscription']['frequency']),
+					'duration'        => $product['subscription']['duration']
+				];
 
-				$price = $this->currency->format($this->tax->calculate($product['subscription']['price'] * $product['quantity'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
-
-				if ($product['subscription']['duration']) {
-					$description .= sprintf($this->language->get('text_subscription_description'), $price, $product['subscription']['cycle'], $frequencies[$product['subscription']['frequency']], $product['subscription']['duration']);
-				} else {
-					$description .= sprintf($this->language->get('text_subscription_cancel'), $price, $product['subscription']['cycle'], $frequencies[$product['subscription']['frequency']]);
-				}
+				$description = sprintf($product['subscription']['description'], $subscription_data);
 			}
 
 			$json['products'][] = [

@@ -74,7 +74,7 @@ class Cart extends \Opencart\System\Engine\Model {
 				'name'         => $product['name'],
 				'model'        => $product['model'],
 				'option'       => $product['option'],
-				'recurring'    => $product['recurring'],
+				'subscription' => $product['subscription'],
 				'quantity'     => $product['quantity'],
 				'stock'        => $product['stock'],
 				'minimum'      => $minimum,

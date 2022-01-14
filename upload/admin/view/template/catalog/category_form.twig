@@ -78,7 +78,7 @@
                   <input type="text" name="path" value="{{ path }}" placeholder="{{ entry_parent }}" id="input-parent" list="list-parent" class="form-control"/>
                   <input type="hidden" name="parent_id" value="{{ parent_id }}" id="input-parent-id"/>
                   <datalist id="list-parent"></datalist>
-                  <div class="form-text text-muted">{{ help_parent }}</div>
+                  <div class="form-text">{{ help_parent }}</div>
                   <div id="error-parent" class="invalid-feedback"></div>
                 </div>
               </div>
@@ -97,7 +97,7 @@
                       {% endfor %}
                     </table>
                   </div>
-                  <div class="form-text text-muted">{{ help_filter }}</div>
+                  <div class="form-text">{{ help_filter }}</div>
                 </div>
               </div>
               <div class="row mb-3">
@@ -132,14 +132,14 @@
                       <input type="radio" name="top" value="1" id="input-top-yes" class="btn-check"{% if top %} checked{% endif %}/> <label for="input-top-yes" class="btn btn-outline-secondary">{{ text_yes }}</label> <input type="radio" name="top" value="0" id="input-top-no" class="btn-check"{% if not top %} checked{% endif %}/> <label for="input-top-no" class="btn btn-outline-secondary">{{ text_no }}</label>
                     </div>
                   </div>
-                  <div class="form-text text-muted">{{ help_top }}</div>
+                  <div class="form-text">{{ help_top }}</div>
                 </div>
               </div>
               <div class="row mb-3">
                 <label for="input-column" class="col-sm-2 col-form-label">{{ entry_column }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="column" value="{{ column }}" placeholder="{{ entry_column }}" id="input-column" class="form-control"/>
-                  <div class="form-text text-muted">{{ help_column }}</div>
+                  <div class="form-text">{{ help_column }}</div>
                 </div>
               </div>
               <div class="row mb-3">

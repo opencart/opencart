@@ -16,7 +16,7 @@ class AccessPointArn extends BaseAccessPointArn implements AccessPointArnInterfa
      *
      * @param array $data
      */
-    protected static function validate(array $data)
+    public static function validate(array $data)
     {
         parent::validate($data);
         if ($data['service'] !== 's3') {

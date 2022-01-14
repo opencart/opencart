@@ -32,6 +32,7 @@ $_['text_legal']                       = 'Legal';
 $_['text_tax']                         = 'Taxes';
 $_['text_account']                     = 'Account';
 $_['text_checkout']                    = 'Checkout';
+$_['text_subscription']                = 'Subscription';
 $_['text_stock']                       = 'Stock';
 $_['text_affiliate']                   = 'Affiliate';
 $_['text_return']                      = 'Return';
@@ -64,6 +65,7 @@ $_['entry_currency_engine']            = 'Currency Rate Engine';
 $_['entry_currency_auto']              = 'Auto Update Currency';
 $_['entry_length_class']               = 'Length Class';
 $_['entry_weight_class']               = 'Weight Class';
+$_['entry_address_format']             = 'Address Format';
 $_['entry_product_description_length'] = 'List Description Limit';
 $_['entry_pagination']                 = 'Default Items Per Page';
 $_['entry_pagination_admin']           = 'Default Items Per Page (Admin)';
@@ -97,6 +99,7 @@ $_['entry_order_status']               = 'Order Status';
 $_['entry_processing_status']          = 'Processing Order Status';
 $_['entry_complete_status']            = 'Complete Order Status';
 $_['entry_fraud_status']               = 'Fraud Order Status';
+$_['entry_subscription_status']        = 'Subscription Status';
 $_['entry_api']                        = 'API User';
 $_['entry_stock_display']              = 'Display Stock';
 $_['entry_stock_warning']              = 'Show Out Of Stock Warning';
@@ -187,6 +190,11 @@ $_['help_order_status']                = 'Set the default order status when an o
 $_['help_processing_status']           = 'Set the order status the customer\'s order must reach before the order starts stock subtraction and coupon, voucher and rewards redemption.';
 $_['help_complete_status']             = 'Set the order status the customer\'s order must reach before they are allowed to access their downloadable products and gift vouchers.';
 $_['help_fraud_status']                = 'Set the order status when a customer is suspected of trying to alter the order payment details or use a coupon, gift voucher or reward points that have already been used.';
+
+
+$_['help_subscription']                = 'Set the default subscription status when a customer is suspected of trying to alter the order payment details or use a coupon, gift voucher or reward points that have already been used.';
+
+
 $_['help_api']                         = 'Default API user the admin should use.';
 $_['help_stock_display']               = 'Display stock quantity on the product page.';
 $_['help_stock_warning']               = 'Display out of stock message on the shopping cart page if a product is out of stock but stock checkout is yes. (Warning always shows if stock checkout is no)';

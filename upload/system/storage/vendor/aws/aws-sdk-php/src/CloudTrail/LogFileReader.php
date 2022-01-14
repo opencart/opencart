@@ -10,7 +10,7 @@ use Aws\S3\S3Client;
  * CloudTrail log files contain data about your AWS API calls and are stored in
  * Amazon S3. The log files are gzipped and contain structured data in JSON
  * format. This class will automatically ungzip and decode the data, and return
- * the data as a array of log records
+ * the data as an array of log records
  */
 class LogFileReader
 {

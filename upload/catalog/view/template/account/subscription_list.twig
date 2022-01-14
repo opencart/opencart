@@ -1,0 +1,48 @@
+{{ header }}
+<div id="account-subscription" class="container">
+  <ul class="breadcrumb">
+    {% for breadcrumb in breadcrumbs %}
+      <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+    {% endfor %}
+  </ul>
+  <div class="row">{{ column_left }}
+    <div id="content" class="col">{{ content_top }}
+      <h1>{{ heading_title }}</h1>
+      {% if subscriptions %}
+        <div class="table-responsive">
+          <table class="table table-bordered table-hover">
+            <thead>
+              <tr>
+                <td class="text-end">{{ column_subscription_id }}</td>
+                <td class="text-start">{{ column_product }}</td>
+                <td class="text-start">{{ column_status }}</td>
+                <td class="text-start">{{ column_date_added }}</td>
+                <td class="text-end"></td>
+              </tr>
+            </thead>
+            <tbody>
+              {% for subscription in subscriptions %}
+                <tr>
+                  <td class="text-end">#{{ subscription.subscription_id }}</td>
+                  <td class="text-start">{{ subscription.product }}</td>
+                  <td class="text-start">{{ subscription.status }}</td>
+                  <td class="text-start">{{ subscription.date_added }}</td>
+                  <td class="text-end"><a href="{{ subscription.view }}" data-bs-toggle="tooltip" title="{{ button_view }}" class="btn btn-info"><i class="fas fa-eye"></i></a></td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        <div class="text-end">{{ pagination }}</div>
+      {% else %}
+        <p>{{ text_no_results }}</p>
+      {% endif %}
+      <div class="d-inline-block pt-2 pd-2 w-100">
+        <div class="float-end"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
+      </div>
+      {{ content_bottom }}
+    </div>
+    {{ column_right }}
+  </div>
+</div>
+{{ footer }}

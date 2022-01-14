@@ -87,6 +87,34 @@ function db_schema() {
 	];
 
 	$tables[] = [
+		'name' => 'address_format',
+		'field' => [
+			[
+				'name' => 'address_format_id',
+				'type' => 'int(11)',
+				'not_null' => true,
+				'auto_increment' => true
+			],
+			[
+				'name' => 'name',
+				'type' => 'varchar(128)',
+				'not_null' => true
+			],
+			[
+				'name' => 'address_format',
+				'type' => 'text',
+				'not_null' => true
+			]
+		],
+		'primary' => [
+			'address_format_id'
+		],
+		'engine' => 'InnoDB',
+		'charset' => 'utf8',
+		'collate' => 'utf8_general_ci'
+	];
+
+	$tables[] = [
 		'name' => 'api',
 		'field' => [
 			[
@@ -414,7 +442,7 @@ function db_schema() {
 				'not_null' => true
 			],
 			[
-				'name' => 'recurring_id',
+				'name' => 'subscription_plan_id',
 				'type' => 'int(11)',
 				'not_null' => true
 			],
@@ -445,7 +473,7 @@ function db_schema() {
 					'customer_id',
 					'session_id',
 					'product_id',
-					'recurring_id'
+					'subscription_plan_id'
 				]
 			]
 		],
@@ -705,8 +733,8 @@ function db_schema() {
 				'not_null' => true
 			],
 			[
-				'name' => 'address_format',
-				'type' => 'text',
+				'name' => 'address_format_id',
+				'type' => 'int(11)',
 				'not_null' => true
 			],
 			[
@@ -3693,248 +3721,6 @@ function db_schema() {
 	];
 
 	$tables[] = [
-		'name' => 'order_recurring',
-		'field' => [
-			[
-				'name' => 'order_recurring_id',
-				'type' => 'int(11)',
-				'not_null' => true,
-				'auto_increment' => true
-			],
-			[
-				'name' => 'order_id',
-				'type' => 'int(11)',
-				'not_null' => true
-			],
-			[
-				'name' => 'reference',
-				'type' => 'varchar(255)',
-				'not_null' => true
-			],
-			[
-				'name' => 'product_id',
-				'type' => 'int(11)',
-				'not_null' => true
-			],
-			[
-				'name' => 'product_name',
-				'type' => 'varchar(255)',
-				'not_null' => true
-			],
-			[
-				'name' => 'product_quantity',
-				'type' => 'int(11)',
-				'not_null' => true
-			],
-			[
-				'name' => 'recurring_id',
-				'type' => 'int(11)',
-				'not_null' => true
-			],
-			[
-				'name' => 'recurring_name',
-				'type' => 'varchar(255)',
-				'not_null' => true
-			],
-			[
-				'name' => 'recurring_description',
-				'type' => 'varchar(255)',
-				'not_null' => true
-			],
-			[
-				'name' => 'recurring_frequency',
-				'type' => 'varchar(25)',
-				'not_null' => true
-			],
-			[
-				'name' => 'recurring_cycle',
-				'type' => 'smallint(6)',
-				'not_null' => true
-			],
-			[
-				'name' => 'recurring_duration',
-				'type' => 'smallint(6)',
-				'not_null' => true
-			],
-			[
-				'name' => 'recurring_price',
-				'type' => 'decimal(10,4)',
-				'not_null' => true
-			],
-			[
-				'name' => 'trial',
-				'type' => 'tinyint(1)',
-				'not_null' => true
-			],
-			[
-				'name' => 'trial_frequency',
-				'type' => 'varchar(25)',
-				'not_null' => true
-			],
-			[
-				'name' => 'trial_cycle',
-				'type' => 'smallint(6)',
-				'not_null' => true
-			],
-			[
-				'name' => 'trial_duration',
-				'type' => 'smallint(6)',
-				'not_null' => true
-			],
-			[
-				'name' => 'trial_price',
-				'type' => 'decimal(10,4)',
-				'not_null' => true
-			],
-			[
-				'name' => 'status',
-				'type' => 'tinyint(4)',
-				'not_null' => true
-			],
-			[
-				'name' => 'date_added',
-				'type' => 'datetime',
-				'not_null' => true
-			]
-		],
-		'primary' => [
-			'order_recurring_id'
-		],
-		'index' => [
-			[
-				'name' => 'order_id',
-				'key' => [
-					'order_id'
-				]
-			]
-		],
-		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
-	];
-
-	$tables[] = [
-		'name' => 'order_recurring_transaction',
-		'field' => [
-			[
-				'name' => 'order_recurring_transaction_id',
-				'type' => 'int(11)',
-				'not_null' => true,
-				'auto_increment' => true
-			],
-			[
-				'name' => 'order_recurring_id',
-				'type' => 'int(11)',
-				'not_null' => true
-			],
-			[
-				'name' => 'order_id',
-				'type' => 'int(11)',
-				'not_null' => true
-			],
-			[
-				'name' => 'reference',
-				'type' => 'varchar(255)',
-				'not_null' => true
-			],
-			[
-				'name' => 'type',
-				'type' => 'int(11)',
-				'not_null' => true
-			],
-			[
-				'name' => 'amount',
-				'type' => 'decimal(10,4)',
-				'not_null' => true
-			],
-			[
-				'name' => 'date_added',
-				'type' => 'datetime',
-				'not_null' => true
-			]
-		],
-		'primary' => [
-			'order_recurring_transaction_id'
-		],
-		'index' => [
-			[
-				'name' => 'order_id',
-				'key' => [
-					'order_id'
-				]
-			]
-		],
-		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
-	];
-
-	$tables[] = [
-		'name' => 'order_shipment',
-		'field' => [
-			[
-				'name' => 'order_shipment_id',
-				'type' => 'int(11)',
-				'not_null' => true,
-				'auto_increment' => true
-			],
-			[
-				'name' => 'order_id',
-				'type' => 'int(11)',
-				'not_null' => true
-			],
-			[
-				'name' => 'date_added',
-				'type' => 'datetime',
-				'not_null' => true
-			],
-			[
-				'name' => 'shipping_courier_id',
-				'type' => 'varchar(255)',
-				'not_null' => true
-			],
-			[
-				'name' => 'tracking_number',
-				'type' => 'varchar(255)',
-				'not_null' => true
-			]
-		],
-		'primary' => [
-			'order_shipment_id'
-		],
-		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
-	];
-
-	$tables[] = [
-		'name' => 'shipping_courier',
-		'field' => [
-			[
-				'name' => 'shipping_courier_id',
-				'type' => 'int(11)',
-				'not_null' => true
-			],
-			[
-				'name' => 'shipping_courier_code',
-				'type' => 'varchar(255)',
-				'not_null' => true
-			],
-			[
-				'name' => 'shipping_courier_name',
-				'type' => 'varchar(255)',
-				'not_null' => true
-			]
-		],
-		'primary' => [
-			'shipping_courier_id'
-		],
-		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
-	];
-
-	$tables[] = [
 		'name' => 'order_status',
 		'field' => [
 			[
@@ -4635,7 +4421,7 @@ function db_schema() {
 	];
 
 	$tables[] = [
-		'name' => 'product_recurring',
+		'name' => 'product_subscription',
 		'field' => [
 			[
 				'name' => 'product_id',
@@ -4643,7 +4429,7 @@ function db_schema() {
 				'not_null' => true
 			],
 			[
-				'name' => 'recurring_id',
+				'name' => 'subscription_plan_id',
 				'type' => 'int(11)',
 				'not_null' => true
 			],
@@ -4655,7 +4441,7 @@ function db_schema() {
 		],
 		'primary' => [
 			'product_id',
-			'recurring_id',
+			'subscription_plan_id',
 			'customer_group_id'
 		],
 		'engine' => 'InnoDB',
@@ -4925,107 +4711,6 @@ function db_schema() {
 		'primary' => [
 			'product_id',
 			'store_id'
-		],
-		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
-	];
-
-	$tables[] = [
-		'name' => 'recurring',
-		'field' => [
-			[
-				'name' => 'recurring_id',
-				'type' => 'int(11)',
-				'not_null' => true,
-				'auto_increment' => true
-			],
-			[
-				'name' => 'price',
-				'type' => 'decimal(10,4)',
-				'not_null' => true
-			],
-			[
-				'name' => 'frequency',
-				'type' => 'enum(\'day\',\'week\',\'semi_month\',\'month\',\'year\')',
-				'not_null' => true
-			],
-			[
-				'name' => 'duration',
-				'type' => 'int(10)',
-				'not_null' => true
-			],
-			[
-				'name' => 'cycle',
-				'type' => 'int(10)',
-				'not_null' => true
-			],
-			[
-				'name' => 'trial_status',
-				'type' => 'tinyint(4)',
-				'not_null' => true
-			],
-			[
-				'name' => 'trial_price',
-				'type' => 'decimal(10,4)',
-				'not_null' => true
-			],
-			[
-				'name' => 'trial_frequency',
-				'type' => 'enum(\'day\',\'week\',\'semi_month\',\'month\',\'year\')',
-				'not_null' => true
-			],
-			[
-				'name' => 'trial_duration',
-				'type' => 'int(10)',
-				'not_null' => true
-			],
-			[
-				'name' => 'trial_cycle',
-				'type' => 'int(10)',
-				'not_null' => true
-			],
-			[
-				'name' => 'status',
-				'type' => 'tinyint(4)',
-				'not_null' => true
-			],
-			[
-				'name' => 'sort_order',
-				'type' => 'int(11)',
-				'not_null' => true
-			]
-		],
-		'primary' => [
-			'recurring_id'
-		],
-		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
-	];
-
-	$tables[] = [
-		'name' => 'recurring_description',
-		'field' => [
-			[
-				'name' => 'recurring_id',
-				'type' => 'int(11)',
-				'not_null' => true
-			],
-			[
-				'name' => 'language_id',
-				'type' => 'int(11)',
-				'not_null' => true
-			],
-			[
-				'name' => 'name',
-				'type' => 'varchar(255)',
-				'not_null' => true
-			]
-		],
-		'primary' => [
-			'recurring_id',
-			'language_id'
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
@@ -5537,6 +5222,359 @@ function db_schema() {
 		],
 		'primary' => [
 			'store_id'
+		],
+		'engine' => 'InnoDB',
+		'charset' => 'utf8',
+		'collate' => 'utf8_general_ci'
+	];
+
+	$tables[] = [
+		'name' => 'subscription',
+		'field' => [
+			[
+				'name' => 'subscription_id',
+				'type' => 'int(11)',
+				'not_null' => true,
+				'auto_increment' => true
+			],
+			[
+				'name' => 'order_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'order_product_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'reference',
+				'type' => 'varchar(255)',
+				'not_null' => true
+			],
+			[
+				'name' => 'subscription_plan_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'name',
+				'type' => 'varchar(255)',
+				'not_null' => true
+			],
+			[
+				'name' => 'description',
+				'type' => 'text',
+				'not_null' => true
+			],
+			[
+				'name' => 'trial_price',
+				'type' => 'decimal(10,4)',
+				'not_null' => true
+			],
+			[
+				'name' => 'trial_frequency',
+				'type' => 'varchar(25)',
+				'not_null' => true
+			],
+			[
+				'name' => 'trial_cycle',
+				'type' => 'smallint(6)',
+				'not_null' => true
+			],
+			[
+				'name' => 'trial_duration',
+				'type' => 'smallint(6)',
+				'not_null' => true
+			],
+			[
+				'name' => 'trial_status',
+				'type' => 'tinyint(1)',
+				'not_null' => true
+			],
+			[
+				'name' => 'price',
+				'type' => 'decimal(10,4)',
+				'not_null' => true
+			],
+			[
+				'name' => 'frequency',
+				'type' => 'varchar(25)',
+				'not_null' => true
+			],
+			[
+				'name' => 'cycle',
+				'type' => 'smallint(6)',
+				'not_null' => true
+			],
+			[
+				'name' => 'duration',
+				'type' => 'smallint(6)',
+				'not_null' => true
+			],
+			[
+				'name' => 'subscription_status_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'date_added',
+				'type' => 'datetime',
+				'not_null' => true
+			],
+			[
+				'name' => 'date_modified',
+				'type' => 'datetime',
+				'not_null' => true
+			]
+		],
+		'primary' => [
+			'subscription_id'
+		],
+		'index' => [
+			[
+				'name' => 'order_id',
+				'key' => [
+					'order_id'
+				]
+			]
+		],
+		'engine' => 'InnoDB',
+		'charset' => 'utf8',
+		'collate' => 'utf8_general_ci'
+	];
+
+	$tables[] = [
+		'name' => 'subscription_history',
+		'field' => [
+			[
+				'name' => 'subscription_history_id',
+				'type' => 'int(11)',
+				'not_null' => true,
+				'auto_increment' => true
+			],
+			[
+				'name' => 'subscription_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'subscription_status_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'notify',
+				'type' => 'tinyint(1)',
+				'not_null' => true,
+				'default' => '0'
+			],
+			[
+				'name' => 'comment',
+				'type' => 'text',
+				'not_null' => true
+			],
+			[
+				'name' => 'date_added',
+				'type' => 'datetime',
+				'not_null' => true
+			]
+		],
+		'primary' => [
+			'subscription_history_id'
+		],
+		'engine' => 'InnoDB',
+		'charset' => 'utf8',
+		'collate' => 'utf8_general_ci'
+	];
+
+	$tables[] = [
+		'name' => 'subscription_plan',
+		'field' => [
+			[
+				'name' => 'subscription_plan_id',
+				'type' => 'int(11)',
+				'not_null' => true,
+				'auto_increment' => true
+			],
+
+			[
+				'name' => 'trial_price',
+				'type' => 'decimal(10,4)',
+				'not_null' => true
+			],
+			[
+				'name' => 'trial_frequency',
+				'type' => 'enum(\'day\',\'week\',\'semi_month\',\'month\',\'year\')',
+				'not_null' => true
+			],
+			[
+				'name' => 'trial_duration',
+				'type' => 'int(10)',
+				'not_null' => true
+			],
+			[
+				'name' => 'trial_cycle',
+				'type' => 'int(10)',
+				'not_null' => true
+			],
+			[
+				'name' => 'trial_status',
+				'type' => 'tinyint(4)',
+				'not_null' => true
+			],
+			[
+				'name' => 'price',
+				'type' => 'decimal(10,4)',
+				'not_null' => true
+			],
+			[
+				'name' => 'frequency',
+				'type' => 'enum(\'day\',\'week\',\'semi_month\',\'month\',\'year\')',
+				'not_null' => true
+			],
+			[
+				'name' => 'duration',
+				'type' => 'int(10)',
+				'not_null' => true
+			],
+			[
+				'name' => 'cycle',
+				'type' => 'int(10)',
+				'not_null' => true
+			],
+			[
+				'name' => 'status',
+				'type' => 'tinyint(1)',
+				'not_null' => true
+			],
+			[
+				'name' => 'sort_order',
+				'type' => 'int(3)',
+				'not_null' => true
+			]
+		],
+		'primary' => [
+			'subscription_plan_id'
+		],
+		'engine' => 'InnoDB',
+		'charset' => 'utf8',
+		'collate' => 'utf8_general_ci'
+	];
+
+	$tables[] = [
+		'name' => 'subscription_plan_description',
+		'field' => [
+			[
+				'name' => 'subscription_plan_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'language_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'name',
+				'type' => 'varchar(255)',
+				'not_null' => true
+			],
+			[
+				'name' => 'description',
+				'type' => 'text',
+				'not_null' => true
+			]
+		],
+		'primary' => [
+			'subscription_plan_id',
+			'language_id'
+		],
+		'engine' => 'InnoDB',
+		'charset' => 'utf8',
+		'collate' => 'utf8_general_ci'
+	];
+
+	$tables[] = [
+		'name' => 'subscription_status',
+		'field' => [
+			[
+				'name' => 'subscription_status_id',
+				'type' => 'int(11)',
+				'not_null' => true,
+				'auto_increment' => true
+			],
+			[
+				'name' => 'language_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'name',
+				'type' => 'varchar(32)',
+				'not_null' => true
+			]
+		],
+		'primary' => [
+			'subscription_status_id',
+			'language_id'
+		],
+		'engine' => 'InnoDB',
+		'charset' => 'utf8',
+		'collate' => 'utf8_general_ci'
+	];
+
+	$tables[] = [
+		'name' => 'subscription_transaction',
+		'field' => [
+			[
+				'name' => 'subscription_transaction_id',
+				'type' => 'int(11)',
+				'not_null' => true,
+				'auto_increment' => true
+			],
+			[
+				'name' => 'subscription_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'order_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'reference',
+				'type' => 'varchar(255)',
+				'not_null' => true
+			],
+			[
+				'name' => 'amount',
+				'type' => 'decimal(10,4)',
+				'not_null' => true
+			],
+			[
+				'name' => 'date_added',
+				'type' => 'datetime',
+				'not_null' => true
+			]
+		],
+		'primary' => [
+			'subscription_transaction_id'
+		],
+		'index' => [
+			[
+				'name' => 'subscription_id',
+				'key' => [
+					'subscription_id'
+				]
+			],
+			[
+				'name' => 'order_id',
+				'key' => [
+					'order_id'
+				]
+			]
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',

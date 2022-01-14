@@ -84,9 +84,9 @@
                     <small>{{ text_points }} {{ order_product.reward }}</small>
                   {% endif %}
 
-                  {% if order_product.recurring %}
+                  {% if order_product.subscription %}
                     <br/>
-                    <small>{{ text_recurring_item }}: {{ order_product.recurring }}</small>
+                    <small>{{ text_subscription }}: {{ subscription.description }}</small>
                   {% endif %}
 
                 </td>
@@ -456,7 +456,7 @@
                     <div class="btn-group">
                       <input type="radio" name="override" value="1" id="input-override-yes" class="btn-check"/> <label for="input-override-yes" class="btn btn-outline-secondary">{{ text_yes }}</label> <input type="radio" name="override" value="0" id="input-override-no" class="btn-check" checked/> <label for="input-override-no" class="btn btn-outline-secondary">{{ text_no }}</label>
                     </div>
-                    <div class="form-text text-muted">{{ help_override }}</div>
+                    <div class="form-text">{{ help_override }}</div>
                   </div>
                 </div>
                 <div class="row mb-3">
@@ -619,8 +619,11 @@
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
                   <label class="form-label">{{ custom_field.name }}</label>
                   <div>
+
                     <button type="button" data-oc-loading-text="{{ text_loading }}" data-oc-toggle="upload" data-oc-url="{{ upload }}" data-oc-size-max="{{ config_file_max_size }}" data-oc-size-error="{{ error_upload_size }}" data-oc-target="#input-custom-field-{{ custom_field.custom_field_id }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
+                    <a href="" class="btn btn-light"><i class="fas fa-download"></i></a>
                     <input type="hidden" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] }}" id="input-custom-field-{{ custom_field.custom_field_id }}"/>
+
                   </div>
                   <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
@@ -692,6 +695,7 @@
                 </div>
               </fieldset>
               <div id="option"></div>
+              <div id="subscription"></div>
               <div class="text-end">
                 <button type="submit" id="button-product-add" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
               </div>
@@ -874,8 +878,11 @@
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
                   <label class="form-label">{{ custom_field.name }}</label>
                   <div>
+
                     <button type="button" data-oc-loading-text="{{ text_loading }}" data-oc-toggle="upload" data-oc-url="{{ upload }}" data-oc-size-max="{{ config_file_max_size }}" data-oc-size-error="{{ error_upload_size }}" data-oc-target="#input-payment-custom-field-{{ custom_field.custom_field_id }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
+                    <a href="" class="btn btn-light"><i class="fas fa-download"></i></a>
                     <input type="hidden" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ payment_custom_field[custom_field.custom_field_id] ? payment_custom_field[custom_field.custom_field_id] }}" id="input-payment-custom-field-{{ custom_field.custom_field_id }}"/>
+
                   </div>
                   <div id="error-payment-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
@@ -1052,8 +1059,11 @@
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
                   <label class="form-label">{{ custom_field.name }}</label>
                   <div>
+
                     <button type="button" data-oc-loading-text="{{ text_loading }}" data-oc-toggle="upload" data-oc-url="{{ upload }}" data-oc-size-max="{{ config_file_max_size }}" data-oc-size-error="{{ error_upload_size }}" data-oc-target="#input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
+                    <a href="" class="btn btn-light"><i class="fas fa-download"></i></a>
                     <input type="hidden" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ shipping_custom_field[custom_field.custom_field_id] ? shipping_custom_field[custom_field.custom_field_id] }}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}"/>
+
                   </div>
                   <div id="error-shipping-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
@@ -1336,9 +1346,13 @@ $('#input-product').autocomplete({
                         value: item['product_id'],
                         model: item['model'],
                         option: item['option'],
+                        subscription: item['subscription'],
                         price: item['price']
                     }
                 }));
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });
     },
@@ -1355,7 +1369,6 @@ $('#input-product').autocomplete({
                 if (option['type'] == 'select') {
                     html += '<div class="mb-3' + (option['required'] == 1 ? ' required' : '') + '">';
                     html += '  <label for="input-option-' + option['product_option_id'] + '" class="form-label">' + option['name'] + '</label>';
-
                     html += '  <select name="option[' + option['product_option_id'] + ']" id="input-option-' + option['product_option_id'] + '" class="form-select">';
                     html += '    <option value="">{{ text_select }}</option>';
 
@@ -1471,6 +1484,7 @@ $('#input-product').autocomplete({
                     html += '  <label class="form-label">' + option['name'] + '</label>';
                     html += '  <div>';
                     html += '    <button type="button" data-oc-toggle="upload" data-oc-url="{{ upload }}" data-oc-loading-text="{{ text_loading }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>';
+                    html += '    <a href="" class="btn btn-light"><i class="fas fa-download"></i></a>';
                     html += '    <input type="hidden" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" id="input-option-' + option['product_option_id'] + '"/>';
                     html += '  </div>';
                     html += '  <div id="error-option-' + option['product_option_id'] + '" class="invalid-feedback"></div>';
@@ -1508,6 +1522,32 @@ $('#input-product').autocomplete({
         } else {
             $('#option').html('');
         }
+
+        if (item['subscription'] != '') {
+            html = '<fieldset class="mb-0">';
+            html += '  <legend>{{ entry_subscription }}</legend>';
+            html += '  <div class="mb-3 required">';
+            html += '    <select name="subscription_plan_id" id="input-subscription-plan" class="form-select">';
+            html += '      <option value="">{{ text_select }}</option>';
+
+            for (i = 0; i < item['subscription'].length; i++) {
+                html += '<option value="' + item['subscription'][i]['subscription_plan_id'] + '">' + item['subscription'][i]['name'] + '</option>';
+            }
+
+            html += '  </select>';
+
+            for (i = 0; i < item['subscription'].length; i++) {
+                html += '  <div id="subscription-description-' + item['subscription'][i]['subscription_plan_id'] + '" class="form-text subscription d-none">' + item['subscription'][i]['description'] + '</div>';
+            }
+
+            html += '  <div id="error-subscription" class="invalid-feedback"></div>';
+            html += '</div>';
+            html += '</fieldset>';
+
+            $('#subscription').html(html);
+        } else {
+            $('#subscription').html('');
+        }
     }
 });
 
@@ -1527,8 +1567,6 @@ $('#form-product-add').on('submit', function (e) {
             $('#button-product-add').button('reset');
         },
         success: function (json) {
-            console.log(json);
-
             $('.alert-dismissible').remove();
             $('.is-invalid').removeClass('is-invalid');
             $('.invalid-feedback').removeClass('d-block');
@@ -1538,11 +1576,9 @@ $('#form-product-add').on('submit', function (e) {
                     $('#form-product-add').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                 }
 
-                if (json['error']['option']) {
-                    for (key in json['error']['option']) {
-                        $('#input-option-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
-                        $('#error-option-' + key.replaceAll('_', '-')).html(json['error']['option'][key]).addClass('d-block');
-                    }
+                for (key in json['error']) {
+                    $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
+                    $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
                 }
             }
 
@@ -2613,23 +2649,25 @@ $('#button-refresh').on('click', function () {
                     product = json['products'][i];
 
                     html += '<tr>';
-                    html += '  <td class="text-start"><a href="index.php?route=catalog/product|form&user_token={{ user_token }}&product_id=' + product['product_id'] + '" target="_blank">' + product['name'] + '</a>' + (!product['stock'] ? ' <span class="text-danger">***</span>' : '') + '<br/>';
+                    html += '  <td class="text-start"><a href="index.php?route=catalog/product|form&user_token={{ user_token }}&product_id=' + product['product_id'] + '" target="_blank">' + product['name'] + '</a>' + (!product['stock'] ? ' <span class="text-danger">***</span>' : '');
 
                     if (product['option']) {
                         for (j = 0; j < product['option'].length; j++) {
                             option = product['option'][j];
 
-                            html += '  - <small>' + option['name'] + ': ' + option['value'] + '</small><br />';
+                            html += '<br/>';
+                            html += '  - <small>' + option['name'] + ': ' + option['value'] + '</small>';
                         }
                     }
 
                     if (product['reward']) {
-                        html += '<small>{{ text_points }} ' + product['reward'] + '</small><br/>';
+                        html += '<br/>';
+                        html += '  - <small>{{ text_points }} ' + product['reward'] + '</small>';
                     }
 
-                    if (product['recurring']) {
-                        html += ' <small class="badge badge-warning">{{ text_recurring_item }}</small>';
-                        html += ' <small>{{ order_product.recurring }}</small>';
+                    if (product['subscription']) {
+                        html += '<br/>';
+                        html += '  - <small>{{ text_subscription }} {{ subscription.description }}</small>';
                     }
 
                     html += '  </td>';

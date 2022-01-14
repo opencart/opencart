@@ -110,7 +110,7 @@ class ConfigurationProvider extends AbstractConfigurationProvider
                 $enabled = getenv(self::ENV_ENABLED_ALT);
             }
             if ($enabled !== false && $enabled !== '') {
-                return Promise\promise_for(
+                return Promise\Create::promiseFor(
                     new Configuration($enabled, $cacheLimit)
                 );
             }
@@ -148,7 +148,7 @@ class ConfigurationProvider extends AbstractConfigurationProvider
         }
 
         return function () use ($enabled) {
-            return Promise\promise_for(
+            return Promise\Create::promiseFor(
                 new Configuration(
                     $enabled,
                     self::DEFAULT_CACHE_LIMIT
@@ -194,7 +194,7 @@ class ConfigurationProvider extends AbstractConfigurationProvider
                     not present in INI profile '{$profile}' ({$filename})");
             }
 
-            return Promise\promise_for(
+            return Promise\Create::promiseFor(
                 new Configuration(
                     $data[$profile]['endpoint_discovery_enabled'],
                     $cacheLimit

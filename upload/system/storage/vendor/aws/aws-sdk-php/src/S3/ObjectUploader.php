@@ -55,7 +55,7 @@ class ObjectUploader implements PromisorInterface
         $this->client = $client;
         $this->bucket = $bucket;
         $this->key = $key;
-        $this->body = Psr7\stream_for($body);
+        $this->body = Psr7\Utils::streamFor($body);
         $this->acl = $acl;
         $this->options = $options + self::$defaults;
     }
@@ -113,8 +113,8 @@ class ObjectUploader implements PromisorInterface
          * Read up to 5MB into a buffer to determine how to upload the body.
          * @var StreamInterface $buffer
          */
-        $buffer = Psr7\stream_for();
-        Psr7\copy_to_stream($body, $buffer, MultipartUploader::PART_MIN_SIZE);
+        $buffer = Psr7\Utils::streamFor();
+        Psr7\Utils::copyToStream($body, $buffer, MultipartUploader::PART_MIN_SIZE);
 
         // If body < 5MB, use PutObject with the buffer.
         if ($buffer->getSize() < MultipartUploader::PART_MIN_SIZE) {

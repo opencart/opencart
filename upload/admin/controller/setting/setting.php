@@ -170,6 +170,12 @@ class Setting extends \Opencart\System\Engine\Controller {
 
 		$data['config_weight_class_id'] = $this->config->get('config_weight_class_id');
 
+		$this->load->model('localisation/address_format');
+
+		$data['address_formats'] = $this->model_localisation_address_format->getAddressFormats();
+
+		$data['config_address_format_id'] = $this->config->get('config_address_format_id');
+
 		// Options
 		if ($this->config->get('config_product_description_length')) {
 			$data['config_product_description_length'] = $this->config->get('config_product_description_length');
@@ -275,6 +281,13 @@ class Setting extends \Opencart\System\Engine\Controller {
 		}
 
 		$data['config_fraud_status_id'] = $this->config->get('config_fraud_status_id');
+
+		// Subscription
+		$this->load->model('localisation/subscription_status');
+
+		$data['subscription_statuses'] = $this->model_localisation_subscription_status->getSubscriptionStatuses();
+
+		$data['config_subscription_status_id'] = $this->config->get('config_subscription_status_id');
 
 		// Api
 		$this->load->model('user/api');

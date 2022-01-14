@@ -28,7 +28,7 @@
             <li class="nav-item"><a href="#tab-links" data-bs-toggle="tab" class="nav-link">{{ tab_links }}</a></li>
             <li class="nav-item"><a href="#tab-attribute" data-bs-toggle="tab" class="nav-link">{{ tab_attribute }}</a></li>
             <li class="nav-item"><a href="#tab-option" data-bs-toggle="tab" class="nav-link">{{ tab_option }}</a></li>
-            <li class="nav-item"><a href="#tab-recurring" data-bs-toggle="tab" class="nav-link">{{ tab_recurring }}</a></li>
+            <li class="nav-item"><a href="#tab-subscription" data-bs-toggle="tab" class="nav-link">{{ tab_subscription }}</a></li>
             <li class="nav-item"><a href="#tab-discount" data-bs-toggle="tab" class="nav-link">{{ tab_discount }}</a></li>
             <li class="nav-item"><a href="#tab-special" data-bs-toggle="tab" class="nav-link">{{ tab_special }}</a></li>
             <li class="nav-item"><a href="#tab-image" data-bs-toggle="tab" class="nav-link">{{ tab_image }}</a></li>
@@ -139,7 +139,7 @@
                             </div>
                           {% endif %}
                         </div>
-                        <div class="form-text text-muted">{{ help_tag }}</div>
+                        <div class="form-text">{{ help_tag }}</div>
                       </div>
                     </div>
                   </div>
@@ -179,7 +179,7 @@
                         </div>
                       {% endif %}
                     </div>
-                    <div class="form-text text-muted">{{ help_sku }}</div>
+                    <div class="form-text">{{ help_sku }}</div>
                   </div>
                 </div>
                 <div class="row mb-3">
@@ -195,7 +195,7 @@
                         </div>
                       {% endif %}
                     </div>
-                    <div class="form-text text-muted">{{ help_upc }}</div>
+                    <div class="form-text">{{ help_upc }}</div>
                   </div>
                 </div>
                 <div class="row mb-3">
@@ -211,7 +211,7 @@
                         </div>
                       {% endif %}
                     </div>
-                    <div class="form-text text-muted">{{ help_ean }}</div>
+                    <div class="form-text">{{ help_ean }}</div>
                   </div>
                 </div>
                 <div class="row mb-3">
@@ -227,7 +227,7 @@
                         </div>
                       {% endif %}
                     </div>
-                    <div class="form-text text-muted">{{ help_jan }}</div>
+                    <div class="form-text">{{ help_jan }}</div>
                   </div>
                 </div>
                 <div class="row mb-3">
@@ -243,7 +243,7 @@
                         </div>
                       {% endif %}
                     </div>
-                    <div class="form-text text-muted">{{ help_isbn }}</div>
+                    <div class="form-text">{{ help_isbn }}</div>
                   </div>
                 </div>
                 <div class="row mb-3">
@@ -259,7 +259,7 @@
                         </div>
                       {% endif %}
                     </div>
-                    <div class="form-text text-muted">{{ help_mpn }}</div>
+                    <div class="form-text">{{ help_mpn }}</div>
                   </div>
                 </div>
                 <div class="row mb-3">
@@ -339,7 +339,7 @@
 
                       {% endif %}
                     </div>
-                    <div class="form-text text-muted">{{ help_minimum }}</div>
+                    <div class="form-text">{{ help_minimum }}</div>
                   </div>
                 </div>
                 <div class="row mb-3">
@@ -376,7 +376,7 @@
                         </div>
                       {% endif %}
                     </div>
-                    <div class="form-text text-muted">{{ help_stock_status }}</div>
+                    <div class="form-text">{{ help_stock_status }}</div>
                   </div>
                 </div>
                 <div class="row mb-3">
@@ -550,7 +550,7 @@
                   </div>
                   <input type="hidden" name="manufacturer_id" value="{{ manufacturer_id }}" id="input-manufacturer-id"/>
                   <datalist id="list-manufacturer"></datalist>
-                  <div class="form-text text-muted">{{ help_manufacturer }}</div>
+                  <div class="form-text">{{ help_manufacturer }}</div>
                 </div>
               </div>
               <div class="row mb-3">
@@ -579,7 +579,7 @@
                       </div>
                     {% endif %}
                   </div>
-                  <div class="form-text text-muted">{{ help_category }}</div>
+                  <div class="form-text">{{ help_category }}</div>
                 </div>
               </div>
               <div class="row mb-3">
@@ -606,7 +606,7 @@
                       </div>
                     {% endif %}
                   </div>
-                  <div class="form-text text-muted">{{ help_filter }}</div>
+                  <div class="form-text">{{ help_filter }}</div>
                 </div>
               </div>
               <div class="row mb-3">
@@ -654,7 +654,7 @@
                       </div>
                     {% endif %}
                   </div>
-                  <div class="form-text text-muted">{{ help_download }}</div>
+                  <div class="form-text">{{ help_download }}</div>
                 </div>
               </div>
               <div class="row mb-3">
@@ -681,7 +681,7 @@
                       </div>
                     {% endif %}
                   </div>
-                  <div class="form-text text-muted">{{ help_related }}</div>
+                  <div class="form-text">{{ help_related }}</div>
                 </div>
               </div>
             </div>
@@ -879,7 +879,7 @@
                     <div class="col-sm-10">
                       <input type="text" name="option" value="" placeholder="{{ entry_option }}" id="input-option" list="list-option" class="form-control"/>
                       <datalist id="list-option"></datalist>
-                      <div class="form-text text-muted">{{ help_option }}</div>
+                      <div class="form-text">{{ help_option }}</div>
                     </div>
                   </div>
                 </fieldset>
@@ -1088,45 +1088,45 @@
               </div>
             {% endif %}
 
-            <div id="tab-recurring" class="tab-pane">
+            <div id="tab-subscription" class="tab-pane">
               <div class="table-responsive">
-                <table id="product-recurring" class="table table-bordered table-hover">
+                <table id="product-subscription" class="table table-bordered table-hover">
                   <thead>
                     <tr>
-                      <td class="text-start">{{ entry_recurring }}</td>
+                      <td class="text-start">{{ entry_subscription }}</td>
                       <td class="text-start">{{ entry_customer_group }}</td>
                       <td>
                         {% if master_id %}
                           <div class="form-check form-switch float-end">
-                            <input type="checkbox" name="override[product_recurring]" value="1" id="input-variant-product-recurring" data-oc-toggle="switch" data-oc-target="#product-recurring" class="form-check-input"{% if override.product_recurring %} checked{% endif %}/> <label for="input-variant-product-recurring" class="form-check-label"></label>
+                            <input type="checkbox" name="override[product_subscription]" value="1" id="input-variant-product-subscription" data-oc-toggle="switch" data-oc-target="#product-subscription" class="form-check-input"{% if override.product_subscription %} checked{% endif %}/> <label for="input-variant-product-subscription" class="form-check-label"></label>
                           </div>
                         {% endif %}
                       </td>
                     </tr>
                   </thead>
                   <tbody>
-                    {% set recurring_row = 0 %}
-                    {% for product_recurring in product_recurrings %}
-                      <tr id="recurring-row-{{ recurring_row }}">
-                        <td class="text-start"><select name="product_recurring[{{ recurring_row }}][recurring_id]" class="form-select">
-                            {% for recurring in recurrings %}
-                              <option value="{{ recurring.recurring_id }}"{% if recurring.recurring_id == product_recurring.recurring_id %} selected="selected"{% endif %}>{{ recurring.name }}</option>
+                    {% set subscription_row = 0 %}
+                    {% for product_subscription in product_subscriptions %}
+                      <tr id="subscription-row-{{ subscription_row }}">
+                        <td class="text-start"><select name="product_subscription[{{ subscription_row }}][subscription_plan_id]" class="form-select">
+                            {% for subscription_plan in subscription_plans %}
+                              <option value="{{ subscription_plan.subscription_plan_id }}"{% if subscription_plan.subscription_plan_id == product_subscription.subscription_plan_id %} selected="selected"{% endif %}>{{ subscription_plan.name }}</option>
                             {% endfor %}
                           </select></td>
-                        <td class="text-start"><select name="product_recurring[{{ recurring_row }}][customer_group_id]" class="form-select">
+                        <td class="text-start"><select name="product_subscription[{{ subscription_row }}][customer_group_id]" class="form-select">
                             {% for customer_group in customer_groups %}
-                              <option value="{{ customer_group.customer_group_id }}"{% if customer_group.customer_group_id == product_recurring.customer_group_id %} selected="selected"{% endif %}>{{ customer_group.name }}</option>
+                              <option value="{{ customer_group.customer_group_id }}"{% if customer_group.customer_group_id == product_subscription.customer_group_id %} selected="selected"{% endif %}>{{ customer_group.name }}</option>
                             {% endfor %}
                           </select></td>
-                        <td class="text-end"><button type="button" onclick="$('#recurring-row-{{ recurring_row }}').remove()" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
+                        <td class="text-end"><button type="button" onclick="$('#subscription-row-{{ subscription_row }}').remove()" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
                       </tr>
-                      {% set recurring_row = recurring_row + 1 %}
+                      {% set subscription_row = subscription_row + 1 %}
                     {% endfor %}
                   </tbody>
                   <tfoot>
                     <tr>
                       <td colspan="2"></td>
-                      <td class="text-end"><button type="button" id="button-recurring" data-bs-toggle="tooltip" title="{{ button_recurring_add }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i></button></td>
+                      <td class="text-end"><button type="button" id="button-subscription" data-bs-toggle="tooltip" title="{{ button_subscription_add }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i></button></td>
                     </tr>
                   </tfoot>
                 </table>
@@ -1328,7 +1328,7 @@
                         </div>
                       {% endif %}
                     </div>
-                    <div class="form-text text-muted">{{ help_points }}</div>
+                    <div class="form-text">{{ help_points }}</div>
                   </div>
                 </div>
               </fieldset>
@@ -2001,26 +2001,26 @@ $('#button-image').on('click', function () {
     image_row++;
 });
 
-var recurring_row = {{ recurring_row }};
+var subscription_row = {{ subscription_row }};
 
-$('#button-recurring').on('click', function () {
-    html = '<tr id="recurring-row-' + recurring_row + '">';
-    html += '  <td class="text-start"><select name="product_recurring[' + recurring_row + '][recurring_id]" class="form-select">';
-  {% for recurring in recurrings %}
-    html += '      <option value="{{ recurring.recurring_id }}">{{ recurring.name|escape('js') }}</option>';
+$('#button-subscription').on('click', function () {
+    html = '<tr id="subscription-row-' + subscription_row + '">';
+    html += '  <td class="text-start"><select name="product_subscription[' + subscription_row + '][subscription_plan_id]" class="form-select">';
+  {% for subscription_plan in subscription_plans %}
+    html += '      <option value="{{ subscription_plan.subscription_plan_id }}">{{ subscription_plan.name|escape('js') }}</option>';
   {% endfor %}
     html += '  </select></td>';
-    html += '  <td class="text-start"><select name="product_recurring[' + recurring_row + '][customer_group_id]" class="form-select">';
+    html += '  <td class="text-start"><select name="product_subscription[' + subscription_row + '][customer_group_id]" class="form-select">';
   {% for customer_group in customer_groups %}
     html += '      <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name|escape('js') }}</option>';
   {% endfor %}
     html += '  <select></td>';
-    html += '  <td class="text-end"><button type="button" onclick="$(\'#recurring-row-' + recurring_row + '\').remove()" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
+    html += '  <td class="text-end"><button type="button" onclick="$(\'#subscription-row-' + subscription_row + '\').remove()" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
     html += '</tr>';
 
-    $('#product-recurring').append(html);
+    $('#product-subscription').append(html);
 
-    recurring_row++;
+    subscription_row++;
 });
 
 {% if master_id %}

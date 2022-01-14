@@ -89,6 +89,7 @@ $_['entry_country']          = 'Country';
 $_['entry_zone']             = 'Region / State';
 $_['entry_product']          = 'Choose Product';
 $_['entry_option']           = 'Choose Option(s)';
+$_['entry_subscription']     = 'Choose Subscription';
 $_['entry_quantity']         = 'Quantity';
 $_['entry_to_name']          = 'Recipient\'s Name';
 $_['entry_to_email']         = 'Recipient\'s E-mail';

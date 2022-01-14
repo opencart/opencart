@@ -8,7 +8,7 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 
 		$results = $this->model_setting_extension->getExtensionsByType('payment');
 
-		$recurring = $this->cart->hasRecurring();
+		$subscription = $this->cart->hasSubscription();
 
 		foreach ($results as $result) {
 			if ($this->config->get('payment_' . $result['code'] . '_status')) {
@@ -17,7 +17,7 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 				$payment_method = $this->{'model_extension_' . $result['extension'] . '_payment_' . $result['code']}->getMethod($payment_address);
 
 				if ($payment_method) {
-					if ($recurring) {
+					if ($subscription) {
 						if (property_exists($this->{'model_extension_' . $result['extension'] . '_payment_' . $result['code']}, 'recurringPayments') && $this->{'model_extension_' . $result['extension'] . '_payment_' . $result['code']}->recurringPayments()) {
 							$method_data[$result['code']] = $payment_method;
 						}

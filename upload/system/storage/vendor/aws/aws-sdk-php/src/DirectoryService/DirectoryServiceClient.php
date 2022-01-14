@@ -50,6 +50,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise deregisterEventTopicAsync(array $args = [])
  * @method \Aws\Result describeCertificate(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeCertificateAsync(array $args = [])
+ * @method \Aws\Result describeClientAuthenticationSettings(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeClientAuthenticationSettingsAsync(array $args = [])
  * @method \Aws\Result describeConditionalForwarders(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeConditionalForwardersAsync(array $args = [])
  * @method \Aws\Result describeDirectories(array $args = [])

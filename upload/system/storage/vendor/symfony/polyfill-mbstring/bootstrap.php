@@ -11,6 +11,10 @@
 
 use Symfony\Polyfill\Mbstring as p;
 
+if (\PHP_VERSION_ID >= 80000) {
+    return require __DIR__.'/bootstrap80.php';
+}
+
 if (!function_exists('mb_convert_encoding')) {
     function mb_convert_encoding($string, $to_encoding, $from_encoding = null) { return p\Mbstring::mb_convert_encoding($string, $to_encoding, $from_encoding); }
 }
@@ -18,7 +22,7 @@ if (!function_exists('mb_decode_mimeheader')) {
     function mb_decode_mimeheader($string) { return p\Mbstring::mb_decode_mimeheader($string); }
 }
 if (!function_exists('mb_encode_mimeheader')) {
-    function mb_encode_mimeheader($string, $charset = null, $transfer_encoding = null, $newline = null, $indent = null) { return p\Mbstring::mb_encode_mimeheader($string, $charset, $transfer_encoding, $newline, $indent); }
+    function mb_encode_mimeheader($string, $charset = null, $transfer_encoding = null, $newline = "\r\n", $indent = 0) { return p\Mbstring::mb_encode_mimeheader($string, $charset, $transfer_encoding, $newline, $indent); }
 }
 if (!function_exists('mb_decode_numericentity')) {
     function mb_decode_numericentity($string, $map, $encoding = null) { return p\Mbstring::mb_decode_numericentity($string, $map, $encoding); }
@@ -51,7 +55,7 @@ if (!function_exists('mb_detect_order')) {
     function mb_detect_order($encoding = null) { return p\Mbstring::mb_detect_order($encoding); }
 }
 if (!function_exists('mb_parse_str')) {
-    function mb_parse_str($string, &$result = array()) { parse_str($string, $result); }
+    function mb_parse_str($string, &$result = []) { parse_str($string, $result); return (bool) $result; }
 }
 if (!function_exists('mb_strlen')) {
     function mb_strlen($string, $encoding = null) { return p\Mbstring::mb_strlen($string, $encoding); }
@@ -108,15 +112,11 @@ if (!function_exists('mb_output_handler')) {
     function mb_output_handler($string, $status) { return p\Mbstring::mb_output_handler($string, $status); }
 }
 if (!function_exists('mb_http_input')) {
-    function mb_http_input($type = '') { return p\Mbstring::mb_http_input($type); }
+    function mb_http_input($type = null) { return p\Mbstring::mb_http_input($type); }
 }
 
 if (!function_exists('mb_convert_variables')) {
-    if (PHP_VERSION_ID >= 80000) {
-        function mb_convert_variables($to_encoding, $from_encoding, &$var, &...$vars) { return p\Mbstring::mb_convert_variables($to_encoding, $from_encoding, $var, ...$vars); }
-    } else {
-        function mb_convert_variables($to_encoding, $from_encoding, &...$vars) { return p\Mbstring::mb_convert_variables($to_encoding, $from_encoding, ...$vars); }
-    }
+    function mb_convert_variables($to_encoding, $from_encoding, &...$vars) { return p\Mbstring::mb_convert_variables($to_encoding, $from_encoding, ...$vars); }
 }
 
 if (!function_exists('mb_ord')) {

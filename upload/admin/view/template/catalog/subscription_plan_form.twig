@@ -36,10 +36,26 @@
             <label class="col-sm-2 col-form-label">{{ entry_description }}</label>
             <div class="col-sm-10">
               {% for language in languages %}
-                <div class="input-group">
+                <div class="input-group mb-1">
                   <div class="input-group-text"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/></div>
                   <textarea name="subscription_plan_description[{{ language.language_id }}][description]" rows="8" placeholder="{{ entry_description }}" id="input-description-{{ language.language_id }}" class="form-control">{{ subscription_plan_description[language.language_id] ? subscription_plan_description[language.language_id].description }}</textarea>
                 </div>
+
+                <div class="form-check">
+                  <input type="checkbox" name="trial" value="{{ text_subscription_trial }}" id="input-description-trial" class="form-check-input"/>
+                  <label for="input-description-trial" class="form-check-label">{{ text_subscription_trial }}</label>
+                </div>
+
+                <div class="form-check">
+                  <input type="radio" name="type" value="{{ text_subscription_description }}" id="input-description-limited" class="form-check-input"/>
+                  <label for="input-description-description" class="form-check-label">{{ text_subscription_description }}</label>
+                </div>
+
+                <div class="form-check">
+                  <input type="radio" name="type" value="{{ text_subscription_cancel }}" id="input-description-unlimited" class="form-check-input"/>
+                  <label for="input-description-cancel" class="form-check-label">{{ text_subscription_cancel }}</label>
+                </div>
+
               {% endfor %}
               <div class="form-text">{{ help_description }}</div>
             </div>
@@ -143,4 +159,18 @@
     </div>
   </div>
 </div>
+<script type="text/javascript"><!--
+
+
+$('input[name=\'type\']').on('change', function() {
+    if (this.value == 'select') {
+        $('#custom-field-value').show();
+        $('#display-value, #display-validation').hide();
+    } else {
+        $('#custom-field-value').hide();
+        $('#display-value, #display-validation').show();
+    }
+
+});
+//--></script>
 {{ footer }}

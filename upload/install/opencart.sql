@@ -14,6 +14,15 @@ SET sql_mode = '';
 -- Dumping data for table `oc_attribute`
 --
 
+INSERT INTO `oc_address_format` (`address_format_id`, `name`, `address_format`) VALUES
+(1, 'Address Format', '{firstname} {lastname}\r\n{company}\r\n{address_1}\r\n{address_2}\r\n{city}, {zone} {postcode}\r\n{country}');
+
+-----------------------------------------------------------
+
+--
+-- Dumping data for table `oc_attribute`
+--
+
 INSERT INTO `oc_attribute` (`attribute_id`, `attribute_group_id`, `sort_order`) VALUES
 (1, 6, 1),
 (2, 6, 5),

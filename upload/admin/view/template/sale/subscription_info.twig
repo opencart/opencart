@@ -1,138 +1,285 @@
 {{ header }}{{ column_left }}
 <div id="content">
-	<div class="page-header">
-		<div class="container-fluid">
-			<div class="float-end"><a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
-			<h1>{{ heading_title }}</h1>
-			<ol class="breadcrumb">
-				{% for breadcrumb in breadcrumbs %}
-					<li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
-				{% endfor %}
-			</ol>
-		</div>
-	</div>
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-lg-6 col-md-6 col-sm-12">
-				<div class="card">
-					<div class="card-header">{{ text_subscription_detail }}</div>
-					<div class="card-body">
-						<table class="table table-bordered">
-							<tr>
-								<td>{{ text_subscription_id }}</td>
-								<td>{{ subscription_id }}</td>
-							</tr>
-							<tr>
-								<td>{{ text_reference }}</td>
-								<td>{{ reference }}</td>
-							</tr>
-							<tr>
-								<td>{{ text_recurring_name }}</td>
-								<td>{% if recurring %}
-										<a href="{{ recurring }}">{{ recurring_name }}</a>
-									{% else %}
-										{{ recurring_name }}
-									{% endif %}</td>
-							</tr>
-							<tr>
-								<td>{{ text_recurring_description }}</td>
-								<td>{{ recurring_description }}</td>
-							</tr>
-							<tr>
-								<td>{{ text_recurring_status }}</td>
-								<td>{{ recurring_status }}</td>
-							</tr>
-							<tr>
-								<td>{{ text_payment_method }}</td>
-								<td>{{ payment_method }}</td>
-							</tr>
-						</table>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-6 col-md-6 col-sm-12">
-				<div class="card">
-					<div class="card-header"><i class="fas fa-list"></i> {{ text_order_detail }}</div>
-					<div class="card-body">
-						<table class="table table-bordered">
-							<tr>
-								<td>{{ text_order_id }}</td>
-								<td><a href="{{ order }}">{{ order_id }}</a></td>
-							</tr>
-							<tr>
-								<td>{{ text_customer }}</td>
-								<td>{% if customer %}
-										<a href="{{ customer }}">{{ firstname }} {{ lastname }}</a>
-									{% else %}
-										{{ firstname }} {{ lastname }}
-									{% endif %}</td>
-							</tr>
-							<tr>
-								<td>{{ text_email }}</td>
-								<td>{{ email }}</td>
-							</tr>
-							<tr>
-								<td>{{ text_order_status }}</td>
-								<td>{{ order_status }}</td>
-							</tr>
-							<tr>
-								<td>{{ text_date_added }}</td>
-								<td>{{ date_added }}</td>
-							</tr>
-						</table>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="card">
-			<div class="card-header"><i class="fas fa-list"></i> {{ text_product_detail }}</div>
-			<div class="card-body">
-				<table class="table table-bordered">
-					<thead>
-						<tr>
-							<td>{{ text_product }}</td>
-							<td>{{ text_quantity }}</td>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>{{ product }}</td>
-							<td>{{ quantity }}</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-		</div>
-		<div class="card">
-			<div class="card-header"><i class="fas fa-list"></i> {{ text_transaction }}</div>
-			<div class="card-body">
-				{{ buttons }}
-				<table class="table table-bordered">
-					<thead>
-						<tr>
-							<td class="text-start">{{ column_date_added }}</td>
-							<td class="text-end">{{ column_amount }}</td>
-							<td class="text-start">{{ column_type }}</td>
-						</tr>
-					</thead>
-					<tbody>
-						{% if transactions %}
-							{% for transaction in transactions %}
-								<tr>
-									<td class="text-start">{{ transaction.date_added }}</td>
-									<td class="text-end">{{ transaction.amount }}</td>
-									<td class="text-start">{{ transaction.type }}</td>
-								</tr>
-							{% endfor %}
-						{% else %}
-							<tr>
-								<td class="text-center" colspan="7">{{ text_no_results }}</td>
-							</tr>
-						{% endif %}
-					</tbody>
-				</table>
-			</div>
-		</div>
-	</div>
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="float-end"><a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
+      <h1>{{ heading_title }}</h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="card">
+          <div class="card-header">{{ text_subscription_detail }}</div>
+          <div class="card-body">
+            <table class="table table-bordered">
+              <tr>
+                <td>{{ text_subscription_id }}</td>
+                <td>{{ subscription_id }}</td>
+              </tr>
+              <tr>
+                <td>{{ text_reference }}</td>
+                <td>{{ reference }}</td>
+              </tr>
+              <tr>
+                <td>{{ text_recurring_name }}</td>
+                <td>{% if recurring %}
+                    <a href="{{ recurring }}">{{ recurring_name }}</a>
+                  {% else %}
+                    {{ recurring_name }}
+                  {% endif %}</td>
+              </tr>
+              <tr>
+                <td>{{ text_recurring_description }}</td>
+                <td>{{ recurring_description }}</td>
+              </tr>
+              <tr>
+                <td>{{ text_recurring_status }}</td>
+                <td>{{ recurring_status }}</td>
+              </tr>
+              <tr>
+                <td>{{ text_payment_method }}</td>
+                <td>{{ payment_method }}</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="card">
+          <div class="card-header"><i class="fas fa-list"></i> {{ text_order_detail }}</div>
+          <div class="card-body">
+            <table class="table table-bordered">
+              <tr>
+                <td>{{ text_order_id }}</td>
+                <td><a href="{{ order }}">{{ order_id }}</a></td>
+              </tr>
+              <tr>
+                <td>{{ text_customer }}</td>
+                <td>{% if customer %}
+                    <a href="{{ customer }}">{{ firstname }} {{ lastname }}</a>
+                  {% else %}
+                    {{ firstname }} {{ lastname }}
+                  {% endif %}</td>
+              </tr>
+              <tr>
+                <td>{{ text_email }}</td>
+                <td>{{ email }}</td>
+              </tr>
+              <tr>
+                <td>{{ text_order_status }}</td>
+                <td>{{ order_status }}</td>
+              </tr>
+              <tr>
+                <td>{{ text_date_added }}</td>
+                <td>{{ date_added }}</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header"><i class="fas fa-list"></i> {{ text_product_detail }}</div>
+      <div class="card-body">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <td>{{ text_product }}</td>
+              <td>{{ text_quantity }}</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{{ product }}</td>
+              <td>{{ quantity }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header"><i class="fas fa-list"></i> {{ text_transaction }}</div>
+      <div class="card-body">
+        <ul class="nav nav-tabs">
+          <li class="nav-item"><a href="#tab-history" data-bs-toggle="tab" class="nav-link active">{{ tab_history }}</a></li>
+          <li class="nav-item"><a href="#tab-transaction" data-bs-toggle="tab" class="nav-link">{{ tab_transaction }}</a></li>
+          {% for tab in tabs %}
+            <li class="nav-item"><a href="#tab-{{ tab.code }}" data-bs-toggle="tab" class="nav-link">{{ tab.title }}</a></li>
+          {% endfor %}
+        </ul>
+        <div class="tab-content">
+          <div id="tab-history" class="tab-pane active">
+            <div id="history"></div>
+            <br/>
+            <form id="form-history">
+              <fieldset>
+                <legend>{{ text_history_add }}</legend>
+                <div class="row mb-3">
+                  <label for="input-order-status" class="col-sm-2 col-form-label">{{ entry_order_status }}</label>
+                  <div class="col-sm-10">
+                    <select name="order_status_id" id="input-order-status" class="form-select">
+                      {% for order_status in order_statuses %}
+                        <option value="{{ order_status.order_status_id }}"{% if order_status.order_status_id == order_status_id %} selected{% endif %}>{{ order_status.name }}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="input-override" class="col-sm-2 col-form-label">{{ entry_override }}</label>
+                  <div class="col-sm-10">
+                    <div class="btn-group">
+                      <input type="radio" name="override" value="1" id="input-override-yes" class="btn-check"/> <label for="input-override-yes" class="btn btn-outline-secondary">{{ text_yes }}</label> <input type="radio" name="override" value="0" id="input-override-no" class="btn-check" checked/> <label for="input-override-no" class="btn btn-outline-secondary">{{ text_no }}</label>
+                    </div>
+                    <div class="form-text">{{ help_override }}</div>
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="input-notify" class="col-sm-2 col-form-label">{{ entry_notify }}</label>
+                  <div class="col-sm-10">
+                    <div class="btn-group">
+                      <input type="radio" name="notify" value="1" id="input-notify-yes" class="btn-check"/> <label for="input-notify-yes" class="btn btn-outline-secondary">{{ text_yes }}</label> <input type="radio" name="notify" value="0" id="input-notify-no" class="btn-check" checked/> <label for="input-notify-no" class="btn btn-outline-secondary">{{ text_no }}</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="input-comment" class="col-sm-2 col-form-label">{{ entry_comment }}</label>
+                  <div class="col-sm-10">
+                    <textarea name="comment" rows="8" placeholder="{{ entry_comment }}" id="input-history" class="form-control"></textarea>
+                  </div>
+                </div>
+                <div class="text-end">
+                  <button type="submit" id="button-history" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i> {{ button_history_add }}</button>
+                </div>
+              </fieldset>
+            </form>
+
+          </div>
+          <div id="tab-transaction" class="tab-pane">
+            <fieldset>
+              <legend>{{ text_transaction }}</legend>
+              <div id="transaction"></div>
+            </fieldset>
+            <form id="form-transaction">
+              <fieldset>
+                <legend>{{ text_transaction_add }}</legend>
+                <div class="row mb-3">
+                  <label for="input-transaction-description" class="col-sm-2 col-form-label">{{ entry_description }}</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="description" value="" placeholder="{{ entry_description }}" id="input-transaction-description" class="form-control"/>
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="input-amount" class="col-sm-2 col-form-label">{{ entry_amount }}</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="amount" value="" placeholder="{{ entry_amount }}" id="input-transaction-amount" class="form-control"/>
+                  </div>
+                </div>
+                <div class="text-end">
+                  <button type="submit" id="button-transaction" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i> {{ button_transaction_add }}</button>
+                </div>
+              </fieldset>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+<script type="text/javascript"><!--
+$('#history').on('click', '.pagination a', function (e) {
+    e.preventDefault();
+
+    $('#history').load(this.href);
+});
+
+$('#history').load('index.php?route=sale/order|history&user_token={{ user_token }}&order_id=' + $('#input-order-id').val());
+
+$('#form-history').on('submit', function (e) {
+    e.preventDefault();
+
+    $.ajax({
+        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=sale/order|addHistory',
+        type: 'post',
+        dataType: 'json',
+        data: $('#form-history').serialize(),
+        contentType: 'application/x-www-form-urlencoded',
+        beforeSend: function () {
+            $('#button-history').button('loading');
+        },
+        complete: function () {
+            $('#button-history').button('reset');
+        },
+        success: function (json) {
+            $('.alert-dismissible').remove();
+
+            if (json['error']) {
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            if (json['success']) {
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                $('#history').load('index.php?route=sale/order|history&user_token={{ user_token }}&order_id=' + $('#input-order-id').val());
+
+                $('#input-history').val('');
+            }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+$('#transaction').on('click', '.pagination a', function(e) {
+    e.preventDefault();
+
+    $('#transaction').load(this.href);
+});
+
+$('#transaction').load('index.php?route=customer/customer|transaction&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val());
+
+$('#button-transaction').on('click', function(e) {
+    e.preventDefault();
+
+    $.ajax({
+        url: 'index.php?route=customer/customer|addtransaction&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val(),
+        type: 'post',
+        dataType: 'json',
+        data: 'description=' + encodeURIComponent($('#input-transaction-description').val()) + '&amount=' + encodeURIComponent($('#input-transaction-amount').val()),
+
+
+        beforeSend: function() {
+            $('#button-transaction').button('loading');
+        },
+        complete: function() {
+            $('#button-transaction').button('reset');
+        },
+        success: function(json) {
+            $('.alert-dismissible').remove();
+
+            if (json['error']) {
+                $('#tab-transaction').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            if (json['success']) {
+                $('#tab-transaction').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                $('#transaction').load('index.php?route=customer/customer|transaction&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val());
+
+                $('#input-transaction-amount').val('');
+                $('#input-transaction-description').val('');
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+//--></script>
 {{ footer }}

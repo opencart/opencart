@@ -425,19 +425,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$data['product'] = $subscription_info['product_name'];
 			$data['quantity'] = $subscription_info['product_quantity'];
 
-			// Transactions
-			$data['transactions'] = [];
-			
-			$transactions = $this->model_sale_subscription->getTransactions($subscription_info['subscription_id']);
-
-			foreach ($transactions as $transaction) {
-				$data['transactions'][] = [
-					'date_added' => $transaction['date_added'],
-					'type'       => $transaction['type'],
-					'amount'     => $this->currency->format($transaction['amount'], $order_info['currency_code'], $order_info['currency_value'])
-				];
-			}
-
 			$data['buttons'] = $this->load->controller('extension/payment/' . $order_info['payment_code'] . '/subscription');
 
 			$data['user_token'] = $this->session->data['user_token'];
@@ -455,12 +442,12 @@ class Subscription extends \Opencart\System\Engine\Controller {
 	}
 
 	public function history(): void {
-		$this->load->language('sale/order');
+		$this->load->language('sale/subscription');
 
-		if (isset($this->request->get['order_id'])) {
-			$order_id = (int)$this->request->get['order_id'];
+		if (isset($this->request->get['subscription_id'])) {
+			$subscription_id = (int)$this->request->get['subscription_id'];
 		} else {
-			$order_id = 0;
+			$subscription_id = 0;
 		}
 
 		if (isset($this->request->get['page'])) {
@@ -471,9 +458,9 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 		$data['histories'] = [];
 
-		$this->load->model('sale/order');
+		$this->load->model('sale/subscription');
 
-		$results = $this->model_sale_order->getHistories($order_id, ($page - 1) * 10, 10);
+		$results = $this->model_sale_subscription->getHistories($subscription_id, ($page - 1) * 10, 10);
 
 		foreach ($results as $result) {
 			$data['histories'][] = [
@@ -484,39 +471,39 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		$history_total = $this->model_sale_order->getTotalHistories($order_id);
+		$subscription_total = $this->model_sale_subscription->getTotalHistories($subscription_id);
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
-			'total' => $history_total,
+			'total' => $subscription_total,
 			'page'  => $page,
 			'limit' => 10,
-			'url'   => $this->url->link('sale/order|history', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $order_id . '&page={page}')
+			'url'   => $this->url->link('sale/subscription|history', 'user_token=' . $this->session->data['user_token'] . '&subscription_id=' . $subscription_id . '&page={page}')
 		]);
 
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($history_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($history_total - 10)) ? $history_total : ((($page - 1) * 10) + 10), $history_total, ceil($history_total / 10));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($subscription_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($subscription_total - 10)) ? $subscription_total : ((($page - 1) * 10) + 10), $subscription_total, ceil($subscription_total / 10));
 
-		$this->response->setOutput($this->load->view('sale/order_history', $data));
+		$this->response->setOutput($this->load->view('sale/subscription_history', $data));
 	}
 
 	public function addHistory(): void {
-		$this->load->language('customer/customer');
+		$this->load->language('sale/subscription');
 
 		$json = [];
 
-		if (isset($this->request->get['customer_id'])) {
-			$customer_id = (int)$this->request->get['customer_id'];
+		if (isset($this->request->get['subscription_id'])) {
+			$subscription_id = (int)$this->request->get['subscription_id'];
 		} else {
-			$customer_id = 0;
+			$subscription_id = 0;
 		}
 
-		if (!$this->user->hasPermission('modify', 'customer/customer')) {
+		if (!$this->user->hasPermission('modify', 'sale/subscription')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
 		if (!$json) {
-			$this->load->model('customer/customer');
+			$this->load->model('sale/subscription');
 
-			$this->model_customer_customer->addHistory($customer_id, $this->request->post['comment']);
+			$this->model_sale_subscription->addHistory($subscription_id, $this->request->post['comment']);
 
 			$json['success'] = $this->language->get('text_success');
 		}
@@ -526,12 +513,12 @@ class Subscription extends \Opencart\System\Engine\Controller {
 	}
 
 	public function transaction(): void {
-		$this->load->language('customer/customer');
+		$this->load->language('sale/subscription');
 
-		if (isset($this->request->get['customer_id'])) {
-			$customer_id = (int)$this->request->get['customer_id'];
+		if (isset($this->request->get['subscription_id'])) {
+			$subscription_id = (int)$this->request->get['subscription_id'];
 		} else {
-			$customer_id = 0;
+			$subscription_id = 0;
 		}
 
 		if (isset($this->request->get['page'])) {
@@ -542,36 +529,36 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 		$data['transactions'] = [];
 
-		$this->load->model('customer/customer');
+		$this->load->model('sale/subscription');
 
-		$results = $this->model_customer_customer->getTransactions($customer_id, ($page - 1) * 10, 10);
+		$results = $this->model_sale_subscription->getTransactions($subscription_id, ($page - 1) * 10, 10);
 
 		foreach ($results as $result) {
 			$data['transactions'][] = [
 				'amount'      => $this->currency->format($result['amount'], $this->config->get('config_currency')),
-				'description' => $result['description'],
+				'description' => nl2br($result['description']),
 				'date_added'  => date($this->language->get('date_format_short'), strtotime($result['date_added']))
 			];
 		}
 
-		$data['balance'] = $this->currency->format($this->model_customer_customer->getTransactionTotal($customer_id), $this->config->get('config_currency'));
+		$data['balance'] = $this->currency->format($this->model_sale_subscription->getTransactionTotal($subscription_id), $this->config->get('config_currency'));
 
-		$transaction_total = $this->model_customer_customer->getTotalTransactions($customer_id);
+		$transaction_total = $this->model_sale_transaction->getTotalTransactions($subscription_id);
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $transaction_total,
 			'page'  => $page,
 			'limit' => 10,
-			'url'   => $this->url->link('customer/customer|transaction', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $customer_id . '&page={page}')
+			'url'   => $this->url->link('sale/subscription|transaction|transaction', 'user_token=' . $this->session->data['user_token'] . '&subscription_id=' . $subscription_id . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($transaction_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($transaction_total - 10)) ? $transaction_total : ((($page - 1) * 10) + 10), $transaction_total, ceil($transaction_total / 10));
 
-		$this->response->setOutput($this->load->view('customer/customer_transaction', $data));
+		$this->response->setOutput($this->load->view('sale/subscription_transaction', $data));
 	}
 
 	public function addTransaction(): void {
-		$this->load->language('customer/customer');
+		$this->load->language('sale/subscription');
 
 		$json = [];
 
@@ -581,7 +568,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$subscription_id = 0;
 		}
 
-		if (!$this->user->hasPermission('modify', 'customer/customer')) {
+		if (!$this->user->hasPermission('modify', 'sale/subscription')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 

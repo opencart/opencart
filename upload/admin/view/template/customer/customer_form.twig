@@ -465,56 +465,61 @@
                 <button type="button" id="button-address" class="btn btn-primary"><i class="fas fa-plus-circle"></i> {{ button_address_add }}</button>
               </div>
             </div>
+
             <div id="tab-history" class="tab-pane">
+
               <fieldset>
                 <legend>{{ text_history }}</legend>
                 <div id="history"></div>
               </fieldset>
-              <br/>
-              <fieldset>
-                <legend>{{ text_history_add }}</legend>
-                <div class="row mb-3">
-                  <label for="input-comment" class="col-sm-2 col-form-label">{{ entry_comment }}</label>
-                  <div class="col-sm-10">
-                    <textarea name="comment" rows="8" placeholder="{{ entry_comment }}" id="input-comment" class="form-control"></textarea>
+              <form id="form-history">
+                <fieldset>
+                  <legend>{{ text_history_add }}</legend>
+                  <div class="row mb-3">
+                    <label for="input-comment" class="col-sm-2 col-form-label">{{ entry_comment }}</label>
+                    <div class="col-sm-10">
+                      <textarea name="comment" rows="8" placeholder="{{ entry_comment }}" id="input-comment" class="form-control"></textarea>
+                    </div>
                   </div>
-                </div>
-              </fieldset>
-              <div class="text-end">
-                <button type="button" id="button-history" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i> {{ button_history_add }}</button>
-              </div>
+                  <div class="text-end">
+                    <button type="submit" id="button-history" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i> {{ button_history_add }}</button>
+                  </div>
+                </fieldset>
+              </form>
             </div>
+
             <div id="tab-transaction" class="tab-pane">
               <fieldset>
                 <legend>{{ text_transaction }}</legend>
                 <div id="transaction"></div>
               </fieldset>
-              <br/>
-              <fieldset>
-                <legend>{{ text_transaction_add }}</legend>
-                <div class="row mb-3">
-                  <label for="input-transaction-description" class="col-sm-2 col-form-label">{{ entry_description }}</label>
-                  <div class="col-sm-10">
-                    <input type="text" name="description" value="" placeholder="{{ entry_description }}" id="input-transaction-description" class="form-control"/>
+              <form id="form-transaction">
+                <fieldset>
+                  <legend>{{ text_transaction_add }}</legend>
+                  <div class="row mb-3">
+                    <label for="input-transaction-description" class="col-sm-2 col-form-label">{{ entry_description }}</label>
+                    <div class="col-sm-10">
+                      <input type="text" name="description" value="" placeholder="{{ entry_description }}" id="input-transaction-description" class="form-control"/>
+                    </div>
                   </div>
-                </div>
-                <div class="row mb-3">
-                  <label for="input-amount" class="col-sm-2 col-form-label">{{ entry_amount }}</label>
-                  <div class="col-sm-10">
-                    <input type="text" name="amount" value="" placeholder="{{ entry_amount }}" id="input-transaction-amount" class="form-control"/>
+                  <div class="row mb-3">
+                    <label for="input-amount" class="col-sm-2 col-form-label">{{ entry_amount }}</label>
+                    <div class="col-sm-10">
+                      <input type="text" name="amount" value="" placeholder="{{ entry_amount }}" id="input-transaction-amount" class="form-control"/>
+                    </div>
                   </div>
-                </div>
-              </fieldset>
-              <div class="text-end">
-                <button type="button" id="button-transaction" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i> {{ button_transaction_add }}</button>
-              </div>
+                  <div class="text-end">
+                    <button type="submit" id="button-transaction" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i> {{ button_transaction_add }}</button>
+                  </div>
+                </fieldset>
+              </form>
             </div>
+
             <div id="tab-reward" class="tab-pane">
               <fieldset>
                 <legend>{{ text_reward }}</legend>
                 <div id="reward"></div>
               </fieldset>
-              <br/>
               <fieldset>
                 <legend>{{ text_reward_add }}</legend>
                 <div class="row mb-3">
@@ -530,10 +535,10 @@
                     <div class="form-text">{{ help_points }}</div>
                   </div>
                 </div>
+                <div class="text-end">
+                  <button type="button" id="button-reward" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i> {{ button_reward_add }}</button>
+                </div>
               </fieldset>
-              <div class="text-end">
-                <button type="button" id="button-reward" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i> {{ button_reward_add }}</button>
-              </div>
             </div>
             <div id="tab-ip" class="tab-pane">
               <fieldset>
@@ -549,11 +554,11 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#input-customer-group').on('change', function() {
+$('#input-customer-group').on('change', function () {
     $.ajax({
         url: 'index.php?route=customer/customer|customfield&user_token={{ user_token }}&customer_group_id=' + this.value,
         dataType: 'json',
-        success: function(json) {
+        success: function (json) {
             $('.custom-field').hide();
             $('.custom-field').removeClass('required');
 
@@ -567,7 +572,7 @@ $('#input-customer-group').on('change', function() {
                 }
             }
         },
-        error: function(xhr, ajaxOptions, thrownError) {
+        error: function (xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
@@ -578,7 +583,7 @@ $('#input-customer-group').trigger('change');
 <script type="text/javascript"><!--
 var address_row = {{ address_row }};
 
-$('#button-address').on('click', function(e) {
+$('#button-address').on('click', function (e) {
     e.preventDefault();
 
     html = '<fieldset id="address-row-' + address_row + '">';
@@ -806,7 +811,7 @@ $('#button-address').on('click', function(e) {
 <script type="text/javascript"><!--
 var zone = [];
 
-$('#tab-address').on('change', 'select[name$=\'[country_id]\']', function() {
+$('#tab-address').on('change', 'select[name$=\'[country_id]\']', function () {
     var element = this;
 
     $(element).prop('disabled', true);
@@ -817,13 +822,13 @@ $('#tab-address').on('change', 'select[name$=\'[country_id]\']', function() {
         $.ajax({
             url: 'index.php?route=localisation/country|country&user_token={{ user_token }}&country_id=' + $(element).val(),
             dataType: 'json',
-            beforeSend: function() {
+            beforeSend: function () {
                 $(element).prop('disabled', true);
             },
-            complete: function() {
+            complete: function () {
                 $(element).prop('disabled', false);
             },
-            success: function(json) {
+            success: function (json) {
                 zone[$(element).val()] = json;
 
                 if (json['postcode_required'] == '1') {
@@ -856,7 +861,7 @@ $('#tab-address').on('change', 'select[name$=\'[country_id]\']', function() {
 
                 $('#tab-address select[name$=\'[country_id]\']:disabled:first').trigger('change');
             },
-            error: function(xhr, ajaxOptions, thrownError) {
+            error: function (xhr, ajaxOptions, thrownError) {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });
@@ -889,7 +894,7 @@ $('#tab-address').on('change', 'select[name$=\'[country_id]\']', function() {
 
 $('#tab-address select[name$=\'[country_id]\']:first').trigger('change');
 
-$('#history').on('click', '.pagination a', function(e) {
+$('#history').on('click', '.pagination a', function (e) {
     e.preventDefault();
 
     $('#history').load(this.href);
@@ -897,21 +902,22 @@ $('#history').on('click', '.pagination a', function(e) {
 
 $('#history').load('index.php?route=customer/customer|history&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val());
 
-$('#button-history').on('click', function(e) {
+$('#form-history').on('submit', function (e) {
     e.preventDefault();
 
     $.ajax({
         url: 'index.php?route=customer/customer|addhistory&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val(),
         type: 'post',
+        data: $('#form-history').serialize(),
         dataType: 'json',
-        data: 'comment=' + encodeURIComponent($('#input-comment').val()),
-        beforeSend: function() {
+        contentType: 'application/x-www-form-urlencoded',
+        beforeSend: function () {
             $('#button-history').button('loading');
         },
-        complete: function() {
+        complete: function () {
             $('#button-history').button('reset');
         },
-        success: function(json) {
+        success: function (json) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
@@ -926,14 +932,13 @@ $('#button-history').on('click', function(e) {
                 $('#input-comment').val('');
             }
         },
-        error: function(xhr, ajaxOptions, thrownError) {
+        error: function (xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 });
-//--></script>
-<script type="text/javascript"><!--
-$('#transaction').on('click', '.pagination a', function(e) {
+
+$('#transaction').on('click', '.pagination a', function (e) {
     e.preventDefault();
 
     $('#transaction').load(this.href);
@@ -941,21 +946,22 @@ $('#transaction').on('click', '.pagination a', function(e) {
 
 $('#transaction').load('index.php?route=customer/customer|transaction&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val());
 
-$('#button-transaction').on('click', function(e) {
+$('#form-transaction').on('submit', function (e) {
     e.preventDefault();
 
     $.ajax({
         url: 'index.php?route=customer/customer|addtransaction&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val(),
         type: 'post',
+        data: $('#form-transaction').serialize(),
         dataType: 'json',
-        data: 'description=' + encodeURIComponent($('#input-transaction-description').val()) + '&amount=' + encodeURIComponent($('#input-transaction-amount').val()),
-        beforeSend: function() {
+        contentType: 'application/x-www-form-urlencoded',
+        beforeSend: function () {
             $('#button-transaction').button('loading');
         },
-        complete: function() {
+        complete: function () {
             $('#button-transaction').button('reset');
         },
-        success: function(json) {
+        success: function (json) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
@@ -971,14 +977,13 @@ $('#button-transaction').on('click', function(e) {
                 $('#input-transaction-description').val('');
             }
         },
-        error: function(xhr, ajaxOptions, thrownError) {
+        error: function (xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 });
-//--></script>
-<script type="text/javascript"><!--
-$('#reward').on('click', '.pagination a', function(e) {
+
+$('#reward').on('click', '.pagination a', function (e) {
     e.preventDefault();
 
     $('#reward').load(this.href);
@@ -986,7 +991,7 @@ $('#reward').on('click', '.pagination a', function(e) {
 
 $('#reward').load('index.php?route=customer/customer|reward&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val());
 
-$('#button-reward').on('click', function(e) {
+$('#button-reward').on('click', function (e) {
     e.preventDefault();
 
     $.ajax({
@@ -994,13 +999,13 @@ $('#button-reward').on('click', function(e) {
         type: 'post',
         dataType: 'json',
         data: 'description=' + encodeURIComponent($('#input-reward-description').val()) + '&points=' + $('#input-reward-points').val(),
-        beforeSend: function() {
+        beforeSend: function () {
             $('#button-reward').button('loading');
         },
-        complete: function() {
+        complete: function () {
             $('#button-reward').button('reset');
         },
-        success: function(json) {
+        success: function (json) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
@@ -1016,13 +1021,13 @@ $('#button-reward').on('click', function(e) {
                 $('#input-reward-description').val('');
             }
         },
-        error: function(xhr, ajaxOptions, thrownError) {
+        error: function (xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 });
 
-$('#ip').on('click', '.pagination a', function(e) {
+$('#ip').on('click', '.pagination a', function (e) {
     e.preventDefault();
 
     $('#ip').load(this.href);

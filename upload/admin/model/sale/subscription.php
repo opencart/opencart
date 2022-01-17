@@ -138,13 +138,13 @@ class Subscription extends \Opencart\System\Engine\Model {
 		return $transaction_data;
 	}
 
-	public function getTotalTransactions(int $subscription_id): array {
+	public function getTotalTransactions(int $subscription_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "subscription_transaction` WHERE `subscription_id` = '" . (int)$subscription_id . "'");
 
 		return (int)$query->row['total'];
 	}
 
-	public function getHistories(int $subscription_id, int $start = 0, int $limit = 10) {
+	public function getHistories(int $subscription_id, int $start = 0, int $limit = 10): array {
 		if ($start < 0) {
 			$start = 0;
 		}

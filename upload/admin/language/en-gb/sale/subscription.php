@@ -26,29 +26,23 @@ $_['text_customer']                        = 'Customer';
 $_['text_email']                           = 'Email';
 $_['text_date_added']                      = 'Date Added';
 $_['text_order_status']                    = 'Order Status';
-$_['text_action']                          = 'Action';
 $_['text_product']                         = 'Product';
 $_['text_quantity']                        = 'Quantity';
+
 $_['text_amount']                          = 'Amount';
+
+$_['text_history']                         = 'Order History';
+$_['text_history_add']                     = 'Add Order History';
+$_['text_transaction']                     = 'Transactions';
+$_['text_transaction_add']                 = 'Add Transaction';
+
 $_['text_cancel_payment']                  = 'Cancel Payment';
 
-$_['text_transaction']                     = 'Transactions';
-
-$_['text_transactions']                    = 'Transactions';
-$_['text_cancel_confirm']                  = 'Profile\'s cancellation cannot be undone! Are you sure want to do this?';
 $_['text_transaction_date_added']          = 'Date added';
 $_['text_transaction_payment']             = 'Payment';
 
 
-$_['text_transaction_outstanding_payment'] = 'Outstanding payment';
-$_['text_transaction_skipped']             = 'Payment skipped';
-$_['text_transaction_failed']              = 'Payment failed';
-$_['text_transaction_cancelled']           = 'Cancelled';
-$_['text_transaction_suspended']           = 'Suspended';
-$_['text_transaction_suspended_failed']    = 'Suspended from failed payment';
-$_['text_transaction_outstanding_failed']  = 'Outstanding payment failed';
-$_['text_transaction_expired']             = 'Expired';
-$_['text_cancelled']                       = 'Recurring payment has been cancelled';
+
 
 // Column
 $_['column_subscription_id']               = 'Subscription ID';
@@ -66,16 +60,23 @@ $_['entry_order_id']                       = 'Order ID';
 $_['entry_reference']                      = 'Payment Reference';
 $_['entry_customer']                       = 'Customer';
 $_['entry_date_added']                     = 'Date Added';
-$_['entry_status']                         = 'Subscription Status';
+$_['entry_subscription_status']            = 'Subscription Status';
 
-$_['entry_description']                    = 'Subscription Description';
+//$_['entry_description']                    = 'Subscription Description';
 $_['entry_product']                        = 'Product';
 $_['entry_quantity']                       = 'Quantity';
+
+
+$_['entry_comment']                        = 'Comment';
 $_['entry_amount']                         = 'Amount';
 
 $_['entry_recurring']                      = 'Recurring Profile';
 $_['entry_payment_method']                 = 'Payment Method';
-$_['entry_cancel_payment']                 = 'Cancel Payment';
+$_['entry_description']                    = 'Description';
+$_['entry_amount']                         = 'Amount';
+$_['entry_notify']                         = 'Notify Customer';
+$_['entry_override']                       = 'Override';
+$_['entry_comment']                        = 'Comment';
 
 // Error
 $_['error_not_cancelled']                  = 'Error: %s';

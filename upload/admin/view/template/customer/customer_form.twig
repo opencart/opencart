@@ -465,9 +465,7 @@
                 <button type="button" id="button-address" class="btn btn-primary"><i class="fas fa-plus-circle"></i> {{ button_address_add }}</button>
               </div>
             </div>
-
             <div id="tab-history" class="tab-pane">
-
               <fieldset>
                 <legend>{{ text_history }}</legend>
                 <div id="history"></div>
@@ -476,9 +474,9 @@
                 <fieldset>
                   <legend>{{ text_history_add }}</legend>
                   <div class="row mb-3">
-                    <label for="input-comment" class="col-sm-2 col-form-label">{{ entry_comment }}</label>
+                    <label for="input-history-comment" class="col-sm-2 col-form-label">{{ entry_comment }}</label>
                     <div class="col-sm-10">
-                      <textarea name="comment" rows="8" placeholder="{{ entry_comment }}" id="input-comment" class="form-control"></textarea>
+                      <textarea name="comment" rows="8" placeholder="{{ entry_comment }}" id="input-history-comment" class="form-control"></textarea>
                     </div>
                   </div>
                   <div class="text-end">
@@ -487,7 +485,6 @@
                 </fieldset>
               </form>
             </div>
-
             <div id="tab-transaction" class="tab-pane">
               <fieldset>
                 <legend>{{ text_transaction }}</legend>
@@ -503,7 +500,7 @@
                     </div>
                   </div>
                   <div class="row mb-3">
-                    <label for="input-amount" class="col-sm-2 col-form-label">{{ entry_amount }}</label>
+                    <label for="input-transaction-amount" class="col-sm-2 col-form-label">{{ entry_amount }}</label>
                     <div class="col-sm-10">
                       <input type="text" name="amount" value="" placeholder="{{ entry_amount }}" id="input-transaction-amount" class="form-control"/>
                     </div>
@@ -514,7 +511,6 @@
                 </fieldset>
               </form>
             </div>
-
             <div id="tab-reward" class="tab-pane">
               <fieldset>
                 <legend>{{ text_reward }}</legend>
@@ -921,11 +917,11 @@ $('#form-history').on('submit', function (e) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
-                $('#tab-history').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
 
             if (json['success']) {
-                $('#tab-history').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                 $('#history').load('index.php?route=customer/customer|history&user_token={{ user_token }}&customer_id={{ customer_id }}');
 
@@ -965,11 +961,11 @@ $('#form-transaction').on('submit', function (e) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
-                $('#tab-transaction').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
 
             if (json['success']) {
-                $('#tab-transaction').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                 $('#transaction').load('index.php?route=customer/customer|transaction&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val());
 
@@ -1009,11 +1005,11 @@ $('#button-reward').on('click', function (e) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
-                $('#tab-reward').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
 
             if (json['success']) {
-                $('#tab-reward').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                 $('#reward').load('index.php?route=customer/customer|reward&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val());
 

@@ -17,6 +17,8 @@
       <div class="card-body">
 
         <div class="row row-cols-1 row-cols-sm-1 row-cols-md-3 row-cols-xl-3">
+
+
           <div class="col">
             <div class="input-group mb-3">
               <div class="form-control border rounded-start">
@@ -32,6 +34,7 @@
               {% endif %}
             </div>
           </div>
+
           <div class="col">
             <div class="input-group mb-3">
               <div class="form-control border rounded-start">
@@ -47,6 +50,8 @@
               <button type="button" data-bs-toggle="modal" data-bs-target="#modal-customer" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
             </div>
           </div>
+
+
           <div class="col">
             <div class="form-control p-0 border rounded mb-3">
               <div class="lead p-2"><strong>{{ text_date_added }}</strong>
@@ -56,7 +61,8 @@
             </div>
           </div>
         </div>
-        <table id="order" class="table table-bordered">
+
+        <table class="table table-bordered">
           <thead>
             <tr>
               <td class="text-start">{{ column_product }}</td>
@@ -413,13 +419,13 @@
           </tbody>
         </table>
 
-        <div class="row">
-          <div class="col text-end">
-            <button type="button" id="button-refresh" data-bs-toggle="tooltip" title="{{ button_refresh }}" class="btn btn-outline-primary"><i class="fas fa-sync"></i></button> <button type="button" id="button-confirm" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_confirm }}</button>
-          </div>
+        <div class="text-end">
+          <button type="button" id="button-refresh" data-bs-toggle="tooltip" title="{{ button_refresh }}" class="btn btn-outline-primary"><i class="fas fa-sync"></i></button>
+          <button type="button" id="button-confirm" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_confirm }}</button>
         </div>
 
       </div>
+
 
     </div>
 
@@ -435,8 +441,10 @@
         </ul>
         <div class="tab-content">
           <div id="tab-history" class="tab-pane active">
-            <div id="history"></div>
-            <br/>
+            <fieldset>
+              <legend>{{ text_history }}</legend>
+              <div id="history"></div>
+            </fieldset>
             <form id="form-history">
               <fieldset>
                 <legend>{{ text_history_add }}</legend>
@@ -619,8 +627,7 @@
                   <div>
 
                     <button type="button" data-oc-loading-text="{{ text_loading }}" data-oc-toggle="upload" data-oc-url="{{ upload }}" data-oc-size-max="{{ config_file_max_size }}" data-oc-size-error="{{ error_upload_size }}" data-oc-target="#input-custom-field-{{ custom_field.custom_field_id }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
-                    <a href="" class="btn btn-light"><i class="fas fa-download"></i></a>
-                    <input type="hidden" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] }}" id="input-custom-field-{{ custom_field.custom_field_id }}"/>
+                    <a href="" class="btn btn-light"><i class="fas fa-download"></i></a> <input type="hidden" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] }}" id="input-custom-field-{{ custom_field.custom_field_id }}"/>
 
                   </div>
                   <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
@@ -878,8 +885,7 @@
                   <div>
 
                     <button type="button" data-oc-loading-text="{{ text_loading }}" data-oc-toggle="upload" data-oc-url="{{ upload }}" data-oc-size-max="{{ config_file_max_size }}" data-oc-size-error="{{ error_upload_size }}" data-oc-target="#input-payment-custom-field-{{ custom_field.custom_field_id }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
-                    <a href="" class="btn btn-light"><i class="fas fa-download"></i></a>
-                    <input type="hidden" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ payment_custom_field[custom_field.custom_field_id] ? payment_custom_field[custom_field.custom_field_id] }}" id="input-payment-custom-field-{{ custom_field.custom_field_id }}"/>
+                    <a href="" class="btn btn-light"><i class="fas fa-download"></i></a> <input type="hidden" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ payment_custom_field[custom_field.custom_field_id] ? payment_custom_field[custom_field.custom_field_id] }}" id="input-payment-custom-field-{{ custom_field.custom_field_id }}"/>
 
                   </div>
                   <div id="error-payment-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
@@ -1059,8 +1065,7 @@
                   <div>
 
                     <button type="button" data-oc-loading-text="{{ text_loading }}" data-oc-toggle="upload" data-oc-url="{{ upload }}" data-oc-size-max="{{ config_file_max_size }}" data-oc-size-error="{{ error_upload_size }}" data-oc-target="#input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
-                    <a href="" class="btn btn-light"><i class="fas fa-download"></i></a>
-                    <input type="hidden" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ shipping_custom_field[custom_field.custom_field_id] ? shipping_custom_field[custom_field.custom_field_id] }}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}"/>
+                    <a href="" class="btn btn-light"><i class="fas fa-download"></i></a> <input type="hidden" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ shipping_custom_field[custom_field.custom_field_id] ? shipping_custom_field[custom_field.custom_field_id] }}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}"/>
 
                   </div>
                   <div id="error-shipping-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>

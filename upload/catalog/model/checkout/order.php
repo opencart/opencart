@@ -6,6 +6,8 @@ class Order extends \Opencart\System\Engine\Model {
 
 		$order_id = $this->db->getLastId();
 
+		$this->load->model('checkout/subscription');
+
 		// Products
 		if (isset($data['products'])) {
 			foreach ($data['products'] as $product) {
@@ -18,6 +20,7 @@ class Order extends \Opencart\System\Engine\Model {
 				}
 
 				foreach ($product['subscription'] as $subscription) {
+
 					$this->db->query("INSERT INTO `" . DB_PREFIX . "subscription` SET `order_id` = '" . (int)$order_id . "', `order_product_id` = '" . (int)$order_product_id . "', `reference` = '', `subscription_plan_id` = '" . (int)$subscription['subscription_plan_id'] . "', `name` = '" . $this->db->escape((string)$subscription['name']) . "', `description` = '" . $this->db->escape((string)$subscription['description']) . "', `trial_price` = '" . (float)$subscription['trial_price'] . "', `trial_frequency` = '" . $this->db->escape((string)$subscription['trial_frequency']) . "', `trial_cycle` = '" . (int)$subscription['trial_cycle'] . "', `trial_duration` = '" . (int)$subscription['trial_duration'] . "', `trial_status` = '" . (int)$subscription['trial_status'] . "', `price` = '" . (float)$subscription['price'] . "', `frequency` = '" . $this->db->escape((string)$subscription['frequency']) . "', `cycle` = '" . (int)$subscription['cycle'] . "', `duration` = '" . (int)$subscription['duration'] . "', `status` = '6', `date_added` = NOW(), `date_modified` = NOW()");
 				}
 			}

@@ -392,25 +392,26 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!empty($subscription_info)) {
-			$data['subscription'] = $this->url->link('catalog/subscription|form', 'user_token=' . $this->session->data['user_token'] . '&subscription_id=' . $subscription_info['subscription_id']);
-		} else {
-			$data['subscription'] = '';
-		}
-
-		if (!empty($subscription_info)) {
 			$data['description'] = $subscription_info['description'];
 		} else {
 			$data['description'] = '';
 		}
+
+		if (!empty($subscription_info)) {
+			$data['subscription'] = $this->url->link('catalog/subscription_plan|form', 'user_token=' . $this->session->data['user_token'] . '&subscription_plan_id=' . $subscription_info['subscription_plan_id']);
+		} else {
+			$data['subscription'] = '';
+		}
+
 
 		// Order
 		if (!empty($subscription_info)) {
 			$this->load->model('sale/order');
 
 			$order_info = $this->model_sale_order->getOrder($subscription_info['order_id']);
+
+			$product_info = $this->model_sale_order->getProductByOrderProductId($subscription_info['order_id'], $subscription_info['order_product_id']);
 		}
-
-
 
 		if (!empty($order_info)) {
 			$data['order_id'] = $order_info['order_id'];
@@ -419,31 +420,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!empty($order_info)) {
-			$data['order'] = $this->url->link('sale/order|info', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $order_info['order_id']);
-		} else {
-			$data['order'] = '';
-		}
-
-		if (!empty($order_info)) {
-			$data['firstname'] = $order_info['firstname'];
-		} else {
-			$data['firstname'] = '';
-		}
-
-		if (!empty($order_info)) {
-			$data['lastname'] = $order_info['lastname'];
-		} else {
-			$data['lastname'] = '';
-		}
-
-		if (!empty($order_info)) {
-			$data['email'] = $order_info['email'];
-		} else {
-			$data['email'] = '';
-		}
-
-		if (!empty($order_info)  && $order_info['customer_id']) {
-			$data['customer'] = $this->url->link('customer/customer|form', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $order_info['customer_id']);
+			$data['customer'] = $order_info['customer'];
 		} else {
 			$data['customer'] = '';
 		}
@@ -455,28 +432,22 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		}
 
 		// Product
-		$data['product'] = $subscription_info['product_name'];
-
-		if (!empty($order_info)) {
-			$data['email'] = $subscription_info['product_name'];
-		} else {
-			$data['email'] = '';
-		}
+		//$data['product'] = $product_info['product_name'];
+		//$data['quantity'] = $product_info['product_quantity'];
 
 
-
-		$data['quantity'] = $subscription_info['product_quantity'];
-		$data['payment_method'] = $order_info['payment_method'];
-
-
-
+		//$data['payment_method'] = $order_info['payment_method'];
 
 
 		$this->load->model('localisation/subscription_status');
 
 		$data['subscription_statuses'] = $this->model_localisation_subscription_status->getSubscriptionStatuses();
 
-		$data['date_added'] = date($this->language->get('date_format_short'), strtotime($order_info['date_added']));
+		if (!empty($order_info)) {
+			$data['date_added'] = date($this->language->get('date_format_short'), strtotime($order_info['date_added']));
+		} else {
+			$data['date_added'] = '';
+		}
 
 		$data['user_token'] = $this->session->data['user_token'];
 

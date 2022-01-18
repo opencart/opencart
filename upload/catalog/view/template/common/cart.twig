@@ -1,4 +1,4 @@
-<div id="cart">
+<div id="header-cart">
   <button type="button" data-bs-toggle="dropdown" data-loading-text="{{ text_loading }}" class="btn btn-inverse btn-block btn-lg dropdown-toggle"><i class="fas fa-shopping-cart"></i> <span id="cart-total">{{ text_items }}</span></button>
   <ul class="dropdown-menu dropdown-menu-right">
     {% if products or vouchers %}
@@ -22,7 +22,11 @@
 
               <td class="text-end">x {{ product.quantity }}</td>
               <td class="text-end">{{ product.total }}</td>
-              <td class="text-center"><button type="button" onclick="cart.remove('{{ product.cart_id }}');" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-sm"><i class="fas fa-times"></i></button></td>
+              <td class="text-center">
+
+                <button type="button" onclick="cart.remove('{{ product.cart_id }}');" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-sm"><i class="fas fa-times"></i></button>
+
+              </td>
             </tr>
           {% endfor %}
           {% for voucher in vouchers %}
@@ -31,7 +35,13 @@
               <td class="text-start">{{ voucher.description }}</td>
               <td class="text-end">x&nbsp;1</td>
               <td class="text-end">{{ voucher.amount }}</td>
-              <td class="text-center text-danger"><button type="button" onclick="voucher.remove('{{ voucher.key }}');" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-sm"><i class="fas fa-times"></i></button></td>
+              <td class="text-center text-danger">
+
+
+                <button type="button" onclick="voucher.remove('{{ voucher.key }}');" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-sm"><i class="fas fa-times"></i></button>
+
+
+              </td>
             </tr>
           {% endfor %}
         </table>

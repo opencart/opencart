@@ -3228,6 +3228,12 @@ function db_schema() {
 				'auto_increment' => true
 			],
 			[
+				'name' => 'reference',
+				'type' => 'varchar(100)',
+				'not_null' => true,
+				'auto_increment' => true
+			],
+			[
 				'name' => 'invoice_no',
 				'type' => 'int(11)',
 				'not_null' => true,
@@ -5249,7 +5255,7 @@ function db_schema() {
 			],
 			[
 				'name' => 'reference',
-				'type' => 'varchar(255)',
+				'type' => 'varchar(100)',
 				'not_null' => true
 			],
 			[

@@ -65,7 +65,6 @@ $_['entry_currency_engine']            = 'Currency Rate Engine';
 $_['entry_currency_auto']              = 'Auto Update Currency';
 $_['entry_length_class']               = 'Length Class';
 $_['entry_weight_class']               = 'Weight Class';
-$_['entry_address_format']             = 'Address Format';
 $_['entry_product_description_length'] = 'List Description Limit';
 $_['entry_pagination']                 = 'Default Items Per Page';
 $_['entry_pagination_admin']           = 'Default Items Per Page (Admin)';

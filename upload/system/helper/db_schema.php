@@ -3224,8 +3224,7 @@ function db_schema() {
 			[
 				'name' => 'reference',
 				'type' => 'varchar(100)',
-				'not_null' => true,
-				'auto_increment' => true
+				'not_null' => true
 			],
 			[
 				'name' => 'invoice_no',
@@ -3909,13 +3908,23 @@ function db_schema() {
 				'not_null' => true
 			],
 			[
+				'name' => 'extension',
+				'type' => 'varchar(255)',
+				'not_null' => true
+			],
+			[
+				'name' => 'code',
+				'type' => 'varchar(32)',
+				'not_null' => true
+			],
+			[
 				'name' => 'token',
 				'type' => 'varchar(96)',
 				'not_null' => true
 			],
 			[
-				'name' => 'code',
-				'type' => 'varchar(255)',
+				'name' => 'date_expire',
+				'type' => 'date',
 				'not_null' => true
 			],
 			[
@@ -3926,11 +3935,6 @@ function db_schema() {
 			[
 				'name' => 'status',
 				'type' => 'tinyint(1)',
-				'not_null' => true
-			],
-			[
-				'name' => 'date_expire',
-				'type' => 'date',
 				'not_null' => true
 			],
 			[

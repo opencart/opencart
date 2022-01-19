@@ -267,16 +267,6 @@
                   </select>
                 </div>
               </div>
-              <div class="row mb-3">
-                <label for="input-address-format" class="col-sm-2 col-form-label">{{ entry_address_format }}</label>
-                <div class="col-sm-10">
-                  <select name="config_address_format_id" id="input-address-format" class="form-select">
-                    {% for address_format in address_formats %}
-                      <option value="{{ address_format.address_format_id }}"{% if address_format.address_format_id == config_address_format_id %} selected{% endif %}>{{ address_format.name }}</option>
-                    {% endfor %}
-                  </select>
-                </div>
-              </div>
             </div>
 
             <div id="tab-option" class="tab-pane">

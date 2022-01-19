@@ -224,7 +224,7 @@ class Address extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->get['address_id'])) {
-			$data['default'] = $this->customer->getAddressId() == $this->request->get['address_id'];
+			$data['default'] = $address_info['default'];
 		} else {
 			$data['default'] = false;
 		}
@@ -379,6 +379,7 @@ class Address extends \Opencart\System\Engine\Controller {
 			$this->load->model('account/address');
 
 			if ($this->model_account_address->getTotalAddresses() == 1) {
+
 				$json['error'] = $this->language->get('error_delete');
 			}
 

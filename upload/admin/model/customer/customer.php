@@ -62,7 +62,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	public function getCustomers(array $data = []): array {
-		$sql = "SELECT *, CONCAT(c.`firstname`, ' ', c.`lastname`) AS name, cgd.`name` AS customer_group FROM `" . DB_PREFIX . "customer` c LEFT JOIN `" . DB_PREFIX . "customer_group_description` cgd ON (c.`customer_group_id` = cgd.`customer_group_id`)";
+		$sql = "SELECT *, CONCAT(c.`firstname`, ' ', c.`lastname`) AS `name`, cgd.`name` AS `customer_group` FROM `" . DB_PREFIX . "customer` c LEFT JOIN `" . DB_PREFIX . "customer_group_description` cgd ON (c.`customer_group_id` = cgd.`customer_group_id`)";
 
 		if (!empty($data['filter_affiliate'])) {
 			$sql .= " LEFT JOIN `" . DB_PREFIX . "customer_affiliate` ca ON (ca.`customer_id` = c.`customer_id`)";
@@ -141,7 +141,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	public function getTotalCustomers(array $data = []): int {
-		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer` c";
+		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer` `c`";
 
 		if (!empty($data['filter_affiliate'])) {
 			$sql .= " LEFT JOIN `" . DB_PREFIX . "customer_affiliate` ca ON (ca.`customer_id` = c.`customer_id`)";
@@ -236,7 +236,8 @@ class Customer extends \Opencart\System\Engine\Model {
 				'iso_code_2'     => $iso_code_2,
 				'iso_code_3'     => $iso_code_3,
 				'address_format' => $address_format,
-				'custom_field'   => json_decode($address_query->row['custom_field'], true)
+				'custom_field'   => json_decode($address_query->row['custom_field'], true),
+				'default'        => $address_query->row['default']
 			];
 		}
 
@@ -284,7 +285,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	public function getPaymentMethods(int $customer_id): array {
-		$query = $this->db->query("SELECT `address_id` FROM `" . DB_PREFIX . "payment_method` WHERE `customer_id` = '" . (int)$customer_id . "'");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "payment_method` WHERE `customer_id` = '" . (int)$customer_id . "'");
 
 		return $query->rows;
 	}

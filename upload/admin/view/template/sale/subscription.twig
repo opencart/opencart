@@ -86,12 +86,6 @@ $('#button-filter').on('click', function () {
         url += '&filter_order_id=' + filter_order_id;
     }
 
-    var filter_reference = $('#input-reference').val();
-
-    if (filter_reference) {
-        url += '&filter_reference=' + encodeURIComponent(filter_reference);
-    }
-
     var filter_customer = $('#input-customer').val();
 
     if (filter_customer) {

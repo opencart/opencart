@@ -19,18 +19,9 @@
         <li><a href="{{ edit }}">{{ text_edit }}</a></li>
         <li><a href="{{ password }}">{{ text_password }}</a></li>
         <li><a href="{{ address }}">{{ text_address }}</a></li>
+        <li><a href="{{ payment_method }}">{{ text_payment_method }}</a></li>
         <li><a href="{{ wishlist }}">{{ text_wishlist }}</a></li>
       </ul>
-      {% if credit_cards %}
-        <h2>
-          {{ text_credit_card }}
-        </h2>
-        <ul class="list-unstyled">
-          {% for credit_card in credit_cards %}
-            <li><a href="{{ credit_card.href }}">{{ credit_card.name }}</a></li>
-          {% endfor %}
-        </ul>
-      {% endif %}
       <h2>
         {{ text_my_orders }}
       </h2>

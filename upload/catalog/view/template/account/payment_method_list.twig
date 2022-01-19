@@ -15,7 +15,7 @@
         {% for payment_method in payment_methods %}
           <tr>
             <td class="text-start">{{ payment_method.name }}</td>
-            <td class="text-end"><a href="{{ payment_method.edit }}" class="btn btn-outline-primary">{{ button_edit }}</a> <a href="{{ address.delete }}" class="btn btn-danger">{{ button_delete }}</a></td>
+            <td class="text-end"><a href="{{ payment_method.delete }}" class="btn btn-danger">{{ button_delete }}</a></td>
           </tr>
         {% endfor %}
       </tbody>

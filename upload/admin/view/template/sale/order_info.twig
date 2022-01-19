@@ -15,9 +15,7 @@
     <div class="card mb-3">
       <div class="card-header"><i class="fas fa-info-circle"></i> {{ text_form }}</div>
       <div class="card-body">
-
         <div class="row row-cols-1 row-cols-sm-1 row-cols-md-3 row-cols-xl-3">
-
 
           <div class="col">
             <div class="input-group mb-3">
@@ -50,7 +48,6 @@
               <button type="button" data-bs-toggle="modal" data-bs-target="#modal-customer" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
             </div>
           </div>
-
 
           <div class="col">
             <div class="form-control p-0 border rounded mb-3">
@@ -368,7 +365,8 @@
                   {% if shipping_code %}
                     <option value="{{ shipping_code }}" selected>{{ shipping_method }}</option>
                   {% endif %}
-                </select> <label for="input-shipping-method">{{ text_shipping_method }}</label>
+                </select>
+                <label for="input-shipping-method">{{ entry_shipping_method }}</label>
                 <button type="button" id="button-shipping-method" class="btn btn-outline-primary"><i class="fas fa-sync"></i></button>
               </div>
             </form>
@@ -382,7 +380,7 @@
                   {% if payment_code %}
                     <option value="{{ payment_code }}" selected>{{ payment_method }}</option>
                   {% endif %}
-                </select> <label for="input-payment-method">{{ text_payment_method }}</label>
+                </select> <label for="input-payment-method">{{ entry_payment_method }}</label>
                 <button type="button" id="button-payment-method" class="btn btn-outline-primary"><i class="fas fa-sync"></i></button>
               </div>
             </form>

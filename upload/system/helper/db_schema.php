@@ -5338,6 +5338,11 @@ function db_schema() {
 				'not_null' => true
 			],
 			[
+				'name' => 'payment_method_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
 				'name' => 'name',
 				'type' => 'varchar(255)',
 				'not_null' => true

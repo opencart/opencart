@@ -67,9 +67,35 @@
             </div>
           </div>
 
+          <div class="col">
+            <form id="form-subscription-plan">
+              <div class="input-group form-floating mb-3">
+                <select name="subscription_plan_id" id="input-subscription-plan" class="form-select">
+                  <option value="">{{ text_select }}</option>
+                  {% for subscription_plan in subscription_plans %}
+                    <option value="{{ subscription_plan.subscription_plan_id }}"{% if subscription_plan.subscription_plan_id == subscription_plan_id %} selected{% endif %}>{{ subscription_plan.name }}</option>
+                  {% endfor %}
+                </select>
+                <label for="input-subscription-plan">{{ entry_subscription_plan }}</label>
+              </div>
+            </form>
+          </div>
+
+          <div class="col">
+            <form id="form-payment-method">
+              <div class="input-group form-floating mb-3">
+                <select name="payment_method_id" id="input-payment-method" class="form-select">
+                  <option value="">{{ text_select }}</option>
+                  {% for payment_method in payment_methods %}
+                    <option value="{{ payment_method.payment_method_id }}"{% if payment_method.payment_method_id == payment_method_id %} selected{% endif %}>{{ payment_method.name }}</option>
+                  {% endfor %}
+                </select>
+                <label for="input-payment-method">{{ entry_payment_method }}</label>
+              </div>
+            </form>
+          </div>
 
         </div>
-
 
         <fieldset>
           <legend>{{ text_product }}</legend>
@@ -88,9 +114,9 @@
             </tbody>
           </table>
         </fieldset>
+
       </div>
     </div>
-
 
     <div class="card">
       <div class="card-header"><i class="fas fa-list"></i> {{ text_history }}</div>
@@ -125,9 +151,7 @@
                   <label for="input-override" class="col-sm-2 col-form-label">{{ entry_override }}</label>
                   <div class="col-sm-10">
                     <div class="btn-group">
-                      <input type="radio" name="override" value="1" id="input-override-yes" class="btn-check"/>
-                      <label for="input-override-yes" class="btn btn-outline-secondary">{{ text_yes }}</label>
-                      <input type="radio" name="override" value="0" id="input-override-no" class="btn-check" checked/> <label for="input-override-no" class="btn btn-outline-secondary">{{ text_no }}</label>
+                      <input type="radio" name="override" value="1" id="input-override-yes" class="btn-check"/> <label for="input-override-yes" class="btn btn-outline-secondary">{{ text_yes }}</label> <input type="radio" name="override" value="0" id="input-override-no" class="btn-check" checked/> <label for="input-override-no" class="btn btn-outline-secondary">{{ text_no }}</label>
                     </div>
                     <div class="form-text">{{ help_override }}</div>
                   </div>
@@ -136,9 +160,7 @@
                   <label for="input-notify" class="col-sm-2 col-form-label">{{ entry_notify }}</label>
                   <div class="col-sm-10">
                     <div class="btn-group">
-                      <input type="radio" name="notify" value="1" id="input-notify-yes" class="btn-check"/>
-                      <label for="input-notify-yes" class="btn btn-outline-secondary">{{ text_yes }}</label>
-                      <input type="radio" name="notify" value="0" id="input-notify-no" class="btn-check" checked/> <label for="input-notify-no" class="btn btn-outline-secondary">{{ text_no }}</label>
+                      <input type="radio" name="notify" value="1" id="input-notify-yes" class="btn-check"/> <label for="input-notify-yes" class="btn btn-outline-secondary">{{ text_yes }}</label> <input type="radio" name="notify" value="0" id="input-notify-no" class="btn-check" checked/> <label for="input-notify-no" class="btn btn-outline-secondary">{{ text_no }}</label>
                     </div>
                   </div>
                 </div>

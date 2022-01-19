@@ -99,8 +99,10 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('account/payment_method');
 
-			if ($this->customer->getAddressId() == $address_id) {
-				$json['error'] = $this->language->get('error_default');
+			$payment_method_info = $this->model_account_payment_method->getPaymentMethod($payment_method_id);
+
+			if (!$payment_method_info) {
+				$json['error'] = $this->language->get('error_payment_method');
 			}
 		}
 

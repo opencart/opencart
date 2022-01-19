@@ -62,7 +62,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	public function getCustomers(array $data = []): array {
-		$sql = "SELECT *, CONCAT(c.`firstname`, ' ', c.`lastname`) AS name, cgd.`name` AS customer_group FROM `" . DB_PREFIX . "customer` c LEFT JOIN `" . DB_PREFIX . "customer_group_description` cgd ON (c.`customer_group_id` = cgd.`customer_group_id`)";
+		$sql = "SELECT *, CONCAT(c.`firstname`, ' ', c.`lastname`) AS name, cgd.`name` AS customer_group FROM `" . DB_PREFIX . "customer` `c` LEFT JOIN `" . DB_PREFIX . "customer_group_description` cgd ON (c.`customer_group_id` = cgd.`customer_group_id`)";
 
 		if (!empty($data['filter_affiliate'])) {
 			$sql .= " LEFT JOIN `" . DB_PREFIX . "customer_affiliate` ca ON (ca.`customer_id` = c.`customer_id`)";
@@ -114,7 +114,7 @@ class Customer extends \Opencart\System\Engine\Model {
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 			$sql .= " ORDER BY " . $data['sort'];
 		} else {
-			$sql .= " ORDER BY name";
+			$sql .= " ORDER BY c.`name`";
 		}
 
 		if (isset($data['order']) && ($data['order'] == 'DESC')) {
@@ -194,7 +194,7 @@ class Customer extends \Opencart\System\Engine\Model {
 		$address_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "address` WHERE `address_id` = '" . $address_id . "'");
 
 		if ($address_query->num_rows) {
-			$country_query = $this->db->query("SELECT *, c.`name` FROM `" . DB_PREFIX . "country` c LEFT JOIN `" . DB_PREFIX . "address_format` af ON (c.`address_format_id` = af.`address_format_id`) WHERE c.`country_id` = '" . (int)$address_query->row['country_id'] . "'");
+			$country_query = $this->db->query("SELECT *, c.`name` FROM `" . DB_PREFIX . "country` `c` LEFT JOIN `" . DB_PREFIX . "address_format` af ON (c.`address_format_id` = af.`address_format_id`) WHERE c.`country_id` = '" . (int)$address_query->row['country_id'] . "'");
 
 			if ($country_query->num_rows) {
 				$country = $country_query->row['name'];

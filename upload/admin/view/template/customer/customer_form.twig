@@ -24,6 +24,7 @@
           <ul class="nav nav-tabs">
             <li class="nav-item"><a href="#tab-general" data-bs-toggle="tab" class="nav-link active">{{ tab_general }}</a></li>
             <li class="nav-item"><a href="#tab-address" data-bs-toggle="tab" class="nav-link">{{ tab_address }}</a></li>
+            <li class="nav-item"><a href="#tab-payment" data-bs-toggle="tab" class="nav-link">{{ tab_payment_method }}</a></li>
             <li class="nav-item"><a href="#tab-history" data-bs-toggle="tab" class="nav-link">{{ tab_history }}</a></li>
             <li class="nav-item"><a href="#tab-transaction" data-bs-toggle="tab" class="nav-link">{{ tab_transaction }}</a></li>
             <li class="nav-item"><a href="#tab-reward" data-bs-toggle="tab" class="nav-link">{{ tab_reward }}</a></li>
@@ -465,6 +466,41 @@
                 <button type="button" id="button-address" class="btn btn-primary"><i class="fas fa-plus-circle"></i> {{ button_address_add }}</button>
               </div>
             </div>
+
+            <div id="tab-payment" class="tab-pane">
+              <fieldset>
+                <legend>{{ text_payment_method }}</legend>
+                <div class="table-responsive">
+                  <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                        <td class="text-start">{{ column_payment_method }}</td>
+                        <td class="text-start">{{ column_type }}</td>
+                        <td class="text-start">{{ column_date_added }}</td>
+                        <td class="text-end">{{ column_action }}</td>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% if payment_methods %}
+                        {% for payment_method in payment_methods %}
+                          <tr>
+                            <td class="text-start">{{ payment_method.name }}</td>
+                            <td class="text-start">{{ payment_method.type }}</td>
+                            <td class="text-start">{{ payment_method.date_added }}</td>
+                            <td class="text-end">{{ column_action }}</td>
+                          </tr>
+                        {% endfor %}
+                      {% else %}
+                        <tr>
+                          <td class="text-center" colspan="4">{{ text_no_results }}</td>
+                        </tr>
+                      {% endif %}
+                    </tbody>
+                  </table>
+                </div>
+              </fieldset>
+            </div>
+
             <div id="tab-history" class="tab-pane">
               <fieldset>
                 <legend>{{ text_history }}</legend>
@@ -516,25 +552,27 @@
                 <legend>{{ text_reward }}</legend>
                 <div id="reward"></div>
               </fieldset>
-              <fieldset>
-                <legend>{{ text_reward_add }}</legend>
-                <div class="row mb-3">
-                  <label for="input-reward-description" class="col-sm-2 col-form-label">{{ entry_description }}</label>
-                  <div class="col-sm-10">
-                    <input type="text" name="description" value="" placeholder="{{ entry_description }}" id="input-reward-description" class="form-control"/>
+              <form id="form-reward">
+                <fieldset>
+                  <legend>{{ text_reward_add }}</legend>
+                  <div class="row mb-3">
+                    <label for="input-reward-description" class="col-sm-2 col-form-label">{{ entry_description }}</label>
+                    <div class="col-sm-10">
+                      <input type="text" name="description" value="" placeholder="{{ entry_description }}" id="input-reward-description" class="form-control"/>
+                    </div>
                   </div>
-                </div>
-                <div class="row mb-3">
-                  <label for="input-reward-points" class="col-sm-2 col-form-label">{{ entry_points }}</label>
-                  <div class="col-sm-10">
-                    <input type="text" name="points" value="" placeholder="{{ entry_points }}" id="input-reward-points" class="form-control"/>
-                    <div class="form-text">{{ help_points }}</div>
+                  <div class="row mb-3">
+                    <label for="input-reward-points" class="col-sm-2 col-form-label">{{ entry_points }}</label>
+                    <div class="col-sm-10">
+                      <input type="text" name="points" value="" placeholder="{{ entry_points }}" id="input-reward-points" class="form-control"/>
+                      <div class="form-text">{{ help_points }}</div>
+                    </div>
                   </div>
-                </div>
-                <div class="text-end">
-                  <button type="button" id="button-reward" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i> {{ button_reward_add }}</button>
-                </div>
-              </fieldset>
+                  <div class="text-end">
+                    <button type="submit" id="button-reward" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i> {{ button_reward_add }}</button>
+                  </div>
+                </fieldset>
+              </form>
             </div>
             <div id="tab-ip" class="tab-pane">
               <fieldset>
@@ -987,14 +1025,15 @@ $('#reward').on('click', '.pagination a', function (e) {
 
 $('#reward').load('index.php?route=customer/customer|reward&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val());
 
-$('#button-reward').on('click', function (e) {
+$('#form-reward').on('submit', function (e) {
     e.preventDefault();
 
     $.ajax({
         url: 'index.php?route=customer/customer|addreward&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val(),
         type: 'post',
+        data: $('#form-reward').serialize(),
         dataType: 'json',
-        data: 'description=' + encodeURIComponent($('#input-reward-description').val()) + '&points=' + $('#input-reward-points').val(),
+        contentType: 'application/x-www-form-urlencoded',
         beforeSend: function () {
             $('#button-reward').button('loading');
         },

@@ -40,6 +40,8 @@ $_['column_ip']             = 'IP';
 $_['column_account']        = 'Accounts';
 $_['column_store']          = 'Store';
 $_['column_country']        = 'Country';
+$_['column_payment_method'] = 'Payment Name';
+$_['column_type']           = 'Type';
 $_['column_action']         = 'Action';
 
 // Entry

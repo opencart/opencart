@@ -16,10 +16,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$url .= '&filter_order_id=' . $this->request->get['filter_order_id'];
 		}
 
-		if (isset($this->request->get['filter_reference'])) {
-			$url .= '&filter_reference=' . $this->request->get['filter_reference'];
-		}
-
 		if (isset($this->request->get['filter_customer'])) {
 			$url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
 		}
@@ -88,15 +84,9 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->get['filter_order_id'])) {
-			$filter_order_id = (int)$this->request->get['filter_order_id'];
+			$filter_order_id = $this->request->get['filter_order_id'];
 		} else {
 			$filter_order_id = '';
-		}
-
-		if (isset($this->request->get['filter_reference'])) {
-			$filter_reference = $this->request->get['filter_reference'];
-		} else {
-			$filter_reference = '';
 		}
 
 		if (isset($this->request->get['filter_customer'])) {
@@ -145,10 +135,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$url .= '&filter_order_id=' . $this->request->get['filter_order_id'];
 		}
 
-		if (isset($this->request->get['filter_reference'])) {
-			$url .= '&filter_reference=' . $this->request->get['filter_reference'];
-		}
-
 		if (isset($this->request->get['filter_customer'])) {
 			$url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
 		}
@@ -178,7 +164,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		$filter_data = [
 			'filter_subscription_id'        => $filter_subscription_id,
 			'filter_order_id'               => $filter_order_id,
-			'filter_reference'              => $filter_reference,
 			'filter_customer'               => $filter_customer,
 			'filter_subscription_status_id' => $filter_subscription_status_id,
 			'filter_date_added'             => $filter_date_added,
@@ -215,10 +200,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 		if (isset($this->request->get['filter_order_id'])) {
 			$url .= '&filter_order_id=' . $this->request->get['filter_order_id'];
-		}
-
-		if (isset($this->request->get['filter_reference'])) {
-			$url .= '&filter_reference=' . urlencode(html_entity_decode($this->request->get['filter_reference'], ENT_QUOTES, 'UTF-8'));
 		}
 
 		if (isset($this->request->get['filter_customer'])) {
@@ -260,10 +241,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$url .= '&filter_order_id=' . $this->request->get['filter_order_id'];
 		}
 
-		if (isset($this->request->get['filter_reference'])) {
-			$url .= '&filter_reference=' . urlencode(html_entity_decode($this->request->get['filter_reference'], ENT_QUOTES, 'UTF-8'));
-		}
-
 		if (isset($this->request->get['filter_customer'])) {
 			$url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
 		}
@@ -295,7 +272,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 		$data['filter_subscription_id'] = $filter_subscription_id;
 		$data['filter_order_id'] = $filter_order_id;
-		$data['filter_reference'] = $filter_reference;
 		$data['filter_customer'] = $filter_customer;
 		$data['filter_subscription_status_id'] = $filter_subscription_status_id;
 		$data['filter_date_added'] = $filter_date_added;
@@ -325,10 +301,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 		if (isset($this->request->get['filter_order_id'])) {
 			$url .= '&filter_order_id=' . $this->request->get['filter_order_id'];
-		}
-
-		if (isset($this->request->get['filter_reference'])) {
-			$url .= '&filter_reference=' . $this->request->get['filter_reference'];
 		}
 
 		if (isset($this->request->get['filter_customer'])) {
@@ -434,10 +406,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		// Product
 		//$data['product'] = $product_info['product_name'];
 		//$data['quantity'] = $product_info['product_quantity'];
-
-
 		//$data['payment_method'] = $order_info['payment_method'];
-
 
 		$this->load->model('localisation/subscription_status');
 

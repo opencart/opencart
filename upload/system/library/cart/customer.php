@@ -122,6 +122,10 @@ class Customer {
 
 	public function getAddressId(): int {
 		return $this->address_id;
+
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "address` WHERE `customer_id` = '" . (int)$this->customer_id . "' AND default = '1'");
+
+		return (float)$query->row['total'];
 	}
 
 	public function getBalance(): float {

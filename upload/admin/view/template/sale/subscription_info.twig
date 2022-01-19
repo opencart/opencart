@@ -13,7 +13,7 @@
   </div>
   <div class="container-fluid">
     <div class="card mb-3">
-      <div class="card-header">{{ text_subscription_detail }}</div>
+      <div class="card-header">{{ text_subscription }}</div>
       <div class="card-body">
         <div class="row row-cols-1 row-cols-sm-1 row-cols-md-3 row-cols-xl-3">
 
@@ -238,7 +238,7 @@ $('#transaction').on('click', '.pagination a', function (e) {
 
 $('#transaction').load('index.php?route=sale/subscription|transaction&user_token={{ user_token }}&subscription_id=' + $('#input-subscription-id').val());
 
-$('#button-transaction').on('click', function (e) {
+$('#form-transaction').on('submit', function (e) {
     e.preventDefault();
 
     $.ajax({

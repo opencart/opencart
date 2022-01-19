@@ -13,7 +13,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('setting/extension');
 
-		$extension_info = $this->model_setting_extension->getExtensionsByCode('currency', $this->config->get('config_currency_engine'));
+		$extension_info = $this->model_setting_extension->getExtensionByCode('currency', $this->config->get('config_currency_engine'));
 
 		if ($extension_info) {
 			$this->load->controller('extension/' . $extension_info['extension'] . '/currency/' . $extension_info['code'] . '|currency', $currency);

@@ -107,14 +107,6 @@ class Cart extends \Opencart\System\Engine\Controller {
 		$this->load->model('tool/image');
 		$this->load->model('tool/upload');
 
-		$frequencies = [
-			'day'        => $this->language->get('text_day'),
-			'week'       => $this->language->get('text_week'),
-			'semi_month' => $this->language->get('text_semi_month'),
-			'month'      => $this->language->get('text_month'),
-			'year'       => $this->language->get('text_year')
-		];
-
 		$data['products'] = [];
 
 		$this->load->model('checkout/cart');
@@ -137,34 +129,37 @@ class Cart extends \Opencart\System\Engine\Controller {
 				$total = false;
 			}
 
-			$recurring = '';
+			$description = '';
 
-			if ($product['recurring']) {
-				if ($product['recurring']['trial']) {
-					$recurring = sprintf($this->language->get('text_trial_description'), $this->currency->format($this->tax->calculate($product['recurring']['trial_price'] * $product['quantity'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']), $product['recurring']['trial_cycle'], $frequencies[$product['recurring']['trial_frequency']], $product['recurring']['trial_duration']) . ' ';
-				}
+			if ($product['subscription']) {
+				$subscription_data = [
+					'trial_price'     => $this->currency->format($this->tax->calculate($product['subscription']['trial_price'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']),
+					'trial_cycle'     => $product['subscription']['trial_cycle'],
+					'trial_frequency' => $this->language->get('text_' . $product['subscription']['trial_frequency']),
+					'trial_duration'  => $product['subscription']['trial_duration'],
+					'price'           => $this->currency->format($this->tax->calculate($product['subscription']['price'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']),
+					'cycle'           => $product['subscription']['cycle'],
+					'frequency'       => $this->language->get('text_' . $product['subscription']['frequency']),
+					'duration'        => $product['subscription']['duration']
+				];
 
-				if ($product['recurring']['duration']) {
-					$recurring .= sprintf($this->language->get('text_payment_description'), $this->currency->format($this->tax->calculate($product['recurring']['price'] * $product['quantity'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']), $product['recurring']['cycle'], $frequencies[$product['recurring']['frequency']], $product['recurring']['duration']);
-				} else {
-					$recurring .= sprintf($this->language->get('text_payment_cancel'), $this->currency->format($this->tax->calculate($product['recurring']['price'] * $product['quantity'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']), $product['recurring']['cycle'], $frequencies[$product['recurring']['frequency']], $product['recurring']['duration']);
-				}
+				$description = sprintf($product['subscription']['description'], $subscription_data);
 			}
 
 			$data['products'][] = [
-				'cart_id'   => $product['cart_id'],
-				'thumb'     => $product['image'],
-				'name'      => $product['name'],
-				'model'     => $product['model'],
-				'option'    => $product['option'],
-				'recurring' => $recurring,
-				'quantity'  => $product['quantity'],
-				'stock'     => $product['stock'] ? true : !(!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning')),
-				'minimum'   => $product['minimum'],
-				'reward'    => $product['reward'],
-				'price'     => $price,
-				'total'     => $total,
-				'href'      => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product['product_id'])
+				'cart_id'      => $product['cart_id'],
+				'thumb'        => $product['image'],
+				'name'         => $product['name'],
+				'model'        => $product['model'],
+				'option'       => $product['option'],
+				'subscription' => $description,
+				'quantity'     => $product['quantity'],
+				'stock'        => $product['stock'] ? true : !(!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning')),
+				'minimum'      => $product['minimum'],
+				'reward'       => $product['reward'],
+				'price'        => $price,
+				'total'        => $total,
+				'href'         => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product['product_id'])
 			];
 		}
 
@@ -213,12 +208,6 @@ class Cart extends \Opencart\System\Engine\Controller {
 			$product_id = 0;
 		}
 
-		if (isset($this->request->post['recurring_id'])) {
-			$recurring_id = $this->request->post['recurring_id'];
-		} else {
-			$recurring_id = 0;
-		}
-
 		if (isset($this->request->post['quantity'])) {
 			$quantity = (int)$this->request->post['quantity'];
 		} else {
@@ -229,6 +218,12 @@ class Cart extends \Opencart\System\Engine\Controller {
 			$option = array_filter($this->request->post['option']);
 		} else {
 			$option = [];
+		}
+
+		if (isset($this->request->post['subscription_plan_id'])) {
+			$subscription_plan_id = $this->request->post['subscription_plan_id'];
+		} else {
+			$subscription_plan_id = 0;
 		}
 
 		$this->load->model('catalog/product');
@@ -255,18 +250,18 @@ class Cart extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-			// Validate recurring product profile
-			$recurrings = $this->model_catalog_product->getProfiles($product_id);
+			// Validate subscription products
+			$subscriptions = $this->model_catalog_product->getSubscriptions($product_id);
 
-			if ($recurrings) {
-				$recurring_ids = [];
+			if ($subscriptions) {
+				$subscription_plan_ids = [];
 
-				foreach ($recurrings as $recurring) {
-					$recurring_ids[] = $recurring['recurring_id'];
+				foreach ($subscriptions as $subscription) {
+					$subscription_plan_ids[] = $subscription['subscription_plan_id'];
 				}
 
-				if (!in_array($recurring_id, $recurring_ids)) {
-					$json['error']['recurring'] = $this->language->get('error_recurring');
+				if (!in_array($subscription_plan_id, $subscription_plan_ids)) {
+					$json['error']['subscription'] = $this->language->get('error_subscription');
 				}
 			}
 		} else {
@@ -274,7 +269,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$this->cart->add($product_id, $quantity, $option, $recurring_id);
+			$this->cart->add($product_id, $quantity, $option, $subscription_plan_id);
 
 			$json['success'] = sprintf($this->language->get('text_success'), $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product_id), $product_info['name'], $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language')));
 

@@ -20,17 +20,19 @@
     <div class="card">
       <div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_form }}</div>
       <div class="card-body">
-        <form id="form-customer" action="{{ save }}" method="post" data-oc-toggle="ajax">
-          <ul class="nav nav-tabs">
-            <li class="nav-item"><a href="#tab-general" data-bs-toggle="tab" class="nav-link active">{{ tab_general }}</a></li>
-            <li class="nav-item"><a href="#tab-address" data-bs-toggle="tab" class="nav-link">{{ tab_address }}</a></li>
-            <li class="nav-item"><a href="#tab-history" data-bs-toggle="tab" class="nav-link">{{ tab_history }}</a></li>
-            <li class="nav-item"><a href="#tab-transaction" data-bs-toggle="tab" class="nav-link">{{ tab_transaction }}</a></li>
-            <li class="nav-item"><a href="#tab-reward" data-bs-toggle="tab" class="nav-link">{{ tab_reward }}</a></li>
-            <li class="nav-item"><a href="#tab-ip" data-bs-toggle="tab" class="nav-link">{{ tab_ip }}</a></li>
-          </ul>
-          <div class="tab-content">
-            <div id="tab-general" class="tab-pane active">
+
+        <ul class="nav nav-tabs">
+          <li class="nav-item"><a href="#tab-general" data-bs-toggle="tab" class="nav-link active">{{ tab_general }}</a></li>
+          <li class="nav-item"><a href="#tab-address" data-bs-toggle="tab" class="nav-link">{{ tab_address }}</a></li>
+          <li class="nav-item"><a href="#tab-payment" data-bs-toggle="tab" class="nav-link">{{ tab_payment_method }}</a></li>
+          <li class="nav-item"><a href="#tab-history" data-bs-toggle="tab" class="nav-link">{{ tab_history }}</a></li>
+          <li class="nav-item"><a href="#tab-transaction" data-bs-toggle="tab" class="nav-link">{{ tab_transaction }}</a></li>
+          <li class="nav-item"><a href="#tab-reward" data-bs-toggle="tab" class="nav-link">{{ tab_reward }}</a></li>
+          <li class="nav-item"><a href="#tab-ip" data-bs-toggle="tab" class="nav-link">{{ tab_ip }}</a></li>
+        </ul>
+        <div class="tab-content">
+          <div id="tab-general" class="tab-pane active">
+            <form id="form-customer" action="{{ save }}" method="post">
               <fieldset>
                 <legend>{{ text_account }}</legend>
                 <div class="row mb-3">
@@ -167,8 +169,8 @@
                       <div class="row mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
                         <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
                         <div class="col-sm-10">
-                          <div class="input-group date">
-                            <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
+                          <div class="input-group">
+                            <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control date"/>
                             <div class="input-group-text"><i class="fas fa-calendar"></i></div>
                           </div>
                           <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
@@ -180,8 +182,8 @@
                       <div class="row mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
                         <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
                         <div class="col-sm-10">
-                          <div class="input-group time">
-                            <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
+                          <div class="input-group">
+                            <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control time"/>
                             <div class="input-group-text"><i class="fas fa-calendar"></i></div>
                           </div>
                           <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
@@ -193,8 +195,8 @@
                       <div class="row mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
                         <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
                         <div class="col-sm-10">
-                          <div class="input-group datetime">
-                            <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
+                          <div class="input-group">
+                            <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control datetime"/>
                             <div class="input-group-text"><i class="fas fa-calendar"></i></div>
                           </div>
                           <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
@@ -246,13 +248,15 @@
                     <div class="btn-group">
                       <input type="radio" name="safe" value="1" id="input-safe-yes" class="btn-check"{% if safe %} checked{% endif %}/> <label for="input-safe-yes" class="btn btn-outline-secondary">{{ text_yes }}</label> <input type="radio" name="safe" value="0" id="input-safe-no" class="btn-check"{% if not safe %} checked{% endif %}/> <label for="input-safe-no" class="btn btn-outline-secondary">{{ text_no }}</label>
                     </div>
-                    <div class="form-text text-muted">{{ help_safe }}</div>
+                    <div class="form-text">{{ help_safe }}</div>
                   </div>
                 </div>
               </fieldset>
-            </div>
+            </form>
+          </div>
 
-            <div id="tab-address" class="tab-pane">
+          <div id="tab-address" class="tab-pane">
+            <form id="form-address" action="{{ save }}" method="post">
               {% set address_row = 0 %}
               {% for address in addresses %}
                 <fieldset id="address-row-{{ address_row }}">
@@ -325,6 +329,7 @@
                       <div id="error-address-{{ address_row }}-zone" class="invalid-feedback"></div>
                     </div>
                   </div>
+
                   {% for custom_field in custom_fields %}
                     {% if custom_field.location == 'address' %}
 
@@ -410,8 +415,8 @@
                         <div class="row mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
                           <label for="input-address-{{ address_row }}-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
                           <div class="col-sm-10">
-                            <div class="input-group date">
-                              <input type="text" name="address[{{ address_row }}][custom_field][{{ custom_field.custom_field_id }}]" value="{{ address.custom_field[custom_field.custom_field_id] ? address.custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-address-{{ address_row }}-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
+                            <div class="input-group">
+                              <input type="text" name="address[{{ address_row }}][custom_field][{{ custom_field.custom_field_id }}]" value="{{ address.custom_field[custom_field.custom_field_id] ? address.custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-address-{{ address_row }}-custom-field-{{ custom_field.custom_field_id }}" class="form-control date"/>
                               <div class="input-group-text"><i class="fas fa-calendar"></i></div>
                             </div>
                             <div id="error-address-{{ address_row }}-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
@@ -423,8 +428,8 @@
                         <div class="row mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
                           <label for="input-address-{{ address_row }}-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
                           <div class="col-sm-10">
-                            <div class="input-group time">
-                              <input type="text" name="address[{{ address_row }}][custom_field][{{ custom_field.custom_field_id }}]" value="{{ address.custom_field[custom_field.custom_field_id] ? address.custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-address-{{ address_row }}-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
+                            <div class="input-group">
+                              <input type="text" name="address[{{ address_row }}][custom_field][{{ custom_field.custom_field_id }}]" value="{{ address.custom_field[custom_field.custom_field_id] ? address.custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-address-{{ address_row }}-custom-field-{{ custom_field.custom_field_id }}" class="form-control time"/>
                               <div class="input-group-text"><i class="fas fa-calendar"></i></div>
                             </div>
                             <div id="error-address-{{ address_row }}-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
@@ -436,8 +441,8 @@
                         <div class="row mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
                           <label for="input-address-{{ address_row }}-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
                           <div class="col-sm-10">
-                            <div class="input-group datetime">
-                              <input type="text" name="address[{{ address_row }}][custom_field][{{ custom_field.custom_field_id }}]" value="{{ address.custom_field[custom_field.custom_field_id] ? address.custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-address-{{ address_row }}-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
+                            <div class="input-group">
+                              <input type="text" name="address[{{ address_row }}][custom_field][{{ custom_field.custom_field_id }}]" value="{{ address.custom_field[custom_field.custom_field_id] ? address.custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-address-{{ address_row }}-custom-field-{{ custom_field.custom_field_id }}" class="form-control datetime"/>
                               <div class="input-group-text"><i class="fas fa-calendar"></i></div>
                             </div>
                             <div id="error-address-{{ address_row }}-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
@@ -453,7 +458,7 @@
                     <label for="input-address-{{ address_row }}-default" class="col-sm-2 col-form-label">{{ entry_default }}</label>
                     <div class="col-sm-10">
                       <div class="form-check">
-                        <input type="radio" name="default" value="{{ address_row }}" id="input-address-{{ address_row }}-default" class="form-check-input"{% if address.address_id == address_id %} checked{% endif %}/>
+                        <input type="radio" name="address[{{ address_row }}][default]" value="1" id="input-address-{{ address_row }}-default" class="form-check-input"{% if address.default %} checked{% endif %}/>
                       </div>
                     </div>
                   </div>
@@ -464,32 +469,70 @@
               <div class="text-end">
                 <button type="button" id="button-address" class="btn btn-primary"><i class="fas fa-plus-circle"></i> {{ button_address_add }}</button>
               </div>
-            </div>
-            <div id="tab-history" class="tab-pane">
-              <fieldset>
-                <legend>{{ text_history }}</legend>
-                <div id="history"></div>
-              </fieldset>
-              <br/>
+              <input type="hidden" name="customer_id" value="{{ customer_id }}" id="input-customer-id"/>
+            </form>
+          </div>
+          <div id="tab-payment" class="tab-pane">
+            <fieldset>
+              <legend>{{ text_payment_method }}</legend>
+              <div class="table-responsive">
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <td class="text-start">{{ column_payment_method }}</td>
+                      <td class="text-start">{{ column_image }}</td>
+                      <td class="text-start">{{ column_type }}</td>
+                      <td class="text-start">{{ column_date_added }}</td>
+                      <td class="text-end">{{ column_action }}</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% if payment_methods %}
+                      {% for payment_method in payment_methods %}
+                        <tr>
+                          <td class="text-start">{{ payment_method.name }}</td>
+                          <td class="text-start">{{ payment_method.image }}</td>
+                          <td class="text-start">{{ payment_method.type }}</td>
+                          <td class="text-start">{{ payment_method.date_added }}</td>
+                          <td class="text-end"><button type="button" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
+                        </tr>
+                      {% endfor %}
+                    {% else %}
+                      <tr>
+                        <td class="text-center" colspan="5">{{ text_no_results }}</td>
+                      </tr>
+                    {% endif %}
+                  </tbody>
+                </table>
+              </div>
+            </fieldset>
+          </div>
+          <div id="tab-history" class="tab-pane">
+            <fieldset>
+              <legend>{{ text_history }}</legend>
+              <div id="history"></div>
+            </fieldset>
+            <form id="form-history">
               <fieldset>
                 <legend>{{ text_history_add }}</legend>
                 <div class="row mb-3">
-                  <label for="input-comment" class="col-sm-2 col-form-label">{{ entry_comment }}</label>
+                  <label for="input-history-comment" class="col-sm-2 col-form-label">{{ entry_comment }}</label>
                   <div class="col-sm-10">
-                    <textarea name="comment" rows="8" placeholder="{{ entry_comment }}" id="input-comment" class="form-control"></textarea>
+                    <textarea name="comment" rows="8" placeholder="{{ entry_comment }}" id="input-history-comment" class="form-control"></textarea>
                   </div>
                 </div>
+                <div class="text-end">
+                  <button type="submit" id="button-history" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i> {{ button_history_add }}</button>
+                </div>
               </fieldset>
-              <div class="text-end">
-                <button type="button" id="button-history" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i> {{ button_history_add }}</button>
-              </div>
-            </div>
-            <div id="tab-transaction" class="tab-pane">
-              <fieldset>
-                <legend>{{ text_transaction }}</legend>
-                <div id="transaction"></div>
-              </fieldset>
-              <br/>
+            </form>
+          </div>
+          <div id="tab-transaction" class="tab-pane">
+            <fieldset>
+              <legend>{{ text_transaction }}</legend>
+              <div id="transaction"></div>
+            </fieldset>
+            <form id="form-transaction">
               <fieldset>
                 <legend>{{ text_transaction_add }}</legend>
                 <div class="row mb-3">
@@ -499,22 +542,23 @@
                   </div>
                 </div>
                 <div class="row mb-3">
-                  <label for="input-amount" class="col-sm-2 col-form-label">{{ entry_amount }}</label>
+                  <label for="input-transaction-amount" class="col-sm-2 col-form-label">{{ entry_amount }}</label>
                   <div class="col-sm-10">
                     <input type="text" name="amount" value="" placeholder="{{ entry_amount }}" id="input-transaction-amount" class="form-control"/>
                   </div>
                 </div>
+                <div class="text-end">
+                  <button type="submit" id="button-transaction" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i> {{ button_transaction_add }}</button>
+                </div>
               </fieldset>
-              <div class="text-end">
-                <button type="button" id="button-transaction" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i> {{ button_transaction_add }}</button>
-              </div>
-            </div>
-            <div id="tab-reward" class="tab-pane">
-              <fieldset>
-                <legend>{{ text_reward }}</legend>
-                <div id="reward"></div>
-              </fieldset>
-              <br/>
+            </form>
+          </div>
+          <div id="tab-reward" class="tab-pane">
+            <fieldset>
+              <legend>{{ text_reward }}</legend>
+              <div id="reward"></div>
+            </fieldset>
+            <form id="form-reward">
               <fieldset>
                 <legend>{{ text_reward_add }}</legend>
                 <div class="row mb-3">
@@ -527,33 +571,32 @@
                   <label for="input-reward-points" class="col-sm-2 col-form-label">{{ entry_points }}</label>
                   <div class="col-sm-10">
                     <input type="text" name="points" value="" placeholder="{{ entry_points }}" id="input-reward-points" class="form-control"/>
-                    <div class="form-text text-muted">{{ help_points }}</div>
+                    <div class="form-text">{{ help_points }}</div>
                   </div>
                 </div>
+                <div class="text-end">
+                  <button type="submit" id="button-reward" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i> {{ button_reward_add }}</button>
+                </div>
               </fieldset>
-              <div class="text-end">
-                <button type="button" id="button-reward" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i> {{ button_reward_add }}</button>
-              </div>
-            </div>
-            <div id="tab-ip" class="tab-pane">
-              <fieldset>
-                <legend>{{ text_ip }}</legend>
-                <div id="ip"></div>
-              </fieldset>
-            </div>
+            </form>
           </div>
-          <input type="hidden" name="customer_id" value="{{ customer_id }}" id="input-customer-id"/>
-        </form>
+          <div id="tab-ip" class="tab-pane">
+            <fieldset>
+              <legend>{{ text_ip }}</legend>
+              <div id="ip"></div>
+            </fieldset>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#input-customer-group').on('change', function() {
+$('#input-customer-group').on('change', function () {
     $.ajax({
         url: 'index.php?route=customer/customer|customfield&user_token={{ user_token }}&customer_group_id=' + this.value,
         dataType: 'json',
-        success: function(json) {
+        success: function (json) {
             $('.custom-field').hide();
             $('.custom-field').removeClass('required');
 
@@ -567,18 +610,17 @@ $('#input-customer-group').on('change', function() {
                 }
             }
         },
-        error: function(xhr, ajaxOptions, thrownError) {
+        error: function (xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 });
 
 $('#input-customer-group').trigger('change');
-//--></script>
-<script type="text/javascript"><!--
+
 var address_row = {{ address_row }};
 
-$('#button-address').on('click', function(e) {
+$('#button-address').on('click', function (e) {
     e.preventDefault();
 
     html = '<fieldset id="address-row-' + address_row + '">';
@@ -750,8 +792,8 @@ $('#button-address').on('click', function(e) {
     html += '<div class="row mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">';
     html += '  <label for="input-address-' + address_row + '-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name|e('js') }}</label>';
     html += '	 <div class="col-sm-10">';
-    html += '		 <div class="input-group date">';
-    html += '		   <input type="text" name="address[' + address_row + '][custom_field][{{ custom_field.custom_field_id }}]" value="{{ custom_field.value|e('js') }}" placeholder="{{ custom_field.name|e('js') }}" id="input-address-' + address_row + '-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/><div class="input-group-text"><i class="fas fa-calendar"></i></div>';
+    html += '		 <div class="input-group">';
+    html += '		   <input type="text" name="address[' + address_row + '][custom_field][{{ custom_field.custom_field_id }}]" value="{{ custom_field.value|e('js') }}" placeholder="{{ custom_field.name|e('js') }}" id="input-address-' + address_row + '-custom-field-{{ custom_field.custom_field_id }}" class="form-control date"/><div class="input-group-text"><i class="fas fa-calendar"></i></div>';
     html += '		 </div>';
     html += '	   <div id="error-address-' + address_row + '-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>';
     html += '	 </div>';
@@ -762,8 +804,8 @@ $('#button-address').on('click', function(e) {
     html += '<div class="row mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">';
     html += '  <label for="input-address-' + address_row + '-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name|e('js') }}</label>';
     html += '  <div class="col-sm-10">';
-    html += '    <div class="input-group time">';
-    html += '		   <input type="text" name="address[' + address_row + '][custom_field][{{ custom_field.custom_field_id }}]" value="{{ custom_field.value|e('js') }}" placeholder="{{ custom_field.name|e('js') }}" id="input-address-' + address_row + '-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/><div class="input-group-text"><i class="fas fa-calendar"></i></div>';
+    html += '    <div class="input-group">';
+    html += '		   <input type="text" name="address[' + address_row + '][custom_field][{{ custom_field.custom_field_id }}]" value="{{ custom_field.value|e('js') }}" placeholder="{{ custom_field.name|e('js') }}" id="input-address-' + address_row + '-custom-field-{{ custom_field.custom_field_id }}" class="form-control time"/><div class="input-group-text"><i class="fas fa-calendar"></i></div>';
     html += '    </div>';
     html += '	   <div id="error-address-' + address_row + '-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>';
     html += '  </div>';
@@ -774,8 +816,8 @@ $('#button-address').on('click', function(e) {
     html += '<div class="row mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">';
     html += '  <label for="input-address-' + address_row + '-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name|e('js') }}</label>';
     html += '  <div class="col-sm-10">';
-    html += '    <div class="input-group datetime">';
-    html += '      <input type="text" name="address[' + address_row + '][custom_field][{{ custom_field.custom_field_id }}]" value="{{ custom_field.value|e('js') }}" placeholder="{{ custom_field.name|e('js') }}" id="input-address-' + address_row + '-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/><div class="input-group-text"><i class="fas fa-calendar"></i></div>';
+    html += '    <div class="input-group">';
+    html += '      <input type="text" name="address[' + address_row + '][custom_field][{{ custom_field.custom_field_id }}]" value="{{ custom_field.value|e('js') }}" placeholder="{{ custom_field.name|e('js') }}" id="input-address-' + address_row + '-custom-field-{{ custom_field.custom_field_id }}" class="form-control datetime"/><div class="input-group-text"><i class="fas fa-calendar"></i></div>';
     html += '    </div>';
     html += '	   <div id="error-address-' + address_row + '-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>';
     html += '  </div>';
@@ -800,31 +842,12 @@ $('#button-address').on('click', function(e) {
 
     $('select[name=\'address[' + address_row + '][country_id]\']').trigger('change');
 
-    $('.date').datetimepicker({
-        'format': 'YYYY-MM-DD',
-        'locale': '{{ datepicker }}',
-        'allowInputToggle': true
-    });
-
-    $('.time').datetimepicker({
-        'format': 'HH:mm',
-        'locale': '{{ datepicker }}',
-        'allowInputToggle': true
-    });
-
-    $('.datetime').datetimepicker({
-        'format': 'YYYY-MM-DD HH:mm',
-        'locale': '{{ datepicker }}',
-        'allowInputToggle': true
-    });
-
     address_row++;
 });
-//--></script>
-<script type="text/javascript"><!--
+
 var zone = [];
 
-$('#tab-address').on('change', 'select[name$=\'[country_id]\']', function() {
+$('#tab-address').on('change', 'select[name$=\'[country_id]\']', function () {
     var element = this;
 
     $(element).prop('disabled', true);
@@ -835,13 +858,13 @@ $('#tab-address').on('change', 'select[name$=\'[country_id]\']', function() {
         $.ajax({
             url: 'index.php?route=localisation/country|country&user_token={{ user_token }}&country_id=' + $(element).val(),
             dataType: 'json',
-            beforeSend: function() {
+            beforeSend: function () {
                 $(element).prop('disabled', true);
             },
-            complete: function() {
+            complete: function () {
                 $(element).prop('disabled', false);
             },
-            success: function(json) {
+            success: function (json) {
                 zone[$(element).val()] = json;
 
                 if (json['postcode_required'] == '1') {
@@ -874,7 +897,7 @@ $('#tab-address').on('change', 'select[name$=\'[country_id]\']', function() {
 
                 $('#tab-address select[name$=\'[country_id]\']:disabled:first').trigger('change');
             },
-            error: function(xhr, ajaxOptions, thrownError) {
+            error: function (xhr, ajaxOptions, thrownError) {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });
@@ -907,7 +930,57 @@ $('#tab-address').on('change', 'select[name$=\'[country_id]\']', function() {
 
 $('#tab-address select[name$=\'[country_id]\']:first').trigger('change');
 
-$('#history').on('click', '.pagination a', function(e) {
+
+$('#form-customer, #form-address').on('submit', function (e) {
+    e.preventDefault();
+
+    $.ajax({
+        url: 'index.php?route=customer/customer|save&user_token={{ user_token }}',
+        type: 'post',
+        data: $('#form-customer, #form-address').serialize(),
+        dataType: 'json',
+        contentType: 'application/x-www-form-urlencoded',
+        beforeSend: function () {
+            $('#button-customer').button('loading');
+        },
+        complete: function () {
+            $('#button-customer').button('reset');
+        },
+        success: function (json) {
+            $('.alert-dismissible').remove();
+            $('.is-invalid').removeClass('is-invalid');
+            $('.invalid-feedback').removeClass('d-block');
+
+            if (json['error']) {
+                if (json['error']['warning']) {
+                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                }
+
+                for (key in json['error']) {
+                    $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
+                    $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
+                }
+            }
+
+            if (json['success']) {
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                // Replace any form values that correspond to form names.
+                for (key in json) {
+                    $('#form-customer, #form-address').find('[name=\'' + key + '\']').val(json[key]);
+                }
+            }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+
+
+
+$('#history').on('click', '.pagination a', function (e) {
     e.preventDefault();
 
     $('#history').load(this.href);
@@ -915,43 +988,43 @@ $('#history').on('click', '.pagination a', function(e) {
 
 $('#history').load('index.php?route=customer/customer|history&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val());
 
-$('#button-history').on('click', function(e) {
+$('#form-history').on('submit', function (e) {
     e.preventDefault();
 
     $.ajax({
         url: 'index.php?route=customer/customer|addhistory&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val(),
         type: 'post',
+        data: $('#form-history').serialize(),
         dataType: 'json',
-        data: 'comment=' + encodeURIComponent($('#input-comment').val()),
-        beforeSend: function() {
+        contentType: 'application/x-www-form-urlencoded',
+        beforeSend: function () {
             $('#button-history').button('loading');
         },
-        complete: function() {
+        complete: function () {
             $('#button-history').button('reset');
         },
-        success: function(json) {
+        success: function (json) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
-                $('#tab-history').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
 
             if (json['success']) {
-                $('#tab-history').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                 $('#history').load('index.php?route=customer/customer|history&user_token={{ user_token }}&customer_id={{ customer_id }}');
 
                 $('#input-comment').val('');
             }
         },
-        error: function(xhr, ajaxOptions, thrownError) {
+        error: function (xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 });
-//--></script>
-<script type="text/javascript"><!--
-$('#transaction').on('click', '.pagination a', function(e) {
+
+$('#transaction').on('click', '.pagination a', function (e) {
     e.preventDefault();
 
     $('#transaction').load(this.href);
@@ -959,29 +1032,30 @@ $('#transaction').on('click', '.pagination a', function(e) {
 
 $('#transaction').load('index.php?route=customer/customer|transaction&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val());
 
-$('#button-transaction').on('click', function(e) {
+$('#form-transaction').on('submit', function (e) {
     e.preventDefault();
 
     $.ajax({
         url: 'index.php?route=customer/customer|addtransaction&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val(),
         type: 'post',
+        data: $('#form-transaction').serialize(),
         dataType: 'json',
-        data: 'description=' + encodeURIComponent($('#input-transaction-description').val()) + '&amount=' + encodeURIComponent($('#input-transaction-amount').val()),
-        beforeSend: function() {
+        contentType: 'application/x-www-form-urlencoded',
+        beforeSend: function () {
             $('#button-transaction').button('loading');
         },
-        complete: function() {
+        complete: function () {
             $('#button-transaction').button('reset');
         },
-        success: function(json) {
+        success: function (json) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
-                $('#tab-transaction').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
 
             if (json['success']) {
-                $('#tab-transaction').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                 $('#transaction').load('index.php?route=customer/customer|transaction&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val());
 
@@ -989,14 +1063,13 @@ $('#button-transaction').on('click', function(e) {
                 $('#input-transaction-description').val('');
             }
         },
-        error: function(xhr, ajaxOptions, thrownError) {
+        error: function (xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 });
-//--></script>
-<script type="text/javascript"><!--
-$('#reward').on('click', '.pagination a', function(e) {
+
+$('#reward').on('click', '.pagination a', function (e) {
     e.preventDefault();
 
     $('#reward').load(this.href);
@@ -1004,29 +1077,30 @@ $('#reward').on('click', '.pagination a', function(e) {
 
 $('#reward').load('index.php?route=customer/customer|reward&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val());
 
-$('#button-reward').on('click', function(e) {
+$('#form-reward').on('submit', function (e) {
     e.preventDefault();
 
     $.ajax({
         url: 'index.php?route=customer/customer|addreward&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val(),
         type: 'post',
+        data: $('#form-reward').serialize(),
         dataType: 'json',
-        data: 'description=' + encodeURIComponent($('#input-reward-description').val()) + '&points=' + encodeURIComponent($('#input-reward-points').val()),
-        beforeSend: function() {
+        contentType: 'application/x-www-form-urlencoded',
+        beforeSend: function () {
             $('#button-reward').button('loading');
         },
-        complete: function() {
+        complete: function () {
             $('#button-reward').button('reset');
         },
-        success: function(json) {
+        success: function (json) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
-                $('#tab-reward').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
 
             if (json['success']) {
-                $('#tab-reward').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                 $('#reward').load('index.php?route=customer/customer|reward&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val());
 
@@ -1034,36 +1108,18 @@ $('#button-reward').on('click', function(e) {
                 $('#input-reward-description').val('');
             }
         },
-        error: function(xhr, ajaxOptions, thrownError) {
+        error: function (xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 });
 
-$('#ip').on('click', '.pagination a', function(e) {
+$('#ip').on('click', '.pagination a', function (e) {
     e.preventDefault();
 
     $('#ip').load(this.href);
 });
 
 $('#ip').load('index.php?route=customer/customer|ip&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val());
-
-$('.date').datetimepicker({
-    'format': 'YYYY-MM-DD',
-    'locale': '{{ datepicker }}',
-    'allowInputToggle': true
-});
-
-$('.time').datetimepicker({
-    'format': 'HH:mm',
-    'locale': '{{ datepicker }}',
-    'allowInputToggle': true
-});
-
-$('.datetime').datetimepicker({
-    'format': 'YYYY-MM-DD HH:mm',
-    'locale': '{{ datepicker }}',
-    'allowInputToggle': true
-});
 //--></script>
 {{ footer }}

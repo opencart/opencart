@@ -32,6 +32,7 @@ $_['text_legal']                       = 'Legal';
 $_['text_tax']                         = 'Taxes';
 $_['text_account']                     = 'Account';
 $_['text_checkout']                    = 'Checkout';
+$_['text_subscription']                = 'Subscription';
 $_['text_stock']                       = 'Stock';
 $_['text_affiliate']                   = 'Affiliate';
 $_['text_return']                      = 'Return';
@@ -68,6 +69,7 @@ $_['entry_product_description_length'] = 'List Description Limit';
 $_['entry_pagination']                 = 'Default Items Per Page';
 $_['entry_pagination_admin']           = 'Default Items Per Page (Admin)';
 $_['entry_product_count']              = 'Category Product Count';
+$_['entry_product_report']             = 'Product Report Status';
 $_['entry_review_status']              = 'Allow Reviews';
 $_['entry_review_guest']               = 'Allow Guest Reviews';
 $_['entry_voucher_min']                = 'Voucher Min';
@@ -96,6 +98,7 @@ $_['entry_order_status']               = 'Order Status';
 $_['entry_processing_status']          = 'Processing Order Status';
 $_['entry_complete_status']            = 'Complete Order Status';
 $_['entry_fraud_status']               = 'Fraud Order Status';
+$_['entry_subscription_status']        = 'Subscription Status';
 $_['entry_api']                        = 'API User';
 $_['entry_stock_display']              = 'Display Stock';
 $_['entry_stock_warning']              = 'Show Out Of Stock Warning';
@@ -159,6 +162,7 @@ $_['help_product_description_length']  = 'In the list view, short description ch
 $_['help_pagination']                  = 'Determines how many catalog items are shown per page (products, categories, etc)';
 $_['help_product_count']               = 'Show the number of products inside the subcategories in the storefront header category menu. Be warned, this will cause an extreme performance hit for stores with a lot of subcategories!';
 $_['help_product_category']            = 'Display products in each parent category.';
+$_['help_product_report']              = 'Report all how many times a product is viewed. This can use up a lot of storage on high traffic sites.';
 $_['help_review']                      = 'Enable/Disable new review entry and display of existing reviews.';
 $_['help_review_guest']                = 'Allow guests to post reviews.';
 $_['help_voucher_min']                 = 'Minimum amount a customer can purchase a voucher for.';
@@ -185,6 +189,11 @@ $_['help_order_status']                = 'Set the default order status when an o
 $_['help_processing_status']           = 'Set the order status the customer\'s order must reach before the order starts stock subtraction and coupon, voucher and rewards redemption.';
 $_['help_complete_status']             = 'Set the order status the customer\'s order must reach before they are allowed to access their downloadable products and gift vouchers.';
 $_['help_fraud_status']                = 'Set the order status when a customer is suspected of trying to alter the order payment details or use a coupon, gift voucher or reward points that have already been used.';
+
+
+$_['help_subscription']                = 'Set the default subscription status when a customer is suspected of trying to alter the order payment details or use a coupon, gift voucher or reward points that have already been used.';
+
+
 $_['help_api']                         = 'Default API user the admin should use.';
 $_['help_stock_display']               = 'Display stock quantity on the product page.';
 $_['help_stock_warning']               = 'Display out of stock message on the shopping cart page if a product is out of stock but stock checkout is yes. (Warning always shows if stock checkout is no)';

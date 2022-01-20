@@ -91,7 +91,7 @@ class Gdpr extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function editStatus(int $gdpr_id, bool $status): void {
+	public function editStatus(int $gdpr_id, int $status): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "gdpr` SET `status` = '" . (int)$status . "' WHERE `gdpr_id` = '" . (int)$gdpr_id . "'");
 	}
 }

@@ -76,7 +76,7 @@
               <label for="input-validation" class="col-sm-2 col-form-label">{{ entry_validation }}</label>
               <div class="col-sm-10">
                 <input type="text" name="validation" id="input-validation" value="{{ validation }}" placeholder="{{ text_regex }}" class="form-control"/>
-                <div class="form-text text-muted">{{ help_regex }}</div>
+                <div class="form-text">{{ help_regex }}</div>
               </div>
             </div>
             <div class="row mb-3">
@@ -119,7 +119,7 @@
               <label for="input-sort-order" class="col-sm-2 col-form-label">{{ entry_sort_order }}</label>
               <div class="col-sm-10">
                 <input type="text" name="sort_order" value="{{ sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/>
-                <div class="form-text text-muted">{{ help_sort_order }}</div>
+                <div class="form-text">{{ help_sort_order }}</div>
               </div>
             </div>
           </fieldset>
@@ -179,34 +179,16 @@ $('#input-type').on('change', function() {
     }
 
     if (this.value == 'date') {
-        $('#display-value > div').html('<div class="input-group date"><input type="text" name="value" value="' + $('#input-value').val() + '" placeholder="{{ entry_value }}" id="input-value" class="form-control"/><div class="input-group-text"><i class="fas fa-calendar"></i></div></div>');
+        $('#display-value > div').html('<div class="input-group"><input type="text" name="value" value="' + $('#input-value').val() + '" placeholder="{{ entry_value }}" id="input-value" class="form-control date"/><div class="input-group-text"><i class="fas fa-calendar"></i></div></div>');
     } else if (this.value == 'time') {
-        $('#display-value > div').html('<div class="input-group time"><input type="text" name="value" value="' + $('#input-value').val() + '" placeholder="{{ entry_value }}" id="input-value" class="form-control"/><div class="input-group-text"><i class="fas fa-calendar"></i></div></div>');
+        $('#display-value > div').html('<div class="input-group"><input type="text" name="value" value="' + $('#input-value').val() + '" placeholder="{{ entry_value }}" id="input-value" class="form-control time"/><div class="input-group-text"><i class="fas fa-calendar"></i></div></div>');
     } else if (this.value == 'datetime') {
-        $('#display-value > div').html('<div class="input-group datetime"><input type="text" name="value" value="' + $('#input-value').val() + '" placeholder="{{ entry_value }}" id="input-value" class="form-control"/><div class="input-group-text"><i class="fas fa-calendar"></i></div></div>');
+        $('#display-value > div').html('<div class="input-group"><input type="text" name="value" value="' + $('#input-value').val() + '" placeholder="{{ entry_value }}" id="input-value" class="form-control datetime"/><div class="input-group-text"><i class="fas fa-calendar"></i></div></div>');
     } else if (this.value == 'textarea') {
         $('#display-value > div').html('<textarea name="value" placeholder="{{ entry_value }}" id="input-value" class="form-control">' + $('#input-value').val() + '</textarea>');
     } else {
         $('#display-value > div').html('<input type="text" name="value" value="' + $('#input-value').val() + '" placeholder="{{ entry_value }}" id="input-value" class="form-control"/>');
     }
-
-    $('.date').datetimepicker({
-        'format': 'YYYY-MM-DD',
-        'locale': '{{ datepicker }}',
-        'allowInputToggle': true
-    });
-
-    $('.time').datetimepicker({
-        'format': 'HH:mm',
-        'locale': '{{ datepicker }}',
-        'allowInputToggle': true
-    });
-
-    $('.datetime').datetimepicker({
-        'format': 'YYYY-MM-DD HH:mm',
-        'locale': '{{ datepicker }}',
-        'allowInputToggle': true
-    });
 });
 
 $('#input-type').trigger('change');
@@ -232,6 +214,5 @@ function addCustomFieldValue() {
 
     custom_field_value_row++;
 }
-
 //--></script>
 {{ footer }} 

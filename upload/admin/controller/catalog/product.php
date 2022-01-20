@@ -866,15 +866,15 @@ class Product extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		// Recurring
-		$this->load->model('catalog/recurring');
+		// Subscriptions
+		$this->load->model('catalog/subscription_plan');
 
-		$data['recurrings'] = $this->model_catalog_recurring->getRecurrings();
+		$data['subscription_plans'] = $this->model_catalog_subscription_plan->getSubscriptionPlans();
 
 		if ($product_id) {
-			$data['product_recurrings'] = $this->model_catalog_product->getRecurrings($product_id);
+			$data['product_subscriptions'] = $this->model_catalog_product->getSubscriptions($product_id);
 		} else {
-			$data['product_recurrings'] = [];
+			$data['product_subscriptions'] = [];
 		}
 
 		// Discount
@@ -1142,6 +1142,62 @@ class Product extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	public function report(): void {
+		$this->load->language('catalog/product');
+
+		if (isset($this->request->get['product_id'])) {
+			$product_id = (int)$this->request->get['product_id'];
+		} else {
+			$product_id = 0;
+		}
+
+		if (isset($this->request->get['page'])) {
+			$page = (int)$this->request->get['page'];
+		} else {
+			$page = 1;
+		}
+
+		$data['reports'] = [];
+
+		$this->load->model('catalog/product');
+		$this->load->model('customer/customer');
+		$this->load->model('setting/store');
+
+		$results = $this->model_catalog_product->getReports($product_id, ($page - 1) * 10, 10);
+
+		foreach ($results as $result) {
+			$store_info = $this->model_setting_store->getStore($result['store_id']);
+
+			if ($store_info) {
+				$store = $store_info['name'];
+			} elseif (!$result['store_id']) {
+				$store = $this->config->get('config_name');
+			} else {
+				$store = '';
+			}
+
+			$data['reports'][] = [
+				'ip'         => $result['ip'],
+				'store'      => $store,
+				'country'    => $result['country'],
+				'date_added' => date($this->language->get('datetime_format'), strtotime($result['date_added']))
+			];
+		}
+
+		$report_total = $this->model_catalog_product->getTotalReports($product_id);
+
+		$data['pagination'] = $this->load->controller('common/pagination', [
+			'total' => $report_total,
+			'page'  => $page,
+			'limit' => $this->config->get('config_pagination_admin'),
+			'url'   => $this->url->link('catalog/product|report', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $product_id . '&page={page}')
+		]);
+
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($report_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($report_total - 10)) ? $report_total : ((($page - 1) * 10) + 10), $report_total, ceil($report_total / 10));
+
+		$this->response->setOutput($this->load->view('catalog/product_report', $data));
+	}
+
 	public function autocomplete(): void {
 		$json = [];
 
@@ -1163,64 +1219,87 @@ class Product extends \Opencart\System\Engine\Controller {
 			$limit = 5;
 		}
 
-		if ($filter_name || $filter_model) {
-			$this->load->model('catalog/product');
-			$this->load->model('catalog/option');
+		$frequencies = [
+			'day'        => $this->language->get('text_day'),
+			'week'       => $this->language->get('text_week'),
+			'semi_month' => $this->language->get('text_semi_month'),
+			'month'      => $this->language->get('text_month'),
+			'year'       => $this->language->get('text_year'),
+		];
 
-			$filter_data = [
-				'filter_name'  => $filter_name,
-				'filter_model' => $filter_model,
-				'start'        => 0,
-				'limit'        => $limit
-			];
+		$filter_data = [
+			'filter_name'  => $filter_name,
+			'filter_model' => $filter_model,
+			'start'        => 0,
+			'limit'        => $limit
+		];
 
-			$results = $this->model_catalog_product->getProducts($filter_data);
+		$this->load->model('catalog/product');
+		$this->load->model('catalog/option');
+		$this->load->model('catalog/subscription_plan');
 
-			foreach ($results as $result) {
-				$option_data = [];
+		$results = $this->model_catalog_product->getProducts($filter_data);
 
-				$product_options = $this->model_catalog_product->getOptions($result['product_id']);
+		foreach ($results as $result) {
+			$option_data = [];
 
-				foreach ($product_options as $product_option) {
-					$option_info = $this->model_catalog_option->getOption($product_option['option_id']);
+			$product_options = $this->model_catalog_product->getOptions($result['product_id']);
 
-					if ($option_info) {
-						$product_option_value_data = [];
+			foreach ($product_options as $product_option) {
+				$option_info = $this->model_catalog_option->getOption($product_option['option_id']);
 
-						foreach ($product_option['product_option_value'] as $product_option_value) {
-							$option_value_info = $this->model_catalog_option->getValue($product_option_value['option_value_id']);
+				if ($option_info) {
+					$product_option_value_data = [];
 
-							if ($option_value_info) {
-								$product_option_value_data[] = [
-									'product_option_value_id' => $product_option_value['product_option_value_id'],
-									'option_value_id'         => $product_option_value['option_value_id'],
-									'name'                    => $option_value_info['name'],
-									'price'                   => (float)$product_option_value['price'] ? $this->currency->format($product_option_value['price'], $this->config->get('config_currency')) : false,
-									'price_prefix'            => $product_option_value['price_prefix']
-								];
-							}
+					foreach ($product_option['product_option_value'] as $product_option_value) {
+						$option_value_info = $this->model_catalog_option->getValue($product_option_value['option_value_id']);
+
+						if ($option_value_info) {
+							$product_option_value_data[] = [
+								'product_option_value_id' => $product_option_value['product_option_value_id'],
+								'option_value_id'         => $product_option_value['option_value_id'],
+								'name'                    => $option_value_info['name'],
+								'price'                   => (float)$product_option_value['price'] ? $this->currency->format($product_option_value['price'], $this->config->get('config_currency')) : false,
+								'price_prefix'            => $product_option_value['price_prefix']
+							];
 						}
-
-						$option_data[] = [
-							'product_option_id'    => $product_option['product_option_id'],
-							'product_option_value' => $product_option_value_data,
-							'option_id'            => $product_option['option_id'],
-							'name'                 => $option_info['name'],
-							'type'                 => $option_info['type'],
-							'value'                => $product_option['value'],
-							'required'             => $product_option['required']
-						];
 					}
-				}
 
-				$json[] = [
-					'product_id' => $result['product_id'],
-					'name'       => strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8')),
-					'model'      => $result['model'],
-					'option'     => $option_data,
-					'price'      => $result['price']
-				];
+					$option_data[] = [
+						'product_option_id'    => $product_option['product_option_id'],
+						'product_option_value' => $product_option_value_data,
+						'option_id'            => $product_option['option_id'],
+						'name'                 => $option_info['name'],
+						'type'                 => $option_info['type'],
+						'value'                => $product_option['value'],
+						'required'             => $product_option['required']
+					];
+				}
 			}
+
+			$subscription_data = [];
+
+			$product_subscriptions = $this->model_catalog_product->getSubscriptions($result['product_id']);
+
+			foreach ($product_subscriptions as $product_subscription) {
+				$subscription_plan_info = $this->model_catalog_subscription_plan->getSubscriptionPlan($product_subscription['subscription_plan_id']);
+
+				if ($subscription_plan_info) {
+					$subscription_data[] = [
+						'subscription_plan_id' => $subscription_plan_info['subscription_plan_id'],
+						'name'                 => $subscription_plan_info['name']
+					];
+				}
+			}
+
+			$json[] = [
+				'product_id'   => $result['product_id'],
+				'name'         => strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8')),
+				'model'        => $result['model'],
+				'option'       => $option_data,
+				'subscription' => $subscription_data,
+				'price'        => $result['price']
+			];
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

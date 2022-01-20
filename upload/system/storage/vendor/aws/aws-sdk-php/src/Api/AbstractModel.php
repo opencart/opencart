@@ -27,22 +27,26 @@ abstract class AbstractModel implements \ArrayAccess
         return $this->definition;
     }
 
+    #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         return isset($this->definition[$offset])
             ? $this->definition[$offset] : null;
     }
 
+    #[\ReturnTypeWillChange]
     public function offsetSet($offset, $value)
     {
         $this->definition[$offset] = $value;
     }
 
+    #[\ReturnTypeWillChange]
     public function offsetExists($offset)
     {
         return isset($this->definition[$offset]);
     }
 
+    #[\ReturnTypeWillChange]
     public function offsetUnset($offset)
     {
         unset($this->definition[$offset]);

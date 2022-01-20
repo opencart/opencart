@@ -72,6 +72,7 @@ class LruArrayCache implements CacheInterface, \Countable
         unset($this->items[$key]);
     }
 
+    #[\ReturnTypeWillChange]
     public function count()
     {
         return count($this->items);

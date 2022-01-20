@@ -38,8 +38,8 @@
                 <div class="row mb-3">
                   <label for="input-date-ordered" class="col-sm-2 col-form-label">{{ entry_date_ordered }}</label>
                   <div class="col-sm-10 col-md-4">
-                    <div class="input-group date">
-                      <input type="text" name="date_ordered" value="{{ date_ordered }}" placeholder="{{ entry_date_ordered }}" id="input-date-ordered" class="form-control"/>
+                    <div class="input-group">
+                      <input type="text" name="date_ordered" value="{{ date_ordered }}" placeholder="{{ entry_date_ordered }}" id="input-date-ordered" class="form-control date"/>
                       <div class="input-group-text"><i class="fas fa-calendar"></i></div>
                     </div>
                   </div>
@@ -47,7 +47,9 @@
                 <div class="row mb-3">
                   <label class="col-sm-2 col-form-label">{{ entry_customer }}</label>
                   <div class="col-sm-10">
-                    <input type="text" name="customer" value="{{ customer }}" placeholder="{{ entry_customer }}" id="input-customer" class="form-control"/> <input type="hidden" name="customer_id" value="{{ customer_id }}"/>
+                    <input type="text" name="customer" value="{{ customer }}" placeholder="{{ entry_customer }}" id="input-customer" list="list-customer" class="form-control"/>
+                    <datalist id="list-customer"></datalist>
+                    <input type="hidden" name="customer_id" value="{{ customer_id }}"/>
                   </div>
                 </div>
                 <div class="row mb-3 required">
@@ -84,9 +86,10 @@
                 <div class="row mb-3 required">
                   <label class="col-sm-2 col-form-label">{{ entry_product }}</label>
                   <div class="col-sm-10">
-                    <input type="text" name="product" value="{{ product }}" placeholder="{{ entry_product }}" id="input-product" class="form-control"/>
+                    <input type="text" name="product" value="{{ product }}" placeholder="{{ entry_product }}" id="input-product" list="list-product" class="form-control"/>
+                    <datalist id="list-product"></datalist>
                     <input type="hidden" name="product_id" value="{{ product_id }}" id="input-product-id"/>
-                    <div class="form-text text-muted">{{ help_product }}</div>
+                    <div class="form-text">{{ help_product }}</div>
                     <div id="error-product" class="invalid-feedback"></div>
                   </div>
                 </div>
@@ -160,7 +163,6 @@
                   <legend>{{ text_history }}</legend>
                   <div id="history"></div>
                 </fieldset>
-                <br/>
                 <fieldset>
                   <legend>{{ text_history_add }}</legend>
                   <div class="row mb-3">
@@ -268,7 +270,7 @@ $('#button-history').on('click', function(e) {
         url: 'index.php?route=sale/returns|addhistory&user_token={{ user_token }}&return_id=' + $('#input-return-id').val(),
         type: 'post',
         dataType: 'json',
-        data: 'return_status_id=' + encodeURIComponent($('#input-return-status').val()) + '&notify=' + ($('#input-notify').prop('checked') ? 1 : 0) + '&comment=' + encodeURIComponent($('#input-comment').val()),
+        data: 'return_status_id=' + $('#input-return-status').val() + '&notify=' + ($('#input-notify').prop('checked') ? 1 : 0) + '&comment=' + encodeURIComponent($('#input-comment').val()),
         beforeSend: function() {
             $('#button-history').button('loading');
         },
@@ -291,13 +293,6 @@ $('#button-history').on('click', function(e) {
             }
         }
     });
-});
-//--></script>
-<script type="text/javascript"><!--
-$('.date').datetimepicker({
-    'format': 'YYYY-MM-DD',
-    'locale': '{{ datepicker }}',
-    'allowInputToggle': true
 });
 //--></script>
 {{ footer }}

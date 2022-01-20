@@ -110,11 +110,13 @@ class LogRecordIterator implements \OuterIterator
      *
      * @return array|false
      */
+    #[\ReturnTypeWillChange]
     public function current()
     {
         return $this->valid() ? $this->records[$this->recordIndex] : false;
     }
 
+    #[\ReturnTypeWillChange]
     public function next()
     {
         $this->recordIndex++;
@@ -131,6 +133,7 @@ class LogRecordIterator implements \OuterIterator
         }
     }
 
+    #[\ReturnTypeWillChange]
     public function key()
     {
         if ($logFile = $this->logFileIterator->current()) {
@@ -140,17 +143,20 @@ class LogRecordIterator implements \OuterIterator
         return null;
     }
 
+    #[\ReturnTypeWillChange]
     public function valid()
     {
         return isset($this->records[$this->recordIndex]);
     }
 
+    #[\ReturnTypeWillChange]
     public function rewind()
     {
         $this->logFileIterator->rewind();
         $this->loadRecordsFromCurrentLogFile();
     }
 
+    #[\ReturnTypeWillChange]
     public function getInnerIterator()
     {
         return $this->logFileIterator;

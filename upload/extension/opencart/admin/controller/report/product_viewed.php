@@ -75,15 +75,13 @@ class ProductViewed extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('extension/opencart/report/product');
 
-		$product_viewed_total = $this->model_extension_opencart_report_product->getTotalProductViews();
+		$product_total = $this->model_extension_opencart_report_product->getTotalViewed();
 
-		$product_total = $this->model_extension_opencart_report_product->getTotalProductsViewed();
-
-		$results = $this->model_extension_opencart_report_product->getProductsViewed($filter_data);
+		$results = $this->model_extension_opencart_report_product->getViewed($filter_data);
 
 		foreach ($results as $result) {
 			if ($result['viewed']) {
-				$percent = round($result['viewed'] / $product_viewed_total * 100, 2);
+				$percent = round($result['viewed'] / $product_total * 100, 2);
 			} else {
 				$percent = 0;
 			}

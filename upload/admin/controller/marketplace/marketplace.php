@@ -165,7 +165,7 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 
 		$response_info = json_decode($response, true);
 
-		$extension_total = $response_info['extension_total'];
+		$extension_total = (int)$response_info['extension_total'];
 
 		$url = '';
 

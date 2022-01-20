@@ -38,7 +38,7 @@
 								<label for="input-code" class="col-sm-2 col-form-label">{{ entry_code }}</label>
 								<div class="col-sm-10">
 									<input type="text" name="code" value="{{ code }}" placeholder="{{ entry_code }}" id="input-code" class="form-control"/>
-									<div class="form-text text-muted">{{ help_code }}</div>
+									<div class="form-text">{{ help_code }}</div>
 									<div id="error-code" class="invalid-feedback"></div>
 								</div>
 							</div>
@@ -57,7 +57,7 @@
 											<option value="F">{{ text_amount }}</option>
 										{% endif %}
 									</select>
-									<div class="form-text text-muted">{{ help_type }}</div>
+									<div class="form-text">{{ help_type }}</div>
 								</div>
 							</div>
 							<div class="row mb-3">
@@ -70,7 +70,7 @@
 								<label for="input-total" class="col-sm-2 col-form-label">{{ entry_total }}</label>
 								<div class="col-sm-10">
 									<input type="text" name="total" value="{{ total }}" placeholder="{{ entry_total }}" id="input-total" class="form-control"/>
-									<div class="form-text text-muted">{{ help_total }}</div>
+									<div class="form-text">{{ help_total }}</div>
 								</div>
 							</div>
 							<div class="row mb-3">
@@ -80,7 +80,7 @@
 										<input type="radio" name="logged" value="1" id="input-logged-yes" class="btn-check"{% if logged %} checked{% endif %}/> <label for="input-logged-yes" class="btn btn-outline-secondary">{{ text_yes }}</label>
 										<input type="radio" name="logged" value="0" id="input-logged-no" class="btn-check"{% if not logged %} checked{% endif %}/> <label for="input-logged-no" class="btn btn-outline-secondary">{{ text_no }}</label>
 									</div>
-									<div class="form-text text-muted">{{ help_logged }}</div>
+									<div class="form-text">{{ help_logged }}</div>
 								</div>
 							</div>
 							<div class="row mb-3">
@@ -97,7 +97,8 @@
 							<div class="row mb-3">
 								<label class="col-sm-2 col-form-label">{{ entry_product }}</label>
 								<div class="col-sm-10">
-									<input type="text" name="product" value="" placeholder="{{ entry_product }}" id="input-product" class="form-control"/>
+									<input type="text" name="product" value="" placeholder="{{ entry_product }}" id="input-product" list="list-product" class="form-control"/>
+									<datalist id="list-product"></datalist>
 									<div class="form-control p-0" style="height: 150px; overflow: auto;">
 										<table id="coupon-product" class="table table-sm m-0">
 											{% for coupon_product in coupon_products %}
@@ -108,13 +109,14 @@
 											{% endfor %}
 										</table>
 									</div>
-									<div class="form-text text-muted">{{ help_product }}</div>
+									<div class="form-text">{{ help_product }}</div>
 								</div>
 							</div>
 							<div class="row mb-3">
 								<label class="col-sm-2 col-form-label">{{ entry_category }}</label>
 								<div class="col-sm-10">
-									<input type="text" name="category" value="" placeholder="{{ entry_category }}" id="input-category" class="form-control"/>
+									<input type="text" name="category" value="" placeholder="{{ entry_category }}" id="input-category" list="list-category" class="form-control"/>
+									<datalist id="list-category"></datalist>
 									<div class="form-control p-0" style="height: 150px; overflow: auto;">
 										<table id="coupon-category" class="table table-sm m-0">
 											{% for coupon_category in coupon_categories %}
@@ -125,14 +127,14 @@
 											{% endfor %}
 										</table>
 									</div>
-									<div class="form-text text-muted">{{ help_category }}</div>
+									<div class="form-text">{{ help_category }}</div>
 								</div>
 							</div>
 							<div class="row mb-3">
 								<label for="input-date-start" class="col-sm-2 col-form-label">{{ entry_date_start }}</label>
 								<div class="col-sm-10 col-md-4">
-									<div class="input-group date">
-										<input type="text" name="date_start" value="{{ date_start }}" placeholder="{{ entry_date_start }}" id="input-date-start" class="form-control"/>
+									<div class="input-group">
+										<input type="text" name="date_start" value="{{ date_start }}" placeholder="{{ entry_date_start }}" id="input-date-start" class="form-control date"/>
 										<div class="input-group-text"><i class="fas fa-calendar"></i></div>
 									</div>
 								</div>
@@ -140,8 +142,8 @@
 							<div class="row mb-3">
 								<label for="input-date-end" class="col-sm-2 col-form-label">{{ entry_date_end }}</label>
 								<div class="col-sm-10 col-md-4">
-									<div class="input-group date">
-										<input type="text" name="date_end" value="{{ date_end }}" placeholder="{{ entry_date_end }}" id="input-date-end" class="form-control"/>
+									<div class="input-group">
+										<input type="text" name="date_end" value="{{ date_end }}" placeholder="{{ entry_date_end }}" id="input-date-end" class="form-control date"/>
 										<div class="input-group-text"><i class="fas fa-calendar"></i></div>
 									</div>
 								</div>
@@ -150,14 +152,14 @@
 								<label for="input-uses-total" class="col-sm-2 col-form-label">{{ entry_uses_total }}</label>
 								<div class="col-sm-10">
 									<input type="text" name="uses_total" value="{{ uses_total }}" placeholder="{{ entry_uses_total }}" id="input-uses-total" class="form-control"/>
-									<div class="form-text text-muted">{{ help_uses_total }}</div>
+									<div class="form-text">{{ help_uses_total }}</div>
 								</div>
 							</div>
 							<div class="row mb-3">
 								<label for="input-uses-customer" class="col-sm-2 col-form-label">{{ entry_uses_customer }}</label>
 								<div class="col-sm-10">
 									<input type="text" name="uses_customer" value="{{ uses_customer }}" placeholder="{{ entry_uses_customer }}" id="input-uses-customer" class="form-control"/>
-									<div class="form-text text-muted">{{ help_uses_customer }}</div>
+									<div class="form-text">{{ help_uses_customer }}</div>
 								</div>
 							</div>
 							<div class="row mb-3">
@@ -258,11 +260,5 @@ $('#history').on('click', '.pagination a', function(e) {
 });
 
 $('#history').load('index.php?route=marketing/coupon|history&user_token={{ user_token }}&coupon_id=' + $('#input-coupon-id').val());
-
-$('.date').datetimepicker({
-    'format': 'YYYY-MM-DD',
-    'locale': '{{ datepicker }}',
-    'allowInputToggle': true
-});
 //--></script>
 {{ footer }}

@@ -256,8 +256,8 @@
                   {% if option.type == 'date' %}
                     <div class="mb-3{% if option.required %} required{% endif %}">
                       <label for="input-option-{{ option.product_option_id }}" class="form-label">{{ option.name }}</label>
-                      <div class="input-group date">
-                        <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" id="input-option-{{ option.product_option_id }}" class="form-control"/>
+                      <div class="input-group">
+                        <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" id="input-option-{{ option.product_option_id }}" class="form-control date"/>
                         <div class="input-group-text"><i class="fas fa-calendar"></i></div>
                       </div>
                       <div id="error-option-{{ option.product_option_id }}" class="invalid-feedback"></div>
@@ -267,8 +267,8 @@
                   {% if option.type == 'datetime' %}
                     <div class="mb-3{% if option.required %} required{% endif %}">
                       <label for="input-option-{{ option.product_option_id }}" class="form-label">{{ option.name }}</label>
-                      <div class="input-group datetime">
-                        <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" id="input-option-{{ option.product_option_id }}" class="form-control"/>
+                      <div class="input-group">
+                        <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" id="input-option-{{ option.product_option_id }}" class="form-control datetime"/>
                         <div class="input-group-text"><i class="fas fa-calendar"></i></div>
                       </div>
 
@@ -278,8 +278,8 @@
                   {% if option.type == 'time' %}
                     <div class="mb-3{% if option.required %} required{% endif %}">
                       <label for="input-option-{{ option.product_option_id }}" class="form-label">{{ option.name }}</label>
-                      <div class="input-group time">
-                        <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" id="input-option-{{ option.product_option_id }}" class="form-control"/>
+                      <div class="input-group">
+                        <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" id="input-option-{{ option.product_option_id }}" class="form-control time"/>
                         <div class="input-group-text"><i class="fas fa-calendar"></i></div>
                       </div>
                       <div id="error-option-{{ option.product_option_id }}" class="invalid-feedback"></div>
@@ -288,24 +288,27 @@
                 {% endfor %}
                 {% endif %}
 
-                {% if recurrings %}
+                {% if subscription_plans %}
                   <hr/>
-                  <h3>{{ text_payment_recurring }}</h3>
+                  <h3>{{ text_subscription }}</h3>
                   <div class="mb-3 required">
-                    <select name="recurring_id" id="input-recurring" class="form-select">
+                    <select name="subscription_plan_id" id="input-subscription" class="form-select">
                       <option value="">{{ text_select }}</option>
-                      {% for recurring in recurrings %}
-                        <option value="{{ recurring.recurring_id }}">{{ recurring.name }}</option>
+                      {% for subscription_plan in subscription_plans %}
+                        <option value="{{ subscription_plan.subscription_plan_id }}">{{ subscription_plan.name }}</option>
                       {% endfor %}
                     </select>
-                    <div id="recurring-description" class="form-text"></div>
-                    <div id="error-recurring" class="invalid-feedback"></div>
+                    {% for subscription_plan in subscription_plans %}
+                    <div id="subscription-description-{{ subscription_plan.subscription_plan_id }}" class="form-text subscription d-none">{{ subscription_plan.description }}</div>
+                    {% endfor %}
+                    <div id="error-subscription" class="invalid-feedback"></div>
                   </div>
                 {% endif %}
 
                 <div class="mb-3">
                   <label for="input-quantity" class="form-label">{{ entry_qty }}</label>
-                  <input type="text" name="quantity" value="{{ minimum }}" size="2" id="input-quantity" class="form-control"/> <input type="hidden" name="product_id" value="{{ product_id }}" id="input-product-id"/>
+                  <input type="text" name="quantity" value="{{ minimum }}" size="2" id="input-quantity" class="form-control"/>
+                  <input type="hidden" name="product_id" value="{{ product_id }}" id="input-product-id"/>
                   <div id="error-quantity" class="form-text"></div>
                   <br/>
                   <button type="submit" id="button-cart" data-loading-text="{{ text_loading }}" class="btn btn-primary btn-lg btn-block">{{ button_cart }}</button>
@@ -353,24 +356,12 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#input-recurring, #input-quantity').change(function() {
-    $.ajax({
-        url: 'index.php?route=product/product|getRecurringDescription',
-        type: 'post',
-        dataType: 'json',
-        data: $('#input-product-id, #input-quantity, #input-recurring'),
-        contentType: 'application/x-www-form-urlencoded',
-        cache: false,
-        processData: false,
-        beforeSend: function() {
-            $('#recurring-description').html('');
-        },
-        success: function(json) {
-            if (json['success']) {
-                $('#recurring-description').html(json['success']);
-            }
-        }
-    });
+$('#input-subscription').on('change', function(e) {
+    var element = this;
+
+    $('.subscription').addClass('d-none');
+
+    $('#subscription-description-' + $(element).val()).removeClass('d-none');
 });
 
 $('#form-product').on('submit', function(e) {
@@ -379,8 +370,8 @@ $('#form-product').on('submit', function(e) {
     $.ajax({
         url: 'index.php?route=checkout/cart|add&language={{ language }}',
         type: 'post',
-        dataType: 'json',
         data: $('#form-product').serialize(),
+        dataType: 'json',
         contentType: 'application/x-www-form-urlencoded',
         cache: false,
         processData: false,
@@ -413,24 +404,6 @@ $('#form-product').on('submit', function(e) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
-});
-
-$('.date').datetimepicker({
-    'format': 'YYYY-MM-DD',
-    'locale': '{{ datepicker }}',
-    'allowInputToggle': true
-});
-
-$('.time').datetimepicker({
-    'format': 'HH:mm',
-    'locale': '{{ datepicker }}',
-    'allowInputToggle': true
-});
-
-$('.datetime').datetimepicker({
-    'format': 'YYYY-MM-DD HH:mm',
-    'locale': '{{ datepicker }}',
-    'allowInputToggle': true
 });
 
 $('#review').on('click', '.pagination a', function(e) {

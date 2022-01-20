@@ -514,12 +514,6 @@ class Customer extends \Opencart\System\Engine\Controller {
 		$data['confirm'] = '';
 
 		if (!empty($customer_info)) {
-			$data['address_id'] = $customer_info['address_id'];
-		} else {
-			$data['address_id'] = 0;
-		}
-
-		if (!empty($customer_info)) {
 			$data['newsletter'] = $customer_info['newsletter'];
 		} else {
 			$data['newsletter'] = 0;

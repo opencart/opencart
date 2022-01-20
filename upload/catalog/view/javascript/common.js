@@ -22,41 +22,56 @@ function getURLVar(key) {
     }
 }
 
-$(document).ready(function() {
+// Tooltip
+var tooltip = function () {
+   $('.tooltip').remove();
+
     // Apply to all on current page
     $('[data-bs-toggle=\'tooltip\']').each(function(i, element) {
         bootstrap.Tooltip.getOrCreateInstance(element);
     });
+}
 
-    // Makes tooltips work on ajax generated content
-    $(document).ajaxStop(function() {
-        $('[data-bs-toggle=\'tooltip\']').each(function(i, element) {
-            bootstrap.Tooltip.getOrCreateInstance(element);
-        });
-    });
-});
+$(document).ready(tooltip);
+// Makes tooltips work on ajax generated content
+$(document).on('click', 'button', tooltip);
 
-$(document).ready(function () {
-    /*
-    $('.date').datetimepicker({
-        'format': 'YYYY-MM-DD',
-        'locale': '{{ datepicker }}',
-        'allowInputToggle': true
-    });
-
-    $('.time').datetimepicker({
-        'format': 'HH:mm',
-        'locale': '{{ datepicker }}',
-        'allowInputToggle': true
+// Daterangepicker
+var datetimepicker = function () {
+    $('.date').daterangepicker({
+        singleDatePicker: true,
+        autoApply: true,
+        locale: {
+            format: 'YYYY-MM-DD'
+        }
     });
 
-    $('.datetime').datetimepicker({
-        'format': 'YYYY-MM-DD HH:mm',
-        'locale': '{{ datepicker }}',
-        'allowInputToggle': true
+    $('.time').daterangepicker({
+        singleDatePicker: true,
+        datePicker: false,
+        autoApply: true,
+        timePicker: true,
+        timePicker24Hour: true,
+        locale: {
+            format: 'HH:mm'
+        }
+    }).on('show.daterangepicker', function (ev, picker) {
+        picker.container.find('.calendar-table').hide();
     });
-    */
-});
+
+    $('.datetime').daterangepicker({
+        singleDatePicker: true,
+        autoApply: true,
+        timePicker: true,
+        timePicker24Hour: true,
+        locale: {
+            format: 'YYYY-MM-DD HH:mm'
+        }
+    });
+}
+
+$(document).ready(datetimepicker);
+$(document).on('click', 'button', datetimepicker);
 
 $(document).ready(function () {
     // Currency
@@ -237,6 +252,7 @@ $(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function (e) {
             $(element).button('reset');
         },
         success: function (json) {
+            $('.alert-dismissible').remove();
             $(form).find('.is-invalid').removeClass('is-invalid');
             $(form).find('.invalid-feedback').removeClass('d-block');
 
@@ -244,19 +260,13 @@ $(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function (e) {
 
             if (json['redirect']) {
                 location = json['redirect'];
-
-                // Not sure this part works
-                delete json['redirect'];
             }
 
             if (typeof json['error'] == 'string') {
                 $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                delete json['error'];
             }
 
             if (typeof json['error'] == 'object') {
-
                 if (json['error']['warning']) {
                     $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                 }
@@ -265,8 +275,6 @@ $(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function (e) {
                     $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
                     $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
                 }
-
-                delete json['error'];
             }
 
             if (json['success']) {
@@ -279,8 +287,6 @@ $(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function (e) {
                 if (url !== undefined && target !== undefined) {
                     $(target).load(url);
                 }
-
-                delete json['success'];
             }
 
             // Replace any form values that correspond to form names.
@@ -395,6 +401,7 @@ class Chain {
 
 var chain = new Chain();
 
+
 // Autocomplete
 (function($) {
     $.fn.autocomplete = function(option) {
@@ -439,6 +446,8 @@ var chain = new Chain();
                 var name;
                 var i = 0, j = 0;
 
+                console.log(json);
+
                 if (json.length) {
                     for (i = 0; i < json.length; i++) {
                         // update element items
@@ -460,10 +469,8 @@ var chain = new Chain();
                     }
 
                     for (name in category) {
-                        //html += '<li><h6 class="dropdown-header">' + name + '</h6></li>';
-
                         for (j = 0; j < category[name].length; j++) {
-                            html += '<option>' + category[name][j]['label'] + '</option>';
+                            html += '<option value="' + category[name][j]['label'] + '">' + name + '</option>';
                         }
                     }
                 }

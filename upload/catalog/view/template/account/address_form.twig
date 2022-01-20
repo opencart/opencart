@@ -163,8 +163,8 @@
               <div class="row mb-3{% if custom_field.required %} required{% endif %}">
                 <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
                 <div class="col-sm-10">
-                  <div class="input-group date">
-                    <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{% if address_custom_field[custom_field.custom_field_id] %}{{ address_custom_field[custom_field.custom_field_id] }}{% else %}{{ custom_field.value }}{% endif %}" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
+                  <div class="input-group">
+                    <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{% if address_custom_field[custom_field.custom_field_id] %}{{ address_custom_field[custom_field.custom_field_id] }}{% else %}{{ custom_field.value }}{% endif %}" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control date"/>
                     <div class="input-group-text"><i class="fas fa-calendar"></i></div>
                   </div>
                   <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
@@ -176,8 +176,8 @@
               <div class="row mb-3{% if custom_field.required %} required{% endif %}">
                 <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
                 <div class="col-sm-10">
-                  <div class="input-group time">
-                    <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{% if address_custom_field[custom_field.custom_field_id] %}{{ address_custom_field[custom_field.custom_field_id] }}{% else %}{{ custom_field.value }}{% endif %}" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
+                  <div class="input-group">
+                    <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{% if address_custom_field[custom_field.custom_field_id] %}{{ address_custom_field[custom_field.custom_field_id] }}{% else %}{{ custom_field.value }}{% endif %}" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control time"/>
                     <div class="input-group-text"><i class="fas fa-calendar"></i></div>
                   </div>
                   <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
@@ -189,8 +189,8 @@
               <div class="row mb-3{% if custom_field.required %} required{% endif %}">
                 <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
                 <div class="col-sm-10">
-                  <div class="input-group datetime">
-                    <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{% if address_custom_field[custom_field.custom_field_id] %}{{ address_custom_field[custom_field.custom_field_id] }}{% else %}{{ custom_field.value }}{% endif %}" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
+                  <div class="input-group">
+                    <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{% if address_custom_field[custom_field.custom_field_id] %}{{ address_custom_field[custom_field.custom_field_id] }}{% else %}{{ custom_field.value }}{% endif %}" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control datetime"/>
                     <div class="input-group-text"><i class="fas fa-calendar"></i></div>
                   </div>
                   <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
@@ -199,7 +199,6 @@
             {% endif %}
 
           {% endfor %}
-
           <div class="row mb-3{% if custom_field.required %} required{% endif %}">
             <label class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
             <div class="col-sm-10">
@@ -210,21 +209,17 @@
               {% endfor %}
             </div>
           </div>
-
           <div class="row mb-3">
             <label class="col-sm-2 col-form-label">{{ entry_default }}</label>
             <div class="col-sm-10">
               <div class="form-check-inline">
-                <input type="radio" name="default" value="1" id="input-default-yes" class="form-check-input"{% if default %} checked{% endif %}/>
-                <label for="input-default-yes" class="form-check-label">{{ text_yes }}</label>
+                <input type="radio" name="default" value="1" id="input-default-yes" class="form-check-input"{% if default %} checked{% endif %}/> <label for="input-default-yes" class="form-check-label">{{ text_yes }}</label>
               </div>
               <div class="form-check-inline">
-                <input type="radio" name="default" value="0" id="input-default-no" class="form-check-input"{% if not default %} checked{% endif %}/>
-                <label for="input-default-no" class="form-check-label">{{ text_no }}</label>
+                <input type="radio" name="default" value="0" id="input-default-no" class="form-check-input"{% if not default %} checked{% endif %}/> <label for="input-default-no" class="form-check-label">{{ text_no }}</label>
               </div>
             </div>
           </div>
-
         </fieldset>
         <div class="d-inline-block pt-2 pd-2 w-100">
           <div class="float-start">
@@ -241,19 +236,19 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#input-country').on('change', function() {
+$('#input-country').on('change', function () {
     var element = this;
 
     $.ajax({
         url: 'index.php?route=localisation/country&country_id=' + this.value,
         dataType: 'json',
-        beforeSend: function() {
+        beforeSend: function () {
             $(element).prop('disabled', true);
         },
-        complete: function() {
+        complete: function () {
             $(element).prop('disabled', false);
         },
-        success: function(json) {
+        success: function (json) {
             if (json['postcode_required'] == '1') {
                 $('#input-postcode').parent().parent().addClass('required');
             } else {
@@ -278,7 +273,7 @@ $('#input-country').on('change', function() {
 
             $('#input-zone').html(html);
         },
-        error: function(xhr, ajaxOptions, thrownError) {
+        error: function (xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });

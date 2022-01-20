@@ -15,10 +15,9 @@
               &nbsp;
               <small> - {{ option.name }}: {{ option.value }}</small>
             {% endfor %}
-            {% if product.recurring %}
+            {% if product.subscription %}
               <br/>
-              <small class="badge badge-warning">{{ text_recurring_item }}</small>
-              <small>{{ product.recurring }}</small>
+              <small>{{ text_subscription }} {{ product.subscription }}</small>
             {% endif %}</td>
           <td class="text-end">{{ product.total }}</td>
         </tr>

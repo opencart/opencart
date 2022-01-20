@@ -31,14 +31,14 @@
               <input type="text" name="product" value="{{ product }}" placeholder="{{ entry_product }}" id="input-product" list="list-product" class="form-control"/>
               <input type="hidden" name="product_id" value="{{ product_id }}" id="input-product-id"/>
               <datalist id="list-product"></datalist>
-              <div class="form-text text-muted">{{ help_product }}</div>
+              <div class="form-text">{{ help_product }}</div>
               <div id="error-product" class="invalid-feedback"></div>
             </div>
           </div>
           <div class="row mb-3 required">
             <label for="input-text" class="col-sm-2 col-form-label">{{ entry_text }}</label>
             <div class="col-sm-10">
-              <textarea name="text" cols="60" rows="8" placeholder="{{ entry_text }}" id="input-text" class="form-control">{{ text }}</textarea>
+              <textarea name="text" rows="8" placeholder="{{ entry_text }}" id="input-text" class="form-control">{{ text }}</textarea>
               <div id="error-text" class="invalid-feedback"></div>
             </div>
           </div>
@@ -68,8 +68,8 @@
           <div class="row mb-3">
             <label for="input-date-added" class="col-sm-2 col-form-label">{{ entry_date_added }}</label>
             <div class="col-sm-10 col-md-4">
-              <div class="input-group datetime">
-                <input type="text" name="date_added" value="{{ date_added }}" placeholder="{{ entry_date_added }}" id="input-date-added" class="form-control"/>
+              <div class="input-group">
+                <input type="text" name="date_added" value="{{ date_added }}" placeholder="{{ entry_date_added }}" id="input-date-added" class="form-control datetime"/>
                 <div class="input-group-text"><i class="fas fa-calendar"></i></div>
               </div>
             </div>
@@ -108,12 +108,6 @@ $('#input-product').autocomplete({
     'select': function(item) {
         $('#input-product-id').val(item['value']);
     }
-});
-
-$('.datetime').datetimepicker({
-    'format': 'YYYY-MM-DD HH:mm',
-    'locale': '{{ datepicker }}',
-    'allowInputToggle': true
 });
 //--></script>
 {{ footer }}

@@ -23,6 +23,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise disassociateResourceAsync(array $args = [])
  * @method \Aws\Result getApplication(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getApplicationAsync(array $args = [])
+ * @method \Aws\Result getAssociatedResource(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getAssociatedResourceAsync(array $args = [])
  * @method \Aws\Result getAttributeGroup(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getAttributeGroupAsync(array $args = [])
  * @method \Aws\Result listApplications(array $args = [])

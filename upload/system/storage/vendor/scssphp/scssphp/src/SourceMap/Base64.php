@@ -16,11 +16,13 @@ namespace ScssPhp\ScssPhp\SourceMap;
  * Base 64 Encode/Decode
  *
  * @author Anthon Pang <anthon.pang@gmail.com>
+ *
+ * @internal
  */
 class Base64
 {
     /**
-     * @var array
+     * @var array<int, string>
      */
     private static $encodingMap = [
         0 => 'A',
@@ -90,7 +92,7 @@ class Base64
     ];
 
     /**
-     * @var array
+     * @var array<string|int, int>
      */
     private static $decodingMap = [
         'A' => 0,
@@ -162,7 +164,7 @@ class Base64
     /**
      * Convert to base64
      *
-     * @param integer $value
+     * @param int $value
      *
      * @return string
      */
@@ -176,7 +178,7 @@ class Base64
      *
      * @param string $value
      *
-     * @return integer
+     * @return int
      */
     public static function decode($value)
     {

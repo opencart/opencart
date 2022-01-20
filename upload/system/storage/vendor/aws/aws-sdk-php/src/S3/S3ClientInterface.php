@@ -12,13 +12,13 @@ interface S3ClientInterface extends AwsClientInterface
     /**
      * Create a pre-signed URL for the given S3 command object.
      *
-     * @param CommandInterface $command     Command to create a pre-signed
-     *                                      URL for.
-     * @param int|string|\DateTime $expires The time at which the URL should
-     *                                      expire. This can be a Unix
-     *                                      timestamp, a PHP DateTime object,
-     *                                      or a string that can be evaluated
-     *                                      by strtotime().
+     * @param CommandInterface              $command Command to create a pre-signed
+     *                                               URL for.
+     * @param int|string|\DateTimeInterface $expires The time at which the URL should
+     *                                               expire. This can be a Unix
+     *                                               timestamp, a PHP DateTime object,
+     *                                               or a string that can be evaluated
+     *                                               by strtotime().
      *
      * @return RequestInterface
      */

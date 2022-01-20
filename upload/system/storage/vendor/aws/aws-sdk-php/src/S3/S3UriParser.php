@@ -52,7 +52,7 @@ class S3UriParser
             }
         }
 
-        $url = Psr7\uri_for($uri);
+        $url = Psr7\Utils::uriFor($uri);
 
         if ($url->getScheme() == $this->streamWrapperScheme) {
             return $this->parseStreamWrapper($url);

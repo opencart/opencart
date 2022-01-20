@@ -34,7 +34,7 @@ class Security extends \Opencart\System\Engine\Controller {
 
 			$data['document_root'] = str_replace('\\', '/', realpath($this->request->server['DOCUMENT_ROOT'] . '/../') . '/');
 		} else {
-		//	$data['error_storage'] = '';
+			$data['error_storage'] = '';
 		}
 
 		// Check admin directory ia renamed

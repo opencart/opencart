@@ -79,7 +79,7 @@ class Dashboard extends \Opencart\System\Engine\Controller {
 			$data['developer_status'] = false;
 		}
 
-		$data['security'] = $this->load->controller('common/security');
+		//$data['security'] = $this->load->controller('common/security');
 
 		$data['user_token'] = $this->session->data['user_token'];
 

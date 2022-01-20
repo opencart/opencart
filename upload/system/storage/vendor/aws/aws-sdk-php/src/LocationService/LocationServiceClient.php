@@ -21,6 +21,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise batchUpdateDevicePositionAsync(array $args = [])
  * @method \Aws\Result calculateRoute(array $args = [])
  * @method \GuzzleHttp\Promise\Promise calculateRouteAsync(array $args = [])
+ * @method \Aws\Result calculateRouteMatrix(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise calculateRouteMatrixAsync(array $args = [])
  * @method \Aws\Result createGeofenceCollection(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createGeofenceCollectionAsync(array $args = [])
  * @method \Aws\Result createMap(array $args = [])

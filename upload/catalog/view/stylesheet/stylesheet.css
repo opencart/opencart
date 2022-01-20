@@ -1,6 +1,6 @@
 @charset "UTF-8";
 body {
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-weight: 400;
   color: #666;
   font-size: 12px;
@@ -31,7 +31,6 @@ h6 {
 }
 a {
   color: #23a1d1;
-  text-decoration: none;
 }
 a:hover {
   text-decoration: none;
@@ -54,7 +53,7 @@ label {
   margin-bottom: 15px;
 }
 div.required .col-form-label:before, div.required .form-label:before {
-  content: '* ';
+  content: "* ";
   color: #F00;
   font-weight: bold;
 }
@@ -344,7 +343,7 @@ footer a:hover {
   color: #fff;
 }
 footer h5 {
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 13px;
   font-weight: bold;
   color: #fff;
@@ -369,7 +368,7 @@ footer h5 {
   white-space: nowrap;
 }
 .breadcrumb > li.breadcrumb-item:after {
-  content: '';
+  content: "";
   display: block;
   position: absolute;
   top: -3px;
@@ -384,7 +383,7 @@ footer h5 {
   transform: rotate(-45deg);
 }
 .breadcrumb > li.breadcrumb-item + li:before {
-  content: '';
+  content: "";
   padding: 0;
 }
 .pagination {
@@ -724,34 +723,34 @@ footer h5 {
   cursor: pointer;
 }
 #checkout-cart #accordion h4:before {
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-size: 14px;
   font-weight: 900;
-  content: ' ';
+  content: " ";
   margin-right: 10px;
 }
 #checkout-cart #accordion h4.collapsed:before {
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-size: 14px;
   font-weight: 900;
-  content: '';
+  content: "";
   margin-right: 10px;
 }
 #checkout-checkout #accordion h4 {
   cursor: pointer;
 }
 #checkout-checkout #accordion h4:before {
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-size: 14px;
   font-weight: 900;
-  content: ' ';
+  content: " ";
   margin-right: 10px;
 }
 #checkout-checkout #accordion h4.collapsed:before {
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-size: 14px;
   font-weight: 900;
-  content: '';
+  content: "";
   margin-right: 10px;
 }
 #product-product h1 {

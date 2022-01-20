@@ -20,12 +20,12 @@
             'dev_requirement' => false,
         ),
         'aws/aws-sdk-php' => array(
-            'pretty_version' => '3.209.4',
-            'version' => '3.209.4.0',
+            'pretty_version' => '3.209.8',
+            'version' => '3.209.8.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../aws/aws-sdk-php',
             'aliases' => array(),
-            'reference' => '784e5ccc1b544db5018a41fc4dbfeda4c7d436b3',
+            'reference' => 'da83dc5bae8f67a80e53423ad8dac2c0f48b3220',
             'dev_requirement' => false,
         ),
         'guzzlehttp/guzzle' => array(

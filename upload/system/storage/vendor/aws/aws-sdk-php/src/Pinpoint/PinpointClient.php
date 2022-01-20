@@ -244,5 +244,7 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise updateVoiceChannelAsync(array $args = [])
  * @method \Aws\Result updateVoiceTemplate(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateVoiceTemplateAsync(array $args = [])
+ * @method \Aws\Result verifyOTPMessage(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise verifyOTPMessageAsync(array $args = [])
  */
 class PinpointClient extends AwsClient {}

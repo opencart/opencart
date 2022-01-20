@@ -325,6 +325,10 @@ class SubscriptionPlan extends \Opencart\System\Engine\Controller {
 			if ((utf8_strlen(trim($value['name'])) < 3) || (utf8_strlen($value['name']) > 255)) {
 				$json['error']['name_' . $language_id] = $this->language->get('error_name');
 			}
+
+			if (!trim($value['description'])) {
+				$json['error']['description_' . $language_id] = $this->language->get('error_description');
+			}
 		}
 
 		if (isset($json['error']) && !isset($json['error']['warning'])) {

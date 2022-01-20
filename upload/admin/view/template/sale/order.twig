@@ -24,7 +24,8 @@
           <div class="card-header"><i class="fas fa-filter"></i> {{ text_filter }}</div>
           <div class="card-body">
             <div class="mb-3">
-              <label for="input-order-id" class="form-label">{{ entry_order_id }}</label> <input type="text" name="filter_order_id" value="{{ filter_order_id }}" placeholder="{{ entry_order_id }}" id="input-order-id" class="form-control"/>
+              <label for="input-order-id" class="form-label">{{ entry_order_id }}</label>
+              <input type="text" name="filter_order_id" value="{{ filter_order_id }}" placeholder="{{ entry_order_id }}" id="input-order-id" class="form-control"/>
             </div>
             <div class="mb-3">
               <label class="form-label">{{ entry_customer }}</label>
@@ -32,7 +33,8 @@
               <datalist id="list-customer"></datalist>
             </div>
             <div class="mb-3">
-              <label for="input-store" class="form-label">{{ entry_store }}</label> <select name="filter_store_id" id="input-store" class="form-select">
+              <label for="input-store" class="form-label">{{ entry_store }}</label>
+              <select name="filter_store_id" id="input-store" class="form-select">
                 <option value=""></option>
                 {% for store in stores %}
                   <option value="{{ store.store_id }}"{% if store.store_id == filter_store_id %} selected{% endif %}>{{ store.name }}</option>

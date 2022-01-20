@@ -68,6 +68,11 @@ function db_schema() {
 				'name' => 'custom_field',
 				'type' => 'text',
 				'not_null' => true
+			],
+			[
+				'name' => 'default',
+				'type' => 'tinyint(1)',
+				'not_null' => true
 			]
 		],
 		'primary' => [
@@ -1094,17 +1099,6 @@ function db_schema() {
 				'name' => 'custom_field',
 				'type' => 'text',
 				'not_null' => true
-			],
-			[
-				'name' => 'cart',
-				'type' => 'text',
-				'not_null' => true
-			],
-			[
-				'name' => 'address_id',
-				'type' => 'int(11)',
-				'not_null' => true,
-				'default' => '0'
 			],
 			[
 				'name' => 'wishlist',
@@ -3228,6 +3222,11 @@ function db_schema() {
 				'auto_increment' => true
 			],
 			[
+				'name' => 'reference',
+				'type' => 'varchar(100)',
+				'not_null' => true
+			],
+			[
 				'name' => 'invoice_no',
 				'type' => 'int(11)',
 				'not_null' => true,
@@ -3873,6 +3872,87 @@ function db_schema() {
 		],
 		'primary' => [
 			'order_voucher_id'
+		],
+		'engine' => 'InnoDB',
+		'charset' => 'utf8',
+		'collate' => 'utf8_general_ci'
+	];
+
+	$tables[] = [
+		'name' => 'payment_method',
+		'field' => [
+			[
+				'name' => 'payment_method_id',
+				'type' => 'int(11)',
+				'not_null' => true,
+				'auto_increment' => true
+			],
+			[
+				'name' => 'customer_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'name',
+				'type' => 'varchar(32)',
+				'not_null' => true
+			],
+			[
+				'name' => 'image',
+				'type' => 'varchar(255)',
+				'not_null' => true
+			],
+			[
+				'name' => 'type',
+				'type' => 'varchar(64)',
+				'not_null' => true
+			],
+			[
+				'name' => 'extension',
+				'type' => 'varchar(255)',
+				'not_null' => true
+			],
+			[
+				'name' => 'code',
+				'type' => 'varchar(32)',
+				'not_null' => true
+			],
+			[
+				'name' => 'token',
+				'type' => 'varchar(96)',
+				'not_null' => true
+			],
+			[
+				'name' => 'date_expire',
+				'type' => 'date',
+				'not_null' => true
+			],
+			[
+				'name' => 'default',
+				'type' => 'tinyint(1)',
+				'not_null' => true
+			],
+			[
+				'name' => 'status',
+				'type' => 'tinyint(1)',
+				'not_null' => true
+			],
+			[
+				'name' => 'date_added',
+				'type' => 'datetime',
+				'not_null' => true
+			]
+		],
+		'primary' => [
+			'payment_method_id'
+		],
+		'index' => [
+			[
+				'name' => 'customer_id',
+				'key' => [
+					'customer_id'
+				]
+			]
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
@@ -5249,11 +5329,16 @@ function db_schema() {
 			],
 			[
 				'name' => 'reference',
-				'type' => 'varchar(255)',
+				'type' => 'varchar(100)',
 				'not_null' => true
 			],
 			[
 				'name' => 'subscription_plan_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'payment_method_id',
 				'type' => 'int(11)',
 				'not_null' => true
 			],

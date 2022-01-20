@@ -35,23 +35,7 @@ class Account extends \Opencart\System\Engine\Controller {
 		$data['edit'] = $this->url->link('account/edit', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']);
 		$data['password'] = $this->url->link('account/password', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']);
 		$data['address'] = $this->url->link('account/address', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']);
-
-		$data['credit_cards'] = [];
-
-		// Get a list of installed modules
-		$results = $this->model_setting_extension->getExtensionsByType('payment');
-
-		foreach ($results as $result) {
-			if ($this->config->get('payment_' . $result['code'] . '_status') && $this->config->get('payment_' . $result['code'] . '_card')) {
-				$this->load->language('extension/' . $result['extension'] . '/credit_card/' . $result['code'], 'extension');
-
-				$data['credit_cards'][] = [
-					'name' => $this->language->get('heading_title', 'extension'),
-					'href' => $this->url->link('extension/' . $result['extension'] . '/credit_card/' . $result['code'], 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'])
-				];
-			}
-		}
-
+		$data['payment_method'] = $this->url->link('account/payment_method', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']);
 		$data['wishlist'] = $this->url->link('account/wishlist', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']);
 		$data['order'] = $this->url->link('account/order', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']);
 		$data['subscription'] = $this->url->link('account/subscription', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']);

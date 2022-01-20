@@ -990,21 +990,24 @@ class Order extends \Opencart\System\Engine\Controller {
 		// Additional tabs that are payment gateway specific
 		$data['tabs'] = [];
 
-		if (!empty($order_info) && $order_info['payment_code'] && $this->user->hasPermission('access', 'extension/payment/' . $order_info['payment_code'])) {
-			if (is_file(DIR_CATALOG . 'controller/extension/payment/' . $order_info['payment_code'] . '.php')) {
-				$content = $this->load->controller('extension/payment/' . $order_info['payment_code'] . '/order');
-			} else {
-				$content = '';
-			}
+		// Extension Order Tabs can are called here.
+		$this->load->model('setting/extension');
 
-			if ($content) {
-				$this->load->language('extension/payment/' . $order_info['payment_code']);
+		if (!empty($order_info)) {
+			$extension_info = $this->model_setting_extension->getExtensionsByCode('payment', $order_info['payment_code']);
 
-				$data['tabs'][] = [
-					'code'    => $order_info['payment_code'],
-					'title'   => $this->language->get('heading_title'),
-					'content' => $content
-				];
+			if ($extension_info && $this->user->hasPermission('access', 'extension/' . $extension_info['extension'] . '/payment/' . $extension_info['code'])) {
+				$output = $this->load->controller('extension/payment/' . $order_info['payment_code'] . '|order');
+
+				if (!$output instanceof \Exception) {
+					$this->load->language('extension/' . $extension_info['extension'] . '/payment/' . $extension_info['code'], 'extension');
+
+					$data['tabs'][] = [
+						'code'    => $extension_info['code'],
+						'title'   => $this->language->get('extension_heading_title'),
+						'content' => $output
+					];
+				}
 			}
 		}
 
@@ -1015,15 +1018,15 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		foreach ($extensions as $extension) {
 			if ($this->config->get('fraud_' . $extension['code'] . '_status')) {
-				$this->load->language('extension/fraud/' . $extension['code'], 'extension');
+				$this->load->language('extension/' . $extension['extension'] . '/fraud/' . $extension['code'], 'extension');
 
-				$content = $this->load->controller('extension/fraud/' . $extension['code'] . '/order');
+				$output = $this->load->controller('extension/' . $extension['extension'] . '/fraud/' . $extension['code'] . '|order');
 
-				if ($content) {
+				if (!$output instanceof \Exception) {
 					$data['tabs'][] = [
-						'code'    => $extension,
+						'code'    => $output,
 						'title'   => $this->language->get('extension_heading_title'),
-						'content' => $content
+						'content' => $output
 					];
 				}
 			}
@@ -1127,8 +1130,8 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		// Create a dummy request class so we can feed the data to the order editor
 		$request = new \stdClass();
-		$request->get =  [];
-		$request->post =  [];
+		$request->get = [];
+		$request->post = [];
 		$request->server = $this->request->server;
 		$request->cookie = [];
 

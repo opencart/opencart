@@ -144,6 +144,7 @@ $_['tab_special']                   = 'Special';
 $_['tab_session']                   = 'Session';
 $_['tab_local']                     = 'Local';
 $_['tab_mail']                      = 'Mail';
+$_['tab_payment_method']            = 'Payment Methods';
 $_['tab_product']                   = 'Products';
 $_['tab_reward']                    = 'Reward Points';
 $_['tab_transaction']               = 'Transactions';

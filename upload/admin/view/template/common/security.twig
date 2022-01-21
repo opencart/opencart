@@ -1,106 +1,107 @@
 <div id="modal-security" class="modal show">
   <div class="modal-dialog">
     <div class="modal-content">
+
       <div class="modal-header">
         <h5 class="modal-title text-danger"><i class="fas fa-exclamation-triangle"></i> {{ heading_title }}</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
-      <div class="modal-body">
 
-        <div class="alert alert-info"><i class="fas fa-exclamation-circle"></i> Some security is have been detected. Click continue to start fixing the issues.</div>
+      <div id="accordion" class="accordion">
 
-        <div class="accordion" id="accordion">
+        {% if error_install %}
+          <div class="accordion-item">
+            <h5 class="accordion-header"><button type="button" data-bs-toggle="collapse" data-bs-target="#accordion-install" class="accordion-button collapsed"><span class="fas fa-folder"></span>&nbsp;&nbsp;{{ text_install }}</button></h5>
+            <div id="accordion-install" class="accordion-collapse collapse" data-bs-parent="#accordion">
+              <div class="modal-body">
 
-          {% if error_install %}
-            <div class="accordion-item">
-              <h2 class="accordion-header"><button type="button" data-bs-toggle="collapse" data-bs-target="#accordion-install" class="accordion-button collapsed"><i class="fas fa-exclamation-triangle"></i> {{ text_install }}</button></h2>
-
-              <div id="accordion-install" class="accordion-collapse collapse" data-bs-parent="#accordion">
-                <form id="form-install" action="{{ save }}" method="post" data-oc-toggle="ajax">
-                  <fieldset>
-                    <legend>{{ text_choose }}</legend>
-                    <div class="mb-3">
-                      The install below directory needs deleting. %s
-                      <button type="button" id="button-delete" class="btn badge-warning"><i class="fas fa-trash-alt"></i> Delete</button>
+                <form id="form-install">
+                  <p>{{ text_install_description }}</p>
+                  <div class="mb-3">
+                    <div class="input-group">
+                      <div class="input-group-text">{{ text_path }}</div>
+                      <input type="text" value="{{ install }}" placeholder="{{ text_path }}" id="input-install" class="form-control"/>
                     </div>
-                  </fieldset>
-                </form>
-              </div>
-            </div>
-          {% endif %}
-
-          {% if error_storage %}
-            <div class="accordion-item">
-              <h2 class="accordion-header"><button type="button" data-bs-toggle="collapse" data-bs-target="#accordion-storage" class="accordion-button collapsed"><i class="fas fa-exclamation-triangle"></i> {{ text_storage }}</button></h2>
-              <div id="accordion-storage" class="accordion-collapse collapse" data-bs-parent="#accordion">
-
-                <form id="form-storage" action="{{ save }}" method="post" data-oc-toggle="ajax">
-                  <fieldset>
-                    <legend>{{ text_storage_choose }}</legend>
-                    <div class="mb-3">
-                      <select name="type" id="input-type" class="form-select">
-                        <option value="automatic">{{ text_storage_automatic }}</option>
-                        <option value="manual">{{ text_storage_manual }}</option>
-                      </select>
-                    </div>
-                  </fieldset>
-                  <fieldset id="collapse-automatic" class="collapse">
-                    <legend>{{ text_storage_automatic }}</legend>
-                    <div class="mb-3">
-                      <div class="input-group dropdown">
-                        <button type="button" id="button-path" data-bs-toggle="dropdown" class="btn btn-primary dropdown-toggle">{{ document_root }} <span class="fas fa-caret-down"></span></button>
-                        <div class="dropdown-menu">
-                          {% for path in paths %}
-                            {% if path|length > document_root|length %}
-                              <a href="{{ path }}" class="dropdown-item"><i class="fas fa-exclamation-triangle fa-fw text-danger"></i> {{ path }}</a>
-                            {% else %}
-                              <a href="{{ path }}" class="dropdown-item"><i class="fas fa-check-circle fa-fw text-success"></i> {{ path }}</a>
-                            {% endif %}
-                          {% endfor %}
-                        </div>
-                        <input type="text" name="directory" value="storage" placeholder="{{ entry_directory }}" class="form-control"/>
-                        <button type="button" id="button-move" data-oc-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-exclamation-triangle"></i> {{ button_move }}</button>
-                      </div>
-                      <input type="hidden" name="path" value="{{ document_root }}"/>
-                    </div>
-                  </fieldset>
-                  <fieldset id="collapse-manual" class="collapse">
-                    <legend>{{ text_storage_manual }}</legend>
-                    <div class="card-body" style="height: 300px; overflow-y: scroll;"></div>
-                  </fieldset>
+                  </div>
+                  <div class="text-end">
+                    <button type="button" id="button-delete" data-oc-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-trash-alt"></i> {{ button_delete }}</button>
+                  </div>
                 </form>
 
               </div>
             </div>
-          {% endif %}
+          </div>
+        {% endif %}
 
-          {% if error_admin %}
-            <div class="accordion-item">
-              <h2 class="accordion-header"><button type="button" data-bs-toggle="collapse" data-bs-target="#accordion-admin" class="accordion-button collapsed"><i class="fas fa-exclamation-triangle"></i> {{ text_admin }}</button></h2>
-              <div id="accordion-admin" class="accordion-collapse collapse" data-bs-parent="#accordion">
+        {% if error_storage %}
+          <div class="accordion-item">
+            <h2 class="accordion-header"><button type="button" data-bs-toggle="collapse" data-bs-target="#accordion-storage" class="accordion-button collapsed"><i class="fas fa-arrow-alt-circle-right"></i>&nbsp;&nbsp;{{ text_storage }}</button></h2>
+            <div id="accordion-storage" class="accordion-collapse collapse" data-bs-parent="#accordion">
+              <div class="modal-body">
+                <form id="form-storage">
+                  <p>{{ text_storage_description }}</p>
 
-                <form id="form-admin" action="{{ save }}" method="post" data-oc-toggle="ajax">
-                  <fieldset>
-                    <legend>{{ text_admin_choose }}</legend>
-                    <div class="mb-3">
-                      <div class="input-group">
-                        <input type="text" name="directory" value="admin" id="input-directory" class="form-control"/>
-                        <button type="button" id="button-move" data-oc-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-exclamation-triangle"></i> {{ button_rename }}</button>
-                      </div>
+                  <div class="mb-3">
+                    <div class="input-group dropdown">
+                      <button type="button" id="button-path" data-bs-toggle="dropdown" class="btn btn-primary dropdown-toggle">{{ document_root }} <span class="fas fa-caret-down"></span></button>
+                      <ul class="dropdown-menu">
+                        {% for path in paths %}
+                          {% if path|length > document_root|length %}
+                            <li><a href="{{ path }}" class="dropdown-item"><i class="fas fa-exclamation-triangle fa-fw text-danger"></i> {{ path }}</a></li>
+                          {% else %}
+                            <li><a href="{{ path }}" class="dropdown-item"><i class="fas fa-check-circle fa-fw text-success"></i> {{ path }}</a></li>
+                          {% endif %}
+                        {% endfor %}
+                      </ul>
+                      <input type="text" name="directory" value="storage" placeholder="{{ text_path }}" class="form-control"/>
                     </div>
-                  </fieldset>
-                </form>
+                    <input type="hidden" name="path" value="{{ document_root }}" id="input-path"/>
+                  </div>.
 
+                  <div class="text-end">
+                    <button type="button" id="button-move" data-oc-loading-text="{{ text_loading }}" class="btn btn-danger"><span class="fas fa-arrow-alt-circle-right"></span> {{ button_move }}</button>
+                  </div>
+
+                </form>
               </div>
             </div>
-          {% endif %}
+          </div>
+        {% endif %}
 
 
+        {% if error_admin %}
+        <div class="accordion-item">
+          <h2 class="accordion-header"><button type="button" data-bs-toggle="collapse" data-bs-target="#accordion-admin" class="accordion-button collapsed"><span class="fas fa-lock"></span>&nbsp;&nbsp;{{ text_admin }}</button></h2>
+          <div id="accordion-admin" class="accordion-collapse collapse" data-bs-parent="#accordion">
+
+            <div class="modal-body">
+
+              <form id="form-admin">
+
+                <p>{{ text_admin_description }}</p>
+
+                <div class="mb-3">
+                  <div class="input-group">
+                    <div class="input-group-text">{{ text_path }}</div>
+                    <input type="text" name="name" value="admin" placeholder="{{ entry_directory }}" id="input-directory" class="form-control"/>
+                  </div>
+                </div>
+
+                <div class="text-end">
+                  <button type="button" id="button-rename" data-oc-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-terminal"></i> {{ button_rename }}</button>
+                </div>
+
+              </form>
+
+            </div>
+          </div>
         </div>
       </div>
+      {% endif %}
     </div>
   </div>
 </div>
+
 <script type="text/javascript"><!--
 $(document).ready(function () {
     var modal = new bootstrap.Modal(document.querySelector('#modal-security'));
@@ -108,20 +109,12 @@ $(document).ready(function () {
     modal.show();
 });
 
-$('#modal-security select[name=\'type\']').on('change', function () {
-    $('#modal-security fieldset.collapse').removeClass('show');
-
-    $('#modal-security #collapse-' + $(this).val()).addClass('show');
-});
-
-//$('#modal-security select[name=\'type\']').trigger('change');
-
 $('#modal-security .dropdown-menu a').on('click', function (e) {
     e.preventDefault();
 
-    $('#modal-security #button-path').html($(this).html() + ' <span class="fas fa-caret-down"></span>');
+    $('#button-path').html($(this).html() + ' <span class="fas fa-caret-down"></span>');
 
-    $('#modal-security input[name=\'path\']').val($(this).attr('href'));
+    $('#input-path\']').val($(this).attr('href'));
 });
 
 $('#modal-security .dropdown-menu a').on('click', function (e) {
@@ -135,7 +128,29 @@ $('#modal-security .dropdown-menu a').on('click', function (e) {
 });
 
 
-$('#button-move').on('click', function () {
+$('#modal-security select[name=\'type\']').on('change', function () {
+    html = '<ol>';
+    html += '  <li><p>{{ text_move }}</p>';
+    html += '    <p><strong>{{ storage }}</strong></p>';
+    html += '    <p>{{ text_to }}</p>';
+    html += '    <p><strong>' + $('#modal-security input[name=\'path\']').val() + $('#modal-security input[name=\'directory\']').val() + '/</strong></p></li>';
+    html += '   <li><p>{{ text_config }}</p>';
+    html += '     <p><strong>define(\'DIR_STORAGE\', DIR_SYSTEM . \'storage/\');</strong></p>';
+    html += '     <p>{{ text_by }}</p>';
+    html += '     <p><strong>define(\'DIR_STORAGE\', \'' + $('#modal-security input[name=\'path\']').val() + $('#modal-security input[name=\'directory\']').val() + '/\');</strong></p></li>';
+    html += '   <li><p>{{ text_admin }}</p>';
+    html += '     <p><strong>define(\'DIR_STORAGE\', DIR_SYSTEM . \'storage/\');</strong></p>';
+    html += '     <p>{{ text_by }}</p>';
+    html += '     <p><strong>define(\'DIR_STORAGE\', \'' + $('#modal-security input[name=\'path\']').val() + $('#modal-security input[name=\'directory\']').val() + '/\');</strong></p></li>';
+    html += '</ol>';
+
+    $('#input-manual').val(html);
+});
+
+$('input[name=\'path\']').trigger('change');
+
+
+$('#button-storage').on('click', function () {
     var element = this;
 
     $.ajax({
@@ -154,11 +169,11 @@ $('#button-move').on('click', function () {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
-                $('#modal-security .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
 
             if (json['success']) {
-                $('#modal-security .modal-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
         },
         error: function (xhr, ajaxOptions, thrownError) {
@@ -167,24 +182,4 @@ $('#button-move').on('click', function () {
     });
 });
 
-$('#modal-security select[name=\'type\']').on('change', function () {
-    html = '<ol>';
-    html += '  <li><p>{{ text_move }}</p>';
-    html += '    <p><strong>{{ storage }}</strong></p>';
-    html += '    <p>{{ text_to }}</p>';
-    html += '    <p><strong>' + $('#modal-security input[name=\'path\']').val() + $('#modal-security input[name=\'directory\']').val() + '/</strong></p></li>';
-    html += '   <li><p>{{ text_config }}</p>';
-    html += '     <p><strong>define(\'DIR_STORAGE\', DIR_SYSTEM . \'storage/\');</strong></p>';
-    html += '     <p>{{ text_by }}</p>';
-    html += '     <p><strong>define(\'DIR_STORAGE\', \'' + $('#modal-security input[name=\'path\']').val() + $('#modal-security input[name=\'directory\']').val() + '/\');</strong></p></li>';
-    html += '   <li><p>{{ text_admin }}</p>';
-    html += '     <p><strong>define(\'DIR_STORAGE\', DIR_SYSTEM . \'storage/\');</strong></p>';
-    html += '     <p>{{ text_by }}</p>';
-    html += '     <p><strong>define(\'DIR_STORAGE\', \'' + $('#modal-security input[name=\'path\']').val() + $('#modal-security input[name=\'directory\']').val() + '/\');</strong></p></li>';
-    html += '</ol>';
-
-    $('#collapse-manual .card-body').html(html);
-});
-
-$('input[name=\'path\']').trigger('change');
 //--></script>

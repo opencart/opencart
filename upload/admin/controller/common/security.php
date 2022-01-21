@@ -11,6 +11,8 @@ class Security extends \Opencart\System\Engine\Controller {
 			$data['error_install'] = '';
 		}
 
+		$data['install'] = DIR_OPENCART . 'install/';
+
 		// Check storage directory exists
 		if (DIR_STORAGE == DIR_SYSTEM . 'storage/') {
 			$data['error_storage'] = $this->language->get('error_storage');
@@ -58,18 +60,24 @@ class Security extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
+		if (!is_dir(DIR_OPENCART . 'install/')) {
+			$json['error'] = $this->language->get('error_install');
+		}
+
 		if (!$json) {
+			$files = [];
+
 			// Make path into an array
-			$source = [DIR_OPENCART . 'install/'];
+			$directory = [DIR_OPENCART . 'install/'];
 
 			// While the path array is still populated keep looping through
-			while (count($source) != 0) {
-				$next = array_shift($source);
+			while (count($directory) != 0) {
+				$next = array_shift($directory);
 
 				foreach (glob($next) as $file) {
 					// If directory add to path array
 					if (is_dir($file)) {
-						$source[] = $file . '/*';
+						$directory[] = $file . '/*';
 					}
 
 					// Add the file to the files to be deleted array
@@ -214,18 +222,29 @@ class Security extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
+		if ($this->request->post['name']) {
+			$name = $this->request->post['name'];
+		} else {
+			$name = '';
+		}
+
 		if (!$this->user->hasPermission('modify', 'common/security')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
 		if (!is_dir(DIR_OPENCART . 'admin/')) {
-			$json['error'] = $this->language->get('error_directory');
+			$json['error'] = $this->language->get('error_admin');
 		}
 
 		if (!$json) {
-			$path = token(6) . '-admin/';
+			$new_name = DIR_OPENCART . basename($name) . '/';
 
-			rename(DIR_OPENCART . 'admin/', DIR_OPENCART . token(6) . '-admin/');
+			rename(DIR_OPENCART . 'admin/', );
+
+			$files = [
+				DIR_OPENCART . 'config.php',
+				DIR_OPENCART . 'config.php'
+			];
 
 			foreach ($files as $file) {
 				$output = '';

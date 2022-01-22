@@ -11,8 +11,8 @@
 
         {% if error_install %}
           <div class="accordion-item">
-            <h5 class="accordion-header"><button type="button" data-bs-toggle="collapse" data-bs-target="#accordion-install" class="accordion-button collapsed"><span class="fas fa-folder"></span>&nbsp;&nbsp;{{ text_install }}</button></h5>
-            <div id="accordion-install" class="accordion-collapse collapse" data-bs-parent="#accordion">
+            <h5 class="accordion-header"><button type="button" data-bs-toggle="collapse" data-bs-target="#accordion-install" class="accordion-button"><span class="fas fa-folder"></span>&nbsp;&nbsp;{{ text_install }}</button></h5>
+            <div id="accordion-install" class="accordion-collapse collapse show" data-bs-parent="#accordion">
               <div class="modal-body">
 
                 <form id="form-install">
@@ -20,7 +20,7 @@
                   <div class="mb-3">
                     <div class="input-group">
                       <div class="input-group-text">{{ text_path }}</div>
-                      <input type="text" value="{{ install }}" placeholder="{{ text_path }}" id="input-install" class="form-control"/>
+                      <input type="text" value="{{ install }}" placeholder="{{ text_path }}" id="input-install" class="form-control" readonly/>
                     </div>
                   </div>
                   <div class="text-end">
@@ -39,11 +39,11 @@
             <div id="accordion-storage" class="accordion-collapse collapse" data-bs-parent="#accordion">
               <div class="modal-body">
                 <form id="form-storage">
-                  <p>{{ text_storage_description }}</p>
 
+                  <p>{{ text_storage_description }}</p>
                   <div class="mb-3">
                     <div class="input-group dropdown">
-                      <button type="button" id="button-path" data-bs-toggle="dropdown" class="btn btn-primary dropdown-toggle">{{ document_root }} <span class="fas fa-caret-down"></span></button>
+                      <button type="button" id="button-path" data-bs-toggle="dropdown" class="btn btn-outline-secondary dropdown-toggle">{{ document_root }} <span class="fas fa-caret-down"></span></button>
                       <ul class="dropdown-menu">
                         {% for path in paths %}
                           {% if path|length > document_root|length %}
@@ -53,13 +53,13 @@
                           {% endif %}
                         {% endfor %}
                       </ul>
-                      <input type="text" name="directory" value="storage" placeholder="{{ text_path }}" class="form-control"/>
+                      <input type="text" value="storage" placeholder="{{ text_path }}" class="form-control" readonly/>
                     </div>
                     <input type="hidden" name="path" value="{{ document_root }}" id="input-path"/>
-                  </div>.
+                  </div>
 
                   <div class="text-end">
-                    <button type="button" id="button-move" data-oc-loading-text="{{ text_loading }}" class="btn btn-danger"><span class="fas fa-arrow-alt-circle-right"></span> {{ button_move }}</button>
+                    <button type="button" id="button-storage" data-oc-loading-text="{{ text_loading }}" class="btn btn-danger"><span class="fas fa-arrow-alt-circle-right"></span> {{ button_move }}</button>
                   </div>
 
                 </form>
@@ -88,7 +88,7 @@
                 </div>
 
                 <div class="text-end">
-                  <button type="button" id="button-rename" data-oc-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-terminal"></i> {{ button_rename }}</button>
+                  <button type="button" id="button-rename" data-oc-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-pencil-alt"></i> {{ button_rename }}</button>
                 </div>
 
               </form>
@@ -114,10 +114,10 @@ $('#modal-security .dropdown-menu a').on('click', function (e) {
 
     $('#button-path').html($(this).html() + ' <span class="fas fa-caret-down"></span>');
 
-    $('#input-path\']').val($(this).attr('href'));
+    $('#input-path').val($(this).attr('href'));
 });
 
-$('#modal-security .dropdown-menu a').on('click', function (e) {
+$('#form-storage .dropdown-menu a').on('click', function (e) {
     e.preventDefault();
 
     $('#button-path').html($(this).text() + ' <span class="fas fa-caret-down"></span>');
@@ -154,9 +154,9 @@ $('#button-storage').on('click', function () {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=common/security|move&user_token={{ user_token }}',
+        url: 'index.php?route=common/security|storage&user_token={{ user_token }}',
         type: 'post',
-        data: $('input[name=\'path\'], input[name=\'directory\']'),
+        data: $('#form-storage').serialize(),
         dataType: 'json',
         crossDomain: true,
         beforeSend: function () {
@@ -166,6 +166,8 @@ $('#button-storage').on('click', function () {
             $(element).button('reset');
         },
         success: function (json) {
+            console.log(json);
+
             $('.alert-dismissible').remove();
 
             if (json['error']) {
@@ -182,4 +184,37 @@ $('#button-storage').on('click', function () {
     });
 });
 
+$('#button-admin').on('click', function () {
+    var element = this;
+
+    $.ajax({
+        url: 'index.php?route=common/security|storage&user_token={{ user_token }}',
+        type: 'post',
+        data: $('#form-storage').serialize(),
+        dataType: 'json',
+        crossDomain: true,
+        beforeSend: function () {
+            $(element).button('loading');
+        },
+        complete: function () {
+            $(element).button('reset');
+        },
+        success: function (json) {
+            console.log(json);
+
+            $('.alert-dismissible').remove();
+
+            if (json['error']) {
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            if (json['success']) {
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
 //--></script>

@@ -5,12 +5,6 @@ class Security extends \Opencart\System\Engine\Controller {
 		$this->load->language('common/security');
 
 		// Check install directory exists
-		if (is_dir(DIR_OPENCART . 'install')) {
-			$data['error_install'] = $this->language->get('error_install');
-		} else {
-			$data['error_install'] = '';
-		}
-
 		$data['install'] = DIR_OPENCART . 'install/';
 
 		// Check storage directory exists
@@ -95,7 +89,7 @@ class Security extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-			$json['success'] = $this->language->get('text_success');
+			$json['success'] = $this->language->get('text_install_success');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -113,36 +107,32 @@ class Security extends \Opencart\System\Engine\Controller {
 			$path = '';
 		}
 
-		if ($this->request->post['directory']) {
-			$directory = $this->request->post['directory'];
-		} else {
-			$directory = '';
-		}
-
 		if (!$this->user->hasPermission('modify', 'common/security')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		if (!$json) {
-			if (DIR_STORAGE != DIR_SYSTEM . 'storage/') {
-				$json['error'] = $this->language->get('error_path');
-			}
+		if (DIR_STORAGE != DIR_SYSTEM . 'storage/') {
+			$json['error'] = $this->language->get('error_storage_path');
+		}
 
-			if (!$path || str_replace('\\', '/', realpath($path)) . '/' != str_replace('\\', '/', substr(DIR_SYSTEM, 0, strlen($path)))) {
-				$json['error'] = $this->language->get('error_path');
-			}
+		$path = '';
 
-			if (!$directory || !preg_match('/^[a-zA-Z0-9_-]+$/', $directory)) {
-				$json['error'] = $this->language->get('error_directory');
-			}
+		$path_data = [];
 
-			if (is_dir($path . $directory)) {
-				$json['error'] = $this->language->get('error_exists');
-			}
+		$parts = explode('/', str_replace('\\', '/', rtrim(DIR_SYSTEM, '/')));
 
-			if (!is_writable(realpath(DIR_APPLICATION . '/../') . '/config.php') || !is_writable(DIR_APPLICATION . 'config.php')) {
-				$json['error'] = $this->language->get('error_writable');
-			}
+		foreach ($parts as $part) {
+			$path .= $part . '/';
+
+			$path_data[] = $path;
+		}
+
+		if (!in_array($path, $path_data)) {
+			$json['error'] = $this->language->get('error_storage_exists');
+		}
+
+		if (!is_writable(realpath(DIR_APPLICATION . '/../') . '/config.php') || !is_writable(DIR_APPLICATION . 'config.php')) {
+			$json['error'] = $this->language->get('error_storage_writable');
 		}
 
 		if (!$json) {
@@ -167,8 +157,8 @@ class Security extends \Opencart\System\Engine\Controller {
 			}
 
 			// Create the new storage folder
-			if (!is_dir($path . $directory)) {
-				mkdir($path . $directory, 0777);
+			if (!is_dir($path)) {
+				mkdir($path, 0777);
 			}
 
 			// Copy the
@@ -210,7 +200,7 @@ class Security extends \Opencart\System\Engine\Controller {
 				fclose($file);
 			}
 
-			$json['success'] = $this->language->get('text_success');
+			$json['success'] = $this->language->get('text_storage_success');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -222,28 +212,31 @@ class Security extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		if ($this->request->post['name']) {
-			$name = $this->request->post['name'];
-		} else {
-			$name = '';
-		}
-
 		if (!$this->user->hasPermission('modify', 'common/security')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
 		if (!is_dir(DIR_OPENCART . 'admin/')) {
+			$json['error'] = $this->language->get('error_admin_exists');
+		}
+
+		if ($this->request->post['name'] == 'admin/') {
+			$json['error'] = $this->language->get('error_admin');
+		}
+
+
+		if ($name = 'admin/') {
 			$json['error'] = $this->language->get('error_admin');
 		}
 
 		if (!$json) {
-			$new_name = DIR_OPENCART . basename($name) . '/';
+			$new_name = DIR_OPENCART . $this->request->post['name'] . '/';
 
-			rename(DIR_OPENCART . 'admin/', );
+			rename(DIR_OPENCART . 'admin/', $new_name);
 
 			$files = [
 				DIR_OPENCART . 'config.php',
-				DIR_OPENCART . 'config.php'
+				$new_name . 'config.php'
 			];
 
 			foreach ($files as $file) {

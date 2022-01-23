@@ -5,14 +5,18 @@ class Security extends \Opencart\System\Engine\Controller {
 		$this->load->language('common/security');
 
 		// Check install directory exists
-		$data['install'] = DIR_OPENCART . 'install/';
+		if (is_dir(DIR_OPENCART . 'install/')) {
+			$data['install'] = DIR_OPENCART . 'install/';
+		} else {
+			$data['install'] = '';
+		}
 
 		// Check storage directory exists
 		if (DIR_STORAGE == DIR_SYSTEM . 'storage/') {
-			$data['error_storage'] = $this->language->get('error_storage');
-
 			// Check install directory exists
-			$data['storage'] = DIR_SYSTEM . 'storage/';
+			$data['storage'] = DIR_STORAGE;
+
+			$data['document_root'] = str_replace('\\', '/', realpath($this->request->server['DOCUMENT_ROOT'] . '/../') . '/');
 
 			$path = '';
 
@@ -23,26 +27,28 @@ class Security extends \Opencart\System\Engine\Controller {
 			foreach ($parts as $part) {
 				$path .= $part . '/';
 
-				$data['paths'][] = $path;
+				if (strlen($data['document_root']) >= strlen($path)) {
+					$data['paths'][] = $path;
+				}
 			}
 
 			rsort($data['paths']);
-
-			$data['document_root'] = str_replace('\\', '/', realpath($this->request->server['DOCUMENT_ROOT'] . '/../') . '/');
 		} else {
-			$data['error_storage'] = '';
+			$data['storage'] = '';
 		}
 
 		// Check admin directory ia renamed
 		if (DIR_APPLICATION == DIR_OPENCART . 'admin/') {
-			$data['error_admin'] = $this->language->get('error_admin');
+			$data['admin'] = 'admin';
 		} else {
-			$data['error_admin'] = '';
+			$data['admin'] = '';
 		}
 
 		$data['user_token'] = $this->session->data['user_token'];
 
-		return $this->load->view('common/security', $data);
+		if ($data['install'] || $data['storage'] || $data['admin']) {
+			return $this->load->view('common/security', $data);
+		}
 	}
 
 	public function install(): void {
@@ -50,12 +56,12 @@ class Security extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		if (!$this->user->hasPermission('modify', 'common/security')) {
+		if ($this->user->hasPermission('modify', 'common/security')) {
+			if (!is_dir(DIR_OPENCART . 'install/')) {
+				$json['error'] = $this->language->get('error_install');
+			}
+		} else {
 			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (!is_dir(DIR_OPENCART . 'install/')) {
-			$json['error'] = $this->language->get('error_install');
 		}
 
 		if (!$json) {
@@ -101,54 +107,52 @@ class Security extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		if ($this->request->post['path']) {
-			$path = $this->request->post['path'];
-		} else {
+		if ($this->user->hasPermission('modify', 'common/security')) {
+			if (is_dir($this->request->post['path'] . 'storage/')) {
+				$json['error'] = $this->language->get('error_storage');
+			}
+
+			$document_root = str_replace('\\', '/', realpath($this->request->server['DOCUMENT_ROOT'] . '/../') . '/');
+
 			$path = '';
-		}
 
-		if (!$this->user->hasPermission('modify', 'common/security')) {
+			$path_data = [];
+
+			$parts = explode('/', str_replace('\\', '/', rtrim(DIR_SYSTEM, '/')));
+
+			foreach ($parts as $part) {
+				$path .= $part . '/';
+
+				if (strlen($document_root) >= strlen($path)) {
+					$path_data[] = $path;
+				}
+			}
+
+			if (!in_array($this->request->post['path'], $path_data)) {
+				$json['error'] = $this->language->get('error_storage');
+			}
+
+			if (!is_writable(DIR_OPENCART . 'config.php') || !is_writable(DIR_APPLICATION . 'config.php')) {
+				$json['error'] = $this->language->get('error_writable');
+			}
+		} else {
 			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (DIR_STORAGE != DIR_SYSTEM . 'storage/') {
-			$json['error'] = $this->language->get('error_storage_path');
-		}
-
-		$path = '';
-
-		$path_data = [];
-
-		$parts = explode('/', str_replace('\\', '/', rtrim(DIR_SYSTEM, '/')));
-
-		foreach ($parts as $part) {
-			$path .= $part . '/';
-
-			$path_data[] = $path;
-		}
-
-		if (!in_array($path, $path_data)) {
-			$json['error'] = $this->language->get('error_storage_exists');
-		}
-
-		if (!is_writable(realpath(DIR_APPLICATION . '/../') . '/config.php') || !is_writable(DIR_APPLICATION . 'config.php')) {
-			$json['error'] = $this->language->get('error_storage_writable');
 		}
 
 		if (!$json) {
 			$files = [];
 
 			// Make path into an array
-			$source = [DIR_SYSTEM . 'storage/'];
+			$directory = [DIR_SYSTEM . 'storage/'];
 
 			// While the path array is still populated keep looping through
-			while (count($source) != 0) {
-				$next = array_shift($source);
+			while (count($directory) != 0) {
+				$next = array_shift($directory);
 
 				foreach (glob($next) as $file) {
 					// If directory add to path array
 					if (is_dir($file)) {
-						$source[] = $file . '/*';
+						$directory[] = $file . '/*';
 					}
 
 					// Add the file to the files to be deleted array
@@ -157,13 +161,11 @@ class Security extends \Opencart\System\Engine\Controller {
 			}
 
 			// Create the new storage folder
-			if (!is_dir($path)) {
-				mkdir($path, 0777);
-			}
+			mkdir($this->request->post['path'] . 'storage/', 0777);
 
 			// Copy the
 			foreach ($files as $file) {
-				$destination = $path . $directory . substr($file, strlen(DIR_SYSTEM . 'storage/'));
+				$destination = $this->request->post['path'] . 'storage/' . substr($file, strlen(DIR_SYSTEM . 'storage/'));
 
 				if (is_dir($file) && !is_dir($destination)) {
 					mkdir($destination, 0777);
@@ -177,7 +179,7 @@ class Security extends \Opencart\System\Engine\Controller {
 			// Modify the config files
 			$files = [
 				DIR_APPLICATION . 'config.php',
-				realpath(DIR_APPLICATION . '/../') . '/config.php'
+				DIR_OPENCART . 'config.php'
 			];
 
 			foreach ($files as $file) {
@@ -187,7 +189,7 @@ class Security extends \Opencart\System\Engine\Controller {
 
 				foreach ($lines as $line_id => $line) {
 					if (strpos($line, 'define(\'DIR_STORAGE') !== false) {
-						$output .= 'define(\'DIR_STORAGE\', \'' . $path . $directory . '/\');' . "\n";
+						$output .= 'define(\'DIR_STORAGE\', \'' . $this->request->post['path'] . 'storage/' . '\');' . "\n";
 					} else {
 						$output .= $line;
 					}
@@ -212,54 +214,115 @@ class Security extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		if (!$this->user->hasPermission('modify', 'common/security')) {
+		if ($this->user->hasPermission('modify', 'common/security')) {
+			$name = preg_replace('[^a-zA-z0-9]', '', basename(html_entity_decode(trim($this->request->post['name']), ENT_QUOTES, 'UTF-8')));
+
+			$path_old = DIR_OPENCART . 'admin/';
+			$path_new = DIR_OPENCART . $name . '/';
+
+			if (!is_dir($path_old)) {
+				$json['error'] = $this->language->get('error_admin');
+			}
+
+			if (is_dir($path_new)) {
+				$json['error'] = $this->language->get('error_admin_exists');
+			}
+
+			if ($name == 'admin') {
+				$json['error'] = $this->language->get('error_admin_name');
+			}
+
+			if (!is_writable(DIR_OPENCART . 'config.php') || !is_writable(DIR_APPLICATION . 'config.php')) {
+				$json['error'] = $this->language->get('error_writable');
+			}
+		} else {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		if (!is_dir(DIR_OPENCART . 'admin/')) {
-			$json['error'] = $this->language->get('error_admin_exists');
-		}
-
-		if ($this->request->post['name'] == 'admin/') {
-			$json['error'] = $this->language->get('error_admin');
-		}
-
-
-		if ($name = 'admin/') {
-			$json['error'] = $this->language->get('error_admin');
-		}
-
 		if (!$json) {
-			$new_name = DIR_OPENCART . $this->request->post['name'] . '/';
+			// Update the old config files
+			$file = $path_old . 'config.php';
+			
+			$output = '';
 
-			rename(DIR_OPENCART . 'admin/', $new_name);
+			$lines = file($file);
 
-			$files = [
-				DIR_OPENCART . 'config.php',
-				$new_name . 'config.php'
-			];
+			foreach ($lines as $line_id => $line) {
+				$string = '';
 
-			foreach ($files as $file) {
-				$output = '';
-
-				$lines = file($file);
-
-				foreach ($lines as $line_id => $line) {
-					if (strpos($line, 'define(\'DIR_STORAGE') !== false) {
-						$output .= 'define(\'DIR_STORAGE\', \'' . $path . $directory . '/\');' . "\n";
-					} else {
-						$output .= $line;
-					}
+				if (strpos($line, 'define(\'HTTP_SERVER') !== false) {
+					$string .= 'define(\'HTTP_SERVER\', \'' . substr(HTTP_SERVER, 0, strrpos(HTTP_SERVER, 'admin/')) . '/' . $name . '/\');' . "\n";
 				}
 
-				$file = fopen($file, 'w');
+				if (strpos($line, 'define(\'DIR_APPLICATION') !== false) {
+					$string .= 'define(\'DIR_APPLICATION\', DIR_OPENCART . \'' . $name . '/\');' . "\n";
+				}
 
-				fwrite($file, $output);
-
-				fclose($file);
+				if (!$string) {
+					$output = $line;
+				}
 			}
 
-			$json['redirect'] = $this->language->get('text_success');
+			$file = fopen($file, 'w');
+
+			fwrite($file, $output);
+
+			fclose($file);
+
+			// 1.  We need to copy the files as rename can not be used on any directory the executing script is running under
+			$files = [];
+
+			// Make path into an array
+			$directory = [$path_old];
+
+			// While the path array is still populated keep looping through
+			while (count($directory) != 0) {
+				$next = array_shift($directory);
+
+				foreach (glob($next) as $file) {
+					// If directory add to path array
+					if (is_dir($file)) {
+						$directory[] = $file . '/*';
+					}
+
+					// Add the file to the files to be deleted array
+					$files[] = $file;
+				}
+			}
+
+			// 2. Create the new admin folder name
+			mkdir($path_new, 0777);
+
+			// 3. Copy the files across
+			foreach ($files as $file) {
+				$destination = $path_new . substr($file, strlen($path_old) + 1);
+
+				if (is_dir($file) && !is_dir($destination)) {
+					mkdir($destination, 0777);
+				}
+
+				if (is_file($file)) {
+					copy($file, $destination);
+				}
+			}
+
+			// 4. reverse file order
+			rsort($files);
+
+			// 5. Delete the old admin directory
+			foreach ($files as $file) {
+				// If file just delete
+				if (is_file($file)) {
+					unlink($file);
+
+					// If directory use the remove directory function
+				} elseif (is_dir($file)) {
+					rmdir($file);
+				}
+			}
+
+			// 6. redirect to the new admin
+			$json['redirect'] = substr(HTTP_SERVER, 0, strrpos(HTTP_SERVER, 'admin/')) . '/' . $name . '/index.php?route=common/dashboard&user_token=' .$this->session->data['user_token'];
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

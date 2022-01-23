@@ -248,18 +248,22 @@ class Security extends \Opencart\System\Engine\Controller {
 			$lines = file($file);
 
 			foreach ($lines as $line_id => $line) {
-				$string = '';
+				$status = true;
 
 				if (strpos($line, 'define(\'HTTP_SERVER') !== false) {
-					$string .= 'define(\'HTTP_SERVER\', \'' . substr(HTTP_SERVER, 0, strrpos(HTTP_SERVER, 'admin/')) . '/' . $name . '/\');' . "\n";
+					$output .= 'define(\'HTTP_SERVER\', \'' . substr(HTTP_SERVER, 0, strrpos(HTTP_SERVER, 'admin/') + 1) . '/' . $name . '/\');' . "\n";
+
+					$status = false;
 				}
 
 				if (strpos($line, 'define(\'DIR_APPLICATION') !== false) {
-					$string .= 'define(\'DIR_APPLICATION\', DIR_OPENCART . \'' . $name . '/\');' . "\n";
+					$output .= 'define(\'DIR_APPLICATION\', DIR_OPENCART . \'' . $name . '/\');' . "\n";
+
+					$status = false;
 				}
 
-				if (!$string) {
-					$output = $line;
+				if ($status) {
+					$output .= $line;
 				}
 			}
 

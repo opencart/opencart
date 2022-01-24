@@ -48,6 +48,8 @@ class Security extends \Opencart\System\Engine\Controller {
 
 		if ($data['install'] || $data['storage'] || $data['admin']) {
 			return $this->load->view('common/security', $data);
+		} else {
+			return '';
 		}
 	}
 
@@ -67,8 +69,10 @@ class Security extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$files = [];
 
+			$path = DIR_OPENCART . 'install/';
+
 			// Make path into an array
-			$directory = [DIR_OPENCART . 'install/'];
+			$directory = [$path];
 
 			// While the path array is still populated keep looping through
 			while (count($directory) != 0) {
@@ -95,6 +99,8 @@ class Security extends \Opencart\System\Engine\Controller {
 				}
 			}
 
+			rmdir($path);
+
 			$json['success'] = $this->language->get('text_install_success');
 		}
 
@@ -108,11 +114,8 @@ class Security extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if ($this->user->hasPermission('modify', 'common/security')) {
-			if (is_dir($this->request->post['path'] . 'storage/')) {
-				$json['error'] = $this->language->get('error_storage');
-			}
-
-			$document_root = str_replace('\\', '/', realpath($this->request->server['DOCUMENT_ROOT'] . '/../') . '/');
+			$path_old = DIR_STORAGE;
+			$path_new = $this->request->post['path'] . 'storage/';
 
 			$path = '';
 
@@ -123,13 +126,17 @@ class Security extends \Opencart\System\Engine\Controller {
 			foreach ($parts as $part) {
 				$path .= $part . '/';
 
-				if (strlen($document_root) >= strlen($path)) {
+				if (strlen(str_replace('\\', '/', realpath($this->request->server['DOCUMENT_ROOT'] . '/../') . '/')) >= strlen($path)) {
 					$path_data[] = $path;
 				}
 			}
 
 			if (!in_array($this->request->post['path'], $path_data)) {
 				$json['error'] = $this->language->get('error_storage');
+			}
+
+			if (is_dir($path_new)) {
+				$json['error'] = $this->language->get('error_storage_exists');
 			}
 
 			if (!is_writable(DIR_OPENCART . 'config.php') || !is_writable(DIR_APPLICATION . 'config.php')) {
@@ -143,7 +150,7 @@ class Security extends \Opencart\System\Engine\Controller {
 			$files = [];
 
 			// Make path into an array
-			$directory = [DIR_SYSTEM . 'storage'];
+			$directory = [$path_old];
 
 			// While the path array is still populated keep looping through
 			while (count($directory) != 0) {
@@ -161,11 +168,11 @@ class Security extends \Opencart\System\Engine\Controller {
 			}
 
 			// Create the new storage folder
-			mkdir($this->request->post['path'] . 'storage/', 0777);
+			mkdir($path_new, 0777);
 
 			// Copy the
 			foreach ($files as $file) {
-				$destination = $this->request->post['path'] . 'storage/' . substr($file, strlen(DIR_SYSTEM . 'storage/'));
+				$destination = $path_new . substr($file, strlen($path_old));
 
 				if (is_dir($file) && !is_dir($destination)) {
 					mkdir($destination, 0777);
@@ -189,7 +196,7 @@ class Security extends \Opencart\System\Engine\Controller {
 
 				foreach ($lines as $line_id => $line) {
 					if (strpos($line, 'define(\'DIR_STORAGE') !== false) {
-						$output .= 'define(\'DIR_STORAGE\', \'' . $this->request->post['path'] . 'storage/' . '\');' . "\n";
+						$output .= 'define(\'DIR_STORAGE\', \'' . $path_new . '\');' . "\n";
 					} else {
 						$output .= $line;
 					}
@@ -240,9 +247,46 @@ class Security extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// 1.  We need to copy the files as rename can not be used on any directory the executing script is running under
+			$files = [];
+
+			// Make path into an array
+			$directory = [$path_old];
+
+			// While the path array is still populated keep looping through
+			while (count($directory) != 0) {
+				$next = array_shift($directory);
+
+				foreach (glob(trim($next, '/') . '/{*,.[!.]*,..?*}', GLOB_BRACE) as $file) {
+					// If directory add to path array
+					if (is_dir($file)) {
+						$directory[] = $file;
+					}
+
+					// Add the file to the files to be deleted array
+					$files[] = $file;
+				}
+			}
+
+			// 2. Create the new admin folder name
+			mkdir($path_new, 0777);
+
+			// 3. Copy the files across
+			foreach ($files as $file) {
+				$destination = $path_new . substr($file, strlen($path_old));
+
+				if (is_dir($file) && !is_dir($destination)) {
+					mkdir($destination, 0777);
+				}
+
+				if (is_file($file)) {
+					copy($file, $destination);
+				}
+			}
+
 			// Update the old config files
-			$file = $path_old . 'config.php';
-			
+			$file = $path_new . 'config.php';
+
 			$output = '';
 
 			$lines = file($file);
@@ -273,6 +317,32 @@ class Security extends \Opencart\System\Engine\Controller {
 
 			fclose($file);
 
+			// 6. redirect to the new admin
+			$json['redirect'] = substr(HTTP_SERVER, 0, strrpos(HTTP_SERVER, 'admin/')) . '/' . $name . '/index.php?route=common/security|delete&user_token=' . $this->session->data['user_token'];
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	public function delete() {
+		$status = true;
+
+		if (!$this->user->hasPermission('modify', 'common/security')) {
+			$status = false;
+		}
+
+		$path_old = DIR_OPENCART . 'admin/';
+
+		if (!is_dir($path_old)) {
+			$status = false;
+		}
+
+		if ($path_old != DIR_APPLICATION) {
+			$status = false;
+		}
+
+		if ($status) {
 			// 1.  We need to copy the files as rename can not be used on any directory the executing script is running under
 			$files = [];
 
@@ -284,8 +354,6 @@ class Security extends \Opencart\System\Engine\Controller {
 				$next = array_shift($directory);
 
 				foreach (glob(trim($next, '/') . '/{*,.[!.]*,..?*}', GLOB_BRACE) as $file) {
-					echo $file . "\n";
-
 					// If directory add to path array
 					if (is_dir($file)) {
 						$directory[] = $file;
@@ -293,25 +361,6 @@ class Security extends \Opencart\System\Engine\Controller {
 
 					// Add the file to the files to be deleted array
 					$files[] = $file;
-				}
-			}
-
-
-			// 2. Create the new admin folder name
-			mkdir($path_new, 0777);
-
-			// 3. Copy the files across
-			foreach ($files as $file) {
-				$destination = $path_new . substr($file, strlen($path_old));
-
-				//echo $destination . "\n";
-
-				if (is_dir($file) && !is_dir($destination)) {
-					mkdir($destination, 0777);
-				}
-
-				if (is_file($file)) {
-					copy($file, $destination);
 				}
 			}
 
@@ -330,11 +379,9 @@ class Security extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-			// 6. redirect to the new admin
-			$json['redirect'] = substr(HTTP_SERVER, 0, strrpos(HTTP_SERVER, 'admin/')) . '/' . $name . '/index.php?route=common/dashboard&user_token=' . $this->session->data['user_token'];
+			rmdir($path_old);
 		}
 
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+		$this->response->redirect($this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token']));
 	}
 }

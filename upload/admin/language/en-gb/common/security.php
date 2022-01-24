@@ -28,6 +28,7 @@ $_['button_rename']            = 'Rename';
 $_['error_permission']         = 'Warning: You do not have permission to modify security!';
 $_['error_install']            = 'Warning: Install directory does not exist!';
 $_['error_storage']            = 'Warning: Storage directory does not exist!';
+$_['error_storage_exists']     = 'Warning: Storage folder name is already exists!';
 $_['error_admin']              = 'Warning: Admin directory does not exist!';
 $_['error_admin_exists']       = 'Warning: Admin folder name is already exists!';
 $_['error_admin_name']         = 'Warning: Admin name can not be `admin` as it is available to the public!';

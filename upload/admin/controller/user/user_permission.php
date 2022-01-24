@@ -227,10 +227,10 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 		while (count($path) != 0) {
 			$next = array_shift($path);
 
-			foreach (glob($next) as $file) {
+			foreach (glob($next . '/*') as $file) {
 				// If directory add to path array
 				if (is_dir($file)) {
-					$path[] = $file . '/*';
+					$path[] = $file;
 				}
 
 				// Add the file to the files to be deleted array

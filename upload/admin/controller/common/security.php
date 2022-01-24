@@ -74,10 +74,10 @@ class Security extends \Opencart\System\Engine\Controller {
 			while (count($directory) != 0) {
 				$next = array_shift($directory);
 
-				foreach (glob($next) as $file) {
+				foreach (glob($next . '/*') as $file) {
 					// If directory add to path array
 					if (is_dir($file)) {
-						$directory[] = $file . '/*';
+						$directory[] = $file;
 					}
 
 					// Add the file to the files to be deleted array
@@ -143,16 +143,16 @@ class Security extends \Opencart\System\Engine\Controller {
 			$files = [];
 
 			// Make path into an array
-			$directory = [DIR_SYSTEM . 'storage/'];
+			$directory = [DIR_SYSTEM . 'storage'];
 
 			// While the path array is still populated keep looping through
 			while (count($directory) != 0) {
 				$next = array_shift($directory);
 
-				foreach (glob($next) as $file) {
+				foreach (glob($next . '/*') as $file) {
 					// If directory add to path array
 					if (is_dir($file)) {
-						$directory[] = $file . '/*';
+						$directory[] = $file;
 					}
 
 					// Add the file to the files to be deleted array
@@ -251,7 +251,7 @@ class Security extends \Opencart\System\Engine\Controller {
 				$status = true;
 
 				if (strpos($line, 'define(\'HTTP_SERVER') !== false) {
-					$output .= 'define(\'HTTP_SERVER\', \'' . substr(HTTP_SERVER, 0, strrpos(HTTP_SERVER, 'admin/') + 1) . '/' . $name . '/\');' . "\n";
+					$output .= 'define(\'HTTP_SERVER\', \'' . substr(HTTP_SERVER, 0, strrpos(HTTP_SERVER, '/admin/')) . '/' . $name . '/\');' . "\n";
 
 					$status = false;
 				}
@@ -283,10 +283,12 @@ class Security extends \Opencart\System\Engine\Controller {
 			while (count($directory) != 0) {
 				$next = array_shift($directory);
 
-				foreach (glob($next) as $file) {
+				foreach (glob(trim($next, '/') . '/{*,.[!.]*,..?*}', GLOB_BRACE) as $file) {
+					echo $file . "\n";
+
 					// If directory add to path array
 					if (is_dir($file)) {
-						$directory[] = $file . '/*';
+						$directory[] = $file;
 					}
 
 					// Add the file to the files to be deleted array
@@ -294,12 +296,15 @@ class Security extends \Opencart\System\Engine\Controller {
 				}
 			}
 
+
 			// 2. Create the new admin folder name
 			mkdir($path_new, 0777);
 
 			// 3. Copy the files across
 			foreach ($files as $file) {
-				$destination = $path_new . substr($file, strlen($path_old) + 1);
+				$destination = $path_new . substr($file, strlen($path_old));
+
+				//echo $destination . "\n";
 
 				if (is_dir($file) && !is_dir($destination)) {
 					mkdir($destination, 0777);
@@ -326,7 +331,7 @@ class Security extends \Opencart\System\Engine\Controller {
 			}
 
 			// 6. redirect to the new admin
-			$json['redirect'] = substr(HTTP_SERVER, 0, strrpos(HTTP_SERVER, 'admin/')) . '/' . $name . '/index.php?route=common/dashboard&user_token=' .$this->session->data['user_token'];
+			$json['redirect'] = substr(HTTP_SERVER, 0, strrpos(HTTP_SERVER, 'admin/')) . '/' . $name . '/index.php?route=common/dashboard&user_token=' . $this->session->data['user_token'];
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

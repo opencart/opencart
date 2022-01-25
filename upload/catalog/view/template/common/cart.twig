@@ -1,8 +1,11 @@
-<div id="header-cart">
+<div id="header-cart" class="dropdown">
   <button type="button" data-bs-toggle="dropdown" data-loading-text="{{ text_loading }}" class="btn btn-inverse btn-block btn-lg dropdown-toggle"><i class="fas fa-shopping-cart"></i> <span id="cart-total">{{ text_items }}</span></button>
+
   <ul class="dropdown-menu dropdown-menu-right">
     {% if products or vouchers %}
       <li>
+
+
         <table class="table table-sm table-striped">
           {% for product in products %}
             <tr>
@@ -45,8 +48,11 @@
             </tr>
           {% endfor %}
         </table>
+
+
       </li>
       <li>
+
         <div>
           <table class="table table-sm table-bordered">
             {% for total in totals %}

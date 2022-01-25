@@ -11,6 +11,8 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			'filter_date_added'             => date('Y-m-d H:i:s', $time)
 		];
 
+		$this->load->model('sale/subscription');
+
 		$results = $this->model_sale_subscription->getSubscriptions($filter_data);
 
 		foreach ($results as $result) {
@@ -18,13 +20,9 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 			}
 
-
-
-
-
 			$time = strtotime('+' . $result['trial_duration'] . ' ' . $result['trial_frequency'], strtotime($result['date_modified']));
 
-echo $time ."\n";
+			echo $time ."\n";
 
 			//< ($time + 10
 			//strtotime('+' . $result['trial_duration'] . ' ' . $result['trial_frequency'], strtotime($result['date_modified']));

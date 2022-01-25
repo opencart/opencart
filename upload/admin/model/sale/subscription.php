@@ -29,7 +29,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 		}
 
 		if (!empty($data['filter_subscription_status_id'])) {
-			$implode[] = "`ss`.`subscription_status_id` = '" . (int)$data['filter_subscription_status_id'] . "'";
+			$implode[] = "`s`.`subscription_status_id` = '" . (int)$data['filter_subscription_status_id'] . "'";
 		}
 
 		if (!empty($data['filter_date_added'])) {
@@ -100,7 +100,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 		}
 
 		if (!empty($data['filter_subscription_status_id'])) {
-			$implode[] .= "`ss`.`subscription_status_id` = '" . (int)$data['filter_subscription_status_id'] . "'";
+			$implode[] .= "`s`.`subscription_status_id` = '" . (int)$data['filter_subscription_status_id'] . "'";
 		}
 
 		if (!empty($data['filter_date_added'])) {

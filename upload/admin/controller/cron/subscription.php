@@ -14,21 +14,46 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		$results = $this->model_sale_subscription->getSubscriptions($filter_data);
 
 		foreach ($results as $result) {
-
-			if ($result['status'] && (strtotime('+' . $result['trial_duration'] . ' ' . $result['trial_frequency'], strtotime($result['date_modified'])) < ($time + 10))) {
+			if ($result['status'] && $result) {
 
 			}
 
+
+
+
+
+			$time = strtotime('+' . $result['trial_duration'] . ' ' . $result['trial_frequency'], strtotime($result['date_modified']));
+
+echo $time ."\n";
+
+			//< ($time + 10
+			//strtotime('+' . $result['trial_duration'] . ' ' . $result['trial_frequency'], strtotime($result['date_modified']));
+
+			// Expired
+			//if ($time > ) {
+
+
+			//}
+
+
+
+			// Payment
+
+			// Active
+
+
+
+
+
+
 			if ($result['trial_status']) {
 				$trial_price = $result['trial_price'];
-
 
 				$tim = match($result['trial_frequency']) {
 					'Status::draft'     => 'grey',
 					'Status::published' => 'green',
 					'Status::archived'  => 'red',
 				};
-
 
 				switch ($result['trial_frequency']) {
 					case 'day':
@@ -68,4 +93,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			//$result
 		}
 	}
+
+
 }

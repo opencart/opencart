@@ -311,24 +311,24 @@ $(document).delegate('#button-register', 'click', function() {
                     error: function(xhr, ajaxOptions, thrownError) {
                         alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
                     }
-                });
-                {% endif %}
-
-                $.ajax({
-                    url: 'index.php?route=checkout/payment_address',
-                    dataType: 'html',
-                    complete: function() {
-                        $('#button-register').button('reset');
-                    },
-                    success: function(html) {
-                        $('#collapse-payment-address .panel-body').html(html);
+                }).done(function() {
+                    $.ajax({
+                        url: 'index.php?route=checkout/payment_address',
+                        dataType: 'html',
+                        complete: function() {
+                            $('#button-register').button('reset');
+                        },
+                        success: function(html) {
+                            $('#collapse-payment-address .panel-body').html(html);
 
 						$('#collapse-payment-address').parent().find('.panel-heading .panel-title').html('<a href="#collapse-payment-address" data-toggle="collapse" data-parent="#accordion" class="accordion-toggle">{{ text_checkout_payment_address }} <i class="fa fa-caret-down"></i></a>');
-                    },
-                    error: function(xhr, ajaxOptions, thrownError) {
-                        alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-                    }
-                });
+                        },
+                        error: function(xhr, ajaxOptions, thrownError) {
+                            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                        }
+                    });
+		});
+                {% endif %}
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {

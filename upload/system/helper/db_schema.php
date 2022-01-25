@@ -954,6 +954,11 @@ function db_schema() {
 				'not_null' => true
 			],
 			[
+				'name' => 'description',
+				'type' => 'text',
+				'not_null' => true
+			],
+			[
 				'name' => 'cycle',
 				'type' => 'varchar(12)',
 				'not_null' => true

@@ -14,7 +14,7 @@
       <div class="carousel-item{% if banner_row == 0 %} active{% endif %}">
         <div class="row justify-content-center">
           {% for banner in carousel %}
-            <div class="col-{{ (12 / items)|round(1, 'floor') }} text-center">
+            <div class="col-{{ (12 / items)|round }} text-center">
               {% if banner.link %}
                 <a href="{{ banner.link }}"><img src="{{ banner.image }}" alt="{{ banner.title }}" class="img-fluid"/></a>
               {% else %}

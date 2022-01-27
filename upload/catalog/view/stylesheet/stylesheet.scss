@@ -212,14 +212,16 @@ div.required .col-form-label:before, div.required .form-label:before {
 
     table {
       margin-bottom: 10px;
-      min-width: 427px;
+
     }
 
     li {
-      //> div {
+      min-width: 427px;
+      padding: 0 10px;
+      > div {
 
-        padding: 0 10px;
-    // }
+
+     }
 
       p {
         margin: 20px 0;

@@ -18,7 +18,7 @@
             {% if product.option %}
               {% for option in product.option %}
                 <br/>
-                <small>{{ option.name }}: {{ option.value }}</small>
+                <small> - {{ option.name }}: {{ option.value }}</small>
               {% endfor %}
             {% endif %}
             {% if product.reward %}

@@ -111,7 +111,7 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 			$this->model_account_payment_method->deletePaymentMethod($payment_method_id);
 
 			// Delete address from session.
-			$json['success'] = $this->language->get('text_delete');
+			$json['success'] = $this->language->get('text_success');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

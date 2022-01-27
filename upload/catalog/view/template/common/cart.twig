@@ -1,5 +1,5 @@
-<div class="dropdown">
-  <button type="button" data-bs-toggle="dropdown" data-loading-text="{{ text_loading }}" class="btn btn-inverse btn-block btn-lg dropdown-toggle"><i class="fas fa-shopping-cart"></i> <span id="cart-total">{{ text_items }}</span></button>
+<div class="dropdown d-grid">
+  <button type="button" data-bs-toggle="dropdown" data-loading-text="{{ text_loading }}" class="btn btn-inverse btn-block dropdown-toggle"><i class="fas fa-shopping-cart"></i> {{ text_items }}</button>
 
   <ul class="dropdown-menu dropdown-menu-right" style="width: 500px;">
     {% if products or vouchers %}
@@ -8,31 +8,26 @@
         <table class="table table-sm table-striped">
           {% for product in products %}
             <tr>
-              <td class="text-center">{% if product.thumb %} <a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-thumbnail"/></a> {% endif %}</td>
+              <td class="text-center">{% if product.thumb %}<a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-thumbnail"/></a>{% endif %}</td>
               <td class="text-start"><a href="{{ product.href }}">{{ product.name }}</a>
                 {% if product.option %}
                   {% for option in product.option %}
                     <br/>
-                    -
-                    <small>{{ option.name }} {{ option.value }}</small>
+                    <small> - {{ option.name }} {{ option.value }}</small>
                   {% endfor %}
                 {% endif %}
                 {% if product.subscription %}
                   <br/>
-                  -
-                  <small>{{ text_subscription }} {{ product.subscription }}</small>
+                  <small> - {{ text_subscription }} {{ product.subscription }}</small>
                 {% endif %}
               </td>
-
               <td class="text-end">x {{ product.quantity }}</td>
               <td class="text-end">{{ product.total }}</td>
               <td class="text-center">
-
                 <form action="{{ product_remove }}" method="post" data-oc-toggle="ajax" data-oc-load="{{ list }}" data-oc-target="#header-cart">
                   <input type="hidden" name="key" value="{{ product.cart_id }}">
                   <button type="submit" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-times-circle"></i></button>
                 </form>
-
               </td>
             </tr>
           {% endfor %}
@@ -42,20 +37,15 @@
               <td class="text-start">{{ voucher.description }}</td>
               <td class="text-end">x&nbsp;1</td>
               <td class="text-end">{{ voucher.amount }}</td>
-              <td class="text-center text-danger">
-
+              <td class="text-center">
                 <form action="{{ voucher_remove }}" method="post" data-oc-toggle="ajax" data-oc-load="{{ list }}" data-oc-target="#header-cart">
                   <input type="hidden" name="key" value="{{ voucher.key }}"/>
                   <button type="submit" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-times-circle"></i></button>
                 </form>
-
               </td>
             </tr>
           {% endfor %}
         </table>
-
-      </li>
-      <li>
 
         <div>
           <table class="table table-sm table-bordered">

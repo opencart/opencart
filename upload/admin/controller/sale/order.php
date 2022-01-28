@@ -994,7 +994,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->load->model('setting/extension');
 
 		if (!empty($order_info)) {
-			$extension_info = $this->model_setting_extension->getExtensionsByCode('payment', $order_info['payment_code']);
+			$extension_info = $this->model_setting_extension->getExtensionByCode('payment', $order_info['payment_code']);
 
 			if ($extension_info && $this->user->hasPermission('access', 'extension/' . $extension_info['extension'] . '/payment/' . $extension_info['code'])) {
 				$output = $this->load->controller('extension/payment/' . $order_info['payment_code'] . '|order');

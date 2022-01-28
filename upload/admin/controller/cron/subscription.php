@@ -20,9 +20,13 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 			}
 
-			$time = strtotime('+' . $result['trial_duration'] . ' ' . $result['trial_frequency'], strtotime($result['date_modified']));
+			$time = strtotime('+' . $result['trial_duration'] . ' ' . $result['trial_frequency'], strtotime($result['payment_date']));
 
 			echo $time ."\n";
+
+
+
+
 
 			//< ($time + 10
 			//strtotime('+' . $result['trial_duration'] . ' ' . $result['trial_frequency'], strtotime($result['date_modified']));

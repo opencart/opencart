@@ -119,7 +119,11 @@ class Customer {
 	public function getAddressId(): int {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "address` WHERE `customer_id` = '" . (int)$this->customer_id . "' AND `default` = '1'");
 
-		return (int)$query->row['address_id'];
+		if ($query->num_rows) {
+			return (int)$query->row['address_id'];
+		} else {
+			return 0;
+		}
 	}
 
 	public function getBalance(): float {

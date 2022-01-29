@@ -282,6 +282,11 @@ class Setting extends \Opencart\System\Engine\Controller {
 		$data['subscription_statuses'] = $this->model_localisation_subscription_status->getSubscriptionStatuses();
 
 		$data['config_subscription_status_id'] = $this->config->get('config_subscription_status_id');
+		$data['config_subscription_active_status_id'] = $this->config->get('config_subscription_active_status_id');
+		$data['config_subscription_expired_status_id'] = $this->config->get('config_subscription_expired_status_id');
+		$data['config_subscription_canceled_status_id'] = $this->config->get('config_subscription_canceled_status_id');
+		$data['config_subscription_failed_status_id'] = $this->config->get('config_subscription_failed_status_id');
+		$data['config_subscription_denied_status_id'] = $this->config->get('config_subscription_denied_status_id');
 
 		// Api
 		$this->load->model('user/api');

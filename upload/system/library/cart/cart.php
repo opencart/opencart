@@ -258,6 +258,7 @@ class Cart {
 							'trial_frequency'      => $subscription_query->row['trial_frequency'],
 							'trial_cycle'          => $subscription_query->row['trial_cycle'],
 							'trial_duration'       => $subscription_query->row['trial_duration'],
+							'trial_status'         => $subscription_query->row['trial_status'],
 							'price'                => $subscription_query->row['price'],
 							'frequency'            => $subscription_query->row['frequency'],
 							'cycle'                => $subscription_query->row['cycle'],

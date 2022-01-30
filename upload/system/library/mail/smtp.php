@@ -222,7 +222,7 @@ class Smtp {
 
 			fputs($handle, '.' . "\r\n");
 
-			$this->handleReply($handle, 250, 'Error: DATA not accepted from server!');
+			//$this->handleReply($handle, 250, 'Error: DATA not accepted from server!');
 
 			fputs($handle, 'QUIT' . "\r\n");
 

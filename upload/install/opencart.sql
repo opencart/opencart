@@ -1978,6 +1978,11 @@ INSERT INTO `oc_setting` (`store_id`, `code`, `key`, `value`, `serialized`) VALU
 (0, 'config', 'config_complete_status', '["5","3"]', 1),
 (0, 'config', 'config_fraud_status_id', '8', 0),
 (0, 'config', 'config_subscription_status_id', '1', 0),
+(0, 'config', 'config_subscription_active_status_id', '2', 0),
+(0, 'config', 'config_subscription_expired_status_id', '6', 0),
+(0, 'config', 'config_subscription_canceled_status_id', '4', 0),
+(0, 'config', 'config_subscription_failed_status_id', '3', 0),
+(0, 'config', 'config_subscription_denied_status_id', '5', 0),
 (0, 'config', 'config_stock_display', '0', 0),
 (0, 'config', 'config_stock_warning', '0', 0),
 (0, 'config', 'config_stock_checkout', '0', 0),
@@ -2261,9 +2266,9 @@ INSERT INTO `oc_stock_status` (`stock_status_id`, `language_id`, `name`) VALUES
 INSERT INTO `oc_subscription_status` (`subscription_status_id`, `language_id`, `name`) VALUES
 (1, 1, 'Pending'),
 (2, 1, 'Active'),
-(3, 1, 'Inactive'),
+(3, 1, 'Failed'),
 (4, 1, 'Cancelled'),
-(5, 1, 'Suspended'),
+(5, 1, 'Denied'),
 (6, 1, 'Expired');
 
 -----------------------------------------------------------

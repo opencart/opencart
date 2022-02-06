@@ -77,24 +77,6 @@ div.required .col-form-label:before, div.required .form-label:before {
   }
 }
 
-/* toast */
-#toast-container {
-  position: fixed;
-  width: 100%;
-  z-index: 1000;
-}
-
-#toast-container .container {
-  position: relative;
-}
-
-#toast {
-  position: absolute;
-  top: 5px;
-  right: 14px;
-  z-index: 1000;
-}
-
 /* top */
 #top {
   background-color: #EEEEEE;
@@ -127,6 +109,12 @@ div.required .col-form-label:before, div.required .form-label:before {
   font-size: 1.1em;
   text-decoration: none;
 }
+
+footer a {
+  font-size: 1.1em;
+  text-decoration: none;
+}
+
 
 /* logo */
 #logo {

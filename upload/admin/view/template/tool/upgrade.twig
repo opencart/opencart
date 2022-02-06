@@ -12,78 +12,56 @@
   </div>
   <div class="container-fluid">
     <div class="card">
-      <div class="card-header"><i class="fas fa-sync"></i> {{ text_version }}</div>
+      <div class="card-header"><i class="fas fa-sync"></i> {{ text_upgrade }}</div>
       <div class="card-body">
 
-        <div class="row row-cols-2 mb-4">
-          <div class="col">
-            <div class="p-2 text-uppercase">Current Version</div>
-            <div class="p-2">{{ current_version }}</div>
-          </div>
-          <div class="col">
-            <div class="p-2 text-uppercase">Latest Version</div>
-            <div class="p-2">{{ latest_version }}</div>
-          </div>
-        </div>
-
-        <div class="row mb-3">
-
-          <div class="col-sm-4 text-center">
-            <div class="d-inline-block p-4 rounded-circle bg-success text-white fs-5" f><i class="fa fa-sync"></i></div>
-            <div class="p-2">Download Update</div>
-          </div>
-
-          <div class="col-sm-4 text-center">
-            <div class="d-inline-block p-4 rounded-circle bg-success text-white fs-5"><i class="fa fa-sync"></i></div>
-            <div class="p-2">Extract Files</div>
-          </div>
-
-          <div class="col-sm-4 text-center">
-            <div class="d-inline-block p-4 rounded-circle bg-success text-white fs-5"><i class="fa fa-sync"></i></div>
-            <div class="p-2">Redirect to Upgrader</div>
-          </div>
-        </div>
-
-        <div class="row mb-3">
-          <label for="input-sort-order" class="col-sm-2 col-form-label">{{ entry_version }}</label>
-          <div class="col-sm-10">{{ version }}
-
-          </div>
-        </div>
-
         <fieldset>
-          <legend id="btn-version">{{ text_update }}</legend>
-          <div class="alert alert-info">
-            <p><strong><i class="fas fa-exclamation-circle"></i> {{ text_tips }}</strong></p>
-            <ol>
-              <li>{{ text_make }}
-                <br/>                {{ text_backup }} <a href="{{ backup }}">{{ text_here }}</a>;
-              </li>
-              <li>{{ text_check }}</li>
-              <li>{{ text_better }}</li>
-            </ol>
-          </div>
-        </fieldset>
+          <legend>{{ text_information }}</legend>
 
-        <fieldset>
-          <legend>{{ text_progress }}</legend>
-          <div class="row mb-3">
-            <label class="col-sm-2 col-form-label">{{ text_progress_short }}</label>
-            <div class="col-sm-10">
-              <div id="progress-download" class="progress">
-                <div id="progress-bar" class="progress-bar"></div>
-              </div>
-              <br/>
-
-              <button type="button" id="button-upgrade" data-oc-loading-text="{{ text_loading }}" class="btn btn-success"{% if not upgrade %} disabled{% endif %}><i class="fas fa-play"></i> {{ button_start }}</button>
-              <div id="progress-text"></div>
+          <div class="row mb-4">
+            <div class="col">
+              <label class="text-uppercase"><strong>{{ text_current_version }}</strong></label>
+              <div class="font-weight-bold">{{ current_version }}</div>
+            </div>
+            <div class="col">
+              <label class="text-uppercase"><strong>{{ text_latest_version }}</strong></label>
+              <div>{{ latest_version }}</div>
+            </div>
+            <div class="col">
+              <label class="text-uppercase"><strong>{{ text_date_added }}</strong></label>
+              <div>{{ date_added }}</div>
             </div>
           </div>
+          <div class="mb-4">
+            <label class="text-uppercase"><strong>{{ text_change }}</strong></label>
+            <div>{{ log }}</div>
+          </div>
         </fieldset>
+
+        <fieldset>
+
+          <legend>{{ text_status }}</legend>
+
+          <div class="d-flex">
+            <div class="flex-shrink-0">
+              <div class="spinner-border float-start"></div>
+            </div>
+
+            <div class="flex-grow-1 ms-3">
+              <h6>{{ text_ready }}</h6>
+              <p>{{ text_ready_description }}</p>
+            </div>
+
+
+          </div>
+        </fieldset>
+
+        <div class="mb-4 text-center">
+          <button type="button" id="button-upgrade" data-oc-loading-text="{{ text_loading }}" class="btn btn-warning btn-lg"{% if not upgrade %} disabled{% endif %}><i class="fas fa-level-up-alt"></i> {{ button_upgrade }}</button>
+        </div>
 
       </div>
     </div>
-
   </div>
 </div>
 
@@ -91,7 +69,6 @@
 $('#button-upgrade').on('click', function () {
     var i = 0;
 
-    $('#progress-bar').css('width', '0%').removeClass('progress-bar-danger progress-bar-success');
     $('#progress-text').html('{{ text_download }}');
     $('#log').append('{{ text_download }}' + "\n");
 
@@ -102,26 +79,26 @@ $('#button-upgrade').on('click', function () {
             url: next,
             dataType: 'json',
             beforeSend: function () {
-                $('#button-upgrade').button('loading');
+                $('#button-upgrade').prop('disable', true);
             },
             complete: function () {
-                $('#button-upgrade').button('reset');
+                $('#button-upgrade').prop('disable', false);
             },
             success: function (json) {
+                $('.alert-dismissible').remove();
+
                 if (json['error']) {
-                    $('#progress-bar').addClass('progress-bar-danger');
-                    $('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
+                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                 }
 
                 if (json['redirect']) {
-                    location = json['redirect'];
+                    var timer = setInterval(function() {
+                        location = json['redirect'];
+                    }, 500);
                 }
 
                 if (json['text']) {
                     i = i + 1;
-
-                    $('#progress-bar').css('width', (i * 20) + '%');
-                    $('#progress-bar').css('width', '20%');
 
                     $('#progress-text').html(json['text']);
                 }

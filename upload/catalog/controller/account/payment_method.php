@@ -107,11 +107,15 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Delete address from database.
-			$this->model_account_payment_method->deletePaymentMethod($payment_method_id);
+			$this->load->model('extension/' . $payment_method_info['extension'] . '/payment/' . $payment_method_info['code']);
 
-			// Delete address from session.
-			$json['success'] = $this->language->get('text_success');
+			if ($this->{'model_extension_' . $payment_method_info['extension'] . '_payment_' . $payment_method_info['code']}->delete($payment_method_id)) {
+				// Delete address from database.
+				$this->model_account_payment_method->deletePaymentMethod($payment_method_id);
+
+				// Delete address from session.
+				$json['success'] = $this->language->get('text_success');
+			}
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

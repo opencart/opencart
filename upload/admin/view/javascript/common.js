@@ -204,7 +204,7 @@ $(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function(e) {
            //$(button).button('reset');
         },
         success: function(json) {
-            $('.alert-dismissible').remove();
+
             $(element).find('.is-invalid').removeClass('is-invalid');
             $(element).find('.invalid-feedback').removeClass('d-block');
 

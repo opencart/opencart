@@ -424,9 +424,23 @@ a {
     }
 }
 
+.row.mb-3 {
+    position: relative;
+}
+
 .row.mb-3 + .row.mb-3 {
     padding-top: 1rem;
-    border-top: 1px solid #ededed;
+}
+
+.row.mb-3 + .row.mb-3:before {
+    display: block;
+    content: '';
+    position: absolute;
+    width: calc(100% - calc(var(--bs-gutter-x) / 1));
+    height: 0px;
+    left: calc(var(--bs-gutter-x) / 2);
+    top: 0;
+    border-bottom: 1px solid #ededed;
 }
 
 .form-control:hover {

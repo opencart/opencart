@@ -127,25 +127,6 @@ var datetimepicker = function () {
 $(document).ready(datetimepicker);
 $(document).on('click', 'button', datetimepicker);
 
-// Buttons
-$(document).ready(function() {
-    $(document).on('click', '[data-oc-loading-text]', function(state) {
-        var element = this;
-
-        var html = $(element).html();
-
-        var loading = $(element).attr('data-oc-loading-text');
-
-        if (state == 'loading') {
-            $(element).html(loading);
-        }
-
-        if (state == 'reset') {
-            $(element).html(html);
-        }
-    });
-});
-
 // Forms
 $(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function(e) {
     e.preventDefault();
@@ -198,13 +179,12 @@ $(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function(e) {
         dataType: 'json',
         contentType: 'application/x-www-form-urlencoded',
         beforeSend: function() {
-           // $(button).button('loading');
+           $(button).button('loading');
         },
         complete: function() {
-           //$(button).button('reset');
+           $(button).button('reset');
         },
         success: function(json) {
-
             $(element).find('.is-invalid').removeClass('is-invalid');
             $(element).find('.invalid-feedback').removeClass('d-block');
 
@@ -388,8 +368,89 @@ class Chain {
 
 var chain = new Chain();
 
-// Autocomplete
 (function($) {
+    $.fn.button = function(state) {
+        var $this = $(this);
+
+        //console.log($this);
+        console.log(state);
+
+       // Button.getOrCreateInstance(element);
+
+
+        this.each(function(index, element) {
+            console.log(index);
+            console.log(element);
+
+
+            //var $this = $(this);
+
+           // if (!data) $this.data('bs.button', (data = new Button(this, options)))
+
+
+            console.log($this);
+
+            $.extend(this, state);
+/*
+            if (option == 'loading') {
+                var icon = $this.find('i');
+
+                $this.prop('disabled', true);
+                $this.find('i').replaceWith('<i class="spinner-border"></i>');
+            }
+
+            if (option == 'reset') {
+                $this.prop('disabled', false);
+                $this.find('i').replaceWith(icon);
+
+            }
+
+ */
+        });
+    }
+
+    console.log($.fn.button);
+
+    $.fn.button.Constructor = function(element, options) {
+        console.log(element);
+        console.log(options);
+    };
+
+   // $.fn.button('');
+
+})(window.jQuery);
+
+$(document).ready(function() {
+
+ $('button').button('toggle');
+
+});
+
+
+/*
+// Buttons
+$(document).ready(function() {
+
+    $(document).on('click', '[data-oc-loading-text]', function(state) {
+        var element = this;
+
+        var html = $(element).html();
+
+        var loading = $(element).attr('data-oc-loading-text');
+
+        if (state == 'loading') {
+            $(element).html(loading);
+        }
+
+        if (state == 'reset') {
+            $(element).html(html);
+        }
+    });
+});
+*/
+
+// Autocomplete
++function($) {
     $.fn.autocomplete = function(option) {
         return this.each(function() {
             var $this = $(this);
@@ -463,4 +524,4 @@ var chain = new Chain();
             }
         });
     }
-})(window.jQuery);
+}(window.jQuery);

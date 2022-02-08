@@ -913,7 +913,8 @@ INSERT INTO `oc_extension` (`extension_id`, `extension`, `type`, `code`) VALUES
 (39, 'opencart', 'report', 'customer_activity'),
 (40, 'opencart', 'report', 'customer_order'),
 (41, 'opencart', 'report', 'customer_reward'),
-(42, 'opencart', 'currency', 'ecb');
+(42, 'opencart', 'currency', 'ecb'),
+(43, 'opencart', 'report', 'marketing');
 
 -----------------------------------------------------------
 
@@ -2116,7 +2117,7 @@ INSERT INTO `oc_setting` (`store_id`, `code`, `key`, `value`, `serialized`) VALU
 (0, 'report_customer_search', 'report_customer_search_sort_order', '3', 0),
 (0, 'report_customer_search', 'report_customer_search_status', '1', 0),
 (0, 'report_customer_transaction', 'report_customer_transaction_status', '1', 0),
-(0, 'report_customer_transaction', 'report_customer_transaction_status_sort_order', '4', 0),
+(0, 'report_customer_transaction', 'report_customer_transaction_sort_order', '4', 0),
 (0, 'report_sale_tax', 'report_sale_tax_status', '1', 0),
 (0, 'report_sale_tax', 'report_sale_tax_sort_order', '5', 0),
 (0, 'report_sale_shipping', 'report_sale_shipping_status', '1', 0),

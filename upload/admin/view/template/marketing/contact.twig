@@ -226,7 +226,9 @@ $('#mail-product').on('click', '.btn', function() {
     $(this).parent().parent().remove();
 });
 
-$('textarea[data-oc-toggle=\'ckeditor\']').ckeditor();
+$('textarea[data-oc-toggle=\'ckeditor\']').ckeditor({
+    language:'{{ ckeditor }}'
+});
 
 $('#button-send').on('click', function() {
     var element = this;

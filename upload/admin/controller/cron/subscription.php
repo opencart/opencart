@@ -1,4 +1,5 @@
 <?php
+
 namespace Opencart\Admin\Controller\Cron;
 class Subscription extends \Opencart\System\Engine\Controller {
 	public function index(int $cron_id, string $code, string $cycle, string $date_added, string $date_modified): void {
@@ -7,65 +8,101 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		$time = time();
 
 		$filter_data = [
-			'filter_subscription_status_id' => $this->config->get('config_subscription_status_id'),
-			'filter_date_added'             => date('Y-m-d H:i:s', $time)
+			'filter_subscription_status_id' => $this->config->get('config_subscription_active_status_id'),
+			'filter_next_payment_date' => date('Y-m-d H:i:s', $time)
 		];
+
+		$this->load->model('sale/subscription');
+		$this->load->model('setting/extension');
 
 		$results = $this->model_sale_subscription->getSubscriptions($filter_data);
 
 		foreach ($results as $result) {
-
-			if ($result['status'] && (strtotime('+' . $result['trial_duration'] . ' ' . $result['trial_frequency'], strtotime($result['date_modified'])) < ($time + 10))) {
-
-			}
-
-			if ($result['trial_status']) {
-				$trial_price = $result['trial_price'];
+			if ($this->config->get('config_subscription_active_status_id') == $result['subscription_status_id']) {
 
 
-				$tim = match($result['trial_frequency']) {
-					'Status::draft'     => 'grey',
-					'Status::published' => 'green',
-					'Status::archived'  => 'red',
-				};
+				if ($result['trial_status']) {
+					$trial_price = $result['trial_price'];
+
+					$time = match ($result['trial_frequency']) {
+						'day'  => 'grey',
+						'week' => 'green',
+						'' => 'red',
+					};
+
+					$frequency = $result['trial_frequency'];
+					$duration = $result['trial_duration'];
+					$cycle = $result['trial_cycle'];
+				} else {
+					$price = $result['price'];
+					$frequency = $result['frequency'];
+					$duration = $result['duration'];
+					$cycle = $result['cycle'];
+				}
+
+				// Get the payment method used by the subscription
+				$extension_info = $this->model_setting_extension->getExtensionByCode('payment', $result['payment_code']);
+
+				// Check payment status
+				if ($extension_info && $this->config->get('config_' . $result['payment_code'] . '_status')) {
+					$this->load->model('extension/' . $extension_info['extension'] . '/payment/' . $extension_info['code']);
+
+					if (property_exists($this->{'model_extension_' . $result['extension'] . '_payment_' . $result['code']}, 'recurringPayments')) {
+
+						$subscription_status_id = $this->{'model_extension_' . $result['extension'] . '_payment_' . $result['code']}->recurringPayment($result['customer_id'], $result['payment_method_id'], $result['amount']);
+
+						if ($subscription_status_id == $this->config->get('config_subscription_active_status_id')) {
+							// Successful
+							$this->model_sale_subscription->addTransaction($result['subscription_id'], 'payment success', $result['amount'], $result['order_id']);
+						}
+
+					} else {
+						// Failed if payment method does not have recurring payment method
+						$this->model_sale_subscription->addHistory($result['subscription_id'], $this->config->get('config_subscription_failed_status_id'), 'payment failed', true);
+					}
 
 
-				switch ($result['trial_frequency']) {
-					case 'day':
-						$time = $result['trial_frequency'];
-						break;
+				} else {
+					// Failed if payment method not found or enabled
+					$this->model_sale_subscription->addHistory($result['subscription_id'], $this->config->get('config_subscription_failed_status_id'), 'payment extension ' . $result['payment_code'] . ' could not be loaded', true);
+				}
+
+
+					// Expires
+					if ($result['duration'] > $result['remaining']) {
+
+						$this->model_sale_subscription->addHistory($result['subscription_id'], $this->config->get('config_subscription_expired_status_id'), 'payment extension ' . $result['payment_code'] . ' could not be loaded', true);
+
+
+					}
+
+					$subscription_data = [
+						'price'        => '',
+						'remaining'    => $result['remaining'] - 1,
+						'date_next_payment' => strtotime($result['remaining']),
+				];
+
+				$this->model_sale_subscription->editNextPayment($result['subscription_id'], $subscription_status_id, '');
+
+
+
+				$time = strtotime('+' . $result['trial_duration'] . ' ' . $result['trial_frequency'], strtotime($result['payment_date']));
+
+				echo $time . "\n";
 
 				}
 
-				if ($time > $result['date_modified']) {
 
-				}
+				//< ($time + 10
+				//strtotime('+' . $result['trial_duration'] . ' ' . $result['trial_frequency'], strtotime($result['date_modified']));
 
-				$data['trial_frequency'] = $result['trial_frequency'];
+				//if ($time > ) {
+				//}
 
-				$data['trial_duration'] = $result['trial_duration'];
-				$data['trial_cycle'] = $result['trial_cycle'];
-				$data['trial_status'] = $result['trial_status'];
+				//if () {
+				//}
+				//$result
 			}
-
-			//$data['price'] = $subscription_info['price'];
-
-
-			$data['frequency'] = $result['frequency'];
-
-
-			$data['duration'] = $result['duration'];
-
-
-			$data['cycle'] = $result['cycle'];
-
-			//if () {
-
-
-			//}
-
-
-			//$result
 		}
 	}
 }

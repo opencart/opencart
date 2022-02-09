@@ -7,7 +7,7 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 		$subscription_plan_id = $this->db->getLastId();
 
 		foreach ($data['subscription_plan_description'] as $language_id => $subscription_plan_description) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "subscription_plan_description` SET `subscription_plan_id` = '" . (int)$subscription_plan_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($subscription_plan_description['name']) . "', `description` = '" . $this->db->escape($subscription_plan_description['description']) . "'");
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "subscription_plan_description` SET `subscription_plan_id` = '" . (int)$subscription_plan_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($subscription_plan_description['name']) . "'");
 		}
 
 		return $subscription_plan_id;
@@ -19,7 +19,7 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "subscription_plan_description` WHERE `subscription_plan_id` = '" . (int)$subscription_plan_id . "'");
 
 		foreach ($data['subscription_plan_description'] as $language_id => $subscription_plan_description) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "subscription_plan_description` SET `subscription_plan_id` = '" . (int)$subscription_plan_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($subscription_plan_description['name']) . "', `description` = '" . $this->db->escape($subscription_plan_description['description']) . "'");
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "subscription_plan_description` SET `subscription_plan_id` = '" . (int)$subscription_plan_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($subscription_plan_description['name']) . "'");
 		}
 	}
 

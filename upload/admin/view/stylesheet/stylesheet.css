@@ -424,11 +424,6 @@ a {
     }
 }
 
-.row.mb-3 {
-    margin-left: -10px;
-    margin-right: -10px;
-}
-
 .row.mb-3 + .row.mb-3 {
     padding-top: 1rem;
     border-top: 1px solid #ededed;

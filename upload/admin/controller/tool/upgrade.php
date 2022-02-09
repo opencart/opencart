@@ -30,9 +30,6 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 		];
 
 		$data['current_version'] = VERSION;
-		$data['latest_version'] = '';
-		$data['date_added'] = '';
-
 		$data['upgrade'] = false;
 
 		$curl = curl_init(OPENCART_SERVER . 'index.php?route=api/upgrade');
@@ -50,19 +47,17 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 
 		// Extension compatibility check
 		if ($response_info) {
-			if (version_compare(VERSION, $response_info['version'], '>=')) {
-				$data['success'] = sprintf($this->language->get('text_success'), $response_info['version']);
-			} else {
-				$data['latest_version'] = $response_info['version'];
-				$data['log'] = $response_info['log'];
-				$data['date_added'] = $response_info['date_added'];
+			$data['latest_version'] = $response_info['version'];
+			$data['date_added'] = date($this->language->get('date_format_short'), strtotime($response_info['date_added']));
+			$data['log'] = $response_info['log'];
 
+			if (!version_compare(VERSION, $response_info['version'], '>=')) {
 				$data['upgrade'] = true;
-
-				$data['error_warning'] = sprintf($this->language->get('error_version'), $response_info['version']);
 			}
 		} else {
-			$data['error_warning'] = $this->language->get('error_connection');
+			$data['latest_version'] = '';
+			$data['date_added'] = '';
+			$data['log'] = '';
 		}
 
 		$data['backup'] = $this->url->link('tool/backup', 'user_token=' . $this->session->data['user_token']);
@@ -176,14 +171,14 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 						}
 
 						// Must not have a path before files and directories can be moved
-						//if (substr($path, -1) == '/' && mkdir($path, 0777)) {
-						//	$json['error'] = $this->language->get('error_download');
-						//}
+						if (substr($path, -1) == '/' && mkdir($path, 0777)) {
+							$json['error'] = $this->language->get('error_download');
+						}
 
 						// If check if the path is not directory and check there is no existing file
-						//if (substr($path, -1) != '/' && copy('zip://' . $file . '#' . $source, $path)) {
-						//	$json['error'] = $this->language->get('error_download');
-						//}
+						if (substr($path, -1) != '/' && copy('zip://' . $file . '#' . $source, $path)) {
+							$json['error'] = $this->language->get('error_download');
+						}
 					}
 				}
 

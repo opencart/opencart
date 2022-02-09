@@ -33,6 +33,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getResourceSharesAsync(array $args = [])
  * @method \Aws\Result listPendingInvitationResources(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listPendingInvitationResourcesAsync(array $args = [])
+ * @method \Aws\Result listPermissionVersions(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listPermissionVersionsAsync(array $args = [])
  * @method \Aws\Result listPermissions(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listPermissionsAsync(array $args = [])
  * @method \Aws\Result listPrincipals(array $args = [])

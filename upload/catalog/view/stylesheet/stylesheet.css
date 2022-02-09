@@ -1,6 +1,6 @@
 @charset "UTF-8";
 body {
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-weight: 400;
   color: #666;
   font-size: 12px;
@@ -31,7 +31,6 @@ h6 {
 }
 a {
   color: #23a1d1;
-  text-decoration: none;
 }
 a:hover {
   text-decoration: none;
@@ -54,7 +53,7 @@ label {
   margin-bottom: 15px;
 }
 div.required .col-form-label:before, div.required .form-label:before {
-  content: '* ';
+  content: "* ";
   color: #F00;
   font-weight: bold;
 }
@@ -62,21 +61,6 @@ div.required .col-form-label:before, div.required .form-label:before {
   .col-form-label {
     text-align: right;
   }
-}
-/* toast */
-#toast-container {
-  position: fixed;
-  width: 100%;
-  z-index: 1000;
-}
-#toast-container .container {
-  position: relative;
-}
-#toast {
-  position: absolute;
-  top: 5px;
-  right: 14px;
-  z-index: 1000;
 }
 /* top */
 #top {
@@ -98,24 +82,13 @@ div.required .col-form-label:before, div.required .form-label:before {
 #top .btn-link:hover {
   color: #444;
 }
-#top .list-inline-item .dropdown .dropdown-menu {
+#top a {
   font-size: 1.1em;
-}
-#top .list-inline-item .dropdown .dropdown-menu > li > a {
-  display: block;
-  padding: 3px 20px;
-  clear: both;
-  font-weight: 400;
-  line-height: 1.42857143;
-  color: #333;
-  white-space: nowrap;
-}
-#top .list-inline-item .dropdown .dropdown-menu > li > a:hover {
   text-decoration: none;
-  color: #ffffff;
-  background-color: #229ac8;
-  background-image: linear-gradient(to bottom, #23a1d1, #1f90bb);
-  background-repeat: repeat-x;
+}
+footer a {
+  font-size: 1.1em;
+  text-decoration: none;
 }
 /* logo */
 #logo {
@@ -141,18 +114,18 @@ div.required .col-form-label:before, div.required .form-label:before {
   text-shadow: 0 1px 0 #FFF;
 }
 /* cart */
-#cart {
+#header-cart {
   margin-bottom: 10px;
 }
-#cart > .btn {
+#header-cart > .btn {
   font-size: 12px;
   line-height: 18px;
   color: #FFF;
 }
-#cart .btn-lg {
+#header-cart .btn-lg {
   padding: 0.65rem 1rem;
 }
-#cart.open > .btn {
+#header-cart.open > .btn {
   background-image: none;
   background-color: #FFFFFF;
   border: 1px solid #E6E6E6;
@@ -160,33 +133,33 @@ div.required .col-form-label:before, div.required .form-label:before {
   box-shadow: none;
   text-shadow: none;
 }
-#cart.open > .btn:hover {
+#header-cart.open > .btn:hover {
   color: #444;
 }
-#cart .dropdown-menu {
+#header-cart .dropdown-menu {
   background: #eee;
   z-index: 1001;
   min-width: 100%;
 }
-#cart .dropdown-menu table {
+#header-cart .dropdown-menu table {
   margin-bottom: 10px;
 }
-#cart .dropdown-menu li > div {
+#header-cart .dropdown-menu li {
   min-width: 427px;
   padding: 0 10px;
 }
-#cart .dropdown-menu li p {
+#header-cart .dropdown-menu li p {
   margin: 20px 0;
 }
 @media (max-width: 478px) {
-  #cart .dropdown-menu {
+  #header-cart .dropdown-menu {
     width: 100%;
   }
-  #cart .dropdown-menu li > div {
+  #header-cart .dropdown-menu li > div {
     min-width: 100%;
   }
 }
-#cart .table-striped > tbody > tr:nth-of-type(odd) {
+#header-cart .table-striped > tbody > tr:nth-of-type(odd) {
   background-color: #f9f9f9;
 }
 /* menu */
@@ -344,7 +317,7 @@ footer a:hover {
   color: #fff;
 }
 footer h5 {
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 13px;
   font-weight: bold;
   color: #fff;
@@ -369,7 +342,7 @@ footer h5 {
   white-space: nowrap;
 }
 .breadcrumb > li.breadcrumb-item:after {
-  content: '';
+  content: "";
   display: block;
   position: absolute;
   top: -3px;
@@ -384,7 +357,7 @@ footer h5 {
   transform: rotate(-45deg);
 }
 .breadcrumb > li.breadcrumb-item + li:before {
-  content: '';
+  content: "";
   padding: 0;
 }
 .pagination {
@@ -724,34 +697,34 @@ footer h5 {
   cursor: pointer;
 }
 #checkout-cart #accordion h4:before {
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-size: 14px;
   font-weight: 900;
-  content: ' ';
+  content: " ";
   margin-right: 10px;
 }
 #checkout-cart #accordion h4.collapsed:before {
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-size: 14px;
   font-weight: 900;
-  content: '';
+  content: "";
   margin-right: 10px;
 }
 #checkout-checkout #accordion h4 {
   cursor: pointer;
 }
 #checkout-checkout #accordion h4:before {
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-size: 14px;
   font-weight: 900;
-  content: ' ';
+  content: " ";
   margin-right: 10px;
 }
 #checkout-checkout #accordion h4.collapsed:before {
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   font-size: 14px;
   font-weight: 900;
-  content: '';
+  content: "";
   margin-right: 10px;
 }
 #product-product h1 {

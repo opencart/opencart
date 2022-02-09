@@ -375,7 +375,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$data['subscription'] = '';
 		}
 
-
 		// Order
 		if (!empty($subscription_info)) {
 			$this->load->model('sale/order');

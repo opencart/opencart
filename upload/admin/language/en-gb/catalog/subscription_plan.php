@@ -9,11 +9,6 @@ $_['text_add']                   = 'Add Subscription Plan';
 $_['text_edit']                  = 'Edit Subscription Plan';
 $_['text_subscription']          = 'Subscription';
 $_['text_trial']                 = 'Trial';
-
-$_['text_trial']                 = 'Trial + Limited';
-$_['text_trial']                 = 'Trial + Limited';
-$_['text_trial']                 = 'Trial + Until Canceled';
-
 $_['text_subscription_trial']    = '{trial_price} every {trial_cycle} {trial_frequency}(s) for {trial_duration} payment(s) then';
 $_['text_subscription_duration'] = '{price} every {cycle} {frequency}(s) for {duration} payment(s)';
 $_['text_subscription_cancel']   = '{price} every {cycle} {frequency}(s) until canceled';
@@ -44,7 +39,6 @@ $_['column_sort_order']          = 'Sort Order';
 $_['column_action']              = 'Action';
 
 // Help
-$_['help_description']           = 'Trial Price = {trial_price}<br />Trial Duration = {trial_duration}<br />Trial Cycle = {trial_cycle}<br />Trial Frequency = {trial_frequency}<br />Price = {price}<br />Duration = {duration}<br />Cycle = {cycle}<br />Frequency = {frequency}';
 $_['help_duration']              = 'The duration is the number of times the user will make a payment, set this to 0 if you want payments until they are cancelled.';
 $_['help_cycle']                 = 'Subscription amounts are calculated by the frequency and cycles.';
 $_['help_frequency']             = 'If you use a frequency of "week" and a cycle of "2", then the user will be billed every 2 weeks.';

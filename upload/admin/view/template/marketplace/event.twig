@@ -75,13 +75,13 @@ $('#event').on('click', '.btn-info', function() {
     html += '      </div>';
     html += '      <div class="modal-body">';
     html += '        <div class="mb-3">';
-    html += '          <label for="input-description" class="form-label">{{ text_description }}</label> <textarea placeholder="{{ text_description }}" id="input-description"rows="5" class="form-control" disabled>' + $(element).attr('data-event-description') + '</textarea>';
+    html += '          <label for="input-description" class="form-label">{{ entry_description }}</label> <textarea placeholder="{{ entry_description }}" id="input-description" rows="5" class="form-control" disabled>' + $(element).attr('data-oc-description') + '</textarea>';
     html += '        </div>';
     html += '        <div class="mb-3">';
-    html += '          <label for="input-trigger" class="form-label">{{ text_trigger }}</label> <textarea placeholder="{{ text_trigger }}" id="input-trigger" class="form-control" disabled>' + $(element).attr('data-event-trigger') + '</textarea>';
+    html += '          <label for="input-trigger" class="form-label">{{ entry_trigger }}</label> <textarea placeholder="{{ entry_trigger }}" id="input-trigger" class="form-control" disabled>' + $(element).attr('data-oc-trigger') + '</textarea>';
     html += '        </div>';
     html += '        <div class="mb-3">';
-    html += '          <label for="input-action" class="form-label">{{ text_action }}</label> <textarea placeholder="{{ text_action }}" id="input-action" class="form-control" disabled>' + $(element).attr('data-event-action') + '</textarea>';
+    html += '          <label for="input-action" class="form-label">{{ entry_action }}</label> <textarea placeholder="{{ entry_action }}" id="input-action" class="form-control" disabled>' + $(element).attr('data-oc-action') + '</textarea>';
     html += '        </div>';
     html += '      </div>';
     html += '      </div>';
@@ -91,9 +91,7 @@ $('#event').on('click', '.btn-info', function() {
 
     $('body').append(html);
 
-    var event = document.querySelector('#modal-event');
-
-    var modal = new bootstrap.Modal(event);
+    var modal = new bootstrap.Modal(document.querySelector('#modal-event'));
 
     modal.show();
 });

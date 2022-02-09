@@ -5,14 +5,11 @@
       <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
     {% endfor %}
   </ul>
-  {% if success %}
-    <div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> {{ success }}</div>
-  {% endif %}
   <div class="row">
     {{ column_left }}
     <div id="content" class="col">
       {{ content_top }}
-      <h1>{{ text_payment_method }}</h1>
+      <h1>{{ heading_title }}</h1>
       <div id="payment-method">{{ list }}</div>
       <div class="d-inline-block pt-2 pd-2 w-100">
         <div class="float-end"><a href="{{ back }}" class="btn btn-light">{{ button_back }}</a></div>

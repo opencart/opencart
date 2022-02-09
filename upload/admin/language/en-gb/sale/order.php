@@ -24,6 +24,7 @@ $_['text_commission_add']     = 'Success: Commission added!';
 $_['text_commission_remove']  = 'Success: Commission removed!';
 $_['text_restock']            = 'Success: Products have been restocked!';
 $_['text_upload']             = 'Your file was successfully uploaded!';
+$_['text_subscription']       = 'Subscription';
 $_['text_more']               = 'More..';
 $_['text_less']               = 'Less..';
 $_['text_payment_address']    = 'Payment Address';

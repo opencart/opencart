@@ -77,24 +77,6 @@ div.required .col-form-label:before, div.required .form-label:before {
   }
 }
 
-/* toast */
-#toast-container {
-  position: fixed;
-  width: 100%;
-  z-index: 1000;
-}
-
-#toast-container .container {
-  position: relative;
-}
-
-#toast {
-  position: absolute;
-  top: 5px;
-  right: 14px;
-  z-index: 1000;
-}
-
 /* top */
 #top {
   background-color: #EEEEEE;
@@ -123,29 +105,16 @@ div.required .col-form-label:before, div.required .form-label:before {
   }
 }
 
-#top .list-inline-item .dropdown .dropdown-menu {
+#top a {
   font-size: 1.1em;
-
-  > li {
-    > a {
-      display: block;
-      padding: 3px 20px;
-      clear: both;
-      font-weight: 400;
-      line-height: 1.42857143;
-      color: #333;
-      white-space: nowrap;
-
-      &:hover {
-        text-decoration: none;
-        color: #ffffff;
-        background-color: #229ac8;
-        background-image: linear-gradient(to bottom, #23a1d1, #1f90bb);
-        background-repeat: repeat-x;
-      }
-    }
-  }
+  text-decoration: none;
 }
+
+footer a {
+  font-size: 1.1em;
+  text-decoration: none;
+}
+
 
 /* logo */
 #logo {
@@ -176,7 +145,7 @@ div.required .col-form-label:before, div.required .form-label:before {
 }
 
 /* cart */
-#cart {
+#header-cart {
   margin-bottom: 10px;
 
   > .btn {
@@ -212,12 +181,16 @@ div.required .col-form-label:before, div.required .form-label:before {
 
     table {
       margin-bottom: 10px;
+
     }
 
     li {
+      min-width: 427px;
+      padding: 0 10px;
+
       > div {
-        min-width: 427px;
-        padding: 0 10px;
+
+
       }
 
       p {

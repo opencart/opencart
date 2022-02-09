@@ -954,6 +954,11 @@ function db_schema() {
 				'not_null' => true
 			],
 			[
+				'name' => 'description',
+				'type' => 'text',
+				'not_null' => true
+			],
+			[
 				'name' => 'cycle',
 				'type' => 'varchar(12)',
 				'not_null' => true
@@ -5338,11 +5343,6 @@ function db_schema() {
 				'not_null' => true
 			],
 			[
-				'name' => 'payment_method_id',
-				'type' => 'int(11)',
-				'not_null' => true
-			],
-			[
 				'name' => 'name',
 				'type' => 'varchar(255)',
 				'not_null' => true
@@ -5398,8 +5398,18 @@ function db_schema() {
 				'not_null' => true
 			],
 			[
+				'name' => 'payment_method_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
 				'name' => 'subscription_status_id',
 				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'date_next',
+				'type' => 'datetime',
 				'not_null' => true
 			],
 			[

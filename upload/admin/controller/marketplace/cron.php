@@ -108,6 +108,7 @@ class Cron extends \Opencart\System\Engine\Controller {
 			$data['crons'][] = [
 				'cron_id'       => $result['cron_id'],
 				'code'          => $result['code'],
+				'description'   => $result['description'],
 				'cycle'         => $this->language->get('text_' . $result['cycle']),
 				'action'        => $result['action'],
 				'status'        => $result['status'],

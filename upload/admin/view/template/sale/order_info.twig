@@ -2668,7 +2668,7 @@ $('#button-refresh').on('click', function () {
 
                     if (product['subscription']) {
                         html += '<br/>';
-                        html += '  - <small>{{ text_subscription }} {{ subscription.description }}</small>';
+                        html += '  - <small>{{ text_subscription }} ' + product['subscription'] + '</small>';
                     }
 
                     html += '  </td>';

@@ -80,7 +80,7 @@ $('#button-upgrade').on('click', function () {
     $('#progress-title').html('{{ text_download }}');
     $('#progress-description').append('{{ text_download_description }}');
 
-    var next = 'index.php?route=tool/upgrade|download&user_token={{ user_token }}&version={{ version }}';
+    var next = 'index.php?route=tool/upgrade|download&user_token={{ user_token }}&version={{ latest_version }}';
 
     var upgrade = function () {
         return $.ajax({

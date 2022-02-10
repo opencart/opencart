@@ -122,7 +122,7 @@ $('#button-upgrade').on('click', function () {
                 }
             },
             error: function (xhr, ajaxOptions, thrownError) {
-                $('#log').append(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });
     };

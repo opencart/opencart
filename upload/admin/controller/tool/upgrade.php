@@ -91,7 +91,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 
 			$handle = fopen(DIR_DOWNLOAD . 'opencart-' . $version . '.zip', 'w');
 
-			$curl = curl_init('https://github.com/opencart/opencart/archive/' . $version . '.zip');
+			$curl = curl_init('https://github.com/opencart/opencart/releases/download/' . $version . '/opencart-' . $version . '.zip');
 
 			curl_setopt($curl, CURLOPT_USERAGENT, 'OpenCart ' . VERSION);
 			curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);

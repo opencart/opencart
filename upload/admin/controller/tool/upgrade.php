@@ -60,8 +60,6 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 			$data['log'] = '';
 		}
 
-		$data['backup'] = $this->url->link('tool/backup', 'user_token=' . $this->session->data['user_token']);
-
 		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');

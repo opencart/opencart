@@ -9,7 +9,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 		$filter_data = [
 			'filter_subscription_status_id' => $this->config->get('config_subscription_active_status_id'),
-			'filter_next_payment_date' => date('Y-m-d H:i:s', $time)
+			'filter_date_payment'           => date('Y-m-d H:i:s', $time)
 		];
 
 		$this->load->model('sale/subscription');
@@ -23,13 +23,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 				if ($result['trial_status']) {
 					$trial_price = $result['trial_price'];
-
-					$time = match ($result['trial_frequency']) {
-						'day'  => 'grey',
-						'week' => 'green',
-						'' => 'red',
-					};
-
 					$frequency = $result['trial_frequency'];
 					$duration = $result['trial_duration'];
 					$cycle = $result['trial_cycle'];
@@ -54,6 +47,22 @@ class Subscription extends \Opencart\System\Engine\Controller {
 						if ($subscription_status_id == $this->config->get('config_subscription_active_status_id')) {
 							// Successful
 							$this->model_sale_subscription->addTransaction($result['subscription_id'], 'payment success', $result['amount'], $result['order_id']);
+
+
+
+							// Expires
+							if ($result['duration'] >= $result['remaining']) {
+
+								$this->model_sale_subscription->addHistory($result['subscription_id'], $this->config->get('config_subscription_expired_status_id'), 'payment extension ' . $result['payment_code'] . ' could not be loaded', true);
+
+
+							}
+
+
+
+
+
+
 						}
 
 					} else {
@@ -76,13 +85,16 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 					}
 
+					$time = strtotime('+' . $result['trial_cycle'] . ' ' . $result['trial_frequency']);
+
+					$time = strtotime('+' . $result['cycle'] . ' ' . $result['frequency']);
+
 					$subscription_data = [
-						'price'        => '',
 						'remaining'    => $result['remaining'] - 1,
-						'date_next_payment' => strtotime($result['remaining']),
+						'date_payment' => date('Y-m-d', strtotime($result['remaining']))
 				];
 
-				$this->model_sale_subscription->editNextPayment($result['subscription_id'], $subscription_status_id, '');
+				$this->model_sale_subscription->editPayment($result['subscription_id'], $subscription_status_id, '');
 
 
 

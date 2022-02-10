@@ -17,49 +17,57 @@
 
         <fieldset>
           <legend>{{ text_information }}</legend>
-
-          <div class="row mb-4">
+          <div class="row mb-3">
             <div class="col">
-              <label class="text-uppercase"><strong>{{ text_current_version }}</strong></label>
-              <div class="font-weight-bold">{{ current_version }}</div>
+              <div class="form-control border rounded-start">
+                <div class="lead"><strong>{{ text_current_version }}</strong>
+                  <br/>
+                  <span{% if upgrade %} class="text-danger"{% endif %}>{{ current_version }}</span>
+                </div>
+              </div>
             </div>
             <div class="col">
-              <label class="text-uppercase"><strong>{{ text_latest_version }}</strong></label>
-              <div>{{ latest_version }}</div>
+              <div class="form-control border rounded-start">
+                <div class="lead"><strong>{{ text_latest_version }}</strong>
+                  <br/>
+                  {{ latest_version }}
+                </div>
+              </div>
             </div>
             <div class="col">
-              <label class="text-uppercase"><strong>{{ text_date_added }}</strong></label>
-              <div>{{ date_added }}</div>
+              <div class="form-control border rounded-start">
+                <div class="lead"><strong>{{ text_date_added }}</strong>
+                  <br/>
+                  {{ date_added }}
+                </div>
+              </div>
             </div>
           </div>
-          <div class="mb-4">
-            <label class="text-uppercase"><strong>{{ text_change }}</strong></label>
-            <div>{{ log }}</div>
+          <div class="form-control border rounded-start">
+            <div class="lead"><strong>{{ text_change }}</strong>
+              <br/>
+              {{ log }}
+            </div>
           </div>
         </fieldset>
-
         <fieldset>
-
           <legend>{{ text_status }}</legend>
-
-          <div class="d-flex">
-            <div class="flex-shrink-0">
-              <div class="spinner-border float-start"></div>
+          <div class="form-control border rounded-start">
+            <div class="d-flex">
+              <div class="flex-shrink-0">
+                <span class="fas fa-download fa-5x"></span> <span class="spinner-border spinner-border-sm"></span>
+              </div>
+              <div class="flex-grow-1 ms-3">
+                <div class="lead"><strong id="progress-title">{{ text_ready }}</strong>
+                  <br/>
+                  <span id="progress-description">{{ text_ready_description }}</span></div>
+              </div>
             </div>
-
-            <div class="flex-grow-1 ms-3">
-              <h6>{{ text_ready }}</h6>
-              <p>{{ text_ready_description }}</p>
-            </div>
-
-
           </div>
         </fieldset>
-
         <div class="mb-4 text-center">
           <button type="button" id="button-upgrade" data-oc-loading-text="{{ text_loading }}" class="btn btn-warning btn-lg"{% if not upgrade %} disabled{% endif %}><i class="fas fa-level-up-alt"></i> {{ button_upgrade }}</button>
         </div>
-
       </div>
     </div>
   </div>
@@ -69,8 +77,8 @@
 $('#button-upgrade').on('click', function () {
     var i = 0;
 
-    $('#progress-text').html('{{ text_download }}');
-    $('#log').append('{{ text_download }}' + "\n");
+    $('#progress-title').html('{{ text_download }}');
+    $('#progress-description').append('{{ text_download_description }}');
 
     var next = 'index.php?route=tool/upgrade|download&user_token={{ user_token }}&version={{ version }}';
 
@@ -80,9 +88,12 @@ $('#button-upgrade').on('click', function () {
             dataType: 'json',
             beforeSend: function () {
                 $('#button-upgrade').prop('disable', true);
+
             },
             complete: function () {
                 $('#button-upgrade').prop('disable', false);
+
+
             },
             success: function (json) {
                 $('.alert-dismissible').remove();
@@ -92,15 +103,16 @@ $('#button-upgrade').on('click', function () {
                 }
 
                 if (json['redirect']) {
-                    var timer = setInterval(function() {
+                    var timer = setInterval(function () {
                         location = json['redirect'];
-                    }, 500);
+                    }, 5000);
                 }
 
                 if (json['text']) {
                     i = i + 1;
 
-                    $('#progress-text').html(json['text']);
+                    $('#progress-title').html(json['text']);
+                    $('#progress-description').html(json['description']);
                 }
 
                 if (json['next']) {

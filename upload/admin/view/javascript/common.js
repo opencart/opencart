@@ -368,6 +368,18 @@ class Chain {
 
 var chain = new Chain();
 
+
++function ($) {
+    Button.prototype.loading = function () {
+        console.log('hi');
+    }
+}(jQuery);
+
+$(document).ready(function() {
+    $('button').button('loading');
+});
+
+/*
 (function($) {
     $.fn.button = function(state) {
         var $this = $(this);
@@ -391,7 +403,7 @@ var chain = new Chain();
             console.log($this);
 
             $.extend(this, state);
-/*
+
             if (option == 'loading') {
                 var icon = $this.find('i');
 
@@ -405,7 +417,7 @@ var chain = new Chain();
 
             }
 
- */
+
         });
     }
 
@@ -419,12 +431,8 @@ var chain = new Chain();
    // $.fn.button('');
 
 })(window.jQuery);
+ */
 
-$(document).ready(function() {
-
- $('button').button('toggle');
-
-});
 
 
 /*
@@ -524,4 +532,4 @@ $(document).ready(function() {
             }
         });
     }
-}(window.jQuery);
+}(jQuery);

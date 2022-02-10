@@ -109,7 +109,8 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 			curl_close($curl);
 
 			if ($status == 200) {
-				$json['text'] = $this->language->get('text_unzip');
+				$json['text'] = $this->language->get('text_install');
+				$json['description'] = $this->language->get('text_install_description');
 
 				$json['next'] = $this->url->link('tool/upgrade|install', 'user_token=' . $this->session->data['user_token'] . '&version=' . $version, true);
 			} else {
@@ -186,6 +187,9 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 
 				// Delete upgrade zip
 				unlink($file);
+
+				$json['text'] = $this->language->get('text_redirect');
+				$json['description'] = $this->language->get('text_redirect_description');
 
 				$json['redirect'] = HTTP_CATALOG . 'install/';
 			} else {

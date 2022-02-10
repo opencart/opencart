@@ -32,6 +32,8 @@ var tooltip = function () {
     });
 }
 
+
+
 $(document).ready(tooltip);
 // Makes tooltips work on ajax generated content
 $(document).on('click', 'button', tooltip);

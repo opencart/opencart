@@ -1,0 +1,29 @@
+services:
+    mysql:
+        image: "mysql:8"
+        environment:
+            - "MYSQL_ROOT_PASSWORD=root_password"
+            - "MYSQL_DATABASE=opencart"
+            - "MYSQL_USER=opencart"
+            - "MYSQL_PASSWORD=opencart_password"
+        restart: "unless-stopped"
+
+    opencart:
+        build: .
+        restart: "unless-stopped"
+        environment:
+            - "DB_DRIVER=mysqli"
+            - "DB_HOSTNAME=mysql"
+            - "DB_PORT=3306"
+            - "DB_USERNAME=opencart"
+            - "DB_PASSWORD=opencart_password"
+            - "DB_DATABASE=opencart"
+            - "DB_PREFIX=oc_"
+            - "HTTP_SERVER=http://localhost:8080/"
+            - "ADMIN_USERNAME=admin"
+            - "ADMIN_PASSWORD=admin_password"
+            - "ADMIN_EMAIL=admin@example.com"
+        depends_on:
+            - "mysql"
+        ports:
+            - 8080:80

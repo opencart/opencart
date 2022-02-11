@@ -173,9 +173,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 
 						if (substr($path, -1) == '/') {
 							if (!is_dir($path) && !mkdir($path, 0777)) {
-								echo $path . "\n";
-
-								$json['error'] = $this->language->get('error_directorty');
+								$json['error'] = sprintf($this->language->get('error_directory'), $path);
 							}
 						}
 
@@ -186,9 +184,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 							}
 
 							if (!copy('zip://' . $file . '#' . $source, $path)) {
-								echo $path . "\n";
-
-								$json['error'] = $this->language->get('error_download');
+								$json['error'] = sprintf($this->language->get('error_copy'), $source, $path);
 							}
 						}
 					}

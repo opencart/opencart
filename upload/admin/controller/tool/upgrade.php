@@ -170,7 +170,6 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 						}
 
 						// Must not have a path before files and directories can be moved
-
 						if (substr($path, -1) == '/') {
 							if (!is_dir($path) && !mkdir($path, 0777)) {
 								$json['error'] = sprintf($this->language->get('error_directory'), $path);

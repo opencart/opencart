@@ -28,4 +28,6 @@ $_['error_permission']          = 'Warning: You do not have permission to modify
 $_['error_connection']          = 'Could not connect to the upgrade server!';
 $_['error_download']            = 'Upgrade could not be downloaded!';
 $_['error_file']                = 'Upgrade file could not be found!';
+$_['error_directory']           = 'Could not create directory %s!';
+$_['error_copy']                = 'Could not copy file %s to %s!';
 $_['error_unzip']               = 'Zip file could not be opened!';

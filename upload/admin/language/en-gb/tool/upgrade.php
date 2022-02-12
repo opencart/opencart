@@ -17,7 +17,8 @@ $_['text_download']             = 'Downloading';
 $_['text_download_description'] = 'Downloading latest update...';
 $_['text_install']              = 'Copying files';
 $_['text_install_description']  = 'Copying files to the correct locations...';
-$_['text_redirect']             = 'Redirecting in 5 seconds';
+$_['text_redirect']             = 'Redirection will occur in 5 seconds.';
+//$_['text_redirect']			= 'Redirecting in 5 seconds...';
 $_['text_redirect_description'] = 'Redirecting to upgrade installer...';
 
 // Button

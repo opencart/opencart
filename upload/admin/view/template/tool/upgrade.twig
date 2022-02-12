@@ -87,21 +87,17 @@ $('#button-upgrade').on('click', function () {
             url: next,
             dataType: 'json',
             beforeSend: function () {
-                $('#button-upgrade').prop('disable', true);
+                $('#button-upgrade').prop('disabled', true);
 
             },
             complete: function () {
-
-
-
+                $('#button-upgrade').prop('disabled', false);
             },
             success: function (json) {
                 $('.alert-dismissible').remove();
 
                 if (json['error']) {
                     $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                    $('#button-upgrade').prop('disable', false);
                 }
 
                 if (json['redirect']) {
@@ -125,8 +121,6 @@ $('#button-upgrade').on('click', function () {
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-
-                $('#button-upgrade').prop('disable', false);
             }
         });
     };

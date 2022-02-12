@@ -9,7 +9,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 		}
 		
 		if (isset($this->request->get['route'])) {
-            if ((strpos($this->request->get['route'], 'install/step_') !== false) || (substr($this->request->get['route'], 0, 8) == 'upgrade/') || (substr($this->request->get['route'], 0, 10) == '3rd_party/')) {
+            if ((strpos($this->request->get['route'], 'install/step_') !== false) || (substr($this->request->get['route'], 0, 8) == 'upgrade/')) {
                 $upgrade = false;
             }
 		}

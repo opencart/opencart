@@ -12,8 +12,25 @@ class Upgrade1 extends \Opencart\System\Engine\Controller {
 			$version = '';
 		}
 
+		if (isset($this->request->get['admin'])) {
+			$admin = $this->request->get['admin'];
+		} else {
+			$admin = '';
+		}
+
 		// Extract
 		try {
+
+			if (is_file(DIR_OPENCART . 'config.php') && filesize(DIR_OPENCART . 'config.php') > 0) {
+				$lines = file(DIR_OPENCART . 'config.php');
+
+				foreach ($lines as $line) {
+					if (strpos($line, 'DB_') !== false) {
+						eval($line);
+					}
+				}
+			}
+
 			$file = DIR_DOWNLOAD . 'opencart-' . $version . '.zip';
 
 			if (!is_file($file)) {
@@ -55,7 +72,7 @@ class Upgrade1 extends \Opencart\System\Engine\Controller {
 								}
 							}
 
-							// If check if the path is not directory and check there is no existing file
+							// Check if the path is not directory and check there is no existing file
 							if (substr($path, -1) != '/') {
 								if (is_file($path)) {
 									unlink($path);
@@ -70,6 +87,8 @@ class Upgrade1 extends \Opencart\System\Engine\Controller {
 				}
 
 				$zip->close();
+
+				unlink($file);
 			} else {
 				$json['error'] = $this->language->get('error_unzip');
 			}

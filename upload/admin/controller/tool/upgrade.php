@@ -145,6 +145,9 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_file');
 		}
 
+
+
+
 		if (!$json) {
 			// Unzip the files
 			$zip = new \ZipArchive();
@@ -191,7 +194,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 				$json['text'] = $this->language->get('text_redirect');
 				$json['description'] = $this->language->get('text_redirect_description');
 
-				$json['redirect'] = HTTP_CATALOG . 'install/';
+				$json['redirect'] = HTTP_CATALOG . 'install/index.php?route=upgrade/upgrade&varsion&admin=';
 			} else {
 				$json['error'] = $this->language->get('error_unzip');
 			}

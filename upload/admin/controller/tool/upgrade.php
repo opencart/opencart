@@ -45,7 +45,6 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 
 		$response_info = json_decode($response, true);
 
-		// Extension compatibility check
 		if ($response_info) {
 			$data['latest_version'] = $response_info['version'];
 			$data['date_added'] = date($this->language->get('date_format_short'), strtotime($response_info['date_added']));
@@ -145,9 +144,6 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_file');
 		}
 
-
-
-
 		if (!$json) {
 			// Unzip the files
 			$zip = new \ZipArchive();
@@ -163,7 +159,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 						// Only extract the contents of the upload folder
 						$destination = str_replace('\\', '/', substr($source, strlen($remove)));
 
-						// Only get the files from the install directory
+						// Only get the files from install directory
 						if (substr($destination, 0, 8) == 'install/') {
 							// Default copy location
 							$path = DIR_OPENCART . $destination;
@@ -194,7 +190,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 				$json['text'] = $this->language->get('text_redirect');
 				$json['description'] = $this->language->get('text_redirect_description');
 
-				$json['redirect'] = HTTP_CATALOG . 'install/index.php?route=upgrade/upgrade&varsion&admin=';
+				$json['redirect'] = HTTP_CATALOG . 'install/index.php?route=upgrade/upgrade&version=' . $version . '&admin=' . DIR_APPLICATION . substr($destination, 6);
 			} else {
 				$json['error'] = $this->language->get('error_unzip');
 			}

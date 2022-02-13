@@ -54,8 +54,8 @@
           <legend>{{ text_status }}</legend>
           <div class="form-control border rounded-start">
             <div class="d-flex">
-              <div class="flex-shrink-0">
-                <span class="fas fa-download fa-5x"></span> <span class="spinner-border spinner-border-sm"></span>
+              <div id="progress-icon" class="flex-shrink-0">
+                <i class="fas fa-download fa-5x"></i>
               </div>
               <div class="flex-grow-1 ms-3">
                 <div class="lead"><strong id="progress-title">{{ text_ready }}</strong>
@@ -80,7 +80,7 @@ $('#button-upgrade').on('click', function () {
     $('#progress-title').html('{{ text_download }}');
     $('#progress-description').append('{{ text_download_description }}');
 
-    var next = 'index.php?route=tool/upgrade|download&user_token={{ user_token }}&version={{ latest_version }}';
+    var next = 'index.php?route=tool/upgrade|download&user_token={{ user_token }}&version={{ latest_version }}&admin={{ admin }}';
 
     var upgrade = function () {
         return $.ajax({
@@ -88,10 +88,11 @@ $('#button-upgrade').on('click', function () {
             dataType: 'json',
             beforeSend: function () {
                 $('#button-upgrade').prop('disabled', true);
-
+                $('#progress-icon').html('<i class="fas fa-circle-notch fa-5x fa-spin"></i>');
             },
             complete: function () {
                 $('#button-upgrade').prop('disabled', false);
+                $('#progress-icon').html('<i class="fas fa-download fa-5x"></i>');
             },
             success: function (json) {
                 $('.alert-dismissible').remove();

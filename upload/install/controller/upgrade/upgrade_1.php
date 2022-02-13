@@ -21,8 +21,10 @@ class Upgrade1 extends \Opencart\System\Engine\Controller {
 		// Extract
 		try {
 
-			if (is_file(DIR_OPENCART . 'config.php') && filesize(DIR_OPENCART . 'config.php') > 0) {
-				$lines = file(DIR_OPENCART . 'config.php');
+			$file = DIR_OPENCART . $admin . '/config.php';
+
+			if (is_file($file)) {
+				$lines = file($file);
 
 				foreach ($lines as $line) {
 					if (strpos($line, 'DB_') !== false) {

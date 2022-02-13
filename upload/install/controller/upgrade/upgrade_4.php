@@ -294,7 +294,17 @@ class Upgrade4 extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$json['success'] = sprintf($this->language->get('text_progress'), 4, 4, 8);
 
-			$json['next'] = $this->url->link('upgrade/upgrade_5', '', true);
+			$url = '';
+
+			if (isset($this->request->get['version'])) {
+				$url .= '&version=' . $this->request->get['version'];
+			}
+
+			if (isset($this->request->get['admin'])) {
+				$url .= '&admin=' . $this->request->get['admin'];
+			}
+
+			$json['next'] = $this->url->link('upgrade/upgrade_5', $url, true);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

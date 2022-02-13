@@ -1,5 +1,4 @@
 <?php
-
 namespace Opencart\Admin\Controller\Cron;
 class Subscription extends \Opencart\System\Engine\Controller {
 	public function index(int $cron_id, string $code, string $cycle, string $date_added, string $date_modified): void {
@@ -48,20 +47,12 @@ class Subscription extends \Opencart\System\Engine\Controller {
 							// Successful
 							$this->model_sale_subscription->addTransaction($result['subscription_id'], 'payment success', $result['amount'], $result['order_id']);
 
-
-
 							// Expires
 							if ($result['duration'] >= $result['remaining']) {
 
 								$this->model_sale_subscription->addHistory($result['subscription_id'], $this->config->get('config_subscription_expired_status_id'), 'payment extension ' . $result['payment_code'] . ' could not be loaded', true);
 
-
 							}
-
-
-
-
-
 
 						}
 
@@ -70,40 +61,32 @@ class Subscription extends \Opencart\System\Engine\Controller {
 						$this->model_sale_subscription->addHistory($result['subscription_id'], $this->config->get('config_subscription_failed_status_id'), 'payment failed', true);
 					}
 
-
 				} else {
 					// Failed if payment method not found or enabled
 					$this->model_sale_subscription->addHistory($result['subscription_id'], $this->config->get('config_subscription_failed_status_id'), 'payment extension ' . $result['payment_code'] . ' could not be loaded', true);
 				}
 
+				// Expires
+				if ($result['duration'] > $result['remaining']) {
 
-					// Expires
-					if ($result['duration'] > $result['remaining']) {
+					$this->model_sale_subscription->addHistory($result['subscription_id'], $this->config->get('config_subscription_expired_status_id'), 'payment extension ' . $result['payment_code'] . ' could not be loaded', true);
 
-						$this->model_sale_subscription->addHistory($result['subscription_id'], $this->config->get('config_subscription_expired_status_id'), 'payment extension ' . $result['payment_code'] . ' could not be loaded', true);
+				}
 
+				$time = strtotime('+' . $result['trial_cycle'] . ' ' . $result['trial_frequency']);
 
-					}
+				$time = strtotime('+' . $result['cycle'] . ' ' . $result['frequency']);
 
-					$time = strtotime('+' . $result['trial_cycle'] . ' ' . $result['trial_frequency']);
-
-					$time = strtotime('+' . $result['cycle'] . ' ' . $result['frequency']);
-
-					$subscription_data = [
-						'remaining'    => $result['remaining'] - 1,
-						'date_payment' => date('Y-m-d', strtotime($result['remaining']))
+				$subscription_data = [
+					'remaining'    => $result['remaining'] - 1,
+					'date_payment' => date('Y-m-d', strtotime($result['remaining']))
 				];
 
 				$this->model_sale_subscription->editPayment($result['subscription_id'], $subscription_status_id, '');
 
-
-
 				$time = strtotime('+' . $result['trial_duration'] . ' ' . $result['trial_frequency'], strtotime($result['payment_date']));
 
 				echo $time . "\n";
-
-				}
-
 
 				//< ($time + 10
 				//strtotime('+' . $result['trial_duration'] . ' ' . $result['trial_frequency'], strtotime($result['date_modified']));

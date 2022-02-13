@@ -261,7 +261,7 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$json['success'] = sprintf($this->language->get('text_progress'), 7, 7, 7);
+			$json['success'] = sprintf($this->language->get('text_progress'), 8, 8, 8);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

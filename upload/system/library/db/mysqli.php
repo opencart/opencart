@@ -10,8 +10,10 @@ class MySQLi {
 
 		try {
 			$mysqli = @new \MySQLi($hostname, $username, $password, $database, $port);
-		} catch (\mysqli_sql_exception $e) {
-			throw new \Exception('Error: Could not make a database link using ' . $username . '@' . $hostname . '!');
+			$mysqli->options(MYSQLI_OPT_CONNECT_TIMEOUT, 5); // optional, see comment
+		} catch (\Exception $e) {
+			error_log("\n" . date('Y.m.d H:i:s') . ' Error: no connection to database [' . $database . '] with user [' . $username . '] pw [' . $password . '] on host [' . $hostname . '] and port [' . $port . '] msg [' . $e->getMessage() . ']', 3, DIR_LOGS . 'error.log' );
+			die();
 		}
 
 		if (!$mysqli->connect_errno) {
@@ -20,7 +22,8 @@ class MySQLi {
 			$this->connection->set_charset('utf8');
 			$this->connection->query("SET SESSION sql_mode = 'NO_ZERO_IN_DATE,NO_ENGINE_SUBSTITUTION'");
 		} else {
-			throw new \Exception('Error: Could not make a database link using ' . $username . '@' . $hostname . '!');
+			error_log("\n" . date('Y.m.d H:i:s') . ' Error: Could not make a database link using ' . $username . '@' . $hostname . '!');
+			die();
 		}
 	}
 

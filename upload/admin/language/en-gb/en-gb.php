@@ -164,6 +164,15 @@ $_['error_upload_8']                = 'Warning: File upload stopped by extension
 $_['error_upload_999']              = 'Warning: No error code available!';
 $_['error_upload_size']             = 'Warning: The uploaded file exceeds the %smb max file size!';
 $_['error_curl']                    = 'CURL: Error Code(%s): %s';
+$_['error_format_b']				= 'Warning: The uploaded file exceeds the max file size: %s bytes!';
+$_['error_format_kb']				= 'Warning: The uploaded file exceeds the max file size: %s kilobytes!';
+$_['error_format_mb']				= 'Warning: The uploaded file exceeds the max file size: %s megabytes!';
+$_['error_format_gb']				= 'Warning: The uploaded file exceeds the max file size: %s gigabytes!';
+$_['error_format_tb']				= 'Warning: The uploaded file exceeds the max file size: %s terabytes!';
+$_['error_format_pb']				= 'Warning: The uploaded file exceeds the max file size: %s petabytes!';
+$_['error_format_eb']				= 'Warning: The uploaded file exceeds the max file size: %s exabyte!';
+$_['error_format_zb']				= 'Warning: The uploaded file exceeds the max file size: %s zetabyte!';
+$_['error_format_yb']				= 'Warning: The uploaded file exceeds the max file size: %s yotabyte!';
 
 /* When doing translations only include the matching language code */
 

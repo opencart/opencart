@@ -113,3 +113,34 @@ function date_added($date) {
 
 	return [$code, $date_added];
 }
+
+// Source: https://stackoverflow.com/a/5502088
+function format_size($file = '', $max = true) {
+	if ($max) {
+		$size = $size = sprintf('%u', ini_get('upload_max_filesize'));
+	} elseif (is_file($file) && !$max) {
+		$size = sprintf('%u', filesize($file));
+	}
+	
+	if ($size) {
+		$suffix = [];
+		
+		$suffix = [
+			'b',
+			'kb',
+			'mb',
+			'gb',
+			'tb',
+			'pb',
+			'eb',
+			'zb',
+			'yb'
+		];
+			
+		$code = intval(log($size, 1024));
+			
+		if (array_key_exists($code, $suffix) === true) {
+			return [$code, $size];    
+		}
+	}
+}

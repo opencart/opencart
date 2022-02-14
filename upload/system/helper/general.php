@@ -117,7 +117,7 @@ function date_added($date) {
 // Source: https://stackoverflow.com/a/5502088
 function format_size($file = '', $max = true) {
 	if ($max) {
-		$size = $size = sprintf('%u', ini_get('upload_max_filesize'));
+		$size = sprintf('%u', ini_get('upload_max_filesize'));
 	} elseif (is_file($file) && !$max) {
 		$size = sprintf('%u', filesize($file));
 	}

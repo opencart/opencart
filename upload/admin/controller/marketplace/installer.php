@@ -23,7 +23,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 
 		$data['error_upload_size'] = sprintf($this->language->get('error_format_' . $code), $size);
 
-		$data['config_file_max_size'] = ((int)preg_filter('/[^0-9]/', '', $size));
+		$data['config_file_max_size'] = ((int)preg_filter('/[^0-9]/', '', $size) * 1000);
 
 		$data['upload'] = $this->url->link('tool/installer|upload', 'user_token=' . $this->session->data['user_token']);
 

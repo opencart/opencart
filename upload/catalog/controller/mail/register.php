@@ -80,7 +80,6 @@ class Register extends \Opencart\System\Engine\Controller {
 			}
 
 			$data['email'] = $args[0]['email'];
-			$data['telephone'] = $args[0]['telephone'];
 
 			$data['store'] = $store_name;
 			$data['store_url'] = $this->config->get('config_url');

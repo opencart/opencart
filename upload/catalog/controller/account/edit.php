@@ -48,7 +48,6 @@ class Edit extends \Opencart\System\Engine\Controller {
 		$data['firstname'] = $customer_info['firstname'];
 		$data['lastname'] = $customer_info['lastname'];
 		$data['email'] = $customer_info['email'];
-		$data['telephone'] = $customer_info['telephone'];
 
 		// Custom Fields
 		$data['custom_fields'] = [];
@@ -96,8 +95,7 @@ class Edit extends \Opencart\System\Engine\Controller {
 			$keys = [
 				'firstname',
 				'lastname',
-				'email',
-				'telephone'
+				'email'
 			];
 
 			foreach ($keys as $key) {
@@ -122,10 +120,6 @@ class Edit extends \Opencart\System\Engine\Controller {
 
 			if (($this->customer->getEmail() != $this->request->post['email']) && $this->model_account_customer->getTotalCustomersByEmail($this->request->post['email'])) {
 				$json['error']['warning'] = $this->language->get('error_exists');
-			}
-
-			if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
-				$json['error']['telephone'] = $this->language->get('error_telephone');
 			}
 
 			// Custom field validation
@@ -157,7 +151,6 @@ class Edit extends \Opencart\System\Engine\Controller {
 				'firstname'         => $this->request->post['firstname'],
 				'lastname'          => $this->request->post['lastname'],
 				'email'             => $this->request->post['email'],
-				'telephone'         => $this->request->post['telephone'],
 				'custom_field'      => isset($this->request->post['custom_field']) ? $this->request->post['custom_field'] : []
 			];
 

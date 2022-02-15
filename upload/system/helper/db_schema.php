@@ -1091,11 +1091,6 @@ function db_schema() {
 				'not_null' => true
 			],
 			[
-				'name' => 'telephone',
-				'type' => 'varchar(32)',
-				'not_null' => true
-			],
-			[
 				'name' => 'password',
 				'type' => 'varchar(255)',
 				'not_null' => true
@@ -3283,11 +3278,6 @@ function db_schema() {
 			[
 				'name' => 'email',
 				'type' => 'varchar(96)',
-				'not_null' => true
-			],
-			[
-				'name' => 'telephone',
-				'type' => 'varchar(32)',
 				'not_null' => true
 			],
 			[

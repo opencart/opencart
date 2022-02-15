@@ -13,195 +13,212 @@
 <body>
 <div class="container">
   {% for order in orders %}
-  <div style="page-break-after: always;">
-    <h1>{{ text_picklist }} #{{ order.order_id }}</h1>
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4">
-      <div class="col">
-        <div class="form-control-plaintext p-0 border rounded mb-3">
-          <div class="lead p-2"><strong>{{ text_invoice }}</strong>
-            <br/>
-            {% if order.invoice_no %}
-              {{ order.invoice_no }}
-            {% else %}
-              &nbsp;
-            {% endif %}
-          </div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="form-control-plaintext p-0 border rounded mb-3">
-          <div class="lead p-2"><strong>{{ text_order_id }}</strong>
-            <br/>
-            {{ order.order_id }}
-          </div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="form-control-plaintext p-0 border rounded mb-3">
-          <div class="lead p-2"><strong>{{ text_date_added }}</strong>
-            <br/>
-            {{ order.date_added }}
-          </div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="form-control-plaintext p-0 border rounded mb-3">
-          <div class="lead p-2"><strong>{{ text_store }}</strong>
-            <br/>
-            {{ order.store_name }}
-          </div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="form-control-plaintext p-0 border rounded mb-3">
-          <div class="lead p-2"><strong>{{ text_store_telephone }}</strong>
-            <br/>
-            {{ order.store_telephone }}
-          </div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="form-control-plaintext p-0 border rounded mb-3">
-          <div class="lead p-2"><strong>{{ text_store_email }}</strong>
-            <br/>
-            {{ order.store_email }}
-          </div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="form-control-plaintext p-0 border rounded mb-3">
-          <div class="lead p-2"><strong>{{ text_website }}</strong>
-            <br/>
-            {{ order.store_url }}
-          </div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="form-control-plaintext p-0 border rounded mb-3">
-          <div class="lead p-2"><strong>{{ text_shipping_method }}</strong>
-            <br/>
-            {{ order.shipping_method }}
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4">
-    <div class="col">
-      <div class="form-control-plaintext p-0 border rounded mb-3">
-        <div class="lead p-2"><strong>{{ text_customer_email }}</strong>
-          <br/>
-          {% if order.email %}
-            {{ order.email }}
-          {% else %}
-            &nbsp;
-          {% endif %}
+    <div style="page-break-after: always;">
+      <h1>{{ text_picklist }} #{{ order.order_id }}</h1>
 
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4">
+        <div class="col">
+          <div class="form-control-plaintext p-0 border rounded mb-3">
+            <div class="lead p-2"><strong>{{ text_invoice }}</strong>
+              <br/>
+              {% if order.invoice_no %}
+                {{ order.invoice_no }}
+              {% else %}
+                &nbsp;
+              {% endif %}
+            </div>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="form-control-plaintext p-0 border rounded mb-3">
+            <div class="lead p-2"><strong>{{ text_order_id }}</strong>
+              <br/>
+              {{ order.order_id }}
+            </div>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="form-control-plaintext p-0 border rounded mb-3">
+            <div class="lead p-2"><strong>{{ text_date_added }}</strong>
+              <br/>
+              {{ order.date_added }}
+            </div>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="form-control-plaintext p-0 border rounded mb-3">
+            <div class="lead p-2"><strong>{{ text_store }}</strong>
+              <br/>
+              {{ order.store_name }}
+            </div>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="form-control-plaintext p-0 border rounded mb-3">
+            <div class="lead p-2"><strong>{{ text_store_telephone }}</strong>
+              <br/>
+              {{ order.store_telephone }}
+            </div>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="form-control-plaintext p-0 border rounded mb-3">
+            <div class="lead p-2"><strong>{{ text_store_email }}</strong>
+              <br/>
+              {{ order.store_email }}
+            </div>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="form-control-plaintext p-0 border rounded mb-3">
+            <div class="lead p-2"><strong>{{ text_website }}</strong>
+              <br/>
+              {{ order.store_url }}
+            </div>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="form-control-plaintext p-0 border rounded mb-3">
+            <div class="lead p-2"><strong>{{ text_shipping_method }}</strong>
+              <br/>
+              {{ order.shipping_method }}
+            </div>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="form-control-plaintext p-0 border rounded mb-3">
+            <div class="lead p-2"><strong>{{ text_customer_email }}</strong>
+              <br/>
+              {% if order.email %}
+                {{ order.email }}
+              {% else %}
+                &nbsp;
+              {% endif %}
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="row row-cols-1 row-cols-sm-2">
+        <div class="col">
+          <div class="form-control-plaintext p-0 border rounded mb-3">
+            <div class="lead p-2"><strong>{{ text_shipping_address }}</strong>
+              <br/>
+              {% if order.shipping_address %}
+                {{ order.shipping_address }}
+              {% else %}
+                &nbsp;
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-control-plaintext p-0 border rounded mb-3">
+            <div class="lead p-2"><strong>{{ text_store_address }}</strong>
+              <br/>
+              {{ order.store_address }}
+            </div>
+          </div>
         </div>
       </div>
+
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <td><b>{{ column_location }}</b></td>
+            <td><b>{{ column_reference }}</b></td>
+            <td><b>{{ column_product }}</b></td>
+            <td><b>{{ column_weight }}</b></td>
+            <td><b>{{ column_model }}</b></td>
+            <td class="text-end"><b>{{ column_quantity }}</b></td>
+          </tr>
+        </thead>
+        <tbody>
+          {% for product in order.product %}
+            <tr>
+              <td>{{ product.location }}</td>
+              <td>
+                {% if product.sku %}
+                  {{ text_sku }} {{ product.sku }}
+                  <br/>
+                {% endif %}
+
+                {% if product.upc %}
+                  {{ text_upc }} {{ product.upc }}
+                  <br/>
+                {% endif %}
+
+                {% if product.ean %}
+                  {{ text_ean }} {{ product.ean }}
+                  <br/>
+                {% endif %}
+
+                {% if product.jan %}
+                  {{ text_jan }} {{ product.jan }}
+                  <br/>
+                {% endif %}
+
+                {% if product.isbn %}
+                  {{ text_isbn }} {{ product.isbn }}
+                  <br/>
+                {% endif %}
+
+                {% if product.mpn %}
+                  {{ text_mpn }}{{ product.mpn }}
+                  <br/>
+                {% endif %}
+              </td>
+              <td>{{ product.name }}
+
+                {% for option in product.option %}
+                  <br/>
+                  <small> - {{ option.name }}: {{ option.value }}</small>
+                {% endfor %}
+
+                {% if product.reward %}
+                  <br/>
+                  <small> - {{ text_points }} {{ product.reward }}</small>
+                {% endif %}
+
+                {% if product.subscription %}
+                  <br/>
+                  <small> - {{ text_subscription }} {{ product.subscription }} </small>
+                {% endif %}
+
+              </td>
+              <td>{{ product.weight }}</td>
+              <td>{{ product.model }}</td>
+              <td class="text-end">{{ product.quantity }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% if order.comment %}
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <td><b>{{ text_comment }}</b></td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{{ order.comment }}</td>
+            </tr>
+          </tbody>
+        </table>
+      {% endif %}
     </div>
-    <div class="col">
-      <div class="form-control-plaintext p-0 border rounded mb-3">
-        <div class="lead p-2"><strong>{{ text_customer_telephone }}</strong>
-          <br/>
-          {% if order.telephone %}
-            {{ order.telephone }}
-          {% else %}
-            &nbsp;
-          {% endif %}
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="row row-cols-1 row-cols-sm-2">
-    <div class="col">
-      <div class="form-control-plaintext p-0 border rounded mb-3">
-        <div class="lead p-2"><strong>{{ text_shipping_address }}</strong>
-          <br/>
-          {% if order.shipping_address %}
-            {{ order.shipping_address }}
-          {% else %}
-            &nbsp;
-          {% endif %}
-        </div>
-      </div>
-    </div>
-    <div class="col">
-      <div class="form-control-plaintext p-0 border rounded mb-3">
-        <div class="lead p-2"><strong>{{ text_store_address }}</strong>
-          <br/>
-          {{ order.store_address }}
-        </div>
-      </div>
-    </div>
-  </div>
-  <table class="table table-bordered">
-    <thead>
-      <tr>
-        <td><b>{{ column_location }}</b></td>
-        <td><b>{{ column_reference }}</b></td>
-        <td><b>{{ column_product }}</b></td>
-        <td><b>{{ column_weight }}</b></td>
-        <td><b>{{ column_model }}</b></td>
-        <td class="text-end"><b>{{ column_quantity }}</b></td>
-      </tr>
-    </thead>
-    <tbody>
-      {% for product in order.product %}
-        <tr>
-          <td>{{ product.location }}</td>
-          <td>{% if product.sku %}
-              {{ text_sku }} {{ product.sku }}
-              <br/>
-            {% endif %}
-            {% if product.upc %}
-              {{ text_upc }} {{ product.upc }}
-              <br/>
-            {% endif %}
-            {% if product.ean %}
-              {{ text_ean }} {{ product.ean }}
-              <br/>
-            {% endif %}
-            {% if product.jan %}
-              {{ text_jan }} {{ product.jan }}
-              <br/>
-            {% endif %}
-            {% if product.isbn %}
-              {{ text_isbn }} {{ product.isbn }}
-              <br/>
-            {% endif %}
-            {% if product.mpn %}
-              {{ text_mpn }}{{ product.mpn }}
-              <br/>
-            {% endif %}</td>
-          <td>{{ product.name }}
-            {% for option in product.option %}
-              <br/>
-              &nbsp;
-              <small> - {{ option.name }}: {{ option.value }}</small>
-            {% endfor %}</td>
-          <td>{{ product.weight }}</td>
-          <td>{{ product.model }}</td>
-          <td class="text-end">{{ product.quantity }}</td>
-        </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-  {% if order.comment %}
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <td><b>{{ text_comment }}</b></td>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>{{ order.comment }}</td>
-        </tr>
-      </tbody>
-    </table>
-  {% endif %}
-{% endfor %}
+  {% endfor %}
 </div>
 </body>
 </html>

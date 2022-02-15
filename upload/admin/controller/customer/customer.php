@@ -472,12 +472,6 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$data['email'] = '';
 		}
 
-		if (!empty($customer_info)) {
-			$data['telephone'] = $customer_info['telephone'];
-		} else {
-			$data['telephone'] = '';
-		}
-
 		// Custom Fields
 		$this->load->model('customer/custom_field');
 
@@ -583,10 +577,6 @@ class Customer extends \Opencart\System\Engine\Controller {
 			if ($customer_info && ($this->request->post['customer_id'] != $customer_info['customer_id'])) {
 				$json['error']['warning'] = $this->language->get('error_exists');
 			}
-		}
-
-		if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
-			$json['error']['telephone'] = $this->language->get('error_telephone');
 		}
 
 		// Custom field validation
@@ -1101,7 +1091,6 @@ class Customer extends \Opencart\System\Engine\Controller {
 					'firstname'         => $result['firstname'],
 					'lastname'          => $result['lastname'],
 					'email'             => $result['email'],
-					'telephone'         => $result['telephone'],
 					'custom_field'      => json_decode($result['custom_field'], true),
 					'address'           => $this->model_customer_customer->getAddresses($result['customer_id'])
 				];

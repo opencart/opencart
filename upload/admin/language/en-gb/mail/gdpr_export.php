@@ -12,7 +12,6 @@ $_['text_addresses']  = 'Addresses';
 $_['text_name']       = 'Customer Name';
 $_['text_recipient']  = 'Recipient';
 $_['text_email']      = 'E-Mail';
-$_['text_telephone']  = 'Telephone';
 $_['text_company']    = 'Company';
 $_['text_address_1']  = 'Address 1';
 $_['text_address_2']  = 'Address 2';

@@ -67,14 +67,12 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 				$data['firstname'] = $this->customer->getFirstName();
 				$data['lastname'] = $this->customer->getLastName();
 				$data['email'] = $this->customer->getEmail();
-				$data['telephone'] = $this->customer->getTelephone();
 			} else {
 				$customer_group_id = $args[1]['customer_group_id'];
 
 				$data['firstname'] = $args[1]['firstname'];
 				$data['lastname'] = $args[1]['lastname'];
 				$data['email'] = $args[1]['email'];
-				$data['telephone'] = $args[1]['telephone'];
 			}
 
 			$data['website'] = html_entity_decode($args[1]['website'], ENT_QUOTES, 'UTF-8');

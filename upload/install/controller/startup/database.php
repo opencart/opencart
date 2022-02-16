@@ -8,7 +8,7 @@ class Database extends \Opencart\System\Engine\Controller {
 			$lines = file(DIR_OPENCART . 'config.php');
 
 			foreach ($lines as $number => $line) {
-				if (strpos(strtoupper($line), 'DB_') !== false && preg_match('/define\(\'(.*)\',\s+\'(.*)\'\)/', $line, $match, PREG_OFFSET_CAPTURE)) {
+				if (strpos(strtoupper($line), 'DB_') !== false && preg_match('/define\(\'(.*)\',\s+\'(.*)\'\)/', $line, $match, PREG_OFFSET_CAPTURE) && isset($matches[2][0])) {
 					$config[$match[1][0]] = $match[2][0];
 				}
 			}

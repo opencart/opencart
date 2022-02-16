@@ -27,7 +27,7 @@ class Upgrade1 extends \Opencart\System\Engine\Controller {
 			$lines = file(DIR_OPENCART . 'config.php');
 
 			foreach ($lines as $number => $line) {
-				if (preg_match('/define\(\'(.*)\',\s+\'(.*)\'\)/', $line, $match, PREG_OFFSET_CAPTURE)) {
+				if (preg_match('/define\(\'(.*)\',\s+\'(.*)\'\)/', $line, $match, PREG_OFFSET_CAPTURE) && isset($match[2][0])) {
 					$config[$match[1][0]] = $match[2][0];
 				}
 			}
@@ -65,6 +65,7 @@ class Upgrade1 extends \Opencart\System\Engine\Controller {
 
 								// Must not have a path before files and directories can be moved
 								if (substr($path, -1) == '/') {
+									// 0777 might be server-based.
 									if (!is_dir($path) && !mkdir($path, 0777)) {
 										$json['error'] = sprintf($this->language->get('error_directory'), $path);
 									}

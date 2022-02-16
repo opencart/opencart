@@ -7,6 +7,9 @@
     </div>
   </div>
   <div class="container">
+    {% if error_warning %}
+      <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}</div>
+    {% endif %}
     <div class="card">
       <div class="card-header"><i class="fab fa-opencart"></i>&nbsp;&nbsp;&nbsp;{{ text_upgrade }}</div>
       <div class="card-body">
@@ -42,15 +45,15 @@
 </div>
 <script type="text/javascript"><!--
 $('#button-continue').on('click', function () {
-    step = 1;
-
-    var next = 'index.php?route=upgrade/upgrade_1';
+    var step = 1;
 
     $('#progress-bar').addClass('progress-bar-success').css('width', '0%').removeClass('progress-bar-danger');
     $('#progress-text').html('');
 
+    var next = 'index.php?route=upgrade/upgrade_1';
+
     var upgrade = function () {
-        $.ajax({
+        return $.ajax({
             url: next,
             dataType: 'json',
             beforeSend: function () {
@@ -74,12 +77,12 @@ $('#button-continue').on('click', function () {
                 step++;
 
                 if (json['next']) {
-                    next(json['next']);
+                    next = json['next'];
+
+                    chain.attach(upgrade);
                 }
             },
             error: function (xhr, ajaxOptions, thrownError) {
-                alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });

@@ -287,6 +287,31 @@ class Upgrade4 extends \Opencart\System\Engine\Controller {
 					$this->db->query("UPDATE `" . DB_PREFIX . "extension` SET `extension` = 'opencart' WHERE `code` = '" . $this->db->escape($result['code']) . "'");
 				}
 			}
+
+			// Merge image/data to image/catalog
+			if (is_dir(DIR_IMAGE . 'data')) {
+				if (!is_dir(DIR_IMAGE . 'catalog')) {
+					rename(DIR_IMAGE . 'data', DIR_IMAGE . 'catalog'); // Rename data to catalog
+				} else {
+					$this->recursive_move(DIR_IMAGE . 'data', DIR_IMAGE . 'catalog');
+
+					@unlink(DIR_IMAGE . 'data');
+				}
+			}
+
+			// Convert image/data to image/catalog
+			$this->db->query("UPDATE `" . DB_PREFIX . "banner_image` SET `image` = REPLACE (image , 'data/', 'catalog/')");
+			$this->db->query("UPDATE `" . DB_PREFIX . "category` SET `image` = REPLACE (image , 'data/', 'catalog/')");
+			$this->db->query("UPDATE `" . DB_PREFIX . "manufacturer` SET `image` = REPLACE (image , 'data/', 'catalog/')");
+			$this->db->query("UPDATE `" . DB_PREFIX . "product` SET `image` = REPLACE (image , 'data/', 'catalog/')");
+			$this->db->query("UPDATE `" . DB_PREFIX . "product_image` SET `image` = REPLACE (image, 'data/', 'catalog/')");
+			$this->db->query("UPDATE `" . DB_PREFIX . "option_value` SET `image` = REPLACE (image, 'data/', 'catalog/')");
+			$this->db->query("UPDATE `" . DB_PREFIX . "voucher_theme` SET `image` = REPLACE (image, 'data/', 'catalog/')");
+			$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `value` = REPLACE (value, 'data/', 'catalog/')");
+			$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `value` = REPLACE (value, 'data/', 'catalog/')");
+			$this->db->query("UPDATE `" . DB_PREFIX . "product_description` SET `description` = REPLACE (description, 'data/', 'catalog/')");
+			$this->db->query("UPDATE `" . DB_PREFIX . "category_description` SET `description` = REPLACE (description, 'data/', 'catalog/')");
+			$this->db->query("UPDATE `" . DB_PREFIX . "information_description` SET `description` = REPLACE (description, 'data/', 'catalog/')");
 		} catch (\ErrorException $exception) {
 			$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
 		}

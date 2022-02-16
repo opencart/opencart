@@ -1,5 +1,4 @@
 <?php
-
 namespace Opencart\Install\Controller\Upgrade;
 class Upgrade1 extends \Opencart\System\Engine\Controller {
 	public function index(): void {
@@ -14,22 +13,22 @@ class Upgrade1 extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->get['admin'])) {
-			$admin = $this->request->get['admin'];
+			$admin = basename($this->request->get['admin']);
 		} else {
-			$admin = '';
+			$admin = 'admin';
 		}
 
 		// Extract
 		try {
+			$config = [];
+
 			$file = DIR_OPENCART . $admin . '/config.php';
 
-			if (is_file($file)) {
-				$lines = file($file);
+			$lines = file(DIR_OPENCART . 'config.php');
 
-				foreach ($lines as $line) {
-					if (strpos($line, 'DB_') !== false) {
-						eval($line);
-					}
+			foreach ($lines as $number => $line) {
+				if (preg_match('/define\(\'(.*)\',\s+\'(.*)\'\)/', $line, $match, PREG_OFFSET_CAPTURE)) {
+					$config[$match[1][0]] = $match[2][0];
 				}
 			}
 
@@ -52,16 +51,16 @@ class Upgrade1 extends \Opencart\System\Engine\Controller {
 
 							if (substr($destination, 0, 8) != 'install/') {
 								// Default copy location
-								$path = DIR_OPENCART . $destination;
+								$path = $config['DIR_OPENCART'] . $destination;
 
 								// Fixes admin folder being under a different name
 								if (substr($destination, 0, 6) == 'admin/') {
-									$path = DIR_APPLICATION . substr($destination, 6);
+									$path = $config['DIR_APPLICATION'] . substr($destination, 6);
 								}
 
 								// We need to use a different path for vendor folders.
 								if (substr($destination, 0, 15) == 'system/storage/') {
-									$path = DIR_STORAGE . substr($destination, 15);
+									$path = $config['DIR_STORAGE'] . substr($destination, 15);
 								}
 
 								// Must not have a path before files and directories can be moved

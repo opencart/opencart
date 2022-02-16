@@ -14,7 +14,7 @@ class Database extends \Opencart\System\Engine\Controller {
 			}
 
 			if (isset($config['DB_PORT'])) {
-				$port = $config['DB_PORT'];
+				$port = (int)$config['DB_PORT'];
 			} else {
 				$port = ini_get('mysqli.default_port');
 			}

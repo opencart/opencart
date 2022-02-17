@@ -22,9 +22,7 @@ class Upgrade1 extends \Opencart\System\Engine\Controller {
 		try {
 			$config = [];
 
-			$file = DIR_OPENCART . $admin . '/config.php';
-
-			$lines = file(DIR_OPENCART . 'config.php');
+			$lines = file(DIR_OPENCART . $admin . '/config.php');
 
 			foreach ($lines as $number => $line) {
 				if (preg_match('/define\(\'(.*)\',\s+\'(.*)\'\)/', $line, $match, PREG_OFFSET_CAPTURE)) {

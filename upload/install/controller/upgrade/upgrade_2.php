@@ -7,7 +7,6 @@ class Upgrade2 extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		// It makes mass changes to the DB by creating tables that are not in the current db, changes the charset and DB engine to the SQL schema.
-
 		// Structure
 		$this->load->helper('db_schema');
 

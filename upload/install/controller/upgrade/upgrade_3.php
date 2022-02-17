@@ -4,6 +4,18 @@ class Upgrade3 extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('upgrade/upgrade');
 
+		if (isset($this->request->get['version'])) {
+			$version = $this->request->get['version'];
+		} else {
+			$version = '';
+		}
+
+		if (isset($this->request->get['admin'])) {
+			$admin = basename($this->request->get['admin']);
+		} else {
+			$admin = 'admin';
+		}
+
 		$json = [];
 
 		// Config and file structure changes
@@ -65,7 +77,7 @@ class Upgrade3 extends \Opencart\System\Engine\Controller {
 			// Catalog
 			$lines = file($file);
 
-			// Remove un-needed lines
+			// Remove un-needed lines and dump any added config value or text at the bottom
 			foreach ($lines as $number => $line) {
 				if (in_array(trim($line), $remove)) {
 					unset($lines[$number]);
@@ -80,18 +92,15 @@ class Upgrade3 extends \Opencart\System\Engine\Controller {
 			// Reset array index
 			$lines = array_values($lines);
 
-			$constants = [];
+			$config = [];
 
 			// Capture values
 			foreach ($lines as $number => $line) {
 				if (preg_match('/define\(\'(.+)\',\s+(.+)\)/', $line, $match, PREG_OFFSET_CAPTURE)) {
-					$key = $match[1][0];
-					$value = $match[2][0];
-
-					$constants[$key] = $value;
+					$config[$match[1][0]] = $match[2][0];
 
 					// Remove required keys if they exist
-					if (in_array($key, $capture)) {
+					if (in_array($match[1][0], $capture)) {
 						unset($lines[$number]);
 					}
 				}
@@ -235,10 +244,7 @@ class Upgrade3 extends \Opencart\System\Engine\Controller {
 			// Capture values
 			foreach ($lines as $number => $line) {
 				if (preg_match('/define\(\'(.+)\',\s+(.+)\)/', $line, $match, PREG_OFFSET_CAPTURE)) {
-					$key = $match[1][0];
-					$value = $match[2][0];
-
-					$constants[$key] = $value;
+					$constants[$match[1][0]] = $match[2][0];
 
 					// Remove required keys if they exist
 					if (in_array($key, $capture)) {
@@ -309,7 +315,7 @@ class Upgrade3 extends \Opencart\System\Engine\Controller {
 				$output .= 'define(\'DIR_OPENCART\', \'' . DIR_OPENCART . '\');' . "\n";
 			}
 
-			$output .= 'define(\'DIR_APPLICATION\', DIR_OPENCART . \'admin/\');' . "\n";
+			$output .= 'define(\'DIR_APPLICATION\', DIR_OPENCART . \'' . $admin . '/\');' . "\n";
 			$output .= 'define(\'DIR_EXTENSION\', DIR_OPENCART . \'extension/\');' . "\n";
 			$output .= 'define(\'DIR_IMAGE\', DIR_OPENCART . \'image/\');' . "\n";
 			$output .= 'define(\'DIR_SYSTEM\', DIR_OPENCART . \'system/\');' . "\n";

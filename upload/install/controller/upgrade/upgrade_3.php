@@ -108,7 +108,7 @@ class Upgrade3 extends \Opencart\System\Engine\Controller {
 			$output .= '// APPLICATION' . "\n";
 
 			if (isset($config['APPLICATION'])) {
-				$output .= 'define(\'APPLICATION\', ' . $config['APPLICATION'] . ');' . "\n\n";
+				$output .= 'define(\'APPLICATION\', \'' . $config['APPLICATION'] . '\');' . "\n\n";
 			} else {
 				$output .= 'define(\'APPLICATION\', \'Catalog\');' . "\n\n";
 			}
@@ -116,15 +116,15 @@ class Upgrade3 extends \Opencart\System\Engine\Controller {
 			$output .= '// HTTP' . "\n";
 
 			if (!empty($config['HTTPS_SERVER'])) {
-				$output .= 'define(\'HTTP_SERVER\', ' . $config['HTTPS_SERVER'] . ');' . "\n\n";
+				$output .= 'define(\'HTTP_SERVER\', \'' . $config['HTTPS_SERVER'] . '\');' . "\n\n";
 			} else {
-				$output .= 'define(\'HTTP_SERVER\', ' . $config['HTTP_SERVER'] . ');' . "\n\n";
+				$output .= 'define(\'HTTP_SERVER\', \'' . $config['HTTP_SERVER'] . '\');' . "\n\n";
 			}
 
 			$output .= '// DIR' . "\n";
 
 			if (isset($config['DIR_OPENCART'])) {
-				$output .= 'define(\'DIR_OPENCART\', ' . $config['DIR_OPENCART'] . ');' . "\n";
+				$output .= 'define(\'DIR_OPENCART\', \'' . $config['DIR_OPENCART'] . '\');' . "\n";
 			} else {
 				$output .= 'define(\'DIR_OPENCART\', \'' . DIR_OPENCART . '\');' . "\n";
 			}
@@ -135,7 +135,7 @@ class Upgrade3 extends \Opencart\System\Engine\Controller {
 			$output .= 'define(\'DIR_SYSTEM\', DIR_OPENCART . \'system/\');' . "\n";
 
 			if (isset($config['DIR_STORAGE'])) {
-				$output .= 'define(\'DIR_STORAGE\', ' . $config['DIR_STORAGE'] . ');' . "\n";
+				$output .= 'define(\'DIR_STORAGE\', \'' . $config['DIR_STORAGE'] . '\');' . "\n";
 			} else {
 				$output .= 'define(\'DIR_STORAGE\', DIR_SYSTEM . \'storage/\');' . "\n";
 			}
@@ -228,7 +228,7 @@ class Upgrade3 extends \Opencart\System\Engine\Controller {
 			$output .= '// APPLICATION' . "\n";
 
 			if (isset($constants['APPLICATION'])) {
-				$output .= 'define(\'APPLICATION\', ' . $config['APPLICATION'] . ');' . "\n\n";
+				$output .= 'define(\'APPLICATION\', \'' . $config['APPLICATION'] . '\');' . "\n\n";
 			} else {
 				$output .= 'define(\'APPLICATION\', \'Admin\');' . "\n\n";
 			}
@@ -236,21 +236,21 @@ class Upgrade3 extends \Opencart\System\Engine\Controller {
 			$output .= '// HTTP' . "\n";
 
 			if (!empty($config['HTTPS_SERVER'])) {
-				$output .= 'define(\'HTTP_SERVER\', ' . $config['HTTPS_SERVER'] . ');' . "\n";
+				$output .= 'define(\'HTTP_SERVER\', \'' . $config['HTTPS_SERVER'] . '\');' . "\n";
 			} else {
-				$output .= 'define(\'HTTP_SERVER\', ' . $config['HTTP_SERVER'] . ');' . "\n";
+				$output .= 'define(\'HTTP_SERVER\', \'' . $config['HTTP_SERVER'] . '\');' . "\n";
 			}
 
 			if (!empty($config['HTTPS_CATALOG'])) {
-				$output .= 'define(\'HTTP_CATALOG\', ' . $config['HTTPS_CATALOG'] . ');' . "\n\n";
+				$output .= 'define(\'HTTP_CATALOG\', \'' . $config['HTTPS_CATALOG'] . '\');' . "\n\n";
 			} else {
-				$output .= 'define(\'HTTP_CATALOG\', ' . $config['HTTP_CATALOG'] . ');' . "\n\n";
+				$output .= 'define(\'HTTP_CATALOG\', \'' . $config['HTTP_CATALOG'] . '\');' . "\n\n";
 			}
 
 			$output .= '// DIR' . "\n";
 
 			if (isset($config['DIR_OPENCART'])) {
-				$output .= 'define(\'DIR_OPENCART\', ' . $config['DIR_OPENCART'] . ');' . "\n";
+				$output .= 'define(\'DIR_OPENCART\', \'' . $config['DIR_OPENCART'] . '\');' . "\n";
 			} else {
 				$output .= 'define(\'DIR_OPENCART\', \'' . DIR_OPENCART . '\');' . "\n";
 			}

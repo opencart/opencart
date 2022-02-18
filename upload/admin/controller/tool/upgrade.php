@@ -59,6 +59,9 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 			$data['log'] = '';
 		}
 
+		// For testing
+		$data['latest_version'] = 'master';
+
 		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
@@ -83,9 +86,6 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		// For testing
-		$version = 'master';
-
 		$file = DIR_DOWNLOAD . 'opencart-' . $version . '.zip';
 
 		if (!is_file($file)) {
@@ -93,7 +93,6 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 
 			set_time_limit(0);
 
-			//$curl = curl_init('https://github.com/opencart/opencart/archive/master.zip');
 			$curl = curl_init('https://github.com/opencart/opencart/archive/' . $version . '.zip');
 
 			curl_setopt($curl, CURLOPT_USERAGENT, 'OpenCart ' . VERSION);

@@ -97,10 +97,6 @@ class Upgrade3 extends \Opencart\System\Engine\Controller {
 				$json['error'] = $this->language->get('error_db_database');
 			}
 
-			if (!defined('DB_PORT')) {
-				$json['error'] = $this->language->get('error_db_port');
-			}
-
 			if (!defined('DB_PREFIX')) {
 				$json['error'] = $this->language->get('error_db_prefix');
 			}
@@ -154,22 +150,19 @@ class Upgrade3 extends \Opencart\System\Engine\Controller {
 			$output .= 'define(\'DIR_UPLOAD\', DIR_STORAGE . \'upload/\');' . "\n\n";
 
 			$output .= '// DB' . "\n";
-			$output .= 'define(\'DB_DRIVER\', ' . $config['DB_DRIVER'] . ');' . "\n";
-			$output .= 'define(\'DB_HOSTNAME\', ' . $config['DB_HOSTNAME'] . ');' . "\n";
-			$output .= 'define(\'DB_USERNAME\', ' . $config['DB_USERNAME'] . ');' . "\n";
-			$output .= 'define(\'DB_PASSWORD\', ' . $config['DB_PASSWORD'] . ');' . "\n";
-			$output .= 'define(\'DB_DATABASE\', ' . $config['DB_DATABASE'] . ');' . "\n";
+			$output .= 'define(\'DB_DRIVER\', \'' . DB_DRIVER . '\');' . "\n";
+			$output .= 'define(\'DB_HOSTNAME\', \'' .DB_HOSTNAME . '\');' . "\n";
+			$output .= 'define(\'DB_USERNAME\', \'' . DB_USERNAME . '\');' . "\n";
+			$output .= 'define(\'DB_PASSWORD\', \'' . DB_PASSWORD . '\');' . "\n";
+			$output .= 'define(\'DB_DATABASE\', \'' . DB_DATABASE . '\');' . "\n";
 
 			if (isset($config['DB_PORT'])) {
-				$output .= 'define(\'DB_PORT\', ' . $config['DB_PORT'] . ');' . "\n";
+				$output .= 'define(\'DB_PORT\', \'' . DB_PORT . '\');' . "\n";
 			} else {
 				$output .= 'define(\'DB_PORT\', \'3306\');' . "\n";
 			}
 
-			$output .= 'define(\'DB_PREFIX\', ' . $config['DB_PREFIX'] . ');' . "\n\n";
-
-			// Dump any custom lines at the bottom of the config file.
-			$output .= trim(implode("\n", $lines), "\n");
+			$output .= 'define(\'DB_PREFIX\', \'' . DB_PREFIX . '\');' . "\n\n";
 
 			// Save file
 			file_put_contents($file, $output);
@@ -189,34 +182,14 @@ class Upgrade3 extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$lines = file($file);
-
-			// Remove un-needed lines
-			foreach ($lines as $number => $line) {
-				if (in_array(trim($line), $remove)) {
-					unset($lines[$number]);
-
-					// Remove any white space on previous line
-					if (isset($lines[$number - 1]) && trim($lines[$number - 1]) == '') {
-						unset($lines[$number - 1]);
-					}
-				}
-			}
-
-			// Reset array index
-			$lines = array_values($lines);
-
 			$config = [];
+
+			$lines = file($file);
 
 			// Capture values
 			foreach ($lines as $number => $line) {
 				if (preg_match('/define\(\'(.*)\',\s+\'(.*)\'\)/', $line, $match, PREG_OFFSET_CAPTURE)) {
 					$config[$match[1][0]] = $match[2][0];
-
-					// Remove required keys if they exist
-					if (in_array($match[1][0], $capture)) {
-						unset($lines[$number]);
-					}
 				}
 			}
 
@@ -224,27 +197,27 @@ class Upgrade3 extends \Opencart\System\Engine\Controller {
 				$json['error'] = $this->language->get('error_server');
 			}
 
-			if (!isset($config['DB_DRIVER'])) {
+			if (!defined('DB_DRIVER')) {
 				$json['error'] = $this->language->get('error_db_driver');
 			}
 
-			if (!isset($config['DB_HOSTNAME'])) {
+			if (!isset($config['DB_HOSTNAME')) {
 				$json['error'] = $this->language->get('error_db_hostname');
 			}
 
-			if (!isset($config['DB_USERNAME'])) {
+			if (!defined('DB_USERNAME')) {
 				$json['error'] = $this->language->get('error_db_username');
 			}
 
-			if (!isset($config['DB_PASSWORD'])) {
+			if (!defined('DB_PASSWORD')) {
 				$json['error'] = $this->language->get('error_db_password');
 			}
 
-			if (!isset($config['DB_DATABASE'])) {
+			if (!defined('DB_DATABASE')) {
 				$json['error'] = $this->language->get('error_db_database');
 			}
 
-			if (!isset($config['DB_PREFIX'])) {
+			if (!defined('DB_PREFIX')) {
 				$json['error'] = $this->language->get('error_db_prefix');
 			}
 		}
@@ -304,25 +277,22 @@ class Upgrade3 extends \Opencart\System\Engine\Controller {
 			$output .= 'define(\'DIR_UPLOAD\', DIR_STORAGE . \'upload/\');' . "\n\n";
 
 			$output .= '// DB' . "\n";
-			$output .= 'define(\'DB_DRIVER\', ' . $config['DB_DRIVER'] . ');' . "\n";
-			$output .= 'define(\'DB_HOSTNAME\', ' . $config['DB_HOSTNAME'] . ');' . "\n";
-			$output .= 'define(\'DB_USERNAME\', ' . $config['DB_USERNAME'] . ');' . "\n";
-			$output .= 'define(\'DB_PASSWORD\', ' . $config['DB_PASSWORD'] . ');' . "\n";
-			$output .= 'define(\'DB_DATABASE\', ' . $config['DB_DATABASE'] . ');' . "\n";
+			$output .= 'define(\'DB_DRIVER\', \'' . DB_DRIVER . '\');' . "\n";
+			$output .= 'define(\'DB_HOSTNAME\', \'' .DB_HOSTNAME . '\');' . "\n";
+			$output .= 'define(\'DB_USERNAME\', \'' . DB_USERNAME . '\');' . "\n";
+			$output .= 'define(\'DB_PASSWORD\', \'' . DB_PASSWORD . '\');' . "\n";
+			$output .= 'define(\'DB_DATABASE\', \'' . DB_DATABASE . '\');' . "\n";
 
 			if (isset($config['DB_PORT'])) {
-				$output .= 'define(\'DB_PORT\', ' . $config['DB_PORT'] . ');' . "\n";
+				$output .= 'define(\'DB_PORT\', \'' . DB_PORT . '\');' . "\n";
 			} else {
 				$output .= 'define(\'DB_PORT\', \'3306\');' . "\n";
 			}
 
-			$output .= 'define(\'DB_PREFIX\', ' . $config['DB_PREFIX'] . ');' . "\n\n";
+			$output .= 'define(\'DB_PREFIX\', \'' . DB_PREFIX . '\');' . "\n\n";
 
 			$output .= '// OpenCart API' . "\n";
 			$output .= 'define(\'OPENCART_SERVER\', \'https://www.opencart.com/\');' . "\n";
-
-			// Dump any custom lines at the bottom of the config file.
-			$output .= trim(implode("\n", $lines), "\n") . "\n";
 
 			// Save file
 			file_put_contents($file, $output);

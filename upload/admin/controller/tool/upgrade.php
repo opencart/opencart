@@ -193,7 +193,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 				$json['text'] = $this->language->get('text_redirect');
 				$json['description'] = $this->language->get('text_redirect_description');
 
-				$json['redirect'] = HTTP_CATALOG . 'install/index.php?route=upgrade/upgrade&version=' . $version . '&admin=' . rtrim(substr(DIR_APPLICATION, strlen(DIR_OPENCART)));
+				$json['redirect'] = HTTP_CATALOG . 'install/index.php?route=upgrade/upgrade&version=' . $version . '&admin=' . rtrim(substr(DIR_APPLICATION, strlen(DIR_OPENCART), -1));
 			} else {
 				$json['error'] = $this->language->get('error_unzip');
 			}

@@ -30,19 +30,6 @@ class Upgrade3 extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Remove
-			$remove = [
-				'<?php',
-				'// APPLICATION',
-				'// HTTP',
-				'// HTTPS',
-				'// DIR',
-				'// DB',
-				'// OpenCart API',
-				'?>'
-			];
-
-			// Capture
 			$capture = [
 				'APPLICATION',
 				'HTTP_SERVER',
@@ -74,35 +61,15 @@ class Upgrade3 extends \Opencart\System\Engine\Controller {
 				'OPENCART_SERVER'
 			];
 
+			$config = [];
+
 			// Catalog
 			$lines = file($file);
-
-			// Remove un-needed lines and dump any added config value or text at the bottom
-			foreach ($lines as $number => $line) {
-				if (in_array(trim($line), $remove)) {
-					unset($lines[$number]);
-
-					// Remove any white space on previous line
-					if (isset($lines[$number - 1]) && trim($lines[$number - 1]) == '') {
-						unset($lines[$number - 1]);
-					}
-				}
-			}
-
-			// Reset array index
-			$lines = array_values($lines);
-
-			$config = [];
 
 			// Capture values
 			foreach ($lines as $number => $line) {
 				if (preg_match('/define\(\'(.*)\',\s+\'(.*)\'\)/', $line, $match, PREG_OFFSET_CAPTURE)) {
 					$config[$match[1][0]] = $match[2][0];
-
-					// Remove required keys if they exist
-					if (in_array($match[1][0], $capture)) {
-						unset($lines[$number]);
-					}
 				}
 			}
 
@@ -110,31 +77,31 @@ class Upgrade3 extends \Opencart\System\Engine\Controller {
 				$json['error'] = $this->language->get('error_server');
 			}
 
-			if (!isset($config['DB_DRIVER'])) {
+			if (!defined('DB_DRIVER')) {
 				$json['error'] = $this->language->get('error_db_driver');
 			}
 
-			if (!isset($config['DB_HOSTNAME'])) {
+			if (!defined('DB_HOSTNAME')) {
 				$json['error'] = $this->language->get('error_db_hostname');
 			}
 
-			if (!isset($config['DB_USERNAME'])) {
+			if (!defined('DB_USERNAME')) {
 				$json['error'] = $this->language->get('error_db_username');
 			}
 
-			if (!isset($config['DB_PASSWORD'])) {
+			if (!defined('DB_PASSWORD')) {
 				$json['error'] = $this->language->get('error_db_password');
 			}
 
-			if (!isset($config['DB_DATABASE'])) {
+			if (!defined('DB_DATABASE')) {
 				$json['error'] = $this->language->get('error_db_database');
 			}
 
-			if (!isset($config['DB_PORT'])) {
+			if (!defined('DB_PORT')) {
 				$json['error'] = $this->language->get('error_db_port');
 			}
 
-			if (!isset($config['DB_PREFIX'])) {
+			if (!defined('DB_PREFIX')) {
 				$json['error'] = $this->language->get('error_db_prefix');
 			}
 		}

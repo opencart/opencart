@@ -13,13 +13,13 @@ class Database extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-			if (isset($config['DB_PORT'])) {
-				$port = $config['DB_PORT'];
+			if (defined('DB_PORT')) {
+				$port = DB_PORT;
 			} else {
 				$port = ini_get('mysqli.default_port');
 			}
 			
-			$this->registry->set('db', new \Opencart\System\Library\DB($config['DB_DRIVER'], $config['DB_HOSTNAME'], $config['DB_USERNAME'], $config['DB_PASSWORD'], $config['DB_DATABASE'], $port));
+			$this->registry->set('db', new \Opencart\System\Library\DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE, $port));
 		}
 	}
 }

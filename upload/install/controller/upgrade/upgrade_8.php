@@ -80,7 +80,7 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 			}
 
 			// Country
-			$this->db->query("UPDATE `" . DB_PREFIX . "country` SET `address_format_id` = `1` WHERE `address_format_id` = '0'");
+			$this->db->query("UPDATE `" . DB_PREFIX . "country` SET `address_format_id` = '1' WHERE `address_format_id` = '0'");
 
 			// order_recurring
 			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "order_recurring' AND COLUMN_NAME = 'created'");

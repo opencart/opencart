@@ -83,6 +83,9 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
+		// For testing
+		$version = 'master';
+
 		$file = DIR_DOWNLOAD . 'opencart-' . $version . '.zip';
 
 		if (!is_file($file)) {
@@ -90,6 +93,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 
 			set_time_limit(0);
 
+			//$curl = curl_init('https://github.com/opencart/opencart/archive/master.zip');
 			$curl = curl_init('https://github.com/opencart/opencart/archive/' . $version . '.zip');
 
 			curl_setopt($curl, CURLOPT_USERAGENT, 'OpenCart ' . VERSION);
@@ -190,7 +194,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 				$json['text'] = $this->language->get('text_redirect');
 				$json['description'] = $this->language->get('text_redirect_description');
 
-				$json['redirect'] = HTTP_CATALOG . 'install/index.php?route=upgrade/upgrade&version=' . $version . '&admin=' . DIR_APPLICATION . substr($destination, 6);
+				$json['redirect'] = HTTP_CATALOG . 'install/index.php?route=upgrade/upgrade&version=' . $version . '&admin=' . substr($destination, 6);
 			} else {
 				$json['error'] = $this->language->get('error_unzip');
 			}

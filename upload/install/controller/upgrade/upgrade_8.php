@@ -151,6 +151,11 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 
 			$remove[] = [
 				'table' => 'customer',
+				'field' => 'cart'
+			];
+
+			$remove[] = [
+				'table' => 'customer',
 				'field' => 'fax'
 			];
 

@@ -20,6 +20,7 @@ class Upgrade1 extends \Opencart\System\Engine\Controller {
 
 		// Extract
 		try {
+			// Get directory constants
 			$config = [];
 
 			$lines = file(DIR_OPENCART . $admin . '/config.php');

@@ -4,6 +4,8 @@ class Upgrade3 extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('upgrade/upgrade');
 
+		$json = [];
+
 		if (isset($this->request->get['version'])) {
 			$version = $this->request->get['version'];
 		} else {
@@ -15,8 +17,6 @@ class Upgrade3 extends \Opencart\System\Engine\Controller {
 		} else {
 			$admin = 'admin';
 		}
-
-		$json = [];
 
 		// Config and file structure changes
 		$file = DIR_OPENCART . 'config.php';
@@ -96,7 +96,7 @@ class Upgrade3 extends \Opencart\System\Engine\Controller {
 
 			// Capture values
 			foreach ($lines as $number => $line) {
-				if (preg_match('/define\(\'(.+)\',\s+(.+)\)/', $line, $match, PREG_OFFSET_CAPTURE)) {
+				if (preg_match('/define\(\'(.*)\',\s+\'(.*)\'\)/', $line, $match, PREG_OFFSET_CAPTURE)) {
 					$config[$match[1][0]] = $match[2][0];
 
 					// Remove required keys if they exist
@@ -106,35 +106,35 @@ class Upgrade3 extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-			if (!isset($constants['HTTP_SERVER'])) {
+			if (!isset($config['HTTP_SERVER'])) {
 				$json['error'] = $this->language->get('error_server');
 			}
 
-			if (!isset($constants['DB_DRIVER'])) {
+			if (!isset($config['DB_DRIVER'])) {
 				$json['error'] = $this->language->get('error_db_driver');
 			}
 
-			if (!isset($constants['DB_HOSTNAME'])) {
+			if (!isset($config['DB_HOSTNAME'])) {
 				$json['error'] = $this->language->get('error_db_hostname');
 			}
 
-			if (!isset($constants['DB_USERNAME'])) {
+			if (!isset($config['DB_USERNAME'])) {
 				$json['error'] = $this->language->get('error_db_username');
 			}
 
-			if (!isset($constants['DB_PASSWORD'])) {
+			if (!isset($config['DB_PASSWORD'])) {
 				$json['error'] = $this->language->get('error_db_password');
 			}
 
-			if (!isset($constants['DB_DATABASE'])) {
+			if (!isset($config['DB_DATABASE'])) {
 				$json['error'] = $this->language->get('error_db_database');
 			}
 
-			if (!isset($constants['DB_PORT'])) {
+			if (!isset($config['DB_PORT'])) {
 				$json['error'] = $this->language->get('error_db_port');
 			}
 
-			if (!isset($constants['DB_PREFIX'])) {
+			if (!isset($config['DB_PREFIX'])) {
 				$json['error'] = $this->language->get('error_db_prefix');
 			}
 		}
@@ -144,24 +144,24 @@ class Upgrade3 extends \Opencart\System\Engine\Controller {
 			$output  = '<?php' . "\n";
 			$output .= '// APPLICATION' . "\n";
 
-			if (isset($constants['APPLICATION'])) {
-				$output .= 'define(\'APPLICATION\', ' . $constants['APPLICATION'] . ');' . "\n\n";
+			if (isset($config['APPLICATION'])) {
+				$output .= 'define(\'APPLICATION\', ' . $config['APPLICATION'] . ');' . "\n\n";
 			} else {
 				$output .= 'define(\'APPLICATION\', \'Catalog\');' . "\n\n";
 			}
 
 			$output .= '// HTTP' . "\n";
 
-			if (!empty($constants['HTTPS_SERVER'])) {
-				$output .= 'define(\'HTTP_SERVER\', ' . $constants['HTTPS_SERVER'] . ');' . "\n\n";
+			if (!empty($config['HTTPS_SERVER'])) {
+				$output .= 'define(\'HTTP_SERVER\', ' . $config['HTTPS_SERVER'] . ');' . "\n\n";
 			} else {
-				$output .= 'define(\'HTTP_SERVER\', ' . $constants['HTTP_SERVER'] . ');' . "\n\n";
+				$output .= 'define(\'HTTP_SERVER\', ' . $config['HTTP_SERVER'] . ');' . "\n\n";
 			}
 
 			$output .= '// DIR' . "\n";
 
-			if (isset($constants['DIR_OPENCART'])) {
-				$output .= 'define(\'DIR_OPENCART\', ' . $constants['DIR_OPENCART'] . ');' . "\n";
+			if (isset($config['DIR_OPENCART'])) {
+				$output .= 'define(\'DIR_OPENCART\', ' . $config['DIR_OPENCART'] . ');' . "\n";
 			} else {
 				$output .= 'define(\'DIR_OPENCART\', \'' . DIR_OPENCART . '\');' . "\n";
 			}
@@ -171,8 +171,8 @@ class Upgrade3 extends \Opencart\System\Engine\Controller {
 			$output .= 'define(\'DIR_IMAGE\', DIR_OPENCART . \'image/\');' . "\n";
 			$output .= 'define(\'DIR_SYSTEM\', DIR_OPENCART . \'system/\');' . "\n";
 
-			if (isset($constants['DIR_STORAGE'])) {
-				$output .= 'define(\'DIR_STORAGE\', ' . $constants['DIR_STORAGE'] . ');' . "\n";
+			if (isset($config['DIR_STORAGE'])) {
+				$output .= 'define(\'DIR_STORAGE\', ' . $config['DIR_STORAGE'] . ');' . "\n";
 			} else {
 				$output .= 'define(\'DIR_STORAGE\', DIR_SYSTEM . \'storage/\');' . "\n";
 			}
@@ -187,19 +187,19 @@ class Upgrade3 extends \Opencart\System\Engine\Controller {
 			$output .= 'define(\'DIR_UPLOAD\', DIR_STORAGE . \'upload/\');' . "\n\n";
 
 			$output .= '// DB' . "\n";
-			$output .= 'define(\'DB_DRIVER\', ' . $constants['DB_DRIVER'] . ');' . "\n";
-			$output .= 'define(\'DB_HOSTNAME\', ' . $constants['DB_HOSTNAME'] . ');' . "\n";
-			$output .= 'define(\'DB_USERNAME\', ' . $constants['DB_USERNAME'] . ');' . "\n";
-			$output .= 'define(\'DB_PASSWORD\', ' . $constants['DB_PASSWORD'] . ');' . "\n";
-			$output .= 'define(\'DB_DATABASE\', ' . $constants['DB_DATABASE'] . ');' . "\n";
+			$output .= 'define(\'DB_DRIVER\', ' . $config['DB_DRIVER'] . ');' . "\n";
+			$output .= 'define(\'DB_HOSTNAME\', ' . $config['DB_HOSTNAME'] . ');' . "\n";
+			$output .= 'define(\'DB_USERNAME\', ' . $config['DB_USERNAME'] . ');' . "\n";
+			$output .= 'define(\'DB_PASSWORD\', ' . $config['DB_PASSWORD'] . ');' . "\n";
+			$output .= 'define(\'DB_DATABASE\', ' . $config['DB_DATABASE'] . ');' . "\n";
 
-			if (isset($constants['DB_PORT'])) {
-				$output .= 'define(\'DB_PORT\', ' . $constants['DB_PORT'] . ');' . "\n";
+			if (isset($config['DB_PORT'])) {
+				$output .= 'define(\'DB_PORT\', ' . $config['DB_PORT'] . ');' . "\n";
 			} else {
 				$output .= 'define(\'DB_PORT\', \'3306\');' . "\n";
 			}
 
-			$output .= 'define(\'DB_PREFIX\', ' . $constants['DB_PREFIX'] . ');' . "\n\n";
+			$output .= 'define(\'DB_PREFIX\', ' . $config['DB_PREFIX'] . ');' . "\n\n";
 
 			// Dump any custom lines at the bottom of the config file.
 			$output .= trim(implode("\n", $lines), "\n");
@@ -211,7 +211,7 @@ class Upgrade3 extends \Opencart\System\Engine\Controller {
 		//*************************************
 
 		// Admin
-		$file = DIR_OPENCART . 'admin/config.php';
+		$file = DIR_OPENCART . $admin . '/config.php';
 
 		if (!is_file($file)) {
 			$json['error'] = sprintf($this->language->get('error_file'), $file);
@@ -239,45 +239,45 @@ class Upgrade3 extends \Opencart\System\Engine\Controller {
 			// Reset array index
 			$lines = array_values($lines);
 
-			$constants = [];
+			$config = [];
 
 			// Capture values
 			foreach ($lines as $number => $line) {
-				if (preg_match('/define\(\'(.+)\',\s+(.+)\)/', $line, $match, PREG_OFFSET_CAPTURE)) {
-					$constants[$match[1][0]] = $match[2][0];
+				if (preg_match('/define\(\'(.*)\',\s+\'(.*)\'\)/', $line, $match, PREG_OFFSET_CAPTURE)) {
+					$config[$match[1][0]] = $match[2][0];
 
 					// Remove required keys if they exist
-					if (in_array($key, $capture)) {
+					if (in_array($match[1][0], $capture)) {
 						unset($lines[$number]);
 					}
 				}
 			}
 
-			if (!isset($constants['HTTP_SERVER'])) {
+			if (!isset($config['HTTP_SERVER'])) {
 				$json['error'] = $this->language->get('error_server');
 			}
 
-			if (!isset($constants['DB_DRIVER'])) {
+			if (!isset($config['DB_DRIVER'])) {
 				$json['error'] = $this->language->get('error_db_driver');
 			}
 
-			if (!isset($constants['DB_HOSTNAME'])) {
+			if (!isset($config['DB_HOSTNAME'])) {
 				$json['error'] = $this->language->get('error_db_hostname');
 			}
 
-			if (!isset($constants['DB_USERNAME'])) {
+			if (!isset($config['DB_USERNAME'])) {
 				$json['error'] = $this->language->get('error_db_username');
 			}
 
-			if (!isset($constants['DB_PASSWORD'])) {
+			if (!isset($config['DB_PASSWORD'])) {
 				$json['error'] = $this->language->get('error_db_password');
 			}
 
-			if (!isset($constants['DB_DATABASE'])) {
+			if (!isset($config['DB_DATABASE'])) {
 				$json['error'] = $this->language->get('error_db_database');
 			}
 
-			if (!isset($constants['DB_PREFIX'])) {
+			if (!isset($config['DB_PREFIX'])) {
 				$json['error'] = $this->language->get('error_db_prefix');
 			}
 		}
@@ -288,29 +288,29 @@ class Upgrade3 extends \Opencart\System\Engine\Controller {
 			$output .= '// APPLICATION' . "\n";
 
 			if (isset($constants['APPLICATION'])) {
-				$output .= 'define(\'APPLICATION\', ' . $constants['APPLICATION'] . ');' . "\n\n";
+				$output .= 'define(\'APPLICATION\', ' . $config['APPLICATION'] . ');' . "\n\n";
 			} else {
 				$output .= 'define(\'APPLICATION\', \'Admin\');' . "\n\n";
 			}
 
 			$output .= '// HTTP' . "\n";
 
-			if (!empty($constants['HTTPS_SERVER'])) {
-				$output .= 'define(\'HTTP_SERVER\', ' . $constants['HTTPS_SERVER'] . ');' . "\n";
+			if (!empty($config['HTTPS_SERVER'])) {
+				$output .= 'define(\'HTTP_SERVER\', ' . $config['HTTPS_SERVER'] . ');' . "\n";
 			} else {
-				$output .= 'define(\'HTTP_SERVER\', ' . $constants['HTTP_SERVER'] . ');' . "\n";
+				$output .= 'define(\'HTTP_SERVER\', ' . $config['HTTP_SERVER'] . ');' . "\n";
 			}
 
-			if (!empty($constants['HTTPS_CATALOG'])) {
-				$output .= 'define(\'HTTP_CATALOG\', ' . $constants['HTTPS_CATALOG'] . ');' . "\n\n";
+			if (!empty($config['HTTPS_CATALOG'])) {
+				$output .= 'define(\'HTTP_CATALOG\', ' . $config['HTTPS_CATALOG'] . ');' . "\n\n";
 			} else {
-				$output .= 'define(\'HTTP_CATALOG\', ' . $constants['HTTP_CATALOG'] . ');' . "\n\n";
+				$output .= 'define(\'HTTP_CATALOG\', ' . $config['HTTP_CATALOG'] . ');' . "\n\n";
 			}
 
 			$output .= '// DIR' . "\n";
 
-			if (isset($constants['DIR_OPENCART'])) {
-				$output .= 'define(\'DIR_OPENCART\', ' . $constants['DIR_OPENCART'] . ');' . "\n";
+			if (isset($config['DIR_OPENCART'])) {
+				$output .= 'define(\'DIR_OPENCART\', ' . $config['DIR_OPENCART'] . ');' . "\n";
 			} else {
 				$output .= 'define(\'DIR_OPENCART\', \'' . DIR_OPENCART . '\');' . "\n";
 			}
@@ -321,8 +321,8 @@ class Upgrade3 extends \Opencart\System\Engine\Controller {
 			$output .= 'define(\'DIR_SYSTEM\', DIR_OPENCART . \'system/\');' . "\n";
 			$output .= 'define(\'DIR_CATALOG\', DIR_OPENCART . \'catalog/\');' . "\n";
 
-			if (isset($constants['DIR_STORAGE'])) {
-				$output .= 'define(\'DIR_STORAGE\', ' . $constants['DIR_STORAGE'] . ');' . "\n";
+			if (isset($config['DIR_STORAGE'])) {
+				$output .= 'define(\'DIR_STORAGE\', ' . $config['DIR_STORAGE'] . ');' . "\n";
 			} else {
 				$output .= 'define(\'DIR_STORAGE\', DIR_SYSTEM . \'storage/\');' . "\n";
 			}
@@ -337,19 +337,19 @@ class Upgrade3 extends \Opencart\System\Engine\Controller {
 			$output .= 'define(\'DIR_UPLOAD\', DIR_STORAGE . \'upload/\');' . "\n\n";
 
 			$output .= '// DB' . "\n";
-			$output .= 'define(\'DB_DRIVER\', ' . $constants['DB_DRIVER'] . ');' . "\n";
-			$output .= 'define(\'DB_HOSTNAME\', ' . $constants['DB_HOSTNAME'] . ');' . "\n";
-			$output .= 'define(\'DB_USERNAME\', ' . $constants['DB_USERNAME'] . ');' . "\n";
-			$output .= 'define(\'DB_PASSWORD\', ' . $constants['DB_PASSWORD'] . ');' . "\n";
-			$output .= 'define(\'DB_DATABASE\', ' . $constants['DB_DATABASE'] . ');' . "\n";
+			$output .= 'define(\'DB_DRIVER\', ' . $config['DB_DRIVER'] . ');' . "\n";
+			$output .= 'define(\'DB_HOSTNAME\', ' . $config['DB_HOSTNAME'] . ');' . "\n";
+			$output .= 'define(\'DB_USERNAME\', ' . $config['DB_USERNAME'] . ');' . "\n";
+			$output .= 'define(\'DB_PASSWORD\', ' . $config['DB_PASSWORD'] . ');' . "\n";
+			$output .= 'define(\'DB_DATABASE\', ' . $config['DB_DATABASE'] . ');' . "\n";
 
-			if (isset($constants['DB_PORT'])) {
-				$output .= 'define(\'DB_PORT\', ' . $constants['DB_PORT'] . ');' . "\n";
+			if (isset($config['DB_PORT'])) {
+				$output .= 'define(\'DB_PORT\', ' . $config['DB_PORT'] . ');' . "\n";
 			} else {
 				$output .= 'define(\'DB_PORT\', \'3306\');' . "\n";
 			}
 
-			$output .= 'define(\'DB_PREFIX\', ' . $constants['DB_PREFIX'] . ');' . "\n\n";
+			$output .= 'define(\'DB_PREFIX\', ' . $config['DB_PREFIX'] . ');' . "\n\n";
 
 			$output .= '// OpenCart API' . "\n";
 			$output .= 'define(\'OPENCART_SERVER\', \'https://www.opencart.com/\');' . "\n";

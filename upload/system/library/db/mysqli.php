@@ -25,9 +25,9 @@ class MySQLi {
 	}
 
 	public function query(string $sql): bool|object {
-		$query = $this->connection->query($sql);
+		try {
+			$query = $this->connection->query($sql);
 
-		if (!$this->connection->errno) {
 			if ($query instanceof \mysqli_result) {
 				$data = [];
 
@@ -48,7 +48,7 @@ class MySQLi {
 			} else {
 				return true;
 			}
-		} else {
+		} catch (\mysqli_sql_exception $e) {
 			throw new \Exception('Error: ' . $this->connection->error  . '<br />Error No: ' . $this->connection->errno . '<br />' . $sql);
 		}
 	}

@@ -201,7 +201,7 @@ class Upgrade3 extends \Opencart\System\Engine\Controller {
 				$json['error'] = $this->language->get('error_db_driver');
 			}
 
-			if (!isset($config['DB_HOSTNAME')) {
+			if (!defined('DB_HOSTNAME')) {
 				$json['error'] = $this->language->get('error_db_hostname');
 			}
 

@@ -96,7 +96,7 @@ class Upgrade3 extends \Opencart\System\Engine\Controller {
 
 			// Capture values
 			foreach ($lines as $number => $line) {
-				if (preg_match('/define\(\'(.*)\',\s+\'(.*)\'\)/', $line, $match, PREG_OFFSET_CAPTURE)) {
+				if (preg_match('/define\(\'(.*)\',\s+\'(.*)\'\)/', $line, $match, PREG_OFFSET_CAPTURE) && isset($match[2][0])) {
 					$config[$match[1][0]] = $match[2][0];
 
 					// Remove required keys if they exist
@@ -194,7 +194,7 @@ class Upgrade3 extends \Opencart\System\Engine\Controller {
 			$output .= 'define(\'DB_DATABASE\', ' . $config['DB_DATABASE'] . ');' . "\n";
 
 			if (isset($config['DB_PORT'])) {
-				$output .= 'define(\'DB_PORT\', ' . $config['DB_PORT'] . ');' . "\n";
+				$output .= 'define(\'DB_PORT\', ' . (int)$config['DB_PORT'] . ');' . "\n";
 			} else {
 				$output .= 'define(\'DB_PORT\', \'3306\');' . "\n";
 			}
@@ -243,7 +243,7 @@ class Upgrade3 extends \Opencart\System\Engine\Controller {
 
 			// Capture values
 			foreach ($lines as $number => $line) {
-				if (preg_match('/define\(\'(.*)\',\s+\'(.*)\'\)/', $line, $match, PREG_OFFSET_CAPTURE)) {
+				if (preg_match('/define\(\'(.*)\',\s+\'(.*)\'\)/', $line, $match, PREG_OFFSET_CAPTURE) && isset($match[2][0])) {
 					$config[$match[1][0]] = $match[2][0];
 
 					// Remove required keys if they exist
@@ -344,7 +344,7 @@ class Upgrade3 extends \Opencart\System\Engine\Controller {
 			$output .= 'define(\'DB_DATABASE\', ' . $config['DB_DATABASE'] . ');' . "\n";
 
 			if (isset($config['DB_PORT'])) {
-				$output .= 'define(\'DB_PORT\', ' . $config['DB_PORT'] . ');' . "\n";
+				$output .= 'define(\'DB_PORT\', ' . (int)$config['DB_PORT'] . ');' . "\n";
 			} else {
 				$output .= 'define(\'DB_PORT\', \'3306\');' . "\n";
 			}
@@ -374,7 +374,7 @@ class Upgrade3 extends \Opencart\System\Engine\Controller {
 
 		foreach ($directories as $directory) {
 			if (!is_dir(DIR_STORAGE . $directory)) {
-				mkdir(DIR_STORAGE . $directory, '0644');
+				mkdir(DIR_STORAGE . $directory, '0755');
 
 				$handle = fopen(DIR_STORAGE . $directory . '/index.html', 'w');
 

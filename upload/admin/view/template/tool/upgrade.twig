@@ -75,7 +75,7 @@
 
 <script type="text/javascript"><!--
 $('#button-upgrade').on('click', function () {
-    var i = 0;
+    var step = 1;
 
     $('#progress-title').html('{{ text_download }}');
     $('#progress-description').append('{{ text_download_description }}');
@@ -108,7 +108,7 @@ $('#button-upgrade').on('click', function () {
                 }
 
                 if (json['text']) {
-                    i = i + 1;
+                    step = step + 1;
 
                     $('#progress-title').html(json['text']);
                     $('#progress-description').html(json['description']);

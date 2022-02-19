@@ -268,7 +268,13 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$json['success'] = sprintf($this->language->get('text_progress'), 8, 8, 8);
 
-			$json['redirect'] = $this->url->link('upgrade/upgrade_8', true);
+			$url = '';
+
+			if (isset($this->request->get['admin'])) {
+				$url .= '&admin=' . $this->request->get['admin'];
+			}
+
+			$json['redirect'] = $this->url->link('install/step_4', $url, true);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

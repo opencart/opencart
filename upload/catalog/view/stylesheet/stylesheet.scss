@@ -458,6 +458,10 @@ footer {
     position: relative;
     white-space: nowrap;
 
+    > a {
+      text-decoration: none;
+    }
+
     &:after {
       content: '';
       display: block;
@@ -718,7 +722,9 @@ footer {
       }
     }
   }
-
+  a {
+    text-decoration: none;
+  }
   .price {
     color: #444;
   }

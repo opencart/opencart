@@ -24,7 +24,7 @@ class Upgrade2 extends \Opencart\System\Engine\Controller {
 		$lines = file(DIR_OPENCART . $admin . '/config.php');
 
 		foreach ($lines as $number => $line) {
-			if (preg_match('/define\(\'(.*)\',\s+\'(.*)\'\)/', $line, $match, PREG_OFFSET_CAPTURE)) {
+			if (preg_match('/define\(\'(.*)\',\s+\'(.*)\'\)/', $line, $match, PREG_OFFSET_CAPTURE) && isset($match[2][0])) {
 				$config[$match[1][0]] = $match[2][0];
 			}
 		}

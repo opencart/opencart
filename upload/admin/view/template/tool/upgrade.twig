@@ -99,13 +99,7 @@ $('#button-upgrade').on('click', function () {
                     $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                 }
 
-                if (json['redirect']) {
-                    var timer = setInterval(function () {
-                        location = json['redirect'];
-                    }, 5000);
-                }
-
-                if (json['text']) {
+                if (json['success']) {
                     $('#progress').html(json['success']);
                 }
 

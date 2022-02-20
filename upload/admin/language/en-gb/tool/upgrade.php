@@ -16,7 +16,7 @@ $_['text_ready']                = 'Click the upgrade button to upgrade to the la
 $_['text_download']             = 'Downloading latest update...';
 $_['text_install']              = 'Copying files...';
 $_['text_install_description']  = 'Copying files to the correct locations...';
-$_['text_patch']                = 'Applying Upgrade patches...';
+$_['text_patch']                = 'Applying upgrade patches...';
 
 // Button
 $_['button_upgrade']            = 'Upgrade';

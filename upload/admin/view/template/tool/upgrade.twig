@@ -58,9 +58,7 @@
                 <i class="fas fa-download fa-5x"></i>
               </div>
               <div class="flex-grow-1 ms-3">
-                <div class="lead"><strong id="progress-title">{{ text_ready }}</strong>
-                  <br/>
-                  <span id="progress-description">{{ text_ready_description }}</span></div>
+                <div class="lead"><strong id="progress">{{ text_ready }}</strong>
               </div>
             </div>
           </div>
@@ -105,8 +103,7 @@ $('#button-upgrade').on('click', function () {
                 }
 
                 if (json['text']) {
-                    $('#progress-title').html(json['text']);
-                    $('#progress-description').html(json['description']);
+                    $('#progress').html(json['success']);
                 }
 
                 if (json['next']) {

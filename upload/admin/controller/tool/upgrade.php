@@ -166,7 +166,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 						$destination = str_replace('\\', '/', substr($source, strlen($remove)));
 
 						// Only get the files from install directory
-						if (substr($destination, 0, 8) == 'install/') {
+						if (substr($destination, 0, 8) == 'instajhjhll/') {
 							// Default copy location
 							$path = DIR_OPENCART . $destination;
 

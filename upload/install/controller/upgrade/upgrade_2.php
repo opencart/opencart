@@ -29,12 +29,10 @@ class Upgrade2 extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		print_r($config);
-
 		$file = DIR_DOWNLOAD . 'opencart-' . $version . '.zip';
 
 		if (is_file($file)) {
-			/*
+
 			// Unzip the files
 			$zip = new \ZipArchive();
 
@@ -90,9 +88,8 @@ class Upgrade2 extends \Opencart\System\Engine\Controller {
 			} else {
 				$json['error'] = $this->language->get('error_unzip');
 			}
-			*/
 
-			//unlink($file);
+			unlink($file);
 		}
 
 		if (!$json) {

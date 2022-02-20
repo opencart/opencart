@@ -74,8 +74,7 @@
 
 <script type="text/javascript"><!--
 $('#button-upgrade').on('click', function () {
-    $('#progress-title').html('{{ text_download }}');
-    $('#progress-description').append('{{ text_download_description }}');
+    $('#progress').html('{{ text_download }}');
 
     var next = 'index.php?route=tool/upgrade|download&user_token={{ user_token }}&version={{ latest_version }}&admin={{ admin }}';
 

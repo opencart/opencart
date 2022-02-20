@@ -116,8 +116,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$json['text'] = $this->language->get('text_install');
-			$json['description'] = $this->language->get('text_install_description');
+			$json['success'] = $this->language->get('text_install');
 
 			$json['next'] = $this->url->link('tool/upgrade|install', 'user_token=' . $this->session->data['user_token'] . '&version=' . $version, true);
 		}
@@ -190,10 +189,9 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 
 				$zip->close();
 
-				$json['text'] = $this->language->get('text_redirect');
-				$json['description'] = $this->language->get('text_redirect_description');
+				$json['success'] = $this->language->get('text_upgrade');
 
-				$json['redirect'] = HTTP_CATALOG . 'install/index.php?route=upgrade/upgrade&version=' . $version . '&admin=' . rtrim(substr(DIR_APPLICATION, strlen(DIR_OPENCART), -1));
+				$json['next'] = HTTP_CATALOG . 'install/index.php?route=upgrade/upgrade&version=' . $version . '&admin=' . rtrim(substr(DIR_APPLICATION, strlen(DIR_OPENCART), -1));
 			} else {
 				$json['error'] = $this->language->get('error_unzip');
 			}

@@ -75,8 +75,6 @@
 
 <script type="text/javascript"><!--
 $('#button-upgrade').on('click', function () {
-    var step = 1;
-
     $('#progress-title').html('{{ text_download }}');
     $('#progress-description').append('{{ text_download_description }}');
 
@@ -92,7 +90,6 @@ $('#button-upgrade').on('click', function () {
             },
             complete: function () {
                 $('#button-upgrade').prop('disabled', false);
-                $('#progress-icon').html('<i class="fas fa-download fa-5x"></i>');
             },
             success: function (json) {
                 $('.alert-dismissible').remove();
@@ -108,8 +105,6 @@ $('#button-upgrade').on('click', function () {
                 }
 
                 if (json['text']) {
-                    step = step + 1;
-
                     $('#progress-title').html(json['text']);
                     $('#progress-description').html(json['description']);
                 }
@@ -121,6 +116,8 @@ $('#button-upgrade').on('click', function () {
                 }
             },
             error: function (xhr, ajaxOptions, thrownError) {
+                $('#progress-icon').html('<i class="fas fa-download fa-5x"></i>');
+
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });

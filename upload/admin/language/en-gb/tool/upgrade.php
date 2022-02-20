@@ -11,14 +11,12 @@ $_['text_latest_version']       = 'Latest Version';
 $_['text_date_added']           = 'Release Date';
 $_['text_change']               = 'Change Log';
 $_['text_status']               = 'Upgrade Status';
-$_['text_ready']                = 'Ready...';
-$_['text_ready_description']    = 'Click the upgrade button to upgrade to the latest version.';
-$_['text_download']             = 'Downloading';
-$_['text_download_description'] = 'Downloading latest update...';
+
+$_['text_ready']                = 'Click the upgrade button to upgrade to the latest version.';
+$_['text_download']             = 'Downloading latest update...';
 $_['text_install']              = 'Copying files';
 $_['text_install_description']  = 'Copying files to the correct locations...';
-$_['text_redirect']             = 'Redirecting in 5 seconds';
-$_['text_redirect_description'] = 'Redirecting to upgrade installer...';
+$_['text_patch']                = 'Applying Upgrade patches';
 
 // Button
 $_['button_upgrade']            = 'Upgrade';

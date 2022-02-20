@@ -189,7 +189,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 
 				$zip->close();
 
-				$json['success'] = $this->language->get('text_upgrade');
+				$json['success'] = $this->language->get('text_patch');
 
 				$json['next'] = HTTP_CATALOG . 'install/index.php?route=upgrade/upgrade_1&version=' . $version . '&admin=' . rtrim(substr(DIR_APPLICATION, strlen(DIR_OPENCART), -1));
 			} else {

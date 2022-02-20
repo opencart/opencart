@@ -58,7 +58,8 @@
                 <i class="fas fa-download fa-5x"></i>
               </div>
               <div class="flex-grow-1 ms-3">
-                <div class="lead text-"><strong id="progress">{{ text_ready }}</strong>
+                <div class="lead"><strong id="progress">{{ text_ready }}</strong></div>
+                <span id="#url"></span>
               </div>
             </div>
           </div>
@@ -79,6 +80,8 @@ $('#button-upgrade').on('click', function () {
     var next = 'index.php?route=tool/upgrade|download&user_token={{ user_token }}&version={{ latest_version }}&admin={{ admin }}';
 
     var upgrade = function () {
+        $('#url').html(next);
+
         return $.ajax({
             url: next,
             dataType: 'json',

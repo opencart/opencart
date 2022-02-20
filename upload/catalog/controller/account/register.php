@@ -182,6 +182,17 @@ class Register extends \Opencart\System\Engine\Controller {
 				$json['error']['password'] = $this->language->get('error_password');
 			}
 
+			// Agree to terms
+			$this->load->model('catalog/information');
+
+			$information_info = $this->model_catalog_information->getInformation($this->config->get('config_account_id'));
+
+			if ($information_info && !$this->request->post['agree']) {
+				$json['error']['warning'] = sprintf($this->language->get('error_agree'), $information_info['title']);
+			}
+		}
+
+		if (!$json) {
 			// Captcha
 			$this->load->model('setting/extension');
 
@@ -193,15 +204,6 @@ class Register extends \Opencart\System\Engine\Controller {
 				if ($captcha) {
 					$json['error']['captcha'] = $captcha;
 				}
-			}
-
-			// Agree to terms
-			$this->load->model('catalog/information');
-
-			$information_info = $this->model_catalog_information->getInformation($this->config->get('config_account_id'));
-
-			if ($information_info && !$this->request->post['agree']) {
-				$json['error']['warning'] = sprintf($this->language->get('error_agree'), $information_info['title']);
 			}
 		}
 

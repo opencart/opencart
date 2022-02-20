@@ -357,7 +357,7 @@ class Register extends \Opencart\System\Engine\Controller {
 			// Captcha
 			$this->load->model('setting/extension');
 
-			if (!$this->customer->isLogged()) {
+			if (!$json && !$this->customer->isLogged()) {
 				$extension_info = $this->model_setting_extension->getExtensionByCode('captcha', $this->config->get('config_captcha'));
 
 				if ($extension_info && $this->config->get('captcha_' . $this->config->get('config_captcha') . '_status') && in_array('register', (array)$this->config->get('config_captcha_page'))) {

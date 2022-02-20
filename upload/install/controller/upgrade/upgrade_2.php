@@ -58,7 +58,11 @@ class Upgrade2 extends \Opencart\System\Engine\Controller {
 
 							// We need to use a different path for vendor folders.
 							if (substr($destination, 0, 15) == 'system/storage/') {
-								$path = $config['DIR_STORAGE'] . substr($destination, 15);
+								if (isset($config['DIR_STORAGE'])) {
+									$path = $config['DIR_STORAGE'] . substr($destination, 15);
+								} else {
+									$path = DIR_OPENCART . $destination;
+								}
 							}
 
 							// Must not have a path before files and directories can be moved

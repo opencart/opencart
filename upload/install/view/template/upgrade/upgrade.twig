@@ -63,13 +63,13 @@ $('#button-continue').on('click', function () {
                 $('#button-continue').button('reset');
             },
             success: function (json) {
-                if (json['redirect']) {
-                    location = json['redirect'];
-                }
-
                 if (json['error']) {
                     $('#progress-bar').addClass('progress-bar-danger');
                     $('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
+                }
+
+                if (json['text']) {
+                    $('#progress-text').html('<span class="text-success">' + json['text'] + '</span>');
                 }
 
                 if (json['success']) {

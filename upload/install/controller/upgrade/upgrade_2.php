@@ -21,10 +21,10 @@ class Upgrade2 extends \Opencart\System\Engine\Controller {
 		// Get directory constants
 		$config = [];
 
-		$lines = file(DIR_OPENCART . $admin . '/config.php');
+		$lines = file(DIR_OPENCART . 'config.php');
 
 		foreach ($lines as $number => $line) {
-			if (preg_match('/define\(\'(.*)\',\s+\'(.*)\'\)/', $line, $match, PREG_OFFSET_CAPTURE)) {
+			if (preg_match('/define\(\'(.*)\',\s+(.*)\)/', $line, $match, PREG_OFFSET_CAPTURE)) {
 				$config[$match[1][0]] = $match[2][0];
 			}
 		}
@@ -34,6 +34,7 @@ class Upgrade2 extends \Opencart\System\Engine\Controller {
 		$file = DIR_DOWNLOAD . 'opencart-' . $version . '.zip';
 
 		if (is_file($file)) {
+			/*
 			// Unzip the files
 			$zip = new \ZipArchive();
 
@@ -50,11 +51,11 @@ class Upgrade2 extends \Opencart\System\Engine\Controller {
 
 						if (substr($destination, 0, 8) != 'install/') {
 							// Default copy location
-							$path = $config['DIR_OPENCART'] . $destination;
+							$path = DIR_OPENCART . $destination;
 
 							// Fixes admin folder being under a different name
 							if (substr($destination, 0, 6) == 'admin/') {
-								$path = $config['DIR_APPLICATION'] . substr($destination, 6);
+								$path = DIR_OPENCART . $admin . '/' . substr($destination, 6);
 							}
 
 							// We need to use a different path for vendor folders.
@@ -81,18 +82,21 @@ class Upgrade2 extends \Opencart\System\Engine\Controller {
 							}
 						}
 					}
+
 				}
 
 				$zip->close();
+
 			} else {
 				$json['error'] = $this->language->get('error_unzip');
 			}
+			*/
 
-			unlink($file);
+			//unlink($file);
 		}
 
 		if (!$json) {
-			$json['success'] = sprintf($this->language->get('text_progress'), 1, 1, 8);
+			$json['success'] = sprintf($this->language->get('text_progress'), 2, 2, 8);
 
 			$url = '';
 

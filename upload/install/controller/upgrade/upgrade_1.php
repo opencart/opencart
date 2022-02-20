@@ -106,12 +106,7 @@ class Upgrade1 extends \Opencart\System\Engine\Controller {
 			// Catalog config.php
 			$output  = '<?php' . "\n";
 			$output .= '// APPLICATION' . "\n";
-
-			if (isset($config['APPLICATION'])) {
-				$output .= 'define(\'APPLICATION\', \'' . $config['APPLICATION'] . '\');' . "\n\n";
-			} else {
-				$output .= 'define(\'APPLICATION\', \'Catalog\');' . "\n\n";
-			}
+			$output .= 'define(\'APPLICATION\', \'Catalog\');' . "\n\n";
 
 			$output .= '// HTTP' . "\n";
 
@@ -122,13 +117,7 @@ class Upgrade1 extends \Opencart\System\Engine\Controller {
 			}
 
 			$output .= '// DIR' . "\n";
-
-			if (isset($config['DIR_OPENCART'])) {
-				$output .= 'define(\'DIR_OPENCART\', \'' . $config['DIR_OPENCART'] . '\');' . "\n";
-			} else {
-				$output .= 'define(\'DIR_OPENCART\', \'' . DIR_OPENCART . '\');' . "\n";
-			}
-
+			$output .= 'define(\'DIR_OPENCART\', \'' . DIR_OPENCART . '\');' . "\n";
 			$output .= 'define(\'DIR_APPLICATION\', DIR_OPENCART . \'catalog/\');' . "\n";
 			$output .= 'define(\'DIR_EXTENSION\', DIR_OPENCART . \'extension/\');' . "\n";
 			$output .= 'define(\'DIR_IMAGE\', DIR_OPENCART . \'image/\');' . "\n";
@@ -156,7 +145,7 @@ class Upgrade1 extends \Opencart\System\Engine\Controller {
 			$output .= 'define(\'DB_PASSWORD\', \'' . DB_PASSWORD . '\');' . "\n";
 			$output .= 'define(\'DB_DATABASE\', \'' . DB_DATABASE . '\');' . "\n";
 
-			if (isset($config['DB_PORT'])) {
+			if (defined('DB_PORT')) {
 				$output .= 'define(\'DB_PORT\', \'' . DB_PORT . '\');' . "\n";
 			} else {
 				$output .= 'define(\'DB_PORT\', \'3306\');' . "\n";
@@ -226,12 +215,7 @@ class Upgrade1 extends \Opencart\System\Engine\Controller {
 			// Admin config.php
 			$output  = '<?php' . "\n";
 			$output .= '// APPLICATION' . "\n";
-
-			if (isset($constants['APPLICATION'])) {
-				$output .= 'define(\'APPLICATION\', \'' . $config['APPLICATION'] . '\');' . "\n\n";
-			} else {
-				$output .= 'define(\'APPLICATION\', \'Admin\');' . "\n\n";
-			}
+			$output .= 'define(\'APPLICATION\', \'Admin\');' . "\n\n";
 
 			$output .= '// HTTP' . "\n";
 
@@ -248,13 +232,7 @@ class Upgrade1 extends \Opencart\System\Engine\Controller {
 			}
 
 			$output .= '// DIR' . "\n";
-
-			if (isset($config['DIR_OPENCART'])) {
-				$output .= 'define(\'DIR_OPENCART\', \'' . $config['DIR_OPENCART'] . '\');' . "\n";
-			} else {
-				$output .= 'define(\'DIR_OPENCART\', \'' . DIR_OPENCART . '\');' . "\n";
-			}
-
+			$output .= 'define(\'DIR_OPENCART\', \'' . DIR_OPENCART . '\');' . "\n";
 			$output .= 'define(\'DIR_APPLICATION\', DIR_OPENCART . \'' . $admin . '/\');' . "\n";
 			$output .= 'define(\'DIR_EXTENSION\', DIR_OPENCART . \'extension/\');' . "\n";
 			$output .= 'define(\'DIR_IMAGE\', DIR_OPENCART . \'image/\');' . "\n";
@@ -283,7 +261,7 @@ class Upgrade1 extends \Opencart\System\Engine\Controller {
 			$output .= 'define(\'DB_PASSWORD\', \'' . DB_PASSWORD . '\');' . "\n";
 			$output .= 'define(\'DB_DATABASE\', \'' . DB_DATABASE . '\');' . "\n";
 
-			if (isset($config['DB_PORT'])) {
+			if (defined('DB_PORT')) {
 				$output .= 'define(\'DB_PORT\', \'' . DB_PORT . '\');' . "\n";
 			} else {
 				$output .= 'define(\'DB_PORT\', \'3306\');' . "\n";
@@ -376,7 +354,7 @@ class Upgrade1 extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$json['success'] = sprintf($this->language->get('text_progress'), 3, 3, 8);
+			$json['success'] = sprintf($this->language->get('text_progress'), 1, 1, 8);
 
 			$url = '';
 

@@ -38,8 +38,6 @@ class Upgrade2 extends \Opencart\System\Engine\Controller {
 		$file = DIR_DOWNLOAD . 'opencart-' . $version . '.zip';
 
 		if (is_file($file)) {
-			$this->session->data['upgrade'] = [];
-
 			// Unzip the files
 			$zip = new \ZipArchive();
 
@@ -121,7 +119,7 @@ class Upgrade2 extends \Opencart\System\Engine\Controller {
 				$json['next'] = $this->url->link('upgrade/upgrade_2', 'version=' . $version . '&admin=' . $admin . '&page=' . ($page + 1), true);
 			} else {
 				$json['text'] = sprintf($this->language->get('text_progress'), 2, 2, 8);
-				$json['next'] = $this->url->link('upgrade/upgrade_3', 'version=' . $version . '&admin=' . $admin, true);
+				$json['next'] = $this->url->link('upgrade/upgrade_3', '', true);
 
 				unlink($file);
 			}

@@ -191,7 +191,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 								}
 
 								if (!copy('zip://' . $file . '#' . $entry, $path)) {
-									$json['error'] = sprintf($this->language->get('error_copy'), $file, $path);
+									$json['error'] = sprintf($this->language->get('error_copy'), $entry, $path);
 								}
 							}
 						}

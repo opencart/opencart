@@ -23,6 +23,7 @@ $_['entry_progress']    = 'Progress';
 $_['error_admin']       = 'Error: config file %s could not found. Make sure the admin directory is the correct name!';
 $_['error_file']        = 'Error: config file %s not found!';
 $_['error_writable']    = 'Error: config file %s is not writable!';
+
 $_['error_server']      = 'Error: HTTP_SERVER constant could not be found!';
 $_['error_db_driver']   = 'Error: DB_DRIVER constant could not be found!';
 $_['error_db_hostname'] = 'Error: DB_HOSTNAME constant could not be found!';

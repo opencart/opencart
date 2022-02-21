@@ -111,6 +111,12 @@ class Upgrade2 extends \Opencart\System\Engine\Controller {
 			$version = '';
 		}
 
+		if (isset($this->request->get['admin'])) {
+			$admin = basename($this->request->get['admin']);
+		} else {
+			$admin = 'admin';
+		}
+
 		if (isset($this->request->get['page'])) {
 			$page = (int)$this->request->get['page'];
 		} else {
@@ -123,69 +129,46 @@ class Upgrade2 extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_file');
 		}
 
-		if (!isset() {
-			$json['error'] = $this->language->get('error_file');
+		if (!isset($this->session->data['upgrade'])) {
+			$json['error'] = $this->language->get('error_upgrade');
 		}
 
 		if (!$json) {
+			$total = count($this->session->data['upgrade']);
 
-			$total = count($files);
-
-			$files = array_slice($this->session->data['upgrade'], ($page - 1) * 200, 200);
+			$results = array_slice($this->session->data['upgrade'], ($page - 1) * 200, 200);
 
 			// Check if any of the files already exist.
-			foreach ($files as $file) {
+			foreach ($results as $result) {
+				// Must not have a path before files and directories can be moved
+				if (substr($result['destination'], -1) == '/') {
+					if (!is_dir($result['destination']) && !mkdir($result['destination'], 0777)) {
+						$json['error'] = sprintf($this->language->get('error_directory'), $result['destination']);
+					}
+				}
 
-				if (substr($file['destination'], 0, 8) == 'install/') {
-
-
-					// Only extract the contents of the upload folder
-					$destination = str_replace('\\', '/', substr($entry, strlen($remove)));
-
-					// Only get the files from install directory
-
-					// Default copy location
-					$path = DIR_OPENCART . $destination;
-
-					// Must not have a path before files and directories can be moved
-					if (substr($path, -1) == '/') {
-						if (!is_dir($path) && !mkdir($path, 0777)) {
-							$json['error'] = sprintf($this->language->get('error_directory'), $path);
-						}
+				// Check if the path is not directory and check there is no existing file
+				if (substr($result['destination'], -1) != '/') {
+					if (is_file($result['destination'])) {
+						unlink($result['destination']);
 					}
 
-					// Check if the path is not directory and check there is no existing file
-					if (substr($path, -1) != '/') {
-						if (is_file($path)) {
-							unlink($path);
-						}
-
-						if (!copy('zip://' . $file . '#' . $entry, $path)) {
-							$json['error'] = sprintf($this->language->get('error_copy'), $entry, $path);
-						}
+					if (!copy('zip://' . $file . '#' . $result['source'], $result['destination'])) {
+						$json['error'] = sprintf($this->language->get('error_copy'), $result['source'], $result['destination']);
 					}
 				}
 			}
+
+			if (($page * 200) <= $total) {
+				$json['text'] = sprintf($this->language->get('text_progress'), 2, 2, 8);
+				$json['next'] = $this->url->link('upgrade/upgrade_2|extract', 'user_token=' . $this->session->data['user_token'] . '&version=' . $version . '&admin=' . $admin . '&page=' . ($page + 1), true);
+			} else {
+				$json['text'] = sprintf($this->language->get('text_progress'), 2, 2, 8);
+				$json['next'] = $this->url->link('upgrade/upgrade_3', 'user_token=' . $this->session->data['user_token'] . '&version=' . $version . '&admin=' . $admin . '&page=1', true);
+
+				unlink($file);
+			}
 		}
-
-		if (($page * 200) >= $total) {
-
-
-			$json['text'] = sprintf($this->language->get('text_backup'), $table, ($page - 1) * 200, $record_total);
-
-			$json['next'] = $this->url->link('tool/backup|backup', 'user_token=' . $this->session->data['user_token'] . '&version=' . urlencode($version) . '&table=' . $table . '&page=1', true);
-
-
-
-		} else {
-			$json['text'] = sprintf($this->language->get('text_backup'), $table, ($page - 1) * 200, $page * 200);
-
-
-			unlink($file);
-
-			$json['next'] = $this->url->link('tool/backup|backup', 'user_token=' . $this->session->data['user_token'] . '&filename=' . urlencode($filename) . '&table=' . $table . '&page=' . ($page + 1), true);
-		}
-
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

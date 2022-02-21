@@ -90,11 +90,11 @@ $('#button-upgrade').on('click', function () {
                 }
 
                 if (json['text']) {
-                    $('#progress').html(json['text']);
+                    $('#input-upgrade').val(json['text']);
                 }
 
                 if (json['success']) {
-                    $('#progress').html(json['success']);
+                    $('#input-upgrade').val(json['success']);
                 }
 
                 if (json['next']) {

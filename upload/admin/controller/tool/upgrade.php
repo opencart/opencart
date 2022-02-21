@@ -165,24 +165,26 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 						// Only extract the contents of the upload folder
 						$destination = str_replace('\\', '/', substr($source, strlen($remove)));
 
-						// Default copy location
-						$path = DIR_OPENCART . $destination;
+						if (substr($destination, 0, 8) == 'install/') {
+							// Default copy location
+							$path = DIR_OPENCART . $destination;
 
-						// Must not have a path before files and directories can be moved
-						if (substr($path, -1) == '/') {
-							if (!is_dir($path) && !mkdir($path, 0777)) {
-								$json['error'] = sprintf($this->language->get('error_directory'), $path);
-							}
-						}
-
-						// Check if the path is not directory and check there is no existing file
-						if (substr($path, -1) != '/') {
-							if (is_file($path)) {
-								unlink($path);
+							// Must not have a path before files and directories can be moved
+							if (substr($path, -1) == '/') {
+								if (!is_dir($path) && !mkdir($path, 0777)) {
+									$json['error'] = sprintf($this->language->get('error_directory'), $path);
+								}
 							}
 
-							if (!copy('zip://' . $file . '#' . $source, $path)) {
-								$json['error'] = sprintf($this->language->get('error_copy'), $source, $path);
+							// Check if the path is not directory and check there is no existing file
+							if (substr($path, -1) != '/') {
+								if (is_file($path)) {
+									unlink($path);
+								}
+
+								if (!copy('zip://' . $file . '#' . $source, $path)) {
+									$json['error'] = sprintf($this->language->get('error_copy'), $source, $path);
+								}
 							}
 						}
 					}

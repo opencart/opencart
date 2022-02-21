@@ -56,10 +56,7 @@
             <button type="button" id="button-upgrade" data-oc-loading-text="{{ text_loading }}" class="btn btn-warning btn-lg"{% if not upgrade %} disabled{% endif %}><i class="fas fa-level-up-alt"></i> {{ button_upgrade }}</button>
             <input type="text" id="input-upgrade" value="{{ text_ready }}" class="form-control bg-white" readonly/>
           </div>
-          <span id="test"></span>
-
         </fieldset>
-
       </div>
     </div>
   </div>
@@ -68,7 +65,7 @@
 $('#button-upgrade').on('click', function () {
     $('#progress').html('{{ text_download }}');
 
-    var next = 'index.php?route=tool/upgrade|download&user_token={{ user_token }}&version={{ latest_version }}&admin={{ admin }}';
+    var next = 'index.php?route=tool/upgrade|download&user_token={{ user_token }}&version={{ latest_version }}';
 
     var upgrade = function () {
         $('#test').html(next);
@@ -83,10 +80,11 @@ $('#button-upgrade').on('click', function () {
                 $('#button-upgrade').prop('disabled', false);
             },
             success: function (json) {
-                $('.alert-dismissible').remove();
+                $('#input-upgrade').removeClass('is-valid is-invalid');
 
                 if (json['error']) {
-                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    $('#input-upgrade').val(json['error']);
+                    $('#input-upgrade').addClass('is-invalid');
                 }
 
                 if (json['text']) {
@@ -95,6 +93,7 @@ $('#button-upgrade').on('click', function () {
 
                 if (json['success']) {
                     $('#input-upgrade').val(json['success']);
+                    $('#input-upgrade').addClass('is-valid');
                 }
 
                 if (json['next']) {

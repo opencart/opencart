@@ -66,7 +66,7 @@ class Upgrade2 extends \Opencart\System\Engine\Controller {
 								}
 							}
 
-							$this->session->data['upgrade'] = [
+							$this->session->data['upgrade'][] = [
 								'source'      => $source,
 								'destination' => $path
 							];

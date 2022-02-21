@@ -161,10 +161,10 @@ class Upgrade2 extends \Opencart\System\Engine\Controller {
 
 			if (($page * 200) <= $total) {
 				$json['text'] = sprintf($this->language->get('text_progress'), 2, 2, 8);
-				$json['next'] = $this->url->link('upgrade/upgrade_2|extract', 'user_token=' . $this->session->data['user_token'] . '&version=' . $version . '&admin=' . $admin . '&page=' . ($page + 1), true);
+				$json['next'] = $this->url->link('upgrade/upgrade_2|extract', 'version=' . $version . '&admin=' . $admin . '&page=' . ($page + 1), true);
 			} else {
 				$json['text'] = sprintf($this->language->get('text_progress'), 2, 2, 8);
-				$json['next'] = $this->url->link('upgrade/upgrade_3', 'user_token=' . $this->session->data['user_token'] . '&version=' . $version . '&admin=' . $admin . '&page=1', true);
+				$json['next'] = $this->url->link('upgrade/upgrade_3', 'version=' . $version . '&admin=' . $admin . '&page=1', true);
 
 				unlink($file);
 			}

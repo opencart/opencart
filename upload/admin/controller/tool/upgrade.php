@@ -92,7 +92,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 
 		$file = DIR_DOWNLOAD . 'opencart-' . $version . '.zip';
 
-		if (!is_file($file)) {
+		//if (!is_file($file)) {
 			$handle = fopen($file, 'w');
 
 			set_time_limit(0);
@@ -117,7 +117,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 			}
 
 			curl_close($curl);
-		}
+		//}
 
 		if (!$json) {
 			$json['text'] = $this->language->get('text_install');
@@ -157,50 +157,42 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 			if ($zip->open($file, \ZipArchive::RDONLY)) {
 				$remove = 'opencart-' . $version . '/upload/';
 
-				$entries = [];
-
 				// Check if any of the files already exist.
 				for ($i = 0; $i < $zip->numFiles; $i++) {
-					$entries[] = $zip->getNameIndex($i);
-				}
+					$source = $zip->getNameIndex($i);
 
-				$zip->close();
-
-				// Check if any of the files already exist.
-				foreach ($entries as $entry) {
-					if (substr($entry, 0, strlen($remove)) == $remove) {
+					if (substr($source, 0, strlen($remove)) == $remove) {
 						// Only extract the contents of the upload folder
-						$destination = str_replace('\\', '/', substr($entry, strlen($remove)));
+						$destination = str_replace('\\', '/', substr($source, strlen($remove)));
 
-						// Only get the files from install directory
-						if (substr($destination, 0, 8) == 'install/') {
-							// Default copy location
-							$path = DIR_OPENCART . $destination;
+						// Default copy location
+						$path = DIR_OPENCART . $destination;
 
-							// Must not have a path before files and directories can be moved
-							if (substr($path, -1) == '/') {
-								if (!is_dir($path) && !mkdir($path, 0777)) {
-									$json['error'] = sprintf($this->language->get('error_directory'), $path);
-								}
+						// Must not have a path before files and directories can be moved
+						if (substr($path, -1) == '/') {
+							if (!is_dir($path) && !mkdir($path, 0777)) {
+								$json['error'] = sprintf($this->language->get('error_directory'), $path);
+							}
+						}
+
+						// Check if the path is not directory and check there is no existing file
+						if (substr($path, -1) != '/') {
+							if (is_file($path)) {
+								unlink($path);
 							}
 
-							// Check if the path is not directory and check there is no existing file
-							if (substr($path, -1) != '/') {
-								if (is_file($path)) {
-									unlink($path);
-								}
-
-								if (!copy('zip://' . $file . '#' . $entry, $path)) {
-									$json['error'] = sprintf($this->language->get('error_copy'), $entry, $path);
-								}
+							if (!copy('zip://' . $file . '#' . $source, $path)) {
+								$json['error'] = sprintf($this->language->get('error_copy'), $source, $path);
 							}
 						}
 					}
 				}
 
+				$zip->close();
+
 				$json['text'] = $this->language->get('text_patch');
 
-				//$json['next'] = HTTP_CATALOG . 'install/index.php?route=upgrade/upgrade_1&version=' . $version . '&admin=' . rtrim(substr(DIR_APPLICATION, strlen(DIR_OPENCART), -1));
+				$json['next'] = HTTP_CATALOG . 'install/index.php?route=upgrade/upgrade_1&version=' . $version . '&admin=' . rtrim(substr(DIR_APPLICATION, strlen(DIR_OPENCART), -1));
 			} else {
 				$json['error'] = $this->language->get('error_unzip');
 			}

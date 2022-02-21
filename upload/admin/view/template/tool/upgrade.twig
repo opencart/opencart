@@ -59,7 +59,7 @@
               </div>
               <div class="flex-grow-1 ms-3">
                 <div class="lead"><strong id="progress">{{ text_ready }}</strong></div>
-                <span id="#url"></span>
+                <span id="test"></span>
               </div>
             </div>
           </div>
@@ -78,7 +78,7 @@ $('#button-upgrade').on('click', function () {
     var next = 'index.php?route=tool/upgrade|download&user_token={{ user_token }}&version={{ latest_version }}&admin={{ admin }}';
 
     var upgrade = function () {
-        $('#url').html(next);
+        $('#test').html(next);
 
         return $.ajax({
             url: next,

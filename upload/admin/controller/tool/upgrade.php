@@ -154,32 +154,26 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 			// Unzip the files
 			$zip = new \ZipArchive();
 
-			if ($zip->open($file)) {
+			if ($zip->open($file, ZipArchive::RDONLY)) {
 				$remove = 'opencart-' . $version . '/upload/';
 
+				$entries = [];
 
-
+				// Check if any of the files already exist.
 				for ($i = 0; $i < $zip->numFiles; $i++) {
-					//$source = $zip->getNameIndex($i);
-
-					//echo $source . "\n";
+					$files[] = $zip->getNameIndex($i);
 				}
-
-				echo $zip->extractTo(DIR_OPENCART . 'install/', 'opencart-master/upload/install/');
 
 				$zip->close();
 
-				/*
 				// Check if any of the files already exist.
-				for ($i = 0; $i < $zip->numFiles; $i++) {
-					$source = $zip->getNameIndex($i);
-
-					if (substr($source, 0, strlen($remove)) == $remove) {
+				foreach ($entries as $entry) {
+					if (substr($entry, 0, strlen($remove)) == $remove) {
 						// Only extract the contents of the upload folder
-						$destination = str_replace('\\', '/', substr($source, strlen($remove)));
+						$destination = str_replace('\\', '/', substr($entry, strlen($remove)));
 
 						// Only get the files from install directory
-						if (substr($destination, 0, 8) == 'instajhjhll/') {
+						if (substr($destination, 0, 8) == 'install/') {
 							// Default copy location
 							$path = DIR_OPENCART . $destination;
 
@@ -196,16 +190,14 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 									unlink($path);
 								}
 
-								if (!copy('zip://' . $file . '#' . $source, $path)) {
-									$json['error'] = sprintf($this->language->get('error_copy'), $source, $path);
+								if (!copy('zip://' . $file . '#' . $entry, $path)) {
+									$json['error'] = sprintf($this->language->get('error_copy'), $file, $path);
 								}
 							}
 						}
 					}
 				}
 
-				$zip->close();
-*/
 				$json['text'] = $this->language->get('text_patch');
 
 				//$json['next'] = HTTP_CATALOG . 'install/index.php?route=upgrade/upgrade_1&version=' . $version . '&admin=' . rtrim(substr(DIR_APPLICATION, strlen(DIR_OPENCART), -1));

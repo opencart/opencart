@@ -18,6 +18,12 @@ class Upgrade2 extends \Opencart\System\Engine\Controller {
 			$admin = 'admin';
 		}
 
+		if (isset($this->request->get['page'])) {
+			$page = (int)$this->request->get['page'];
+		} else {
+			$page = 1;
+		}
+
 		// Get directory constants
 		$config = [];
 
@@ -38,10 +44,14 @@ class Upgrade2 extends \Opencart\System\Engine\Controller {
 			$zip = new \ZipArchive();
 
 			if ($zip->open($file)) {
+				$total = $zip->numFiles;
+
+				$start = ($page - 1) * 200;
+
 				$remove = 'opencart-' . $version . '/upload/';
 
 				// Check if any of the files already exist.
-				for ($i = 0; $i < $zip->numFiles; $i++) {
+				for ($i = $start; $i < ($start + 200); $i++) {
 					$source = $zip->getNameIndex($i);
 
 					if (substr($source, 0, strlen($remove)) == $remove) {
@@ -66,10 +76,23 @@ class Upgrade2 extends \Opencart\System\Engine\Controller {
 								}
 							}
 
-							$this->session->data['upgrade'][] = [
-								'source'      => $source,
-								'destination' => $path
-							];
+							// Must not have a path before files and directories can be moved
+							if (substr($path, -1) == '/') {
+								if (!is_dir($path) && !mkdir($path, 0777)) {
+									$json['error'] = sprintf($this->language->get('error_directory'), $path);
+								}
+							}
+
+							// Check if the path is not directory and check there is no existing file
+							if (substr($path, -1) != '/') {
+								if (is_file($path)) {
+									unlink($path);
+								}
+
+								if (!copy('zip://' . $file . '#' . $source, $path)) {
+									$json['error'] = sprintf($this->language->get('error_copy'), $source, $path);
+								}
+							}
 						}
 					}
 				}
@@ -93,78 +116,12 @@ class Upgrade2 extends \Opencart\System\Engine\Controller {
 				$url .= '&admin=' . $this->request->get['admin'];
 			}
 
-			$json['next'] = $this->url->link('upgrade/upgrade_2|extract', $url, true);
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	public function extract(): void {
-		$this->load->language('tool/upgrade');
-
-		$json = [];
-
-		if (isset($this->request->get['version'])) {
-			$version = $this->request->get['version'];
-		} else {
-			$version = '';
-		}
-
-		if (isset($this->request->get['admin'])) {
-			$admin = basename($this->request->get['admin']);
-		} else {
-			$admin = 'admin';
-		}
-
-		if (isset($this->request->get['page'])) {
-			$page = (int)$this->request->get['page'];
-		} else {
-			$page = 1;
-		}
-
-		$file = DIR_DOWNLOAD . 'opencart-' . $version . '.zip';
-
-		if (!is_file($file)) {
-			$json['error'] = $this->language->get('error_file');
-		}
-
-		if (!isset($this->session->data['upgrade'])) {
-			$json['error'] = $this->language->get('error_upgrade');
-		}
-
-		if (!$json) {
-			$total = count($this->session->data['upgrade']);
-
-			$results = array_slice($this->session->data['upgrade'], ($page - 1) * 200, 200);
-
-			// Check if any of the files already exist.
-			foreach ($results as $result) {
-				// Must not have a path before files and directories can be moved
-				if (substr($result['destination'], -1) == '/') {
-					if (!is_dir($result['destination']) && !mkdir($result['destination'], 0777)) {
-						$json['error'] = sprintf($this->language->get('error_directory'), $result['destination']);
-					}
-				}
-
-				// Check if the path is not directory and check there is no existing file
-				if (substr($result['destination'], -1) != '/') {
-					if (is_file($result['destination'])) {
-						unlink($result['destination']);
-					}
-
-					if (!copy('zip://' . $file . '#' . $result['source'], $result['destination'])) {
-						$json['error'] = sprintf($this->language->get('error_copy'), $result['source'], $result['destination']);
-					}
-				}
-			}
-
 			if (($page * 200) <= $total) {
 				$json['text'] = sprintf($this->language->get('text_progress'), 2, 2, 8);
-				$json['next'] = $this->url->link('upgrade/upgrade_2|extract', 'version=' . $version . '&admin=' . $admin . '&page=' . ($page + 1), true);
+				$json['next'] = $this->url->link('upgrade/upgrade_2', 'version=' . $version . '&admin=' . $admin . '&page=' . ($page + 1), true);
 			} else {
 				$json['text'] = sprintf($this->language->get('text_progress'), 2, 2, 8);
-				$json['next'] = $this->url->link('upgrade/upgrade_3', 'version=' . $version . '&admin=' . $admin . '&page=1', true);
+				$json['next'] = $this->url->link('upgrade/upgrade_3', 'version=' . $version . '&admin=' . $admin, true);
 
 				unlink($file);
 			}

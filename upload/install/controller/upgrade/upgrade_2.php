@@ -30,7 +30,7 @@ class Upgrade2 extends \Opencart\System\Engine\Controller {
 		$lines = file(DIR_OPENCART . 'config.php');
 
 		foreach ($lines as $number => $line) {
-			if (preg_match('/define\(\'(.*)\',\s+(.*)\)/', $line, $match, PREG_OFFSET_CAPTURE)) {
+			if (preg_match('/define\(\'(.*)\',\s+\'(.*)\'\)/', $line, $match, PREG_OFFSET_CAPTURE)) {
 				$config[$match[1][0]] = $match[2][0];
 			}
 		}
@@ -66,12 +66,8 @@ class Upgrade2 extends \Opencart\System\Engine\Controller {
 							}
 
 							// We need to use a different path for vendor folders.
-							if (substr($destination, 0, 15) == 'system/storage/') {
-								if (isset($config['DIR_STORAGE'])) {
-									$path = $config['DIR_STORAGE'] . substr($destination, 15);
-								} else {
-									$path = DIR_OPENCART . $destination;
-								}
+							if (substr($destination, 0, 15) == 'system/storage/' && isset($config['DIR_STORAGE'])) {
+								$path = $config['DIR_STORAGE'] . substr($destination, 15);
 							}
 
 							// Must not have a path before files and directories can be moved
@@ -115,10 +111,8 @@ class Upgrade2 extends \Opencart\System\Engine\Controller {
 			}
 
 			if (($page * 200) <= $total) {
-				$json['text'] = sprintf($this->language->get('text_progress'), 2, 2, 8);
 				$json['next'] = $this->url->link('upgrade/upgrade_2', 'version=' . $version . '&admin=' . $admin . '&page=' . ($page + 1), true);
 			} else {
-				$json['text'] = sprintf($this->language->get('text_progress'), 2, 2, 8);
 				$json['next'] = $this->url->link('upgrade/upgrade_3', '', true);
 
 				unlink($file);

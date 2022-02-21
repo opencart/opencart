@@ -2,9 +2,6 @@
 // Site
 $_['site_url']          = HTTP_SERVER;
 
-// Session
-$_['session_autostart'] = true;
-
 // Language
 $_['language_code']     = 'en-gb';
 

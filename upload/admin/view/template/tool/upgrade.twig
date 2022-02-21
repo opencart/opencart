@@ -52,21 +52,14 @@
         </fieldset>
         <fieldset>
           <legend>{{ text_status }}</legend>
-          <div class="form-control border rounded-start">
-            <div class="d-flex">
-              <div id="progress-icon" class="flex-shrink-0">
-                <i class="fas fa-download fa-5x"></i>
-              </div>
-              <div class="flex-grow-1 ms-3">
-                <div class="lead"><strong id="progress">{{ text_ready }}</strong></div>
-                <span id="test"></span>
-              </div>
-            </div>
+          <div class="input-group input-group-lg">
+            <button type="button" id="button-upgrade" data-oc-loading-text="{{ text_loading }}" class="btn btn-warning btn-lg"{% if not upgrade %} disabled{% endif %}><i class="fas fa-level-up-alt"></i> {{ button_upgrade }}</button>
+            <input type="text" id="input-upgrade" value="{{ text_ready }}" class="form-control bg-white" readonly/>
           </div>
+          <span id="test"></span>
+
         </fieldset>
-        <div class="text-center">
-          <button type="button" id="button-upgrade" data-oc-loading-text="{{ text_loading }}" class="btn btn-warning btn-lg"{% if not upgrade %} disabled{% endif %}><i class="fas fa-level-up-alt"></i> {{ button_upgrade }}</button>
-        </div>
+
       </div>
     </div>
   </div>
@@ -85,7 +78,6 @@ $('#button-upgrade').on('click', function () {
             dataType: 'json',
             beforeSend: function () {
                 $('#button-upgrade').prop('disabled', true);
-                $('#progress-icon').html('<i class="fas fa-circle-notch fa-5x fa-spin"></i>');
             },
             complete: function () {
                 $('#button-upgrade').prop('disabled', false);
@@ -103,7 +95,6 @@ $('#button-upgrade').on('click', function () {
 
                 if (json['success']) {
                     $('#progress').html(json['success']);
-                    $('#progress-icon').html('<i class="fas fa-download fa-5x"></i>');
                 }
 
                 if (json['next']) {
@@ -113,8 +104,6 @@ $('#button-upgrade').on('click', function () {
                 }
             },
             error: function (xhr, ajaxOptions, thrownError) {
-                $('#progress-icon').html('<i class="fas fa-download fa-5x"></i>');
-
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });

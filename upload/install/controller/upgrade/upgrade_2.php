@@ -39,6 +39,18 @@ class Upgrade2 extends \Opencart\System\Engine\Controller {
 			if ($zip->open($file)) {
 				$remove = 'opencart-' . $version . '/upload/';
 
+				//if (substr($remove . $source, 0, strlen($remove)) == $remove) {
+
+
+				// Fixes admin folder being under a different name
+				//if (substr($destination, 0, 6) == 'admin/') {
+				//	$path = DIR_OPENCART . $admin . '/' . substr($destination, 6);
+				//}
+
+				$zip->extractTo('/admin/', 'upload/admin/');
+				$zip->close();
+
+
 				// Check if any of the files already exist.
 				for ($i = 0; $i < $zip->numFiles; $i++) {
 					$source = $zip->getNameIndex($i);
@@ -87,7 +99,7 @@ class Upgrade2 extends \Opencart\System\Engine\Controller {
 
 				}
 
-				$zip->close();
+
 
 			} else {
 				$json['error'] = $this->language->get('error_unzip');

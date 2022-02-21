@@ -157,6 +157,19 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 			if ($zip->open($file)) {
 				$remove = 'opencart-' . $version . '/upload/';
 
+
+
+				for ($i = 0; $i < $zip->numFiles; $i++) {
+					//$source = $zip->getNameIndex($i);
+
+					//echo $source . "\n";
+				}
+
+				echo $zip->extractTo(DIR_OPENCART . 'install/', 'opencart-master/upload/install/');
+
+				$zip->close();
+
+				/*
 				// Check if any of the files already exist.
 				for ($i = 0; $i < $zip->numFiles; $i++) {
 					$source = $zip->getNameIndex($i);
@@ -192,10 +205,10 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 				}
 
 				$zip->close();
-
+*/
 				$json['text'] = $this->language->get('text_patch');
 
-				$json['next'] = HTTP_CATALOG . 'install/index.php?route=upgrade/upgrade_1&version=' . $version . '&admin=' . rtrim(substr(DIR_APPLICATION, strlen(DIR_OPENCART), -1));
+				//$json['next'] = HTTP_CATALOG . 'install/index.php?route=upgrade/upgrade_1&version=' . $version . '&admin=' . rtrim(substr(DIR_APPLICATION, strlen(DIR_OPENCART), -1));
 			} else {
 				$json['error'] = $this->language->get('error_unzip');
 			}

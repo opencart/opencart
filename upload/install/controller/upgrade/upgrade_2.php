@@ -35,6 +35,8 @@ class Upgrade2 extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		$total = 0;
+
 		$file = DIR_DOWNLOAD . 'opencart-' . $version . '.zip';
 
 		if (is_file($file)) {
@@ -115,7 +117,9 @@ class Upgrade2 extends \Opencart\System\Engine\Controller {
 			} else {
 				$json['next'] = $this->url->link('upgrade/upgrade_3', '', true);
 
-				unlink($file);
+				if (is_file($file)) {
+					unlink($file);
+				}
 			}
 		}
 

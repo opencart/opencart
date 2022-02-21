@@ -154,7 +154,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 			// Unzip the files
 			$zip = new \ZipArchive();
 
-			if ($zip->open($file, ZipArchive::RDONLY)) {
+			if ($zip->open($file, \ZipArchive::RDONLY)) {
 				$remove = 'opencart-' . $version . '/upload/';
 
 				$entries = [];

@@ -161,7 +161,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 
 				// Check if any of the files already exist.
 				for ($i = 0; $i < $zip->numFiles; $i++) {
-					$files[] = $zip->getNameIndex($i);
+					$entries[] = $zip->getNameIndex($i);
 				}
 
 				$zip->close();

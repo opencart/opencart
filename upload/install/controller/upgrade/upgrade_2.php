@@ -39,25 +39,19 @@ class Upgrade2 extends \Opencart\System\Engine\Controller {
 			if ($zip->open($file)) {
 				$remove = 'opencart-' . $version . '/upload/';
 
-				//if (substr($remove . $source, 0, strlen($remove)) == $remove) {
-
-
-				// Fixes admin folder being under a different name
-				//if (substr($destination, 0, 6) == 'admin/') {
-				//	$path = DIR_OPENCART . $admin . '/' . substr($destination, 6);
-				//}
-
-				$zip->extractTo('/admin/', 'upload/admin/');
-				$zip->close();
-
+				$entries = [];
 
 				// Check if any of the files already exist.
 				for ($i = 0; $i < $zip->numFiles; $i++) {
-					$source = $zip->getNameIndex($i);
+					$entries[] = $zip->getNameIndex($i);
+				}
 
-					if (substr($source, 0, strlen($remove)) == $remove) {
+				$zip->close();
+
+				foreach ($entries as $entry) {
+					if (substr($entry, 0, strlen($remove)) == $remove) {
 						// Only extract the contents of the upload folder
-						$destination = str_replace('\\', '/', substr($source, strlen($remove)));
+						$destination = str_replace('\\', '/', substr($entry, strlen($remove)));
 
 						if (substr($destination, 0, 8) != 'install/') {
 							// Default copy location
@@ -90,17 +84,13 @@ class Upgrade2 extends \Opencart\System\Engine\Controller {
 									unlink($path);
 								}
 
-								if (!copy('zip://' . $file . '#' . $source, $path)) {
-									$json['error'] = sprintf($this->language->get('error_copy'), $source, $path);
+								if (!copy('zip://' . $file . '#' . $entry, $path)) {
+									$json['error'] = sprintf($this->language->get('error_copy'), $entry, $path);
 								}
 							}
 						}
 					}
-
 				}
-
-
-
 			} else {
 				$json['error'] = $this->language->get('error_unzip');
 			}

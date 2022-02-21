@@ -87,7 +87,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!version_compare($version, VERSION, '>=')) {
-			//$json['error'] = $this->language->get('error_version');
+			$json['error'] = $this->language->get('error_version');
 		}
 
 		$file = DIR_DOWNLOAD . 'opencart-' . $version . '.zip';

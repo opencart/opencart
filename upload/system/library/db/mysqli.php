@@ -50,7 +50,10 @@ class MySQLi {
 	}
 
 	public function escape(string $value): string {
-		return $this->connection->real_escape_string($value);
+		if ( $value != '' ) {
+			return $this->connection->real_escape_string($value);
+		}
+		return ''
 	}
 	
 	public function countAffected(): int {

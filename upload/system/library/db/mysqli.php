@@ -53,7 +53,7 @@ class MySQLi {
 		if ( $value != '' ) {
 			return $this->connection->real_escape_string($value);
 		}
-		return ''
+		return '';
 	}
 	
 	public function countAffected(): int {

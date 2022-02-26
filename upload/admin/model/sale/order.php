@@ -82,6 +82,7 @@ class Order extends \Opencart\System\Engine\Model {
 				'firstname'               => $order_query->row['firstname'],
 				'lastname'                => $order_query->row['lastname'],
 				'email'                   => $order_query->row['email'],
+				'telephone'               => $order_query->row['telephone'],
 				'custom_field'            => json_decode($order_query->row['custom_field'], true),
 				'payment_firstname'       => $order_query->row['payment_firstname'],
 				'payment_lastname'        => $order_query->row['payment_lastname'],

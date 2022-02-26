@@ -564,6 +564,11 @@
             </div>
             <div id="error-email" class="invalid-feedback"></div>
           </div>
+          <div class="mb-3 required">
+            <label for="input-telephone" class="form-label">{{ entry_telephone }}</label>
+            <input type="text" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control"/>
+            <div id="error-telephone" class="invalid-feedback"></div>
+          </div>
           {% for custom_field in custom_fields %}
             {% if custom_field.location == 'account' %}
               {% if custom_field.type == 'select' %}
@@ -1198,6 +1203,7 @@ $('#input-customer').autocomplete({
                     firstname: '',
                     lastname: '',
                     email: '',
+                    telephone: '',
                     custom_field: [],
                     address: []
                 });
@@ -1211,6 +1217,7 @@ $('#input-customer').autocomplete({
                         firstname: item['firstname'],
                         lastname: item['lastname'],
                         email: item['email'],
+                        telephone: item['telephone'],
                         custom_field: item['custom_field'],
                         address: item['address']
                     }
@@ -1229,6 +1236,7 @@ $('#input-customer').autocomplete({
         $('#input-firstname').val(item['firstname']);
         $('#input-lastname').val(item['lastname']);
         $('#input-email').val(item['email']);
+        $('#input-telephone').val(item['telephone']);
 
         for (i in item.custom_field) {
             $('#input-custom-field-' + i).val(item.custom_field[i]);

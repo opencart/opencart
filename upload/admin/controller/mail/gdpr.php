@@ -95,6 +95,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 			$data['firstname'] = $customer_info['firstname'];
 			$data['lastname'] = $customer_info['lastname'];
 			$data['email'] = $customer_info['email'];
+			$data['telephone'] = $customer_info['telephone'];
 		}
 
 		// Addresses

@@ -51,6 +51,7 @@ class Order extends \Opencart\System\Engine\Model {
 				'customer_id'             => $order_query->row['customer_id'],
 				'firstname'               => $order_query->row['firstname'],
 				'lastname'                => $order_query->row['lastname'],
+				'telephone'               => $order_query->row['telephone'],
 				'email'                   => $order_query->row['email'],
 				'payment_firstname'       => $order_query->row['payment_firstname'],
 				'payment_lastname'        => $order_query->row['payment_lastname'],

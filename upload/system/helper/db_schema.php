@@ -1091,6 +1091,11 @@ function db_schema() {
 				'not_null' => true
 			],
 			[
+				'name' => 'telephone',
+				'type' => 'varchar(32)',
+				'not_null' => true
+			],
+			[
 				'name' => 'password',
 				'type' => 'varchar(255)',
 				'not_null' => true
@@ -3278,6 +3283,11 @@ function db_schema() {
 			[
 				'name' => 'email',
 				'type' => 'varchar(96)',
+				'not_null' => true
+			],
+			[
+				'name' => 'telephone',
+				'type' => 'varchar(32)',
 				'not_null' => true
 			],
 			[
@@ -5941,62 +5951,6 @@ function db_schema() {
 	];
 
 	$tables[] = [
-		'name' => 'seo_profile',
-		'field' => [
-			[
-				'name' => 'seo_profile_id',
-				'type' => 'int(11)',
-				'not_null' => true,
-				'auto_increment' => true
-			],
-			[
-				'name' => 'name',
-				'type' => 'varchar(64)',
-				'not_null' => true
-			],
-			[
-				'name' => 'key',
-				'type' => 'varchar(64)',
-				'not_null' => true
-			],
-			[
-				'name' => 'regex',
-				'type' => 'varchar(255)',
-				'not_null' => true
-			],
-			[
-				'name' => 'push',
-				'type' => 'varchar(255)',
-				'not_null' => true
-			],
-			[
-				'name' => 'remove',
-				'type' => 'varchar(255)',
-				'not_null' => true
-			],
-			[
-				'name' => 'sort_order',
-				'type' => 'int(3)',
-				'not_null' => true
-			]
-		],
-		'primary' => [
-			'seo_profile_id'
-		],
-		'index' => [
-			[
-				'name' => 'key',
-				'key' => [
-					'key'
-				]
-			]
-		],
-		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
-	];
-
-	$tables[] = [
 		'name' => 'seo_url',
 		'field' => [
 			[
@@ -6028,6 +5982,11 @@ function db_schema() {
 			[
 				'name' => 'keyword',
 				'type' => 'varchar(255)',
+				'not_null' => true
+			],
+			[
+				'name' => 'sort_order',
+				'type' => 'int(3)',
 				'not_null' => true
 			]
 		],

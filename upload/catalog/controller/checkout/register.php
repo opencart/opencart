@@ -44,12 +44,14 @@ class Register extends \Opencart\System\Engine\Controller {
 			$data['firstname'] = $this->session->data['customer']['firstname'];
 			$data['lastname'] = $this->session->data['customer']['lastname'];
 			$data['email'] = $this->session->data['customer']['email'];
+			$data['telephone'] = $this->session->data['customer']['telephone'];
 			$data['account_custom_field'] = $this->session->data['customer']['custom_field'];
 		} else {
 			$data['customer_group_id'] = $this->config->get('config_customer_group_id');
 			$data['firstname'] = '';
 			$data['lastname'] = '';
 			$data['email'] = '';
+			$data['telephone'] = '';
 			$data['account_custom_field'] = [];
 		}
 
@@ -145,6 +147,7 @@ class Register extends \Opencart\System\Engine\Controller {
 			'firstname',
 			'lastname',
 			'email',
+			'telephone',
 			'payment_company',
 			'payment_address_1',
 			'payment_address_2',
@@ -237,6 +240,10 @@ class Register extends \Opencart\System\Engine\Controller {
 				if ($customer_info['customer_id'] != $this->customer->getId()) {
 					$json['error']['warning'] = $this->language->get('error_exists');
 				}
+			}
+
+			if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
+				$json['error']['telephone'] = $this->language->get('error_telephone');
 			}
 
 			// Custom field validation
@@ -378,6 +385,7 @@ class Register extends \Opencart\System\Engine\Controller {
 				'firstname'         => $this->request->post['firstname'],
 				'lastname'          => $this->request->post['lastname'],
 				'email'             => $this->request->post['email'],
+				'telephone'         => $this->request->post['telephone'],
 				'custom_field'      => isset($this->request->post['custom_field']['account']) ? $this->request->post['custom_field'] : []
 			];
 

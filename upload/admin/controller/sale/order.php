@@ -558,6 +558,12 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!empty($order_info)) {
+			$data['telephone'] = $order_info['telephone'];
+		} else {
+			$data['telephone'] = '';
+		}
+
+		if (!empty($order_info)) {
 			$data['account_custom_field'] = $order_info['custom_field'];
 		} else {
 			$data['account_custom_field'] = '';
@@ -1428,6 +1434,7 @@ class Order extends \Opencart\System\Engine\Controller {
 					'store_email'      => $store_email,
 					'store_telephone'  => $store_telephone,
 					'email'            => $order_info['email'],
+					'telephone'        => $order_info['telephone'],
 					'shipping_address' => $shipping_address,
 					'shipping_method'  => $order_info['shipping_method'],
 					'payment_address'  => $payment_address,
@@ -1608,6 +1615,7 @@ class Order extends \Opencart\System\Engine\Controller {
 					'store_email'      => $store_email,
 					'store_telephone'  => $store_telephone,
 					'email'            => $order_info['email'],
+					'telephone'        => $order_info['telephone'],
 					'shipping_address' => $shipping_address,
 					'shipping_method'  => $order_info['shipping_method'],
 					'product'          => $product_data,

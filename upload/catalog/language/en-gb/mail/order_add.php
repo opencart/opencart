@@ -11,6 +11,7 @@ $_['text_order_status']     = 'Order Status:';
 $_['text_payment_method']   = 'Payment Method:';
 $_['text_shipping_method']  = 'Shipping Method:';
 $_['text_email']            = 'E-mail:';
+$_['text_telephone']        = 'Telephone:';
 $_['text_ip']               = 'IP Address:';
 $_['text_payment_address']  = 'Payment Address';
 $_['text_shipping_address'] = 'Shipping Address';

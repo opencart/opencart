@@ -113,6 +113,7 @@ class Register extends \Opencart\System\Engine\Controller {
 			'firstname',
 			'lastname',
 			'email',
+			'telephone',
 			'custom_field',
 			'password',
 			'confirm',
@@ -161,6 +162,10 @@ class Register extends \Opencart\System\Engine\Controller {
 
 			if ($this->model_account_customer->getTotalCustomersByEmail($this->request->post['email'])) {
 				$json['error']['warning'] = $this->language->get('error_exists');
+			}
+
+			if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
+				$json['error']['telephone'] = $this->language->get('error_telephone');
 			}
 
 			// Custom field validation
@@ -219,6 +224,7 @@ class Register extends \Opencart\System\Engine\Controller {
 					'firstname'         => $this->request->post['firstname'],
 					'lastname'          => $this->request->post['lastname'],
 					'email'             => $this->request->post['email'],
+					'telephone'         => $this->request->post['telephone'],
 					'custom_field'      => $this->request->post['custom_field']
 				];
 

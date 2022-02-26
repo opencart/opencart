@@ -37,6 +37,7 @@ class Order extends \Opencart\System\Engine\Controller {
 				'firstname'         => $order_info['firstname'],
 				'lastname'          => $order_info['lastname'],
 				'email'             => $order_info['email'],
+				'telephone'         => $order_info['telephone'],
 				'custom_field'      => $order_info['custom_field']
 			];
 
@@ -261,6 +262,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			$order_data['firstname'] = $this->session->data['customer']['firstname'];
 			$order_data['lastname'] = $this->session->data['customer']['lastname'];
 			$order_data['email'] = $this->session->data['customer']['email'];
+			$order_data['telephone'] = $this->session->data['customer']['telephone'];
 			$order_data['custom_field'] = $this->session->data['customer']['custom_field'];
 
 			// Payment Details

@@ -38,6 +38,10 @@
         <label for="input-email" class="form-label">{{ entry_email }}</label> <input type="text" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control"/>
         <div id="error-email" class="invalid-feedback"></div>
       </div>
+      <div class="col mb-3 required">
+        <label for="input-telephone" class="form-label">{{ entry_telephone }}</label> <input type="text" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control"/>
+        <div id="error-telephone" class="invalid-feedback"></div>
+      </div>
 
       {% for custom_field in custom_fields %}
 

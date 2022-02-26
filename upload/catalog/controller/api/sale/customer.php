@@ -12,6 +12,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 			'firstname',
 			'lastname',
 			'email',
+			'telephone',
 			'account_custom_field'
 		];
 
@@ -58,6 +59,10 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$json['error']['email'] = $this->language->get('error_email');
 		}
 
+		if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
+			$json['error']['telephone'] = $this->language->get('error_telephone');
+		}
+
 		// Custom field validation
 		$this->load->model('account/custom_field');
 
@@ -80,6 +85,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 				'firstname'         => $this->request->post['firstname'],
 				'lastname'          => $this->request->post['lastname'],
 				'email'             => $this->request->post['email'],
+				'telephone'         => $this->request->post['telephone'],
 				'custom_field'      => !empty($this->request->post['custom_field']) && is_array($this->request->post['custom_field']) ? $this->request->post['custom_field'] : []
 			];
 

@@ -107,6 +107,19 @@
           </div>
         </div>
 
+        <div class="col">
+          <div class="form-control-plaintext p-0 border rounded mb-3">
+            <div class="lead p-2"><strong>{{ text_customer_telephone }}</strong>
+              <br/>
+              {% if order.telephone %}
+                {{ order.telephone }}
+              {% else %}
+                &nbsp;
+              {% endif %}
+            </div>
+          </div>
+        </div>
+
       </div>
 
       <div class="row row-cols-1 row-cols-sm-2">

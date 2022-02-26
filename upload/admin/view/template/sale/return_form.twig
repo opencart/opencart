@@ -214,7 +214,8 @@ $('#input-customer').autocomplete({
                         value: item['customer_id'],
                         firstname: item['firstname'],
                         lastname: item['lastname'],
-                        email: item['email']
+                        email: item['email'],
+                        telephone: item['telephone']
                     }
                 }));
             }
@@ -226,6 +227,7 @@ $('#input-customer').autocomplete({
         $('#input-firstname').val(item['firstname']);
         $('#input-lastname').val(item['lastname']);
         $('#input-email').val(item['email']);
+        $('#input-telephone').val(item['telephone']);
     }
 });
 //--></script>

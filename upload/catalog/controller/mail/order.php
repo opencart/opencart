@@ -125,6 +125,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$data['payment_method'] = $order_info['payment_method'];
 		$data['shipping_method'] = $order_info['shipping_method'];
 		$data['email'] = $order_info['email'];
+		$data['telephone'] = $order_info['telephone'];
 		$data['ip'] = $order_info['ip'];
 
 		$order_status_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_status` WHERE `order_status_id` = '" . (int)$order_status_id . "' AND `language_id` = '" . (int)$order_info['language_id'] . "'");

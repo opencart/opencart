@@ -124,6 +124,7 @@ class Login extends \Opencart\System\Engine\Controller {
 				'firstname'         => $customer_info['firstname'],
 				'lastname'          => $customer_info['lastname'],
 				'email'             => $customer_info['email'],
+				'telephone'         => $customer_info['telephone'],
 				'custom_field'      => $customer_info['custom_field']
 			];
 

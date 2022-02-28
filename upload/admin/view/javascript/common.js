@@ -368,7 +368,7 @@ class Chain {
 
 var chain = new Chain();
 
-
+/*
 +function ($) {
     Button.prototype.loading = function () {
         console.log('hi');
@@ -379,7 +379,7 @@ $(document).ready(function() {
     $('button').button('loading');
 });
 
-/*
+
 (function($) {
     $.fn.button = function(state) {
         var $this = $(this);

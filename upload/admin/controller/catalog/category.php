@@ -311,6 +311,8 @@ class Category extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->get['category_id'])) {
+			$this->load->model('design/seo_url');
+
 			$data['category_seo_url'] = $this->model_catalog_category->getSeoUrls($this->request->get['category_id']);
 		} else {
 			$data['category_seo_url'] = [];

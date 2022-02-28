@@ -2140,9 +2140,7 @@ INSERT INTO `oc_setting` (`store_id`, `code`, `key`, `value`, `serialized`) VALU
 -- Dumping data for table `oc_seo_url`
 --
 
-
 INSERT INTO `oc_seo_url` (`seo_url_id`, `store_id`, `language_id`, `key`, `value`, `keyword`, `sort_order`) VALUES
-
 (38, 0, 1, 'product_id', '47', '/hp-lp3065', 0),
 (39, 0, 1, 'product_id', '48', '/ipod-classic', 0),
 (40, 0, 1, 'product_id', '28', '/htc-touch-hd', 0),
@@ -2170,18 +2168,15 @@ INSERT INTO `oc_seo_url` (`seo_url_id`, `store_id`, `language_id`, `key`, `value
 (62, 0, 1, 'information_id', '4', '/delivery', 0),
 (63, 0, 1, 'information_id', '3', '/privacy', 0),
 (65, 0, 1, 'language', 'en-gb', '/en-gb', -2),
-(66, 0, 1, 'route', 'product/manufacturer', '/brands', -1),
 (101, 0, 1, 'manufacturer_id', '9', '/canon', 0),
 (102, 0, 1, 'manufacturer_id', '8', '/apple', 0),
-
 (103, 0, 1, 'information_id', '1', '/about-us', 0),
 (104, 0, 1, 'information_id', '2', '/terms', 0),
-
 (108, 0, 1, 'route', 'information/information|info', '/info', 0),
 (109, 0, 1, 'route', 'information/information', '/information', -1),
 (136, 0, 1, 'route', 'product/product', '/products', -1),
 (137, 0, 1, 'route', 'product/category', '/catalog', -1),
-
+(66, 0, 1, 'route', 'product/manufacturer', '/brands', -1),
 (3, 0, 1, 'path', '27', '/mac', 0),
 (5, 0, 1, 'path', '46', '/macs', 0),
 (6, 0, 1, 'path', '45', '/windows', 0),

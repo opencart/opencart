@@ -183,7 +183,7 @@ class Category extends \Opencart\System\Engine\Model {
 				$seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyValue('path', $path, $store_id, $language_id);
 
 				if ($seo_url_info) {
-					$this->db->query("UPDATE `" . DB_PREFIX . "seo_url` SET `value` = REPLACE(`value`, '" . $this->db->escape($path_old) . "', '" . $this->db->escape($path) . "'), `keyword` = REPLACE(`keyword`, '" . $this->db->escape($seo_url_info['keyword']) . "', '" . $this->db->escape($keyword) . "'  WHERE `seo_url_id` = '" . (int)$seo_url_info['seo_url_id'] . "'");
+					$this->db->query("UPDATE `" . DB_PREFIX . "seo_url` SET `value` = REPLACE(`value`, '" . $this->db->escape($path_old) . "', '" . $this->db->escape($path) . "'), `keyword` = REPLACE(`keyword`, '" . $this->db->escape($seo_url_info['keyword']) . "', '" . $this->db->escape($keyword) . "' WHERE `seo_url_id` = '" . (int)$seo_url_info['seo_url_id'] . "'");
 				}
 			}
 		}

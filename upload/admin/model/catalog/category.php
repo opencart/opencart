@@ -58,7 +58,7 @@ class Category extends \Opencart\System\Engine\Model {
 					$path = $path . '_' . $category_id;
 				}
 
-				$this->db->query("INSERT INTO `" . DB_PREFIX . "seo_url` SET `store_id` = '" . (int)$store_id . "', `language_id` = '" . (int)$language_id . "', `key` = 'path', `value`= '" . $this->db->escape($path) . "', `keyword` = '" . $this->db->escape($string . '/' . trim($keyword, '/')) . "'");
+				$this->db->query("INSERT INTO `" . DB_PREFIX . "seo_url` SET `store_id` = '" . (int)$store_id . "', `language_id` = '" . (int)$language_id . "', `key` = 'path', `value`= '" . $this->db->escape($path) . "', `keyword` = '" . $this->db->escape('/' . trim($keyword, '/')) . "'");
 			}
 		}
 
@@ -177,13 +177,13 @@ class Category extends \Opencart\System\Engine\Model {
 					$path = $path . '_' . $category_id;
 				}
 
-				$this->db->query("INSERT INTO `" . DB_PREFIX . "seo_url` SET `store_id` = '" . (int)$store_id . "', `language_id` = '" . (int)$language_id . "', `key` = 'path', `value` = '" . $this->db->escape($path) . "', `keyword` = '" . $this->db->escape($keyword) . "'");
+				$this->db->query("INSERT INTO `" . DB_PREFIX . "seo_url` SET `store_id` = '" . (int)$store_id . "', `language_id` = '" . (int)$language_id . "', `key` = 'path', `value` = '" . $this->db->escape($path) . "', `keyword` = '" . $this->db->escape('/' . trim($keyword, '/')) . "'");
 
 				// Update sub category path plus keyword
 				$seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyValue('path', $path, $store_id, $language_id);
 
 				if ($seo_url_info) {
-					$this->db->query("UPDATE `" . DB_PREFIX . "seo_url` SET `value` = REPLACE(`value`, '" . $this->db->escape($path_old) . "', '" . $this->db->escape($path) . "'), `keyword` = REPLACE(`keyword`, '" . $this->db->escape($seo_url_info['keyword']) . "', '" . $this->db->escape($keyword) . "' WHERE `seo_url_id` = '" . (int)$seo_url_info['seo_url_id'] . "'");
+					$this->db->query("UPDATE `" . DB_PREFIX . "seo_url` SET `value` = REPLACE(`value`, '" . $this->db->escape($path_old) . "', '" . $this->db->escape($path) . "'), `keyword` = REPLACE(`keyword`, '" . $this->db->escape($seo_url_info['keyword']) . "', '" . $this->db->escape('/' . trim($keyword, '/')) . "') WHERE `store_id` = '" . (int)$store_id . "' AND `language_id` = '" . (int)$language_id . "' AND `path` LIKE '" . $this->db->escape($path) . "_%'");
 				}
 			}
 		}

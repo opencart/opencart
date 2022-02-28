@@ -183,7 +183,7 @@ class Category extends \Opencart\System\Engine\Model {
 				$seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyValue('path', $path, $store_id, $language_id);
 
 				if ($seo_url_info) {
-					$this->db->query("UPDATE `" . DB_PREFIX . "seo_url` SET `value` = REPLACE(`value`, '" . $this->db->escape($path_old) . "', '" . $this->db->escape($path) . "'), `keyword` = REPLACE(`keyword`, '" . $this->db->escape($seo_url_info['keyword']) . "', '" . $this->db->escape('/' . trim($keyword, '/')) . "') WHERE `store_id` = '" . (int)$store_id . "' AND `language_id` = '" . (int)$language_id . "' AND `path` LIKE '" . $this->db->escape($path) . "_%'");
+					$this->db->query("UPDATE `" . DB_PREFIX . "seo_url` SET `value` = REPLACE(`value`, '" . $this->db->escape($path_old) . "', '" . $this->db->escape($path) . "'), `keyword` = REPLACE(`keyword`, '" . $this->db->escape($seo_url_info['keyword']) . "', '" . $this->db->escape('/' . trim($keyword, '/')) . "') WHERE `store_id` = '" . (int)$store_id . "' AND `language_id` = '" . (int)$language_id . "' AND `key` = 'path' AND `value` LIKE '" . $this->db->escape($path) . "_%'");
 				}
 			}
 		}

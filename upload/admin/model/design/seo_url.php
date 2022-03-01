@@ -35,7 +35,7 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 		}
 
 		if (!empty($data['filter_value'])) {
-			$implode[] = "`value` = '" . $this->db->escape((string)$data['filter_value']) . "'";
+			$implode[] = "`value` LIKE '" . $this->db->escape((string)$data['filter_value']) . "'";
 		}
 
 		if (isset($data['filter_store_id']) && $data['filter_store_id'] !== '') {
@@ -119,6 +119,13 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 		$query = $this->db->query($sql);
 
 		return (int)$query->row['total'];
+	}
+
+
+	public function getSeoUrlsByKeyValue(string $key, string $value, int $store_id, int $language_id): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "seo_url` WHERE `key` = '" . $this->db->escape($key) . "' AND `value` = '" . $this->db->escape((string)$value) . "' AND `store_id` = '" . (int)$store_id . "' AND `language_id` = '" . (int)$language_id . "'");
+
+		return $query->row;
 	}
 
 	public function getSeoUrlByKeyValue(string $key, string $value, int $store_id, int $language_id): array {

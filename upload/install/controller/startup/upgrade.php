@@ -8,7 +8,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 			$upgrade = true;
 		}
 
-		if (isset($this->request->get['route']) && (substr($this->request->get['route'], 0, 8) == 'upgrade/')) {
+		if (isset($this->request->get['route']) && ((substr($this->request->get['route'], 0, 8) == 'upgrade/') || (substr($this->request->get['route'], 0, 14) == 'install/step_4'))) {
 			$upgrade = false;
 		}
 

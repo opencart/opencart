@@ -1786,6 +1786,10 @@
             "keywords": [
                 "wechat-php-sdk"
             ],
+            "support": {
+                "issues": "https://github.com/zoujingli/wechat-php-sdk/issues",
+                "source": "https://github.com/zoujingli/wechat-php-sdk/tree/v1.3.18"
+            },
             "install-path": "../zoujingli/wechat-php-sdk"
         }
     ],

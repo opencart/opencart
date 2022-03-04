@@ -80,7 +80,7 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 		$url .= str_replace('/index.php', '', $url_info['path']);
 
 		foreach ($paths as $result) {
-			$url .= $result['keyword'];
+			$url .= '/' . $result['keyword'];
 		}
 
 		// Rebuild the URL query

@@ -1,4 +1,0 @@
-suites:
-    cardinity_suite:
-        namespace: Cardinity
-        psr4_prefix: Cardinity

@@ -1,80 +1,72 @@
 {{ header }}{{ column_left }}
 <div id="content">
-	<div class="page-header">
-		<div class="container-fluid">
-			<div class="float-end">
-				<button type="button" data-oc-action="{{ save }}" data-oc-form="#country-form" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
-				<a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
-			<h1>{{ heading_title }}</h1>
-			<ol class="breadcrumb">
-				{% for breadcrumb in breadcrumbs %}
-					<li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
-				{% endfor %}
-			</ol>
-		</div>
-	</div>
-	<div class="container-fluid">
-		<div class="card">
-			<div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_form }}</div>
-			<div class="card-body">
-				<form id="country-form">
-					<input type="hidden" name="translation_id" value="{{ translation_id }}" id="input-translation-id"/>
-					<div class="row mb-3 required">
-						<label for="input-name" class="col-sm-2 col-form-label">{{ entry_name }}</label>
-						<div class="col-sm-10">
-							<input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
-						</div>
-					</div>
-					<div class="row mb-3">
-						<label for="input-iso-code-2" class="col-sm-2 col-form-label">{{ entry_iso_code_2 }}</label>
-						<div class="col-sm-10">
-							<input type="text" name="iso_code_2" value="{{ iso_code_2 }}" placeholder="{{ entry_iso_code_2 }}" id="input-iso-code-2" class="form-control"/>
-						</div>
-					</div>
-					<div class="row mb-3">
-						<label for="input-iso-code-3" class="col-sm-2 col-form-label">{{ entry_iso_code_3 }}</label>
-						<div class="col-sm-10">
-							<input type="text" name="iso_code_3" value="{{ iso_code_3 }}" placeholder="{{ entry_iso_code_3 }}" id="input-iso-code-3" class="form-control"/>
-						</div>
-					</div>
-					<div class="row mb-3">
-						<label for="input-address-format" class="col-sm-2 col-form-label">{{ entry_address_format }}</label>
-						<div class="col-sm-10">
-							<textarea name="address_format" rows="5" placeholder="{{ entry_address_format }}" id="input-address-format" class="form-control">{{ address_format }}</textarea>
-							<small class="form-text text-muted">{{ help_address_format }}</small>
-						</div>
-					</div>
-					<div class="row mb-3">
-						<label class="col-sm-2 col-form-label">{{ entry_postcode_required }}</label>
-						<div class="col-sm-10">
-							<div class="btn-group btn-group-toggle" data-bs-toggle="buttons">
-								{% if postcode_required %}
-									<label class="btn btn-outline-secondary active"><input type="radio" name="postcode_required" value="1" checked="checked"/> {{ text_yes }}</label>
-									<label class="btn btn-outline-secondary"><input type="radio" name="postcode_required" value="0"/> {{ text_no }}</label>
-								{% else %}
-									<label class="btn btn-outline-secondary"><input type="radio" name="postcode_required" value="1"/> {{ text_yes }}</label>
-									<label class="btn btn-outline-secondary active"><input type="radio" name="postcode_required" value="0" checked="checked"/> {{ text_no }}</label>
-								{% endif %}
-							</div>
-						</div>
-					</div>
-					<div class="row mb-3">
-						<label for="input-status" class="col-sm-2 col-form-label">{{ entry_status }}</label>
-						<div class="col-sm-10">
-							<select name="status" id="input-status" class="form-select">
-								{% if status %}
-									<option value="1" selected="selected">{{ text_enabled }}</option>
-									<option value="0">{{ text_disabled }}</option>
-								{% else %}
-									<option value="1">{{ text_enabled }}</option>
-									<option value="0" selected="selected">{{ text_disabled }}</option>
-								{% endif %}
-							</select>
-						</div>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="float-end"><button type="submit" form="form-country" formaction="{{ save }}" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
+        <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
+      <h1>{{ heading_title }}</h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_form }}</div>
+      <div class="card-body">
+        <form id="form-country" action="{{ save }}" method="post" data-oc-toggle="ajax">
+          <div class="row mb-3 required">
+            <label for="input-name" class="col-sm-2 col-form-label">{{ entry_name }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
+              <div id="error-name" class="invalid-feedback"></div>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label for="input-iso-code-2" class="col-sm-2 col-form-label">{{ entry_iso_code_2 }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="iso_code_2" value="{{ iso_code_2 }}" placeholder="{{ entry_iso_code_2 }}" id="input-iso-code-2" class="form-control"/>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label for="input-iso-code-3" class="col-sm-2 col-form-label">{{ entry_iso_code_3 }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="iso_code_3" value="{{ iso_code_3 }}" placeholder="{{ entry_iso_code_3 }}" id="input-iso-code-3" class="form-control"/>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label for="input-address-format" class="col-sm-2 col-form-label">{{ entry_address_format }}</label>
+            <div class="col-sm-10">
+              <select name="address_format_id" id="input-address-format" class="form-select">
+                {% for address_format in address_formats %}
+                  <option value="{{ address_format.address_format_id }}"{% if address_format.address_format_id == address_format_id %} selected{% endif %}>{{ address_format.name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">{{ entry_postcode_required }}</label>
+            <div class="col-sm-10">
+              <div class="btn-group">
+                <input type="radio" name="postcode_required" value="1" id="input-postcode-required-yes" class="btn-check"{% if postcode_required %} checked{% endif %}/> <label for="input-postcode-required-yes" class="btn btn-outline-secondary">{{ text_yes }}</label> <input type="radio" name="postcode_required" value="0" id="input-postcode-required-no" class="btn-check"{% if not postcode_required %} checked{% endif %}/> <label for="input-postcode-required-no" class="btn btn-outline-secondary">{{ text_no }}</label>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label for="input-status" class="col-sm-2 col-form-label">{{ entry_status }}</label>
+            <div class="col-sm-10">
+              <select name="status" id="input-status" class="form-select">
+                <option value="1"{% if status %} selected="selected"{% endif %}>{{ text_enabled }}</option>
+                <option value="0"{% if not status %} selected="selected"{% endif %}>{{ text_disabled }}</option>
+              </select>
+            </div>
+          </div>
+          <input type="hidden" name="country_id" value="{{ country_id }}" id="input-country-id"/>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>
 {{ footer }}

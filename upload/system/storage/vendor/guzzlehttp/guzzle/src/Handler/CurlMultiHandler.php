@@ -205,6 +205,10 @@ class CurlMultiHandler
      */
     private function cancel($id): bool
     {
+        if (!is_int($id)) {
+            trigger_deprecation('guzzlehttp/guzzle', '7.4', 'Not passing an integer to %s::%s() is deprecated and will cause an error in 8.0.', __CLASS__, __FUNCTION__);
+        }
+
         // Cannot cancel if it has been processed.
         if (!isset($this->handles[$id])) {
             return false;
@@ -221,6 +225,10 @@ class CurlMultiHandler
     private function processMessages(): void
     {
         while ($done = \curl_multi_info_read($this->_mh)) {
+            if ($done['msg'] !== \CURLMSG_DONE) {
+                // if it's not done, then it would be premature to remove the handle. ref https://github.com/guzzle/guzzle/pull/2892#issuecomment-945150216
+                continue;
+            }
             $id = (int) $done['handle'];
             \curl_multi_remove_handle($this->_mh, $done['handle']);
 

@@ -24,7 +24,6 @@ class Ip extends \Opencart\System\Engine\Controller {
 		];
 
 		$data['save'] = $this->url->link('extension/opencart/fraud/ip|save', 'user_token=' . $this->session->data['user_token']);
-
 		$data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=fraud');
 
 		$data['fraud_ip_order_status_id'] = $this->config->get('fraud_ip_order_status_id');

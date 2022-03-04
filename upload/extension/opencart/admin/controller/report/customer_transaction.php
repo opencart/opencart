@@ -24,7 +24,6 @@ class CustomerTransaction extends \Opencart\System\Engine\Controller {
 		];
 
 		$data['save'] = $this->url->link('extension/opencart/report/customer_transaction|save', 'user_token=' . $this->session->data['user_token']);
-
 		$data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=report');
 
 		$data['report_customer_transaction_status'] = $this->config->get('report_customer_transaction_status');
@@ -108,7 +107,7 @@ class CustomerTransaction extends \Opencart\System\Engine\Controller {
 				'customer_group' => $result['customer_group'],
 				'status'         => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
 				'total'          => $this->currency->format($result['total'], $this->config->get('config_currency')),
-				'edit'           => $this->url->link('customer/customer|edit', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id'])
+				'edit'           => $this->url->link('customer/customer|form', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id'])
 			];
 		}
 

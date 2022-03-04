@@ -24,7 +24,6 @@ class CustomerReward extends \Opencart\System\Engine\Controller {
 		];
 
 		$data['save'] = $this->url->link('extension/opencart/report/customer_reward|save', 'user_token=' . $this->session->data['user_token']);
-
 		$data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=report');
 
 		$data['report_customer_reward_status'] = $this->config->get('report_customer_reward_status');
@@ -109,8 +108,8 @@ class CustomerReward extends \Opencart\System\Engine\Controller {
 				'status'         => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
 				'points'         => $result['points'],
 				'orders'         => $result['orders'],
-				'total'          => $this->currency->format($result['total'], $this->config->get('config_currency')),
-				'edit'           => $this->url->link('customer/customer|edit', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id'])
+				'total'          => $this->currency->format((float)$result['total'], $this->config->get('config_currency')),
+				'edit'           => $this->url->link('customer/customer|form', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id'])
 			];
 		}
 

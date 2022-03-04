@@ -36,10 +36,10 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 				];
 			}
 
-			if ($this->user->hasPermission('access', 'catalog/recurring')) {
+			if ($this->user->hasPermission('access', 'catalog/subscription_plan')) {
 				$catalog[] = [
-					'name'	   => $this->language->get('text_recurring'),
-					'href'     => $this->url->link('catalog/recurring', 'user_token=' . $this->session->data['user_token']),
+					'name'	   => $this->language->get('text_subscription_plan'),
+					'href'     => $this->url->link('catalog/subscription_plan', 'user_token=' . $this->session->data['user_token']),
 					'children' => []
 				];
 			}
@@ -227,27 +227,11 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 
 			$seo = [];
 
-			if ($this->user->hasPermission('access', 'design/seo_profile')) {
-				$seo[] = [
-					'name'	   => $this->language->get('text_seo_profile'),
-					'href'     => $this->url->link('design/seo_profile', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
 			if ($this->user->hasPermission('access', 'design/seo_url')) {
-				$seo[] = [
+				$design[] = [
 					'name'	   => $this->language->get('text_seo_url'),
 					'href'     => $this->url->link('design/seo_url', 'user_token=' . $this->session->data['user_token']),
 					'children' => []
-				];
-			}
-
-			if ($seo) {
-				$design[] = [
-					'name'	   => $this->language->get('text_seo'),
-					'href'     => '',
-					'children' => $seo
 				];
 			}
 
@@ -272,10 +256,10 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 				];
 			}
 
-			if ($this->user->hasPermission('access', 'sale/recurring')) {
+			if ($this->user->hasPermission('access', 'sale/subscription')) {
 				$sale[] = [
-					'name'	   => $this->language->get('text_order_recurring'),
-					'href'     => $this->url->link('sale/recurring', 'user_token=' . $this->session->data['user_token']),
+					'name'	   => $this->language->get('text_subscription'),
+					'href'     => $this->url->link('sale/subscription', 'user_token=' . $this->session->data['user_token']),
 					'children' => []
 				];
 			}
@@ -512,6 +496,14 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 				];
 			}
 
+			if ($this->user->hasPermission('access', 'localisation/subscription_status')) {
+				$localisation[] = [
+					'name'	   => $this->language->get('text_subscription_status'),
+					'href'     => $this->url->link('localisation/subscription_status', 'user_token=' . $this->session->data['user_token']),
+					'children' => []
+				];
+			}
+
 			// Returns
 			$return = [];
 
@@ -610,6 +602,14 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 				$localisation[] = [
 					'name'	   => $this->language->get('text_weight_class'),
 					'href'     => $this->url->link('localisation/weight_class', 'user_token=' . $this->session->data['user_token']),
+					'children' => []
+				];
+			}
+
+			if ($this->user->hasPermission('access', 'localisation/address_format')) {
+				$localisation[] = [
+					'name'	   => $this->language->get('text_address_format'),
+					'href'     => $this->url->link('localisation/address_format', 'user_token=' . $this->session->data['user_token']),
 					'children' => []
 				];
 			}

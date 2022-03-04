@@ -186,18 +186,19 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('localisation/length_class', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		if (!isset($this->request->get['length_class_id'])) {
-			$data['save'] = $this->url->link('localisation/length_class|save', 'user_token=' . $this->session->data['user_token'] . $url);
-		} else {
-			$data['save'] = $this->url->link('localisation/length_class|save', 'user_token=' . $this->session->data['user_token'] . '&length_class_id=' . $this->request->get['length_class_id']);
-		}
-
+		$data['save'] = $this->url->link('localisation/length_class|save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('localisation/length_class', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['length_class_id'])) {
 			$this->load->model('localisation/length_class');
 
 			$length_class_info = $this->model_localisation_length_class->getLengthClass($this->request->get['length_class_id']);
+		}
+
+		if (isset($this->request->get['length_class_id'])) {
+			$data['length_class_id'] = (int)$this->request->get['length_class_id'];
+		} else {
+			$data['length_class_id'] = 0;
 		}
 
 		$this->load->model('localisation/language');
@@ -245,10 +246,10 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('localisation/length_class');
 
-			if (!isset($this->request->get['length_class_id'])) {
+			if (!$this->request->post['length_class_id']) {
 				$json['length_class_id'] = $this->model_localisation_length_class->addLengthClass($this->request->post);
 			} else {
-				$this->model_localisation_length_class->editLengthClass($this->request->get['length_class_id'], $this->request->post);
+				$this->model_localisation_length_class->editLengthClass($this->request->post['length_class_id'], $this->request->post);
 			}
 
 			$json['success'] = $this->language->get('text_success');

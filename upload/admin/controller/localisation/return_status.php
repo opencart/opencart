@@ -182,13 +182,14 @@ class ReturnStatus extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('localisation/return_status', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		if (!isset($this->request->get['return_status_id'])) {
-			$data['save'] = $this->url->link('localisation/return_status|save', 'user_token=' . $this->session->data['user_token'] . $url);
-		} else {
-			$data['save'] = $this->url->link('localisation/return_status|save', 'user_token=' . $this->session->data['user_token'] . '&return_status_id=' . $this->request->get['return_status_id']);
-		}
-
+		$data['save'] = $this->url->link('localisation/return_status|save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('localisation/return_status', 'user_token=' . $this->session->data['user_token'] . $url);
+
+		if (isset($this->request->get['return_status_id'])) {
+			$data['return_status_id'] = (int)$this->request->get['return_status_id'];
+		} else {
+			$data['return_status_id'] = 0;
+		}
 
 		$this->load->model('localisation/language');
 
@@ -227,10 +228,10 @@ class ReturnStatus extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('localisation/return_status');
 
-			if (!isset($this->request->get['return_status_id'])) {
+			if (!$this->request->post['return_status_id']) {
 				$json['return_status_id'] = $this->model_localisation_return_status->addReturnStatus($this->request->post);
 			} else {
-				$this->model_localisation_return_status->editReturnStatus($this->request->get['return_status_id'], $this->request->post);
+				$this->model_localisation_return_status->editReturnStatus($this->request->post['return_status_id'], $this->request->post);
 			}
 
 			$json['success'] = $this->language->get('text_success');

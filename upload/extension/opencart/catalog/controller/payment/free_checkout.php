@@ -2,13 +2,25 @@
 namespace Opencart\Catalog\Controller\Extension\Opencart\Payment;
 class FreeCheckout extends \Opencart\System\Engine\Controller {
 	public function index(): string {
+		$this->load->language('extension/opencart/payment/free_checkout');
+
 		return $this->load->view('extension/opencart/payment/free_checkout');
 	}
 
 	public function confirm(): void {
+		$this->load->language('extension/opencart/payment/free_checkout');
+
 		$json = [];
 
-		if ($this->session->data['payment_method']['code'] == 'free_checkout') {
+		if (!isset($this->session->data['order_id'])) {
+			$json['error'] = $this->language->get('error_order');
+		}
+
+		if (!isset($this->session->data['payment_method']) || $this->session->data['payment_method'] != 'free_checkout') {
+			$json['error'] = $this->language->get('error_payment_method');
+		}
+
+		if (!$json) {
 			$this->load->model('checkout/order');
 
 			$this->model_checkout_order->addHistory($this->session->data['order_id'], $this->config->get('payment_free_checkout_order_status_id'));

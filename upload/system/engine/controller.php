@@ -19,7 +19,11 @@ class Controller {
 	}
 
 	public function __get(string $key): object {
-		return $this->registry->get($key);
+		if ($this->registry->has($key)) {
+			return $this->registry->get($key);
+		} else {
+			throw new \Exception('Error: Could not call registry key ' . $key . '!');
+		}
 	}
 
 	public function __set(string $key, object $value): void {

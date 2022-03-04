@@ -182,18 +182,19 @@ class Layout extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('design/layout', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		if (!isset($this->request->get['layout_id'])) {
-			$data['save'] = $this->url->link('design/layout|save', 'user_token=' . $this->session->data['user_token'] . $url);
-		} else {
-			$data['save'] = $this->url->link('design/layout|save', 'user_token=' . $this->session->data['user_token'] . '&layout_id=' . $this->request->get['layout_id']);
-		}
-
+		$data['save'] = $this->url->link('design/layout|save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('design/layout', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['layout_id'])) {
 			$this->load->model('design/layout');
 
 			$layout_info = $this->model_design_layout->getLayout($this->request->get['layout_id']);
+		}
+
+		if (isset($this->request->get['layout_id'])) {
+			$data['layout_id'] = (int)$this->request->get['layout_id'];
+		} else {
+			$data['layout_id'] = 0;
 		}
 
 		if (!empty($layout_info)) {
@@ -297,17 +298,17 @@ class Layout extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		if ((utf8_strlen(trim($this->request->post['name'])) < 3) || (utf8_strlen($this->request->post['name']) > 64)) {
+		if ((utf8_strlen($this->request->post['name']) < 3) || (utf8_strlen($this->request->post['name']) > 64)) {
 			$json['error']['name'] = $this->language->get('error_name');
 		}
 
 		if (!$json) {
 			$this->load->model('design/layout');
 
-			if (!isset($this->request->get['layout_id'])) {
+			if (!$this->request->post['layout_id']) {
 				$json['layout_id'] = $this->model_design_layout->addLayout($this->request->post);
 			} else {
-				$this->model_design_layout->editLayout($this->request->get['layout_id'], $this->request->post);
+				$this->model_design_layout->editLayout($this->request->post['layout_id'], $this->request->post);
 			}
 
 			$json['success'] = $this->language->get('text_success');

@@ -1,42 +1,34 @@
-<form id="banner-list" data-oc-load="{{ action }}" data-oc-target="#banner">
-	<div class="table-responsive">
-		<table class="table table-bordered table-hover">
-			<thead>
-				<tr>
-					<td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));"/></td>
-					<td class="text-start">{% if sort == 'name' %}
-							<a href="{{ sort_name }}" class="{{ order|lower }}">{{ column_name }}</a>
-						{% else %}
-							<a href="{{ sort_name }}">{{ column_name }}</a>
-						{% endif %}</td>
-					<td class="text-start">{% if sort == 'status' %}
-							<a href="{{ sort_status }}" class="{{ order|lower }}">{{ column_status }}</a>
-						{% else %}
-							<a href="{{ sort_status }}">{{ column_status }}</a>
-						{% endif %}</td>
-					<td class="text-end">{{ column_action }}</td>
-				</tr>
-			</thead>
-			<tbody>
-				{% if banners %}
-					{% for banner in banners %}
-						<tr>
-							<td class="text-center"><input type="checkbox" name="selected[]" value="{{ banner.banner_id }}"/></td>
-							<td class="text-start">{{ banner.name }}</td>
-							<td class="text-start">{{ banner.status }}</td>
-							<td class="text-end"><a href="{{ banner.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a></td>
-						</tr>
-					{% endfor %}
-				{% else %}
-					<tr>
-						<td class="text-center" colspan="4">{{ text_no_results }}</td>
-					</tr>
-				{% endif %}
-			</tbody>
-		</table>
-	</div>
-	<div class="row">
-		<div class="col-sm-6 text-start">{{ pagination }}</div>
-		<div class="col-sm-6 text-end">{{ results }}</div>
-	</div>
+<form id="form-banner" method="post" data-oc-toggle="ajax" data-oc-load="{{ action }}" data-oc-target="#banner">
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <td class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></td>
+          <td class="text-start"><a href="{{ sort_name }}"{% if sort == 'name' %} class="{{ order|lower }}"{% endif %}>{{ column_name }}</a></td>
+          <td class="text-start"><a href="{{ sort_status }}"{% if sort == 'status' %} class="{{ order|lower }}"{% endif %}>{{ column_status }}</a></td>
+          <td class="text-end">{{ column_action }}</td>
+        </tr>
+      </thead>
+      <tbody>
+        {% if banners %}
+          {% for banner in banners %}
+            <tr>
+              <td class="text-center"><input type="checkbox" name="selected[]" value="{{ banner.banner_id }}" class="form-check-input"/></td>
+              <td class="text-start">{{ banner.name }}</td>
+              <td class="text-start">{{ banner.status }}</td>
+              <td class="text-end"><a href="{{ banner.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a></td>
+            </tr>
+          {% endfor %}
+        {% else %}
+          <tr>
+            <td class="text-center" colspan="4">{{ text_no_results }}</td>
+          </tr>
+        {% endif %}
+      </tbody>
+    </table>
+  </div>
+  <div class="row">
+    <div class="col-sm-6 text-start">{{ pagination }}</div>
+    <div class="col-sm-6 text-end">{{ results }}</div>
+  </div>
 </form>

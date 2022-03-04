@@ -3,7 +3,7 @@
 	<div class="page-header">
 		<div class="container-fluid">
 			<div class="float-end">
-				<button id="button-send" data-loading-text="{{ text_loading }}" class="btn btn-primary" onclick="send('index.php?route=marketing/contact|send&user_token={{ user_token }}');"><i class="fas fa-envelope"></i> {{ button_send }}</button></div>
+				<button type="button" id="button-send" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-envelope"></i> {{ button_send }}</button></div>
 			<h1>{{ heading_title }}</h1>
 			<ol class="breadcrumb">
 				{% for breadcrumb in breadcrumbs %}
@@ -25,7 +25,6 @@
 								{% for store in stores %}
 									<option value="{{ store.store_id }}">{{ store.name }}</option>
 								{% endfor %}
-
 							</select>
 						</div>
 					</div>
@@ -56,37 +55,41 @@
 					<div class="row mb-3 to" id="to-customer">
 						<label class="col-sm-2 col-form-label">{{ entry_customer }}</label>
 						<div class="col-sm-10">
-							<input type="text" name="customers" value="" placeholder="{{ entry_customer }}" id="input-customer" class="form-control"/>
+							<input type="text" name="customers" value="" placeholder="{{ entry_customer }}" id="input-customer" list="list-customer" class="form-control"/>
+              <datalist id="list-customer"></datalist>
 							<div class="form-control p-0" style="height: 150px; overflow: auto;">
 								<table id="mail-customer" class="table table-sm m-0"></table>
 							</div>
-							<small class="form-text text-muted">{{ help_customer }}</small>
+							<div class="form-text">{{ help_customer }}</div>
 						</div>
 					</div>
 					<div class="row mb-3 to" id="to-affiliate">
 						<label class="col-sm-2 col-form-label">{{ entry_affiliate }}</label>
 						<div class="col-sm-10">
-							<input type="text" name="affiliates" value="" placeholder="{{ entry_affiliate }}" id="input-affiliate" class="form-control"/>
+							<input type="text" name="affiliates" value="" placeholder="{{ entry_affiliate }}" id="input-affiliate" list="list-affiliate" class="form-control"/>
+              <datalist id="list-affiliate"></datalist>
 							<div class="form-control p-0" style="height: 150px; overflow: auto;">
 								<table id="mail-affiliate" class="table table-sm m-0"></table>
 							</div>
-							<small class="form-text text-muted">{{ help_affiliate }}</small>
+							<div class="form-text">{{ help_affiliate }}</div>
 						</div>
 					</div>
 					<div class="row mb-3 to" id="to-product">
 						<label class="col-sm-2 col-form-label">{{ entry_product }}</label>
 						<div class="col-sm-10">
-							<input type="text" name="products" value="" placeholder="{{ entry_product }}" id="input-product" class="form-control"/>
+							<input type="text" name="products" value="" placeholder="{{ entry_product }}" id="input-product" list="list-product" class="form-control"/>
+              <datalist id="list-product"></datalist>
 							<div class="form-control p-0" style="height: 150px; overflow: auto;">
 								<table id="mail-product" class="table table-sm m-0"></table>
 							</div>
-							<small class="form-text text-muted">{{ help_product }}</small>
+							<div class="form-text">{{ help_product }}</div>
 						</div>
 					</div>
 					<div class="row mb-3 required">
 						<label for="input-subject" class="col-sm-2 col-form-label">{{ entry_subject }}</label>
 						<div class="col-sm-10">
 							<input type="text" name="subject" value="" placeholder="{{ entry_subject }}" id="input-subject" class="form-control"/>
+              <div id="error-subject" class="invalid-feedback"></div>
 						</div>
 					</div>
 					<div class="row mb-3 required">
@@ -94,6 +97,7 @@
 						<div class="col-sm-10">
 							<div id="input-message">
 								<textarea name="message" placeholder="{{ entry_message }}" data-oc-toggle="ckeditor" data-lang="{{ ckeditor }}" class="form-control"></textarea>
+                <div id="error-message" class="invalid-feedback"></div>
 							</div>
 						</div>
 					</div>
@@ -103,16 +107,16 @@
 	</div>
 </div>
 <script type="text/javascript"><!--
-$('select[name=\'to\']').on('change', function() {
+$('#input-to').on('change', function() {
     $('.to').hide();
 
     $('#to-' + this.value.replaceAll('_', '-')).show();
 });
 
-$('select[name=\'to\']').trigger('change');
+$('#input-to').trigger('change');
 
 // Customers
-$('input[name=\'customers\']').autocomplete({
+$('#input-customer').autocomplete({
     'source': function(request, response) {
         $.ajax({
             url: 'index.php?route=customer/customer|autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
@@ -126,12 +130,12 @@ $('input[name=\'customers\']').autocomplete({
                 }));
             },
             error: function(xhr, ajaxOptions, thrownError) {
-                alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });
     },
     'select': function(item) {
-        $('input[name=\'customers\']').val('');
+        $('#input-customer').val('');
 
         $('#mail-customer-' + item['value']).remove();
 
@@ -149,7 +153,7 @@ $('#mail-customer').on('click', '.btn', function() {
 });
 
 // Affiliates
-$('input[name=\'affiliates\']').autocomplete({
+$('#input-affiliate').autocomplete({
     'source': function(request, response) {
         $.ajax({
             url: 'index.php?route=customer/customer|autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request) + '&filter_affiliate=1',
@@ -163,16 +167,16 @@ $('input[name=\'affiliates\']').autocomplete({
                 }));
             },
             error: function(xhr, ajaxOptions, thrownError) {
-                alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });
     },
     'select': function(item) {
-        $('input[name=\'affiliates\']').val('');
+        $('#input-affiliate').val('');
 
         $('#mail-affiliate-' + item['value']).remove();
 
-        html = '<tr id="mail-affiliate-' + item['value'] + '">';
+        html  = '<tr id="mail-affiliate-' + item['value'] + '">';
         html += '  <td>' + item['label'] + '<input type="hidden" name="affiliate[]" value="' + item['value'] + '"/></td>';
         html += '  <td class="text-end"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>';
         html += '</tr>';
@@ -186,7 +190,7 @@ $('#input-affiliate').on('click', '.btn', function() {
 });
 
 // Products
-$('input[name=\'products\']').autocomplete({
+$('#input-product').autocomplete({
     'source': function(request, response) {
         $.ajax({
             url: 'index.php?route=catalog/product|autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
@@ -200,16 +204,16 @@ $('input[name=\'products\']').autocomplete({
                 }));
             },
             error: function(xhr, ajaxOptions, thrownError) {
-                alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });
     },
     'select': function(item) {
-        $('input[name=\'products\']').val('');
+        $('#input-product').val('');
 
         $('#mail-product-' + item['value']).remove();
 
-        html = '<tr id="mail-product-' + item['value'] + '">';
+        html  = '<tr id="mail-product-' + item['value'] + '">';
         html += '  <td>' + item['label'] + '<input type="hidden" name="product[]" value="' + item['value'] + '"/></td>';
         html += '  <td class="text-end"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>';
         html += '</tr>';
@@ -224,54 +228,60 @@ $('#mail-product').on('click', '.btn', function() {
 
 $('textarea[data-oc-toggle=\'ckeditor\']').ckeditor();
 
-function send(url) {
+$('#button-send').on('click', function() {
+    var element = this;
+
     for (instance in CKEDITOR.instances) {
         CKEDITOR.instances[instance].updateElement();
     }
 
-    $.ajax({
-        url: url,
-        type: 'post',
-        data: $('#content form').serialize(),
-        dataType: 'json',
-        beforeSend: function() {
-            $('#button-send').button('loading');
-        },
-        complete: function() {
-            $('#button-send').button('reset');
-        },
-        success: function(json) {
-            console.log(json);
+    var next = 'index.php?route=marketing/contact|send&user_token={{ user_token }}';
 
-            $('.alert-dismissible, .invalid-tooltip').remove();
+    var send = function() {
+        $.ajax({
+            url: next,
+            type: 'post',
+            data: $('#content form').serialize(),
+            dataType: 'json',
+            beforeSend: function() {
+                $('#button-send').button('loading');
+            },
+            complete: function() {
+                $('#button-send').button('reset');
+            },
+            success: function(json) {
+                $('.invalid-feedback').removeClass('d-block');
 
-            if (json['error']) {
-                if (json['error']['warning']) {
-                    $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                if (json['error']) {
+                    if (json['error']['warning']) {
+                        $('#alert').prepend('<div class="alert alert-danger"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    }
+
+                    for (key in json['error']) {
+                        $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
+                        $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
+                    }
+
+                    delete json['error'];
                 }
 
-                if (json['error']['subject']) {
-                    $('#input-subject').after('<div class="invalid-tooltip d-inline">' + json['error']['subject'] + '</div>');
+                if (json['success']) {
+                    $('#alert').prepend('<div class="alert alert-success"><i class="fas fa-check-circle-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                 }
 
-                if (json['error']['message']) {
-                    $('#input-message').after('<div class="invalid-tooltip d-inline">' + json['error']['message'] + '</div>');
+                if (json['next']) {
+                    next = json['next'];
+
+                    chain.attach(send);
                 }
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
+        });
+    };
 
-            if (json['success']) {
-                $('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i>  ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-            }
-
-            if (json['next']) {
-                send(json['next']);
-            }
-        },
-        error: function(xhr, ajaxOptions, thrownError) {
-            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-        }
-    });
-}
-
+    chain.attach(send);
+});
 //--></script>
 {{ footer }}

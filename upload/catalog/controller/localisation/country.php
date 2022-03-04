@@ -5,7 +5,7 @@ class Country extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->get['country_id'])) {
-			$country_id = $this->request->get['country_id'];
+			$country_id = (int)$this->request->get['country_id'];
 		} else {
 			$country_id = 0;
 		}

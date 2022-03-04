@@ -190,18 +190,19 @@ class Translation extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('design/translation', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		if (!isset($this->request->get['translation_id'])) {
-			$data['save'] = $this->url->link('design/translation|save', 'user_token=' . $this->session->data['user_token'] . $url);
-		} else {
-			$data['save'] = $this->url->link('design/translation|save', 'user_token=' . $this->session->data['user_token'] . '&translation_id=' . $this->request->get['translation_id']);
-		}
-
+		$data['save'] = $this->url->link('design/translation|save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('design/translation', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['translation_id'])) {
 			$this->load->model('design/translation');
 
 			$translation_info = $this->model_design_translation->getTranslation($this->request->get['translation_id']);
+		}
+
+		if (isset($this->request->get['translation_id'])) {
+			$data['translation_id'] = (int)$this->request->get['translation_id'];
+		} else {
+			$data['translation_id'] = 0;
 		}
 
 		$this->load->model('setting/store');
@@ -260,17 +261,17 @@ class Translation extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		if ((utf8_strlen(trim($this->request->post['key'])) < 3) || (utf8_strlen($this->request->post['key']) > 64)) {
+		if ((utf8_strlen($this->request->post['key']) < 3) || (utf8_strlen($this->request->post['key']) > 64)) {
 			$json['error']['key'] = $this->language->get('error_key');
 		}
 
 		if (!$json) {
 			$this->load->model('design/translation');
 
-			if (!isset($this->request->get['translation_id'])) {
+			if (!$this->request->post['translation_id']) {
 				$json['translation_id'] = $this->model_design_translation->addTranslation($this->request->post);
 			} else {
-				$this->model_design_translation->editTranslation($this->request->get['translation_id'], $this->request->post);
+				$this->model_design_translation->editTranslation($this->request->post['translation_id'], $this->request->post);
 			}
 
 			$json['success'] = $this->language->get('text_success');
@@ -330,9 +331,9 @@ class Translation extends \Opencart\System\Engine\Controller {
 			while (count($path) != 0) {
 				$next = array_shift($path);
 
-				foreach ((array)glob($next) as $file) {
+				foreach ((array)glob($next . '/*') as $file) {
 					if (is_dir($file)) {
-						$path[] = $file . '/*';
+						$path[] = $file;
 					}
 
 					if (substr($file, -4) == '.php') {
@@ -346,9 +347,9 @@ class Translation extends \Opencart\System\Engine\Controller {
 			while (count($path) != 0) {
 				$next = array_shift($path);
 
-				foreach ((array)glob($next) as $file) {
+				foreach ((array)glob($next . '/*') as $file) {
 					if (is_dir($file)) {
-						$path[] = $file . '/*';
+						$path[] = $file;
 					}
 
 					if (substr($file, -4) == '.php') {
@@ -405,6 +406,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 			$directory = DIR_EXTENSION . $part[1] . '/catalog/language/';
 
 			array_shift($part);
+			// Don't remove. Required for extension route.
 			array_shift($part);
 
 			$route = implode('/', $part);

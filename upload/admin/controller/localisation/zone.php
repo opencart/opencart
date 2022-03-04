@@ -259,18 +259,19 @@ class Zone extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('localisation/zone', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		if (!isset($this->request->get['zone_id'])) {
-			$data['save'] = $this->url->link('localisation/zone|save', 'user_token=' . $this->session->data['user_token'] . $url);
-		} else {
-			$data['save'] = $this->url->link('localisation/zone|save', 'user_token=' . $this->session->data['user_token'] . '&zone_id=' . $this->request->get['zone_id']);
-		}
-
+		$data['save'] = $this->url->link('localisation/zone|save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('localisation/zone', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['zone_id'])) {
 			$this->load->model('localisation/zone');
 
 			$zone_info = $this->model_localisation_zone->getZone($this->request->get['zone_id']);
+		}
+
+		if (isset($this->request->get['zone_id'])) {
+			$data['zone_id'] = (int)$this->request->get['zone_id'];
+		} else {
+			$data['zone_id'] = 0;
 		}
 
 		if (!empty($zone_info)) {
@@ -291,15 +292,15 @@ class Zone extends \Opencart\System\Engine\Controller {
 			$data['code'] = '';
 		}
 
+		$this->load->model('localisation/country');
+
+		$data['countries'] = $this->model_localisation_country->getCountries();
+
 		if (!empty($zone_info)) {
 			$data['country_id'] = $zone_info['country_id'];
 		} else {
 			$data['country_id'] = '';
 		}
-
-		$this->load->model('localisation/country');
-
-		$data['countries'] = $this->model_localisation_country->getCountries();
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -324,10 +325,10 @@ class Zone extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('localisation/zone');
 
-			if (!isset($this->request->get['zone_id'])) {
+			if (!$this->request->post['zone_id']) {
 				$json['zone_id'] = $this->model_localisation_zone->addZone($this->request->post);
 			} else {
-				$this->model_localisation_zone->editZone($this->request->get['zone_id'], $this->request->post);
+				$this->model_localisation_zone->editZone($this->request->post['zone_id'], $this->request->post);
 			}
 
 			$json['success'] = $this->language->get('text_success');

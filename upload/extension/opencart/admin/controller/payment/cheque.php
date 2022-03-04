@@ -24,11 +24,9 @@ class Cheque extends \Opencart\System\Engine\Controller {
 		];
 
 		$data['save'] = $this->url->link('extension/opencart/payment/cheque|save', 'user_token=' . $this->session->data['user_token']);
-
 		$data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment');
 
 		$data['payment_cheque_payable'] = $this->config->get('payment_cheque_payable');
-		$data['payment_cheque_total'] = $this->config->get('payment_cheque_total');
 		$data['payment_cheque_order_status_id'] = $this->config->get('payment_cheque_order_status_id');
 
 		$this->load->model('localisation/order_status');

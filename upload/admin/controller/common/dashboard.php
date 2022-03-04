@@ -18,13 +18,6 @@ class Dashboard extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		// Check install directory exists
-		if (is_dir(DIR_CATALOG . '../install')) {
-			$data['error_install'] = $this->language->get('error_install');
-		} else {
-			$data['error_install'] = '';
-		}
-
 		// Dashboard Extensions
 		$dashboards = [];
 
@@ -80,17 +73,13 @@ class Dashboard extends \Opencart\System\Engine\Controller {
 			$data['rows'][] = $column;
 		}
 
-		if (DIR_STORAGE == DIR_SYSTEM . 'storage/') {
-			$data['security'] = $this->load->controller('common/security');
-		} else {
-			$data['security'] = '';
-		}
-
 		if ($this->user->hasPermission('access', 'common/developer')) {
 			$data['developer_status'] = true;
 		} else {
 			$data['developer_status'] = false;
 		}
+
+		$data['security'] = $this->load->controller('common/security');
 
 		$data['user_token'] = $this->session->data['user_token'];
 

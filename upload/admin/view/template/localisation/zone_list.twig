@@ -1,48 +1,36 @@
-<form id="zone-list" data-oc-load="{{ action }}" data-oc-target="#zone">
-	<div class="table-responsive">
-		<table class="table table-bordered table-hover">
-			<thead>
-				<tr>
-					<td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));"/></td>
-					<td class="text-start">{% if sort == 'c.name' %}
-							<a href="{{ sort_country }}" class="{{ order|lower }}">{{ column_country }}</a>
-						{% else %}
-							<a href="{{ sort_country }}">{{ column_country }}</a>
-						{% endif %}</td>
-					<td class="text-start">{% if sort == 'z.name' %}
-							<a href="{{ sort_name }}" class="{{ order|lower }}">{{ column_name }}</a>
-						{% else %}
-							<a href="{{ sort_name }}">{{ column_name }}</a>
-						{% endif %}</td>
-					<td class="text-start">{% if sort == 'z.code' %}
-							<a href="{{ sort_code }}" class="{{ order|lower }}">{{ column_code }}</a>
-						{% else %}
-							<a href="{{ sort_code }}">{{ column_code }}</a>
-						{% endif %}</td>
-					<td class="text-end">{{ column_action }}</td>
-				</tr>
-			</thead>
-			<tbody>
-				{% if zones %}
-					{% for zone in zones %}
-						<tr>
-							<td class="text-center"><input type="checkbox" name="selected[]" value="{{ zone.zone_id }}"/></td>
-							<td class="text-start">{{ zone.country }}</td>
-							<td class="text-start">{{ zone.name }}</td>
-							<td class="text-start">{{ zone.code }}</td>
-							<td class="text-end"><a href="{{ zone.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a></td>
-						</tr>
-					{% endfor %}
-				{% else %}
-					<tr>
-						<td class="text-center" colspan="5">{{ text_no_results }}</td>
-					</tr>
-				{% endif %}
-			</tbody>
-		</table>
-	</div>
-	<div class="row">
-		<div class="col-sm-6 text-start">{{ pagination }}</div>
-		<div class="col-sm-6 text-end">{{ results }}</div>
-	</div>
+<form id="form-zone" method="post" data-oc-toggle="ajax" data-oc-load="{{ action }}" data-oc-target="#zone">
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <td class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></td>
+          <td class="text-start"><a href="{{ sort_country }}"{% if sort == 'c.name' %} class="{{ order|lower }}"{% endif %}>{{ column_country }}</a></td>
+          <td class="text-start"><a href="{{ sort_name }}"{% if sort == 'z.name' %} class="{{ order|lower }}"{% endif %}>{{ column_name }}</a></td>
+          <td class="text-start"><a href="{{ sort_code }}"{% if sort == 'z.code' %} class="{{ order|lower }}"{% endif %}>{{ column_code }}</a></td>
+          <td class="text-end">{{ column_action }}</td>
+        </tr>
+      </thead>
+      <tbody>
+        {% if zones %}
+          {% for zone in zones %}
+            <tr>
+              <td class="text-center"><input type="checkbox" name="selected[]" value="{{ zone.zone_id }}" class="form-check-input"/></td>
+              <td class="text-start">{{ zone.country }}</td>
+              <td class="text-start">{{ zone.name }}</td>
+              <td class="text-start">{{ zone.code }}</td>
+              <td class="text-end"><a href="{{ zone.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a></td>
+            </tr>
+          {% endfor %}
+        {% else %}
+          <tr>
+            <td class="text-center" colspan="5">{{ text_no_results }}</td>
+          </tr>
+        {% endif %}
+      </tbody>
+    </table>
+  </div>
+  <div class="row">
+    <div class="col-sm-6 text-start">{{ pagination }}</div>
+    <div class="col-sm-6 text-end">{{ results }}</div>
+  </div>
 </form>

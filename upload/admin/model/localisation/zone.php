@@ -2,7 +2,7 @@
 namespace Opencart\Admin\Model\Localisation;
 class Zone extends \Opencart\System\Engine\Model {
 	public function addZone(array $data): int {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "zone` SET ``name` = '" . $this->db->escape((string)$data['name']) . "', `code` = '" . $this->db->escape((string)$data['code']) . "', `country_id` = '" . (int)$data['country_id'] . "', `status` = '" . (bool)$data['status'] . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "zone` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `code` = '" . $this->db->escape((string)$data['code']) . "', `country_id` = '" . (int)$data['country_id'] . "', `status` = '" . (bool)$data['status'] . "'");
 
 		$this->cache->delete('zone');
 

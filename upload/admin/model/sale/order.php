@@ -54,11 +54,9 @@ class Order extends \Opencart\System\Engine\Model {
 			$affiliate_info = $this->model_customer_customer->getCustomer($order_query->row['affiliate_id']);
 
 			if ($affiliate_info) {
-				$affiliate_firstname = $affiliate_info['firstname'];
-				$affiliate_lastname = $affiliate_info['lastname'];
+				$affiliate = $affiliate_info['firstname'] . ' ' . $affiliate_info['lastname'];
 			} else {
-				$affiliate_firstname = '';
-				$affiliate_lastname = '';
+				$affiliate = '';
 			}
 
 			$this->load->model('localisation/language');
@@ -128,8 +126,7 @@ class Order extends \Opencart\System\Engine\Model {
 				'order_status_id'         => $order_query->row['order_status_id'],
 				'order_status'            => $order_query->row['order_status'],
 				'affiliate_id'            => $order_query->row['affiliate_id'],
-				'affiliate_firstname'     => $affiliate_firstname,
-				'affiliate_lastname'      => $affiliate_lastname,
+				'affiliate'               => $affiliate,
 				'commission'              => $order_query->row['commission'],
 				'language_id'             => $order_query->row['language_id'],
 				'language_code'           => $language_code,
@@ -242,6 +239,12 @@ class Order extends \Opencart\System\Engine\Model {
 
 	public function getProducts(int $order_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_product` WHERE `order_id` = '" . (int)$order_id . "' ORDER BY order_product_id ASC");
+
+		return $query->rows;
+	}
+
+	public function getProductByOrderProductId(int $order_id, int $order_product_id): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_product` WHERE `order_id` = '" . (int)$order_id . "' AND `order_product_id` = '" . (int)$order_product_id . "' ORDER BY `order_product_id` ASC");
 
 		return $query->rows;
 	}
@@ -462,6 +465,12 @@ class Order extends \Opencart\System\Engine\Model {
 
 			return $order_info['invoice_prefix'] . $invoice_no;
 		}
+	}
+
+	public function getRewardTotal(int $order_id): int {
+		$query = $this->db->query("SELECT SUM(reward * quantity) AS total FROM `" . DB_PREFIX . "order_product` WHERE `order_id` = '" . (int)$order_id . "'");
+
+		return (int)$query->row['total'];
 	}
 
 	public function getHistories(int $order_id, int $start = 0, int $limit = 10) {

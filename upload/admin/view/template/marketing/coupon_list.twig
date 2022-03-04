@@ -1,66 +1,42 @@
-<form id="coupon-list" data-oc-load="{{ action }}" data-oc-target="#coupon">
-	<div class="table-responsive">
-		<table class="table table-bordered table-hover">
-			<thead>
-				<tr>
-					<td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));"/></td>
-					<td class="text-start">{% if sort == 'name' %}
-							<a href="{{ sort_name }}" class="{{ order|lower }}">{{ column_name }}</a>
-						{% else %}
-							<a href="{{ sort_name }}">{{ column_name }}</a>
-						{% endif %}</td>
-					<td class="text-start">{% if sort == 'code' %}
-							<a href="{{ sort_code }}" class="{{ order|lower }}">{{ column_code }}</a>
-						{% else %}
-							<a href="{{ sort_code }}">{{ column_code }}</a>
-						{% endif %}</td>
-					<td class="text-end">{% if sort == 'discount' %}
-							<a href="{{ sort_discount }}" class="{{ order|lower }}">{{ column_discount }}</a>
-						{% else %}
-							<a href="{{ sort_discount }}">{{ column_discount }}</a>
-						{% endif %}</td>
-					<td class="text-left d-none d-lg-table-cell">{% if sort == 'date_start' %}
-							<a href="{{ sort_date_start }}" class="{{ order|lower }}">{{ column_date_start }}</a>
-						{% else %}
-							<a href="{{ sort_date_start }}">{{ column_date_start }}</a>
-						{% endif %}</td>
-					<td class="text-left d-none d-lg-table-cell">{% if sort == 'date_end' %}
-							<a href="{{ sort_date_end }}" class="{{ order|lower }}">{{ column_date_end }}</a>
-						{% else %}
-							<a href="{{ sort_date_end }}">{{ column_date_end }}</a>
-						{% endif %}</td>
-					<td class="text-start">{% if sort == 'status' %}
-							<a href="{{ sort_status }}" class="{{ order|lower }}">{{ column_status }}</a>
-						{% else %}
-							<a href="{{ sort_status }}">{{ column_status }}</a>
-						{% endif %}</td>
-					<td class="text-end">{{ column_action }}</td>
-				</tr>
-			</thead>
-			<tbody>
-				{% if coupons %}
-					{% for coupon in coupons %}
-						<tr>
-							<td class="text-center"><input type="checkbox" name="selected[]" value="{{ coupon.coupon_id }}"/></td>
-							<td class="text-start">{{ coupon.name }}</td>
-							<td class="text-start">{{ coupon.code }}</td>
-							<td class="text-end">{{ coupon.discount }}</td>
-							<td class="text-left d-none d-lg-table-cell">{{ coupon.date_start }}</td>
-							<td class="text-left d-none d-lg-table-cell">{{ coupon.date_end }}</td>
-							<td class="text-start">{{ coupon.status }}</td>
-							<td class="text-end"><a href="{{ coupon.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a></td>
-						</tr>
-					{% endfor %}
-				{% else %}
-					<tr>
-						<td class="text-center" colspan="8">{{ text_no_results }}</td>
-					</tr>
-				{% endif %}
-			</tbody>
-		</table>
-	</div>
-	<div class="row">
-		<div class="col-sm-6 text-left">{{ pagination }}</div>
-		<div class="col-sm-6 text-end">{{ results }}</div>
-	</div>
+<form id="form-coupon" method="post" data-oc-toggle="ajax" data-oc-load="{{ action }}" data-oc-target="#coupon">
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <td class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></td>
+          <td class="text-start"><a href="{{ sort_name }}"{% if sort == 'name' %} class="{{ order|lower }}"{% endif %}>{{ column_name }}</a></td>
+          <td class="text-start"><a href="{{ sort_code }}"{% if sort == 'code' %} class="{{ order|lower }}"{% endif %}>{{ column_code }}</a></td>
+          <td class="text-end"><a href="{{ sort_discount }}"{% if sort == 'discount' %} class="{{ order|lower }}"{% endif %}>{{ column_discount }}</a></td>
+          <td class="text-left d-none d-lg-table-cell"><a href="{{ sort_date_start }}"{% if sort == 'date_start' %} class="{{ order|lower }}"{% endif %}>{{ column_date_start }}</a></td>
+          <td class="text-left d-none d-lg-table-cell"><a href="{{ sort_date_end }}"{% if sort == 'date_end' %} class="{{ order|lower }}"{% endif %}>{{ column_date_end }}</a></td>
+          <td class="text-start"><a href="{{ sort_status }}"{% if sort == 'status' %} class="{{ order|lower }}"{% endif %}>{{ column_status }}</a></td>
+          <td class="text-end">{{ column_action }}</td>
+        </tr>
+      </thead>
+      <tbody>
+        {% if coupons %}
+          {% for coupon in coupons %}
+            <tr>
+              <td class="text-center"><input type="checkbox" name="selected[]" value="{{ coupon.coupon_id }}" class="form-check-input"/></td>
+              <td class="text-start">{{ coupon.name }}</td>
+              <td class="text-start">{{ coupon.code }}</td>
+              <td class="text-end">{{ coupon.discount }}</td>
+              <td class="text-left d-none d-lg-table-cell">{{ coupon.date_start }}</td>
+              <td class="text-left d-none d-lg-table-cell">{{ coupon.date_end }}</td>
+              <td class="text-start">{{ coupon.status }}</td>
+              <td class="text-end"><a href="{{ coupon.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a></td>
+            </tr>
+          {% endfor %}
+        {% else %}
+          <tr>
+            <td class="text-center" colspan="8">{{ text_no_results }}</td>
+          </tr>
+        {% endif %}
+      </tbody>
+    </table>
+  </div>
+  <div class="row">
+    <div class="col-sm-6 text-left">{{ pagination }}</div>
+    <div class="col-sm-6 text-end">{{ results }}</div>
+  </div>
 </form>

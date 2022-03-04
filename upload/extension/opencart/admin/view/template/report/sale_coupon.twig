@@ -1,33 +1,29 @@
 <div class="row">
-	<div id="filter-report" class="col-md-3 col-sm-12 order-md-9 d-none d-md-block mb-3">
+	<div id="filter-report" class="col-lg-3 col-md-12 order-lg-last d-none d-lg-block mb-3">
 		<div class="card">
 			<div class="card-header"><i class="fas fa-filter"></i> {{ text_filter }}</div>
 			<div class="card-body">
-				<div class="form-group">
+				<div class="mb-3">
 					<label for="input-date-start" class="col-form-label">{{ entry_date_start }}</label>
 					<div class="input-group date">
 						<input type="text" name="filter_date_start" value="{{ filter_date_start }}" placeholder="{{ entry_date_start }}" id="input-date-start" class="form-control"/>
-						<div class="input-group-append">
-							<div class="input-group-text"><i class="fas fa-calendar"></i></div>
-						</div>
+						<div class="input-group-text"><i class="fas fa-calendar"></i></div>
 					</div>
 				</div>
-				<div class="form-group">
+				<div class="mb-3">
 					<label for="input-date-end" class="col-form-label">{{ entry_date_end }}</label>
 					<div class="input-group date">
 						<input type="text" name="filter_date_end" value="{{ filter_date_end }}" placeholder="{{ entry_date_end }}" id="input-date-end" class="form-control"/>
-						<div class="input-group-append">
-							<div class="input-group-text"><i class="fas fa-calendar"></i></div>
-						</div>
+						<div class="input-group-text"><i class="fas fa-calendar"></i></div>
 					</div>
 				</div>
-				<div class="form-group text-end">
+				<div class="text-end">
 					<button type="button" id="button-filter" class="btn btn-light"><i class="fas fa-filter"></i> {{ button_filter }}</button>
 				</div>
 			</div>
 		</div>
 	</div>
-	<div class="col-md-9 col-sm-12">
+	<div class="col col-lg-9 col-md-12">
 		<div class="card">
 			<div class="card-header"><i class="fas fa-chart-bar"></i> {{ heading_title }}</div>
 			<div class="card-body">

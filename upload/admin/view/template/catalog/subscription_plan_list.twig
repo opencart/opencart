@@ -1,0 +1,34 @@
+<form id="form-subscription-plan" method="post" data-oc-toggle="ajax" data-oc-load="{{ action }}" data-oc-target="#subscription-plan">
+	<div class="table-responsive">
+		<table class="table table-bordered table-hover">
+			<thead>
+				<tr>
+					<td class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></td>
+					<td class="text-start"><a href="{{ sort_name }}"{% if sort == 'spd.name' %} class="{{ order|lower }}"{% endif %}>{{ column_name }}</a></td>
+					<td class="text-end"><a href="{{ sort_sort_order }}"{% if sort == 's.sort_order' %} class="{{ order|lower }}"{% endif %}>{{ column_sort_order }}</a></td>
+					<td class="text-end">{{ column_action }}</td>
+				</tr>
+			</thead>
+			<tbody>
+				{% if subscription_plans %}
+					{% for subscription_plan in subscription_plans %}
+						<tr>
+							<td class="text-center"><input type="checkbox" name="selected[]" value="{{ subscription_plan.subscription_plan_id }}" class="form-check-input"/></td>
+							<td class="text-start">{{ subscription_plan.name }}</td>
+							<td class="text-end">{{ subscription_plan.sort_order }}</td>
+							<td class="text-end"><a href="{{ subscription_plan.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a></td>
+						</tr>
+					{% endfor %}
+				{% else %}
+					<tr>
+						<td class="text-center" colspan="4">{{ text_no_results }}</td>
+					</tr>
+				{% endif %}
+			</tbody>
+		</table>
+	</div>
+	<div class="row">
+		<div class="col-sm-6 text-start">{{ pagination }}</div>
+		<div class="col-sm-6 text-end">{{ results }}</div>
+	</div>
+</form>

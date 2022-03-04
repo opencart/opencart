@@ -24,7 +24,6 @@ class Chart extends \Opencart\System\Engine\Controller {
 		];
 
 		$data['save'] = $this->url->link('extension/opencart/dashboard/chart|save', 'user_token=' . $this->session->data['user_token']);
-
 		$data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=dashboard');
 
 		$data['dashboard_chart_width'] = $this->config->get('dashboard_chart_width');

@@ -60,5 +60,7 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise stopStreamEncryptionAsync(array $args = [])
  * @method \Aws\Result updateShardCount(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateShardCountAsync(array $args = [])
+ * @method \Aws\Result updateStreamMode(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateStreamModeAsync(array $args = [])
  */
 class KinesisClient extends AwsClient {}

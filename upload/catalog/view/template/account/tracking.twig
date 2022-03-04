@@ -18,9 +18,11 @@
           </div>
         </div>
         <div class="row mb-3">
-          <label for="input-generator"><span data-bs-toggle="tooltip" title="{{ help_generator }}" class="col-md-2 col-form-label">{{ entry_generator }}</span></label>
+          <label for="input-generator" class="col-md-2 col-form-label">{{ entry_generator }}</label>
           <div class="col-md-10">
-            <input type="text" name="product" value="" placeholder="{{ entry_generator }}" id="input-generator" class="form-control"/>
+            <input type="text" name="product" value="" placeholder="{{ entry_generator }}" id="input-generator" list="list-generator" class="form-control"/>
+            <datalist id="list-generator"></datalist>
+            <div class="text-muted">{{ help_generator }}</div>
           </div>
         </div>
         <div class="row mb-3">
@@ -39,25 +41,24 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('input[name=\'product\']').autocomplete({
-	'source': function(request, response) {
-		$.ajax({
-			url: 'index.php?route=account/tracking|autocomplete&filter_name=' + encodeURIComponent(request) + '&tracking=' + encodeURIComponent($('#input-code').val()),
-			dataType: 'json',
-			success: function(json) {
-				response($.map(json, function(item) {
-					return {
-						label: item['name'],
-						value: item['link']
-					}
-				}));
-			}
-		});
-	},
-	'select': function(item) {
-		$('input[name=\'product\']').val(item['label']);
-		$('textarea[name=\'link\']').val(item['value']);
-	}
+$('#input-generator').autocomplete({
+    'source': function (request, response) {
+        $.ajax({
+            url: 'index.php?route=account/tracking|autocomplete&customer_token={{ customer_token }}&filter_name=' + encodeURIComponent(request) + '&tracking=' + encodeURIComponent($('#input-code').val()),
+            dataType: 'json',
+            success: function (json) {
+                response($.map(json, function (item) {
+                    return {
+                        label: item['name'],
+                        value: item['link']
+                    }
+                }));
+            }
+        });
+    },
+    'select': function (item) {
+        $('#input-link').val(item['value']);
+    }
 });
 //--></script>
 {{ footer }}

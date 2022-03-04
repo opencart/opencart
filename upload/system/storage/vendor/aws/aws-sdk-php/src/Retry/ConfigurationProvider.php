@@ -111,7 +111,7 @@ class ConfigurationProvider extends AbstractConfigurationProvider
                 ? getenv(self::ENV_MAX_ATTEMPTS)
                 : self::DEFAULT_MAX_ATTEMPTS;
             if (!empty($mode)) {
-                return Promise\promise_for(
+                return Promise\Create::promiseFor(
                     new Configuration($mode, $maxAttempts)
                 );
             }
@@ -129,7 +129,7 @@ class ConfigurationProvider extends AbstractConfigurationProvider
     public static function fallback()
     {
         return function () {
-            return Promise\promise_for(
+            return Promise\Create::promiseFor(
                 new Configuration(self::DEFAULT_MODE, self::DEFAULT_MAX_ATTEMPTS)
             );
         };
@@ -174,7 +174,7 @@ class ConfigurationProvider extends AbstractConfigurationProvider
                 ? $data[$profile][self::INI_MAX_ATTEMPTS]
                 : self::DEFAULT_MAX_ATTEMPTS;
 
-            return Promise\promise_for(
+            return Promise\Create::promiseFor(
                 new Configuration(
                     $data[$profile][self::INI_MODE],
                     $maxAttempts

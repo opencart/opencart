@@ -23,7 +23,7 @@ class Registry {
 	 *
 	 * @return   object
 	 */
-	public function __get(string $key): object {
+	public function __get(string $key): object|null {
 		return $this->get($key);
 	}
 
@@ -47,12 +47,8 @@ class Registry {
 	 * 
 	 * @return	mixed
      */
-	public function get(string $key): object {
-		if (!$this->data[$key]) {
-			exit('Missing ' . $key);
-		}
-
-		return isset($this->data[$key]) ? $this->data[$key] : '';
+	public function get(string $key): object|null {
+		return isset($this->data[$key]) ? $this->data[$key] : null;
 	}
 
     /**

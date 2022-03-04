@@ -76,7 +76,7 @@ class Session {
 		
 		return $session_id;
 	}
-	
+
 	/**
 	 * Close
 	 *
@@ -85,12 +85,12 @@ class Session {
 	public function close(): void {
 		$this->adaptor->write($this->session_id, $this->data);
 	}
-	
+
 	/**
 	 * Destroy
 	 *
 	 * Deletes the current session from storage
- 	*/	
+ 	*/
 	public function destroy(): void {
 		$this->data = [];
 

@@ -24,7 +24,6 @@ class Store extends \Opencart\System\Engine\Controller {
 		];
 
 		$data['save'] = $this->url->link('extension/opencart/module/store|save', 'user_token=' . $this->session->data['user_token']);
-
 		$data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module');
 
 		$data['module_store_admin'] = $this->config->get('module_store_admin');

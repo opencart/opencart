@@ -1,158 +1,157 @@
 {{ header }}{{ column_left }}
 <div id="content">
-	<div class="page-header">
-		<div class="container-fluid">
-			<div class="float-end">
-				{% if voucher_id %}
-					<button type="button" id="button-send" data-bs-toggle="tooltip" title="{{ button_send }}" class="btn btn-warning"><i class="fas fa-envelope"></i></button>
-				{% endif %}
-				<button type="button" data-oc-action="{{ save }}" data-oc-form="#voucher-form" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
-				<a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a>
-			</div>
-			<h1>{{ heading_title }}</h1>
-			<ol class="breadcrumb">
-				{% for breadcrumb in breadcrumbs %}
-					<li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
-				{% endfor %}
-			</ol>
-		</div>
-	</div>
-	<div class="container-fluid">
-		<div class="card">
-			<div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_form }}</div>
-			<div class="card-body">
-				<form id="voucher-form">
-					<input type="hidden" name="voucher_id" value="{{ voucher_id }}" id="input-voucher-id"/>
-					<ul class="nav nav-tabs">
-						<li class="nav-item"><a href="#tab-general" data-bs-toggle="tab" class="nav-link active">{{ tab_general }}</a></li>
-						{% if voucher_id %}
-							<li class="nav-item"><a href="#tab-history" data-bs-toggle="tab" class="nav-link">{{ tab_history }}</a></li>
-						{% endif %}
-					</ul>
-					<div class="tab-content">
-						<div class="tab-pane active" id="tab-general">
-							<div class="row mb-3 required">
-								<label for="input-code" class="col-sm-2 col-form-label">{{ entry_code }}</label>
-								<div class="col-sm-10">
-									<input type="text" name="code" value="{{ code }}" placeholder="{{ entry_code }}" id="input-code" class="form-control"/>
-									<small class="form-text text-muted">{{ help_code }}</small>
-								</div>
-							</div>
-							<div class="row mb-3 required">
-								<label for="input-from-name" class="col-sm-2 col-form-label">{{ entry_from_name }}</label>
-								<div class="col-sm-10">
-									<input type="text" name="from_name" value="{{ from_name }}" placeholder="{{ entry_from_name }}" id="input-from-name" class="form-control"/>
-								</div>
-							</div>
-							<div class="row mb-3 required">
-								<label for="input-from-email" class="col-sm-2 col-form-label">{{ entry_from_email }}</label>
-								<div class="col-sm-10">
-									<input type="text" name="from_email" value="{{ from_email }}" placeholder="{{ entry_from_email }}" id="input-from-email" class="form-control"/>
-								</div>
-							</div>
-							<div class="row mb-3 required">
-								<label for="input-to-name" class="col-sm-2 col-form-label">{{ entry_to_name }}</label>
-								<div class="col-sm-10">
-									<input type="text" name="to_name" value="{{ to_name }}" placeholder="{{ entry_to_name }}" id="input-to-name" class="form-control"/>
-								</div>
-							</div>
-							<div class="row mb-3 required">
-								<label for="input-to-email" class="col-sm-2 col-form-label">{{ entry_to_email }}</label>
-								<div class="col-sm-10">
-									<input type="text" name="to_email" value="{{ to_email }}" placeholder="{{ entry_to_email }}" id="input-to-email" class="form-control"/>
-								</div>
-							</div>
-							<div class="row mb-3">
-								<label for="input-theme" class="col-sm-2 col-form-label">{{ entry_theme }}</label>
-								<div class="col-sm-10">
-									<select name="voucher_theme_id" id="input-theme" class="form-select">
-										{% for voucher_theme in voucher_themes %}
-											{% if voucher_theme.voucher_theme_id == voucher_theme_id %}
-												<option value="{{ voucher_theme.voucher_theme_id }}" selected="selected">{{ voucher_theme.name }}</option>
-											{% else %}
-												<option value="{{ voucher_theme.voucher_theme_id }}">{{ voucher_theme.name }}</option>
-											{% endif %}
-										{% endfor %}
-									</select>
-								</div>
-							</div>
-							<div class="row mb-3">
-								<label for="input-message" class="col-sm-2 col-form-label">{{ entry_message }}</label>
-								<div class="col-sm-10">
-									<textarea name="message" rows="5" placeholder="{{ entry_message }}" id="input-message" class="form-control">{{ message }}</textarea>
-								</div>
-							</div>
-							<div class="row mb-3 required">
-								<label for="input-amount" class="col-sm-2 col-form-label">{{ entry_amount }}</label>
-								<div class="col-sm-10">
-									<input type="text" name="amount" value="{{ amount }}" placeholder="{{ entry_amount }}" id="input-amount" class="form-control"/>
-								</div>
-							</div>
-							<div class="row mb-3">
-								<label for="input-status" class="col-sm-2 col-form-label">{{ entry_status }}</label>
-								<div class="col-sm-10">
-									<select name="status" id="input-status" class="form-select">
-										{% if status %}
-											<option value="1" selected="selected">{{ text_enabled }}</option>
-											<option value="0">{{ text_disabled }}</option>
-										{% else %}
-											<option value="1">{{ text_enabled }}</option>
-											<option value="0" selected="selected">{{ text_disabled }}</option>
-										{% endif %}
-									</select>
-								</div>
-							</div>
-						</div>
-						{% if voucher_id %}
-							<div id="tab-history" class="tab-pane">
-								<div id="history"></div>
-							</div>
-						{% endif %}
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="float-end">
+        {% if voucher_id %}
+          <button type="button" id="button-send" data-bs-toggle="tooltip" title="{{ button_send }}" class="btn btn-warning"><i class="fas fa-envelope"></i></button>
+        {% endif %}
+        <button type="submit" form="form-voucher" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
+        <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a>
+      </div>
+      <h1>{{ heading_title }}</h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_form }}</div>
+      <div class="card-body">
+        <form id="form-voucher" action="{{ save }}" method="post" data-oc-toggle="ajax">
+          <ul class="nav nav-tabs">
+            <li class="nav-item"><a href="#tab-general" data-bs-toggle="tab" class="nav-link active">{{ tab_general }}</a></li>
+            <li class="nav-item"><a href="#tab-history" data-bs-toggle="tab" class="nav-link">{{ tab_history }}</a></li>
+          </ul>
+          <div class="tab-content">
+            <div id="tab-general" class="tab-pane active">
+              <div class="row mb-3 required">
+                <label for="input-code" class="col-sm-2 col-form-label">{{ entry_code }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="code" value="{{ code }}" placeholder="{{ entry_code }}" id="input-code" class="form-control"/>
+                  <div class="form-text">{{ help_code }}</div>
+                  <div id="error-code" class="invalid-feedback"></div>
+                </div>
+              </div>
+              <div class="row mb-3 required">
+                <label for="input-from-name" class="col-sm-2 col-form-label">{{ entry_from_name }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="from_name" value="{{ from_name }}" placeholder="{{ entry_from_name }}" id="input-from-name" class="form-control"/>
+                  <div id="error-from-name" class="invalid-feedback"></div>
+                </div>
+              </div>
+              <div class="row mb-3 required">
+                <label for="input-from-email" class="col-sm-2 col-form-label">{{ entry_from_email }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="from_email" value="{{ from_email }}" placeholder="{{ entry_from_email }}" id="input-from-email" class="form-control"/>
+                  <div id="error-from-email" class="invalid-feedback"></div>
+                </div>
+              </div>
+              <div class="row mb-3 required">
+                <label for="input-to-name" class="col-sm-2 col-form-label">{{ entry_to_name }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="to_name" value="{{ to_name }}" placeholder="{{ entry_to_name }}" id="input-to-name" class="form-control"/>
+                  <div id="error-to-name" class="invalid-feedback"></div>
+                </div>
+              </div>
+              <div class="row mb-3 required">
+                <label for="input-to-email" class="col-sm-2 col-form-label">{{ entry_to_email }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="to_email" value="{{ to_email }}" placeholder="{{ entry_to_email }}" id="input-to-email" class="form-control"/>
+                  <div id="error-to-email" class="invalid-feedback"></div>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label for="input-theme" class="col-sm-2 col-form-label">{{ entry_theme }}</label>
+                <div class="col-sm-10">
+                  <select name="voucher_theme_id" id="input-theme" class="form-select">
+                    {% for voucher_theme in voucher_themes %}
+                      {% if voucher_theme.voucher_theme_id == voucher_theme_id %}
+                        <option value="{{ voucher_theme.voucher_theme_id }}" selected="selected">{{ voucher_theme.name }}</option>
+                      {% else %}
+                        <option value="{{ voucher_theme.voucher_theme_id }}">{{ voucher_theme.name }}</option>
+                      {% endif %}
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label for="input-message" class="col-sm-2 col-form-label">{{ entry_message }}</label>
+                <div class="col-sm-10">
+                  <textarea name="message" rows="5" placeholder="{{ entry_message }}" id="input-message" class="form-control">{{ message }}</textarea>
+                </div>
+              </div>
+              <div class="row mb-3 required">
+                <label for="input-amount" class="col-sm-2 col-form-label">{{ entry_amount }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="amount" value="{{ amount }}" placeholder="{{ entry_amount }}" id="input-amount" class="form-control"/>
+                  <div id="error-amount" class="invalid-feedback"></div>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label for="input-status" class="col-sm-2 col-form-label">{{ entry_status }}</label>
+                <div class="col-sm-10">
+                  <select name="status" id="input-status" class="form-select">
+                    <option value="1"{% if status %} selected{% endif %}>{{ text_enabled }}</option>
+                    <option value="0"{% if not status %} selected{% endif %}>{{ text_disabled }}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div id="tab-history" class="tab-pane">
+              <fieldset>
+                <legend>{{ text_history }}</legend>
+                <div id="history"></div>
+              </fieldset>
+            </div>
+          </div>
+          <input type="hidden" name="voucher_id" value="{{ voucher_id }}" id="input-voucher-id"/>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>
-{% if voucher_id %}
-	<script type="text/javascript"><!--
-  $('#button-send').on('click', function() {
-      $.ajax({
-          url: 'index.php?route=sale/voucher|send&user_token={{ user_token }}',
-          type: 'post',
-          dataType: 'json',
-          data: 'voucher_id={{ voucher_id }}',
-          beforeSend: function() {
-              $('#button-send').prop('disabled', true);
-          },
-          complete: function() {
-              $('#button-send').prop('disabled', false);
-          },
-          success: function(json) {
-              $('.alert-dismissible').remove();
+<script type="text/javascript"><!--
+$('#button-send').on('click', function() {
+    var element = this;
 
-              if (json['error']) {
-                  $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-              }
+    $.ajax({
+        url: 'index.php?route=sale/voucher|send&user_token={{ user_token }}',
+        type: 'post',
+        dataType: 'json',
+        data: 'voucher_id=' + $('#input-voucher-id').val(),
+        beforeSend: function() {
+            $(element).prop('disabled', true);
+        },
+        complete: function() {
+            $(element).prop('disabled', false);
+        },
+        success: function(json) {
+            $('.alert-dismissible').remove();
 
-              if (json['success']) {
-                  $('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i>  ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-              }
-          },
-          error: function(xhr, ajaxOptions, thrownError) {
-              alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-          }
-      });
-  })
-  //--></script>
-	<script type="text/javascript"><!--
-  $('#history').on('click', '.pagination a', function(e) {
-      e.preventDefault();
+            if (json['error']) {
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
 
-      $('#history').load(this.href);
-  });
+            if (json['success']) {
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
 
-  $('#history').load('index.php?route=sale/voucher|history&user_token={{ user_token }}&voucher_id={{ voucher_id }}');
-  //--></script>
-{% endif %}
+$('#history').on('click', '.pagination a', function(e) {
+    e.preventDefault();
+
+    $('#history').load(this.href);
+});
+
+$('#history').load('index.php?route=sale/voucher|history&user_token={{ user_token }}&voucher_id=' + $('#input-voucher-id').val());
+//--></script>
 {{ footer }}

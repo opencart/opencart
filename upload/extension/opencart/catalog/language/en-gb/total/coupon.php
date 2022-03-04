@@ -12,4 +12,4 @@ $_['entry_coupon']  = 'Enter your coupon here';
 
 // Error
 $_['error_coupon']  = 'Warning: Coupon is either invalid, expired or reached its usage limit!';
-$_['error_empty']   = 'Warning: Please enter a coupon code!';
+$_['error_status']  = 'Warning: Coupons are not enabled on this store!';

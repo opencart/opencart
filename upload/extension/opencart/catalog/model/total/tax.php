@@ -9,7 +9,7 @@ class Tax extends \Opencart\System\Engine\Model {
 					'code'       => 'tax',
 					'title'      => $this->tax->getRateName($key),
 					'value'      => $value,
-					'sort_order' => $this->config->get('total_tax_sort_order')
+					'sort_order' => (int)$this->config->get('total_tax_sort_order')
 				];
 
 				$total += $value;

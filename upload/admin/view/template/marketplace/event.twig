@@ -3,7 +3,7 @@
 	<div class="page-header">
 		<div class="container-fluid">
 			<div class="float-end">
-				<button type="button" data-oc-action="{{ delete }}" data-oc-form="#event-list" data-bs-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+				<button type="submit" form="form-event" formaction="{{ delete }}" data-bs-toggle="tooltip" title="{{ button_delete }}" onclick="confirm('{{ text_confirm }}') ? $('#form-event').submit() : false;" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
 			</div>
 			<h1>{{ heading_title }}</h1>
 			<ol class="breadcrumb">
@@ -28,7 +28,9 @@ $('#event').on('click', 'thead a, .pagination a', function(e) {
     $('#event').load(this.href);
 });
 
-$('#event').on('click', '.btn-success, .btn-danger', function() {
+$('#event').on('click', '.btn-success, .btn-danger', function(e) {
+    e.preventDefault();
+
     var element = this;
 
     $.ajax({
@@ -43,25 +45,21 @@ $('#event').on('click', '.btn-success, .btn-danger', function() {
             $(element).button('reset');
         },
         success: function(json) {
-            $('.alert-dismissible').remove();
-
             if (json['error']) {
-                $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
 
             if (json['success']) {
-                $('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#event').load($('#event-list').attr('data-oc-load'));
+                $('#event').load($('#form-event').attr('data-oc-load'));
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
-            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 });
-
-import Modal from 'bootstrap/js/dist/modal';
 
 $('#event').on('click', '.btn-info', function() {
     var element = this;
@@ -73,17 +71,17 @@ $('#event').on('click', '.btn-info', function() {
     html += '    <div class="modal-content">';
     html += '      <div class="modal-header">';
     html += '        <h5 class="modal-title">{{ text_info }}</h5>';
-    html += '        <button type="button" class="btn-close" data-bs-dismiss="modal">&times;</button>';
+    html += '        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>';
     html += '      </div>';
     html += '      <div class="modal-body">';
     html += '        <div class="mb-3">';
-    html += '          <label for="input-description" class="col-form-label">{{ text_description }}</label> <textarea placeholder="{{ text_description }}" id="input-description"rows="5" class="form-control" disabled>' + $(element).attr('data-event-description') + '</textarea>';
+    html += '          <label for="input-description" class="form-label">{{ entry_description }}</label> <textarea placeholder="{{ entry_description }}" id="input-description" rows="5" class="form-control" disabled>' + $(element).attr('data-oc-description') + '</textarea>';
     html += '        </div>';
     html += '        <div class="mb-3">';
-    html += '          <label for="input-trigger" class="col-form-label">{{ text_trigger }}</label> <textarea placeholder="{{ text_trigger }}" id="input-trigger" class="form-control" disabled>' + $(element).attr('data-event-trigger') + '</textarea>';
+    html += '          <label for="input-trigger" class="form-label">{{ entry_trigger }}</label> <textarea placeholder="{{ entry_trigger }}" id="input-trigger" class="form-control" disabled>' + $(element).attr('data-oc-trigger') + '</textarea>';
     html += '        </div>';
     html += '        <div class="mb-3">';
-    html += '          <label for="input-action" class="col-form-label">{{ text_action }}</label> <textarea placeholder="{{ text_action }}" id="input-action" class="form-control" disabled>' + $(element).attr('data-event-action') + '</textarea>';
+    html += '          <label for="input-action" class="form-label">{{ entry_action }}</label> <textarea placeholder="{{ entry_action }}" id="input-action" class="form-control" disabled>' + $(element).attr('data-oc-action') + '</textarea>';
     html += '        </div>';
     html += '      </div>';
     html += '      </div>';
@@ -93,25 +91,9 @@ $('#event').on('click', '.btn-info', function() {
 
     $('body').append(html);
 
-    //$('#modal-event').modal('show');
+    var modal = new bootstrap.Modal(document.querySelector('#modal-event'));
 
-    //var event = document.querySelector('#modal-event');
-     //var event = document.getElementById('#modal-event');
-
-    var option = {
-        'backdrop': true
-    };
-
-
-
-   // var modal = new bootstrap.Modal(document.getElementById('modal-event'), option);
-
-    //modal.show();
-
-    //console.log(modal);
-    console.log(bootstrap);
-
-    //modal.show();
+    modal.show();
 });
 //--></script>
 {{ footer }}

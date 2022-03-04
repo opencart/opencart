@@ -24,7 +24,6 @@ class SubTotal extends \Opencart\System\Engine\Controller {
 		];
 
 		$data['save'] = $this->url->link('extension/opencart/total/sub_total|save', 'user_token=' . $this->session->data['user_token']);
-
 		$data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=total');
 
 		$data['total_sub_total_status'] = $this->config->get('total_sub_total_status');

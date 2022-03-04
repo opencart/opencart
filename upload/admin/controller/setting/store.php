@@ -128,30 +128,24 @@ class Store extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('setting/store', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		if (!isset($this->request->get['store_id'])) {
-			$data['breadcrumbs'][] = [
-				'text' => $this->language->get('text_settings'),
-				'href' => $this->url->link('setting/store|form', 'user_token=' . $this->session->data['user_token'] . $url)
-			];
-		} else {
-			$data['breadcrumbs'][] = [
-				'text' => $this->language->get('text_settings'),
-				'href' => $this->url->link('setting/store|form', 'user_token=' . $this->session->data['user_token'] . '&store_id=' . $this->request->get['store_id'] . $url)
-			];
-		}
+		$data['breadcrumbs'][] = [
+			'text' => $this->language->get('text_settings'),
+			'href' => $this->url->link('setting/store|form', 'user_token=' . $this->session->data['user_token'] . (isset($this->request->post['store_id']) ? '&store_id=' . $this->request->get['store_id'] : '') . $url)
+		];
 
-		if (!isset($this->request->get['store_id'])) {
-			$data['save'] = $this->url->link('setting/store|save', 'user_token=' . $this->session->data['user_token']);
-		} else {
-			$data['save'] = $this->url->link('setting/store|save', 'user_token=' . $this->session->data['user_token'] . '&store_id=' . $this->request->get['store_id']);
-		}
-
+		$data['save'] = $this->url->link('setting/store|save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('setting/store', 'user_token=' . $this->session->data['user_token']);
 
 		if (isset($this->request->get['store_id'])) {
 			$this->load->model('setting/setting');
 
 			$store_info = $this->model_setting_setting->getSetting('config', $this->request->get['store_id']);
+		}
+
+		if (isset($this->request->get['store_id'])) {
+			$data['store_id'] = (int)$this->request->get['store_id'];
+		} else {
+			$data['store_id'] = 0;
 		}
 
 		if (isset($store_info['config_url'])) {
@@ -178,12 +172,6 @@ class Store extends \Opencart\System\Engine\Controller {
 			$data['config_meta_keyword'] = '';
 		}
 
-		if (isset($store_info['config_theme'])) {
-			$data['config_theme'] = $store_info['config_theme'];
-		} else {
-			$data['config_theme'] = '';
-		}
-
 		$data['themes'] = [];
 
 		$this->load->model('setting/extension');
@@ -201,15 +189,21 @@ class Store extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		if (isset($store_info['config_layout_id'])) {
-			$data['config_layout_id'] = $store_info['config_layout_id'];
+		if (isset($store_info['config_theme'])) {
+			$data['config_theme'] = $store_info['config_theme'];
 		} else {
-			$data['config_layout_id'] = '';
+			$data['config_theme'] = '';
 		}
 
 		$this->load->model('design/layout');
 
 		$data['layouts'] = $this->model_design_layout->getLayouts();
+
+		if (isset($store_info['config_layout_id'])) {
+			$data['config_layout_id'] = $store_info['config_layout_id'];
+		} else {
+			$data['config_layout_id'] = '';
+		}
 
 		if (isset($store_info['config_name'])) {
 			$data['config_name'] = $store_info['config_name'];
@@ -285,15 +279,15 @@ class Store extends \Opencart\System\Engine\Controller {
 			$data['config_location'] = [];
 		}
 
+		$this->load->model('localisation/country');
+
+		$data['countries'] = $this->model_localisation_country->getCountries();
+
 		if (isset($store_info['config_country_id'])) {
 			$data['config_country_id'] = $store_info['config_country_id'];
 		} else {
 			$data['config_country_id'] = $this->config->get('config_country_id');
 		}
-
-		$this->load->model('localisation/country');
-
-		$data['countries'] = $this->model_localisation_country->getCountries();
 
 		if (isset($store_info['config_zone_id'])) {
 			$data['config_zone_id'] = $store_info['config_zone_id'];
@@ -301,25 +295,25 @@ class Store extends \Opencart\System\Engine\Controller {
 			$data['config_zone_id'] = $this->config->get('config_zone_id');
 		}
 
+		$this->load->model('localisation/language');
+
+		$data['languages'] = $this->model_localisation_language->getLanguages();
+
 		if (isset($store_info['config_language'])) {
 			$data['config_language'] = $store_info['config_language'];
 		} else {
 			$data['config_language'] = $this->config->get('config_language');
 		}
 
-		$this->load->model('localisation/language');
+		$this->load->model('localisation/currency');
 
-		$data['languages'] = $this->model_localisation_language->getLanguages();
+		$data['currencies'] = $this->model_localisation_currency->getCurrencies();
 
 		if (isset($store_info['config_currency'])) {
 			$data['config_currency'] = $store_info['config_currency'];
 		} else {
 			$data['config_currency'] = $this->config->get('config_currency');
 		}
-
-		$this->load->model('localisation/currency');
-
-		$data['currencies'] = $this->model_localisation_currency->getCurrencies();
 
 		// Options
 		if (isset($store_info['config_product_description_length'])) {
@@ -370,15 +364,15 @@ class Store extends \Opencart\System\Engine\Controller {
 			$data['config_tax_customer'] = '';
 		}
 
+		$this->load->model('customer/customer_group');
+
+		$data['customer_groups'] = $this->model_customer_customer_group->getCustomerGroups();
+
 		if (isset($store_info['config_customer_group_id'])) {
 			$data['config_customer_group_id'] = $store_info['config_customer_group_id'];
 		} else {
 			$data['config_customer_group_id'] = '';
 		}
-
-		$this->load->model('customer/customer_group');
-
-		$data['customer_groups'] = $this->model_customer_customer_group->getCustomerGroups();
 
 		if (isset($store_info['config_customer_group_display'])) {
 			$data['config_customer_group_display'] = $store_info['config_customer_group_display'];
@@ -392,15 +386,15 @@ class Store extends \Opencart\System\Engine\Controller {
 			$data['config_customer_price'] = '';
 		}
 
+		$this->load->model('catalog/information');
+
+		$data['informations'] = $this->model_catalog_information->getInformations();
+
 		if (isset($store_info['config_account_id'])) {
 			$data['config_account_id'] = $store_info['config_account_id'];
 		} else {
 			$data['config_account_id'] = '';
 		}
-
-		$this->load->model('catalog/information');
-
-		$data['informations'] = $this->model_catalog_information->getInformations();
 
 		if (isset($store_info['config_cart_weight'])) {
 			$data['config_cart_weight'] = $store_info['config_cart_weight'];
@@ -419,16 +413,6 @@ class Store extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['config_checkout_id'] = '';
 		}
-
-		if (isset($store_info['config_order_status_id'])) {
-			$data['config_order_status_id'] = $store_info['config_order_status_id'];
-		} else {
-			$data['config_order_status_id'] = '';
-		}
-
-		$this->load->model('localisation/order_status');
-
-		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 
 		if (isset($store_info['config_stock_display'])) {
 			$data['config_stock_display'] = $store_info['config_stock_display'];
@@ -609,19 +593,19 @@ class Store extends \Opencart\System\Engine\Controller {
 			$json['error']['name'] = $this->language->get('error_name');
 		}
 
-		if ((utf8_strlen(trim($this->request->post['config_owner'])) < 3) || (utf8_strlen(trim($this->request->post['config_owner'])) > 64)) {
+		if ((utf8_strlen($this->request->post['config_owner']) < 3) || (utf8_strlen($this->request->post['config_owner']) > 64)) {
 			$json['error']['owner'] = $this->language->get('error_owner');
 		}
 
-		if ((utf8_strlen(trim($this->request->post['config_address'])) < 3) || (utf8_strlen(trim($this->request->post['config_address'])) > 256)) {
+		if ((utf8_strlen($this->request->post['config_address']) < 3) || (utf8_strlen($this->request->post['config_address']) > 256)) {
 			$json['error']['address'] = $this->language->get('error_address');
 		}
 
-		if ((utf8_strlen(trim($this->request->post['config_email'])) > 96) || !filter_var($this->request->post['config_email'], FILTER_VALIDATE_EMAIL)) {
+		if ((utf8_strlen($this->request->post['config_email']) > 96) || !filter_var($this->request->post['config_email'], FILTER_VALIDATE_EMAIL)) {
 			$json['error']['email'] = $this->language->get('error_email');
 		}
 
-		if ((utf8_strlen(trim($this->request->post['config_telephone'])) < 3) || (utf8_strlen(trim($this->request->post['config_telephone'])) > 32)) {
+		if ((utf8_strlen($this->request->post['config_telephone']) < 3) || (utf8_strlen($this->request->post['config_telephone']) > 32)) {
 			$json['error']['telephone'] = $this->language->get('error_telephone');
 		}
 
@@ -686,14 +670,14 @@ class Store extends \Opencart\System\Engine\Controller {
 
 			$this->load->model('setting/store');
 
-			if (!isset($this->request->get['store_id'])) {
-				$store_id = $this->model_setting_store->addStore($this->request->post);
+			if (!$this->request->post['store_id']) {
+				$json['store_id'] = $this->model_setting_store->addStore($this->request->post);
 
-				$this->model_setting_setting->editSetting('config', $this->request->post, $store_id);
+				$this->model_setting_setting->editSetting('config', $this->request->post, $json['store_id']);
 			} else {
-				$this->model_setting_store->editStore($this->request->get['store_id'], $this->request->post);
+				$this->model_setting_store->editStore($this->request->post['store_id'], $this->request->post);
 
-				$this->model_setting_setting->editSetting('config', $this->request->post, $this->request->get['store_id']);
+				$this->model_setting_setting->editSetting('config', $this->request->post, $this->request->post['store_id']);
 			}
 
 			$json['success'] = $this->language->get('text_success');

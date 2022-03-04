@@ -344,18 +344,19 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('design/seo_url', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		if (!isset($this->request->get['seo_url_id'])) {
-			$data['save'] = $this->url->link('design/seo_url|save', 'user_token=' . $this->session->data['user_token'] . $url);
-		} else {
-			$data['save'] = $this->url->link('design/seo_url|save', 'user_token=' . $this->session->data['user_token'] . '&seo_url_id=' . $this->request->get['seo_url_id']);
-		}
-
+		$data['save'] = $this->url->link('design/seo_url|save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('design/seo_url', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['seo_url_id'])) {
 			$this->load->model('design/seo_url');
 
 			$seo_url_info = $this->model_design_seo_url->getSeoUrl($this->request->get['seo_url_id']);
+		}
+
+		if (isset($this->request->get['seo_url_id'])) {
+			$data['seo_url_id'] = (int)$this->request->get['seo_url_id'];
+		} else {
+			$data['seo_url_id'] = 0;
 		}
 
 		$data['stores'] = [];
@@ -410,6 +411,12 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 			$data['keyword'] = '';
 		}
 
+		if (!empty($seo_profile_info)) {
+			$data['sort_order'] = $seo_profile_info['sort_order'];
+		} else {
+			$data['sort_order'] = '';
+		}
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -426,11 +433,11 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		if ((utf8_strlen(trim($this->request->post['key'])) < 1) || (utf8_strlen($this->request->post['key']) > 64)) {
+		if ((utf8_strlen($this->request->post['key']) < 1) || (utf8_strlen($this->request->post['key']) > 64)) {
 			$json['error']['key'] = $this->language->get('error_key');
 		}
 
-		if ((utf8_strlen(trim($this->request->post['value'])) < 1) || (utf8_strlen($this->request->post['value']) > 255)) {
+		if ((utf8_strlen($this->request->post['value']) < 1) || (utf8_strlen($this->request->post['value']) > 255)) {
 			$json['error']['value'] = $this->language->get('error_value');
 		}
 
@@ -439,7 +446,7 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 		// Check if there is already a key value pair on the same store using the same language
 		$seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyValue($this->request->post['key'], $this->request->post['value'], $this->request->post['store_id'], $this->request->post['language_id']);
 
-		if ($seo_url_info && (!isset($this->request->get['seo_url_id']) || $seo_url_info['seo_url_id'] != (int)$this->request->get['seo_url_id'])) {
+		if ($seo_url_info && (!isset($this->request->post['seo_url_id']) || $seo_url_info['seo_url_id'] != (int)$this->request->post['seo_url_id'])) {
 			$json['error']['value'] = $this->language->get('error_value_exists');
 		}
 
@@ -450,19 +457,20 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 		// Check if keyword already exists and on the same store using the same language
 		$seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyword($this->request->post['keyword'], $this->request->post['store_id'], $this->request->post['language_id']);
 
-		if ($seo_url_info && (!isset($this->request->get['seo_url_id']) || $seo_url_info['seo_url_id'] != $this->request->get['seo_url_id'])) {
+		if ($seo_url_info && (!isset($this->request->post['seo_url_id']) || $seo_url_info['seo_url_id'] != $this->request->post['seo_url_id'])) {
 			$json['error']['keyword'] = $this->language->get('error_keyword_exists');
 		}
 
 		if (!$json) {
-			if (!isset($this->request->get['seo_url_id'])) {
+			if (!$this->request->post['seo_url_id']) {
 				$json['seo_url_id'] = $this->model_design_seo_url->addSeoUrl($this->request->post);
 			} else {
-				$this->model_design_seo_url->editSeoUrl($this->request->get['seo_url_id'], $this->request->post);
+				$this->model_design_seo_url->editSeoUrl($this->request->post['seo_url_id'], $this->request->post);
 			}
 
 			$json['success'] = $this->language->get('text_success');
 		}
+
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
@@ -486,7 +494,7 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 			$this->load->model('design/seo_url');
 
 			foreach ($selected as $seo_url_id) {
-				$this->model_design_seo_url->deleteSeoProfile($seo_url_id);
+				$this->model_design_seo_url->deleteSeoUrl($seo_url_id);
 			}
 
 			$json['success'] = $this->language->get('text_success');

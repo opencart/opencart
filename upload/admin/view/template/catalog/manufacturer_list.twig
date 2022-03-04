@@ -1,19 +1,11 @@
-<form id="manufacturer-list" data-oc-load="{{ action }}" data-oc-target="#manufacturer">
+<form id="form-manufacturer" method="post" data-oc-toggle="ajax" data-oc-load="{{ action }}" data-oc-target="#manufacturer">
 	<div class="table-responsive">
 		<table class="table table-bordered table-hover">
 			<thead>
 				<tr>
-					<td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));"/></td>
-					<td class="text-start">{% if sort == 'name' %}
-							<a href="{{ sort_name }}" class="{{ order|lower }}">{{ column_name }}</a>
-						{% else %}
-							<a href="{{ sort_name }}">{{ column_name }}</a>
-						{% endif %}</td>
-					<td class="text-end">{% if sort == 'sort_order' %}
-							<a href="{{ sort_sort_order }}" class="{{ order|lower }}">{{ column_sort_order }}</a>
-						{% else %}
-							<a href="{{ sort_sort_order }}">{{ column_sort_order }}</a>
-						{% endif %}</td>
+					<td class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></td>
+					<td class="text-start"><a href="{{ sort_name }}"{% if sort == 'name' %} class="{{ order|lower }}"{% endif %}>{{ column_name }}</a></td>
+					<td class="text-end"><a href="{{ sort_sort_order }}"{% if sort == 'sort_order' %} class="{{ order|lower }}"{% endif %}>{{ column_sort_order }}</a></td>
 					<td class="text-end">{{ column_action }}</td>
 				</tr>
 			</thead>
@@ -21,7 +13,7 @@
 				{% if manufacturers %}
 					{% for manufacturer in manufacturers %}
 						<tr>
-							<td class="text-center"><input type="checkbox" name="selected[]" value="{{ manufacturer.manufacturer_id }}"/></td>
+							<td class="text-center"><input type="checkbox" name="selected[]" value="{{ manufacturer.manufacturer_id }}" class="form-check-input"/></td>
 							<td class="text-start">{{ manufacturer.name }}</td>
 							<td class="text-end">{{ manufacturer.sort_order }}</td>
 							<td class="text-end"><a href="{{ manufacturer.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a></td>

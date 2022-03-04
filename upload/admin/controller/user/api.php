@@ -85,17 +85,7 @@ class Api extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['breadcrumbs'] = [];
-
-		$data['breadcrumbs'][] = [
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		];
-
-		$data['breadcrumbs'][] = [
-			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('user/api', 'user_token=' . $this->session->data['user_token'] . $url)
-		];
+		$data['action'] = $this->url->link('user/api|list', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$data['apis'] = [];
 
@@ -129,10 +119,6 @@ class Api extends \Opencart\System\Engine\Controller {
 			$url .= '&order=DESC';
 		} else {
 			$url .= '&order=ASC';
-		}
-
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
 		}
 
 		$data['sort_username'] = $this->url->link('user/api|list', 'user_token=' . $this->session->data['user_token'] . '&sort=username' . $url);
@@ -205,18 +191,19 @@ class Api extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('user/api', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		if (!isset($this->request->get['api_id'])) {
-			$data['save'] = $this->url->link('user/api|save', 'user_token=' . $this->session->data['user_token'] . $url);
-		} else {
-			$data['save'] = $this->url->link('user/api|save', 'user_token=' . $this->session->data['user_token'] . '&api_id=' . $this->request->get['api_id']);
-		}
-
+		$data['save'] = $this->url->link('user/api|save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('user/api', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['api_id'])) {
 			$this->load->model('user/api');
 
 			$api_info = $this->model_user_api->getApi($this->request->get['api_id']);
+		}
+
+		if (isset($this->request->get['api_id'])) {
+			$data['api_id'] = (int)$this->request->get['api_id'];
+		} else {
+			$data['api_id'] = 0;
 		}
 
 		if (!empty($api_info)) {
@@ -279,7 +266,7 @@ class Api extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		if ((utf8_strlen(trim($this->request->post['username'])) < 3) || (utf8_strlen(trim($this->request->post['username'])) > 64)) {
+		if ((utf8_strlen($this->request->post['username']) < 3) || (utf8_strlen($this->request->post['username']) > 64)) {
 			$json['error']['username'] = $this->language->get('error_username');
 		}
 
@@ -294,10 +281,10 @@ class Api extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('user/api');
 
-			if (!isset($this->request->get['api_id'])) {
+			if (!$this->request->post['api_id']) {
 				$json['api_id'] = $this->model_user_api->addApi($this->request->post);
 			} else {
-				$this->model_user_api->editApi($this->request->get['api_id'], $this->request->post);
+				$this->model_user_api->editApi($this->request->post['api_id'], $this->request->post);
 			}
 
 			$json['success'] = $this->language->get('text_success');
@@ -343,7 +330,9 @@ class Api extends \Opencart\System\Engine\Controller {
 
 		if (!$this->user->hasPermission('modify', 'user/api')) {
 			$json['error'] = $this->language->get('error_permission');
-		} else {
+		}
+
+		if (!$json) {
 			$this->load->model('user/api');
 
 			$this->model_user_api->deleteSession($this->request->get['api_session_id']);

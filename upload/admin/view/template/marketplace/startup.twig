@@ -3,7 +3,7 @@
 	<div class="page-header">
 		<div class="container-fluid">
 			<div class="float-end">
-				<button type="button" data-oc-action="{{ delete }}" data-oc-form="#startup-list" data-bs-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+				<button type="submit" form="form-startup" formaction="{{ delete }}" data-bs-toggle="tooltip" title="{{ button_delete }}" onclick="confirm('{{ text_confirm }}') ? $('#form-startup').submit() : false;" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
 			</div>
 			<h1>{{ heading_title }}</h1>
 			<ol class="breadcrumb">
@@ -27,7 +27,9 @@ $('#startup').on('click', 'thead a, .pagination a', function(e) {
     $('#startup').load(this.href);
 });
 
-$('#startup').on('click', '.btn-success, .btn-danger', function() {
+$('#startup').on('click', '.btn-success, .btn-danger', function(e) {
+    e.preventDefault();
+
     var element = this;
 
     $.ajax({
@@ -43,17 +45,17 @@ $('#startup').on('click', '.btn-success, .btn-danger', function() {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
-                $('#content > .container-fluid').after('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').after('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
 
             if (json['success']) {
-                $('#content > .container-fluid').after('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').after('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#button-refresh').trigger('click');
+                $('#startup').load($('#form-startup').attr('data-oc-load'));
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
-            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 });

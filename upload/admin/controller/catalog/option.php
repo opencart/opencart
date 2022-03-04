@@ -184,18 +184,19 @@ class Option extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		if (!isset($this->request->get['option_id'])) {
-			$data['save'] = $this->url->link('catalog/option|save', 'user_token=' . $this->session->data['user_token'] . $url);
-		} else {
-			$data['save'] = $this->url->link('catalog/option|save', 'user_token=' . $this->session->data['user_token'] . '&option_id=' . $this->request->get['option_id']);
-		}
-
+		$data['save'] = $this->url->link('catalog/option|save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('catalog/option', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['option_id'])) {
 			$this->load->model('catalog/option');
 
 			$option_info = $this->model_catalog_option->getOption($this->request->get['option_id']);
+		}
+
+		if (isset($this->request->get['option_id'])) {
+			$data['option_id'] = (int)$this->request->get['option_id'];
+		} else {
+			$data['option_id'] = 0;
 		}
 
 		$this->load->model('localisation/language');
@@ -279,7 +280,7 @@ class Option extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->post['option_value'])) {
-			if (isset($this->request->get['option_id'])) {
+			if (isset($this->request->post['option_id'])) {
 				$this->load->model('catalog/product');
 
 				$option_value_data = [];
@@ -290,7 +291,7 @@ class Option extends \Opencart\System\Engine\Controller {
 					}
 				}
 
-				$product_option_values = $this->model_catalog_product->getOptionValuesByOptionId($this->request->get['option_id']);
+				$product_option_values = $this->model_catalog_product->getOptionValuesByOptionId($this->request->post['option_id']);
 
 				foreach ($product_option_values as $product_option_value) {
 					if (!in_array($product_option_value['option_value_id'], $option_value_data)) {
@@ -317,10 +318,10 @@ class Option extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('catalog/option');
 
-			if (!isset($this->request->get['option_id'])) {
+			if (!$this->request->post['option_id']) {
 				$json['option_id'] = $this->model_catalog_option->addOption($this->request->post);
 			} else {
-				$this->model_catalog_option->editOption($this->request->get['option_id'], $this->request->post);
+				$this->model_catalog_option->editOption($this->request->post['option_id'], $this->request->post);
 			}
 
 			$json['success'] = $this->language->get('text_success');

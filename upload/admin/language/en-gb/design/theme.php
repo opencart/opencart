@@ -10,7 +10,7 @@ $_['text_template']     = 'Choose a template';
 $_['text_default']      = 'Default';
 $_['text_extension']    = 'Extension';
 $_['text_history']      = 'Theme History';
-$_['text_twig']         = 'The theme editor uses the template language Twig. You can read about <a href="http://twig.sensiolabs.org/documentation" target="_blank" class="alert-link">Twig syntax here</a>.';
+$_['text_twig']         = 'The theme editor uses the template language Twig. You can read about <a href="https://twig.symfony.com/doc/" target="_blank" class="alert-link">Twig syntax here</a>.';
 
 // Column
 $_['column_store']      = 'Store';

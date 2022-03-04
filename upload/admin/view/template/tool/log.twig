@@ -17,7 +17,7 @@
 		<div class="card">
 			<div class="card-header"><i class="fas fa-exclamation-triangle"></i> {{ text_list }}</div>
 			<div class="card-body">
-				<textarea name="log" wrap="off" rows="15" readonly class="form-control">{{ log }}</textarea>
+				<textarea name="log" wrap="off" rows="15" id="input-log" class="form-control" readonly>{{ log }}</textarea>
 			</div>
 		</div>
 	</div>
@@ -40,17 +40,17 @@ $('#button-clear').on('click', function() {
                 $('.alert-dismissible').remove();
 
                 if (json['error']) {
-                    $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                 }
 
                 if (json['success']) {
-                    $('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                    $('textarea[name=\'log\']').val('');
+                    $('#input-log').val('');
                 }
             },
             error: function(xhr, ajaxOptions, thrownError) {
-                alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });
     }

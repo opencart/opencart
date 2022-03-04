@@ -182,13 +182,14 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('localisation/stock_status', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		if (!isset($this->request->get['stock_status_id'])) {
-			$data['save'] = $this->url->link('localisation/stock_status|save', 'user_token=' . $this->session->data['user_token'] . $url);
-		} else {
-			$data['save'] = $this->url->link('localisation/stock_status|save', 'user_token=' . $this->session->data['user_token'] . '&stock_status_id=' . $this->request->get['stock_status_id']);
-		}
-
+		$data['save'] = $this->url->link('localisation/stock_status|save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('localisation/stock_status', 'user_token=' . $this->session->data['user_token'] . $url);
+
+		if (isset($this->request->get['stock_status_id'])) {
+			$data['stock_status_id'] = (int)$this->request->get['stock_status_id'];
+		} else {
+			$data['stock_status_id'] = 0;
+		}
 
 		$this->load->model('localisation/language');
 
@@ -227,10 +228,10 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('localisation/stock_status');
 
-			if (!isset($this->request->get['stock_status_id'])) {
+			if (!$this->request->post['stock_status_id']) {
 				$json['stock_status_id'] = $this->model_localisation_stock_status->addStockStatus($this->request->post);
 			} else {
-				$this->model_localisation_stock_status->editStockStatus($this->request->get['stock_status_id'], $this->request->post);
+				$this->model_localisation_stock_status->editStockStatus($this->request->post['stock_status_id'], $this->request->post);
 			}
 
 			$json['success'] = $this->language->get('text_success');
@@ -269,7 +270,7 @@ class StockStatus extends \Opencart\System\Engine\Controller {
 			$this->load->model('localisation/stock_status');
 
 			foreach ($selected as $stock_status_id) {
-				$this->model_localisation_stock_status->deleteStockStatusId($stock_status_id);
+				$this->model_localisation_stock_status->deleteStockStatus($stock_status_id);
 			}
 
 			$json['success'] = $this->language->get('text_success');

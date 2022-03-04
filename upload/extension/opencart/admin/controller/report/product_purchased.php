@@ -24,7 +24,6 @@ class ProductPurchased extends \Opencart\System\Engine\Controller {
 		];
 
 		$data['save'] = $this->url->link('extension/opencart/report/product_purchased|save', 'user_token=' . $this->session->data['user_token']);
-
 		$data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=report');
 
 		$data['report_product_purchased_status'] = $this->config->get('report_product_purchased_status');

@@ -2,9 +2,9 @@
 	<table class="table table-bordered table-hover">
 		<thead>
 			<tr>
-				<td class="text-start">{% if sort == 'name' %}<a href="{{ sort_name }}" class="{{ order|lower }}">{{ column_name }}</a>{% else %}<a href="{{ sort_name }}">{{ column_name }}</a>{% endif %}</td>
-				<td class="text-start">{% if sort == 'version' %}<a href="{{ sort_version }}" class="{{ order|lower }}">{{ column_version }}</a>{% else %}<a href="{{ sort_version }}">{{ column_version }}</a>{% endif %}</td>
-				<td class="text-start">{% if sort == 'date_added' %}<a href="{{ sort_date_added }}" class="{{ order|lower }}">{{ column_date_added }}</a>{% else %}<a href="{{ sort_date_added }}">{{ column_date_added }}</a>{% endif %}</td>
+				<td class="text-start"><a href="{{ sort_name }}"{% if sort == 'name' %} class="{{ order|lower }}"{% endif %}>{{ column_name }}</a></td>
+				<td class="text-start"><a href="{{ sort_version }}"{% if sort == 'version' %} class="{{ order|lower }}"{% endif %}>{{ column_version }}</a></td>
+				<td class="text-start"><a href="{{ sort_date_added }}"{% if sort == 'date_added' %} class="{{ order|lower }}"{% endif %}>{{ column_date_added }}</a></td>
 				<td class="text-end" style="min-width: 105px;">{{ column_action }}</td>
 			</tr>
 		</thead>
@@ -21,7 +21,7 @@
 						</td>
 						<td class="text-start align-text-top">{{ extension.version }}</td>
 						<td class="text-start align-text-top">{{ extension.date_added }}</td>
-						<td class="text-end align-text-top">
+						<td class="text-end align-text-top text-nowrap">
 							{% if not extension.status %}
 								<a href="{{ extension.install }}" data-bs-toggle="tooltip" title="{{ button_install }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></a>
 								<a href="{{ extension.delete }}" data-bs-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger"><i class="far fa-trash-alt"></i></a>

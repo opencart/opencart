@@ -1,0 +1,6 @@
+bower_components
+node_modules
+npm-debug.log
+*.sublime-workspace
+*.sublime-project
+*.sw[onp]

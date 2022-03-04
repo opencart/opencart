@@ -174,12 +174,7 @@ class User extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		if (!isset($this->request->get['user_id'])) {
-			$data['save'] = $this->url->link('user/user|save', 'user_token=' . $this->session->data['user_token'] . $url);
-		} else {
-			$data['save'] = $this->url->link('user/user|save', 'user_token=' . $this->session->data['user_token'] . '&user_id=' . $this->request->get['user_id']);
-		}
-
+		$data['save'] = $this->url->link('user/user|save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('user/user', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['user_id'])) {
@@ -188,21 +183,27 @@ class User extends \Opencart\System\Engine\Controller {
 			$user_info = $this->model_user_user->getUser($this->request->get['user_id']);
 		}
 
+		if (isset($this->request->get['user_id'])) {
+			$data['user_id'] = (int)$this->request->get['user_id'];
+		} else {
+			$data['user_id'] = 0;
+		}
+
 		if (!empty($user_info)) {
 			$data['username'] = $user_info['username'];
 		} else {
 			$data['username'] = '';
 		}
 
-		if (!empty($user_info)) {
-			$data['user_group_id'] = $user_info['user_group_id'];
-		} else {
-			$data['user_group_id'] = '';
-		}
-
 		$this->load->model('user/user_group');
 
 		$data['user_groups'] = $this->model_user_user_group->getUserGroups();
+
+		if (!empty($user_info)) {
+			$data['user_group_id'] = $user_info['user_group_id'];
+		} else {
+			$data['user_group_id'] = 0;
+		}
 
 		if (!empty($user_info)) {
 			$data['firstname'] = $user_info['firstname'];
@@ -268,21 +269,21 @@ class User extends \Opencart\System\Engine\Controller {
 
 		$user_info = $this->model_user_user->getUserByUsername($this->request->post['username']);
 
-		if (!isset($this->request->get['user_id'])) {
+		if (!$this->request->post['user_id']) {
 			if ($user_info) {
 				$json['error']['warning'] = $this->language->get('error_username_exists');
 			}
 		} else {
-			if ($user_info && ($this->request->get['user_id'] != $user_info['user_id'])) {
+			if ($user_info && ($this->request->post['user_id'] != $user_info['user_id'])) {
 				$json['error']['warning'] = $this->language->get('error_username_exists');
 			}
 		}
 
-		if ((utf8_strlen(trim($this->request->post['firstname'])) < 1) || (utf8_strlen(trim($this->request->post['firstname'])) > 32)) {
+		if ((utf8_strlen($this->request->post['firstname']) < 1) || (utf8_strlen($this->request->post['firstname']) > 32)) {
 			$json['error']['firstname'] = $this->language->get('error_firstname');
 		}
 
-		if ((utf8_strlen(trim($this->request->post['lastname'])) < 1) || (utf8_strlen(trim($this->request->post['lastname'])) > 32)) {
+		if ((utf8_strlen($this->request->post['lastname']) < 1) || (utf8_strlen($this->request->post['lastname']) > 32)) {
 			$json['error']['lastname'] = $this->language->get('error_lastname');
 		}
 
@@ -292,17 +293,17 @@ class User extends \Opencart\System\Engine\Controller {
 
 		$user_info = $this->model_user_user->getUserByEmail($this->request->post['email']);
 
-		if (!isset($this->request->get['user_id'])) {
+		if (!$this->request->post['user_id']) {
 			if ($user_info) {
 				$json['error']['warning'] = $this->language->get('error_exists_email');
 			}
 		} else {
-			if ($user_info && ($this->request->get['user_id'] != $user_info['user_id'])) {
+			if ($user_info && ($this->request->post['user_id'] != $user_info['user_id'])) {
 				$json['error']['warning'] = $this->language->get('error_exists_email');
 			}
 		}
 
-		if ($this->request->post['password'] || (!isset($this->request->get['user_id']))) {
+		if ($this->request->post['password'] || (!isset($this->request->post['user_id']))) {
 			if ((utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) < 4) || (utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) > 40)) {
 				$json['error']['password'] = $this->language->get('error_password');
 			}
@@ -313,10 +314,10 @@ class User extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			if (!isset($this->request->get['user_id'])) {
+			if (!$this->request->post['user_id']) {
 				$json['user_id'] = $this->model_user_user->addUser($this->request->post);
 			} else {
-				$this->model_user_user->editUser($this->request->get['user_id'], $this->request->post);
+				$this->model_user_user->editUser($this->request->post['user_id'], $this->request->post);
 			}
 
 			$json['success'] = $this->language->get('text_success');

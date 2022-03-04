@@ -109,6 +109,11 @@ foreach ($config->get('response_header') as $header) {
 	$response->addHeader($header);
 }
 
+$response->addHeader('Access-Control-Allow-Origin: *');
+$response->addHeader('Access-Control-Allow-Credentials: true');
+$response->addHeader('Access-Control-Max-Age: 1000');
+$response->addHeader('Access-Control-Allow-Headers: X-Requested-With, Content-Type, Origin, Cache-Control, Pragma, Authorization, Accept, Accept-Encoding');
+$response->addHeader('Access-Control-Allow-Methods: PUT, POST, GET, OPTIONS, DELETE');
 $response->setCompression($config->get('response_compression'));
 $registry->set('response', $response);
 
@@ -141,12 +146,12 @@ if ($config->get('session_autostart')) {
 
 	// Require higher security for session cookies
 	$option = [
-		'expires'  => time() + $config->get('session_expire'),
+		'expires'  => 0,
 		'path'     => $config->get('session_path'),
 		'domain'   => $config->get('session_domain'),
 		'secure'   => $request->server['HTTPS'],
 		'httponly' => false,
-		'SameSite' => 'Strict'
+		'SameSite' => $config->get('session_samesite')
 	];
 
 	setcookie($config->get('session_name'), $session->getId(), $option);
@@ -194,6 +199,7 @@ foreach ($config->get('action_pre_action') as $pre_action) {
 		$action = $error;
 
 		$error = '';
+		
 		break;
 	}
 }

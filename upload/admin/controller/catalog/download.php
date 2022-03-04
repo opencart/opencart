@@ -158,9 +158,10 @@ class Download extends \Opencart\System\Engine\Controller {
 
 		$data['text_form'] = !isset($this->request->get['download_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
-		$data['error_upload_size'] = sprintf($this->language->get('error_upload_size'), $this->config->get('config_file_max_size'));
+		// Use the ini_get('upload_max_filesize') for the max file size
+		$data['error_upload_size'] = sprintf($this->language->get('error_upload_size'), ini_get('upload_max_filesize'));
 
-		$data['config_file_max_size'] = $this->config->get('config_file_max_size');
+		$data['config_file_max_size'] = ((int)preg_filter('/[^0-9]/', '', ini_get('upload_max_filesize')) * 1000);
 
 		$url = '';
 
@@ -188,13 +189,9 @@ class Download extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('catalog/download', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		if (!isset($this->request->get['download_id'])) {
-			$data['save'] = $this->url->link('catalog/download|save', 'user_token=' . $this->session->data['user_token'] . $url);
-		} else {
-			$data['save'] = $this->url->link('catalog/download|save', 'user_token=' . $this->session->data['user_token'] . '&download_id=' . $this->request->get['download_id']);
-		}
-
+		$data['save'] = $this->url->link('catalog/download|save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('catalog/download', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['upload'] = $this->url->link('catalog/download|upload', 'user_token=' . $this->session->data['user_token']);
 
 		if (isset($this->request->get['download_id'])) {
 			$this->load->model('catalog/download');
@@ -254,15 +251,19 @@ class Download extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		if ((utf8_strlen(trim($this->request->post['filename'])) < 3) || (utf8_strlen($this->request->post['filename']) > 128)) {
+		if ((utf8_strlen($this->request->post['filename']) < 3) || (utf8_strlen($this->request->post['filename']) > 128)) {
 			$json['error']['filename'] = $this->language->get('error_filename');
+		}
+
+		if (substr(realpath(DIR_DOWNLOAD . $this->request->post['filename']), 0, utf8_strlen(DIR_DOWNLOAD)) != DIR_DOWNLOAD) {
+			$json['error']['filename'] = $this->language->get('error_directory');
 		}
 
 		if (!is_file(DIR_DOWNLOAD . $this->request->post['filename'])) {
 			$json['error']['filename'] = $this->language->get('error_exists');
 		}
 
-		if ((utf8_strlen(trim($this->request->post['mask'])) < 3) || (utf8_strlen($this->request->post['mask']) > 128)) {
+		if ((utf8_strlen($this->request->post['mask']) < 3) || (utf8_strlen($this->request->post['mask']) > 128)) {
 			$json['error']['mask'] = $this->language->get('error_mask');
 		}
 
@@ -273,10 +274,10 @@ class Download extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('catalog/download');
 
-			if (!isset($this->request->get['download_id'])) {
+			if (!$this->request->post['download_id']) {
 				$json['download_id'] = $this->model_catalog_download->addDownload($this->request->post);
 			} else {
-				$this->model_catalog_download->editDownload($this->request->get['download_id'], $this->request->post);
+				$this->model_catalog_download->editDownload($this->request->post['download_id'], $this->request->post);
 			}
 
 			$json['success'] = $this->language->get('text_success');

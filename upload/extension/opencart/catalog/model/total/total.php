@@ -8,8 +8,8 @@ class Total extends \Opencart\System\Engine\Model {
 			'extension'  => 'opencart',
 			'code'       => 'total',
 			'title'      => $this->language->get('text_total'),
-			'value'      => max(0, $total),
-			'sort_order' => $this->config->get('total_total_sort_order')
+			'value'      => $total,
+			'sort_order' => (int)$this->config->get('total_total_sort_order')
 		];
 	}
 }

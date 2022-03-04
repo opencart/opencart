@@ -7,7 +7,7 @@
   </ul>
   {% if success %}
     <div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> {{ success }}
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
     </div>
   {% endif %}
   <div class="row">{{ column_left }}
@@ -108,11 +108,7 @@
                 <tr>
                   <td>{{ attribute.name }}</td>
                   {% for product in products %}
-                    {% if product.attribute[key] %}
-                      <td> {{ product.attribute[key] }}</td>
-                    {% else %}
-                      <td></td>
-                    {% endif %}
+                    <td>{% if product.attribute[key] %}{{ product.attribute[key] }}{% endif %}</td>
                   {% endfor %}
                 </tr>
               </tbody>
@@ -121,7 +117,13 @@
           <tr>
             <td></td>
             {% for product in products %}
-              <td><button type="button" id="button-confirm" onclick="cart.add('{{ product.product_id }}', '{{ product.minimum }}');" class="btn btn-primary btn-block">{{ button_cart }}</button> <a href="{{ product.remove }}" class="btn btn-danger btn-block">{{ button_remove }}</a></td>
+              <td class="text-center">
+                <form action="{{ add_to_cart }}" method="post" data-oc-toggle="ajax" data-oc-load="{{ cart }}" data-oc-target="#cart">
+                  <button type="submit" id="button-confirm" class="btn btn-primary btn-block">{{ button_cart }}</button>
+                  <input type="hidden" name="product_id" value="{{ product.product_id }}"/> <input type="hidden" name="quantity" value="{{ product.minimum }}"/>
+                  <a href="{{ product.remove }}" class="btn btn-danger btn-block">{{ button_remove }}</a>
+                </form>
+              </td>
             {% endfor %}
           </tr>
         </table>

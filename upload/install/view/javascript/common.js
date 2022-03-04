@@ -40,6 +40,40 @@ $(document).ready(function() {
 	}	
 });
 
+// Chain ajax calls.
+class Chain {
+	constructor() {
+		this.start = false;
+		this.data = [];
+	}
+
+	attach(call) {
+		this.data.push(call);
+
+		if (!this.start) {
+			this.execute();
+		}
+	}
+
+	execute() {
+		if (this.data.length) {
+			this.start = true;
+
+			var call = this.data.shift();
+
+			var jqxhr = call();
+
+			jqxhr.done(function() {
+				chain.execute();
+			});
+		} else {
+			this.start = false;
+		}
+	}
+}
+
+var chain = new Chain();
+
 +function($) {
 	'use strict';
 

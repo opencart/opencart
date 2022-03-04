@@ -18,9 +18,12 @@ class Installer extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('marketplace/installer', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		$data['error_upload_size'] = sprintf($this->language->get('error_upload_size'), $this->config->get('config_file_max_size'));
+		// Use the ini_get('upload_max_filesize') for the max file size
+		$data['error_upload_size'] = sprintf($this->language->get('error_upload_size'), ini_get('upload_max_filesize'));
 
-		$data['config_file_max_size'] = $this->config->get('config_file_max_size');
+		$data['config_file_max_size'] = ((int)preg_filter('/[^0-9]/', '', ini_get('upload_max_filesize')) * 1000);
+
+		$data['upload'] = $this->url->link('tool/installer|upload', 'user_token=' . $this->session->data['user_token']);
 
 		if (isset($this->request->get['filter_extension_id'])) {
 			$data['filter_extension_download_id'] = (int)$this->request->get['filter_extension_download_id'];
@@ -213,15 +216,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 						} else {
 							$link = '';
 						}
-
-						$composer = $dom->getElementsByTagName('composer')->item(0);
-
-						if ($composer) {
-							$composer = $composer->nodeValue;
-						} else {
-							$composer = '';
-						}
-					} catch(\Exception $exception) {
+					} catch (\Exception $exception) {
 						$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
 					}
 
@@ -233,8 +228,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 							'code'              	=> basename($filename, '.ocmod.zip'),
 							'version'               => $version,
 							'author'                => $author,
-							'link'                  => $link,
-							'composer'              => $composer
+							'link'                  => $link
 						];
 
 						$this->load->model('setting/extension');
@@ -300,13 +294,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 					$source = $zip->getNameIndex($i);
 
 					// Only extract the contents of the upload folder
-					if (substr($source, 0, strlen($extension_install_info['code'])) == $extension_install_info['code']) {
-						$remove = strlen($extension_install_info['code'] . '/upload/');
-					} else {
-						$remove = strlen('upload/');
-					}
-
-					$destination = str_replace('\\', '/', substr($source, $remove));
+					$destination = str_replace('\\', '/', $source);
 
 					$path = '';
 					$base = '';
@@ -359,6 +347,12 @@ class Installer extends \Opencart\System\Engine\Controller {
 						$base = DIR_STORAGE;
 					}
 
+					// Include install xml file
+					if ($destination == 'install.xml') {
+						$path = $extension_install_info['code'] . '/' . $destination;
+						$base = DIR_EXTENSION;
+					}
+
 					if ($path) {
 						if (substr($path, -1) != '/' && is_file($base . $path)) {
 							$json['error'] = sprintf($this->language->get('error_exists'), $destination);
@@ -403,19 +397,6 @@ class Installer extends \Opencart\System\Engine\Controller {
 
 			$json['success'] = $this->language->get('text_install');
 		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	public function composer(): void {
-		$this->load->language('marketplace/installer');
-
-		$json = [];
-
-
-
-
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

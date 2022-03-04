@@ -192,18 +192,19 @@ class Coupon extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('marketing/coupon', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		if (!isset($this->request->get['coupon_id'])) {
-			$data['save'] = $this->url->link('marketing/coupon|save', 'user_token=' . $this->session->data['user_token'] . $url);
-		} else {
-			$data['save'] = $this->url->link('marketing/coupon|save', 'user_token=' . $this->session->data['user_token'] . '&coupon_id=' . $this->request->get['coupon_id']);
-		}
-
+		$data['save'] = $this->url->link('marketing/coupon|save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('marketing/coupon', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['coupon_id'])) {
 			$this->load->model('marketing/coupon');
 
 			$coupon_info = $this->model_marketing_coupon->getCoupon($this->request->get['coupon_id']);
+		}
+
+		if (isset($this->request->get['coupon_id'])) {
+			$data['coupon_id'] = (int)$this->request->get['coupon_id'];
+		} else {
+			$data['coupon_id'] = 0;
 		}
 
 		if (!empty($coupon_info)) {
@@ -351,18 +352,18 @@ class Coupon extends \Opencart\System\Engine\Controller {
 		$coupon_info = $this->model_marketing_coupon->getCouponByCode($this->request->post['code']);
 
 		if ($coupon_info) {
-			if (!isset($this->request->get['coupon_id'])) {
+			if (!isset($this->request->post['coupon_id'])) {
 				$json['error']['warning'] = $this->language->get('error_exists');
-			} elseif ($coupon_info['coupon_id'] != (int)$this->request->get['coupon_id']) {
+			} elseif ($coupon_info['coupon_id'] != (int)$this->request->post['coupon_id']) {
 				$json['error']['warning'] = $this->language->get('error_exists');
 			}
 		}
 
 		if (!$json) {
-			if (!isset($this->request->get['coupon_id'])) {
+			if (!$this->request->post['coupon_id']) {
 				$json['coupon_id'] = $this->model_marketing_coupon->addCoupon($this->request->post);
 			} else {
-				$this->model_marketing_coupon->editCoupon($this->request->get['coupon_id'], $this->request->post);
+				$this->model_marketing_coupon->editCoupon($this->request->post['coupon_id'], $this->request->post);
 			}
 
 			$json['success'] = $this->language->get('text_success');

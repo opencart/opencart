@@ -1,60 +1,40 @@
-<form id="currency-list" data-oc-load="{{ action }}" data-oc-target="#currency">
-	<div class="table-responsive">
-		<table class="table table-bordered table-hover">
-			<thead>
-				<tr>
-					<td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));"/></td>
-					<td class="text-start">{% if sort == 'title' %}
-							<a href="{{ sort_title }}" class="{{ order|lower }}">{{ column_title }}</a>
-						{% else %}
-							<a href="{{ sort_title }}">{{ column_title }}</a>
-						{% endif %}</td>
-					<td class="text-start">{% if sort == 'code' %}
-							<a href="{{ sort_code }}" class="{{ order|lower }}">{{ column_code }}</a>
-						{% else %}
-							<a href="{{ sort_code }}">{{ column_code }}</a>
-						{% endif %}</td>
-					<td class="text-end">{% if sort == 'value' %}
-							<a href="{{ sort_value }}" class="{{ order|lower }}">{{ column_value }}</a>
-						{% else %}
-							<a href="{{ sort_value }}">{{ column_value }}</a>
-						{% endif %}</td>
-					<td class="text-start">{% if sort == 'status' %}
-							<a href="{{ sort_status }}" class="{{ order|lower }}">{{ column_status }}</a>
-						{% else %}
-							<a href="{{ sort_status }}">{{ column_status }}</a>
-						{% endif %}</td>
-					<td class="text-start d-none d-lg-table-cell">{% if sort == 'date_modified' %}
-							<a href="{{ sort_date_modified }}" class="{{ order|lower }}">{{ column_date_modified }}</a>
-						{% else %}
-							<a href="{{ sort_date_modified }}">{{ column_date_modified }}</a>
-						{% endif %}</td>
-					<td class="text-end">{{ column_action }}</td>
-				</tr>
-			</thead>
-			<tbody>
-				{% if currencies %}
-					{% for currency in currencies %}
-						<tr>
-							<td class="text-center"><input type="checkbox" name="selected[]" value="{{ currency.currency_id }}"/></td>
-							<td class="text-start">{{ currency.title }}</td>
-							<td class="text-start">{{ currency.code }}</td>
-							<td class="text-end">{{ currency.value }}</td>
-							<td class="text-start">{{ currency.status }}</td>
-							<td class="text-left d-none d-lg-table-cell">{{ currency.date_modified }}</td>
-							<td class="text-end"><a href="{{ currency.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a></td>
-						</tr>
-					{% endfor %}
-				{% else %}
-					<tr>
-						<td class="text-center" colspan="7">{{ text_no_results }}</td>
-					</tr>
-				{% endif %}
-			</tbody>
-		</table>
-	</div>
-	<div class="row">
-		<div class="col-sm-6 text-left">{{ pagination }}</div>
-		<div class="col-sm-6 text-end">{{ results }}</div>
-	</div>
+<form id="form-currency" method="post" data-oc-toggle="ajax" data-oc-load="{{ action }}" data-oc-target="#currency">
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <td class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></td>
+          <td class="text-start"><a href="{{ sort_title }}"{% if sort == 'title' %} class="{{ order|lower }}"{% endif %}>{{ column_title }}</a></td>
+          <td class="text-start"><a href="{{ sort_code }}"{% if sort == 'code' %} class="{{ order|lower }}"{% endif %}>{{ column_code }}</a></td>
+          <td class="text-end"><a href="{{ sort_value }}"{% if sort == 'value' %} class="{{ order|lower }}"{% endif %}>{{ column_value }}</a></td>
+          <td class="text-start"><a href="{{ sort_status }}"{% if sort == 'status' %} class="{{ order|lower }}"{% endif %}>{{ column_status }}</a></td>
+          <td class="text-start d-none d-lg-table-cell"><a href="{{ sort_date_modified }}"{% if sort == 'date_modified' %} class="{{ order|lower }}"{% endif %}>{{ column_date_modified }}</a></td>
+          <td class="text-end">{{ column_action }}</td>
+        </tr>
+      </thead>
+      <tbody>
+        {% if currencies %}
+          {% for currency in currencies %}
+            <tr>
+              <td class="text-center"><input type="checkbox" name="selected[]" value="{{ currency.currency_id }}" class="form-check-input"/></td>
+              <td class="text-start">{{ currency.title }}</td>
+              <td class="text-start">{{ currency.code }}</td>
+              <td class="text-end">{{ currency.value }}</td>
+              <td class="text-start">{{ currency.status }}</td>
+              <td class="text-left d-none d-lg-table-cell">{{ currency.date_modified }}</td>
+              <td class="text-end"><a href="{{ currency.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a></td>
+            </tr>
+          {% endfor %}
+        {% else %}
+          <tr>
+            <td class="text-center" colspan="7">{{ text_no_results }}</td>
+          </tr>
+        {% endif %}
+      </tbody>
+    </table>
+  </div>
+  <div class="row">
+    <div class="col-sm-6 text-left">{{ pagination }}</div>
+    <div class="col-sm-6 text-end">{{ results }}</div>
+  </div>
 </form>

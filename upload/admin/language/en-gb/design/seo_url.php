@@ -24,9 +24,11 @@ $_['entry_language']       = 'Language';
 $_['entry_key']            = 'Key';
 $_['entry_value']          = 'Value';
 $_['entry_keyword']        = 'Keyword';
+$_['entry_sort_order']     = 'Sort Order';
 
 // Help
 $_['help_keyword']         = 'Make sure you only use characters in the a-z or 0-9 use and - or _ for spaces. Leave blank if you just want to remove the perimeter.';
+$_['help_sort_order']      = 'The sort order of the keywords in the URL.';
 
 // Error
 $_['error_permission']     = 'Warning: You do not have permission to modify SEO URL!';

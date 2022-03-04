@@ -20,6 +20,8 @@ use ScssPhp\ScssPhp\Formatter;
  * @author Anthon Pang <anthon.pang@gmail.com>
  *
  * @deprecated since 1.4.0.
+ *
+ * @internal
  */
 class Debug extends Formatter
 {

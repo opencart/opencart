@@ -39,7 +39,7 @@ class Notification extends \Opencart\System\Engine\Controller {
 				'path'     => !empty($_SERVER['PHP_SELF']) ? dirname($_SERVER['PHP_SELF']) . '/' : '',
 				'secure'   => $this->request->server['HTTPS'],
 				'httponly' => false,
-				'SameSite' => 'Strict'
+				'SameSite' => $this->config->get('session_samesite')
 			];
 
 			setcookie('notification', true, $option);

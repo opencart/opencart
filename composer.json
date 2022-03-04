@@ -15,6 +15,7 @@
 		"twig/twig": "^3.3",
 		"braintree/braintree_php": "^6.7",
 		"cardinity/cardinity-sdk-php": "^3.0",
-		"divido/divido-php": "^1.15"
+		"divido/divido-php": "^1.15",
+		"zoujingli/wechat-php-sdk": "^1.3"
     }
 }

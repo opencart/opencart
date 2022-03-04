@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../../../../',
         'aliases' => array(),
-        'reference' => '0f1ae34401cd056b86b2df949e1abcad66bc2a4a',
+        'reference' => '6e71e465ce947d5d6b5bede75f26a5ccf0c87a0f',
         'name' => 'opencart/opencart',
         'dev' => true,
     ),
@@ -79,7 +79,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../../../../',
             'aliases' => array(),
-            'reference' => '0f1ae34401cd056b86b2df949e1abcad66bc2a4a',
+            'reference' => '6e71e465ce947d5d6b5bede75f26a5ccf0c87a0f',
             'dev_requirement' => false,
         ),
         'psr/http-message' => array(

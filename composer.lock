@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5f7477d996d7712fa2980dcd28c9d064",
+    "content-hash": "c65da74baf4b5b406a807a2768a641e8",
     "packages": [
         {
             "name": "braintree/braintree_php",
@@ -1688,47 +1688,6 @@
                 }
             ],
             "time": "2022-02-04T06:59:48+00:00"
-        },
-        {
-            "name": "zoujingli/wechat-php-sdk",
-            "version": "v1.3.18",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/zoujingli/wechat-php-sdk.git",
-                "reference": "d37d0c1919ede2ee54e65100ac3792e947b1e0ef"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/zoujingli/wechat-php-sdk/zipball/d37d0c1919ede2ee54e65100ac3792e947b1e0ef",
-                "reference": "d37d0c1919ede2ee54e65100ac3792e947b1e0ef",
-                "shasum": ""
-            },
-            "require": {
-                "ext-json": "*",
-                "ext-libxml": "*",
-                "ext-simplexml": "*",
-                "php": ">=5.3.3"
-            },
-            "type": "project",
-            "autoload": {
-                "psr-4": {
-                    "Wechat\\": "./Wechat"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "WeChat development of SDK",
-            "homepage": "http://www.kancloud.cn/zoujingli/wechat-php-sdk",
-            "keywords": [
-                "wechat-php-sdk"
-            ],
-            "support": {
-                "issues": "https://github.com/zoujingli/wechat-php-sdk/issues",
-                "source": "https://github.com/zoujingli/wechat-php-sdk/tree/v1.3.18"
-            },
-            "time": "2019-10-10T09:42:15+00:00"
         }
     ],
     "packages-dev": [],

@@ -20,8 +20,8 @@ class ControllerExtensionPaymentEway extends Controller {
 
 		for ($i = $today['year']; $i < $today['year'] + 11; $i++) {
 			$data['year_expire'][] = array(
-				'text'  => strftime('%Y', mktime(0, 0, 0, 1, 1, $i)),
-				'value' => strftime('%Y', mktime(0, 0, 0, 1, 1, $i))
+				'text'  => sprintf('%02d', $i % 100),
+				'value' => sprintf('%04d', $i)
 			);
 		}
 

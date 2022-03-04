@@ -60,6 +60,10 @@ class ComposerStaticInita8cb75283b86ff94542c6f1327c4ce59
         array (
             'Cardinity\\' => 10,
         ),
+        'B' => 
+        array (
+            'Braintree\\' => 10,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
@@ -135,6 +139,10 @@ class ComposerStaticInita8cb75283b86ff94542c6f1327c4ce59
         array (
             0 => __DIR__ . '/..' . '/cardinity/cardinity-sdk-php/src',
         ),
+        'Braintree\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/braintree/braintree_php/lib/Braintree',
+        ),
     );
 
     public static $prefixesPsr0 = array (
@@ -143,13 +151,6 @@ class ComposerStaticInita8cb75283b86ff94542c6f1327c4ce59
             'Divido' => 
             array (
                 0 => __DIR__ . '/..' . '/divido/divido-php/lib',
-            ),
-        ),
-        'B' => 
-        array (
-            'Braintree' => 
-            array (
-                0 => __DIR__ . '/..' . '/braintree/braintree_php/lib',
             ),
         ),
     );

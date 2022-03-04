@@ -5,18 +5,18 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../../../../',
         'aliases' => array(),
-        'reference' => 'e2f6a88815b0dc0372df8d8d4a8f503a8846a611',
+        'reference' => '4053809bc83cf5a1fe507c10ecc741724c4a4362',
         'name' => 'opencart/opencart',
         'dev' => true,
     ),
     'versions' => array(
         'braintree/braintree_php' => array(
-            'pretty_version' => '3.40.0',
-            'version' => '3.40.0.0',
+            'pretty_version' => '6.7.0',
+            'version' => '6.7.0.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../braintree/braintree_php',
             'aliases' => array(),
-            'reference' => '840fc6ebf8d96756fed475cce94565fef178187d',
+            'reference' => '3406aa331c3eb5ac38aecb135389897dd50f35a1',
             'dev_requirement' => false,
         ),
         'cardinity/cardinity-sdk-php' => array(
@@ -79,7 +79,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../../../../',
             'aliases' => array(),
-            'reference' => 'e2f6a88815b0dc0372df8d8d4a8f503a8846a611',
+            'reference' => '4053809bc83cf5a1fe507c10ecc741724c4a4362',
             'dev_requirement' => false,
         ),
         'psr/http-message' => array(

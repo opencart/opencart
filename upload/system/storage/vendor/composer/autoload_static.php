@@ -54,6 +54,10 @@ class ComposerStaticInita8cb75283b86ff94542c6f1327c4ce59
         array (
             'Psr\\Http\\Message\\' => 17,
         ),
+        'K' => 
+        array (
+            'Klarna\\' => 7,
+        ),
         'G' => 
         array (
             'GuzzleHttp\\Subscriber\\Oauth\\' => 28,
@@ -131,6 +135,10 @@ class ComposerStaticInita8cb75283b86ff94542c6f1327c4ce59
         'Psr\\Http\\Message\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/http-message/src',
+        ),
+        'Klarna\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/klarna/kco_rest/src/Klarna',
         ),
         'GuzzleHttp\\Subscriber\\Oauth\\' => 
         array (

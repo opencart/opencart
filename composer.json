@@ -16,6 +16,7 @@
 		"braintree/braintree_php": "^6.7",
 		"cardinity/cardinity-sdk-php": "^3.0",
 		"divido/divido-php": "^1.15",
-		"zoujingli/wechat-php-sdk": "^1.3"
+		"zoujingli/wechat-php-sdk": "^1.3",
+		"klarna/kco_rest": "^4.2"
     }
 }

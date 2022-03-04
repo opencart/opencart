@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5f7477d996d7712fa2980dcd28c9d064",
+    "content-hash": "7fc9af796366d8ed1b0ccbb54c20f5fb",
     "packages": [
         {
             "name": "braintree/braintree_php",
@@ -463,6 +463,58 @@
                 }
             ],
             "time": "2021-10-05T13:56:00+00:00"
+        },
+        {
+            "name": "klarna/kco_rest",
+            "version": "v4.2.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/klarna/kco_rest_php.git",
+                "reference": "6c092bdd155cc8d6564503beb703ea721958381a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/klarna/kco_rest_php/zipball/6c092bdd155cc8d6564503beb703ea721958381a",
+                "reference": "6c092bdd155cc8d6564503beb703ea721958381a",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "~6.0",
+                "php": ">=5.5.0"
+            },
+            "require-dev": {
+                "apigen/apigen": "4.1.*",
+                "klarna/apigen-theme": "2.1.0",
+                "php-coveralls/php-coveralls": "^2.1",
+                "phploc/phploc": "2.0.*",
+                "phpmd/phpmd": "2.1.*",
+                "phpunit/phpunit": ">=4.0.0, <6.0",
+                "sebastian/phpcpd": "2.0.*",
+                "squizlabs/php_codesniffer": "1.5.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Klarna\\": "src/Klarna/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Klarna AB"
+                }
+            ],
+            "description": "Official Klarna REST PHP SDK",
+            "homepage": "http://developers.klarna.com",
+            "support": {
+                "issues": "https://github.com/klarna/kco_rest_php/issues",
+                "source": "https://github.com/klarna/kco_rest_php/tree/v4.x"
+            },
+            "abandoned": true,
+            "time": "2020-02-14T09:31:35+00:00"
         },
         {
             "name": "psr/http-message",

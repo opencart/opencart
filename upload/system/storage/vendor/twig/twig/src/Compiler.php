@@ -141,14 +141,14 @@ class Compiler
     public function repr($value)
     {
         if (\is_int($value) || \is_float($value)) {
-            if (false !== $locale = setlocale(LC_NUMERIC, '0')) {
-                setlocale(LC_NUMERIC, 'C');
+            if (false !== $locale = setlocale(\LC_NUMERIC, '0')) {
+                setlocale(\LC_NUMERIC, 'C');
             }
 
             $this->raw(var_export($value, true));
 
             if (false !== $locale) {
-                setlocale(LC_NUMERIC, $locale);
+                setlocale(\LC_NUMERIC, $locale);
             }
         } elseif (null === $value) {
             $this->raw('null');
@@ -238,7 +238,7 @@ class Compiler
 
     public function getVarName()
     {
-        return sprintf('__internal_%s', hash('sha256', __METHOD__.$this->varNameSalt++));
+        return sprintf('__internal_compile_%d', $this->varNameSalt++);
     }
 }
 

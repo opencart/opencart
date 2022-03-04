@@ -18,7 +18,7 @@ final class DB {
 		if ($query->num_rows) {
 			return json_decode($query->row['data'], true);
 		} else {
-			return false;
+			return array();
 		}
 	}
 

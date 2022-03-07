@@ -336,15 +336,7 @@ class Category extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "seo_url` WHERE `key` = 'path' AND `value` = '" . $this->db->escape($this->getPath($category_id)) . "'");
 
 		foreach ($query->rows as $result) {
-			$pos = strrpos($result['keyword'], '/');
-
-			if ($pos !== false) {
-				$keyword = substr($result['keyword'], $pos + 1);
-			} else {
-				$keyword = $result['keyword'];
-			}
-
-			$category_seo_url_data[$result['store_id']][$result['language_id']] = $keyword;
+			$category_seo_url_data[$result['store_id']][$result['language_id']] = $result['keyword'];
 		}
 
 		return $category_seo_url_data;

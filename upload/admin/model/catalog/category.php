@@ -40,8 +40,6 @@ class Category extends \Opencart\System\Engine\Model {
 		}
 
 		// Seo urls on categories need to be done differently to they include the full keyword path
-		$this->load->model('design/seo_url');
-
 		$parent_path = $this->getPath($data['parent_id']);
 
 		if (!$parent_path) {
@@ -49,6 +47,8 @@ class Category extends \Opencart\System\Engine\Model {
 		} else {
 			$path = $parent_path . '_' . $category_id;
 		}
+
+		$this->load->model('design/seo_url');
 
 		foreach ($data['category_seo_url'] as $store_id => $language) {
 			foreach ($language as $language_id => $keyword) {
@@ -155,9 +155,6 @@ class Category extends \Opencart\System\Engine\Model {
 			}
 		}
 
-		// Delete the old path before adding another
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "seo_url` WHERE `key` = 'path' AND `value` = '" . $this->db->escape($path_old) . "'");
-
 		// Seo urls on categories need to be done differently to they include the full keyword path
 		$path_parent = $this->getPath($data['parent_id']);
 
@@ -166,6 +163,12 @@ class Category extends \Opencart\System\Engine\Model {
 		} else {
 			$path_new = $path_parent . '_' . $category_id;
 		}
+
+		// Get old data to so we know what to replace
+		$seo_url_data = $this->getSeoUrls($category_id);
+
+		// Delete the old path
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "seo_url` WHERE `key` = 'path' AND `value` = '" . $this->db->escape($path_old) . "'");
 
 		$this->load->model('design/seo_url');
 
@@ -179,17 +182,9 @@ class Category extends \Opencart\System\Engine\Model {
 
 				$this->db->query("INSERT INTO `" . DB_PREFIX . "seo_url` SET `store_id` = '" . (int)$store_id . "', `language_id` = '" . (int)$language_id . "', `key` = 'path', `value` = '" . $this->db->escape($path_new) . "', `keyword` = '" . $this->db->escape($keyword) . "'");
 
-				$seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyValue('path', $path_old, $store_id, $language_id);
-
-				if ($seo_url_info) {
-					// Update sub category seo urls
-					$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "seo_url` WHERE `store_id` = '" . (int)$store_id . "' AND `language_id` = '" . (int)$language_id . "' AND `key` = 'path' AND `value` LIKE '" . $this->db->escape($path_old) . "_%'");
-
-					$this->db->query("DELETE FROM `" . DB_PREFIX . "seo_url` WHERE `store_id` = '" . (int)$store_id . "' AND `language_id` = '" . (int)$language_id . "' AND `key` = 'path' AND `value` LIKE '" . $this->db->escape($path_old) . "_%'");
-
-					foreach ($query->rows as $result) {
-						$this->db->query("INSERT INTO `" . DB_PREFIX . "seo_url` SET `store_id` = '" . (int)$store_id . "', `language_id` = '" . (int)$language_id . "', `key` = 'path', `value` = '" . $this->db->escape($path_new . '_' . substr($result['value'], strlen($path_old . '_'))) . "', `keyword` = '" . $this->db->escape($keyword . '/' . substr($result['keyword'], utf8_strlen($seo_url_info['keyword']))) . "'");
-					}
+				// Update sub category seo urls
+				if (isset($seo_url_data[$store_id][$language_id])) {
+					$this->db->query("UPDATE `" . DB_PREFIX . "seo_url` SET `value` = CONCAT('" . $this->db->escape($path_new . '_') . "', SUBSTRING(`value`, " . (strlen($path_old . '_') + 1) . ")), `keyword` = CONCAT('" . $this->db->escape($keyword) . "', SUBSTRING(`keyword`, " . (utf8_strlen($seo_url_data[$store_id][$language_id]) + 1) . ")) WHERE `store_id` = '" . (int)$store_id . "' AND `language_id` = '" . (int)$language_id . "' AND `key` = 'path' AND `value` LIKE '" . $this->db->escape($path_old) . "_%'");
 				}
 			}
 		}

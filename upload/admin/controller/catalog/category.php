@@ -310,12 +310,24 @@ class Category extends \Opencart\System\Engine\Controller {
 			$data['status'] = true;
 		}
 
-		if (isset($this->request->get['category_id'])) {
-			$this->load->model('design/seo_url');
+		$data['category_seo_url'] = [];
 
-			$data['category_seo_url'] = $this->model_catalog_category->getSeoUrls($this->request->get['category_id']);
-		} else {
-			$data['category_seo_url'] = [];
+		if (isset($this->request->get['category_id'])) {
+			$results = $this->model_catalog_category->getSeoUrls($this->request->get['category_id']);
+
+			foreach ($results as $store_id => $languages) {
+				foreach ($languages as $language_id => $keyword) {
+					$pos = strrpos($keyword, '/');
+
+					if ($pos !== false) {
+						$keyword = substr($keyword, $pos + 1);
+					} else {
+						$keyword = $keyword;
+					}
+
+					$data['category_seo_url'][$store_id][$language_id] = $keyword;
+				}
+			}
 		}
 
 		$this->load->model('design/layout');

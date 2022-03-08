@@ -7,7 +7,7 @@ $_['text_extension']     = 'Extensions';
 $_['text_success']       = 'Success: You have modified credit card payment module!';
 $_['text_edit']          = 'Edit Credit Card';
 $_['text_approve']       = 'Approve';
-$_['text_denied']        = 'Deny';
+$_['text_deny']          = 'Deny';
 
 // Entry
 $_['entry_response']     = 'Test card response';

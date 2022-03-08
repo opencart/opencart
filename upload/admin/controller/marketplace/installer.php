@@ -173,7 +173,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 				// Unzip the files
 				$zip = new \ZipArchive();
 
-				if ($zip->open($file)) {
+				if ($zip->open($file, \ZipArchive::RDONLY)) {
 					$xml = $zip->getFromName('install.xml');
 
 					$zip->close();

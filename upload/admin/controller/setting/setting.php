@@ -232,6 +232,8 @@ class Setting extends \Opencart\System\Engine\Controller {
 		}
 
 		$data['config_customer_price'] = $this->config->get('config_customer_price');
+		$data['config_telephone_display'] = $this->config->get('config_telephone_display');
+		$data['config_telephone_required'] = $this->config->get('config_telephone_required');
 
 		if ($this->config->has('config_login_attempts')) {
 			$data['config_login_attempts'] = $this->config->get('config_login_attempts');

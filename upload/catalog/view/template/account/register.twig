@@ -43,13 +43,17 @@
               <div id="error-email" class="invalid-feedback"></div>
             </div>
           </div>
-          <div class="row mb-3 required">
-            <label for="input-telephone" class="col-sm-2 col-form-label">{{ entry_telephone }}</label>
-            <div class="col-sm-10">
-              <input type="tel" name="telephone" value="" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control"/>
-              <div id="error-telephone" class="invalid-feedback"></div>
+
+          {% if config_telephone_display %}
+            <div class="row mb-3{% if config_telephone_required %} required{% endif %}">
+              <label for="input-telephone" class="col-sm-2 col-form-label">{{ entry_telephone }}</label>
+              <div class="col-sm-10">
+                <input type="tel" name="telephone" value="" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control"/>
+                <div id="error-telephone" class="invalid-feedback"></div>
+              </div>
             </div>
-          </div>
+          {% endif %}
+
           {% for custom_field in custom_fields %}
 
             {% if custom_field.type == 'select' %}
@@ -190,12 +194,10 @@
             <label class="col-sm-2 col-form-label">{{ entry_newsletter }}</label>
             <div class="col-sm-10">
               <div class="form-check form-check-inline">
-                <input type="radio" name="newsletter" value="1" id="input-newsletter-yes" class="form-check-input"/>
-                <label for="input-newsletter-yes" class="form-check-label">{{ text_yes }}</label>
+                <input type="radio" name="newsletter" value="1" id="input-newsletter-yes" class="form-check-input"/> <label for="input-newsletter-yes" class="form-check-label">{{ text_yes }}</label>
               </div>
               <div class="form-check form-check-inline">
-                <input type="radio" name="newsletter" value="0" id="input-newsletter-no" class="form-check-input" checked/>
-                <label for="input-newsletter-no" class="form-check-label">{{ text_no }}</label>
+                <input type="radio" name="newsletter" value="0" id="input-newsletter-no" class="form-check-input" checked/> <label for="input-newsletter-no" class="form-check-label">{{ text_no }}</label>
               </div>
             </div>
           </div>
@@ -219,11 +221,11 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#input-customer-group').on('change', function() {
+$('#input-customer-group').on('change', function () {
     $.ajax({
         url: 'index.php?route=account/custom_field&customer_group_id=' + this.value,
         dataType: 'json',
-        success: function(json) {
+        success: function (json) {
             $('.custom-field').hide();
             $('.custom-field').removeClass('required');
 
@@ -237,7 +239,7 @@ $('#input-customer-group').on('change', function() {
                 }
             }
         },
-        error: function(xhr, ajaxOptions, thrownError) {
+        error: function (xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });

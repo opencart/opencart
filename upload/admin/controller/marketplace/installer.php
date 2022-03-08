@@ -296,20 +296,8 @@ class Installer extends \Opencart\System\Engine\Controller {
 					// Only extract the contents of the upload folder
 					$destination = str_replace('\\', '/', $source);
 
-					$path = '';
-					$base = '';
-
-					// admin > extension/{directory}/admin
-					if (substr($destination, 0, 6) == 'admin/') {
-						$path = $extension_install_info['code'] . '/' . $destination;
-						$base = DIR_EXTENSION;
-					}
-
-					// catalog > extension/{directory}/catalog
-					if (substr($destination, 0, 8) == 'catalog/') {
-						$path = $extension_install_info['code'] . '/' . $destination;
-						$base = DIR_EXTENSION;
-					}
+					$path = $extension_install_info['code'] . '/' . $destination;
+					$base = DIR_EXTENSION;
 
 					// image > image
 					if (substr($destination, 0, 6) == 'image/') {
@@ -317,40 +305,10 @@ class Installer extends \Opencart\System\Engine\Controller {
 						$base = substr(DIR_IMAGE, 0, -6);
 					}
 
-					// Add the system directory if it doesn't exist.
-					if ($destination == 'system/') {
-						$path = $extension_install_info['code'] . '/' . $destination;
-						$base = DIR_EXTENSION;
-					}
-
-					// Config
-					if (substr($destination, 0, 14) == 'system/config/') {
-						$path = $extension_install_info['code'] . '/' . $destination;
-						$base = DIR_EXTENSION;
-					}
-
-					// Helper
-					if (substr($destination, 0, 14) == 'system/helper/') {
-						$path = $extension_install_info['code'] . '/' . $destination;
-						$base = DIR_EXTENSION;
-					}
-
-					// Library
-					if (substr($destination, 0, 15) == 'system/library/') {
-						$path = $extension_install_info['code'] . '/' . $destination;
-						$base = DIR_EXTENSION;
-					}
-
 					// We need to store the path differently for vendor folders.
 					if (substr($destination, 0, 22) == 'system/storage/vendor/') {
 						$path = substr($destination, 15);
 						$base = DIR_STORAGE;
-					}
-
-					// Include install xml file
-					if ($destination == 'install.xml') {
-						$path = $extension_install_info['code'] . '/' . $destination;
-						$base = DIR_EXTENSION;
 					}
 
 					if ($path) {
@@ -360,14 +318,12 @@ class Installer extends \Opencart\System\Engine\Controller {
 							break;
 						}
 
-						if (!is_dir($base . $path)) {
-							$extract[] = [
-								'source'      => $source,
-								'destination' => $destination,
-								'base'        => $base,
-								'path'        => $path
-							];
-						}
+						$extract[] = [
+							'source'      => $source,
+							'destination' => $destination,
+							'base'        => $base,
+							'path'        => $path
+						];
 					}
 				}
 
@@ -378,18 +334,29 @@ class Installer extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Add extension directory
-			mkdir(DIR_EXTENSION . $extension_install_info['code'], 0777);
-
 			foreach ($extract as $copy) {
 				// Must not have a path before files and directories can be moved
-				if (substr($copy['path'], -1) == '/' && mkdir($copy['base'] . $copy['path'], 0777)) {
-					$this->model_setting_extension->addPath($extension_install_id, $copy['path']);
+				$path = '';
+
+				$directories = explode('/', dirname($copy['path']));
+
+				foreach ($directories as $directory) {
+					if (!$path) {
+						$path = $directory;
+					} else {
+						$path = $path . '/' . $directory;
+					}
+
+					if (!is_dir($copy['base'] . $path) && mkdir($copy['base'] . $path, 0777)) {
+						$this->model_setting_extension->addPath($extension_install_id, $path);
+					}
 				}
 
 				// If check if the path is not directory and check there is no existing file
-				if (substr($copy['path'], -1) != '/' && copy('zip://' . $file . '#' . $copy['source'], $copy['base'] . $copy['path'])) {
-					$this->model_setting_extension->addPath($extension_install_id, $copy['path']);
+				if (substr($copy['path'], -1) != '/') {
+					if (!is_file($copy['base'] . $copy['path']) && copy('zip://' . $file . '#' . $copy['source'], $copy['base'] . $copy['path'])) {
+						$this->model_setting_extension->addPath($extension_install_id, $copy['path']);
+					}
 				}
 			}
 
@@ -459,8 +426,6 @@ class Installer extends \Opencart\System\Engine\Controller {
 			}
 
 			// Remove extension directory
-			rmdir(DIR_EXTENSION . $extension_install_info['code'] . '/');
-
 			$this->model_setting_extension->editStatus($extension_install_id, 0);
 
 			$json['success'] = $this->language->get('text_uninstall');

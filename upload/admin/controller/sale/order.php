@@ -415,7 +415,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$data['config_file_max_size'] = ((int)$this->config->get('config_file_max_size') * 1024 * 1024);
 		$data['config_telephone_required'] = $this->config->get('config_telephone_required');
-		
+
 		$url = '';
 
 		if (isset($this->request->get['filter_order_id'])) {

@@ -76,7 +76,7 @@
                     <div id="error-email" class="invalid-feedback"></div>
                   </div>
                 </div>
-                <div class="row mb-3 required">
+                <div class="row mb-3{% if config_telephone_required %} required{% endif %}">
                   <label for="input-telephone" class="col-sm-2 col-form-label">{{ entry_telephone }}</label>
                   <div class="col-sm-10">
                     <input type="text" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control"/>
@@ -976,8 +976,6 @@ $('#form-customer, #form-address').on('submit', function (e) {
         }
     });
 });
-
-
 
 
 $('#history').on('click', '.pagination a', function (e) {

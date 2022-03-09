@@ -69,7 +69,7 @@ class CreditCard extends \Opencart\System\Engine\Controller {
 				$this->load->model('account/payment_method');
 
 				$payment_method_data = [
-					'name'        => '**** **** **** ' . substr($this->request->post['card_number'], -4),
+					'name'        => str_repeat('X', (strlen($this->request->post['card_number']) - 8)) . substr($this->request->post['card_number'], -4)
 					'image'       => 'visa.png',
 					'type'        => 'visa',
 					'extension'   => 'opencart',

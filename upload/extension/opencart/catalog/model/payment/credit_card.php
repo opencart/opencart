@@ -26,8 +26,4 @@ class CreditCard extends \Opencart\System\Engine\Model {
 
 		return $method_data;
 	}
-
-	public function recurringPayments(): bool {
-		return true;
-	}
 }

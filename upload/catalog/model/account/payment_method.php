@@ -1,6 +1,10 @@
 <?php
 namespace Opencart\Catalog\Model\Account;
 class PaymentMethod extends \Opencart\System\Engine\Model {
+	public function addPaymentMethod(array $data): void {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "payment_method` SET `customer_id` = '" . (int)$this->customer->getId() . "'");
+	}
+
 	public function deletePaymentMethod(int $payment_method_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "payment_method` WHERE `customer_id` = '" . (int)$this->customer->getId() . "' AND `payment_method_id` = '" . (int)$payment_method_id . "'");
 	}

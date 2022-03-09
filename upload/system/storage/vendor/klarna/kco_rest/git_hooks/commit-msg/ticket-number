@@ -1,0 +1,30 @@
+#!/bin/bash
+
+function run_test
+{
+    if ! grep -qvE '^#.*|^$' $1 ; then
+        exit 0
+    fi
+
+    ticket=$(git symbolic-ref HEAD | grep -oP "([A-Z]+)-([0-9]+)")
+
+    if [ -z $ticket ]; then
+        exit 0
+    fi
+
+    if grep -q "^$ticket" $1; then
+        exit 0
+    fi
+
+    echo >> $1
+    echo $ticket >> $1
+}
+
+case "${1}" in
+    --about )
+        echo "Append ticket number to commit message"
+        ;;
+    * )
+        run_test "$@"
+        ;;
+esac

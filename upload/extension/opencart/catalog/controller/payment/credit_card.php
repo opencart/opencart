@@ -4,7 +4,7 @@ class CreditCard extends \Opencart\System\Engine\Controller {
 	public function index(): string {
 		$this->load->language('extension/opencart/payment/credit_card');
 
-		$data['bank'] = nl2br($this->config->get('payment_bank_transfer_bank_' . $this->config->get('config_language_id')));
+		$data['language'] = $this->config->get('config_language');
 
 		return $this->load->view('extension/opencart/payment/credit_card', $data);
 	}
@@ -14,18 +14,46 @@ class CreditCard extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
+		$keys = [
+			'name',
+			'number',
+			'expire',
+			'cvv',
+			'store'
+		];
+
+		foreach ($keys as $key) {
+			if (!isset($this->request->post[$key])) {
+				$this->request->post[$key] = '';
+			}
+		}
+
 		if (!isset($this->session->data['order_id'])) {
-			$json['error'] = $this->language->get('error_order');
+			$json['error']['warning'] = $this->language->get('error_order');
 		}
 
 		if (!isset($this->session->data['payment_method']) || $this->session->data['payment_method'] != 'bank_transfer') {
-			$json['error'] = $this->language->get('error_payment_method');
+			$json['error'] ['warning']= $this->language->get('error_payment_method');
+		}
+
+		if (!$this->request->post['cc_name']) {
+			$json['error']['cc_name'] = $this->language->get('error_name');
+		}
+
+		if (!$this->request->post['cc_number']) {
+			$json['error']['cc_number'] = $this->language->get('error_number');
+		}
+
+		if (!$this->request->post['cc_number']) {
+			$json['error']['cc_number'] = $this->language->get('error_number');
 		}
 
 		if (!$json) {
-			$comment  = $this->language->get('text_instruction') . "\n\n";
-			$comment .= $this->config->get('payment_bank_transfer_bank_' . $this->config->get('config_language_id')) . "\n\n";
-			$comment .= $this->language->get('text_payment');
+			if ($this->request->post['store']) {
+				$this->load->model('account/payment_method');
+
+				$this->model_account_payment_method->addPaymentMethod($this->session->data['order_id'], $this->config->get('payment_bank_transfer_order_status_id'), $comment, true);
+			}
 
 			$this->load->model('checkout/order');
 

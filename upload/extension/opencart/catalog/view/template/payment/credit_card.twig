@@ -13,7 +13,7 @@
 
         <div class="mb-3 required">
           <label for="input-cc-number" class="col-form-label">{{ entry_cc_number }}</label>
-          <input type="text" name="cc_number" value="" placeholder="{{ entry_cc_number }}" id="input-cc-number" class="form-control"/>
+          <input type="text" name="cc_number" value="" placeholder="{{ entry_cc_number }}" id="input-cc-number" pattern=".{8,}" class="form-control"/>
           <div id="error-cc-number" class="invalid-feedback"></div>
         </div>
 
@@ -23,13 +23,16 @@
 
         <div class="mb-3 required">
           <label for="input-cc-expire" class="col-form-label">{{ entry_cc_expire }}</label>
-          <input type="text" name="cc_expire" value="" placeholder="{{ entry_cc_expire }}" id="input-cc-expire" class="form-control"/>
+          <div class="input-group">
+            <input type="text" name="cc_expire" value="" placeholder="{{ entry_cc_expire }}" id="input-cc-expire" pattern=".{8,}" class="form-control date"/>
+            <div class="input-group-text"><i class="fas fa-calendar"></i></div>
+          </div>
           <div id="error-cc-expire" class="invalid-feedback"></div>
         </div>
 
         <div class="mb-3 required">
           <label for="input-cc-cvv" class="col-form-label">{{ entry_cc_cvv }}</label>
-          <input type="text" name="cc_cvv" value="" placeholder="{{ entry_cc_cvv }}" id="input-cc-cvv" class="form-control"/>
+          <input type="text" name="cc_cvv" value="" placeholder="{{ entry_cc_cvv }}" id="input-cc-cvv" pattern=".{8,}" class="form-control"/>
           <div id="error-cc-cvv" class="invalid-feedback"></div>
         </div>
 
@@ -48,7 +51,7 @@ $('#form-credit-card').on('submit', function () {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=extension/opencart/payment/credit_card|confirm',
+        url: 'index.php?route=extension/opencart/payment/credit_card|confirm&language={{ language }}',
         type: 'post',
         data: $('#form-credit-card').serialize(),
         dataType: 'json',
@@ -62,8 +65,7 @@ $('#form-credit-card').on('submit', function () {
             $('#button-confirm').button('reset');
         },
         success: function (json) {
-
-
+            $('.alert-dismissible').remove();
             $('#form-credit-card').find('.is-invalid').removeClass('is-invalid');
             $('#form-credit-card').find('.invalid-feedback').removeClass('d-block');
 

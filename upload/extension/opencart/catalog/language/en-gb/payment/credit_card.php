@@ -18,5 +18,5 @@ $_['help_name']        = 'Cardholder Name';
 $_['error_permission'] = 'Warning: You do not have permission to modify payment credit card!';
 $_['error_cc_name']    = 'Error: Cardholder name required!';
 $_['error_cc_number']  = 'Error: Credit card number required!';
-$_['error_cc_expire']  = 'Error: Expiration required!';
-$_['error_cc_cvv']     = 'Error: CVV required!';
+$_['error_cc_expire']  = 'Error: Expiration date required!';
+$_['error_cc_cvv']     = 'Error: CVV must have 3 digits!';

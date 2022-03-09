@@ -4,24 +4,21 @@
   <form id="form-credit-card">
 
     <div class="row">
-      <div class="col">
 
+      <div class="col">
         <div class="mb-3 required">
           <label for="input-card-name" class="col-form-label">{{ entry_card_name }}</label>
           <input type="text" name="card_name" value="" placeholder="{{ entry_card_name }}" id="input-card-name" class="form-control"/>
           <div id="error-card-name" class="invalid-feedback"></div>
         </div>
-
         <div class="mb-3 required">
           <label for="input-card-number" class="col-form-label">{{ entry_card_number }}</label>
           <input type="text" name="card_number" value="" placeholder="{{ entry_card_number }}" id="input-card-number" class="form-control"/>
           <div id="error-card-number" class="invalid-feedback"></div>
         </div>
-
       </div>
 
       <div class="col">
-
         <div class="mb-3 required">
           <label for="input-card-expire" class="col-form-label">{{ entry_card_expire }}</label>
           <div id="input-card-expire" class="input-group">
@@ -47,20 +44,22 @@
         </div>
 
       </div>
+
     </div>
 
     <div class="form-check">
-      <input type="checkbox" name="store" value="1" id="input-store" class="form-check-input"/> <label for="input-store" class="form-check-label">Remember My Card</label>
+      <input type="checkbox" name="store" value="1" id="input-store" class="form-check-input"/>
+      <label for="input-store" class="form-check-label">{{ text_store }}</label>
     </div>
 
     <div class="d-inline-block pt-2 pd-2 w-100 text-end">
-      <button type="button" id="button-confirm" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_confirm }}</button>
+      <button type="submit" id="button-confirm" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_confirm }}</button>
     </div>
 
   </form>
 </fieldset>
 <script type="text/javascript"><!--
-$('#form-credit-card').on('submit', function () {
+$('#form-credit-card').on('submit', function (e) {
     e.preventDefault();
 
     var element = this;

@@ -6,7 +6,11 @@ class CreditCard extends \Opencart\System\Engine\Controller {
 
 		$data['logged'] = !$this->customer->isLogged();
 
-		$data['months'] = range(1, 12);
+		$data['months'] = [];
+
+		foreach (range(1, 12) as $month) {
+			$data['months'][] = date('m', mktime(0, 0, 0, $month));
+		}
 
 		$data['years'] = [];
 
@@ -51,11 +55,15 @@ class CreditCard extends \Opencart\System\Engine\Controller {
 			$json['error']['card_name'] = $this->language->get('error_card_name');
 		}
 
-		if (preg_match($this->request->post['card_number'], '[^0-9\s]{8,19}')) {
+		if (preg_match('/[0-9\s]{8,19}/', $this->request->post['card_number'])) {
 			$json['error']['card_number'] = $this->language->get('error_card_number');
 		}
 
-		if (!in_array($this->request->post['card_expire_month'], range(1, 12)) || !in_array($this->request->post['card_expire_year'], range(date('Y'), date('Y', strtotime('+10 year'))))) {
+		if ($this->request->post['card_expire_year'] && $this->request->post['card_expire_month']) {
+			if (strtotime((int)$this->request->post['card_expire_year'] . '-' . $this->request->post['card_expire_month'] . '-01') < time()) {
+				$json['error']['card_expire'] = $this->language->get('error_card_expired');
+			}
+		} else {
 			$json['error']['card_expire'] = $this->language->get('error_card_expire');
 		}
 

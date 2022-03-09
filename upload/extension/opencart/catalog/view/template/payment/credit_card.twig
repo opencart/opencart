@@ -20,12 +20,13 @@
         <div class="mb-3 required">
           <label for="input-card-expire" class="col-form-label">{{ entry_card_expire }}</label>
           <div id="input-card-expire" class="input-group">
-            <select name="card_expire_year" class="form-select">
+            <select name="card_expire_month" class="form-select">
               <option value="">{{ text_month }}</option>
               {% for month in months %}
                 <option value="{{ month }}">{{ month }}</option>
               {% endfor %}
-            </select> <select name="card_expire_month" class="form-select">
+            </select>
+            <select name="card_expire_year" class="form-select">
               <option value="">{{ text_year }}</option>
               {% for year in years %}
                 <option value="{{ year }}">{{ year }}</option>
@@ -98,7 +99,7 @@ $('#form-credit-card').on('submit', function (e) {
             }
         },
         error: function (xhr, ajaxOptions, thrownError) {
-            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 });

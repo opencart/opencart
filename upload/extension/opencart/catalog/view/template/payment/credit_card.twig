@@ -42,7 +42,7 @@
   </form>
 </fieldset>
 <script type="text/javascript"><!--
-$('#form-credit-card').on('click', function () {
+$('#form-credit-card').on('submit', function () {
     e.preventDefault();
 
     var element = this;
@@ -62,6 +62,8 @@ $('#form-credit-card').on('click', function () {
             $('#button-confirm').button('reset');
         },
         success: function (json) {
+
+
             $('#form-credit-card').find('.is-invalid').removeClass('is-invalid');
             $('#form-credit-card').find('.invalid-feedback').removeClass('d-block');
 

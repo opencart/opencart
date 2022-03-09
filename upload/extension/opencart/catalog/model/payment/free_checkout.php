@@ -16,7 +16,7 @@ class FreeCheckout extends \Opencart\System\Engine\Model {
 
 		if ((float)$total <= 0.00) {
 			$status = true;
-		} elseif ($this->cart->hasRecuirring()) {
+		} elseif ($this->cart->hasRecurring()) {
 			$status = false;
 		} else {
 			$status = false;

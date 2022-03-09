@@ -6,6 +6,7 @@ $_['heading_title']     = 'Credit Card Payment';
 $_['text_description']  = 'This payment method is a dummy one and will not store credit card information nor should it be used on a live site.';
 $_['text_month']        = 'Months';
 $_['text_year']         = 'Years';
+$_['text_store']        = 'Remember My Card';
 
 // Entry
 $_['entry_card_name']   = 'Cardholders Name';

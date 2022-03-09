@@ -19,7 +19,7 @@ class BankTransfer extends \Opencart\System\Engine\Model {
 		if ($status) {
 			$method_data = [
 				'code'       => 'bank_transfer',
-				'title'      => $this->language->get('text_title'),
+				'title'      => $this->language->get('heading_title'),
 				'terms'      => '',
 				'sort_order' => $this->config->get('payment_bank_transfer_sort_order')
 			];

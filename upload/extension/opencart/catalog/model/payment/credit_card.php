@@ -19,11 +19,15 @@ class CreditCard extends \Opencart\System\Engine\Model {
 		if ($status) {
 			$method_data = [
 				'code'       => 'credit_card',
-				'title'      => $this->language->get('text_title'),
+				'title'      => $this->language->get('heading_title'),
 				'sort_order' => $this->config->get('payment_credit_card_sort_order')
 			];
 		}
 
 		return $method_data;
+	}
+
+	public function recurringPayments(): bool {
+		return true;
 	}
 }

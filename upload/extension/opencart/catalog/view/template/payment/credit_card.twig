@@ -1,0 +1,88 @@
+<fieldset>
+  <legend>{{ heading_title }}</legend>
+  <p><b>{{ text_description }}</b></p>
+  <form id="form-credit-card">
+    <div class="row">
+      <div class="col">
+
+        <div class="mb-3 required">
+          <label for="input-cc-name" class="col-form-label">{{ entry_cc_name }}</label>
+          <input type="text" name="cc_name" value="" placeholder="{{ entry_cc_name }}" id="input-cc-name" class="form-control"/>
+          <div id="error-cc-name" class="invalid-feedback"></div>
+        </div>
+
+        <div class="mb-3 required">
+          <label for="input-cc-number" class="col-form-label">{{ entry_cc_number }}</label>
+          <input type="text" name="cc_number" value="" placeholder="{{ entry_cc_number }}" id="input-cc-number" class="form-control"/>
+          <div id="error-cc-number" class="invalid-feedback"></div>
+        </div>
+
+      </div>
+
+      <div class="col">
+
+        <div class="mb-3 required">
+          <label for="input-cc-expire" class="col-form-label">{{ entry_cc_expire }}</label>
+          <input type="text" name="cc_expire" value="" placeholder="{{ entry_cc_expire }}" id="input-cc-expire" class="form-control"/>
+          <div id="error-cc-expire" class="invalid-feedback"></div>
+        </div>
+
+        <div class="mb-3 required">
+          <label for="input-cc-cvv" class="col-form-label">{{ entry_cc_cvv }}</label>
+          <input type="text" name="cc_cvv" value="" placeholder="{{ entry_cc_cvv }}" id="input-cc-cvv" class="form-control"/>
+          <div id="error-cc-cvv" class="invalid-feedback"></div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="d-inline-block pt-2 pd-2 w-100 text-end">
+      <button type="button" id="button-confirm" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_confirm }}</button>
+    </div>
+  </form>
+</fieldset>
+<script type="text/javascript"><!--
+$('#form-credit-card').on('click', function () {
+    e.preventDefault();
+
+    var element = this;
+
+    $.ajax({
+        url: 'index.php?route=extension/opencart/payment/credit_card|confirm',
+        type: 'post',
+        data: $('#form-credit-card').serialize(),
+        dataType: 'json',
+        contentType: 'application/x-www-form-urlencoded',
+        cache: false,
+        processData: false,
+        beforeSend: function () {
+            $('#button-confirm').button('loading');
+        },
+        complete: function () {
+            $('#button-confirm').button('reset');
+        },
+        success: function (json) {
+            $('#form-credit-card').find('.is-invalid').removeClass('is-invalid');
+            $('#form-credit-card').find('.invalid-feedback').removeClass('d-block');
+
+            if (json['error']) {
+                if (json['error']['warning']) {
+                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                }
+
+                for (key in json['error']) {
+                    $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
+                    $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
+                }
+            }
+
+            if (json['redirect']) {
+                location = json['redirect'];
+            }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+//--></script>

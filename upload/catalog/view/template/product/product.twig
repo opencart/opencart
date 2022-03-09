@@ -385,8 +385,6 @@ $('#form-product').on('submit', function(e) {
             $('#form-product').find('.is-invalid').removeClass('is-invalid');
             $('#form-product').find('.invalid-feedback').removeClass('d-block');
 
-            console.log(json);
-
             if (json['error']) {
                 for (key in json['error']) {
                     $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');

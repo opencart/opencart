@@ -26,7 +26,7 @@ class CreditCard extends \Opencart\System\Engine\Controller {
 		$data['save'] = $this->url->link('extension/opencart/payment/credit_card|save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment');
 
-		$data['payment_credit_card_reponse'] = $this->config->get('payment_credit_card_reponse');
+		$data['payment_credit_card_response'] = $this->config->get('payment_credit_card_response');
 		$data['payment_credit_card_order_status_id'] = $this->config->get('payment_credit_card_order_status_id');
 
 		$this->load->model('localisation/order_status');

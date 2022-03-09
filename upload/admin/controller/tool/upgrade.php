@@ -92,32 +92,30 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 
 		$file = DIR_DOWNLOAD . 'opencart-' . $version . '.zip';
 
-		//if (!is_file($file)) {
-			$handle = fopen($file, 'w');
+		$handle = fopen($file, 'w');
 
-			set_time_limit(0);
+		set_time_limit(0);
 
-			$curl = curl_init('https://github.com/opencart/opencart/archive/' . $version . '.zip');
+		$curl = curl_init('https://github.com/opencart/opencart/archive/' . $version . '.zip');
 
-			curl_setopt($curl, CURLOPT_USERAGENT, 'OpenCart ' . VERSION);
-			curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
-			curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
-			curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
-			curl_setopt($curl, CURLOPT_TIMEOUT, 300);
-			curl_setopt($curl, CURLOPT_FILE, $handle);
+		curl_setopt($curl, CURLOPT_USERAGENT, 'OpenCart ' . VERSION);
+		curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
+		curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
+		curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
+		curl_setopt($curl, CURLOPT_TIMEOUT, 300);
+		curl_setopt($curl, CURLOPT_FILE, $handle);
 
-			curl_exec($curl);
+		curl_exec($curl);
 
-			fclose($handle);
+		fclose($handle);
 
-			$status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+		$status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
-			if ($status != 200) {
-				$json['error'] = $this->language->get('error_download');
-			}
+		if ($status != 200) {
+			$json['error'] = $this->language->get('error_download');
+		}
 
-			curl_close($curl);
-		//}
+		curl_close($curl);
 
 		if (!$json) {
 			$json['text'] = $this->language->get('text_install');
@@ -167,23 +165,31 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 
 						if (substr($destination, 0, 8) == 'install/') {
 							// Default copy location
-							$path = DIR_OPENCART . $destination;
+							$path = '';
 
 							// Must not have a path before files and directories can be moved
-							if (substr($path, -1) == '/') {
-								if (!is_dir($path) && !mkdir($path, 0777)) {
+							$directories = explode('/', dirname($destination, '/'));
+
+							foreach ($directories as $directory) {
+								if (!$path) {
+									$path = $directory;
+								} else {
+									$path = $path . '/' . $directory;
+								}
+
+								if (!is_dir(DIR_OPENCART . $path) && !@mkdir(DIR_OPENCART . $path, 0777)) {
 									$json['error'] = sprintf($this->language->get('error_directory'), $path);
 								}
 							}
 
 							// Check if the path is not directory and check there is no existing file
-							if (substr($path, -1) != '/') {
-								if (is_file($path)) {
-									unlink($path);
+							if (substr($destination, -1) != '/') {
+								if (is_file(DIR_OPENCART . $destination)) {
+									unlink(DIR_OPENCART . $destination);
 								}
 
-								if (!copy('zip://' . $file . '#' . $source, $path)) {
-									$json['error'] = sprintf($this->language->get('error_copy'), $source, $path);
+								if (!copy('zip://' . $file . '#' . $source, DIR_OPENCART . $destination)) {
+									$json['error'] = sprintf($this->language->get('error_copy'), $source, $destination);
 								}
 							}
 						}

@@ -43,7 +43,7 @@ class Upgrade2 extends \Opencart\System\Engine\Controller {
 			// Unzip the files
 			$zip = new \ZipArchive();
 
-			if ($zip->open($file)) {
+			if ($zip->open($file, \ZipArchive::RDONLY)) {
 				$total = $zip->numFiles;
 
 				$start = ($page - 1) * 200;
@@ -60,32 +60,44 @@ class Upgrade2 extends \Opencart\System\Engine\Controller {
 
 						if (substr($destination, 0, 8) != 'install/') {
 							// Default copy location
-							$path = DIR_OPENCART . $destination;
+							$base = DIR_OPENCART;
 
 							// Fixes admin folder being under a different name
 							if (substr($destination, 0, 6) == 'admin/') {
-								$path = DIR_OPENCART . $admin . '/' . substr($destination, 6);
+								$destination = $admin . '/' . substr($destination, 6);
 							}
 
 							// We need to use a different path for vendor folders.
 							if (substr($destination, 0, 15) == 'system/storage/' && isset($config['DIR_STORAGE'])) {
-								$path = $config['DIR_STORAGE'] . substr($destination, 15);
+								$destination = substr($destination, 15);
+								$base = $config['DIR_STORAGE'];
 							}
 
-							// Must not have a path before files and directories can be moved
-							if (substr($path, -1) == '/') {
-								if (!is_dir($path) && !mkdir($path, 0777)) {
+							// Default copy location
+							$path = '';
+
+							// Must have a path before files can be moved
+							$directories = explode('/', dirname($destination, '/'));
+
+							foreach ($directories as $directory) {
+								if (!$path) {
+									$path = $directory;
+								} else {
+									$path = $path . '/' . $directory;
+								}
+
+								if (!is_dir($base . $path) && !@mkdir($base . $path, 0777)) {
 									$json['error'] = sprintf($this->language->get('error_directory'), $path);
 								}
 							}
 
 							// Check if the path is not directory and check there is no existing file
-							if (substr($path, -1) != '/') {
-								if (is_file($path)) {
-									unlink($path);
+							if (substr($destination, -1) != '/') {
+								if (is_file($base . $destination)) {
+									unlink($base . $destination);
 								}
 
-								if (!copy('zip://' . $file . '#' . $source, $path)) {
+								if (!copy('zip://' . $file . '#' . $source, $base . $destination)) {
 									$json['error'] = sprintf($this->language->get('error_copy'), $source, $path);
 								}
 							}

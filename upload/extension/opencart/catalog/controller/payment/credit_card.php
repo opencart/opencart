@@ -4,6 +4,8 @@ class CreditCard extends \Opencart\System\Engine\Controller {
 	public function index(): string {
 		$this->load->language('extension/opencart/payment/credit_card');
 
+		$data['logged'] = !$this->customer->isLogged();
+
 		$data['months'] = range(1, 12);
 
 		$data['years'] = [];
@@ -49,7 +51,7 @@ class CreditCard extends \Opencart\System\Engine\Controller {
 			$json['error']['card_name'] = $this->language->get('error_card_name');
 		}
 
-		if (preg_match($this->request->post['card_number'], '[^0-9\s]{13,19}')) {
+		if (preg_match($this->request->post['card_number'], '[^0-9\s]{8,19}')) {
 			$json['error']['card_number'] = $this->language->get('error_card_number');
 		}
 
@@ -63,13 +65,22 @@ class CreditCard extends \Opencart\System\Engine\Controller {
 
 		if (!$json) {
 			// Card storage
-
-			if ($this->request->post['store']) {
+			if ($this->customer->isLogged() && $this->request->post['store']) {
 				$this->load->model('account/payment_method');
 
-				//$this->model_account_payment_method->addPaymentMethod($this->session->data['order_id'], $this->config->get('payment_bank_transfer_order_status_id'), '', true);
-			}
+				$payment_method_data = [
+					'name'        => '**** **** **** ' . substr($this->request->post['card_number'], -4),
+					'image'       => 'visa.png',
+					'type'        => 'visa',
+					'extension'   => 'opencart',
+					'code'        => 'credit_card',
+					'token'       => md5(rand()),
+					'date_expire' => $this->request->post['card_expire_year'] . '-' . $this->request->post['card_expire_month'] . '-01',
+					'default'     => !$this->model_account_payment_method->getTotalPaymentMethods() ? true : false
+				];
 
+				$this->model_account_payment_method->addPaymentMethod($payment_method_data);
+			}
 
 			$this->load->model('checkout/order');
 

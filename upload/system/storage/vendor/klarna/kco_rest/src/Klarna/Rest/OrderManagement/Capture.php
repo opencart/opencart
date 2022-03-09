@@ -21,16 +21,17 @@ namespace Klarna\Rest\OrderManagement;
 
 use GuzzleHttp\Exception\RequestException;
 use Klarna\Rest\Resource;
-use Klarna\Rest\Transport\ConnectorInterface;
+use Klarna\Rest\Transport\Connector;
 use Klarna\Rest\Transport\Exception\ConnectorException;
 
 /**
- * Order Management: Capture resource.
+ * Capture resource.
  *
- * @example docs/examples/OrderManagementAPI/Captures/add_shipping_info.php
- * @example docs/examples/OrderManagementAPI/Captures/fetch_captures.php
- * @example docs/examples/OrderManagementAPI/Captures/trigger_send_out.php
- * @example docs/examples/OrderManagementAPI/Captures/update_customer_details.php
+ * @example docs/examples/order/fetch_capture.php
+ * @example docs/examples/order/create_capture.php
+ * @example docs/examples/capture/append_shipping_info.php
+ * @example docs/examples/capture/trigger_send_out.php
+ * @example docs/examples/capture/update_customer_details.php
  */
 class Capture extends Resource
 {
@@ -45,13 +46,13 @@ class Capture extends Resource
     public static $path = '/captures';
 
     /**
-     * Constructs a Capture instance.
+     * Constructs an order instance.
      *
-     * @param ConnectorInterface $connector HTTP transport connector
+     * @param Connector $connector HTTP transport connector
      * @param string    $orderUrl  Parent order resource url
      * @param string    $captureId Capture ID
      */
-    public function __construct(ConnectorInterface $connector, $orderUrl, $captureId = null)
+    public function __construct(Connector $connector, $orderUrl, $captureId = null)
     {
         parent::__construct($connector);
 
@@ -80,7 +81,6 @@ class Capture extends Resource
     public function create(array $data)
     {
         $url = $this->post($this->getLocation(), $data)
-            ->expectSuccessfull()
             ->status('201')
             ->getLocation();
 
@@ -104,7 +104,6 @@ class Capture extends Resource
     public function addShippingInfo(array $data)
     {
         $this->post($this->getLocation() . '/shipping-info', $data)
-            ->expectSuccessfull()
             ->status('204');
 
         return $this;
@@ -125,7 +124,6 @@ class Capture extends Resource
     public function updateCustomerDetails(array $data)
     {
         $this->patch($this->getLocation() . '/customer-details', $data)
-            ->expectSuccessfull()
             ->status('204');
 
         return $this;
@@ -144,7 +142,6 @@ class Capture extends Resource
     public function triggerSendout()
     {
         $this->post($this->getLocation() . '/trigger-send-out')
-            ->expectSuccessfull()
             ->status('204');
 
         return $this;

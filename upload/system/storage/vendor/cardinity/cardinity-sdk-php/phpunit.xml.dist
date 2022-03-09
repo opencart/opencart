@@ -2,21 +2,23 @@
 
 <!-- http://www.phpunit.de/manual/current/en/appendixes.configuration.html -->
 <phpunit
-        backupGlobals="false"
-        backupStaticAttributes="false"
-        colors="true"
-        convertErrorsToExceptions="true"
-        convertNoticesToExceptions="true"
-        convertWarningsToExceptions="true"
-        processIsolation="false"
-        stopOnFailure="false"
-        bootstrap="vendor/autoload.php"
-        forceCoversAnnotation="false">
+    backupGlobals               = "false"
+    backupStaticAttributes      = "false"
+    colors                      = "true"
+    convertErrorsToExceptions   = "true"
+    convertNoticesToExceptions  = "true"
+    convertWarningsToExceptions = "true"
+    processIsolation            = "false"
+    stopOnFailure               = "false"
+    syntaxCheck                 = "false"
+    bootstrap                   = "vendor/autoload.php"
+    mapTestClassNameToCoveredClassName = "true"
+    forceCoversAnnotation        = "false">
 
     <php>
         <!-- For integration tests -->
-        <env name="CONSUMER_KEY" value=""/>
-        <env name="CONSUMER_SECRET" value=""/>
+        <const name="CONSUMER_KEY" value=""/>
+        <const name="CONSUMER_SECRET" value=""/>
     </php>
 
     <testsuites>

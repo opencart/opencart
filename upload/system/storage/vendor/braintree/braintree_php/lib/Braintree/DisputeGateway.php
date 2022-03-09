@@ -1,20 +1,35 @@
 <?php
-
 namespace Braintree;
 
 use InvalidArgumentException;
 
 /**
  * Braintree DisputeGateway module
+ * PHP Version 5
  * Creates and manages Braintree Disputes
+ *
+ * @package   Braintree
  */
 class DisputeGateway
 {
+    /**
+     * @var Gateway
+     */
     private $_gateway;
+
+    /**
+     * @var Configuration
+     */
     private $_config;
+
+    /**
+     * @var Http
+     */
     private $_http;
 
-    // phpcs:ignore PEAR.Commenting.FunctionComment.Missing
+    /**
+     * @param Gateway $gateway
+     */
     public function __construct($gateway)
     {
         $this->_gateway = $gateway;
@@ -23,17 +38,17 @@ class DisputeGateway
         $this->_http = new Http($gateway->config);
     }
 
+    /* public class methods */
+
     /**
      * Accepts a dispute, given a dispute ID
      *
-     * @param string $id of the dispute to be accepted
-     *
-     * @return Dispute|Exception\NotFound|Result\Error
+     * @param string $id
      */
     public function accept($id)
     {
         try {
-            if (is_null($id) || trim($id) == "") {
+            if (trim($id) == "") {
                 throw new Exception\NotFound();
             }
 
@@ -53,20 +68,18 @@ class DisputeGateway
     /**
      * Adds file evidence to a dispute, given a dispute ID and a document ID
      *
-     * @param string $disputeId           to have evidence added
-     * @param string $documentIdOrRequest either a string of the unique identifier for a DocumentUpload object or a set of request params including the DocumentUpload ID
-     *
-     * @return EvidenceDetails|Exception\NotFound
+     * @param string $disputeId
+     * @param string $documentIdOrRequest
      */
     public function addFileEvidence($disputeId, $documentIdOrRequest)
     {
         $request = is_array($documentIdOrRequest) ? $documentIdOrRequest : ['documentId' => $documentIdOrRequest];
 
-        if (is_null($disputeId) || trim($disputeId) == "") {
+        if (trim($disputeId) == "") {
             throw new Exception\NotFound('dispute with id "' . $disputeId . '" not found');
         }
 
-        if (is_null($request['documentId']) || trim($request['documentId']) == "") {
+        if (trim($request['documentId']) == "") {
             throw new Exception\NotFound('document with id "' . $request['documentId'] . '" not found');
         }
 
@@ -99,15 +112,13 @@ class DisputeGateway
     /**
      * Adds text evidence to a dispute, given a dispute ID and content
      *
-     * @param string $id               of the dispute
-     * @param mixed  $contentOrRequest text-based content for the dispute evidence
-     *
-     * @return EvidenceDetails|Exception\NotFound
+     * @param string $id
+     * @param string $content
      */
     public function addTextEvidence($id, $contentOrRequest)
     {
         $request = is_array($contentOrRequest) ? $contentOrRequest : ['content' => $contentOrRequest];
-        if (is_null($request['content']) || trim($request['content']) == "") {
+        if (trim($request['content']) == "") {
             throw new InvalidArgumentException('content cannot be blank');
         }
 
@@ -116,12 +127,11 @@ class DisputeGateway
                 'comments' => $request['content'],
             ];
 
-            if (is_null($id) || trim($id) == "") {
+            if (trim($id) == "") {
                 throw new Exception\NotFound();
             }
 
             if (array_key_exists('tag', $request)) {
-                trigger_error('$tag is deprecated, use $category instead', E_USER_DEPRECATED);
                 $evidence['category'] = $request['tag'];
             }
 
@@ -135,7 +145,7 @@ class DisputeGateway
             if (array_key_exists('sequenceNumber', $request)) {
                 if (trim($request['sequenceNumber']) == "") {
                     throw new InvalidArgumentException('sequenceNumber cannot be blank');
-                } elseif ((string)(int)($request['sequenceNumber']) != $request['sequenceNumber']) {
+                } else if ((string)(int)($request['sequenceNumber']) != $request['sequenceNumber']) {
                     throw new InvalidArgumentException('sequenceNumber must be an integer');
                 }
                 $evidence['sequenceNumber'] = (int)$request['sequenceNumber'];
@@ -162,14 +172,12 @@ class DisputeGateway
     /**
      * Finalize a dispute, given a dispute ID
      *
-     * @param string $id of the dispute
-     *
-     * @return Dispute|Result\Error
+     * @param string $id
      */
     public function finalize($id)
     {
         try {
-            if (is_null($id) || trim($id) == "") {
+            if (trim($id) == "") {
                 throw new Exception\NotFound();
             }
 
@@ -189,13 +197,11 @@ class DisputeGateway
     /**
      * Find a dispute, given a dispute ID
      *
-     * @param string $id of the dispute
-     *
-     * @return Dispute|Exception\NotFound
+     * @param string $id
      */
     public function find($id)
     {
-        if (is_null($id) || trim($id) == "") {
+        if (trim($id) == "") {
             throw new Exception\NotFound('dispute with id "' . $id . '" not found');
         }
 
@@ -211,15 +217,13 @@ class DisputeGateway
     /**
      * Remove evidence from a dispute, given a dispute ID and evidence ID
      *
-     * @param string $disputeId  unique dispute identifier
-     * @param string $evidenceId uniqye evidence identifier
-     *
-     * @return true|Result\Error|Exception\NotFound
+     * @param string $disputeId
+     * @param string $evidenceId
      */
     public function removeEvidence($disputeId, $evidenceId)
     {
         try {
-            if (is_null($disputeId) || trim($disputeId) == "" || is_null($evidenceId) || trim($evidenceId) == "") {
+            if (trim($disputeId) == "" || trim($evidenceId) == "") {
                 throw new Exception\NotFound();
             }
 
@@ -232,17 +236,14 @@ class DisputeGateway
 
             return new Result\Successful();
         } catch (Exception\NotFound $e) {
-            $message = 'evidence with id "' . $evidenceId . '" for dispute with id "' . $disputeId . '" not found';
-            throw new Exception\NotFound($message);
+            throw new Exception\NotFound('evidence with id "' . $evidenceId . '" for dispute with id "' . $disputeId . '" not found');
         }
     }
 
     /**
      * Search for Disputes, given a DisputeSearch query
      *
-     * @param array $query containing search fields
-     *
-     * @return ResourceCollection of Dispute objects
+     * @param DisputeSearch $query
      */
     public function search($query)
     {
@@ -258,14 +259,6 @@ class DisputeGateway
         return new PaginatedCollection($pager);
     }
 
-    /**
-     * Similar to search, with a paging object
-     *
-     * @param array  $query containing search fields
-     * @param object $page  to iterate over results
-     *
-     * @return PaginatedResults
-     */
     public function fetchDisputes($query, $page)
     {
         $response = $this->_http->post($this->_config->merchantPath() . '/disputes/advanced_search?page=' . $page, [
@@ -278,3 +271,4 @@ class DisputeGateway
         return new PaginatedResult($totalItems, $pageSize, $disputes);
     }
 }
+class_alias('Braintree\DisputeGateway', 'Braintree_DisputeGateway');

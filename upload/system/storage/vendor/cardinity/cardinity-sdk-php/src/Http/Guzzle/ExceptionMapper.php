@@ -2,6 +2,7 @@
 
 namespace Cardinity\Http\Guzzle;
 
+use Cardinity\Exception;
 use Cardinity\Method\Error;
 use Cardinity\Method\MethodInterface;
 use Cardinity\Method\ResultObjectMapperInterface;
@@ -69,9 +70,9 @@ class ExceptionMapper
         ];
     }
 
-    private function create($class, ClientException $exception, MethodInterface $method)
+    private function create($class, $exception, MethodInterface $method)
     {
-        $response = json_decode($exception->getResponse()->getBody(), true);
+        $response = $exception->getResponse()->json();
 
         // map declined response to result object
         if ($exception->getCode() == 402) {

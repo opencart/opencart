@@ -1,47 +1,38 @@
 {
     "name": "klarna/kco_rest",
-    "description": "Official Klarna REST PHP SDK",
+    "description": "Klarna Checkout PHP SDK",
     "homepage": "http://developers.klarna.com",
     "license": "Apache-2.0",
     "type": "library",
     "authors": [
         {
-            "name": "Klarna AB"
+            "name": "Klarna AB",
+            "email": "integration@klarna.com"
         }
     ],
     "autoload": {
         "psr-4": {
-            "Klarna\\": "src/Klarna/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Klarna\\Rest\\Tests\\": "tests/"
+            "": "src/"
         }
     },
     "minimum-stability": "stable",
     "require": {
-        "php": ">=5.5.0",
-        "guzzlehttp/guzzle": "~6.0"
+        "php": ">=5.4.0",
+        "guzzlehttp/guzzle": ">=4.2,<6.0"
     },
     "require-dev": {
-        "phpunit/phpunit": ">=4.0.0, <6.0",
+        "phpunit/phpunit": "4.2.*",
         "squizlabs/php_codesniffer": "1.5.*",
         "phpmd/phpmd": "2.1.*",
         "phploc/phploc": "2.0.*",
         "sebastian/phpcpd": "2.0.*",
-        "php-coveralls/php-coveralls": "^2.1",
-        "apigen/apigen": "4.1.*",
-        "klarna/apigen-theme": "2.1.0"
+        "satooshi/php-coveralls": "0.6.*",
+        "apigen/apigen": "4.0.*",
+        "klarna/apigen-theme": "~1.0"
     },
     "scripts": {
         "test": "vendor/bin/phpunit --colors",
         "reference": "vendor/bin/apigen generate -s src -d docs/reference --template-config='vendor/klarna/apigen-theme/src/config.neon'",
-        "checkstyle": "vendor/bin/phpcs --standard=PSR2 --report=checkstyle --extensions=php src/ tests/",
-        "check": [
-            "@test",
-            "@checkstyle"
-        ],
         "analyze": [
             "mkdir -p build/logs",
             "vendor/bin/phploc --log-csv build/logs/phploc.csv src/ tests/",

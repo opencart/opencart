@@ -11,18 +11,19 @@
 
 namespace Symfony\Component\Validator\Violation;
 
+use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\ConstraintViolationList;
 use Symfony\Component\Validator\Util\PropertyPath;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Default implementation of {@link ConstraintViolationBuilderInterface}.
  *
  * @author Bernhard Schussek <bschussek@gmail.com>
  *
- * @internal since version 2.5. Code against ConstraintViolationBuilderInterface instead.
+ * @internal You should not instantiate or use this class. Code against
+ *           {@link ConstraintViolationBuilderInterface} instead.
  */
 class ConstraintViolationBuilder implements ConstraintViolationBuilderInterface
 {
@@ -43,10 +44,7 @@ class ConstraintViolationBuilder implements ConstraintViolationBuilderInterface
      */
     private $cause;
 
-    /**
-     * @param string $message The error message as a string or a stringable object
-     */
-    public function __construct(ConstraintViolationList $violations, ?Constraint $constraint, $message, array $parameters, $root, $propertyPath, $invalidValue, TranslatorInterface $translator, $translationDomain = null)
+    public function __construct(ConstraintViolationList $violations, Constraint $constraint, $message, array $parameters, $root, $propertyPath, $invalidValue, TranslatorInterface $translator, $translationDomain = null)
     {
         $this->violations = $violations;
         $this->message = $message;
@@ -62,7 +60,7 @@ class ConstraintViolationBuilder implements ConstraintViolationBuilderInterface
     /**
      * {@inheritdoc}
      */
-    public function atPath(string $path)
+    public function atPath($path)
     {
         $this->propertyPath = PropertyPath::append($this->propertyPath, $path);
 
@@ -72,7 +70,7 @@ class ConstraintViolationBuilder implements ConstraintViolationBuilderInterface
     /**
      * {@inheritdoc}
      */
-    public function setParameter(string $key, string $value)
+    public function setParameter($key, $value)
     {
         $this->parameters[$key] = $value;
 
@@ -92,7 +90,7 @@ class ConstraintViolationBuilder implements ConstraintViolationBuilderInterface
     /**
      * {@inheritdoc}
      */
-    public function setTranslationDomain(string $translationDomain)
+    public function setTranslationDomain($translationDomain)
     {
         $this->translationDomain = $translationDomain;
 
@@ -112,7 +110,7 @@ class ConstraintViolationBuilder implements ConstraintViolationBuilderInterface
     /**
      * {@inheritdoc}
      */
-    public function setPlural(int $number)
+    public function setPlural($number)
     {
         $this->plural = $number;
 
@@ -122,7 +120,7 @@ class ConstraintViolationBuilder implements ConstraintViolationBuilderInterface
     /**
      * {@inheritdoc}
      */
-    public function setCode(?string $code)
+    public function setCode($code)
     {
         $this->code = $code;
 
@@ -151,11 +149,20 @@ class ConstraintViolationBuilder implements ConstraintViolationBuilderInterface
                 $this->translationDomain
             );
         } else {
-            $translatedMessage = $this->translator->trans(
-                $this->message,
-                ['%count%' => $this->plural] + $this->parameters,
-                $this->translationDomain
-            );
+            try {
+                $translatedMessage = $this->translator->transChoice(
+                    $this->message,
+                    $this->plural,
+                    $this->parameters,
+                    $this->translationDomain
+                );
+            } catch (\InvalidArgumentException $e) {
+                $translatedMessage = $this->translator->trans(
+                    $this->message,
+                    $this->parameters,
+                    $this->translationDomain
+                );
+            }
         }
 
         $this->violations->add(new ConstraintViolation(

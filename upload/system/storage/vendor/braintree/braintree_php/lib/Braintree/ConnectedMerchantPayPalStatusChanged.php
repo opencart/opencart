@@ -1,22 +1,21 @@
 <?php
-
 namespace Braintree;
 
 /**
  * Connected Merchant PayPal Status Changed Payload
  *
- * See our {@link https://developer.paypal.com/braintree/docs/reference/general/webhooks/braintree-auth/php#notification-type-connected_merchant_paypal_status_changed developer docs} for information on attributes
+ * @package    Braintree
+ *
+ * @property-read string $merchantPublicId
+ * @property-read string $action
+ * @property-read string $oauthApplicationClientId
  */
 class ConnectedMerchantPayPalStatusChanged extends Base
 {
     protected $_attributes = [];
 
     /**
-     * Creates an instance of a ConnectedMerchantPayPalStatusChanged from given attributes
-     *
-     * @param array $attributes response object attributes
-     *
-     * @return ConnectedMerchantPayPalStatusChanged
+     * @ignore
      */
     public static function factory($attributes)
     {
@@ -27,8 +26,12 @@ class ConnectedMerchantPayPalStatusChanged extends Base
         return $instance;
     }
 
+    /**
+     * @ignore
+     */
     protected function _initialize($attributes)
     {
         $this->_attributes = $attributes;
     }
 }
+class_alias('Braintree\ConnectedMerchantPayPalStatusChanged', 'Braintree_ConnectedMerchantPayPalStatusChanged');

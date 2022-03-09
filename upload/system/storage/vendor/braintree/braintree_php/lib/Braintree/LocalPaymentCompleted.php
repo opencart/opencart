@@ -1,24 +1,36 @@
 <?php
-
 namespace Braintree;
 
 /**
  * Braintree LocalPaymentCompleted module
+ *
+ * @package    Braintree
+ * @category   Resources
  */
 
 /**
- * Manages Braintree LocalPaymentCompleted
+ * Manages Braintree LocalPaymentCompleted 
  *
- * See our {@link https://developer.paypal.com/braintree/docs/reference/general/webhooks/local-payment-methods developer docs} for more information
+ * <b>== More information ==</b>
+ *
+ *
+ * @package    Braintree
+ * @category   Resources
+ *
+ * @property-read string $grantOwnerMerchantId
+ * @property-read string $grantRecipientMerchantId
+ * @property-read string $paymentMethodNonce
+ * @property-read string $token
+ * @property-read string $updatedFields
  */
 class LocalPaymentCompleted extends Base
 {
     /**
-     * Creates an instance from given attributes
+     *  factory method: returns an instance of GrantedPaymentInstrumentUpdate
+     *  to the requesting method, with populated properties
      *
-     * @param array $attributes response object attributes
-     *
-     * @return LocalPaymentCompleted
+     * @ignore
+     * @return LocalPaymentCompleted 
      */
     public static function factory($attributes)
     {
@@ -32,29 +44,25 @@ class LocalPaymentCompleted extends Base
     /**
      * sets instance properties from an array of values
      *
+     * @access protected
      * @param array $LocalPaymentCompletedAttribs array of localPaymentCompleted data
-     *
      * @return void
      */
     protected function _initialize($localPaymentCompletedAttribs)
     {
         // set the attributes
         $this->_attributes = $localPaymentCompletedAttribs;
-
-        if (isset($transactionAttribs['transaction'])) {
-            $this->_set(
-                'transaction',
-                new Transaction(
-                    $transactionAttribs['transaction']
-                )
-            );
-        }
     }
 
-    // phpcs:ignore PEAR.Commenting.FunctionComment.Missing
-    public function __toString()
+    /**
+     * create a printable representation of the object as:
+     * ClassName[property=value, property=value]
+     * @return string
+     */
+    public function  __toString()
     {
         return __CLASS__ . '[' .
                 Util::attributesToString($this->_attributes) . ']';
     }
 }
+class_alias('Braintree\LocalPaymentCompleted', 'Braintree_LocalPaymentCompleted');

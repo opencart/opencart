@@ -1,23 +1,24 @@
 <?php
-
 namespace Braintree;
 
 /**
  * Braintree Xml parser and generator
+ * PHP version 5
  * superclass for Braintree XML parsing and generation
  */
 class Xml
 {
-    // phpcs:ignore PEAR.Commenting.FunctionComment.Missing
-    protected function __construct()
+    /**
+     * @ignore
+     */
+    protected function  __construct()
     {
+
     }
 
     /**
-     * Create an array from XML element(s)
      *
-     * @param string $xml elements(s)
-     *
+     * @param string $xml
      * @return array
      */
     public static function buildArrayFromXml($xml)
@@ -26,10 +27,8 @@ class Xml
     }
 
     /**
-     * Create an XML string from an Array object
      *
-     * @param array $array object
-     *
+     * @param array $array
      * @return string
      */
     public static function buildXmlFromArray($array)
@@ -37,3 +36,4 @@ class Xml
         return Xml\Generator::arrayToXml($array);
     }
 }
+class_alias('Braintree\Xml', 'Braintree_Xml');

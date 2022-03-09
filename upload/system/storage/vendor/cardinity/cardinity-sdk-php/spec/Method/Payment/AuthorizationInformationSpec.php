@@ -3,6 +3,7 @@
 namespace spec\Cardinity\Method\Payment;
 
 use PhpSpec\ObjectBehavior;
+use Prophecy\Argument;
 
 class AuthorizationInformationSpec extends ObjectBehavior
 {

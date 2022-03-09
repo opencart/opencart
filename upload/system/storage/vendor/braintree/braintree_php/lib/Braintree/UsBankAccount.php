@@ -1,20 +1,42 @@
 <?php
-
 namespace Braintree;
 
 /**
  * Braintree UsBankAccount module
+ *
+ * @package    Braintree
+ * @category   Resources
+ */
+
+/**
  * Manages Braintree UsBankAccounts
  *
- * See our {@link https://developer.paypal.com/braintree/docs/reference/response/us-bank-account developer docs} for information on attributes
+ * <b>== More information ==</b>
+ *
+ *
+ * @package    Braintree
+ * @category   Resources
+ *
+ * @property-read string $customerId
+ * @property-read string $email
+ * @property-read string $token
+ * @property-read string $imageUrl
+ * @property-read string $routingNumber
+ * @property-read string $accountType
+ * @property-read string $accountHolderName
+ * @property-read string $last4
+ * @property-read string $bankName
+ * @property-read string $achMandate
+ * @property-read boolean $default
+ * @property-read boolean $verified
  */
 class UsBankAccount extends Base
 {
     /**
-     * Creates an instance from given attributes
+     *  factory method: returns an instance of UsBankAccount
+     *  to the requesting method, with populated properties
      *
-     * @param array $attributes response object attributes
-     *
+     * @ignore
      * @return UsBankAccount
      */
     public static function factory($attributes)
@@ -24,12 +46,14 @@ class UsBankAccount extends Base
         return $instance;
     }
 
+    /* instance methods */
+
     /**
      * sets instance properties from an array of values
      *
+     * @access protected
      * @param array $usBankAccountAttribs array of usBankAccount data
-     *
-     * @return mixed
+     * @return void
      */
     protected function _initialize($usBankAccountAttribs)
     {
@@ -54,8 +78,12 @@ class UsBankAccount extends Base
         }
     }
 
-    // phpcs:ignore PEAR.Commenting.FunctionComment.Missing
-    public function __toString()
+    /**
+     * create a printable representation of the object as:
+     * ClassName[property=value, property=value]
+     * @return string
+     */
+    public function  __toString()
     {
         return __CLASS__ . '[' .
                 Util::attributesToString($this->_attributes) . ']';
@@ -71,28 +99,13 @@ class UsBankAccount extends Base
         return $this->default;
     }
 
-    /**
-     * Static methods redirecting to gateway class
-     *
-     * @param string $token the payment method identifier
-     *
-     * @see USBankAccountGateway::find()
-     *
-     * @return UsBankAccount|Error
-     */
+    // static methods redirecting to gateway
+
     public static function find($token)
     {
         return Configuration::gateway()->usBankAccount()->find($token);
     }
 
-    /**
-     * DO NOT USE, Use Transaction#sale instead. If you do choose to use this function, note that the subsequent transaction (if successful) will be automatically submitted for settlement.
-     *
-     * @param string $token              the payment method identifier
-     * @param array  $transactionAttribs all other transaction parameters
-     *
-     * @return UsBankAccount|Error
-     */
     public static function sale($token, $transactionAttribs)
     {
         $transactionAttribs['options'] = [
@@ -101,3 +114,4 @@ class UsBankAccount extends Base
         return Configuration::gateway()->usBankAccount()->sale($token, $transactionAttribs);
     }
 }
+class_alias('Braintree\UsBankAccount', 'Braintree_UsBankAccount');

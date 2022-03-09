@@ -1,5 +1,4 @@
 <?php
-
 namespace Braintree;
 
 use InvalidArgumentException;
@@ -7,8 +6,13 @@ use InvalidArgumentException;
 /**
  * Braintree SubscriptionGateway module
  *
- * // phpcs:ignore Generic.Files.LineLength
- * For more detailed information on Subscriptions, see {@link https://developer.paypal.com/braintree/docs/reference/response/subscription/php our developer docs}
+ * <b>== More information ==</b>
+ *
+ * For more detailed information on Subscriptions, see {@link https://developers.braintreepayments.com/reference/response/subscription/php https://developers.braintreepayments.com/reference/response/subscription/php}
+ *
+ * PHP Version 5
+ *
+ * @package   Braintree
  */
 class SubscriptionGateway
 {
@@ -16,7 +20,6 @@ class SubscriptionGateway
     private $_config;
     private $_http;
 
-    // phpcs:ignore PEAR.Commenting.FunctionComment.Missing
     public function __construct($gateway)
     {
         $this->_gateway = $gateway;
@@ -25,13 +28,6 @@ class SubscriptionGateway
         $this->_http = new Http($gateway->config);
     }
 
-    /*
-     * Request a new subscription be created
-     *
-     * @param array $attributes containing request params
-     *
-     * @return Result\Sucessful|Result\Error
-     */
     public function create($attributes)
     {
         Util::verifyKeys(self::_createSignature(), $attributes);
@@ -40,13 +36,6 @@ class SubscriptionGateway
         return $this->_verifyGatewayResponse($response);
     }
 
-    /*
-     * Look up a single subscription
-     *
-     * @param string $id of the subscription to find
-     *
-     * @return Subscription|Exception\NotFound
-     */
     public function find($id)
     {
         $this->_validateId($id);
@@ -58,15 +47,9 @@ class SubscriptionGateway
         } catch (Exception\NotFound $e) {
             throw new Exception\NotFound('subscription with id ' . $id . ' not found');
         }
+
     }
 
-    /*
-     * Search for subscriptions using a variety of criteria
-     *
-     * @param mixed $query of search fields
-     *
-     * @return ResourceCollection of Subscription objects
-     */
     public function search($query)
     {
         $criteria = [];
@@ -86,14 +69,6 @@ class SubscriptionGateway
         return new ResourceCollection($response, $pager);
     }
 
-    /*
-     * Fetch subscriptions using a variety of criteria
-     *
-     * @param mixed $query of search fields
-     * @param array $ids to be fetched
-     *
-     * @return ResourceCollection of Subscription objects
-     */
     public function fetch($query, $ids)
     {
         $criteria = [];
@@ -110,14 +85,6 @@ class SubscriptionGateway
         );
     }
 
-    /*
-     * Updates a specific subscription with given details
-     *
-     * @param string $subscriptionId the ID of the subscription to be updated
-     * @param mixed $attributes
-     *
-     * @return Subscription|Exception\NotFound
-     */
     public function update($subscriptionId, $attributes)
     {
         Util::verifyKeys(self::_updateSignature(), $attributes);
@@ -126,15 +93,6 @@ class SubscriptionGateway
         return $this->_verifyGatewayResponse($response);
     }
 
-    /*
-     * Manually retry charging a past due subscription
-     *
-     * @param string $subscriptionId the ID of the subscription with a charge being retried
-     * @param string $amount optional
-     * @param bool $submitForSettlement defaults to false unless specified true
-     *
-     * @return Transaction
-     */
     public function retryCharge($subscriptionId, $amount = null, $submitForSettlement = false)
     {
         $transaction_params = ['type' => Transaction::SALE,
@@ -151,13 +109,6 @@ class SubscriptionGateway
         return $this->_verifyGatewayResponse($response);
     }
 
-    /*
-     * Stops billing a payment method for a subscription. Cannot be reactivated
-     *
-     * @param string $subscriptionId to be canceled
-     *
-     * @return Subscription|Exception\NotFound
-     */
     public function cancel($subscriptionId)
     {
         $path = $this->_config->merchantPath() . '/subscriptions/' . $subscriptionId . '/cancel';
@@ -233,37 +184,43 @@ class SubscriptionGateway
         ];
     }
 
-    private function _validateId($id = null)
-    {
+    /**
+     * @ignore
+     */
+    private function _validateId($id = null) {
         if (empty($id)) {
-            throw new InvalidArgumentException(
-                'expected subscription id to be set'
-            );
+           throw new InvalidArgumentException(
+                   'expected subscription id to be set'
+                   );
         }
         if (!preg_match('/^[0-9A-Za-z_-]+$/', $id)) {
             throw new InvalidArgumentException(
-                $id . ' is an invalid subscription id.'
-            );
+                    $id . ' is an invalid subscription id.'
+                    );
         }
     }
 
+    /**
+     * @ignore
+     */
     private function _verifyGatewayResponse($response)
     {
         if (isset($response['subscription'])) {
             return new Result\Successful(
                 Subscription::factory($response['subscription'])
             );
-        } elseif (isset($response['transaction'])) {
+        } else if (isset($response['transaction'])) {
             // return a populated instance of Transaction, for subscription retryCharge
             return new Result\Successful(
                 Transaction::factory($response['transaction'])
             );
-        } elseif (isset($response['apiErrorResponse'])) {
+        } else if (isset($response['apiErrorResponse'])) {
             return new Result\Error($response['apiErrorResponse']);
         } else {
             throw new Exception\Unexpected(
-                "Expected subscription, transaction, or apiErrorResponse"
+            "Expected subscription, transaction, or apiErrorResponse"
             );
         }
     }
 }
+class_alias('Braintree\SubscriptionGateway', 'Braintree_SubscriptionGateway');

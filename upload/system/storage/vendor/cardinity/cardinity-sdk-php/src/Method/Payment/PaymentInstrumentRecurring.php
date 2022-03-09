@@ -9,7 +9,7 @@ class PaymentInstrumentRecurring extends ResultObject implements PaymentInstrume
     /** @type string Id of the approved payment in the past.
         Same card will be used to create a new payment. */
     private $paymentId;
-
+ 
     /**
      * Gets the value of paymentId.
      * @return mixed
@@ -18,7 +18,7 @@ class PaymentInstrumentRecurring extends ResultObject implements PaymentInstrume
     {
         return $this->paymentId;
     }
-
+ 
     /**
      * Sets the value of paymentId.
      * @param mixed $paymentId the payment id

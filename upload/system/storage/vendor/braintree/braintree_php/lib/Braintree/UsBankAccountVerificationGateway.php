@@ -1,17 +1,23 @@
 <?php
-
 namespace Braintree;
 
 use InvalidArgumentException;
 
 /**
  * Braintree UsBankAccountVerificationGateway module
+ *
+ * @package    Braintree
+ * @category   Resources
  */
 
 /**
  * Manages Braintree UsBankAccountVerifications
  *
  * <b>== More information ==</b>
+ *
+ *
+ * @package    Braintree
+ * @category   Resources
  */
 class UsBankAccountVerificationGateway
 {
@@ -19,7 +25,6 @@ class UsBankAccountVerificationGateway
     private $_config;
     private $_http;
 
-    // phpcs:ignore PEAR.Commenting.FunctionComment.Missing
     public function __construct($gateway)
     {
         $this->_gateway = $gateway;
@@ -31,11 +36,10 @@ class UsBankAccountVerificationGateway
     /**
      * find a usBankAccountVerification by token
      *
+     * @access public
      * @param string $token unique id
-     *
-     * @throws Exception\NotFound
-     *
      * @return UsBankAccountVerification
+     * @throws Exception\NotFound
      */
     public function find($token)
     {
@@ -50,13 +54,6 @@ class UsBankAccountVerificationGateway
         }
     }
 
-    /**
-     * Returns a ResourceCollection of US bank account verifications matching the search query.
-     *
-     * @param mixed $query search query
-     *
-     * @return ResourceCollection
-     */
     public function search($query)
     {
         $criteria = [];
@@ -78,17 +75,15 @@ class UsBankAccountVerificationGateway
     /**
      * complete micro transfer verification by confirming the transfer amounts
      *
-     * @param string $token   unique id
-     * @param array  $amounts amounts deposited in micro transfer
-     *
-     * @throws Exception\Unexpected
-     *
+     * @access public
+     * @param string $token unique id
+     * @param array $amounts amounts deposited in micro transfer
      * @return UsBankAccountVerification
+     * @throws Exception\Unexpected
      */
     public function confirmMicroTransferAmounts($token, $amounts)
     {
         try {
-            // phpcs:ignore Generic.Files.LineLength
             $path = $this->_config->merchantPath() . '/us_bank_account_verifications/' . $token . '/confirm_micro_transfer_amounts';
             $response = $this->_http->put($path, [
                 "us_bank_account_verification" => ["deposit_amounts" => $amounts]
@@ -109,17 +104,16 @@ class UsBankAccountVerificationGateway
      * encapsulates a Errors object inside a Result\Error
      * alternatively, throws an Unexpected exception if the response is invalid.
      *
+     * @ignore
      * @param array $response gateway response values
-     *
-     * @throws Exception\Unexpected
-     *
      * @return Result\Successful|Result\Error
+     * @throws Exception\Unexpected
      */
     private function _verifyGatewayResponse($response)
     {
         if (isset($response['apiErrorResponse'])) {
             return new Result\Error($response['apiErrorResponse']);
-        } elseif (isset($response['usBankAccountVerification'])) {
+        } else if (isset($response['usBankAccountVerification'])) {
             // return a populated instance of UsBankAccountVerification
             return new Result\Successful(
                 UsBankAccountVerification::factory($response['usBankAccountVerification'])
@@ -131,3 +125,5 @@ class UsBankAccountVerificationGateway
         }
     }
 }
+
+class_alias('Braintree\UsBankAccountVerificationGateway', 'Braintree_UsBankAccountVerificationGateway');

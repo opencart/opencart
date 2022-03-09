@@ -1,13 +1,46 @@
 <?php
-
 namespace Braintree;
 
 /**
  * Braintree CreditCard module
  * Creates and manages Braintree CreditCards
  *
- * For more detailed information on CreditCards, see {@link https://developer.paypal.com/braintree/docs/reference/response/credit-card our developer docs}<br />
- * For more detailed information on CreditCard verifications, see {@link https://developer.paypal.com/braintree/docs/reference/response/credit-card-verification our developer docs}
+ * <b>== More information ==</b>
+ *
+ * For more detailed information on CreditCards, see {@link https://developers.braintreepayments.com/reference/response/credit-card/php https://developers.braintreepayments.com/reference/response/credit-card/php}<br />
+ * For more detailed information on CreditCard verifications, see {@link https://developers.braintreepayments.com/reference/response/credit-card-verification/php https://developers.braintreepayments.com/reference/response/credit-card-verification/php}
+ *
+ * @package    Braintree
+ * @category   Resources
+ *
+ * @property-read \Braintree\Address $billingAddress
+ * @property-read string $bin
+ * @property-read string $cardType
+ * @property-read string $cardholderName
+ * @property-read string $commercial
+ * @property-read \DateTime $createdAt
+ * @property-read string $customerId
+ * @property-read string $customerLocation
+ * @property-read string $debit
+ * @property-read boolean $default
+ * @property-read string $durbinRegulated
+ * @property-read string $expirationDate
+ * @property-read string $expirationMonth
+ * @property-read string $expirationYear
+ * @property-read boolean $expired
+ * @property-read boolean $healthcare
+ * @property-read string $imageUrl
+ * @property-read string $issuingBank
+ * @property-read string $last4
+ * @property-read string $maskedNumber
+ * @property-read string $payroll
+ * @property-read string $prepaid
+ * @property-read string $productId
+ * @property-read \Braintree\Subscription[] $subscriptions
+ * @property-read string $token
+ * @property-read string $uniqueNumberIdentifier
+ * @property-read \DateTime $updatedAt
+ * @property-read \Braintree\CreditCardVerification|null $verification
  */
 class CreditCard extends Base
 {
@@ -94,8 +127,8 @@ class CreditCard extends Base
     /**
      * sets instance properties from an array of values
      *
+     * @access protected
      * @param array $creditCardAttribs array of creditcard data
-     *
      * @return void
      */
     protected function _initialize($creditCardAttribs)
@@ -110,7 +143,7 @@ class CreditCard extends Base
 
         $subscriptionArray = [];
         if (isset($creditCardAttribs['subscriptions'])) {
-            foreach ($creditCardAttribs['subscriptions'] as $subscription) {
+            foreach ($creditCardAttribs['subscriptions'] AS $subscription) {
                 $subscriptionArray[] = Subscription::factory($subscription);
             }
         }
@@ -120,7 +153,7 @@ class CreditCard extends Base
         $this->_set('expirationDate', $this->expirationMonth . '/' . $this->expirationYear);
         $this->_set('maskedNumber', $this->bin . '******' . $this->last4);
 
-        if (isset($creditCardAttribs['verifications']) && count($creditCardAttribs['verifications']) > 0) {
+        if(isset($creditCardAttribs['verifications']) && count($creditCardAttribs['verifications']) > 0) {
             $verifications = $creditCardAttribs['verifications'];
             usort($verifications, [$this, '_compareCreatedAtOnVerifications']);
 
@@ -138,7 +171,6 @@ class CreditCard extends Base
      * or is a CreditCard with a different id
      *
      * @param object $otherCreditCard customer to compare against
-     *
      * @return boolean
      */
     public function isEqual($otherCreditCard)
@@ -146,18 +178,22 @@ class CreditCard extends Base
         return !($otherCreditCard instanceof self) ? false : $this->token === $otherCreditCard->token;
     }
 
-    // phpcs:ignore PEAR.Commenting.FunctionComment.Missing
-    public function __toString()
+    /**
+     * create a printable representation of the object as:
+     * ClassName[property=value, property=value]
+     * @return string
+     */
+    public function  __toString()
     {
         return __CLASS__ . '[' .
-                Util::attributesToString($this->_attributes) . ']';
+                Util::attributesToString($this->_attributes) .']';
     }
 
     /**
-     * Creates an instance of an CreditCard from given attributes
+     *  factory method: returns an instance of CreditCard
+     *  to the requesting method, with populated properties
      *
-     * @param array $attributes response object attributes
-     *
+     * @ignore
      * @return CreditCard
      */
     public static function factory($attributes)
@@ -174,238 +210,105 @@ class CreditCard extends Base
         return $instance;
     }
 
-    /**
-     * static method redirecting to gateway class
-     *
-     * @param array $attribs containing request parameters
-     *
-     * @see CreditCardGateway::create()
-     *
-     * @throws Exception\ValidationError
-     *
-     * @return Result\Successful|Result\Error
-     */
+
+    // static methods redirecting to gateway
+
     public static function create($attribs)
     {
         return Configuration::gateway()->creditCard()->create($attribs);
     }
 
-    /**
-     * Attempts the create operation assuming all data will validate
-     * returns a CreditCard object instead of a Result
-     *
-     * @param array $attribs containing request parameters
-     *
-     * @throws Exception\ValidationError
-     *
-     * @return CreditCard
-     */
     public static function createNoValidate($attribs)
     {
         return Configuration::gateway()->creditCard()->createNoValidate($attribs);
     }
 
-    // phpcs:ignore PEAR.Commenting.FunctionComment.Missing
+    public static function createFromTransparentRedirect($queryString)
+    {
+        return Configuration::gateway()->creditCard()->createFromTransparentRedirect($queryString);
+    }
+
     public static function createCreditCardUrl()
     {
         return Configuration::gateway()->creditCard()->createCreditCardUrl();
     }
 
-    /**
-     * Returns a ResourceCollection of expired credit cards
-     *
-     * @return ResourceCollection
-     */
     public static function expired()
     {
         return Configuration::gateway()->creditCard()->expired();
     }
 
-    /**
-     * Returns a ResourceCollection of expired credit cards
-     *
-     * @param string $ids containing credit card IDs
-     *
-     * @return ResourceCollection
-     */
     public static function fetchExpired($ids)
     {
         return Configuration::gateway()->creditCard()->fetchExpired($ids);
     }
 
-    /**
-     * Returns a ResourceCollection of credit cards expiring between start/end
-     *
-     * @param string $startDate the start date of search
-     * @param string $endDate   the end date of search
-     *
-     * @return ResourceCollection
-     */
     public static function expiringBetween($startDate, $endDate)
     {
         return Configuration::gateway()->creditCard()->expiringBetween($startDate, $endDate);
     }
 
-    /**
-     * Returns a ResourceCollection of credit cards expiring between start/end given a set of IDs
-     *
-     * @param string $startDate the start date of search
-     * @param string $endDate   the end date of search
-     * @param string $ids       containing ids to search
-     *
-     * @return ResourceCollection
-     */
     public static function fetchExpiring($startDate, $endDate, $ids)
     {
         return Configuration::gateway()->creditCard()->fetchExpiring($startDate, $endDate, $ids);
     }
 
-    /**
-     * Find a creditcard by token
-     *
-     * @param string $token credit card unique id
-     *
-     * @throws Exception\NotFound
-     *
-     * @return CreditCard
-     */
     public static function find($token)
     {
         return Configuration::gateway()->creditCard()->find($token);
     }
 
-    /**
-     * Convert a payment method nonce to a credit card
-     *
-     * @param string $nonce payment method nonce
-     *
-     * @throws Exception\NotFound
-     *
-     * @return CreditCard
-     */
     public static function fromNonce($nonce)
     {
         return Configuration::gateway()->creditCard()->fromNonce($nonce);
     }
 
-   /**
-     * Create a credit on the card for the passed transaction
-     *
-     * @param string $token              belonging to the credit card
-     * @param array  $transactionAttribs containing request parameters
-     *
-     * @return Result\Successful|Result\Error
-     */
     public static function credit($token, $transactionAttribs)
     {
         return Configuration::gateway()->creditCard()->credit($token, $transactionAttribs);
     }
 
-    /**
-     * Create a credit on this card, assuming validations will pass
-     *
-     * Returns a Transaction object on success
-     *
-     * @param string $token              belonging to the credit card
-     * @param array  $transactionAttribs containing request parameters
-     *
-     * @throws Exception\ValidationError
-     *
-     * @return Transaction
-     */
     public static function creditNoValidate($token, $transactionAttribs)
     {
         return Configuration::gateway()->creditCard()->creditNoValidate($token, $transactionAttribs);
     }
 
-    /**
-     * Create a new sale for the current card
-     *
-     * @param string $token              belonging to the credit card
-     * @param array  $transactionAttribs containing request parameters
-     *
-     * @return Result\Successful|Result\Error
-     */
     public static function sale($token, $transactionAttribs)
     {
         return Configuration::gateway()->creditCard()->sale($token, $transactionAttribs);
     }
 
-    /**
-     * Create a new sale using this card, assuming validations will pass
-     *
-     * Returns a Transaction object on success
-     *
-     * @param string $token              belonging to the credit card
-     * @param array  $transactionAttribs containing request parameters
-     *
-     * @throws Exception\ValidationsFailed
-     *
-     * @return Transaction
-     */
     public static function saleNoValidate($token, $transactionAttribs)
     {
         return Configuration::gateway()->creditCard()->saleNoValidate($token, $transactionAttribs);
     }
 
-    /**
-     * Updates the creditcard record
-     *
-     * If calling this method in context, $token
-     * is the 2nd attribute. $token is not sent in object context.
-     *
-     * @param string $token      (optional)
-     * @param array  $attributes containing request parameters
-     *
-     * @return Result\Successful|Result\Error
-     */
     public static function update($token, $attributes)
     {
         return Configuration::gateway()->creditCard()->update($token, $attributes);
     }
 
-    /**
-     * Update a creditcard record, assuming validations will pass
-     *
-     * If calling this method in context, $token
-     * is the 2nd attribute. $token is not sent in object context.
-     * returns a CreditCard object on success
-     *
-     * @param string $token      (optional)
-     * @param array  $attributes containing request parameters
-     *
-     * @return CreditCard
-     *
-     * @throws Exception\ValidationsFailed
-     */
     public static function updateNoValidate($token, $attributes)
     {
         return Configuration::gateway()->creditCard()->updateNoValidate($token, $attributes);
     }
 
-    // phpcs:ignore PEAR.Commenting.FunctionComment.Missing
     public static function updateCreditCardUrl()
     {
         return Configuration::gateway()->creditCard()->updateCreditCardUrl();
     }
 
-    /**
-     * Delete a credit card record
-     *
-     * @param string $token credit card identifier
-     *
-     * @return Result
-     */
+    public static function updateFromTransparentRedirect($queryString)
+    {
+        return Configuration::gateway()->creditCard()->updateFromTransparentRedirect($queryString);
+    }
+
     public static function delete($token)
     {
         return Configuration::gateway()->creditCard()->delete($token);
     }
 
-    /**
-     * All credit card types in an array
-     *
-     * @return array
-     */
+    /** @return array */
     public static function allCardTypes()
     {
         return [
@@ -426,3 +329,4 @@ class CreditCard extends Base
         ];
     }
 }
+class_alias('Braintree\CreditCard', 'Braintree_CreditCard');

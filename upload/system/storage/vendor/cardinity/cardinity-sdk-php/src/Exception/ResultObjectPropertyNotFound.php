@@ -2,7 +2,8 @@
 
 namespace Cardinity\Exception;
 
-class ResultObjectPropertyNotFound extends Runtime
-{
+use Symfony\Component\Validator\ConstraintViolationListInterface;
 
+class ResultObjectInterfacePropertyNotFound extends Runtime
+{
 }

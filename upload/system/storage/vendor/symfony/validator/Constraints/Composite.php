@@ -51,9 +51,9 @@ abstract class Composite extends Constraint
      * cached. When constraints are loaded from the cache, no more group
      * checks need to be done.
      */
-    public function __construct($options = null, array $groups = null, $payload = null)
+    public function __construct($options = null)
     {
-        parent::__construct($options, $groups, $payload);
+        parent::__construct($options);
 
         $this->initializeNestedConstraints();
 
@@ -62,7 +62,7 @@ abstract class Composite extends Constraint
         $nestedConstraints = $this->$compositeOption;
 
         if (!\is_array($nestedConstraints)) {
-            $nestedConstraints = [$nestedConstraints];
+            $nestedConstraints = array($nestedConstraints);
         }
 
         foreach ($nestedConstraints as $constraint) {
@@ -71,16 +71,16 @@ abstract class Composite extends Constraint
                     $constraint = \get_class($constraint);
                 }
 
-                throw new ConstraintDefinitionException(sprintf('The value "%s" is not an instance of Constraint in constraint "%s".', $constraint, static::class));
+                throw new ConstraintDefinitionException(sprintf('The value %s is not an instance of Constraint in constraint %s', $constraint, \get_class($this)));
             }
 
             if ($constraint instanceof Valid) {
-                throw new ConstraintDefinitionException(sprintf('The constraint Valid cannot be nested inside constraint "%s". You can only declare the Valid constraint directly on a field or method.', static::class));
+                throw new ConstraintDefinitionException(sprintf('The constraint Valid cannot be nested inside constraint %s. You can only declare the Valid constraint directly on a field or method.', \get_class($this)));
             }
         }
 
-        if (!isset(((array) $this)['groups'])) {
-            $mergedGroups = [];
+        if (!property_exists($this, 'groups')) {
+            $mergedGroups = array();
 
             foreach ($nestedConstraints as $constraint) {
                 foreach ($constraint->groups as $group) {
@@ -88,19 +88,18 @@ abstract class Composite extends Constraint
                 }
             }
 
-            // prevent empty composite constraint to have empty groups
-            $this->groups = array_keys($mergedGroups) ?: [self::DEFAULT_GROUP];
+            $this->groups = array_keys($mergedGroups);
             $this->$compositeOption = $nestedConstraints;
 
             return;
         }
 
         foreach ($nestedConstraints as $constraint) {
-            if (isset(((array) $constraint)['groups'])) {
+            if (property_exists($constraint, 'groups')) {
                 $excessGroups = array_diff($constraint->groups, $this->groups);
 
                 if (\count($excessGroups) > 0) {
-                    throw new ConstraintDefinitionException(sprintf('The group(s) "%s" passed to the constraint "%s" should also be passed to its containing constraint "%s".', implode('", "', $excessGroups), get_debug_type($constraint), static::class));
+                    throw new ConstraintDefinitionException(sprintf('The group(s) "%s" passed to the constraint %s should also be passed to its containing constraint %s', implode('", "', $excessGroups), \get_class($constraint), \get_class($this)));
                 }
             } else {
                 $constraint->groups = $this->groups;
@@ -114,8 +113,10 @@ abstract class Composite extends Constraint
      * {@inheritdoc}
      *
      * Implicit group names are forwarded to nested constraints.
+     *
+     * @param string $group
      */
-    public function addImplicitGroupName(string $group)
+    public function addImplicitGroupName($group)
     {
         parent::addImplicitGroupName($group);
 
@@ -130,20 +131,9 @@ abstract class Composite extends Constraint
     /**
      * Returns the name of the property that contains the nested constraints.
      *
-     * @return string
+     * @return string The property name
      */
     abstract protected function getCompositeOption();
-
-    /**
-     * @internal Used by metadata
-     *
-     * @return Constraint[]
-     */
-    public function getNestedConstraints()
-    {
-        /* @var Constraint[] $nestedConstraints */
-        return $this->{$this->getCompositeOption()};
-    }
 
     /**
      * Initializes the nested constraints.

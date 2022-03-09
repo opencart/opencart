@@ -1,23 +1,30 @@
 <?php
-
 namespace Braintree;
 
 /**
  * Braintree UsBankAccountVerification module
+ *
+ * @package    Braintree
+ * @category   Resources
  */
 
 /**
  * Manages Braintree UsBankAccountVerifications
  *
  * <b>== More information ==</b>
+ *
+ *
+ * @package    Braintree
+ * @category   Resources
+ *
  */
 class UsBankAccountVerification extends Result\UsBankAccountVerification
 {
     /**
-     * Creates an instance from given attributes
+     *  factory method: returns an instance of UsBankAccountVerification
+     *  to the requesting method, with populated properties
      *
-     * @param array $attributes response object attributes
-     *
+     * @ignore
      * @return UsBankAccountVerification
      */
     public static function factory($attributes)
@@ -32,8 +39,8 @@ class UsBankAccountVerification extends Result\UsBankAccountVerification
     /**
      * sets instance properties from an array of values
      *
+     * @access protected
      * @param array $usBankAccountVerificationAttribs array of usBankAccountVerification data
-     *
      * @return void
      */
     protected function _initialize($usBankAccountVerificationAttribs)
@@ -42,20 +49,24 @@ class UsBankAccountVerification extends Result\UsBankAccountVerification
         $this->_attributes = $usBankAccountVerificationAttribs;
     }
 
-    // phpcs:ignore PEAR.Commenting.FunctionComment.Missing
-    public function __toString()
+    /**
+     * create a printable representation of the object as:
+     * ClassName[property=value, property=value]
+     * @return string
+     */
+    public function  __toString()
     {
         return __CLASS__ . '[' . Util::attributesToString($this->_attributes) . ']';
     }
 
 
+    // static methods redirecting to gateway
+
     /**
-     * Static methods redirecting to gateway class
+     * finds a US bank account verification
      *
+     * @access public
      * @param string $token unique id
-     *
-     * @see UsBankAccountVerificationGateway::find()
-     *
      * @return UsBankAccountVerification
      */
     public static function find($token)
@@ -64,12 +75,10 @@ class UsBankAccountVerification extends Result\UsBankAccountVerification
     }
 
     /**
-     * Static methods redirecting to gateway class
+     * Returns a ResourceCollection of US bank account verifications matching the search query.
      *
+     * @access public
      * @param mixed $query search query
-     *
-     * @see UsBankAccountVerificationGateway::search()
-     *
      * @return ResourceCollection
      */
     public static function search($query)
@@ -78,13 +87,11 @@ class UsBankAccountVerification extends Result\UsBankAccountVerification
     }
 
     /**
-     * Static methods redirecting to gateway class
+     * Returns a ResourceCollection of US bank account verifications matching the search query.
      *
-     * @param string $token   unique id
-     * @param array  $amounts micro transfer amounts
-     *
-     * @see UsBankAccountVerificationGateway::confirmMicroTransferAmounts()
-     *
+     * @access public
+     * @param string $token unique id
+     * @param array $amounts micro transfer amounts
      * @return ResourceCollection
      */
     public static function confirmMicroTransferAmounts($token, $amounts)
@@ -92,3 +99,4 @@ class UsBankAccountVerification extends Result\UsBankAccountVerification
         return Configuration::gateway()->usBankAccountVerification()->confirmMicroTransferAmounts($token, $amounts);
     }
 }
+class_alias('Braintree\UsBankAccountVerification', 'Braintree_UsBankAccountVerification');

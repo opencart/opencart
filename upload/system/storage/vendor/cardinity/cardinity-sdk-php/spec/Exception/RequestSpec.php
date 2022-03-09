@@ -5,6 +5,7 @@ namespace spec\Cardinity\Exception;
 use Cardinity\Method\Error;
 use Cardinity\Method\Payment\Payment;
 use PhpSpec\ObjectBehavior;
+use Prophecy\Argument;
 
 class RequestSpec extends ObjectBehavior
 {
@@ -57,17 +58,21 @@ class RequestSpec extends ObjectBehavior
         $this->getMessage()->shouldEndWith($string);
     }
 
-    function it_returns_errors_from_error_result_object()
+    function it_returns_erros_from_error_result_object()
     {
         $this->getErrors()->shouldReturn($this->result['errors']);
     }
 
     function it_returns_errors_as_string()
     {
-        $this->getErrorsAsString()->shouldReturn("currency: invalid or unsupported currency ('EGR' given);\npayment_instrument.exp_month: must be between 1 and 12 ('13' given);");
+        $this
+            ->getErrorsAsString()
+            ->shouldReturn("currency: invalid or unsupported currency ('EGR' given);
+payment_instrument.exp_month: must be between 1 and 12 ('13' given);")
+        ;
     }
 
-    function it_returns_errors_from_payment_result_object(\RuntimeException $exception)
+        function it_returns_erros_from_payment_result_object(\RuntimeException $exception)
     {
         $msg = 'Payment error';
 

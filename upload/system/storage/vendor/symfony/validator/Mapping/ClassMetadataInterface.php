@@ -11,8 +11,8 @@
 
 namespace Symfony\Component\Validator\Mapping;
 
-use Symfony\Component\Validator\Constraints\GroupSequence;
-use Symfony\Component\Validator\GroupSequenceProviderInterface;
+use Symfony\Component\Validator\ClassBasedInterface;
+use Symfony\Component\Validator\PropertyMetadataContainerInterface as LegacyPropertyMetadataContainerInterface;
 
 /**
  * Stores all metadata needed for validating objects of specific class.
@@ -27,16 +27,16 @@ use Symfony\Component\Validator\GroupSequenceProviderInterface;
  * @author Bernhard Schussek <bschussek@gmail.com>
  *
  * @see MetadataInterface
- * @see GroupSequence
- * @see GroupSequenceProviderInterface
+ * @see \Symfony\Component\Validator\Constraints\GroupSequence
+ * @see \Symfony\Component\Validator\GroupSequenceProviderInterface
  * @see TraversalStrategy
  */
-interface ClassMetadataInterface extends MetadataInterface
+interface ClassMetadataInterface extends MetadataInterface, LegacyPropertyMetadataContainerInterface, ClassBasedInterface
 {
     /**
      * Returns the names of all constrained properties.
      *
-     * @return string[]
+     * @return string[] A list of property names
      */
     public function getConstrainedProperties();
 
@@ -45,7 +45,9 @@ interface ClassMetadataInterface extends MetadataInterface
      *
      * If it is, you can access the group sequence with {@link getGroupSequence()}.
      *
-     * @return bool
+     * @return bool Returns true if the "Default" group is overridden
+     *
+     * @see \Symfony\Component\Validator\Constraints\GroupSequence
      */
     public function hasGroupSequence();
 
@@ -53,7 +55,9 @@ interface ClassMetadataInterface extends MetadataInterface
      * Returns the group sequence that overrides the "Default" group for this
      * class.
      *
-     * @return GroupSequence|null
+     * @return \Symfony\Component\Validator\Constraints\GroupSequence|null The group sequence or null
+     *
+     * @see \Symfony\Component\Validator\Constraints\GroupSequence
      */
     public function getGroupSequence();
 
@@ -62,39 +66,14 @@ interface ClassMetadataInterface extends MetadataInterface
      * sequence obtained by the validated objects.
      *
      * If this method returns true, the class must implement
-     * {@link GroupSequenceProviderInterface}.
+     * {@link \Symfony\Component\Validator\GroupSequenceProviderInterface}.
      * This interface will be used to obtain the group sequence when an object
      * of this class is validated.
      *
-     * @return bool
+     * @return bool Returns true if the "Default" group is overridden by
+     *              a dynamic group sequence
+     *
+     * @see \Symfony\Component\Validator\GroupSequenceProviderInterface
      */
     public function isGroupSequenceProvider();
-
-    /**
-     * Check if there's any metadata attached to the given named property.
-     *
-     * @param string $property The property name
-     *
-     * @return bool
-     */
-    public function hasPropertyMetadata(string $property);
-
-    /**
-     * Returns all metadata instances for the given named property.
-     *
-     * If your implementation does not support properties, throw an exception
-     * in this method (for example a <tt>BadMethodCallException</tt>).
-     *
-     * @param string $property The property name
-     *
-     * @return PropertyMetadataInterface[]
-     */
-    public function getPropertyMetadata(string $property);
-
-    /**
-     * Returns the name of the backing PHP class.
-     *
-     * @return string
-     */
-    public function getClassName();
 }

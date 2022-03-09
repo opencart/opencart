@@ -1,4 +1,4 @@
-<?php // phpcs:disable Generic.Commenting PEAR.Commenting
+<?php
 
 spl_autoload_register(function ($className) {
     if (strpos($className, 'Braintree') !== 0) {
@@ -19,4 +19,3 @@ spl_autoload_register(function ($className) {
         require_once $fileName;
     }
 });
-// phpcs:enable Generic.Commenting PEAR.Commenting

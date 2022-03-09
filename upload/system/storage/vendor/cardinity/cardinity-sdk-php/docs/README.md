@@ -28,9 +28,9 @@ $method = new Payment\Create([
     'payment_method' => Payment\Create::CARD,
     'payment_instrument' => [
         'pan' => '4111111111111111',
-        'exp_year' => 2021,
+        'exp_year' => 2016,
         'exp_month' => 12,
-        'cvc' => '456',
+        'cvc' => 456,
         'holder' => 'Mike Dough'
     ],
 ]);
@@ -57,9 +57,9 @@ $method = new Payment\Create([
     'payment_method' => Payment\Create::RECURRING,
     'payment_instrument' => [
         'pan' => '4111111111111111',
-        'exp_year' => 2021,
+        'exp_year' => 2016,
         'exp_month' => 12,
-        'cvc' => '456',
+        'cvc' => 456,
         'holder' => 'Mike Dough'
     ],
 ]);
@@ -242,12 +242,12 @@ $settlement = $result[0];
 ## Voids [API](https://developers.cardinity.com/api/v1/#voids)
 ### Create new void
 ```php
-use Cardinity\Method\VoidPayment;
-$method = new VoidPayment\Create(
+use Cardinity\Method\Void;
+$method = new Void\Create(
     $payment->getId(),
     'my description'
 );
-/** @type Cardinity\Method\VoidPayment\VoidPayment */
+/** @type Cardinity\Method\Void\Void */
 $result = $client->call($method);
 ```
 
@@ -257,18 +257,18 @@ exception will be thrown.
 
 ```php
 use Cardinity\Exception;
-use Cardinity\Method\VoidPayment;
+use Cardinity\Method\Void;
 
-$method = new VoidPayment\Create(
+$method = new Void\Create(
     $payment->getId(),
     'fail'
 );
 
 try {
-    /** @type Cardinity\Method\VoidPayment\VoidPayment */
+    /** @type Cardinity\Method\Void\Void */
     $void = $client->call($method);
 } catch (Exception\Declined $exception) {
-    /** @type Cardinity\Method\VoidPayment\VoidPayment */
+    /** @type Cardinity\Method\Void\Void */
     $void = $exception->getResult();
     $status = $void->getStatus(); // value will be 'declined'
     $errors = $exception->getErrors(); // list of errors occured
@@ -277,23 +277,23 @@ try {
 
 ### Get existing void
 ```php
-use Cardinity\Method\VoidPayment;
-$method = new VoidPayment\Get(
+use Cardinity\Method\Void;
+$method = new Void\Get(
     $payment->getId(),
     $void->getId()
 );
-/** @type Cardinity\Method\VoidPayment\VoidPayment */
+/** @type Cardinity\Method\Void\Void */
 $void = $client->call($method);
 ```
 
 ### Get all voids
 ```php
-use Cardinity\Method\VoidPayment;
-$method = new VoidPayment\GetAll(
+use Cardinity\Method\Void;
+$method = new Void\GetAll(
     $payment->getId()
 );
 $result = $client->call($method);
-/** @type Cardinity\Method\VoidPayment\VoidPayment */
+/** @type Cardinity\Method\Void\Void */
 $void = $result[0];
 ```
 
@@ -303,8 +303,8 @@ $void = $result[0];
 #### Base class for API error response exceptions
 Class: `Cardinity\Exception\Request`  
 Methods:  
-- `getErrors()` returns list of errors occurred
-- `getErrorsAsString()` returns list of errors occurred in string form
+- `getErrors()` returns list of errors occured
+- `getErrorsAsString()` returns list of errors occured in string form
 - `getResult()` returns object, the instance of `ResultObjectInterface`.
 
 #### All classes
@@ -346,6 +346,10 @@ Class: `Cardinity\Exception\InvalidAttributeValue`
 Methods:  
 - `getViolations()` returns list of validation violations
 
+#### Response mapping to result object failure
+Class: `Cardinity\Exception\ResultObjectInterfacePropertyNotFound`  
+Got unexpected response? Response object changed?
+
 #### Unexpected error
 Class: `Cardinity\Exception\UnexpectedError`
 
@@ -358,12 +362,13 @@ Catching this exception ensures that you handle all cardinity failure use cases.
 
 ### Debug, log request/response
 `Client::create()` accepts second argument, which defines the logger. 
-Available values: `Client::LOG_NONE` or PSR-3 `LoggerInterface`.
+Available values: `Client::LOG_NONE`, `Client::LOG_DEBUG` or PSR-3 `LoggerInterface`.
 - `Client::LOG_NONE` - log disabled.
+- `Client::LOG_DEBUG` - logs request/response with direct output to the screen.
 - `LoggerInterface` - custom logger implementation, for eg. `Monolog`.
 
 ```php
-$client = Client::create($config, Client::LOG_NONE);
+$client = Client::create($config, Client::LOG_DEBUG);
 ```
 
 ### Use Monolog for logging

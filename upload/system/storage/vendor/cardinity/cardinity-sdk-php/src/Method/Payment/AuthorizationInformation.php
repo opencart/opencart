@@ -7,15 +7,15 @@ use Cardinity\Method\ResultObject;
 class AuthorizationInformation extends ResultObject
 {
     /** @type string URL where customer should be redirected to complete
-     * a payment authorization.
-     * Value assigned by Cardinity. */
+        a payment authorization.
+        Value assigned by Cardinity. */
     private $url;
 
     /** @type string Data which must be passed along with the customer being
-     * redirected.
-     * Value assigned by Cardinity.*/
+        redirected.
+        Value assigned by Cardinity.*/
     private $data;
-
+ 
     /**
      * Gets the value of url.
      * @return mixed
@@ -24,7 +24,7 @@ class AuthorizationInformation extends ResultObject
     {
         return $this->url;
     }
-
+ 
     /**
      * Sets the value of url.
      * @param mixed $url the url
@@ -34,7 +34,7 @@ class AuthorizationInformation extends ResultObject
     {
         $this->url = $url;
     }
-
+ 
     /**
      * Gets the value of data.
      * @return mixed
@@ -43,7 +43,7 @@ class AuthorizationInformation extends ResultObject
     {
         return $this->data;
     }
-
+ 
     /**
      * Sets the value of data.
      * @param mixed $data the data

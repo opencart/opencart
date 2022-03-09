@@ -13,8 +13,8 @@ namespace Symfony\Component\Validator\Constraints;
 
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
-use Symfony\Component\Validator\Exception\UnexpectedValueException;
 
 /**
  * @author Bernhard Schussek <bschussek@gmail.com>
@@ -27,7 +27,7 @@ class CollectionValidator extends ConstraintValidator
     public function validate($value, Constraint $constraint)
     {
         if (!$constraint instanceof Collection) {
-            throw new UnexpectedTypeException($constraint, Collection::class);
+            throw new UnexpectedTypeException($constraint, __NAMESPACE__.'\Collection');
         }
 
         if (null === $value) {
@@ -35,7 +35,7 @@ class CollectionValidator extends ConstraintValidator
         }
 
         if (!\is_array($value) && !($value instanceof \Traversable && $value instanceof \ArrayAccess)) {
-            throw new UnexpectedValueException($value, 'array|(Traversable&ArrayAccess)');
+            throw new UnexpectedTypeException($value, 'array or Traversable and ArrayAccess');
         }
 
         // We need to keep the initialized context when CollectionValidator
@@ -51,35 +51,58 @@ class CollectionValidator extends ConstraintValidator
 
         foreach ($constraint->fields as $field => $fieldConstraint) {
             // bug fix issue #2779
-            $existsInArray = \is_array($value) && \array_key_exists($field, $value);
+            $existsInArray = \is_array($value) && array_key_exists($field, $value);
             $existsInArrayAccess = $value instanceof \ArrayAccess && $value->offsetExists($field);
 
             if ($existsInArray || $existsInArrayAccess) {
                 if (\count($fieldConstraint->constraints) > 0) {
-                    $context->getValidator()
-                        ->inContext($context)
-                        ->atPath('['.$field.']')
-                        ->validate($value[$field], $fieldConstraint->constraints);
+                    if ($context instanceof ExecutionContextInterface) {
+                        $context->getValidator()
+                            ->inContext($context)
+                            ->atPath('['.$field.']')
+                            ->validate($value[$field], $fieldConstraint->constraints);
+                    } else {
+                        // 2.4 API
+                        $context->validateValue($value[$field], $fieldConstraint->constraints, '['.$field.']');
+                    }
                 }
             } elseif (!$fieldConstraint instanceof Optional && !$constraint->allowMissingFields) {
-                $context->buildViolation($constraint->missingFieldsMessage)
-                    ->atPath('['.$field.']')
-                    ->setParameter('{{ field }}', $this->formatValue($field))
-                    ->setInvalidValue(null)
-                    ->setCode(Collection::MISSING_FIELD_ERROR)
-                    ->addViolation();
+                if ($context instanceof ExecutionContextInterface) {
+                    $context->buildViolation($constraint->missingFieldsMessage)
+                        ->atPath('['.$field.']')
+                        ->setParameter('{{ field }}', $this->formatValue($field))
+                        ->setInvalidValue(null)
+                        ->setCode(Collection::MISSING_FIELD_ERROR)
+                        ->addViolation();
+                } else {
+                    $this->buildViolationInContext($context, $constraint->missingFieldsMessage)
+                        ->atPath('['.$field.']')
+                        ->setParameter('{{ field }}', $this->formatValue($field))
+                        ->setInvalidValue(null)
+                        ->setCode(Collection::MISSING_FIELD_ERROR)
+                        ->addViolation();
+                }
             }
         }
 
         if (!$constraint->allowExtraFields) {
             foreach ($value as $field => $fieldValue) {
                 if (!isset($constraint->fields[$field])) {
-                    $context->buildViolation($constraint->extraFieldsMessage)
-                        ->atPath('['.$field.']')
-                        ->setParameter('{{ field }}', $this->formatValue($field))
-                        ->setInvalidValue($fieldValue)
-                        ->setCode(Collection::NO_SUCH_FIELD_ERROR)
-                        ->addViolation();
+                    if ($context instanceof ExecutionContextInterface) {
+                        $context->buildViolation($constraint->extraFieldsMessage)
+                            ->atPath('['.$field.']')
+                            ->setParameter('{{ field }}', $this->formatValue($field))
+                            ->setInvalidValue($fieldValue)
+                            ->setCode(Collection::NO_SUCH_FIELD_ERROR)
+                            ->addViolation();
+                    } else {
+                        $this->buildViolationInContext($context, $constraint->extraFieldsMessage)
+                            ->atPath('['.$field.']')
+                            ->setParameter('{{ field }}', $this->formatValue($field))
+                            ->setInvalidValue($fieldValue)
+                            ->setCode(Collection::NO_SUCH_FIELD_ERROR)
+                            ->addViolation();
+                    }
                 }
             }
         }

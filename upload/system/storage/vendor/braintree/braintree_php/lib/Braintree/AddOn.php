@@ -1,21 +1,25 @@
 <?php
-
 namespace Braintree;
 
 /**
- * Braintree AddOn class
- *
- * Object containing information on AddOns of a subscription
- *
- * See our {@link https://developer.paypal.com/braintree/docs/reference/response/add-on developer docs} for information on attributes
+ * @property-read string $amount
+ * @property-read \DateTime $createdAt
+ * @property-read int|null $currentBillingCycle
+ * @property-read string $description
+ * @property-read string $id
+ * @property-read string|null $kind
+ * @property-read string $merchantId
+ * @property-read string $name
+ * @property-read boolean $neverExpires
+ * @property-read int|null $numberOfBillingCycles
+ * @property-read int|null $quantity
+ * @property-read \DateTime $updatedAt
  */
 class AddOn extends Modification
 {
     /**
-     * Creates an instance of an AddOn from given attributes
      *
-     * @param array $attributes response object attributes
-     *
+     * @param array $attributes
      * @return AddOn
      */
     public static function factory($attributes)
@@ -27,9 +31,7 @@ class AddOn extends Modification
 
 
     /**
-     * static methods redirecting to gateway class
-     *
-     * @see AddOnGateway::all()
+     * static methods redirecting to gateway
      *
      * @return AddOn[]
      */
@@ -38,3 +40,4 @@ class AddOn extends Modification
         return Configuration::gateway()->addOn()->all();
     }
 }
+class_alias('Braintree\AddOn', 'Braintree_AddOn');

@@ -32,29 +32,25 @@ class ConstraintViolation implements ConstraintViolationInterface
     /**
      * Creates a new constraint violation.
      *
-     * @param string|\Stringable $message         The violation message as a string or a stringable object
-     * @param string|null        $messageTemplate The raw violation message
-     * @param array              $parameters      The parameters to substitute in the
-     *                                            raw violation message
-     * @param mixed              $root            The value originally passed to the
-     *                                            validator
-     * @param string|null        $propertyPath    The property path from the root
-     *                                            value to the invalid value
-     * @param mixed              $invalidValue    The invalid value that caused this
-     *                                            violation
-     * @param int|null           $plural          The number for determining the plural
-     *                                            form when translating the message
-     * @param string|null        $code            The error code of the violation
-     * @param Constraint|null    $constraint      The constraint whose validation
-     *                                            caused the violation
-     * @param mixed              $cause           The cause of the violation
+     * @param string          $message         The violation message
+     * @param string          $messageTemplate The raw violation message
+     * @param array           $parameters      The parameters to substitute in the
+     *                                         raw violation message
+     * @param mixed           $root            The value originally passed to the
+     *                                         validator
+     * @param string          $propertyPath    The property path from the root
+     *                                         value to the invalid value
+     * @param mixed           $invalidValue    The invalid value that caused this
+     *                                         violation
+     * @param int|null        $plural          The number for determining the plural
+     *                                         form when translating the message
+     * @param mixed           $code            The error code of the violation
+     * @param Constraint|null $constraint      The constraint whose validation
+     *                                         caused the violation
+     * @param mixed           $cause           The cause of the violation
      */
-    public function __construct($message, ?string $messageTemplate, array $parameters, $root, ?string $propertyPath, $invalidValue, int $plural = null, string $code = null, Constraint $constraint = null, $cause = null)
+    public function __construct($message, $messageTemplate, array $parameters, $root, $propertyPath, $invalidValue, $plural = null, $code = null, Constraint $constraint = null, $cause = null)
     {
-        if (!\is_string($message) && !(\is_object($message) && method_exists($message, '__toString'))) {
-            throw new \TypeError('Constraint violation message should be a string or an object which implements the __toString() method.');
-        }
-
         $this->message = $message;
         $this->messageTemplate = $messageTemplate;
         $this->parameters = $parameters;
@@ -70,7 +66,7 @@ class ConstraintViolation implements ConstraintViolationInterface
     /**
      * Converts the violation into a string for debugging purposes.
      *
-     * @return string
+     * @return string The violation as string
      */
     public function __toString()
     {
@@ -83,12 +79,13 @@ class ConstraintViolation implements ConstraintViolationInterface
         }
 
         $propertyPath = (string) $this->propertyPath;
+        $code = $this->code;
 
         if ('' !== $propertyPath && '[' !== $propertyPath[0] && '' !== $class) {
             $class .= '.';
         }
 
-        if (null !== ($code = $this->code) && '' !== $code) {
+        if (!empty($code)) {
             $code = ' (code '.$code.')';
         }
 
@@ -100,11 +97,24 @@ class ConstraintViolation implements ConstraintViolationInterface
      */
     public function getMessageTemplate()
     {
-        return (string) $this->messageTemplate;
+        return $this->messageTemplate;
     }
 
     /**
      * {@inheritdoc}
+     *
+     * @deprecated since version 2.7, to be removed in 3.0.
+     *             Use getParameters() instead
+     */
+    public function getMessageParameters()
+    {
+        @trigger_error('The '.__METHOD__.' method is deprecated since Symfony 2.7, to be removed in 3.0. Use the ConstraintViolation::getParameters() method instead.', E_USER_DEPRECATED);
+
+        return $this->parameters;
+    }
+
+    /**
+     * Alias of {@link getMessageParameters()}.
      */
     public function getParameters()
     {
@@ -113,6 +123,19 @@ class ConstraintViolation implements ConstraintViolationInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @deprecated since version 2.7, to be removed in 3.0.
+     *             Use getPlural() instead
+     */
+    public function getMessagePluralization()
+    {
+        @trigger_error('The '.__METHOD__.' method is deprecated since Symfony 2.7, to be removed in 3.0. Use the ConstraintViolation::getPlural() method instead.', E_USER_DEPRECATED);
+
+        return $this->plural;
+    }
+
+    /**
+     * Alias of {@link getMessagePluralization()}.
      */
     public function getPlural()
     {
@@ -140,7 +163,7 @@ class ConstraintViolation implements ConstraintViolationInterface
      */
     public function getPropertyPath()
     {
-        return (string) $this->propertyPath;
+        return $this->propertyPath;
     }
 
     /**
@@ -154,7 +177,7 @@ class ConstraintViolation implements ConstraintViolationInterface
     /**
      * Returns the constraint whose validation caused the violation.
      *
-     * @return Constraint|null
+     * @return Constraint|null The constraint or null if it is not known
      */
     public function getConstraint()
     {

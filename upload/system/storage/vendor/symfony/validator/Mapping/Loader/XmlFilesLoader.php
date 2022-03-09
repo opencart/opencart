@@ -24,7 +24,7 @@ class XmlFilesLoader extends FilesLoader
     /**
      * {@inheritdoc}
      */
-    public function getFileLoaderInstance(string $file)
+    public function getFileLoaderInstance($file)
     {
         return new XmlFileLoader($file);
     }

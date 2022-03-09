@@ -1,5 +1,4 @@
 <?php
-
 namespace Braintree\Transaction;
 
 use Braintree\Instance;
@@ -9,13 +8,25 @@ use Braintree\AchMandate;
  * US Bank Account details from a transaction
  * creates an instance of UsbankAccountDetails
  *
- * See our {@link https://developer.paypal.com/braintree/docs/guides/ach/server-side developer docs} for more information
+ * @package    Braintree
+ * @subpackage Transaction
+ *
+ * @property-read string $token
+ * @property-read string $imageUrl
+ * @property-read string $routingNumber
+ * @property-read string $accountType
+ * @property-read string $accountHolderName
+ * @property-read string $last4
+ * @property-read string $bankName
+ * @property-read string $achMandate
  */
 class UsBankAccountDetails extends Instance
 {
     protected $_attributes = [];
 
-    // phpcs:ignore PEAR.Commenting.FunctionComment.Missing
+    /**
+     * @ignore
+     */
     public function __construct($attributes)
     {
         parent::__construct($attributes);
@@ -26,3 +37,4 @@ class UsBankAccountDetails extends Instance
         $this->achMandate = $achMandate;
     }
 }
+class_alias('Braintree\Transaction\UsBankAccountDetails', 'Braintree_Transaction_UsBankAccountDetails');

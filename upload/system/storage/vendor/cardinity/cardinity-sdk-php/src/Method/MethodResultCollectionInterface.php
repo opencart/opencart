@@ -7,5 +7,5 @@ namespace Cardinity\Method;
  */
 interface MethodResultCollectionInterface extends MethodInterface
 {
-
+    
 }

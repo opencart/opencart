@@ -1,10 +1,12 @@
 <?php
-
 namespace Braintree;
 
 /**
  * Braintree OAuthGateway module
+ * PHP Version 5
  * Creates and manages Braintree Addresses
+ *
+ * @package   Braintree
  */
 class OAuthGateway
 {
@@ -12,7 +14,6 @@ class OAuthGateway
     private $_config;
     private $_http;
 
-    // phpcs:ignore PEAR.Commenting.FunctionComment.Missing
     public function __construct($gateway)
     {
         $this->_gateway = $gateway;
@@ -23,36 +24,18 @@ class OAuthGateway
         $this->_config->assertHasClientCredentials();
     }
 
-    /* Create an oAuth token from an authorization code
-     *
-     * @param mixed $params of request details
-     *
-     * @return Result\Successful|Result\Error
-     */
     public function createTokenFromCode($params)
     {
         $params['grantType'] = "authorization_code";
         return $this->_createToken($params);
     }
 
-    /* Create an oAuth token from a refresh token
-     *
-     * @param mixed $params of request details
-     *
-     * @return Result\Successful|Result\Error
-     */
     public function createTokenFromRefreshToken($params)
     {
         $params['grantType'] = "refresh_token";
         return $this->_createToken($params);
     }
 
-    /* Revoke an oAuth Access token
-     *
-     * @param mixed $params of request details
-     *
-     * @return Result\Successful|Result\Error
-     */
     public function revokeAccessToken($accessToken)
     {
         $params = ['token' => $accessToken];
@@ -67,7 +50,6 @@ class OAuthGateway
         return $this->_verifyGatewayResponse($response);
     }
 
-    // phpcs:ignore PEAR.Commenting.FunctionComment.Missing
     private function _verifyGatewayResponse($response)
     {
         if (isset($response['credentials'])) {
@@ -75,12 +57,12 @@ class OAuthGateway
                 OAuthCredentials::factory($response['credentials'])
             );
             return $this->_mapSuccess($result);
-        } elseif (isset($response['result'])) {
+        } else if (isset($response['result'])) {
             $result =  new Result\Successful(
                 OAuthResult::factory($response['result'])
             );
             return $this->_mapAccessTokenRevokeSuccess($result);
-        } elseif (isset($response['apiErrorResponse'])) {
+        } else if (isset($response['apiErrorResponse'])) {
             $result = new Result\Error($response['apiErrorResponse']);
             return $this->_mapError($result);
         } else {
@@ -90,30 +72,27 @@ class OAuthGateway
         }
     }
 
-    // phpcs:ignore PEAR.Commenting.FunctionComment.Missing
     public function _mapError($result)
     {
         $error = $result->errors->deepAll()[0];
 
         if ($error->code == Error\Codes::OAUTH_INVALID_GRANT) {
             $result->error = 'invalid_grant';
-        } elseif ($error->code == Error\Codes::OAUTH_INVALID_CREDENTIALS) {
+        } else if ($error->code == Error\Codes::OAUTH_INVALID_CREDENTIALS) {
             $result->error = 'invalid_credentials';
-        } elseif ($error->code == Error\Codes::OAUTH_INVALID_SCOPE) {
+        } else if ($error->code == Error\Codes::OAUTH_INVALID_SCOPE) {
             $result->error = 'invalid_scope';
         }
         $result->errorDescription = explode(': ', $error->message)[1];
         return $result;
     }
 
-    // phpcs:ignore PEAR.Commenting.FunctionComment.Missing
     public function _mapAccessTokenRevokeSuccess($result)
     {
         $result->revocationResult = $result->success;
         return $result;
     }
 
-    // phpcs:ignore PEAR.Commenting.FunctionComment.Missing
     public function _mapSuccess($result)
     {
         $credentials = $result->credentials;
@@ -124,13 +103,6 @@ class OAuthGateway
         return $result;
     }
 
-    /*
-     * Create URL for oAuth connection
-     *
-     * @param array $params optional
-     *
-     * @return string
-     */
     public function connectUrl($params = [])
     {
         $query = Util::camelCaseToDelimiterArray($params, '_');
@@ -139,4 +111,14 @@ class OAuthGateway
 
         return $this->_config->baseUrl() . '/oauth/connect?' . $queryString;
     }
+
+    /**
+     * @deprecated since version 3.26.1
+     */
+    public function computeSignature($url)
+    {
+        $key = hash('sha256', $this->_config->getClientSecret(), true);
+        return hash_hmac('sha256', $url, $key);
+    }
 }
+class_alias('Braintree\OAuthGateway', 'Braintree_OAuthGateway');

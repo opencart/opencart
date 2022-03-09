@@ -1,24 +1,25 @@
 <?php
-
 namespace Braintree\Error;
 
 use Braintree\Util;
-use Countable;
-use JsonSerializable;
 
 /**
+ *
  * Error handler
  * Handles validation errors
  *
  * Contains a read-only property $error which is a ValidationErrorCollection
  *
- * See our {@link https://developer.paypal.com/braintree/docs/reference/general/result-objects#error-results developer docs} for more information
+ * @package    Braintree
+ * @subpackage Errors
+ * @category   Errors
+ *
+ * @property-read object $errors
  */
-class ErrorCollection implements Countable, JsonSerializable
+class ErrorCollection implements \Countable
 {
     private $_errors;
 
-    // phpcs:ignore PEAR.Commenting.FunctionComment.Missing
     public function __construct($errorData)
     {
         $this->_errors =
@@ -31,7 +32,6 @@ class ErrorCollection implements Countable, JsonSerializable
      *
      * @return integer
      */
-    #[\ReturnTypeWillChange]
     public function count()
     {
         return $this->deepSize();
@@ -39,8 +39,6 @@ class ErrorCollection implements Countable, JsonSerializable
 
     /**
      * Returns all of the validation errors at all levels of nesting in a single, flat array.
-     *
-     * @return array
      */
     public function deepAll()
     {
@@ -52,7 +50,7 @@ class ErrorCollection implements Countable, JsonSerializable
      *if creating a customer with a credit card and a billing address, and each of the customer,
      * credit card, and billing address has 1 error, this method will return 3.
      *
-     * @return integer size
+     * @return int size
      */
     public function deepSize()
     {
@@ -63,8 +61,7 @@ class ErrorCollection implements Countable, JsonSerializable
     /**
      * return errors for the passed key name
      *
-     * @param string $key name
-     *
+     * @param string $key
      * @return mixed
      */
     public function forKey($key)
@@ -76,19 +73,16 @@ class ErrorCollection implements Countable, JsonSerializable
      * return errors for the passed html field.
      * For example, $result->errors->onHtmlField("transaction[customer][last_name]")
      *
-     * @param string $field html element
-     *
+     * @param string $field
      * @return array
      */
     public function onHtmlField($field)
     {
         $pieces = preg_split("/[\[\]]+/", $field, 0, PREG_SPLIT_NO_EMPTY);
         $errors = $this;
-        foreach (array_slice($pieces, 0, -1) as $key) {
+        foreach(array_slice($pieces, 0, -1) as $key) {
             $errors = $errors->forKey(Util::delimiterToCamelCase($key));
-            if (!isset($errors)) {
-                return [];
-            }
+            if (!isset($errors)) { return []; }
         }
         $finalKey = Util::delimiterToCamelCase(end($pieces));
         return $errors->onAttribute($finalKey);
@@ -101,35 +95,29 @@ class ErrorCollection implements Countable, JsonSerializable
      *   $result = Customer::create(...);
      *   $customerErrors = $result->errors->forKey('customer')->shallowAll();
      * </code>
-     *
-     * @return array
      */
     public function shallowAll()
     {
         return $this->_errors->shallowAll();
     }
 
-    // phpcs:ignore PEAR.Commenting.FunctionComment.Missing
-    public function __get($name)
+    /**
+     *
+     * @ignore
+     */
+    public function  __get($name)
     {
         $varName = "_$name";
         return isset($this->$varName) ? $this->$varName : null;
     }
 
-    // phpcs:ignore PEAR.Commenting.FunctionComment.Missing
-    public function __toString()
+    /**
+     *
+     * @ignore
+     */
+    public function  __toString()
     {
         return sprintf('%s', $this->_errors);
     }
-
-    /**
-     * Implementation of JsonSerializable
-     *
-     * @return array
-     */
-    #[\ReturnTypeWillChange]
-    public function jsonSerialize()
-    {
-        return $this->_errors->deepAll();
-    }
 }
+class_alias('Braintree\Error\ErrorCollection', 'Braintree_Error_ErrorCollection');

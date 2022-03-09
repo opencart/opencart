@@ -11,9 +11,6 @@
 
 namespace Symfony\Component\Validator;
 
-use Symfony\Component\Validator\Exception\ValidationFailedException;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
-
 /**
  * Entry point for the Validator component.
  *
@@ -22,67 +19,42 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 final class Validation
 {
     /**
-     * Creates a callable chain of constraints.
+     * The Validator API provided by Symfony 2.4 and older.
      *
-     * @param Constraint|ValidatorInterface|null $constraintOrValidator
-     *
-     * @return callable($value)
+     * @deprecated use API_VERSION_2_5_BC instead
      */
-    public static function createCallable($constraintOrValidator = null, Constraint ...$constraints): callable
-    {
-        $validator = self::createIsValidCallable($constraintOrValidator, ...$constraints);
-
-        return static function ($value) use ($validator) {
-            if (!$validator($value, $violations)) {
-                throw new ValidationFailedException($value, $violations);
-            }
-
-            return $value;
-        };
-    }
+    const API_VERSION_2_4 = 1;
 
     /**
-     * Creates a callable that returns true/false instead of throwing validation exceptions.
-     *
-     * @param Constraint|ValidatorInterface|null $constraintOrValidator
-     *
-     * @return callable($value, &$violations = null): bool
+     * The Validator API provided by Symfony 2.5 and newer.
      */
-    public static function createIsValidCallable($constraintOrValidator = null, Constraint ...$constraints): callable
-    {
-        $validator = $constraintOrValidator;
+    const API_VERSION_2_5 = 2;
 
-        if ($constraintOrValidator instanceof Constraint) {
-            $constraints = \func_get_args();
-            $validator = null;
-        } elseif (null !== $constraintOrValidator && !$constraintOrValidator instanceof ValidatorInterface) {
-            throw new \TypeError(sprintf('Argument 1 passed to "%s()" must be a "%s" or a "%s" object, "%s" given.', __METHOD__, Constraint::class, ValidatorInterface::class, get_debug_type($constraintOrValidator)));
-        }
-
-        $validator = $validator ?? self::createValidator();
-
-        return static function ($value, &$violations = null) use ($constraints, $validator) {
-            $violations = $validator->validate($value, $constraints);
-
-            return 0 === $violations->count();
-        };
-    }
+    /**
+     * The Validator API provided by Symfony 2.5 and newer with a backwards
+     * compatibility layer for 2.4 and older.
+     */
+    const API_VERSION_2_5_BC = 3;
 
     /**
      * Creates a new validator.
      *
      * If you want to configure the validator, use
      * {@link createValidatorBuilder()} instead.
+     *
+     * @return ValidatorInterface The new validator
      */
-    public static function createValidator(): ValidatorInterface
+    public static function createValidator()
     {
         return self::createValidatorBuilder()->getValidator();
     }
 
     /**
      * Creates a configurable builder for validator objects.
+     *
+     * @return ValidatorBuilderInterface The new builder
      */
-    public static function createValidatorBuilder(): ValidatorBuilder
+    public static function createValidatorBuilder()
     {
         return new ValidatorBuilder();
     }

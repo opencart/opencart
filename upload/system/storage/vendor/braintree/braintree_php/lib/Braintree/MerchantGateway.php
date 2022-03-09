@@ -1,5 +1,4 @@
-<?php // phpcs:disable PEAR.Commenting
-
+<?php
 namespace Braintree;
 
 class MerchantGateway
@@ -8,7 +7,6 @@ class MerchantGateway
     private $_config;
     private $_http;
 
-    // phpcs:ignore PEAR.Commenting.FunctionComment.Missing
     public function __construct($gateway)
     {
         $this->_gateway = $gateway;
@@ -32,12 +30,13 @@ class MerchantGateway
                 Merchant::factory($response['response']['merchant']),
                 OAuthCredentials::factory($response['response']['credentials']),
             ]);
-        } elseif (isset($response['apiErrorResponse'])) {
+        } else if (isset($response['apiErrorResponse'])) {
             return new Result\Error($response['apiErrorResponse']);
         } else {
             throw new Exception\Unexpected(
-                "Expected merchant or apiErrorResponse"
+            "Expected merchant or apiErrorResponse"
             );
         }
     }
 }
+class_alias('Braintree\MerchantGateway', 'Braintree_MerchantGateway');

@@ -15,25 +15,25 @@ class UriTemplate
     private $variables;
 
     /** @var array Hash for quick operator lookups */
-    private static $operatorHash = [
-        ''  => ['prefix' => '',  'joiner' => ',', 'query' => false],
-        '+' => ['prefix' => '',  'joiner' => ',', 'query' => false],
-        '#' => ['prefix' => '#', 'joiner' => ',', 'query' => false],
-        '.' => ['prefix' => '.', 'joiner' => '.', 'query' => false],
-        '/' => ['prefix' => '/', 'joiner' => '/', 'query' => false],
-        ';' => ['prefix' => ';', 'joiner' => ';', 'query' => true],
-        '?' => ['prefix' => '?', 'joiner' => '&', 'query' => true],
-        '&' => ['prefix' => '&', 'joiner' => '&', 'query' => true]
-    ];
+    private static $operatorHash = array(
+        ''  => array('prefix' => '',  'joiner' => ',', 'query' => false),
+        '+' => array('prefix' => '',  'joiner' => ',', 'query' => false),
+        '#' => array('prefix' => '#', 'joiner' => ',', 'query' => false),
+        '.' => array('prefix' => '.', 'joiner' => '.', 'query' => false),
+        '/' => array('prefix' => '/', 'joiner' => '/', 'query' => false),
+        ';' => array('prefix' => ';', 'joiner' => ';', 'query' => true),
+        '?' => array('prefix' => '?', 'joiner' => '&', 'query' => true),
+        '&' => array('prefix' => '&', 'joiner' => '&', 'query' => true)
+    );
 
     /** @var array Delimiters */
-    private static $delims = [':', '/', '?', '#', '[', ']', '@', '!', '$',
-        '&', '\'', '(', ')', '*', '+', ',', ';', '='];
+    private static $delims = array(':', '/', '?', '#', '[', ']', '@', '!', '$',
+        '&', '\'', '(', ')', '*', '+', ',', ';', '=');
 
     /** @var array Percent encoded delimiters */
-    private static $delimsPct = ['%3A', '%2F', '%3F', '%23', '%5B', '%5D',
+    private static $delimsPct = array('%3A', '%2F', '%3F', '%23', '%5B', '%5D',
         '%40', '%21', '%24', '%26', '%27', '%28', '%29', '%2A', '%2B', '%2C',
-        '%3B', '%3D'];
+        '%3B', '%3D');
 
     public function expand($template, array $variables)
     {
@@ -60,7 +60,7 @@ class UriTemplate
      */
     private function parseExpression($expression)
     {
-        $result = [];
+        $result = array();
 
         if (isset(self::$operatorHash[$expression[0]])) {
             $result['operator'] = $expression[0];
@@ -71,12 +71,12 @@ class UriTemplate
 
         foreach (explode(',', $expression) as $value) {
             $value = trim($value);
-            $varspec = [];
+            $varspec = array();
             if ($colonPos = strpos($value, ':')) {
                 $varspec['value'] = substr($value, 0, $colonPos);
                 $varspec['modifier'] = ':';
                 $varspec['position'] = (int) substr($value, $colonPos + 1);
-            } elseif (substr($value, -1) === '*') {
+            } elseif (substr($value, -1) == '*') {
                 $varspec['modifier'] = '*';
                 $varspec['value'] = substr($value, 0, -1);
             } else {
@@ -98,15 +98,16 @@ class UriTemplate
      */
     private function expandMatch(array $matches)
     {
-        static $rfc1738to3986 = ['+' => '%20', '%7e' => '~'];
+        static $rfc1738to3986 = array('+' => '%20', '%7e' => '~');
 
-        $replacements = [];
+        $replacements = array();
         $parsed = self::parseExpression($matches[1]);
         $prefix = self::$operatorHash[$parsed['operator']]['prefix'];
         $joiner = self::$operatorHash[$parsed['operator']]['joiner'];
         $useQuery = self::$operatorHash[$parsed['operator']]['query'];
 
         foreach ($parsed['values'] as $value) {
+
             if (!isset($this->variables[$value['value']])) {
                 continue;
             }
@@ -116,9 +117,11 @@ class UriTemplate
             $expanded = '';
 
             if (is_array($variable)) {
+
                 $isAssoc = $this->isAssoc($variable);
-                $kvp = [];
+                $kvp = array();
                 foreach ($variable as $key => $var) {
+
                     if ($isAssoc) {
                         $key = rawurlencode($key);
                         $isNestedArray = is_array($var);
@@ -128,14 +131,14 @@ class UriTemplate
 
                     if (!$isNestedArray) {
                         $var = rawurlencode($var);
-                        if ($parsed['operator'] === '+' ||
-                            $parsed['operator'] === '#'
+                        if ($parsed['operator'] == '+' ||
+                            $parsed['operator'] == '#'
                         ) {
                             $var = $this->decodeReserved($var);
                         }
                     }
 
-                    if ($value['modifier'] === '*') {
+                    if ($value['modifier'] == '*') {
                         if ($isAssoc) {
                             if ($isNestedArray) {
                                 // Nested arrays must allow for deeply nested
@@ -157,7 +160,7 @@ class UriTemplate
 
                 if (empty($variable)) {
                     $actuallyUseQuery = false;
-                } elseif ($value['modifier'] === '*') {
+                } elseif ($value['modifier'] == '*') {
                     $expanded = implode($joiner, $kvp);
                     if ($isAssoc) {
                         // Don't prepend the value name when using the explode
@@ -176,18 +179,19 @@ class UriTemplate
                     }
                     $expanded = implode(',', $kvp);
                 }
+
             } else {
-                if ($value['modifier'] === ':') {
+                if ($value['modifier'] == ':') {
                     $variable = substr($variable, 0, $value['position']);
                 }
                 $expanded = rawurlencode($variable);
-                if ($parsed['operator'] === '+' || $parsed['operator'] === '#') {
+                if ($parsed['operator'] == '+' || $parsed['operator'] == '#') {
                     $expanded = $this->decodeReserved($expanded);
                 }
             }
 
             if ($actuallyUseQuery) {
-                if (!$expanded && $joiner !== '&') {
+                if (!$expanded && $joiner != '&') {
                     $expanded = $value['value'];
                 } else {
                     $expanded = $value['value'] . '=' . $expanded;

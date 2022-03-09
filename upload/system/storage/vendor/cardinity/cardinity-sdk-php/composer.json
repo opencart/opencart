@@ -3,18 +3,18 @@
     "description": "Client library for Cardinity credit card processing API",
     "type": "library",
     "license": "MIT",
-    "homepage": "https://cardinity.com",
+    "homepage": "http://cardinity.com",
     "require": {
-        "php"                       : ">=7.2.5",
-        "guzzlehttp/guzzle"         : "^6.2.1",
-        "guzzlehttp/oauth-subscriber": "0.3.*",
-        "symfony/validator"         : "^5.0.0"
+        "php"                       : ">=5.4.0",
+        "guzzlehttp/guzzle"         : "~5.1",
+        "guzzlehttp/log-subscriber" : "~1.0",
+        "guzzlehttp/oauth-subscriber": "0.2.*",
+        "symfony/validator"         : "~2.6"
     },
     "require-dev": {
         "monolog/monolog"           : "~1.0",
-        "phpspec/phpspec"           : "~6.2",
-        "phpunit/phpunit"           : "^8.5",
-        "symfony/yaml"              : "^4.4"
+        "phpspec/phpspec"           : "~2.1",
+        "phpunit/phpunit"           : "~4.3"
     },
     "config": {
         "bin-dir": "bin"
@@ -26,8 +26,5 @@
         "psr-4": {
             "Cardinity\\Tests\\": "tests/"
         }
-    },
-    "scripts": {
-        "test": "phpunit"
     }
 }

@@ -1,21 +1,13 @@
 <?php
-
 namespace Braintree;
 
 /**
- * Create and Manage 3D Secure Info type objects
- *
- * See our {@link https://developer.paypal.com/braintree/docs/reference/response/payment-method-nonce/php#three_d_secure_info developer docs} for information on attributes
+ * @property-read string $enrolled
+ * @property-read boolean $liabilityShiftPossible
+ * @property-read string $status
  */
 class ThreeDSecureInfo extends Base
 {
-    /**
-     * Creates an instance from given attributes
-     *
-     * @param array $attributes response object attributes
-     *
-     * @return ThreeDSecureInfo
-     */
     public static function factory($attributes)
     {
         $instance = new self();
@@ -29,10 +21,15 @@ class ThreeDSecureInfo extends Base
         $this->_attributes = $attributes;
     }
 
-    // phpcs:ignore PEAR.Commenting.FunctionComment.Missing
-    public function __toString()
+    /**
+     * returns a string representation of the three d secure info
+     * @return string
+     */
+    public function  __toString()
     {
         return __CLASS__ . '[' .
-                Util::attributesToString($this->_attributes) . ']';
+                Util::attributesToString($this->_attributes) .']';
     }
+
 }
+class_alias('Braintree\ThreeDSecureInfo', 'Braintree_ThreeDSecureInfo');

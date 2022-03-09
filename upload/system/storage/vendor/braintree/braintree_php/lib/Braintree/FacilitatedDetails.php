@@ -1,23 +1,13 @@
 <?php
-
 namespace Braintree;
 
 /**
- * Braintree FacilitatedDetails class
- *
- * If the transaction request was performed using payment information from a third party via the Grant API or Shared Vault, these fields will capture information about the merchant of record. These fields are primarily useful for the third party.
- *
- * See our {@link https://developer.paypal.com/braintree/docs/reference/response/transaction/php#facilitated_details developer docs} for information on attributes
+ * @property-read string $merchantId
+ * @property-read string $merchantName
+ * @property-read string $paymentMethodNonce
  */
 class FacilitatedDetails extends Base
 {
-    /**
-     * Creates an instance of a FacilitatedDetails from given attributes
-     *
-     * @param array $attributes response object attributes
-     *
-     * @return FacilitatedDetails
-     */
     public static function factory($attributes)
     {
         $instance = new self();
@@ -30,10 +20,15 @@ class FacilitatedDetails extends Base
         $this->_attributes = $attributes;
     }
 
-    // phpcs:ignore PEAR.Commenting.FunctionComment.Missing
-    public function __toString()
+    /**
+     * returns a string representation of the facilitated details
+     * @return string
+     */
+    public function  __toString()
     {
         return __CLASS__ . '[' .
-                Util::attributesToString($this->_attributes) . ']';
+                Util::attributesToString($this->_attributes) .']';
     }
+
 }
+class_alias('Braintree\FacilitatedDetails', 'Braintree_FacilitatedDetails');

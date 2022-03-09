@@ -1,5 +1,4 @@
 <?php
-
 namespace Braintree\Dispute;
 
 use Braintree\Instance;
@@ -7,11 +6,19 @@ use Braintree\Instance;
 /**
  * Evidence details for a dispute
  *
- * See our {@link https://developer.paypal.com/braintree/docs/reference/response/dispute#evidence developer docs} for information on attributes
+ * @package    Braintree
+ *
+ * @property-read string $category
+ * @property-read string $comment
+ * @property-read \DateTime $createdAt
+ * @property-read string $id
+ * @property-read \DateTime $sentToProcessorAt
+ * @property-read string $sequenceNumber
+ * @property-read string $tag
+ * @property-read string $url
  */
 class EvidenceDetails extends Instance
 {
-    // phpcs:ignore PEAR.Commenting.FunctionComment.Missing
     public function __construct($attributes)
     {
         if (array_key_exists('category', $attributes)) {
@@ -20,3 +27,5 @@ class EvidenceDetails extends Instance
         parent::__construct($attributes);
     }
 }
+
+class_alias('Braintree\Dispute\EvidenceDetails', 'Braintree_Dispute_EvidenceDetails');

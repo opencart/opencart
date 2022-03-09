@@ -3,6 +3,7 @@
 namespace spec\Cardinity\Method\Refund;
 
 use PhpSpec\ObjectBehavior;
+use Prophecy\Argument;
 
 class RefundSpec extends ObjectBehavior
 {

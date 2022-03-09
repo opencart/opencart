@@ -19,7 +19,6 @@ use Symfony\Component\Validator\Constraint;
  *
  * @author Bernhard Schussek <bschussek@gmail.com>
  */
-#[\Attribute(\Attribute::TARGET_CLASS | \Attribute::TARGET_PROPERTY | \Attribute::TARGET_METHOD | \Attribute::IS_REPEATABLE)]
 class Callback extends Constraint
 {
     /**
@@ -28,24 +27,36 @@ class Callback extends Constraint
     public $callback;
 
     /**
-     * {@inheritdoc}
+     * @var array
      *
-     * @param array|string|callable $callback The callback or a set of options
+     * @deprecated since version 2.4, to be removed in 3.0.
      */
-    public function __construct($callback = null, array $groups = null, $payload = null, array $options = [])
+    public $methods;
+
+    /**
+     * {@inheritdoc}
+     */
+    public function __construct($options = null)
     {
         // Invocation through annotations with an array parameter only
-        if (\is_array($callback) && 1 === \count($callback) && isset($callback['value'])) {
-            $callback = $callback['value'];
+        if (\is_array($options) && 1 === \count($options) && isset($options['value'])) {
+            $options = $options['value'];
         }
 
-        if (!\is_array($callback) || (!isset($callback['callback']) && !isset($callback['groups']) && !isset($callback['payload']))) {
-            $options['callback'] = $callback;
-        } else {
-            $options = array_merge($callback, $options);
+        if (\is_array($options) && isset($options['methods'])) {
+            @trigger_error('The "methods" option of the '.__CLASS__.' class is deprecated since Symfony 2.4 and will be removed in 3.0. Use the "callback" option instead.', E_USER_DEPRECATED);
         }
 
-        parent::__construct($options, $groups, $payload);
+        if (\is_array($options) && !isset($options['callback']) && !isset($options['methods']) && !isset($options['groups']) && !isset($options['payload'])) {
+            if (\is_callable($options) || !$options) {
+                $options = array('callback' => $options);
+            } else {
+                // @deprecated, to be removed in 3.0
+                $options = array('methods' => $options);
+            }
+        }
+
+        parent::__construct($options);
     }
 
     /**
@@ -61,6 +72,6 @@ class Callback extends Constraint
      */
     public function getTargets()
     {
-        return [self::CLASS_CONSTRAINT, self::PROPERTY_CONSTRAINT];
+        return array(self::CLASS_CONSTRAINT, self::PROPERTY_CONSTRAINT);
     }
 }

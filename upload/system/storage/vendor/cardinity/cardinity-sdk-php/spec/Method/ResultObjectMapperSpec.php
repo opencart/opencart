@@ -1,19 +1,21 @@
 <?php
 
-namespace spec\Cardinity\Method;
+namespace spec\Cardinity;
 
+use Cardinity\Method\MethodInterface;
 use Cardinity\Method\MethodResultCollectionInterface;
 use Cardinity\Method\Payment\AuthorizationInformation;
 use Cardinity\Method\Payment\Payment;
 use Cardinity\Method\Payment\PaymentInstrumentCard;
 use Cardinity\Method\Payment\PaymentInstrumentRecurring;
 use PhpSpec\ObjectBehavior;
+use Prophecy\Argument;
 
 class ResultObjectMapperSpec extends ObjectBehavior
 {
     function it_is_initializable()
     {
-        $this->shouldImplement('Cardinity\Method\ResultObjectMapper');
+        $this->shouldImplement('Cardinity\ResultObjectMapperInterface');
     }
 
     function it_maps_array_to_object(Payment $object)
@@ -29,6 +31,18 @@ class ResultObjectMapperSpec extends ObjectBehavior
         $this->map($data, $object);
     }
 
+    function it_throws_exception_if_object_property_not_found(Payment $object)
+    {
+        $data = [
+            'randomField' => 'randomValue',
+        ];
+
+        $this
+            ->shouldThrow('Cardinity\Exception\ResultObjectInterfacePropertyNotFound')
+            ->duringMap($data, $object)
+        ;
+    }
+
     function it_maps_card_payment_instrument(Payment $payment)
     {
         $data = [
@@ -36,8 +50,8 @@ class ResultObjectMapperSpec extends ObjectBehavior
             'payment_instrument' => [
                 'card_brand' => 'Visa',
                 'pan' => '0067',
-                'exp_year' => 2021,
-                'exp_month' => 12,
+                'exp_year' => 2016,
+                'exp_month' => 11,
                 'holder' => 'Mike Dough'
             ],
         ];
@@ -45,8 +59,8 @@ class ResultObjectMapperSpec extends ObjectBehavior
         $instrument = new PaymentInstrumentCard();
         $instrument->setCardBrand('Visa');
         $instrument->setPan('0067');
-        $instrument->setExpYear(2021);
-        $instrument->setExpMonth(12);
+        $instrument->setExpYear(2016);
+        $instrument->setExpMonth(11);
         $instrument->setHolder('Mike Dough');
 
         $payment->setPaymentMethod('card')->shouldBeCalled();
@@ -80,7 +94,10 @@ class ResultObjectMapperSpec extends ObjectBehavior
             'payment_instrument' => [],
         ];
 
-        $this->shouldThrow('Cardinity\Exception\Runtime')->duringMap($data, $payment);
+        $this
+            ->shouldThrow('Cardinity\Exception\Runtime')
+            ->duringMap($data, $payment)
+        ;
     }
 
     function it_maps_authorization_information(Payment $payment)
@@ -101,13 +118,17 @@ class ResultObjectMapperSpec extends ObjectBehavior
         $this->map($data, $payment);
     }
 
-    function it_maps_data_collection(MethodResultCollectionInterface $method, Payment $object)
+    function it_maps_data_collection(ResultCollectionInterface $method, Payment $object)
     {
         $data = [
             ['id' => 32, 'type' => 'my_type'],
         ];
 
-        $method->createResultObject()->shouldBeCalled()->willReturn($object);
+        $method
+            ->createResultObject()
+            ->shouldBeCalled()
+            ->willReturn($object)
+        ;
 
         $object->setId(32)->shouldBeCalled();
         $object->setType('my_type')->shouldBeCalled();

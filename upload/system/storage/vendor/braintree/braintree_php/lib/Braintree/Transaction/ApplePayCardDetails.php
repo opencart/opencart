@@ -1,25 +1,39 @@
 <?php
-
 namespace Braintree\Transaction;
 
 use Braintree\Instance;
 
 /**
  * Apple Pay card details from a transaction
+ *
+ * @package    Braintree
+ * @subpackage Transaction
  */
 
 /**
  * creates an instance of ApplePayCardDetails
  *
- * See our {@link https://developer.paypal.com/braintree/docs/reference/response/transaction#apple_pay_details developer docs} for information on attributes
+ *
+ * @package    Braintree
+ * @subpackage Transaction
+ *
+ * @property-read string $cardType
+ * @property-read string $paymentInstrumentName
+ * @property-read string $expirationMonth
+ * @property-read string $expirationYear
+ * @property-read string $cardholderName
+ * @property-read string $sourceDescription
  */
 class ApplePayCardDetails extends Instance
 {
     protected $_attributes = [];
 
-    // phpcs:ignore PEAR.Commenting.FunctionComment.Missing
+    /**
+     * @ignore
+     */
     public function __construct($attributes)
     {
         parent::__construct($attributes);
     }
 }
+class_alias('Braintree\Transaction\ApplePayCardDetails', 'Braintree_Transaction_ApplePayCardDetails');

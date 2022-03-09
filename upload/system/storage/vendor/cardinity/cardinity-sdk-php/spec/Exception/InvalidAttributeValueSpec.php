@@ -3,6 +3,7 @@
 namespace spec\Cardinity\Exception;
 
 use PhpSpec\ObjectBehavior;
+use Prophecy\Argument;
 use Symfony\Component\Validator\ConstraintViolationList;
 
 class InvalidAttributeValueSpec extends ObjectBehavior

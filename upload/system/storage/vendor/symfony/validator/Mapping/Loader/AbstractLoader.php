@@ -30,9 +30,9 @@ abstract class AbstractLoader implements LoaderInterface
     /**
      * The namespace to load constraints from by default.
      */
-    public const DEFAULT_NAMESPACE = '\\Symfony\\Component\\Validator\\Constraints\\';
+    const DEFAULT_NAMESPACE = '\\Symfony\\Component\\Validator\\Constraints\\';
 
-    protected $namespaces = [];
+    protected $namespaces = array();
 
     /**
      * Adds a namespace alias.
@@ -43,8 +43,11 @@ abstract class AbstractLoader implements LoaderInterface
      *     $this->addNamespaceAlias('mynamespace', '\\Acme\\Package\\Constraints\\');
      *
      *     $constraint = $this->newConstraint('mynamespace:NotNull');
+     *
+     * @param string $alias     The alias
+     * @param string $namespace The PHP namespace
      */
-    protected function addNamespaceAlias(string $alias, string $namespace)
+    protected function addNamespaceAlias($alias, $namespace)
     {
         $this->namespaces[$alias] = $namespace;
     }
@@ -64,15 +67,15 @@ abstract class AbstractLoader implements LoaderInterface
      *
      * @throws MappingException If the namespace prefix is undefined
      */
-    protected function newConstraint(string $name, $options = null)
+    protected function newConstraint($name, $options = null)
     {
-        if (str_contains($name, '\\') && class_exists($name)) {
-            $className = $name;
-        } elseif (str_contains($name, ':')) {
-            [$prefix, $className] = explode(':', $name, 2);
+        if (false !== strpos($name, '\\') && class_exists($name)) {
+            $className = (string) $name;
+        } elseif (false !== strpos($name, ':')) {
+            list($prefix, $className) = explode(':', $name, 2);
 
             if (!isset($this->namespaces[$prefix])) {
-                throw new MappingException(sprintf('Undefined namespace prefix "%s".', $prefix));
+                throw new MappingException(sprintf('Undefined namespace prefix "%s"', $prefix));
             }
 
             $className = $this->namespaces[$prefix].$className;

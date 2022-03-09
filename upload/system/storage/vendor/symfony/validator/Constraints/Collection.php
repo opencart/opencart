@@ -19,18 +19,17 @@ use Symfony\Component\Validator\Exception\ConstraintDefinitionException;
  *
  * @author Bernhard Schussek <bschussek@gmail.com>
  */
-#[\Attribute(\Attribute::TARGET_PROPERTY | \Attribute::TARGET_METHOD | \Attribute::IS_REPEATABLE)]
 class Collection extends Composite
 {
-    public const MISSING_FIELD_ERROR = '2fa2158c-2a7f-484b-98aa-975522539ff8';
-    public const NO_SUCH_FIELD_ERROR = '7703c766-b5d5-4cef-ace7-ae0dd82304e9';
+    const MISSING_FIELD_ERROR = '2fa2158c-2a7f-484b-98aa-975522539ff8';
+    const NO_SUCH_FIELD_ERROR = '7703c766-b5d5-4cef-ace7-ae0dd82304e9';
 
-    protected static $errorNames = [
+    protected static $errorNames = array(
         self::MISSING_FIELD_ERROR => 'MISSING_FIELD_ERROR',
         self::NO_SUCH_FIELD_ERROR => 'NO_SUCH_FIELD_ERROR',
-    ];
+    );
 
-    public $fields = [];
+    public $fields = array();
     public $allowExtraFields = false;
     public $allowMissingFields = false;
     public $extraFieldsMessage = 'This field was not expected.';
@@ -39,20 +38,15 @@ class Collection extends Composite
     /**
      * {@inheritdoc}
      */
-    public function __construct($fields = null, array $groups = null, $payload = null, bool $allowExtraFields = null, bool $allowMissingFields = null, string $extraFieldsMessage = null, string $missingFieldsMessage = null)
+    public function __construct($options = null)
     {
-        // no known options set? $fields is the fields array
-        if (\is_array($fields)
-            && !array_intersect(array_keys($fields), ['groups', 'fields', 'allowExtraFields', 'allowMissingFields', 'extraFieldsMessage', 'missingFieldsMessage'])) {
-            $fields = ['fields' => $fields];
+        // no known options set? $options is the fields array
+        if (\is_array($options)
+            && !array_intersect(array_keys($options), array('groups', 'fields', 'allowExtraFields', 'allowMissingFields', 'extraFieldsMessage', 'missingFieldsMessage'))) {
+            $options = array('fields' => $options);
         }
 
-        parent::__construct($fields, $groups, $payload);
-
-        $this->allowExtraFields = $allowExtraFields ?? $this->allowExtraFields;
-        $this->allowMissingFields = $allowMissingFields ?? $this->allowMissingFields;
-        $this->extraFieldsMessage = $extraFieldsMessage ?? $this->extraFieldsMessage;
-        $this->missingFieldsMessage = $missingFieldsMessage ?? $this->missingFieldsMessage;
+        parent::__construct($options);
     }
 
     /**
@@ -63,7 +57,7 @@ class Collection extends Composite
         parent::initializeNestedConstraints();
 
         if (!\is_array($this->fields)) {
-            throw new ConstraintDefinitionException(sprintf('The option "fields" is expected to be an array in constraint "%s".', __CLASS__));
+            throw new ConstraintDefinitionException(sprintf('The option "fields" is expected to be an array in constraint %s', __CLASS__));
         }
 
         foreach ($this->fields as $fieldName => $field) {
@@ -74,14 +68,14 @@ class Collection extends Composite
             }
 
             if (!$field instanceof Optional && !$field instanceof Required) {
-                $this->fields[$fieldName] = new Required($field);
+                $this->fields[$fieldName] = $field = new Required($field);
             }
         }
     }
 
     public function getRequiredOptions()
     {
-        return ['fields'];
+        return array('fields');
     }
 
     protected function getCompositeOption()

@@ -1,19 +1,30 @@
 <?php
-
 namespace Braintree;
 
-/**
- * Braintree AddOnGateway module
- *
- * Manages subscription addons
- */
 class AddOnGateway
 {
+    /**
+     *
+     * @var Gateway
+     */
     private $_gateway;
+
+    /**
+     *
+     * @var Configuration
+     */
     private $_config;
+
+    /**
+     *
+     * @var Http
+     */
     private $_http;
 
-    // phpcs:ignore PEAR.Commenting.FunctionComment.Missing
+    /**
+     *
+     * @param Gateway $gateway
+     */
     public function __construct($gateway)
     {
         $this->_gateway = $gateway;
@@ -23,7 +34,6 @@ class AddOnGateway
     }
 
     /**
-     * Retrieve all add ons
      *
      * @return AddOn[]
      */
@@ -40,3 +50,4 @@ class AddOnGateway
         );
     }
 }
+class_alias('Braintree\AddOnGateway', 'Braintree_AddOnGateway');

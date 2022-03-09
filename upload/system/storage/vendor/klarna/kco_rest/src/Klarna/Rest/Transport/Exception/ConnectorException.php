@@ -19,6 +19,9 @@
 
 namespace Klarna\Rest\Transport\Exception;
 
+use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Message\ResponseInterface;
+
 /**
  * ConnectorException is used to represent a API error response.
  */
@@ -48,25 +51,21 @@ class ConnectorException extends \RuntimeException
     /**
      * Constructs a connector exception instance.
      *
-     * @param array $data Error data
+     * @param array             $data Error data
+     * @param RequestException  $prev Previous exception
      */
     public function __construct(
         array $data,
-        $code = 0
+        RequestException $prev
     ) {
-        $data = self::setDefaultData($data);
-
         $messages = implode(', ', $data['error_messages']);
-        $serviceVersion = isset($data['service_version']) ? $data['service_version'] : '';
         $message = "{$data['error_code']}: {$messages} (#{$data['correlation_id']})";
-        $message .= $serviceVersion ? " ServiceVersion: $serviceVersion" : '';
 
-        parent::__construct($message, $code);
+        parent::__construct($message, $prev->getCode(), $prev);
 
         $this->errorCode = $data['error_code'];
         $this->messages = $data['error_messages'];
         $this->correlationId = $data['correlation_id'];
-        $this->serviceVersion = $serviceVersion;
     }
 
     /**
@@ -100,45 +99,12 @@ class ConnectorException extends \RuntimeException
     }
 
     /**
-     * Gets the API Service version for this exception.
-     *
-     * @return string
-     */
-    public function getServiceVersion()
-    {
-        return $this->serviceVersion;
-    }
-
-    /**
-     * @deprecated Function is not longer used. Will always return null
      * Gets the HTTP response for this API error.
      *
-     * @return null
+     * @return ResponseInterface
      */
     public function getResponse()
     {
-        return null;
-    }
-
-    private static function setDefaultData($data)
-    {
-        $defaults = [
-            'error_code' => 'UNDEFINED',
-            'error_messages' => [],
-            'correlation_id' => 'UNDEFINED',
-        ];
-
-        foreach ($defaults as $field => $default) {
-            if (!isset($data[$field])) {
-                $data[$field] = $default;
-            }
-        }
-
-        // We need to have a special check for error_message and merge the message to error_messages
-        if (isset($data['error_message'])) {
-            array_push($data['error_messages'], $data['error_message']);
-        }
-
-        return $data;
+        return $this->getPrevious()->getResponse();
     }
 }

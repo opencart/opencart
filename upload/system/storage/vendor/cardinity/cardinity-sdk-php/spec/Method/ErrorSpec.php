@@ -3,6 +3,7 @@
 namespace spec\Cardinity\Method;
 
 use PhpSpec\ObjectBehavior;
+use Prophecy\Argument;
 
 class ErrorSpec extends ObjectBehavior
 {

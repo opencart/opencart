@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class GetAll implements MethodResultCollectionInterface
 {
     private $limit;
-
+    
     public function __construct($limit = 10)
     {
         $this->limit = $limit;

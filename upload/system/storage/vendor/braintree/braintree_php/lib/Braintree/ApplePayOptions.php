@@ -1,23 +1,18 @@
 <?php
-
 namespace Braintree;
 
 /**
  * Braintree ApplePayOptions module
  * Manages configuration and options for Apple Pay
  *
- * See our {@link https://developer.paypal.com/braintree/docs/reference/response/apple-pay-options developer docs} for information on attributes
+ * @package    Braintree
+ * @category   Resources
+ *
+ * @property-read array $domains
  */
 
 class ApplePayOptions extends Base
 {
-    /**
-     * Creates an instance of an ApplePayOptions from given attributes
-     *
-     * @param array $attributes response object attributes
-     *
-     * @return ApplePayOptions
-     */
     public static function factory($attributes)
     {
         $instance = new self();
@@ -30,3 +25,4 @@ class ApplePayOptions extends Base
         $this->_attributes = $attributes;
     }
 }
+class_alias('Braintree\ApplePayOptions', 'Braintree_ApplePayOptions');

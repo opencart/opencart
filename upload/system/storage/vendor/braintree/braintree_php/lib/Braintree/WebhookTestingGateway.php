@@ -1,36 +1,20 @@
 <?php
-
 namespace Braintree;
 
-/**
- * WebhookTestingGateway module
- * Creates and manages test webhooks
- */
 class WebhookTestingGateway
 {
-    // phpcs:ignore PEAR.Commenting.FunctionComment.Missing
+
     public function __construct($gateway)
     {
         $this->config = $gateway->config;
         $this->config->assertHasAccessTokenOrKeys();
     }
 
-    /**
-     * Build a sample Webhook
-     *
-     * @param string $kind             the kind of Webhook you want to generate
-     * @param string $id               unique identifier
-     * @param string $sourceMerchantId optional
-     *
-     * @return Webhook
-     */
     public function sampleNotification($kind, $id, $sourceMerchantId = null)
     {
         $xml = self::_sampleXml($kind, $id, $sourceMerchantId);
         $payload = base64_encode($xml) . "\n";
-        $publicKey = $this->config->getPublicKey();
-        $sha = Digest::hexDigestSha1($this->config->getPrivateKey(), $payload);
-        $signature = $publicKey . "|" . $sha;
+        $signature = $this->config->getPublicKey() . "|" . Digest::hexDigestSha1($this->config->getPrivateKey(), $payload);
 
         return [
             'bt_signature' => $signature,
@@ -49,9 +33,6 @@ class WebhookTestingGateway
                 break;
             case WebhookNotification::TRANSACTION_DISBURSED:
                 $subjectXml = self::_transactionDisbursedSampleXml($id);
-                break;
-            case WebhookNotification::TRANSACTION_REVIEWED:
-                $subjectXml = self::_transactionReviewedSampleXml($id);
                 break;
             case WebhookNotification::TRANSACTION_SETTLED:
                 $subjectXml = self::_transactionSettledSampleXml($id);
@@ -92,29 +73,11 @@ class WebhookTestingGateway
             case WebhookNotification::DISPUTE_WON:
                 $subjectXml = self::_disputeWonSampleXml($id);
                 break;
-            case WebhookNotification::DISPUTE_ACCEPTED:
-                $subjectXml = self::_disputeAcceptedSampleXml($id);
-                break;
-            case WebhookNotification::DISPUTE_DISPUTED:
-                $subjectXml = self::_disputeDisputedSampleXml($id);
-                break;
-            case WebhookNotification::DISPUTE_EXPIRED:
-                $subjectXml = self::_disputeExpiredSampleXml($id);
-                break;
             case WebhookNotification::SUBSCRIPTION_CHARGED_SUCCESSFULLY:
                 $subjectXml = self::_subscriptionChargedSuccessfullySampleXml($id);
                 break;
             case WebhookNotification::SUBSCRIPTION_CHARGED_UNSUCCESSFULLY:
                 $subjectXml = self::_subscriptionChargedUnsuccessfullySampleXml($id);
-                break;
-            case WebhookNotification::SUBSCRIPTION_EXPIRED:
-                $subjectXml = self::_subscriptionExpiredSampleXml($id);
-                break;
-            case WebhookNotification::SUBSCRIPTION_CANCELED:
-                $subjectXml = self::_subscriptionCanceledSampleXml($id);
-                break;
-            case WebhookNotification::SUBSCRIPTION_WENT_PAST_DUE:
-                $subjectXml = self::_subscriptionWentPastDueSampleXml($id);
                 break;
             case WebhookNotification::CHECK:
                 $subjectXml = self::_checkSampleXml();
@@ -122,32 +85,24 @@ class WebhookTestingGateway
             case WebhookNotification::ACCOUNT_UPDATER_DAILY_REPORT:
                 $subjectXml = self::_accountUpdaterDailyReportSampleXml($id);
                 break;
+            case WebhookNotification::IDEAL_PAYMENT_COMPLETE:
+                $subjectXml = self::_idealPaymentCompleteSampleXml($id);
+                break;
+            case WebhookNotification::IDEAL_PAYMENT_FAILED:
+                $subjectXml = self::_idealPaymentFailedSampleXml($id);
+                break;
+            // NEXT_MAJOR_VERSION remove GRANTED_PAYMENT_INSTRUMENT_UPDATE
+            case WebhookNotification::GRANTED_PAYMENT_INSTRUMENT_UPDATE:
+                $subjectXml = self::_grantedPaymentInstrumentUpdateSampleXml();
+                break;
             case WebhookNotification::GRANTOR_UPDATED_GRANTED_PAYMENT_METHOD:
                 $subjectXml = self::_grantedPaymentInstrumentUpdateSampleXml();
                 break;
             case WebhookNotification::RECIPIENT_UPDATED_GRANTED_PAYMENT_METHOD:
                 $subjectXml = self::_grantedPaymentInstrumentUpdateSampleXml();
                 break;
-            case WebhookNotification::GRANTED_PAYMENT_METHOD_REVOKED:
-                $subjectXml = self::_venmoAccountXml($id);
-                break;
-            case WebhookNotification::PAYMENT_METHOD_REVOKED_BY_CUSTOMER:
-                $subjectXml = self::_paymentMethodRevokedByCustomerSampleXml($id);
-                break;
             case WebhookNotification::LOCAL_PAYMENT_COMPLETED:
                 $subjectXml = self::_localPaymentCompletedSampleXml();
-                break;
-            case WebhookNotification::LOCAL_PAYMENT_EXPIRED:
-                $subjectXml = self::_localPaymentExpiredSampleXml();
-                break;
-            case WebhookNotification::LOCAL_PAYMENT_FUNDED:
-                $subjectXml = self::_localPaymentFundedSampleXml();
-                break;
-            case WebhookNotification::LOCAL_PAYMENT_REVERSED:
-                $subjectXml = self::_localPaymentReversedSampleXml();
-                break;
-            case WebhookNotification::PAYMENT_METHOD_CUSTOMER_DATA_UPDATED:
-                $subjectXml = self::_paymentMethodCustomerDataUpdatedSampleXml($id);
                 break;
             default:
                 $subjectXml = self::_subscriptionSampleXml($id);
@@ -223,19 +178,6 @@ class WebhookTestingGateway
                 <disbursement-date type=\"date\">2013-07-09</disbursement-date>
             </disbursement-details>
         </transaction>
-        ";
-    }
-
-    private static function _transactionReviewedSampleXml($id)
-    {
-        return "
-        <transaction-review>
-            <transaction-id>my_id</transaction-id>
-            <decision>smart_decision</decision>
-            <reviewer-email>hey@girl.com</reviewer-email>
-            <reviewer-note>I reviewed this</reviewer-note>
-            <reviewed-time type='dateTime'>2018-10-11T21:28:37Z</reviewed-time>
-        </transaction-review>
         ";
     }
 
@@ -402,81 +344,11 @@ class WebhookTestingGateway
         ";
     }
 
-    private static function _disputeAcceptedSampleXml($id)
-    {
-        return "
-        <dispute>
-          <amount>250.00</amount>
-          <amount-disputed>250.0</amount-disputed>
-          <amount-won>245.00</amount-won>
-          <currency-iso-code>USD</currency-iso-code>
-          <received-date type=\"date\">2014-03-01</received-date>
-          <reply-by-date type=\"date\">2014-03-21</reply-by-date>
-          <kind>chargeback</kind>
-          <status>accepted</status>
-          <reason>fraud</reason>
-          <id>${id}</id>
-          <transaction>
-            <id>${id}</id>
-            <amount>250.00</amount>
-          </transaction>
-          <date-opened type=\"date\">2014-03-21</date-opened>
-        </dispute>
-        ";
-    }
-
-    private static function _disputeDisputedSampleXml($id)
-    {
-        return "
-        <dispute>
-          <amount>250.00</amount>
-          <amount-disputed>250.0</amount-disputed>
-          <amount-won>245.00</amount-won>
-          <currency-iso-code>USD</currency-iso-code>
-          <received-date type=\"date\">2014-03-01</received-date>
-          <reply-by-date type=\"date\">2014-03-21</reply-by-date>
-          <kind>chargeback</kind>
-          <status>disputed</status>
-          <reason>fraud</reason>
-          <id>${id}</id>
-          <transaction>
-            <id>${id}</id>
-            <amount>250.00</amount>
-          </transaction>
-          <date-opened type=\"date\">2014-03-21</date-opened>
-        </dispute>
-        ";
-    }
-
-    private static function _disputeExpiredSampleXml($id)
-    {
-        return "
-        <dispute>
-          <amount>250.00</amount>
-          <amount-disputed>250.0</amount-disputed>
-          <amount-won>245.00</amount-won>
-          <currency-iso-code>USD</currency-iso-code>
-          <received-date type=\"date\">2014-03-01</received-date>
-          <reply-by-date type=\"date\">2014-03-21</reply-by-date>
-          <kind>chargeback</kind>
-          <status>expired</status>
-          <reason>fraud</reason>
-          <id>${id}</id>
-          <transaction>
-            <id>${id}</id>
-            <amount>250.00</amount>
-          </transaction>
-          <date-opened type=\"date\">2014-03-21</date-opened>
-        </dispute>
-        ";
-    }
-
     private static function _subscriptionSampleXml($id)
     {
         return "
         <subscription>
             <id>{$id}</id>
-            <status>Active</status>
             <transactions type=\"array\">
             </transactions>
             <add_ons type=\"array\">
@@ -492,7 +364,6 @@ class WebhookTestingGateway
         return "
         <subscription>
             <id>{$id}</id>
-            <status>Active</status>
             <billing-period-start-date type=\"date\">2016-03-21</billing-period-start-date>
             <billing-period-end-date type=\"date\">2017-03-31</billing-period-end-date>
             <transactions type=\"array\">
@@ -515,7 +386,6 @@ class WebhookTestingGateway
         return "
         <subscription>
             <id>{$id}</id>
-            <status>Active</status>
             <billing-period-start-date type=\"date\">2016-03-21</billing-period-start-date>
             <billing-period-end-date type=\"date\">2017-03-31</billing-period-end-date>
             <transactions type=\"array\">
@@ -524,54 +394,6 @@ class WebhookTestingGateway
                     <status>failed</status>
                     <amount>49.99</amount>
                 </transaction>
-            </transactions>
-            <add_ons type=\"array\">
-            </add_ons>
-            <discounts type=\"array\">
-            </discounts>
-        </subscription>
-        ";
-    }
-
-    private static function _subscriptionExpiredSampleXml($id)
-    {
-        return "
-        <subscription>
-            <id>{$id}</id>
-            <status>Expired</status>
-            <transactions type=\"array\">
-            </transactions>
-            <add_ons type=\"array\">
-            </add_ons>
-            <discounts type=\"array\">
-            </discounts>
-        </subscription>
-        ";
-    }
-
-    private static function _subscriptionCanceledSampleXml($id)
-    {
-        return "
-        <subscription>
-            <id>{$id}</id>
-            <status>Canceled</status>
-            <transactions type=\"array\">
-            </transactions>
-            <add_ons type=\"array\">
-            </add_ons>
-            <discounts type=\"array\">
-            </discounts>
-        </subscription>
-        ";
-    }
-
-    private static function _subscriptionWentPastDueSampleXml($id)
-    {
-        return "
-        <subscription>
-            <id>{$id}</id>
-            <status>Past Due</status>
-            <transactions type=\"array\">
             </transactions>
             <add_ons type=\"array\">
             </add_ons>
@@ -661,8 +483,42 @@ class WebhookTestingGateway
         ";
     }
 
-    private static function _grantedPaymentInstrumentUpdateSampleXml()
+    private static function _idealPaymentCompleteSampleXml($id)
     {
+        return "
+        <ideal-payment>
+          <id>{$id}</id>
+          <status>COMPLETE</status>
+          <issuer>ABCISSUER</issuer>
+          <order-id>ORDERABC</order-id>
+          <currency>EUR</currency>
+          <amount>10.00</amount>
+          <created-at>2016-11-29T23:27:34.547Z</created-at>
+          <approval-url>https://example.com</approval-url>
+          <ideal-transaction-id>1234567890</ideal-transaction-id>
+        </ideal-payment>
+        ";
+    }
+
+    private static function _idealPaymentFailedSampleXml($id)
+    {
+        return "
+        <ideal-payment>
+          <id>{$id}</id>
+          <status>FAILED</status>
+          <issuer>ABCISSUER</issuer>
+          <order-id>ORDERABC</order-id>
+          <currency>EUR</currency>
+          <amount>10.00</amount>
+          <created-at>2016-11-29T23:27:34.547Z</created-at>
+          <approval-url>https://example.com</approval-url>
+          <ideal-transaction-id>1234567890</ideal-transaction-id>
+        </ideal-payment>
+        ";
+    }
+
+    private static function _grantedPaymentInstrumentUpdateSampleXml()
+	{
         return "
 		<granted-payment-instrument-update>
 		  <grant-owner-merchant-id>vczo7jqrpwrsi2px</grant-owner-merchant-id>
@@ -681,123 +537,13 @@ class WebhookTestingGateway
         ";
     }
 
-    private static function _paymentMethodRevokedByCustomerSampleXml($id)
-    {
-        return "
-        <paypal-account>
-            <billing-agreement-id>a-billing-agreement-id</billing-agreement-id>
-            <created-at type='datetime'>2019-01-01T12:00:00Z</created-at>
-            <customer-id>a-customer-id</customer-id>
-            <default type='boolean'>true</default>
-            <email>name@email.com</email>
-            <global-id>cGF5bWVudG1ldGhvZF9jaDZieXNz</global-id>
-            <image-url>https://assets.braintreegateway.com/payment_method_logo/paypal.png?environment=test</image-url>
-            <subscriptions type='array'/>
-            <token>{$id}</token>
-            <updated-at type='datetime'>2019-01-02T12:00:00Z</updated-at>
-            <is-channel-initiated nil='true'/>
-            <payer-id>a-payer-id</payer-id>
-            <payer-info nil='true'/>
-            <limited-use-order-id nil='true'/>
-            <revoked-at type='datetime'>2019-01-02T12:00:00Z</revoked-at>
-        </paypal-account>
-        ";
-    }
-
     private static function _localPaymentCompletedSampleXml()
-    {
+	{
         return "
 		<local-payment>
             <payment-id>a-payment-id</payment-id>
             <payer-id>a-payer-id</payer-id>
-            <payment-method-nonce>ee257d98-de40-47e8-96b3-a6954ea7a9a4</payment-method-nonce>
-            <transaction>
-                <id>1</id>
-                <status>authorizing</status>
-                <amount>10.00</amount>
-                <order-id>order1234</order-id>
-            </transaction>
 		</local-payment>
-        ";
-    }
-
-    private static function _localPaymentExpiredSampleXml()
-    {
-        return "
-        <local-payment-expired>
-            <payment-id>a-payment-id</payment-id>
-            <payment-context-id>a-payment-context-id</payment-context-id>
-        </local-payment-expired>
-        ";
-    }
-
-    private static function _localPaymentFundedSampleXml()
-    {
-        return "
-        <local-payment-funded>
-            <payment-id>a-payment-id</payment-id>
-            <payment-context-id>a-payment-context-id</payment-context-id>
-            <transaction>
-                <id>1</id>
-                <status>settled</status>
-                <amount>10.00</amount>
-                <order-id>order1234</order-id>
-            </transaction>
-        </local-payment-funded>
-        ";
-    }
-
-    private static function _localPaymentReversedSampleXml()
-    {
-        return "
-		<local-payment-reversed>
-            <payment-id>a-payment-id</payment-id>
-		</local-payment-reversed>
-        ";
-    }
-
-    private static function _paymentMethodCustomerDataUpdatedSampleXml($id)
-    {
-        $venmoAccountXml = self::_venmoAccountXml($id);
-        return "
-        <payment-method-customer-data-updated-metadata>
-          <token>TOKEN-12345</token>
-          <payment-method>
-            {$venmoAccountXml}
-          </payment-method>
-          <datetime-updated type='dateTime'>2022-01-01T21:28:37Z</datetime-updated>
-          <enriched-customer-data>
-            <fields-updated type='array'>
-                <item>firstName</item>
-            </fields-updated>
-            <profile-data>
-              <username>venmo_username</username>
-              <first-name>John</first-name>
-              <last-name>Doe</last-name>
-              <phone-number>1231231234</phone-number>
-              <email>john.doe@paypal.com</email>
-            </profile-data>
-          </enriched-customer-data>
-        </payment-method-customer-data-updated-metadata>
-        ";
-    }
-
-    private static function _venmoAccountXml($id)
-    {
-        return "
-        <venmo-account>
-          <created-at type='dateTime'>2018-10-11T21:28:37Z</created-at>
-          <updated-at type='dateTime'>2018-10-11T21:28:37Z</updated-at>
-          <default type='boolean'>true</default>
-          <image-url>https://assets.braintreegateway.com/payment_method_logo/venmo.png?environment=test</image-url>
-          <token>{$id}</token>
-          <source-description>Venmo Account: venmojoe</source-description>
-          <username>venmojoe</username>
-          <venmo-user-id>456</venmo-user-id>
-          <subscriptions type='array'/>
-          <customer-id>venmo_customer_id</customer-id>
-          <global-id>cGF5bWVudG1ldGhvZF92ZW5tb2FjY291bnQ</global-id>
-        </venmo-account>
         ";
     }
 
@@ -805,9 +551,10 @@ class WebhookTestingGateway
     {
         $originalZone = date_default_timezone_get();
         date_default_timezone_set('UTC');
-        $timestamp = date("Y-m-d\TH:i:s\Z", time());
+        $timestamp = strftime('%Y-%m-%dT%TZ');
         date_default_timezone_set($originalZone);
 
         return $timestamp;
     }
 }
+class_alias('Braintree\WebhookTestingGateway', 'Braintree_WebhookTestingGateway');

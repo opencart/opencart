@@ -1,10 +1,9 @@
 <?php
-
-// phpcs:disable Generic.Files.LineLength
 namespace Braintree;
 
 /**
- * Braintree Transaction processor creates and manages transactions
+ * Braintree Transaction processor
+ * Creates and manages transactions
  *
  * At minimum, an amount, credit card number, and
  * credit card expiration date are required.
@@ -134,9 +133,84 @@ namespace Braintree;
  *   ));
  * </code>
  *
- * For more detailed information on Transactions, see {@link https://developer.paypal.com/braintree/docs/reference/response/transaction our developer docs}
-// phpcs:enable Generic.Files.LineLength
+ * <b>== More information ==</b>
+ *
+ * For more detailed information on Transactions, see {@link https://developers.braintreepayments.com/reference/response/transaction/php https://developers.braintreepayments.com/reference/response/transaction/php}
+ *
+ * @package    Braintree
+ * @category   Resources
+ *
+ *
+ * @property-read \Braintree\AddOn[] $addons
+ * @property-read string $additionalProcessorResponse raw response from processor
+ * @property-read string $amount transaction amount
+ * @property-read \Braintree\AmexExpressCheckoutCardDetails $amexExpressCheckoutCardDetails transaction Amex Express Checkout card info
+ * @property-read \Braintree\AndroidPayCardDetails $androidPayCardDetails transaction Android Pay card info
+ * @property-read \Braintree\ApplePayCardDetails $applePayCardDetails transaction Apple Pay card info
+ * @property-read \Braintree\AuthorizationAdjustment[] $authorizationAdjustments populated when a transaction has authorization adjustments created when submitted for settlement
+ * @property-read \DateTime $authorizationExpiresAt DateTime authorization will expire
+ * @property-read string $avsErrorResponseCode
+ * @property-read string $avsPostalCodeResponseCode
+ * @property-read string $avsStreetAddressResponseCode
+ * @property-read \Braintree\Transaction\AddressDetails $billingDetails transaction billing address
+ * @property-read string $channel
+ * @property-read \Braintree\CoinbaseDetails $coinbaseDetails transaction Coinbase account info
+ * @property-read \DateTime $createdAt transaction created DateTime
+ * @property-read \Braintree\CreditCardDetails $creditCardDetails transaction credit card info
+ * @property-read string $currencyIsoCode
+ * @property-read array $customFields custom fields passed with the request
+ * @property-read \Braintree\Transaction\CustomerDetails $customerDetails transaction customer info
+ * @property-read string $cvvResponseCode
+ * @property-read \Braintree\Descriptor $descriptor
+ * @property-read Braintree\DisbursementDetails $disbursementDetails populated when transaction is disbursed
+ * @property-read string $discountAmount
+ * @property-read \Braintree\Discount[] $discounts
+ * @property-read \Braintree\Dispute[] $disputes populated when transaction is disputed
+ * @property-read string $escrowStatus
+ * @property-read \Braintree\FacilitatedDetails $facilitatedDetails
+ * @property-read \Braintree\FacilitatorDetails $facilitatorDetails
+ * @property-read string $gatewayRejectionReason
+ * @property-read string $id transaction id
+ * @property-read \Braintree\IdealPayment $idealPaymentDetails transaction Ideal Payment info
+ * @property-read \Braintree\TransactionLineItem[] $lineItems
+ * @property-read \Braintree\MasterpassCardDetails $masterpassCardDetails transaction Masterpass card info
+ * @property-read string $merchantAccountId
+ * @property-read string $networkTransactionId
+ * @property-read string $orderId
+ * @property-read string $paymentInstrumentType
+ * @property-read \Braintree\PayPalDetails $paypalDetails transaction paypal account info
+ * @property-read string $planId
+ * @property-read string $processorAuthorizationCode
+ * @property-read string $processorResponseCode gateway response code
+ * @property-read string $processorResponseText
+ * @property-read string $processorResponseType
+ * @property-read string $processorSettlementResponseCode
+ * @property-read string $processorSettlementResponseText
+ * @property-read string $purchaseOrderNumber
+ * @property-read mixed $reccuring
+ * @property-read mixed $refundIds
+ * @property-read string $refundedTransactionId
+ * @property-read \Braintree\RiskData $riskData
+ * @property-read \Braintree\SamsungPayCardDetails $samsungPayCardDetails transaction Samsung Pay card info
+ * @property-read string $serviceFeeAmount
+ * @property-read string $settlementBatchId
+ * @property-read string $shippingAmount
+ * @property-read \Braintree\Transaction\AddressDetails $shippingDetails transaction shipping address
+ * @property-read string $status transaction status
+ * @property-read \Braintree\Transaction\StatusDetails[] $statusHistory array of StatusDetails objects
+ * @property-read \Braintree\Transaction\SubscriptionDetails $subscriptionDetails
+ * @property-read string $subscriptionId
+ * @property-read string $taxAmount
+ * @property-read string $taxExcempt
+ * @property-read \Braintree\ThreeDSecureInfo $threeDSecureInfo
+ * @property-read string $type transaction type
+ * @property-read \DateTime $updatedAt transaction updated DateTime
+ * @property-read \Braintree\VenmoAccount $venmoAccountDetails transaction Venmo Account info
+ * @property-read \Braintree\VisaCheckoutCardDetails $visaCheckoutCardDetails transaction Visa Checkout card info
+ * @property-read string $voiceReferralName
+ *
  */
+
 class Transaction extends Base
 {
     // Transaction Status
@@ -181,9 +255,7 @@ class Transaction extends Base
     const CVV            = 'cvv';
     const DUPLICATE      = 'duplicate';
     const FRAUD          = 'fraud';
-    const RISK_THRESHOLD = 'risk_threshold';
     const THREE_D_SECURE = 'three_d_secure';
-    const TOKEN_ISSUANCE = 'token_issuance';
     const APPLICATION_INCOMPLETE = 'application_incomplete';
 
     // Industry Types
@@ -191,19 +263,12 @@ class Transaction extends Base
     const TRAVEL_AND_CRUISE_INDUSTRY = 'travel_cruise';
     const TRAVEL_AND_FLIGHT_INDUSTRY = 'travel_flight';
 
-    // Additional Charge Types
-    const RESTAURANT = 'lodging';
-    const GIFT_SHOP  = 'gift_shop';
-    const MINI_BAR   = 'mini_bar';
-    const TELEPHONE  = 'telephone';
-    const LAUNDRY    = 'laundry';
-    const OTHER      = 'other';
-
     /**
      * sets instance properties from an array of values
      *
+     * @ignore
+     * @access protected
      * @param array $transactionAttribs array of transaction data
-     *
      * @return void
      */
     protected function _initialize($transactionAttribs)
@@ -211,27 +276,31 @@ class Transaction extends Base
         $this->_attributes = $transactionAttribs;
 
         if (isset($transactionAttribs['applePay'])) {
-            $this->_set(
-                'applePayCardDetails',
+            $this->_set('applePayCardDetails',
                 new Transaction\ApplePayCardDetails(
                     $transactionAttribs['applePay']
                 )
             );
         }
 
-        // Rename androidPayCard from API responses to GooglePayCard
         if (isset($transactionAttribs['androidPayCard'])) {
-            $this->_set(
-                'googlePayCardDetails',
-                new Transaction\GooglePayCardDetails(
+            $this->_set('androidPayCardDetails',
+                new Transaction\AndroidPayCardDetails(
                     $transactionAttribs['androidPayCard']
                 )
             );
         }
 
+        if (isset($transactionAttribs['masterpassCard'])) {
+            $this->_set('masterpassCardDetails',
+                new Transaction\MasterpassCardDetails(
+                    $transactionAttribs['masterpassCard']
+                )
+            );
+        }
+
         if (isset($transactionAttribs['visaCheckoutCard'])) {
-            $this->_set(
-                'visaCheckoutCardDetails',
+            $this->_set('visaCheckoutCardDetails',
                 new Transaction\VisaCheckoutCardDetails(
                     $transactionAttribs['visaCheckoutCard']
                 )
@@ -239,17 +308,23 @@ class Transaction extends Base
         }
 
         if (isset($transactionAttribs['samsungPayCard'])) {
-            $this->_set(
-                'samsungPayCardDetails',
+            $this->_set('samsungPayCardDetails',
                 new Transaction\SamsungPayCardDetails(
                     $transactionAttribs['samsungPayCard']
                 )
             );
         }
 
+        if (isset($transactionAttribs['amexExpressCheckoutCard'])) {
+            $this->_set('amexExpressCheckoutCardDetails',
+                new Transaction\AmexExpressCheckoutCardDetails(
+                    $transactionAttribs['amexExpressCheckoutCard']
+                )
+            );
+        }
+
         if (isset($transactionAttribs['venmoAccount'])) {
-            $this->_set(
-                'venmoAccountDetails',
+            $this->_set('venmoAccountDetails',
                 new Transaction\VenmoAccountDetails(
                     $transactionAttribs['venmoAccount']
                 )
@@ -257,53 +332,47 @@ class Transaction extends Base
         }
 
         if (isset($transactionAttribs['creditCard'])) {
-            $this->_set(
-                'creditCardDetails',
+            $this->_set('creditCardDetails',
                 new Transaction\CreditCardDetails(
                     $transactionAttribs['creditCard']
                 )
             );
         }
 
+        if (isset($transactionAttribs['coinbaseAccount'])) {
+            $this->_set('coinbaseDetails',
+                new Transaction\CoinbaseDetails(
+                    $transactionAttribs['coinbaseAccount']
+                )
+            );
+        }
+
         if (isset($transactionAttribs['usBankAccount'])) {
-            $this->_set(
-                'usBankAccount',
+            $this->_set('usBankAccount',
                 new Transaction\UsBankAccountDetails(
                     $transactionAttribs['usBankAccount']
                 )
             );
         }
 
+        if (isset($transactionAttribs['idealPayment'])) {
+            $this->_set('idealPayment',
+                new Transaction\IdealPaymentDetails(
+                    $transactionAttribs['idealPayment']
+                )
+            );
+        }
+
         if (isset($transactionAttribs['paypal'])) {
-            $this->_set(
-                'paypalDetails',
+            $this->_set('paypalDetails',
                 new Transaction\PayPalDetails(
                     $transactionAttribs['paypal']
                 )
             );
         }
 
-        if (isset($transactionAttribs['paypalHere'])) {
-            $this->_set(
-                'paypalHereDetails',
-                new Transaction\PayPalHereDetails(
-                    $transactionAttribs['paypalHere']
-                )
-            );
-        }
-
-        if (isset($transactionAttribs['localPayment'])) {
-            $this->_set(
-                'localPaymentDetails',
-                new Transaction\LocalPaymentDetails(
-                    $transactionAttribs['localPayment']
-                )
-            );
-        }
-
         if (isset($transactionAttribs['customer'])) {
-            $this->_set(
-                'customerDetails',
+            $this->_set('customerDetails',
                 new Transaction\CustomerDetails(
                     $transactionAttribs['customer']
                 )
@@ -311,8 +380,7 @@ class Transaction extends Base
         }
 
         if (isset($transactionAttribs['billing'])) {
-            $this->_set(
-                'billingDetails',
+            $this->_set('billingDetails',
                 new Transaction\AddressDetails(
                     $transactionAttribs['billing']
                 )
@@ -320,8 +388,7 @@ class Transaction extends Base
         }
 
         if (isset($transactionAttribs['shipping'])) {
-            $this->_set(
-                'shippingDetails',
+            $this->_set('shippingDetails',
                 new Transaction\AddressDetails(
                     $transactionAttribs['shipping']
                 )
@@ -329,8 +396,7 @@ class Transaction extends Base
         }
 
         if (isset($transactionAttribs['subscription'])) {
-            $this->_set(
-                'subscriptionDetails',
+            $this->_set('subscriptionDetails',
                 new Transaction\SubscriptionDetails(
                     $transactionAttribs['subscription']
                 )
@@ -338,8 +404,7 @@ class Transaction extends Base
         }
 
         if (isset($transactionAttribs['descriptor'])) {
-            $this->_set(
-                'descriptor',
+            $this->_set('descriptor',
                 new Descriptor(
                     $transactionAttribs['descriptor']
                 )
@@ -347,15 +412,14 @@ class Transaction extends Base
         }
 
         if (isset($transactionAttribs['disbursementDetails'])) {
-            $this->_set(
-                'disbursementDetails',
+            $this->_set('disbursementDetails',
                 new DisbursementDetails($transactionAttribs['disbursementDetails'])
             );
         }
 
         $disputes = [];
         if (isset($transactionAttribs['disputes'])) {
-            foreach ($transactionAttribs['disputes'] as $dispute) {
+            foreach ($transactionAttribs['disputes'] AS $dispute) {
                 $disputes[] = Dispute::factory($dispute);
             }
         }
@@ -364,7 +428,7 @@ class Transaction extends Base
 
         $statusHistory = [];
         if (isset($transactionAttribs['statusHistory'])) {
-            foreach ($transactionAttribs['statusHistory'] as $history) {
+            foreach ($transactionAttribs['statusHistory'] AS $history) {
                 $statusHistory[] = new Transaction\StatusDetails($history);
             }
         }
@@ -373,7 +437,7 @@ class Transaction extends Base
 
         $addOnArray = [];
         if (isset($transactionAttribs['addOns'])) {
-            foreach ($transactionAttribs['addOns'] as $addOn) {
+            foreach ($transactionAttribs['addOns'] AS $addOn) {
                 $addOnArray[] = AddOn::factory($addOn);
             }
         }
@@ -381,7 +445,7 @@ class Transaction extends Base
 
         $discountArray = [];
         if (isset($transactionAttribs['discounts'])) {
-            foreach ($transactionAttribs['discounts'] as $discount) {
+            foreach ($transactionAttribs['discounts'] AS $discount) {
                 $discountArray[] = Discount::factory($discount);
             }
         }
@@ -389,29 +453,32 @@ class Transaction extends Base
 
         $authorizationAdjustments = [];
         if (isset($transactionAttribs['authorizationAdjustments'])) {
-            foreach ($transactionAttribs['authorizationAdjustments'] as $authorizationAdjustment) {
+            foreach ($transactionAttribs['authorizationAdjustments'] AS $authorizationAdjustment) {
                 $authorizationAdjustments[] = AuthorizationAdjustment::factory($authorizationAdjustment);
             }
         }
 
         $this->_set('authorizationAdjustments', $authorizationAdjustments);
 
-        if (isset($transactionAttribs['riskData'])) {
+        if(isset($transactionAttribs['riskData'])) {
             $this->_set('riskData', RiskData::factory($transactionAttribs['riskData']));
         }
-        if (isset($transactionAttribs['threeDSecureInfo'])) {
+        if(isset($transactionAttribs['threeDSecureInfo'])) {
             $this->_set('threeDSecureInfo', ThreeDSecureInfo::factory($transactionAttribs['threeDSecureInfo']));
         }
-        if (isset($transactionAttribs['facilitatedDetails'])) {
+        if(isset($transactionAttribs['facilitatedDetails'])) {
             $this->_set('facilitatedDetails', FacilitatedDetails::factory($transactionAttribs['facilitatedDetails']));
         }
-        if (isset($transactionAttribs['facilitatorDetails'])) {
+        if(isset($transactionAttribs['facilitatorDetails'])) {
             $this->_set('facilitatorDetails', FacilitatorDetails::factory($transactionAttribs['facilitatorDetails']));
         }
     }
 
-    // phpcs:ignore PEAR.Commenting.FunctionComment.Missing
-    public function __toString()
+    /**
+     * returns a string representation of the transaction
+     * @return string
+     */
+    public function  __toString()
     {
         // array of attributes to print
         $display = [
@@ -420,76 +487,56 @@ class Transaction extends Base
             ];
 
         $displayAttributes = [];
-        foreach ($display as $attrib) {
+        foreach ($display AS $attrib) {
             $displayAttributes[$attrib] = $this->$attrib;
         }
         return __CLASS__ . '[' .
-                Util::attributesToString($displayAttributes) . ']';
+                Util::attributesToString($displayAttributes) .']';
     }
 
-    /*
-     * Checks if one transaction's ID is the same as another transaction's Id.
-     *
-     * @param string $otherTx to be compared
-     *
-     * @return bool
-     */
     public function isEqual($otherTx)
     {
         return $this->id === $otherTx->id;
     }
 
-    //NEXT_MAJOR_VERSION this function is only used for tests, the assertions this function provides are obfuscated.
-    //We should remove this function and update the tests to be more clear in what we're asserting.
     public function vaultCreditCard()
     {
         $token = $this->creditCardDetails->token;
         if (empty($token)) {
             return null;
-        } else {
+        }
+        else {
             return CreditCard::find($token);
         }
     }
 
-    //NEXT_MAJOR_VERSION this function is only used for tests, the assertions this function provides are obfuscated.
-    //We should remove this function and update the tests to be more clear in what we're asserting.
+    /** @return void|Braintree\Customer */
     public function vaultCustomer()
     {
         $customerId = $this->customerDetails->id;
         if (empty($customerId)) {
             return null;
-        } else {
+        }
+        else {
             return Customer::find($customerId);
         }
     }
 
-    /**
-     * Checks if transactions is disbursed
-     *
-     * @return boolean
-     */
-    public function isDisbursed()
-    {
+    /** @return boolean */
+    public function isDisbursed() {
         return $this->disbursementDetails->isValid();
     }
 
-    /**
-     * Static methods redirecting to gateway class
-     *
-     * @see TransactionLineItemGateway::findAll()
-     *
-     * @return ResourceCollection of TransactionLineItem objects
-     */
-    public function lineItems()
-    {
+    /** @return line items */
+    public function lineItems() {
         return Configuration::gateway()->transactionLineItem()->findAll($this->id);
     }
 
     /**
-     * Creates an instance from given attributes
+     *  factory method: returns an instance of Transaction
+     *  to the requesting method, with populated properties
      *
-     * @param array $attributes response object attributes
-     *
+     * @ignore
      * @return Transaction
      */
     public static function factory($attributes)
@@ -499,287 +546,107 @@ class Transaction extends Base
         return $instance;
     }
 
-    /**
-     * Static methods redirecting to gateway class
-     *
-     * @param string $transactionId unique identifier
-     * @param string $amount        to be adjusted
-     *
-     * @see TransactionGateway::adjustAuthorization()
-     *
-     * @return Transction|Result\Error
-     */
-    public static function adjustAuthorization($transactionId, $amount)
-    {
-        return Configuration::gateway()->transaction()->adjustAuthorization($transactionId, $amount);
-    }
 
-    /**
-     * Static methods redirecting to gateway class
-     *
-     * @param string $transactionId to be cloned
-     * @param mixed  $attribs       containing any additional request parameters
-     *
-     * @see TransactionGateway::cloneTransaction()
-     *
-     * @return Transction|Result\Error
-     */
+    // static methods redirecting to gateway
+
     public static function cloneTransaction($transactionId, $attribs)
     {
         return Configuration::gateway()->transaction()->cloneTransaction($transactionId, $attribs);
     }
 
-    //NEXT_MAJOR_VERSION remove this function, it was only used for a Transparent Redirect test that no longer exists
+    public static function createFromTransparentRedirect($queryString)
+    {
+        return Configuration::gateway()->transaction()->createFromTransparentRedirect($queryString);
+    }
+
     public static function createTransactionUrl()
     {
         return Configuration::gateway()->transaction()->createTransactionUrl();
     }
 
-    /**
-     * Static methods redirecting to gateway class
-     *
-     * @param mixed $attribs containing any request parameters
-     *
-     * @see TransactionGateway::credit()
-     *
-     * @return Result\Successful|Result\Error
-     */
     public static function credit($attribs)
     {
         return Configuration::gateway()->transaction()->credit($attribs);
     }
 
-    /**
-     * Static methods redirecting to gateway class
-     *
-     * @param mixed $attribs containing any request parameters
-     *
-     * @see TransactionGateway::creditNoValidate()
-     *
-     * @return Transaction|Result\Error
-     */
     public static function creditNoValidate($attribs)
     {
         return Configuration::gateway()->transaction()->creditNoValidate($attribs);
     }
 
-    /**
-     * Static methods redirecting to gateway class
-     *
-     * @param mixed $id unique identifier of the transaction to find
-     *
-     * @see TransactionGateway::find()
-     *
-     * @return Result\Successful|Exception\NotFound
-     */
     public static function find($id)
     {
         return Configuration::gateway()->transaction()->find($id);
     }
 
-    /**
-     * Static methods redirecting to gateway class
-     *
-     * @param mixed $attribs containing any request parameters
-     *
-     * @see TransactionGateway::sale()
-     *
-     * @return Result\Successful|Exception\NotFound
-     */
     public static function sale($attribs)
     {
         return Configuration::gateway()->transaction()->sale($attribs);
     }
 
-    /**
-     * Static methods redirecting to gateway class
-     *
-     * @param mixed $attribs containing any request parameters
-     *
-     * @see TransactionGateway::saleNoValidate()
-     *
-     * @return Transaction|Result\Error
-     */
     public static function saleNoValidate($attribs)
     {
         return Configuration::gateway()->transaction()->saleNoValidate($attribs);
     }
 
-    /**
-     * Static methods redirecting to gateway class
-     *
-     * @param mixed $query containing search fields
-     *
-     * @see TransactionGateway::search()
-     *
-     * @return ResourceCollection of Transaction objects
-     */
     public static function search($query)
     {
         return Configuration::gateway()->transaction()->search($query);
     }
 
-    /*
-     * Static methods redirecting to gateway class
-     *
-     * @param mixed $query of search fields
-     * @param array $ids to be fetched
-     *
-     * @see TransactionGateway::fetch()
-     *
-     * @return ResourceCollection of Transaction objects
-     */
     public static function fetch($query, $ids)
     {
         return Configuration::gateway()->transaction()->fetch($query, $ids);
     }
 
-    /**
-     * Static methods redirecting to gateway class
-     *
-     * @param string $transactionId unque identifier of the transaction to be voided
-     *
-     * @see TransactionGateway::void()
-     *
-     * @return Result\Successful|Exception\NotFound
-     */
     public static function void($transactionId)
     {
         return Configuration::gateway()->transaction()->void($transactionId);
     }
 
-    /**
-     * Static methods redirecting to gateway class
-     *
-     * @param string $transactionId unque identifier of the transaction to be voided
-     *
-     * @see TransactionGateway::voidNoValidate()
-     *
-     * @return Transaction|Result\Error
-     */
     public static function voidNoValidate($transactionId)
     {
         return Configuration::gateway()->transaction()->voidNoValidate($transactionId);
     }
 
-    /**
-     * Static methods redirecting to gateway class
-     *
-     * @param string $transactionId unque identifier of the transaction to be submitted for settlement
-     * @param string $amount        optional
-     * @param mixed  $attribs       any additional request parameters
-     *
-     * @see TransactionGateway::submitForSettlement()
-     *
-     * @return Result\Successful|Exception\NotFound
-     */
     public static function submitForSettlement($transactionId, $amount = null, $attribs = [])
     {
         return Configuration::gateway()->transaction()->submitForSettlement($transactionId, $amount, $attribs);
     }
 
-    /**
-     * Static methods redirecting to gateway class
-     *
-     * @param string $transactionId unque identifier of the transaction to be submitted for settlement
-     * @param string $amount        optional
-     * @param mixed  $attribs       any additional request parameters
-     *
-     * @see TransactionGateway::submitForSettlement()
-     *
-     * @return Transaction|Result\Error
-     */
     public static function submitForSettlementNoValidate($transactionId, $amount = null, $attribs = [])
     {
-        // phpcs:ignore Generic.Files.LineLength
         return Configuration::gateway()->transaction()->submitForSettlementNoValidate($transactionId, $amount, $attribs);
     }
 
-    /**
-     * Static methods redirecting to gateway class
-     *
-     * @param string $transactionId to be updated
-     * @param array  $attribs       attributes to be updated in the request
-     *
-     * @see TransactionGateway::updateDetails()
-     *
-     * @return Result\Successful|Result\Error
-     */
     public static function updateDetails($transactionId, $attribs = [])
     {
         return Configuration::gateway()->transaction()->updateDetails($transactionId, $attribs);
     }
 
-    /**
-     * Static methods redirecting to gateway class
-     *
-     * @param string $transactionId unque identifier of the transaction to be submitted for settlement
-     * @param string $amount        optional
-     * @param mixed  $attribs       any additional request parameters
-     *
-     * @see TransactionGateway::submitForPartialSettlement()
-     *
-     * @return Result\Successful|Exception\NotFound
-     */
     public static function submitForPartialSettlement($transactionId, $amount, $attribs = [])
     {
         return Configuration::gateway()->transaction()->submitForPartialSettlement($transactionId, $amount, $attribs);
     }
 
-    /**
-     * Static methods redirecting to gateway class
-     *
-     * @param string $transactionId unque identifier of the transaction to be held in escrow
-     *
-     * @see TransactionGateway::holdInEscrow()
-     *
-     * @return Result\Successful|Exception\NotFound
-     */
     public static function holdInEscrow($transactionId)
     {
         return Configuration::gateway()->transaction()->holdInEscrow($transactionId);
     }
 
-    /**
-     * Static methods redirecting to gateway class
-     *
-     * @param string $transactionId unque identifier of the transaction to be released from escrow
-     *
-     * @see TransactionGateway::releaseFromEscrow()
-     *
-     * @return Result\Successful|Exception\NotFound
-     */
     public static function releaseFromEscrow($transactionId)
     {
         return Configuration::gateway()->transaction()->releaseFromEscrow($transactionId);
     }
 
-    /**
-     * Static methods redirecting to gateway class
-     *
-     * @param string $transactionId unque identifier of the transaction whose escrow release is to be canceled
-     *
-     * @see TransactionGateway::cancelRelease()
-     *
-     * @return Result\Successful|Exception\NotFound
-     */
     public static function cancelRelease($transactionId)
     {
         return Configuration::gateway()->transaction()->cancelRelease($transactionId);
     }
 
-    /**
-     * Static methods redirecting to gateway class
-     *
-     * @param string $transactionId unque identifier of the transaction to be refunded
-     * @param string $amount        to be refunded, optional
-     *
-     * @see TransactionGateway::refund()
-     *
-     * @return Result\Successful|Exception\NotFound
-     */
     public static function refund($transactionId, $amount = null)
     {
         return Configuration::gateway()->transaction()->refund($transactionId, $amount);
     }
 }
+class_alias('Braintree\Transaction', 'Braintree_Transaction');

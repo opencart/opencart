@@ -1,8 +1,8 @@
 <?php
-
 namespace Braintree\Error;
 
 /**
+ *
  * Validation Error codes and messages
  *
  * ErrorCodes class provides constants for validation errors.
@@ -10,40 +10,40 @@ namespace Braintree\Error;
  * error in a ValidationErrorCollection.
  * The error messages returned from the server may change;
  * but the codes will remain the same.
+ *
+ * @package    Braintree
+ * @subpackage Errors
+ * @category   Validation
  */
 class Codes
 {
-    // phpcs:disable Generic.Files.LineLength
-    const ADDRESS_CANNOT_BE_BLANK                                      = '81801';
-    const ADDRESS_COMPANY_IS_INVALID                                   = '91821';
-    const ADDRESS_COMPANY_IS_TOO_LONG                                  = '81802';
-    const ADDRESS_COUNTRY_CODE_ALPHA2_IS_NOT_ACCEPTED                  = '91814';
-    const ADDRESS_COUNTRY_CODE_ALPHA3_IS_NOT_ACCEPTED                  = '91816';
-    const ADDRESS_COUNTRY_CODE_NUMERIC_IS_NOT_ACCEPTED                 = '91817';
-    const ADDRESS_COUNTRY_NAME_IS_NOT_ACCEPTED                         = '91803';
-    const ADDRESS_EXTENDED_ADDRESS_IS_INVALID                          = '91823';
-    const ADDRESS_EXTENDED_ADDRESS_IS_TOO_LONG                         = '81804';
-    const ADDRESS_FIRST_NAME_IS_INVALID                                = '91819';
-    const ADDRESS_FIRST_NAME_IS_TOO_LONG                               = '81805';
-    const ADDRESS_INCONSISTENT_COUNTRY                                 = '91815';
-    const ADDRESS_LAST_NAME_IS_INVALID                                 = '91820';
-    const ADDRESS_LAST_NAME_IS_TOO_LONG                                = '81806';
-    const ADDRESS_LOCALITY_IS_INVALID                                  = '91824';
-    const ADDRESS_LOCALITY_IS_TOO_LONG                                 = '81807';
-    const ADDRESS_POSTAL_CODE_INVALID_CHARACTERS                       = '81813';
-    const ADDRESS_POSTAL_CODE_IS_INVALID                               = '91826';
-    const ADDRESS_POSTAL_CODE_IS_REQUIRED                              = '81808';
-    const ADDRESS_POSTAL_CODE_IS_REQUIRED_FOR_CARD_BRAND_AND_PROCESSOR = '81828';
-    const ADDRESS_POSTAL_CODE_IS_TOO_LONG                              = '81809';
-    const ADDRESS_REGION_IS_INVALID                                    = '91825';
-    const ADDRESS_REGION_IS_TOO_LONG                                   = '81810';
-    const ADDRESS_STATE_IS_INVALID_FOR_SELLER_PROTECTION               = '81827';
-    const ADDRESS_STREET_ADDRESS_IS_INVALID                            = '91822';
-    const ADDRESS_STREET_ADDRESS_IS_REQUIRED                           = '81811';
-    const ADDRESS_STREET_ADDRESS_IS_TOO_LONG                           = '81812';
-    const ADDRESS_TOO_MANY_ADDRESSES_PER_CUSTOMER                      = '91818';
-
-    const ADJUSTMENT_AMOUNT_MUST_BE_GREATER_THAN_ZERO                   = '95605';
+    const ADDRESS_CANNOT_BE_BLANK                        = '81801';
+    const ADDRESS_COMPANY_IS_INVALID                     = '91821';
+    const ADDRESS_COMPANY_IS_TOO_LONG                    = '81802';
+    const ADDRESS_COUNTRY_CODE_ALPHA2_IS_NOT_ACCEPTED    = '91814';
+    const ADDRESS_COUNTRY_CODE_ALPHA3_IS_NOT_ACCEPTED    = '91816';
+    const ADDRESS_COUNTRY_CODE_NUMERIC_IS_NOT_ACCEPTED   = '91817';
+    const ADDRESS_COUNTRY_NAME_IS_NOT_ACCEPTED           = '91803';
+    const ADDRESS_EXTENDED_ADDRESS_IS_INVALID            = '91823';
+    const ADDRESS_EXTENDED_ADDRESS_IS_TOO_LONG           = '81804';
+    const ADDRESS_FIRST_NAME_IS_INVALID                  = '91819';
+    const ADDRESS_FIRST_NAME_IS_TOO_LONG                 = '81805';
+    const ADDRESS_INCONSISTENT_COUNTRY                   = '91815';
+    const ADDRESS_LAST_NAME_IS_INVALID                   = '91820';
+    const ADDRESS_LAST_NAME_IS_TOO_LONG                  = '81806';
+    const ADDRESS_LOCALITY_IS_INVALID                    = '91824';
+    const ADDRESS_LOCALITY_IS_TOO_LONG                   = '81807';
+    const ADDRESS_POSTAL_CODE_INVALID_CHARACTERS         = '81813';
+    const ADDRESS_POSTAL_CODE_IS_INVALID                 = '91826';
+    const ADDRESS_POSTAL_CODE_IS_REQUIRED                = '81808';
+    const ADDRESS_POSTAL_CODE_IS_TOO_LONG                = '81809';
+    const ADDRESS_REGION_IS_INVALID                      = '91825';
+    const ADDRESS_REGION_IS_TOO_LONG                     = '81810';
+    const ADDRESS_STATE_IS_INVALID_FOR_SELLER_PROTECTION = '81827';
+    const ADDRESS_STREET_ADDRESS_IS_INVALID              = '91822';
+    const ADDRESS_STREET_ADDRESS_IS_REQUIRED             = '81811';
+    const ADDRESS_STREET_ADDRESS_IS_TOO_LONG             = '81812';
+    const ADDRESS_TOO_MANY_ADDRESSES_PER_CUSTOMER        = '91818';
 
     const APPLE_PAY_CARDS_ARE_NOT_ACCEPTED                                  = '83501';
     const APPLE_PAY_CUSTOMER_ID_IS_REQUIRED_FOR_VAULTING                    = '83502';
@@ -198,9 +198,6 @@ class Codes
     const DOCUMENT_UPLOAD_FILE_TYPE_IS_INVALID           = '84903';
     const DOCUMENT_UPLOAD_FILE_IS_MALFORMED_OR_ENCRYPTED = '84904';
     const DOCUMENT_UPLOAD_FILE_IS_TOO_LONG               = '84905';
-    const DOCUMENT_UPLOAD_FILE_IS_EMPTY                  = '84906';
-
-    const EXCHANGE_RATE_QUOTE_ID_IS_TOO_LONG  = '915229';
 
     const FAILED_AUTH_ADJUSTMENT_ALLOW_RETRY                    = '95603';
     const FAILED_AUTH_ADJUSTMENT_HARD_DECLINE                   = '95602';
@@ -234,16 +231,6 @@ class Codes
     const INDUSTRY_DATA_LODGING_CHECK_OUT_DATE_IS_INVALID                   = '93405';
     const INDUSTRY_DATA_LODGING_CHECK_OUT_DATE_MUST_FOLLOW_CHECK_IN_DATE    = '93406';
     const INDUSTRY_DATA_LODGING_UNKNOWN_DATA_FIELD                          = '93407';
-    const INDUSTRY_DATA_LODGING_ROOM_RATE_MUST_BE_GREATER_THAN_ZERO         = '93433';
-    const INDUSTRY_DATA_LODGING_ROOM_RATE_FORMAT_IS_INVALID                 = '93434';
-    const INDUSTRY_DATA_LODGING_ROOM_RATE_IS_TOO_LARGE                      = '93435';
-    const INDUSTRY_DATA_LODGING_ROOM_TAX_MUST_BE_GREATER_THAN_ZERO          = '93436';
-    const INDUSTRY_DATA_LODGING_ROOM_TAX_FORMAT_IS_INVALID                  = '93437';
-    const INDUSTRY_DATA_LODGING_ROOM_TAX_IS_TOO_LARGE                       = '93438';
-    const INDUSTRY_DATA_LODGING_NO_SHOW_INDICATOR_IS_INVALID                = '93439';
-    const INDUSTRY_DATA_LODGING_ADVANCED_DEPOSIT_INDICATOR_IS_INVALID       = '93440';
-    const INDUSTRY_DATA_LODGING_FIRE_SAFETY_INDICATOR_IS_INVALID            = '93441';
-    const INDUSTRY_DATA_LODGING_PROPERTY_PHONE_IS_INVALID                   = '93442';
     const INDUSTRY_DATA_TRAVEL_CRUISE_EMPTY_DATA                            = '93408';
     const INDUSTRY_DATA_TRAVEL_CRUISE_UNKNOWN_DATA_FIELD                    = '93409';
     const INDUSTRY_DATA_TRAVEL_CRUISE_TRAVEL_PACKAGE_IS_INVALID             = '93410';
@@ -269,17 +256,12 @@ class Codes
     const INDUSTRY_DATA_TRAVEL_FLIGHT_TICKET_NUMBER_IS_TOO_LONG             = '93430';
     const INDUSTRY_DATA_TRAVEL_FLIGHT_LEGS_EXPECTED                         = '93431';
     const INDUSTRY_DATA_TRAVEL_FLIGHT_TOO_MANY_LEGS                         = '93432';
-    const INDUSTRY_DATA_ADDITIONAL_CHARGE_KIND_IS_INVALID                   = '96601';
-    const INDUSTRY_DATA_ADDITIONAL_CHARGE_KIND_MUST_BE_UNIQUE               = '96602';
-    const INDUSTRY_DATA_ADDITIONAL_CHARGE_AMOUNT_MUST_BE_GREATER_THAN_ZERO  = '96603';
-    const INDUSTRY_DATA_ADDITIONAL_CHARGE_AMOUNT_FORMAT_IS_INVALID          = '96604';
-    const INDUSTRY_DATA_ADDITIONAL_CHARGE_AMOUNT_IS_TOO_LARGE               = '96605';
-    const INDUSTRY_DATA_ADDITIONAL_CHARGE_AMOUNT_IS_REQUIRED                = '96606';
 
     const TRANSACTION_LINE_ITEM_COMMODITY_CODE_IS_TOO_LONG                  = '95801';
     const TRANSACTION_LINE_ITEM_DESCRIPTION_IS_TOO_LONG                     = '95803';
     const TRANSACTION_LINE_ITEM_DISCOUNT_AMOUNT_FORMAT_IS_INVALID           = '95804';
     const TRANSACTION_LINE_ITEM_DISCOUNT_AMOUNT_IS_TOO_LARGE                = '95805';
+    const TRANSACTION_LINE_ITEM_DISCOUNT_AMOUNT_MUST_BE_GREATER_THAN_ZERO   = '95806'; // Deprecated as the amount may be zero. Use TRANSACTION_LINE_ITEM_DISCOUNT_AMOUNT_CANNOT_BE_ZERO.
     const TRANSACTION_LINE_ITEM_DISCOUNT_AMOUNT_CANNOT_BE_NEGATIVE          = '95806';
     const TRANSACTION_LINE_ITEM_KIND_IS_INVALID                             = '95807';
     const TRANSACTION_LINE_ITEM_KIND_IS_REQUIRED                            = '95808';
@@ -300,6 +282,7 @@ class Codes
     const TRANSACTION_LINE_ITEM_UNIT_OF_MEASURE_IS_TOO_LONG                 = '95821';
     const TRANSACTION_LINE_ITEM_UNIT_TAX_AMOUNT_FORMAT_IS_INVALID           = '95824';
     const TRANSACTION_LINE_ITEM_UNIT_TAX_AMOUNT_IS_TOO_LARGE                = '95825';
+    const TRANSACTION_LINE_ITEM_UNIT_TAX_AMOUNT_MUST_BE_GREATER_THAN_ZERO   = '95826'; // Deprecated as the amount may be zero. Use TRANSACTION_LINE_ITEM_UNIT_TAX_AMOUNT_CANNOT_BE_ZERO.
     const TRANSACTION_LINE_ITEM_UNIT_TAX_AMOUNT_CANNOT_BE_NEGATIVE          = '95826';
     const TRANSACTION_LINE_ITEM_TAX_AMOUNT_FORMAT_IS_INVALID                = '95827';
     const TRANSACTION_LINE_ITEM_TAX_AMOUNT_IS_TOO_LARGE                     = '95828';
@@ -307,6 +290,7 @@ class Codes
 
     const TRANSACTION_EXTERNAL_VAULT_STATUS_IS_INVALID                                      = '915175';
     const TRANSACTION_EXTERNAL_VAULT_STATUS_WITH_PREVIOUS_NETWORK_TRANSACTION_ID_IS_INVALID = '915177';
+    const TRANSACTION_EXTERNAL_VAULT_CARD_TYPE_IS_INVALID                                   = '915178';
     const TRANSACTION_EXTERNAL_VAULT_PREVIOUS_NETWORK_TRANSACTION_ID_IS_INVALID             = '915179';
 
     const MERCHANT_COUNTRY_CANNOT_BE_BLANK              = '83603';
@@ -423,8 +407,6 @@ class Codes
     const MERCHANT_ACCOUNT_FUNDING_MOBILE_PHONE_IS_REQUIRED = '82682';
     const MERCHANT_ACCOUNT_FUNDING_MOBILE_PHONE_IS_INVALID = '82683';
 
-    const NO_NET_AMOUNT_TO_PERFORM_AUTH_ADJUSTMENT          = '95606';
-
     const OAUTH_INVALID_GRANT          = '93801';
     const OAUTH_INVALID_CREDENTIALS    = '93802';
     const OAUTH_INVALID_SCOPE          = '93803';
@@ -459,54 +441,68 @@ class Codes
     const PAYPAL_ACCOUNT_PAYPAL_COMMUNICATION_ERROR                              = '92910';
     const PAYPAL_ACCOUNT_TOKEN_IS_IN_USE                                         = '92906';
 
-    const PROCESSOR_DOES_NOT_SUPPORT_AUTH_ADJUSTMENT                                  = '915222';
-    const PROCESSOR_DOES_NOT_SUPPORT_INCREMENTAL_AUTH                                 = '915220';
-    const PROCESSOR_DOES_NOT_SUPPORT_PARTIAL_AUTH_REVERSAL                            = '915221';
+    const SEPA_BANK_ACCOUNT_ACCOUNT_HOLDER_NAME_IS_REQUIRED = '93003';
+    const SEPA_BANK_ACCOUNT_BIC_IS_REQUIRED                 = '93002';
+    const SEPA_BANK_ACCOUNT_IBAN_IS_REQUIRED                = '93001';
+
+    const SEPA_MANDATE_ACCOUNT_HOLDER_NAME_IS_REQUIRED = '83301';
+    const SEPA_MANDATE_BIC_INVALID_CHARACTER           = '83306';
+    const SEPA_MANDATE_BIC_IS_REQUIRED                 = '83302';
+    const SEPA_MANDATE_BIC_LENGTH_IS_INVALID           = '83307';
+    const SEPA_MANDATE_BIC_UNSUPPORTED_COUNTRY         = '83308';
+    const SEPA_MANDATE_BILLING_ADDRESS_CONFLICT        = '93311';
+    const SEPA_MANDATE_BILLING_ADDRESS_ID_IS_INVALID   = '93312';
+    const SEPA_MANDATE_IBAN_INVALID_CHARACTER          = '83305';
+    const SEPA_MANDATE_IBAN_INVALID_FORMAT             = '83310';
+    const SEPA_MANDATE_IBAN_IS_REQUIRED                = '83303';
+    const SEPA_MANDATE_IBAN_UNSUPPORTED_COUNTRY        = '83309';
+    const SEPA_MANDATE_TYPE_IS_REQUIRED                = '93304';
+    const SEPA_MANDATE_TYPE_IS_INVALID                 = '93313';
 
     const SETTLEMENT_BATCH_SUMMARY_SETTLEMENT_DATE_IS_INVALID  = '82302';
     const SETTLEMENT_BATCH_SUMMARY_SETTLEMENT_DATE_IS_REQUIRED = '82301';
     const SETTLEMENT_BATCH_SUMMARY_CUSTOM_FIELD_IS_INVALID     = '82303';
 
-    const SUBSCRIPTION_BILLING_DAY_OF_MONTH_CANNOT_BE_UPDATED                              = '91918';
-    const SUBSCRIPTION_BILLING_DAY_OF_MONTH_IS_INVALID                                     = '91914';
-    const SUBSCRIPTION_BILLING_DAY_OF_MONTH_MUST_BE_NUMERIC                                = '91913';
-    const SUBSCRIPTION_CANNOT_ADD_DUPLICATE_ADDON_OR_DISCOUNT                              = '91911';
-    const SUBSCRIPTION_CANNOT_EDIT_CANCELED_SUBSCRIPTION                                   = '81901';
-    const SUBSCRIPTION_CANNOT_EDIT_EXPIRED_SUBSCRIPTION                                    = '81910';
-    const SUBSCRIPTION_CANNOT_EDIT_PRICE_CHANGING_FIELDS_ON_PAST_DUE_SUBSCRIPTION          = '91920';
-    const SUBSCRIPTION_FIRST_BILLING_DATE_CANNOT_BE_IN_THE_PAST                            = '91916';
-    const SUBSCRIPTION_FIRST_BILLING_DATE_CANNOT_BE_UPDATED                                = '91919';
-    const SUBSCRIPTION_FIRST_BILLING_DATE_IS_INVALID                                       = '91915';
-    const SUBSCRIPTION_ID_IS_IN_USE                                                        = '81902';
-    const SUBSCRIPTION_INCONSISTENT_NUMBER_OF_BILLING_CYCLES                               = '91908';
-    const SUBSCRIPTION_INCONSISTENT_START_DATE                                             = '91917';
-    const SUBSCRIPTION_INVALID_REQUEST_FORMAT                                              = '91921';
-    const SUBSCRIPTION_MERCHANT_ACCOUNT_ID_IS_INVALID                                      = '91901';
-    const SUBSCRIPTION_MISMATCH_CURRENCY_ISO_CODE                                          = '91923';
-    const SUBSCRIPTION_NUMBER_OF_BILLING_CYCLES_CANNOT_BE_BLANK                            = '91912';
-    const SUBSCRIPTION_NUMBER_OF_BILLING_CYCLES_IS_TOO_SMALL                               = '91909';
-    const SUBSCRIPTION_NUMBER_OF_BILLING_CYCLES_MUST_BE_GREATER_THAN_ZERO                  = '91907';
-    const SUBSCRIPTION_NUMBER_OF_BILLING_CYCLES_MUST_BE_NUMERIC                            = '91906';
-    const SUBSCRIPTION_PAYMENT_METHOD_NONCE_CARD_TYPE_IS_NOT_ACCEPTED                      = '91924';
-    const SUBSCRIPTION_PAYMENT_METHOD_NONCE_IS_INVALID                                     = '91925';
-    const SUBSCRIPTION_PAYMENT_METHOD_NONCE_NOT_ASSOCIATED_WITH_CUSTOMER                   = '91926';
-    const SUBSCRIPTION_PAYMENT_METHOD_NONCE_UNVAULTED_CARD_IS_NOT_ACCEPTED                 = '91927';
-    const SUBSCRIPTION_PAYMENT_METHOD_TOKEN_CARD_TYPE_IS_NOT_ACCEPTED                      = '91902';
-    const SUBSCRIPTION_PAYMENT_METHOD_TOKEN_IS_INVALID                                     = '91903';
-    const SUBSCRIPTION_PAYMENT_METHOD_TOKEN_NOT_ASSOCIATED_WITH_CUSTOMER                   = '91905';
-    const SUBSCRIPTION_PLAN_BILLING_FREQUENCY_CANNOT_BE_UPDATED                            = '91922';
-    const SUBSCRIPTION_PLAN_ID_IS_INVALID                                                  = '91904';
-    const SUBSCRIPTION_PRICE_CANNOT_BE_BLANK                                               = '81903';
-    const SUBSCRIPTION_PRICE_FORMAT_IS_INVALID                                             = '81904';
-    const SUBSCRIPTION_PRICE_IS_TOO_LARGE                                                  = '81923';
-    const SUBSCRIPTION_STATUS_IS_CANCELED                                                  = '81905';
-    const SUBSCRIPTION_TOKEN_FORMAT_IS_INVALID                                             = '81906';
-    const SUBSCRIPTION_TRIAL_DURATION_FORMAT_IS_INVALID                                    = '81907';
-    const SUBSCRIPTION_TRIAL_DURATION_IS_REQUIRED                                          = '81908';
-    const SUBSCRIPTION_TRIAL_DURATION_UNIT_IS_INVALID                                      = '81909';
-    const SUBSCRIPTION_MERCHANT_ACCOUNT_DOES_NOT_SUPPORT_INSTRUMENT_TYPE                   = '91930';
-    const SUBSCRIPTION_PAYMENT_METHOD_NONCE_INSTRUMENT_TYPE_DOES_NOT_SUPPORT_SUBSCRIPTIONS = '91929';
-    const SUBSCRIPTION_PAYMENT_METHOD_TOKEN_INSTRUMENT_TYPE_DOES_NOT_SUPPORT_SUBSCRIPTIONS = '91928';
+	const SUBSCRIPTION_BILLING_DAY_OF_MONTH_CANNOT_BE_UPDATED                              = '91918';
+	const SUBSCRIPTION_BILLING_DAY_OF_MONTH_IS_INVALID                                     = '91914';
+	const SUBSCRIPTION_BILLING_DAY_OF_MONTH_MUST_BE_NUMERIC                                = '91913';
+	const SUBSCRIPTION_CANNOT_ADD_DUPLICATE_ADDON_OR_DISCOUNT                              = '91911';
+	const SUBSCRIPTION_CANNOT_EDIT_CANCELED_SUBSCRIPTION                                   = '81901';
+	const SUBSCRIPTION_CANNOT_EDIT_EXPIRED_SUBSCRIPTION                                    = '81910';
+	const SUBSCRIPTION_CANNOT_EDIT_PRICE_CHANGING_FIELDS_ON_PAST_DUE_SUBSCRIPTION          = '91920';
+	const SUBSCRIPTION_FIRST_BILLING_DATE_CANNOT_BE_IN_THE_PAST                            = '91916';
+	const SUBSCRIPTION_FIRST_BILLING_DATE_CANNOT_BE_UPDATED                                = '91919';
+	const SUBSCRIPTION_FIRST_BILLING_DATE_IS_INVALID                                       = '91915';
+	const SUBSCRIPTION_ID_IS_IN_USE                                                        = '81902';
+	const SUBSCRIPTION_INCONSISTENT_NUMBER_OF_BILLING_CYCLES                               = '91908';
+	const SUBSCRIPTION_INCONSISTENT_START_DATE                                             = '91917';
+	const SUBSCRIPTION_INVALID_REQUEST_FORMAT                                              = '91921';
+	const SUBSCRIPTION_MERCHANT_ACCOUNT_ID_IS_INVALID                                      = '91901';
+	const SUBSCRIPTION_MISMATCH_CURRENCY_ISO_CODE                                          = '91923';
+	const SUBSCRIPTION_NUMBER_OF_BILLING_CYCLES_CANNOT_BE_BLANK                            = '91912';
+	const SUBSCRIPTION_NUMBER_OF_BILLING_CYCLES_IS_TOO_SMALL                               = '91909';
+	const SUBSCRIPTION_NUMBER_OF_BILLING_CYCLES_MUST_BE_GREATER_THAN_ZERO                  = '91907';
+	const SUBSCRIPTION_NUMBER_OF_BILLING_CYCLES_MUST_BE_NUMERIC                            = '91906';
+	const SUBSCRIPTION_PAYMENT_METHOD_NONCE_CARD_TYPE_IS_NOT_ACCEPTED                      = '91924';
+	const SUBSCRIPTION_PAYMENT_METHOD_NONCE_IS_INVALID                                     = '91925';
+	const SUBSCRIPTION_PAYMENT_METHOD_NONCE_NOT_ASSOCIATED_WITH_CUSTOMER                   = '91926';
+	const SUBSCRIPTION_PAYMENT_METHOD_NONCE_UNVAULTED_CARD_IS_NOT_ACCEPTED                 = '91927';
+	const SUBSCRIPTION_PAYMENT_METHOD_TOKEN_CARD_TYPE_IS_NOT_ACCEPTED                      = '91902';
+	const SUBSCRIPTION_PAYMENT_METHOD_TOKEN_IS_INVALID                                     = '91903';
+	const SUBSCRIPTION_PAYMENT_METHOD_TOKEN_NOT_ASSOCIATED_WITH_CUSTOMER                   = '91905';
+	const SUBSCRIPTION_PLAN_BILLING_FREQUENCY_CANNOT_BE_UPDATED                            = '91922';
+	const SUBSCRIPTION_PLAN_ID_IS_INVALID                                                  = '91904';
+	const SUBSCRIPTION_PRICE_CANNOT_BE_BLANK                                               = '81903';
+	const SUBSCRIPTION_PRICE_FORMAT_IS_INVALID                                             = '81904';
+	const SUBSCRIPTION_PRICE_IS_TOO_LARGE                                                  = '81923';
+	const SUBSCRIPTION_STATUS_IS_CANCELED                                                  = '81905';
+	const SUBSCRIPTION_TOKEN_FORMAT_IS_INVALID                                             = '81906';
+	const SUBSCRIPTION_TRIAL_DURATION_FORMAT_IS_INVALID                                    = '81907';
+	const SUBSCRIPTION_TRIAL_DURATION_IS_REQUIRED                                          = '81908';
+	const SUBSCRIPTION_TRIAL_DURATION_UNIT_IS_INVALID                                      = '81909';
+	const SUBSCRIPTION_MERCHANT_ACCOUNT_DOES_NOT_SUPPORT_INSTRUMENT_TYPE                   = '91930';
+	const SUBSCRIPTION_PAYMENT_METHOD_NONCE_INSTRUMENT_TYPE_DOES_NOT_SUPPORT_SUBSCRIPTIONS = '91929';
+	const SUBSCRIPTION_PAYMENT_METHOD_TOKEN_INSTRUMENT_TYPE_DOES_NOT_SUPPORT_SUBSCRIPTIONS = '91928';
 
     const SUBSCRIPTION_MODIFICATION_AMOUNT_CANNOT_BE_BLANK                             = '92003';
     const SUBSCRIPTION_MODIFICATION_AMOUNT_IS_INVALID                                  = '92002';
@@ -532,14 +528,13 @@ class Codes
 
     const TRANSACTION_AMOUNT_CANNOT_BE_NEGATIVE                                       = '81501';
     const TRANSACTION_AMOUNT_DOES_NOT_MATCH3_D_SECURE_AMOUNT                          = '91585';
+    const TRANSACTION_AMOUNT_DOES_NOT_MATCH_IDEAL_PAYMENT_AMOUNT                      = '915144';
     const TRANSACTION_AMOUNT_FORMAT_IS_INVALID                                        = '81503';
     const TRANSACTION_AMOUNT_IS_INVALID                                               = '81503';
     const TRANSACTION_AMOUNT_IS_REQUIRED                                              = '81502';
     const TRANSACTION_AMOUNT_IS_TOO_LARGE                                             = '81528';
     const TRANSACTION_AMOUNT_MUST_BE_GREATER_THAN_ZERO                                = '81531';
-    const TRANSACTION_AMOUNT_NOT_SUPPORTED_BY_PROCESSOR                               = '815193';
     const TRANSACTION_BILLING_ADDRESS_CONFLICT                                        = '91530';
-    const TRANSACTION_BILLING_PHONE_NUMBER_IS_INVALID                                 = '915206';
     const TRANSACTION_CANNOT_BE_VOIDED                                                = '91504';
     const TRANSACTION_CANNOT_CANCEL_RELEASE                                           = '91562';
     const TRANSACTION_CANNOT_CLONE_CREDIT                                             = '91543';
@@ -569,7 +564,8 @@ class Codes
     const TRANSACTION_CUSTOM_FIELD_IS_TOO_LONG                                        = '81527';
     const TRANSACTION_PAYMENT_INSTRUMENT_WITH_EXTERNAL_VAULT_IS_INVALID               = '915176';
     const TRANSACTION_HAS_ALREADY_BEEN_REFUNDED                                       = '91512';
-    const TRANSACTION_IS_NOT_ELIGIBLE_FOR_ADJUSTMENT                                  = '915219';
+    const TRANSACTION_IDEAL_PAYMENT_NOT_COMPLETE                                      = '815141';
+    const TRANSACTION_IDEAL_PAYMENTS_CANNOT_BE_VAULTED                                = '915150';
     const TRANSACTION_LINE_ITEMS_EXPECTED                                             = '915158';
     const TRANSACTION_TOO_MANY_LINE_ITEMS                                             = '915157';
     const TRANSACTION_DISCOUNT_AMOUNT_FORMAT_IS_INVALID                               = '915159';
@@ -578,19 +574,17 @@ class Codes
     const TRANSACTION_SHIPPING_AMOUNT_FORMAT_IS_INVALID                               = '915162';
     const TRANSACTION_SHIPPING_AMOUNT_CANNOT_BE_NEGATIVE                              = '915163';
     const TRANSACTION_SHIPPING_AMOUNT_IS_TOO_LARGE                                    = '915164';
-    const TRANSACTION_SHIPPING_METHOD_IS_INVALID                                      = '915203';
-    const TRANSACTION_SHIPPING_PHONE_NUMBER_IS_INVALID                                = '915204';
     const TRANSACTION_SHIPS_FROM_POSTAL_CODE_IS_TOO_LONG                              = '915165';
     const TRANSACTION_SHIPS_FROM_POSTAL_CODE_IS_INVALID                               = '915166';
     const TRANSACTION_SHIPS_FROM_POSTAL_CODE_INVALID_CHARACTERS                       = '915167';
     const TRANSACTION_MERCHANT_ACCOUNT_DOES_NOT_MATCH3_D_SECURE_MERCHANT_ACCOUNT      = '91584';
+    const TRANSACTION_MERCHANT_ACCOUNT_DOES_NOT_MATCH_IDEAL_PAYMENT_MERCHANT_ACCOUNT  = '915143';
     const TRANSACTION_MERCHANT_ACCOUNT_DOES_NOT_SUPPORT_MOTO                          = '91558';
     const TRANSACTION_MERCHANT_ACCOUNT_DOES_NOT_SUPPORT_REFUNDS                       = '91547';
     const TRANSACTION_MERCHANT_ACCOUNT_ID_DOES_NOT_MATCH_SUBSCRIPTION                 = '915180';
     const TRANSACTION_MERCHANT_ACCOUNT_ID_IS_INVALID                                  = '91513';
     const TRANSACTION_MERCHANT_ACCOUNT_IS_SUSPENDED                                   = '91514';
     const TRANSACTION_MERCHANT_ACCOUNT_NAME_IS_INVALID                                = '91513'; //Deprecated
-    const TRANSACTION_MUST_BE_IN_STATE_AUTHORIZED                                     = '915218';
     const TRANSACTION_OPTIONS_PAY_PAL_CUSTOM_FIELD_TOO_LONG                           = '91580';
     const TRANSACTION_OPTIONS_SUBMIT_FOR_SETTLEMENT_IS_REQUIRED_FOR_CLONING           = '91544';
     const TRANSACTION_OPTIONS_SUBMIT_FOR_SETTLEMENT_IS_REQUIRED_FOR_PAYPAL_UNILATERAL = '91582';
@@ -599,6 +593,8 @@ class Codes
     const TRANSACTION_OPTIONS_CREDIT_CARD_ACCOUNT_TYPE_IS_INVALID                     = '915184';
     const TRANSACTION_OPTIONS_CREDIT_CARD_ACCOUNT_TYPE_NOT_SUPPORTED                  = '915185';
     const TRANSACTION_OPTIONS_CREDIT_CARD_ACCOUNT_TYPE_DEBIT_DOES_NOT_SUPPORT_AUTHS   = '915186';
+    const TRANSACTION_ORDER_ID_DOES_NOT_MATCH_IDEAL_PAYMENT_ORDER_ID                  = '91503';
+    const TRANSACTION_ORDER_ID_IS_REQUIRED_WITH_IDEAL_PAYMENT                         = '91502';
     const TRANSACTION_ORDER_ID_IS_TOO_LONG                                            = '91501';
     const TRANSACTION_PAYMENT_INSTRUMENT_NOT_SUPPORTED_BY_MERCHANT_ACCOUNT            = '91577';
     const TRANSACTION_PAYMENT_INSTRUMENT_TYPE_IS_NOT_ACCEPTED                         = '915101';
@@ -620,19 +616,14 @@ class Codes
     const TRANSACTION_PROCESSOR_AUTHORIZATION_CODE_IS_INVALID                         = '81520';
     const TRANSACTION_PROCESSOR_DOES_NOT_SUPPORT_AUTHS                                = '915104';
     const TRANSACTION_PROCESSOR_DOES_NOT_SUPPORT_CREDITS                              = '91546';
-    const TRANSACTION_PROCESSOR_DOES_NOT_SUPPORT_MOTO_FOR_CARD_TYPE                   = '915195';
     const TRANSACTION_PROCESSOR_DOES_NOT_SUPPORT_PARTIAL_SETTLEMENT                   = '915102';
     const TRANSACTION_PROCESSOR_DOES_NOT_SUPPORT_UPDATING_ORDER_ID                    = '915107';
     const TRANSACTION_PROCESSOR_DOES_NOT_SUPPORT_UPDATING_DESCRIPTOR                  = '915108';
     const TRANSACTION_PROCESSOR_DOES_NOT_SUPPORT_UPDATING_DETAILS                     = '915130';
     const TRANSACTION_PROCESSOR_DOES_NOT_SUPPORT_VOICE_AUTHORIZATIONS                 = '91545';
-    const TRANSACTION_PRODUCT_SKU_IS_INVALID                                          = '915202';
     const TRANSACTION_PURCHASE_ORDER_NUMBER_IS_INVALID                                = '91548';
     const TRANSACTION_PURCHASE_ORDER_NUMBER_IS_TOO_LONG                               = '91537';
     const TRANSACTION_REFUND_AMOUNT_IS_TOO_LARGE                                      = '91521';
-    const TRANSACTION_REFUND_AUTH_HARD_DECLINED                                       = '915200';
-    const TRANSACTION_REFUND_AUTH_SOFT_DECLINED                                       = '915201';
-    const TRANSACTION_SCA_EXEMPTION_INVALID                                           = '915213';
     const TRANSACTION_SERVICE_FEE_AMOUNT_CANNOT_BE_NEGATIVE                           = '91554';
     const TRANSACTION_SERVICE_FEE_AMOUNT_FORMAT_IS_INVALID                            = '91555';
     const TRANSACTION_SERVICE_FEE_AMOUNT_IS_TOO_LARGE                                 = '91556';
@@ -648,21 +639,16 @@ class Codes
     const TRANSACTION_SUB_MERCHANT_ACCOUNT_REQUIRES_SERVICE_FEE_AMOUNT                = '91553';
     const TRANSACTION_TAX_AMOUNT_CANNOT_BE_NEGATIVE                                   = '81534';
     const TRANSACTION_TAX_AMOUNT_FORMAT_IS_INVALID                                    = '81535';
-    const TRANSACTION_TAX_AMOUNT_IS_REQUIRED_FOR_AIB_SWEDISH                          = '815224';
     const TRANSACTION_TAX_AMOUNT_IS_TOO_LARGE                                         = '81536';
 
     const TRANSACTION_THREE_D_SECURE_AUTHENTICATION_FAILED                            = '81571';
-    const TRANSACTION_THREE_D_SECURE_AUTHENTICATION_RESPONSE_IS_INVALID               = '915120';
-    const TRANSACTION_THREE_D_SECURE_CAVV_ALGORITHM_IS_INVALID                        = '915122';
-    const TRANSACTION_THREE_D_SECURE_CAVV_IS_REQUIRED                                 = '915116';
-    const TRANSACTION_THREE_D_SECURE_DIRECTORY_RESPONSE_IS_INVALID                    = '915121';
-    const TRANSACTION_THREE_D_SECURE_ECI_FLAG_IS_INVALID                              = '915114';
-    const TRANSACTION_THREE_D_SECURE_ECI_FLAG_IS_REQUIRED                             = '915113';
-    const TRANSACTION_THREE_D_SECURE_MERCHANT_ACCOUNT_DOES_NOT_SUPPORT_CARD_TYPE      = '915131';
-    const TRANSACTION_THREE_D_SECURE_THREE_D_SECURE_VERSION_IS_INVALID                = '915119';
     const TRANSACTION_THREE_D_SECURE_TOKEN_IS_INVALID                                 = '91568';
     const TRANSACTION_THREE_D_SECURE_TRANSACTION_DATA_DOESNT_MATCH_VERIFY             = '91570';
+    const TRANSACTION_THREE_D_SECURE_ECI_FLAG_IS_REQUIRED                             = '915113';
+    const TRANSACTION_THREE_D_SECURE_CAVV_IS_REQUIRED                                 = '915116';
     const TRANSACTION_THREE_D_SECURE_XID_IS_REQUIRED                                  = '915115';
+    const TRANSACTION_THREE_D_SECURE_ECI_FLAG_IS_INVALID                              = '915114';
+    const TRANSACTION_THREE_D_SECURE_MERCHANT_ACCOUNT_DOES_NOT_SUPPORT_CARD_TYPE      = '915131';
     const TRANSACTION_TYPE_IS_INVALID                                                 = '91523';
     const TRANSACTION_TYPE_IS_REQUIRED                                                = '91524';
     const TRANSACTION_UNSUPPORTED_VOICE_AUTHORIZATION                                 = '91539';
@@ -688,30 +674,5 @@ class Codes
     const VERIFICATION_OPTIONS_MERCHANT_ACCOUNT_CANNOT_BE_SUB_MERCHANT_ACCOUNT = '94208';
     const VERIFICATION_OPTIONS_ACCOUNT_TYPE_IS_INVALID                         = '942184';
     const VERIFICATION_OPTIONS_ACCOUNT_TYPE_NOT_SUPPORTED                      = '942185';
-
-    const VERIFICATION_THREE_D_SECURE_ECI_FLAG_IS_REQUIRED                                                    = "942113";
-    const VERIFICATION_THREE_D_SECURE_ECI_FLAG_IS_INVALID                                                     = "942114";
-    const VERIFICATION_THREE_D_SECURE_CAVV_IS_REQUIRED                                                        = "942116";
-    const VERIFICATION_THREE_D_SECURE_THREE_D_SECURE_VERSION_IS_REQUIRED                                      = '942117';
-    const VERIFICATION_THREE_D_SECURE_THREE_D_SECURE_VERSION_IS_INVALID                                       = "942119";
-    const VERIFICATION_THREE_D_SECURE_AUTHENTICATION_RESPONSE_IS_INVALID                                      = "942120";
-    const VERIFICATION_THREE_D_SECURE_DIRECTORY_RESPONSE_IS_INVALID                                           = "942121";
-    const VERIFICATION_THREE_D_SECURE_CAVV_ALGORITHM_IS_INVALID                                               = "942122";
-    const THREE_D_SECURE_AUTHENTICATION_ID_IS_INVALID                                                         = "942196";
-    const THREE_D_SECURE_AUTHENTICATION_ID_DOESNT_MATCH_NONCE_THREE_D_SECURE_AUTHENTICATION                   = "942198";
-    const THREE_D_SECURE_TRANSACTION_PAYMENT_METHOD_DOESNT_MATCH_THREE_D_SECURE_AUTHENTICATION_PAYMENT_METHOD = "942197";
-    const THREE_D_SECURE_AUTHENTICATION_ID_WITH_THREE_D_SECURE_PASS_THRU_IS_INVALID                           = "942199";
-    const THREE_D_SECURE_AUTHENTICATION_FAILED                                                                = "94271";
-    const THREE_D_SECURE_TOKEN_IS_INVALID                                                                     = "94268";
-    const THREE_D_SECURE_VERIFICATION_DATA_DOESNT_MATCH_VERIFY                                                = "94270";
-    const MERCHANT_ACCOUNT_DOES_NOT_SUPPORT3_D_SECURE                                                         = "942169";
-    const MERCHANT_ACOUNT_DOES_NOT_MATCH3_D_SECURE_MERCHANT_ACCOUNT                                           = "94284";
-    const AMOUNT_DOES_NOT_MATCH3_D_SECURE_AMOUNT                                                              = "94285";
-    const RISK_DATA_CUSTOMER_DEVICE_ID_IS_TOO_LONG                                                            = "94702";
-    const RISK_DATA_CUSTOMER_LOCATION_ZIP_INVALID_CHARACTERS                                                  = "94703";
-    const RISK_DATA_CUSTOMER_LOCATION_ZIP_IS_INVALID                                                          = "94704";
-    const RISK_DATA_CUSTOMER_LOCATION_ZIP_IS_TOO_LONG                                                         = "94705";
-    const RISK_DATA_CUSTOMER_TENURE_IS_TOO_LONG                                                               = "94706";
-    const RISK_DATA_CUSTOMER_TENURE_IS_INVALID                                                                = "94707";
-    // phpcs:enable Generic.Files.LineLength
 }
+class_alias('Braintree\Error\Codes', 'Braintree_Error_Codes');

@@ -11,20 +11,18 @@
 
 namespace Symfony\Component\Validator\Context;
 
+use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Component\Validator\ClassBasedInterface;
 use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\Constraints\Valid;
 use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\ConstraintViolationList;
-use Symfony\Component\Validator\ConstraintViolationListInterface;
-use Symfony\Component\Validator\Mapping\ClassMetadataInterface;
-use Symfony\Component\Validator\Mapping\MemberMetadata;
 use Symfony\Component\Validator\Mapping\MetadataInterface;
 use Symfony\Component\Validator\Mapping\PropertyMetadataInterface;
 use Symfony\Component\Validator\Util\PropertyPath;
-use Symfony\Component\Validator\Validator\LazyProperty;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\Validator\ValidatorInterface as LegacyValidatorInterface;
 use Symfony\Component\Validator\Violation\ConstraintViolationBuilder;
-use Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * The context used and created by {@link ExecutionContextFactory}.
@@ -33,7 +31,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  *
  * @see ExecutionContextInterface
  *
- * @internal since version 2.5. Code against ExecutionContextInterface instead.
+ * @internal You should not instantiate or use this class. Code against
+ *           {@link ExecutionContextInterface} instead.
  */
 class ExecutionContext implements ExecutionContextInterface
 {
@@ -55,7 +54,7 @@ class ExecutionContext implements ExecutionContextInterface
     private $translator;
 
     /**
-     * @var string|null
+     * @var string
      */
     private $translationDomain;
 
@@ -111,59 +110,62 @@ class ExecutionContext implements ExecutionContextInterface
     /**
      * Stores which objects have been validated in which group.
      *
-     * @var bool[][]
+     * @var array
      */
-    private $validatedObjects = [];
+    private $validatedObjects = array();
 
     /**
      * Stores which class constraint has been validated for which object.
      *
-     * @var bool[]
+     * @var array
      */
-    private $validatedConstraints = [];
+    private $validatedConstraints = array();
 
     /**
      * Stores which objects have been initialized.
      *
-     * @var bool[]
+     * @var array
      */
     private $initializedObjects;
 
     /**
-     * @var \SplObjectStorage<object, string>
-     */
-    private $cachedObjectsRefs;
-
-    /**
-     * @param mixed $root The root value of the validated object graph
+     * Creates a new execution context.
      *
-     * @internal Called by {@link ExecutionContextFactory}. Should not be used in user code.
+     * @param ValidatorInterface  $validator         The validator
+     * @param mixed               $root              The root value of the
+     *                                               validated object graph
+     * @param TranslatorInterface $translator        The translator
+     * @param string|null         $translationDomain The translation domain to
+     *                                               use for translating
+     *                                               violation messages
+     *
+     * @internal Called by {@link ExecutionContextFactory}. Should not be used
+     *           in user code.
      */
-    public function __construct(ValidatorInterface $validator, $root, TranslatorInterface $translator, string $translationDomain = null)
+    public function __construct(ValidatorInterface $validator, $root, TranslatorInterface $translator, $translationDomain = null)
     {
         $this->validator = $validator;
         $this->root = $root;
         $this->translator = $translator;
         $this->translationDomain = $translationDomain;
         $this->violations = new ConstraintViolationList();
-        $this->cachedObjectsRefs = new \SplObjectStorage();
     }
 
     /**
      * {@inheritdoc}
      */
-    public function setNode($value, ?object $object, MetadataInterface $metadata = null, string $propertyPath)
+    public function setNode($value, $object, MetadataInterface $metadata = null, $propertyPath)
     {
         $this->value = $value;
         $this->object = $object;
         $this->metadata = $metadata;
-        $this->propertyPath = $propertyPath;
+        $this->propertyPath = (string) $propertyPath;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function setGroup(?string $group)
+    public function setGroup($group)
     {
         $this->group = $group;
     }
@@ -179,15 +181,32 @@ class ExecutionContext implements ExecutionContextInterface
     /**
      * {@inheritdoc}
      */
-    public function addViolation(string $message, array $parameters = [])
+    public function addViolation($message, array $parameters = array(), $invalidValue = null, $plural = null, $code = null)
     {
+        // The parameters $invalidValue and following are ignored by the new
+        // API, as they are not present in the new interface anymore.
+        // You should use buildViolation() instead.
+        if (\func_num_args() > 2) {
+            @trigger_error('The parameters $invalidValue, $plural and $code in method '.__METHOD__.' are deprecated since Symfony 2.5 and will be removed in 3.0. Use the '.__CLASS__.'::buildViolation method instead.', E_USER_DEPRECATED);
+
+            $this
+                ->buildViolation($message, $parameters)
+                ->setInvalidValue($invalidValue)
+                ->setPlural($plural)
+                ->setCode($code)
+                ->addViolation()
+            ;
+
+            return;
+        }
+
         $this->violations->add(new ConstraintViolation(
             $this->translator->trans($message, $parameters, $this->translationDomain),
             $message,
             $parameters,
             $this->root,
             $this->propertyPath,
-            $this->getValue(),
+            $this->value,
             null,
             null,
             $this->constraint
@@ -197,7 +216,7 @@ class ExecutionContext implements ExecutionContextInterface
     /**
      * {@inheritdoc}
      */
-    public function buildViolation(string $message, array $parameters = []): ConstraintViolationBuilderInterface
+    public function buildViolation($message, array $parameters = array())
     {
         return new ConstraintViolationBuilder(
             $this->violations,
@@ -206,7 +225,7 @@ class ExecutionContext implements ExecutionContextInterface
             $parameters,
             $this->root,
             $this->propertyPath,
-            $this->getValue(),
+            $this->value,
             $this->translator,
             $this->translationDomain
         );
@@ -215,7 +234,7 @@ class ExecutionContext implements ExecutionContextInterface
     /**
      * {@inheritdoc}
      */
-    public function getViolations(): ConstraintViolationListInterface
+    public function getViolations()
     {
         return $this->violations;
     }
@@ -223,7 +242,7 @@ class ExecutionContext implements ExecutionContextInterface
     /**
      * {@inheritdoc}
      */
-    public function getValidator(): ValidatorInterface
+    public function getValidator()
     {
         return $this->validator;
     }
@@ -241,10 +260,6 @@ class ExecutionContext implements ExecutionContextInterface
      */
     public function getValue()
     {
-        if ($this->value instanceof LazyProperty) {
-            return $this->value->getPropertyValue();
-        }
-
         return $this->value;
     }
 
@@ -259,7 +274,7 @@ class ExecutionContext implements ExecutionContextInterface
     /**
      * {@inheritdoc}
      */
-    public function getMetadata(): ?MetadataInterface
+    public function getMetadata()
     {
         return $this->metadata;
     }
@@ -267,12 +282,12 @@ class ExecutionContext implements ExecutionContextInterface
     /**
      * {@inheritdoc}
      */
-    public function getGroup(): ?string
+    public function getGroup()
     {
         return $this->group;
     }
 
-    public function getConstraint(): ?Constraint
+    public function getConstraint()
     {
         return $this->constraint;
     }
@@ -280,15 +295,15 @@ class ExecutionContext implements ExecutionContextInterface
     /**
      * {@inheritdoc}
      */
-    public function getClassName(): ?string
+    public function getClassName()
     {
-        return $this->metadata instanceof MemberMetadata || $this->metadata instanceof ClassMetadataInterface ? $this->metadata->getClassName() : null;
+        return $this->metadata instanceof ClassBasedInterface ? $this->metadata->getClassName() : null;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getPropertyName(): ?string
+    public function getPropertyName()
     {
         return $this->metadata instanceof PropertyMetadataInterface ? $this->metadata->getPropertyName() : null;
     }
@@ -296,7 +311,7 @@ class ExecutionContext implements ExecutionContextInterface
     /**
      * {@inheritdoc}
      */
-    public function getPropertyPath(string $subPath = ''): string
+    public function getPropertyPath($subPath = '')
     {
         return PropertyPath::append($this->propertyPath, $subPath);
     }
@@ -304,10 +319,107 @@ class ExecutionContext implements ExecutionContextInterface
     /**
      * {@inheritdoc}
      */
-    public function markGroupAsValidated(string $cacheKey, string $groupHash)
+    public function addViolationAt($subPath, $message, array $parameters = array(), $invalidValue = null, $plural = null, $code = null)
+    {
+        @trigger_error('The '.__METHOD__.' method is deprecated since Symfony 2.5 and will be removed in 3.0. Use the '.__CLASS__.'::buildViolation method instead.', E_USER_DEPRECATED);
+
+        if (\func_num_args() > 2) {
+            $this
+                ->buildViolation($message, $parameters)
+                ->atPath($subPath)
+                ->setInvalidValue($invalidValue)
+                ->setPlural($plural)
+                ->setCode($code)
+                ->addViolation()
+            ;
+
+            return;
+        }
+
+        $this
+            ->buildViolation($message, $parameters)
+            ->atPath($subPath)
+            ->addViolation()
+        ;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function validate($value, $subPath = '', $groups = null, $traverse = false, $deep = false)
+    {
+        @trigger_error('The '.__METHOD__.' method is deprecated since Symfony 2.5 and will be removed in 3.0. Use the '.__CLASS__.'::getValidator() method instead.', E_USER_DEPRECATED);
+
+        if (\is_array($value)) {
+            // The $traverse flag is ignored for arrays
+            $constraint = new Valid(array('traverse' => true, 'deep' => $deep));
+
+            return $this
+                ->getValidator()
+                ->inContext($this)
+                ->atPath($subPath)
+                ->validate($value, $constraint, $groups)
+            ;
+        }
+
+        if ($traverse && $value instanceof \Traversable) {
+            $constraint = new Valid(array('traverse' => true, 'deep' => $deep));
+
+            return $this
+                ->getValidator()
+                ->inContext($this)
+                ->atPath($subPath)
+                ->validate($value, $constraint, $groups)
+            ;
+        }
+
+        return $this
+            ->getValidator()
+            ->inContext($this)
+            ->atPath($subPath)
+            ->validate($value, null, $groups)
+        ;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function validateValue($value, $constraints, $subPath = '', $groups = null)
+    {
+        @trigger_error('The '.__METHOD__.' method is deprecated since Symfony 2.5 and will be removed in 3.0. Use the '.__CLASS__.'::getValidator() method instead.', E_USER_DEPRECATED);
+
+        return $this
+            ->getValidator()
+            ->inContext($this)
+            ->atPath($subPath)
+            ->validate($value, $constraints, $groups)
+        ;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getMetadataFactory()
+    {
+        @trigger_error('The '.__METHOD__.' is deprecated since Symfony 2.5 and will be removed in 3.0. Use the new Symfony\Component\Validator\Context\ExecutionContext::getValidator method in combination with Symfony\Component\Validator\Validator\ValidatorInterface::getMetadataFor or Symfony\Component\Validator\Validator\ValidatorInterface::hasMetadataFor method instead.', E_USER_DEPRECATED);
+
+        $validator = $this->getValidator();
+
+        if ($validator instanceof LegacyValidatorInterface) {
+            return $validator->getMetadataFactory();
+        }
+
+        // The ValidatorInterface extends from the deprecated MetadataFactoryInterface, so return it when we don't have the factory instance itself
+        return $validator;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function markGroupAsValidated($cacheKey, $groupHash)
     {
         if (!isset($this->validatedObjects[$cacheKey])) {
-            $this->validatedObjects[$cacheKey] = [];
+            $this->validatedObjects[$cacheKey] = array();
         }
 
         $this->validatedObjects[$cacheKey][$groupHash] = true;
@@ -316,7 +428,7 @@ class ExecutionContext implements ExecutionContextInterface
     /**
      * {@inheritdoc}
      */
-    public function isGroupValidated(string $cacheKey, string $groupHash): bool
+    public function isGroupValidated($cacheKey, $groupHash)
     {
         return isset($this->validatedObjects[$cacheKey][$groupHash]);
     }
@@ -324,7 +436,7 @@ class ExecutionContext implements ExecutionContextInterface
     /**
      * {@inheritdoc}
      */
-    public function markConstraintAsValidated(string $cacheKey, string $constraintHash)
+    public function markConstraintAsValidated($cacheKey, $constraintHash)
     {
         $this->validatedConstraints[$cacheKey.':'.$constraintHash] = true;
     }
@@ -332,7 +444,7 @@ class ExecutionContext implements ExecutionContextInterface
     /**
      * {@inheritdoc}
      */
-    public function isConstraintValidated(string $cacheKey, string $constraintHash): bool
+    public function isConstraintValidated($cacheKey, $constraintHash)
     {
         return isset($this->validatedConstraints[$cacheKey.':'.$constraintHash]);
     }
@@ -340,7 +452,7 @@ class ExecutionContext implements ExecutionContextInterface
     /**
      * {@inheritdoc}
      */
-    public function markObjectAsInitialized(string $cacheKey)
+    public function markObjectAsInitialized($cacheKey)
     {
         $this->initializedObjects[$cacheKey] = true;
     }
@@ -348,25 +460,8 @@ class ExecutionContext implements ExecutionContextInterface
     /**
      * {@inheritdoc}
      */
-    public function isObjectInitialized(string $cacheKey): bool
+    public function isObjectInitialized($cacheKey)
     {
         return isset($this->initializedObjects[$cacheKey]);
-    }
-
-    /**
-     * @internal
-     */
-    public function generateCacheKey(object $object): string
-    {
-        if (!isset($this->cachedObjectsRefs[$object])) {
-            $this->cachedObjectsRefs[$object] = spl_object_hash($object);
-        }
-
-        return $this->cachedObjectsRefs[$object];
-    }
-
-    public function __clone()
-    {
-        $this->violations = clone $this->violations;
     }
 }

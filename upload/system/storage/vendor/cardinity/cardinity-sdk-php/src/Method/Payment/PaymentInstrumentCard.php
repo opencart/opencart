@@ -15,7 +15,7 @@ class PaymentInstrumentCard extends ResultObject implements PaymentInstrumentInt
         retrieving an existing payments only last 4 digits are returned. */
     private $pan;
 
-    /** @type integer Expiration year. 4 digits, e.g. 2021. */
+    /** @type integer Expiration year. 4 digits, e.g. 2016. */
     private $expYear;
 
     /** @type integer Expiration month, e.g. 9. */
@@ -23,7 +23,7 @@ class PaymentInstrumentCard extends ResultObject implements PaymentInstrumentInt
 
     /** @type string Card holder’s name. Max length 32 characters. */
     private $holder;
-
+  
     /**
      * Gets the value of cardBrand.
      * @return mixed
@@ -32,7 +32,7 @@ class PaymentInstrumentCard extends ResultObject implements PaymentInstrumentInt
     {
         return $this->cardBrand;
     }
-
+ 
     /**
      * Sets the value of cardBrand.
      * @param mixed $cardBrand the card brand
@@ -42,7 +42,7 @@ class PaymentInstrumentCard extends ResultObject implements PaymentInstrumentInt
     {
         $this->cardBrand = $cardBrand;
     }
-
+ 
     /**
      * Gets the value of pan.
      * @return mixed
@@ -51,7 +51,7 @@ class PaymentInstrumentCard extends ResultObject implements PaymentInstrumentInt
     {
         return $this->pan;
     }
-
+ 
     /**
      * Sets the value of pan.
      * @param mixed $pan the pan
@@ -61,7 +61,7 @@ class PaymentInstrumentCard extends ResultObject implements PaymentInstrumentInt
     {
         $this->pan = $pan;
     }
-
+ 
     /**
      * Gets the value of expYear.
      * @return mixed
@@ -70,7 +70,7 @@ class PaymentInstrumentCard extends ResultObject implements PaymentInstrumentInt
     {
         return $this->expYear;
     }
-
+ 
     /**
      * Sets the value of expYear.
      * @param mixed $expYear the exp year
@@ -80,7 +80,7 @@ class PaymentInstrumentCard extends ResultObject implements PaymentInstrumentInt
     {
         $this->expYear = $expYear;
     }
-
+ 
     /**
      * Gets the value of expMonth.
      * @return mixed
@@ -89,7 +89,7 @@ class PaymentInstrumentCard extends ResultObject implements PaymentInstrumentInt
     {
         return $this->expMonth;
     }
-
+ 
     /**
      * Sets the value of expMonth.
      * @param mixed $expMonth the exp month
@@ -99,7 +99,7 @@ class PaymentInstrumentCard extends ResultObject implements PaymentInstrumentInt
     {
         $this->expMonth = $expMonth;
     }
-
+ 
     /**
      * Gets the value of holder.
      * @return mixed
@@ -108,7 +108,7 @@ class PaymentInstrumentCard extends ResultObject implements PaymentInstrumentInt
     {
         return $this->holder;
     }
-
+ 
     /**
      * Sets the value of holder.
      * @param mixed $holder the holder

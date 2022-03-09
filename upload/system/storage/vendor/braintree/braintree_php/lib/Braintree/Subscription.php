@@ -1,12 +1,47 @@
 <?php
-
 namespace Braintree;
 
 /**
  * Braintree Subscription module
  *
- * // phpcs:ignore
- * For more detailed information on Subscriptions, see {@link https://developer.paypal.com/braintree/docs/reference/response/subscription our developer docs}
+ * <b>== More information ==</b>
+ *
+ * For more detailed information on Subscriptions, see {@link https://developers.braintreepayments.com/reference/response/subscription/php https://developers.braintreepayments.com/reference/response/subscription/php}
+ *
+ * PHP Version 5
+ *
+ * @package   Braintree
+ * 
+ * @property-read \Braintree\Addon[] $addOns
+ * @property-read string $balance
+ * @property-read int $billingDayOfMonth
+ * @property-read \DateTime $billingPeriodEndDate
+ * @property-read \DateTime $billingPeriodStartDate
+ * @property-read \DateTime $createdAt
+ * @property-read int $currentBillingCycle
+ * @property-read int|null $daysPastDue
+ * @property-read string|null $description
+ * @property-read \Braintree\Descriptor|null $descriptor
+ * @property-read \Braintree\Discount[] $discounts
+ * @property-read int $failureCount
+ * @property-read \DateTime $firstBillingDate
+ * @property-read string $id
+ * @property-read string $merchantAccountId
+ * @property-read boolean $neverExpires
+ * @property-read string $nextBillingPeriodAmount
+ * @property-read \DateTime $nextBillingDate
+ * @property-read int|null $numberOfBillingCycles
+ * @property-read \DateTime|null $paidThroughDate
+ * @property-read string $paymentMethodToken
+ * @property-read string $planId
+ * @property-read string $price
+ * @property-read string $status
+ * @property-read \Braintree\Subscription\StatusDetails[] $statusHistory
+ * @property-read \Braintree\Transaction[] $transactions
+ * @property-read int $trialDuration
+ * @property-read string $trialDurationUnit
+ * @property-read boolean $trialPeriod
+ * @property-read \DateTime $updatedAt
  */
 class Subscription extends Base
 {
@@ -22,11 +57,7 @@ class Subscription extends Base
     const RECURRING     = 'recurring';
 
     /**
-     * Creates an instance from given attributes
-     *
-     * @param array $attributes response object attributes
-     *
-     * @return Subscription
+     * @ignore
      */
     public static function factory($attributes)
     {
@@ -36,13 +67,16 @@ class Subscription extends Base
         return $instance;
     }
 
+    /**
+     * @ignore
+     */
     protected function _initialize($attributes)
     {
         $this->_attributes = $attributes;
 
         $addOnArray = [];
         if (isset($attributes['addOns'])) {
-            foreach ($attributes['addOns'] as $addOn) {
+            foreach ($attributes['addOns'] AS $addOn) {
                 $addOnArray[] = AddOn::factory($addOn);
             }
         }
@@ -50,7 +84,7 @@ class Subscription extends Base
 
         $discountArray = [];
         if (isset($attributes['discounts'])) {
-            foreach ($attributes['discounts'] as $discount) {
+            foreach ($attributes['discounts'] AS $discount) {
                 $discountArray[] = Discount::factory($discount);
             }
         }
@@ -66,7 +100,7 @@ class Subscription extends Base
 
         $statusHistory = [];
         if (isset($attributes['statusHistory'])) {
-            foreach ($attributes['statusHistory'] as $history) {
+            foreach ($attributes['statusHistory'] AS $history) {
                 $statusHistory[] = new Subscription\StatusDetails($history);
             }
         }
@@ -74,128 +108,68 @@ class Subscription extends Base
 
         $transactionArray = [];
         if (isset($attributes['transactions'])) {
-            foreach ($attributes['transactions'] as $transaction) {
+            foreach ($attributes['transactions'] AS $transaction) {
                 $transactionArray[] = Transaction::factory($transaction);
             }
         }
         $this->_attributes['transactions'] = $transactionArray;
     }
 
-    // phpcs:ignore PEAR.Commenting.FunctionComment.Missing
-    public function __toString()
+    /**
+     * returns a string representation of the customer
+     * @return string
+     */
+    public function  __toString()
     {
         $excludedAttributes = ['statusHistory'];
 
         $displayAttributes = [];
-        foreach ($this->_attributes as $key => $val) {
+        foreach($this->_attributes as $key => $val) {
             if (!in_array($key, $excludedAttributes)) {
                 $displayAttributes[$key] = $val;
             }
         }
 
         return __CLASS__ . '[' .
-                Util::attributesToString($displayAttributes) . ']';
+                Util::attributesToString($displayAttributes) .']';
     }
 
-    /**
-     * Static methods redirecting to gateway class
-     *
-     * @param array $attributes containing request params
-     *
-     * @see SubscriptionGateway::create()
-     *
-     * @return Result\Successful|Result\Error
-     */
+
+    // static methods redirecting to gateway
+
     public static function create($attributes)
     {
         return Configuration::gateway()->subscription()->create($attributes);
     }
 
-    /*
-     * Static methods redirecting to gateway class
-     *
-     * @param string $id of the subscription to find
-     *
-     * @see SubscriptionGateway::find()
-     *
-     * @return Subscription|Exception\NotFound
-     */
     public static function find($id)
     {
         return Configuration::gateway()->subscription()->find($id);
     }
 
-    /*
-     * Static methods redirecting to gateway class
-     *
-     * @param mixed $query of search fields
-     *
-     * @see SubscriptionGateway::search()
-     *
-     * @return ResourceCollection of Subscription objects
-     */
     public static function search($query)
     {
         return Configuration::gateway()->subscription()->search($query);
     }
 
-    /*
-     * Static methods redirecting to gateway class
-     *
-     * @param mixed $query of search fields
-     * @param array $ids to be fetched
-     *
-     * @see SubscriptionGateway::fetch()
-     *
-     * @return ResourceCollection of Subscription objects
-     */
     public static function fetch($query, $ids)
     {
         return Configuration::gateway()->subscription()->fetch($query, $ids);
     }
 
-    /*
-     * Static methods redirecting to gateway class
-     *
-     * @param string $subscriptionId the ID of the subscription to be updated
-     * @param mixed $attributes
-     *
-     * @see SubscriptionGateway::update()
-     *
-     * @return Subscription|Exception\NotFound
-     */
     public static function update($subscriptionId, $attributes)
     {
         return Configuration::gateway()->subscription()->update($subscriptionId, $attributes);
     }
 
-    /*
-     * Static methods redirecting to gateway class
-     *
-     * @param string $subscriptionId the ID of the subscription with a charge being retried
-     * @param string $amount optional
-     * @param bool $submitForSettlement defaults to false unless specified true
-     *
-     * @see SubscriptionGateway::retryCharge()
-     *
-     * @return Transaction
-     */
     public static function retryCharge($subscriptionId, $amount = null, $submitForSettlement = false)
     {
         return Configuration::gateway()->subscription()->retryCharge($subscriptionId, $amount, $submitForSettlement);
     }
 
-    /*
-     * Static methods redirecting to gateway class
-     *
-     * @param string $subscriptionId to be canceled
-     *
-     * @see SubscriptionGateway::cancel()
-     *
-     * @return Subscription|Exception\NotFound
-     */
     public static function cancel($subscriptionId)
     {
         return Configuration::gateway()->subscription()->cancel($subscriptionId);
     }
 }
+class_alias('Braintree\Subscription', 'Braintree_Subscription');

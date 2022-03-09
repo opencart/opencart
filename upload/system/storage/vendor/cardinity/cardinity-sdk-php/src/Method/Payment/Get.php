@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Get implements MethodInterface
 {
     private $paymentId;
-
+    
     public function __construct($paymentId)
     {
         $this->paymentId = $paymentId;

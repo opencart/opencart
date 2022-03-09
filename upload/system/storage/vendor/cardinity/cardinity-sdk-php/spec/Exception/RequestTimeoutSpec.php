@@ -4,6 +4,7 @@ namespace spec\Cardinity\Exception;
 
 use Cardinity\Method\ResultObject;
 use PhpSpec\ObjectBehavior;
+use Prophecy\Argument;
 
 class RequestTimeoutSpec extends ObjectBehavior
 {

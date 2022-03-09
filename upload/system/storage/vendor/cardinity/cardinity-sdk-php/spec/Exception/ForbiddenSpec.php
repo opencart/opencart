@@ -3,6 +3,7 @@
 namespace spec\Cardinity\Exception;
 
 use PhpSpec\ObjectBehavior;
+use Prophecy\Argument;
 
 class ForbiddenSpec extends ObjectBehavior
 {

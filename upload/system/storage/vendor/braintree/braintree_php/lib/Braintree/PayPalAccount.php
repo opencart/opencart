@@ -1,20 +1,40 @@
 <?php
-
 namespace Braintree;
 
 /**
  * Braintree PayPalAccount module
+ *
+ * @package    Braintree
+ * @category   Resources
+ */
+
+/**
  * Manages Braintree PayPalAccounts
  *
- * See our {@link https://developer.paypal.com/braintree/docs/reference/response/paypal-account/php developer docs} for information on attributes
+ * <b>== More information ==</b>
+ *
+ *
+ * @package    Braintree
+ * @category   Resources
+ *
+ * @property-read string $billingAgreementId
+ * @property-read \DateTime $createdAt
+ * @property-read string $customerId
+ * @property-read boolean $default
+ * @property-read string $email
+ * @property-read string $imageUrl
+ * @property-read string $payerId
+ * @property-read \Braintree\Subscription[] $subscriptions
+ * @property-read string $token
+ * @property-read \DateTime $updatedAt
  */
 class PayPalAccount extends Base
 {
     /**
-     * Creates an instance from given attributes
+     *  factory method: returns an instance of PayPalAccount
+     *  to the requesting method, with populated properties
      *
-     * @param array $attributes response object attributes
-     *
+     * @ignore
      * @return PayPalAccount
      */
     public static function factory($attributes)
@@ -39,8 +59,8 @@ class PayPalAccount extends Base
     /**
      * sets instance properties from an array of values
      *
+     * @access protected
      * @param array $paypalAccountAttribs array of paypalAccount data
-     *
      * @return void
      */
     protected function _initialize($paypalAccountAttribs)
@@ -50,7 +70,7 @@ class PayPalAccount extends Base
 
         $subscriptionArray = [];
         if (isset($paypalAccountAttribs['subscriptions'])) {
-            foreach ($paypalAccountAttribs['subscriptions'] as $subscription) {
+            foreach ($paypalAccountAttribs['subscriptions'] AS $subscription) {
                 $subscriptionArray[] = Subscription::factory($subscription);
             }
         }
@@ -58,73 +78,38 @@ class PayPalAccount extends Base
         $this->_set('subscriptions', $subscriptionArray);
     }
 
-    // phpcs:ignore PEAR.Commenting.FunctionComment.Missing
-    public function __toString()
+    /**
+     * create a printable representation of the object as:
+     * ClassName[property=value, property=value]
+     * @return string
+     */
+    public function  __toString()
     {
         return __CLASS__ . '[' .
                 Util::attributesToString($this->_attributes) . ']';
     }
 
-    /**
-     * Static methods redirecting to gateway class
-     *
-     * @param string $token paypal accountunique id
-     *
-     * @see PayPalGateway::find()
-     *
-     * @throws Exception\NotFound
-     *
-     * @return PayPalAccount
-     */
+
+    // static methods redirecting to gateway
+
     public static function find($token)
     {
         return Configuration::gateway()->payPalAccount()->find($token);
     }
 
-    /**
-     * Static methods redirecting to gateway class
-     *
-     * if calling this method in context, $token
-     * is the 2nd attribute. $token is not sent in object context.
-     *
-     * @param string $token      (optional)
-     * @param array  $attributes including request parameters
-     *
-     * @see PayPalGateway::update()
-     *
-     * @return Result\Successful or Result\Error
-     */
     public static function update($token, $attributes)
     {
         return Configuration::gateway()->payPalAccount()->update($token, $attributes);
     }
 
-    /**
-     * Static methods redirecting to gateway class
-     *
-     * @param string $token paypal account identifier
-     *
-     * @see PayPalGateway::delete()
-     *
-     * @return Result
-     */
     public static function delete($token)
     {
         return Configuration::gateway()->payPalAccount()->delete($token);
     }
 
-    /**
-     * Static methods redirecting to gateway class
-     *
-     * @param string $token              paypal account identifier
-     * @param array  $transactionAttribs containing request parameters
-     *
-     * @see PayPalGateway::sale()
-     *
-     * @return Result\Successful|Result\Error
-     */
     public static function sale($token, $transactionAttribs)
     {
         return Configuration::gateway()->payPalAccount()->sale($token, $transactionAttribs);
     }
 }
+class_alias('Braintree\PayPalAccount', 'Braintree_PayPalAccount');

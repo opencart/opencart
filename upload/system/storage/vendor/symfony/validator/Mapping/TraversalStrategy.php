@@ -33,18 +33,28 @@ class TraversalStrategy
      * Specifies that a node's value should be iterated only if it is an
      * instance of {@link \Traversable}.
      */
-    public const IMPLICIT = 1;
+    const IMPLICIT = 1;
 
     /**
      * Specifies that a node's value should never be iterated.
      */
-    public const NONE = 2;
+    const NONE = 2;
 
     /**
      * Specifies that a node's value should always be iterated. If the value is
      * not an instance of {@link \Traversable}, an exception should be thrown.
      */
-    public const TRAVERSE = 4;
+    const TRAVERSE = 4;
+
+    /**
+     * Specifies that nested instances of {@link \Traversable} should never be
+     * iterated. Can be combined with {@link IMPLICIT} or {@link TRAVERSE}.
+     *
+     * @deprecated since version 2.5, to be removed in 3.0. This constant was added for backwards compatibility only.
+     *
+     * @internal
+     */
+    const STOP_RECURSION = 8;
 
     /**
      * Not instantiable.

@@ -1,21 +1,38 @@
 <?php
-
 namespace Braintree\Transaction;
 
 use Braintree\Instance;
-
 /**
  * Venmo account details from a transaction
  *
- * See our {@link https://developer.paypal.com/braintree/docs/reference/response/transaction#venmo_account_details developer docs} for information on attributes
+ * @package    Braintree
+ * @subpackage Transaction
+ */
+
+/**
+ * creates an instance of VenmoAccountDetails
+ *
+ *
+ * @package    Braintree
+ * @subpackage Transaction
+ *
+ * @property-read string $sourceDescription
+ * @property-read string $token
+ * @property-read string $imageUrl
+ * @property-read string $username
+ * @property-read string $venmo_user_id
+ * @uses Instance inherits methods
  */
 class VenmoAccountDetails extends Instance
 {
     protected $_attributes = array();
 
-    // phpcs:ignore PEAR.Commenting.FunctionComment.Missing
+    /**
+     * @ignore
+     */
     public function __construct($attributes)
     {
         parent::__construct($attributes);
     }
 }
+class_alias('Braintree\Transaction\VenmoAccountDetails', 'Braintree_Transaction_VenmoAccountDetails');

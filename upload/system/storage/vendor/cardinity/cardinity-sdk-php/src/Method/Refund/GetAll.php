@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class GetAll implements MethodResultCollectionInterface
 {
     private $paymentId;
-
+    
     public function __construct($paymentId)
     {
         $this->paymentId = $paymentId;

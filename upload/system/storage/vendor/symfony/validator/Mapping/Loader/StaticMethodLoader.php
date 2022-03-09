@@ -28,7 +28,7 @@ class StaticMethodLoader implements LoaderInterface
      *
      * @param string $methodName The name of the static method to call
      */
-    public function __construct(string $methodName = 'loadValidatorMetadata')
+    public function __construct($methodName = 'loadValidatorMetadata')
     {
         $this->methodName = $methodName;
     }
@@ -49,7 +49,7 @@ class StaticMethodLoader implements LoaderInterface
             }
 
             if (!$reflMethod->isStatic()) {
-                throw new MappingException(sprintf('The method "%s::%s()" should be static.', $reflClass->name, $this->methodName));
+                throw new MappingException(sprintf('The method %s::%s should be static', $reflClass->name, $this->methodName));
             }
 
             if ($reflMethod->getDeclaringClass()->name != $reflClass->name) {

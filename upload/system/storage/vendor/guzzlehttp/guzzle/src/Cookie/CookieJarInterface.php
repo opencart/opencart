@@ -1,8 +1,8 @@
 <?php
 namespace GuzzleHttp\Cookie;
 
-use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
+use GuzzleHttp\Message\RequestInterface;
+use GuzzleHttp\Message\ResponseInterface;
 
 /**
  * Stores HTTP cookies.
@@ -17,16 +17,14 @@ use Psr\Http\Message\ResponseInterface;
 interface CookieJarInterface extends \Countable, \IteratorAggregate
 {
     /**
-     * Create a request with added cookie headers.
+     * Add a Cookie header to a request.
      *
      * If no matching cookies are found in the cookie jar, then no Cookie
-     * header is added to the request and the same request is returned.
+     * header is added to the request.
      *
-     * @param RequestInterface $request Request object to modify.
-     *
-     * @return RequestInterface returns the modified request.
+     * @param RequestInterface $request Request object to update
      */
-    public function withCookieHeader(RequestInterface $request);
+    public function addCookieHeader(RequestInterface $request);
 
     /**
      * Extract cookies from an HTTP response and store them in the CookieJar.
@@ -58,9 +56,9 @@ interface CookieJarInterface extends \Countable, \IteratorAggregate
      * arguments, then the cookie with the specified name, path and domain is
      * removed.
      *
-     * @param string|null $domain Clears cookies matching a domain
-     * @param string|null $path   Clears cookies matching a domain and path
-     * @param string|null $name   Clears cookies matching a domain, path, and name
+     * @param string $domain Clears cookies matching a domain
+     * @param string $path   Clears cookies matching a domain and path
+     * @param string $name   Clears cookies matching a domain, path, and name
      *
      * @return CookieJarInterface
      */
@@ -74,11 +72,4 @@ interface CookieJarInterface extends \Countable, \IteratorAggregate
      * to RFC 2965.
      */
     public function clearSessionCookies();
-
-    /**
-     * Converts the cookie jar to an array.
-     *
-     * @return array
-     */
-    public function toArray();
 }

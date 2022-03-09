@@ -1,11 +1,8 @@
 <?php
-
 namespace Braintree\Result;
 
 use Braintree\RiskData;
-use Braintree\ThreeDSecureInfo;
 use Braintree\Util;
-use Braintree\Base;
 
 /**
  * Braintree Credit Card Verification Result
@@ -13,9 +10,18 @@ use Braintree\Base;
  * This object is returned as part of an Error Result; it provides
  * access to the credit card verification data from the gateway
  *
- * See our {@link https://developer.paypal.com/braintree/docs/reference/response/credit-card-verification developer docs} for information on attributes
+ *
+ * @package    Braintree
+ * @subpackage Result
+ *
+ * @property-read string|null $avsErrorResponseCode
+ * @property-read string $avsPostalCodeResponseCode
+ * @property-read string $avsStreetAddressResponseCode
+ * @property-read string $cvvResponseCode
+ * @property-read string $status
+ *
  */
-class CreditCardVerification extends Base
+class CreditCardVerification
 {
     // Status
     const FAILED                   = 'failed';
@@ -23,6 +29,7 @@ class CreditCardVerification extends Base
     const PROCESSOR_DECLINED       = 'processor_declined';
     const VERIFIED                 = 'verified';
 
+    private $_attributes;
     private $_amount;
     private $_avsErrorResponseCode;
     private $_avsPostalCodeResponseCode;
@@ -32,58 +39,54 @@ class CreditCardVerification extends Base
     private $_gatewayRejectionReason;
     private $_status;
 
-    // phpcs:ignore PEAR.Commenting.FunctionComment.Missing
-    public function __construct($attributes)
+    /**
+     * @ignore
+     */
+    public function  __construct($attributes)
     {
         $this->_initializeFromArray($attributes);
     }
 
     /**
      * initializes instance properties from the keys/values of an array
-     *
+     * @ignore
+     * @access protected
      * @param <type> $aAttribs array of properties to set - single level
-     *
      * @return void
      */
     private function _initializeFromArray($attributes)
     {
-        if (isset($attributes['riskData'])) {
+        if(isset($attributes['riskData']))
+        {
             $attributes['riskData'] = RiskData::factory($attributes['riskData']);
         }
 
-        if (isset($attributes['globalId'])) {
-            $attributes['graphQLId'] = $attributes['globalId'];
-        }
-
-        if (isset($attributes['threeDSecureInfo'])) {
-            $attributes['threeDSecureInfo'] = ThreeDSecureInfo::factory($attributes['threeDSecureInfo']);
-        }
         $this->_attributes = $attributes;
-        foreach ($attributes as $name => $value) {
+        foreach($attributes AS $name => $value) {
             $varName = "_$name";
             $this->$varName = $value;
         }
     }
 
-    // phpcs:ignore PEAR.Commenting.FunctionComment.Missing
-    public function __get($name)
+    /**
+     * @ignore
+     */
+    public function  __get($name)
     {
         $varName = "_$name";
         return isset($this->$varName) ? $this->$varName : null;
     }
 
-    // phpcs:ignore PEAR.Commenting.FunctionComment.Missing
-    public function __toString()
+    /**
+     * returns a string representation of the customer
+     * @return string
+     */
+    public function  __toString()
     {
         return __CLASS__ . '[' .
                 Util::attributesToString($this->_attributes) . ']';
     }
 
-    /**
-     * returns an array of all possible Credit Card Verification statuses
-     *
-     * @return array
-     */
     public static function allStatuses()
     {
         return [
@@ -94,3 +97,4 @@ class CreditCardVerification extends Base
         ];
     }
 }
+class_alias('Braintree\Result\CreditCardVerification', 'Braintree_Result_CreditCardVerification');

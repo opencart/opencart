@@ -1,12 +1,42 @@
 <?php
-
 namespace Braintree;
 
 /**
  * Braintree SamsungPayCard module
  * Creates and manages Braintree SamsungPayCards
  *
- * See our {@link https://developer.paypal.com/braintree/docs/reference/response/samsung-pay-card developer docs} for information on attributes
+ * @package    Braintree
+ * @category   Resources
+ *
+ * @property-read \Braintree\Address $billingAddress
+ * @property-read string $bin
+ * @property-read string $cardType
+ * @property-read string $cardholderName
+ * @property-read string $commercial
+ * @property-read string $countryOfIssuance
+ * @property-read \DateTime $createdAt
+ * @property-read string $customerId
+ * @property-read string $customerLocation
+ * @property-read string $debit
+ * @property-read boolean $default
+ * @property-read string $durbinRegulated
+ * @property-read string $expirationDate
+ * @property-read string $expirationMonth
+ * @property-read string $expirationYear
+ * @property-read boolean $expired
+ * @property-read string $healthcare
+ * @property-read string $imageUrl
+ * @property-read string $issuingBank
+ * @property-read string $last4
+ * @property-read string $maskedNumber
+ * @property-read string $payroll
+ * @property-read string $prepaid
+ * @property-read string $productId
+ * @property-read string $sourceCardLast4
+ * @property-read \Braintree\Subscription[] $subscriptions
+ * @property-read string $token
+ * @property-read string $uniqueNumberIdentifier
+ * @property-read \DateTime $updatedAt
  */
 class SamsungPayCard extends Base
 {
@@ -34,8 +64,8 @@ class SamsungPayCard extends Base
     /**
      * sets instance properties from an array of values
      *
+     * @access protected
      * @param array $creditCardAttribs array of creditcard data
-     *
      * @return void
      */
     protected function _initialize($creditCardAttribs)
@@ -50,7 +80,7 @@ class SamsungPayCard extends Base
 
         $subscriptionArray = [];
         if (isset($creditCardAttribs['subscriptions'])) {
-            foreach ($creditCardAttribs['subscriptions'] as $subscription) {
+            foreach ($creditCardAttribs['subscriptions'] AS $subscription) {
                 $subscriptionArray[] = Subscription::factory($subscription);
             }
         }
@@ -66,7 +96,6 @@ class SamsungPayCard extends Base
      * or is a SamsungPayCard with a different id
      *
      * @param object $otherSamsungPayCard customer to compare against
-     *
      * @return boolean
      */
     public function isEqual($otherSamsungPayCard)
@@ -74,18 +103,22 @@ class SamsungPayCard extends Base
         return !($otherSamsungPayCard instanceof self) ? false : $this->token === $otherSamsungPayCard->token;
     }
 
-    // phpcs:ignore PEAR.Commenting.FunctionComment.Missing
-    public function __toString()
+    /**
+     * create a printable representation of the object as:
+     * ClassName[property=value, property=value]
+     * @return string
+     */
+    public function  __toString()
     {
         return __CLASS__ . '[' .
-                Util::attributesToString($this->_attributes) . ']';
+                Util::attributesToString($this->_attributes) .']';
     }
 
     /**
-     * Creates an instance from given attributes
+     *  factory method: returns an instance of SamsungPayCard
+     *  to the requesting method, with populated properties
      *
-     * @param array $attributes response object attributes
-     *
+     * @ignore
      * @return SamsungPayCard
      */
     public static function factory($attributes)
@@ -102,3 +135,4 @@ class SamsungPayCard extends Base
         return $instance;
     }
 }
+class_alias('Braintree\SamsungPayCard', 'Braintree_SamsungPayCard');

@@ -1,5 +1,4 @@
 <?php
-
 namespace Braintree;
 
 /**
@@ -8,16 +7,22 @@ namespace Braintree;
  */
 class Version
 {
-    const MAJOR = 6;
-    const MINOR = 7;
+    /**
+     * class constants
+     */
+    const MAJOR = 3;
+    const MINOR = 40;
     const TINY = 0;
 
-    protected function __construct()
+    /**
+     * @ignore
+     * @access protected
+     */
+    protected function  __construct()
     {
     }
 
     /**
-     * Get the version
      *
      * @return string the current library version
      */
@@ -26,3 +31,4 @@ class Version
         return self::MAJOR . '.' . self::MINOR . '.' . self::TINY;
     }
 }
+class_alias('Braintree\Version', 'Braintree_Version');

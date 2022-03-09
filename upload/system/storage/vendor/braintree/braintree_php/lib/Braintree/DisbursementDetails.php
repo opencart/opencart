@@ -1,23 +1,24 @@
 <?php
-
 namespace Braintree;
 
 /**
  * Disbursement details from a transaction
+ * Creates an instance of DisbursementDetails as returned from a transaction
  *
- * Contains information about how and when the transaction was disbursed, including timing and currency information. This detail is only available if you have an eligible merchant account.
  *
- * See our {@link https://developer.paypal.com/braintree/docs/reference/response/transaction/php#disbursement_details developer docs} for information on attributes
+ * @package    Braintree
+ *
+ * @property-read string $disbursementDate
+ * @property-read boolean $fundsHeld
+ * @property-read string $settlementAmount
+ * @property-read string $settlementCurrencyExchangeRate
+ * @property-read string $settlementCurrencyIsoCode
+ * @property-read string $success
  */
 class DisbursementDetails extends Instance
 {
-    /**
-     * Checks whether a Disbursement date is valid
-     *
-     * @return bool
-     */
-    public function isValid()
-    {
+    public function isValid() {
         return !is_null($this->disbursementDate);
     }
 }
+class_alias('Braintree\DisbursementDetails', 'Braintree_DisbursementDetails');

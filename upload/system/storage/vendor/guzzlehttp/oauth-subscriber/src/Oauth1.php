@@ -2,11 +2,14 @@
 
 namespace GuzzleHttp\Subscriber\Oauth;
 
-use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
-use GuzzleHttp\MessageFormatter;
-use GuzzleHttp\Promise;
-use Psr\Http\Message\StreamInterface;
+use GuzzleHttp\Collection;
+use GuzzleHttp\Event\RequestEvents;
+use GuzzleHttp\Event\SubscriberInterface;
+use GuzzleHttp\Event\BeforeEvent;
+use GuzzleHttp\Message\RequestInterface;
+use GuzzleHttp\Post\PostBodyInterface;
+use GuzzleHttp\Query;
+use GuzzleHttp\Url;
 
 /**
  * OAuth 1.0 signature plugin.
@@ -20,7 +23,7 @@ use Psr\Http\Message\StreamInterface;
  *
  * @link http://oauth.net/core/1.0/#rfc.section.9.1.1 OAuth specification
  */
-class Oauth1
+class Oauth1 implements SubscriberInterface
 {
     /**
      * Consumer request method constants. See http://oauth.net/core/1.0/#consumer_req_param
@@ -32,7 +35,7 @@ class Oauth1
     const SIGNATURE_METHOD_RSA       = 'RSA-SHA1';
     const SIGNATURE_METHOD_PLAINTEXT = 'PLAINTEXT';
 
-    /** @var array Configuration settings */
+    /** @var Collection Configuration settings */
     private $config;
 
     /**
@@ -45,8 +48,6 @@ class Oauth1
      * - callback: OAuth callback
      * - consumer_key: Consumer key string. Defaults to "anonymous".
      * - consumer_secret: Consumer secret. Defaults to "anonymous".
-     * - private_key_file: The location of your private key file (RSA-SHA1 signature method only)
-     * - private_key_passphrase: The passphrase for your private key file (RSA-SHA1 signature method only)
      * - token: Client token
      * - token_secret: Client secret token
      * - verifier: OAuth verifier.
@@ -59,57 +60,44 @@ class Oauth1
      */
     public function __construct($config)
     {
-        $this->config = [
+        $this->config = Collection::fromConfig($config, [
             'version'          => '1.0',
             'request_method'   => self::REQUEST_METHOD_HEADER,
             'consumer_key'     => 'anonymous',
             'consumer_secret'  => 'anonymous',
             'signature_method' => self::SIGNATURE_METHOD_HMAC,
-        ];
+        ], ['signature_method', 'version', 'consumer_key', 'consumer_secret']);
+    }
 
-        foreach ($config as $key => $value) {
-            $this->config[$key] = $value;
+    public function getEvents()
+    {
+        return ['before' => ['onBefore', RequestEvents::SIGN_REQUEST]];
+    }
+
+    public function onBefore(BeforeEvent $event)
+    {
+        $request = $event->getRequest();
+
+        // Only sign requests using "auth"="oauth"
+        if ($request->getConfig()['auth'] != 'oauth') {
+            return;
         }
-    }
 
-    /**
-     * Called when the middleware is handled.
-     *
-     * @param callable $handler
-     *
-     * @return \Closure
-     */
-    public function __invoke(callable $handler)
-    {
-        return function ($request, array $options) use ($handler) {
-
-            if (isset($options['auth']) && $options['auth'] == 'oauth') {
-                $request = $this->onBefore($request);
-            }
-
-            return $handler($request, $options);
-        };
-    }
-
-    private function onBefore(RequestInterface $request)
-    {
-        $oauthparams = $this->getOauthParams(
+        $params = $this->getOauthParams(
             $this->generateNonce($request),
             $this->config
         );
 
-        $oauthparams['oauth_signature'] = $this->getSignature($request, $oauthparams);
-        uksort($oauthparams, 'strcmp');
+        $params['oauth_signature'] = $this->getSignature($request, $params);
+        uksort($params, 'strcmp');
 
         switch ($this->config['request_method']) {
             case self::REQUEST_METHOD_HEADER:
-                list($header, $value) = $this->buildAuthorizationHeader($oauthparams);
-                $request = $request->withHeader($header, $value);
+                list($header, $value) = $this->buildAuthorizationHeader($params);
+                $request->setHeader($header, $value);
                 break;
             case self::REQUEST_METHOD_QUERY:
-                $queryparams = \GuzzleHttp\Psr7\parse_query($request->getUri()->getQuery());
-                $preparedParams = \GuzzleHttp\Psr7\build_query($oauthparams + $queryparams);
-                $request = $request->withUri($request->getUri()->withQuery($preparedParams));
+                $request->getQuery()->overwriteWith($params);
                 break;
             default:
                 throw new \InvalidArgumentException(sprintf(
@@ -117,8 +105,6 @@ class Oauth1
                     $this->config['request_method']
                 ));
         }
-
-        return $request;
     }
 
     /**
@@ -138,14 +124,16 @@ class Oauth1
         unset($params['oauth_signature']);
 
         // Add POST fields if the request uses POST fields and no files
-        if ($request->getHeaderLine('Content-Type') == 'application/x-www-form-urlencoded') {
-            $body = \GuzzleHttp\Psr7\parse_query($request->getBody()->getContents());
-            $params += $body;
+        $body = $request->getBody();
+        if ($body instanceof PostBodyInterface && !$body->getFiles()) {
+            $query = Query::fromString($body->getFields(true));
+            $params += $query->toArray();
         }
 
         // Parse & add query string parameters as base string parameters
-        $query = $request->getUri()->getQuery();
-        $params += \GuzzleHttp\Psr7\parse_query($query);
+        $query = Query::fromString((string) $request->getQuery());
+        $query->setEncodingType(Query::RFC1738);
+        $params += $query->toArray();
 
         $baseString = $this->createBaseString(
             $request,
@@ -153,22 +141,16 @@ class Oauth1
         );
 
         // Implements double-dispatch to sign requests
-        switch ($this->config['signature_method']) {
-            case Oauth1::SIGNATURE_METHOD_HMAC:
-                $signature = $this->signUsingHmacSha1($baseString);
-                break;
-            case Oauth1::SIGNATURE_METHOD_RSA:
-                $signature = $this->signUsingRsaSha1($baseString);
-                break;
-            case Oauth1::SIGNATURE_METHOD_PLAINTEXT:
-                $signature = $this->signUsingPlaintext($baseString);
-                break;
-            default:
-                throw new \RuntimeException('Unknown signature method: ' . $this->config['signature_method']);
-                break;
+        $meth = [$this, 'sign_' . str_replace(
+            '-', '_', $this->config['signature_method']
+        )];
+
+        if (!is_callable($meth)) {
+            throw new \RuntimeException('Unknown signature method: '
+                . $this->config['signature_method']);
         }
 
-        return base64_encode($signature);
+        return base64_encode(call_user_func($meth, $baseString, $this->config));
     }
 
     /**
@@ -183,7 +165,7 @@ class Oauth1
      */
     public function generateNonce(RequestInterface $request)
     {
-        return sha1(uniqid('', true) . $request->getUri()->getHost() . $request->getUri()->getPath());
+        return sha1(uniqid('', true) . $request->getUrl());
     }
 
     /**
@@ -202,7 +184,8 @@ class Oauth1
     protected function createBaseString(RequestInterface $request, array $params)
     {
         // Remove query params from URL. Ref: Spec: 9.1.2.
-        $url = $request->getUri()->withQuery('');
+        $url = Url::fromString($request->getUrl());
+        $url->setQuery('');
         $query = http_build_query($params, '', '&', PHP_QUERY_RFC3986);
 
         return strtoupper($request->getMethod())
@@ -232,12 +215,7 @@ class Oauth1
         return $data;
     }
 
-    /**
-     * @param string $baseString
-     *
-     * @return string
-     */
-    private function signUsingHmacSha1($baseString)
+    private function sign_HMAC_SHA1($baseString)
     {
         $key = rawurlencode($this->config['consumer_secret'])
             . '&' . rawurlencode($this->config['token_secret']);
@@ -245,12 +223,7 @@ class Oauth1
         return hash_hmac('sha1', $baseString, $key, true);
     }
 
-    /**
-     * @param string $baseString
-     *
-     * @return string
-     */
-    private function signUsingRsaSha1($baseString)
+    private function sign_RSA_SHA1($baseString)
     {
         if (!function_exists('openssl_pkey_get_private')) {
             throw new \RuntimeException('RSA-SHA1 signature method '
@@ -258,23 +231,18 @@ class Oauth1
         }
 
         $privateKey = openssl_pkey_get_private(
-            file_get_contents($this->config['private_key_file']),
-            $this->config['private_key_passphrase']
+            file_get_contents($this->config['consumer_secret']),
+            $this->config['consumer_secret']
         );
 
-        $signature = '';
+        $signature = false;
         openssl_sign($baseString, $signature, $privateKey);
         openssl_free_key($privateKey);
 
         return $signature;
     }
 
-    /**
-     * @param string $baseString
-     *
-     * @return string
-     */
-    private function signUsingPlaintext($baseString)
+    private function sign_PLAINTEXT($baseString)
     {
         return $baseString;
     }
@@ -292,7 +260,7 @@ class Oauth1
             $params[$key] = $key . '="' . rawurlencode($value) . '"';
         }
 
-        if (isset($this->config['realm'])) {
+        if ($this->config['realm']) {
             array_unshift(
                 $params,
                 'realm="' . rawurlencode($this->config['realm']) . '"'
@@ -306,11 +274,11 @@ class Oauth1
      * Get the oauth parameters as named by the oauth spec
      *
      * @param string     $nonce  Unique nonce
-     * @param array      $config Configuration options of the plugin.
+     * @param Collection $config Configuration options of the plugin.
      *
      * @return array
      */
-    private function getOauthParams($nonce, array $config)
+    private function getOauthParams($nonce, Collection $config)
     {
         $params = [
             'oauth_consumer_key'     => $config['consumer_key'],

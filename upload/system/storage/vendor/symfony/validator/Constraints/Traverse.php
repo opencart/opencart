@@ -19,21 +19,17 @@ use Symfony\Component\Validator\Exception\ConstraintDefinitionException;
  *
  * @author Bernhard Schussek <bschussek@gmail.com>
  */
-#[\Attribute(\Attribute::TARGET_CLASS)]
 class Traverse extends Constraint
 {
     public $traverse = true;
 
-    /**
-     * @param bool|array|null $traverse
-     */
-    public function __construct($traverse = null)
+    public function __construct($options = null)
     {
-        if (\is_array($traverse) && \array_key_exists('groups', $traverse)) {
-            throw new ConstraintDefinitionException(sprintf('The option "groups" is not supported by the constraint "%s".', __CLASS__));
+        if (\is_array($options) && array_key_exists('groups', $options)) {
+            throw new ConstraintDefinitionException(sprintf('The option "groups" is not supported by the constraint %s', __CLASS__));
         }
 
-        parent::__construct($traverse);
+        parent::__construct($options);
     }
 
     /**

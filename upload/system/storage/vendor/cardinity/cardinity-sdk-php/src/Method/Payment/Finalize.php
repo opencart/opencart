@@ -9,18 +9,11 @@ class Finalize implements MethodInterface
 {
     private $paymentId;
     private $authorizeData;
-    private $finalizeKey;
-
-    /**
-     * @param STRING payment ID of the Cardinity system
-     * @param STRING authorize data 'cres' or 'authorize_data'
-     * @param BOOL should it be 3D secure v2 ?
-     */
-    public function __construct(string $paymentId, string $authorizeData, $isV2=false)
+    
+    public function __construct($paymentId, $authorizeData)
     {
         $this->paymentId = $paymentId;
         $this->authorizeData = $authorizeData;
-        $this->finalizeKey = $isV2 ? 'cres' : 'authorize_data';
     }
 
     public function getPaymentId()
@@ -51,28 +44,17 @@ class Finalize implements MethodInterface
     public function getAttributes()
     {
         return [
-            $this->finalizeKey => $this->getAuthorizeData(),
-            $this->paymentId => $this->getPaymentId(),
+            'authorize_data' => $this->getAuthorizeData()
         ];
     }
 
     public function getValidationConstraints()
     {
-        $type_params = [
-            'type' => 'string',
-            'message' => 'The value {{ value }} is not a valid {{ type }}.'
-        ];
         return new Assert\Collection([
-            'fields' => [
-                $this->finalizeKey => new Assert\Required([
-                    new Assert\NotBlank(["message"=>"$this->finalizeKey missing."]),
-                    new Assert\Type($type_params)
-                ]),
-                $this->paymentId => new Assert\Required([
-                    new Assert\NotBlank(["message"=>"paymentId missing."]),
-                    new Assert\Type($type_params)
-                ]),
-            ],
+            'authorize_data' => new Assert\Required([
+                new Assert\NotBlank(),
+                new Assert\Type(['type' => 'string']),
+            ])
         ]);
     }
 }

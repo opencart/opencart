@@ -1,21 +1,34 @@
 <?php
-
 namespace Braintree;
 
 /**
  * Braintree UnknownPaymentMethod module
- * Manages Braintree UnknownPaymentMethod
  *
- * See our {@link https://developer.paypal.com/braintree/docs/reference/response/payment-method developer docs} for information on attributes
+ * @package    Braintree
+ * @category   Resources
  */
 
+/**
+ * Manages Braintree UnknownPaymentMethod
+ *
+ * <b>== More information ==</b>
+ *
+ *
+ * @package    Braintree
+ * @category   Resources
+ *
+ * @property-read string $token
+ * @property-read string $imageUrl
+ */
 class UnknownPaymentMethod extends Base
 {
+
+
     /**
-     * Creates an instance from given attributes
+     *  factory method: returns an instance of UnknownPaymentMethod
+     *  to the requesting method, with populated properties
      *
-     * @param array $attributes response object attributes
-     *
+     * @ignore
      * @return UnknownPaymentMethod
      */
     public static function factory($attributes)
@@ -41,8 +54,8 @@ class UnknownPaymentMethod extends Base
     /**
      * sets instance properties from an array of values
      *
+     * @access protected
      * @param array $unknownPaymentMethodAttribs array of unknownPaymentMethod data
-     *
      * @return void
      */
     protected function _initialize($unknownPaymentMethodAttribs)
@@ -51,4 +64,6 @@ class UnknownPaymentMethod extends Base
         $this->imageUrl = 'https://assets.braintreegateway.com/payment_method_logo/unknown.png';
         $this->_attributes = $unknownPaymentMethodAttribs;
     }
+
 }
+class_alias('Braintree\UnknownPaymentMethod', 'Braintree_UnknownPaymentMethod');

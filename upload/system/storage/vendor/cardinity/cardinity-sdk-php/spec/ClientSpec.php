@@ -9,6 +9,7 @@ use Cardinity\Method\ValidatorInterface;
 use Cardinity\Method\Payment\Payment;
 use Cardinity\Method\ResultObjectMapperInterface;
 use PhpSpec\ObjectBehavior;
+use Prophecy\Argument;
 
 class ClientSpec extends ObjectBehavior
 {
@@ -198,4 +199,6 @@ class ClientSpec extends ObjectBehavior
 
         $this->callNoValidate($method)->shouldReturn($resultObject);
     }
+
+
 }

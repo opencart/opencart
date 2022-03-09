@@ -1,24 +1,43 @@
 <?php
-
 namespace Braintree;
 
 use InvalidArgumentException;
 
 /**
  * Braintree AddressGateway module
+ * PHP Version 5
  * Creates and manages Braintree Addresses
  *
  * An Address belongs to a Customer. It can be associated to a
  * CreditCard as the billing address. It can also be used
  * as the shipping address when creating a Transaction.
+ *
+ * @package   Braintree
  */
 class AddressGateway
 {
+    /**
+     *
+     * @var Gateway
+     */
     private $_gateway;
+
+    /**
+     *
+     * @var Configuration
+     */
     private $_config;
+
+    /**
+     *
+     * @var Http
+     */
     private $_http;
 
-    // phpcs:ignore PEAR.Commenting.FunctionComment.Missing
+    /**
+     *
+     * @param Gateway $gateway
+     */
     public function __construct($gateway)
     {
         $this->_gateway = $gateway;
@@ -28,11 +47,11 @@ class AddressGateway
     }
 
 
+    /* public class methods */
     /**
-     * Create an Address
      *
-     * @param array $attribs containing request parameters
-     *
+     * @access public
+     * @param  array  $attribs
      * @return Result\Successful|Result\Error
      */
     public function create($attribs)
@@ -60,25 +79,23 @@ class AddressGateway
      * attempts the create operation assuming all data will validate
      * returns a Address object instead of a Result
      *
-     * @param array $attribs containing request parameters
-     *
+     * @access public
+     * @param  array $attribs
+     * @return self
      * @throws Exception\ValidationError
-     *
-     * @return Address
      */
     public function createNoValidate($attribs)
     {
         $result = $this->create($attribs);
         return Util::returnObjectOrThrowException(__CLASS__, $result);
+
     }
 
     /**
      * delete an address by id
      *
-     * @param mixed  $customerOrId either a customer object or string ID of customer
-     * @param string $addressId    optional unique identifier
-     *
-     * @return Result\Successful|Result\Error
+     * @param mixed $customerOrId
+     * @param string $addressId
      */
     public function delete($customerOrId = null, $addressId = null)
     {
@@ -96,12 +113,12 @@ class AddressGateway
      * to the given <b>customerOrId</b>.
      * If the address cannot be found, a NotFound exception will be thrown.
      *
-     * @param mixed  $customerOrId either a customer object or string ID of customer
-     * @param string $addressId    optional unique identifier
      *
-     * @throws Exception\NotFound
-     *
+     * @access public
+     * @param mixed $customerOrId
+     * @param string $addressId
      * @return Address
+     * @throws Exception\NotFound
      */
     public function find($customerOrId, $addressId)
     {
@@ -115,10 +132,11 @@ class AddressGateway
             return Address::factory($response['address']);
         } catch (Exception\NotFound $e) {
             throw new Exception\NotFound(
-                'address for customer ' . $customerId .
+            'address for customer ' . $customerId .
                 ' with id ' . $addressId . ' not found.'
             );
         }
+
     }
 
     /**
@@ -128,10 +146,11 @@ class AddressGateway
      * customerOrId is the 2nd attribute, addressId 3rd.
      * customerOrId & addressId are not sent in object context.
      *
-     * @param mixed  $customerOrId (only used in call)
-     * @param string $addressId    (only used in call)
-     * @param array  $attributes   containing request parameters
      *
+     * @access public
+     * @param array $attributes
+     * @param mixed $customerOrId (only used in call)
+     * @param string $addressId (only used in call)
      * @return Result\Successful|Result\Error
      */
     public function update($customerOrId, $addressId, $attributes)
@@ -144,6 +163,7 @@ class AddressGateway
         $response = $this->_http->put($path, ['address' => $attributes]);
 
         return $this->_verifyGatewayResponse($response);
+
     }
 
     /**
@@ -153,15 +173,12 @@ class AddressGateway
      * customerOrId is the 2nd attribute, addressId 3rd.
      * customerOrId & addressId are not sent in object context.
      *
-     * @param mixed  $customerOrId (only used in call)
-     * @param string $addressId    (only used in call)
-     * @param array  $attributes   containing request parameters
-     *
+     * @access public
+     * @param array $transactionAttribs
+     * @param string $customerId
+     * @return Transaction
      * @throws Exception\ValidationsFailed
-     *
      * @see Address::update()
-     *
-     * @return Address
      */
     public function updateNoValidate($customerOrId, $addressId, $attributes)
     {
@@ -171,7 +188,6 @@ class AddressGateway
 
     /**
      * creates a full array signature of a valid create request
-     *
      * @return array gateway create request format
      */
     public static function createSignature()
@@ -185,65 +201,60 @@ class AddressGateway
 
     /**
      * creates a full array signature of a valid update request
-     *
      * @return array gateway update request format
      */
     public static function updateSignature()
     {
+        // TODO: remove customerId from update signature
         return self::createSignature();
+
     }
 
     /**
      * verifies that a valid address id is being used
-     *
+     * @ignore
      * @param string $id address id
-     *
      * @throws InvalidArgumentException
-     *
-     * @return self
      */
     private function _validateId($id = null)
     {
         if (empty($id) || trim($id) == "") {
             throw new InvalidArgumentException(
-                'expected address id to be set'
+            'expected address id to be set'
             );
         }
         if (!preg_match('/^[0-9A-Za-z_-]+$/', $id)) {
             throw new InvalidArgumentException(
-                $id . ' is an invalid address id.'
+            $id . ' is an invalid address id.'
             );
         }
     }
 
     /**
      * verifies that a valid customer id is being used
-     *
+     * @ignore
      * @param string $id customer id
-     *
      * @throws InvalidArgumentException
-     *
-     * @return self
      */
     private function _validateCustomerId($id = null)
     {
         if (empty($id) || trim($id) == "") {
             throw new InvalidArgumentException(
-                'expected customer id to be set'
+            'expected customer id to be set'
             );
         }
         if (!preg_match('/^[0-9A-Za-z_-]+$/', $id)) {
             throw new InvalidArgumentException(
-                $id . ' is an invalid customer id.'
+            $id . ' is an invalid customer id.'
             );
         }
+
     }
 
     /**
      * determines if a string id or Customer object was passed
-     *
-     * @param mixed $customerOrId either a customer object or string unique identifier
-     *
+     * @ignore
+     * @param mixed $customerOrId
      * @return string customerId
      */
     private function _determineCustomerId($customerOrId)
@@ -251,8 +262,17 @@ class AddressGateway
         $customerId = ($customerOrId instanceof Customer) ? $customerOrId->id : $customerOrId;
         $this->_validateCustomerId($customerId);
         return $customerId;
+
     }
 
+    /* private class methods */
+    /**
+     * sends the create request to the gateway
+     * @ignore
+     * @param string $subPath
+     * @param array $params
+     * @return Result\Successful|Result\Error
+     */
     private function _doCreate($subPath, $params)
     {
         $fullPath = $this->_config->merchantPath() . $subPath;
@@ -261,6 +281,19 @@ class AddressGateway
         return $this->_verifyGatewayResponse($response);
     }
 
+    /**
+     * generic method for validating incoming gateway responses
+     *
+     * creates a new Address object and encapsulates
+     * it inside a Result\Successful object, or
+     * encapsulates an Errors object inside a Result\Error
+     * alternatively, throws an Unexpected exception if the response is invalid
+     *
+     * @ignore
+     * @param array $response gateway response values
+     * @return Result\Successful|Result\Error
+     * @throws Exception\Unexpected
+     */
     private function _verifyGatewayResponse($response)
     {
         if (isset($response['address'])) {
@@ -268,12 +301,14 @@ class AddressGateway
             return new Result\Successful(
                 Address::factory($response['address'])
             );
-        } elseif (isset($response['apiErrorResponse'])) {
+        } else if (isset($response['apiErrorResponse'])) {
             return new Result\Error($response['apiErrorResponse']);
         } else {
             throw new Exception\Unexpected(
-                "Expected address or apiErrorResponse"
+            "Expected address or apiErrorResponse"
             );
         }
+
     }
 }
+class_alias('Braintree\AddressGateway', 'Braintree_AddressGateway');

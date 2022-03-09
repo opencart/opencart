@@ -30,9 +30,9 @@ interface ValidatorInterface extends MetadataFactoryInterface
      * If no constraint is passed, the constraint
      * {@link \Symfony\Component\Validator\Constraints\Valid} is assumed.
      *
-     * @param mixed                                                 $value       The value to validate
-     * @param Constraint|Constraint[]                               $constraints The constraint(s) to validate against
-     * @param string|GroupSequence|array<string|GroupSequence>|null $groups      The validation groups to validate. If none is given, "Default" is assumed
+     * @param mixed                                              $value       The value to validate
+     * @param Constraint|Constraint[]                            $constraints The constraint(s) to validate against
+     * @param string|GroupSequence|(string|GroupSequence)[]|null $groups      The validation groups to validate. If none is given, "Default" is assumed
      *
      * @return ConstraintViolationListInterface A list of constraint violations
      *                                          If the list is empty, validation
@@ -44,29 +44,30 @@ interface ValidatorInterface extends MetadataFactoryInterface
      * Validates a property of an object against the constraints specified
      * for this property.
      *
-     * @param string                                                $propertyName The name of the validated property
-     * @param string|GroupSequence|array<string|GroupSequence>|null $groups       The validation groups to validate. If none is given, "Default" is assumed
+     * @param object                                             $object       The object
+     * @param string                                             $propertyName The name of the validated property
+     * @param string|GroupSequence|(string|GroupSequence)[]|null $groups       The validation groups to validate. If none is given, "Default" is assumed
      *
      * @return ConstraintViolationListInterface A list of constraint violations
      *                                          If the list is empty, validation
      *                                          succeeded
      */
-    public function validateProperty(object $object, string $propertyName, $groups = null);
+    public function validateProperty($object, $propertyName, $groups = null);
 
     /**
      * Validates a value against the constraints specified for an object's
      * property.
      *
-     * @param object|string                                         $objectOrClass The object or its class name
-     * @param string                                                $propertyName  The name of the property
-     * @param mixed                                                 $value         The value to validate against the property's constraints
-     * @param string|GroupSequence|array<string|GroupSequence>|null $groups        The validation groups to validate. If none is given, "Default" is assumed
+     * @param object|string                                      $objectOrClass The object or its class name
+     * @param string                                             $propertyName  The name of the property
+     * @param mixed                                              $value         The value to validate against the property's constraints
+     * @param string|GroupSequence|(string|GroupSequence)[]|null $groups        The validation groups to validate. If none is given, "Default" is assumed
      *
      * @return ConstraintViolationListInterface A list of constraint violations
      *                                          If the list is empty, validation
      *                                          succeeded
      */
-    public function validatePropertyValue($objectOrClass, string $propertyName, $value, $groups = null);
+    public function validatePropertyValue($objectOrClass, $propertyName, $value, $groups = null);
 
     /**
      * Starts a new validation context and returns a validator for that context.
@@ -75,7 +76,7 @@ interface ValidatorInterface extends MetadataFactoryInterface
      * context. You can access these violations with the
      * {@link ContextualValidatorInterface::getViolations()} method.
      *
-     * @return ContextualValidatorInterface
+     * @return ContextualValidatorInterface The validator for the new context
      */
     public function startContext();
 
@@ -85,7 +86,7 @@ interface ValidatorInterface extends MetadataFactoryInterface
      * The returned validator adds all generated violations to the given
      * context.
      *
-     * @return ContextualValidatorInterface
+     * @return ContextualValidatorInterface The validator for that context
      */
     public function inContext(ExecutionContextInterface $context);
 }

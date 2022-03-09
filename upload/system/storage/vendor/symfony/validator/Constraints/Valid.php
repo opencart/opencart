@@ -12,6 +12,7 @@
 namespace Symfony\Component\Validator\Constraints;
 
 use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\Exception\ConstraintDefinitionException;
 
 /**
  * @Annotation
@@ -19,28 +20,25 @@ use Symfony\Component\Validator\Constraint;
  *
  * @author Bernhard Schussek <bschussek@gmail.com>
  */
-#[\Attribute(\Attribute::TARGET_PROPERTY | \Attribute::TARGET_METHOD | \Attribute::IS_REPEATABLE)]
 class Valid extends Constraint
 {
     public $traverse = true;
 
-    public function __get(string $option)
-    {
-        if ('groups' === $option) {
-            // when this is reached, no groups have been configured
-            return null;
-        }
-
-        return parent::__get($option);
-    }
-
     /**
-     * {@inheritdoc}
+     * @deprecated since version 2.5, to be removed in Symfony 3.0.
      */
-    public function addImplicitGroupName(string $group)
+    public $deep = true;
+
+    public function __construct($options = null)
     {
-        if (null !== $this->groups) {
-            parent::addImplicitGroupName($group);
+        if (\is_array($options) && array_key_exists('groups', $options)) {
+            throw new ConstraintDefinitionException(sprintf('The option "groups" is not supported by the constraint %s', __CLASS__));
         }
+
+        if (\is_array($options) && array_key_exists('deep', $options)) {
+            @trigger_error('The "deep" option for the Valid constraint is deprecated since Symfony 2.5 and will be removed in 3.0. When traversing arrays, nested arrays are always traversed. When traversing nested objects, their traversal strategy is used.', E_USER_DEPRECATED);
+        }
+
+        parent::__construct($options);
     }
 }

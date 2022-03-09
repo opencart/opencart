@@ -3,8 +3,8 @@
 namespace spec\Cardinity\Method\Payment;
 
 use Cardinity\Method\Payment\AuthorizationInformation;
-use Cardinity\Method\Payment\ThreeDS2AuthorizationInformation;
 use PhpSpec\ObjectBehavior;
+use Prophecy\Argument;
 
 class PaymentSpec extends ObjectBehavior
 {
@@ -44,13 +44,13 @@ class PaymentSpec extends ObjectBehavior
 
     function it_is_able_to_unserialize_card_payment_instrument()
     {
-        $json = '{"payment_method":"card","payment_instrument":{"card_brand":"Visa","pan":"4447","exp_year":2024,"exp_month":5,"holder":"John Smith"}}';
+        $json = '{"payment_method":"card","payment_instrument":{"card_brand":"Visa","pan":"4447","exp_year":2017,"exp_month":5,"holder":"John Smith"}}';
         $this->unserialize($json);
 
         $this->getPaymentMethod()->shouldReturn('card');
         $this->getPaymentInstrument()->shouldReturnAnInstanceOf('Cardinity\Method\Payment\PaymentInstrumentCard');
         $this->getPaymentInstrument()->getCardBrand()->shouldReturn('Visa');
-        $this->getPaymentInstrument()->getExpYear()->shouldReturn(2024);
+        $this->getPaymentInstrument()->getExpYear()->shouldReturn(2017);
     }
 
     function it_is_able_to_unserialize_recurring_payment_instrument()
@@ -62,35 +62,6 @@ class PaymentSpec extends ObjectBehavior
         $this->getPaymentInstrument()->shouldReturnAnInstanceOf('Cardinity\Method\Payment\PaymentInstrumentRecurring');
         $this->getPaymentInstrument()->getPaymentId()->shouldReturn('ba3119f2-9a73');
     }
-
-
-    function it_is_able_to_take_threeds2_data()
-    {
-
-        $tds2Auth = new ThreeDS2AuthorizationInformation();
-        $tds2Auth->setAcsUrl('https://acs.cardinity.com/v2/');
-        $tds2Auth->setCreq('eyJyZXR1c...');
-
-        $this->setThreeds2Data($tds2Auth);
-        $this->getThreeds2Data()->shouldReturnAnInstanceOf('Cardinity\Method\Payment\ThreeDS2AuthorizationInformation');
-        $this->getThreeds2Data()->shouldReturn($tds2Auth);
-
-    }
-
-    function it_is_able_to_serialize_tdsv2(){
-        $json = '{"acs_url":"https:\/\/acs.cardinity.com\/v2\/","c_req":"eyJyZXR1c..."}';
-
-        $tds2Auth = new ThreeDS2AuthorizationInformation();
-        $tds2Auth->setAcsUrl('https://acs.cardinity.com/v2/');
-        $tds2Auth->setCreq('eyJyZXR1c...');
-
-        $this->setThreeds2Data($tds2Auth);
-        $this->getThreeds2Data()->shouldReturnAnInstanceOf('Cardinity\Method\Payment\ThreeDS2AuthorizationInformation');
-        $this->getThreeds2Data()->shouldReturn($tds2Auth);
-
-        $this->getThreeds2Data()->serialize()->shouldReturn($json);
-    }
-
 
     function it_handles_unexpected_values()
     {

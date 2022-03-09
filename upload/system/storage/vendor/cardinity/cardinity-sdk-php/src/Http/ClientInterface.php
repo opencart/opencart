@@ -1,5 +1,4 @@
 <?php
-
 namespace Cardinity\Http;
 
 use Cardinity\Method\MethodInterface;

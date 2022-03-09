@@ -1,5 +1,4 @@
 <?php
-
 namespace Cardinity\Tests;
 
 use Cardinity\Method\Settlement;
@@ -7,9 +6,6 @@ use Cardinity\Method\Payment;
 
 class SettlementTest extends ClientTestCase
 {
-    /**
-     * @return void
-     */
     public function testResultObjectSerialization()
     {
         $refund = new Settlement\Settlement();
@@ -24,9 +20,6 @@ class SettlementTest extends ClientTestCase
         );
     }
 
-    /**
-     * @return void
-     */
     public function testResultObjectUnserialization()
     {
         $json = '{"id":"foo","amount":"55.00","type":"bar"}';
@@ -41,7 +34,7 @@ class SettlementTest extends ClientTestCase
     }
 
     /**
-     * @return Cardinity\Method\ResultObject $payment
+     * @return Payment\Payment
      */
     public function testCreatePayment()
     {
@@ -53,8 +46,7 @@ class SettlementTest extends ClientTestCase
 
     /**
      * @depends testCreatePayment
-     * @param Payment\Payment $payment
-     * @return void
+     * @expectedException Cardinity\Exception\Declined
      */
     public function testCreateFail(Payment\Payment $payment)
     {
@@ -63,14 +55,11 @@ class SettlementTest extends ClientTestCase
             10.00,
             'fail'
         );
-        $this->expectException(\Cardinity\Exception\Declined::class);
         $this->client->call($method);
     }
 
     /**
      * @depends testCreatePayment
-     * @param Payment\Payment $payment
-     * @return Cardinity\Method\ResultObject $result
      */
     public function testCreate(Payment\Payment $payment)
     {
@@ -81,17 +70,14 @@ class SettlementTest extends ClientTestCase
         );
         $result = $this->client->call($method);
 
-        $this->assertInstanceOf('Cardinity\Method\Settlement\Settlement', $result);
+        $this->assertInstanceOf('Cardinity\Method\Settlement\Settlement', $result); 
         $this->assertSame('10.00', $result->getAmount());
-        $this->assertSame(true, $result->isApproved());
 
         return $result;
     }
 
     /**
      * @depends testCreate
-     * @param Settlement\Settlement $settlement
-     * @return void
      */
     public function testGet(Settlement\Settlement $settlement)
     {
@@ -101,7 +87,7 @@ class SettlementTest extends ClientTestCase
         );
         $result = $this->client->call($method);
 
-        $this->assertInstanceOf('Cardinity\Method\Settlement\Settlement', $result);
+        $this->assertInstanceOf('Cardinity\Method\Settlement\Settlement', $result); 
         $this->assertSame($settlement->getParentId(), $result->getParentId());
         $this->assertSame('10.00', $result->getAmount());
         $this->assertSame('settlement', $result->getType());
@@ -110,8 +96,6 @@ class SettlementTest extends ClientTestCase
 
     /**
      * @depends testCreate
-     * @param Settlement\Settlement $settlement
-     * @return void
      */
     public function testGetAll(Settlement\Settlement $settlement)
     {

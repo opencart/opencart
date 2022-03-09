@@ -17,15 +17,9 @@ namespace Symfony\Component\Validator\Constraints;
  *
  * @author Bernhard Schussek <bschussek@gmail.com>
  */
-#[\Attribute(\Attribute::TARGET_PROPERTY | \Attribute::TARGET_METHOD | \Attribute::IS_REPEATABLE)]
 class All extends Composite
 {
-    public $constraints = [];
-
-    public function __construct($constraints = null, array $groups = null, $payload = null)
-    {
-        parent::__construct($constraints ?? [], $groups, $payload);
-    }
+    public $constraints = array();
 
     public function getDefaultOption()
     {
@@ -34,7 +28,7 @@ class All extends Composite
 
     public function getRequiredOptions()
     {
-        return ['constraints'];
+        return array('constraints');
     }
 
     protected function getCompositeOption()

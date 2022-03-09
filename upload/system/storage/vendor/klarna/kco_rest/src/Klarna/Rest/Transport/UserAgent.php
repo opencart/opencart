@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2019 Klarna AB
+ * Copyright 2014 Klarna AB
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,6 +19,8 @@
 
 namespace Klarna\Rest\Transport;
 
+use GuzzleHttp\ClientInterface;
+
 /**
  * HTTP user agent.
  */
@@ -32,15 +34,22 @@ class UserAgent implements UserAgentInterface
     /**
      * Version of the SDK.
      */
-    const VERSION = '4.2.3';
+    const VERSION = '2.2.0';
 
     /**
      * Components of the user agent.
      *
      * @var array
      */
-    protected $fields = [];
+    protected $fields;
 
+    /**
+     * Constructs a user agent instance.
+     */
+    public function __construct()
+    {
+        $this->fields = [];
+    }
 
     /**
      * Sets the specified field.
@@ -104,10 +113,11 @@ class UserAgent implements UserAgentInterface
      *
      * @return self
      */
-    public static function createDefault($options = [])
+    public static function createDefault()
     {
         $agent = new static();
 
+        $options = ['Guzzle/' . ClientInterface::VERSION];
         if (extension_loaded('curl')) {
             $options[] = 'curl/' . curl_version()['version'];
         }

@@ -1,5 +1,4 @@
 <?php
-
 namespace Braintree;
 
 use InvalidArgumentException;
@@ -7,9 +6,18 @@ use InvalidArgumentException;
 /**
  * Braintree PayPalAccountGateway module
  *
+ * @package    Braintree
+ * @category   Resources
+ */
+
+/**
  * Manages Braintree PayPalAccounts
  *
- * For more detailed information on PayPal Accounts, see {@link https://developer.paypal.com/braintree/docs/reference/response/paypal-account our developer docs}<br />
+ * <b>== More information ==</b>
+ *
+ *
+ * @package    Braintree
+ * @category   Resources
  */
 class PayPalAccountGateway
 {
@@ -17,7 +25,6 @@ class PayPalAccountGateway
     private $_config;
     private $_http;
 
-    // phpcs:ignore PEAR.Commenting.FunctionComment.Missing
     public function __construct($gateway)
     {
         $this->_gateway = $gateway;
@@ -28,13 +35,12 @@ class PayPalAccountGateway
 
 
     /**
-     * Find a paypalAccount by token
+     * find a paypalAccount by token
      *
+     * @access public
      * @param string $token paypal accountunique id
-     *
-     * @throws Exception\NotFound
-     *
      * @return PayPalAccount
+     * @throws Exception\NotFound
      */
     public function find($token)
     {
@@ -48,6 +54,7 @@ class PayPalAccountGateway
                 'paypal account with token ' . $token . ' not found'
             );
         }
+
     }
 
     /**
@@ -56,9 +63,9 @@ class PayPalAccountGateway
      * if calling this method in context, $token
      * is the 2nd attribute. $token is not sent in object context.
      *
-     * @param string $token      (optional)
-     * @param array  $attributes including request parameters
-     *
+     * @access public
+     * @param array $attributes
+     * @param string $token (optional)
      * @return Result\Successful or Result\Error
      */
     public function update($token, $attributes)
@@ -68,13 +75,6 @@ class PayPalAccountGateway
         return $this->_doUpdate('put', '/payment_methods/paypal_account/' . $token, ['paypalAccount' => $attributes]);
     }
 
-    /**
-     * Delete a PayPal Account record
-     *
-     * @param string $token paypal account identifier
-     *
-     * @return Result
-     */
     public function delete($token)
     {
         $this->_validateId($token);
@@ -86,10 +86,10 @@ class PayPalAccountGateway
     /**
      * create a new sale for the current PayPal account
      *
-     * @param string $token              paypal account identifier
-     * @param array  $transactionAttribs containing request parameters
-     *
+     * @param string $token
+     * @param array $transactionAttribs
      * @return Result\Successful|Result\Error
+     * @see Transaction::sale()
      */
     public function sale($token, $transactionAttribs)
     {
@@ -102,7 +102,6 @@ class PayPalAccountGateway
         );
     }
 
-    // phpcs:ignore PEAR.Commenting.FunctionComment.Missing
     public static function updateSignature()
     {
         return [
@@ -111,7 +110,14 @@ class PayPalAccountGateway
         ];
     }
 
-    // phpcs:ignore PEAR.Commenting.FunctionComment.Missing
+    /**
+     * sends the update request to the gateway
+     *
+     * @ignore
+     * @param string $subPath
+     * @param array $params
+     * @return mixed
+     */
     private function _doUpdate($httpVerb, $subPath, $params)
     {
         $fullPath = $this->_config->merchantPath() . $subPath;
@@ -127,47 +133,46 @@ class PayPalAccountGateway
      * encapsulates a Errors object inside a Result\Error
      * alternatively, throws an Unexpected exception if the response is invalid.
      *
+     * @ignore
      * @param array $response gateway response values
-     *
-     * @throws Exception\Unexpected
-     *
      * @return Result\Successful|Result\Error
+     * @throws Exception\Unexpected
      */
     private function _verifyGatewayResponse($response)
     {
         if (isset($response['paypalAccount'])) {
             // return a populated instance of PayPalAccount
             return new Result\Successful(
-                PayPalAccount::factory($response['paypalAccount'])
+                    PayPalAccount::factory($response['paypalAccount'])
             );
-        } elseif (isset($response['apiErrorResponse'])) {
+        } else if (isset($response['apiErrorResponse'])) {
             return new Result\Error($response['apiErrorResponse']);
         } else {
             throw new Exception\Unexpected(
-                'Expected paypal account or apiErrorResponse'
+            'Expected paypal account or apiErrorResponse'
             );
         }
     }
 
     /**
      * verifies that a valid paypal account identifier is being used
-     *
-     * @param string   $identifier
-     * @param Optional $string     $identifierType type of identifier supplied, default 'token'
-     *
+     * @ignore
+     * @param string $identifier
+     * @param Optional $string $identifierType type of identifier supplied, default 'token'
      * @throws InvalidArgumentException
      */
     private function _validateId($identifier = null, $identifierType = 'token')
     {
         if (empty($identifier)) {
-            throw new InvalidArgumentException(
-                'expected paypal account id to be set'
-            );
+           throw new InvalidArgumentException(
+                   'expected paypal account id to be set'
+                   );
         }
         if (!preg_match('/^[0-9A-Za-z_-]+$/', $identifier)) {
             throw new InvalidArgumentException(
-                $identifier . ' is an invalid paypal account ' . $identifierType . '.'
-            );
+                    $identifier . ' is an invalid paypal account ' . $identifierType . '.'
+                    );
         }
     }
 }
+class_alias('Braintree\PayPalAccountGateway', 'Braintree_PayPalAccountGateway');

@@ -1,5 +1,4 @@
-<?php //phpcs:disable PEAR
-
+<?php
 namespace Braintree;
 
 class WebhookTesting
@@ -9,3 +8,4 @@ class WebhookTesting
         return Configuration::gateway()->webhookTesting()->sampleNotification($kind, $id, $sourceMerchantId);
     }
 }
+class_alias('Braintree\WebhookTesting', 'Braintree_WebhookTesting');

@@ -1,12 +1,27 @@
 <?php
-
 namespace Braintree;
 
 /**
  * Braintree VenmoAccount module
  * Creates and manages Braintree Venmo accounts
  *
- * See our {@link https://developer.paypal.com/braintree/docs/reference/response/venmo-account developer docs} for information on attributes
+ * <b>== More information ==</b>
+ *
+ * See {@link https://developers.braintreepayments.com/javascript+php}<br />
+ *
+ * @package    Braintree
+ * @category   Resources
+ *
+ * @property-read \DateTime $createdAt
+ * @property-read string $customerId
+ * @property-read boolean $default
+ * @property-read string $imageUrl
+ * @property-read string $sourceDescription
+ * @property-read \Braintree\Subscription[] $subscriptions
+ * @property-read string $token
+ * @property-read \DateTime $updatedAt
+ * @property-read string $username
+ * @property-read string $venmoUserId
  */
 class VenmoAccount extends Base
 {
@@ -22,10 +37,10 @@ class VenmoAccount extends Base
     }
 
     /**
-     * Creates an instance from given attributes
+     *  factory method: returns an instance of VenmoAccount
+     *  to the requesting method, with populated properties
      *
-     * @param array $attributes response object attributes
-     *
+     * @ignore
      * @return VenmoAccount
      */
     public static function factory($attributes)
@@ -39,8 +54,8 @@ class VenmoAccount extends Base
     /**
      * sets instance properties from an array of values
      *
+     * @access protected
      * @param array $venmoAccountAttribs array of Venmo account properties
-     *
      * @return void
      */
     protected function _initialize($venmoAccountAttribs)
@@ -49,7 +64,7 @@ class VenmoAccount extends Base
 
         $subscriptionArray = array();
         if (isset($venmoAccountAttribs['subscriptions'])) {
-            foreach ($venmoAccountAttribs['subscriptions'] as $subscription) {
+            foreach ($venmoAccountAttribs['subscriptions'] AS $subscription) {
                 $subscriptionArray[] = Subscription::factory($subscription);
             }
         }
@@ -57,3 +72,4 @@ class VenmoAccount extends Base
         $this->_set('subscriptions', $subscriptionArray);
     }
 }
+class_alias('Braintree\VenmoAccount', 'Braintree_VenmoAccount');

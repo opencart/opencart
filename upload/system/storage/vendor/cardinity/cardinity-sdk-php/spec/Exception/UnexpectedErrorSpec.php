@@ -3,6 +3,7 @@
 namespace spec\Cardinity\Exception;
 
 use PhpSpec\ObjectBehavior;
+use Prophecy\Argument;
 
 class UnexpectedErrorSpec extends ObjectBehavior
 {

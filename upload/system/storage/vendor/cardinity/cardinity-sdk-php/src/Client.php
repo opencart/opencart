@@ -6,17 +6,14 @@ use Cardinity\Http\ClientInterface;
 use Cardinity\Http\Guzzle;
 use Cardinity\Method\MethodInterface;
 use Cardinity\Method\MethodResultCollectionInterface;
-use Cardinity\Method\ResultObjectInterface;
 use Cardinity\Method\ResultObjectMapper;
 use Cardinity\Method\ResultObjectMapperInterface;
 use Cardinity\Method\Validator;
 use Cardinity\Method\ValidatorInterface;
-use GuzzleHttp\HandlerStack;
-use GuzzleHttp\Middleware;
-use GuzzleHttp\MessageFormatter;
+use GuzzleHttp\Subscriber\Log\Formatter;
+use GuzzleHttp\Subscriber\Log\LogSubscriber;
 use GuzzleHttp\Subscriber\Oauth\Oauth1;
 use Symfony\Component\Validator\Validation;
-use Symfony\Component\Validator\Constraints\Url;
 
 class Client
 {
@@ -49,48 +46,40 @@ class Client
      *     'consumerKey' => 'foo',
      *     'consumerSecret' => 'bar',
      * ]
-     * @param LoggerInterface $logger Logs messages.
+     * @param mixed $logger Logger used to log
+     *     messages. Pass a LoggerInterface to use a PSR-3 logger. Pass a
+     *     callable to log messages to a function that accepts a string of
+     *     data. Pass a resource returned from ``fopen()`` to log to an open
+     *     resource. Pass null or leave empty to write log messages using
+     *     ``echo()``.
      * @return self
      */
     public static function create(array $options = [], $logger = Client::LOG_NONE)
     {
+        $client = new \GuzzleHttp\Client([
+            'base_url' => self::$url,
+            'defaults' => ['auth' => 'oauth']
+        ]);
+
+        if ($logger !== false) {
+            $subscriber = new LogSubscriber($logger, Formatter::DEBUG);
+            $client->getEmitter()->attach($subscriber);
+        }
+
         $oauth = new Oauth1([
-            'token_secret' => '',
             'consumer_key' => $options['consumerKey'],
             'consumer_secret' => $options['consumerSecret']
         ]);
-
-        $validator = Validation::createValidator();
-
-        if(isset($options['apiEndpoint'])){
-            self::validateClientEndpoint($options, $validator);
-            self::$url = $options['apiEndpoint'];
-        }
-
-        $stack = HandlerStack::create();
-        $stack->push($oauth);
-
-        if (!empty($logger)) {
-            $stack->push(
-                Middleware::log($logger, new MessageFormatter(MessageFormatter::DEBUG))
-            );
-        }
-
-        $client = new \GuzzleHttp\Client([
-            'base_uri' => self::$url,
-            'handler' => $stack,
-            'auth' => 'oauth'
-        ]);
+        $client->getEmitter()->attach($oauth);
 
         $mapper = new ResultObjectMapper();
 
         return new self(
             new Guzzle\ClientAdapter($client, new Guzzle\ExceptionMapper($mapper)),
-            new Validator($validator),
+            new Validator(Validation::createValidator()),
             $mapper
         );
     }
-
     /**
      * @param ClientInterface $client
      * @param ValidatorInterface $validator
@@ -192,24 +181,5 @@ class Client
         }
 
         return $data;
-    }
-
-    /**
-     * Validate endPoint is a valid URL
-     *
-     * @param [array] $options
-     * @param [Validator] $validator
-     * @return void
-     */
-    private static function validateClientEndpoint($options, $validator){
-        $violations = $validator->validate($options['apiEndpoint'], [
-            new Url(),
-        ]);
-        if(count($violations) != 0){
-            throw new Exception\InvalidAttributeValue(
-                'Your API endpoint is not a valid URL',
-                $violations
-            );
-        }
     }
 }

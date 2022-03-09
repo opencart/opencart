@@ -23,7 +23,7 @@ interface LoaderInterface
     /**
      * Loads validation metadata into a {@link ClassMetadata} instance.
      *
-     * @return bool
+     * @return bool Whether the loader succeeded
      */
     public function loadClassMetadata(ClassMetadata $metadata);
 }

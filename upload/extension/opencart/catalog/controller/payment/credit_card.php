@@ -4,7 +4,7 @@ class CreditCard extends \Opencart\System\Engine\Controller {
 	public function index(): string {
 		$this->load->language('extension/opencart/payment/credit_card');
 
-		$data['logged'] = !$this->customer->isLogged();
+		$data['logged'] = $this->customer->isLogged();
 
 		$data['months'] = [];
 

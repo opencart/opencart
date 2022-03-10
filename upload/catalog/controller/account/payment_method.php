@@ -39,6 +39,10 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 
 		$data['list'] = $this->getList();
 
+		$data['customer_token'] = $this->session->data['customer_token'];
+
+		$data['language'] = $this->config->get('config_language');
+
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
 		$data['content_top'] = $this->load->controller('common/content_top');
@@ -72,6 +76,9 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 			$data['payment_methods'][] = [
 				'payment_method_id' => $result['payment_method_id'],
 				'name'              => $result['name'],
+				'image'             => $result['image'],
+				'type'              => $result['type'],
+				'expires'           => date($this->language->get('date_format_short'), strtotime($result['date_expire'])),
 				'delete'            => $this->url->link('account/payment_method|delete', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&payment_method_id=' . $result['payment_method_id'])
 			];
 		}

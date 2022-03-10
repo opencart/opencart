@@ -55,7 +55,7 @@ class CreditCard extends \Opencart\System\Engine\Controller {
 			$json['error']['card_name'] = $this->language->get('error_card_name');
 		}
 
-		if (preg_match('/[0-9\s]{8,19}/', $this->request->post['card_number'])) {
+		if (!preg_match('/[0-9\s]{8,19}/', $this->request->post['card_number'])) {
 			$json['error']['card_number'] = $this->language->get('error_card_number');
 		}
 
@@ -99,5 +99,9 @@ class CreditCard extends \Opencart\System\Engine\Controller {
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
+	}
+
+	public function callback(): void {
+
 	}
 }

@@ -22,7 +22,7 @@
               <td class="text-start">{{ subscription.customer }}</td>
               <td class="text-start">{{ subscription.status }}</td>
               <td class="text-start d-none d-lg-table-cell">{{ subscription.date_added }}</td>
-              <td class="text-end"><a href="{{ subscription.view }}" data-bs-toggle="tooltip" title="{{ button_view }}" class="btn btn-info"><i class="fas fa-eye"></i></a> <a href="{{ subscription.order }}" data-bs-toggle="tooltip" title="{{ button_order }}" class="btn btn-info"><i class="fas fa-shopping-cart"></i></a></td>
+              <td class="text-end"><a href="{{ subscription.view }}" data-bs-toggle="tooltip" title="{{ button_view }}" class="btn btn-primary"><i class="fas fa-eye"></i></a> <a href="{{ subscription.order }}" data-bs-toggle="tooltip" title="{{ button_order }}" class="btn btn-light"><i class="fas fa-shopping-cart"></i></a></td>
             </tr>
           {% endfor %}
         {% else %}

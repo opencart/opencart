@@ -5343,6 +5343,11 @@ function db_schema() {
 				'not_null' => true
 			],
 			[
+				'name' => 'customer_payment_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
 				'name' => 'name',
 				'type' => 'varchar(255)',
 				'not_null' => true
@@ -5373,6 +5378,11 @@ function db_schema() {
 				'not_null' => true
 			],
 			[
+				'name' => 'trial_remaining',
+				'type' => 'smallint(6)',
+				'not_null' => true
+			],
+			[
 				'name' => 'trial_status',
 				'type' => 'tinyint(1)',
 				'not_null' => true
@@ -5398,8 +5408,8 @@ function db_schema() {
 				'not_null' => true
 			],
 			[
-				'name' => 'customer_payment_id',
-				'type' => 'int(11)',
+				'name' => 'remaining',
+				'type' => 'smallint(6)',
 				'not_null' => true
 			],
 			[

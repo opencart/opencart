@@ -370,18 +370,16 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!empty($subscription_info)) {
-			$data['subscription'] = $this->url->link('catalog/subscription_plan|form', 'user_token=' . $this->session->data['user_token'] . '&subscription_plan_id=' . $subscription_info['subscription_plan_id']);
+			$data['subscription_plan'] = $this->url->link('catalog/subscription_plan|form', 'user_token=' . $this->session->data['user_token'] . '&subscription_plan_id=' . $subscription_info['subscription_plan_id']);
 		} else {
-			$data['subscription'] = '';
+			$data['subscription_plan'] = '';
 		}
 
-		// Order
+		// Order data
 		if (!empty($subscription_info)) {
 			$this->load->model('sale/order');
 
 			$order_info = $this->model_sale_order->getOrder($subscription_info['order_id']);
-
-			$product_info = $this->model_sale_order->getProductByOrderProductId($subscription_info['order_id'], $subscription_info['order_product_id']);
 		}
 
 		if (!empty($order_info)) {
@@ -402,14 +400,62 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$data['order_status'] = '';
 		}
 
-		// Product
-		//$data['product'] = $product_info['product_name'];
-		//$data['quantity'] = $product_info['product_quantity'];
+		$this->load->model('catalog/subscription_plan');
+
+		$data['subscription_plans'] = $this->model_catalog_subscription_plan->getSubscriptionPlans();
+
+		if (!empty($subscription_info)) {
+			$data['subscription_plan_id'] = $subscription_info['subscription_plan_id'];
+		} else {
+			$data['subscription_plan_id'] = 0;
+		}
+
+		$this->load->model('customer/customer');
+
+		$data['payment_methods'] = $this->model_customer_customer->getPaymentMethods($order_info['customer_id']);
+
+		if (!empty($subscription_info)) {
+			$data['customer_payment_id'] = $subscription_info['customer_payment_id'];
+		} else {
+			$data['customer_payment_id'] = 0;
+		}
+
+		if (!empty($order_info)) {
+			$data['payment_method'] = $order_info['payment_method'];
+		} else {
+			$data['payment_method'] = '';
+		}
+
 		//$data['payment_method'] = $order_info['payment_method'];
+
+		// Product data
+		if (!empty($subscription_info)) {
+			$this->load->model('sale/order');
+
+			$product_info = $this->model_sale_order->getProductByOrderProductId($subscription_info['order_id'], $subscription_info['order_product_id']);
+		}
+
+		if (!empty($product_info)) {
+			$data['product'] = $product_info['name'];
+		} else {
+			$data['product'] = '';
+		}
+
+		if (!empty($product_info)) {
+			$data['quantity'] = $product_info['quantity'];
+		} else {
+			$data['quantity'] = '';
+		}
 
 		$this->load->model('localisation/subscription_status');
 
 		$data['subscription_statuses'] = $this->model_localisation_subscription_status->getSubscriptionStatuses();
+
+		if (!empty($subscription_info)) {
+			$data['subscription_status_id'] = $subscription_info['subscription_status_id'];
+		} else {
+			$data['subscription_status_id'] = '';
+		}
 
 		if (!empty($order_info)) {
 			$data['date_added'] = date($this->language->get('date_format_short'), strtotime($order_info['date_added']));

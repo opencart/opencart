@@ -78,7 +78,7 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 				'name'                => $result['name'],
 				'image'               => $result['image'],
 				'type'                => $result['type'],
-				'date_expire'         => date($this->language->get('date_format_short'), strtotime($result['date_expire'])),
+				'date_expire'         => date('m-Y', strtotime($result['date_expire'])),
 				'delete'              => $this->url->link('account/payment_method|delete', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&customer_payment_id=' . $result['customer_payment_id'])
 			];
 		}
@@ -106,7 +106,7 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('account/payment_method');
 
-			$payment_method_info = $this->model_account_payment_method->getPaymentMethod($customer_payment_id);
+			$payment_method_info = $this->model_account_payment_method->getPaymentMethod($this->customer->getId(), $customer_payment_id);
 
 			if (!$payment_method_info) {
 				$json['error'] = $this->language->get('error_payment_method');
@@ -117,12 +117,14 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 			$this->load->model('extension/' . $payment_method_info['extension'] . '/payment/' . $payment_method_info['code']);
 
 			if ($this->{'model_extension_' . $payment_method_info['extension'] . '_payment_' . $payment_method_info['code']}->delete($customer_payment_id)) {
-				// Delete address from database.
-				$this->model_account_payment_method->deletePaymentMethod($customer_payment_id);
 
-				// Delete address from session.
-				$json['success'] = $this->language->get('text_success');
 			}
+
+			// Delete address from database.
+			$this->model_account_payment_method->deletePaymentMethod($customer_payment_id);
+
+			// Delete address from session.
+			$json['success'] = $this->language->get('text_success');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

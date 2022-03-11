@@ -1424,7 +1424,7 @@
             <div id="tab-report" class="tab-pane">
               <fieldset>
                 <legend>{{ text_report }}</legend>
-                <div id="report"></div>
+                <div id="report">{{ report }}</div>
               </fieldset>
             </div>
           </div>
@@ -2102,7 +2102,5 @@ $('#report').on('click', '.pagination a', function(e) {
 
     $('#report').load(this.href);
 });
-
-$('#report').load('index.php?route=catalog/product|report&user_token={{ user_token }}&product_id=' + $('#input-product-id').val());
 //--></script>
 {{ footer }}

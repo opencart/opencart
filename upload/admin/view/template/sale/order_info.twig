@@ -441,7 +441,7 @@
           <div id="tab-history" class="tab-pane active">
             <fieldset>
               <legend>{{ text_history }}</legend>
-              <div id="history"></div>
+              <div id="history">{{ history }}</div>
             </fieldset>
             <form id="form-history">
               <fieldset>
@@ -2812,8 +2812,6 @@ $('#history').on('click', '.pagination a', function (e) {
 
     $('#history').load(this.href);
 });
-
-$('#history').load('index.php?route=sale/order|history&user_token={{ user_token }}&order_id=' + $('#input-order-id').val());
 
 $('#form-history').on('submit', function (e) {
     e.preventDefault();

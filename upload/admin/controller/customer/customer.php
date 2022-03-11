@@ -896,7 +896,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->getHistory());
 	}
 
-	private function getHistory(): string {
+	public function getHistory(): string {
 		if (isset($this->request->get['customer_id'])) {
 			$customer_id = (int)$this->request->get['customer_id'];
 		} else {
@@ -969,7 +969,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->getTransaction());
 	}
 
-	private function getTransaction(): string {
+	public function getTransaction(): string {
 		if (isset($this->request->get['customer_id'])) {
 			$customer_id = (int)$this->request->get['customer_id'];
 		} else {
@@ -1053,7 +1053,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->getReward());
 	}
 
-	private function getReward(): string {
+	public function getReward(): string {
 		if (isset($this->request->get['customer_id'])) {
 			$customer_id = (int)$this->request->get['customer_id'];
 		} else {
@@ -1137,7 +1137,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->getIp());
 	}
 
-	private function getIp(): string {
+	public function getIp(): string {
 		if (isset($this->request->get['customer_id'])) {
 			$customer_id = (int)$this->request->get['customer_id'];
 		} else {

@@ -1050,6 +1050,8 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['date_modified'] = date($this->language->get('date_format_short'), time());
 		}
 
+		$data['history'] = $this->getHistory();
+
 		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
@@ -1631,6 +1633,10 @@ class Order extends \Opencart\System\Engine\Controller {
 	public function history(): void {
 		$this->load->language('sale/order');
 
+		$this->response->setOutput($this->getHistory());
+	}
+
+	public function getHistory(): string {
 		if (isset($this->request->get['order_id'])) {
 			$order_id = (int)$this->request->get['order_id'];
 		} else {
@@ -1669,7 +1675,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($history_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($history_total - 10)) ? $history_total : ((($page - 1) * 10) + 10), $history_total, ceil($history_total / 10));
 
-		$this->response->setOutput($this->load->view('sale/order_history', $data));
+		return $this->load->view('sale/order_history', $data);
 	}
 
 	public function createInvoiceNo(): void {

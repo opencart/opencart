@@ -285,7 +285,7 @@
             <div id="tab-history" class="tab-pane">
               <fieldset>
                 <legend>{{ text_history }}</legend>
-                <div id="history"></div>
+                <div id="history">{{ history }}</div>
               </fieldset>
               <br/>
               <fieldset>
@@ -304,7 +304,7 @@
             <div id="tab-transaction" class="tab-pane">
               <fieldset>
                 <legend>{{ text_transaction }}</legend>
-                <div id="transaction"></div>
+                <div id="transaction">{{ transaction }}</div>
               </fieldset>
               <br/>
               <fieldset>
@@ -329,7 +329,7 @@
             <div id="tab-report" class="tab-pane">
               <fieldset>
                 <legend>{{ text_report }}</legend>
-                <div id="report"></div>
+                <div id="report">{{ report }}</div>
               </fieldset>
             </div>
           </div>
@@ -398,8 +398,6 @@ $('#history').on('click', '.pagination a', function(e) {
     $('#history').load(this.href);
 });
 
-$('#history').load('index.php?route=customer/customer|history&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val());
-
 $('#button-history').on('click', function(e) {
     var element = this;
 
@@ -440,8 +438,6 @@ $('#transaction').on('click', '.pagination a', function(e) {
 
     $('#transaction').load(this.href);
 });
-
-$('#transaction').load('index.php?route=customer/customer|transaction&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val());
 
 $('#button-transaction').on('click', function(e) {
     e.preventDefault();
@@ -484,8 +480,6 @@ $('#report').on('click', '.pagination a', function(e) {
 
     $('#report').load(this.href);
 });
-
-$('#report').load('index.php?route=marketing/affiliate|report&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val());
 
 $('input[name=\'payment\']').on('change', function() {
     $('.payment').hide();

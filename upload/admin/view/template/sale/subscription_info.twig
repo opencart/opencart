@@ -132,7 +132,7 @@
           <div id="tab-history" class="tab-pane active">
             <fieldset>
               <legend>{{ text_history }}</legend>
-              <div id="history"></div>
+              <div id="history">{{ history }}</div>
             </fieldset>
             <form id="form-history">
               <fieldset>
@@ -179,7 +179,7 @@
           <div id="tab-transaction" class="tab-pane">
             <fieldset>
               <legend>{{ text_transaction }}</legend>
-              <div id="transaction"></div>
+              <div id="transaction">{{ transaction }}</div>
             </fieldset>
             <form id="form-transaction">
               <fieldset>
@@ -213,8 +213,6 @@ $('#history').on('click', '.pagination a', function (e) {
 
     $('#history').load(this.href);
 });
-
-$('#history').load('index.php?route=sale/subscription|history&user_token={{ user_token }}&subscription_id=' + $('#input-subscription-id').val());
 
 $('#form-history').on('submit', function (e) {
     e.preventDefault();
@@ -257,8 +255,6 @@ $('#transaction').on('click', '.pagination a', function (e) {
 
     $('#transaction').load(this.href);
 });
-
-$('#transaction').load('index.php?route=sale/subscription|transaction&user_token={{ user_token }}&subscription_id=' + $('#input-subscription-id').val());
 
 $('#form-transaction').on('submit', function (e) {
     e.preventDefault();

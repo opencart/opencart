@@ -417,6 +417,9 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$data['date_added'] = '';
 		}
 
+		$data['history'] = $this->getHistory();
+		$data['transaction'] = $this->getTransaction();
+
 		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
@@ -429,6 +432,10 @@ class Subscription extends \Opencart\System\Engine\Controller {
 	public function history(): void {
 		$this->load->language('sale/subscription');
 
+		$this->response->setOutput($this->getHistory());
+	}
+
+	public function getHistory(): string {
 		if (isset($this->request->get['subscription_id'])) {
 			$subscription_id = (int)$this->request->get['subscription_id'];
 		} else {
@@ -467,7 +474,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($subscription_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($subscription_total - 10)) ? $subscription_total : ((($page - 1) * 10) + 10), $subscription_total, ceil($subscription_total / 10));
 
-		$this->response->setOutput($this->load->view('sale/subscription_history', $data));
+		return $this->load->view('sale/subscription_history', $data);
 	}
 
 	public function addHistory(): void {
@@ -500,6 +507,10 @@ class Subscription extends \Opencart\System\Engine\Controller {
 	public function transaction(): void {
 		$this->load->language('sale/subscription');
 
+		$this->response->setOutput($this->getTransaction());
+	}
+
+	public function getTransaction(): string {
 		if (isset($this->request->get['subscription_id'])) {
 			$subscription_id = (int)$this->request->get['subscription_id'];
 		} else {
@@ -539,7 +550,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($transaction_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($transaction_total - 10)) ? $transaction_total : ((($page - 1) * 10) + 10), $transaction_total, ceil($transaction_total / 10));
 
-		$this->response->setOutput($this->load->view('sale/subscription_transaction', $data));
+		return $this->load->view('sale/subscription_transaction', $data);
 	}
 
 	public function addTransaction(): void {

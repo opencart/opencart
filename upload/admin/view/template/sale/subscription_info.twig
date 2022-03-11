@@ -84,10 +84,10 @@
           <div class="col">
             <form id="form-payment-method">
               <div class="input-group form-floating mb-3">
-                <select name="payment_method_id" id="input-payment-method" class="form-select">
+                <select name="customer_payment_id" id="input-payment-method" class="form-select">
                   <option value="">{{ text_select }}</option>
                   {% for payment_method in payment_methods %}
-                    <option value="{{ payment_method.payment_method_id }}"{% if payment_method.payment_method_id == payment_method_id %} selected{% endif %}>{{ payment_method.name }}</option>
+                    <option value="{{ payment_method.customer_payment_id }}"{% if payment_method.customer_payment_id == customer_payment_id %} selected{% endif %}>{{ payment_method.name }}</option>
                   {% endfor %}
                 </select>
                 <label for="input-payment-method">{{ entry_payment_method }}</label>

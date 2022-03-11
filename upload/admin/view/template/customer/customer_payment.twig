@@ -1,0 +1,48 @@
+<div class="table-responsive">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <td class="text-start">{{ column_payment_method }}</td>
+        <td class="text-start">{{ column_image }}</td>
+        <td class="text-start">{{ column_type }}</td>
+        <td class="text-start">{{ column_status }}</td>
+        <td class="text-start">{{ column_date_expire }}</td>
+        <td class="text-end">{{ column_action }}</td>
+      </tr>
+    </thead>
+    <tbody>
+      {% if payment_methods %}
+
+        {% for payment_method in payment_methods %}
+          <tr>
+            <td class="text-start">{{ payment_method.name }}</td>
+            <td class="text-start">{% if payment_method.image %}<img src="{{ payment_method.image }}" alt=""/>{% endif %}</td>
+            <td class="text-start">{{ payment_method.type }}</td>
+            <td class="text-start">
+              <div class="btn-group">
+
+                <input type="radio" name="status" value="1" id="input-status-yes-{{ payment_method.customer_payment_id }}" class="btn-check"{% if payment_method.status %} checked{% endif %}/>
+                <label for="input-status-yes-{{ payment_method.customer_payment_id }}" class="btn btn-outline-secondary">{{ text_on }}</label>
+
+                <input type="radio" name="status" value="0" id="input-status-no-{{ payment_method.customer_payment_id }}" class="btn-check"{% if not payment_method.status %} checked{% endif %}/>
+                <label for="input-status-no-{{ payment_method.customer_payment_id }}" class="btn btn-outline-secondary">{{ text_off }}</label>
+
+              </div>
+            </td>
+            <td class="text-start">{{ payment_method.date_expire }}</td>
+            <td class="text-end"><a href="{{ payment_method.delete }}" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></a></td>
+          </tr>
+        {% endfor %}
+
+      {% else %}
+        <tr>
+          <td class="text-center" colspan="6">{{ text_no_results }}</td>
+        </tr>
+      {% endif %}
+    </tbody>
+  </table>
+</div>
+<div class="row">
+  <div class="col-sm-6 text-start">{{ pagination }}</div>
+  <div class="col-sm-6 text-end">{{ results }}</div>
+</div>

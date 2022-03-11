@@ -3884,10 +3884,10 @@ function db_schema() {
 	];
 
 	$tables[] = [
-		'name' => 'payment_method',
+		'name' => 'customer_payment',
 		'field' => [
 			[
-				'name' => 'payment_method_id',
+				'name' => 'customer_payment_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
@@ -3949,7 +3949,7 @@ function db_schema() {
 			]
 		],
 		'primary' => [
-			'payment_method_id'
+			'customer_payment_id'
 		],
 		'index' => [
 			[
@@ -5398,7 +5398,7 @@ function db_schema() {
 				'not_null' => true
 			],
 			[
-				'name' => 'payment_method_id',
+				'name' => 'customer_payment_id',
 				'type' => 'int(11)',
 				'not_null' => true
 			],

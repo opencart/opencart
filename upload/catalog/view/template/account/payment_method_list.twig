@@ -6,7 +6,7 @@
           <th class="text-start">{{ column_payment_method }}</th>
           <th></th>
           <th class="text-start">{{ column_type }}</th>
-          <th class="text-start">{{ column_expires }}</th>
+          <th class="text-start">{{ column_date_expire }}</th>
           <th class="text-end">{{ column_action }}</th>
         </tr>
       </thead>
@@ -17,7 +17,7 @@
             <td class="text-start">{{ payment_method.name }}</td>
             <td class="text-start">{{ payment_method.image }}</td>
             <td class="text-start">{{ payment_method.type }}</td>
-            <td class="text-start">{{ payment_method.expires }}</td>
+            <td class="text-start">{{ payment_method.date_expire }}</td>
             <td class="text-end"><a href="{{ payment_method.delete }}" class="btn btn-danger">{{ button_delete }}</a></td>
           </tr>
         {% endfor %}

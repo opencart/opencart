@@ -238,7 +238,10 @@
                   <label class="col-sm-2 col-form-label">{{ entry_status }}</label>
                   <div class="col-sm-10">
                     <div class="btn-group">
-                      <input type="radio" name="status" value="1" id="input-status-yes" class="btn-check"{% if status %} checked{% endif %}/> <label for="input-status-yes" class="btn btn-outline-secondary">{{ text_yes }}</label> <input type="radio" name="status" value="0" id="input-status-no" class="btn-check"{% if not status %} checked{% endif %}/> <label for="input-status-no" class="btn btn-outline-secondary">{{ text_no }}</label>
+                      <input type="radio" name="status" value="1" id="input-status-yes" class="btn-check"{% if status %} checked{% endif %}/>
+                      <label for="input-status-yes" class="btn btn-outline-secondary">{{ text_yes }}</label>
+                      <input type="radio" name="status" value="0" id="input-status-no" class="btn-check"{% if not status %} checked{% endif %}/>
+                      <label for="input-status-no" class="btn btn-outline-secondary">{{ text_no }}</label>
                     </div>
                   </div>
                 </div>
@@ -475,42 +478,13 @@
           <div id="tab-payment" class="tab-pane">
             <fieldset>
               <legend>{{ text_payment_method }}</legend>
-              <div class="table-responsive">
-                <table class="table table-bordered">
-                  <thead>
-                    <tr>
-                      <td class="text-start">{{ column_payment_method }}</td>
-                      <td class="text-start">{{ column_image }}</td>
-                      <td class="text-start">{{ column_type }}</td>
-                      <td class="text-start">{{ column_date_added }}</td>
-                      <td class="text-end">{{ column_action }}</td>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {% if payment_methods %}
-                      {% for payment_method in payment_methods %}
-                        <tr>
-                          <td class="text-start">{{ payment_method.name }}</td>
-                          <td class="text-start">{{ payment_method.image }}</td>
-                          <td class="text-start">{{ payment_method.type }}</td>
-                          <td class="text-start">{{ payment_method.date_added }}</td>
-                          <td class="text-end"><button type="button" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
-                        </tr>
-                      {% endfor %}
-                    {% else %}
-                      <tr>
-                        <td class="text-center" colspan="5">{{ text_no_results }}</td>
-                      </tr>
-                    {% endif %}
-                  </tbody>
-                </table>
-              </div>
+              <div id="payment-method">{{ payment_method }}</div>
             </fieldset>
           </div>
           <div id="tab-history" class="tab-pane">
             <fieldset>
               <legend>{{ text_history }}</legend>
-              <div id="history"></div>
+              <div id="history">{{ history }}</div>
             </fieldset>
             <form id="form-history">
               <fieldset>
@@ -530,7 +504,7 @@
           <div id="tab-transaction" class="tab-pane">
             <fieldset>
               <legend>{{ text_transaction }}</legend>
-              <div id="transaction"></div>
+              <div id="transaction">{{ transaction }}</div>
             </fieldset>
             <form id="form-transaction">
               <fieldset>
@@ -556,7 +530,7 @@
           <div id="tab-reward" class="tab-pane">
             <fieldset>
               <legend>{{ text_reward }}</legend>
-              <div id="reward"></div>
+              <div id="reward">{{ reward }}</div>
             </fieldset>
             <form id="form-reward">
               <fieldset>
@@ -583,7 +557,7 @@
           <div id="tab-ip" class="tab-pane">
             <fieldset>
               <legend>{{ text_ip }}</legend>
-              <div id="ip"></div>
+              <div id="ip">{{ ip }}</div>
             </fieldset>
           </div>
         </div>
@@ -930,7 +904,6 @@ $('#tab-address').on('change', 'select[name$=\'[country_id]\']', function () {
 
 $('#tab-address select[name$=\'[country_id]\']:first').trigger('change');
 
-
 $('#form-customer, #form-address').on('submit', function (e) {
     e.preventDefault();
 
@@ -977,14 +950,54 @@ $('#form-customer, #form-address').on('submit', function (e) {
     });
 });
 
+$('#payment-method').on('click', '.pagination a', function (e) {
+    e.preventDefault();
+
+    $('#payment-method').load(this.href);
+});
+
+$('#form-payment-method').on('submit', function (e) {
+    e.preventDefault();
+
+    $.ajax({
+        url: 'index.php?route=customer/customer|addtransaction&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val(),
+        type: 'post',
+        data: $('#form-transaction').serialize(),
+        dataType: 'json',
+        contentType: 'application/x-www-form-urlencoded',
+        beforeSend: function () {
+            $('#button-transaction').button('loading');
+        },
+        complete: function () {
+            $('#button-transaction').button('reset');
+        },
+        success: function (json) {
+            $('.alert-dismissible').remove();
+
+            if (json['error']) {
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            if (json['success']) {
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                $('#transaction').load('index.php?route=customer/customer|transaction&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val());
+
+                $('#input-transaction-amount').val('');
+                $('#input-transaction-description').val('');
+            }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
 
 $('#history').on('click', '.pagination a', function (e) {
     e.preventDefault();
 
     $('#history').load(this.href);
 });
-
-$('#history').load('index.php?route=customer/customer|history&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val());
 
 $('#form-history').on('submit', function (e) {
     e.preventDefault();
@@ -1027,8 +1040,6 @@ $('#transaction').on('click', '.pagination a', function (e) {
 
     $('#transaction').load(this.href);
 });
-
-$('#transaction').load('index.php?route=customer/customer|transaction&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val());
 
 $('#form-transaction').on('submit', function (e) {
     e.preventDefault();
@@ -1073,8 +1084,6 @@ $('#reward').on('click', '.pagination a', function (e) {
     $('#reward').load(this.href);
 });
 
-$('#reward').load('index.php?route=customer/customer|reward&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val());
-
 $('#form-reward').on('submit', function (e) {
     e.preventDefault();
 
@@ -1117,7 +1126,5 @@ $('#ip').on('click', '.pagination a', function (e) {
 
     $('#ip').load(this.href);
 });
-
-$('#ip').load('index.php?route=customer/customer|ip&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val());
 //--></script>
 {{ footer }}

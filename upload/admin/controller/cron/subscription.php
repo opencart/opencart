@@ -41,7 +41,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 					if (property_exists($this->{'model_extension_' . $result['extension'] . '_payment_' . $result['code']}, 'recurringPayments')) {
 
-						$subscription_status_id = $this->{'model_extension_' . $result['extension'] . '_payment_' . $result['code']}->recurringPayment($result['customer_id'], $result['payment_method_id'], $result['amount']);
+						$subscription_status_id = $this->{'model_extension_' . $result['extension'] . '_payment_' . $result['code']}->recurringPayment($result['customer_id'], $result['customer_payment_id'], $result['amount']);
 
 						if ($subscription_status_id == $this->config->get('config_subscription_active_status_id')) {
 							// Successful

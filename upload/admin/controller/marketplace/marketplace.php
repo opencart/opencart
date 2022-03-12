@@ -621,6 +621,7 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 
 			$data['rating'] = $response_info['rating'];
 			$data['rating_total'] = $response_info['rating_total'];
+			$data['compatibility'] = $response_info['compatibility'];
 
 			$data['downloaded'] = $response_info['downloaded'];
 			$data['sales'] = $response_info['sales'];

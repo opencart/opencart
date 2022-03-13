@@ -28,6 +28,19 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 
 		array_multisort($sort_order, SORT_ASC, $method_data);
 
+		// Stored payment methods
+		$this->load->model('account/payment_method');
+
+		$payment_methods = $this->model_account_payment_method->getPaymentMethods($this->customer->getId());
+
+		foreach ($payment_methods as $payment_method) {
+			$method_data[$result['code'] . '_'] = [
+				'name' => $payment_method['name'],
+				'name' => $payment_method['name'],
+				'code' => $payment_method['code']
+			];
+		}
+
 		return $method_data;
 	}
 }

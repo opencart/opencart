@@ -5323,6 +5323,11 @@ function db_schema() {
 				'auto_increment' => true
 			],
 			[
+				'name' => 'customer_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
 				'name' => 'order_id',
 				'type' => 'int(11)',
 				'not_null' => true

@@ -354,6 +354,12 @@ class Customer extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE `" . DB_PREFIX . "customer_payment` WHERE `customer_payment_id` = '" . (int)$customer_payment_id . "'");
 	}
 
+	public function getPaymentMethod(int $customer_id, int $customer_payment_id): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_payment` WHERE `customer_id` = '" . (int)$customer_id . "' AND `customer_payment_id` = '" . (int)$customer_payment_id . "'");
+
+		return $query->rows;
+	}
+
 	public function getPaymentMethods(int $customer_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_payment` WHERE `customer_id` = '" . (int)$customer_id . "'");
 

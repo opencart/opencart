@@ -68,31 +68,29 @@
           </div>
 
           <div class="col">
-            <form id="form-subscription-plan">
-              <div class="input-group form-floating mb-3">
-                <select name="subscription_plan_id" id="input-subscription-plan" class="form-select">
-                  <option value="">{{ text_select }}</option>
-                  {% for subscription_plan in subscription_plans %}
-                    <option value="{{ subscription_plan.subscription_plan_id }}"{% if subscription_plan.subscription_plan_id == subscription_plan_id %} selected{% endif %}>{{ subscription_plan.name }}</option>
-                  {% endfor %}
-                </select>
-                <label for="input-subscription-plan">{{ entry_subscription_plan }}</label>
-              </div>
-            </form>
+            <div class="input-group form-floating mb-3">
+              <select name="subscription_plan_id" id="input-subscription-plan" class="form-select">
+                <option value="">{{ text_select }}</option>
+                {% for subscription_plan in subscription_plans %}
+                  <option value="{{ subscription_plan.subscription_plan_id }}"{% if subscription_plan.subscription_plan_id == subscription_plan_id %} selected{% endif %}>{{ subscription_plan.name }}</option>
+                {% endfor %}
+              </select>
+              <label for="input-subscription-plan">{{ entry_subscription_plan }}</label>
+            </div>
           </div>
 
           <div class="col">
-            <form id="form-payment-method">
-              <div class="input-group form-floating mb-3">
-                <select name="customer_payment_id" id="input-payment-method" class="form-select">
-                  <option value="">{{ text_select }}</option>
-                  {% for payment_method in payment_methods %}
-                    <option value="{{ payment_method.customer_payment_id }}"{% if payment_method.customer_payment_id == customer_payment_id %} selected{% endif %}>{{ payment_method.name }}</option>
-                  {% endfor %}
-                </select>
-                <label for="input-payment-method">{{ entry_payment_method }}</label>
-              </div>
-            </form>
+
+            <div class="input-group form-floating mb-3">
+              <select name="customer_payment_id" id="input-payment-method" class="form-select">
+                <option value="">{{ text_select }}</option>
+                {% for payment_method in payment_methods %}
+                  <option value="{{ payment_method.customer_payment_id }}"{% if payment_method.customer_payment_id == customer_payment_id %} selected{% endif %}>{{ payment_method.name }}</option>
+                {% endfor %}
+              </select>
+              <label for="input-payment-method">{{ entry_payment_method }}</label>
+            </div>
+
           </div>
 
         </div>
@@ -129,6 +127,7 @@
           {% endfor %}
         </ul>
         <div class="tab-content">
+
           <div id="tab-history" class="tab-pane active">
             <fieldset>
               <legend>{{ text_history }}</legend>
@@ -176,6 +175,7 @@
               </fieldset>
             </form>
           </div>
+
           <div id="tab-transaction" class="tab-pane">
             <fieldset>
               <legend>{{ text_transaction }}</legend>
@@ -202,12 +202,81 @@
               </fieldset>
             </form>
           </div>
+
         </div>
       </div>
     </div>
   </div>
 </div>
 <script type="text/javascript"><!--
+$('#input-subscription-plan').on('change', function (e) {
+    e.preventDefault();
+
+    var element = this;
+
+    $.ajax({
+        url: 'index.php?route=sale/subscription|editSubscriptionPlan&user_token={{ user_token }}&subscription_id=' + $('#input-subscription-id').val(),
+        type: 'post',
+        dataType: 'json',
+        data: $(element).serialize(),
+        contentType: 'application/x-www-form-urlencoded',
+        beforeSend: function () {
+            $(element).button('loading');
+        },
+        complete: function () {
+            $(element).button('reset');
+        },
+        success: function (json) {
+            $('.alert-dismissible').remove();
+
+            if (json['error']) {
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            if (json['success']) {
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+$('#input-payment-method').on('change', function (e) {
+    e.preventDefault();
+
+    var element = this;
+
+    $.ajax({
+        url: 'index.php?route=sale/subscription|editPaymentMethod&user_token={{ user_token }}&subscription_id=' + $('#input-subscription-id').val(),
+        type: 'post',
+        dataType: 'json',
+        data: $(element).serialize(),
+        contentType: 'application/x-www-form-urlencoded',
+        beforeSend: function () {
+            $(element).button('loading');
+        },
+        complete: function () {
+            $(element).button('reset');
+        },
+        success: function (json) {
+            $('.alert-dismissible').remove();
+
+            if (json['error']) {
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            if (json['success']) {
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
 $('#history').on('click', '.pagination a', function (e) {
     e.preventDefault();
 

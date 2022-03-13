@@ -59,3 +59,5 @@ $_['entry_date_added']           = 'Date Added';
 
 // Error
 $_['error_subscription']         = 'Warning: Subscription does not exist!';
+$_['error_subscription_plan']    = 'Warning: Subscription plan does not exist!';
+$_['error_payment_method']       = 'Warning: Payment method does not exist!';

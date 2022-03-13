@@ -1,6 +1,14 @@
 <?php
 namespace Opencart\Admin\Model\Sale;
 class Subscription extends \Opencart\System\Engine\Model {
+	public function editSubscriptionPlan(int $subscription_id, int $subscription_plan_id): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "subscription` SET `subscription_plan_id` = '" . (int)$subscription_plan_id . "' WHERE `subscription_id` = '" . (int)$subscription_id . "'");
+	}
+
+	public function editPaymentMethod(int $subscription_id, int $customer_payment_id): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "subscription` SET `customer_payment_id` = '" . (int)$customer_payment_id . "' WHERE `subscription_id` = '" . (int)$subscription_id . "'");
+	}
+
 	public function getSubscription(int $subscription_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "subscription` WHERE `subscription_id` = '" . (int)$subscription_id . "'");
 
@@ -148,7 +156,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 		return (int)$query->row['total'];
 	}
 
-	public function addHistory(int $subscription_id, int $subscription_status_id, string $comment = '', bool $notify = false): int {
+	public function addHistory(int $subscription_id, int $subscription_status_id, string $comment = '', bool $notify = false): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "subscription_history` SET `subscription_id` = '" . (int)$subscription_id . "', `subscription_status_id` = '" . (int)$subscription_status_id . "', `comment` = '" . $this->db->escape($comment) . "', `notify` = '" . (int)$notify . "'");
 
 		$this->db->query("UPDATE `" . DB_PREFIX . "subscription` SET `subscription_status_id` = '" . (int)$subscription_status_id . "' WHERE `subscription_id` = '" . (int)$subscription_id . "'");

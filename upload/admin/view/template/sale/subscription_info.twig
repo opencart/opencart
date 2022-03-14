@@ -33,7 +33,7 @@
               <div class="form-control border rounded-start">
                 <div class="lead"><strong>{{ text_order_id }}</strong>
                   <br/>
-                  <div id="order-value"><a href="index.php?route=sale/order|info&user_token={{ user_token }}&order_id={{ order_id }}" target="_blank">{{ order }}</a></div>
+                  <div id="order-value"><a href="index.php?route=sale/order|info&user_token={{ user_token }}&order_id={{ order_id }}" target="_blank">{{ order_id }}</a></div>
                 </div>
               </div>
             </div>
@@ -60,6 +60,24 @@
 
           <div class="col">
             <div class="form-control p-0 border rounded mb-3">
+              <div class="lead p-2"><strong>{{ text_remaining }}</strong>
+                <br/>
+                {{ remaining }}
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="form-control p-0 border rounded mb-3">
+              <div class="lead p-2"><strong>{{ text_date_next }}</strong>
+                <br/>
+                {{ date_next }}
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="form-control p-0 border rounded mb-3">
               <div class="lead p-2"><strong>{{ text_order_status }}</strong>
                 <br/>
                 {{ order_status }}
@@ -68,7 +86,7 @@
           </div>
 
           <div class="col">
-            <div class="input-group form-floating mb-3">
+            <div class="form-floating mb-3">
               <select name="subscription_plan_id" id="input-subscription-plan" class="form-select">
                 <option value="">{{ text_select }}</option>
                 {% for subscription_plan in subscription_plans %}
@@ -81,7 +99,7 @@
 
           <div class="col">
 
-            <div class="input-group form-floating mb-3">
+            <div class="form-floating mb-3">
               <select name="customer_payment_id" id="input-payment-method" class="form-select">
                 <option value="">{{ text_select }}</option>
                 {% for payment_method in payment_methods %}
@@ -106,13 +124,12 @@
             </thead>
             <tbody>
               <tr>
-                <td>{{ product }}</td>
+                <td><a href="{{ product }}" target="_blank">{{ product_name }}</a></td>
                 <td>{{ quantity }}</td>
               </tr>
             </tbody>
           </table>
         </fieldset>
-
       </div>
     </div>
 
@@ -200,6 +217,7 @@
                   <button type="submit" id="button-transaction" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i> {{ button_transaction_add }}</button>
                 </div>
               </fieldset>
+              <input type="hidden" name="subscription_id" value="{{ subscription_id }}" id="input-subscription-id"/>
             </form>
           </div>
 

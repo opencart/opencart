@@ -405,7 +405,13 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		if (!empty($subscription_info)) {
 			$data['remaining'] = $subscription_info['remaining'];
 		} else {
-			$data['remaining'] = '';
+			$data['remaining'] = 0;
+		}
+
+		if (!empty($subscription_info)) {
+			$data['duration'] = $subscription_info['duration'];
+		} else {
+			$data['duration'] = 0;
 		}
 
 		if (!empty($subscription_info)) {

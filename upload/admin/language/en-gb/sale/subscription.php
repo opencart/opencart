@@ -6,19 +6,21 @@ $_['heading_title']              = 'Subscriptions';
 $_['text_success']               = 'Success: You have modified subscriptions!';
 $_['text_list']                  = 'Subscription List';
 $_['text_filter']                = 'Filter';
-
 $_['text_subscription']          = 'Subscription Details';
 $_['text_subscription_id']       = 'Subscription ID';
-$_['text_subscription_plan']     = 'Subscription Plan';
-$_['text_reference']             = 'Reference';
-$_['text_customer']              = 'Customer';
 $_['text_order_id']              = 'Order ID';
-$_['text_order_status']          = 'Order Status';
-$_['text_payment_method']        = 'Payment Method';
+$_['text_customer']              = 'Customer';
 $_['text_date_added']            = 'Date Added';
 $_['text_remaining']             = 'Remaining Payments';
-$_['text_cancel']                = 'Until Canceled';
 $_['text_date_next']             = 'Next Payment Date';
+$_['text_order_status']          = 'Order Status';
+
+
+$_['text_payment_method']        = 'Payment Method';
+
+
+
+$_['text_cancel']                = 'Until Canceled';
 
 $_['text_product']               = 'Product Details';
 $_['text_quantity']              = 'Quantity';

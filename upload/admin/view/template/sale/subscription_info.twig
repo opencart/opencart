@@ -15,123 +15,128 @@
     <div class="card mb-3">
       <div class="card-header">{{ text_subscription }}</div>
       <div class="card-body">
-        <div class="row row-cols-1 row-cols-sm-1 row-cols-md-3 row-cols-xl-3">
 
-          <div class="col">
-            <div class="input-group mb-3">
-              <div class="form-control border rounded-start">
-                <div class="lead"><strong>{{ text_subscription_id }}</strong>
+        <form id="form-subscription">
+          <div class="row row-cols-1 row-cols-sm-1 row-cols-md-3 row-cols-xl-3">
+            <div class="col">
+              <div class="input-group mb-3">
+                <div class="form-control border rounded-start">
+                  <div class="lead"><strong>{{ text_subscription_id }}</strong>
+                    <br/>
+                    <div id="subscription-value">{{ subscription_id }}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="input-group mb-3">
+                <div class="form-control border rounded-start">
+                  <div class="lead"><strong>{{ text_order_id }}</strong>
+                    <br/>
+                    <div id="order-value"><a href="index.php?route=sale/order|info&user_token={{ user_token }}&order_id={{ order_id }}" target="_blank">{{ order_id }}</a></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col">
+              <div class="input-group mb-3">
+                <div class="form-control border rounded-start">
+                  <div class="lead"><strong>{{ text_customer }}</strong>
+                    <div id="customer-value"><a href="index.php?route=customer/customer|form&user_token={{ user_token }}&customer_id={{ customer_id }}" target="_blank">{{ customer }}</a></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col">
+              <div class="form-control p-0 border rounded mb-3">
+                <div class="lead p-2"><strong>{{ text_date_added }}</strong>
                   <br/>
-                  <div id="subscription-value">{{ subscription_id }}</div>
+                  {{ date_added }}
                 </div>
               </div>
             </div>
-          </div>
 
-          <div class="col">
-            <div class="input-group mb-3">
-              <div class="form-control border rounded-start">
-                <div class="lead"><strong>{{ text_order_id }}</strong>
+            <div class="col">
+              <div class="form-control p-0 border rounded mb-3">
+                <div class="lead p-2"><strong>{{ text_remaining }}</strong>
                   <br/>
-                  <div id="order-value"><a href="index.php?route=sale/order|info&user_token={{ user_token }}&order_id={{ order_id }}" target="_blank">{{ order_id }}</a></div>
+                  {% if duration %}
+                    {{ remaining }}
+                  {% else %}
+                    {{ text_cancel }}
+                  {% endif %}
                 </div>
               </div>
             </div>
-          </div>
 
-          <div class="col">
-            <div class="input-group mb-3">
-              <div class="form-control border rounded-start">
-                <div class="lead"><strong>{{ text_customer }}</strong>
-                  <div id="customer-value"><a href="index.php?route=customer/customer|form&user_token={{ user_token }}&customer_id={{ customer_id }}" target="_blank">{{ customer }}</a></div>
+            <div class="col">
+              <div class="form-control p-0 border rounded mb-3">
+                <div class="lead p-2"><strong>{{ text_date_next }}</strong>
+                  <br/>
+                  {{ date_next }}
                 </div>
               </div>
             </div>
-          </div>
 
-          <div class="col">
-            <div class="form-control p-0 border rounded mb-3">
-              <div class="lead p-2"><strong>{{ text_date_added }}</strong>
-                <br/>
-                {{ date_added }}
+            <div class="col">
+              <div class="form-control p-0 border rounded mb-3">
+                <div class="lead p-2"><strong>{{ text_order_status }}</strong>
+                  <br/>
+                  {{ order_status }}
+                </div>
               </div>
             </div>
-          </div>
 
-          <div class="col">
-            <div class="form-control p-0 border rounded mb-3">
-              <div class="lead p-2"><strong>{{ text_remaining }}</strong>
-                <br/>
-                {{ remaining }}
+            <div class="col">
+              <div class="form-floating mb-3">
+                <select name="subscription_plan_id" id="input-subscription-plan" class="form-select">
+                  <option value="">{{ text_select }}</option>
+                  {% for subscription_plan in subscription_plans %}
+                    <option value="{{ subscription_plan.subscription_plan_id }}"{% if subscription_plan.subscription_plan_id == subscription_plan_id %} selected{% endif %}>{{ subscription_plan.name }}</option>
+                  {% endfor %}
+                </select> <label for="input-subscription-plan">{{ entry_subscription_plan }}</label>
               </div>
             </div>
-          </div>
 
-          <div class="col">
-            <div class="form-control p-0 border rounded mb-3">
-              <div class="lead p-2"><strong>{{ text_date_next }}</strong>
-                <br/>
-                {{ date_next }}
+            <div class="col">
+              <div class="form-floating mb-3">
+                <select name="customer_payment_id" id="input-payment-method" class="form-select">
+                  <option value="">{{ text_select }}</option>
+                  {% for payment_method in payment_methods %}
+                    <option value="{{ payment_method.customer_payment_id }}"{% if payment_method.customer_payment_id == customer_payment_id %} selected{% endif %}>{{ payment_method.name }}</option>
+                  {% endfor %}
+                </select> <label for="input-payment-method">{{ entry_payment_method }}</label>
               </div>
             </div>
-          </div>
-
-          <div class="col">
-            <div class="form-control p-0 border rounded mb-3">
-              <div class="lead p-2"><strong>{{ text_order_status }}</strong>
-                <br/>
-                {{ order_status }}
-              </div>
-            </div>
-          </div>
-
-          <div class="col">
-            <div class="form-floating mb-3">
-              <select name="subscription_plan_id" id="input-subscription-plan" class="form-select">
-                <option value="">{{ text_select }}</option>
-                {% for subscription_plan in subscription_plans %}
-                  <option value="{{ subscription_plan.subscription_plan_id }}"{% if subscription_plan.subscription_plan_id == subscription_plan_id %} selected{% endif %}>{{ subscription_plan.name }}</option>
-                {% endfor %}
-              </select>
-              <label for="input-subscription-plan">{{ entry_subscription_plan }}</label>
-            </div>
-          </div>
-
-          <div class="col">
-
-            <div class="form-floating mb-3">
-              <select name="customer_payment_id" id="input-payment-method" class="form-select">
-                <option value="">{{ text_select }}</option>
-                {% for payment_method in payment_methods %}
-                  <option value="{{ payment_method.customer_payment_id }}"{% if payment_method.customer_payment_id == customer_payment_id %} selected{% endif %}>{{ payment_method.name }}</option>
-                {% endfor %}
-              </select>
-              <label for="input-payment-method">{{ entry_payment_method }}</label>
-            </div>
 
           </div>
 
-        </div>
+          <fieldset>
+            <legend>{{ text_product }}</legend>
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <td>{{ column_product }}</td>
+                  <td>{{ column_quantity }}</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><a href="{{ product }}" target="_blank">{{ product_name }}</a></td>
+                  <td>{{ quantity }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </fieldset>
 
-        <fieldset>
-          <legend>{{ text_product }}</legend>
-          <table class="table table-bordered">
-            <thead>
-              <tr>
-                <td>{{ column_product }}</td>
-                <td>{{ column_quantity }}</td>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><a href="{{ product }}" target="_blank">{{ product_name }}</a></td>
-                <td>{{ quantity }}</td>
-              </tr>
-            </tbody>
-          </table>
-        </fieldset>
+          <input type="hidden" name="subscription_id" value="{{ subscription_id }}" id="input-subscription-id"/>
+        </form>
+
       </div>
     </div>
+
 
     <div class="card">
       <div class="card-header"><i class="fas fa-list"></i> {{ text_history }}</div>
@@ -190,6 +195,7 @@
                   <button type="submit" id="button-history" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i> {{ button_history_add }}</button>
                 </div>
               </fieldset>
+
             </form>
           </div>
 
@@ -227,50 +233,16 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#input-subscription-plan').on('change', function (e) {
+$('#input-subscription-plan, #input-payment-method').on('change', function (e) {
     e.preventDefault();
 
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=sale/subscription|editSubscriptionPlan&user_token={{ user_token }}&subscription_id=' + $('#input-subscription-id').val(),
+        url: 'index.php?route=sale/subscription|save&user_token={{ user_token }}&subscription_id=' + $('#input-subscription-id').val(),
         type: 'post',
         dataType: 'json',
-        data: $(element).serialize(),
-        contentType: 'application/x-www-form-urlencoded',
-        beforeSend: function () {
-            $(element).button('loading');
-        },
-        complete: function () {
-            $(element).button('reset');
-        },
-        success: function (json) {
-            $('.alert-dismissible').remove();
-
-            if (json['error']) {
-                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-            }
-
-            if (json['success']) {
-                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-            }
-        },
-        error: function (xhr, ajaxOptions, thrownError) {
-            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-        }
-    });
-});
-
-$('#input-payment-method').on('change', function (e) {
-    e.preventDefault();
-
-    var element = this;
-
-    $.ajax({
-        url: 'index.php?route=sale/subscription|editPaymentMethod&user_token={{ user_token }}&subscription_id=' + $('#input-subscription-id').val(),
-        type: 'post',
-        dataType: 'json',
-        data: $(element).serialize(),
+        data: $('#form-subscription').serialize(),
         contentType: 'application/x-www-form-urlencoded',
         beforeSend: function () {
             $(element).button('loading');

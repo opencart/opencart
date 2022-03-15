@@ -36,6 +36,10 @@ class Subscription extends \Opencart\System\Engine\Model {
 			$implode[] = "CONCAT(o.`firstname`, ' ', o.`lastname`) LIKE '" . $this->db->escape((string)$data['filter_customer']) . "%'";
 		}
 
+		if (!empty($data['filter_date_next'])) {
+			$implode[] = "DATE(`s`.`date_next`) = DATE('" . $this->db->escape((string)$data['filter_date_next']) . "')";
+		}
+
 		if (!empty($data['filter_subscription_status_id'])) {
 			$implode[] = "`s`.`subscription_status_id` = '" . (int)$data['filter_subscription_status_id'] . "'";
 		}

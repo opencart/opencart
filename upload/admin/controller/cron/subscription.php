@@ -27,7 +27,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 					$cycle = $result['trial_cycle'];
 					$remaining = $result['trial_remaining'];
 
-					$this->model_sale_subscription->editTrailRemaining($result['subscription_id'], $result['trial_remaining'] - 1);
+					$this->model_sale_subscription->editTrialRemaining($result['subscription_id'], $result['trial_remaining'] - 1);
 
 				}
 

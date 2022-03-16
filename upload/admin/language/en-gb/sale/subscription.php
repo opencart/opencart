@@ -15,10 +15,7 @@ $_['text_remaining']             = 'Remaining Payments';
 $_['text_date_next']             = 'Next Payment Date';
 $_['text_order_status']          = 'Order Status';
 
-
 $_['text_payment_method']        = 'Payment Method';
-
-
 
 $_['text_cancel']                = 'Until Canceled';
 

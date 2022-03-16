@@ -3227,7 +3227,7 @@ function db_schema() {
 				'auto_increment' => true
 			],
 			[
-				'name' => 'reference',
+				'name' => 'transaction_id',
 				'type' => 'varchar(100)',
 				'not_null' => true
 			],
@@ -5654,8 +5654,18 @@ function db_schema() {
 				'not_null' => true
 			],
 			[
-				'name' => 'reference',
+				'name' => 'transaction_id',
 				'type' => 'varchar(255)',
+				'not_null' => true
+			],
+			[
+				'name' => 'payment_method',
+				'type' => 'varchar(255)',
+				'not_null' => true
+			],
+			[
+				'name' => 'description',
+				'type' => 'text',
 				'not_null' => true
 			],
 			[

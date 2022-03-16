@@ -105,8 +105,8 @@ class Subscription extends \Opencart\System\Engine\Controller {
 				$time = strtotime('+' . $result['cycle'] . ' ' . $result['frequency']);
 
 				$subscription_data = [
-					'remaining'    => $result['remaining'] - 1,
-					'date_payment' => date('Y-m-d', strtotime($result['remaining']))
+					'remaining' => $result['remaining'] - 1,
+					'date_next' => date('Y-m-d', strtotime($result['remaining']))
 				];
 
 				$this->model_sale_subscription->editSubscription($result['subscription_id'], $subscription_status_id, '');

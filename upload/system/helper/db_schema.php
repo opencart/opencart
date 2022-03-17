@@ -5338,7 +5338,7 @@ function db_schema() {
 				'not_null' => true
 			],
 			[
-				'name' => 'reference',
+				'name' => 'token',
 				'type' => 'varchar(100)',
 				'not_null' => true
 			],
@@ -5418,13 +5418,13 @@ function db_schema() {
 				'not_null' => true
 			],
 			[
-				'name' => 'subscription_status_id',
-				'type' => 'int(11)',
+				'name' => 'date_next',
+				'type' => 'datetime',
 				'not_null' => true
 			],
 			[
-				'name' => 'date_next',
-				'type' => 'datetime',
+				'name' => 'subscription_status_id',
+				'type' => 'int(11)',
 				'not_null' => true
 			],
 			[

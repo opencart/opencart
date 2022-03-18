@@ -22,54 +22,38 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 				if ($result['trial_status'] && (!$result['trial_duration'] || $result['trial_remaining'])) {
 					$price = $result['trial_price'];
-
-					$description = 'trail payment';
 				} elseif (!$result['duration'] || $result['remaining']) {
 					$price = $result['price'];
-
-					$description = 'payment success';
 				}
 
 				$subscription_status_id = $this->config->get('config_subscription_status_id');
 
-				$payment_info = $this->model_customer_customer->getPaymentMethod($result['customer_id'], $result['customer_id']);
+				$payment_info = $this->model_customer_customer->getPaymentMethod($result['customer_id'], $result['customer_payment_id']);
+				print_r($payment_info);
 
 				if ($payment_info) {
 
 				}
 
 				// Get the payment method used by the subscription
-				$extension_info = $this->model_setting_extension->getExtensionByCode('payment', $payment_info['payment_method']);
+				$extension_info = $this->model_setting_extension->getExtensionByCode('payment', $payment_info['extension'], $payment_info['code']);
 
 				// Check payment status
 				if ($extension_info && $this->config->get('config_' . $result['payment_code'] . '_status')) {
 					$this->load->model('extension/' . $extension_info['extension'] . '/payment/' . $extension_info['code']);
 
 					if (property_exists($this->{'model_extension_' . $result['extension'] . '_payment_' . $result['code']}, 'recurringPayments')) {
-
 						$subscription_status_id = $this->{'model_extension_' . $result['extension'] . '_payment_' . $result['code']}->recurringPayment($result['customer_id'], $result['customer_payment_id'], $price);
-
 					} else {
 						// Failed if payment method does not have recurring payment method
 						$subscription_status_id = $this->config->get('config_subscription_failed_status_id');
 					}
-
 				} else {
 					$subscription_status_id = $this->config->get('config_subscription_failed_status_id');
 				}
 
-				// History
-				if ($result['subscription_status_id'] != $subscription_status_id) {
-					$this->model_sale_subscription->addHistory($result['subscription_id'], $subscription_status_id, 'payment extension ' . $result['payment_code'] . ' could not be loaded', true);
-				}
-				// Transaction
-				if ($this->config->get('config_subscription_active_status_id') == $subscription_status_id) {
-					$this->model_sale_subscription->addTransaction($result['subscription_id'], 'payment success', $result['amount'], $result['order_id']);
-				}
-
 				// Success
 				if ($this->config->get('config_subscription_active_status_id') == $subscription_status_id) {
-
 					if ($result['trial_status'] && (!$result['trial_duration'] || $result['trial_remaining'])) {
 						if ($result['trial_duration'] && $result['trial_remaining']) {
 							$this->model_sale_subscription->editTrailRemaining($result['subscription_id'], $result['trial_remaining'] - 1);

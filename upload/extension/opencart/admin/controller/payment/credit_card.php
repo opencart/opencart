@@ -69,4 +69,27 @@ class CreditCard extends \Opencart\System\Engine\Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
+
+	public function charge(int $customer_id, $customner_payment_id, $amount): int {
+		$this->load->language('extension/opencart/payment/credit_card');
+
+		$json = [];
+
+		if (!$json) {
+
+
+			// History
+			if ($result['subscription_status_id'] != $subscription_status_id) {
+				$this->model_sale_subscription->addHistory($result['subscription_id'], $subscription_status_id, 'payment extension ' . $result['payment_code'] . ' could not be loaded', true);
+			}
+			// Transaction
+			if ($this->config->get('config_subscription_active_status_id') == $subscription_status_id) {
+				$this->model_sale_subscription->addTransaction($result['subscription_id'], 'payment success', $result['amount'], $result['order_id']);
+			}
+
+
+			return false;
+		}
+
+
 }

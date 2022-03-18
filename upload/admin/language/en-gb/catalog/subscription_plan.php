@@ -43,4 +43,5 @@ $_['help_frequency']        = 'If you use a frequency of "week" and a cycle of "
 $_['error_warning']         = 'Warning: Please check the form carefully for errors!';
 $_['error_permission']      = 'Warning: You do not have permission to modify subscription plans!';
 $_['error_name']            = 'Subscription Plan Name must be greater than 3 and less than 255 characters!';
+$_['error_trial_duration']  = 'Trial duration must be greater than 0!';
 $_['error_product']         = 'Warning: This subscription plans cannot be deleted as it is currently assigned to %s products!';

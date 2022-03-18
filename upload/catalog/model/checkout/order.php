@@ -138,6 +138,10 @@ class Order extends \Opencart\System\Engine\Model {
 		}
 	}
 
+	public function editTransactionId(int $order_id, string $transaction_id): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "order` SET `transaction_id` = '" . $this->db->escape($transaction_id) . "' WHERE `order_id` = '" . (int)$order_id . "'");
+	}
+
 	public function deleteOrder(int $order_id): void {
 		// Void the order first
 		$this->addHistory($order_id, 0);

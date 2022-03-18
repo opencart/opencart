@@ -5,8 +5,20 @@ class Subscription extends \Opencart\System\Engine\Model {
 		$this->db->query("UPDATE `" . DB_PREFIX . "subscription` SET `subscription_plan_id` = '" . (int)$data['subscription_plan_id'] . "', `customer_payment_id` = '" . (int)$data['customer_payment_id'] . "' WHERE `subscription_id` = '" . (int)$subscription_id . "'");
 	}
 
-	public function editPaymentMethod(int $subscription_id, int $customer_payment_id): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "subscription` SET  WHERE `subscription_id` = '" . (int)$subscription_id . "'");
+	public function editPaymentMethod(int $subscription_id, string $payment_method): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "subscription` SET `payment_method` = '" . $this->db->escape($payment_method) . "' WHERE `subscription_id` = '" . (int)$subscription_id . "'");
+	}
+
+	public function editRemaining(int $subscription_id, int $remaining): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "subscription` SET `remaining` = '" .  (int)$remaining .  "' WHERE `subscription_id` = '" . (int)$subscription_id . "'");
+	}
+
+	public function editTrialRemaining(int $subscription_id, int $trial_remaining): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "subscription` SET `trial_remaining` = '" .  (int)$trial_remaining .  "' WHERE `subscription_id` = '" . (int)$subscription_id . "'");
+	}
+
+	public function editDateNext(int $subscription_id, int $date_next): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "subscription` SET `date_next` = '" . $this->db->escape($date_next) . "' WHERE `subscription_id` = '" . (int)$subscription_id . "'");
 	}
 
 	public function getSubscription(int $subscription_id): array {

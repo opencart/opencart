@@ -28,7 +28,22 @@ class Subscription extends \Opencart\System\Engine\Model {
 	}
 
 	public function getSubscriptions(array $data): array {
-		$sql = "SELECT `s`.`subscription_id`, `s`.`order_id`, `s`.`reference`, CONCAT(o.`firstname`, ' ', o.`lastname`) AS customer, (SELECT ss.`name` FROM `" . DB_PREFIX . "subscription_status` ss WHERE ss.`subscription_status_id` = s.`subscription_status_id` AND ss.`language_id` = '" . (int)$this->config->get('config_language_id') . "') AS subscription_status, `s`.`date_added`, `s`.`date_modified` FROM `" . DB_PREFIX . "subscription` `s` LEFT JOIN `" . DB_PREFIX . "order` `o` ON (`s`.`order_id` = `o`.`order_id`)";
+		$sql = "SELECT `s`.`subscription_id`, 
+       `s`.`order_id`, 
+       `s`.`reference`, 
+       CONCAT(o.`firstname`, ' ', o.`lastname`) AS customer, 
+       `trial_price`, 
+       `trial_frequency`, 
+       `trial_duration`, 
+       `trial_remaining`, 
+       `trial_status`, 
+       `price`, 
+       `frequency`, 
+       `cycle`, 
+       `duration`, 
+       `remaining`, 
+       `customer_payment_id`,
+       s.`subscription_status_id`, (SELECT ss.`name` FROM `" . DB_PREFIX . "subscription_status` ss WHERE ss.`subscription_status_id` = s.`subscription_status_id` AND ss.`language_id` = '" . (int)$this->config->get('config_language_id') . "') AS subscription_status, `s`.`date_added`, `s`.`date_modified` FROM `" . DB_PREFIX . "subscription` `s` LEFT JOIN `" . DB_PREFIX . "order` `o` ON (`s`.`order_id` = `o`.`order_id`)";
 
 		$implode = [];
 

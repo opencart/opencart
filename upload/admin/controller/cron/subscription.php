@@ -48,8 +48,11 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 				// History
 				if ($result['subscription_status_id'] != $subscription_status_id) {
-					$this->model_sale_subscription->addHistory($result['subscription_id'], $subscription_status_id, 'payment extension: ' . $result['payment_code'] . ' could not be loaded', true);
+					$comment = sprintf($this->language->get('error_payment_code'), $result['payment_code']);
+					
+					$this->model_sale_subscription->addHistory($result['subscription_id'], $subscription_status_id, $comment, true);
 				}
+				
 				// Transaction
 				if ($this->config->get('config_subscription_active_status_id') == $subscription_status_id) {
 					$this->model_sale_subscription->addTransaction($result['subscription_id'], 'payment success', $result['amount'], $result['order_id']);

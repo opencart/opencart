@@ -47,8 +47,8 @@ class Subscription extends \Opencart\System\Engine\Controller {
 				}
 
 				// History
-				if ($result['subscription_status_id'] != $subscription_status_id) {
-					$this->model_sale_subscription->addHistory($result['subscription_id'], $subscription_status_id, 'payment extension ' . $result['payment_code'] . ' could not be loaded', true);
+				if ($result['subscription_status_id'] != $subscription_status_id) {					
+					$this->model_sale_subscription->addHistory($result['subscription_id'], $subscription_status_id, 'payment extension: ' . $result['payment_code'] . ' could not be loaded', true);
 				}
 				// Transaction
 				if ($this->config->get('config_subscription_active_status_id') == $subscription_status_id) {
@@ -60,10 +60,10 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 					if ($result['trial_status'] && (!$result['trial_duration'] || $result['trial_remaining'])) {
 						if ($result['trial_duration'] && $result['trial_remaining']) {
-							$this->model_sale_subscription->editTrailRemaining($result['subscription_id'], $result['trial_remaining'] - 1);
+							$this->model_sale_subscription->editTrialRemaining($result['subscription_id'], $result['trial_remaining'] - 1);
 						}
 
-						$this->model_sale_subscription->editTrailDateNext($result['subscription_id'], date('Y-m-d', strtotime('+' . $result['trial_cycle'] . ' ' . $result['trial_frequency'])));
+						$this->model_sale_subscription->editTrialDateNext($result['subscription_id'], date('Y-m-d', strtotime('+' . $result['trial_cycle'] . ' ' . $result['trial_frequency'])));
 					} elseif (!$result['duration'] || $result['remaining']) {
 						if ($result['duration'] && $result['remaining']) {
 							$this->model_sale_subscription->editRemaining($result['subscription_id'], $result['remaining'] - 1);

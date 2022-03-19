@@ -396,12 +396,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$data['customer_payment_id'] = 0;
 		}
 
-		if (!empty($order_info)) {
-			$data['payment_method'] = $order_info['payment_method'];
-		} else {
-			$data['payment_method'] = '';
-		}
-
 		if (!empty($subscription_info)) {
 			$data['remaining'] = $subscription_info['remaining'];
 		} else {
@@ -450,8 +444,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['quantity'] = '';
 		}
-
-
 
 		$this->load->model('localisation/subscription_status');
 

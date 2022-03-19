@@ -5338,11 +5338,6 @@ function db_schema() {
 				'not_null' => true
 			],
 			[
-				'name' => 'token',
-				'type' => 'varchar(100)',
-				'not_null' => true
-			],
-			[
 				'name' => 'subscription_plan_id',
 				'type' => 'int(11)',
 				'not_null' => true
@@ -5659,11 +5654,6 @@ function db_schema() {
 				'not_null' => true
 			],
 			[
-				'name' => 'payment_method',
-				'type' => 'varchar(255)',
-				'not_null' => true
-			],
-			[
 				'name' => 'description',
 				'type' => 'text',
 				'not_null' => true
@@ -5671,6 +5661,16 @@ function db_schema() {
 			[
 				'name' => 'amount',
 				'type' => 'decimal(10,4)',
+				'not_null' => true
+			],
+			[
+				'name' => 'payment_method',
+				'type' => 'varchar(128)',
+				'not_null' => true
+			],
+			[
+				'name' => 'payment_code',
+				'type' => 'varchar(128)',
 				'not_null' => true
 			],
 			[

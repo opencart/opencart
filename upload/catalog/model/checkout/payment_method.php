@@ -34,8 +34,7 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 		$payment_methods = $this->model_account_payment_method->getPaymentMethods($this->customer->getId());
 
 		foreach ($payment_methods as $payment_method) {
-			$method_data[$result['code'] . '_'] = [
-				'name' => $payment_method['name'],
+			$method_data[$result['code'] . '_' . $result['code']] = [
 				'name' => $payment_method['name'],
 				'code' => $payment_method['code']
 			];

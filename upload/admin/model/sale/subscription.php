@@ -17,7 +17,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 		$this->db->query("UPDATE `" . DB_PREFIX . "subscription` SET `trial_remaining` = '" .  (int)$trial_remaining .  "' WHERE `subscription_id` = '" . (int)$subscription_id . "'");
 	}
 
-	public function editDateNext(int $subscription_id, int $date_next): void {
+	public function editDateNext(int $subscription_id, string $date_next): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "subscription` SET `date_next` = '" . $this->db->escape($date_next) . "' WHERE `subscription_id` = '" . (int)$subscription_id . "'");
 	}
 
@@ -153,13 +153,14 @@ class Subscription extends \Opencart\System\Engine\Model {
 	public function getTransactions(int $subscription_id): array {
 		$transaction_data = [];
 
-		$query = $this->db->query("SELECT `order_id`, `amount`, `date_added` FROM `" . DB_PREFIX . "subscription_transaction` WHERE `subscription_id` = '" . (int)$subscription_id . "' ORDER BY `date_added` DESC");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "subscription_transaction` WHERE `subscription_id` = '" . (int)$subscription_id . "' ORDER BY `date_added` DESC");
 
 		foreach ($query->rows as $result) {
 			$transaction_data[] = [
-				'date_added' => $result['date_added'],
-				'amount'     => $result['amount'],
-				'order_id'   => $result['order_id']
+				'date_added'  => $result['date_added'],
+				'description' => $result['description'],
+				'amount'      => $result['amount'],
+				'order_id'    => $result['order_id']
 			];
 		}
 
@@ -173,7 +174,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 	}
 
 	public function addHistory(int $subscription_id, int $subscription_status_id, string $comment = '', bool $notify = false): void {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "subscription_history` SET `subscription_id` = '" . (int)$subscription_id . "', `subscription_status_id` = '" . (int)$subscription_status_id . "', `comment` = '" . $this->db->escape($comment) . "', `notify` = '" . (int)$notify . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "subscription_history` SET `subscription_id` = '" . (int)$subscription_id . "', `subscription_status_id` = '" . (int)$subscription_status_id . "', `comment` = '" . $this->db->escape($comment) . "', `notify` = '" . (int)$notify . "', date_added = NOW()");
 
 		$this->db->query("UPDATE `" . DB_PREFIX . "subscription` SET `subscription_status_id` = '" . (int)$subscription_status_id . "' WHERE `subscription_id` = '" . (int)$subscription_id . "'");
 	}

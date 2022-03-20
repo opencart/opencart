@@ -183,7 +183,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$data['subscriptions'][] = [
 				'subscription_id' => $result['subscription_id'],
 				'order_id'        => $result['order_id'],
-				'reference'       => $result['reference'],
 				'customer'        => $result['customer'],
 				'status'          => $result['subscription_status'],
 				'date_added'      => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
@@ -226,7 +225,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 		$data['sort_subscription'] = $this->url->link('sale/subscription|list', 'user_token=' . $this->session->data['user_token'] . '&sort=s.subscription_id' . $url);
 		$data['sort_order'] = $this->url->link('sale/subscription|list', 'user_token=' . $this->session->data['user_token'] . '&sort=s.order_id' . $url);
-		$data['sort_reference'] = $this->url->link('sale/subscription|list', 'user_token=' . $this->session->data['user_token'] . '&sort=s.reference' . $url);
 		$data['sort_customer'] = $this->url->link('sale/subscription|list', 'user_token=' . $this->session->data['user_token'] . '&sort=customer' . $url);
 		$data['sort_status'] = $this->url->link('sale/subscription|list', 'user_token=' . $this->session->data['user_token'] . '&sort=subscription_status' . $url);
 		$data['sort_date_added'] = $this->url->link('sale/subscription|list', 'user_token=' . $this->session->data['user_token'] . '&sort=s.date_added' . $url);
@@ -439,6 +437,33 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$data['product'] = '';
 		}
 
+		$data['description'] = '';
+
+		if (!empty($subscription_info)) {
+
+			$trial_cycle = $subscription_info['trial_cycle'];
+			$trial_frequency = $this->language->get('text_' . $subscription_info['trial_frequency']);
+			$trial_duration = $subscription_info['trial_duration'];
+			$trial_price = $this->currency->format($subscription_info['trial_price'], $this->config->get('config_currency'));
+
+			if ($subscription_info['trial_status']) {
+				$data['description'] .= sprintf($this->language->get('text_subscription_trial'), $trial_price, $trial_cycle, $trial_frequency, $trial_duration);
+			}
+
+			$price = $this->currency->format($subscription_info['price'], $this->config->get('config_currency'));
+			$cycle = $subscription_info['cycle'];
+			$frequency = $this->language->get('text_' . $subscription_info['frequency']);
+			$duration = $subscription_info['duration'];
+
+			if ($subscription_info['duration']) {
+				$data['description'] .= sprintf($this->language->get('text_subscription_duration'), $price, $cycle, $frequency, $duration);
+			} else {
+				$data['description'] .= sprintf($this->language->get('text_subscription_cancel'), $price, $cycle, $frequency);
+			}
+
+
+		}
+
 		if (!empty($product_info)) {
 			$data['quantity'] = $product_info['quantity'];
 		} else {
@@ -457,6 +482,30 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 		$data['history'] = $this->getHistory();
 		$data['transaction'] = $this->getTransaction();
+
+		// Additional tabs that are payment gateway specific
+		$data['tabs'] = [];
+
+		// Extension Order Tabs can are called here.
+		$this->load->model('setting/extension');
+
+		if (!empty($order_info)) {
+			$extension_info = $this->model_setting_extension->getExtensionByCode('payment', $order_info['payment_code']);
+
+			if ($extension_info && $this->user->hasPermission('access', 'extension/' . $extension_info['extension'] . '/payment/' . $extension_info['code'])) {
+				$output = $this->load->controller('extension/payment/' . $order_info['payment_code'] . '|subscription');
+
+				if (!$output instanceof \Exception) {
+					$this->load->language('extension/' . $extension_info['extension'] . '/payment/' . $extension_info['code'], 'extension');
+
+					$data['tabs'][] = [
+						'code'    => $extension_info['code'],
+						'title'   => $this->language->get('extension_heading_title'),
+						'content' => $output
+					];
+				}
+			}
+		}
 
 		$data['user_token'] = $this->session->data['user_token'];
 

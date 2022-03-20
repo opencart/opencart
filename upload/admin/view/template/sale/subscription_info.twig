@@ -107,7 +107,8 @@
                   {% for payment_method in payment_methods %}
                     <option value="{{ payment_method.customer_payment_id }}"{% if payment_method.customer_payment_id == customer_payment_id %} selected{% endif %}>{{ payment_method.name }}</option>
                   {% endfor %}
-                </select> <label for="input-payment-method">{{ entry_payment_method }}</label>
+                </select>
+                <label for="input-payment-method">{{ entry_payment_method }}</label>
               </div>
             </div>
 
@@ -124,7 +125,9 @@
               </thead>
               <tbody>
                 <tr>
-                  <td><a href="{{ product }}" target="_blank">{{ product_name }}</a></td>
+                  <td><a href="{{ product }}" target="_blank">{{ product_name }}</a><br/>
+                    <small class="text-muted">{{ description }}</small>
+                  </td>
                   <td>{{ quantity }}</td>
                 </tr>
               </tbody>
@@ -226,6 +229,12 @@
               <input type="hidden" name="subscription_id" value="{{ subscription_id }}" id="input-subscription-id"/>
             </form>
           </div>
+
+
+          {% for tab in tabs %}
+            <div id="tab-{{ tab.code }}" class="tab-pane">{{ tab.content }}</div>
+          {% endfor %}
+
 
         </div>
       </div>

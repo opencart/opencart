@@ -365,8 +365,7 @@
                   {% if shipping_code %}
                     <option value="{{ shipping_code }}" selected>{{ shipping_method }}</option>
                   {% endif %}
-                </select>
-                <label for="input-shipping-method">{{ entry_shipping_method }}</label>
+                </select> <label for="input-shipping-method">{{ entry_shipping_method }}</label>
                 <button type="button" id="button-shipping-method" class="btn btn-outline-primary"><i class="fas fa-sync"></i></button>
               </div>
             </form>
@@ -416,7 +415,7 @@
             {% endfor %}
           </tbody>
         </table>
-
+        <input type="hidden" name="order_id" value="{{ order_id }}" id="input-order-id"/>
         <div class="text-end">
           <button type="button" id="button-refresh" data-bs-toggle="tooltip" title="{{ button_refresh }}" class="btn btn-outline-primary"><i class="fas fa-sync"></i></button>
           <button type="button" id="button-confirm" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_confirm }}</button>
@@ -524,7 +523,7 @@
     </div>
   </div>
 </div>
-<input type="hidden" name="order_id" value="{{ order_id }}" id="input-order-id"/>
+
 <div id="modal-customer" class="modal">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -565,8 +564,7 @@
             <div id="error-email" class="invalid-feedback"></div>
           </div>
           <div class="mb-3{% if config_telephone_required %} required{% endif %}">
-            <label for="input-telephone" class="form-label">{{ entry_telephone }}</label>
-            <input type="text" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control"/>
+            <label for="input-telephone" class="form-label">{{ entry_telephone }}</label> <input type="text" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control"/>
             <div id="error-telephone" class="invalid-feedback"></div>
           </div>
           {% for custom_field in custom_fields %}

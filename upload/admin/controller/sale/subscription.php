@@ -440,11 +440,10 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		$data['description'] = '';
 
 		if (!empty($subscription_info)) {
-
+			$trial_price = $this->currency->format($subscription_info['trial_price'], $this->config->get('config_currency'));
 			$trial_cycle = $subscription_info['trial_cycle'];
 			$trial_frequency = $this->language->get('text_' . $subscription_info['trial_frequency']);
 			$trial_duration = $subscription_info['trial_duration'];
-			$trial_price = $this->currency->format($subscription_info['trial_price'], $this->config->get('config_currency'));
 
 			if ($subscription_info['trial_status']) {
 				$data['description'] .= sprintf($this->language->get('text_subscription_trial'), $trial_price, $trial_cycle, $trial_frequency, $trial_duration);
@@ -460,8 +459,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			} else {
 				$data['description'] .= sprintf($this->language->get('text_subscription_cancel'), $price, $cycle, $frequency);
 			}
-
-
 		}
 
 		if (!empty($product_info)) {

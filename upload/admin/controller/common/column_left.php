@@ -749,6 +749,8 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 			}
 
 			return $this->load->view('common/column_left', $data);
+		} else {
+			return '';
 		}
 	}
 }

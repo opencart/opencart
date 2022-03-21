@@ -1,7 +1,35 @@
 <?php
 namespace Opencart\Admin\Controller\Mail;
 class Customer extends \Opencart\System\Engine\Controller {
-	public function approve(string &$route, array &$args, mixed &$output): void {
+	public function index(string &$route, array &$args, mixed &$output): void {
+		if (isset($args[0])) {
+			$customer_id = $args[0];
+		} else {
+			$customer_id = 0;
+		}
+
+		if (isset($args[1])) {
+			$description = $args[1];
+		} else {
+			$description = '';
+		}
+
+		if (isset($args[2])) {
+			$amount = $args[2];
+		} else {
+			$amount = 0;
+		}
+
+		if (isset($args[3])) {
+			$order_id = $args[3];
+		} else {
+			$order_id = 0;
+		}
+
+
+
+
+
 		$this->load->model('customer/customer');
 
 		$customer_info = $this->model_customer_customer->getCustomer($args[0]);
@@ -76,5 +104,10 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$mail->setHtml($this->load->view('mail/customer_approve', $data));
 			$mail->send();
 		}
+	}
+
+	public function cancel(string &$route, array &$args, mixed &$output): void {
+
+
 	}
 }

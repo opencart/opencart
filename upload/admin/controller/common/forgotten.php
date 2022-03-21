@@ -22,6 +22,7 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('common/forgotten')
 		];
 
+		$data['confirm'] = $this->url->link('common/forgotten|confirm');
 		$data['back'] = $this->url->link('common/login');
 
 		$data['header'] = $this->load->controller('common/header');
@@ -53,7 +54,7 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 		$user_info = $this->model_user_user->getUserByEmail($this->request->post['email']);
 
 		if (!$user_info) {
-			$json['error'] = $this->language->get('error_not_found');
+			$json['error'] = $this->language->get('error_email');
 		}
 
 		if (!$json) {
@@ -115,7 +116,7 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 
 		$this->session->data['reset_token'] = substr(bin2hex(openssl_random_pseudo_bytes(26)), 0, 26);
 
-		$data['reset'] = $this->url->link('account/forgotten|password', 'email=' . urlencode($email) . '&code=' . $code . '&reset_token=' . $this->session->data['reset_token']);
+		$data['reset'] = $this->url->link('common/forgotten|password', 'email=' . urlencode($email) . '&code=' . $code . '&reset_token=' . $this->session->data['reset_token']);
 		$data['back'] = $this->url->link('common/login');
 
 		$data['header'] = $this->load->controller('common/header');
@@ -124,7 +125,7 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('common/forgotten_reset', $data));
 	}
 
-	public function password(): bool {
+	public function password(): void {
 		$this->load->language('common/forgotten');
 
 		$json = [];

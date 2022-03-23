@@ -39,8 +39,20 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 						$this->load->model('extension/' . $payment_info['extension'] . '/payment/' . $payment_info['code']);
 
-						if (property_exists($this->{'model_extension_' . $payment_info['extension'] . '_payment_' . $payment_info['code']}, 'charge')) {
+						if (property_exists($this->{'model_extension_' . $payment_info['extension'] . '_payment_' . $payment_info['code']}, 'charge') ) {
+
+
 							$subscription_status_id = $this->{'model_extension_' . $payment_info['extension'] . '_payment_' . $payment_info['code']}->charge($result['customer_id'], $result['customer_payment_id'], $amount);
+
+							// Transaction
+							if ($this->config->get('config_subscription_active_status_id') == $subscription_status_id) {
+
+
+
+								$this->model_sale_subscription->addTransaction($result['subscription_id'], $this->language->get('text_success'), $amount, $result['order_id']);
+
+
+							}
 
 						} else {
 							// Failed if payment method does not have recurring payment method
@@ -69,10 +81,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 					$this->model_sale_subscription->addHistory($result['subscription_id'], $subscription_status_id, 'payment extension ' . $result['payment_code'] . ' could not be loaded', true);
 				}
 
-				// Transaction
-				if ($this->config->get('config_subscription_active_status_id') == $subscription_status_id) {
-					$this->model_sale_subscription->addTransaction($result['subscription_id'], 'payment success', $amount, $result['order_id']);
-				}
+
 
 
 

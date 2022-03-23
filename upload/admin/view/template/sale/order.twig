@@ -188,10 +188,10 @@ $('#button-delete').on('click', function(e) {
             data: $('#form-order').serialize(),
             dataType: 'json',
             beforeSend: function() {
-                $(element).button('loading');
+                $(element).prop('disabled', true).addClass('loading');
             },
             complete: function() {
-                $(element).button('reset');
+                $(element).prop('disabled', false).removeClass('loading');
             },
             success: function(json) {
                 $('.alert-dismissible').remove();

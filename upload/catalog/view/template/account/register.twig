@@ -128,7 +128,7 @@
                 <label class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
                 <div class="col-sm-10">
                   <div>
-                    <button type="button" data-loading-text="{{ text_loading }}" data-oc-toggle="upload" data-oc-url="{{ upload }}" data-oc-size-max="{{ config_file_max_size }}" data-oc-size-error="{{ error_upload_size }}" data-oc-target="#input-custom-field-{{ custom_field.custom_field_id }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
+                    <button type="button" data-oc-toggle="upload" data-oc-url="{{ upload }}" data-oc-size-max="{{ config_file_max_size }}" data-oc-size-error="{{ error_upload_size }}" data-oc-target="#input-custom-field-{{ custom_field.custom_field_id }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
                     <input type="hidden" name="custom_field[{{ custom_field.custom_field_id }}]" value="" id="input-custom-field-{{ custom_field.custom_field_id }}"/>
                   </div>
                   <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
@@ -211,7 +211,7 @@
                 <label class="form-check-label">{{ text_agree }}</label> <input type="checkbox" name="agree" value="1" class="form-check-input"/>
               </div>
             {% endif %}
-            <button type="submit" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_continue }}</button>
+            <button type="submit" class="btn btn-primary">{{ button_continue }}</button>
           </div>
         </div>
       </form>

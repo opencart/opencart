@@ -195,7 +195,7 @@
                   </div>
                 </div>
                 <div class="text-end">
-                  <button type="submit" id="button-history" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i> {{ button_history_add }}</button>
+                  <button type="submit" id="button-history" class="btn btn-primary"><i class="fas fa-plus-circle"></i> {{ button_history_add }}</button>
                 </div>
               </fieldset>
 
@@ -223,7 +223,7 @@
                   </div>
                 </div>
                 <div class="text-end">
-                  <button type="submit" id="button-transaction" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i> {{ button_transaction_add }}</button>
+                  <button type="submit" id="button-transaction" class="btn btn-primary"><i class="fas fa-plus-circle"></i> {{ button_transaction_add }}</button>
                 </div>
               </fieldset>
               <input type="hidden" name="subscription_id" value="{{ subscription_id }}" id="input-subscription-id"/>
@@ -254,10 +254,10 @@ $('#input-subscription-plan, #input-payment-method').on('change', function (e) {
         data: $('#form-subscription').serialize(),
         contentType: 'application/x-www-form-urlencoded',
         beforeSend: function () {
-            $(element).button('loading');
+            $(element).prop('disabled', true).addClass('loading');
         },
         complete: function () {
-            $(element).button('reset');
+            $(element).prop('disabled', false).removeClass('loading');
         },
         success: function (json) {
             $('.alert-dismissible').remove();
@@ -292,10 +292,10 @@ $('#form-history').on('submit', function (e) {
         data: $('#form-history').serialize(),
         contentType: 'application/x-www-form-urlencoded',
         beforeSend: function () {
-            $('#button-history').button('loading');
+            $('#button-history').prop('disabled', true).addClass('loading');
         },
         complete: function () {
-            $('#button-history').button('reset');
+            $('#button-history').prop('disabled', false).removeClass('loading');
         },
         success: function (json) {
             $('.alert-dismissible').remove();
@@ -334,10 +334,10 @@ $('#form-transaction').on('submit', function (e) {
         data: $('#form-transaction').serialize(),
         contentType: 'application/x-www-form-urlencoded',
         beforeSend: function () {
-            $('#button-transaction').button('loading');
+            $('#button-transaction').prop('disabled', true).addClass('loading');
         },
         complete: function () {
-            $('#button-transaction').button('reset');
+            $('#button-transaction').prop('disabled', false).removeClass('loading');
         },
         success: function (json) {
             $('.alert-dismissible').remove();

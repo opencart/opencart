@@ -61,7 +61,7 @@
     {% endif %}
 
     <div class="d-inline-block pt-2 pd-2 w-100 text-end">
-      <button type="submit" id="button-confirm" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_confirm }}</button>
+      <button type="submit" id="button-confirm" class="btn btn-primary">{{ button_confirm }}</button>
     </div>
 
   </form>
@@ -81,10 +81,10 @@ $('#form-credit-card').on('submit', function (e) {
         cache: false,
         processData: false,
         beforeSend: function () {
-            $('#button-confirm').button('loading');
+            $('#button-confirm').prop('disabled', true).addClass('loading');
         },
         complete: function () {
-            $('#button-confirm').button('reset');
+            $('#button-confirm').prop('disabled', false).removeClass('loading');
         },
         success: function (json) {
             $('.alert-dismissible').remove();

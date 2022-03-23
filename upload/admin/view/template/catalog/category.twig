@@ -36,10 +36,10 @@ $('#button-repair').on('click', function(e) {
         url: 'index.php?route=catalog/category|repair&user_token={{ user_token }}',
         dataType: 'json',
         beforeSend: function() {
-            $(element).button('loading');
+            $(element).prop('disabled', true).addClass('loading');
         },
         complete: function() {
-            $(element).button('reset');
+            $(element).prop('disabled', false).removeClass('loading');
         },
         success: function(json) {
             if (json['error']) {

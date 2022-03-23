@@ -15,7 +15,7 @@
             <td class="text-start"><a href="http://www.geoiptool.com/en/?IP={{ ip.ip }}" target="_blank">{{ ip.ip }}</a></td>
             <td class="text-end"><a href="{{ ip.filter_ip }}" target="_blank">{{ ip.total }}</a></td>
             <td class="text-start">{{ ip.date_added }}</td>
-            <td class="text-end"><button type="button" value="{{ ip.ip }}" data-bs-toggle="tooltip" title="{{ button_remove }}" data-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
+            <td class="text-end"><button type="button" value="{{ ip.ip }}" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
           </tr>
         {% endfor %}
       {% else %}

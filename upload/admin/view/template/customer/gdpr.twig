@@ -89,10 +89,10 @@ $('#gdpr').on('click', '.btn-success, .btn-warning, .btn-danger', function(e) {
         url: $(element).val(),
         dataType: 'json',
         beforeSend: function() {
-            $(element).button('loading');
+            $(element).prop('disabled', true).addClass('loading');
         },
         complete: function() {
-            $(element).button('reset');
+            $(element).prop('disabled', false).removeClass('loading');
         },
         success: function(json) {
             $('.alert-dismissible').remove();

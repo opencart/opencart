@@ -53,7 +53,7 @@
         <fieldset>
           <legend>{{ text_status }}</legend>
           <div class="input-group input-group-lg">
-            <button type="button" id="button-upgrade" data-oc-loading-text="{{ text_loading }}" class="btn btn-warning btn-lg"{% if not upgrade %} disabled{% endif %}><i class="fas fa-level-up-alt"></i> {{ button_upgrade }}</button>
+            <button type="button" id="button-upgrade" class="btn btn-warning btn-lg"{% if not upgrade %} disabled{% endif %}><i class="fas fa-level-up-alt"></i> {{ button_upgrade }}</button>
             <input type="text" id="input-upgrade" value="{{ text_ready }}" class="form-control bg-white" readonly/>
           </div>
         </fieldset>

@@ -36,7 +36,7 @@
         </div>
 
         <div class="text-end">
-          <button type="submit" id="button-quote" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_quote }}</button>
+          <button type="submit" id="button-quote" class="btn btn-primary">{{ button_quote }}</button>
         </div>
 
       </form>
@@ -52,10 +52,10 @@
           data: $('#form-quote').serialize(),
           dataType: 'json',
           beforeSend: function () {
-              $('#button-quote').button('loading');
+              $('#button-quote').prop('disabled', true).addClass('loading');
           },
           complete: function () {
-              $('#button-quote').button('reset');
+              $('#button-quote').prop('disabled', false).removeClass('loading');
           },
           success: function (json) {
               $('.alert-dismissible').remove();
@@ -111,7 +111,7 @@
                   }
 
                   html += '          <div class="text-end">';
-                  html += '            <button type="submit" id="button-shipping" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_shipping }}</button>';
+                  html += '            <button type="submit" id="button-shipping" class="btn btn-primary">{{ button_shipping }}</button>';
                   html += '          </div>';
                   html += '        </form>';
                   html += '      </div>';
@@ -140,10 +140,10 @@
           dataType: 'json',
           contentType: 'application/x-www-form-urlencoded',
           beforeSend: function () {
-              $('#button-shipping').button('loading');
+              $('#button-shipping').prop('disabled', true).addClass('loading');
           },
           complete: function () {
-              $('#button-shipping').button('reset');
+              $('#button-shipping').prop('disabled', false).removeClass('loading');
           },
           success: function (json) {
               $('.alert-dismissible').remove();

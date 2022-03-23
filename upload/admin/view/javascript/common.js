@@ -180,12 +180,13 @@ $(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function(e) {
         dataType: 'json',
         contentType: 'application/x-www-form-urlencoded',
         beforeSend: function() {
-           $(button).button('loading');
+            $(button).prop('disabled', true).addClass('loading');
         },
         complete: function() {
-           $(button).button('reset');
+           $(button).prop('disabled', false).removeClass('loading');
         },
         success: function(json) {
+            $('.alert-dismissible').remove();
             $(element).find('.is-invalid').removeClass('is-invalid');
             $(element).find('.invalid-feedback').removeClass('d-block');
 
@@ -211,7 +212,7 @@ $(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function(e) {
             }
 
             if (json['success']) {
-                $('#alert').prepend('<div class="alert alert-success"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                 // Refresh
                 var url = $(form).attr('data-oc-load');
@@ -274,7 +275,7 @@ $(document).on('click', '[data-oc-toggle=\'upload\']', function() {
                         $(element).button('loading');
                     },
                     complete: function() {
-                        $(element).button('reset');
+                        $(element).prop('disabled', false).removeClass('loading');
                     },
                     success: function(json) {
                         console.log(json);
@@ -313,7 +314,7 @@ $(document).on('click', '[data-oc-toggle=\'image\']', function(e) {
             $(element).button('loading');
         },
         complete: function() {
-            $(element).button('reset');
+            $(element).prop('disabled', false).removeClass('loading');
         },
         success: function(html) {
             console.log(html);
@@ -368,95 +369,6 @@ class Chain {
 }
 
 var chain = new Chain();
-
-/*
-+function ($) {
-    Button.prototype.loading = function () {
-        console.log('hi');
-    }
-}(jQuery);
-
-$(document).ready(function() {
-    $('button').button('loading');
-});
-
-
-(function($) {
-    $.fn.button = function(state) {
-        var $this = $(this);
-
-        //console.log($this);
-        console.log(state);
-
-       // Button.getOrCreateInstance(element);
-
-
-        this.each(function(index, element) {
-            console.log(index);
-            console.log(element);
-
-
-            //var $this = $(this);
-
-           // if (!data) $this.data('bs.button', (data = new Button(this, options)))
-
-
-            console.log($this);
-
-            $.extend(this, state);
-
-            if (option == 'loading') {
-                var icon = $this.find('i');
-
-                $this.prop('disabled', true);
-                $this.find('i').replaceWith('<i class="spinner-border"></i>');
-            }
-
-            if (option == 'reset') {
-                $this.prop('disabled', false);
-                $this.find('i').replaceWith(icon);
-
-            }
-
-
-        });
-    }
-
-    console.log($.fn.button);
-
-    $.fn.button.Constructor = function(element, options) {
-        console.log(element);
-        console.log(options);
-    };
-
-   // $.fn.button('');
-
-})(window.jQuery);
- */
-
-
-
-/*
-// Buttons
-$(document).ready(function() {
-
-    $(document).on('click', '[data-oc-loading-text]', function(state) {
-        var element = this;
-
-        var html = $(element).html();
-
-        var loading = $(element).attr('data-oc-loading-text');
-
-        if (state == 'loading') {
-            $(element).html(loading);
-        }
-
-        if (state == 'reset') {
-            $(element).html(html);
-        }
-    });
-});
-*/
 
 // Autocomplete
 +function($) {

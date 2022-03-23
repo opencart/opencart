@@ -9,7 +9,7 @@
     <p>{{ text_payment }}</p>
   </div>
   <div class="d-inline-block pt-2 pd-2 w-100 text-end">
-    <button type="button" id="button-confirm" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_confirm }}</button>
+    <button type="button" id="button-confirm" class="btn btn-primary">{{ button_confirm }}</button>
   </div>
 </fieldset>
 <script type="text/javascript"><!--
@@ -20,10 +20,10 @@ $('#button-confirm').on('click', function() {
         url: 'index.php?route=extension/opencart/payment/cheque|confirm',
         dataType: 'json',
         beforeSend: function() {
-            $(element).button('loading');
+            $(element).prop('disabled', true).addClass('loading');
         },
         complete: function() {
-            $(element).button('reset');
+            $(element).prop('disabled', false).removeClass('loading');
         },
         success: function(json) {
             if (json['error']) {

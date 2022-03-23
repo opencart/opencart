@@ -19,7 +19,7 @@
                   </div>
                 </div>
                 <div class="text-end">
-                  <button type="button" id="button-install" data-oc-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-trash-alt"></i> {{ button_delete }}</button>
+                  <button type="button" id="button-install" class="btn btn-danger"><i class="fas fa-trash-alt"></i> {{ button_delete }}</button>
                 </div>
               </div>
             </div>
@@ -49,7 +49,7 @@
                     <input type="hidden" name="path" value="{{ document_root }}" id="input-path"/>
                   </div>
                   <div class="text-end">
-                    <button type="button" id="button-storage" data-oc-loading-text="{{ text_loading }}" class="btn btn-danger"><span class="fas fa-arrow-alt-circle-right"></span> {{ button_move }}</button>
+                    <button type="button" id="button-storage" class="btn btn-danger"><span class="fas fa-arrow-alt-circle-right"></span> {{ button_move }}</button>
                   </div>
                 </form>
               </div>
@@ -70,7 +70,7 @@
                   </div>
                 </div>
                 <div class="text-end">
-                  <button type="button" id="button-admin" data-oc-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-pencil-alt"></i> {{ button_rename }}</button>
+                  <button type="button" id="button-admin" class="btn btn-danger"><i class="fas fa-pencil-alt"></i> {{ button_rename }}</button>
                 </div>
               </form>
             </div>
@@ -99,10 +99,10 @@ $('#button-install').on('click', function () {
         url: 'index.php?route=common/security|install&user_token={{ user_token }}',
         dataType: 'json',
         beforeSend: function () {
-            $(element).button('loading');
+            $(element).prop('disabled', true).addClass('loading');
         },
         complete: function () {
-            $(element).button('reset');
+            $(element).prop('disabled', false).removeClass('loading');
         },
         success: function (json) {
             console.log(json);
@@ -145,10 +145,10 @@ $('#button-storage').on('click', function () {
         dataType: 'json',
         contentType: 'application/x-www-form-urlencoded',
         beforeSend: function () {
-            $(element).button('loading');
+            $(element).prop('disabled', true).addClass('loading');
         },
         complete: function () {
-            $(element).button('reset');
+            $(element).prop('disabled', false).removeClass('loading');
         },
         success: function (json) {
             $('.alert-dismissible').remove();
@@ -181,10 +181,10 @@ $('#button-admin').on('click', function () {
         dataType: 'json',
         contentType: 'application/x-www-form-urlencoded',
         beforeSend: function () {
-            $(element).button('loading');
+            $(element).prop('disabled', true).addClass('loading');
         },
         complete: function () {
-            $(element).button('reset');
+            $(element).prop('disabled', false).removeClass('loading');
         },
         success: function (json) {
             console.log(json);

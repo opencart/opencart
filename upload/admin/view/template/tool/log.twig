@@ -71,10 +71,10 @@ $('.tab-content .btn-danger').on('click', function () {
             url: $(element).attr('value'),
             dataType: 'json',
             beforeSend: function () {
-                $(element).button('loading');
+                $(element).prop('disabled', true).addClass('loading');
             },
             complete: function () {
-                $(element).button('reset');
+                $(element).prop('disabled', false).removeClass('loading');
             },
             success: function (json) {
                 $('.alert-dismissible').remove();

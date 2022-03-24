@@ -6143,6 +6143,44 @@ function db_schema() {
 	];
 
 	$tables[] = [
+		'name' => 'vendor',
+		'field' => [
+			[
+				'name' => 'vendor_id',
+				'type' => 'int(11)',
+				'not_null' => true,
+				'auto_increment' => true
+			],
+			[
+				'name' => 'name',
+				'type' => 'varchar(64)',
+				'not_null' => true
+			],
+			[
+				'name' => 'code',
+				'type' => 'text',
+				'not_null' => true
+			],
+			[
+				'name' => 'version',
+				'type' => 'text',
+				'not_null' => true
+			],
+			[
+				'name' => 'date_added',
+				'type' => 'text',
+				'not_null' => true
+			]
+		],
+		'primary' => [
+			'vendor_id'
+		],
+		'engine' => 'InnoDB',
+		'charset' => 'utf8',
+		'collate' => 'utf8_general_ci'
+	];
+
+	$tables[] = [
 		'name' => 'voucher',
 		'field' => [
 			[

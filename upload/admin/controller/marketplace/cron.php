@@ -35,7 +35,7 @@ class Cron extends \Opencart\System\Engine\Controller {
 		$data['delete'] = $this->url->link('marketplace/cron|delete', 'user_token=' . $this->session->data['user_token']);
 
 		// Example cron URL
-		$data['cron'] = $this->url->link('common/cron');
+		$data['cron'] = $this->url->link('cron/cron');
 
 		$data['list'] = $this->getList();
 

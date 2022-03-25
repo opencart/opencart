@@ -174,14 +174,15 @@ class Installer extends \Opencart\System\Engine\Controller {
 				$zip = new \ZipArchive();
 
 				if ($zip->open($file, \ZipArchive::RDONLY)) {
-					$xml = $zip->getFromName('install.xml');
+					$data = $zip->getFromName('install.json');
 
 					$zip->close();
 				}
 
 				// If xml file just put it straight into the DB
-				if ($xml) {
+				if ($data) {
 					try {
+
 						$dom = new \DOMDocument('1.0', 'UTF-8');
 						$dom->loadXml($xml);
 

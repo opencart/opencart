@@ -3,7 +3,7 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="float-end">
-        <button type="submit" form="form-vendor" formaction="{{ delete }}" data-bs-toggle="tooltip" title="{{ button_delete }}" onclick="confirm('{{ text_confirm }}') ? $('#form-vendor').submit() : false;" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+        <button type="button" id="button-refresh" data-bs-toggle="tooltip" title="{{ button_delete }}" class="btn btn-light"><i class="fas fa-sync"></i></button>
       </div>
       <h1>{{ heading_title }}</h1>
       <ol class="breadcrumb">
@@ -14,20 +14,6 @@
     </div>
   </div>
   <div class="container-fluid">
-    <div class="card mb-3">
-      <div class="card-header"><i class="fas fa-question-circle"></i> {{ text_instruction }}</div>
-      <div class="card-body">
-        <p>{{ text_cron_1 }}</p>
-        <p>{{ text_vendor_2 }}</p>
-        <div class="mb-3">
-          <div class="input-group">
-            <div class="input-group-text">{{ entry_vendor }}</div>
-            <input type="text" value="wget &quot;{{ vendor }}&quot; --read-timeout=5400" id="input-vendor" class="form-control"/>
-            <button type="button" id="button-copy" data-bs-toggle="tooltip" title="{{ button_copy }}" class="btn btn-light"><i class="fas fa-copy"></i></button>
-          </div>
-        </div>
-      </div>
-    </div>
     <div class="card">
       <div class="card-header"><i class="fas fa-list"></i> {{ text_list }}</div>
       <div id="vendor" class="card-body">{{ list }}</div>

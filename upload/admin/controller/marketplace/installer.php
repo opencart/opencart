@@ -179,12 +179,12 @@ class Installer extends \Opencart\System\Engine\Controller {
 					$zip->close();
 				}
 
-				// If xml file just put it straight into the DB
+				// If json file just put it straight into the DB
 				if ($data) {
 					try {
 
 						$dom = new \DOMDocument('1.0', 'UTF-8');
-						$dom->loadXml($xml);
+						$dom->loadXml($data);
 
 						$name = $dom->getElementsByTagName('name')->item(0);
 

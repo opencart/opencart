@@ -189,10 +189,10 @@ class Language extends \Opencart\System\Engine\Model {
 		$this->cache->delete('weight_class');
 
 		// Subscription
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "subscription_description` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "subscription_status` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
 
 		foreach ($query->rows as $subscription) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "subscription_description` SET `subscription_id` = '" . (int)$subscription['subscription_id'] . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($subscription['name']) . "'");
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "subscription_status` SET `subscription_id` = '" . (int)$subscription['subscription_id'] . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($subscription['name']) . "'");
 		}
 
 		return $language_id;

@@ -192,7 +192,7 @@ class Language extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "subscription_status` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
 
 		foreach ($query->rows as $subscription) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "subscription_status` SET `subscription_id` = '" . (int)$subscription['subscription_id'] . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($subscription['name']) . "'");
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "subscription_status` SET `subscription_status_id` = '" . (int)$subscription['subscription_status_id'] . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($subscription['name']) . "'");
 		}
 
 		return $language_id;

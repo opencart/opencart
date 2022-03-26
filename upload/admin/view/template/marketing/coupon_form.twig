@@ -175,7 +175,7 @@
 						<div id="tab-history" class="tab-pane">
 							<fieldset>
 								<legend>{{ text_coupon }}</legend>
-								<div id="history"></div>
+								<div id="history">{{ history }}</div>
 							</fieldset>
 						</div>
 					</div>
@@ -258,7 +258,5 @@ $('#history').on('click', '.pagination a', function(e) {
 
     $('#history').load(this.href);
 });
-
-$('#history').load('index.php?route=marketing/coupon|history&user_token={{ user_token }}&coupon_id=' + $('#input-coupon-id').val());
 //--></script>
 {{ footer }}

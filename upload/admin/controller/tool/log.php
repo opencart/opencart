@@ -18,19 +18,26 @@ class Log extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('tool/log', 'user_token=' . $this->session->data['user_token'])
 		];
 
+		//echo $this->session->data['error'];
+
+
 		if (isset($this->session->data['error'])) {
 			$data['error_warning'] = $this->session->data['error'];
+
+			unset($this->session->data['error']);
 		} else {
 			$data['error_warning'] = '';
 		}
 
-		$data['download'] = $this->url->link('tool/log|download', 'user_token=' . $this->session->data['user_token']);
+		$data['log'] = [];
 
-		$data['log'] = '';
+		$files = glob(DIR_LOGS . '*.log');
 
-		$file = DIR_LOGS . $this->config->get('config_error_filename');
+		foreach ($files as $file) {
+			$error = '';
 
-		if (is_file($file)) {
+			$filename = basename($file);
+
 			$size = filesize($file);
 
 			if ($size >= 3145728) {
@@ -53,12 +60,18 @@ class Log extends \Opencart\System\Engine\Controller {
 					$i++;
 				}
 
-				$data['error_warning'] = sprintf($this->language->get('error_warning'), basename($file), round(substr($size, 0, strpos($size, '.') + 4), 2) . $suffix[$i]);
+				$error = sprintf($this->language->get('error_size'), $filename, round(substr($size, 0, strpos($size, '.') + 4), 2) . $suffix[$i]);
 			}
 
 			$handle = fopen($file, 'r+');
 
-			$data['log'] = fread($handle, 3145728);
+			$data['logs'][] = [
+				'name'     => $filename,
+				'output'   => fread($handle, 3145728),
+				'download' => $this->url->link('tool/log|download', 'user_token=' . $this->session->data['user_token'] . '&filename=' . $filename),
+				'clear'    => $this->url->link('tool/log|clear', 'user_token=' . $this->session->data['user_token'] . '&filename=' . $filename),
+				'error'    => $error
+			];
 
 			fclose($handle);
 		}
@@ -75,26 +88,45 @@ class Log extends \Opencart\System\Engine\Controller {
 	public function download(): void {
 		$this->load->language('tool/log');
 
-		$file = DIR_LOGS . $this->config->get('config_error_filename');
-
-		if (is_file($file) && filesize($file) > 0) {
-			$this->response->addheader('Pragma: public');
-			$this->response->addheader('Expires: 0');
-			$this->response->addheader('Content-Description: File Transfer');
-			$this->response->addheader('Content-Type: application/octet-stream');
-			$this->response->addheader('Content-Disposition: attachment; filename="' . $this->config->get('config_name') . '_' . date('Y-m-d_H-i-s', time()) . '_error.log"');
-			$this->response->addheader('Content-Transfer-Encoding: binary');
-
-			$this->response->setOutput(file_get_contents($file, FILE_USE_INCLUDE_PATH, null));
+		if (isset($this->request->get['filename'])) {
+			$filename = (string)basename($this->request->get['filename']);
 		} else {
-			$this->session->data['error'] = sprintf($this->language->get('error_warning'), basename($file), '0B');
+			$filename = '';
+		}
+
+		$file = DIR_LOGS . $filename;
+
+		if (!is_file($file)) {
+			$this->session->data['error'] = sprintf($this->language->get('error_file'), $filename);
 
 			$this->response->redirect($this->url->link('tool/log', 'user_token=' . $this->session->data['user_token']));
 		}
+
+		if (!filesize($file)) {
+			$this->session->data['error'] = sprintf($this->language->get('error_empty'), $filename);
+			//echo sprintf($this->language->get('error_empty'), $filename);
+
+			$this->response->redirect($this->url->link('tool/log', 'user_token=' . $this->session->data['user_token']));
+		}
+
+		$this->response->addheader('Pragma: public');
+		$this->response->addheader('Expires: 0');
+		$this->response->addheader('Content-Description: File Transfer');
+		$this->response->addheader('Content-Type: application/octet-stream');
+		$this->response->addheader('Content-Disposition: attachment; filename="' . $this->config->get('config_name') . '_' . date('Y-m-d_H-i-s', time()) . '_error.log"');
+		$this->response->addheader('Content-Transfer-Encoding: binary');
+
+		//$this->response->setOutput(file_get_contents($file, FILE_USE_INCLUDE_PATH, null));
 	}
 	
 	public function clear(): void {
 		$this->load->language('tool/log');
+
+		if (isset($this->request->get['filename'])) {
+			$filename = (string)$this->request->get['filename'];
+		} else {
+			$filename = '';
+		}
 
 		$json = [];
 
@@ -102,9 +134,13 @@ class Log extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		if (!$json) {
-			$file = DIR_LOGS . $this->config->get('config_error_filename');
+		$file = DIR_LOGS . $filename;
 
+		if (!is_file($file)) {
+			$json['error'] = sprintf($this->language->get('error_file'), $filename);
+		}
+
+		if (!$json) {
 			$handle = fopen($file, 'w+');
 
 			fclose($handle);

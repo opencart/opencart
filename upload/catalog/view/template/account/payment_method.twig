@@ -5,25 +5,20 @@
       <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
     {% endfor %}
   </ul>
-  {% if success %}
-    <div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> {{ success }}</div>
-  {% endif %}
   <div class="row">
     {{ column_left }}
     <div id="content" class="col">
       {{ content_top }}
-      <h1>{{ text_payment_method }}</h1>
+      <h1>{{ heading_title }}</h1>
       <div id="payment-method">{{ list }}</div>
-      <div class="d-inline-block pt-2 pd-2 w-100">
-        <div class="float-end"><a href="{{ back }}" class="btn btn-light">{{ button_back }}</a></div>
-      </div>
+      <div class="d-inline-block pt-2 pd-2 w-100 text-end"><a href="{{ back }}" class="btn btn-light">{{ button_back }}</a></div>
       {{ content_bottom }}
     </div>
     {{ column_right }}
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#payment-method').on('click', '.btn-danger', function(e) {
+$('#payment-method').on('click', '.btn-danger', function (e) {
     e.preventDefault();
 
     var element = this;
@@ -31,13 +26,13 @@ $('#payment-method').on('click', '.btn-danger', function(e) {
     $.ajax({
         url: $(element).attr('href'),
         dataType: 'json',
-        beforeSend: function() {
+        beforeSend: function () {
             $(element).prop('disabled', true);
         },
-        complete: function() {
+        complete: function () {
             $(element).prop('disabled', false);
         },
-        success: function(json) {
+        success: function (json) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
@@ -47,10 +42,10 @@ $('#payment-method').on('click', '.btn-danger', function(e) {
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#payment-method').load('index.php?route=account/payment_method|list');
+                $('#payment-method').load('index.php?route=account/payment_method|list&customer_token={{ customer_token }}');
             }
         },
-        error: function(xhr, ajaxOptions, thrownError) {
+        error: function (xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });

@@ -195,8 +195,8 @@ $('#path').on('click', 'a.file', function(e) {
                     html += '  <input type="hidden" name="path" value="' + $(element).attr('href') + '" id="input-' + tab_id + '-path"/>';
                     html += '  <br />';
                     html += '  <div class="float-end">';
-                    html += '    <button type="button" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>';
-                    html += '    <button data-oc-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-recycle"></i> {{ button_reset }}</button>';
+                    html += '    <button type="button" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>';
+                    html += '    <button class="btn btn-danger"><i class="fas fa-recycle"></i> {{ button_reset }}</button>';
                     html += '  </div>';
                     html += '</div>';
 
@@ -266,10 +266,10 @@ $('.tab-content').on('click', '.btn-primary', function(e) {
         data: 'code=' + encodeURIComponent(editor.getValue()),
         dataType: 'json',
         beforeSend: function() {
-            $(element).button('loading');
+            $(element).prop('disabled', true).addClass('loading');
         },
         complete: function() {
-            $(element).button('reset');
+            $(element).prop('disabled', false).removeClass('loading');
         },
         success: function(json) {
             $('.alert-dismissible').remove();
@@ -298,10 +298,10 @@ $('.tab-content').on('click', '.btn-danger', function(e) {
             url: 'index.php?route=design/theme|reset&user_token={{ user_token }}&store_id=' + $('.tab-content .active #input-store').val() + '&path=' + $('.tab-content .active input[name=\'path\']').val(),
             dataType: 'json',
             beforeSend: function() {
-                $(element).button('loading');
+                $(element).prop('disabled', true).addClass('loading');
             },
             complete: function() {
-                $(element).button('reset');
+                $(element).prop('disabled', false).removeClass('loading');
             },
             success: function(json) {
                 $('.alert-dismissible').remove();
@@ -347,10 +347,10 @@ $('#history').on('click', '.btn-primary', function(e) {
             url: 'index.php?route=design/theme|template&user_token={{ user_token }}&store_id=' + $(element).parent().parent().find('input[name=\'store_id\']').val() + '&path=' + $(element).parent().parent().find('input[name=\'path\']').val(),
             dataType: 'json',
             beforeSend: function() {
-                $(element).button('loading');
+                $(element).prop('disabled', true).addClass('loading');
             },
             complete: function() {
-                $(element).button('reset');
+                $(element).prop('disabled', false).removeClass('loading');
             },
             success: function(json) {
                 if (json['code']) {
@@ -365,8 +365,8 @@ $('#history').on('click', '.btn-primary', function(e) {
                     html += '  <input type="hidden" name="path" value="' + $(element).parent().parent().find('input[name=\'path\']').val() + '.twig" />';
                     html += '  <br />';
                     html += '  <div class="float-end">';
-                    html += '    <button type="button" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>';
-                    html += '    <button data-oc-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-recycle"></i> {{ button_reset }}</button>';
+                    html += '    <button type="button" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>';
+                    html += '    <button class="btn btn-danger"><i class="fas fa-recycle"></i> {{ button_reset }}</button>';
                     html += '  </div>';
                     html += '</div>';
 
@@ -406,10 +406,10 @@ $('#history').on('click', '.btn-danger', function(e) {
             url: $(element).attr('href'),
             dataType: 'json',
             beforeSend: function() {
-                $(element).button('loading');
+                $(element).prop('disabled', true).addClass('loading');
             },
             complete: function() {
-                $(element).button('reset');
+                $(element).prop('disabled', false).removeClass('loading');
             },
             success: function(json) {
                 $('.alert-dismissible').remove();

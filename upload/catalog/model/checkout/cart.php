@@ -70,11 +70,13 @@ class Cart extends \Opencart\System\Engine\Model {
 			$product_data[] = [
 				'cart_id'      => $product['cart_id'],
 				'product_id'   => $product['product_id'],
+				'master_id'    => $product['master_id'],
 				'image'        => $image,
 				'name'         => $product['name'],
 				'model'        => $product['model'],
 				'option'       => $product['option'],
 				'subscription' => $product['subscription'],
+				'download'     => $product['download'],
 				'quantity'     => $product['quantity'],
 				'stock'        => $product['stock'],
 				'minimum'      => $minimum,

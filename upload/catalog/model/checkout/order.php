@@ -19,9 +19,25 @@ class Order extends \Opencart\System\Engine\Model {
 					$this->db->query("INSERT INTO `" . DB_PREFIX . "order_option` SET `order_id` = '" . (int)$order_id . "', `order_product_id` = '" . (int)$order_product_id . "', `product_option_id` = '" . (int)$option['product_option_id'] . "', `product_option_value_id` = '" . (int)$option['product_option_value_id'] . "', `name` = '" . $this->db->escape($option['name']) . "', `value` = '" . $this->db->escape($option['value']) . "', `type` = '" . $this->db->escape($option['type']) . "'");
 				}
 
-				foreach ($product['subscription'] as $subscription) {
+				if ($product['subscription']) {
+					$subscription_data = [
+						'order_product_id' => $order_product_id,
+						'name'             => $product['subscription']['name'],
+						'description'      => $product['subscription']['description'],
+						'trial_price'      => $product['subscription']['trial_price'],
+						'trial_frequency'  => $product['subscription']['trial_frequency'],
+						'trial_cycle'      => $product['subscription']['trial_cycle'],
+						'trial_duration'   => $product['subscription']['trial_duration'],
+						'trial_status'     => $product['subscription']['trial_status'],
+						'price'            => $product['subscription']['price'],
+						'frequency'        => $product['subscription']['frequency'],
+						'cycle'            => $product['subscription']['cycle'],
+						'duration'         => $product['subscription']['duration'],
+						'remaining'        => $product['subscription']['duration'],
+						'date_next'        => $product['subscription']['date_next']
+					];
 
-					$this->db->query("INSERT INTO `" . DB_PREFIX . "subscription` SET `order_id` = '" . (int)$order_id . "', `order_product_id` = '" . (int)$order_product_id . "', `reference` = '', `subscription_plan_id` = '" . (int)$subscription['subscription_plan_id'] . "', `name` = '" . $this->db->escape((string)$subscription['name']) . "', `description` = '" . $this->db->escape((string)$subscription['description']) . "', `trial_price` = '" . (float)$subscription['trial_price'] . "', `trial_frequency` = '" . $this->db->escape((string)$subscription['trial_frequency']) . "', `trial_cycle` = '" . (int)$subscription['trial_cycle'] . "', `trial_duration` = '" . (int)$subscription['trial_duration'] . "', `trial_status` = '" . (int)$subscription['trial_status'] . "', `price` = '" . (float)$subscription['price'] . "', `frequency` = '" . $this->db->escape((string)$subscription['frequency']) . "', `cycle` = '" . (int)$subscription['cycle'] . "', `duration` = '" . (int)$subscription['duration'] . "', `status` = '6', `date_added` = NOW(), `date_modified` = NOW()");
+					$this->model_checkout_subscription->addSubscription($order_id, $subscription_data);
 				}
 			}
 		}
@@ -69,7 +85,10 @@ class Order extends \Opencart\System\Engine\Model {
 
 			$this->db->query("DELETE FROM `" . DB_PREFIX . "order_product` WHERE `order_id` = '" . (int)$order_id . "'");
 			$this->db->query("DELETE FROM `" . DB_PREFIX . "order_option` WHERE `order_id` = '" . (int)$order_id . "'");
-			$this->db->query("DELETE FROM `" . DB_PREFIX . "subscription` WHERE `order_id` = '" . (int)$order_id . "'");
+
+			$this->load->model('checkout/subscription');
+
+			$this->model_checkout_subscription->deleteSubscriptionByOrderId($order_id);
 
 			// Products
 			if (isset($data['products'])) {
@@ -82,8 +101,8 @@ class Order extends \Opencart\System\Engine\Model {
 						$this->db->query("INSERT INTO `" . DB_PREFIX . "order_option` SET `order_id` = '" . (int)$order_id . "', `order_product_id` = '" . (int)$order_product_id . "', `product_option_id` = '" . (int)$option['product_option_id'] . "', `product_option_value_id` = '" . (int)$option['product_option_value_id'] . "', `name` = '" . $this->db->escape($option['name']) . "', `value` = '" . $this->db->escape($option['value']) . "', `type` = '" . $this->db->escape($option['type']) . "'");
 					}
 
-					foreach ($product['subscription'] as $subscription) {
-						$this->db->query("INSERT INTO `" . DB_PREFIX . "subscription` SET `order_id` = '" . (int)$order_id . "', `order_product_id` = '" . (int)$order_product_id . "', `reference` = '', `subscription_plan_id` = '" . (int)$subscription['subscription_plan_id'] . "', `name` = '" . $this->db->escape((string)$subscription['name']) . "', `description` = '" . $this->db->escape((string)$data['description']) . "', `trial_price` = '" . (float)$subscription['trial_price'] . "', `trial_frequency` = '" . $this->db->escape((string)$subscription['trial_frequency']) . "', `trial_cycle` = '" . (int)$subscription['trial_cycle'] . "', `trial_duration` = '" . (int)$subscription['trial_duration'] . "', `trial_status` = '" . (int)$subscription['trial_status'] . "', `price` = '" . (float)$subscription['price'] . "', `frequency` = '" . $this->db->escape((string)$subscription['frequency']) . "', `cycle` = '" . (int)$subscription['cycle'] . "', `duration` = '" . (int)$subscription['duration'] . "', `status` = '6', `date_added` = NOW(), `date_modified` = NOW()");
+					if ($product['subscription']) {
+						$this->model_checkout_subscription->addSubscription($order_id, $product['subscription'] + ['order_product_id' => $order_product_id]);
 					}
 				}
 			}
@@ -117,6 +136,10 @@ class Order extends \Opencart\System\Engine\Model {
 				}
 			}
 		}
+	}
+
+	public function editTransactionId(int $order_id, string $transaction_id): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "order` SET `transaction_id` = '" . $this->db->escape($transaction_id) . "' WHERE `order_id` = '" . (int)$order_id . "'");
 	}
 
 	public function deleteOrder(int $order_id): void {

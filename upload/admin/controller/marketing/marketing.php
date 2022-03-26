@@ -316,6 +316,8 @@ class Marketing extends \Opencart\System\Engine\Controller {
 			$data['code'] = uniqid();
 		}
 
+		$data['report'] = $this->getReport();
+
 		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
@@ -396,6 +398,10 @@ class Marketing extends \Opencart\System\Engine\Controller {
 	public function report(): void {
 		$this->load->language('marketing/marketing');
 
+		$this->response->setOutput($this->getReport());
+	}
+
+	public function getReport(): string {
 		if (isset($this->request->get['marketing_id'])) {
 			$marketing_id = (int)$this->request->get['marketing_id'];
 		} else {
@@ -448,6 +454,6 @@ class Marketing extends \Opencart\System\Engine\Controller {
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($report_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($report_total - 10)) ? $report_total : ((($page - 1) * 10) + 10), $report_total, ceil($report_total / 10));
 
-		$this->response->setOutput($this->load->view('marketing/marketing_report', $data));
+		return $this->load->view('marketing/marketing_report', $data);
 	}
 }

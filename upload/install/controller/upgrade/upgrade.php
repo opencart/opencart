@@ -23,7 +23,13 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 
 		$data['button_continue'] = $this->language->get('button_continue');
 
-		$data['store'] = HTTP_OPENCART;
+		$file = DIR_OPENCART . 'admin/config.php';
+
+		if (!is_file($file)) {
+			$data['error_warning'] = sprintf($this->language->get('error_admin'), $file);
+		} else {
+			$data['error_warning'] = '';
+		}
 
 		$data['total'] = count(glob(DIR_APPLICATION . 'controller/upgrade/upgrade_*.php'));
 

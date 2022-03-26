@@ -321,6 +321,8 @@ class Coupon extends \Opencart\System\Engine\Controller {
 			$data['status'] = true;
 		}
 
+		$data['history'] = $this->getHistory();
+
 		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
@@ -405,6 +407,10 @@ class Coupon extends \Opencart\System\Engine\Controller {
 	public function history(): void {
 		$this->load->language('marketing/coupon');
 
+		$this->response->setOutput($this->getHistory());
+	}
+
+	public function getHistory(): string {
 		if (isset($this->request->get['coupon_id'])) {
 			$coupon_id = (int)$this->request->get['coupon_id'];
 		} else {
@@ -443,6 +449,6 @@ class Coupon extends \Opencart\System\Engine\Controller {
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($history_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($history_total - 10)) ? $history_total : ((($page - 1) * 10) + 10), $history_total, ceil($history_total / 10));
 
-		$this->response->setOutput($this->load->view('marketing/coupon_history', $data));
+		return $this->load->view('marketing/coupon_history', $data);
 	}
 }

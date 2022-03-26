@@ -61,6 +61,10 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 		$data['list'] = $this->getList();
 
+		$this->load->model('customer/customer_group');
+
+		$data['customer_groups'] = $this->model_customer_customer_group->getCustomerGroups();
+
 		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
@@ -327,10 +331,6 @@ class Customer extends \Opencart\System\Engine\Controller {
 		$data['filter_ip'] = $filter_ip;
 		$data['filter_date_added'] = $filter_date_added;
 
-		$this->load->model('customer/customer_group');
-
-		$data['customer_groups'] = $this->model_customer_customer_group->getCustomerGroups();
-
 		$data['sort'] = $sort;
 		$data['order'] = $order;
 
@@ -347,6 +347,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 		$data['error_upload_size'] = sprintf($this->language->get('error_upload_size'), $this->config->get('config_file_max_size'));
 
 		$data['config_file_max_size'] = ((int)$this->config->get('config_file_max_size') * 1024 * 1024);
+		$data['config_telephone_required'] = $this->config->get('config_telephone_required');
 
 		$url = '';
 
@@ -411,7 +412,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['customer_id'])) {
 			$this->load->model('customer/customer');
 
-			$customer_info = $this->model_customer_customer->getCustomer($this->request->get['customer_id']);
+			$customer_info = $this->model_customer_customer->getCustomer((int)$this->request->get['customer_id']);
 		}
 
 		if (isset($this->request->get['customer_id'])) {
@@ -536,10 +537,16 @@ class Customer extends \Opencart\System\Engine\Controller {
 		$data['countries'] = $this->model_localisation_country->getCountries();
 
 		if (isset($this->request->get['customer_id'])) {
-			$data['addresses'] = $this->model_customer_customer->getAddresses($this->request->get['customer_id']);
+			$data['addresses'] = $this->model_customer_customer->getAddresses((int)$this->request->get['customer_id']);
 		} else {
 			$data['addresses'] = [];
 		}
+
+		$data['payment_method'] = $this->getPayment();
+		$data['history'] = $this->getHistory();
+		$data['transaction'] = $this->getTransaction();
+		$data['reward'] = $this->getReward();
+		$data['ip'] = $this->getIp();
 
 		$data['user_token'] = $this->session->data['user_token'];
 
@@ -772,11 +779,124 @@ class Customer extends \Opencart\System\Engine\Controller {
 		}
 	}
 
-	public function history(): void {
+	public function payment(): void {
 		$this->load->language('customer/customer');
+
+		$this->response->setOutput($this->getPayment());
+	}
+
+	private function getPayment(): string {
+		if (isset($this->request->get['customer_id'])) {
+			$customer_id = (int)$this->request->get['customer_id'];
+		} else {
+			$customer_id = 0;
+		}
+
+		if (isset($this->request->get['page'])) {
+			$page = (int)$this->request->get['page'];
+		} else {
+			$page = 1;
+		}
+
+		$data['payment_methods'] = [];
 
 		$this->load->model('customer/customer');
 
+		$results = $this->model_customer_customer->getPaymentMethods($customer_id, ($page - 1) * 10, 10);
+
+		foreach ($results as $result) {
+			if (isset($result['image'])) {
+				$image = DIR_IMAGE . 'payment/' . $result['image'];
+			} else {
+				$image = '';
+			}
+
+			$data['payment_methods'][] = [
+				'customer_payment_id' => $result['customer_payment_id'],
+				'name'                => $result['name'],
+				'image'               => $image,
+				'type'                => $result['type'],
+				'status'              => $result['status'],
+				'date_expire'         => date($this->language->get('date_format_short'), strtotime($result['date_expire'])),
+				'delete'              => $this->url->link('customer/customer|deletePayment', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $customer_id)
+			];
+		}
+
+		$payment_total = $this->model_customer_customer->getTotalPaymentMethods($customer_id);
+
+		$data['pagination'] = $this->load->controller('common/pagination', [
+			'total' => $payment_total,
+			'page'  => $page,
+			'limit' => 10,
+			'url'   => $this->url->link('customer/customer|payment', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $customer_id . '&page={page}')
+		]);
+
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($payment_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($payment_total - 10)) ? $payment_total : ((($page - 1) * 10) + 10), $payment_total, ceil($payment_total / 10));
+
+		return $this->load->view('customer/customer_payment', $data);
+	}
+
+	public function disablePayment(): void {
+		$this->load->language('customer/customer');
+
+		$json = [];
+
+		if (isset($this->request->get['customer_id'])) {
+			$customer_id = (int)$this->request->get['customer_id'];
+		} else {
+			$customer_id = 0;
+		}
+
+		if (!$this->user->hasPermission('modify', 'customer/customer')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			$this->load->model('customer/customer');
+
+			$this->model_customer_customer->addHistory($customer_id, $this->request->post['comment']);
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	public function deletePayment(): void {
+		$this->load->language('customer/customer');
+
+		$json = [];
+
+		if (isset($this->request->get['customer_id'])) {
+			$customer_id = (int)$this->request->get['customer_id'];
+		} else {
+			$customer_id = 0;
+		}
+
+		if (!$this->user->hasPermission('modify', 'customer/customer')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			$this->load->model('customer/customer');
+
+			$this->model_customer_customer->addHistory($customer_id, $this->request->post['comment']);
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	public function history(): void {
+		$this->load->language('customer/customer');
+
+		$this->response->setOutput($this->getHistory());
+	}
+
+	public function getHistory(): string {
 		if (isset($this->request->get['customer_id'])) {
 			$customer_id = (int)$this->request->get['customer_id'];
 		} else {
@@ -790,6 +910,8 @@ class Customer extends \Opencart\System\Engine\Controller {
 		}
 
 		$data['histories'] = [];
+
+		$this->load->model('customer/customer');
 
 		$results = $this->model_customer_customer->getHistories($customer_id, ($page - 1) * 10, 10);
 
@@ -811,7 +933,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($history_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($history_total - 10)) ? $history_total : ((($page - 1) * 10) + 10), $history_total, ceil($history_total / 10));
 
-		$this->response->setOutput($this->load->view('customer/customer_history', $data));
+		return $this->load->view('customer/customer_history', $data);
 	}
 
 	public function addHistory(): void {
@@ -844,6 +966,10 @@ class Customer extends \Opencart\System\Engine\Controller {
 	public function transaction(): void {
 		$this->load->language('customer/customer');
 
+		$this->response->setOutput($this->getTransaction());
+	}
+
+	public function getTransaction(): string {
 		if (isset($this->request->get['customer_id'])) {
 			$customer_id = (int)$this->request->get['customer_id'];
 		} else {
@@ -883,7 +1009,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($transaction_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($transaction_total - 10)) ? $transaction_total : ((($page - 1) * 10) + 10), $transaction_total, ceil($transaction_total / 10));
 
-		$this->response->setOutput($this->load->view('customer/customer_transaction', $data));
+		return $this->load->view('customer/customer_transaction', $data);
 	}
 
 	public function addTransaction(): void {
@@ -924,6 +1050,10 @@ class Customer extends \Opencart\System\Engine\Controller {
 	public function reward(): void {
 		$this->load->language('customer/customer');
 
+		$this->response->setOutput($this->getReward());
+	}
+
+	public function getReward(): string {
 		if (isset($this->request->get['customer_id'])) {
 			$customer_id = (int)$this->request->get['customer_id'];
 		} else {
@@ -963,7 +1093,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($reward_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($reward_total - 10)) ? $reward_total : ((($page - 1) * 10) + 10), $reward_total, ceil($reward_total / 10));
 
-		$this->response->setOutput($this->load->view('customer/customer_reward', $data));
+		return $this->load->view('customer/customer_reward', $data);
 	}
 
 	public function addReward(): void {
@@ -1004,6 +1134,10 @@ class Customer extends \Opencart\System\Engine\Controller {
 	public function ip(): void {
 		$this->load->language('customer/customer');
 
+		$this->response->setOutput($this->getIp());
+	}
+
+	public function getIp(): string {
 		if (isset($this->request->get['customer_id'])) {
 			$customer_id = (int)$this->request->get['customer_id'];
 		} else {
@@ -1055,7 +1189,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($ip_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($ip_total - 10)) ? $ip_total : ((($page - 1) * 10) + 10), $ip_total, ceil($ip_total / 10));
 
-		$this->response->setOutput($this->load->view('customer/customer_ip', $data));
+		return $this->load->view('customer/customer_ip', $data);
 	}
 
 	public function autocomplete(): void {

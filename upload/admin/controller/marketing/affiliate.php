@@ -464,6 +464,10 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			$data['affiliate_custom_field'] = [];
 		}
 
+		$data['history'] = $this->load->controller('customer/customer|getHistory');
+		$data['transaction'] = $this->load->controller('customer/customer|getTransaction');
+		$data['report'] = $this->getReport();
+
 		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
@@ -592,6 +596,10 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 	public function report(): void {
 		$this->load->language('marketing/affiliate');
 
+		$this->response->setOutput($this->getReport());
+	}
+
+	private function getReport(): string {
 		if (isset($this->request->get['customer_id'])) {
 			$customer_id = (int)$this->request->get['customer_id'];
 		} else {
@@ -644,6 +652,6 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($report_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($report_total - 10)) ? $report_total : ((($page - 1) * 10) + 10), $report_total, ceil($report_total / 10));
 
-		$this->response->setOutput($this->load->view('marketing/affiliate_report', $data));
+		return $this->load->view('marketing/affiliate_report', $data);
 	}
 }

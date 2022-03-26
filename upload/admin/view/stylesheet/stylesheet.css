@@ -25,6 +25,15 @@ a {
     text-decoration: none;
 }
 
+.loading i {
+    -webkit-animation: fa-spin 2s linear infinite;
+    animation: fa-spin 2s linear infinite;
+}
+
+.loading i:before {
+    content: "\f1ce";
+}
+
 #container {
     min-height: 100%;
     width: 100%;
@@ -422,11 +431,6 @@ a {
     .col-form-label {
         text-align: right;
     }
-}
-
-.row.mb-3 {
-    margin-left: -10px;
-    margin-right: -10px;
 }
 
 .row.mb-3 + .row.mb-3 {

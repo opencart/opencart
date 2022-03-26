@@ -2,7 +2,7 @@
 	<div class="card-header">
 		<i class="fas fa-filter"></i> {{ heading_title }}
 		<div class="float-end">
-			<button type="button" id="button-reset" data-loading-text="{{ text_loading }}" class="btn btn-danger btn-sm"><i class="fas fa-sync"></i> {{ button_reset }}</button>
+			<button type="button" id="button-reset" class="btn btn-danger btn-sm"><i class="fas fa-sync"></i> {{ button_reset }}</button>
 		</div>
 	</div>
 	<div class="card-body">
@@ -46,10 +46,10 @@ $('#button-reset').on('click', function() {
         url: 'index.php?route=extension/opencart/report/product_viewed|reset&user_token={{ user_token }}',
         dataType: 'json',
         beforeSend: function() {
-            $('#button-reset').button('loading');
+            $('#button-reset').prop('disabled', true).addClass('loading');
         },
         complete: function() {
-            $('#button-reset').button('reset');
+            $('#button-reset').prop('disabled', false).removeClass('loading');
         },
         success: function(json) {
             $('.alert-dismissible').remove();

@@ -609,7 +609,8 @@ INSERT INTO `oc_coupon` (`coupon_id`, `name`, `code`, `type`, `discount`, `logge
 
 INSERT INTO `oc_cron` (`cron_id`, `code`, `cycle`, `action`, `status`, `date_added`, `date_modified`) VALUES
 (1, 'currency', 'day', 'cron/currency', 1, '2014-09-25 14:40:00', '2014-09-25 14:40:00'),
-(2, 'gdpr', 'day', 'cron/gdpr', 1, '2014-09-25 14:40:00', '2014-09-25 14:40:00');
+(2, 'gdpr', 'day', 'cron/gdpr', 1, '2014-09-25 14:40:00', '2014-09-25 14:40:00'),
+(3, 'subscription', 'day', 'cron/subscription', 1, '2014-09-25 14:40:00', '2014-09-25 14:40:00');
 
 -----------------------------------------------------------
 
@@ -1977,6 +1978,11 @@ INSERT INTO `oc_setting` (`store_id`, `code`, `key`, `value`, `serialized`) VALU
 (0, 'config', 'config_complete_status', '["5","3"]', 1),
 (0, 'config', 'config_fraud_status_id', '8', 0),
 (0, 'config', 'config_subscription_status_id', '1', 0),
+(0, 'config', 'config_subscription_active_status_id', '2', 0),
+(0, 'config', 'config_subscription_expired_status_id', '6', 0),
+(0, 'config', 'config_subscription_canceled_status_id', '4', 0),
+(0, 'config', 'config_subscription_failed_status_id', '3', 0),
+(0, 'config', 'config_subscription_denied_status_id', '5', 0),
 (0, 'config', 'config_stock_display', '0', 0),
 (0, 'config', 'config_stock_warning', '0', 0),
 (0, 'config', 'config_stock_checkout', '0', 0),
@@ -2131,98 +2137,89 @@ INSERT INTO `oc_setting` (`store_id`, `code`, `key`, `value`, `serialized`) VALU
 -----------------------------------------------------------
 
 --
--- Dumping data for table `oc_seo_profile`
---
-
-INSERT INTO `oc_seo_profile` (`seo_profile_id`, `name`, `key`, `regex`, `push`, `remove`, `sort_order`) VALUES
-(1, 'Category Level 1', 'path', '(\\d+)', 'route=product/category', 'route,path', 1),
-(2, 'Category Level 2', 'path', '(\\d+_\\d+)', 'route=product/category', 'route,path', 2),
-(3, 'Category Level 3', 'path', '(\\d+_\\d+_\\d+)', 'route=product/category', 'route,path', 3),
-(4, 'Category Level 4', 'path', '(\\d+_\\d+_\\d+_\\d+)', 'route=product/category', 'route,path', 4),
-(5, 'Category Level 5', 'path', '(\\d+_\\d+_\\d+_\\d+_\\d+)', 'route=product/category', 'route,path', 5),
-(6, 'Information', 'information_id', '(\\d+)', '', 'information_id', 1),
-(7, 'Manufacturer', 'manufacturer_id', '(\\d+)', 'route=product/manufacturer|info', 'route,manufacturer_id', 2),
-(8, 'Language', 'language', '([a-z-]+)', '', 'language', -1),
-(9, 'Product', 'product_id', '(\\d+)', 'route=product/product', 'route,product_id', 100),
-(10, 'Route', 'route', '([a-zA-Z0-9/|_]+)', '', 'route', 0);
-
------------------------------------------------------------
-
---
 -- Dumping data for table `oc_seo_url`
 --
 
-INSERT INTO `oc_seo_url` (`seo_url_id`, `store_id`, `language_id`, `key`, `value`, `keyword`) VALUES
-(2, 0, 1, 'path', '26', 'pc'),
-(3, 0, 1, 'path', '27', 'mac'),
-(4, 0, 1, 'path', '18', 'laptop-notebook'),
-(5, 0, 1, 'path', '46', 'macs'),
-(6, 0, 1, 'path', '45', 'windows'),
-(8, 0, 1, 'path', '25_29', 'mouse'),
-(9, 0, 1, 'path', '25_28', 'monitor'),
-(10, 0, 1, 'path', '30', 'printer'),
-(11, 0, 1, 'path', '25_31', 'scanner'),
-(12, 0, 1, 'path', '25_32', 'web-camera'),
-(13, 0, 1, 'path', '57', 'tablet'),
-(14, 0, 1, 'path', '17', 'software'),
-(15, 0, 1, 'path', '24', 'smartphone'),
-(17, 0, 1, 'path', '34', 'mp3-players'),
-(18, 0, 1, 'path', '34_43', 'test-11'),
-(19, 0, 1, 'path', '34_44', 'test-12'),
-(20, 0, 1, 'path', '34_47', 'test-15'),
-(21, 0, 1, 'path', '34_48', 'test-16'),
-(22, 0, 1, 'path', '34_49', 'test-17'),
-(23, 0, 1, 'path', '34_50', 'test-18'),
-(24, 0, 1, 'path', '34_51', 'test-19'),
-(25, 0, 1, 'path', '34_52', 'test-20'),
-(26, 0, 1, 'path', '34_58', 'test-25'),
-(27, 0, 1, 'path', '34_53', 'test-21'),
-(28, 0, 1, 'path', '34_54', 'test-22'),
-(29, 0, 1, 'path', '34_55', 'test-23'),
-(30, 0, 1, 'path', '34_56', 'test-24'),
-(31, 0, 1, 'path', '34_38', 'test-4'),
-(32, 0, 1, 'path', '34_37', 'test-5'),
-(33, 0, 1, 'path', '34_39', 'test-6'),
-(34, 0, 1, 'path', '34_40', 'test-7'),
-(35, 0, 1, 'path', '34_41', 'test-8'),
-(36, 0, 1, 'path', '34_42', 'test-9'),
-(37, 0, 1, 'product_id', '30', 'canon-eos-5d'),
-(38, 0, 1, 'product_id', '47', 'hp-lp3065'),
-(39, 0, 1, 'product_id', '48', 'ipod-classic'),
-(40, 0, 1, 'product_id', '28', 'htc-touch-hd'),
-(41, 0, 1, 'product_id', '43', 'macbook'),
-(42, 0, 1, 'product_id', '44', 'macbook-air'),
-(43, 0, 1, 'product_id', '45', 'macbook-pro'),
-(44, 0, 1, 'product_id', '31', 'nikon-d300'),
-(45, 0, 1, 'product_id', '29', 'palm-treo-pro'),
-(46, 0, 1, 'product_id', '35', 'product-8'),
-(47, 0, 1, 'product_id', '49', 'samsung-galaxy-tab-10-1'),
-(48, 0, 1, 'product_id', '33', 'samsung-syncmaster-941bw'),
-(49, 0, 1, 'product_id', '46', 'sony-vaio'),
-(50, 0, 1, 'product_id', '41', 'imac'),
-(51, 0, 1, 'product_id', '40', 'iphone'),
-(52, 0, 1, 'product_id', '36', 'ipod-nano'),
-(53, 0, 1, 'product_id', '34', 'ipod-shuffle'),
-(54, 0, 1, 'product_id', '32', 'ipod-touch'),
-(57, 0, 1, 'manufacturer_id', '5', 'htc'),
-(58, 0, 1, 'manufacturer_id', '7', 'hewlett-packard'),
-(59, 0, 1, 'manufacturer_id', '6', 'palm'),
-(60, 0, 1, 'manufacturer_id', '10', 'sony'),
-(62, 0, 1, 'information_id', '4', 'delivery'),
-(63, 0, 1, 'information_id', '3', 'privacy'),
-(65, 0, 1, 'language', 'en-gb', 'en-gb'),
-(66, 0, 1, 'route', 'product/manufacturer', 'brands'),
-(83, 0, 1, 'product_id', '50', 'apple-4'),
-(90, 0, 1, 'product_id', '42', 'apple-cinema'),
-(94, 0, 1, 'path', '20', 'desktops'),
-(101, 0, 1, 'manufacturer_id', '9', 'canon'),
-(102, 0, 1, 'manufacturer_id', '8', 'apple'),
-(103, 0, 1, 'information_id', '1', 'about-us'),
-(104, 0, 1, 'information_id', '2', 'terms'),
-(106, 0, 1, 'path', '33', 'cameras'),
-(107, 0, 1, 'path', '25', 'component'),
-(108, 0, 1, 'route', 'information/information|info', 'info'),
-(109, 0, 1, 'route', 'information/information', 'information');
+INSERT INTO `oc_seo_url` (`store_id`, `language_id`, `key`, `value`, `keyword`, `sort_order`) VALUES
+(0, 1, 'product_id', '47', 'hp-lp3065', 0),
+(0, 1, 'product_id', '48', 'ipod-classic', 0),
+(0, 1, 'product_id', '28', 'htc-touch-hd', 0),
+(0, 1, 'product_id', '43', 'macbook', 0),
+(0, 1, 'product_id', '44', 'macbook-air', 0),
+(0, 1, 'product_id', '45', 'macbook-pro', 0),
+(0, 1, 'product_id', '30', 'canon-eos-5d', 0),
+(0, 1, 'product_id', '31', 'nikon-d300', 0),
+(0, 1, 'product_id', '29', 'palm-treo-pro', 0),
+(0, 1, 'product_id', '35', 'product-8', 0),
+(0, 1, 'product_id', '49', 'samsung-galaxy-tab-10-1', 0),
+(0, 1, 'product_id', '33', 'samsung-syncmaster-941bw', 0),
+(0, 1, 'product_id', '46', 'sony-vaio', 0),
+(0, 1, 'product_id', '41', 'imac', 0),
+(0, 1, 'product_id', '40', 'iphone', 0),
+(0, 1, 'product_id', '36', 'ipod-nano', 0),
+(0, 1, 'product_id', '34', 'ipod-shuffle', 0),
+(0, 1, 'product_id', '32', 'ipod-touch', 0),
+(0, 1, 'product_id', '50', 'apple-4', 0),
+(0, 1, 'product_id', '42', 'apple-cinema', 0),
+(0, 1, 'manufacturer_id', '5', 'htc', 0),
+(0, 1, 'manufacturer_id', '7', 'hewlett-packard', 0),
+(0, 1, 'manufacturer_id', '6', 'palm', 0),
+(0, 1, 'manufacturer_id', '10', 'sony', 0),
+(0, 1, 'manufacturer_id', '9', 'canon', 0),
+(0, 1, 'manufacturer_id', '8', 'apple', 0),
+(0, 1, 'path', '27', 'mac', 0),
+(0, 1, 'path', '46', 'macs', 0),
+(0, 1, 'path', '45', 'windows', 0),
+(0, 1, 'path', '30', 'printer', 0),
+(0, 1, 'path', '20_27', 'desktops/mac', 0),
+(0, 1, 'path', '20_26', 'desktops/pc', 0),
+(0, 1, 'path', '25', 'component', 0),
+(0, 1, 'path', '25_64', 'component/a123', 0),
+(0, 1, 'path', '25_29', 'component/mouse', 0),
+(0, 1, 'path', '25_33', 'component/cameras', 0),
+(0, 1, 'path', '25_28', 'component/monitor', 0),
+(0, 1, 'path', '25_28_35', 'component/monitor/test-1', 0),
+(0, 1, 'path', '25_28_36', 'component/monitor/test-2', 0),
+(0, 1, 'path', '25_30', 'component/printers', 0),
+(0, 1, 'path', '25_31', 'component/scanner', 0),
+(0, 1, 'path', '25_32', 'component/web-camera', 0),
+(0, 1, 'path', '20', 'desktops', 0),
+(0, 1, 'path', '18', 'laptop-notebook', 0),
+(0, 1, 'path', '18_46', 'laptop-notebook/macs', 0),
+(0, 1, 'path', '18_45', 'laptop-notebook/windows', 0),
+(0, 1, 'path', '34', 'mp3-players', 0),
+(0, 1, 'path', '34_43', 'mp3-players/test-11', 0),
+(0, 1, 'path', '34_44', 'mp3-players/test-12', 0),
+(0, 1, 'path', '34_47', 'mp3-players/test-15', 0),
+(0, 1, 'path', '34_48', 'mp3-players/test-16', 0),
+(0, 1, 'path', '34_49', 'mp3-players/test-17', 0),
+(0, 1, 'path', '34_50', 'mp3-players/test-18', 0),
+(0, 1, 'path', '34_51', 'mp3-players/test-19', 0),
+(0, 1, 'path', '34_52', 'mp3-players/test-20', 0),
+(0, 1, 'path', '34_52_58', 'mp3-players/test-20/test-25', 0),
+(0, 1, 'path', '34_53', 'mp3-players/test-21', 0),
+(0, 1, 'path', '34_54', 'mp3-players/test-22', 0),
+(0, 1, 'path', '34_55', 'mp3-players/test-23', 0),
+(0, 1, 'path', '34_56', 'mp3-players/test-24', 0),
+(0, 1, 'path', '34_38', 'mp3-players/test-4', 0),
+(0, 1, 'path', '34_37', 'mp3-players/test-5', 0),
+(0, 1, 'path', '34_39', 'mp3-players/test-6', 0),
+(0, 1, 'path', '34_40', 'mp3-players/test-7', 0),
+(0, 1, 'path', '34_41', 'mp3-players/test-8', 0),
+(0, 1, 'path', '34_42', 'mp3-players/test-9', 0),
+(0, 1, 'path', '24', 'smartphone', 0),
+(0, 1, 'path', '17', 'software', 0),
+(0, 1, 'path', '57', 'tablet', 0),
+(0, 1, 'information_id', '1', 'about-us', 0),
+(0, 1, 'information_id', '2', 'terms', 0),
+(0, 1, 'information_id', '4', 'delivery', 0),
+(0, 1, 'information_id', '3', 'privacy', 0),
+(0, 1, 'language', 'en-gb', 'en-gb', -2),
+(0, 1, 'route', 'information/information|info', 'info', 0),
+(0, 1, 'route', 'information/information', 'information', -1),
+(0, 1, 'route', 'product/product', 'product', -1),
+(0, 1, 'route', 'product/category', 'catalog', -1),
+(0, 1, 'route', 'product/manufacturer', 'brands', -1);
 
 -----------------------------------------------------------
 
@@ -2260,9 +2257,9 @@ INSERT INTO `oc_stock_status` (`stock_status_id`, `language_id`, `name`) VALUES
 INSERT INTO `oc_subscription_status` (`subscription_status_id`, `language_id`, `name`) VALUES
 (1, 1, 'Pending'),
 (2, 1, 'Active'),
-(3, 1, 'Inactive'),
+(3, 1, 'Failed'),
 (4, 1, 'Cancelled'),
-(5, 1, 'Suspended'),
+(5, 1, 'Denied'),
 (6, 1, 'Expired');
 
 -----------------------------------------------------------
@@ -2314,7 +2311,7 @@ INSERT INTO `oc_tax_rule` (`tax_rule_id`, `tax_class_id`, `tax_rate_id`, `based`
 --
 
 INSERT INTO `oc_user_group` (`user_group_id`, `name`, `permission`) VALUES
-(1, 'Administrator', '{\"access\":[\"catalog\\/attribute\",\"catalog\\/attribute_group\",\"catalog\\/category\",\"catalog\\/download\",\"catalog\\/filter\",\"catalog\\/information\",\"catalog\\/manufacturer\",\"catalog\\/option\",\"catalog\\/product\",\"catalog\\/review\",\"catalog\\/subscription_plan\",\"common\\/column_left\",\"common\\/developer\",\"common\\/filemanager\",\"common\\/pagination\",\"common\\/security\",\"cron\\/cron\",\"cron\\/currency\",\"cron\\/gdpr\",\"cron\\/subscription\",\"customer\\/custom_field\",\"customer\\/customer\",\"customer\\/customer_approval\",\"customer\\/customer_group\",\"customer\\/gdpr\",\"design\\/banner\",\"design\\/layout\",\"design\\/seo_profile\",\"design\\/seo_url\",\"design\\/theme\",\"design\\/translation\",\"error\\/exception\",\"event\\/currency\",\"event\\/debug\",\"event\\/language\",\"event\\/statistics\",\"extension\\/analytics\",\"extension\\/captcha\",\"extension\\/currency\",\"extension\\/dashboard\",\"extension\\/feed\",\"extension\\/fraud\",\"extension\\/module\",\"extension\\/other\",\"extension\\/payment\",\"extension\\/report\",\"extension\\/shipping\",\"extension\\/theme\",\"extension\\/total\",\"localisation\\/address_format\",\"localisation\\/country\",\"localisation\\/currency\",\"localisation\\/geo_zone\",\"localisation\\/language\",\"localisation\\/length_class\",\"localisation\\/location\",\"localisation\\/order_status\",\"localisation\\/return_action\",\"localisation\\/return_reason\",\"localisation\\/return_status\",\"localisation\\/stock_status\",\"localisation\\/subscription_status\",\"localisation\\/tax_class\",\"localisation\\/tax_rate\",\"localisation\\/weight_class\",\"localisation\\/zone\",\"mail\\/affiliate\",\"mail\\/customer\",\"mail\\/forgotten\",\"mail\\/gdpr\",\"mail\\/returns\",\"mail\\/reward\",\"mail\\/transaction\",\"mail\\/voucher\",\"marketing\\/affiliate\",\"marketing\\/contact\",\"marketing\\/coupon\",\"marketing\\/marketing\",\"marketplace\\/api\",\"marketplace\\/cron\",\"marketplace\\/event\",\"marketplace\\/extension\",\"marketplace\\/installer\",\"marketplace\\/marketplace\",\"marketplace\\/promotion\",\"marketplace\\/startup\",\"report\\/online\",\"report\\/report\",\"report\\/statistics\",\"sale\\/order\",\"sale\\/returns\",\"sale\\/subscription\",\"sale\\/voucher\",\"sale\\/voucher_theme\",\"setting\\/setting\",\"setting\\/store\",\"startup\\/application\",\"startup\\/error\",\"startup\\/event\",\"startup\\/extension\",\"startup\\/language\",\"startup\\/login\",\"startup\\/notification\",\"startup\\/permission\",\"startup\\/sass\",\"startup\\/session\",\"startup\\/setting\",\"startup\\/startup\",\"tool\\/backup\",\"tool\\/log\",\"tool\\/notification\",\"tool\\/upgrade\",\"tool\\/upload\",\"user\\/api\",\"user\\/profile\",\"user\\/user\",\"user\\/user_permission\",\"extension\\/opencart\\/captcha\\/basic\",\"extension\\/opencart\\/currency\\/ecb\",\"extension\\/opencart\\/currency\\/fixer\",\"extension\\/opencart\\/dashboard\\/activity\",\"extension\\/opencart\\/dashboard\\/chart\",\"extension\\/opencart\\/dashboard\\/customer\",\"extension\\/opencart\\/dashboard\\/map\",\"extension\\/opencart\\/dashboard\\/online\",\"extension\\/opencart\\/dashboard\\/order\",\"extension\\/opencart\\/dashboard\\/recent\",\"extension\\/opencart\\/dashboard\\/sale\",\"extension\\/opencart\\/fraud\\/ip\",\"extension\\/opencart\\/module\\/account\",\"extension\\/opencart\\/module\\/banner\",\"extension\\/opencart\\/module\\/bestseller\",\"extension\\/opencart\\/module\\/category\",\"extension\\/opencart\\/module\\/featured\",\"extension\\/opencart\\/module\\/filter\",\"extension\\/opencart\\/module\\/html\",\"extension\\/opencart\\/module\\/information\",\"extension\\/opencart\\/module\\/latest\",\"extension\\/opencart\\/module\\/special\",\"extension\\/opencart\\/module\\/store\",\"extension\\/opencart\\/payment\\/bank_transfer\",\"extension\\/opencart\\/payment\\/cheque\",\"extension\\/opencart\\/payment\\/cod\",\"extension\\/opencart\\/payment\\/free_checkout\",\"extension\\/opencart\\/report\\/customer_activity\",\"extension\\/opencart\\/report\\/customer_order\",\"extension\\/opencart\\/report\\/customer_reward\",\"extension\\/opencart\\/report\\/customer_search\",\"extension\\/opencart\\/report\\/customer_transaction\",\"extension\\/opencart\\/report\\/marketing\",\"extension\\/opencart\\/report\\/product_purchased\",\"extension\\/opencart\\/report\\/product_viewed\",\"extension\\/opencart\\/report\\/sale_coupon\",\"extension\\/opencart\\/report\\/sale_order\",\"extension\\/opencart\\/report\\/sale_return\",\"extension\\/opencart\\/report\\/sale_shipping\",\"extension\\/opencart\\/report\\/sale_tax\",\"extension\\/opencart\\/shipping\\/flat\",\"extension\\/opencart\\/shipping\\/free\",\"extension\\/opencart\\/shipping\\/item\",\"extension\\/opencart\\/shipping\\/pickup\",\"extension\\/opencart\\/shipping\\/weight\",\"extension\\/opencart\\/theme\\/basic\",\"extension\\/opencart\\/total\\/coupon\",\"extension\\/opencart\\/total\\/credit\",\"extension\\/opencart\\/total\\/handling\",\"extension\\/opencart\\/total\\/low_order_fee\",\"extension\\/opencart\\/total\\/reward\",\"extension\\/opencart\\/total\\/shipping\",\"extension\\/opencart\\/total\\/sub_total\",\"extension\\/opencart\\/total\\/tax\",\"extension\\/opencart\\/total\\/total\",\"extension\\/opencart\\/total\\/voucher\"],\"modify\":[\"catalog\\/attribute\",\"catalog\\/attribute_group\",\"catalog\\/category\",\"catalog\\/download\",\"catalog\\/filter\",\"catalog\\/information\",\"catalog\\/manufacturer\",\"catalog\\/option\",\"catalog\\/product\",\"catalog\\/review\",\"catalog\\/subscription_plan\",\"common\\/column_left\",\"common\\/developer\",\"common\\/filemanager\",\"common\\/pagination\",\"common\\/security\",\"cron\\/cron\",\"cron\\/currency\",\"cron\\/gdpr\",\"cron\\/subscription\",\"customer\\/custom_field\",\"customer\\/customer\",\"customer\\/customer_approval\",\"customer\\/customer_group\",\"customer\\/gdpr\",\"design\\/banner\",\"design\\/layout\",\"design\\/seo_profile\",\"design\\/seo_url\",\"design\\/theme\",\"design\\/translation\",\"error\\/exception\",\"event\\/currency\",\"event\\/debug\",\"event\\/language\",\"event\\/statistics\",\"extension\\/analytics\",\"extension\\/captcha\",\"extension\\/currency\",\"extension\\/dashboard\",\"extension\\/feed\",\"extension\\/fraud\",\"extension\\/module\",\"extension\\/other\",\"extension\\/payment\",\"extension\\/report\",\"extension\\/shipping\",\"extension\\/theme\",\"extension\\/total\",\"localisation\\/address_format\",\"localisation\\/country\",\"localisation\\/currency\",\"localisation\\/geo_zone\",\"localisation\\/language\",\"localisation\\/length_class\",\"localisation\\/location\",\"localisation\\/order_status\",\"localisation\\/return_action\",\"localisation\\/return_reason\",\"localisation\\/return_status\",\"localisation\\/stock_status\",\"localisation\\/subscription_status\",\"localisation\\/tax_class\",\"localisation\\/tax_rate\",\"localisation\\/weight_class\",\"localisation\\/zone\",\"mail\\/affiliate\",\"mail\\/customer\",\"mail\\/forgotten\",\"mail\\/gdpr\",\"mail\\/returns\",\"mail\\/reward\",\"mail\\/transaction\",\"mail\\/voucher\",\"marketing\\/affiliate\",\"marketing\\/contact\",\"marketing\\/coupon\",\"marketing\\/marketing\",\"marketplace\\/api\",\"marketplace\\/cron\",\"marketplace\\/event\",\"marketplace\\/extension\",\"marketplace\\/installer\",\"marketplace\\/marketplace\",\"marketplace\\/promotion\",\"marketplace\\/startup\",\"report\\/online\",\"report\\/report\",\"report\\/statistics\",\"sale\\/order\",\"sale\\/returns\",\"sale\\/subscription\",\"sale\\/voucher\",\"sale\\/voucher_theme\",\"setting\\/setting\",\"setting\\/store\",\"startup\\/application\",\"startup\\/error\",\"startup\\/event\",\"startup\\/extension\",\"startup\\/language\",\"startup\\/login\",\"startup\\/notification\",\"startup\\/permission\",\"startup\\/sass\",\"startup\\/session\",\"startup\\/setting\",\"startup\\/startup\",\"tool\\/backup\",\"tool\\/log\",\"tool\\/notification\",\"tool\\/upgrade\",\"tool\\/upload\",\"user\\/api\",\"user\\/profile\",\"user\\/user\",\"user\\/user_permission\",\"extension\\/opencart\\/captcha\\/basic\",\"extension\\/opencart\\/currency\\/ecb\",\"extension\\/opencart\\/currency\\/fixer\",\"extension\\/opencart\\/dashboard\\/activity\",\"extension\\/opencart\\/dashboard\\/chart\",\"extension\\/opencart\\/dashboard\\/customer\",\"extension\\/opencart\\/dashboard\\/map\",\"extension\\/opencart\\/dashboard\\/online\",\"extension\\/opencart\\/dashboard\\/order\",\"extension\\/opencart\\/dashboard\\/recent\",\"extension\\/opencart\\/dashboard\\/sale\",\"extension\\/opencart\\/fraud\\/ip\",\"extension\\/opencart\\/module\\/account\",\"extension\\/opencart\\/module\\/banner\",\"extension\\/opencart\\/module\\/bestseller\",\"extension\\/opencart\\/module\\/category\",\"extension\\/opencart\\/module\\/featured\",\"extension\\/opencart\\/module\\/filter\",\"extension\\/opencart\\/module\\/html\",\"extension\\/opencart\\/module\\/information\",\"extension\\/opencart\\/module\\/latest\",\"extension\\/opencart\\/module\\/special\",\"extension\\/opencart\\/module\\/store\",\"extension\\/opencart\\/payment\\/bank_transfer\",\"extension\\/opencart\\/payment\\/cheque\",\"extension\\/opencart\\/payment\\/cod\",\"extension\\/opencart\\/payment\\/free_checkout\",\"extension\\/opencart\\/report\\/customer_activity\",\"extension\\/opencart\\/report\\/customer_order\",\"extension\\/opencart\\/report\\/customer_reward\",\"extension\\/opencart\\/report\\/customer_search\",\"extension\\/opencart\\/report\\/customer_transaction\",\"extension\\/opencart\\/report\\/marketing\",\"extension\\/opencart\\/report\\/product_purchased\",\"extension\\/opencart\\/report\\/product_viewed\",\"extension\\/opencart\\/report\\/sale_coupon\",\"extension\\/opencart\\/report\\/sale_order\",\"extension\\/opencart\\/report\\/sale_return\",\"extension\\/opencart\\/report\\/sale_shipping\",\"extension\\/opencart\\/report\\/sale_tax\",\"extension\\/opencart\\/shipping\\/flat\",\"extension\\/opencart\\/shipping\\/free\",\"extension\\/opencart\\/shipping\\/item\",\"extension\\/opencart\\/shipping\\/pickup\",\"extension\\/opencart\\/shipping\\/weight\",\"extension\\/opencart\\/theme\\/basic\",\"extension\\/opencart\\/total\\/coupon\",\"extension\\/opencart\\/total\\/credit\",\"extension\\/opencart\\/total\\/handling\",\"extension\\/opencart\\/total\\/low_order_fee\",\"extension\\/opencart\\/total\\/reward\",\"extension\\/opencart\\/total\\/shipping\",\"extension\\/opencart\\/total\\/sub_total\",\"extension\\/opencart\\/total\\/tax\",\"extension\\/opencart\\/total\\/total\",\"extension\\/opencart\\/total\\/voucher\"]}'),
+(1, 'Administrator', '{\"access\":[\"catalog\\/attribute\",\"catalog\\/attribute_group\",\"catalog\\/category\",\"catalog\\/download\",\"catalog\\/filter\",\"catalog\\/information\",\"catalog\\/manufacturer\",\"catalog\\/option\",\"catalog\\/product\",\"catalog\\/review\",\"catalog\\/subscription_plan\",\"common\\/column_left\",\"common\\/developer\",\"common\\/filemanager\",\"common\\/pagination\",\"common\\/security\",\"cron\\/cron\",\"cron\\/currency\",\"cron\\/gdpr\",\"cron\\/subscription\",\"customer\\/custom_field\",\"customer\\/customer\",\"customer\\/customer_approval\",\"customer\\/customer_group\",\"customer\\/gdpr\",\"design\\/banner\",\"design\\/layout\",\"design\\/seo_url\",\"design\\/theme\",\"design\\/translation\",\"error\\/exception\",\"event\\/currency\",\"event\\/debug\",\"event\\/language\",\"event\\/statistics\",\"extension\\/analytics\",\"extension\\/captcha\",\"extension\\/currency\",\"extension\\/dashboard\",\"extension\\/feed\",\"extension\\/fraud\",\"extension\\/module\",\"extension\\/other\",\"extension\\/payment\",\"extension\\/report\",\"extension\\/shipping\",\"extension\\/theme\",\"extension\\/total\",\"localisation\\/address_format\",\"localisation\\/country\",\"localisation\\/currency\",\"localisation\\/geo_zone\",\"localisation\\/language\",\"localisation\\/length_class\",\"localisation\\/location\",\"localisation\\/order_status\",\"localisation\\/return_action\",\"localisation\\/return_reason\",\"localisation\\/return_status\",\"localisation\\/stock_status\",\"localisation\\/subscription_status\",\"localisation\\/tax_class\",\"localisation\\/tax_rate\",\"localisation\\/weight_class\",\"localisation\\/zone\",\"mail\\/affiliate\",\"mail\\/customer\",\"mail\\/forgotten\",\"mail\\/gdpr\",\"mail\\/returns\",\"mail\\/reward\",\"mail\\/transaction\",\"mail\\/voucher\",\"marketing\\/affiliate\",\"marketing\\/contact\",\"marketing\\/coupon\",\"marketing\\/marketing\",\"marketplace\\/api\",\"marketplace\\/cron\",\"marketplace\\/event\",\"marketplace\\/extension\",\"marketplace\\/installer\",\"marketplace\\/marketplace\",\"marketplace\\/promotion\",\"marketplace\\/startup\",\"report\\/online\",\"report\\/report\",\"report\\/statistics\",\"sale\\/order\",\"sale\\/returns\",\"sale\\/subscription\",\"sale\\/voucher\",\"sale\\/voucher_theme\",\"setting\\/setting\",\"setting\\/store\",\"startup\\/application\",\"startup\\/error\",\"startup\\/event\",\"startup\\/extension\",\"startup\\/language\",\"startup\\/login\",\"startup\\/notification\",\"startup\\/permission\",\"startup\\/sass\",\"startup\\/session\",\"startup\\/setting\",\"startup\\/startup\",\"tool\\/backup\",\"tool\\/log\",\"tool\\/notification\",\"tool\\/upgrade\",\"tool\\/upload\",\"user\\/api\",\"user\\/profile\",\"user\\/user\",\"user\\/user_permission\",\"extension\\/opencart\\/captcha\\/basic\",\"extension\\/opencart\\/currency\\/ecb\",\"extension\\/opencart\\/currency\\/fixer\",\"extension\\/opencart\\/dashboard\\/activity\",\"extension\\/opencart\\/dashboard\\/chart\",\"extension\\/opencart\\/dashboard\\/customer\",\"extension\\/opencart\\/dashboard\\/map\",\"extension\\/opencart\\/dashboard\\/online\",\"extension\\/opencart\\/dashboard\\/order\",\"extension\\/opencart\\/dashboard\\/recent\",\"extension\\/opencart\\/dashboard\\/sale\",\"extension\\/opencart\\/fraud\\/ip\",\"extension\\/opencart\\/module\\/account\",\"extension\\/opencart\\/module\\/banner\",\"extension\\/opencart\\/module\\/bestseller\",\"extension\\/opencart\\/module\\/category\",\"extension\\/opencart\\/module\\/featured\",\"extension\\/opencart\\/module\\/filter\",\"extension\\/opencart\\/module\\/html\",\"extension\\/opencart\\/module\\/information\",\"extension\\/opencart\\/module\\/latest\",\"extension\\/opencart\\/module\\/special\",\"extension\\/opencart\\/module\\/store\",\"extension\\/opencart\\/payment\\/bank_transfer\",\"extension\\/opencart\\/payment\\/cheque\",\"extension\\/opencart\\/payment\\/cod\",\"extension\\/opencart\\/payment\\/free_checkout\",\"extension\\/opencart\\/report\\/customer_activity\",\"extension\\/opencart\\/report\\/customer_order\",\"extension\\/opencart\\/report\\/customer_reward\",\"extension\\/opencart\\/report\\/customer_search\",\"extension\\/opencart\\/report\\/customer_transaction\",\"extension\\/opencart\\/report\\/marketing\",\"extension\\/opencart\\/report\\/product_purchased\",\"extension\\/opencart\\/report\\/product_viewed\",\"extension\\/opencart\\/report\\/sale_coupon\",\"extension\\/opencart\\/report\\/sale_order\",\"extension\\/opencart\\/report\\/sale_return\",\"extension\\/opencart\\/report\\/sale_shipping\",\"extension\\/opencart\\/report\\/sale_tax\",\"extension\\/opencart\\/shipping\\/flat\",\"extension\\/opencart\\/shipping\\/free\",\"extension\\/opencart\\/shipping\\/item\",\"extension\\/opencart\\/shipping\\/pickup\",\"extension\\/opencart\\/shipping\\/weight\",\"extension\\/opencart\\/theme\\/basic\",\"extension\\/opencart\\/total\\/coupon\",\"extension\\/opencart\\/total\\/credit\",\"extension\\/opencart\\/total\\/handling\",\"extension\\/opencart\\/total\\/low_order_fee\",\"extension\\/opencart\\/total\\/reward\",\"extension\\/opencart\\/total\\/shipping\",\"extension\\/opencart\\/total\\/sub_total\",\"extension\\/opencart\\/total\\/tax\",\"extension\\/opencart\\/total\\/total\",\"extension\\/opencart\\/total\\/voucher\"],\"modify\":[\"catalog\\/attribute\",\"catalog\\/attribute_group\",\"catalog\\/category\",\"catalog\\/download\",\"catalog\\/filter\",\"catalog\\/information\",\"catalog\\/manufacturer\",\"catalog\\/option\",\"catalog\\/product\",\"catalog\\/review\",\"catalog\\/subscription_plan\",\"common\\/column_left\",\"common\\/developer\",\"common\\/filemanager\",\"common\\/pagination\",\"common\\/security\",\"cron\\/cron\",\"cron\\/currency\",\"cron\\/gdpr\",\"cron\\/subscription\",\"customer\\/custom_field\",\"customer\\/customer\",\"customer\\/customer_approval\",\"customer\\/customer_group\",\"customer\\/gdpr\",\"design\\/banner\",\"design\\/layout\",\"design\\/seo_url\",\"design\\/theme\",\"design\\/translation\",\"error\\/exception\",\"event\\/currency\",\"event\\/debug\",\"event\\/language\",\"event\\/statistics\",\"extension\\/analytics\",\"extension\\/captcha\",\"extension\\/currency\",\"extension\\/dashboard\",\"extension\\/feed\",\"extension\\/fraud\",\"extension\\/module\",\"extension\\/other\",\"extension\\/payment\",\"extension\\/report\",\"extension\\/shipping\",\"extension\\/theme\",\"extension\\/total\",\"localisation\\/address_format\",\"localisation\\/country\",\"localisation\\/currency\",\"localisation\\/geo_zone\",\"localisation\\/language\",\"localisation\\/length_class\",\"localisation\\/location\",\"localisation\\/order_status\",\"localisation\\/return_action\",\"localisation\\/return_reason\",\"localisation\\/return_status\",\"localisation\\/stock_status\",\"localisation\\/subscription_status\",\"localisation\\/tax_class\",\"localisation\\/tax_rate\",\"localisation\\/weight_class\",\"localisation\\/zone\",\"mail\\/affiliate\",\"mail\\/customer\",\"mail\\/forgotten\",\"mail\\/gdpr\",\"mail\\/returns\",\"mail\\/reward\",\"mail\\/transaction\",\"mail\\/voucher\",\"marketing\\/affiliate\",\"marketing\\/contact\",\"marketing\\/coupon\",\"marketing\\/marketing\",\"marketplace\\/api\",\"marketplace\\/cron\",\"marketplace\\/event\",\"marketplace\\/extension\",\"marketplace\\/installer\",\"marketplace\\/marketplace\",\"marketplace\\/promotion\",\"marketplace\\/startup\",\"report\\/online\",\"report\\/report\",\"report\\/statistics\",\"sale\\/order\",\"sale\\/returns\",\"sale\\/subscription\",\"sale\\/voucher\",\"sale\\/voucher_theme\",\"setting\\/setting\",\"setting\\/store\",\"startup\\/application\",\"startup\\/error\",\"startup\\/event\",\"startup\\/extension\",\"startup\\/language\",\"startup\\/login\",\"startup\\/notification\",\"startup\\/permission\",\"startup\\/sass\",\"startup\\/session\",\"startup\\/setting\",\"startup\\/startup\",\"tool\\/backup\",\"tool\\/log\",\"tool\\/notification\",\"tool\\/upgrade\",\"tool\\/upload\",\"user\\/api\",\"user\\/profile\",\"user\\/user\",\"user\\/user_permission\",\"extension\\/opencart\\/captcha\\/basic\",\"extension\\/opencart\\/currency\\/ecb\",\"extension\\/opencart\\/currency\\/fixer\",\"extension\\/opencart\\/dashboard\\/activity\",\"extension\\/opencart\\/dashboard\\/chart\",\"extension\\/opencart\\/dashboard\\/customer\",\"extension\\/opencart\\/dashboard\\/map\",\"extension\\/opencart\\/dashboard\\/online\",\"extension\\/opencart\\/dashboard\\/order\",\"extension\\/opencart\\/dashboard\\/recent\",\"extension\\/opencart\\/dashboard\\/sale\",\"extension\\/opencart\\/fraud\\/ip\",\"extension\\/opencart\\/module\\/account\",\"extension\\/opencart\\/module\\/banner\",\"extension\\/opencart\\/module\\/bestseller\",\"extension\\/opencart\\/module\\/category\",\"extension\\/opencart\\/module\\/featured\",\"extension\\/opencart\\/module\\/filter\",\"extension\\/opencart\\/module\\/html\",\"extension\\/opencart\\/module\\/information\",\"extension\\/opencart\\/module\\/latest\",\"extension\\/opencart\\/module\\/special\",\"extension\\/opencart\\/module\\/store\",\"extension\\/opencart\\/payment\\/bank_transfer\",\"extension\\/opencart\\/payment\\/cheque\",\"extension\\/opencart\\/payment\\/cod\",\"extension\\/opencart\\/payment\\/free_checkout\",\"extension\\/opencart\\/report\\/customer_activity\",\"extension\\/opencart\\/report\\/customer_order\",\"extension\\/opencart\\/report\\/customer_reward\",\"extension\\/opencart\\/report\\/customer_search\",\"extension\\/opencart\\/report\\/customer_transaction\",\"extension\\/opencart\\/report\\/marketing\",\"extension\\/opencart\\/report\\/product_purchased\",\"extension\\/opencart\\/report\\/product_viewed\",\"extension\\/opencart\\/report\\/sale_coupon\",\"extension\\/opencart\\/report\\/sale_order\",\"extension\\/opencart\\/report\\/sale_return\",\"extension\\/opencart\\/report\\/sale_shipping\",\"extension\\/opencart\\/report\\/sale_tax\",\"extension\\/opencart\\/shipping\\/flat\",\"extension\\/opencart\\/shipping\\/free\",\"extension\\/opencart\\/shipping\\/item\",\"extension\\/opencart\\/shipping\\/pickup\",\"extension\\/opencart\\/shipping\\/weight\",\"extension\\/opencart\\/theme\\/basic\",\"extension\\/opencart\\/total\\/coupon\",\"extension\\/opencart\\/total\\/credit\",\"extension\\/opencart\\/total\\/handling\",\"extension\\/opencart\\/total\\/low_order_fee\",\"extension\\/opencart\\/total\\/reward\",\"extension\\/opencart\\/total\\/shipping\",\"extension\\/opencart\\/total\\/sub_total\",\"extension\\/opencart\\/total\\/tax\",\"extension\\/opencart\\/total\\/total\",\"extension\\/opencart\\/total\\/voucher\"]}'),
 (2, 'Demonstration', '');
 
 

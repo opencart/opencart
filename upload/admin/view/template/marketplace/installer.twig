@@ -2,7 +2,7 @@
 <div id="content">
 	<div class="page-header">
 		<div class="container-fluid">
-			<div class="float-end"><button type="button" id="button-upload" data-oc-loading-text="{{ text_loading }}" data-bs-toggle="tooltip" title="{{ button_upload }}" class="btn btn-primary"><i class="fas fa-upload"></i></button></div>
+			<div class="float-end"><button type="button" id="button-upload" data-bs-toggle="tooltip" title="{{ button_upload }}" class="btn btn-primary"><i class="fas fa-upload"></i></button></div>
 			<h1>{{ heading_title }}</h1>
 			<ol class="breadcrumb">
 				{% for breadcrumb in breadcrumbs %}
@@ -77,10 +77,10 @@ $('#button-upload').on('click', function() {
                 contentType: false,
                 processData: false,
                 beforeSend: function() {
-                    $('#button-upload').button('loading');
+                    $('#button-upload').prop('disabled', true).addClass('loading');
                 },
                 complete: function() {
-                    $('#button-upload').button('reset');
+                    $('#button-upload').prop('disabled', false).removeClass('loading');
                 },
                 success: function(json) {
                     if (json['error']) {
@@ -114,10 +114,10 @@ $('#extension').on('click', '.btn-success, .btn-warning', function(e) {
         url: $(element).attr('href'),
         dataType: 'json',
         beforeSend: function() {
-            $(element).button('loading');
+            $(element).prop('disabled', true).addClass('loading');
         },
         complete: function() {
-            $(element).button('reset');
+            $(element).prop('disabled', false).removeClass('loading');
         },
         success: function(json) {
             $('.alert-dismissible').remove();
@@ -151,10 +151,10 @@ $('#extension').on('click', '.btn-danger', function(e) {
             url: $(element).attr('href'),
             dataType: 'json',
             beforeSend: function() {
-                $(element).button('loading');
+                $(element).prop('disabled', true).addClass('loading');
             },
             complete: function() {
-                $(element).button('reset');
+                $(element).prop('disabled', false).removeClass('loading');
             },
             success: function(json) {
                 $('.alert-dismissible').remove();

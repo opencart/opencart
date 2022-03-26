@@ -87,6 +87,7 @@ var tooltip = function () {
 }
 
 $(document).ready(tooltip);
+
 // Makes tooltips work on ajax generated content
 $(document).on('click', 'button', tooltip);
 
@@ -126,25 +127,6 @@ var datetimepicker = function () {
 
 $(document).ready(datetimepicker);
 $(document).on('click', 'button', datetimepicker);
-
-// Buttons
-$(document).ready(function() {
-    $(document).on('click', '[data-oc-loading-text]', function(state) {
-        var element = this;
-
-        var html = $(element).html();
-
-        var loading = $(element).attr('data-oc-loading-text');
-
-        if (state == 'loading') {
-            $(element).html(loading);
-        }
-
-        if (state == 'reset') {
-            $(element).html(html);
-        }
-    });
-});
 
 // Forms
 $(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function(e) {
@@ -198,10 +180,10 @@ $(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function(e) {
         dataType: 'json',
         contentType: 'application/x-www-form-urlencoded',
         beforeSend: function() {
-           // $(button).button('loading');
+            $(button).prop('disabled', true).addClass('loading');
         },
         complete: function() {
-           //$(button).button('reset');
+           $(button).prop('disabled', false).removeClass('loading');
         },
         success: function(json) {
             $('.alert-dismissible').remove();
@@ -230,7 +212,7 @@ $(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function(e) {
             }
 
             if (json['success']) {
-                $('#alert').prepend('<div class="alert alert-success"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                 // Refresh
                 var url = $(form).attr('data-oc-load');
@@ -293,7 +275,7 @@ $(document).on('click', '[data-oc-toggle=\'upload\']', function() {
                         $(element).button('loading');
                     },
                     complete: function() {
-                        $(element).button('reset');
+                        $(element).prop('disabled', false).removeClass('loading');
                     },
                     success: function(json) {
                         console.log(json);
@@ -332,7 +314,7 @@ $(document).on('click', '[data-oc-toggle=\'image\']', function(e) {
             $(element).button('loading');
         },
         complete: function() {
-            $(element).button('reset');
+            $(element).prop('disabled', false).removeClass('loading');
         },
         success: function(html) {
             console.log(html);
@@ -389,7 +371,7 @@ class Chain {
 var chain = new Chain();
 
 // Autocomplete
-(function($) {
++function($) {
     $.fn.autocomplete = function(option) {
         return this.each(function() {
             var $this = $(this);
@@ -463,4 +445,4 @@ var chain = new Chain();
             }
         });
     }
-})(window.jQuery);
+}(jQuery);

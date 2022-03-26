@@ -156,6 +156,14 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 				];
 			}
 
+			if ($this->user->hasPermission('access', 'marketplace/vendor')) {
+				$marketplace[] = [
+					'name'	   => $this->language->get('text_vendor'),
+					'href'     => $this->url->link('marketplace/vendor', 'user_token=' . $this->session->data['user_token']),
+					'children' => []
+				];
+			}
+
 			if ($this->user->hasPermission('access', 'marketplace/startup')) {
 				$marketplace[] = [
 					'name'	   => $this->language->get('text_startup'),
@@ -227,27 +235,11 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 
 			$seo = [];
 
-			if ($this->user->hasPermission('access', 'design/seo_profile')) {
-				$seo[] = [
-					'name'	   => $this->language->get('text_seo_profile'),
-					'href'     => $this->url->link('design/seo_profile', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
 			if ($this->user->hasPermission('access', 'design/seo_url')) {
-				$seo[] = [
+				$design[] = [
 					'name'	   => $this->language->get('text_seo_url'),
 					'href'     => $this->url->link('design/seo_url', 'user_token=' . $this->session->data['user_token']),
 					'children' => []
-				];
-			}
-
-			if ($seo) {
-				$design[] = [
-					'name'	   => $this->language->get('text_seo'),
-					'href'     => '',
-					'children' => $seo
 				];
 			}
 
@@ -765,6 +757,8 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 			}
 
 			return $this->load->view('common/column_left', $data);
+		} else {
+			return '';
 		}
 	}
 }

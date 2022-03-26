@@ -17,6 +17,8 @@ use Psr\Http\Message\RequestInterface;
  * @method \GuzzleHttp\Promise\Promise createAnomalyDetectorAsync(array $args = [])
  * @method \Aws\Result createMetricSet(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createMetricSetAsync(array $args = [])
+ * @method \Aws\Result deactivateAnomalyDetector(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise deactivateAnomalyDetectorAsync(array $args = [])
  * @method \Aws\Result deleteAlert(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteAlertAsync(array $args = [])
  * @method \Aws\Result deleteAnomalyDetector(array $args = [])

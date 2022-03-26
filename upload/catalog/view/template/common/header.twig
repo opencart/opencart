@@ -46,18 +46,18 @@
         <li class="list-inline-item">
           <div class="dropdown">
             <a href="{{ account }}" class="dropdown-toggle" data-bs-toggle="dropdown"><i class="fas fa-user"></i> <span class="d-none d-md-inline">{{ text_account }}</span> <i class="fas fa-caret-down"></i></a>
-            <div class="dropdown-menu dropdown-menu-right">
+            <ul class="dropdown-menu dropdown-menu-right">
               {% if not logged %}
-                <a href="{{ register }}" class="dropdown-item">{{ text_register }}</a>
-                <a href="{{ login }}" class="dropdown-item">{{ text_login }}</a>
+                <li><a href="{{ register }}" class="dropdown-item">{{ text_register }}</a></li>
+                <li><a href="{{ login }}" class="dropdown-item">{{ text_login }}</a></li>
               {% else %}
-                <a href="{{ account }}" class="dropdown-item">{{ text_account }}</a>
-                <a href="{{ order }}" class="dropdown-item">{{ text_order }}</a>
-                <a href="{{ transaction }}" class="dropdown-item">{{ text_transaction }}</a>
-                <a href="{{ download }}" class="dropdown-item">{{ text_download }}</a>
-                <a href="{{ logout }}" class="dropdown-item">{{ text_logout }}</a>
+                <li><a href="{{ account }}" class="dropdown-item">{{ text_account }}</a></li>
+                <li><a href="{{ order }}" class="dropdown-item">{{ text_order }}</a></li>
+                <li><a href="{{ transaction }}" class="dropdown-item">{{ text_transaction }}</a></li>
+                <li><a href="{{ download }}" class="dropdown-item">{{ text_download }}</a></li>
+                <li><a href="{{ logout }}" class="dropdown-item">{{ text_logout }}</a></li>
               {% endif %}
-            </div>
+            </ul>
           </div>
         </li>
         <li class="list-inline-item"><a href="{{ wishlist }}" id="wishlist-total" title="{{ text_wishlist }}"><i class="fas fa-heart"></i> <span class="d-none d-md-inline">{{ text_wishlist }}</span></a></li>
@@ -80,9 +80,9 @@
         </div>
       </div>
       <div class="col-md-5">{{ search }}</div>
-      <div class="col-md-4 col-lg-3">{{ cart }}</div>
+      <div id="header-cart" class="col-md-4 col-lg-3">{{ cart }}</div>
     </div>
   </div>
 </header>
 <main>
-{{ menu }}
+  {{ menu }}

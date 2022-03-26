@@ -22,6 +22,7 @@ $_['entry_postcode']     = 'Post Code';
 $_['entry_city']         = 'City';
 $_['entry_country']      = 'Country';
 $_['entry_zone']         = 'Region / State';
+$_['entry_default']      = 'Default Address';
 
 // Error
 $_['error_token']        = 'Warning: Address token invalid!';

@@ -526,15 +526,55 @@
                           <div id="error-customer-group-display" class="invalid-feedback"></div>
                         </div>
                       </div>
+
+
+
                       <div class="row mb-3">
                         <label class="col-sm-2 col-form-label">{{ entry_customer_price }}</label>
                         <div class="col-sm-10">
                           <div class="btn-group">
-                            <input type="radio" name="config_customer_price" value="1" id="input-customer-price-yes" class="btn-check"{% if config_customer_price %} checked{% endif %}/> <label for="input-customer-price-yes" class="btn btn-outline-secondary">{{ text_yes }}</label> <input type="radio" name="config_customer_price" value="0" id="input-customer-price-no" class="btn-check"{% if not config_customer_price %} checked{% endif %}/> <label for="input-customer-price-no" class="btn btn-outline-secondary">{{ text_no }}</label>
+                            <input type="radio" name="config_customer_price" value="1" id="input-customer-price-yes" class="btn-check"{% if config_customer_price %} checked{% endif %}/>
+                            <label for="input-customer-price-yes" class="btn btn-outline-secondary">{{ text_yes }}</label>
+
+                            <input type="radio" name="config_customer_price" value="0" id="input-customer-price-no" class="btn-check"{% if not config_customer_price %} checked{% endif %}/>
+                            <label for="input-customer-price-no" class="btn btn-outline-secondary">{{ text_no }}</label>
                           </div>
                           <div class="form-text">{{ help_customer_price }}</div>
                         </div>
                       </div>
+
+
+                      <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label">{{ entry_telephone_display }}</label>
+                        <div class="col-sm-10">
+                          <div class="btn-group">
+
+                            <input type="radio" name="config_telephone_display" value="1" id="input-telephone-display-yes" class="btn-check"{% if config_telephone_display %} checked{% endif %}/>
+                            <label for="input-telephone-display-yes" class="btn btn-outline-secondary">{{ text_yes }}</label>
+
+                            <input type="radio" name="config_telephone_display" value="0" id="input-telephone-display-no" class="btn-check"{% if not config_telephone_display %} checked{% endif %}/>
+                            <label for="input-telephone-display-no" class="btn btn-outline-secondary">{{ text_no }}</label>
+
+                          </div>
+                        </div>
+                      </div>
+
+
+                      <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label">{{ entry_telephone_required }}</label>
+                        <div class="col-sm-10">
+                          <div class="btn-group">
+                            <input type="radio" name="config_telephone_required" value="1" id="input-telephone-required-yes" class="btn-check"{% if config_telephone_required %} checked{% endif %}/>
+                            <label for="input-telephone-required-yes" class="btn btn-outline-secondary">{{ text_yes }}</label>
+                            <input type="radio" name="config_telephone_required" value="0" id="input-telephone-required-no" class="btn-check"{% if not config_telephone_required %} checked{% endif %}/>
+                            <label for="input-telephone-required-no" class="btn btn-outline-secondary">{{ text_no }}</label>
+                          </div>
+                        </div>
+                      </div>
+
+
+
+
                       <div class="row mb-3">
                         <label for="input-login-attempts" class="col-sm-2 col-form-label">{{ entry_login_attempts }}</label>
                         <div class="col-sm-10">
@@ -543,6 +583,7 @@
                           <div id="error-login-attempts" class="invalid-feedback"></div>
                         </div>
                       </div>
+
                       <div class="row mb-3">
                         <label for="input-account" class="col-sm-2 col-form-label">{{ entry_account }}</label>
                         <div class="col-sm-10">
@@ -681,6 +722,7 @@
                   <h2 class="accordion-header"><button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapse-subscription">{{ text_subscription }}</button></h2>
                   <div id="collapse-subscription" class="accordion-collapse collapse" data-bs-parent="#accordion-option">
                     <div class="accordion-body">
+
                       <div class="row mb-3">
                         <label for="input-subscription-status" class="col-sm-2 col-form-label">{{ entry_subscription_status }}</label>
                         <div class="col-sm-10">
@@ -689,7 +731,57 @@
                               <option value="{{ subscription_status.subscription_status_id }}"{% if subscription_status.subscription_status_id == config_subscription_status_id %} selected="selected"{% endif %}>{{ subscription_status.name }}</option>
                             {% endfor %}
                           </select>
-                          <div class="form-text">{{ help_subscription_status }}</div>
+                          <div class="form-text">{{ help_subscription }}</div>
+                        </div>
+                      </div>
+                      <div class="row mb-3">
+                        <label for="input-subscription-active-status" class="col-sm-2 col-form-label">{{ entry_subscription_active_status }}</label>
+                        <div class="col-sm-10">
+                          <select name="config_subscription_active_status_id" id="input-subscription-active-status" class="form-select">
+                            {% for subscription_status in subscription_statuses %}
+                              <option value="{{ subscription_status.subscription_status_id }}"{% if subscription_status.subscription_status_id == config_subscription_active_status_id %} selected="selected"{% endif %}>{{ subscription_status.name }}</option>
+                            {% endfor %}
+                          </select>
+                        </div>
+                      </div>
+                      <div class="row mb-3">
+                        <label for="input-subscription-expired-status" class="col-sm-2 col-form-label">{{ entry_subscription_expired_status }}</label>
+                        <div class="col-sm-10">
+                          <select name="config_subscription_expired_status_id" id="input-subscription-expired-status" class="form-select">
+                            {% for subscription_status in subscription_statuses %}
+                              <option value="{{ subscription_status.subscription_status_id }}"{% if subscription_status.subscription_status_id == config_subscription_expired_status_id %} selected="selected"{% endif %}>{{ subscription_status.name }}</option>
+                            {% endfor %}
+                          </select>
+                        </div>
+                      </div>
+                      <div class="row mb-3">
+                        <label for="input-subscription-canceled-status" class="col-sm-2 col-form-label">{{ entry_subscription_canceled_status }}</label>
+                        <div class="col-sm-10">
+                          <select name="config_subscription_canceled_status_id" id="input-subscription-canceled-status" class="form-select">
+                            {% for subscription_status in subscription_statuses %}
+                              <option value="{{ subscription_status.subscription_status_id }}"{% if subscription_status.subscription_status_id == config_subscription_canceled_status_id %} selected="selected"{% endif %}>{{ subscription_status.name }}</option>
+                            {% endfor %}
+                          </select>
+                        </div>
+                      </div>
+                      <div class="row mb-3">
+                        <label for="input-subscription-failed-status" class="col-sm-2 col-form-label">{{ entry_subscription_failed_status }}</label>
+                        <div class="col-sm-10">
+                          <select name="config_subscription_failed_status_id" id="input-subscription-failed-status" class="form-select">
+                            {% for subscription_status in subscription_statuses %}
+                              <option value="{{ subscription_status.subscription_status_id }}"{% if subscription_status.subscription_status_id == config_subscription_failed_status_id %} selected="selected"{% endif %}>{{ subscription_status.name }}</option>
+                            {% endfor %}
+                          </select>
+                        </div>
+                      </div>
+                      <div class="row mb-3">
+                        <label for="input-subscription-denied-status" class="col-sm-2 col-form-label">{{ entry_subscription_denied_status }}</label>
+                        <div class="col-sm-10">
+                          <select name="config_subscription_denied_status_id" id="input-subscription-denied-status" class="form-select">
+                            {% for subscription_status in subscription_statuses %}
+                              <option value="{{ subscription_status.subscription_status_id }}"{% if subscription_status.subscription_status_id == config_subscription_denied_status_id %} selected="selected"{% endif %}>{{ subscription_status.name }}</option>
+                            {% endfor %}
+                          </select>
                         </div>
                       </div>
                     </div>

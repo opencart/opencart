@@ -23,22 +23,25 @@
 							<td class="text-start d-none d-lg-table-cell">{{ customer.status }}</td>
 							<td class="text-start d-none d-lg-table-cell">{{ customer.date_added }}</td>
 							<td class="text-end">
-								<div class="btn-group">
+								<div class="btn-group dropdown">
+
 									<a href="{{ customer.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a>
+
 									<button type="button" data-bs-toggle="dropdown" class="btn btn-primary dropdown-toggle dropdown-toggle-split"><span class="fas fa-caret-down"></span></button>
-									<div class="dropdown-menu dropdown-menu-right">
-										<h6 class="dropdown-header">{{ text_option }}</h6>
+
+									<ul class="dropdown-menu dropdown-menu-right">
+										<li><h6 class="dropdown-header">{{ text_option }}</h6></li>
 										{% if customer.unlock %}
-											<a href="{{ customer.unlock }}" class="dropdown-item"><i class="fas fa-unlock"></i> {{ text_unlock }}</a>
+										<li><a href="{{ customer.unlock }}" class="dropdown-item"><i class="fas fa-unlock"></i> {{ text_unlock }}</a></li>
 										{% else %}
-											<a href="#" class="dropdown-item disabled"><i class="fas fa-unlock"></i> {{ text_unlock }}</a>
+										<li><a href="#" class="dropdown-item disabled"><i class="fas fa-unlock"></i> {{ text_unlock }}</a></li>
 										{% endif %}
-										<div class="dropdown-divider"></div>
-										<h6 class="dropdown-header">{{ text_login }}</h6>
+										<li><hr class="dropdown-divider"></li>
+										<li><h6 class="dropdown-header">{{ text_login }}</h6></li>
 										{% for store in customer.store %}
-											<a href="{{ store.href }}" target="_blank" class="dropdown-item"><i class="fas fa-lock"></i> {% if customer.store_id == store.store_id %}<span class="text-primary">{{ store.name }}</span>{% else %}{{ store.name }}{% endif %}</a>
+										<li><a href="{{ store.href }}" target="_blank" class="dropdown-item"><i class="fas fa-lock"></i> {% if customer.store_id == store.store_id %}<span class="text-primary">{{ store.name }}</span>{% else %}{{ store.name }}{% endif %}</a></li>
 										{% endfor %}
-									</div>
+									</ul>
 								</div>
 							</td>
 						</tr>

@@ -274,6 +274,8 @@ class Voucher extends \Opencart\System\Engine\Controller {
 			$data['status'] = true;
 		}
 
+		$data['history'] = $this->getHistory();
+
 		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
@@ -386,7 +388,15 @@ class Voucher extends \Opencart\System\Engine\Controller {
 	public function history(): void {
 		$this->load->language('sale/voucher');
 
-		$this->load->model('sale/voucher');
+		$this->response->setOutput($this->getHistory());
+	}
+
+	public function getHistory(): string {
+		if (isset($this->request->get['voucher_id'])) {
+			$voucher_id = (int)$this->request->get['voucher_id'];
+		} else {
+			$voucher_id = 0;
+		}
 
 		if (isset($this->request->get['page'])) {
 			$page = (int)$this->request->get['page'];
@@ -396,7 +406,9 @@ class Voucher extends \Opencart\System\Engine\Controller {
 
 		$data['histories'] = [];
 
-		$results = $this->model_sale_voucher->getHistories($this->request->get['voucher_id'], ($page - 1) * 10, 10);
+		$this->load->model('sale/voucher');
+
+		$results = $this->model_sale_voucher->getHistories($voucher_id, ($page - 1) * 10, 10);
 
 		foreach ($results as $result) {
 			$data['histories'][] = [
@@ -407,18 +419,18 @@ class Voucher extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		$history_total = $this->model_sale_voucher->getTotalHistories($this->request->get['voucher_id']);
+		$history_total = $this->model_sale_voucher->getTotalHistories($voucher_id);
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $history_total,
 			'page'  => $page,
 			'limit' => 10,
-			'url'   => $this->url->link('sale/voucher|history', 'user_token=' . $this->session->data['user_token'] . '&voucher_id=' . $this->request->get['voucher_id'] . '&page={page}')
+			'url'   => $this->url->link('sale/voucher|history', 'user_token=' . $this->session->data['user_token'] . '&voucher_id=' . $voucher_id . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($history_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($history_total - 10)) ? $history_total : ((($page - 1) * 10) + 10), $history_total, ceil($history_total / 10));
 
-		$this->response->setOutput($this->load->view('sale/voucher_history', $data));
+		return $this->load->view('sale/voucher_history', $data);
 	}
 
 	public function send(): void {

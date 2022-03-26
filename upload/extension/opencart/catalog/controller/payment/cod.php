@@ -4,7 +4,9 @@ class Cod extends \Opencart\System\Engine\Controller {
 	public function index(): string {
 		$this->load->language('extension/opencart/payment/cod');
 
-		return $this->load->view('extension/opencart/payment/cod');
+		$data['language'] = $this->config->get('config_language');
+
+		return $this->load->view('extension/opencart/payment/cod', $data);
 	}
 
 	public function confirm(): void {

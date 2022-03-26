@@ -4,7 +4,9 @@ class FreeCheckout extends \Opencart\System\Engine\Controller {
 	public function index(): string {
 		$this->load->language('extension/opencart/payment/free_checkout');
 
-		return $this->load->view('extension/opencart/payment/free_checkout');
+		$data['language'] = $this->config->get('config_language');
+
+		return $this->load->view('extension/opencart/payment/free_checkout', $data);
 	}
 
 	public function confirm(): void {

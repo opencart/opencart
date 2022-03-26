@@ -8,7 +8,7 @@
         <div class="card">
           <div class="card-header"><i class="fas fa-redo"></i> {{ heading_title }}</div>
           <div class="card-body">
-            <form id="form-forgotten" action="{{ save }}" method="post" data-oc-toggle="ajax">
+            <form id="form-forgotten" action="{{ reset }}" method="post" data-oc-toggle="ajax">
               <p>{{ text_password }}</p>
               <div class="mb-3">
                 <label for="input-password" class="form-label">{{ entry_password }}</label>
@@ -19,7 +19,7 @@
                 <input type="password" name="confirm" value="" id="input-confirm" class="form-control"/>
               </div>
               <div class="text-end">
-                <button type="button" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
+                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
                 <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a>
               </div>
             </form>

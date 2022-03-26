@@ -144,7 +144,7 @@
                       <div class="row mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
                         <label class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
                         <div class="col-sm-10">
-                          <button type="button" data-oc-loading-text="{{ text_loading }}" data-oc-toggle="upload" data-oc-url="{{ upload }}" data-oc-size-max="{{ config_file_max_size }}" data-oc-size-error="{{ error_upload_size }}" data-oc-target="#input-custom-field-{{ custom_field.custom_field_id }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
+                          <button type="button" data-oc-toggle="upload" data-oc-url="{{ upload }}" data-oc-size-max="{{ config_file_max_size }}" data-oc-size-error="{{ error_upload_size }}" data-oc-target="#input-custom-field-{{ custom_field.custom_field_id }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
                           <input type="hidden" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ affiliate_custom_field[custom_field.custom_field_id] ? affiliate_custom_field[custom_field.custom_field_id] }}" id="input-custom-field-{{ custom_field.custom_field_id }}"/>
                           <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                         </div>
@@ -285,7 +285,7 @@
             <div id="tab-history" class="tab-pane">
               <fieldset>
                 <legend>{{ text_history }}</legend>
-                <div id="history"></div>
+                <div id="history">{{ history }}</div>
               </fieldset>
               <br/>
               <fieldset>
@@ -298,13 +298,13 @@
                 </div>
               </fieldset>
               <div class="text-end">
-                <button type="button" id="button-history" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i> {{ button_history_add }}</button>
+                <button type="button" id="button-history" class="btn btn-primary"><i class="fas fa-plus-circle"></i> {{ button_history_add }}</button>
               </div>
             </div>
             <div id="tab-transaction" class="tab-pane">
               <fieldset>
                 <legend>{{ text_transaction }}</legend>
-                <div id="transaction"></div>
+                <div id="transaction">{{ transaction }}</div>
               </fieldset>
               <br/>
               <fieldset>
@@ -323,13 +323,13 @@
                 </div>
               </fieldset>
               <div class="text-end">
-                <button type="button" id="button-transaction" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i> {{ button_transaction_add }}</button>
+                <button type="button" id="button-transaction" class="btn btn-primary"><i class="fas fa-plus-circle"></i> {{ button_transaction_add }}</button>
               </div>
             </div>
             <div id="tab-report" class="tab-pane">
               <fieldset>
                 <legend>{{ text_report }}</legend>
-                <div id="report"></div>
+                <div id="report">{{ report }}</div>
               </fieldset>
             </div>
           </div>
@@ -398,8 +398,6 @@ $('#history').on('click', '.pagination a', function(e) {
     $('#history').load(this.href);
 });
 
-$('#history').load('index.php?route=customer/customer|history&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val());
-
 $('#button-history').on('click', function(e) {
     var element = this;
 
@@ -409,10 +407,10 @@ $('#button-history').on('click', function(e) {
         dataType: 'json',
         data: 'comment=' + encodeURIComponent($('#input-comment').val()),
         beforeSend: function() {
-            $(element).button('loading');
+            $(element).prop('disabled', true).addClass('loading');
         },
         complete: function() {
-            $(element).button('reset');
+            $(element).prop('disabled', false).removeClass('loading');
         },
         success: function(json) {
             $('.alert-dismissible').remove();
@@ -441,8 +439,6 @@ $('#transaction').on('click', '.pagination a', function(e) {
     $('#transaction').load(this.href);
 });
 
-$('#transaction').load('index.php?route=customer/customer|transaction&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val());
-
 $('#button-transaction').on('click', function(e) {
     e.preventDefault();
 
@@ -452,10 +448,10 @@ $('#button-transaction').on('click', function(e) {
         dataType: 'json',
         data: 'description=' + encodeURIComponent($('#input-transaction-description').val()) + '&amount=' + encodeURIComponent($('#input-transaction-amount').val()),
         beforeSend: function() {
-            $('#button-transaction').button('loading');
+            $('#button-transaction').prop('disabled', true).addClass('loading');
         },
         complete: function() {
-            $('#button-transaction').button('reset');
+            $('#button-transaction').prop('disabled', false).removeClass('loading');
         },
         success: function(json) {
             $('.alert-dismissible').remove();
@@ -484,8 +480,6 @@ $('#report').on('click', '.pagination a', function(e) {
 
     $('#report').load(this.href);
 });
-
-$('#report').load('index.php?route=marketing/affiliate|report&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val());
 
 $('input[name=\'payment\']').on('change', function() {
     $('.payment').hide();

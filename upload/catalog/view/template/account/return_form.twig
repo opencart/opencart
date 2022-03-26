@@ -109,13 +109,13 @@
           <div class="row mb-3">
             <label for="input-comment" class="col-sm-2 col-form-label">{{ entry_fault_detail }}</label>
             <div class="col-sm-10">
-              <textarea name="comment" rows="10" placeholder="{{ entry_fault_detail }}" id="input-comment" class="form-control"></textarea>
+              <textarea name="comment" rows="5" placeholder="{{ entry_fault_detail }}" id="input-comment" class="form-control"></textarea>
             </div>
           </div>
           {{ captcha }}
         </fieldset>
         <div class="d-inline-block pt-2 pd-2 w-100">
-          <div class="float-start"><a href="{{ back }}" class="btn btn-danger">{{ button_back }}</a></div>
+          <div class="float-start"><a href="{{ back }}" class="btn btn-light">{{ button_back }}</a></div>
           <div class="float-end">
             {% if text_agree %}
               <div class="form-check form-check-inline">

@@ -414,6 +414,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$data['error_upload_size'] = sprintf($this->language->get('error_upload_size'), $this->config->get('config_file_max_size'));
 
 		$data['config_file_max_size'] = ((int)$this->config->get('config_file_max_size') * 1024 * 1024);
+		$data['config_telephone_required'] = $this->config->get('config_telephone_required');
 
 		$url = '';
 
@@ -994,7 +995,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->load->model('setting/extension');
 
 		if (!empty($order_info)) {
-			$extension_info = $this->model_setting_extension->getExtensionsByCode('payment', $order_info['payment_code']);
+			$extension_info = $this->model_setting_extension->getExtensionByCode('payment', $order_info['payment_code']);
 
 			if ($extension_info && $this->user->hasPermission('access', 'extension/' . $extension_info['extension'] . '/payment/' . $extension_info['code'])) {
 				$output = $this->load->controller('extension/payment/' . $order_info['payment_code'] . '|order');
@@ -1048,6 +1049,8 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['date_added'] = date($this->language->get('date_format_short'), time());
 			$data['date_modified'] = date($this->language->get('date_format_short'), time());
 		}
+
+		$data['history'] = $this->getHistory();
 
 		$data['user_token'] = $this->session->data['user_token'];
 
@@ -1630,6 +1633,10 @@ class Order extends \Opencart\System\Engine\Controller {
 	public function history(): void {
 		$this->load->language('sale/order');
 
+		$this->response->setOutput($this->getHistory());
+	}
+
+	public function getHistory(): string {
 		if (isset($this->request->get['order_id'])) {
 			$order_id = (int)$this->request->get['order_id'];
 		} else {
@@ -1668,7 +1675,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($history_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($history_total - 10)) ? $history_total : ((($page - 1) * 10) + 10), $history_total, ceil($history_total / 10));
 
-		$this->response->setOutput($this->load->view('sale/order_history', $data));
+		return $this->load->view('sale/order_history', $data);
 	}
 
 	public function createInvoiceNo(): void {

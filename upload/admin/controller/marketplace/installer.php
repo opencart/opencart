@@ -19,13 +19,11 @@ class Installer extends \Opencart\System\Engine\Controller {
 		];
 
 		// Use the ini_get('upload_max_filesize') for the max file size
-		$data['error_upload_size'] = sprintf($this->language->get('error_upload_size'), ini_get('upload_max_filesize'));
+		[$code, $format_size, $size] = format_size();
+		
+		$data['error_upload_size'] = sprintf($this->language->get('error_format_' . $code), $format_size);
 
-		//$data['config_file_max_size'] = ((int)preg_filter('/[^0-9]/', '', ini_get('upload_max_filesize')) * 1000);
-		$upload_max_filesize = ini_get('upload_max_filesize');
-		$type_size = preg_filter('/[^a-zA-Z]/', '', $upload_max_filesize);
-		$calc = ($type_size === 'M') ? 1024*1024 : 1024;
-		$data['config_file_max_size'] = ((int)preg_filter('/[^0-9]/', '', $upload_max_filesize) * $calc);
+		$data['config_file_max_size'] = ((int)$size);
 
 		$data['upload'] = $this->url->link('tool/installer|upload', 'user_token=' . $this->session->data['user_token']);
 

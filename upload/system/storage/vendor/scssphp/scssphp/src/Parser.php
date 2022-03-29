@@ -27,6 +27,7 @@ use ScssPhp\ScssPhp\Block\WhileBlock;
 use ScssPhp\ScssPhp\Exception\ParserException;
 use ScssPhp\ScssPhp\Logger\LoggerInterface;
 use ScssPhp\ScssPhp\Logger\QuietLogger;
+use ScssPhp\ScssPhp\Node\Number;
 
 /**
  * Parser
@@ -86,10 +87,6 @@ class Parser
      */
     private $sourcePositions;
     /**
-     * @var array|null
-     */
-    private $charset;
-    /**
      * The current offset in the buffer
      *
      * @var int
@@ -147,10 +144,8 @@ class Parser
     {
         $this->sourceName       = $sourceName ?: '(stdin)';
         $this->sourceIndex      = $sourceIndex;
-        $this->charset          = null;
         $this->utf8             = ! $encoding || strtolower($encoding) === 'utf-8';
         $this->patternModifiers = $this->utf8 ? 'Aisu' : 'Ais';
-        $this->commentsSeen     = [];
         $this->commentsSeen     = [];
         $this->allowVars        = true;
         $this->cssOnly          = $cssOnly;
@@ -255,7 +250,6 @@ class Parser
         if ($this->cache) {
             $cacheKey = $this->sourceName . ':' . md5($buffer);
             $parseOptions = [
-                'charset' => $this->charset,
                 'utf8' => $this->utf8,
             ];
             $v = $this->cache->getCache('parse', $cacheKey, $parseOptions);
@@ -296,11 +290,8 @@ class Parser
             throw $this->parseError('unclosed block');
         }
 
-        if ($this->charset) {
-            array_unshift($this->env->children, $this->charset);
-        }
-
         $this->restoreEncoding();
+        assert($this->env !== null);
 
         if ($this->cache) {
             $this->cache->setCache('parse', $cacheKey, $this->env, $parseOptions);
@@ -380,8 +371,8 @@ class Parser
      *
      * @api
      *
-     * @param string       $buffer
-     * @param string|array $out
+     * @param string $buffer
+     * @param array  $out
      *
      * @return bool
      */
@@ -827,18 +818,6 @@ class Parser
                 $this->valueList($charset) &&
                 $this->end()
             ) {
-                if (! isset($this->charset)) {
-                    $statement = [Type::T_CHARSET, $charset];
-
-                    list($line, $column) = $this->getSourcePosition($s);
-
-                    $statement[static::SOURCE_LINE]   = $line;
-                    $statement[static::SOURCE_COLUMN] = $column;
-                    $statement[static::SOURCE_INDEX]  = $this->sourceIndex;
-
-                    $this->charset = $statement;
-                }
-
                 return true;
             }
 
@@ -1074,6 +1053,8 @@ class Parser
             $block = $this->popBlock();
 
             if (! isset($block->type) || $block->type !== Type::T_IF) {
+                assert($this->env !== null);
+
                 if ($this->env->parent) {
                     $this->append(null); // collect comments before next statement if needed
                 }
@@ -1093,6 +1074,7 @@ class Parser
             // collect comments just after the block closing if needed
             if ($this->eatWhiteDefault) {
                 $this->whitespace();
+                assert($this->env !== null);
 
                 if ($this->env->comments) {
                     $this->append(null);
@@ -1161,6 +1143,7 @@ class Parser
         // collect comments at the beginning of a block if needed
         if ($this->eatWhiteDefault) {
             $this->whitespace();
+            assert($this->env !== null);
 
             if ($this->env->comments) {
                 $this->append(null);
@@ -1195,6 +1178,7 @@ class Parser
      */
     protected function popBlock()
     {
+        assert($this->env !== null);
 
         // collect comments ending just before of a block closing
         if ($this->env->comments) {
@@ -1245,6 +1229,8 @@ class Parser
      * Seek to position in input stream (or return current position in input stream)
      *
      * @param int $where
+     *
+     * @return void
      */
     protected function seek($where)
     {
@@ -1256,6 +1242,8 @@ class Parser
      *
      * @param array|false $parsed
      * @param int         $startPos
+     *
+     * @return array
      *
      * @throws ParserException
      */
@@ -1288,7 +1276,7 @@ class Parser
      * @param array $parsed
      * @param bool  $allowExpression
      *
-     * @return bool|array
+     * @return array|false
      */
     protected function isPlainCssValidElement($parsed, $allowExpression = false)
     {
@@ -1468,6 +1456,8 @@ class Parser
      * @param string $delim Delimiter
      *
      * @return bool True if match; false otherwise
+     *
+     * @phpstan-impure
      */
     protected function matchString(&$m, $delim)
     {
@@ -1508,6 +1498,8 @@ class Parser
      * @param bool   $eatWhitespace
      *
      * @return bool
+     *
+     * @phpstan-impure
      */
     protected function match($regex, &$out, $eatWhitespace = null)
     {
@@ -1537,6 +1529,8 @@ class Parser
      * @param bool   $eatWhitespace
      *
      * @return bool
+     *
+     * @phpstan-impure
      */
     protected function matchChar($char, $eatWhitespace = null)
     {
@@ -1565,6 +1559,8 @@ class Parser
      * @param bool   $eatWhitespace
      *
      * @return bool
+     *
+     * @phpstan-impure
      */
     protected function literal($what, $len, $eatWhitespace = null)
     {
@@ -1589,6 +1585,8 @@ class Parser
      * Match some whitespace
      *
      * @return bool
+     *
+     * @phpstan-impure
      */
     protected function whitespace()
     {
@@ -1640,19 +1638,19 @@ class Parser
 
                 if (! $comment) {
                     // single part static comment
-                    $this->appendComment([Type::T_COMMENT, $c]);
+                    $commentStatement = [Type::T_COMMENT, $c];
                 } else {
                     $comment[] = $c;
                     $staticComment = substr($this->buffer, $startCommentCount, $endCommentCount - $startCommentCount);
                     $commentStatement = [Type::T_COMMENT, $staticComment, [Type::T_STRING, '', $comment]];
-
-                    list($line, $column) = $this->getSourcePosition($startCommentCount);
-                    $commentStatement[self::SOURCE_LINE] = $line;
-                    $commentStatement[self::SOURCE_COLUMN] = $column;
-                    $commentStatement[self::SOURCE_INDEX] = $this->sourceIndex;
-
-                    $this->appendComment($commentStatement);
                 }
+
+                list($line, $column) = $this->getSourcePosition($startCommentCount);
+                $commentStatement[self::SOURCE_LINE] = $line;
+                $commentStatement[self::SOURCE_COLUMN] = $column;
+                $commentStatement[self::SOURCE_INDEX] = $this->sourceIndex;
+
+                $this->appendComment($commentStatement);
 
                 $this->commentsSeen[$startCommentCount] = true;
                 $this->count = $endCommentCount;
@@ -1675,9 +1673,13 @@ class Parser
      * Append comment to current block
      *
      * @param array $comment
+     *
+     * @return void
      */
     protected function appendComment($comment)
     {
+        assert($this->env !== null);
+
         if (! $this->discardComments) {
             $this->env->comments[] = $comment;
         }
@@ -1688,9 +1690,13 @@ class Parser
      *
      * @param array|null $statement
      * @param int        $pos
+     *
+     * @return void
      */
     protected function append($statement, $pos = null)
     {
+        assert($this->env !== null);
+
         if (! \is_null($statement)) {
             ! $this->cssOnly || ($statement = $this->assertPlainCssValid($statement, $pos));
 
@@ -1720,11 +1726,15 @@ class Parser
      */
     protected function last()
     {
+        assert($this->env !== null);
+
         $i = \count($this->env->children) - 1;
 
         if (isset($this->env->children[$i])) {
             return $this->env->children[$i];
         }
+
+        return null;
     }
 
     /**
@@ -2069,10 +2079,12 @@ class Parser
     /**
      * Parse directive value list that considers $vars as keyword
      *
-     * @param array       $out
-     * @param bool|string $endChar
+     * @param array        $out
+     * @param string|false $endChar
      *
      * @return bool
+     *
+     * @phpstan-impure
      */
     protected function directiveValue(&$out, $endChar = false)
     {
@@ -2211,6 +2223,7 @@ class Parser
     {
         $s     = $this->count;
         $items = [];
+        /** @var array|Number|null $value */
         $value = null;
 
         while ($this->$parseItem($value)) {
@@ -2224,9 +2237,12 @@ class Parser
 
                 $trailing_delim = true;
             } else {
+                assert(\is_array($value) || $value instanceof Number);
                 // if no delim watch that a keyword didn't eat the single/double quote
                 // from the following starting string
                 if ($value[0] === Type::T_KEYWORD) {
+                    assert(\is_array($value));
+                    /** @var string $word */
                     $word = $value[1];
 
                     $last_char = substr($word, -1);
@@ -2251,8 +2267,10 @@ class Parser
                             $this->count--;
                         }
 
+                        /** @var array|Number|null $nextValue */
                         $nextValue = null;
                         if ($this->$parseItem($nextValue)) {
+                            assert(\is_array($nextValue) || $nextValue instanceof Number);
                             if ($nextValue[0] === Type::T_KEYWORD && $nextValue[1] === $last_char) {
                                 // bad try, forget it
                                 $this->seek($currentCount);
@@ -2306,6 +2324,8 @@ class Parser
      * @param bool  $lookForExp
      *
      * @return bool
+     *
+     * @phpstan-impure
      */
     protected function expression(&$out, $listOnly = false, $lookForExp = true)
     {
@@ -2366,12 +2386,14 @@ class Parser
     /**
      * Parse expression specifically checking for lists in parenthesis or brackets
      *
-     * @param array   $out
-     * @param int     $s
-     * @param string  $closingParen
-     * @param array   $allowedTypes
+     * @param array    $out
+     * @param int      $s
+     * @param string   $closingParen
+     * @param string[] $allowedTypes
      *
      * @return bool
+     *
+     * @phpstan-param array<Type::*> $allowedTypes
      */
     protected function enclosedExpression(&$out, $s, $closingParen = ')', $allowedTypes = [Type::T_LIST, Type::T_MAP])
     {
@@ -4016,7 +4038,7 @@ class Parser
      *
      * @param array $value
      *
-     * @return array
+     * @return string[]
      */
     protected function stripAssignmentFlags(&$value)
     {
@@ -4043,7 +4065,7 @@ class Parser
      *
      * @param array $selectors
      *
-     * @return string
+     * @return bool
      */
     protected function stripOptionalFlag(&$selectors)
     {
@@ -4092,6 +4114,8 @@ class Parser
      * Extract line numbers from buffer
      *
      * @param string $buffer
+     *
+     * @return void
      */
     private function extractLineNumbers($buffer)
     {
@@ -4116,6 +4140,7 @@ class Parser
      * @param int $pos
      *
      * @return array
+     * @phpstan-return array{int, int}
      */
     private function getSourcePosition($pos)
     {

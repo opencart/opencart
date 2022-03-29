@@ -161,73 +161,110 @@ class Vendor extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		if (isset($this->request->get['extension_install_id'])) {
-			$extension_install_id = (int)$this->request->get['extension_install_id'];
-		} else {
-			$extension_install_id = 0;
-		}
-
-		if (!$this->user->hasPermission('modify', 'marketplace/installer')) {
+		if (!$this->user->hasPermission('modify', 'marketplace/vendor')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		$this->load->model('setting/extension');
+		$file = DIR_STORAGE . 'composer.json';
 
-		$extension_install_info = $this->model_setting_extension->getInstall($extension_install_id);
-
-		if (!$extension_install_info) {
-			$json['error'] = $this->language->get('error_install');
+		if (!is_file($file)) {
+			$json['error'] = $this->language->get('error_file');
 		}
 
 		if (!$json) {
+			$this->load->model('setting/vendor');
 
-			$directories = glob(DIR_STORAGE . 'vendor/');
+			$this->model_setting_vendor->clear();
 
+			$output = json_decode(file_get_contents($file), true);
 
-			$results = $this->model_setting_extension->getPathsByPath($extension_install_id);
+			if (isset($output['require'])) {
+				$require = $output['require'];
 
-			foreach ($results as $result) {
-				$output = file_get_contents($result['path']);
+				print_r($output);
 
-				json_decode($output, true);
+				while (count($require) != 0) {
+					$next = $require;
+
+					$require = [];
+
+					foreach ($next as $key => $version) {
+						$file = DIR_STORAGE . 'vendor/' . $key . '/composer.json';
+
+						echo $file . "\n";
+
+						if (is_file($file)) {
+							$output = json_decode(file_get_contents($file), true);
+
+							if (isset($output['require'])) {
+								$require = $output['require'];
+							}
+
+							if (isset($output['require-dev'])) {
+								$require = $require + $output['require-dev'];
+							}
+
+							print_r($require);
+						}
+					}
+				}
 			}
 
+			/*
+			$files = [];
+
+			// Make path into an array
+			$path = [$path];
+
+			// While the path array is still populated keep looping through
+			while (count($path) != 0) {
+				$next = array_shift($path);
+
+				foreach (glob($next . '/*') as $file) {
+					$output = json_decode(file_get_contents($file), true);
 
 
-			rsort($results);
 
-			foreach ($results as $result) {
-				$path = '';
+					// If directory add to path array
+					if (is_dir($file)) {
+						$path[] = $file;
+					}
 
-				// Remove extension directory and files
-				if (substr($result['path'], 0, strlen($extension_install_info['code'])) == $extension_install_info['code']) {
-					$path = DIR_EXTENSION . $result['path'];
+					// Add the file to the files to be deleted array
+					$files[] = $file;
 				}
-
-				// Remove images
-				if (substr($result['path'], 0, 6) == 'image/') {
-					$path = DIR_IMAGE . substr($result['path'], 6);
-				}
-
-				// Remove vendor files
-				if (substr($result['path'], 0, 7) == 'vendor/') {
-					$path = DIR_STORAGE . $result['path'];
-				}
-
-				// Check if the location exists or not
-				if (is_file($path)) {
-					unlink($path);
-				} elseif (is_dir($path)) {
-					rmdir($path);
-				}
-
-				$this->model_setting_extension->deletePath($result['extension_path_id']);
 			}
 
-			// Remove extension directory
-			$this->model_setting_extension->editStatus($extension_install_id, 0);
+			$paths = glob(DIR_STORAGE . 'vendor');
 
-			$json['success'] = $this->language->get('text_uninstall');
+			foreach ($paths as $path) {
+				if (basename($path) == 'composer.json') {
+					$output = json_decode(file_get_contents($path), true);
+
+					if ($output) {
+						if (isset($output['homepage'])) {
+							$homepage = $output['homepage'];
+						} else {
+							$homepage = '';
+						}
+
+						$vendor_data = [
+							'name' => $output['name'],
+							'description' => $output['description'],
+							'homepage' => $homepage,
+							'version' => $output['version']
+						];
+
+						$this->model_setting_vendor->addVendor($vendor_data);
+					}
+
+					print_r($output);
+				}
+			}
+			*/
+
+
+			$json['success'] = $this->language->get('text_success');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

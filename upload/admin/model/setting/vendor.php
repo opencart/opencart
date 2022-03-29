@@ -11,6 +11,11 @@ class Vendor extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "vendor` WHERE `code` = '" . $this->db->escape($code) . "'");
 	}
 
+	public function clear(): void {
+		$this->db->query("TRUNCATE TABLE `" . DB_PREFIX . "vendor`");
+	}
+
+
 	public function getVendor(int $vendor_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "vendor` WHERE `vendor_id` = '" . (int)$vendor_id . "'");
 

@@ -299,19 +299,18 @@ final class Partition implements ArrayAccess, PartitionInterface
         if (!empty($variantTags)) {
             if (isset($data['variants'])) {
                 foreach ($data['variants'] as $variant) {
-                    if ($variant['tags'] == $variantTags) {
+                    if (array_count_values($variant['tags']) == array_count_values($variantTags)) {
                         return $variant;
                     }
                 }
             }
             if (isset($this->data['defaults']['variants'])) {
                 foreach ($this->data['defaults']['variants'] as $variant) {
-                    if ($variant['tags'] == $variantTags) {
+                    if (array_count_values($variant['tags']) == array_count_values($variantTags)) {
                         return $variant;
                     }
                 }
             }
         }
     }
-
 }

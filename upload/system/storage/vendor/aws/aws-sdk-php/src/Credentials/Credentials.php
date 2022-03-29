@@ -98,4 +98,16 @@ class Credentials implements CredentialsInterface, \Serializable
         $this->token = $data['token'];
         $this->expires = $data['expires'];
     }
+
+    public function extendExpiration() {
+        $extension = mt_rand(5, 15);
+        $this->expires = time() + $extension * 60;
+
+        $message = <<<EOT
+Attempting credential expiration extension due to a credential service 
+availability issue. A refresh of these credentials will be attempted again 
+after {$extension} minutes.\n
+EOT;
+        error_log($message);
+    }
 }

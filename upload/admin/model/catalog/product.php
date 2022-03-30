@@ -639,6 +639,12 @@ class ModelCatalogProduct extends Model {
 
 		return $query->rows;
 	}
+	
+	public function getRecurringsByProfileId($recurring_id) {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_recurring` WHERE recurring_id = '" . (int)recurring_id . "'");
+
+		return $query->rows;
+	}
 
 	public function getTotalProducts($data = array()) {
 		$sql = "SELECT COUNT(DISTINCT p.product_id) AS total FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id)";

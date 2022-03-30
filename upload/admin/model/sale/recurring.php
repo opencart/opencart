@@ -193,5 +193,29 @@ class ModelSaleRecurring extends Model {
 		$query = $this->db->query($sql);
 
 		return $query->row['total'];
-	}	
+	}
+	
+	public function getEmailsByRecurringProductsOrdered($products, $start, $end) {
+		$implode = array();
+
+		foreach ($products as $product_id) {
+			$implode[] = "or.product_id = '" . (int)$product_id . "'";
+		}
+
+		$query = $this->db->query("SELECT DISTINCT email FROM `" . DB_PREFIX . "order` o LEFT JOIN " . DB_PREFIX . "order_recurring or ON (o.order_id = or.order_id) WHERE (" . implode(" OR ", $implode) . ") AND o.order_status_id <> '0' LIMIT " . (int)$start . "," . (int)$end);
+
+		return $query->rows;
+	}
+
+	public function getTotalEmailsByRecurringProductsOrdered($products) {
+		$implode = array();
+
+		foreach ($products as $product_id) {
+			$implode[] = "or.product_id = '" . (int)$product_id . "'";
+		}
+
+		$query = $this->db->query("SELECT COUNT(DISTINCT email) AS total FROM `" . DB_PREFIX . "order` o LEFT JOIN " . DB_PREFIX . "order_recurring or ON (o.order_id = or.order_id) WHERE (" . implode(" OR ", $implode) . ") AND o.order_status_id <> '0'");
+
+		return $query->row['total'];
+	}
 }

@@ -65,6 +65,10 @@ class ModelCatalogRecurring extends Model {
 		if (!empty($data['filter_name'])) {
 			$sql .= " AND rd.name LIKE '" . $this->db->escape($data['filter_name']) . "%'";
 		}
+		
+		if (!empty($data['filter_product_id'])) {
+			$sql .= " AND r.recurring_id IN (SELECT pr.recurring_id FROM " . DB_PREFIX . "product_recurring pr WHERE pr.product_id = '" . (int)$data['filter_product_id'] . "')";
+		}
 
 		$sort_data = array(
 			'rd.name',

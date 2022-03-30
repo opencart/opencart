@@ -2,6 +2,9 @@
 // Heading
 $_['heading_title']           = 'Recurring Profiles';
 
+// Button
+$_['button_report_print']     = 'Print Recurrings List';
+
 // Text
 $_['text_success']            = 'Success: You have modified recurring profiles!';
 $_['text_list']               = 'Recurring Profile List';

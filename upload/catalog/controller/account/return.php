@@ -135,6 +135,7 @@ class ControllerAccountReturn extends Controller {
 
 			$data['return_id'] = $return_info['return_id'];
 			$data['order_id'] = $return_info['order_id'];
+			$data['recurring'] = $return_info['recurring'];
 			$data['date_ordered'] = date($this->language->get('date_format_short'), strtotime($return_info['date_ordered']));
 			$data['date_added'] = date($this->language->get('date_format_short'), strtotime($return_info['date_added']));
 			$data['firstname'] = $return_info['firstname'];

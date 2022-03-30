@@ -45,7 +45,11 @@
               <label class="control-label" for="input-price">{{ entry_price }}</label>
               <input type="text" name="filter_price" value="{{ filter_price }}" placeholder="{{ entry_price }}" id="input-price" class="form-control" />
             </div>
-            <div class="form-group">
+			<div class="form-group">
+              <label class="control-label" for="input-recurring">{{ entry_recurring }}</label>
+              <input type="text" name="filter_recurring" value="{{ filter_recurring }}" placeholder="{{ entry_recurring }}" id="input-recurring" class="form-control" />
+            </div>
+            <div class="form-group">			
               <label class="control-label" for="input-quantity">{{ entry_quantity }}</label>
               <input type="text" name="filter_quantity" value="{{ filter_quantity }}" placeholder="{{ entry_quantity }}" id="input-quantity" class="form-control" />
             </div>
@@ -216,6 +220,12 @@ $('#button-filter').on('click', function() {
 	if (filter_price) {
 		url += '&filter_price=' + encodeURIComponent(filter_price);
 	}
+	
+	var filter_recurring = $('input[name=\'filter_recurring\']').val();
+
+	if (filter_recurring) {
+		url += '&filter_recurring=' + encodeURIComponent(filter_recurring);
+	}
 
 	var filter_quantity = $('input[name=\'filter_quantity\']').val();
 
@@ -277,5 +287,25 @@ $('input[name=\'filter_model\']').autocomplete({
 		$('input[name=\'filter_model\']').val(item['label']);
 	}
 });
+
+$('input[name=\'filter_recurring\']').autocomplete({
+	'source': function(request, response) {
+		$.ajax({
+			url: 'index.php?route=catalog/recurring/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
+			dataType: 'json',
+			success: function(json) {
+				response($.map(json, function(item) {
+					return {
+						label: item['name'],
+						value: item['recurring_id']
+					}
+				}));
+			}
+		});
+	},
+	'select': function(item) {
+		$('input[name=\'filter_recurring\']').val(item['label']);
+	}
+});
 //--></script></div>
-{{ footer }} 
+{{ footer }}

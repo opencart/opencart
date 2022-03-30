@@ -18,7 +18,7 @@
     <table class="table table-bordered">
       <thead>
         <tr>
-          <td class="text-left"><b>{{ column_name }}</b></td>
+          <td class="text-left"><b>{{ column_recurring }}</b></td>
 	  <td class="text-left"><b>{{ column_price }}</b></td>
           <td class="text-left"><b>{{ column_frequency }}</b></td>
           <td class="text-left"><b>{{ column_duration }}</b></td>
@@ -33,11 +33,29 @@
         <tr>
           <td class="text-left">{{ recurring.name }}</td>
 	  <td class="text-left">{{ recurring.price }}</td>
-          <td class="text-left">{{ recurring.frequency }}</td>
+          <td class="text-left">
+	  {% for frequency_option in frequencies %}
+	  <br/>
+          {% if recurring.frequency == frequency_option.value %}
+          {{ recurring.frequency }} ({{ text_selected }})
+          {% else %}
+          {{ recurring.frequency }}
+          {% endif %}
+          {% endfor %}
+	  </td>
           <td class="text-left">{{ recurring.duration }}</td>
           <td class="text-center">{{ recurring.cycle }}</td>
           <td class="text-right">{{ recurring.trial_price }}</td>
-	  <td class="text-right">{{ recurring.trial_frequency }}</td>
+	  <td class="text-right">
+	  {% for frequency_option in frequencies %}
+	  <br/>
+          {% if recurring.trial_frequency == frequency_option.value %}
+          {{ recurring.trial_frequency }} ({{ text_selected }})
+          {% else %}
+          {{ recurring.trial_frequency }}
+          {% endif %}
+          {% endfor %}
+	  </td>
 	  <td class="text-right">{{ recurring.trial_duration }}</td>
 	  <td class="text-right">{{ recurring.trial_cycle }}</td>
         </tr>        

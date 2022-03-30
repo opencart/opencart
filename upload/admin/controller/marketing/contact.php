@@ -185,6 +185,17 @@ class ControllerMarketingContact extends Controller {
 							}
 						}
 						break;
+					case 'recurring':
+						if (isset($this->request->post['product'])) {
+							$email_total = $this->model_sale_order->getTotalEmailsByRecurringProductsOrdered($this->request->post['product']);
+
+							$results = $this->model_sale_order->getEmailsByRecurringProductsOrdered($this->request->post['product'], ($page - 1) * 10, 10);
+
+							foreach ($results as $result) {
+								$emails[] = $result['email'];
+							}
+						}
+						break;
 				}
 
 				if ($emails) {

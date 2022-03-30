@@ -513,6 +513,79 @@ class ControllerCatalogRecurring extends Controller {
 		return !$this->error;
 	}
 	
+	public function invoice() {
+		$this->load->language('catalog/recurring');
+
+		$data['title'] = $this->language->get('text_report');
+
+		if ($this->request->server['HTTPS']) {
+			$data['base'] = HTTPS_SERVER;
+		} else {
+			$data['base'] = HTTP_SERVER;
+		}
+
+		$data['direction'] = $this->language->get('direction');
+		
+		$data['lang'] = $this->language->get('code');
+
+		$this->load->model('catalog/recurring');
+
+		$data['recurrings'] = array();
+
+		if (isset($this->request->post['selected'])) {
+			$recurrings = $this->request->post['selected'];
+		} else {
+			$recurrings = array();	
+		}
+		
+		$data['frequencies'] = array();
+
+		$data['frequencies'][] = array(
+			'text'  => $this->language->get('text_day'),
+			'value' => 'day'
+		);
+
+		$data['frequencies'][] = array(
+			'text'  => $this->language->get('text_week'),
+			'value' => 'week'
+		);
+
+		$data['frequencies'][] = array(
+			'text'  => $this->language->get('text_semi_month'),
+			'value' => 'semi_month'
+		);
+
+		$data['frequencies'][] = array(
+			'text'  => $this->language->get('text_month'),
+			'value' => 'month'
+		);
+
+		$data['frequencies'][] = array(
+			'text'  => $this->language->get('text_year'),
+			'value' => 'year'
+		);
+
+		foreach ($recurrings as $recurring_id) {
+			$recurring_info = $this->model_catalog_recurring->getRecurring($recurring_id);
+			
+			if ($recurring_info) {			
+				$data['recurrings'][] = array(
+					'name'			=> $recurring_info['name'],
+					'price'			=> $this->currency->format($recurring_info['price'], $this->config->get('config_currency'), true, false),
+					'frequency'		=> $recurring_info['frequency'],
+					'duration'		=> $recurring_info['duration'],
+					'cycle'			=> $recurring_info['cycle'],
+					'trial_price'		=> $this->currency->format($recurring_info['trial_price'], $this->config->get('config_currency'), true, false),
+					'trial_frequency'	=> $recurring_info['trial_frequency'],
+					'trial_duration'	=> $recurring_info['trial_duration'],
+					'trial_cycle'		=> $recurring_info['trial_cycle']
+				);
+			}
+		}
+
+		$this->response->setOutput($this->load->view('catalog/recurring_report', $data));
+	}
+	
 	public function autocomplete() {
 		$json = array();
 

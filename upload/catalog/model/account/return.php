@@ -27,7 +27,7 @@ class ModelAccountReturn extends Model {
 	}
 
 	public function getTotalReturns() {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "return`WHERE customer_id = '" . $this->customer->getId() . "'");
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "return` WHERE customer_id = '" . $this->customer->getId() . "'");
 
 		return $query->row['total'];
 	}

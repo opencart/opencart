@@ -189,6 +189,7 @@ class ControllerCatalogRecurring extends Controller {
 			'href' => $this->url->link('catalog/recurring', 'user_token=' . $this->session->data['user_token'] . $url, true)
 		);
 
+		$data['report'] = $this->url->link('catalog/recurring/report', 'user_token=' . $this->session->data['user_token'], true);
 		$data['add'] = $this->url->link('catalog/recurring/add', 'user_token=' . $this->session->data['user_token'] . $url, true);
 		$data['copy'] = $this->url->link('catalog/recurring/copy', 'user_token=' . $this->session->data['user_token'] . $url, true);
 		$data['delete'] = $this->url->link('catalog/recurring/delete', 'user_token=' . $this->session->data['user_token'] . $url, true);

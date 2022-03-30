@@ -16,6 +16,7 @@ $_['text_recurring']          = '<p><i class="fa fa-info-circle"></i> Recurring 
 $_['text_profile']            = 'Recurring Profile';
 $_['text_trial']              = 'Trial Profile';
 $_['text_report']             = 'Report';
+$_['text_selected']           = 'Selected';
 
 // Entry
 $_['entry_name']              = 'Name';

@@ -380,7 +380,7 @@ class ModelCatalogProduct extends Model {
 		}
 		
 		if (!empty($data['filter_recurring'])) {
-			$sql .= " AND p.product_id IN (SELECT pr.product_id FROM " . DB_PREFIX . "product_recurring pr ON (p.product_id = pr.product_id) WHERE pr.name LIKE '" . $this->db->escape($data['filter_recurring']) . "%')";	
+			$sql .= " AND p.product_id IN (SELECT pr.product_id FROM " . DB_PREFIX . "product_recurring pr LEFT JOIN " . DB_PREFIX . "recurring r ON (pr.recurring_id = r.recurring_id) LEFT JOIN " . DB_PREFIX . "recurring_description rd ON (r.recurring_id = rd.recurring_id) WHERE rd.name LIKE '" . $this->db->escape($data['filter_recurring']) . "%' AND p.product_id = pr.product_id AND pd.language_id = rd.language_id)";	
 		}
 
 		if (isset($data['filter_quantity']) && $data['filter_quantity'] !== '') {

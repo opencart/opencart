@@ -195,11 +195,11 @@ class ModelSaleRecurring extends Model {
 		return $query->row['total'];
 	}
 	
-	public function getEmailsByRecurringProductsOrdered($products, $start, $end) {
+	public function getEmailsByRecurringProductsOrdered($recurrings, $start, $end) {
 		$implode = array();
 
-		foreach ($products as $product_id) {
-			$implode[] = "or.product_id = '" . (int)$product_id . "'";
+		foreach ($recurrings as $recurring_id) {
+			$implode[] = "or.recurring_id = '" . (int)$recurring_id . "'";
 		}
 
 		$query = $this->db->query("SELECT DISTINCT email FROM `" . DB_PREFIX . "order` o LEFT JOIN " . DB_PREFIX . "order_recurring or ON (o.order_id = or.order_id) WHERE (" . implode(" OR ", $implode) . ") AND o.order_status_id <> '0' LIMIT " . (int)$start . "," . (int)$end);
@@ -207,11 +207,11 @@ class ModelSaleRecurring extends Model {
 		return $query->rows;
 	}
 
-	public function getTotalEmailsByRecurringProductsOrdered($products) {
+	public function getTotalEmailsByRecurringProductsOrdered($recurrings) {
 		$implode = array();
 
-		foreach ($products as $product_id) {
-			$implode[] = "or.product_id = '" . (int)$product_id . "'";
+		foreach ($recurrings as $recurring_id) {
+			$implode[] = "or.recurring_id = '" . (int)$recurring_id . "'";
 		}
 
 		$query = $this->db->query("SELECT COUNT(DISTINCT email) AS total FROM `" . DB_PREFIX . "order` o LEFT JOIN " . DB_PREFIX . "order_recurring or ON (o.order_id = or.order_id) WHERE (" . implode(" OR ", $implode) . ") AND o.order_status_id <> '0'");

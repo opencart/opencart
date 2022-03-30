@@ -513,7 +513,7 @@ class ControllerCatalogRecurring extends Controller {
 		return !$this->error;
 	}
 	
-	public function invoice() {
+	public function report() {
 		$this->load->language('catalog/recurring');
 
 		$data['title'] = $this->language->get('text_report');

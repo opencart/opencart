@@ -445,6 +445,7 @@ class ControllerCatalogRecurring extends Controller {
 		} else {
 			$data['trial_cycle'] = '1';
 		}
+		
 		if (isset($this->request->post['trial_status'])) {
 			$data['trial_status'] = $this->request->post['trial_status'];
 		} elseif (!empty($recurring_info)) {
@@ -510,5 +511,43 @@ class ControllerCatalogRecurring extends Controller {
 		}
 
 		return !$this->error;
+	}
+	
+	public function autocomplete() {
+		$json = array();
+
+		if (isset($this->request->get['filter_name'])) {
+			$this->load->model('catalog/recurring');			
+
+			if (isset($this->request->get['filter_name'])) {
+				$filter_name = $this->request->get['filter_name'];
+			} else {
+				$filter_name = '';
+			}
+
+			if (isset($this->request->get['limit'])) {
+				$limit = (int)$this->request->get['limit'];
+			} else {
+				$limit = 5;
+			}
+
+			$filter_data = array(
+				'filter_name'  => $filter_name,
+				'start'        => 0,
+				'limit'        => $limit
+			);
+
+			$results = $this->model_catalog_recurring->getRecurrings($filter_data);
+
+			foreach ($results as $result) {
+				$json[] = array(
+					'recurring_id' 	=> $result['recurring_id'],
+					'name'       	=> strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8'))
+				);
+			}
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 }

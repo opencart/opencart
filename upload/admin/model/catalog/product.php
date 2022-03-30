@@ -378,6 +378,10 @@ class ModelCatalogProduct extends Model {
 		if (!empty($data['filter_price'])) {
 			$sql .= " AND p.price LIKE '" . $this->db->escape($data['filter_price']) . "%'";
 		}
+		
+		if (!empty($data['filter_recurring'])) {
+			$sql .= " AND p.product_id IN (SELECT pr.product_id FROM " . DB_PREFIX . "product_recurring pr ON (p.product_id = pr.product_id) WHERE pr.name LIKE '" . $this->db->escape($data['filter_recurring']) . "%')";	
+		}
 
 		if (isset($data['filter_quantity']) && $data['filter_quantity'] !== '') {
 			$sql .= " AND p.quantity = '" . (int)$data['filter_quantity'] . "'";

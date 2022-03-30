@@ -37,6 +37,10 @@ class ControllerCatalogProduct extends Controller {
 			if (isset($this->request->get['filter_price'])) {
 				$url .= '&filter_price=' . $this->request->get['filter_price'];
 			}
+			
+			if (isset($this->request->get['filter_recurring'])) {
+				$url .= '&filter_recurring=' . $this->request->get['filter_recurring'];
+			}
 
 			if (isset($this->request->get['filter_quantity'])) {
 				$url .= '&filter_quantity=' . $this->request->get['filter_quantity'];
@@ -88,6 +92,10 @@ class ControllerCatalogProduct extends Controller {
 
 			if (isset($this->request->get['filter_price'])) {
 				$url .= '&filter_price=' . $this->request->get['filter_price'];
+			}
+			
+			if (isset($this->request->get['filter_recurring'])) {
+				$url .= '&filter_recurring=' . $this->request->get['filter_recurring'];
 			}
 
 			if (isset($this->request->get['filter_quantity'])) {
@@ -143,6 +151,10 @@ class ControllerCatalogProduct extends Controller {
 			if (isset($this->request->get['filter_price'])) {
 				$url .= '&filter_price=' . $this->request->get['filter_price'];
 			}
+			
+			if (isset($this->request->get['filter_recurring'])) {
+				$url .= '&filter_recurring=' . $this->request->get['filter_recurring'];
+			}
 
 			if (isset($this->request->get['filter_quantity'])) {
 				$url .= '&filter_quantity=' . $this->request->get['filter_quantity'];
@@ -197,6 +209,10 @@ class ControllerCatalogProduct extends Controller {
 			if (isset($this->request->get['filter_price'])) {
 				$url .= '&filter_price=' . $this->request->get['filter_price'];
 			}
+			
+			if (isset($this->request->get['filter_recurring'])) {
+				$url .= '&filter_recurring=' . $this->request->get['filter_recurring'];
+			}
 
 			if (isset($this->request->get['filter_quantity'])) {
 				$url .= '&filter_quantity=' . $this->request->get['filter_quantity'];
@@ -242,6 +258,12 @@ class ControllerCatalogProduct extends Controller {
 		} else {
 			$filter_price = '';
 		}
+		
+		if (isset($this->request->get['filter_recurring'])) {
+			$filter_recurring = $this->request->get['filter_recurring'];
+		} else {
+			$filter_recurring = '';
+		}
 
 		if (isset($this->request->get['filter_quantity'])) {
 			$filter_quantity = $this->request->get['filter_quantity'];
@@ -286,6 +308,10 @@ class ControllerCatalogProduct extends Controller {
 		if (isset($this->request->get['filter_price'])) {
 			$url .= '&filter_price=' . $this->request->get['filter_price'];
 		}
+		
+		if (isset($this->request->get['filter_recurring'])) {
+			$url .= '&filter_recurring=' . $this->request->get['filter_recurring'];
+		}
 
 		if (isset($this->request->get['filter_quantity'])) {
 			$url .= '&filter_quantity=' . $this->request->get['filter_quantity'];
@@ -322,15 +348,16 @@ class ControllerCatalogProduct extends Controller {
 		$data['products'] = array();
 
 		$filter_data = array(
-			'filter_name'	  => $filter_name,
-			'filter_model'	  => $filter_model,
-			'filter_price'	  => $filter_price,
-			'filter_quantity' => $filter_quantity,
-			'filter_status'   => $filter_status,
-			'sort'            => $sort,
-			'order'           => $order,
-			'start'           => ($page - 1) * $this->config->get('config_limit_admin'),
-			'limit'           => $this->config->get('config_limit_admin')
+			'filter_name'	  	=> $filter_name,
+			'filter_model'	  	=> $filter_model,
+			'filter_price'	  	=> $filter_price,			
+			'filter_quantity' 	=> $filter_quantity,
+			'filter_recurring' 	=> $filter_recurring,
+			'filter_status'   	=> $filter_status,
+			'sort'            	=> $sort,
+			'order'           	=> $order,
+			'start'           	=> ($page - 1) * $this->config->get('config_limit_admin'),
+			'limit'           	=> $this->config->get('config_limit_admin')
 		);
 
 		$this->load->model('tool/image');
@@ -406,6 +433,10 @@ class ControllerCatalogProduct extends Controller {
 		if (isset($this->request->get['filter_price'])) {
 			$url .= '&filter_price=' . $this->request->get['filter_price'];
 		}
+		
+		if (isset($this->request->get['filter_recurring'])) {
+			$url .= '&filter_recurring=' . $this->request->get['filter_recurring'];
+		}
 
 		if (isset($this->request->get['filter_quantity'])) {
 			$url .= '&filter_quantity=' . $this->request->get['filter_quantity'];
@@ -445,6 +476,10 @@ class ControllerCatalogProduct extends Controller {
 		if (isset($this->request->get['filter_price'])) {
 			$url .= '&filter_price=' . $this->request->get['filter_price'];
 		}
+		
+		if (isset($this->request->get['filter_recurring'])) {
+			$url .= '&filter_recurring=' . $this->request->get['filter_recurring'];
+		}
 
 		if (isset($this->request->get['filter_quantity'])) {
 			$url .= '&filter_quantity=' . $this->request->get['filter_quantity'];
@@ -475,6 +510,7 @@ class ControllerCatalogProduct extends Controller {
 		$data['filter_name'] = $filter_name;
 		$data['filter_model'] = $filter_model;
 		$data['filter_price'] = $filter_price;
+		$data['filter_recurring'] = $filter_recurring;
 		$data['filter_quantity'] = $filter_quantity;
 		$data['filter_status'] = $filter_status;
 
@@ -533,6 +569,10 @@ class ControllerCatalogProduct extends Controller {
 
 		if (isset($this->request->get['filter_price'])) {
 			$url .= '&filter_price=' . $this->request->get['filter_price'];
+		}
+		
+		if (isset($this->request->get['filter_recurring'])) {
+			$url .= '&filter_recurring=' . $this->request->get['filter_recurring'];
 		}
 
 		if (isset($this->request->get['filter_quantity'])) {

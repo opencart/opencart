@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html dir="{{ direction }}" lang="{{ lang }}">
+<head>
+<meta charset="UTF-8" />
+<title>{{ title }}</title>
+<base href="{{ base }}" />
+<link href="view/javascript/bootstrap/css/bootstrap.css" rel="stylesheet" media="all" />
+<script type="text/javascript" src="view/javascript/jquery/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="view/javascript/bootstrap/js/bootstrap.min.js"></script>
+<link href="view/javascript/font-awesome/css/font-awesome.min.css" type="text/css" rel="stylesheet" />
+<link type="text/css" href="view/stylesheet/stylesheet.css" rel="stylesheet" media="all" />
+</head>
+<body>
+<div class="container">
+  {% for recurring in recurrings %}
+  <div style="page-break-after: always;">
+    <h1>{{ text_report }}</h1>    
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <td class="text-left"><b>{{ column_recurring }}</b></td>
+		  <td class="text-left"><b>{{ column_price }}</b></td>
+          <td class="text-left"><b>{{ column_frequency }}</b></td>
+          <td class="text-left"><b>{{ column_duration }}</b></td>
+          <td class="text-center"><b>{{ column_cycle }}</b></td>
+          <td class="text-right"><b>{{ column_trial_price }}</b></td>
+		  <td class="text-right"><b>{{ column_trial_frequency }}</b></td>
+		  <td class="text-right"><b>{{ column_trial_duration }}</b></td>
+		  <td class="text-right"><b>{{ column_trial_cycle }}</b></td>
+        </tr>
+      </thead>
+      <tbody>        
+        <tr>
+          <td class="text-left">{{ recurring.name }}</td>
+		  <td class="text-left">{{ recurring.price }}</td>
+          <td class="text-left">{{ recurring.frequency }}</td>
+          <td class="text-left">{{ recurring.duration }}</td>
+          <td class="text-center">{{ recurring.cycle }}</td>
+          <td class="text-right">{{ recurring.trial_price }}</td>
+		  <td class="text-right">{{ recurring.trial_frequency }}</td>
+		  <td class="text-right">{{ recurring.trial_duration }}</td>
+		  <td class="text-right">{{ recurring.trial_cycle }}</td>
+        </tr>        
+      </tbody>
+    </table>   
+  </div>
+  {% endfor %}
+</div>
+</body>
+</html>

@@ -187,6 +187,12 @@ $('#button-filter').on('click', function() {
 	if (filter_model) {
 		url += '&filter_model=' + encodeURIComponent(filter_model);
 	}
+	
+	var filter_recurring = $('input[name=\'filter_recurring\']').val();
+	
+	if (filter_recurring) {
+		url += '&filter_recurring=' + encodeURIComponent(filter_recurring);
+	}
 		
 	var filter_return_status_id = $('select[name=\'filter_return_status_id\']').val();
 	

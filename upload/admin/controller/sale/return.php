@@ -361,7 +361,7 @@ class ControllerSaleReturn extends Controller {
 		$filter_data = array(
 			'filter_return_id'        => $filter_return_id,
 			'filter_order_id'         => $filter_order_id,
-			'filter_recurring'		  => $filter_recurring,
+			'filter_recurring'	  => $filter_recurring,
 			'filter_customer'         => $filter_customer,			
 			'filter_product'          => $filter_product,
 			'filter_model'            => $filter_model,

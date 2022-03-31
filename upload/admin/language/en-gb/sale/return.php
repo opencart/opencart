@@ -36,6 +36,7 @@ $_['entry_lastname']       = 'Last Name';
 $_['entry_email']          = 'E-Mail';
 $_['entry_telephone']      = 'Telephone';
 $_['entry_product']        = 'Product';
+$_['entry_recurring']      = 'Recurring Orders';
 $_['entry_model']          = 'Model';
 $_['entry_quantity']       = 'Quantity';
 $_['entry_opened']         = 'Opened';

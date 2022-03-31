@@ -52,6 +52,10 @@
               <label class="control-label" for="input-model">{{ entry_model }}</label>
               <input type="text" name="filter_model" value="{{ filter_model }}" placeholder="{{ entry_model }}" id="input-model" class="form-control" />
             </div>
+	    <div class="form-group">
+              <label class="control-label" for="input-recurring">{{ entry_recurring }}</label>
+              <input type="text" name="filter_recurring" value="{{ filter_recurring }}" placeholder="{{ entry_recurring }}" id="input-recurring" class="form-control" />
+            </div>
             <div class="form-group">
               <label class="control-label" for="input-return-status">{{ entry_return_status }}</label>
               <select name="filter_return_status_id" id="input-return-status" class="form-control">
@@ -263,6 +267,26 @@ $('input[name=\'filter_model\']').autocomplete({
 	},
 	'select': function(item) {
 		$('input[name=\'filter_model\']').val(item['label']);
+	}	
+});
+
+$('input[name=\'filter_recurring\']').autocomplete({
+	'source': function(request, response) {
+		$.ajax({
+			url: 'index.php?route=catalog/recurring/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
+			dataType: 'json',			
+			success: function(json) {
+				response($.map(json, function(item) {
+					return {
+						label: item['name'],
+						value: item['recurring_id']
+					}
+				}));
+			}
+		});
+	},
+	'select': function(item) {
+		$('input[name=\'filter_recurring\']').val(item['label']);
 	}	
 });
 //--></script> 

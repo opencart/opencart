@@ -16,7 +16,7 @@ class ModelSaleReturn extends Model {
 	}
 
 	public function getReturn($return_id) {
-		$query = $this->db->query("SELECT DISTINCT *, (SELECT CONCAT(c.firstname, ' ', c.lastname) FROM " . DB_PREFIX . "customer c WHERE c.customer_id = r.customer_id) AS customer, (SELECT rs.name FROM " . DB_PREFIX . "return_status rs WHERE rs.return_status_id = r.return_status_id AND rs.language_id = '" . (int)$this->config->get('config_language_id') . "') AS return_status, COUNT((SELECT COUNT(or.order_recurring_id) FROM " . DB_PREFIX . "order_recurring or LEFT JOIN " . DB_PREFIX . "recurring r ON (or.recurring_id = r.recurring_id) LEFT JOIN " . DB_PREFIX . "recurring_description rd ON (r.recurring_id = rd.recurring_id) WHERE r.order_id = or.order_id AND r.product_id = or.product_id AND rd.language_id = '" . (int)$this->config->get('config_language_id') . "')) AS recurring FROM `" . DB_PREFIX . "return` r WHERE r.return_id = '" . (int)$return_id . "'");
+		$query = $this->db->query("SELECT DISTINCT *, (SELECT CONCAT(c.firstname, ' ', c.lastname) FROM " . DB_PREFIX . "customer c WHERE c.customer_id = r.customer_id) AS customer, (SELECT rs.name FROM " . DB_PREFIX . "return_status rs WHERE rs.return_status_id = r.return_status_id AND rs.language_id = '" . (int)$this->config->get('config_language_id') . "') AS return_status FROM `" . DB_PREFIX . "return` r WHERE r.return_id = '" . (int)$return_id . "'");
 
 		return $query->row;
 	}
@@ -32,6 +32,10 @@ class ModelSaleReturn extends Model {
 
 		if (!empty($data['filter_order_id'])) {
 			$implode[] = "r.order_id = '" . (int)$data['filter_order_id'] . "'";
+		}
+		
+		if (!empty($data['filter_recurring'])) {
+			$implode[] = "r.product_id IN (SELECT or.product_id FROM " . DB_PREFIX . "order_recurring or LEFT JOIN " . DB_PREFIX . "recurring r ON (or.recurring_id = r.recurring_id) LEFT JOIN " . DB_PREFIX . "recurring_description rd ON (r.recurring_id = rd.recurring_id) WHERE rd.name LIKE '" . $this->db->escape($data['filter_recurring']) . "%' AND r.product_id = or.product_id AND rd.language_id = '" . (int)$this->config->get('config_language_id') . "')";	
 		}
 
 		if (!empty($data['filter_customer'])) {
@@ -117,6 +121,10 @@ class ModelSaleReturn extends Model {
 
 		if (!empty($data['filter_order_id'])) {
 			$implode[] = "r.order_id = '" . $this->db->escape($data['filter_order_id']) . "'";
+		}
+		
+		if (!empty($data['filter_recurring'])) {
+			$implode[] = "r.product_id IN (SELECT or.product_id FROM " . DB_PREFIX . "order_recurring or LEFT JOIN " . DB_PREFIX . "recurring r ON (or.recurring_id = r.recurring_id) LEFT JOIN " . DB_PREFIX . "recurring_description rd ON (r.recurring_id = rd.recurring_id) WHERE rd.name LIKE '" . $this->db->escape($data['filter_recurring']) . "%' AND r.product_id = or.product_id AND rd.language_id = '" . (int)$this->config->get('config_language_id') . "')";	
 		}
 
 		if (!empty($data['filter_product'])) {

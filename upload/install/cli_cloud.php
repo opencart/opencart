@@ -239,7 +239,7 @@ class CliCloud extends \Opencart\System\Engine\Controller {
 
 			$db->query("SET @@session.sql_mode = ''");
 
-			$db->query("DELETE FROM `" . $db_prefix . "user` WHERE user_id = '1'");
+			$db->query("DELETE FROM `" . $db_prefix . "user` WHERE `user_id` = '1'");
 
 			// If cloud we do not need to hash the password as we will be passing the password hash
 			$db->query("INSERT INTO `" . $db_prefix . "user` SET `user_id` = '1', `user_group_id` = '1', `username` = '" . $db->escape($option['username']) . "', `password` = '" . $db->escape($option['password']) . "', `firstname` = 'John', `lastname` = 'Doe', `email` = '" . $db->escape($option['email']) . "', `status` = '1', `date_added` = NOW()");

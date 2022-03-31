@@ -328,7 +328,7 @@ class CliInstall extends \Opencart\System\Engine\Controller {
 
 			$db->query("SET @@session.sql_mode = ''");
 
-			$db->query("DELETE FROM `" . $db_prefix . "user` WHERE user_id = '1'");
+			$db->query("DELETE FROM `" . $db_prefix . "user` WHERE `user_id` = '1'");
 			$db->query("INSERT INTO `" . $db_prefix . "user` SET `user_id` = '1', `user_group_id` = '1', `username` = '" . $db->escape($option['username']) . "', `password` = '" . $db->escape(password_hash(html_entity_decode($option['password'], ENT_QUOTES, 'UTF-8'), PASSWORD_DEFAULT)) . "', `firstname` = 'John', `lastname` = 'Doe', `email` = '" . $db->escape($option['email']) . "', `status` = '1', `date_added` = NOW()");
 
 			$db->query("DELETE FROM `" . $db_prefix . "setting` WHERE `key` = 'config_email'");

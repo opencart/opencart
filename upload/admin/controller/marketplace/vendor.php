@@ -176,12 +176,12 @@ class Vendor extends \Opencart\System\Engine\Controller {
 
 			$this->model_setting_vendor->clear();
 
+			$files = [];
+
 			$output = json_decode(file_get_contents($file), true);
 
 			if (isset($output['require'])) {
 				$require = $output['require'];
-
-				print_r($output);
 
 				while (count($require) != 0) {
 					$next = $require;
@@ -189,11 +189,13 @@ class Vendor extends \Opencart\System\Engine\Controller {
 					$require = [];
 
 					foreach ($next as $key => $version) {
+						echo $key . "\n";
+
 						$file = DIR_STORAGE . 'vendor/' . $key . '/composer.json';
 
-						echo $file . "\n";
-
 						if (is_file($file)) {
+							$files[] = $file;
+
 							$output = json_decode(file_get_contents($file), true);
 
 							if (isset($output['require'])) {
@@ -204,11 +206,43 @@ class Vendor extends \Opencart\System\Engine\Controller {
 								$require = $require + $output['require-dev'];
 							}
 
-							print_r($require);
+							if (isset($output['autoload'])) {
+								$autoload = $output['autoload'];
+
+								if (isset($output['autoload'])) {
+									$psr = $autoload['psr-4'];
+
+								}
+
+								if (isset($output['files'])) {
+									$namespace = $autoload['namespace'];
+
+								}
+
+								"Twig\\" : "src/"
+
+							}
+
+
+
+
+
 						}
 					}
 				}
 			}
+
+			foreach ($files as $file) {
+				$output = json_decode(file_get_contents($file), true);
+
+
+
+
+				echo $file . "\n";
+			}
+
+
+			//Twig\\" : "src/
 
 			/*
 			$files = [];

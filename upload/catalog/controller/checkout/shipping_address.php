@@ -150,6 +150,13 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// If no default address add it
+			$address_id = $this->customer->getAddressId();
+
+			if (!$address_id) {
+				$this->request->post['default'] = 1;
+			}
+
 			$this->load->model('account/address');
 
 			$json['address_id'] = $this->model_account_address->addAddress($this->customer->getId(), $this->request->post);

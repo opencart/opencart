@@ -84,15 +84,18 @@
             </div>
           </div>
         </div>
-        <div class="row">
+
+        <div class="row row-col-2">
           {% for product in products %}
-            <div class="product-layout product-list col-12">{{ product }}</div>
+            <div class="col">{{ product }}</div>
           {% endfor %}
         </div>
+
         <div class="row">
           <div class="col-sm-6 text-start">{{ pagination }}</div>
           <div class="col-sm-6 text-end">{{ results }}</div>
         </div>
+
       {% endif %}
       {% if not categories and not products %}
         <p>{{ text_no_results }}</p>

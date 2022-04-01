@@ -239,6 +239,17 @@ class Loader {
 	}
 
 	/**
+	 * Vendor
+	 *
+	 * @param	string $route
+	 */
+	public function vendor(string $path): void {
+		$path = preg_replace('/[^a-zA-Z0-9_\/]/', '', $path);
+
+
+	}
+
+	/**
 	 * Callback
 	 *
 	 * https://www.php.net/manual/en/class.closure.php

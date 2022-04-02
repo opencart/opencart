@@ -219,7 +219,7 @@ class Vendor extends \Opencart\System\Engine\Controller {
 
 								}
 
-								"Twig\\" : "src/"
+								//"Twig\\" : "src/"
 
 							}
 

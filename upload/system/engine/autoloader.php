@@ -29,6 +29,13 @@ class Autoloader {
 			}
 		}
 
+		//echo '$class ' . $class . "\n";
+		//echo '$namespace ' . $namespace . "\n";
+		//echo '$file ' . $file . "\n";
+
+		//print_r($this->path);
+
+
 		if (isset($file) && is_file($file)) {
 			include_once($file);
 

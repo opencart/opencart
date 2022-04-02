@@ -5,6 +5,11 @@ $autoloader->register('Opencart\\' . APPLICATION, DIR_APPLICATION);
 $autoloader->register('Opencart\Extension', DIR_EXTENSION);
 $autoloader->register('Opencart\System', DIR_SYSTEM);
 
+//$autoloader->register('Twig', DIR_STORAGE . 'vendor/twig/twig/src/');
+
+new \Composer\Autoload\ClassLoader();
+
+
 // Registry
 $registry = new \Opencart\System\Engine\Registry();
 $registry->set('autoloader', $autoloader);

@@ -202,7 +202,7 @@ class ModelSaleRecurring extends Model {
 			$implode[] = "or.recurring_id = '" . (int)$recurring_id . "'";
 		}
 
-		$query = $this->db->query("SELECT DISTINCT email FROM `" . DB_PREFIX . "order` o LEFT JOIN " . DB_PREFIX . "order_recurring or ON (o.order_id = or.order_id) WHERE (" . implode(" OR ", $implode) . ") AND o.order_status_id <> '0' LIMIT " . (int)$start . "," . (int)$end);
+		$query = $this->db->query("SELECT DISTINCT o.`email` FROM `" . DB_PREFIX . "order` o LEFT JOIN `" . DB_PREFIX . "order_recurring` `or` ON (o.`order_id` = `or`.`order_id`) WHERE (" . implode(" OR ", $implode) . ") AND o.`order_status_id` <> '0' LIMIT " . (int)$start . "," . (int)$end);
 
 		return $query->rows;
 	}
@@ -214,7 +214,7 @@ class ModelSaleRecurring extends Model {
 			$implode[] = "or.recurring_id = '" . (int)$recurring_id . "'";
 		}
 
-		$query = $this->db->query("SELECT COUNT(DISTINCT email) AS total FROM `" . DB_PREFIX . "order` o LEFT JOIN " . DB_PREFIX . "order_recurring or ON (o.order_id = or.order_id) WHERE (" . implode(" OR ", $implode) . ") AND o.order_status_id <> '0'");
+		$query = $this->db->query("SELECT COUNT(DISTINCT o.`email`) AS total FROM `" . DB_PREFIX . "order` o LEFT JOIN `" . DB_PREFIX . "order_recurring` `or` ON (o.`order_id` = `or`.`order_id`) WHERE (" . implode(" OR ", $implode) . ") AND o.`order_status_id` <> '0'");
 
 		return $query->row['total'];
 	}

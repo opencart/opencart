@@ -1,5 +1,5 @@
 <?php
-$_['autoload'][] = [
-	'Twig\\' => DIR_STORAGE . 'vendor/twig/twig/src/',
-	''
+$_['autoload'] = [
+	'Twig'            => 'twig/twig/src/',
+	'ScssPhp\ScssPhp' => 'scssphp/scssphp/src/'
 ];

@@ -5,11 +5,6 @@ $autoloader->register('Opencart\\' . APPLICATION, DIR_APPLICATION);
 $autoloader->register('Opencart\Extension', DIR_EXTENSION);
 $autoloader->register('Opencart\System', DIR_SYSTEM);
 
-//$autoloader->register('Twig', DIR_STORAGE . 'vendor/twig/twig/src/');
-
-new \Composer\Autoload\ClassLoader();
-
-
 // Registry
 $registry = new \Opencart\System\Engine\Registry();
 $registry->set('autoloader', $autoloader);
@@ -22,6 +17,10 @@ $config->addPath(DIR_CONFIG);
 $config->load('default');
 $config->load(strtolower(APPLICATION));
 $config->load('vendor');
+
+foreach ((array)$config->get('autoload') as $key => $value) {
+	$autoloader->register($key, DIR_STORAGE . 'vendor/' . $value, true);
+}
 
 // Set the default application
 $config->set('application', APPLICATION);

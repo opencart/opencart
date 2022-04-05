@@ -35,7 +35,7 @@ class ModelSaleReturn extends Model {
 		}
 		
 		if (!empty($data['filter_recurring'])) {
-			$implode[] = "r.`product_id` IN (SELECT `or`.`product_id` FROM `" . DB_PREFIX . "order_recurring` `or` LEFT JOIN `" . DB_PREFIX . "recurring` r ON (`or`.`recurring_id` = r.`recurring_id`) LEFT JOIN `" . DB_PREFIX . "recurring_description` rd ON (r.`recurring_id` = rd.`recurring_id`) WHERE rd.`name` LIKE '" . $this->db->escape($data['filter_recurring']) . "%' AND r.`product_id` = `or`.`product_id` AND rd.`language_id` = '" . (int)$this->config->get('config_language_id') . "')";	
+			$implode[] = "r.`product_id` IN (SELECT `or`.`product_id` FROM `" . DB_PREFIX . "order_recurring` `or` LEFT JOIN `" . DB_PREFIX . "recurring` r ON (`or`.`recurring_id` = r.`recurring_id`) LEFT JOIN `" . DB_PREFIX . "recurring_description` rd ON (r.`recurring_id` = rd.`recurring_id`) WHERE rd.`name` LIKE '" . $this->db->escape($data['filter_recurring']) . "%' AND r.`product_id` = `or`.`product_id` AND rd.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND `or`.`reference` != '')";	
 		}
 
 		if (!empty($data['filter_customer'])) {
@@ -124,7 +124,7 @@ class ModelSaleReturn extends Model {
 		}
 		
 		if (!empty($data['filter_recurring'])) {
-			$implode[] = "r.`product_id` IN (SELECT `or`.`product_id` FROM `" . DB_PREFIX . "order_recurring` `or` LEFT JOIN `" . DB_PREFIX . "recurring` r ON (`or`.`recurring_id` = r.`recurring_id`) LEFT JOIN `" . DB_PREFIX . "recurring_description` rd ON (r.`recurring_id` = rd.`recurring_id`) WHERE rd.`name` LIKE '" . $this->db->escape($data['filter_recurring']) . "%' AND r.`product_id` = `or`.`product_id` AND rd.`language_id` = '" . (int)$this->config->get('config_language_id') . "')";	
+			$implode[] = "r.`product_id` IN (SELECT `or`.`product_id` FROM `" . DB_PREFIX . "order_recurring` `or` LEFT JOIN `" . DB_PREFIX . "recurring` r ON (`or`.`recurring_id` = r.`recurring_id`) LEFT JOIN `" . DB_PREFIX . "recurring_description` rd ON (r.`recurring_id` = rd.`recurring_id`) WHERE rd.`name` LIKE '" . $this->db->escape($data['filter_recurring']) . "%' AND r.`product_id` = `or`.`product_id` AND rd.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND `or`.`reference` != '')";	
 		}
 
 		if (!empty($data['filter_product'])) {

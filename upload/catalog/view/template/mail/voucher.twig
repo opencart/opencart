@@ -1,22 +1,57 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>{{ title }}</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>{{ title }}</title>
+  <style type="text/css">
+      body {
+          color: #000000;
+          font-family: Arial, Helvetica, sans-serif;
+      }
+
+      body, td, th, input, textarea, select, a {
+          font-size: 12px;
+      }
+
+      p {
+          margin-top: 0px;
+          margin-bottom: 20px;
+      }
+
+      a, a:visited, a b {
+          color: #378DC1;
+          text-decoration: underline;
+          cursor: pointer;
+      }
+
+      a:hover {
+          text-decoration: none;
+      }
+
+      a img {
+          border: none;
+      }
+
+      #container {
+          width: 680px;
+      }
+  </style>
 </head>
-<body style="font-family: Arial, Helvetica, sans-serif; font-size: 12px; color: #000000;">
-<div style="width: 680px;">
-  <div style="float: right; margin-left: 20px;"><a href="{{ store_url }}" title="{{ store_name }}"><img src="{{ image }}" alt="{{ store_name }}" style="margin-bottom: 20px; border: none;" /></a></div>
+<body>
+<div id="container">
+  {% if image %}
+    <div style="float: right; margin-left: 20px;"><a href="{{ store_url }}" title="{{ store_name }}"><img src="{{ image }}" alt="{{ store_name }}"/></a></div>
+  {% endif %}
   <div>
-    <p style="margin-top: 0px; margin-bottom: 20px;">{{ text_greeting }}</p>
-    <p style="margin-top: 0px; margin-bottom: 20px;">{{ text_from }}</p>
+    <p>{{ text_greeting }}</p>
+    <p>{{ text_from }}</p>
     {% if message %}
-    <p style="margin-top: 0px; margin-bottom: 20px;">{{ text_message }}</p>
-    <p style="margin-top: 0px; margin-bottom: 20px;">{{ message }}</p>
+      <p>{{ text_message }}</p>
+      <p>{{ message }}</p>
     {% endif %}
-    <p style="margin-top: 0px; margin-bottom: 20px;">{{ text_redeem }}</p>
-    <p style="margin-top: 0px; margin-bottom: 20px;"><a href="{{ store_url }}" title="{{ store_name }}">{{ store_url }}</a></p>
-    <p style="margin-top: 0px; margin-bottom: 20px;">{{ text_footer }}</p>
+    <p>{{ text_redeem }}</p>
+    <p><a href="{{ store_url }}" title="{{ store_name }}">{{ store_url }}</a></p>
+    <p>{{ text_footer }}</p>
   </div>
 </div>
 </body>

@@ -300,7 +300,7 @@ class Transfer implements PromisorInterface
 
         // Create an EachPromise, that will concurrently handle the upload
         // operations' yielded promises from the iterator.
-        return Promise\each_limit_all($files, $this->concurrency);
+        return Promise\Each::ofLimitAll($files, $this->concurrency);
     }
 
     /** @return Iterator */
@@ -355,7 +355,8 @@ class Transfer implements PromisorInterface
     {
         $args = $this->s3Args;
         $args['Key'] = $this->createS3Key($filename);
-
+        $filename = $filename instanceof \SplFileInfo ? $filename->getPathname() : $filename;
+        
         return (new MultipartUploader($this->client, $filename, [
             'bucket'          => $args['Bucket'],
             'key'             => $args['Key'],

@@ -1,0 +1,40 @@
+<form id="form-startup" method="post" data-oc-toggle="ajax" data-oc-load="{{ action }}" data-oc-target="#startup">
+	<div class="table-responsive">
+		<table class="table table-bordered table-hover">
+			<thead>
+				<tr>
+					<td class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></td>
+					<td class="text-start"><a href="{{ sort_code }}"{% if sort == 'code' %} class="{{ order|lower }}"{% endif %}>{{ column_code }}</a></td>
+					<td class="text-start"><a href="{{ sort_action }}"{% if sort == 'action' %} class="{{ order|lower }}"{% endif %}>{{ column_action }}</a></td>
+					<td class="text-end"><a href="{{ sort_sort_order }}"{% if sort == 'sort_order' %} class="{{ order|lower }}"{% endif %}>{{ column_sort_order }}</a></td>
+					<td class="text-end">{{ column_action }}</td>
+				</tr>
+			</thead>
+			<tbody>
+				{% if startups %}
+					{% for startup in startups %}
+						<tr>
+							<td class="text-center"><input type="checkbox" name="selected[]" value="{{ startup.startup_id }}" class="form-check-input"/></td>
+							<td class="text-start">{{ startup.code }}</td>
+							<td class="text-start">{{ startup.action }}</td>
+							<td class="text-end">{{ startup.sort_order }}</td>
+							<td class="text-end">{% if not startup.status %}
+									<button type="button" value="{{ startup.enable }}" data-bs-toggle="tooltip" title="{{ button_enable }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></button>
+								{% else %}
+									<button type="button" value="{{ startup.disable }}" data-bs-toggle="tooltip" title="{{ button_disable }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>
+								{% endif %}</td>
+						</tr>
+					{% endfor %}
+				{% else %}
+					<tr>
+						<td class="text-center" colspan="5">{{ text_no_results }}</td>
+					</tr>
+				{% endif %}
+			</tbody>
+		</table>
+	</div>
+	<div class="row">
+		<div class="col-sm-6 text-left">{{ pagination }}</div>
+		<div class="col-sm-6 text-end">{{ results }}</div>
+	</div>
+</form>

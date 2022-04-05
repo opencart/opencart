@@ -1,29 +1,29 @@
 <?php
 namespace Opencart\System\Library\DB;
 class MySQLi {
-	private $connection;
+	private object $connection;
 
-	public function __construct($hostname, $username, $password, $database, $port = '3306') {
-		$connection = new \MySQLi($hostname, $username, $password, $database, $port);
+	public function __construct(string $hostname, string $username, string $password, string $database, string $port = '') {
+		if (!$port) {
+			$port = '3306';
+		}
 
-		if (!$connection->connect_error) {
-			$this->connection = $connection;
+		try {
+			$mysqli = @new \MySQLi($hostname, $username, $password, $database, $port);
 
-			$this->connection->report_mode = MYSQLI_REPORT_STRICT;
-
+			$this->connection = $mysqli;
+			$this->connection->report_mode = MYSQLI_REPORT_ERROR;
 			$this->connection->set_charset('utf8');
-
-			//register_shutdown_function([$this, 'close']);
-		} else {
-			error_log('Error: Could not make a database link using ' . $username . '@' . $hostname . '!');
-			exit();
+			$this->connection->query("SET SESSION sql_mode = 'NO_ZERO_IN_DATE,NO_ENGINE_SUBSTITUTION'");
+		} catch (\mysqli_sql_exception $e) {
+			throw new \Exception('Error: Could not make a database link using ' . $username . '@' . $hostname . '!');
 		}
 	}
 
-	public function query($sql) {
-		$query = $this->connection->query($sql);
+	public function query(string $sql): bool|object {
+		try {
+			$query = $this->connection->query($sql);
 
-		if (!$this->connection->errno) {
 			if ($query instanceof \mysqli_result) {
 				$data = [];
 
@@ -38,38 +38,48 @@ class MySQLi {
 
 				$query->close();
 
+				unset($data);
+
 				return $result;
 			} else {
 				return true;
 			}
-		} else {
+		} catch (\mysqli_sql_exception $e) {
 			throw new \Exception('Error: ' . $this->connection->error  . '<br />Error No: ' . $this->connection->errno . '<br />' . $sql);
 		}
 	}
 
-	public function escape($value) {
+	public function escape(string $value): string {
 		return $this->connection->real_escape_string($value);
 	}
 	
-	public function countAffected() {
+	public function countAffected(): int {
 		return $this->connection->affected_rows;
 	}
 
-	public function getLastId() {
+	public function getLastId(): int {
 		return $this->connection->insert_id;
 	}
 	
-	public function isConnected() {
-		return $this->connection->ping();
-	}
-	
-	public function close() {
-		if (!$this->connection) {
-			$this->connection->close();
+	public function isConnected(): bool {
+		if ($this->connection) {
+			return $this->connection->ping();
+		} else {
+			return false;
 		}
 	}
 
+	/**
+	 * __destruct
+	 *
+	 * Closes the DB connection when this object is destroyed.
+	 *
+	 */
 	public function __destruct() {
-		$this->close();
+		if ($this->connection) {
+			$this->connection->close();
+
+			unset($this->connection);
+		}
 	}
 }

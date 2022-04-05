@@ -22,6 +22,6 @@ $_['entry_sort_order']       = 'Sort Order';
 // Error
 $_['error_warning']          = 'Warning: Please check the form carefully for errors!';
 $_['error_permission']       = 'Warning: You do not have permission to modify attributes!';
-$_['error_attribute_group']  = 'Attribute Group Required!';
+$_['error_attribute_group']  = 'Attribute Group required!';
 $_['error_name']             = 'Attribute Name must be between 1 and 64 characters!';
 $_['error_product']          = 'Warning: This attribute cannot be deleted as it is currently assigned to %s products!';

@@ -2,7 +2,108 @@
 
 Please refer to [UPGRADING](UPGRADING.md) guide for upgrading to a major version.
 
-## UNRELEASED
+## 7.4.2 - 2022-03-20
+
+### Fixed
+
+- Remove curl auth on cross-domain redirects to align with the Authorization HTTP header
+- Reject non-HTTP schemes in StreamHandler
+- Set a default ssl.peer_name context in StreamHandler to allow `force_ip_resolve`
+
+## 7.4.1 - 2021-12-06
+
+### Changed
+
+- Replaced implicit URI to string coercion [#2946](https://github.com/guzzle/guzzle/pull/2946)
+- Allow `symfony/deprecation-contracts` version 3 [#2961](https://github.com/guzzle/guzzle/pull/2961)
+
+### Fixed
+
+- Only close curl handle if it's done [#2950](https://github.com/guzzle/guzzle/pull/2950)
+
+## 7.4.0 - 2021-10-18
+
+### Added
+
+- Support PHP 8.1 [#2929](https://github.com/guzzle/guzzle/pull/2929), [#2939](https://github.com/guzzle/guzzle/pull/2939)
+- Support `psr/log` version 2 and 3 [#2943](https://github.com/guzzle/guzzle/pull/2943)
+
+### Fixed
+
+- Make sure we always call `restore_error_handler()` [#2915](https://github.com/guzzle/guzzle/pull/2915)
+- Fix progress parameter type compatibility between the cURL and stream handlers [#2936](https://github.com/guzzle/guzzle/pull/2936)
+- Throw `InvalidArgumentException` when an incorrect `headers` array is provided [#2916](https://github.com/guzzle/guzzle/pull/2916), [#2942](https://github.com/guzzle/guzzle/pull/2942)
+
+### Changed
+
+- Be more strict with types [#2914](https://github.com/guzzle/guzzle/pull/2914), [#2917](https://github.com/guzzle/guzzle/pull/2917), [#2919](https://github.com/guzzle/guzzle/pull/2919), [#2945](https://github.com/guzzle/guzzle/pull/2945)
+
+## 7.3.0 - 2021-03-23
+
+### Added
+
+- Support for DER and P12 certificates [#2413](https://github.com/guzzle/guzzle/pull/2413)
+- Support the cURL (http://) scheme for StreamHandler proxies [#2850](https://github.com/guzzle/guzzle/pull/2850)
+- Support for `guzzlehttp/psr7:^2.0` [#2878](https://github.com/guzzle/guzzle/pull/2878)
+
+### Fixed
+
+- Handle exceptions on invalid header consistently between PHP versions and handlers [#2872](https://github.com/guzzle/guzzle/pull/2872)
+
+## 7.2.0 - 2020-10-10
+
+### Added
+
+- Support for PHP 8 [#2712](https://github.com/guzzle/guzzle/pull/2712), [#2715](https://github.com/guzzle/guzzle/pull/2715), [#2789](https://github.com/guzzle/guzzle/pull/2789)
+- Support passing a body summarizer to the http errors middleware [#2795](https://github.com/guzzle/guzzle/pull/2795)
+
+### Fixed
+
+- Handle exceptions during response creation [#2591](https://github.com/guzzle/guzzle/pull/2591)
+- Fix CURLOPT_ENCODING not to be overwritten [#2595](https://github.com/guzzle/guzzle/pull/2595)
+- Make sure the Request always has a body object [#2804](https://github.com/guzzle/guzzle/pull/2804)
+
+### Changed
+
+- The `TooManyRedirectsException` has a response [#2660](https://github.com/guzzle/guzzle/pull/2660)
+- Avoid "functions" from dependencies [#2712](https://github.com/guzzle/guzzle/pull/2712)
+
+### Deprecated
+
+- Using environment variable GUZZLE_CURL_SELECT_TIMEOUT [#2786](https://github.com/guzzle/guzzle/pull/2786)
+
+## 7.1.1 - 2020-09-30
+
+### Fixed
+
+- Incorrect EOF detection for response body streams on Windows.
+
+### Changed
+
+- We dont connect curl `sink` on HEAD requests.
+- Removed some PHP 5 workarounds
+
+## 7.1.0 - 2020-09-22
+
+### Added
+
+- `GuzzleHttp\MessageFormatterInterface`
+
+### Fixed
+
+- Fixed issue that caused cookies with no value not to be stored.
+- On redirects, we allow all safe methods like GET, HEAD and OPTIONS.
+- Fixed logging on empty responses.
+- Make sure MessageFormatter::format returns string
+
+### Deprecated
+
+- All functions in `GuzzleHttp` has been deprecated. Use static methods on `Utils` instead.
+- `ClientInterface::getConfig()`
+- `Client::getConfig()`
+- `Client::__call()`
+- `Utils::defaultCaBundle()`
+- `CurlFactory::LOW_CURL_VERSION_NUMBER`
 
 ## 7.0.1 - 2020-06-27
 

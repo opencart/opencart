@@ -1,7 +1,7 @@
 <?php
-namespace Opencart\Application\Controller\Report;
+namespace Opencart\Admin\Controller\Report;
 class Report extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): void {
 		$this->load->language('report/report');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -17,8 +17,6 @@ class Report extends \Opencart\System\Engine\Controller {
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('report/report', 'user_token=' . $this->session->data['user_token'])
 		];
-
-		$data['user_token'] = $this->session->data['user_token'];
 
 		if (isset($this->request->get['code'])) {
 			$data['code'] = $this->request->get['code'];
@@ -55,6 +53,8 @@ class Report extends \Opencart\System\Engine\Controller {
 		}
 
 		array_multisort($sort_order, SORT_ASC, $data['reports']);
+
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

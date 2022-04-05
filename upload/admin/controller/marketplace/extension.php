@@ -1,7 +1,7 @@
 <?php
-namespace Opencart\Application\Controller\Marketplace;
+namespace Opencart\Admin\Controller\Marketplace;
 class Extension extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): void {
 		$this->load->language('marketplace/extension');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -18,8 +18,6 @@ class Extension extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		$data['user_token'] = $this->session->data['user_token'];
-
 		if (isset($this->request->get['type'])) {
 			$data['type'] = $this->request->get['type'];
 		} else {
@@ -30,7 +28,7 @@ class Extension extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('setting/extension');
 
-		$files = glob(DIR_APPLICATION . 'controller/extension/*.php', GLOB_BRACE);
+		$files = glob(DIR_APPLICATION . 'controller/extension/*.php');
 
 		foreach ($files as $file) {
 			$extension = basename($file, '.php');
@@ -55,6 +53,8 @@ class Extension extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['extension'] = '';
 		}
+
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

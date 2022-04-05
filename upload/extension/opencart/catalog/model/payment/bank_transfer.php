@@ -1,12 +1,12 @@
 <?php
-namespace Opencart\Application\Model\Extension\Opencart\Payment;
+namespace Opencart\Catalog\Model\Extension\Opencart\Payment;
 class BankTransfer extends \Opencart\System\Engine\Model {
-	public function getMethod($address, $total) {
+	public function getMethod(array $address): array {
 		$this->load->language('extension/opencart/payment/bank_transfer');
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone_to_geo_zone` WHERE `geo_zone_id` = '" . (int)$this->config->get('payment_bank_transfer_geo_zone_id') . "' AND `country_id` = '" . (int)$address['country_id'] . "' AND (`zone_id` = '" . (int)$address['zone_id'] . "' OR `zone_id` = '0')");
 
-		if ($this->config->get('payment_bank_transfer_total') > 0 && $this->config->get('payment_bank_transfer_total') > $total) {
+		if ($this->cart->hasSubscription()) {
 			$status = false;
 		} elseif (!$this->config->get('payment_bank_transfer_geo_zone_id')) {
 			$status = true;
@@ -21,8 +21,7 @@ class BankTransfer extends \Opencart\System\Engine\Model {
 		if ($status) {
 			$method_data = [
 				'code'       => 'bank_transfer',
-				'title'      => $this->language->get('text_title'),
-				'terms'      => '',
+				'title'      => $this->language->get('heading_title'),
 				'sort_order' => $this->config->get('payment_bank_transfer_sort_order')
 			];
 		}

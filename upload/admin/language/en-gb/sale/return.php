@@ -13,6 +13,7 @@ $_['text_order']           = 'Order Information';
 $_['text_product']         = 'Product Information &amp; Reason for Return';
 $_['text_history']         = 'History';
 $_['text_history_add']     = 'Add History';
+$_['text_filter']          = 'Filter';
 
 // Column
 $_['column_return_id']     = 'Return ID';
@@ -54,6 +55,7 @@ $_['help_product']         = '(Autocomplete)';
 // Error
 $_['error_warning']        = 'Warning: Please check the form carefully for errors!';
 $_['error_permission']     = 'Warning: You do not have permission to modify returns!';
+$_['error_return']         = 'Warning could not find selected return!';
 $_['error_order_id']       = 'Order ID required!';
 $_['error_firstname']      = 'First Name must be between 1 and 32 characters!';
 $_['error_lastname']       = 'Last Name must be between 1 and 32 characters!';

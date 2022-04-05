@@ -1,9 +1,12 @@
 <?php
-namespace Opencart\Application\Controller\Extension\Opencart\Total;
+namespace Opencart\Catalog\Controller\Extension\Opencart\Total;
 class Coupon extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): string {
 		if ($this->config->get('total_coupon_status')) {
 			$this->load->language('extension/opencart/total/coupon');
+
+			$data['save'] = $this->url->link('extension/opencart/total/coupon|save', 'language=' . $this->config->get('config_language'), true);
+			$data['list'] = $this->url->link('checkout/cart|list', 'language=' . $this->config->get('config_language'), true);
 
 			if (isset($this->session->data['coupon'])) {
 				$data['coupon'] = $this->session->data['coupon'];
@@ -13,14 +16,14 @@ class Coupon extends \Opencart\System\Engine\Controller {
 
 			return $this->load->view('extension/opencart/total/coupon', $data);
 		}
+
+		return '';
 	}
 
-	public function coupon() {
+	public function save(): void {
 		$this->load->language('extension/opencart/total/coupon');
 
 		$json = [];
-
-		$this->load->model('extension/opencart/total/coupon');
 
 		if (isset($this->request->post['coupon'])) {
 			$coupon = $this->request->post['coupon'];
@@ -28,19 +31,30 @@ class Coupon extends \Opencart\System\Engine\Controller {
 			$coupon = '';
 		}
 
-		$coupon_info = $this->model_extension_total_coupon->getCoupon($coupon);
+		if (!$this->config->get('total_coupon_status')) {
+			$json['error'] = $this->language->get('error_status');
+		}
 
-		if (empty($this->request->post['coupon'])) {
-			$json['error'] = $this->language->get('error_empty');
+		if ($coupon) {
+			$this->load->model('marketing/coupon');
 
-			unset($this->session->data['coupon']);
-		} elseif ($coupon_info) {
-			$this->session->data['coupon'] = $this->request->post['coupon'];
-			$this->session->data['success'] = $this->language->get('text_success');
+			$coupon_info = $this->model_marketing_coupon->getCoupon($coupon);
 
-			$json['redirect'] = redirect_link($this->url->link('checkout/cart', 'language=' . $this->config->get('config_language')));
-		} else {
-			$json['error'] = $this->language->get('error_coupon');
+			if (!$coupon_info) {
+				$json['error'] = $this->language->get('error_coupon');
+			}
+		}
+
+		if (!$json) {
+			if ($coupon) {
+				$this->session->data['coupon'] = $coupon;
+
+				$json['success'] = $this->language->get('text_success');
+			} else {
+				unset($this->session->data['coupon']);
+
+				$json['success'] = $this->language->get('text_remove');
+			}
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

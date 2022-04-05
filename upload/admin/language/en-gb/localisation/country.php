@@ -7,6 +7,7 @@ $_['text_success']            = 'Success: You have modified countries!';
 $_['text_list']               = 'Country List';
 $_['text_add']                = 'Add Country';
 $_['text_edit']               = 'Edit Country';
+$_['text_filter']             = 'Filter';
 
 // Column
 $_['column_name']             = 'Country Name';
@@ -21,9 +22,6 @@ $_['entry_iso_code_3']        = 'ISO Code (3)';
 $_['entry_address_format']    = 'Address Format';
 $_['entry_postcode_required'] = 'Postcode Required';
 $_['entry_status']            = 'Status';
-
-// Help
-$_['help_address_format']     = 'First Name = {firstname}<br />Last Name = {lastname}<br />Company = {company}<br />Address 1 = {address_1}<br />Address 2 = {address_2}<br />City = {city}<br />Postcode = {postcode}<br />Zone = {zone}<br />Zone Code = {zone_code}<br />Country = {country}';
 
 // Error
 $_['error_permission']        = 'Warning: You do not have permission to modify countries!';

@@ -4,6 +4,7 @@ namespace GuzzleHttp;
 
 use GuzzleHttp\Cookie\CookieJarInterface;
 use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Promise as P;
 use GuzzleHttp\Promise\PromiseInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -46,24 +47,26 @@ final class Middleware
 
     /**
      * Middleware that throws exceptions for 4xx or 5xx responses when the
-     * "http_error" request option is set to true.
+     * "http_errors" request option is set to true.
+     *
+     * @param BodySummarizerInterface|null $bodySummarizer The body summarizer to use in exception messages.
      *
      * @return callable(callable): callable Returns a function that accepts the next handler.
      */
-    public static function httpErrors(): callable
+    public static function httpErrors(BodySummarizerInterface $bodySummarizer = null): callable
     {
-        return static function (callable $handler): callable {
-            return static function ($request, array $options) use ($handler) {
+        return static function (callable $handler) use ($bodySummarizer): callable {
+            return static function ($request, array $options) use ($handler, $bodySummarizer) {
                 if (empty($options['http_errors'])) {
                     return $handler($request, $options);
                 }
                 return $handler($request, $options)->then(
-                    static function (ResponseInterface $response) use ($request) {
+                    static function (ResponseInterface $response) use ($request, $bodySummarizer) {
                         $code = $response->getStatusCode();
                         if ($code < 400) {
                             return $response;
                         }
-                        throw RequestException::create($request, $response);
+                        throw RequestException::create($request, $response, null, [], $bodySummarizer);
                     }
                 );
             };
@@ -104,7 +107,7 @@ final class Middleware
                             'error'    => $reason,
                             'options'  => $options
                         ];
-                        return \GuzzleHttp\Promise\rejection_for($reason);
+                        return P\Create::rejectionFor($reason);
                     }
                 );
             };
@@ -180,14 +183,19 @@ final class Middleware
      *
      * @phpstan-param \Psr\Log\LogLevel::* $logLevel  Level at which to log requests.
      *
-     * @param LoggerInterface  $logger    Logs messages.
-     * @param MessageFormatter $formatter Formatter used to create message strings.
-     * @param string           $logLevel  Level at which to log requests.
+     * @param LoggerInterface                            $logger    Logs messages.
+     * @param MessageFormatterInterface|MessageFormatter $formatter Formatter used to create message strings.
+     * @param string                                     $logLevel  Level at which to log requests.
      *
      * @return callable Returns a function that accepts the next handler.
      */
-    public static function log(LoggerInterface $logger, MessageFormatter $formatter, string $logLevel = 'info'): callable
+    public static function log(LoggerInterface $logger, $formatter, string $logLevel = 'info'): callable
     {
+        // To be compatible with Guzzle 7.1.x we need to allow users to pass a MessageFormatter
+        if (!$formatter instanceof MessageFormatter && !$formatter instanceof MessageFormatterInterface) {
+            throw new \LogicException(sprintf('Argument 2 to %s::log() must be of type %s', self::class, MessageFormatterInterface::class));
+        }
+
         return static function (callable $handler) use ($logger, $formatter, $logLevel): callable {
             return static function (RequestInterface $request, array $options = []) use ($handler, $logger, $formatter, $logLevel) {
                 return $handler($request, $options)->then(
@@ -197,12 +205,10 @@ final class Middleware
                         return $response;
                     },
                     static function ($reason) use ($logger, $request, $formatter): PromiseInterface {
-                        $response = $reason instanceof RequestException
-                            ? $reason->getResponse()
-                            : null;
-                        $message = $formatter->format($request, $response, \GuzzleHttp\Promise\exception_for($reason));
+                        $response = $reason instanceof RequestException ? $reason->getResponse() : null;
+                        $message = $formatter->format($request, $response, P\Create::exceptionFor($reason));
                         $logger->error($message);
-                        return \GuzzleHttp\Promise\rejection_for($reason);
+                        return P\Create::rejectionFor($reason);
                     }
                 );
             };

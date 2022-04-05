@@ -1,117 +1,59 @@
 <?php
-namespace Opencart\Application\Controller\Localisation;
+namespace Opencart\Admin\Controller\Localisation;
 class ReturnAction extends \Opencart\System\Engine\Controller {
-	private $error = [];
 
-	public function index() {
+	public function index(): void {
 		$this->load->language('localisation/return_action');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('localisation/return_action');
+		$url = '';
 
-		$this->getList();
-	}
-
-	public function add() {
-		$this->load->language('localisation/return_action');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('localisation/return_action');
-
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_localisation_return_action->addReturnAction($this->request->post);
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('localisation/return_action', 'user_token=' . $this->session->data['user_token'] . $url));
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
 		}
 
-		$this->getForm();
-	}
-
-	public function edit() {
-		$this->load->language('localisation/return_action');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('localisation/return_action');
-
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_localisation_return_action->editReturnAction($this->request->get['return_action_id'], $this->request->post);
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('localisation/return_action', 'user_token=' . $this->session->data['user_token'] . $url));
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
 		}
 
-		$this->getForm();
-	}
-
-	public function delete() {
-		$this->load->language('localisation/return_action');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('localisation/return_action');
-
-		if (isset($this->request->post['selected']) && $this->validateDelete()) {
-			foreach ($this->request->post['selected'] as $return_action_id) {
-				$this->model_localisation_return_action->deleteReturnAction($return_action_id);
-			}
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('localisation/return_action', 'user_token=' . $this->session->data['user_token'] . $url));
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$this->getList();
+		$data['breadcrumbs'] = [];
+
+		$data['breadcrumbs'][] = [
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+		];
+
+		$data['breadcrumbs'][] = [
+			'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('localisation/return_action', 'user_token=' . $this->session->data['user_token'] . $url)
+		];
+
+		$data['add'] = $this->url->link('localisation/return_action|form', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['delete'] = $this->url->link('localisation/return_action|delete', 'user_token=' . $this->session->data['user_token']);
+
+		$data['list'] = $this->getList();
+
+		$data['user_token'] = $this->session->data['user_token'];
+
+		$data['header'] = $this->load->controller('common/header');
+		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['footer'] = $this->load->controller('common/footer');
+
+		$this->response->setOutput($this->load->view('localisation/return_action', $data));
 	}
 
-	protected function getList() {
+	public function list(): void {
+		$this->load->language('localisation/return_action');
+
+		$this->response->setOutput($this->getList());
+	}
+
+	protected function getList(): string {
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
 		} else {
@@ -144,29 +86,18 @@ class ReturnAction extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['breadcrumbs'] = [];
-
-		$data['breadcrumbs'][] = [
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		];
-
-		$data['breadcrumbs'][] = [
-			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('localisation/return_action', 'user_token=' . $this->session->data['user_token'] . $url)
-		];
-
-		$data['add'] = $this->url->link('localisation/return_action|add', 'user_token=' . $this->session->data['user_token'] . $url);
-		$data['delete'] = $this->url->link('localisation/return_action|delete', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['action'] = $this->url->link('localisation/return_action|list', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$data['return_actions'] = [];
 
 		$filter_data = [
 			'sort'  => $sort,
 			'order' => $order,
-			'start' => ($page - 1) * $this->config->get('config_pagination'),
-			'limit' => $this->config->get('config_pagination')
+			'start' => ($page - 1) * $this->config->get('config_pagination_admin'),
+			'limit' => $this->config->get('config_pagination_admin')
 		];
+
+		$this->load->model('localisation/return_action');
 
 		$return_action_total = $this->model_localisation_return_action->getTotalReturnActions();
 
@@ -176,28 +107,8 @@ class ReturnAction extends \Opencart\System\Engine\Controller {
 			$data['return_actions'][] = [
 				'return_action_id' => $result['return_action_id'],
 				'name'             => $result['name'],
-				'edit'             => $this->url->link('localisation/return_action|edit', 'user_token=' . $this->session->data['user_token'] . '&return_action_id=' . $result['return_action_id'] . $url)
+				'edit'             => $this->url->link('localisation/return_action|form', 'user_token=' . $this->session->data['user_token'] . '&return_action_id=' . $result['return_action_id'] . $url)
 			];
-		}
-
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-
-		if (isset($this->session->data['success'])) {
-			$data['success'] = $this->session->data['success'];
-
-			unset($this->session->data['success']);
-		} else {
-			$data['success'] = '';
-		}
-
-		if (isset($this->request->post['selected'])) {
-			$data['selected'] = (array)$this->request->post['selected'];
-		} else {
-			$data['selected'] = [];
 		}
 
 		$url = '';
@@ -212,7 +123,7 @@ class ReturnAction extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['sort_name'] = $this->url->link('localisation/return_action', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
+		$data['sort_name'] = $this->url->link('localisation/return_action|list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
 
 		$url = '';
 
@@ -227,36 +138,24 @@ class ReturnAction extends \Opencart\System\Engine\Controller {
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $return_action_total,
 			'page'  => $page,
-			'limit' => $this->config->get('config_pagination'),
-			'url'   => $this->url->link('localisation/return_action', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+			'limit' => $this->config->get('config_pagination_admin'),
+			'url'   => $this->url->link('localisation/return_action|list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
 		]);
 
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($return_action_total) ? (($page - 1) * $this->config->get('config_pagination')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination')) > ($return_action_total - $this->config->get('config_pagination'))) ? $return_action_total : ((($page - 1) * $this->config->get('config_pagination')) + $this->config->get('config_pagination')), $return_action_total, ceil($return_action_total / $this->config->get('config_pagination')));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($return_action_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($return_action_total - $this->config->get('config_pagination_admin'))) ? $return_action_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $return_action_total, ceil($return_action_total / $this->config->get('config_pagination_admin')));
 
 		$data['sort'] = $sort;
 		$data['order'] = $order;
 
-		$data['header'] = $this->load->controller('common/header');
-		$data['column_left'] = $this->load->controller('common/column_left');
-		$data['footer'] = $this->load->controller('common/footer');
-
-		$this->response->setOutput($this->load->view('localisation/return_action_list', $data));
+		return $this->load->view('localisation/return_action_list', $data);
 	}
 
-	protected function getForm() {
+	public function form(): void {
+		$this->load->language('localisation/return_action');
+
+		$this->document->setTitle($this->language->get('heading_title'));
+
 		$data['text_form'] = !isset($this->request->get['return_action_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
-
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-
-		if (isset($this->error['name'])) {
-			$data['error_name'] = $this->error['name'];
-		} else {
-			$data['error_name'] = [];
-		}
 
 		$url = '';
 
@@ -284,21 +183,22 @@ class ReturnAction extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('localisation/return_action', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		if (!isset($this->request->get['return_action_id'])) {
-			$data['action'] = $this->url->link('localisation/return_action|add', 'user_token=' . $this->session->data['user_token'] . $url);
-		} else {
-			$data['action'] = $this->url->link('localisation/return_action|edit', 'user_token=' . $this->session->data['user_token'] . '&return_action_id=' . $this->request->get['return_action_id'] . $url);
-		}
+		$data['save'] = $this->url->link('localisation/return_action|save', 'user_token=' . $this->session->data['user_token']);
+		$data['back'] = $this->url->link('localisation/return_action', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		$data['cancel'] = $this->url->link('localisation/return_action', 'user_token=' . $this->session->data['user_token'] . $url);
+		if (isset($this->request->get['return_action_id'])) {
+			$data['return_action_id'] = (int)$this->request->get['return_action_id'];
+		} else {
+			$data['return_action_id'] = 0;
+		}
 
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
-		if (isset($this->request->post['return_action'])) {
-			$data['return_action'] = $this->request->post['return_action'];
-		} elseif (isset($this->request->get['return_action_id'])) {
+		if (isset($this->request->get['return_action_id'])) {
+			$this->load->model('localisation/return_action');
+
 			$data['return_action'] = $this->model_localisation_return_action->getDescriptions($this->request->get['return_action_id']);
 		} else {
 			$data['return_action'] = [];
@@ -311,35 +211,73 @@ class ReturnAction extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('localisation/return_action_form', $data));
 	}
 
-	protected function validateForm() {
+	public function save(): void {
+		$this->load->language('localisation/return_action');
+
+		$json = [];
+
 		if (!$this->user->hasPermission('modify', 'localisation/return_action')) {
-			$this->error['warning'] = $this->language->get('error_permission');
+			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
 		foreach ($this->request->post['return_action'] as $language_id => $value) {
 			if ((utf8_strlen($value['name']) < 3) || (utf8_strlen($value['name']) > 64)) {
-				$this->error['name'][$language_id] = $this->language->get('error_name');
+				$json['error']['name_' . $language_id] = $this->language->get('error_name');
 			}
 		}
 
-		return !$this->error;
+		if (!$json) {
+			$this->load->model('localisation/return_action');
+
+			if (!$this->request->post['return_action_id']) {
+				$json['return_action_id'] = $this->model_localisation_return_action->addReturnAction($this->request->post);
+			} else {
+				$this->model_localisation_return_action->editReturnAction($this->request->post['return_action_id'], $this->request->post);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
-	protected function validateDelete() {
+	public function delete(): void {
+		$this->load->language('localisation/return_action');
+
+		$json = [];
+
+		if (isset($this->request->post['selected'])) {
+			$selected = $this->request->post['selected'];
+		} else {
+			$selected = [];
+		}
+
 		if (!$this->user->hasPermission('modify', 'localisation/return_action')) {
-			$this->error['warning'] = $this->language->get('error_permission');
+			$json['error'] = $this->language->get('error_permission');
 		}
 
 		$this->load->model('sale/returns');
 
-		foreach ($this->request->post['selected'] as $return_action_id) {
+		foreach ($selected as $return_action_id) {
 			$return_total = $this->model_sale_returns->getTotalReturnsByReturnActionId($return_action_id);
 
 			if ($return_total) {
-				$this->error['warning'] = sprintf($this->language->get('error_return'), $return_total);
+				$json['error'] = sprintf($this->language->get('error_return'), $return_total);
 			}
 		}
 
-		return !$this->error;
+		if (!$json) {
+			$this->load->model('localisation/return_action');
+
+			foreach ($selected as $return_action_id) {
+				$this->model_localisation_return_action->deleteReturnAction($return_action_id);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 }

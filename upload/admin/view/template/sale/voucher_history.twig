@@ -2,20 +2,20 @@
   <table class="table table-bordered table-hover">
     <thead>
       <tr>
-        <td class="text-right">{{ column_order_id }}</td>
-        <td class="text-left">{{ column_customer }}</td>
-        <td class="text-right">{{ column_amount }}</td>
-        <td class="text-left">{{ column_date_added }}</td>
+        <td class="text-end">{{ column_order_id }}</td>
+        <td class="text-start">{{ column_customer }}</td>
+        <td class="text-end">{{ column_amount }}</td>
+        <td class="text-start">{{ column_date_added }}</td>
       </tr>
     </thead>
     <tbody>
       {% if histories %}
         {% for history in histories %}
           <tr>
-            <td class="text-right">{{ history.order_id }}</td>
-            <td class="text-left">{{ history.customer }}</td>
-            <td class="text-right">{{ history.amount }}</td>
-            <td class="text-left">{{ history.date_added }}</td>
+            <td class="text-end">{{ history.order_id }}</td>
+            <td class="text-start">{{ history.customer }}</td>
+            <td class="text-end">{{ history.amount }}</td>
+            <td class="text-start">{{ history.date_added }}</td>
           </tr>
         {% endfor %}
       {% else %}
@@ -27,6 +27,6 @@
   </table>
 </div>
 <div class="row">
-  <div class="col-sm-6 text-left">{{ pagination }}</div>
-  <div class="col-sm-6 text-right">{{ results }}</div>
+  <div class="col-sm-6 text-start">{{ pagination }}</div>
+  <div class="col-sm-6 text-end">{{ results }}</div>
 </div>

@@ -1,117 +1,58 @@
 <?php
-namespace Opencart\Application\Controller\Design;
+namespace Opencart\Admin\Controller\Design;
 class Layout extends \Opencart\System\Engine\Controller {
-	private $error = [];
-
-	public function index() {
+	public function index(): void {
 		$this->load->language('design/layout');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('design/layout');
+		$url = '';
 
-		$this->getList();
-	}
-
-	public function add() {
-		$this->load->language('design/layout');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('design/layout');
-
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_design_layout->addLayout($this->request->post);
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('design/layout', 'user_token=' . $this->session->data['user_token'] . $url));
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
 		}
 
-		$this->getForm();
-	}
-
-	public function edit() {
-		$this->load->language('design/layout');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('design/layout');
-
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_design_layout->editLayout($this->request->get['layout_id'], $this->request->post);
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('design/layout', 'user_token=' . $this->session->data['user_token'] . $url));
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
 		}
 
-		$this->getForm();
-	}
-
-	public function delete() {
-		$this->load->language('design/layout');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('design/layout');
-
-		if (isset($this->request->post['selected']) && $this->validateDelete()) {
-			foreach ($this->request->post['selected'] as $layout_id) {
-				$this->model_design_layout->deleteLayout($layout_id);
-			}
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('design/layout', 'user_token=' . $this->session->data['user_token'] . $url));
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$this->getList();
+		$data['breadcrumbs'] = [];
+
+		$data['breadcrumbs'][] = [
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+		];
+
+		$data['breadcrumbs'][] = [
+			'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('design/layout', 'user_token=' . $this->session->data['user_token'] . $url)
+		];
+
+		$data['add'] = $this->url->link('design/layout|form', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['delete'] = $this->url->link('design/layout|delete', 'user_token=' . $this->session->data['user_token']);
+
+		$data['list'] = $this->getList();
+
+		$data['user_token'] = $this->session->data['user_token'];
+
+		$data['header'] = $this->load->controller('common/header');
+		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['footer'] = $this->load->controller('common/footer');
+
+		$this->response->setOutput($this->load->view('design/layout', $data));
 	}
 
-	protected function getList() {
+	public function list(): void {
+		$this->load->language('design/layout');
+
+		$this->response->setOutput($this->getList());
+	}
+
+	protected function getList(): string {
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
 		} else {
@@ -144,29 +85,18 @@ class Layout extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['breadcrumbs'] = [];
-
-		$data['breadcrumbs'][] = [
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		];
-
-		$data['breadcrumbs'][] = [
-			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('design/layout', 'user_token=' . $this->session->data['user_token'] . $url)
-		];
-
-		$data['add'] = $this->url->link('design/layout|add', 'user_token=' . $this->session->data['user_token'] . $url);
-		$data['delete'] = $this->url->link('design/layout|delete', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['action'] = $this->url->link('design/layout|list', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$data['layouts'] = [];
 
 		$filter_data = [
 			'sort'  => $sort,
 			'order' => $order,
-			'start' => ($page - 1) * $this->config->get('config_pagination'),
-			'limit' => $this->config->get('config_pagination')
+			'start' => ($page - 1) * $this->config->get('config_pagination_admin'),
+			'limit' => $this->config->get('config_pagination_admin')
 		];
+
+		$this->load->model('design/layout');
 
 		$layout_total = $this->model_design_layout->getTotalLayouts();
 
@@ -176,28 +106,8 @@ class Layout extends \Opencart\System\Engine\Controller {
 			$data['layouts'][] = [
 				'layout_id' => $result['layout_id'],
 				'name'      => $result['name'],
-				'edit'      => $this->url->link('design/layout|edit', 'user_token=' . $this->session->data['user_token'] . '&layout_id=' . $result['layout_id'] . $url)
+				'edit'      => $this->url->link('design/layout|form', 'user_token=' . $this->session->data['user_token'] . '&layout_id=' . $result['layout_id'] . $url)
 			];
-		}
-
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-
-		if (isset($this->session->data['success'])) {
-			$data['success'] = $this->session->data['success'];
-
-			unset($this->session->data['success']);
-		} else {
-			$data['success'] = '';
-		}
-
-		if (isset($this->request->post['selected'])) {
-			$data['selected'] = (array)$this->request->post['selected'];
-		} else {
-			$data['selected'] = [];
 		}
 
 		$url = '';
@@ -212,7 +122,7 @@ class Layout extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['sort_name'] = $this->url->link('design/layout', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
+		$data['sort_name'] = $this->url->link('design/layout|list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
 
 		$url = '';
 
@@ -227,36 +137,24 @@ class Layout extends \Opencart\System\Engine\Controller {
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $layout_total,
 			'page'  => $page,
-			'limit' => $this->config->get('config_pagination'),
-			'url'   => $this->url->link('design/layout', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+			'limit' => $this->config->get('config_pagination_admin'),
+			'url'   => $this->url->link('design/layout|list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
 		]);
 
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($layout_total) ? (($page - 1) * $this->config->get('config_pagination')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination')) > ($layout_total - $this->config->get('config_pagination'))) ? $layout_total : ((($page - 1) * $this->config->get('config_pagination')) + $this->config->get('config_pagination')), $layout_total, ceil($layout_total / $this->config->get('config_pagination')));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($layout_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($layout_total - $this->config->get('config_pagination_admin'))) ? $layout_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $layout_total, ceil($layout_total / $this->config->get('config_pagination_admin')));
 
 		$data['sort'] = $sort;
 		$data['order'] = $order;
 
-		$data['header'] = $this->load->controller('common/header');
-		$data['column_left'] = $this->load->controller('common/column_left');
-		$data['footer'] = $this->load->controller('common/footer');
-
-		$this->response->setOutput($this->load->view('design/layout_list', $data));
+		return $this->load->view('design/layout_list', $data);
 	}
 
-	protected function getForm() {
+	public function form(): void {
+		$this->load->language('design/layout');
+
+		$this->document->setTitle($this->language->get('heading_title'));
+
 		$data['text_form'] = !isset($this->request->get['layout_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
-
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-
-		if (isset($this->error['name'])) {
-			$data['error_name'] = $this->error['name'];
-		} else {
-			$data['error_name'] = '';
-		}
 
 		$url = '';
 
@@ -284,23 +182,22 @@ class Layout extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('design/layout', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		if (!isset($this->request->get['layout_id'])) {
-			$data['action'] = $this->url->link('design/layout|add', 'user_token=' . $this->session->data['user_token'] . $url);
-		} else {
-			$data['action'] = $this->url->link('design/layout|edit', 'user_token=' . $this->session->data['user_token'] . '&layout_id=' . $this->request->get['layout_id'] . $url);
-		}
+		$data['save'] = $this->url->link('design/layout|save', 'user_token=' . $this->session->data['user_token']);
+		$data['back'] = $this->url->link('design/layout', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		$data['cancel'] = $this->url->link('design/layout', 'user_token=' . $this->session->data['user_token'] . $url);
+		if (isset($this->request->get['layout_id'])) {
+			$this->load->model('design/layout');
 
-		$data['user_token'] = $this->session->data['user_token'];
-
-		if (isset($this->request->get['layout_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$layout_info = $this->model_design_layout->getLayout($this->request->get['layout_id']);
 		}
 
-		if (isset($this->request->post['name'])) {
-			$data['name'] = $this->request->post['name'];
-		} elseif (!empty($layout_info)) {
+		if (isset($this->request->get['layout_id'])) {
+			$data['layout_id'] = (int)$this->request->get['layout_id'];
+		} else {
+			$data['layout_id'] = 0;
+		}
+
+		if (!empty($layout_info)) {
 			$data['name'] = $layout_info['name'];
 		} else {
 			$data['name'] = '';
@@ -310,9 +207,7 @@ class Layout extends \Opencart\System\Engine\Controller {
 
 		$data['stores'] = $this->model_setting_store->getStores();
 
-		if (isset($this->request->post['layout_route'])) {
-			$data['layout_routes'] = $this->request->post['layout_route'];
-		} elseif (!empty($layout_info)) {
+		if (isset($this->request->get['layout_id'])) {
 			$data['layout_routes'] = $this->model_design_layout->getRoutes($this->request->get['layout_id']);
 		} else {
 			$data['layout_routes'] = [];
@@ -352,9 +247,7 @@ class Layout extends \Opencart\System\Engine\Controller {
 		}
 
 		// Modules layout
-		if (isset($this->request->post['layout_module'])) {
-			$layout_modules = $this->request->post['layout_module'];
-		} elseif (!empty($layout_info)) {
+		if (!empty($layout_info)) {
 			$layout_modules = $this->model_design_layout->getModules($this->request->get['layout_id']);
 		} else {
 			$layout_modules = [];
@@ -387,6 +280,8 @@ class Layout extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		$data['user_token'] = $this->session->data['user_token'];
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -394,21 +289,48 @@ class Layout extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('design/layout_form', $data));
 	}
 
-	protected function validateForm() {
+	public function save(): void {
+		$this->load->language('design/layout');
+
+		$json = [];
+
 		if (!$this->user->hasPermission('modify', 'design/layout')) {
-			$this->error['warning'] = $this->language->get('error_permission');
+			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		if ((utf8_strlen(trim($this->request->post['name'])) < 3) || (utf8_strlen($this->request->post['name']) > 64)) {
-			$this->error['name'] = $this->language->get('error_name');
+		if ((utf8_strlen($this->request->post['name']) < 3) || (utf8_strlen($this->request->post['name']) > 64)) {
+			$json['error']['name'] = $this->language->get('error_name');
 		}
 
-		return !$this->error;
+		if (!$json) {
+			$this->load->model('design/layout');
+
+			if (!$this->request->post['layout_id']) {
+				$json['layout_id'] = $this->model_design_layout->addLayout($this->request->post);
+			} else {
+				$this->model_design_layout->editLayout($this->request->post['layout_id'], $this->request->post);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
-	protected function validateDelete() {
+	public function delete(): void {
+		$this->load->language('design/layout');
+
+		$json = [];
+
+		if (isset($this->request->post['selected'])) {
+			$selected = $this->request->post['selected'];
+		} else {
+			$selected = [];
+		}
+
 		if (!$this->user->hasPermission('modify', 'design/layout')) {
-			$this->error['warning'] = $this->language->get('error_permission');
+			$json['error'] = $this->language->get('error_permission');
 		}
 
 		$this->load->model('setting/store');
@@ -417,42 +339,53 @@ class Layout extends \Opencart\System\Engine\Controller {
 		$this->load->model('catalog/manufacturer');
 		$this->load->model('catalog/information');
 
-		foreach ($this->request->post['selected'] as $layout_id) {
+		foreach ($selected as $layout_id) {
 			if ($this->config->get('config_layout_id') == $layout_id) {
-				$this->error['warning'] = $this->language->get('error_default');
+				$json['error'] = $this->language->get('error_default');
 			}
 
 			$store_total = $this->model_setting_store->getTotalStoresByLayoutId($layout_id);
 
 			if ($store_total) {
-				$this->error['warning'] = sprintf($this->language->get('error_store'), $store_total);
+				$json['error'] = sprintf($this->language->get('error_store'), $store_total);
 			}
 
 			$product_total = $this->model_catalog_product->getTotalProductsByLayoutId($layout_id);
 
 			if ($product_total) {
-				$this->error['warning'] = sprintf($this->language->get('error_product'), $product_total);
+				$json['error'] = sprintf($this->language->get('error_product'), $product_total);
 			}
 
 			$category_total = $this->model_catalog_category->getTotalCategoriesByLayoutId($layout_id);
 
 			if ($category_total) {
-				$this->error['warning'] = sprintf($this->language->get('error_category'), $category_total);
+				$json['error'] = sprintf($this->language->get('error_category'), $category_total);
 			}
 
 			$manufacturer_total = $this->model_catalog_manufacturer->getTotalManufacturersByLayoutId($layout_id);
 
 			if ($manufacturer_total) {
-				$this->error['warning'] = sprintf($this->language->get('error_manufacturer'), $manufacturer_total);
+				$json['error'] = sprintf($this->language->get('error_manufacturer'), $manufacturer_total);
 			}
 
 			$information_total = $this->model_catalog_information->getTotalInformationsByLayoutId($layout_id);
 
 			if ($information_total) {
-				$this->error['warning'] = sprintf($this->language->get('error_information'), $information_total);
+				$json['error'] = sprintf($this->language->get('error_information'), $information_total);
 			}
 		}
 
-		return !$this->error;
+		if (!$json) {
+			$this->load->model('design/layout');
+
+			foreach ($selected as $layout_id) {
+				$this->model_design_layout->deleteLayout($layout_id);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 }

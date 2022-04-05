@@ -1,7 +1,7 @@
 <?php
-namespace Opencart\Application\Controller\Common;
+namespace Opencart\Admin\Controller\Common;
 class Notification extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): void {
 		if (empty($this->request->cookie['notification'])) {
 			$curl = curl_init();
 
@@ -35,15 +35,14 @@ class Notification extends \Opencart\System\Engine\Controller {
 
 			// Only grab the
 			$option = [
-				'max-age'  => time() + 3600 * 24 * 7,
+				'expires'  => time() + 3600 * 24 * 7,
 				'path'     => !empty($_SERVER['PHP_SELF']) ? dirname($_SERVER['PHP_SELF']) . '/' : '',
-				'domain'   => $this->request->server['HTTP_HOST'],
 				'secure'   => $this->request->server['HTTPS'],
 				'httponly' => false,
-				'SameSite' => 'strict'
+				'SameSite' => $this->config->get('session_samesite')
 			];
 
-			oc_setcookie('notification', true, $option);
+			setcookie('notification', true, $option);
 		}
 	}
 }

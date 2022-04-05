@@ -1,7 +1,7 @@
 <?php
-namespace Opencart\Application\Model\Extension\Opencart\Total;
+namespace Opencart\Catalog\Model\Extension\Opencart\Total;
 class Credit extends \Opencart\System\Engine\Model {
-	public function getTotal(&$totals, &$taxes, &$total) {
+	public function getTotal(array &$totals, array &$taxes, float &$total): void {
 		$this->load->language('extension/opencart/total/credit');
 
 		$balance = $this->customer->getBalance();
@@ -11,10 +11,11 @@ class Credit extends \Opencart\System\Engine\Model {
 
 			if ((float)$credit > 0) {
 				$totals[] = [
+					'extension'  => 'opencart',
 					'code'       => 'credit',
 					'title'      => $this->language->get('text_credit'),
 					'value'      => -$credit,
-					'sort_order' => $this->config->get('total_credit_sort_order')
+					'sort_order' => (int)$this->config->get('total_credit_sort_order')
 				];
 
 				$total -= $credit;
@@ -22,7 +23,7 @@ class Credit extends \Opencart\System\Engine\Model {
 		}
 	}
 
-	public function confirm($order_info, $order_total) {
+	public function confirm(array $order_info, array $order_total): void {
 		$this->load->language('extension/opencart/total/credit');
 
 		if ($order_info['customer_id']) {
@@ -30,7 +31,7 @@ class Credit extends \Opencart\System\Engine\Model {
 		}
 	}
 
-	public function unconfirm($order_id) {
+	public function unconfirm(int $order_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_transaction` WHERE `order_id` = '" . (int)$order_id . "'");
 	}
 }

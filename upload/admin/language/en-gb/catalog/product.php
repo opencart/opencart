@@ -32,6 +32,9 @@ $_['text_image']             = 'Image';
 $_['text_image_additional']  = 'Additional Images';
 $_['text_reward']            = 'Buy Points';
 $_['text_points']            = 'Reward Points';
+$_['text_subscription_trial']    = '%s every %d %s(s) for %d payment(s) then';
+$_['text_subscription_description'] = '%s every %d %s(s) for %d payment(s)';
+$_['text_subscription_cancel']      = '%s every %d %s(s) until canceled';
 
 // Column
 $_['column_name']            = 'Product Name';
@@ -40,9 +43,10 @@ $_['column_image']           = 'Image';
 $_['column_price']           = 'Price';
 $_['column_quantity']        = 'Quantity';
 $_['column_status']          = 'Status';
-$_['column_entry']           = 'Entry Name';
-$_['column_master']          = 'Master';
-$_['column_variant']         = 'Variant';
+$_['column_ip']              = 'IP';
+$_['column_store']           = 'Store';
+$_['column_country']         = 'Country';
+$_['column_date_added']      = 'Date Added';
 $_['column_action']          = 'Action';
 
 // Entry
@@ -98,7 +102,7 @@ $_['entry_related']          = 'Related Products';
 $_['entry_tag']              = 'Product Tags';
 $_['entry_reward']           = 'Reward Points';
 $_['entry_layout']           = 'Layout Override';
-$_['entry_recurring']        = 'Recurring Profile';
+$_['entry_subscription']     = 'Subscription Plans';
 
 // Help
 $_['help_tag']               = 'Comma separated';

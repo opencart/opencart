@@ -1,117 +1,58 @@
 <?php
-namespace Opencart\Application\Controller\Sale;
+namespace Opencart\Admin\Controller\Sale;
 class VoucherTheme extends \Opencart\System\Engine\Controller {
-	private $error = [];
-
-	public function index() {
+	public function index(): void {
 		$this->load->language('sale/voucher_theme');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('sale/voucher_theme');
+		$url = '';
 
-		$this->getList();
-	}
-
-	public function add() {
-		$this->load->language('sale/voucher_theme');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('sale/voucher_theme');
-
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_sale_voucher_theme->addVoucherTheme($this->request->post);
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('sale/voucher_theme', 'user_token=' . $this->session->data['user_token'] . $url));
+		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
 		}
 
-		$this->getForm();
-	}
-
-	public function edit() {
-		$this->load->language('sale/voucher_theme');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('sale/voucher_theme');
-
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_sale_voucher_theme->editVoucherTheme($this->request->get['voucher_theme_id'], $this->request->post);
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('sale/voucher_theme', 'user_token=' . $this->session->data['user_token'] . $url));
+		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
 		}
 
-		$this->getForm();
-	}
-
-	public function delete() {
-		$this->load->language('sale/voucher_theme');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('sale/voucher_theme');
-
-		if (isset($this->request->post['selected']) && $this->validateDelete()) {
-			foreach ($this->request->post['selected'] as $voucher_theme_id) {
-				$this->model_sale_voucher_theme->deleteVoucherTheme($voucher_theme_id);
-			}
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('sale/voucher_theme', 'user_token=' . $this->session->data['user_token'] . $url));
+		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$this->getList();
+		$data['breadcrumbs'] = [];
+
+		$data['breadcrumbs'][] = [
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+		];
+
+		$data['breadcrumbs'][] = [
+			'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('sale/voucher_theme', 'user_token=' . $this->session->data['user_token'] . $url)
+		];
+
+		$data['add'] = $this->url->link('sale/voucher_theme|form', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['delete'] = $this->url->link('sale/voucher_theme|delete', 'user_token=' . $this->session->data['user_token']);
+
+		$data['list'] = $this->getList();
+
+		$data['user_token'] = $this->session->data['user_token'];
+
+		$data['header'] = $this->load->controller('common/header');
+		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['footer'] = $this->load->controller('common/footer');
+
+		$this->response->setOutput($this->load->view('sale/voucher_theme', $data));
 	}
 
-	protected function getList() {
+	public function list(): void {
+		$this->load->language('sale/voucher_theme');
+
+		$this->response->setOutput($this->getList());
+	}
+
+	protected function getList(): string {
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
 		} else {
@@ -144,29 +85,18 @@ class VoucherTheme extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['breadcrumbs'] = [];
-
-		$data['breadcrumbs'][] = [
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
-		];
-
-		$data['breadcrumbs'][] = [
-			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('sale/voucher_theme', 'user_token=' . $this->session->data['user_token'] . $url)
-		];
-
-		$data['add'] = $this->url->link('sale/voucher_theme|add', 'user_token=' . $this->session->data['user_token'] . $url);
-		$data['delete'] = $this->url->link('sale/voucher_theme|delete', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['action'] = $this->url->link('sale/voucher_theme|list', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$data['voucher_themes'] = [];
 
 		$filter_data = [
 			'sort'  => $sort,
 			'order' => $order,
-			'start' => ($page - 1) * $this->config->get('config_pagination'),
-			'limit' => $this->config->get('config_pagination')
+			'start' => ($page - 1) * $this->config->get('config_pagination_admin'),
+			'limit' => $this->config->get('config_pagination_admin')
 		];
+
+		$this->load->model('sale/voucher_theme');
 
 		$voucher_theme_total = $this->model_sale_voucher_theme->getTotalVoucherThemes();
 
@@ -176,28 +106,8 @@ class VoucherTheme extends \Opencart\System\Engine\Controller {
 			$data['voucher_themes'][] = [
 				'voucher_theme_id' => $result['voucher_theme_id'],
 				'name'             => $result['name'],
-				'edit'             => $this->url->link('sale/voucher_theme|edit', 'user_token=' . $this->session->data['user_token'] . '&voucher_theme_id=' . $result['voucher_theme_id'] . $url)
+				'edit'             => $this->url->link('sale/voucher_theme|form', 'user_token=' . $this->session->data['user_token'] . '&voucher_theme_id=' . $result['voucher_theme_id'] . $url)
 			];
-		}
-
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-
-		if (isset($this->session->data['success'])) {
-			$data['success'] = $this->session->data['success'];
-
-			unset($this->session->data['success']);
-		} else {
-			$data['success'] = '';
-		}
-
-		if (isset($this->request->post['selected'])) {
-			$data['selected'] = (array)$this->request->post['selected'];
-		} else {
-			$data['selected'] = [];
 		}
 
 		$url = '';
@@ -212,7 +122,7 @@ class VoucherTheme extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['sort_name'] = $this->url->link('sale/voucher_theme', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
+		$data['sort_name'] = $this->url->link('sale/voucher_theme|list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
 
 		$url = '';
 
@@ -227,42 +137,24 @@ class VoucherTheme extends \Opencart\System\Engine\Controller {
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $voucher_theme_total,
 			'page'  => $page,
-			'limit' => $this->config->get('config_pagination'),
-			'url'   => $this->url->link('sale/voucher_theme', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+			'limit' => $this->config->get('config_pagination_admin'),
+			'url'   => $this->url->link('sale/voucher_theme|list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
 		]);
 
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($voucher_theme_total) ? (($page - 1) * $this->config->get('config_pagination')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination')) > ($voucher_theme_total - $this->config->get('config_pagination'))) ? $voucher_theme_total : ((($page - 1) * $this->config->get('config_pagination')) + $this->config->get('config_pagination')), $voucher_theme_total, ceil($voucher_theme_total / $this->config->get('config_pagination')));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($voucher_theme_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($voucher_theme_total - $this->config->get('config_pagination_admin'))) ? $voucher_theme_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $voucher_theme_total, ceil($voucher_theme_total / $this->config->get('config_pagination_admin')));
 
 		$data['sort'] = $sort;
 		$data['order'] = $order;
 
-		$data['header'] = $this->load->controller('common/header');
-		$data['column_left'] = $this->load->controller('common/column_left');
-		$data['footer'] = $this->load->controller('common/footer');
-
-		$this->response->setOutput($this->load->view('sale/voucher_theme_list', $data));
+		return $this->load->view('sale/voucher_theme_list', $data);
 	}
 
-	protected function getForm() {
+	public function form(): void {
+		$this->load->language('sale/voucher_theme');
+
+		$this->document->setTitle($this->language->get('heading_title'));
+
 		$data['text_form'] = !isset($this->request->get['voucher_theme_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
-
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-
-		if (isset($this->error['name'])) {
-			$data['error_name'] = $this->error['name'];
-		} else {
-			$data['error_name'] = [];
-		}
-
-		if (isset($this->error['image'])) {
-			$data['error_image'] = $this->error['image'];
-		} else {
-			$data['error_image'] = '';
-		}
 
 		$url = '';
 
@@ -290,35 +182,32 @@ class VoucherTheme extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('sale/voucher_theme', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		if (!isset($this->request->get['voucher_theme_id'])) {
-			$data['action'] = $this->url->link('sale/voucher_theme|add', 'user_token=' . $this->session->data['user_token'] . $url);
-		} else {
-			$data['action'] = $this->url->link('sale/voucher_theme|edit', 'user_token=' . $this->session->data['user_token'] . '&voucher_theme_id=' . $this->request->get['voucher_theme_id'] . $url);
-		}
+		$data['save'] = $this->url->link('sale/voucher_theme|save', 'user_token=' . $this->session->data['user_token']);
+		$data['back'] = $this->url->link('sale/voucher_theme', 'user_token=' . $this->session->data['user_token'] . $url);
 
-		$data['cancel'] = $this->url->link('sale/voucher_theme', 'user_token=' . $this->session->data['user_token'] . $url);
+		if (isset($this->request->get['voucher_theme_id'])) {
+			$this->load->model('sale/voucher_theme');
 
-		if (isset($this->request->get['voucher_theme_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$voucher_theme_info = $this->model_sale_voucher_theme->getVoucherTheme($this->request->get['voucher_theme_id']);
 		}
 
-		$data['user_token'] = $this->session->data['user_token'];
+		if (isset($this->request->get['voucher_theme_id'])) {
+			$data['voucher_theme_id'] = (int)$this->request->get['voucher_theme_id'];
+		} else {
+			$data['voucher_theme_id'] = 0;
+		}
 
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
-		if (isset($this->request->post['voucher_theme_description'])) {
-			$data['voucher_theme_description'] = $this->request->post['voucher_theme_description'];
-		} elseif (!empty($voucher_theme_info)) {
+		if (!empty($voucher_theme_info)) {
 			$data['voucher_theme_description'] = $this->model_sale_voucher_theme->getDescriptions($this->request->get['voucher_theme_id']);
 		} else {
 			$data['voucher_theme_description'] = [];
 		}
 
-		if (isset($this->request->post['image'])) {
-			$data['image'] = $this->request->post['image'];
-		} elseif (!empty($voucher_theme_info)) {
+		if (!empty($voucher_theme_info)) {
 			$data['image'] = $voucher_theme_info['image'];
 		} else {
 			$data['image'] = '';
@@ -334,6 +223,8 @@ class VoucherTheme extends \Opencart\System\Engine\Controller {
 			$data['thumb'] = $data['placeholder'];
 		}
 
+		$data['user_token'] = $this->session->data['user_token'];
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -341,39 +232,77 @@ class VoucherTheme extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('sale/voucher_theme_form', $data));
 	}
 
-	protected function validateForm() {
+	public function save(): void {
+		$this->load->language('sale/voucher_theme');
+
+		$json = [];
+
 		if (!$this->user->hasPermission('modify', 'sale/voucher_theme')) {
-			$this->error['warning'] = $this->language->get('error_permission');
+			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
 		foreach ($this->request->post['voucher_theme_description'] as $language_id => $value) {
 			if ((utf8_strlen($value['name']) < 3) || (utf8_strlen($value['name']) > 32)) {
-				$this->error['name'][$language_id] = $this->language->get('error_name');
+				$json['error']['name_' . $language_id] = $this->language->get('error_name');
 			}
 		}
 
 		if (!$this->request->post['image']) {
-			$this->error['image'] = $this->language->get('error_image');
+			$json['error']['image'] = $this->language->get('error_image');
 		}
 
-		return !$this->error;
+		if (!$json) {
+			$this->load->model('sale/voucher_theme');
+
+			if (!$this->request->post['voucher_theme_id']) {
+				$json['voucher_theme_id'] = $this->model_sale_voucher_theme->addVoucherTheme($this->request->post);
+			} else {
+				$this->model_sale_voucher_theme->editVoucherTheme($this->request->post['voucher_theme_id'], $this->request->post);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
-	protected function validateDelete() {
+	public function delete(): void {
+		$this->load->language('sale/voucher_theme');
+
+		$json = [];
+
+		if (isset($this->request->post['selected'])) {
+			$selected = $this->request->post['selected'];
+		} else {
+			$selected = [];
+		}
+
 		if (!$this->user->hasPermission('modify', 'sale/voucher_theme')) {
-			$this->error['warning'] = $this->language->get('error_permission');
+			$json['error'] = $this->language->get('error_permission');
 		}
 
 		$this->load->model('sale/voucher');
 
-		foreach ($this->request->post['selected'] as $voucher_theme_id) {
+		foreach ($selected as $voucher_theme_id) {
 			$voucher_total = $this->model_sale_voucher->getTotalVouchersByVoucherThemeId($voucher_theme_id);
 
 			if ($voucher_total) {
-				$this->error['warning'] = sprintf($this->language->get('error_voucher'), $voucher_total);
+				$json['error'] = sprintf($this->language->get('error_voucher'), $voucher_total);
 			}
 		}
 
-		return !$this->error;
+		if (!$json) {
+			$this->load->model('sale/voucher_theme');
+
+			foreach ($selected as $voucher_theme_id) {
+				$this->model_sale_voucher_theme->deleteVoucherTheme($voucher_theme_id);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 }

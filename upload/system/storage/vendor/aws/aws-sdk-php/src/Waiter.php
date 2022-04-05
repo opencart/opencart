@@ -88,7 +88,7 @@ class Waiter implements PromisorInterface
 
     public function promise()
     {
-        return Promise\coroutine(function () {
+        return Promise\Coroutine::of(function () {
             $name = $this->config['operation'];
             for ($state = 'retry', $attempt = 1; $state === 'retry'; $attempt++) {
                 // Execute the operation.

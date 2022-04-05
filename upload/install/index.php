@@ -11,6 +11,10 @@ if ((isset($_SERVER['HTTPS']) && (($_SERVER['HTTPS'] == 'on') || ($_SERVER['HTTP
 	$protocol = 'http://';
 }
 
+// APPLICATION
+define('APPLICATION', 'Install');
+
+// HTTP
 define('HTTP_SERVER', $protocol . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['SCRIPT_NAME']), '/.\\') . '/');
 define('HTTP_OPENCART', $protocol . $_SERVER['HTTP_HOST'] . rtrim(rtrim(dirname($_SERVER['SCRIPT_NAME']), 'install'), '/.\\') . '/');
 
@@ -27,7 +31,6 @@ define('DIR_CONFIG', DIR_SYSTEM . 'config/');
 define('DIR_CACHE', DIR_SYSTEM . 'storage/cache/');
 define('DIR_DOWNLOAD', DIR_SYSTEM . 'storage/download/');
 define('DIR_LOGS', DIR_SYSTEM . 'storage/logs/');
-define('DIR_MODIFICATION', DIR_SYSTEM . 'storage/modification/');
 define('DIR_SESSION', DIR_SYSTEM . 'storage/session/');
 define('DIR_UPLOAD', DIR_SYSTEM . 'storage/upload/');
 

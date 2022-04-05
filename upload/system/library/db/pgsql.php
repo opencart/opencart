@@ -3,17 +3,24 @@ namespace Opencart\System\Library\DB;
 final class PgSQL {
 	private $connection;
 
-	public function __construct($hostname, $username, $password, $database, $port = '5432') {
-		$this->connection = @pg_connect('hostname=' . $hostname . ' port=' . $port .  ' username=' . $username . ' password='	. $password . ' database=' . $database);
+	public function __construct(string $hostname, string $username, string $password, string $database, string $port = '') {
+		if (!$port) {
+			$port = '5432';
+		}
 
-		if (!$this->connection) {
+		try {
+			$pg = @pg_connect('hostname=' . $hostname . ' port=' . $port .  ' username=' . $username . ' password='	. $password . ' database=' . $database);
+		} catch (\Exception $e) {
 			throw new \Exception('Error: Could not make a database link using ' . $username . '@' . $hostname);
 		}
 
-		pg_query($this->connection, "SET CLIENT_ENCODING TO 'UTF8'");
+		if ($pg) {
+			$this->connection = $pg;
+			pg_query($this->connection, "SET CLIENT_ENCODING TO 'UTF8'");
+		}
 	}
 
-	public function query($sql) {
+	public function query(string $sql): bool|object {
 		$resource = pg_query($this->connection, $sql);
 
 		if ($resource) {
@@ -46,15 +53,15 @@ final class PgSQL {
 		}
 	}
 
-	public function escape($value) {
+	public function escape(string $value): string  {
 		return pg_escape_string($this->connection, $value);
 	}
 
-	public function countAffected() {
+	public function countAffected(): int {
 		return pg_affected_rows($this->connection);
 	}
 
-	public function isConnected() {
+	public function isConnected(): bool {
 		if (pg_connection_status($this->connection) == PGSQL_CONNECTION_OK) {
 			return true;
 		} else {
@@ -62,15 +69,17 @@ final class PgSQL {
 		}
 	}
 
-	public function getLastId() {
+	public function getLastId(): int {
 		$query = $this->query("SELECT LASTVAL() AS `id`");
 
 		return $query->row['id'];
 	}
 
 	public function __destruct() {
-		if ($this->isConnected()) {
+		if ($this->connection) {
 			pg_close($this->connection);
+
+			$this->connection = '';
 		}
 	}
 }

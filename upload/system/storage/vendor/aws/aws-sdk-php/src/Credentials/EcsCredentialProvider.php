@@ -31,7 +31,15 @@ class EcsCredentialProvider
      */
     public function __construct(array $config = [])
     {
-        $this->timeout = (float) getenv(self::ENV_TIMEOUT) ?: (isset($config['timeout']) ? $config['timeout'] : 1.0);
+        $timeout = getenv(self::ENV_TIMEOUT);
+
+        if (!$timeout) {
+            $timeout = isset($_SERVER[self::ENV_TIMEOUT])
+                ? $_SERVER[self::ENV_TIMEOUT]
+                : (isset($config['timeout']) ? $config['timeout'] : 1.0);
+        }
+
+        $this->timeout = (float) $timeout;
         $this->client = isset($config['client'])
             ? $config['client']
             : \Aws\default_http_handler();
@@ -76,8 +84,13 @@ class EcsCredentialProvider
      */
     private function getEcsUri()
     {
-        $creds_uri = getenv(self::ENV_URI);
-        return self::SERVER_URI . $creds_uri;
+        $credsUri = getenv(self::ENV_URI);
+
+        if ($credsUri === false) {
+            $credsUri = isset($_SERVER[self::ENV_URI]) ? $_SERVER[self::ENV_URI] : '';
+        }
+        
+        return self::SERVER_URI . $credsUri;
     }
 
     private function decodeResult($response)

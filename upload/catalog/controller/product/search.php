@@ -1,7 +1,7 @@
 <?php
-namespace Opencart\Application\Controller\Product;
+namespace Opencart\Catalog\Controller\Product;
 class Search extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): void {
 		$this->load->language('product/search');
 
 		$this->load->model('catalog/category');
@@ -61,7 +61,7 @@ class Search extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['limit'])) {
 			$limit = (int)$this->request->get['limit'];
 		} else {
-			$limit = $this->config->get('theme_' . $this->config->get('config_theme') . '_pagination');
+			$limit = $this->config->get('config_pagination');
 		}
 
 		if (isset($this->request->get['search'])) {
@@ -191,9 +191,9 @@ class Search extends \Opencart\System\Engine\Controller {
 
 			foreach ($results as $result) {
 				if (is_file(DIR_IMAGE . html_entity_decode($result['image'], ENT_QUOTES, 'UTF-8'))) {
-					$image = $this->model_tool_image->resize(html_entity_decode($result['image'], ENT_QUOTES, 'UTF-8'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_product_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_product_height'));
+					$image = $this->model_tool_image->resize(html_entity_decode($result['image'], ENT_QUOTES, 'UTF-8'), $this->config->get('config_image_product_width'), $this->config->get('config_image_product_height'));
 				} else {
-					$image = $this->model_tool_image->resize('placeholder.png', $this->config->get('theme_' . $this->config->get('config_theme') . '_image_product_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_product_height'));
+					$image = $this->model_tool_image->resize('placeholder.png', $this->config->get('config_image_product_width'), $this->config->get('config_image_product_height'));
 				}
 
 				if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
@@ -218,7 +218,7 @@ class Search extends \Opencart\System\Engine\Controller {
 					'product_id'  => $result['product_id'],
 					'thumb'       => $image,
 					'name'        => $result['name'],
-					'description' => utf8_substr(trim(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8'))), 0, $this->config->get('theme_' . $this->config->get('config_theme') . '_product_description_length')) . '..',
+					'description' => utf8_substr(trim(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8'))), 0, $this->config->get('config_product_description_length')) . '..',
 					'price'       => $price,
 					'special'     => $special,
 					'tax'         => $tax,
@@ -346,7 +346,7 @@ class Search extends \Opencart\System\Engine\Controller {
 
 			$data['limits'] = [];
 
-			$limits = array_unique([$this->config->get('theme_' . $this->config->get('config_theme') . '_pagination'), 25, 50, 75, 100]);
+			$limits = array_unique([$this->config->get('config_pagination'), 25, 50, 75, 100]);
 
 			sort($limits);
 
@@ -417,13 +417,13 @@ class Search extends \Opencart\System\Engine\Controller {
 				}
 
 				$search_data = [
-					'keyword'       => $search,
-					'category_id'   => $category_id,
-					'sub_category'  => $sub_category,
-					'description'   => $description,
-					'products'      => $product_total,
-					'customer_id'   => $customer_id,
-					'ip'            => $ip
+					'keyword'      => $search,
+					'category_id'  => $category_id,
+					'sub_category' => $sub_category,
+					'description'  => $description,
+					'products'     => $product_total,
+					'customer_id'  => $customer_id,
+					'ip'           => $ip
 				];
 
 				$this->model_account_search->addSearch($search_data);

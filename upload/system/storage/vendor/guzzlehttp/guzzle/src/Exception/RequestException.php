@@ -2,6 +2,8 @@
 
 namespace GuzzleHttp\Exception;
 
+use GuzzleHttp\BodySummarizer;
+use GuzzleHttp\BodySummarizerInterface;
 use Psr\Http\Client\RequestExceptionInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -47,24 +49,24 @@ class RequestException extends TransferException implements RequestExceptionInte
      */
     public static function wrapException(RequestInterface $request, \Throwable $e): RequestException
     {
-        return $e instanceof RequestException
-            ? $e
-            : new RequestException($e->getMessage(), $request, null, $e);
+        return $e instanceof RequestException ? $e : new RequestException($e->getMessage(), $request, null, $e);
     }
 
     /**
      * Factory method to create a new exception with a normalized error message
      *
-     * @param RequestInterface  $request  Request
-     * @param ResponseInterface $response Response received
-     * @param \Throwable        $previous Previous exception
-     * @param array             $ctx      Optional handler context.
+     * @param RequestInterface             $request        Request sent
+     * @param ResponseInterface            $response       Response received
+     * @param \Throwable|null              $previous       Previous exception
+     * @param array                        $handlerContext Optional handler context
+     * @param BodySummarizerInterface|null $bodySummarizer Optional body summarizer
      */
     public static function create(
         RequestInterface $request,
         ResponseInterface $response = null,
         \Throwable $previous = null,
-        array $ctx = []
+        array $handlerContext = [],
+        BodySummarizerInterface $bodySummarizer = null
     ): self {
         if (!$response) {
             return new self(
@@ -72,7 +74,7 @@ class RequestException extends TransferException implements RequestExceptionInte
                 $request,
                 null,
                 $previous,
-                $ctx
+                $handlerContext
             );
         }
 
@@ -97,18 +99,18 @@ class RequestException extends TransferException implements RequestExceptionInte
             '%s: `%s %s` resulted in a `%s %s` response',
             $label,
             $request->getMethod(),
-            $uri,
+            $uri->__toString(),
             $response->getStatusCode(),
             $response->getReasonPhrase()
         );
 
-        $summary = \GuzzleHttp\Psr7\get_message_body_summary($response);
+        $summary = ($bodySummarizer ?? new BodySummarizer())->summarize($response);
 
         if ($summary !== null) {
             $message .= ":\n{$summary}\n";
         }
 
-        return new $className($message, $request, $response, $previous, $ctx);
+        return new $className($message, $request, $response, $previous, $handlerContext);
     }
 
     /**

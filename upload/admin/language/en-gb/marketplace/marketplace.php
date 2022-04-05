@@ -50,6 +50,10 @@ $_['text_action']        = 'Action';
 $_['text_install']       = 'Install';
 $_['text_uninstall']     = 'Uninstall';
 $_['text_delete']        = 'Delete';
+$_['text_more']          = 'see more replies...';
+$_['text_leave']         = 'see more replies...';
+$_['text_refresh']		 = 'refresh';
+$_['text_featured']		 = 'Featured';
 
 // Entry
 $_['entry_pin']          = 'PIN';

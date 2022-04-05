@@ -1,8 +1,8 @@
 <?php
-namespace Opencart\Application\Model\Catalog;
+namespace Opencart\Admin\Model\Catalog;
 class Product extends \Opencart\System\Engine\Model {
-	public function addProduct($data) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "product` SET `master_id` = '" . (int)$data['master_id'] . "', `model` = '" . $this->db->escape((string)$data['model']) . "', `sku` = '" . $this->db->escape((string)$data['sku']) . "', `upc` = '" . $this->db->escape((string)$data['upc']) . "', `ean` = '" . $this->db->escape((string)$data['ean']) . "', `jan` = '" . $this->db->escape((string)$data['jan']) . "', `isbn` = '" . $this->db->escape((string)$data['isbn']) . "', `mpn` = '" . $this->db->escape((string)$data['mpn']) . "', `location` = '" . $this->db->escape((string)$data['location']) . "', `variant` = '" . $this->db->escape(!empty($data['variant']) ? json_encode($data['variant']) : '') . "', `override` = '" . $this->db->escape(!empty($data['override']) ? json_encode($data['override']) : '') . "', `quantity` = '" . (int)$data['quantity'] . "', `minimum` = '" . (int)$data['minimum'] . "', `subtract` = '" . (int)$data['subtract'] . "', `stock_status_id` = '" . (int)$data['stock_status_id'] . "', `date_available` = '" . $this->db->escape((string)$data['date_available']) . "', `manufacturer_id` = '" . (int)$data['manufacturer_id'] . "', `shipping` = '" . (int)$data['shipping'] . "', `price` = '" . (float)$data['price'] . "', `points` = '" . (int)$data['points'] . "', `weight` = '" . (float)$data['weight'] . "', `weight_class_id` = '" . (int)$data['weight_class_id'] . "', `length` = '" . (float)$data['length'] . "', `width` = '" . (float)$data['width'] . "', `height` = '" . (float)$data['height'] . "', `length_class_id` = '" . (int)$data['length_class_id'] . "', `status` = '" . (int)$data['status'] . "', `tax_class_id` = '" . (int)$data['tax_class_id'] . "', `sort_order` = '" . (int)$data['sort_order'] . "', `date_added` = NOW(), `date_modified` = NOW()");
+	public function addProduct(array $data): int {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "product` SET `master_id` = '" . (int)$data['master_id'] . "', `model` = '" . $this->db->escape((string)$data['model']) . "', `sku` = '" . $this->db->escape((string)$data['sku']) . "', `upc` = '" . $this->db->escape((string)$data['upc']) . "', `ean` = '" . $this->db->escape((string)$data['ean']) . "', `jan` = '" . $this->db->escape((string)$data['jan']) . "', `isbn` = '" . $this->db->escape((string)$data['isbn']) . "', `mpn` = '" . $this->db->escape((string)$data['mpn']) . "', `location` = '" . $this->db->escape((string)$data['location']) . "', `variant` = '" . $this->db->escape(!empty($data['variant']) ? json_encode($data['variant']) : '') . "', `override` = '" . $this->db->escape(!empty($data['override']) ? json_encode($data['override']) : '') . "', `quantity` = '" . (int)$data['quantity'] . "', `minimum` = '" . (int)$data['minimum'] . "', `subtract` = '" . (int)$data['subtract'] . "', `stock_status_id` = '" . (int)$data['stock_status_id'] . "', `date_available` = '" . $this->db->escape((string)$data['date_available']) . "', `manufacturer_id` = '" . (int)$data['manufacturer_id'] . "', `shipping` = '" . (int)$data['shipping'] . "', `price` = '" . (float)$data['price'] . "', `points` = '" . (int)$data['points'] . "', `weight` = '" . (float)$data['weight'] . "', `weight_class_id` = '" . (int)$data['weight_class_id'] . "', `length` = '" . (float)$data['length'] . "', `width` = '" . (float)$data['width'] . "', `height` = '" . (float)$data['height'] . "', `length_class_id` = '" . (int)$data['length_class_id'] . "', `status` = '" . (bool)$data['status'] . "', `tax_class_id` = '" . (int)$data['tax_class_id'] . "', `sort_order` = '" . (int)$data['sort_order'] . "', `date_added` = NOW(), `date_modified` = NOW()");
 
 		$product_id = $this->db->getLastId();
 
@@ -88,14 +88,13 @@ class Product extends \Opencart\System\Engine\Model {
 			}
 		}
 
-		// Recurring
-		if (isset($data['product_recurring'])) {
-			foreach ($data['product_recurring'] as $recurring) {
-
-				$query = $this->db->query("SELECT `product_id` FROM `" . DB_PREFIX . "product_recurring` WHERE `product_id` = '" . (int)$product_id . "' AND `customer_group_id = '" . (int)$recurring['customer_group_id'] . "' AND `recurring_id` = '" . (int)$recurring['recurring_id'] . "'");
+		// Subscription
+		if (isset($data['product_subscription'])) {
+			foreach ($data['product_subscription'] as $product_subscription) {
+				$query = $this->db->query("SELECT `product_id` FROM `" . DB_PREFIX . "product_subscription` WHERE `product_id` = '" . (int)$product_id . "' AND `customer_group_id` = '" . (int)$product_subscription['customer_group_id'] . "' AND `subscription_plan_id` = '" . (int)$product_subscription['subscription_plan_id'] . "'");
 
 				if (!$query->num_rows) {
-					$this->db->query("INSERT INTO `" . DB_PREFIX . "product_recurring` SET `product_id` = '" . (int)$product_id . "', customer_group_id = '" . (int)$recurring['customer_group_id'] . "', `recurring_id` = '" . (int)$recurring['recurring_id'] . "'");
+					$this->db->query("INSERT INTO `" . DB_PREFIX . "product_subscription` SET `product_id` = '" . (int)$product_id . "', customer_group_id = '" . (int)$product_subscription['customer_group_id'] . "', `subscription_plan_id` = '" . (int)$product_subscription['subscription_plan_id'] . "'");
 				}
 			}
 		}
@@ -134,9 +133,7 @@ class Product extends \Opencart\System\Engine\Model {
 		if (isset($data['product_seo_url'])) {
 			foreach ($data['product_seo_url'] as $store_id => $language) {
 				foreach ($language as $language_id => $keyword) {
-					if ($keyword) {
-						$this->db->query("INSERT INTO `" . DB_PREFIX . "seo_url` SET `store_id` = '" . (int)$store_id . "', `language_id` = '" . (int)$language_id . "', `key` = 'product_id', `value` = '" . (int)$product_id . "', `keyword` = '" . $this->db->escape($keyword) . "'");
-					}
+					$this->db->query("INSERT INTO `" . DB_PREFIX . "seo_url` SET `store_id` = '" . (int)$store_id . "', `language_id` = '" . (int)$language_id . "', `key` = 'product_id', `value` = '" . (int)$product_id . "', `keyword` = '" . $this->db->escape($keyword) . "'");
 				}
 			}
 		}
@@ -153,8 +150,8 @@ class Product extends \Opencart\System\Engine\Model {
 		return $product_id;
 	}
 
-	public function editProduct($product_id, $data) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "product` SET `model` = '" . $this->db->escape((string)$data['model']) . "', `sku` = '" . $this->db->escape((string)$data['sku']) . "', `upc` = '" . $this->db->escape((string)$data['upc']) . "', `ean` = '" . $this->db->escape((string)$data['ean']) . "', `jan` = '" . $this->db->escape((string)$data['jan']) . "', `isbn` = '" . $this->db->escape((string)$data['isbn']) . "', `mpn` = '" . $this->db->escape((string)$data['mpn']) . "', `location` = '" . $this->db->escape((string)$data['location']) . "', `variant` = '" . $this->db->escape(!empty($data['variant']) ? json_encode($data['variant']) : '') . "', `override` = '" . $this->db->escape(!empty($data['override']) ? json_encode($data['override']) : '') . "', `quantity` = '" . (int)$data['quantity'] . "', `minimum` = '" . (int)$data['minimum'] . "', `subtract` = '" . (int)$data['subtract'] . "', `stock_status_id` = '" . (int)$data['stock_status_id'] . "', `date_available` = '" . $this->db->escape((string)$data['date_available']) . "', `manufacturer_id` = '" . (int)$data['manufacturer_id'] . "', `shipping` = '" . (int)$data['shipping'] . "', `price` = '" . (float)$data['price'] . "', `points` = '" . (int)$data['points'] . "', `weight` = '" . (float)$data['weight'] . "', `weight_class_id` = '" . (int)$data['weight_class_id'] . "', `length` = '" . (float)$data['length'] . "', `width` = '" . (float)$data['width'] . "', `height` = '" . (float)$data['height'] . "', `length_class_id` = '" . (int)$data['length_class_id'] . "', `status` = '" . (int)$data['status'] . "', `tax_class_id` = '" . (int)$data['tax_class_id'] . "', `sort_order` = '" . (int)$data['sort_order'] . "', `date_modified` = NOW() WHERE `product_id` = '" . (int)$product_id . "'");
+	public function editProduct(int $product_id, array $data): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "product` SET `model` = '" . $this->db->escape((string)$data['model']) . "', `sku` = '" . $this->db->escape((string)$data['sku']) . "', `upc` = '" . $this->db->escape((string)$data['upc']) . "', `ean` = '" . $this->db->escape((string)$data['ean']) . "', `jan` = '" . $this->db->escape((string)$data['jan']) . "', `isbn` = '" . $this->db->escape((string)$data['isbn']) . "', `mpn` = '" . $this->db->escape((string)$data['mpn']) . "', `location` = '" . $this->db->escape((string)$data['location']) . "', `variant` = '" . $this->db->escape(!empty($data['variant']) ? json_encode($data['variant']) : '') . "', `override` = '" . $this->db->escape(!empty($data['override']) ? json_encode($data['override']) : '') . "', `quantity` = '" . (int)$data['quantity'] . "', `minimum` = '" . (int)$data['minimum'] . "', `subtract` = '" . (int)$data['subtract'] . "', `stock_status_id` = '" . (int)$data['stock_status_id'] . "', `date_available` = '" . $this->db->escape((string)$data['date_available']) . "', `manufacturer_id` = '" . (int)$data['manufacturer_id'] . "', `shipping` = '" . (int)$data['shipping'] . "', `price` = '" . (float)$data['price'] . "', `points` = '" . (int)$data['points'] . "', `weight` = '" . (float)$data['weight'] . "', `weight_class_id` = '" . (int)$data['weight_class_id'] . "', `length` = '" . (float)$data['length'] . "', `width` = '" . (float)$data['width'] . "', `height` = '" . (float)$data['height'] . "', `length_class_id` = '" . (int)$data['length_class_id'] . "', `status` = '" . (bool)$data['status'] . "', `tax_class_id` = '" . (int)$data['tax_class_id'] . "', `sort_order` = '" . (int)$data['sort_order'] . "', `date_modified` = NOW() WHERE `product_id` = '" . (int)$product_id . "'");
 
 		if ($data['image']) {
 			$this->db->query("UPDATE `" . DB_PREFIX . "product` SET `image` = '" . $this->db->escape((string)$data['image']) . "' WHERE `product_id` = '" . (int)$product_id . "'");
@@ -254,15 +251,15 @@ class Product extends \Opencart\System\Engine\Model {
 			}
 		}
 
-		// Recurring
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_recurring` WHERE `product_id` = '" . (int)$product_id . "'");
+		// Subscription
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_subscription` WHERE `product_id` = '" . (int)$product_id . "'");
 
-		if (isset($data['product_recurring'])) {
-			foreach ($data['product_recurring'] as $product_recurring) {
-				$query = $this->db->query("SELECT `product_id` FROM `" . DB_PREFIX . "product_recurring` WHERE `product_id` = '" . (int)$product_id . "' AND `customer_group_id` = '" . (int)$product_recurring['customer_group_id'] . "' AND `recurring_id` = '" . (int)$product_recurring['recurring_id'] . "'");
+		if (isset($data['product_subscription'])) {
+			foreach ($data['product_subscription'] as $product_subscription) {
+				$query = $this->db->query("SELECT `product_id` FROM `" . DB_PREFIX . "product_subscription` WHERE `product_id` = '" . (int)$product_id . "' AND `customer_group_id` = '" . (int)$product_subscription['customer_group_id'] . "' AND `subscription_plan_id` = '" . (int)$product_subscription['subscription_plan_id'] . "'");
 
 				if (!$query->num_rows) {
-					$this->db->query("INSERT INTO `" . DB_PREFIX . "product_recurring` SET `product_id` = '" . (int)$product_id . "', `customer_group_id` = '" . (int)$product_recurring['customer_group_id'] . "', `recurring_id` = '" . (int)$product_recurring['recurring_id'] . "'");
+					$this->db->query("INSERT INTO `" . DB_PREFIX . "product_subscription` SET `product_id` = '" . (int)$product_id . "', `customer_group_id` = '" . (int)$product_subscription['customer_group_id'] . "', `subscription_plan_id` = '" . (int)$product_subscription['subscription_plan_id'] . "'");
 				}
 			}
 		}
@@ -311,9 +308,7 @@ class Product extends \Opencart\System\Engine\Model {
 		if (isset($data['product_seo_url'])) {
 			foreach ($data['product_seo_url'] as $store_id => $language) {
 				foreach ($language as $language_id => $keyword) {
-					if ($keyword) {
-						$this->db->query("INSERT INTO `" . DB_PREFIX . "seo_url` SET `store_id` = '" . (int)$store_id . "', `language_id` = '" . (int)$language_id . "', `key` = 'product_id', `value` = '" . (int)$product_id . "', `keyword` = '" . $this->db->escape($keyword) . "'");
-					}
+					$this->db->query("INSERT INTO `" . DB_PREFIX . "seo_url` SET `store_id` = '" . (int)$store_id . "', `language_id` = '" . (int)$language_id . "', `key` = 'product_id', `value` = '" . (int)$product_id . "', `keyword` = '" . $this->db->escape($keyword) . "'");
 				}
 			}
 		}
@@ -330,7 +325,7 @@ class Product extends \Opencart\System\Engine\Model {
 		$this->cache->delete('product');
 	}
 
-	public function copyProduct($product_id) {
+	public function copyProduct(int $product_id): void {
 		$product_info = $this->model_catalog_product->getProduct($product_id);
 
 		if ($product_info) {
@@ -349,7 +344,7 @@ class Product extends \Opencart\System\Engine\Model {
 			$product_data['product_image'] = $this->model_catalog_product->getImages($product_id);
 			$product_data['product_layout'] = $this->model_catalog_product->getLayouts($product_id);
 			$product_data['product_option'] = $this->model_catalog_product->getOptions($product_id);
-			$product_data['product_recurring'] = $this->model_catalog_product->getRecurrings($product_id);
+			$product_data['product_subscription'] = $this->model_catalog_product->getSubscriptions($product_id);
 			$product_data['product_related'] = $this->model_catalog_product->getRelated($product_id);
 			$product_data['product_reward'] = $this->model_catalog_product->getRewards($product_id);
 			$product_data['product_special'] = $this->model_catalog_product->getSpecials($product_id);
@@ -359,7 +354,7 @@ class Product extends \Opencart\System\Engine\Model {
 		}
 	}
 
-	public function deleteProduct($product_id) {
+	public function deleteProduct(int $product_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "product` WHERE `product_id` = '" . (int)$product_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_attribute` WHERE `product_id` = '" . (int)$product_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_description` WHERE `product_id` = '" . (int)$product_id . "'");
@@ -368,9 +363,10 @@ class Product extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_image` WHERE `product_id` = '" . (int)$product_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_option` WHERE `product_id` = '" . (int)$product_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_option_value` WHERE `product_id` = '" . (int)$product_id . "'");
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_recurring` WHERE `product_id` = '" . (int)$product_id . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_subscription` WHERE `product_id` = '" . (int)$product_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_related` WHERE `product_id` = '" . (int)$product_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_related` WHERE `related_id` = '" . (int)$product_id . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_report` WHERE `product_id` = '" . (int)$product_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_reward` WHERE `product_id` = '" . (int)$product_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_special` WHERE `product_id` = '" . (int)$product_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_to_category` WHERE `product_id` = '" . (int)$product_id . "'");
@@ -387,7 +383,7 @@ class Product extends \Opencart\System\Engine\Model {
 		$this->cache->delete('product');
 	}
 
-	public function addVariant($master_id, $data) {
+	public function addVariant(int $master_id, array $data): int {
 		$product_data = [];
 
 		// Use master values to override the values
@@ -466,9 +462,9 @@ class Product extends \Opencart\System\Engine\Model {
 			// Options
 			// product_option should not be used if variant product
 
-			// Recurring
-			if (!isset($override['product_recurring'])) {
-				$product_data['product_recurring'] = $this->model_catalog_product->getRecurrings($master_id);
+			// Subscriptions
+			if (!isset($override['product_subscription'])) {
+				$product_data['product_subscription'] = $this->model_catalog_product->getSubscriptions($master_id);
 			}
 
 			// Related
@@ -514,10 +510,10 @@ class Product extends \Opencart\System\Engine\Model {
 		}
 
 		// Product add with master product overridden values
-		$this->model_catalog_product->addProduct($product_data);
+		return $this->model_catalog_product->addProduct($product_data);
 	}
 
-	public function editVariant($master_id, $product_id, $data) {
+	public function editVariant(int $master_id, int $product_id, array $data): void {
 		$product_data = [];
 
 		// Use master values to override the values
@@ -595,9 +591,9 @@ class Product extends \Opencart\System\Engine\Model {
 			// Options
 			// product_option should not be used if variant product
 
-			// Recurring
-			if (!isset($override['product_recurring'])) {
-				$product_data['product_recurring'] = $this->model_catalog_product->getRecurrings($master_id);
+			// Subscription
+			if (!isset($override['product_subscription'])) {
+				$product_data['product_subscription'] = $this->model_catalog_product->getSubscriptions($master_id);
 			}
 
 			// Related
@@ -646,7 +642,7 @@ class Product extends \Opencart\System\Engine\Model {
 		$this->model_catalog_product->editProduct($product_id, $product_data);
 	}
 
-	function editVariants($master_id, $data) {
+	public function editVariants(int $master_id, array $data): void {
 		// product_option should not be passed to product variants
 		unset($data['product_option']);
 
@@ -730,9 +726,9 @@ class Product extends \Opencart\System\Engine\Model {
 				$product_data['product_layout'] = $this->model_catalog_product->getLayouts($product['product_id']);
 			}
 
-			// Recurring
-			if (isset($override['product_recurring'])) {
-				$product_data['product_recurring'] = $this->model_catalog_product->getRecurrings($product['product_id']);
+			// Subscription
+			if (isset($override['product_subscription'])) {
+				$product_data['product_subscription'] = $this->model_catalog_product->getSubscriptions($product['product_id']);
 			}
 
 			// Related
@@ -782,13 +778,13 @@ class Product extends \Opencart\System\Engine\Model {
 		}
 	}
 
-	public function getProduct($product_id) {
+	public function getProduct(int $product_id): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "product` p LEFT JOIN `" . DB_PREFIX . "product_description` pd ON (p.`product_id` = pd.`product_id`) WHERE p.`product_id` = '" . (int)$product_id . "' AND pd.`language_id` = '" . (int)$this->config->get('config_language_id') . "'");
 
 		return $query->row;
 	}
 
-	public function getProducts($data = []) {
+	public function getProducts(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "product` p LEFT JOIN `" . DB_PREFIX . "product_description` pd ON (p.`product_id` = pd.`product_id`) WHERE pd.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
 		if (!empty($data['filter_master_id'])) {
@@ -855,7 +851,7 @@ class Product extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function getDescriptions($product_id) {
+	public function getDescriptions(int $product_id): array {
 		$product_description_data = [];
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_description` WHERE `product_id` = '" . (int)$product_id . "'");
@@ -874,7 +870,7 @@ class Product extends \Opencart\System\Engine\Model {
 		return $product_description_data;
 	}
 
-	public function getCategories($product_id) {
+	public function getCategories(int $product_id): array {
 		$product_category_data = [];
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_to_category` WHERE `product_id` = '" . (int)$product_id . "'");
@@ -886,7 +882,7 @@ class Product extends \Opencart\System\Engine\Model {
 		return $product_category_data;
 	}
 
-	public function getFilters($product_id) {
+	public function getFilters(int $product_id): array {
 		$product_filter_data = [];
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_filter` WHERE `product_id` = '" . (int)$product_id . "'");
@@ -898,7 +894,7 @@ class Product extends \Opencart\System\Engine\Model {
 		return $product_filter_data;
 	}
 
-	public function getAttributes($product_id) {
+	public function getAttributes(int $product_id): array {
 		$product_attribute_data = [];
 
 		$product_attribute_query = $this->db->query("SELECT attribute_id FROM `" . DB_PREFIX . "product_attribute` WHERE `product_id` = '" . (int)$product_id . "' GROUP BY `attribute_id`");
@@ -921,7 +917,7 @@ class Product extends \Opencart\System\Engine\Model {
 		return $product_attribute_data;
 	}
 
-	public function getOptions($product_id) {
+	public function getOptions(int $product_id): array {
 		$product_option_data = [];
 
 		$product_option_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_option` po LEFT JOIN `" . DB_PREFIX . "option` o ON (po.`option_id` = o.`option_id`) LEFT JOIN `" . DB_PREFIX . "option_description` od ON (o.`option_id` = od.`option_id`) WHERE po.`product_id` = '" . (int)$product_id . "' AND od.`language_id` = '" . (int)$this->config->get('config_language_id') . "' ORDER BY o.`sort_order` ASC");
@@ -960,37 +956,37 @@ class Product extends \Opencart\System\Engine\Model {
 		return $product_option_data;
 	}
 
-	public function getOptionValue($product_id, $product_option_value_id) {
+	public function getOptionValue(int $product_id, int $product_option_value_id): array {
 		$query = $this->db->query("SELECT pov.`option_value_id`, ovd.`name`, pov.`quantity`, pov.`subtract`, pov.`price`, pov.`price_prefix`, pov.`points`, pov.`points_prefix`, pov.`weight`, pov.`weight_prefix` FROM `" . DB_PREFIX . "product_option_value` pov LEFT JOIN `" . DB_PREFIX . "option_value` ov ON (pov.`option_value_id` = ov.`option_value_id`) LEFT JOIN `" . DB_PREFIX . "option_value_description` ovd ON (ov.`option_value_id` = ovd.`option_value_id`) WHERE pov.`product_id` = '" . (int)$product_id . "' AND pov.`product_option_value_id` = '" . (int)$product_option_value_id . "' AND ovd.`language_id` = '" . (int)$this->config->get('config_language_id') . "'");
 
 		return $query->row;
 	}
 
-	public function getOptionValuesByOptionId($option_id) {
+	public function getOptionValuesByOptionId(int $option_id): array {
 		$query = $this->db->query("SELECT DISTINCT `option_value_id` FROM `" . DB_PREFIX . "product_option_value` WHERE `option_id` = '" . (int)$option_id . "'");
 
 		return $query->rows;
 	}
 
-	public function getImages($product_id) {
+	public function getImages(int $product_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_image` WHERE `product_id` = '" . (int)$product_id . "' ORDER BY `sort_order` ASC");
 
 		return $query->rows;
 	}
 
-	public function getDiscounts($product_id) {
+	public function getDiscounts(int $product_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_discount` WHERE `product_id` = '" . (int)$product_id . "' ORDER BY `quantity`, `priority`, `price`");
 
 		return $query->rows;
 	}
 
-	public function getSpecials($product_id) {
+	public function getSpecials(int $product_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_special` WHERE `product_id` = '" . (int)$product_id . "' ORDER BY `priority`, `price`");
 
 		return $query->rows;
 	}
 
-	public function getRewards($product_id) {
+	public function getRewards(int $product_id): array {
 		$product_reward_data = [];
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_reward` WHERE `product_id` = '" . (int)$product_id . "'");
@@ -1002,7 +998,7 @@ class Product extends \Opencart\System\Engine\Model {
 		return $product_reward_data;
 	}
 
-	public function getDownloads($product_id) {
+	public function getDownloads(int $product_id): array {
 		$product_download_data = [];
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_to_download` WHERE `product_id` = '" . (int)$product_id . "'");
@@ -1014,7 +1010,7 @@ class Product extends \Opencart\System\Engine\Model {
 		return $product_download_data;
 	}
 
-	public function getStores($product_id) {
+	public function getStores(int $product_id): array {
 		$product_store_data = [];
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_to_store` WHERE `product_id` = '" . (int)$product_id . "'");
@@ -1026,7 +1022,7 @@ class Product extends \Opencart\System\Engine\Model {
 		return $product_store_data;
 	}
 
-	public function getSeoUrls($product_id) {
+	public function getSeoUrls(int $product_id): array {
 		$product_seo_url_data = [];
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "seo_url` WHERE `key` = 'product_id' AND `value` = '" . (int)$product_id . "'");
@@ -1038,7 +1034,7 @@ class Product extends \Opencart\System\Engine\Model {
 		return $product_seo_url_data;
 	}
 
-	public function getLayouts($product_id) {
+	public function getLayouts(int $product_id): array {
 		$product_layout_data = [];
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_to_layout` WHERE `product_id` = '" . (int)$product_id . "'");
@@ -1050,7 +1046,7 @@ class Product extends \Opencart\System\Engine\Model {
 		return $product_layout_data;
 	}
 
-	public function getRelated($product_id) {
+	public function getRelated(int $product_id): array {
 		$product_related_data = [];
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_related` WHERE `product_id` = '" . (int)$product_id . "'");
@@ -1062,13 +1058,13 @@ class Product extends \Opencart\System\Engine\Model {
 		return $product_related_data;
 	}
 
-	public function getRecurrings($product_id) {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_recurring` WHERE `product_id` = '" . (int)$product_id . "'");
+	public function getSubscriptions(int $product_id): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_subscription` WHERE `product_id` = '" . (int)$product_id . "'");
 
 		return $query->rows;
 	}
 
-	public function getTotalProducts($data = []) {
+	public function getTotalProducts(array $data = []): int {
 		$sql = "SELECT COUNT(DISTINCT p.`product_id`) AS `total` FROM `" . DB_PREFIX . "product` p LEFT JOIN `" . DB_PREFIX . "product_description` pd ON (p.`product_id` = pd.`product_id`) WHERE pd.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
 		if (!empty($data['filter_master_id'])) {
@@ -1097,72 +1093,92 @@ class Product extends \Opencart\System\Engine\Model {
 
 		$query = $this->db->query($sql);
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
 	}
 
-	public function getTotalProductsByTaxClassId($tax_class_id) {
+	public function getTotalProductsByTaxClassId(int $tax_class_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "product` WHERE `tax_class_id` = '" . (int)$tax_class_id . "'");
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
 	}
 
-	public function getTotalProductsByStockStatusId($stock_status_id) {
+	public function getTotalProductsByStockStatusId(int $stock_status_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "product` WHERE `stock_status_id` = '" . (int)$stock_status_id . "'");
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
 	}
 
-	public function getTotalProductsByWeightClassId($weight_class_id) {
+	public function getTotalProductsByWeightClassId(int $weight_class_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "product` WHERE `weight_class_id` = '" . (int)$weight_class_id . "'");
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
 	}
 
-	public function getTotalProductsByLengthClassId($length_class_id) {
+	public function getTotalProductsByLengthClassId(int $length_class_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "product` WHERE `length_class_id` = '" . (int)$length_class_id . "'");
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
 	}
 
-	public function getTotalProductsByDownloadId($download_id) {
+	public function getTotalProductsByDownloadId(int $download_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "product_to_download` WHERE `download_id` = '" . (int)$download_id . "'");
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
 	}
 
-	public function getTotalProductsByManufacturerId($manufacturer_id) {
+	public function getTotalProductsByManufacturerId(int $manufacturer_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "product` WHERE `manufacturer_id` = '" . (int)$manufacturer_id . "'");
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
 	}
 
-	public function getTotalProductsByAttributeId($attribute_id) {
+	public function getTotalProductsByAttributeId(int $attribute_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "product_attribute` WHERE `attribute_id` = '" . (int)$attribute_id . "'");
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
 	}
 
-	public function getTotalProductsByProfileId($recurring_id) {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "product_recurring` WHERE `recurring_id` = '" . (int)$recurring_id . "'");
+	public function getTotalProductsBySubscriptionPlanId(int $subscription_plan_id): int {
+		$query = $this->db->query("SELECT COUNT(DISTINCT product_id) AS `total` FROM `" . DB_PREFIX . "product_subscription` WHERE `subscription_plan_id` = '" . (int)$subscription_plan_id . "'");
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
 	}
 
-	public function getTotalProductsByLayoutId($layout_id) {
+	public function getTotalProductsByLayoutId(int $layout_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "product_to_layout` WHERE `layout_id` = '" . (int)$layout_id . "'");
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
 	}
 
-	public function getTotalProductsByOptionId($option_id) {
+	public function getTotalProductsByOptionId(int $option_id): int {
 		$query = $this->db->query("SELECT COUNT(DISTINCT product_id) AS `total` FROM `" . DB_PREFIX . "product_option` WHERE `option_id` = '" . (int)$option_id . "'");
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
 	}
 
-	public function getTotalProductsByOptionValueId($option_value_id) {
+	public function getTotalProductsByOptionValueId(int $option_value_id): int {
 		$query = $this->db->query("SELECT COUNT(DISTINCT product_id) AS `total` FROM `" . DB_PREFIX . "product_option_value` WHERE `option_value_id` = '" . (int)$option_value_id . "'");
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
+	}
+
+	public function getReports(int $product_id, int $start = 0, int $limit = 10): array {
+		if ($start < 0) {
+			$start = 0;
+		}
+
+		if ($limit < 1) {
+			$limit = 10;
+		}
+
+		$query = $this->db->query("SELECT `ip`, `store_id`, `country`, `date_added` FROM `" . DB_PREFIX . "product_report` WHERE `product_id` = '" . (int)$product_id . "' ORDER BY `date_added` ASC LIMIT " . (int)$start . "," . (int)$limit);
+
+		return $query->rows;
+	}
+
+	public function getTotalReports(int $product_id): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "product_report` WHERE `product_id` = '" . (int)$product_id . "'");
+
+		return (int)$query->row['total'];
 	}
 }

@@ -13,20 +13,20 @@
         <table class="table table-bordered table-hover">
           <thead>
             <tr>
-              <th class="text-left">{{ column_date_added }}</th>
-              <th class="text-left">{{ column_description }}</th>
-              <th class="text-right">{{ column_points }}</th>
+              <th class="text-start">{{ column_date_added }}</th>
+              <th class="text-start">{{ column_description }}</th>
+              <th class="text-end">{{ column_points }}</th>
             </tr>
           </thead>
           <tbody>
             {% if rewards %}
               {% for reward in rewards %}
                 <tr>
-                  <td class="text-left">{{ reward.date_added }}</td>
-                  <td class="text-left">{% if reward.order_id %} <a href="{{ reward.href }}">{{ reward.description }}</a> {% else %}
+                  <td class="text-start">{{ reward.date_added }}</td>
+                  <td class="text-start">{% if reward.order_id %} <a href="{{ reward.href }}">{{ reward.description }}</a> {% else %}
                       {{ reward.description }}
                     {% endif %}</td>
-                  <td class="text-right">{{ reward.points }}</td>
+                  <td class="text-end">{{ reward.points }}</td>
                 </tr>
               {% endfor %}
             {% else %}
@@ -38,11 +38,11 @@
         </table>
       </div>
       <div class="row">
-        <div class="col-sm-6 text-left">{{ pagination }}</div>
-        <div class="col-sm-6 text-right">{{ results }}</div>
+        <div class="col-sm-6 text-start">{{ pagination }}</div>
+        <div class="col-sm-6 text-end">{{ results }}</div>
       </div>
       <div class="d-inline-block pt-2 pd-2 w-100">
-        <div class="float-right"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
+        <div class="float-end"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
       </div>
       {{ content_bottom }}</div>
     {{ column_right }}</div>

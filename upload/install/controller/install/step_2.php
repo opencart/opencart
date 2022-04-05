@@ -1,13 +1,13 @@
 <?php
-namespace Opencart\Application\Controller\Install;
+namespace Opencart\Install\Controller\Install;
 class Step2 extends \Opencart\System\Engine\Controller {
 	private $error = [];
 
-	public function index() {
+	public function index(): void {
 		$this->load->language('install/step_2');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->response->redirect($this->url->link('install/step_3'));
+			$this->response->redirect($this->url->link('install/step_3', 'language=' . $this->config->get('language_code')));
 		}
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -53,11 +53,11 @@ class Step2 extends \Opencart\System\Engine\Controller {
 			$data['error_warning'] = '';
 		}
 
-		$data['action'] = $this->url->link('install/step_2');
+		$data['action'] = $this->url->link('install/step_2', 'language=' . $this->config->get('language_code'));
 
 		$data['php_version'] = phpversion();
 
-		if (version_compare(phpversion(), '7.3.0', '<')) {
+		if (version_compare(phpversion(), '8.0.0', '<')) {
 			$data['version'] = false;
 		} else {
 			$data['version'] = true;
@@ -112,17 +112,17 @@ class Step2 extends \Opencart\System\Engine\Controller {
 		$data['catalog_config'] = DIR_OPENCART . 'config.php';
 		$data['admin_config'] = DIR_OPENCART . 'admin/config.php';
 
-		$data['back'] = $this->url->link('install/step_1');
+		$data['back'] = $this->url->link('install/step_1', 'language=' . $this->config->get('language_code'));
 
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
-		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['language'] = $this->load->controller('common/language');
 
 		$this->response->setOutput($this->load->view('install/step_2', $data));
 	}
 
-	private function validate() {
-		if (version_compare(phpversion(), '7.3.0', '<')) {
+	private function validate(): bool {
+		if (version_compare(phpversion(), '8.0.0', '<')) {
 			$this->error['warning'] = $this->language->get('error_version');
 		}
 

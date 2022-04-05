@@ -113,6 +113,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getSubscriptionDefinitionAsync(array $args = [])
  * @method \Aws\Result getSubscriptionDefinitionVersion(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getSubscriptionDefinitionVersionAsync(array $args = [])
+ * @method \Aws\Result getThingRuntimeConfiguration(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getThingRuntimeConfigurationAsync(array $args = [])
  * @method \Aws\Result listBulkDeploymentDetailedReports(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listBulkDeploymentDetailedReportsAsync(array $args = [])
  * @method \Aws\Result listBulkDeployments(array $args = [])
@@ -185,5 +187,7 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise updateResourceDefinitionAsync(array $args = [])
  * @method \Aws\Result updateSubscriptionDefinition(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateSubscriptionDefinitionAsync(array $args = [])
+ * @method \Aws\Result updateThingRuntimeConfiguration(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateThingRuntimeConfigurationAsync(array $args = [])
  */
 class GreengrassClient extends AwsClient {}

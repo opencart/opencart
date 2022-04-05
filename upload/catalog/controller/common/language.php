@@ -1,10 +1,8 @@
 <?php
-namespace Opencart\Application\Controller\Common;
+namespace Opencart\Catalog\Controller\Common;
 class Language extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): string {
 		$this->load->language('common/language');
-
-		$data['code'] = $this->config->get('config_language');
 
 		$url_data = $this->request->get;
 
@@ -34,14 +32,16 @@ class Language extends \Opencart\System\Engine\Controller {
 			$data['languages'][] = [
 				'name' => $result['name'],
 				'code' => $result['code'],
-				'href' => $this->url->link('common/language|language', 'language=' . $this->config->get('config_language') . '&code=' . $result['code'] . '&redirect=' . urlencode(redirect_link($this->url->link($route, 'language=' . $result['code'] . $url))))
+				'href' => $this->url->link('common/language|save', 'language=' . $this->config->get('config_language') . '&code=' . $result['code'] . '&redirect=' . urlencode(str_replace('&amp;', '&', $this->url->link($route, 'language=' . $result['code'] . $url))))
 			];
 		}
+
+		$data['code'] = $this->config->get('config_language');
 
 		return $this->load->view('common/language', $data);
 	}
 
-	public function language() {
+	public function save(): void {
 		if (isset($this->request->get['code'])) {
 			$code = $this->request->get['code'];
 		} else {
@@ -49,18 +49,10 @@ class Language extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->get['redirect'])) {
-			$redirect =  htmlspecialchars_decode($this->request->get['redirect'], ENT_COMPAT, 'UTF-8');
+			$redirect =  htmlspecialchars_decode($this->request->get['redirect'], ENT_COMPAT);
 		} else {
 			$redirect = '';
 		}
-
-		$option = [
-			'max-age'  => time() + 60 * 60 * 24 * 30,
-			'path'     => '/',
-			'SameSite' => 'lax'
-		];
-
-		oc_setcookie('language', $code, $option);
 
 		if ($redirect && substr($redirect, 0, strlen($this->config->get('config_url'))) == $this->config->get('config_url')) {
 			$this->response->redirect($redirect);

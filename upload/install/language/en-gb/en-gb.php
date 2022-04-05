@@ -1,5 +1,6 @@
 <?php
 // Text
+$_['text_name']       = 'English (United Kingdom)';
 $_['text_loading']    = 'Loading...';
 
 // Button

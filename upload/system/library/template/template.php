@@ -68,7 +68,7 @@ class Template {
 	}
 
 	protected function compile(string $filename, string $code): string {
-		$file = DIR_CACHE . 'template/' . hash('md5', $filename . $code) . '.php';
+		$file = DIR_CACHE . 'template/' . sha1_file($filename . $code) . '.php';
 
 		if (!is_file($file)) {
 			file_put_contents($file, $code, LOCK_EX);

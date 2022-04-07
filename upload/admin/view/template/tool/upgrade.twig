@@ -68,8 +68,6 @@ $('#button-upgrade').on('click', function () {
     var next = 'index.php?route=tool/upgrade|download&user_token={{ user_token }}&version={{ latest_version }}';
 
     var upgrade = function () {
-        $('#test').html(next);
-
         return $.ajax({
             url: next,
             dataType: 'json',

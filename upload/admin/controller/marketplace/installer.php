@@ -334,7 +334,6 @@ class Installer extends \Opencart\System\Engine\Controller {
 						'base'        => $base,
 						'path'        => $path
 					];
-
 				}
 
 				$zip->close();
@@ -364,7 +363,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 
 				// If check if the path is not directory and check there is no existing file
 				if (substr($copy['path'], -1) != '/') {
-					if (!is_file($copy['base'] . $copy['path']) && copy('zip://' . $file . '#' . $source, $copy['base'] . $copy['path'])) {
+					if (!is_file($copy['base'] . $copy['path']) && copy('zip://' . $file . '#' . $copy['source'], $copy['base'] . $copy['path'])) {
 						$this->model_setting_extension->addPath($extension_install_id, $copy['path']);
 					}
 				}

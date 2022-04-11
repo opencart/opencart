@@ -45,6 +45,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listRevisionAssetsAsync(array $args = [])
  * @method \Aws\Result listTagsForResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array $args = [])
+ * @method \Aws\Result revokeRevision(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise revokeRevisionAsync(array $args = [])
  * @method \Aws\Result sendApiAsset(array $args = [])
  * @method \GuzzleHttp\Promise\Promise sendApiAssetAsync(array $args = [])
  * @method \Aws\Result startJob(array $args = [])

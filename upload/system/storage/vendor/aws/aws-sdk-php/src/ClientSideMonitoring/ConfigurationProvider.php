@@ -161,7 +161,7 @@ class ConfigurationProvider extends AbstractConfigurationProvider
         $profile = $profile ?: (getenv(self::ENV_PROFILE) ?: 'aws_csm');
 
         return function () use ($profile, $filename) {
-            if (!is_readable($filename)) {
+            if (!@is_readable($filename)) {
                 return self::reject("Cannot read CSM config from $filename");
             }
             $data = \Aws\parse_ini_file($filename, true);

@@ -54,12 +54,6 @@ class GuzzleHandler
                         && $e->getResponse()
                     ) {
                         $error['response'] = $e->getResponse();
-                    } else if (
-                        class_exists('Error')
-                        && $e instanceof \Error
-                        && $e ->getResponse()
-                    ) {
-                        $error['response'] = $e->getResponse();
                     }
 
                     return new Promise\RejectedPromise($error);

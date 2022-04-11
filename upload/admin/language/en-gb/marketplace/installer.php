@@ -22,6 +22,7 @@ $_['entry_progress']    = 'Progress';
 
 // Error
 $_['error_permission']  = 'Warning: You do not have permission to modify extensions!';
+
 $_['error_install']     = 'Install record could not be found!';
 $_['error_file']        = 'Install file %s could not be found!';
 $_['error_directory']   = 'Install directory %s could not be found!';

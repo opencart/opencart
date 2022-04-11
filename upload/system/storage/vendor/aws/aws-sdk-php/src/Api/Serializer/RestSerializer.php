@@ -130,7 +130,10 @@ abstract class RestSerializer
                 ? $member['timestampFormat']
                 : 'rfc822';
             $value = TimestampShape::format($value, $timestampFormat);
+        } elseif ($member->getType() === 'boolean') {
+            $value = $value ? 'true' : 'false';
         }
+
         if ($member['jsonvalue']) {
             $value = json_encode($value);
             if (empty($value) && JSON_ERROR_NONE !== json_last_error()) {

@@ -305,6 +305,9 @@ class HandlerList implements \Countable
         return $prev;
     }
 
+    /**
+     * @return int
+     */
     #[\ReturnTypeWillChange]
     public function count()
     {

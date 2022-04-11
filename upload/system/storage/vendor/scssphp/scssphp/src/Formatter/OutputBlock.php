@@ -22,7 +22,7 @@ namespace ScssPhp\ScssPhp\Formatter;
 class OutputBlock
 {
     /**
-     * @var string
+     * @var string|null
      */
     public $type;
 

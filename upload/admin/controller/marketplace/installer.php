@@ -176,6 +176,8 @@ class Installer extends \Opencart\System\Engine\Controller {
 				if ($zip->open($file, \ZipArchive::RDONLY)) {
 					$data = $zip->getFromName('install.json');
 
+
+
 					$zip->close();
 				}
 
@@ -261,6 +263,12 @@ class Installer extends \Opencart\System\Engine\Controller {
 			$extension_install_id = 0;
 		}
 
+		if (isset($this->request->get['page'])) {
+			$page = (int)$this->request->get['page'];
+		} else {
+			$page = 1;
+		}
+
 		if (!$this->user->hasPermission('modify', 'marketplace/installer')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
@@ -290,14 +298,16 @@ class Installer extends \Opencart\System\Engine\Controller {
 			$zip = new \ZipArchive();
 
 			if ($zip->open($file)) {
+				$total = $zip->numFiles;
+
+				$start = ($page - 1) * 200;
+
 				// Check if any of the files already exist.
-				for ($i = 0; $i < $zip->numFiles; $i++) {
+				for ($i = $start; $i < ($start + 200); $i++) {
 					$source = $zip->getNameIndex($i);
 
 					// Only extract the contents of the upload folder
-					$destination = str_replace('\\', '/', $source);
-
-					$path = $extension_install_info['code'] . '/' . $destination;
+					$destination = $extension_install_info['code'] . '/' . str_replace('\\', '/', $source);
 					$base = DIR_EXTENSION;
 
 					// image > image
@@ -312,20 +322,18 @@ class Installer extends \Opencart\System\Engine\Controller {
 						$base = DIR_STORAGE;
 					}
 
-					if ($path) {
-						if (substr($path, -1) != '/' && is_file($base . $path)) {
-							$json['error'] = sprintf($this->language->get('error_exists'), $destination);
+					if (substr($path, -1) != '/' && is_file($base . $path)) {
+						$json['error'] = sprintf($this->language->get('error_exists'), $destination);
 
-							break;
-						}
-
-						$extract[] = [
-							'source'      => $source,
-							'destination' => $destination,
-							'base'        => $base,
-							'path'        => $path
-						];
+						break;
 					}
+
+					$extract[] = [
+						'source'      => $source,
+						'destination' => $destination,
+						'base'        => $base,
+						'path'        => $path
+					];
 				}
 
 				$zip->close();
@@ -339,7 +347,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 				// Must not have a path before files and directories can be moved
 				$path = '';
 
-				$directories = explode('/', dirname($copy['path']));
+				$directories = explode('/', dirname($path));
 
 				foreach ($directories as $directory) {
 					if (!$path) {
@@ -348,7 +356,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 						$path = $path . '/' . $directory;
 					}
 
-					if (!is_dir($copy['base'] . $path) && mkdir($copy['base'] . $path, 0777)) {
+					if (!is_dir($base . $path) && mkdir($base . $path, 0777)) {
 						$this->model_setting_extension->addPath($extension_install_id, $path);
 					}
 				}
@@ -364,6 +372,131 @@ class Installer extends \Opencart\System\Engine\Controller {
 			$this->model_setting_extension->editStatus($extension_install_id, 1);
 
 			$json['success'] = $this->language->get('text_install');
+		}
+
+		if (!$json) {
+			$json['text'] = sprintf($this->language->get('text_progress'), 2, 2, 8);
+
+			$url = '';
+
+			if (isset($this->request->get['extension_install_id'])) {
+				$url .= '&extension_install_id=' . $this->request->get['extension_install_id'];
+			}
+
+			if (($page * 200) <= $total) {
+				$json['next'] = $this->url->link('marketplace/installer', $url . '&page=' . ($page + 1), true);
+			} else {
+				$json['next'] = $this->url->link('marketplace/installer', '', true);
+
+				if (is_file($file)) {
+					unlink($file);
+				}
+			}
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	/* Generate new autoloader file */
+	public function vendor(): void {
+		$this->load->language('marketplace/installer');
+
+		$json = [];
+
+		if (!$this->user->hasPermission('modify', 'marketplace/vendor')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			// Generate php autoload file
+			$code = '<?php' . "\n";
+
+			$files = glob(DIR_STORAGE . 'vendor/*/*/composer.json');
+
+			foreach ($files as $file) {
+				$output = json_decode(file_get_contents($file), true);
+
+				$code .= '// ' . $output['name'] . "\n";
+
+				if (isset($output['autoload'])) {
+					$directory = substr(dirname($file), strlen(DIR_STORAGE . 'vendor/'));
+
+					// Autoload psr-4 files
+					if (isset($output['autoload']['psr-4'])) {
+						$autoload = $output['autoload']['psr-4'];
+
+						foreach ($autoload as $namespace => $path) {
+							if (!is_array($path)) {
+								$code .= '$autoloader->register(\'' . rtrim($namespace, '\\') . '\', DIR_STORAGE . \'vendor/' . $directory . '/' . $path . '\', true);' . "\n";
+							} else {
+								foreach ($path as $value) {
+									$code .= '$autoloader->register(\'' . rtrim($namespace, '\\') . '\', DIR_STORAGE . \'vendor/' . $directory . '/' . $value . '\', true);' . "\n";
+								}
+							}
+						}
+					}
+
+					// Autoload psr-0 files
+					if (isset($output['autoload']['psr-0'])) {
+						$autoload = $output['autoload']['psr-0'];
+
+						foreach ($autoload as $namespace => $path) {
+							if (!is_array($path)) {
+								$code .= '$autoloader->register(\'' . rtrim($namespace, '\\') . '\', DIR_STORAGE . \'vendor/' . $directory . '/' . $path . '\', true);' . "\n";
+							} else {
+								foreach ($path as $value) {
+									$code .= '$autoloader->register(\'' . rtrim($namespace, '\\') . '\', DIR_STORAGE . \'vendor/' . $directory . '/' . $value . '\', true);' . "\n";
+								}
+							}
+						}
+					}
+
+					// Autoload classmap
+					if (isset($output['autoload']['classmap'])) {
+						$autoload = [];
+
+						$classmaps = $output['autoload']['classmap'];
+
+						foreach ($classmaps as $classmap) {
+							$directories = [dirname($file) . '/' . $classmap];
+
+							while (count($directories) != 0) {
+								$next = array_shift($directories);
+
+								foreach (glob($next . '*') as $file) {
+									if (is_dir($file)) {
+										$directories[] = $file . '/';
+									}
+
+									if (is_file($file)) {
+										$autoload[substr(dirname($file), strlen(DIR_STORAGE . 'vendor/' . $directory . $classmap) + 1)] = substr(dirname($file), strlen(DIR_STORAGE . 'vendor/'));
+									}
+								}
+							}
+						}
+
+						foreach ($autoload as $namespace => $path) {
+							$code .= '$autoloader->register(\'' . rtrim($namespace, '\\') . '\', DIR_STORAGE . \'vendor/' . $path . '\', true);' . "\n";
+						}
+					}
+
+					// Autoload files
+					if (isset($output['autoload']['files'])) {
+						$files = $output['autoload']['files'];
+
+						foreach ($files as $file) {
+							$code .= 'require_once(DIR_STORAGE . \'vendor/' . $directory . '/' . $file . '\');' . "\n";
+						}
+					}
+				}
+
+				$code .= "\n";
+			}
+
+			file_put_contents(DIR_SYSTEM . 'vendor.php', trim($code));
+
+			$json['success'] = $this->language->get('text_success');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

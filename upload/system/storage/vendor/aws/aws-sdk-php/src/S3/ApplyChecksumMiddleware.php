@@ -1,14 +1,14 @@
 <?php
 namespace Aws\S3;
 
-use Aws\Api\ApiProvider;
 use Aws\Api\Service;
 use Aws\CommandInterface;
 use GuzzleHttp\Psr7;
+use InvalidArgumentException;
 use Psr\Http\Message\RequestInterface;
 
 /**
- * Apply required or optional MD5s to requests before sending.
+ * Apply required or optional checksums to requests before sending.
  *
  * IMPORTANT: This middleware must be added after the "build" step.
  *
@@ -16,6 +16,7 @@ use Psr\Http\Message\RequestInterface;
  */
 class ApplyChecksumMiddleware
 {
+    use CalculatesChecksumTrait;
     private static $sha256 = [
         'PutObject',
         'UploadPart',
@@ -55,13 +56,55 @@ class ApplyChecksumMiddleware
 
         $op = $this->api->getOperation($command->getName());
 
-        if (!empty($op['httpChecksumRequired']) && !$request->hasHeader('Content-MD5')) {
-            // Set the content MD5 header for operations that require it.
-            $request = $request->withHeader(
-                'Content-MD5',
-                base64_encode(Psr7\Utils::hash($body, 'md5', true))
-            );
-        } elseif (in_array($name, self::$sha256) && $command['ContentSHA256']) {
+        $checksumInfo = isset($op['httpChecksum'])
+            ? $op['httpChecksum']
+            : [];
+        $checksumMemberName = array_key_exists('requestAlgorithmMember', $checksumInfo)
+            ? $checksumInfo['requestAlgorithmMember']
+            : "";
+        $requestedAlgorithm = isset($command[$checksumMemberName])
+            ? $command[$checksumMemberName]
+            : null;
+        if (!empty($checksumMemberName) && !empty($requestedAlgorithm)) {
+            $requestedAlgorithm = strtolower($requestedAlgorithm);
+            $checksumMember = $op->getInput()->getMember($checksumMemberName);
+            $supportedAlgorithms = isset($checksumMember['enum'])
+                ? array_map('strtolower', $checksumMember['enum'])
+                : null;
+            if (is_array($supportedAlgorithms)
+                && in_array($requestedAlgorithm, $supportedAlgorithms)
+            ) {
+                $headerName = "x-amz-checksum-{$requestedAlgorithm}";
+                $encoded = $this->getEncodedValue($requestedAlgorithm, $body);
+                if (!$request->hasHeader($headerName)) {
+                    $request = $request->withHeader($headerName, $encoded);
+                }
+            } else {
+                throw new InvalidArgumentException(
+                    "Unsupported algorithm supplied for input variable {$checksumMemberName}."
+                    . "  Supported checksums for this operation include: "
+                    . implode(", ", $supportedAlgorithms) . "."
+                );
+            }
+            return $next($command, $request);
+        }
+
+        if (!empty($checksumInfo)) {
+        //if the checksum member is absent, check if it's required
+        $checksumRequired = isset($checksumInfo['requestChecksumRequired'])
+            ? $checksumInfo['requestChecksumRequired']
+            : null;
+            if (!empty($checksumRequired) && !$request->hasHeader('Content-MD5')) {
+                // Set the content MD5 header for operations that require it.
+                $request = $request->withHeader(
+                    'Content-MD5',
+                    base64_encode(Psr7\Utils::hash($body, 'md5', true))
+                );
+                return $next($command, $request);
+            }
+        }
+
+        if (in_array($name, self::$sha256) && $command['ContentSHA256']) {
             // Set the content hash header if provided in the parameters.
             $request = $request->withHeader(
                 'X-Amz-Content-Sha256',

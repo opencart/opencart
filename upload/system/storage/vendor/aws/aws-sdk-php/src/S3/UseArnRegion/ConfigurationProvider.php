@@ -131,7 +131,7 @@ class ConfigurationProvider extends AbstractConfigurationProvider
         $profile = $profile ?: (getenv(self::ENV_PROFILE) ?: 'default');
 
         return function () use ($profile, $filename) {
-            if (!is_readable($filename)) {
+            if (!@is_readable($filename)) {
                 return self::reject("Cannot read configuration from $filename");
             }
 

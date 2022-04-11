@@ -32,6 +32,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise deletePackageAsync(array $args = [])
  * @method \Aws\Result describeDomainAutoTunes(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeDomainAutoTunesAsync(array $args = [])
+ * @method \Aws\Result describeDomainChangeProgress(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeDomainChangeProgressAsync(array $args = [])
  * @method \Aws\Result describeElasticsearchDomain(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeElasticsearchDomainAsync(array $args = [])
  * @method \Aws\Result describeElasticsearchDomainConfig(array $args = [])

@@ -13,6 +13,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise createWorkerConfigurationAsync(array $args = [])
  * @method \Aws\Result deleteConnector(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteConnectorAsync(array $args = [])
+ * @method \Aws\Result deleteCustomPlugin(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteCustomPluginAsync(array $args = [])
  * @method \Aws\Result describeConnector(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeConnectorAsync(array $args = [])
  * @method \Aws\Result describeCustomPlugin(array $args = [])

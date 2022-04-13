@@ -2178,6 +2178,11 @@ function db_schema() {
 				'not_null' => true
 			],
 			[
+				'name' => 'filename',
+				'type' => 'varchar(255)',
+				'not_null' => true
+			],
+			[
 				'name' => 'version',
 				'type' => 'varchar(255)',
 				'not_null' => true

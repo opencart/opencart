@@ -1,42 +1,42 @@
 {{ header }}{{ column_left }}
 <div id="content">
-	<div class="page-header">
-		<div class="container-fluid">
-			<div class="float-end"><button type="button" id="button-upload" data-bs-toggle="tooltip" title="{{ button_upload }}" class="btn btn-primary"><i class="fas fa-upload"></i></button></div>
-			<h1>{{ heading_title }}</h1>
-			<ol class="breadcrumb">
-				{% for breadcrumb in breadcrumbs %}
-					<li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
-				{% endfor %}
-			</ol>
-		</div>
-	</div>
-	<div class="container-fluid">
-		<div class="card">
-			<div class="card-header"><i class="fas fa-puzzle-piece"></i> {{ heading_title }}</div>
-			<div class="card-body">
-				<fieldset>
-					<legend>{{ text_progress }}</legend>
-					<div class="row mb-3">
-						<label class="col-sm-2 col-form-label">{{ entry_progress }}</label>
-						<div class="col-sm-10 mt-2">
-							<div class="progress">
-								<div id="progress-bar" class="progress-bar" style="width: 0%;"></div>
-							</div>
-							<div id="progress-text"></div>
-						</div>
-					</div>
-				</fieldset>
-				<fieldset>
-					<legend>{{ text_installed }}</legend>
-					<div id="extension">{{ list }}</div>
-				</fieldset>
-			</div>
-		</div>
-	</div>
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="float-end"><button type="button" id="button-upload" data-bs-toggle="tooltip" title="{{ button_upload }}" class="btn btn-primary"><i class="fas fa-upload"></i></button></div>
+      <h1>{{ heading_title }}</h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-header"><i class="fas fa-puzzle-piece"></i> {{ heading_title }}</div>
+      <div class="card-body">
+        <fieldset>
+          <legend>{{ text_progress }}</legend>
+          <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">{{ entry_progress }}</label>
+            <div class="col-sm-10 mt-2">
+              <div class="progress">
+                <div id="progress-bar" class="progress-bar" style="width: 0%;"></div>
+              </div>
+              <div id="progress-text"></div>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>{{ text_installed }}</legend>
+          <div id="extension">{{ list }}</div>
+        </fieldset>
+      </div>
+    </div>
+  </div>
 </div>
 <script type="text/javascript"><!--
-$('#extension').on('click', 'thead a, .pagination a', function(e) {
+$('#extension').on('click', 'thead a, .pagination a', function (e) {
     e.preventDefault();
 
     $('#extension').load(this.href);
@@ -45,16 +45,16 @@ $('#extension').on('click', 'thead a, .pagination a', function(e) {
 $('#extension').load('index.php?route=marketplace/installer|extension&user_token={{ user_token }}');
 
 // Upload
-$('#button-upload').on('click', function() {
+$('#button-upload').on('click', function () {
     $('#form-upload').remove();
 
     $('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file"/></form>');
 
     $('#form-upload input[name=\'file\']').trigger('click');
 
-    $('#form-upload input[name=\'file\']').on('change', function() {
+    $('#form-upload input[name=\'file\']').on('change', function () {
         if (this.files[0].size > {{ config_file_max_size }}) {
-          	alert('{{ error_upload_size }}');
+            alert('{{ error_upload_size }}');
 
             $(this).val('');
         }
@@ -64,7 +64,7 @@ $('#button-upload').on('click', function() {
         clearInterval(timer);
     }
 
-    timer = setInterval(function() {
+    timer = setInterval(function () {
         if ($('#form-upload input[name=\'file\']').val() != '') {
             clearInterval(timer);
 
@@ -76,13 +76,13 @@ $('#button-upload').on('click', function() {
                 cache: false,
                 contentType: false,
                 processData: false,
-                beforeSend: function() {
+                beforeSend: function () {
                     $('#button-upload').prop('disabled', true).addClass('loading');
                 },
-                complete: function() {
+                complete: function () {
                     $('#button-upload').prop('disabled', false).removeClass('loading');
                 },
-                success: function(json) {
+                success: function (json) {
                     if (json['error']) {
                         alert(json['error']);
                     }
@@ -93,7 +93,7 @@ $('#button-upload').on('click', function() {
                         $('#extension').load('index.php?route=marketplace/installer|extension&user_token={{ user_token }}');
                     }
                 },
-                error: function(xhr, ajaxOptions, thrownError) {
+                error: function (xhr, ajaxOptions, thrownError) {
                     console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
                 }
             });
@@ -102,12 +102,14 @@ $('#button-upload').on('click', function() {
 });
 
 // Install
-$('#extension').on('click', '.btn-success, .btn-warning', function(e) {
+$('#extension').on('click', '.btn-success, .btn-warning', function (e) {
     e.preventDefault();
 
     var element = this;
 
     var next = $(element).attr('href');
+
+    console.log(next);
 
     $('#progress-bar').removeClass('progress-bar-danger progress-bar-success').css('width', '0%');
     $('#progress-text').html('');
@@ -116,13 +118,15 @@ $('#extension').on('click', '.btn-success, .btn-warning', function(e) {
         return $.ajax({
             url: next,
             dataType: 'json',
-            beforeSend: function() {
+            beforeSend: function () {
                 $(element).prop('disabled', true).addClass('loading');
             },
-            complete: function() {
+            complete: function () {
                 $(element).prop('disabled', false).removeClass('loading');
             },
-            success: function(json) {
+            success: function (json) {
+                console.log(json);
+
                 $('.alert-dismissible').remove();
 
                 if (json['error']) {
@@ -136,6 +140,7 @@ $('#extension').on('click', '.btn-success, .btn-warning', function(e) {
 
                     $('#extension').load('index.php?route=marketplace/installer|extension&user_token={{ user_token }}');
                 }
+
                 if (json['next']) {
                     next = json['next'];
 
@@ -152,7 +157,7 @@ $('#extension').on('click', '.btn-success, .btn-warning', function(e) {
 });
 
 // Delete
-$('#extension').on('click', '.btn-danger', function(e) {
+$('#extension').on('click', '.btn-danger', function (e) {
     e.preventDefault();
 
     var element = this;
@@ -161,13 +166,13 @@ $('#extension').on('click', '.btn-danger', function(e) {
         $.ajax({
             url: $(element).attr('href'),
             dataType: 'json',
-            beforeSend: function() {
+            beforeSend: function () {
                 $(element).prop('disabled', true).addClass('loading');
             },
-            complete: function() {
+            complete: function () {
                 $(element).prop('disabled', false).removeClass('loading');
             },
-            success: function(json) {
+            success: function (json) {
                 $('.alert-dismissible').remove();
 
                 if (json['error']) {
@@ -180,7 +185,7 @@ $('#extension').on('click', '.btn-danger', function(e) {
                     $('#extension').load('index.php?route=marketplace/installer|extension&user_token={{ user_token }}');
                 }
             },
-            error: function(xhr, ajaxOptions, thrownError) {
+            error: function (xhr, ajaxOptions, thrownError) {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });

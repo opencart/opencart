@@ -346,8 +346,6 @@ class Installer extends \Opencart\System\Engine\Controller {
 
 				$zip->close();
 
-				//$json['success'] = $this->language->get('text_install');
-
 				$this->model_setting_extension->editStatus($extension_install_id, 1);
 			} else {
 				$json['error'] = $this->language->get('error_unzip');
@@ -355,7 +353,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$json['text'] = sprintf($this->language->get('text_progress'), 2, 2, 8);
+			$json['text'] = sprintf($this->language->get('text_progress'), 2, $total);
 
 			$url = '';
 
@@ -366,7 +364,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 			if (($page * 200) <= $total) {
 				$json['next'] = $this->url->link('marketplace/installer|install', 'user_token=' . $this->session->data['user_token'] . $url . '&page=' . ($page + 1), true);
 			} else {
-				$json['next'] = $this->url->link('marketplace/installer|vendor', $this->session->data['user_token'] . $url, true);
+				$json['next'] = $this->url->link('marketplace/installer|vendor', 'user_token=' . $this->session->data['user_token'] . $url, true);
 			}
 		}
 

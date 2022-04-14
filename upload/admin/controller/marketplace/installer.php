@@ -141,7 +141,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		// Check for any install directories
+		// 1. Validate the file uploaded.
 		if (isset($this->request->files['file']['name'])) {
 			$filename = basename($this->request->files['file']['name']);
 
@@ -153,8 +153,12 @@ class Installer extends \Opencart\System\Engine\Controller {
 				$json['error'] = $this->language->get('error_filetype');
 			}
 
+			$file = DIR_STORAGE . 'marketplace/' . $filename;
+
 			if (is_file($filename)) {
 				$json['error'] = $this->language->get('error_exists');
+
+				unlink($this->request->files['file']['name']);
 			}
 
 			if ($this->request->files['file']['error'] != UPLOAD_ERR_OK) {
@@ -164,88 +168,77 @@ class Installer extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_upload');
 		}
 
+		// 3. Validate if the file can be opened and there is a install.json that can be read.
 		if (!$json) {
-			$file = DIR_STORAGE . 'marketplace/' . $filename;
-
 			move_uploaded_file($this->request->files['file']['tmp_name'], $file);
 
-			if (is_file($file)) {
-				// Unzip the files
-				$zip = new \ZipArchive();
+			// Unzip the files
+			$zip = new \ZipArchive();
 
-				if ($zip->open($file, \ZipArchive::RDONLY)) {
-					$data = $zip->getFromName('install.json');
+			if ($zip->open($file, \ZipArchive::RDONLY)) {
+				$install_info = json_decode($zip->getFromName('install.json'), true);
 
-
-
-					$zip->close();
+				if ($install_info) {
+					if ($this->model_setting_extension->getInstallByCode(basename($filename, '.ocmod.zip'))) {
+						$json['error'] = $this->language->get('error_exists');
+					}
+				} else {
+					$json['error'] = $this->language->get('error_unzip');
 				}
 
-				// If xml file just put it straight into the DB
-				if ($data) {
-					try {
-
-						$dom = new \DOMDocument('1.0', 'UTF-8');
-						$dom->loadXml($xml);
-
-						$name = $dom->getElementsByTagName('name')->item(0);
-
-						if ($name) {
-							$name = $name->nodeValue;
-						} else {
-							$name = '';
-						}
-
-						$version = $dom->getElementsByTagName('version')->item(0);
-
-						if ($version) {
-							$version = $version->nodeValue;
-						} else {
-							$version = '';
-						}
-
-						$author = $dom->getElementsByTagName('author')->item(0);
-
-						if ($author) {
-							$author = $author->nodeValue;
-						} else {
-							$author = '';
-						}
-
-						$link = $dom->getElementsByTagName('link')->item(0);
-
-						if ($link) {
-							$link = $link->nodeValue;
-						} else {
-							$link = '';
-						}
-					} catch (\Exception $exception) {
-						$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
-					}
-
-					if (!$json) {
-						$extension_data = [
-							'extension_id'          => 0,
-							'extension_download_id' => 0,
-							'name'                  => $name,
-							'code'              	=> basename($filename, '.ocmod.zip'),
-							'version'               => $version,
-							'author'                => $author,
-							'link'                  => $link
-						];
-
-						$this->load->model('setting/extension');
-
-						$this->model_setting_extension->addInstall($extension_data);
-					}
-				}
-
-				$json['success'] = $this->language->get('text_upload');
+				$zip->close();
 			} else {
-				$json['error'] = sprintf($this->language->get('error_file'), $filename);
+				$json['error'] = $this->language->get('error_unzip');
 			}
-		} else {
-			unset($this->request->files['file']['tmp_name']);
+		}
+
+		if (!$json) {
+			// If xml file just put it straight into the DB
+			if (isset($install_info['name'])) {
+				$name = $install_info['name'];
+			} else {
+				$name = '';
+			}
+
+			if (isset($install_info['code'])) {
+				$code = basename($filename, '.ocmod.zip');
+			} else {
+				$code = '';
+			}
+
+			if (isset($install_info['version'])) {
+				$version = $install_info['version'];
+			} else {
+				$version = '';
+			}
+
+			if (isset($install_info['author'])) {
+				$author = $install_info['author'];
+			} else {
+				$author = '';
+			}
+
+			if (isset($install_info['link'])) {
+				$link = $install_info['link'];
+			} else {
+				$link = '';
+			}
+
+			$extension_data = [
+				'extension_id'          => 0,
+				'extension_download_id' => 0,
+				'name'                  => $name,
+				'code'              	=> $code,
+				'version'               => $version,
+				'author'                => $author,
+				'link'                  => $link
+			];
+
+			$this->load->model('setting/extension');
+
+			$this->model_setting_extension->addInstall($extension_data);
+
+			$json['success'] = $this->language->get('text_upload');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -284,14 +277,16 @@ class Installer extends \Opencart\System\Engine\Controller {
 				$json['error'] = sprintf($this->language->get('error_file'), $extension_install_info['code'] . '.ocmod.zip');
 			}
 
-			if (is_dir(DIR_EXTENSION . $extension_install_info['code'] . '/')) {
+			if ($page == 1 && is_dir(DIR_EXTENSION . $extension_install_info['code'] . '/')) {
 				$json['error'] = sprintf($this->language->get('error_exists'), $extension_install_info['code'] . '/');
+			}
+
+			if ($page > 1 && !is_dir(DIR_EXTENSION . $extension_install_info['code'] . '/')) {
+				$json['error'] = sprintf($this->language->get('error_directory'), $extension_install_info['code'] . '/');
 			}
 		} else {
 			$json['error'] = $this->language->get('error_install');
 		}
-
-		$extract = [];
 
 		if (!$json) {
 			// Unzip the files
@@ -306,8 +301,10 @@ class Installer extends \Opencart\System\Engine\Controller {
 				for ($i = $start; $i < ($start + 200); $i++) {
 					$source = $zip->getNameIndex($i);
 
+					$destination = str_replace('\\', '/', $source);
+
 					// Only extract the contents of the upload folder
-					$destination = $extension_install_info['code'] . '/' . str_replace('\\', '/', $source);
+					$path = $extension_install_info['code'] . '/' . $destination;
 					$base = DIR_EXTENSION;
 
 					// image > image
@@ -322,60 +319,41 @@ class Installer extends \Opencart\System\Engine\Controller {
 						$base = DIR_STORAGE;
 					}
 
-					if (substr($path, -1) != '/' && is_file($base . $path)) {
-						$json['error'] = sprintf($this->language->get('error_exists'), $destination);
+					// Must not have a path before files and directories can be moved
+					$path_new = '';
 
-						break;
+					$directories = explode('/', dirname($path));
+
+					foreach ($directories as $directory) {
+						if (!$path_new) {
+							$path_new = $directory;
+						} else {
+							$path_new = $path_new . '/' . $directory;
+						}
+
+						if (!is_dir($base . $path_new) && mkdir($base . $path_new, 0777)) {
+							$this->model_setting_extension->addPath($extension_install_id, $path_new);
+						}
 					}
 
-					$extract[] = [
-						'source'      => $source,
-						'destination' => $destination,
-						'base'        => $base,
-						'path'        => $path
-					];
+					// If check if the path is not directory and check there is no existing file
+					if (substr($path, -1) != '/') {
+						if (!is_file($base . $path) && copy('zip://' . $file . '#' . $source, $base . $path)) {
+							$this->model_setting_extension->addPath($extension_install_id, $path);
+						}
+					}
 				}
 
 				$zip->close();
+
+				$this->model_setting_extension->editStatus($extension_install_id, 1);
 			} else {
 				$json['error'] = $this->language->get('error_unzip');
 			}
 		}
 
 		if (!$json) {
-			foreach ($extract as $copy) {
-				// Must not have a path before files and directories can be moved
-				$path = '';
-
-				$directories = explode('/', dirname($path));
-
-				foreach ($directories as $directory) {
-					if (!$path) {
-						$path = $directory;
-					} else {
-						$path = $path . '/' . $directory;
-					}
-
-					if (!is_dir($base . $path) && mkdir($base . $path, 0777)) {
-						$this->model_setting_extension->addPath($extension_install_id, $path);
-					}
-				}
-
-				// If check if the path is not directory and check there is no existing file
-				if (substr($copy['path'], -1) != '/') {
-					if (!is_file($copy['base'] . $copy['path']) && copy('zip://' . $file . '#' . $copy['source'], $copy['base'] . $copy['path'])) {
-						$this->model_setting_extension->addPath($extension_install_id, $copy['path']);
-					}
-				}
-			}
-
-			$this->model_setting_extension->editStatus($extension_install_id, 1);
-
-			$json['success'] = $this->language->get('text_install');
-		}
-
-		if (!$json) {
-			$json['text'] = sprintf($this->language->get('text_progress'), 2, 2, 8);
+			$json['text'] = sprintf($this->language->get('text_progress'), 2, $total);
 
 			$url = '';
 
@@ -384,13 +362,9 @@ class Installer extends \Opencart\System\Engine\Controller {
 			}
 
 			if (($page * 200) <= $total) {
-				$json['next'] = $this->url->link('marketplace/installer', $url . '&page=' . ($page + 1), true);
+				$json['next'] = $this->url->link('marketplace/installer|install', 'user_token=' . $this->session->data['user_token'] . $url . '&page=' . ($page + 1), true);
 			} else {
-				$json['next'] = $this->url->link('marketplace/installer', '', true);
-
-				if (is_file($file)) {
-					unlink($file);
-				}
+				$json['next'] = $this->url->link('marketplace/installer|vendor', 'user_token=' . $this->session->data['user_token'] . $url, true);
 			}
 		}
 
@@ -550,10 +524,14 @@ class Installer extends \Opencart\System\Engine\Controller {
 				}
 
 				// Check if the location exists or not
-				if (is_file($path)) {
-					unlink($path);
-				} elseif (is_dir($path)) {
-					rmdir($path);
+				$path_total = $this->model_setting_extension->getTotalPaths($result['path']);
+
+				if ($path_total < 2) {
+					if (is_file($path)) {
+						unlink($path);
+					} elseif (is_dir($path)) {
+						rmdir($path);
+					}
 				}
 
 				$this->model_setting_extension->deletePath($result['extension_path_id']);

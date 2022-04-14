@@ -281,6 +281,9 @@ class Installer extends \Opencart\System\Engine\Controller {
 				$json['error'] = sprintf($this->language->get('error_exists'), $extension_install_info['code'] . '/');
 			}
 
+			if ($page > 1 && !is_dir(DIR_EXTENSION . $extension_install_info['code'] . '/')) {
+				$json['error'] = sprintf($this->language->get('error_directory'), $extension_install_info['code'] . '/');
+			}
 		} else {
 			$json['error'] = $this->language->get('error_install');
 		}
@@ -314,12 +317,6 @@ class Installer extends \Opencart\System\Engine\Controller {
 					if (substr($destination, 0, 22) == 'system/storage/vendor/') {
 						$path = substr($destination, 15);
 						$base = DIR_STORAGE;
-					}
-
-					if (substr($path, -1) != '/' && is_file($base . $path)) {
-						$json['error'] = sprintf($this->language->get('error_exists'), $destination);
-
-						break;
 					}
 
 					// Must not have a path before files and directories can be moved
@@ -375,126 +372,6 @@ class Installer extends \Opencart\System\Engine\Controller {
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
-	}
-
-	public function extract(): void {
-		$this->load->language('marketplace/installer');
-
-		$json = [];
-
-
-
-		if (!$this->user->hasPermission('modify', 'marketplace/installer')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (!$json) {
-			// Unzip the files
-			$zip = new \ZipArchive();
-
-			if ($zip->open($file)) {
-				$total = $zip->numFiles;
-
-				$start = ($page - 1) * 200;
-
-				// Check if any of the files already exist.
-				for ($i = $start; $i < ($start + 200); $i++) {
-					$source = $zip->getNameIndex($i);
-
-					$destination = str_replace('\\', '/', $source);
-
-					// Only extract the contents of the upload folder
-					$path = $extension_install_info['code'] . '/' . $destination;
-					$base = DIR_EXTENSION;
-
-					// image > image
-					if (substr($destination, 0, 6) == 'image/') {
-						$path = $destination;
-						$base = substr(DIR_IMAGE, 0, -6);
-					}
-
-					// We need to store the path differently for vendor folders.
-					if (substr($destination, 0, 22) == 'system/storage/vendor/') {
-						$path = substr($destination, 15);
-						$base = DIR_STORAGE;
-					}
-
-					if (substr($path, -1) != '/' && is_file($base . $path)) {
-						$json['error'] = sprintf($this->language->get('error_exists'), $destination);
-
-						break;
-					}
-
-					$extract[] = [
-						'source'      => $source,
-						'destination' => $destination,
-						'base'        => $base,
-						'path'        => $path
-					];
-				}
-
-				$zip->close();
-			} else {
-				$json['error'] = $this->language->get('error_unzip');
-			}
-		}
-
-
-
-
-
-
-			if (!$json) {
-			foreach ($extract as $copy) {
-				// Must not have a path before files and directories can be moved
-				$path = '';
-
-				$directories = explode('/', dirname($copy['path']));
-
-				foreach ($directories as $directory) {
-					if (!$path) {
-						$path = $directory;
-					} else {
-						$path = $path . '/' . $directory;
-					}
-
-					if (!is_dir($base . $path) && mkdir($base . $path, 0777)) {
-						$this->model_setting_extension->addPath($extension_install_id, $path);
-					}
-				}
-
-				// If check if the path is not directory and check there is no existing file
-				if (substr($copy['path'], -1) != '/') {
-					if (!is_file($copy['base'] . $copy['path']) && copy('zip://' . $file . '#' . $copy['source'], $copy['base'] . $copy['path'])) {
-						$this->model_setting_extension->addPath($extension_install_id, $copy['path']);
-					}
-				}
-			}
-
-			$this->model_setting_extension->editStatus($extension_install_id, 1);
-
-			//$json['success'] = $this->language->get('text_install');
-		}
-
-		if (!$json) {
-			$json['text'] = sprintf($this->language->get('text_progress'), 2, 2, 8);
-
-			$url = '';
-
-			if (isset($this->request->get['extension_install_id'])) {
-				$url .= '&extension_install_id=' . $this->request->get['extension_install_id'];
-			}
-
-			if (($page * 200) <= $total) {
-				$json['next'] = $this->url->link('marketplace/installer|install', 'user_token=' . $this->session->data['user_token'] . $url . '&page=' . ($page + 1), true);
-			} else {
-				$json['next'] = $this->url->link('marketplace/installer|vendor', $this->session->data['user_token'] . $url, true);
-
-				if (is_file($file)) {
-					unlink($file);
-				}
-			}
-		}
 	}
 
 	/* Generate new autoloader file */

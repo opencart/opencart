@@ -46,59 +46,63 @@ $('#extension').load('index.php?route=marketplace/installer|extension&user_token
 
 // Upload
 $('#button-upload').on('click', function () {
-    $('#form-upload').remove();
+    var element = this;
 
-    $('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file"/></form>');
+    if (!$('button-upload').prop('disabled')) {
+        $('#form-upload').remove();
 
-    $('#form-upload input[name=\'file\']').trigger('click');
+        $('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file"/></form>');
 
-    $('#form-upload input[name=\'file\']').on('change', function () {
-        if (this.files[0].size > {{ config_file_max_size }}) {
-            alert('{{ error_upload_size }}');
+        $('#form-upload input[name=\'file\']').trigger('click');
 
-            $(this).val('');
-        }
-    });
+        $('#form-upload input[name=\'file\']').on('change', function () {
+            if (this.files[0].size > {{ config_file_max_size }}) {
+                alert('{{ error_upload_size }}');
 
-    if (typeof timer != 'undefined') {
-        clearInterval(timer);
-    }
+                $(this).val('');
+            }
+        });
 
-    timer = setInterval(function () {
-        if ($('#form-upload input[name=\'file\']').val() != '') {
+        if (typeof timer != 'undefined') {
             clearInterval(timer);
-
-            $.ajax({
-                url: 'index.php?route=marketplace/installer|upload&user_token={{ user_token }}',
-                type: 'post',
-                dataType: 'json',
-                data: new FormData($('#form-upload')[0]),
-                cache: false,
-                contentType: false,
-                processData: false,
-                beforeSend: function () {
-                    $('#button-upload').prop('disabled', true).addClass('loading');
-                },
-                complete: function () {
-                    $('#button-upload').prop('disabled', false).removeClass('loading');
-                },
-                success: function (json) {
-                    if (json['error']) {
-                        alert(json['error']);
-                    }
-
-                    if (json['success']) {
-                        alert(json['success']);
-
-                        $('#extension').load('index.php?route=marketplace/installer|extension&user_token={{ user_token }}');
-                    }
-                },
-                error: function (xhr, ajaxOptions, thrownError) {
-                    console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-                }
-            });
         }
-    }, 500);
+
+        timer = setInterval(function () {
+            if ($('#form-upload input[name=\'file\']').val() != '') {
+                clearInterval(timer);
+
+                $.ajax({
+                    url: 'index.php?route=marketplace/installer|upload&user_token={{ user_token }}',
+                    type: 'post',
+                    data: new FormData($('#form-upload')[0]),
+                    dataType: 'json',
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    beforeSend: function () {
+                        $(element).prop('disabled', true).addClass('loading');
+                    },
+                    complete: function () {
+                        $(element).prop('disabled', false).removeClass('loading');
+                    },
+                    success: function (json) {
+                        if (json['error']) {
+                            alert(json['error']);
+                        }
+
+                        if (json['success']) {
+                            alert(json['success']);
+
+                            $('#extension').load('index.php?route=marketplace/installer|extension&user_token={{ user_token }}');
+                        }
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                    }
+                });
+            }
+        }, 500);
+    }
 });
 
 // Install

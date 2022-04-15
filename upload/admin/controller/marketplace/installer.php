@@ -470,7 +470,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 
 			file_put_contents(DIR_SYSTEM . 'vendor.php', trim($code));
 
-			$json['success'] = $this->language->get('text_success');
+			$json['success'] = $this->language->get('text_install');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

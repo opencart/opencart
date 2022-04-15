@@ -113,8 +113,6 @@ $('#extension').on('click', '.btn-success, .btn-warning', function (e) {
 
     var next = $(element).attr('href');
 
-    console.log(next);
-
     $('#progress-bar').removeClass('progress-bar-danger progress-bar-success').css('width', '0%');
     $('#progress-text').html('');
 
@@ -129,8 +127,6 @@ $('#extension').on('click', '.btn-success, .btn-warning', function (e) {
                 $(element).prop('disabled', false).removeClass('loading');
             },
             success: function (json) {
-                console.log(json);
-
                 $('.alert-dismissible').remove();
 
                 if (json['error']) {

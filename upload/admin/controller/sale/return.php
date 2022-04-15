@@ -857,11 +857,7 @@ class ControllerSaleReturn extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 		
-		$this->load->model('sale/order');
-			
-		$order_info = $this->model_sale_order->getOrder($this->request->post['order_id']);
-			
-		if (empty($this->request->post['order_id']) || !$order_info) {
+		if (empty($this->request->post['order_id'])) {
 			$this->error['order_id'] = $this->language->get('error_order_id');
 		}
 

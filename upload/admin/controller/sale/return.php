@@ -856,8 +856,12 @@ class ControllerSaleReturn extends Controller {
 		if (!$this->user->hasPermission('modify', 'sale/return')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
-
-		if (empty($this->request->post['order_id'])) {
+		
+		$this->load->model('sale/order');
+			
+		$order_info = $this->model_sale_order->getOrder($this->request->post['order_id']);
+			
+		if (empty($this->request->post['order_id']) || !$order_info) {
 			$this->error['order_id'] = $this->language->get('error_order_id');
 		}
 

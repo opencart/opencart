@@ -145,18 +145,21 @@ class Installer extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->files['file']['name'])) {
 			$filename = basename($this->request->files['file']['name']);
 
+			// 2. Validate the filename.
 			if ((utf8_strlen($filename) < 1) || (utf8_strlen($filename) > 128)) {
 				$json['error'] = $this->language->get('error_filename');
 			}
 
+			// 3. Validate is ocmod file.
 			if (substr($filename, -10) != '.ocmod.zip') {
 				$json['error'] = $this->language->get('error_filetype');
 			}
 
+			// 4. check if there is already a file
 			$file = DIR_STORAGE . 'marketplace/' . $filename;
 
-			if (is_file($filename)) {
-				$json['error'] = $this->language->get('error_exists');
+			if (is_file($file)) {
+				$json['error'] = $this->language->get('error_file_exists');
 
 				unlink($this->request->files['file']['name']);
 			}
@@ -168,7 +171,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_upload');
 		}
 
-		// 3. Validate if the file can be opened and there is a install.json that can be read.
+		// 5. Validate if the file can be opened and there is a install.json that can be read.
 		if (!$json) {
 			move_uploaded_file($this->request->files['file']['tmp_name'], $file);
 
@@ -180,7 +183,11 @@ class Installer extends \Opencart\System\Engine\Controller {
 
 				if ($install_info) {
 					if ($this->model_setting_extension->getInstallByCode(basename($filename, '.ocmod.zip'))) {
-						$json['error'] = $this->language->get('error_exists');
+						$json['error'] = $this->language->get('error_installed');
+					}
+
+					if (!$install_info['code']) {
+						$code = basename($filename, '.ocmod.zip');
 					}
 				} else {
 					$json['error'] = $this->language->get('error_unzip');
@@ -278,7 +285,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 			}
 
 			if ($page == 1 && is_dir(DIR_EXTENSION . $extension_install_info['code'] . '/')) {
-				$json['error'] = sprintf($this->language->get('error_exists'), $extension_install_info['code'] . '/');
+				$json['error'] = sprintf($this->language->get('error_directory_exists'), $extension_install_info['code'] . '/');
 			}
 
 			if ($page > 1 && !is_dir(DIR_EXTENSION . $extension_install_info['code'] . '/')) {

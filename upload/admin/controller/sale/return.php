@@ -559,7 +559,7 @@ class ControllerSaleReturn extends Controller {
 		$data['text_form'] = !isset($this->request->get['return_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
 		$data['user_token'] = $this->session->data['user_token'];
-
+		
 		if (isset($this->request->get['return_id'])) {
 			$data['return_id'] = (int)$this->request->get['return_id'];
 		} else {
@@ -683,18 +683,27 @@ class ControllerSaleReturn extends Controller {
 		}
 
 		$data['cancel'] = $this->url->link('sale/return', 'user_token=' . $this->session->data['user_token'] . $url, true);
-
+		
 		if (isset($this->request->get['return_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$return_info = $this->model_sale_return->getReturn($this->request->get['return_id']);
 		}
 
 		if (isset($this->request->post['order_id'])) {
-			$data['order_id'] = $this->request->post['order_id'];
+			$data['order_id'] = (int)$this->request->post['order_id'];
 		} elseif (!empty($return_info)) {
 			$data['order_id'] = $return_info['order_id'];
 		} else {
 			$data['order_id'] = '';
 		}
+		
+		// Return Recurring
+		$this->load->model('sale/recurring');
+		
+		$filter_data = array(
+			'filter_order_id' => $data['order_id']	
+		);
+			
+		$data['recurring_total'] = $this->model_sale_recurring->getTotalRecurrings($filter_data);
 
 		if (isset($this->request->post['date_ordered'])) {
 			$data['date_ordered'] = $this->request->post['date_ordered'];

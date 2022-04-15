@@ -10,6 +10,7 @@ $_['text_edit']            = 'Edit Product Return';
 $_['text_opened']          = 'Opened';
 $_['text_unopened']        = 'Unopened';
 $_['text_order']           = 'Order Information';
+$_['text_recurring']       = 'This returned request has a recurring order';
 $_['text_product']         = 'Product Information &amp; Reason for Return';
 $_['text_history']         = 'History';
 $_['text_history_add']     = 'Add History';

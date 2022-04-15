@@ -334,7 +334,7 @@ class Backup extends \Opencart\System\Engine\Controller {
 
 			// Allowed file extension types
 			if (strtolower(substr(strrchr($filename, '.'), 1)) != 'sql') {
-				$json['error'] = $this->language->get('error_filetype');
+				$json['error'] = $this->language->get('error_file_type');
 			}
 		}
 

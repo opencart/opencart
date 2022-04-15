@@ -152,7 +152,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 
 			// 3. Validate is ocmod file.
 			if (substr($filename, -10) != '.ocmod.zip') {
-				$json['error'] = $this->language->get('error_filetype');
+				$json['error'] = $this->language->get('error_file_type');
 			}
 
 			// 4. check if there is already a file
@@ -186,9 +186,23 @@ class Installer extends \Opencart\System\Engine\Controller {
 						$json['error'] = $this->language->get('error_installed');
 					}
 
-					if (!$install_info['code']) {
-						$code = basename($filename, '.ocmod.zip');
+					if (!$install_info['name']) {
+						$json['error'] = $this->language->get('error_name');
 					}
+
+					if (!$install_info['version']) {
+						$json['error'] = $this->language->get('error_version');
+					}
+
+					if (!$install_info['author']) {
+						$json['error'] = $this->language->get('error_author');
+					}
+
+					if (!$install_info['link']) {
+						$json['error'] = $this->language->get('error_link');
+					}
+
+
 				} else {
 					$json['error'] = $this->language->get('error_unzip');
 				}

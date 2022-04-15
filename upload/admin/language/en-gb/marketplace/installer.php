@@ -22,17 +22,13 @@ $_['entry_progress']    = 'Progress';
 
 // Error
 $_['error_permission']       = 'Warning: You do not have permission to modify extensions!';
-
 $_['error_install']          = 'Install could not be found!';
 $_['error_installed']        = 'Extension already installed!';
 $_['error_filename']         = 'Filename must be between 3 and 128 characters!';
-
 $_['error_file']             = 'Install file %s could not be found!';
 $_['error_file_exists']      = 'File already exist!';
-$_['error_filetype']         = 'Invalid file type!';
-
+$_['error_file_type']         = 'Invalid file type!';
 $_['error_directory']        = 'Install directory %s could not be found!';
 $_['error_directory_exists'] = 'Path %s already exists!';
-
 $_['error_unzip']            = 'Zip file could not be opened!';
 $_['error_upload']           = 'File could not be uploaded!';

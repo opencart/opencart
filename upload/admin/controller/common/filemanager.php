@@ -316,7 +316,7 @@ class FileManager extends \Opencart\System\Engine\Controller {
 					];
 
 					if (!in_array(substr($filename, strrpos($filename, '.') + 1), $allowed)) {
-						$json['error'] = $this->language->get('error_filetype');
+						$json['error'] = $this->language->get('error_file_type');
 					}
 
 					// Allowed file mime types
@@ -331,7 +331,7 @@ class FileManager extends \Opencart\System\Engine\Controller {
 					];
 
 					if (!in_array($file['type'], $allowed)) {
-						$json['error'] = $this->language->get('error_filetype');
+						$json['error'] = $this->language->get('error_file_type');
 					}
 
 					// Return any upload error

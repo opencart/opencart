@@ -31,8 +31,12 @@ h6 {
 }
 a {
   color: #23a1d1;
+  text-decoration: none;
 }
 a:hover {
+  text-decoration: none;
+}
+.list-unstyled a {
   text-decoration: none;
 }
 /* Chrome border line */

@@ -38,10 +38,15 @@ h6 {
 
 a {
   color: #23a1d1;
+  text-decoration: none;
 
   &:hover {
     text-decoration: none;
   }
+}
+
+.list-unstyled a {
+  text-decoration: none;
 }
 
 /* Chrome border line */
@@ -722,9 +727,11 @@ footer {
       }
     }
   }
+
   a {
     text-decoration: none;
   }
+
   .price {
     color: #444;
   }

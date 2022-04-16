@@ -92,8 +92,6 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 			unset($this->session->data['payment_methods']);
 		}
 
-		print_r($this->session->data);
-
 		if (isset($this->session->data['payment_method'])) {
 			$data['code'] = $this->session->data['payment_method'];
 		} else {

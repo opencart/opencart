@@ -128,6 +128,12 @@ class Login extends \Opencart\System\Engine\Controller {
 				'custom_field'      => $customer_info['custom_field']
 			];
 
+			// Default address
+			$address_id = $this->customer->getAddressId();
+
+			$this->load->model('account/address');
+
+
 			// Wishlist
 			if (isset($this->session->data['wishlist']) && is_array($this->session->data['wishlist'])) {
 				$this->load->model('account/wishlist');

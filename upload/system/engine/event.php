@@ -58,15 +58,26 @@ class Event {
 	 * @param	array	$args
  	*/		
 	public function trigger(string $event, array $args = []): mixed {
+		// Where the core library classes would be defined
+		$library_data = [];
+	
+		$library_data = [
+		
+		];
+	
 		foreach ($this->data as $value) {
 			if (preg_match('/^' . str_replace(['\*', '\?'], ['.*', '.'], preg_quote($value['trigger'], '/')) . '/', $event)) {
-				$result = $value['action']->execute($this->registry, $args);
+				$event_data = explode('/', $event);
+			
+				if (end($event_data) == 'before' && !in_array($event_data[0], $library_data)) {		
+					$result = $value['action']->execute($this->registry, $args);
 
-				if (!is_null($result) && !($result instanceof \Exception)) {
-					return $result;
+					if (!is_null($result) && !($result instanceof \Exception)) {
+						return $result;
+					}
 				}
 			}
-		}
+		}	
 
 		return '';
 	}

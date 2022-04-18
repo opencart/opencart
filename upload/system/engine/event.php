@@ -58,18 +58,22 @@ class Event {
 	 * @param	array	$args
  	*/		
 	public function trigger(string $event, array $args = []): mixed {
-		// Where the core library classes would be defined
+		// Adding restriction on core librairies to be used as events.
 		$library_data = [];
 	
 		$library_data = [
-		
+			'document',
+			'encryption',
+			'request',
+			'response',
+			'session'
 		];
 	
 		foreach ($this->data as $value) {
 			if (preg_match('/^' . str_replace(['\*', '\?'], ['.*', '.'], preg_quote($value['trigger'], '/')) . '/', $event)) {
 				$event_data = explode('/', $event);
 			
-				if (end($event_data) == 'before' && !in_array($event_data[0], $library_data)) {		
+				if (($event_data[0] == 'library' && !in_array($event_data[1], $library_data)) || ($event_data[0] != 'library')) {
 					$result = $value['action']->execute($this->registry, $args);
 
 					if (!is_null($result) && !($result instanceof \Exception)) {

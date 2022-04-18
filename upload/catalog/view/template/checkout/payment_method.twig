@@ -41,6 +41,8 @@ $('#button-payment-method').on('click', function () {
                 $('#input-payment-method').prop('disabled', true);
             },
             success: function (json) {
+                console.log(json);
+
                 if (json['redirect']) {
                     location = json['redirect'];
                 }
@@ -54,6 +56,9 @@ $('#button-payment-method').on('click', function () {
                 html = '<option value="">{{ text_select }}</option>';
 
                 if (json['payment_methods']) {
+
+
+
                     for (i in json['payment_methods']) {
                         if (json['payment_methods'][i]['code'] == $('#input-payment-method').val()) {
                             html += '<option value="' + json['payment_methods'][i]['code'] + '" selected>' + json['payment_methods'][i]['title'] + '</option>';

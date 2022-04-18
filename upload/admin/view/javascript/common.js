@@ -245,10 +245,8 @@ $(document).on('click', '[data-oc-toggle=\'upload\']', function() {
 
         $('#form-upload input[name=\'file\']').trigger('click');
 
-        var size = $(element).attr('data-oc-size-max');
-
         $('#form-upload input[name=\'file\']').on('change', function(e) {
-            if (this.files[0].size > size) {
+            if ((this.files[0].size / 1024) > $(element).attr('data-oc-size-max')) {
                 alert($(element).attr('data-oc-size-error'));
 
                 $(this).val('');

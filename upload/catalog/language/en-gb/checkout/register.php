@@ -6,6 +6,8 @@ $_['heading_title']           = 'Your Personal Details';
 $_['text_login']              = 'If you already have an account with us, please login at the <a href="%s"><strong>login page</strong></a>.';
 $_['text_register']           = 'Register Account';
 $_['text_guest']              = 'Guest Checkout';
+$_['text_payment_address']    = 'Payment Address';
+$_['text_shipping_address']   = 'Shipping Address';
 $_['text_your_password']      = 'Your Password';
 $_['text_agree']              = 'I have read and agree to the <a href="%s" class="modal-link"><b>%s</b></a>';
 $_['text_success_add']        = 'Success: Your account has been created!';

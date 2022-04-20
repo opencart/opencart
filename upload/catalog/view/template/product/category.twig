@@ -32,9 +32,9 @@
             </div>
           </div>
         {% else %}
-          <div class="row">
+          <div class="row row-cols-sm-2 row-cols-lg-4">
             {% for category in categories|batch((categories|length / 4)|round(1, 'ceil')) %}
-              <div class="col-sm-3">
+              <div class="col">
                 <ul>
                   {% for child in category %}
                     <li><a href="{{ child.href }}">{{ child.name }}</a></li>

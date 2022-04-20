@@ -71,16 +71,4 @@ class ControllerExtensionModuleReturnRecurring extends Controller {
 		
 		$output = str_replace($search, $replace . $search, $output);
 	}
-	
-	public function install() {
-		$this->load->model('setting/event');
-		
-		$this->model_setting_event->addEvent('admin_return_recurring', 'admin/view/sale/return_form/after', 'extension/module/return_recurring/notify');
-	}
-	
-	public function uninstall() {
-		$this->load->model('setting/event');
-		
-		$this->model_setting_event->deleteEventByCode('admin_return_recurring');
-	}
 }

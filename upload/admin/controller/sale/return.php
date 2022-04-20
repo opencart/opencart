@@ -696,15 +696,6 @@ class ControllerSaleReturn extends Controller {
 			$data['order_id'] = '';
 		}
 		
-		// Return Recurring
-		$this->load->model('sale/recurring');
-		
-		$filter_data = array(
-			'filter_order_id' => $data['order_id']	
-		);
-			
-		$data['recurring_total'] = $this->model_sale_recurring->getTotalRecurrings($filter_data);
-
 		if (isset($this->request->post['date_ordered'])) {
 			$data['date_ordered'] = $this->request->post['date_ordered'];
 		} elseif (!empty($return_info)) {

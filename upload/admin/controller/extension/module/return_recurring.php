@@ -53,6 +53,8 @@ class ControllerExtensionModuleReturnRecurring extends Controller {
 		
 		$this->load->model('sale/recurring');
 		
+		$filter_data = array();
+		
 		$filter_data = array(
 			'filter_order_id' => $args['order_id']
 		);

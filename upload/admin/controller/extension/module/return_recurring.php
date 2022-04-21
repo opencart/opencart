@@ -67,7 +67,7 @@ class ControllerExtensionModuleReturnRecurring extends Controller {
 		
 		$search = '<div class="panel panel-default">';
 		
-		$replace = '<div class="alert alert-info"><?php echo $text_recurring; ?></div>';
+		$replace = '<div class="alert alert-info"><?php echo $text_recurring; ?></div>' . "\n";
 		
 		$output = str_replace($search, $replace . $search, $output);
 	}

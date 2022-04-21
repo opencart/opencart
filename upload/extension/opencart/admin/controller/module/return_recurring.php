@@ -33,15 +33,15 @@ class ReturnRecurring extends \Opencart\System\Engine\Controller {
 	}
 
 	public function notify(string &$route, array &$args, string &$code): void {
-		$this->load->language('sale/return');
+		$this->load->language('sale/returns');
 
-		$this->load->model('sale/recurring');
+		$this->load->model('sale/subscription');
 
 		$filter_data = array(
 			'filter_order_id' => $args['order_id']
 		);
 
-		$recurring_total = $this->model_sale_recurring->getTotalRecurrings($filter_data);
+		$recurring_total = $this->model_sale_subscription->getTotalSubscriptions($filter_data);
 
 		if ($recurring_total) {
 			$text_recurring = $this->language->get('text_recurring');

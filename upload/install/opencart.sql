@@ -2246,7 +2246,8 @@ INSERT INTO `oc_stock_status` (`stock_status_id`, `language_id`, `name`) VALUES
 (7, 1, 'In Stock'),
 (8, 1, 'Pre-Order'),
 (5, 1, 'Out Of Stock'),
-(6, 1, '2-3 Days');
+(6, 1, '2-3 Days'),
+(9, 1, 'Made To Order');
 
 -----------------------------------------------------------
 

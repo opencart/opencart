@@ -33,7 +33,7 @@ class ReturnRecurring extends \Opencart\System\Engine\Controller {
 	}
 
 	public function notify(string &$route, array &$args, string &$code): void {
-		$this->load->language('sale/returns');
+		$this->load->language('sale/return');
 
 		$this->load->model('sale/subscription');
 
@@ -41,17 +41,17 @@ class ReturnRecurring extends \Opencart\System\Engine\Controller {
 			'filter_order_id' => $args['order_id']
 		);
 
-		$recurring_total = $this->model_sale_subscription->getTotalSubscriptions($filter_data);
+		$subscription_total = $this->model_sale_subscription->getTotalSubscriptions($filter_data);
 
-		if ($recurring_total) {
-			$text_recurring = $this->language->get('text_recurring');
+		if ($subscription_total) {
+			$text_subscription = $this->language->get('text_subscription');
 		} else {
-			$text_recurring = $this->language->get('text_no_recurring');
+			$text_subscription = $this->language->get('text_no_subscription');
 		}
 
 		$search = '<div id="tab-general" class="tab-pane active">';
 
-		$replace = '<div class="alert alert-info"><i class="fas fa-info-circle"></i> <?php echo $text_recurring; ?></div>';
+		$replace = '<div class="alert alert-info"><i class="fas fa-info-circle"></i> <?php echo $text_subscription; ?></div>';
 
 		$code = str_replace($search, $search . "\n" . $replace, $code);
 	}

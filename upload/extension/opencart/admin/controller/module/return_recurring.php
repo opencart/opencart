@@ -32,6 +32,7 @@ class ReturnRecurring extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('extension/opencart/module/return_recurring', $data));
 	}
 
+	// admin/view/sale/return_form/after
 	public function notify(string &$route, array &$args, string &$code): void {
 		$this->load->language('sale/return');
 

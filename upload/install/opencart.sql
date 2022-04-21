@@ -867,7 +867,7 @@ INSERT INTO `oc_event` (`code`, `trigger`, `action`, `status`) VALUES
 ('admin_currency_edit', 'admin/model/localisation/currency/editCurrency/after', 'event/currency', 1),
 ('admin_setting', 'admin/model/setting/setting/editSetting/after', 'event/currency', 1),
 ('admin_mail_gdpr', 'admin/model/customer/gdpr/editStatus/after', 'mail/gdpr', 1);
-('admin_return_subscription', 'admin/view/sale/return_form/after', 'extension/module/return_recurring|notify', 1);
+('admin_return_subscription', 'admin/view/sale/return_form/after', 'extension/module/return_subscription|notify', 1);
 
 -----------------------------------------------------------
 

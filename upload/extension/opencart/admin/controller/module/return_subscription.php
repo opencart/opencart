@@ -37,10 +37,12 @@ class ReturnSubscription extends \Opencart\System\Engine\Controller {
 		$this->load->language('sale/return');
 
 		$this->load->model('sale/subscription');
+		
+		$filter_data = [];
 
-		$filter_data = array(
+		$filter_data = [
 			'filter_order_id' => $args['order_id']
-		);
+		];
 
 		$subscription_total = $this->model_sale_subscription->getTotalSubscriptions($filter_data);
 

@@ -1,8 +1,8 @@
 <?php
 namespace Opencart\Admin\Controller\Extension\Opencart\Module;
-class ReturnRecurring extends \Opencart\System\Engine\Controller {
+class ReturnSubscription extends \Opencart\System\Engine\Controller {
 	public function index(): void {
-		$this->load->language('extension/opencart/module/return_recurring');
+		$this->load->language('extension/opencart/module/return_subscription');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -20,7 +20,7 @@ class ReturnRecurring extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/opencart/module/return_recurring', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('extension/opencart/module/return_subscription', 'user_token=' . $this->session->data['user_token'])
 		];
 
 		$data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module');
@@ -29,7 +29,7 @@ class ReturnRecurring extends \Opencart\System\Engine\Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('extension/opencart/module/return_recurring', $data));
+		$this->response->setOutput($this->load->view('extension/opencart/module/return_subscription', $data));
 	}
 
 	// admin/view/sale/return_form/after

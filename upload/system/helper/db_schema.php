@@ -950,7 +950,7 @@ function db_schema() {
 			],
 			[
 				'name' => 'code',
-				'type' => 'varchar(64)',
+				'type' => 'varchar(128)',
 				'not_null' => true
 			],
 			[
@@ -2076,7 +2076,7 @@ function db_schema() {
 			],
 			[
 				'name' => 'code',
-				'type' => 'varchar(64)',
+				'type' => 'varchar(128)',
 				'not_null' => true
 			],
 			[
@@ -2136,7 +2136,7 @@ function db_schema() {
 			],
 			[
 				'name' => 'code',
-				'type' => 'varchar(32)',
+				'type' => 'varchar(128)',
 				'not_null' => true
 			]
 		],

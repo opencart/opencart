@@ -30,6 +30,7 @@ $_['text_week']                  = 'week';
 $_['text_semi_month']            = 'half-month';
 $_['text_month']                 = 'month';
 $_['text_year']                  = 'year';
+$_['text_madetoorder']           = 'Made To Order';
 
 // Entry
 $_['entry_qty']                  = 'Qty';

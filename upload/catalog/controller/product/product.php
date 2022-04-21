@@ -251,11 +251,17 @@ class Product extends \Opencart\System\Engine\Controller {
 
 			if ($product_info['quantity'] <= 0) {
 				$data['stock'] = $product_info['stock_status'];
-			} elseif ($this->config->get('config_stock_display')) {
+			} switch ($this->config->get('config_stock_display')) {
+			       case
 				$data['stock'] = $product_info['quantity'];
-			} else {
+                                break;
+			       case
 				$data['stock'] = $this->language->get('text_instock');
-			}
+                                break;
+			       case
+                                $data['stock'] = $this->language->get('text_madetoorder');
+                                break;
+                        }
 
 			$this->load->model('tool/image');
 

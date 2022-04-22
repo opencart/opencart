@@ -138,7 +138,7 @@ class Sale extends \Opencart\System\Engine\Model {
 	}
 
 	public function getOrders(array $data = []): array {
-		$sql = "SELECT MIN(o.`date_added`) AS date_start, MAX(o.`date_added`) AS date_end, COUNT(*) AS orders, SUM((SELECT SUM(op.`quantity`) FROM `" . DB_PREFIX . "order_product` op WHERE op.`order_id` = o.`order_id` GROUP BY op.`order_id`)) AS products, SUM((SELECT SUM(ot.`value`) FROM `" . DB_PREFIX . "order_total` ot WHERE ot.`order_id` = o.`order_id` AND ot.`code` = 'tax' GROUP BY ot.`order_id`)) AS tax, SUM(o.`total`) AS `total` FROM `" . DB_PREFIX . "order` o";
+		$sql = "SELECT MIN(o.`date_added`) AS date_start, MAX(o.`date_added`) AS date_end, COUNT(*) AS orders, SUM((SELECT SUM(op.`quantity`) FROM `" . DB_PREFIX . "order_product` op WHERE op.`order_id` = o.`order_id` GROUP BY op.`order_id`)) AS products, SUM((SELECT SUM(op.`quantity`) FROM (`" . DB_PREFIX . "order_product` op, `" . DB_PREFIX . "subscription` s) INNER JOIN `" . DB_PREFIX . "customer_payment` pp ON (s.`customer_payment_id` = pp.`customer_payment_id`) WHERE op.`order_id` = o.`order_id` AND s.`order_id` = op.`order_id` AND s.`customer_id` = o.`customer_id` AND s.`order_product_id` = op.`order_product_id` GROUP BY op.`order_id`)) AS subscriptions, SUM((SELECT SUM(ot.`value`) FROM `" . DB_PREFIX . "order_total` ot WHERE ot.`order_id` = o.`order_id` AND ot.`code` = 'tax' GROUP BY ot.`order_id`)) AS tax, SUM(o.`total`) AS `total` FROM `" . DB_PREFIX . "order` o";
 
 		if (!empty($data['filter_order_status_id'])) {
 			$sql .= " WHERE o.`order_status_id` = '" . (int)$data['filter_order_status_id'] . "'";

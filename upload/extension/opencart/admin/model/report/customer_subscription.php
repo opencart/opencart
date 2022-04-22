@@ -36,16 +36,16 @@ class CustomerSubscription extends \Opencart\System\Engine\Model {
 	}
 
 	public function getTotalTransactions(array $data = []): int {
-		$sql = "SELECT COUNT(DISTINCT s.`customer_id`) AS `total` FROM `" . DB_PREFIX . "subscription` s LEFT JOIN `" . DB_PREFIX . "customer` c ON (s.`customer_id` = c.`customer_id`)";
+		$sql = "SELECT COUNT(DISTINCT s.`customer_id`) AS `total` FROM `" . DB_PREFIX . "subscription_transaction` st LEFT JOIN `" . DB_PREFIX . "subscription` s ON (st.`subscription_id` = s.`subscription_id`) LEFT JOIN `" . DB_PREFIX . "customer` c ON (s.`customer_id` = c.`customer_id`)";
 
 		$implode = [];
 
 		if (!empty($data['filter_date_start'])) {
-			$implode[] = "DATE(s.`date_added`) >= DATE('" . $this->db->escape((string)$data['filter_date_start']) . "')";
+			$implode[] = "DATE(st.`date_added`) >= DATE('" . $this->db->escape((string)$data['filter_date_start']) . "')";
 		}
 
 		if (!empty($data['filter_date_end'])) {
-			$implode[] = "DATE(s.`date_added`) <= DATE('" . $this->db->escape((string)$data['filter_date_end']) . "')";
+			$implode[] = "DATE(st.`date_added`) <= DATE('" . $this->db->escape((string)$data['filter_date_end']) . "')";
 		}
 
 		if (!empty($data['filter_customer'])) {

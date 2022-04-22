@@ -410,7 +410,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['customer_id'])) {
 			$this->load->model('customer/customer');
 
-			$customer_info = $this->model_customer_customer->getCustomer((int)$this->request->get['customer_id']);
+			$customer_info = $this->model_customer_customer->getCustomer($this->request->get['customer_id']);
 		}
 
 		if (isset($this->request->get['customer_id'])) {
@@ -535,7 +535,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 		$data['countries'] = $this->model_localisation_country->getCountries();
 
 		if (isset($this->request->get['customer_id'])) {
-			$data['addresses'] = $this->model_customer_customer->getAddresses((int)$this->request->get['customer_id']);
+			$data['addresses'] = $this->model_customer_customer->getAddresses($this->request->get['customer_id']);
 		} else {
 			$data['addresses'] = [];
 		}
@@ -1148,7 +1148,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 		if (!empty($this->request->get['address_id'])) {
 			$this->load->model('customer/customer');
 
-			$json = $this->model_customer_customer->getAddress((int)$this->request->get['address_id']);
+			$json = $this->model_customer_customer->getAddress($this->request->get['address_id']);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

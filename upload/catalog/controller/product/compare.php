@@ -156,7 +156,7 @@ class Compare extends \Opencart\System\Engine\Controller {
 		$product_info = $this->model_catalog_product->getProduct($product_id);
 
 		if ($product_info) {
-			if (!in_array((int)$this->request->post['product_id'], (array)$this->session->data['compare'])) {
+			if (!in_array($this->request->post['product_id'], (array)$this->session->data['compare'])) {
 				if (count($this->session->data['compare']) >= 4) {
 					array_shift($this->session->data['compare']);
 				}

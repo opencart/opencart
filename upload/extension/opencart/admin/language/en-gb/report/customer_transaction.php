@@ -5,7 +5,7 @@ $_['heading_title']         = 'Customer Transaction Report';
 // Text
 $_['text_extension']        = 'Extensions';
 $_['text_edit']             = 'Edit Customer Transaction Report';
-$_['text_success']          = 'Success: You have modified customer credit report!';
+$_['text_success']          = 'Success: You have modified customer transaction report!';
 $_['text_filter']           = 'Filter';
 
 // Column
@@ -24,4 +24,4 @@ $_['entry_status']          = 'Status';
 $_['entry_sort_order']      = 'Sort Order';
 
 // Error
-$_['error_permission']      = 'Warning: You do not have permission to modify customer credit report!';
+$_['error_permission']      = 'Warning: You do not have permission to modify customer transaction report!';

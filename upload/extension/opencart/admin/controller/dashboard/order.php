@@ -87,13 +87,13 @@ class Order extends \Opencart\System\Engine\Controller {
 		$order_total = $this->model_sale_order->getTotalOrders();
 
 		if ($order_total > 1000000000000) {
-			$data['total'] = round($order_total / 1000000000000, 1) . 'T';
+			$data['total'] = sprintf($this->language->get('text_terabyte_prefix'), round($order_total / 1000000000000, 1));
 		} elseif ($order_total > 1000000000) {
-			$data['total'] = round($order_total / 1000000000, 1) . 'B';
+			$data['total'] = sprintf($this->language->get('text_byte_prefix'), round($order_total / 1000000000, 1));
 		} elseif ($order_total > 1000000) {
-			$data['total'] = round($order_total / 1000000, 1) . 'M';
+			$data['total'] = sprintf($this->language->get('text_megabyte_prefix'), round($order_total / 1000000, 1));
 		} elseif ($order_total > 1000) {
-			$data['total'] = round($order_total / 1000, 1) . 'K';
+			$data['total'] = sprintf($this->language->get('text_kilobyte_prefix'), round($order_total / 1000, 1));
 		} else {
 			$data['total'] = $order_total;
 		}

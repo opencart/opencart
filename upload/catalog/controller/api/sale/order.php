@@ -542,7 +542,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function addHistory() {
+	public function addHistory(): void {
 		$this->load->language('api/sale/order');
 
 		$json = [];

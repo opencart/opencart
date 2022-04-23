@@ -33,7 +33,7 @@ class Marketing extends \Opencart\System\Engine\Model {
 		$order_statuses = $this->config->get('config_complete_status');
 
 		foreach ($order_statuses as $order_status_id) {
-			$implode[] = "o.order_status_id = '" . (int)$order_status_id . "'";
+			$implode[] = "o.`order_status_id` = '" . (int)$order_status_id . "'";
 		}
 
 		$sql = "SELECT *, (SELECT COUNT(*) FROM `" . DB_PREFIX . "order` o WHERE (" . implode(" OR ", $implode) . ") AND o.`marketing_id` = m.`marketing_id`) AS orders FROM `" . DB_PREFIX . "marketing` m";

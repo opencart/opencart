@@ -73,7 +73,7 @@ class Chart extends \Opencart\System\Engine\Controller {
 		return $this->load->view('extension/opencart/dashboard/chart_info', $data);
 	}
 
-	public function chart() {
+	public function chart(): void {
 		$this->load->language('extension/opencart/dashboard/chart');
 
 		$json = [];

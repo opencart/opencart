@@ -25,12 +25,6 @@ class Subscription extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 	
-	public function getSubscriptionByReference(string $reference): array {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "subscription` WHERE `reference` = '" . $this->db->escape($reference) . "'");
-
-		return $query->row;
-	}
-
 	public function getTotalSubscriptions(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "subscription` `s` LEFT JOIN `" . DB_PREFIX . "order` `o` ON (`s`.`order_id` = `o`.`order_id`) WHERE `o`.`customer_id` = '" . (int)$this->customer->getId() . "'");
 

@@ -76,7 +76,7 @@ class User {
 		}
 	}
 
-	public function logout() {
+	public function logout(): void {
 		unset($this->session->data['user_id']);
 
 		$this->user_id = '';

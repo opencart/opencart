@@ -14,7 +14,6 @@ $_['text_order_id']                        = 'Order ID:';
 $_['text_product']                         = 'Product:';
 $_['text_quantity']                        = 'Quantity:';
 $_['text_description']                     = 'Description';
-$_['text_reference']                       = 'Reference';
 $_['text_transaction']                     = 'Transactions';
 
 $_['text_status_1']                        = 'Active';

@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Catalog\Controller\Mail;
 class Order extends \Opencart\System\Engine\Controller {
-	public function index(string &$route, array &$args) {
+	public function index(string &$route, array &$args): void {
 		if (isset($args[0])) {
 			$order_id = $args[0];
 		} else {

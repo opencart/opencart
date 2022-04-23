@@ -138,7 +138,7 @@ class Register extends \Opencart\System\Engine\Controller {
 		return $this->load->view('checkout/register', $data);
 	}
 
-	public function save() {
+	public function save(): void {
 		$this->load->language('checkout/register');
 
 		$json = [];

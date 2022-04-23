@@ -30,10 +30,10 @@ class Returns extends \Opencart\System\Engine\Model {
 				break;
 			default:
 			case 'week':
-				$sql .= " GROUP BY YEAR(r.`date_added`), WEEK(r.date_added)";
+				$sql .= " GROUP BY YEAR(r.`date_added`), WEEK(r.`date_added`)";
 				break;
 			case 'month':
-				$sql .= " GROUP BY YEAR(r.`date_added`), MONTH(r.date_added)";
+				$sql .= " GROUP BY YEAR(r.`date_added`), MONTH(r.`date_added`)";
 				break;
 			case 'year':
 				$sql .= " GROUP BY YEAR(r.`date_added`)";

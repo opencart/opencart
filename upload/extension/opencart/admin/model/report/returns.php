@@ -24,7 +24,7 @@ class Returns extends \Opencart\System\Engine\Model {
 			$group = 'week';
 		}
 
-		switch($group) {
+		switch ($group) {
 			case 'day';
 				$sql .= " GROUP BY YEAR(r.`date_added`), MONTH(r.`date_added`), DAY(r.`date_added`)";
 				break;

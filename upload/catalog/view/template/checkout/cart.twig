@@ -15,8 +15,7 @@
     <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }} <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>
   {% endif %}
   <div class="row">{{ column_left }}
-    <div id="content" class="col">
-      {{ content_top }}
+    <div id="content" class="col">{{ content_top }}
       <h1>{{ heading_title }}{% if weight %} ({{ weight }}){% endif %}</h1>
       <div id="shopping-cart">{{ list }}</div>
       {% if modules %}

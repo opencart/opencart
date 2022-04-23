@@ -95,15 +95,15 @@ class User {
 		return $this->user_id;
 	}
 
-	public function getId() {
+	public function getId(): int {
 		return $this->user_id;
 	}
 
-	public function getUserName() {
+	public function getUserName(): string {
 		return $this->username;
 	}
 
-	public function getGroupId() {
+	public function getGroupId(): int {
 		return $this->user_group_id;
 	}
 }

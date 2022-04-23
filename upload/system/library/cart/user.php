@@ -91,7 +91,7 @@ class User {
 		}
 	}
 
-	public function isLogged() {
+	public function isLogged(): int {
 		return $this->user_id;
 	}
 

@@ -437,7 +437,7 @@ class CliInstall extends \Opencart\System\Engine\Controller {
 		return $output;
 	}
 
-	public function usage() {
+	public function usage(): string {
 		$option = implode(' ', [
 			'--username',
 			'admin',

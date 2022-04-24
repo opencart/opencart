@@ -129,10 +129,13 @@ class Login extends \Opencart\System\Engine\Controller {
 			];
 
 			// Default address
-			$address_id = $this->customer->getAddressId();
-
 			$this->load->model('account/address');
 
+			$address_info = $this->model_account_address->getAddress($this->customer->getAddressId());
+
+			if ($address_info) {
+				$this->session->data['shipping_address'] = $address_info;
+			}
 
 			// Wishlist
 			if (isset($this->session->data['wishlist']) && is_array($this->session->data['wishlist'])) {

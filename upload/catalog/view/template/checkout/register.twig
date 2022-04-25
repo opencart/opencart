@@ -15,7 +15,7 @@
         </div>
       {% endif %}
 
-      <div class="col mb-3{{ customer_groups|length <= 1 ? ' d-none' }}">
+      <div class="col mb-3{% if customer_groups|length <= 1 %} ' d-none'{% endif %}">
         <label class="form-label">{{ entry_customer_group }}</label> <select name="customer_group_id" id="input-customer-group" class="form-select">
           {% for customer_group in customer_groups %}
             <option value="{{ customer_group.customer_group_id }}"{% if customer_group.customer_group_id == customer_group_id %} selected{% endif %}>{{ customer_group.name }}</option>
@@ -25,7 +25,7 @@
 
     </div>
 
-    <div class="row  row-cols-1 row-cols-md-2">
+    <div class="row row-cols-1 row-cols-md-2">
       <div class="col mb-3 required">
         <label for="input-firstname" class="form-label">{{ entry_firstname }}</label> <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-firstname" class="form-control"/>
         <div id="error-firstname" class="invalid-feedback"></div>

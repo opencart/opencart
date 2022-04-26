@@ -100,7 +100,7 @@ $('#button-filter').on('click', function () {
 
     var filter_date_added = $('#input-date_added').val();
 
-    if (filter_date_added != '') {
+    if (filter_date_added !== '') {
         url += '&filter_date_added=' + encodeURIComponent(filter_date_added);
     }
 

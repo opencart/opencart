@@ -364,7 +364,7 @@ class Address extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->get['address_id'])) {
-			$address_id = $this->request->get['address_id'];
+			$address_id = (int)$this->request->get['address_id'];
 		} else {
 			$address_id = 0;
 		}
@@ -382,9 +382,7 @@ class Address extends \Opencart\System\Engine\Controller {
 				$json['error'] = $this->language->get('error_delete');
 			}
 			
-			$address_info = $this->model_account_address->getAddress($this->customer->getAddressId());
-
-			if ($address_info['address_id'] == $address_id) {
+			if ($this->customer->getAddressId() == $address_id) {
 				$json['error'] = $this->language->get('error_default');
 			}
 		}

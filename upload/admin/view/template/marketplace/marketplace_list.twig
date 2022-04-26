@@ -162,7 +162,7 @@ $('#button-filter').on('click', function(e) {
     var input = $('#extension-filter :input');
 
     for (i = 0; i < input.length; i++) {
-        if ($(input[i]).val() != '' && $(input[i]).val() != null) {
+        if ($(input[i]).val() !== '' && $(input[i]).val() != null) {
             url += '&' + $(input[i]).attr('name') + '=' + $(input[i]).val()
         }
     }

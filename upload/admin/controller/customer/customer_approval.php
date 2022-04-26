@@ -194,7 +194,7 @@ class CustomerApproval extends \Opencart\System\Engine\Controller {
 			if (isset($this->request->get['customer_id'])) {
 				$approvals[] = (int)$this->request->get['customer_id'];
 			}
-print_r($approvals);
+
 			foreach ($approvals as $customer_id) {
 				if ($this->request->get['type'] == 'customer') {
 					$this->model_customer_customer_approval->approveCustomer($customer_id);

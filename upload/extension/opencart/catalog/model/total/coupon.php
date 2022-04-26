@@ -6,8 +6,12 @@ class Coupon extends \Opencart\System\Engine\Model {
 			$this->load->language('extension/opencart/total/coupon', 'coupon');
 
 			$this->load->model('marketing/coupon');
+			
+			$this->load->model('checkout/cart');
 
 			$coupon_info = $this->model_marketing_coupon->getCoupon($this->session->data['coupon']);
+			
+			$products = $this->model_checkout_cart->getProducts();
 
 			if ($coupon_info) {
 				$discount_total = 0;
@@ -17,7 +21,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 				} else {
 					$sub_total = 0;
 
-					foreach ($this->cart->getProducts() as $product) {
+					foreach ($products as $product) {
 						if (in_array($product['product_id'], $coupon_info['product'])) {
 							$sub_total += $product['total'];
 						}
@@ -28,7 +32,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 					$coupon_info['discount'] = min($coupon_info['discount'], $sub_total);
 				}
 
-				foreach ($this->cart->getProducts() as $product) {
+				foreach ($products as $product) {
 					$discount = 0;
 
 					if (!$coupon_info['product']) {

@@ -6,7 +6,6 @@ class Payment extends \Opencart\System\Engine\Controller {
 	}
 
 	public function getList(): string {
-
 		$this->load->language('extension/payment');
 
 		$available = [];

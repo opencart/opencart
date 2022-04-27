@@ -51,7 +51,7 @@ $('#button-upload').on('click', function () {
     if (!$('button-upload').prop('disabled')) {
         $('#form-upload').remove();
 
-        $('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file"/></form>');
+        $('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" accept=".ocmod.zip"/></form>');
 
         $('#form-upload input[name=\'file\']').trigger('click');
 

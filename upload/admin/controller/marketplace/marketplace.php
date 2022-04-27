@@ -165,7 +165,11 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 
 		$response_info = json_decode($response, true);
 
-		$extension_total = (int)$response_info['extension_total'];
+		if (isset($response_info['extension_total'])) {
+			$extension_total = (int)$response_info['extension_total'];
+		} else {
+			$extension_total = 0;
+		}
 
 		$url = '';
 
@@ -203,7 +207,7 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 
 		$data['promotions'] = [];
 
-		if ($response_info['promotions'] && $page == 1) {
+		if (isset($response_info['promotions']) && $page == 1) {
 			foreach ($response_info['promotions'] as $result) {
 				$data['promotions'][] = [
 					'name'         => utf8_decode($result['name']),
@@ -220,7 +224,7 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 
 		$data['extensions'] = [];
 
-		if ($response_info['extensions']) {
+		if (isset($response_info['extensions'])) {
 			foreach ($response_info['extensions'] as $result) {
 				$data['extensions'][] = [
 					'name'         => utf8_decode($result['name']),

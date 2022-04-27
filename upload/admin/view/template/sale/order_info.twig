@@ -536,7 +536,8 @@
           <div class="mb-3">
             <label for="input-customer" class="form-label">{{ entry_customer }}</label>
             <div class="input-group">
-              <input type="text" name="customer" value="{{ customer }}" placeholder="{{ entry_customer }}" id="input-customer" list="list-customer" class="form-control"/> <a href="{{ customer_add }}" target="_blank" data-bs-toggle="tooltip" title="{{ button_customer_add }}" class="btn btn-outline-secondary"><i class="fas fa-user-plus"></i></a>
+              <input type="text" name="customer" value="{{ customer }}" placeholder="{{ entry_customer }}" id="input-customer" list="list-customer" class="form-control"/>
+              <a href="{{ customer_add }}" target="_blank" data-bs-toggle="tooltip" title="{{ button_customer_add }}" class="btn btn-outline-secondary"><i class="fas fa-user-plus"></i></a>
             </div>
             <input type="hidden" name="customer_id" value="{{ customer_id }}" id="input-customer-id"/>
             <datalist id="list-customer"></datalist>
@@ -549,11 +550,13 @@
             </select>
           </div>
           <div class="mb-3 required">
-            <label for="input-firstname" class="form-label">{{ entry_firstname }}</label> <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-firstname" class="form-control"/>
+            <label for="input-firstname" class="form-label">{{ entry_firstname }}</label>
+            <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-firstname" class="form-control"/>
             <div id="error-firstname" class="invalid-feedback"></div>
           </div>
           <div class="mb-3 required">
-            <label for="input-lastname" class="form-label">{{ entry_lastname }}</label> <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-lastname" class="form-control"/>
+            <label for="input-lastname" class="form-label">{{ entry_lastname }}</label>
+            <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-lastname" class="form-control"/>
             <div id="error-lastname" class="invalid-feedback"></div>
           </div>
           <div class="mb-3 required">
@@ -618,18 +621,25 @@
                   <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               {% endif %}
+
               {% if custom_field.type == 'file' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
                   <label class="form-label">{{ custom_field.name }}</label>
                   <div>
 
                     <button type="button" data-oc-toggle="upload" data-oc-url="{{ upload }}" data-oc-size-max="{{ config_file_max_size }}" data-oc-size-error="{{ error_upload_size }}" data-oc-target="#input-custom-field-{{ custom_field.custom_field_id }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
+
+
+                    <button type="button" data-oc-toggle="download" data-oc-url="{{ download }}" data-oc-target="#input-custom-field-{{ custom_field.custom_field_id }}"{% if not account_custom_field[custom_field.custom_field_id] %} disabled{% endif %} class="btn btn-light"><i class="fas fa-download"></i> {{ button_download }}</button>
+
+
                     <a href="" class="btn btn-light"><i class="fas fa-download"></i></a> <input type="hidden" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] }}" id="input-custom-field-{{ custom_field.custom_field_id }}"/>
 
                   </div>
                   <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               {% endif %}
+
               {% if custom_field.type == 'date' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
                   <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>

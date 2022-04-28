@@ -300,10 +300,10 @@ class Upgrade4 extends \Opencart\System\Engine\Controller {
 			}
 
 			// Convert image/data to image/catalog
-			$this->db->query("UPDATE `" . DB_PREFIX . "banner_image` SET `image` = REPLACE (image , 'data/', 'catalog/')");
-			$this->db->query("UPDATE `" . DB_PREFIX . "category` SET `image` = REPLACE (image , 'data/', 'catalog/')");
-			$this->db->query("UPDATE `" . DB_PREFIX . "manufacturer` SET `image` = REPLACE (image , 'data/', 'catalog/')");
-			$this->db->query("UPDATE `" . DB_PREFIX . "product` SET `image` = REPLACE (image , 'data/', 'catalog/')");
+			$this->db->query("UPDATE `" . DB_PREFIX . "banner_image` SET `image` = REPLACE (image, 'data/', 'catalog/')");
+			$this->db->query("UPDATE `" . DB_PREFIX . "category` SET `image` = REPLACE (image, 'data/', 'catalog/')");
+			$this->db->query("UPDATE `" . DB_PREFIX . "manufacturer` SET `image` = REPLACE (image, 'data/', 'catalog/')");
+			$this->db->query("UPDATE `" . DB_PREFIX . "product` SET `image` = REPLACE (image, 'data/', 'catalog/')");
 			$this->db->query("UPDATE `" . DB_PREFIX . "product_image` SET `image` = REPLACE (image, 'data/', 'catalog/')");
 			$this->db->query("UPDATE `" . DB_PREFIX . "option_value` SET `image` = REPLACE (image, 'data/', 'catalog/')");
 			$this->db->query("UPDATE `" . DB_PREFIX . "voucher_theme` SET `image` = REPLACE (image, 'data/', 'catalog/')");

@@ -16,8 +16,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		$results = $this->model_sale_subscription->getSubscriptions($filter_data);
 
 		foreach ($results as $result) {
-			print_r($result);
-
 			if ($this->config->get('config_subscription_active_status_id') == $result['subscription_status_id']) {
 
 				if ($result['trial_status'] && (!$result['trial_duration'] || $result['trial_remaining'])) {
@@ -32,8 +30,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 				$payment_info = $this->model_customer_customer->getPaymentMethod($result['customer_id'], $result['customer_payment_id']);
 
 				if ($payment_info) {
-					print_r($payment_info);
-
 					// Check payment status
 					if ($this->config->get('payment_' . $payment_info['code'] . '_status')) {
 

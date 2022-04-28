@@ -301,26 +301,20 @@ var download = function() {
     var element = this;
 
     $($(element).attr('data-oc-target')).on('change', function() {
-        var value = $(this).val();
-
-        var value = $(this).val();
-
+        location = $(this).attr('data-oc-url') + '&code=' + this.value;
     });
 }
 
 $(document).ready(download);
-$(document).on('click', 'button', download);
+$(document).on('change', 'button', download);
 
 $(document).on('click', 'button[data-oc-toggle=\'download\']', function (e) {
     var element = this;
 
-    $().prop('disabled', false);
     var value = $($(element).attr('data-oc-target')).val();
 
     if (value != '') {
-        location = $(element).attr('data-oc-target') + '&code=' + value;
-    } else {
-
+        location = $(element).attr('data-oc-url') + '&code=' + value;
     }
 });
 

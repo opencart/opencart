@@ -260,7 +260,7 @@ $(document).on('click', '[data-oc-toggle=\'upload\']', function() {
                clearInterval(timer);
 
                 $.ajax({
-                    url: $(element).attr('data-oc-url'),
+                    url: 'index.php?route=tool/upload|upload&user_token=' + getURLVar('user_token'),
                     type: 'post',
                     data: new FormData($('#form-upload')[0]),
                     dataType: 'json',
@@ -297,12 +297,17 @@ $(document).on('click', '[data-oc-toggle=\'upload\']', function() {
     }
 });
 
+/*
+$(document).on('change', 'button[data-oc-toggle=\'download\']', function() {
+    location = $(this).attr('data-oc-url') + '&code=' + this.value;
+});
+//$($(element).attr('data-oc-target'))
+*/
+
 var download = function() {
     var element = this;
 
-    $($(element).attr('data-oc-target')).on('change', function() {
-        location = $(this).attr('data-oc-url') + '&code=' + this.value;
-    });
+
 }
 
 $(document).ready(download);

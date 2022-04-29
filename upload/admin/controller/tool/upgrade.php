@@ -45,7 +45,6 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 
 		$response_info = json_decode($response, true);
 
-		// Extension compatibility check
 		if ($response_info) {
 			$data['latest_version'] = $response_info['version'];
 			$data['date_added'] = date($this->language->get('date_format_short'), strtotime($response_info['date_added']));
@@ -60,7 +59,8 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 			$data['log'] = '';
 		}
 
-		$data['backup'] = $this->url->link('tool/backup', 'user_token=' . $this->session->data['user_token']);
+		// For testing
+		//$data['latest_version'] = 'master';
 
 		$data['user_token'] = $this->session->data['user_token'];
 
@@ -86,35 +86,41 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
+		if (!version_compare($version, VERSION, '>=')) {
+			$json['error'] = $this->language->get('error_version');
+		}
+
+		$file = DIR_DOWNLOAD . 'opencart-' . $version . '.zip';
+
+		$handle = fopen($file, 'w');
+
+		set_time_limit(0);
+
+		$curl = curl_init('https://github.com/opencart/opencart/archive/' . $version . '.zip');
+
+		curl_setopt($curl, CURLOPT_USERAGENT, 'OpenCart ' . VERSION);
+		curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
+		curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
+		curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
+		curl_setopt($curl, CURLOPT_TIMEOUT, 300);
+		curl_setopt($curl, CURLOPT_FILE, $handle);
+
+		curl_exec($curl);
+
+		fclose($handle);
+
+		$status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+
+		if ($status != 200) {
+			$json['error'] = $this->language->get('error_download');
+		}
+
+		curl_close($curl);
+
 		if (!$json) {
-			set_time_limit(0);
+			$json['text'] = $this->language->get('text_install');
 
-			$handle = fopen(DIR_DOWNLOAD . 'opencart-' . $version . '.zip', 'w');
-
-			$curl = curl_init('https://github.com/opencart/opencart/archive/' . $version . '.zip');
-
-			curl_setopt($curl, CURLOPT_USERAGENT, 'OpenCart ' . VERSION);
-			curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
-			curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
-			curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
-			curl_setopt($curl, CURLOPT_TIMEOUT, 300);
-			curl_setopt($curl, CURLOPT_FILE, $handle);
-
-			curl_exec($curl);
-
-			fclose($handle);
-
-			$status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-
-			curl_close($curl);
-
-			if ($status == 200) {
-				$json['text'] = $this->language->get('text_unzip');
-
-				$json['next'] = $this->url->link('tool/upgrade|install', 'user_token=' . $this->session->data['user_token'] . '&version=' . $version, true);
-			} else {
-				$json['error'] = $this->language->get('error_download');
-			}
+			$json['next'] = $this->url->link('tool/upgrade|install', 'user_token=' . $this->session->data['user_token'] . '&version=' . $version, true);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -146,7 +152,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 			// Unzip the files
 			$zip = new \ZipArchive();
 
-			if ($zip->open($file)) {
+			if ($zip->open($file, \ZipArchive::RDONLY)) {
 				$remove = 'opencart-' . $version . '/upload/';
 
 				// Check if any of the files already exist.
@@ -157,37 +163,44 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 						// Only extract the contents of the upload folder
 						$destination = str_replace('\\', '/', substr($source, strlen($remove)));
 
-						// Default copy location
-						$path = DIR_OPENCART . $destination;
+						if (substr($destination, 0, 8) == 'install/') {
+							// Default copy location
+							$path = '';
 
-						// Fixes admin folder being under a different name
-						if (substr($destination, 0, 6) == 'admin/') {
-							$path = DIR_APPLICATION . substr($destination, 6);
-						}
+							// Must not have a path before files and directories can be moved
+							$directories = explode('/', dirname($destination, '/'));
 
-						// We need to use a different path for vendor folders.
-						if (substr($destination, 0, 15) == 'system/storage/') {
-							$path = DIR_STORAGE . substr($destination, 15);
-						}
+							foreach ($directories as $directory) {
+								if (!$path) {
+									$path = $directory;
+								} else {
+									$path = $path . '/' . $directory;
+								}
 
-						// Must not have a path before files and directories can be moved
-						if (substr($path, -1) == '/' && mkdir($path, 0777)) {
-							$json['error'] = $this->language->get('error_download');
-						}
+								if (!is_dir(DIR_OPENCART . $path) && !@mkdir(DIR_OPENCART . $path, 0777)) {
+									$json['error'] = sprintf($this->language->get('error_directory'), $path);
+								}
+							}
 
-						// If check if the path is not directory and check there is no existing file
-						if (substr($path, -1) != '/' && copy('zip://' . $file . '#' . $source, $path)) {
-							$json['error'] = $this->language->get('error_download');
+							// Check if the path is not directory and check there is no existing file
+							if (substr($destination, -1) != '/') {
+								if (is_file(DIR_OPENCART . $destination)) {
+									unlink(DIR_OPENCART . $destination);
+								}
+
+								if (!copy('zip://' . $file . '#' . $source, DIR_OPENCART . $destination)) {
+									$json['error'] = sprintf($this->language->get('error_copy'), $source, $destination);
+								}
+							}
 						}
 					}
 				}
 
 				$zip->close();
 
-				// Delete upgrade zip
-				unlink($file);
+				$json['text'] = $this->language->get('text_patch');
 
-				$json['redirect'] = HTTP_CATALOG . 'install/';
+				$json['next'] = HTTP_CATALOG . 'install/index.php?route=upgrade/upgrade_1&version=' . $version . '&admin=' . rtrim(substr(DIR_APPLICATION, strlen(DIR_OPENCART), -1));
 			} else {
 				$json['error'] = $this->language->get('error_unzip');
 			}

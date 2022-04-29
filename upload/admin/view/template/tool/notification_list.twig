@@ -19,7 +19,7 @@
                 <br/>
                 <div class="text-muted">{{ notification.date_added }}</div>
               </td>
-              <td class="text-end"><button value="{{ notification.view }}" data-bs-toggle="tooltip" title="{{ button_view }}" data-oc-loading-text="{{ text_loading }}" id="button-view-{{ notification.notification_id }}" class="btn btn-primary"><i class="fas fa-eye"></i></button></td>
+              <td class="text-end"><button value="{{ notification.view }}" data-bs-toggle="tooltip" title="{{ button_view }}" id="button-view-{{ notification.notification_id }}" class="btn btn-primary"><i class="fas fa-eye"></i></button></td>
             </tr>
             {% set notification_row = notification_row + 1 %}
           {% endfor %}

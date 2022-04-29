@@ -30,14 +30,6 @@
               {% endfor %}
             </div>
           </div>
-          <div class="row mb-3 required">
-
-            <label class="col-sm-2 col-form-label">{{ entry_description }}</label>
-            <div class="col-sm-10">
-              <textarea rows="4" placeholder="{{ entry_description }}" id="input-description" class="form-control" readonly>{{ subscription_plan_description[language.language_id] ? subscription_plan_description[language.language_id].description }}</textarea>
-            </div>
-          </div>
-
           <fieldset>
             <legend>{{ text_trial }}</legend>
             <div class="row mb-3">
@@ -51,6 +43,7 @@
               <div class="col-sm-10">
                 <input type="text" name="trial_duration" value="{{ trial_duration }}" placeholder="{{ entry_trial_duration }}" id="input-trial-duration" class="form-control"/>
                 <div class="form-text">{{ help_duration }}</div>
+                <div id="error-trial-duration" class="invalid-feedback"></div>
               </div>
             </div>
             <div class="row mb-3">
@@ -136,28 +129,4 @@
     </div>
   </div>
 </div>
-<script type="text/javascript"><!--
-$('#input-trial-status, #input-duration').on('change', function () {
-    if ($('#input-override').prop('checked')) {
-        var description = '';
-
-        var trial = $('#input-trial-status').prop('checked');
-
-        if (trial) {
-            description += '{{ text_subscription_trial }} ';
-        }
-
-        var duration = $('#input-duration').val();
-
-        if (duration > 0) {
-            description += '{{ text_subscription_duration }}';
-        } else {
-            description += '{{ text_subscription_cancel }}';
-        }
-
-        $('#input-description-1').val(description);
-    }
-});
-$('#input-trial-status').trigger('change');
-//--></script>
 {{ footer }}

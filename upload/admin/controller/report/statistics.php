@@ -53,7 +53,7 @@ class Statistics extends \Opencart\System\Engine\Controller {
 		return $this->load->view('report/statistics_list', $data);
 	}
 
-	public function ordersale(): void {
+	public function orderSale(): void {
 		$this->load->language('report/statistics');
 
 		$json = [];
@@ -75,7 +75,7 @@ class Statistics extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function orderprocessing(): void {
+	public function orderProcessing(): void {
 		$this->load->language('report/statistics');
 
 		$json = [];
@@ -97,7 +97,7 @@ class Statistics extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function ordercomplete(): void {
+	public function orderComplete(): void {
 		$this->load->language('report/statistics');
 
 		$json = [];
@@ -119,7 +119,7 @@ class Statistics extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function orderother(): void {
+	public function orderOther(): void {
 		$this->load->language('report/statistics');
 
 		$json = [];

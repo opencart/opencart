@@ -127,15 +127,16 @@ class CustomerApproval extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			$data['customer_approvals'][] = [
-				'customer_id'    => $result['customer_id'],
-				'customer'       => $result['customer'],
-				'email'          => $result['email'],
-				'customer_group' => $result['customer_group'],
-				'type'           => $this->language->get('text_' . $result['type']),
-				'date_added'     => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'approve'        => $this->url->link('customer/customer_approval|approve', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id'] . '&type=' . $result['type'], true),
-				'deny'           => $this->url->link('customer/customer_approval|deny', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id'] . '&type=' . $result['type'], true),
-				'edit'           => $this->url->link('customer/customer|form', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id'], true)
+				'customer_approval_id' => $result['customer_approval_id'],
+				'customer_id'          => $result['customer_id'],
+				'customer'             => $result['customer'],
+				'email'                => $result['email'],
+				'customer_group'       => $result['customer_group'],
+				'type'                 => $this->language->get('text_' . $result['type']),
+				'date_added'           => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
+				'approve'              => $this->url->link('customer/customer_approval|approve', 'user_token=' . $this->session->data['user_token'] . '&customer_approval_id=' . $result['customer_approval_id'], true),
+				'deny'                 => $this->url->link('customer/customer_approval|deny', 'user_token=' . $this->session->data['user_token'] . '&customer_approval_id=' . $result['customer_approval_id'], true),
+				'edit'                 => $this->url->link('customer/customer|form', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id'], true)
 			];
 		}
 
@@ -191,15 +192,21 @@ class CustomerApproval extends \Opencart\System\Engine\Controller {
 				$approvals = $this->request->post['selected'];
 			}
 
-			if (isset($this->request->get['customer_id'])) {
-				$approvals[] = (int)$this->request->get['customer_id'];
+			if (isset($this->request->get['customer_approval_id'])) {
+				$approvals[] = (int)$this->request->get['customer_approval_id'];
 			}
-print_r($approvals);
-			foreach ($approvals as $customer_id) {
-				if ($this->request->get['type'] == 'customer') {
-					$this->model_customer_customer_approval->approveCustomer($customer_id);
-				} elseif ($this->request->get['type'] == 'affiliate') {
-					$this->model_customer_customer_approval->approveAffiliate($customer_id);
+
+			foreach ($approvals as $customer_approval_id) {
+				$customer_approval_info = $this->model_customer_customer_approval->getCustomerApproval($customer_approval_id);
+
+				if ($customer_approval_info) {
+					if ($customer_approval_info['type'] == 'customer') {
+						$this->model_customer_customer_approval->approveCustomer($customer_approval_info['customer_id']);
+					}
+
+					if ($customer_approval_info['type'] == 'affiliate') {
+						$this->model_customer_customer_approval->approveAffiliate($customer_approval_info['customer_id']);
+					}
 				}
 			}
 
@@ -228,15 +235,21 @@ print_r($approvals);
 				$denials = $this->request->post['selected'];
 			}
 
-			if (isset($this->request->get['customer_id'])) {
-				$denials[] = (int)$this->request->get['customer_id'];
+			if (isset($this->request->get['customer_approval_id'])) {
+				$denials[] = (int)$this->request->get['customer_approval_id'];
 			}
 
-			foreach ($denials as $customer_id) {
-				if ($this->request->get['type'] == 'customer') {
-					$this->model_customer_customer_approval->denyCustomer($customer_id);
-				} elseif ($this->request->get['type'] == 'affiliate') {
-					$this->model_customer_customer_approval->denyAffiliate($customer_id);
+			foreach ($denials as $customer_approval_id) {
+				$customer_approval_info = $this->model_customer_customer_approval->getCustomerApproval($customer_approval_id);
+
+				if ($customer_approval_info) {
+					if ($customer_approval_info['type'] == 'customer') {
+						$this->model_customer_customer_approval->denyCustomer($customer_approval_info['customer_id']);
+					}
+
+					if ($customer_approval_info['type'] == 'affiliate') {
+						$this->model_customer_customer_approval->denyAffiliate($customer_approval_info['customer_id']);
+					}
 				}
 			}
 

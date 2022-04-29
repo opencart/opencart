@@ -6,7 +6,9 @@ class COD extends \Opencart\System\Engine\Model {
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone_to_geo_zone` WHERE `geo_zone_id` = '" . (int)$this->config->get('payment_cod_geo_zone_id') . "' AND `country_id` = '" . (int)$address['country_id'] . "' AND (`zone_id` = '" . (int)$address['zone_id'] . "' OR `zone_id` = '0')");
 
-		if (!$this->cart->hasShipping()) {
+		if ($this->cart->hasSubscription()) {
+			$status = false;
+		} elseif (!$this->cart->hasShipping()) {
 			$status = false;
 		} elseif (!$this->config->get('payment_cod_geo_zone_id')) {
 			$status = true;
@@ -21,8 +23,7 @@ class COD extends \Opencart\System\Engine\Model {
 		if ($status) {
 			$method_data = [
 				'code'       => 'cod',
-				'title'      => $this->language->get('text_title'),
-				'terms'      => '',
+				'title'      => $this->language->get('heading_title'),
 				'sort_order' => $this->config->get('payment_cod_sort_order')
 			];
 		}

@@ -1,3 +1,15 @@
+# 3.3.9 (2022-03-25)
+
+ * Fix custom escapers when using multiple Twig environments
+ * Add support for "constant('class', object)"
+ * Do not reuse internally generated variable names during parsing
+
+# 3.3.8 (2022-02-04)
+
+ * Fix a security issue when in a sandbox: the `sort` filter must require a Closure for the `arrow` parameter
+ * Fix deprecation notice on `round`
+ * Fix call to deprecated `convertToHtml` method
+
 # 3.3.7 (2022-01-03)
 
 * Allow more null support when Twig expects a string (for better 8.1 support)

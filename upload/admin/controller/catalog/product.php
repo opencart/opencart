@@ -989,6 +989,8 @@ class Product extends \Opencart\System\Engine\Controller {
 			$data['product_layout'] = [];
 		}
 
+		$data['report'] = $this->getReport();
+
 		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
@@ -1145,6 +1147,10 @@ class Product extends \Opencart\System\Engine\Controller {
 	public function report(): void {
 		$this->load->language('catalog/product');
 
+		$this->response->setOutput($this->getReport());
+	}
+
+	public function getReport(): string {
 		if (isset($this->request->get['product_id'])) {
 			$product_id = (int)$this->request->get['product_id'];
 		} else {
@@ -1195,7 +1201,7 @@ class Product extends \Opencart\System\Engine\Controller {
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($report_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($report_total - 10)) ? $report_total : ((($page - 1) * 10) + 10), $report_total, ceil($report_total / 10));
 
-		$this->response->setOutput($this->load->view('catalog/product_report', $data));
+		return $this->load->view('catalog/product_report', $data);
 	}
 
 	public function autocomplete(): void {

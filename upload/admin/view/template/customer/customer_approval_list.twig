@@ -16,7 +16,7 @@
         {% if customer_approvals %}
           {% for customer_approval in customer_approvals %}
             <tr>
-              <td class="text-center"><input type="checkbox" name="selected[]" value="{{ customer_approval.customer_id }}" class="form-check-input"/></td>
+              <td class="text-center"><input type="checkbox" name="selected[]" value="{{ customer_approval.customer_approval_id }}" class="form-check-input"/></td>
               <td class="text-start"><a href="{{ customer_approval.edit }}">{{ customer_approval.customer }}</a></td>
               <td class="text-start">{{ customer_approval.email }}</td>
               <td class="text-start">{{ customer_approval.customer_group }}</td>

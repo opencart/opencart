@@ -7,6 +7,8 @@ class Cheque extends \Opencart\System\Engine\Controller {
 		$data['payable'] = $this->config->get('payment_cheque_payable');
 		$data['address'] = nl2br($this->config->get('config_address'));
 
+		$data['language'] = $this->config->get('config_language');
+
 		return $this->load->view('extension/opencart/payment/cheque', $data);
 	}
 

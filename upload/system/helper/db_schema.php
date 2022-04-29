@@ -950,7 +950,7 @@ function db_schema() {
 			],
 			[
 				'name' => 'code',
-				'type' => 'varchar(64)',
+				'type' => 'varchar(128)',
 				'not_null' => true
 			],
 			[
@@ -2076,7 +2076,7 @@ function db_schema() {
 			],
 			[
 				'name' => 'code',
-				'type' => 'varchar(64)',
+				'type' => 'varchar(128)',
 				'not_null' => true
 			],
 			[
@@ -2136,7 +2136,7 @@ function db_schema() {
 			],
 			[
 				'name' => 'code',
-				'type' => 'varchar(32)',
+				'type' => 'varchar(128)',
 				'not_null' => true
 			]
 		],
@@ -2179,6 +2179,11 @@ function db_schema() {
 			],
 			[
 				'name' => 'code',
+				'type' => 'varchar(255)',
+				'not_null' => true
+			],
+			[
+				'name' => 'filename',
 				'type' => 'varchar(255)',
 				'not_null' => true
 			],
@@ -3232,7 +3237,7 @@ function db_schema() {
 				'auto_increment' => true
 			],
 			[
-				'name' => 'reference',
+				'name' => 'transaction_id',
 				'type' => 'varchar(100)',
 				'not_null' => true
 			],
@@ -3889,10 +3894,10 @@ function db_schema() {
 	];
 
 	$tables[] = [
-		'name' => 'payment_method',
+		'name' => 'customer_payment',
 		'field' => [
 			[
-				'name' => 'payment_method_id',
+				'name' => 'customer_payment_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
@@ -3954,7 +3959,7 @@ function db_schema() {
 			]
 		],
 		'primary' => [
-			'payment_method_id'
+			'customer_payment_id'
 		],
 		'index' => [
 			[
@@ -5328,6 +5333,11 @@ function db_schema() {
 				'auto_increment' => true
 			],
 			[
+				'name' => 'customer_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
 				'name' => 'order_id',
 				'type' => 'int(11)',
 				'not_null' => true
@@ -5338,12 +5348,12 @@ function db_schema() {
 				'not_null' => true
 			],
 			[
-				'name' => 'reference',
-				'type' => 'varchar(100)',
+				'name' => 'subscription_plan_id',
+				'type' => 'int(11)',
 				'not_null' => true
 			],
 			[
-				'name' => 'subscription_plan_id',
+				'name' => 'customer_payment_id',
 				'type' => 'int(11)',
 				'not_null' => true
 			],
@@ -5378,6 +5388,11 @@ function db_schema() {
 				'not_null' => true
 			],
 			[
+				'name' => 'trial_remaining',
+				'type' => 'smallint(6)',
+				'not_null' => true
+			],
+			[
 				'name' => 'trial_status',
 				'type' => 'tinyint(1)',
 				'not_null' => true
@@ -5403,18 +5418,18 @@ function db_schema() {
 				'not_null' => true
 			],
 			[
-				'name' => 'payment_method_id',
-				'type' => 'int(11)',
-				'not_null' => true
-			],
-			[
-				'name' => 'subscription_status_id',
-				'type' => 'int(11)',
+				'name' => 'remaining',
+				'type' => 'smallint(6)',
 				'not_null' => true
 			],
 			[
 				'name' => 'date_next',
 				'type' => 'datetime',
+				'not_null' => true
+			],
+			[
+				'name' => 'subscription_status_id',
+				'type' => 'int(11)',
 				'not_null' => true
 			],
 			[
@@ -5644,13 +5659,28 @@ function db_schema() {
 				'not_null' => true
 			],
 			[
-				'name' => 'reference',
+				'name' => 'transaction_id',
 				'type' => 'varchar(255)',
+				'not_null' => true
+			],
+			[
+				'name' => 'description',
+				'type' => 'text',
 				'not_null' => true
 			],
 			[
 				'name' => 'amount',
 				'type' => 'decimal(10,4)',
+				'not_null' => true
+			],
+			[
+				'name' => 'payment_method',
+				'type' => 'varchar(128)',
+				'not_null' => true
+			],
+			[
+				'name' => 'payment_code',
+				'type' => 'varchar(128)',
 				'not_null' => true
 			],
 			[
@@ -5956,62 +5986,6 @@ function db_schema() {
 	];
 
 	$tables[] = [
-		'name' => 'seo_profile',
-		'field' => [
-			[
-				'name' => 'seo_profile_id',
-				'type' => 'int(11)',
-				'not_null' => true,
-				'auto_increment' => true
-			],
-			[
-				'name' => 'name',
-				'type' => 'varchar(64)',
-				'not_null' => true
-			],
-			[
-				'name' => 'key',
-				'type' => 'varchar(64)',
-				'not_null' => true
-			],
-			[
-				'name' => 'regex',
-				'type' => 'varchar(255)',
-				'not_null' => true
-			],
-			[
-				'name' => 'push',
-				'type' => 'varchar(255)',
-				'not_null' => true
-			],
-			[
-				'name' => 'remove',
-				'type' => 'varchar(255)',
-				'not_null' => true
-			],
-			[
-				'name' => 'sort_order',
-				'type' => 'int(3)',
-				'not_null' => true
-			]
-		],
-		'primary' => [
-			'seo_profile_id'
-		],
-		'index' => [
-			[
-				'name' => 'key',
-				'key' => [
-					'key'
-				]
-			]
-		],
-		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
-	];
-
-	$tables[] = [
 		'name' => 'seo_url',
 		'field' => [
 			[
@@ -6043,6 +6017,11 @@ function db_schema() {
 			[
 				'name' => 'keyword',
 				'type' => 'varchar(255)',
+				'not_null' => true
+			],
+			[
+				'name' => 'sort_order',
+				'type' => 'int(3)',
 				'not_null' => true
 			]
 		],
@@ -6167,6 +6146,44 @@ function db_schema() {
 		],
 		'primary' => [
 			'user_group_id'
+		],
+		'engine' => 'InnoDB',
+		'charset' => 'utf8',
+		'collate' => 'utf8_general_ci'
+	];
+
+	$tables[] = [
+		'name' => 'vendor',
+		'field' => [
+			[
+				'name' => 'vendor_id',
+				'type' => 'int(11)',
+				'not_null' => true,
+				'auto_increment' => true
+			],
+			[
+				'name' => 'name',
+				'type' => 'varchar(64)',
+				'not_null' => true
+			],
+			[
+				'name' => 'code',
+				'type' => 'text',
+				'not_null' => true
+			],
+			[
+				'name' => 'version',
+				'type' => 'text',
+				'not_null' => true
+			],
+			[
+				'name' => 'date_added',
+				'type' => 'text',
+				'not_null' => true
+			]
+		],
+		'primary' => [
+			'vendor_id'
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',

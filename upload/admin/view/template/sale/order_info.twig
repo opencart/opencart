@@ -26,7 +26,7 @@
                 </div>
               </div>
               {% if not invoice_no %}
-                <button type="button" id="button-invoice" data-oc-loading-text="{{ text_loading }}" data-bs-toggle="tooltip" title="{{ button_generate }}" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
+                <button type="button" id="button-invoice" data-bs-toggle="tooltip" title="{{ button_generate }}" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
               {% else %}
                 <button type="button" disabled="disabled" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
               {% endif %}
@@ -78,18 +78,18 @@
                   {% if order_product.option %}
                     {% for option in order_product.option %}
                       <br/>
-                      <small>{{ option.name }}: {{ option.value }}</small>
+                      <small> - {{ option.name }}: {{ option.value }}</small>
                     {% endfor %}
                   {% endif %}
 
                   {% if order_product.reward %}
                     <br/>
-                    <small>{{ text_points }} {{ order_product.reward }}</small>
+                    <small> - {{ text_points }} {{ order_product.reward }}</small>
                   {% endif %}
 
                   {% if order_product.subscription %}
                     <br/>
-                    <small>{{ text_subscription }}: {{ subscription.description }}</small>
+                    <small> - {{ text_subscription }}: {{ subscription.description }}</small>
                   {% endif %}
 
                 </td>
@@ -99,7 +99,7 @@
                 <td class="text-end">{{ order_product.total }}</td>
                 <td class="text-end">
                   <form>
-                    <button type="submit" data-bs-toggle="tooltip" title="{{ button_remove }}" data-oc-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>
+                    <button type="submit" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>
                     <input type="hidden" name="key" value="{{ order_product.cart_id }}"/>
                   </form>
                 </td>
@@ -116,7 +116,7 @@
                 <td class="text-end">{{ order_voucher.amount }}</td>
                 <td class="text-end">
                   <form>
-                    <button type="submit" data-bs-toggle="tooltip" title="{{ button_remove }}" data-oc-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>
+                    <button type="submit" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>
                     <input type="hidden" name="key" value="{{ order_voucher.key }}"/>
                   </form>
                 </td>
@@ -199,7 +199,7 @@
               <form id="form-reward" class="mb-3">
                 <div class="input-group form-floating">
                   <input type="text" name="reward" value="{{ reward }}" placeholder="{{ entry_reward }}" id="input-reward" class="form-control"/> <label for="input-reward">{{ entry_reward }}</label>
-                  <button type="submit" id="button-reward" data-oc-loading-text="{{ text_loading }}" class="btn btn-outline-primary"><i class="fas fa-check"></i></button>
+                  <button type="submit" id="button-reward" class="btn btn-outline-primary"><i class="fas fa-check"></i></button>
                 </div>
               </form>
             </div>
@@ -213,9 +213,9 @@
                   </div>
                 </div>
                 {% if not reward_total %}
-                  <button type="button" id="button-reward-add" data-oc-loading-text="{{ text_loading }}" data-bs-toggle="tooltip" title="{{ button_reward_add }}" class="btn btn-success"{% if not customer_id or not points %} disabled{% endif %}><i class="fas fa-plus-circle"></i></button>
+                  <button type="button" id="button-reward-add" data-bs-toggle="tooltip" title="{{ button_reward_add }}" class="btn btn-success"{% if not customer_id or not points %} disabled{% endif %}><i class="fas fa-plus-circle"></i></button>
                 {% else %}
-                  <button type="button" id="button-reward-remove" data-oc-loading-text="{{ text_loading }}" data-bs-toggle="tooltip" title="{{ button_reward_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>
+                  <button type="button" id="button-reward-remove" data-bs-toggle="tooltip" title="{{ button_reward_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>
                 {% endif %}
               </div>
             </div>
@@ -249,9 +249,9 @@
                   </div>
                 </div>
                 {% if not commission_total %}
-                  <button type="button" id="button-commission-add" data-oc-loading-text="{{ text_loading }}" data-bs-toggle="tooltip" title="{{ button_commission_add }}" class="btn btn-success"{% if not affiliate_id %} disabled{% endif %}><i class="fas fa-plus-circle"></i></button>
+                  <button type="button" id="button-commission-add" data-bs-toggle="tooltip" title="{{ button_commission_add }}" class="btn btn-success"{% if not affiliate_id %} disabled{% endif %}><i class="fas fa-plus-circle"></i></button>
                 {% else %}
-                  <button type="button" id="button-commission-remove" data-oc-loading-text="{{ text_loading }}" data-bs-toggle="tooltip" title="{{ button_commission_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>
+                  <button type="button" id="button-commission-remove" data-bs-toggle="tooltip" title="{{ button_commission_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>
                 {% endif %}
               </div>
             </div>
@@ -365,8 +365,7 @@
                   {% if shipping_code %}
                     <option value="{{ shipping_code }}" selected>{{ shipping_method }}</option>
                   {% endif %}
-                </select>
-                <label for="input-shipping-method">{{ entry_shipping_method }}</label>
+                </select> <label for="input-shipping-method">{{ entry_shipping_method }}</label>
                 <button type="button" id="button-shipping-method" class="btn btn-outline-primary"><i class="fas fa-sync"></i></button>
               </div>
             </form>
@@ -416,7 +415,6 @@
             {% endfor %}
           </tbody>
         </table>
-
         <div class="text-end">
           <button type="button" id="button-refresh" data-bs-toggle="tooltip" title="{{ button_refresh }}" class="btn btn-outline-primary"><i class="fas fa-sync"></i></button>
           <button type="button" id="button-confirm" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_confirm }}</button>
@@ -441,7 +439,7 @@
           <div id="tab-history" class="tab-pane active">
             <fieldset>
               <legend>{{ text_history }}</legend>
-              <div id="history"></div>
+              <div id="history">{{ history }}</div>
             </fieldset>
             <form id="form-history">
               <fieldset>
@@ -480,9 +478,10 @@
                   </div>
                 </div>
                 <div class="text-end">
-                  <button type="submit" id="button-history" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i> {{ button_history_add }}</button>
+                  <button type="submit" id="button-history" class="btn btn-primary"><i class="fas fa-plus-circle"></i> {{ button_history_add }}</button>
                 </div>
               </fieldset>
+              <input type="hidden" name="order_id" value="{{ order_id }}" id="input-order-id"/>
             </form>
           </div>
           <div id="tab-additional" class="tab-pane">
@@ -524,7 +523,7 @@
     </div>
   </div>
 </div>
-<input type="hidden" name="order_id" value="{{ order_id }}" id="input-order-id"/>
+
 <div id="modal-customer" class="modal">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -537,7 +536,8 @@
           <div class="mb-3">
             <label for="input-customer" class="form-label">{{ entry_customer }}</label>
             <div class="input-group">
-              <input type="text" name="customer" value="{{ customer }}" placeholder="{{ entry_customer }}" id="input-customer" list="list-customer" class="form-control"/> <a href="{{ customer_add }}" target="_blank" data-bs-toggle="tooltip" title="{{ button_customer_add }}" class="btn btn-outline-secondary"><i class="fas fa-user-plus"></i></a>
+              <input type="text" name="customer" value="{{ customer }}" placeholder="{{ entry_customer }}" id="input-customer" list="list-customer" class="form-control"/>
+              <a href="{{ customer_add }}" target="_blank" data-bs-toggle="tooltip" title="{{ button_customer_add }}" class="btn btn-outline-secondary"><i class="fas fa-user-plus"></i></a>
             </div>
             <input type="hidden" name="customer_id" value="{{ customer_id }}" id="input-customer-id"/>
             <datalist id="list-customer"></datalist>
@@ -550,11 +550,13 @@
             </select>
           </div>
           <div class="mb-3 required">
-            <label for="input-firstname" class="form-label">{{ entry_firstname }}</label> <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-firstname" class="form-control"/>
+            <label for="input-firstname" class="form-label">{{ entry_firstname }}</label>
+            <input type="text" name="firstname" value="{{ firstname }}" placeholder="{{ entry_firstname }}" id="input-firstname" class="form-control"/>
             <div id="error-firstname" class="invalid-feedback"></div>
           </div>
           <div class="mb-3 required">
-            <label for="input-lastname" class="form-label">{{ entry_lastname }}</label> <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-lastname" class="form-control"/>
+            <label for="input-lastname" class="form-label">{{ entry_lastname }}</label>
+            <input type="text" name="lastname" value="{{ lastname }}" placeholder="{{ entry_lastname }}" id="input-lastname" class="form-control"/>
             <div id="error-lastname" class="invalid-feedback"></div>
           </div>
           <div class="mb-3 required">
@@ -564,7 +566,7 @@
             </div>
             <div id="error-email" class="invalid-feedback"></div>
           </div>
-          <div class="mb-3 required">
+          <div class="mb-3{% if config_telephone_required %} required{% endif %}">
             <label for="input-telephone" class="form-label">{{ entry_telephone }}</label> <input type="text" name="telephone" value="{{ telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control"/>
             <div id="error-telephone" class="invalid-feedback"></div>
           </div>
@@ -619,18 +621,25 @@
                   <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               {% endif %}
+
               {% if custom_field.type == 'file' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
                   <label class="form-label">{{ custom_field.name }}</label>
                   <div>
 
-                    <button type="button" data-oc-loading-text="{{ text_loading }}" data-oc-toggle="upload" data-oc-url="{{ upload }}" data-oc-size-max="{{ config_file_max_size }}" data-oc-size-error="{{ error_upload_size }}" data-oc-target="#input-custom-field-{{ custom_field.custom_field_id }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
-                    <a href="" class="btn btn-light"><i class="fas fa-download"></i></a> <input type="hidden" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] }}" id="input-custom-field-{{ custom_field.custom_field_id }}"/>
+                    <button type="button" data-oc-toggle="upload" data-oc-url="{{ upload }}" data-oc-size-max="{{ config_file_max_size }}" data-oc-size-error="{{ error_upload_size }}" data-oc-target="#input-custom-field-{{ custom_field.custom_field_id }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
+
+                    <button type="button" data-oc-toggle="download" data-oc-url="{{ download }}" data-oc-target="#input-custom-field-{{ custom_field.custom_field_id }}"{% if not account_custom_field[custom_field.custom_field_id] %} disabled{% endif %} class="btn btn-light"><i class="fas fa-download"></i> {{ button_download }}</button>
+
+                    <a href="" class="btn btn-light"><i class="fas fa-download"></i></a>
+
+                    <input type="hidden" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] }}" id="input-custom-field-{{ custom_field.custom_field_id }}"/>
 
                   </div>
                   <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               {% endif %}
+
               {% if custom_field.type == 'date' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
                   <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
@@ -664,7 +673,7 @@
             {% endif %}
           {% endfor %}
           <div class="text-end">
-            <button type="submit" id="button-customer" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
+            <button type="submit" id="button-customer" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
           </div>
         </form>
       </div>
@@ -700,7 +709,7 @@
               <div id="option"></div>
               <div id="subscription"></div>
               <div class="text-end">
-                <button type="submit" id="button-product-add" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
+                <button type="submit" id="button-product-add" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
               </div>
             </form>
           </div>
@@ -740,7 +749,7 @@
                 </div>
               </fieldset>
               <div class="text-end">
-                <button type="submit" id="button-voucher-add" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
+                <button type="submit" id="button-voucher-add" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
               </div>
             </form>
           </div>
@@ -763,7 +772,7 @@
             <datalist id="list-affiliate"></datalist>
           </div>
           <div class="text-end">
-            <button type="submit" id="button-affiliate" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
+            <button type="submit" id="button-affiliate" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
           </div>
         </form>
       </div>
@@ -882,7 +891,7 @@
                   <label class="form-label">{{ custom_field.name }}</label>
                   <div>
 
-                    <button type="button" data-oc-loading-text="{{ text_loading }}" data-oc-toggle="upload" data-oc-url="{{ upload }}" data-oc-size-max="{{ config_file_max_size }}" data-oc-size-error="{{ error_upload_size }}" data-oc-target="#input-payment-custom-field-{{ custom_field.custom_field_id }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
+                    <button type="button" data-oc-toggle="upload" data-oc-url="{{ upload }}" data-oc-size-max="{{ config_file_max_size }}" data-oc-size-error="{{ error_upload_size }}" data-oc-target="#input-payment-custom-field-{{ custom_field.custom_field_id }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
                     <a href="" class="btn btn-light"><i class="fas fa-download"></i></a> <input type="hidden" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ payment_custom_field[custom_field.custom_field_id] ? payment_custom_field[custom_field.custom_field_id] }}" id="input-payment-custom-field-{{ custom_field.custom_field_id }}"/>
 
                   </div>
@@ -922,7 +931,7 @@
             {% endif %}
           {% endfor %}
           <div class="text-end">
-            <button type="submit" id="button-payment-address" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
+            <button type="submit" id="button-payment-address" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
           </div>
         </form>
       </div>
@@ -1062,7 +1071,7 @@
                   <label class="form-label">{{ custom_field.name }}</label>
                   <div>
 
-                    <button type="button" data-oc-loading-text="{{ text_loading }}" data-oc-toggle="upload" data-oc-url="{{ upload }}" data-oc-size-max="{{ config_file_max_size }}" data-oc-size-error="{{ error_upload_size }}" data-oc-target="#input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
+                    <button type="button" data-oc-toggle="upload" data-oc-url="{{ upload }}" data-oc-size-max="{{ config_file_max_size }}" data-oc-size-error="{{ error_upload_size }}" data-oc-target="#input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
                     <a href="" class="btn btn-light"><i class="fas fa-download"></i></a> <input type="hidden" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ shipping_custom_field[custom_field.custom_field_id] ? shipping_custom_field[custom_field.custom_field_id] }}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}"/>
 
                   </div>
@@ -1108,7 +1117,7 @@
           {% endfor %}
 
           <div class="text-end">
-            <button type="submit" id="button-shipping-address" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
+            <button type="submit" id="button-shipping-address" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
           </div>
 
         </form>
@@ -1131,7 +1140,9 @@
             <textarea name="comment" rows="5" placeholder="{{ entry_comment }}" id="input-comment" class="form-control">{{ comment }}</textarea>
           </div>
           <div class="text-end">
-            <button type="submit" id="button-comment" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
+
+            <button type="submit" id="button-comment" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
+
           </div>
         </form>
       </div>
@@ -1161,10 +1172,10 @@ $(document).on('click', '#button-invoice', function () {
         url: 'index.php?route=sale/order|createinvoiceno&user_token={{ user_token }}&order_id={{ order_id }}',
         dataType: 'json',
         beforeSend: function () {
-            $('#button-invoice').button('loading');
+            $('#button-invoice').prop('disabled', true).addClass('loading');
         },
         complete: function () {
-            $('#button-invoice').button('reset');
+            $('#button-invoice').prop('disabled', false).removeClass('loading');
         },
         success: function (json) {
             $('.alert-dismissible').remove();
@@ -1298,10 +1309,10 @@ $('#form-customer').on('submit', function (e) {
         dataType: 'json',
         contentType: 'application/x-www-form-urlencoded',
         beforeSend: function () {
-            $('#button-customer').button('loading');
+            $('#button-customer').prop('disabled', true).addClass('loading');
         },
         complete: function () {
-            $('#button-customer').button('reset');
+            $('#button-customer').prop('disabled', false).removeClass('loading');
         },
         success: function (json) {
             $('.alert-dismissible').remove();
@@ -1484,7 +1495,7 @@ $('#input-product').autocomplete({
                     html += '<div class="mb-3' + (option['required'] == 1 ? ' required' : '') + '">';
                     html += '  <label class="form-label">' + option['name'] + '</label>';
                     html += '  <div>';
-                    html += '    <button type="button" data-oc-toggle="upload" data-oc-url="{{ upload }}" data-oc-loading-text="{{ text_loading }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>';
+                    html += '    <button type="button" data-oc-toggle="upload" data-oc-url="{{ upload }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>';
                     html += '    <a href="" class="btn btn-light"><i class="fas fa-download"></i></a>';
                     html += '    <input type="hidden" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" id="input-option-' + option['product_option_id'] + '"/>';
                     html += '  </div>';
@@ -1562,10 +1573,10 @@ $('#form-product-add').on('submit', function (e) {
         dataType: 'json',
         contentType: 'application/x-www-form-urlencoded',
         beforeSend: function () {
-            $('#button-product-add').button('loading');
+            $('#button-product-add').prop('disabled', true).addClass('loading');
         },
         complete: function () {
-            $('#button-product-add').button('reset');
+            $('#button-product-add').prop('disabled', false).removeClass('loading');
         },
         success: function (json) {
             $('.alert-dismissible').remove();
@@ -1608,10 +1619,10 @@ $('#order-products').on('submit', 'form', function (e) {
         data: $(element).serialize(),
         dataType: 'json',
         beforeSend: function () {
-            $(e.target).button('loading');
+            $(e.target).prop('disabled', true).addClass('loading');
         },
         complete: function () {
-            $(e.target).button('reset');
+            $(e.target).prop('disabled', false).removeClass('loading');
         },
         success: function (json) {
             $('.alert-dismissible').remove();
@@ -1644,10 +1655,10 @@ $('#form-voucher-add').on('submit', function (e) {
         data: $('#form-voucher-add').serialize(),
         dataType: 'json',
         beforeSend: function () {
-            $('#button-voucher-add').button('loading');
+            $('#button-voucher-add').prop('disabled', true).addClass('loading');
         },
         complete: function () {
-            $('#button-voucher-add').button('reset');
+            $('#button-voucher-add').prop('disabled', false).removeClass('loading');
         },
         success: function (json) {
             $('.alert-dismissible').remove();
@@ -1699,10 +1710,10 @@ $('#order-vouchers').on('submit', 'form', function (e) {
         data: $(element).serialize(),
         dataType: 'json',
         beforeSend: function () {
-            $(e.target).button('loading');
+            $(e.target).prop('disabled', true).addClass('loading');
         },
         complete: function () {
-            $(e.target).button('reset');
+            $(e.target).prop('disabled', false).removeClass('loading');
         },
         success: function (json) {
             $('.alert-dismissible').remove();
@@ -1834,10 +1845,10 @@ $('#form-coupon').on('submit', function (e) {
         data: $('#form-coupon').serialize(),
         dataType: 'json',
         beforeSend: function () {
-            $('#button-coupon').button('loading');
+            $('#button-coupon').addClass('loading').prop('disabled', true);
         },
         complete: function () {
-            $('#button-coupon').button('reset');
+            $('#button-coupon').removeClass('loading').prop('disabled', false);
         },
         success: function (json) {
             $('.alert-dismissible').remove();
@@ -1869,10 +1880,10 @@ $('#form-voucher').on('submit', function (e) {
         data: $('#form-voucher').serialize(),
         dataType: 'json',
         beforeSend: function () {
-            $('#button-voucher').button('loading');
+            $('#button-voucher').prop('disabled', true).addClass('loading');
         },
         complete: function () {
-            $('#button-voucher').button('reset');
+            $('#button-voucher').prop('disabled', false).removeClass('loading');
         },
         success: function (json) {
             $('.alert-dismissible').remove();
@@ -1904,10 +1915,10 @@ $('#form-reward').on('submit', function (e) {
         data: $('#form-reward').serialize(),
         dataType: 'json',
         beforeSend: function () {
-            $('#button-reward').button('loading');
+            $('#button-reward').prop('disabled', true).addClass('loading');
         },
         complete: function () {
-            $('#button-reward').button('reset');
+            $('#button-reward').prop('disabled', false).removeClass('loading');
         },
         success: function (json) {
             $('.alert-dismissible').remove();
@@ -1943,10 +1954,10 @@ $(document).on('click', '#button-reward-add, #button-reward-remove', function (e
         type: 'post',
         dataType: 'json',
         beforeSend: function () {
-            $(element).button('loading');
+            $(element).prop('disabled', true).addClass('loading');
         },
         complete: function () {
-            $(element).button('reset');
+            $(element).prop('disabled', false).removeClass('loading');
         },
         success: function (json) {
             $('.alert-dismissible').remove();
@@ -2009,10 +2020,10 @@ $('#form-affiliate').on('submit', function (e) {
         data: $('#form-affiliate').serialize(),
         dataType: 'json',
         beforeSend: function () {
-            $('#button-affiliate').button('loading');
+            $('#button-affiliate').prop('disabled', true).addClass('loading');
         },
         complete: function () {
-            $('#button-affiliate').button('reset');
+            $('#button-affiliate').prop('disabled', false).removeClass('loading');
         },
         success: function (json) {
             $('.alert-dismissible').remove();
@@ -2052,10 +2063,10 @@ $(document).on('click', '#button-commission-add, #button-commission-remove', fun
         type: 'post',
         dataType: 'json',
         beforeSend: function () {
-            $(element).button('loading');
+            $(element).prop('disabled', true).addClass('loading');
         },
         complete: function () {
-            $(element).button('reset');
+            $(element).prop('disabled', false).removeClass('loading');
         },
         success: function (json) {
             $('.alert-dismissible').remove();
@@ -2145,10 +2156,10 @@ $('#form-payment-address').on('submit', function (e) {
         data: $('#form-payment-address').serialize(),
         dataType: 'json',
         beforeSend: function () {
-            $('#button-payment-address').button('loading');
+            $('#button-payment-address').prop('disabled', true).addClass('loading');
         },
         complete: function () {
-            $('#button-payment-address').button('reset');
+            $('#button-payment-address').prop('disabled', false).removeClass('loading');
         },
         success: function (json) {
             $('.alert-dismissible').remove();
@@ -2319,10 +2330,10 @@ $('#form-shipping-address').on('submit', function (e) {
         dataType: 'json',
         contentType: 'application/x-www-form-urlencoded',
         beforeSend: function () {
-            $('#button-shipping-address').button('loading');
+            $('#button-shipping-address').prop('disabled', true).addClass('loading');
         },
         complete: function () {
-            $('#button-shipping-address').button('reset');
+            $('#button-shipping-address').prop('disabled', false).removeClass('loading');
         },
         success: function (json) {
             $('#form-shipping-address .alert-dismissible').remove();
@@ -2438,10 +2449,10 @@ $('#button-payment-method').on('click', function () {
         url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=sale/payment_method',
         dataType: 'json',
         beforeSend: function () {
-            $(element).button('loading');
+            $(element).prop('disabled', true).addClass('loading');
         },
         complete: function () {
-            $(element).button('reset');
+            $(element).prop('disabled', false).removeClass('loading');
         },
         success: function (json) {
             $('#alert .alert-dismissible').remove();
@@ -2516,10 +2527,10 @@ $('#button-shipping-method').on('click', function () {
         url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=sale/shipping_method',
         dataType: 'json',
         beforeSend: function () {
-            $(element).button('loading');
+            $(element).prop('disabled', true).addClass('loading');
         },
         complete: function () {
-            $(element).button('reset');
+            $(element).prop('disabled', false).removeClass('loading');
         },
         success: function (json) {
             $('.alert-dismissible').remove();
@@ -2606,10 +2617,10 @@ $('#form-comment').on('submit', function (e) {
         dataType: 'json',
         contentType: 'application/x-www-form-urlencoded',
         beforeSend: function () {
-            $('#button-comment').button('loading');
+            $('#button-comment').prop('disabled', true).addClass('loading');
         },
         complete: function () {
-            $('#button-comment').button('reset');
+            $('#button-comment').prop('disabled', false).removeClass('loading');
         },
         success: function (json) {
             $('.alert-dismissible').remove();
@@ -2637,10 +2648,10 @@ $('#button-refresh').on('click', function () {
         url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=sale/cart',
         dataType: 'json',
         beforeSend: function () {
-            $('#button-confirm').button('loading');
+            $('#button-confirm').prop('disabled', true).addClass('loading');
         },
         complete: function () {
-            $('#button-confirm').button('reset');
+            $('#button-confirm').prop('disabled', false).removeClass('loading');
         },
         success: function (json) {
             html = '';
@@ -2678,7 +2689,7 @@ $('#button-refresh').on('click', function () {
                     html += '  <td class="text-end">' + product['total'] + '</td>';
                     html += '  <td class="text-end">';
                     html += '    <form>';
-                    html += '      <button type="submit" data-bs-toggle="tooltip" title="{{ button_remove }}" data-oc-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>';
+                    html += '      <button type="submit" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>';
                     html += '      <input type="hidden" name="key" value="' + product['cart_id'] + '"/>';
                     html += '    </form>';
                     html += '  </td>';
@@ -2702,7 +2713,7 @@ $('#button-refresh').on('click', function () {
                     html += '  <td class="text-end">' + voucher['amount'] + '</td>';
                     html += '  <td class="text-end">';
                     html += '    <form>';
-                    html += '      <button type="submit" data-bs-toggle="tooltip" title="{{ button_remove }}" data-oc-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>';
+                    html += '      <button type="submit" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>';
                     html += '      <input type="hidden" name="key" value="' + voucher['key'] + '"/>';
                     html += '    </form>';
                     html += '  </td>';
@@ -2758,10 +2769,10 @@ $('#button-confirm').on('click', function () {
         url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=sale/order|confirm',
         dataType: 'json',
         beforeSend: function () {
-            $(element).button('loading');
+            $(element).prop('disabled', true).addClass('loading');
         },
         complete: function () {
-            $(element).button('reset');
+            $(element).prop('disabled', false).removeClass('loading');
         },
         success: function (json) {
             $('.alert-dismissible').remove();
@@ -2812,22 +2823,20 @@ $('#history').on('click', '.pagination a', function (e) {
     $('#history').load(this.href);
 });
 
-$('#history').load('index.php?route=sale/order|history&user_token={{ user_token }}&order_id=' + $('#input-order-id').val());
-
 $('#form-history').on('submit', function (e) {
     e.preventDefault();
 
     $.ajax({
-        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=sale/order|addHistory',
+        url: 'index.php?route=sale/order|call&user_token={{ user_token }}&action=sale/order|addHistory&order_id=' + $('#input-order-id').val(),
         type: 'post',
         dataType: 'json',
         data: $('#form-history').serialize(),
         contentType: 'application/x-www-form-urlencoded',
         beforeSend: function () {
-            $('#button-history').button('loading');
+            $('#button-history').prop('disabled', true).addClass('loading');
         },
         complete: function () {
-            $('#button-history').button('reset');
+            $('#button-history').prop('disabled', false).removeClass('loading');
         },
         success: function (json) {
             $('.alert-dismissible').remove();

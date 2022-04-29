@@ -38,6 +38,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise describeAccountLimitsAsync(array $args = [])
  * @method \Aws\Result describeChangeSet(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeChangeSetAsync(array $args = [])
+ * @method \Aws\Result describeChangeSetHooks(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeChangeSetHooksAsync(array $args = [])
  * @method \Aws\Result describePublisher(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describePublisherAsync(array $args = [])
  * @method \Aws\Result describeStackDriftDetectionStatus(array $args = [])

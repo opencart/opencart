@@ -14,93 +14,84 @@
     <div class="card">
       <div class="card-header"><i class="fas fa-sync"></i> {{ text_upgrade }}</div>
       <div class="card-body">
-
         <fieldset>
           <legend>{{ text_information }}</legend>
-
-          <div class="row mb-4">
+          <div class="row mb-3">
             <div class="col">
-              <label class="text-uppercase"><strong>{{ text_current_version }}</strong></label>
-              <div class="font-weight-bold">{{ current_version }}</div>
+              <div class="form-control border rounded-start">
+                <div class="lead"><strong>{{ text_current_version }}</strong>
+                  <br/>
+                  <span{% if upgrade %} class="text-danger"{% endif %}>{{ current_version }}</span>
+                </div>
+              </div>
             </div>
             <div class="col">
-              <label class="text-uppercase"><strong>{{ text_latest_version }}</strong></label>
-              <div>{{ latest_version }}</div>
+              <div class="form-control border rounded-start">
+                <div class="lead"><strong>{{ text_latest_version }}</strong>
+                  <br/>
+                  {{ latest_version }}
+                </div>
+              </div>
             </div>
             <div class="col">
-              <label class="text-uppercase"><strong>{{ text_date_added }}</strong></label>
-              <div>{{ date_added }}</div>
+              <div class="form-control border rounded-start">
+                <div class="lead"><strong>{{ text_date_added }}</strong>
+                  <br/>
+                  {{ date_added }}
+                </div>
+              </div>
             </div>
           </div>
-          <div class="mb-4">
-            <label class="text-uppercase"><strong>{{ text_change }}</strong></label>
-            <div>{{ log }}</div>
+          <div class="form-control border rounded-start">
+            <div class="lead"><strong>{{ text_change }}</strong>
+              <br/>
+              {{ log }}
+            </div>
           </div>
         </fieldset>
-
         <fieldset>
-
           <legend>{{ text_status }}</legend>
-
-          <div class="d-flex">
-            <div class="flex-shrink-0">
-              <div class="spinner-border float-start"></div>
-            </div>
-
-            <div class="flex-grow-1 ms-3">
-              <h6>{{ text_ready }}</h6>
-              <p>{{ text_ready_description }}</p>
-            </div>
-
-
+          <div class="input-group input-group-lg">
+            <button type="button" id="button-upgrade" class="btn btn-warning btn-lg"{% if not upgrade %} disabled{% endif %}><i class="fas fa-level-up-alt"></i> {{ button_upgrade }}</button>
+            <input type="text" id="input-upgrade" value="{{ text_ready }}" class="form-control bg-white" readonly/>
           </div>
         </fieldset>
-
-        <div class="mb-4 text-center">
-          <button type="button" id="button-upgrade" data-oc-loading-text="{{ text_loading }}" class="btn btn-warning btn-lg"{% if not upgrade %} disabled{% endif %}><i class="fas fa-level-up-alt"></i> {{ button_upgrade }}</button>
-        </div>
 
       </div>
     </div>
   </div>
 </div>
-
 <script type="text/javascript"><!--
 $('#button-upgrade').on('click', function () {
-    var i = 0;
+    $('#progress').html('{{ text_download }}');
 
-    $('#progress-text').html('{{ text_download }}');
-    $('#log').append('{{ text_download }}' + "\n");
-
-    var next = 'index.php?route=tool/upgrade|download&user_token={{ user_token }}&version={{ version }}';
+    var next = 'index.php?route=tool/upgrade|download&user_token={{ user_token }}&version={{ latest_version }}';
 
     var upgrade = function () {
         return $.ajax({
             url: next,
             dataType: 'json',
             beforeSend: function () {
-                $('#button-upgrade').prop('disable', true);
+                $('#button-upgrade').prop('disabled', true);
             },
             complete: function () {
-                $('#button-upgrade').prop('disable', false);
+                $('#button-upgrade').prop('disabled', false);
             },
             success: function (json) {
-                $('.alert-dismissible').remove();
+                $('#input-upgrade').removeClass('is-valid is-invalid');
 
                 if (json['error']) {
-                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-                }
-
-                if (json['redirect']) {
-                    var timer = setInterval(function() {
-                        location = json['redirect'];
-                    }, 500);
+                    $('#input-upgrade').val(json['error']);
+                    $('#input-upgrade').addClass('is-invalid');
                 }
 
                 if (json['text']) {
-                    i = i + 1;
+                    $('#input-upgrade').val(json['text']);
+                }
 
-                    $('#progress-text').html(json['text']);
+                if (json['success']) {
+                    $('#input-upgrade').val(json['success']);
+                    $('#input-upgrade').addClass('is-valid');
                 }
 
                 if (json['next']) {
@@ -110,7 +101,7 @@ $('#button-upgrade').on('click', function () {
                 }
             },
             error: function (xhr, ajaxOptions, thrownError) {
-                $('#log').append(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });
     };

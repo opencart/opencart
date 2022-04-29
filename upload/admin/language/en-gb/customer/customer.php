@@ -14,6 +14,7 @@ $_['text_password']         = 'Password';
 $_['text_other']            = 'Other';
 $_['text_balance']          = 'Balance';
 $_['text_address']          = 'Address';
+$_['text_payment_method']   = 'Payment Methods';
 $_['text_history']          = 'History';
 $_['text_history_add']      = 'Add History';
 $_['text_transaction']      = 'Transactions';
@@ -43,6 +44,7 @@ $_['column_country']        = 'Country';
 $_['column_payment_method'] = 'Payment Name';
 $_['column_image']          = 'Image';
 $_['column_type']           = 'Type';
+$_['column_date_expire']    = 'Date Expires';
 $_['column_action']         = 'Action';
 
 // Entry

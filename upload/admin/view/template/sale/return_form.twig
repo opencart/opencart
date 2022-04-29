@@ -20,9 +20,7 @@
         <form id="form-return" action="{{ save }}" method="post" data-oc-toggle="ajax">
           <ul class="nav nav-tabs">
             <li class="nav-item"><a href="#tab-general" data-bs-toggle="tab" class="nav-link active">{{ tab_general }}</a></li>
-            {% if return_id %}
-              <li class="nav-item"><a href="#tab-history" data-bs-toggle="tab" class="nav-link">{{ tab_history }}</a></li>
-            {% endif %}
+            <li class="nav-item"><a href="#tab-history" data-bs-toggle="tab" class="nav-link">{{ tab_history }}</a></li>
           </ul>
           <div class="tab-content">
             <div id="tab-general" class="tab-pane active">
@@ -157,42 +155,40 @@
                 {% endif %}
               </fieldset>
             </div>
-            {% if return_id %}
-              <div id="tab-history" class="tab-pane">
-                <fieldset>
-                  <legend>{{ text_history }}</legend>
-                  <div id="history"></div>
-                </fieldset>
-                <fieldset>
-                  <legend>{{ text_history_add }}</legend>
-                  <div class="row mb-3">
-                    <label for="input-return-status" class="col-sm-2 col-form-label">{{ entry_return_status }}</label>
-                    <div class="col-sm-10">
-                      <select name="return_status_id" id="input-return-status" class="form-select">
-                        {% for return_status in return_statuses %}
-                          <option value="{{ return_status.return_status_id }}"{% if return_status.return_status_id == return_status_id %} selected{% endif %}>{{ return_status.name }}</option>
-                        {% endfor %}
-                      </select>
-                    </div>
+            <div id="tab-history" class="tab-pane">
+              <fieldset>
+                <legend>{{ text_history }}</legend>
+                <div id="history">{{ history }}</div>
+              </fieldset>
+              <fieldset>
+                <legend>{{ text_history_add }}</legend>
+                <div class="row mb-3">
+                  <label for="input-return-status" class="col-sm-2 col-form-label">{{ entry_return_status }}</label>
+                  <div class="col-sm-10">
+                    <select name="return_status_id" id="input-return-status" class="form-select">
+                      {% for return_status in return_statuses %}
+                        <option value="{{ return_status.return_status_id }}"{% if return_status.return_status_id == return_status_id %} selected{% endif %}>{{ return_status.name }}</option>
+                      {% endfor %}
+                    </select>
                   </div>
-                  <div class="row mb-3">
-                    <label for="input-notify" class="col-sm-2 col-form-label">{{ entry_notify }}</label>
-                    <div class="col-sm-10">
-                      <input type="checkbox" name="notify" value="1" id="input-notify" class="form-check-input"/>
-                    </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="input-notify" class="col-sm-2 col-form-label">{{ entry_notify }}</label>
+                  <div class="col-sm-10">
+                    <input type="checkbox" name="notify" value="1" id="input-notify" class="form-check-input"/>
                   </div>
-                  <div class="row mb-3">
-                    <label for="input-history-comment" class="col-sm-2 col-form-label">{{ entry_comment }}</label>
-                    <div class="col-sm-10">
-                      <textarea name="comment" rows="8" placeholder="{{ entry_comment }}" id="input-history-comment" class="form-control"></textarea>
-                    </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="input-history-comment" class="col-sm-2 col-form-label">{{ entry_comment }}</label>
+                  <div class="col-sm-10">
+                    <textarea name="comment" rows="8" placeholder="{{ entry_comment }}" id="input-history-comment" class="form-control"></textarea>
                   </div>
-                  <div class="text-end">
-                    <button type="button" id="button-history" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i> {{ button_history_add }}</button>
-                  </div>
-                </fieldset>
-              </div>
-            {% endif %}
+                </div>
+                <div class="text-end">
+                  <button type="button" id="button-history" class="btn btn-primary"><i class="fas fa-plus-circle"></i> {{ button_history_add }}</button>
+                </div>
+              </fieldset>
+            </div>
           </div>
           <input type="hidden" name="return_id" value="{{ return_id }}" id="input-return-id"/>
         </form>
@@ -202,12 +198,12 @@
 </div>
 <script type="text/javascript"><!--
 $('#input-customer').autocomplete({
-    'source': function(request, response) {
+    'source': function (request, response) {
         $.ajax({
             url: 'index.php?route=customer/customer|autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
-            success: function(json) {
-                response($.map(json, function(item) {
+            success: function (json) {
+                response($.map(json, function (item) {
                     return {
                         category: item['customer_group'],
                         label: item['name'],
@@ -221,7 +217,7 @@ $('#input-customer').autocomplete({
             }
         });
     },
-    'select': function(item) {
+    'select': function (item) {
         $('#input-customer').val(item['label']);
         $('#input-customer-id').val(item['value']);
         $('#input-firstname').val(item['firstname']);
@@ -233,12 +229,12 @@ $('#input-customer').autocomplete({
 //--></script>
 <script type="text/javascript"><!--
 $('#input-product').autocomplete({
-    'source': function(request, response) {
+    'source': function (request, response) {
         $.ajax({
             url: 'index.php?route=catalog/product|autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
-            success: function(json) {
-                response($.map(json, function(item) {
+            success: function (json) {
+                response($.map(json, function (item) {
                     return {
                         label: item['name'],
                         value: item['product_id'],
@@ -248,22 +244,20 @@ $('#input-product').autocomplete({
             }
         });
     },
-    'select': function(item) {
+    'select': function (item) {
         $('#input-product').val(item['label']);
         $('#input-product-id').val(item['value']);
         $('#input-model').val(item['model']);
     }
 });
 
-$('#history').on('click', '.pagination a', function(e) {
+$('#history').on('click', '.pagination a', function (e) {
     e.preventDefault();
 
     $('#history').load(this.href);
 });
 
-$('#history').load('index.php?route=sale/returns|history&user_token={{ user_token }}&return_id=' + $('#input-return-id').val());
-
-$('#button-history').on('click', function(e) {
+$('#button-history').on('click', function (e) {
     e.preventDefault();
 
     $.ajax({
@@ -271,13 +265,13 @@ $('#button-history').on('click', function(e) {
         type: 'post',
         dataType: 'json',
         data: 'return_status_id=' + $('#input-return-status').val() + '&notify=' + ($('#input-notify').prop('checked') ? 1 : 0) + '&comment=' + encodeURIComponent($('#input-comment').val()),
-        beforeSend: function() {
-            $('#button-history').button('loading');
+        beforeSend: function () {
+            $('#button-history').prop('disabled', true).addClass('loading');
         },
-        complete: function() {
-            $('#button-history').button('reset');
+        complete: function () {
+            $('#button-history').prop('disabled', false).removeClass('loading');
         },
-        success: function(json) {
+        success: function (json) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {

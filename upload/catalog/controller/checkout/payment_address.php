@@ -13,19 +13,21 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 		$data['language'] = $this->config->get('config_language');
 		$data['shipping_required'] = $this->cart->hasShipping();
 
+		// Set payment address
 		$this->load->model('account/address');
 
-		if (isset($this->session->data['payment_address']['address_id'])) {
-			$data['address_id'] = (int)$this->session->data['payment_address']['address_id'];
-		} else {
-			$data['address_id'] = $this->customer->getAddressId();
-
-			// Set payment address
-			$address_info = $this->model_account_address->getAddress($data['address_id']);
+		if ($this->customer->isLogged() && !isset($this->session->data['payment_address'])) {
+			$address_info = $this->model_account_address->getAddress($this->customer->getAddressId());
 
 			if ($address_info) {
 				$this->session->data['payment_address'] = $address_info;
 			}
+		}
+
+		if (isset($this->session->data['payment_address']['address_id'])) {
+			$data['address_id'] = (int)$this->session->data['payment_address']['address_id'];
+		} else {
+			$data['address_id'] = 0;
 		}
 
 		$data['addresses'] = $this->model_account_address->getAddresses();
@@ -150,6 +152,13 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			// If no default address add it
+			$address_id = $this->customer->getAddressId();
+
+			if (!$address_id) {
+				$this->request->post['default'] = 1;
+			}
+
 			$this->load->model('account/address');
 
 			$json['address_id'] = $this->model_account_address->addAddress($this->customer->getId(), $this->request->post);

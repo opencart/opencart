@@ -31,6 +31,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise describeDomainAsync(array $args = [])
  * @method \Aws\Result describeDomainAutoTunes(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeDomainAutoTunesAsync(array $args = [])
+ * @method \Aws\Result describeDomainChangeProgress(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeDomainChangeProgressAsync(array $args = [])
  * @method \Aws\Result describeDomainConfig(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeDomainConfigAsync(array $args = [])
  * @method \Aws\Result describeDomains(array $args = [])

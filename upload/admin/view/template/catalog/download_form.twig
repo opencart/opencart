@@ -42,7 +42,7 @@
                 <label for="input-filename" class="col-sm-2 col-form-label">{{ entry_filename }}</label>
                 <div class="col-sm-10">
                   <div class="input-group">
-                    <button type="button" id="button-upload" data-oc-loading-text="{{ text_loading }}" class="btn btn-primary"><i class="fas fa-upload"></i> {{ button_upload }}</button>
+                    <button type="button" id="button-upload" class="btn btn-primary"><i class="fas fa-upload"></i> {{ button_upload }}</button>
                     <input type="text" name="filename" value="{{ filename }}" placeholder="{{ entry_filename }}" id="input-filename" class="form-control"/>
                   </div>
                   <div class="form-text">{{ help_filename }}</div>
@@ -62,7 +62,7 @@
             <div id="tab-report" class="tab-pane">
               <fieldset>
                 <legend>{{ text_report }}</legend>
-                <div id="report"></div>
+                <div id="report">{{ report }}</div>
               </fieldset>
             </div>
           </div>
@@ -79,8 +79,6 @@ $('#report').on('click', '.pagination a', function(e) {
     $('#report').load(this.href);
 });
 
-$('#report').load('index.php?route=catalog/download|report&user_token={{ user_token }}&download_id=' + $('#input-download-id').val());
-
 $('#button-upload').on('click', function() {
     var element = this;
 
@@ -91,7 +89,7 @@ $('#button-upload').on('click', function() {
     $('#form-upload input[name=\'file\']').trigger('click');
 
     $('#form-upload input[name=\'file\']').on('change', function() {
-        if (this.files[0].size > {{ config_file_max_size }}) {
+        if ((this.files[0].size / 1024) > {{ config_file_max_size }}) {
           	alert('{{ error_upload_size }}');
 
             $(this).val('');
@@ -115,10 +113,10 @@ $('#button-upload').on('click', function() {
                 contentType: false,
                 processData: false,
                 beforeSend: function() {
-                    $(element).button('loading');
+                    $(element).prop('disabled', true).addClass('loading');
                 },
                 complete: function() {
-                    $(element).button('reset');
+                    $(element).prop('disabled', false).removeClass('loading');
                 },
                 success: function(json) {
                     if (json['error']) {

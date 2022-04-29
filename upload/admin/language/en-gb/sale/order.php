@@ -47,7 +47,6 @@ $_['text_shipping']           = 'Dispatch Note';
 $_['text_store_address']      = 'Store Address';
 $_['text_store_telephone']    = 'Store Telephone';
 $_['text_store_email']        = 'Store E-Mail';
-$_['text_customer_telephone'] = 'Customer Telephone';
 $_['text_customer_email']     = 'Customer E-Mail';
 $_['text_missing']            = 'Missing Orders';
 $_['text_default']            = 'Default';

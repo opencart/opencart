@@ -5,6 +5,8 @@ $autoloader->register('Opencart\\' . APPLICATION, DIR_APPLICATION);
 $autoloader->register('Opencart\Extension', DIR_EXTENSION);
 $autoloader->register('Opencart\System', DIR_SYSTEM);
 
+require_once(DIR_SYSTEM . 'vendor.php');
+
 // Registry
 $registry = new \Opencart\System\Engine\Registry();
 $registry->set('autoloader', $autoloader);
@@ -139,7 +141,7 @@ if ($config->get('session_autostart')) {
 
 	$session->start($session_id);
 
-	// Setting the cookie path to the store front so admin users can login to cutomers accounts.
+	// Setting the cookie path to the store front so admin users can login to customers accounts.
 	$path = dirname($_SERVER['PHP_SELF']);
 
 	$path = substr($path, 0, strrpos($path, '/')) . '/';

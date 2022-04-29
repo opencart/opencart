@@ -12,7 +12,7 @@ class Ec2ParamBuilder extends QueryParamBuilder
     protected function queryName(Shape $shape, $default = null)
     {
         return ($shape['queryName']
-            ?: ucfirst($shape['locationName']))
+            ?: ucfirst(@$shape['locationName'] ?: ""))
                 ?: $default;
     }
 

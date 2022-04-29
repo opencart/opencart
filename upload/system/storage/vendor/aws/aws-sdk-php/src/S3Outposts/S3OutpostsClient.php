@@ -11,5 +11,7 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise deleteEndpointAsync(array $args = [])
  * @method \Aws\Result listEndpoints(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listEndpointsAsync(array $args = [])
+ * @method \Aws\Result listSharedEndpoints(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listSharedEndpointsAsync(array $args = [])
  */
 class S3OutpostsClient extends AwsClient {}

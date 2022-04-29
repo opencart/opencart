@@ -87,7 +87,6 @@ var tooltip = function () {
 }
 
 $(document).ready(tooltip);
-// Makes tooltips work on ajax generated content
 $(document).on('click', 'button', tooltip);
 
 // Daterangepicker
@@ -179,12 +178,13 @@ $(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function(e) {
         dataType: 'json',
         contentType: 'application/x-www-form-urlencoded',
         beforeSend: function() {
-           $(button).button('loading');
+            $(button).prop('disabled', true).addClass('loading');
         },
         complete: function() {
-           $(button).button('reset');
+           $(button).prop('disabled', false).removeClass('loading');
         },
         success: function(json) {
+            $('.alert-dismissible').remove();
             $(element).find('.is-invalid').removeClass('is-invalid');
             $(element).find('.invalid-feedback').removeClass('d-block');
 
@@ -210,7 +210,7 @@ $(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function(e) {
             }
 
             if (json['success']) {
-                $('#alert').prepend('<div class="alert alert-success"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                 // Refresh
                 var url = $(form).attr('data-oc-load');
@@ -243,10 +243,8 @@ $(document).on('click', '[data-oc-toggle=\'upload\']', function() {
 
         $('#form-upload input[name=\'file\']').trigger('click');
 
-        var size = $(element).attr('data-oc-size-max');
-
         $('#form-upload input[name=\'file\']').on('change', function(e) {
-            if (this.files[0].size > size) {
+            if ((this.files[0].size / 1024) > $(element).attr('data-oc-size-max')) {
                 alert($(element).attr('data-oc-size-error'));
 
                 $(this).val('');
@@ -262,7 +260,7 @@ $(document).on('click', '[data-oc-toggle=\'upload\']', function() {
                clearInterval(timer);
 
                 $.ajax({
-                    url: $(element).attr('data-oc-url'),
+                    url: 'index.php?route=tool/upload|upload&user_token=' + getURLVar('user_token'),
                     type: 'post',
                     data: new FormData($('#form-upload')[0]),
                     dataType: 'json',
@@ -273,7 +271,7 @@ $(document).on('click', '[data-oc-toggle=\'upload\']', function() {
                         $(element).button('loading');
                     },
                     complete: function() {
-                        $(element).button('reset');
+                        $(element).prop('disabled', false).removeClass('loading');
                     },
                     success: function(json) {
                         console.log(json);
@@ -299,6 +297,32 @@ $(document).on('click', '[data-oc-toggle=\'upload\']', function() {
     }
 });
 
+/*
+$(document).on('change', 'button[data-oc-toggle=\'download\']', function() {
+    location = $(this).attr('data-oc-url') + '&code=' + this.value;
+});
+//$($(element).attr('data-oc-target'))
+*/
+
+var download = function() {
+    var element = this;
+
+
+}
+
+$(document).ready(download);
+$(document).on('change', 'button', download);
+
+$(document).on('click', 'button[data-oc-toggle=\'download\']', function (e) {
+    var element = this;
+
+    var value = $($(element).attr('data-oc-target')).val();
+
+    if (value != '') {
+        location = $(element).attr('data-oc-url') + '&code=' + value;
+    }
+});
+
 // Image Manager
 $(document).on('click', '[data-oc-toggle=\'image\']', function(e) {
     e.preventDefault();
@@ -312,7 +336,7 @@ $(document).on('click', '[data-oc-toggle=\'image\']', function(e) {
             $(element).button('loading');
         },
         complete: function() {
-            $(element).button('reset');
+            $(element).prop('disabled', false).removeClass('loading');
         },
         success: function(html) {
             console.log(html);
@@ -367,87 +391,6 @@ class Chain {
 }
 
 var chain = new Chain();
-
-(function($) {
-    $.fn.button = function(state) {
-        var $this = $(this);
-
-        //console.log($this);
-        console.log(state);
-
-       // Button.getOrCreateInstance(element);
-
-
-        this.each(function(index, element) {
-            console.log(index);
-            console.log(element);
-
-
-            //var $this = $(this);
-
-           // if (!data) $this.data('bs.button', (data = new Button(this, options)))
-
-
-            console.log($this);
-
-            $.extend(this, state);
-/*
-            if (option == 'loading') {
-                var icon = $this.find('i');
-
-                $this.prop('disabled', true);
-                $this.find('i').replaceWith('<i class="spinner-border"></i>');
-            }
-
-            if (option == 'reset') {
-                $this.prop('disabled', false);
-                $this.find('i').replaceWith(icon);
-
-            }
-
- */
-        });
-    }
-
-    console.log($.fn.button);
-
-    $.fn.button.Constructor = function(element, options) {
-        console.log(element);
-        console.log(options);
-    };
-
-   // $.fn.button('');
-
-})(window.jQuery);
-
-$(document).ready(function() {
-
- $('button').button('toggle');
-
-});
-
-
-/*
-// Buttons
-$(document).ready(function() {
-
-    $(document).on('click', '[data-oc-loading-text]', function(state) {
-        var element = this;
-
-        var html = $(element).html();
-
-        var loading = $(element).attr('data-oc-loading-text');
-
-        if (state == 'loading') {
-            $(element).html(loading);
-        }
-
-        if (state == 'reset') {
-            $(element).html(html);
-        }
-    });
-});
-*/
 
 // Autocomplete
 +function($) {
@@ -524,4 +467,4 @@ $(document).ready(function() {
             }
         });
     }
-}(window.jQuery);
+}(jQuery);

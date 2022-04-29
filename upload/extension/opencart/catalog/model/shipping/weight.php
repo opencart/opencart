@@ -57,7 +57,7 @@ class Weight extends \Opencart\System\Engine\Model {
 		if ($quote_data) {
 			$method_data = [
 				'code'       => 'weight',
-				'title'      => $this->language->get('text_title'),
+				'title'      => $this->language->get('heading_title'),
 				'quote'      => $quote_data,
 				'sort_order' => $this->config->get('shipping_weight_sort_order'),
 				'error'      => false

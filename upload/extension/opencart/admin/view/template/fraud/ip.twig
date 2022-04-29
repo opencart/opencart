@@ -45,7 +45,7 @@
               <div class="col-sm-10">
                 <div class="input-group">
                   <input type="text" value="" id="input-ip" placeholder="{{ entry_ip }}" class="form-control"/>
-                  <button class="btn btn-primary" data-loading-text="{{ text_loading }}" id="button-ip-add" type="button">{{ button_ip_add }}</button>
+                  <button class="btn btn-primary" id="button-ip-add" type="button">{{ button_ip_add }}</button>
                 </div>
               </div>
             </div>
@@ -76,10 +76,10 @@ $('#button-ip-add').on('click', function() {
         dataType: 'json',
         data: 'ip=' + encodeURIComponent($('#input-ip').val()),
         beforeSend: function() {
-            $('#button-ip-add').button('loading');
+            $('#button-ip-add').prop('disabled', true).addClass('loading');
         },
         complete: function() {
-            $('#button-ip-add').button('reset');
+            $('#button-ip-add').prop('disabled', false).removeClass('loading');
         },
         success: function(json) {
             $('.alert-dismissible').remove();
@@ -111,10 +111,10 @@ $('#ip').on('click', 'button', function() {
         dataType: 'json',
         data: 'ip=' + encodeURIComponent($(element).val()),
         beforeSend: function() {
-            $(element).button('loading');
+            $(element).prop('disabled', true).addClass('loading');
         },
         complete: function() {
-            $(element).button('reset');
+            $(element).prop('disabled', false).removeClass('loading');
         },
         success: function(json) {
             $('.alert-dismissible').remove();

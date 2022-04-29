@@ -38,10 +38,15 @@ h6 {
 
 a {
   color: #23a1d1;
+  text-decoration: none;
 
   &:hover {
     text-decoration: none;
   }
+}
+
+.list-unstyled a {
+  text-decoration: none;
 }
 
 /* Chrome border line */
@@ -458,6 +463,10 @@ footer {
     position: relative;
     white-space: nowrap;
 
+    > a {
+      text-decoration: none;
+    }
+
     &:after {
       content: '';
       display: block;
@@ -717,6 +726,10 @@ footer {
         color: #FC0;
       }
     }
+  }
+
+  a {
+    text-decoration: none;
   }
 
   .price {

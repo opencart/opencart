@@ -69,6 +69,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise untagResourceAsync(array $args = [])
  * @method \Aws\Result updateDataCatalog(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateDataCatalogAsync(array $args = [])
+ * @method \Aws\Result updateNamedQuery(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateNamedQueryAsync(array $args = [])
  * @method \Aws\Result updatePreparedStatement(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updatePreparedStatementAsync(array $args = [])
  * @method \Aws\Result updateWorkGroup(array $args = [])

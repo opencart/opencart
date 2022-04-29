@@ -425,6 +425,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 
 			$url = '';
 
+
 			if (isset($this->request->get['extension_install_id'])) {
 				$url .= '&extension_install_id=' . $this->request->get['extension_install_id'];
 			}

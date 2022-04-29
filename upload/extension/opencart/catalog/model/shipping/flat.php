@@ -29,7 +29,7 @@ class Flat extends \Opencart\System\Engine\Model {
 
 			$method_data = [
 				'code'       => 'flat',
-				'title'      => $this->language->get('text_title'),
+				'title'      => $this->language->get('heading_title'),
 				'quote'      => $quote_data,
 				'sort_order' => $this->config->get('shipping_flat_sort_order'),
 				'error'      => false

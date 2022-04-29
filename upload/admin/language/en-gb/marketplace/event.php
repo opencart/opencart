@@ -14,9 +14,9 @@ $_['column_sort_order'] = 'Sort Order';
 $_['column_action']     = 'Action';
 
 // Entry
-$_['text_description']  = 'Description';
-$_['text_trigger']      = 'Trigger';
-$_['text_action']       = 'Action';
+$_['entry_description'] = 'Description';
+$_['entry_trigger']     = 'Trigger';
+$_['entry_action']      = 'Action';
 
 // Error
 $_['error_permission']  = 'Warning: You do not have permission to modify the events!';

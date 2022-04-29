@@ -139,7 +139,7 @@ $(document).ready(function () {
                 $(element).button('loading');
             },
             complete: function () {
-                $(element).button('reset');
+                $(element).prop('disabled', false).removeClass('loading');
             },
             success: function (json) {
                 if (json['success']) {
@@ -209,10 +209,10 @@ $(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function (e) {
         contentType: enctype,
         processData: false,
         beforeSend: function () {
-            $(element).button('loading');
+            $(button).prop('disabled', true).addClass('loading');
         },
         complete: function () {
-            $(element).button('reset');
+           $(button).prop('disabled', false).removeClass('loading');
         },
         success: function (json) {
             $('.alert-dismissible').remove();
@@ -241,7 +241,7 @@ $(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function (e) {
             }
 
             if (json['success']) {
-                $('#alert').prepend('<div class="alert alert-success"><i class="fas fa-exclamation-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                 // Refresh
                 var url = $(form).attr('data-oc-load');
@@ -274,10 +274,8 @@ $(document).on('click', 'button[data-oc-toggle=\'upload\']', function () {
 
         $('#form-upload input[name=\'file\']').trigger('click');
 
-        var size = $(element).attr('data-oc-size-max');
-
         $('#form-upload input[name=\'file\']').on('change', function (e) {
-            if (this.files[0].size > size) {
+            if ((this.files[0].size / 1024) > $(element).attr('data-oc-size-max')) {
                 alert($(element).attr('data-oc-size-error'));
 
                 $(this).val('');
@@ -301,10 +299,10 @@ $(document).on('click', 'button[data-oc-toggle=\'upload\']', function () {
                     contentType: false,
                     processData: false,
                     beforeSend: function () {
-                        $(element).button('loading');
+                        $(element).prop('disabled', true).addClass('loading');
                     },
                     complete: function () {
-                        $(element).button('reset');
+                        $(element).prop('disabled', false).removeClass('loading');
                     },
                     success: function (json) {
                         console.log(json);

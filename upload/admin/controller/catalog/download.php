@@ -227,6 +227,8 @@ class Download extends \Opencart\System\Engine\Controller {
 			$data['mask'] = '';
 		}
 
+		$data['report'] = $this->getReport();
+
 		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
@@ -329,6 +331,10 @@ class Download extends \Opencart\System\Engine\Controller {
 	public function report(): void {
 		$this->load->language('catalog/download');
 
+		$this->response->setOutput($this->getReport());
+	}
+
+	private function getReport(): string {
 		if (isset($this->request->get['download_id'])) {
 			$download_id = (int)$this->request->get['download_id'];
 		} else {
@@ -381,7 +387,7 @@ class Download extends \Opencart\System\Engine\Controller {
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($report_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($report_total - 10)) ? $report_total : ((($page - 1) * 10) + 10), $report_total, ceil($report_total / 10));
 
-		$this->response->setOutput($this->load->view('catalog/download_report', $data));
+		return $this->load->view('catalog/download_report', $data);
 	}
 
 	public function upload(): void {
@@ -416,7 +422,7 @@ class Download extends \Opencart\System\Engine\Controller {
 				}
 
 				if (!in_array(strtolower(substr(strrchr($filename, '.'), 1)), $allowed)) {
-					$json['error'] = $this->language->get('error_filetype');
+					$json['error'] = $this->language->get('error_file_type');
 				}
 
 				// Allowed file mime types
@@ -431,14 +437,14 @@ class Download extends \Opencart\System\Engine\Controller {
 				}
 
 				if (!in_array($this->request->files['file']['type'], $allowed)) {
-					$json['error'] = $this->language->get('error_filetype');
+					$json['error'] = $this->language->get('error_file_type');
 				}
 
 				// Check to see if any PHP files are trying to be uploaded
 				$content = file_get_contents($this->request->files['file']['tmp_name']);
 
 				if (preg_match('/\<\?php/i', $content)) {
-					$json['error'] = $this->language->get('error_filetype');
+					$json['error'] = $this->language->get('error_file_type');
 				}
 
 				// Return any upload error

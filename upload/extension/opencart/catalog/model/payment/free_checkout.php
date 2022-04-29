@@ -16,6 +16,8 @@ class FreeCheckout extends \Opencart\System\Engine\Model {
 
 		if ((float)$total <= 0.00) {
 			$status = true;
+		} elseif ($this->cart->hasSubscription()) {
+			$status = false;
 		} else {
 			$status = false;
 		}
@@ -25,8 +27,7 @@ class FreeCheckout extends \Opencart\System\Engine\Model {
 		if ($status) {
 			$method_data = [
 				'code'       => 'free_checkout',
-				'title'      => $this->language->get('text_title'),
-				'terms'      => '',
+				'title'      => $this->language->get('heading_title'),
 				'sort_order' => $this->config->get('payment_free_checkout_sort_order')
 			];
 		}

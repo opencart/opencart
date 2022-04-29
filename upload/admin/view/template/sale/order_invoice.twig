@@ -84,33 +84,41 @@
             </div>
           </div>
         </div>
-        <div class="col">
-          <div class="form-control-plaintext p-0 border rounded mb-3">
-            <div class="lead p-2"><strong>{{ text_shipping_method }}</strong>
-              <br/>
-              {{ order.shipping_method }}
+        {% if order.shipping_method %}
+          <div class="col">
+            <div class="form-control-plaintext p-0 border rounded mb-3">
+              <div class="lead p-2"><strong>{{ text_shipping_method }}</strong>
+                <br/>
+                {{ order.shipping_method }}
+              </div>
             </div>
           </div>
-        </div>
+        {% endif %}
       </div>
-      <div class="row row-cols-1 row-cols-sm-2">
-        <div class="col">
-          <div class="form-control-plaintext p-0 border rounded mb-3">
-            <div class="lead p-2"><strong>{{ text_payment_address }}</strong>
-              <br/>
-              {{ order.payment_address }}
+
+      <div class="row">
+        {% if order.payment_address %}
+          <div class="col">
+            <div class="form-control-plaintext p-0 border rounded mb-3">
+              <div class="lead p-2"><strong>{{ text_payment_address }}</strong>
+                <br/>
+                {{ order.payment_address }}
+              </div>
             </div>
           </div>
-        </div>
-        <div class="col">
-          <div class="form-control-plaintext p-0 border rounded mb-3">
-            <div class="lead p-2"><strong>{{ text_shipping_address }}</strong>
-              <br/>
-              {{ order.shipping_address }}
+        {% endif %}
+        {% if order.shipping_address %}
+          <div class="col">
+            <div class="form-control-plaintext p-0 border rounded mb-3">
+              <div class="lead p-2"><strong>{{ text_shipping_address }}</strong>
+                <br/>
+                {{ order.shipping_address }}
+              </div>
             </div>
           </div>
-        </div>
+        {% endif %}
       </div>
+
       <table class="table table-bordered">
         <thead>
           <tr>
@@ -127,9 +135,20 @@
               <td>{{ product.name }}
                 {% for option in product.option %}
                   <br/>
-                  &nbsp;
                   <small> - {{ option.name }}: {{ option.value }}</small>
-                {% endfor %}</td>
+                {% endfor %}
+
+                {% if product.reward %}
+                  <br/>
+                  <small> - {{ text_points }} {{ product.reward }}</small>
+                {% endif %}
+
+                {% if product.subscription %}
+                  <br/>
+                  <small> - {{ text_subscription }} {{ product.subscription }} </small>
+                {% endif %}
+
+              </td>
               <td>{{ product.model }}</td>
               <td class="text-end">{{ product.quantity }}</td>
               <td class="text-end">{{ product.price }}</td>
@@ -154,11 +173,13 @@
         </tbody>
       </table>
       {% if order.comment %}
-        <div class="col">
-          <div class="form-control-plaintext p-0 border rounded mb-3">
-            <div class="lead p-2"><strong>{{ text_comment }}</strong>
-              <br/>
-              {{ order.comment }}
+        <div class="row">
+          <div class="col">
+            <div class="form-control-plaintext p-0 border rounded mb-3">
+              <div class="lead p-2"><strong>{{ text_comment }}</strong>
+                <br/>
+                {{ order.comment }}
+              </div>
             </div>
           </div>
         </div>

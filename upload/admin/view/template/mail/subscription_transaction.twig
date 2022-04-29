@@ -1,0 +1,35 @@
+<div class="table-responsive">
+  <table class="table table-bordered table-hover">
+    <thead>
+      <tr>
+        <td class="text-start">{{ column_date_added }}</td>
+        <td class="text-start">{{ column_description }}</td>
+        <td class="text-end">{{ column_amount }}</td>
+      </tr>
+    </thead>
+    <tbody>
+      {% if transactions %}
+        {% for transaction in transactions %}
+          <tr>
+            <td class="text-start">{{ transaction.date_added }}</td>
+            <td class="text-start">{{ transaction.description }}</td>
+            <td class="text-end">{{ transaction.amount }}</td>
+          </tr>
+        {% endfor %}
+        <tr>
+          <td>&nbsp;</td>
+          <td class="text-end"><b>{{ text_balance }}</b></td>
+          <td class="text-end">{{ balance }}</td>
+        </tr>
+      {% else %}
+        <tr>
+          <td class="text-center" colspan="3">{{ text_no_results }}</td>
+        </tr>
+      {% endif %}
+    </tbody>
+  </table>
+</div>
+<div class="row">
+  <div class="col-sm-6 text-start">{{ pagination }}</div>
+  <div class="col-sm-6 text-end">{{ results }}</div>
+</div>

@@ -31,8 +31,12 @@ h6 {
 }
 a {
   color: #23a1d1;
+  text-decoration: none;
 }
 a:hover {
+  text-decoration: none;
+}
+.list-unstyled a {
   text-decoration: none;
 }
 /* Chrome border line */
@@ -341,6 +345,9 @@ footer h5 {
   position: relative;
   white-space: nowrap;
 }
+.breadcrumb > li.breadcrumb-item > a {
+  text-decoration: none;
+}
 .breadcrumb > li.breadcrumb-item:after {
   content: "";
   display: block;
@@ -512,6 +519,9 @@ footer h5 {
 }
 .product-thumb .rating .far.fa-star {
   color: #FC0;
+}
+.product-thumb a {
+  text-decoration: none;
 }
 .product-thumb .price {
   color: #444;

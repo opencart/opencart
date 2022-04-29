@@ -39,6 +39,10 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 
 		$data['list'] = $this->getList();
 
+		$data['customer_token'] = $this->session->data['customer_token'];
+
+		$data['language'] = $this->config->get('config_language');
+
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
 		$data['content_top'] = $this->load->controller('common/content_top');
@@ -70,9 +74,12 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			$data['payment_methods'][] = [
-				'payment_method_id' => $result['payment_method_id'],
-				'name'              => $result['name'],
-				'delete'            => $this->url->link('account/payment_method|delete', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&payment_method_id=' . $result['payment_method_id'])
+				'customer_payment_id' => $result['customer_payment_id'],
+				'name'                => $result['name'],
+				'image'               => $result['image'],
+				'type'                => $result['type'],
+				'date_expire'         => date('m-Y', strtotime($result['date_expire'])),
+				'delete'              => $this->url->link('account/payment_method|delete', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&customer_payment_id=' . $result['customer_payment_id'])
 			];
 		}
 
@@ -84,10 +91,10 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		if (isset($this->request->get['payment_method_id'])) {
-			$payment_method_id = $this->request->get['payment_method_id'];
+		if (isset($this->request->get['customer_payment_id'])) {
+			$customer_payment_id = $this->request->get['customer_payment_id'];
 		} else {
-			$payment_method_id = 0;
+			$customer_payment_id = 0;
 		}
 
 		if (!$this->customer->isLogged() || (!isset($this->request->get['customer_token']) || !isset($this->session->data['customer_token']) || ($this->request->get['customer_token'] != $this->session->data['customer_token']))) {
@@ -99,7 +106,7 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('account/payment_method');
 
-			$payment_method_info = $this->model_account_payment_method->getPaymentMethod($payment_method_id);
+			$payment_method_info = $this->model_account_payment_method->getPaymentMethod($this->customer->getId(), $customer_payment_id);
 
 			if (!$payment_method_info) {
 				$json['error'] = $this->language->get('error_payment_method');
@@ -109,13 +116,15 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('extension/' . $payment_method_info['extension'] . '/payment/' . $payment_method_info['code']);
 
-			if ($this->{'model_extension_' . $payment_method_info['extension'] . '_payment_' . $payment_method_info['code']}->delete($payment_method_id)) {
-				// Delete address from database.
-				$this->model_account_payment_method->deletePaymentMethod($payment_method_id);
+			if ($this->{'model_extension_' . $payment_method_info['extension'] . '_payment_' . $payment_method_info['code']}->delete($customer_payment_id)) {
 
-				// Delete address from session.
-				$json['success'] = $this->language->get('text_success');
 			}
+
+			// Delete address from database.
+			$this->model_account_payment_method->deletePaymentMethod($customer_payment_id);
+
+			// Delete address from session.
+			$json['success'] = $this->language->get('text_success');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

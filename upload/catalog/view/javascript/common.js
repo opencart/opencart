@@ -192,14 +192,6 @@ $(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function (e) {
         }
     }
 
-    console.log(e);
-    console.log('element ' + element);
-    console.log('action ' + action);
-    console.log('button ' + button);
-    console.log('formaction ' + formaction);
-    console.log('method ' + method);
-    console.log('enctype ' + enctype);
-
     $.ajax({
         url: action,
         type: method,
@@ -218,8 +210,6 @@ $(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function (e) {
             $('.alert-dismissible').remove();
             $(form).find('.is-invalid').removeClass('is-invalid');
             $(form).find('.invalid-feedback').removeClass('d-block');
-
-            console.log(json);
 
             if (json['redirect']) {
                 location = json['redirect'];
@@ -305,8 +295,6 @@ $(document).on('click', 'button[data-oc-toggle=\'upload\']', function () {
                         $(element).prop('disabled', false).removeClass('loading');
                     },
                     success: function (json) {
-                        console.log(json);
-
                         if (json['error']) {
                             alert(json['error']);
                         }
@@ -406,8 +394,6 @@ var chain = new Chain();
                 var category = {};
                 var name;
                 var i = 0, j = 0;
-
-                console.log(json);
 
                 if (json.length) {
                     for (i = 0; i < json.length; i++) {

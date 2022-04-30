@@ -41,8 +41,6 @@ $('#button-payment-method').on('click', function () {
                 $('#input-payment-method').prop('disabled', true);
             },
             success: function (json) {
-                console.log(json);
-
                 if (json['redirect']) {
                     location = json['redirect'];
                 }

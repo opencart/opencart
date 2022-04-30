@@ -1211,7 +1211,7 @@ class ControllerExtensionPaymentPPExpress extends Controller {
 						$result = $this->model_extension_payment_pp_express->call($data);
 
 						if (isset($result['PROFILEID'])) {
-							$this->model_checkout_recurring->addReference($recurring_id, $result['PROFILEID']);
+							$this->model_checkout_recurring->editReference($recurring_id, $result['PROFILEID']);
 						} else {
 							// there was an error creating the recurring, need to log and also alert admin / user
 

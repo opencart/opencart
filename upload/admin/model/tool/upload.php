@@ -34,8 +34,8 @@ class Upload extends \Opencart\System\Engine\Model {
 			$implode[] = "`name` LIKE '" . $this->db->escape((string)$data['filter_name']) . "%'";
 		}
 
-		if (!empty($data['filter_filename'])) {
-			$implode[] = "`filename` LIKE '" . $this->db->escape((string)$data['filter_filename']) . "%'";
+		if (!empty($data['filter_code'])) {
+			$implode[] = "`code` LIKE '" . $this->db->escape((string)$data['filter_code']) . "%'";
 		}
 
 		if (!empty($data['filter_date_added'])) {
@@ -48,7 +48,7 @@ class Upload extends \Opencart\System\Engine\Model {
 
 		$sort_data = [
 			'name',
-			'filename',
+			'code',
 			'date_added'
 		];
 
@@ -90,8 +90,8 @@ class Upload extends \Opencart\System\Engine\Model {
 			$implode[] = "`name` LIKE '" . $this->db->escape((string)$data['filter_name']) . "%'";
 		}
 
-		if (!empty($data['filter_filename'])) {
-			$implode[] = "`filename` LIKE '" . $this->db->escape((string)$data['filter_filename']) . "%'";
+		if (!empty($data['filter_code'])) {
+			$implode[] = "`code` LIKE '" . $this->db->escape((string)$data['filter_code']) . "%'";
 		}
 
 		if (!empty($data['filter_date_added'])) {

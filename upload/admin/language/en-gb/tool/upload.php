@@ -9,7 +9,7 @@ $_['text_filter']        = 'Filter';
 
 // Column
 $_['column_name']        = 'Upload Name';
-$_['column_filename']    = 'Filename';
+$_['column_code']        = 'Code';
 $_['column_date_added']  = 'Date Added';
 $_['column_action']      = 'Action';
 

@@ -2030,8 +2030,6 @@ $('input[data-oc-toggle=\'switch\']').on('change', function (e) {
 
     var target = $(this).attr('data-oc-target');
 
-    console.log(target);
-
     // First we need to grab the default values
     // Now we need to enable or disable any fields in the targets
     $.merge($(target), $(target).find('input, textarea, select, button')).not('[data-oc-toggle=\'switch\']').each(function (i, elem) {

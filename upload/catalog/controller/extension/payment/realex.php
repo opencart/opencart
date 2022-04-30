@@ -62,7 +62,7 @@ class ControllerExtensionPaymentRealex extends Controller {
 		$data['tss'] = (int)$this->config->get('payment_realex_tss_check');
 		$data['merchant_id'] = $this->config->get('payment_realex_merchant_id');
 
-		$data['timestamp'] = strftime("%Y%m%d%H%M%S");
+		$data['timestamp'] = date("YmdHis");
 		$data['order_id'] = $this->session->data['order_id'] . 'T' . $data['timestamp'] . mt_rand(1, 999);
 
 		$data['amount'] = round($this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false) * 100);

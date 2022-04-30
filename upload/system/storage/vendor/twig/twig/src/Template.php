@@ -29,9 +29,9 @@ use Twig\Error\RuntimeError;
  */
 abstract class Template
 {
-    const ANY_CALL = 'any';
-    const ARRAY_CALL = 'array';
-    const METHOD_CALL = 'method';
+    public const ANY_CALL = 'any';
+    public const ARRAY_CALL = 'array';
+    public const METHOD_CALL = 'method';
 
     protected $parent;
     protected $parents = [];
@@ -45,14 +45,6 @@ abstract class Template
     {
         $this->env = $env;
         $this->extensions = $env->getExtensions();
-    }
-
-    /**
-     * @internal this method will be removed in 3.0 and is only used internally to provide an upgrade path from 1.x to 2.0
-     */
-    public function __toString()
-    {
-        return $this->getTemplateName();
     }
 
     /**
@@ -74,10 +66,7 @@ abstract class Template
      *
      * @return Source
      */
-    public function getSourceContext()
-    {
-        return new Source('', $this->getTemplateName());
-    }
+    abstract public function getSourceContext();
 
     /**
      * Returns the parent template.
@@ -326,11 +315,11 @@ abstract class Template
                 if (false !== $pos = strrpos($class, '___', -1)) {
                     $class = substr($class, 0, $pos);
                 }
-
-                return $this->env->loadClass($class, $template, $index);
+            } else {
+                $class = $this->env->getTemplateClass($template);
             }
 
-            return $this->env->loadTemplate($template, $index);
+            return $this->env->loadTemplate($class, $template, $index);
         } catch (Error $e) {
             if (!$e->getSourceContext()) {
                 $e->setSourceContext($templateName ? new Source('', $templateName) : $this->getSourceContext());
@@ -355,7 +344,7 @@ abstract class Template
      *
      * @return Template
      */
-    protected function unwrap()
+    public function unwrap()
     {
         return $this;
     }
@@ -431,5 +420,3 @@ abstract class Template
      */
     abstract protected function doDisplay(array $context, array $blocks = []);
 }
-
-class_alias('Twig\Template', 'Twig_Template');

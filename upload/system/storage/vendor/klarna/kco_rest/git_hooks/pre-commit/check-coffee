@@ -1,0 +1,59 @@
+#!/bin/bash
+
+coffeelint_alt="node_modules/.bin/coffeelint coffeelint"
+
+for c in 'coffeelint.json' "`dirname $0`/../coffeelint"; do
+    if [ -e "$c" ]; then
+        config="$c"
+    fi
+done
+
+function run_coffeelint {
+    if [ -n "$config" ]; then
+        $coffeelint -f "${config}" ${@}
+    else
+        $coffeelint ${@}
+    fi
+}
+
+function changed_files {
+    git diff --cached --name-only --diff-filter=ACM
+}
+
+function write_staged {
+    while read file; do
+        name=`echo "$file" | sed 's:/:-:g'`
+        tmpfile=`mktemp /tmp/XXXXX-${name}`
+        git show ":$file" > $tmpfile
+        echo "$tmpfile"
+    done
+}
+
+case "${1}" in
+    --about )
+        if [ -z "$config" ]; then
+            config='default config'
+        fi
+        echo "Perform static analysis of coffee-script files (${config})"
+        ;;
+    * )
+        coffeelint=`which $jshint_alt 2>/dev/null | head -n 1`
+
+        # call out to tools
+        files=`changed_files | grep -e '\.coffee$' | write_staged`
+
+        if [ -z "$files" ]; then
+            exit 0
+        fi
+
+        if test -z "$coffeelint"; then
+            echo "Please install coffeelint: npm install -g coffeelint"
+            exit 0
+        fi
+
+        run_coffeelint $files
+        status=$?
+        rm $files
+        exit $status
+        ;;
+esac

@@ -9,7 +9,7 @@ class ModelExtensionDashboardSale extends Model {
 
 		$query = $this->db->query($sql);
 
-		return $query->row['total'];
+		return isset($query->row['total']) ? $query->row['total'] : 0.00;
 	}
 
 	public function getTotalOrdersByCountry() {

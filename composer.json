@@ -15,7 +15,7 @@
       "klarna/kco_rest": "^2.2",
       "php": ">=5.4.0",
       "scssphp/scssphp": "1.1.1",
-      "twig/twig": "^2.4.8",
-      "zoujingli/wechat-php-sdk": ">=1.3.10"
+      "zoujingli/wechat-php-sdk": ">=1.3.10",
+		"twig/twig": "^3.0"
     }
 }

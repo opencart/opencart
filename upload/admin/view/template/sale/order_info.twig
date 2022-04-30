@@ -1313,7 +1313,6 @@ $('#form-customer').on('submit', function (e) {
             $('#button-customer').prop('disabled', false).removeClass('loading');
         },
         success: function (json) {
-            console.log(json);
             $('.alert-dismissible').remove();
             $('.is-invalid').removeClass('is-invalid');
             $('.invalid-feedback').removeClass('d-block');

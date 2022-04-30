@@ -546,8 +546,6 @@ function setupPayPal() {
 					event.preventDefault();
 					
 					if ($('#paypal_button_submit').hasClass('show-button')) {
-						console.log('CCF Event "click", state=' + hostedFieldsInstance.getState() + ',event=' + event);
-
 						showPayPalAlert({wait: true});
 					
 						hostedFieldsInstance.submit({

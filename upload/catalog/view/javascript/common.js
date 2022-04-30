@@ -36,43 +36,6 @@ $(document).ready(tooltip);
 // Makes tooltips work on ajax generated content
 $(document).on('click', 'button', tooltip);
 
-// Daterangepicker
-var datetimepicker = function () {
-    $('.date').daterangepicker({
-        singleDatePicker: true,
-        autoApply: true,
-        locale: {
-            format: 'YYYY-MM-DD'
-        }
-    });
-
-    $('.time').daterangepicker({
-        singleDatePicker: true,
-        datePicker: false,
-        autoApply: true,
-        timePicker: true,
-        timePicker24Hour: true,
-        locale: {
-            format: 'HH:mm'
-        }
-    }).on('show.daterangepicker', function (ev, picker) {
-        picker.container.find('.calendar-table').hide();
-    });
-
-    $('.datetime').daterangepicker({
-        singleDatePicker: true,
-        autoApply: true,
-        timePicker: true,
-        timePicker24Hour: true,
-        locale: {
-            format: 'YYYY-MM-DD HH:mm'
-        }
-    });
-}
-
-$(document).ready(datetimepicker);
-$(document).on('click', 'button', datetimepicker);
-
 $(document).ready(function () {
     // Currency
     $('#form-currency .dropdown-item').on('click', function (e) {
@@ -176,7 +139,7 @@ $(document).ready(function () {
                 $(element).button('loading');
             },
             complete: function () {
-                $(element).button('reset');
+                $(element).prop('disabled', false).removeClass('loading');
             },
             success: function (json) {
                 if (json['success']) {
@@ -246,12 +209,13 @@ $(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function (e) {
         contentType: enctype,
         processData: false,
         beforeSend: function () {
-            $(element).button('loading');
+            $(button).prop('disabled', true).addClass('loading');
         },
         complete: function () {
-            $(element).button('reset');
+           $(button).prop('disabled', false).removeClass('loading');
         },
         success: function (json) {
+            $('.alert-dismissible').remove();
             $(form).find('.is-invalid').removeClass('is-invalid');
             $(form).find('.invalid-feedback').removeClass('d-block');
 
@@ -277,7 +241,7 @@ $(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function (e) {
             }
 
             if (json['success']) {
-                $('#alert').prepend('<div class="alert alert-success"><i class="fas fa-exclamation-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                 // Refresh
                 var url = $(form).attr('data-oc-load');
@@ -310,10 +274,8 @@ $(document).on('click', 'button[data-oc-toggle=\'upload\']', function () {
 
         $('#form-upload input[name=\'file\']').trigger('click');
 
-        var size = $(element).attr('data-oc-size-max');
-
         $('#form-upload input[name=\'file\']').on('change', function (e) {
-            if (this.files[0].size > size) {
+            if ((this.files[0].size / 1024) > $(element).attr('data-oc-size-max')) {
                 alert($(element).attr('data-oc-size-error'));
 
                 $(this).val('');
@@ -337,10 +299,10 @@ $(document).on('click', 'button[data-oc-toggle=\'upload\']', function () {
                     contentType: false,
                     processData: false,
                     beforeSend: function () {
-                        $(element).button('loading');
+                        $(element).prop('disabled', true).addClass('loading');
                     },
                     complete: function () {
-                        $(element).button('reset');
+                        $(element).prop('disabled', false).removeClass('loading');
                     },
                     success: function (json) {
                         console.log(json);
@@ -389,7 +351,7 @@ class Chain {
 
             var jqxhr = call();
 
-            jqxhr.done(function() {
+            jqxhr.done(function () {
                 chain.execute();
             });
         } else {
@@ -468,10 +430,8 @@ var chain = new Chain();
                     }
 
                     for (name in category) {
-                        //html += '<li><h6 class="dropdown-header">' + name + '</h6></li>';
-
                         for (j = 0; j < category[name].length; j++) {
-                            html += '<option>' + category[name][j]['label'] + '</option>';
+                            html += '<option value="' + category[name][j]['label'] + '">' + name + '</option>';
                         }
                     }
                 }

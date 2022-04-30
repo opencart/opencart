@@ -28,7 +28,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$customer_info = $this->model_account_customer->getCustomer($this->request->post['customer_id']);
 
 			if (!$customer_info) {
-				$json['error'] = $this->language->get('error_customer');
+				$json['error']['warning'] = $this->language->get('error_customer');
 			}
 		}
 

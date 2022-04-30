@@ -225,8 +225,6 @@ $('#input-payment-address').on('change', function() {
                 $(element).prop('disabled', false);
             },
             success: function(json) {
-                console.log(json);
-
                 if (json['redirect']) {
                     location = json['redirect'];
                 }
@@ -268,8 +266,6 @@ $('#form-payment-address').on('submit', function(e) {
             success: function(json) {
                 $('#form-payment-address').find('.is-invalid').removeClass('is-invalid');
                 $('#form-payment-address').find('.invalid-feedback').removeClass('d-block');
-
-                console.log(json);
 
                 if (json['redirect']) {
                     location = json['redirect'];

@@ -131,7 +131,7 @@ class ControllerExtensionCreditCardSagepayServer extends Controller {
 		$payment_data['ReferrerID'] = 'E511AF91-E4A0-42DE-80B0-09C981A3FB61';
 		$payment_data['TxType'] = 'TOKEN';
 		$payment_data['Vendor'] = $this->config->get('payment_sagepay_server_vendor');
-		$payment_data['VendorTxCode'] = 'server_card_' . strftime("%Y%m%d%H%M%S") . mt_rand(1, 999);
+		$payment_data['VendorTxCode'] = 'server_card_' . date("YmdHis") . mt_rand(1, 999);
 		$payment_data['NotificationURL'] = $this->url->link('extension/credit_card/sagepay_server/callback', '', true);
 		$payment_data['Currency'] = $this->session->data['currency'];
 

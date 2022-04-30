@@ -30,7 +30,7 @@ function isIE() {
 // Header
 $(document).ready(function() {
     // Header
-    $('#header-notification [data-bs-toggle=\'modal\']').on('click', function(e) {
+    $('#header-notification [data-bs-toggle=\'modal\']').on('click', function (e) {
         e.preventDefault();
 
         var element = this;
@@ -40,7 +40,7 @@ $(document).ready(function() {
         $.ajax({
             url: $(element).attr('href'),
             dataType: 'html',
-            success: function(html) {
+            success: function (html) {
                 $('body').append(html);
 
                 $('#modal-notification').modal('show');
@@ -50,15 +50,15 @@ $(document).ready(function() {
 });
 
 // Menu
-$(document).ready(function() {
-    $('#button-menu').on('click', function(e) {
+$(document).ready(function () {
+    $('#button-menu').on('click', function (e) {
         e.preventDefault();
 
         $('#column-left').toggleClass('active');
     });
 
     // Set last page opened on the menu
-    $('#menu a[href]').on('click', function() {
+    $('#menu a[href]').on('click', function () {
         sessionStorage.setItem('menu', $(this).attr('href'));
     });
 
@@ -70,9 +70,7 @@ $(document).ready(function() {
     }
 
     $('#menu a[href=\'' + sessionStorage.getItem('menu') + '\']').parents('li').children('a').removeClass('collapsed');
-
     $('#menu a[href=\'' + sessionStorage.getItem('menu') + '\']').parents('ul').addClass('show');
-
     $('#menu a[href=\'' + sessionStorage.getItem('menu') + '\']').parents('li').addClass('active');
 });
 
@@ -81,7 +79,7 @@ var tooltip = function () {
     $('.tooltip').remove();
 
     // Apply to all on current page
-    $('[data-bs-toggle=\'tooltip\']').each(function(i, element) {
+    $('[data-bs-toggle=\'tooltip\']').each(function (i, element) {
         bootstrap.Tooltip.getOrCreateInstance(element);
     });
 }
@@ -127,7 +125,7 @@ $(document).ready(datetimepicker);
 $(document).on('click', 'button', datetimepicker);
 
 // Forms
-$(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function(e) {
+$(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function (e) {
     e.preventDefault();
 
     var element = this;
@@ -177,13 +175,13 @@ $(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function(e) {
         data: $(form).serialize(),
         dataType: 'json',
         contentType: 'application/x-www-form-urlencoded',
-        beforeSend: function() {
+        beforeSend: function () {
             $(button).prop('disabled', true).addClass('loading');
         },
-        complete: function() {
+        complete: function () {
            $(button).prop('disabled', false).removeClass('loading');
         },
-        success: function(json) {
+        success: function (json) {
             $('.alert-dismissible').remove();
             $(element).find('.is-invalid').removeClass('is-invalid');
             $(element).find('.invalid-feedback').removeClass('d-block');
@@ -233,7 +231,7 @@ $(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function(e) {
 });
 
 // Upload
-$(document).on('click', '[data-oc-toggle=\'upload\']', function() {
+$(document).on('click', '[data-oc-toggle=\'upload\']', function () {
     var element = this;
 
     if (!$(element).prop('disabled')) {
@@ -243,7 +241,7 @@ $(document).on('click', '[data-oc-toggle=\'upload\']', function() {
 
         $('#form-upload input[name=\'file\']').trigger('click');
 
-        $('#form-upload input[name=\'file\']').on('change', function(e) {
+        $('#form-upload input[name=\'file\']').on('change', function (e) {
             if ((this.files[0].size / 1024) > $(element).attr('data-oc-size-max')) {
                 alert($(element).attr('data-oc-size-error'));
 
@@ -255,7 +253,7 @@ $(document).on('click', '[data-oc-toggle=\'upload\']', function() {
             clearInterval(timer);
         }
 
-       var timer = setInterval(function() {
+       var timer = setInterval(function () {
             if ($('#form-upload input[name=\'file\']').val() != '') {
                clearInterval(timer);
 
@@ -298,13 +296,13 @@ $(document).on('click', '[data-oc-toggle=\'upload\']', function() {
 });
 
 /*
-$(document).on('change', 'button[data-oc-toggle=\'download\']', function() {
+$(document).on('change', 'button[data-oc-toggle=\'download\']', function () {
     location = $(this).attr('data-oc-url') + '&code=' + this.value;
 });
 //$($(element).attr('data-oc-target'))
 */
 
-var download = function() {
+var download = function () {
     var element = this;
 }
 
@@ -318,7 +316,7 @@ $(document).on('click', 'button[data-oc-toggle=\'download\']', function (e) {
     }
 });
 
-$(document).on('click', '[data-oc-toggle=\'clear\']', function() {
+$(document).on('click', '[data-oc-toggle=\'clear\']', function () {
     var element = $(this);
 
     element
@@ -331,7 +329,7 @@ $(document).on('click', '[data-oc-toggle=\'clear\']', function() {
 });
 
 // Image Manager
-$(document).on('click', '[data-oc-toggle=\'image\']', function(e) {
+$(document).on('click', '[data-oc-toggle=\'image\']', function (e) {
     e.preventDefault();
 
     var element = this;
@@ -339,10 +337,10 @@ $(document).on('click', '[data-oc-toggle=\'image\']', function(e) {
     $.ajax({
         url: 'index.php?route=common/filemanager&user_token=' + getURLVar('user_token') + '&target=' + encodeURIComponent($(this).attr('data-oc-target')) + '&thumb=' + encodeURIComponent($(this).attr('data-oc-thumb')),
         dataType: 'html',
-        beforeSend: function() {
+        beforeSend: function () {
             $(element).button('loading');
         },
-        complete: function() {
+        complete: function () {
             $(element).prop('disabled', false).removeClass('loading');
         },
         success: function(html) {
@@ -382,7 +380,7 @@ class Chain {
 
             var jqxhr = call();
 
-            jqxhr.done(function() {
+            jqxhr.done(function () {
                 chain.execute();
             });
         } else {
@@ -395,8 +393,8 @@ var chain = new Chain();
 
 // Autocomplete
 +function($) {
-    $.fn.autocomplete = function(option) {
-        return this.each(function() {
+    $.fn.autocomplete = function (option) {
+        return this.each(function () {
             var $this = $(this);
             var $dropdown = $('#' + $this.attr('list'));
 
@@ -406,12 +404,12 @@ var chain = new Chain();
             $.extend(this, option);
 
             // Focus
-            $this.on('focus', function() {
+            $this.on('focus', function () {
                 this.request();
             });
 
             // Keydown
-            $this.on('input', function(e) {
+            $this.on('input', function (e) {
                 this.request();
 
                 var value = $this.val();
@@ -425,13 +423,13 @@ var chain = new Chain();
             this.request = function() {
                 clearTimeout(this.timer);
 
-                this.timer = setTimeout(function(object) {
+                this.timer = setTimeout(function (object) {
                     object.source($(object).val(), $.proxy(object.response, object));
                 }, 50, this);
             }
 
             // Response
-            this.response = function(json) {
+            this.response = function (json) {
                 var html = '';
                 var category = {};
                 var name;

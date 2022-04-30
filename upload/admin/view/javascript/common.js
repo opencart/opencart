@@ -28,7 +28,7 @@ function isIE() {
 }
 
 // Header
-$(document).ready(function() {
+$(document).ready(function () {
     // Header
     $('#header-notification [data-bs-toggle=\'modal\']').on('click', function (e) {
         e.preventDefault();
@@ -224,7 +224,7 @@ $(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function (e) {
                 $(element).find('[name=\'' + key + '\']').val(json[key]);
             }
         },
-        error: function(xhr, ajaxOptions, thrownError) {
+        error: function (xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
@@ -265,13 +265,13 @@ $(document).on('click', '[data-oc-toggle=\'upload\']', function () {
                     cache: false,
                     contentType: false,
                     processData: false,
-                    beforeSend: function() {
+                    beforeSend: function () {
                         $(element).button('loading');
                     },
-                    complete: function() {
+                    complete: function () {
                         $(element).prop('disabled', false).removeClass('loading');
                     },
-                    success: function(json) {
+                    success: function (json) {
                         console.log(json);
 
                         if (json['error']) {
@@ -286,7 +286,7 @@ $(document).on('click', '[data-oc-toggle=\'upload\']', function () {
                             $($(element).attr('data-oc-target')).attr('value', json['code']);
                         }
                     },
-                    error: function(xhr, ajaxOptions, thrownError) {
+                    error: function (xhr, ajaxOptions, thrownError) {
                         console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
                     }
                 });
@@ -343,7 +343,7 @@ $(document).on('click', '[data-oc-toggle=\'image\']', function (e) {
         complete: function () {
             $(element).prop('disabled', false).removeClass('loading');
         },
-        success: function(html) {
+        success: function (html) {
             console.log(html);
 
             $('body').append(html);
@@ -392,7 +392,7 @@ class Chain {
 var chain = new Chain();
 
 // Autocomplete
-+function($) {
++function ($) {
     $.fn.autocomplete = function (option) {
         return this.each(function () {
             var $this = $(this);
@@ -420,7 +420,7 @@ var chain = new Chain();
             });
 
             // Request
-            this.request = function() {
+            this.request = function () {
                 clearTimeout(this.timer);
 
                 this.timer = setTimeout(function (object) {

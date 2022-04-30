@@ -105,8 +105,6 @@ $('#button-install').on('click', function () {
             $(element).prop('disabled', false).removeClass('loading');
         },
         success: function (json) {
-            console.log(json);
-
             $('.alert-dismissible').remove();
 
             if (json['error']) {
@@ -187,8 +185,6 @@ $('#button-admin').on('click', function () {
             $(element).prop('disabled', false).removeClass('loading');
         },
         success: function (json) {
-            console.log(json);
-
             $('.alert-dismissible').remove();
 
             if (json['redirect']) {

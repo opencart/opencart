@@ -605,8 +605,6 @@ $('select[name$=\'_country_id\']').on('change', function () {
     var element = this;
     var type = $(this).attr('name').slice(0, -11);
 
-    console.log(type);
-
     chain.attach(function () {
         return $.ajax({
             url: 'index.php?route=localisation/country&language={{ language }}&country_id=' + $('#input-' + type + '-country').val(),

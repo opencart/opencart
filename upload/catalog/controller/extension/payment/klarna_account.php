@@ -1,6 +1,8 @@
 <?php
 class ControllerExtensionPaymentKlarnaAccount extends Controller {
 	public function index() {
+		$this->load->language('extension/payment/klarna_account');
+		
 		$this->load->model('checkout/order');
 
 		if(!isset($this->session->data['order_id'])) {
@@ -10,8 +12,6 @@ class ControllerExtensionPaymentKlarnaAccount extends Controller {
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
 		if ($order_info) {
-			$this->load->language('extension/payment/klarna_account');
-
 			$data['days'] = array();
 
 			for ($i = 1; $i <= 31; $i++) {
@@ -510,7 +510,7 @@ class ControllerExtensionPaymentKlarnaAccount extends Controller {
 				$response = curl_exec($curl);
 
 				if (curl_errno($curl)) {
-					$log = new Log('klarna_account.log');
+					$log = new \Log('klarna_account.log');
 					$log->write('HTTP Error for order #' . $order_info['order_id'] . '. Code: ' . curl_errno($curl) . ' message: ' . curl_error($curl));
 
 					$json['error'] = $this->language->get('error_network');
@@ -520,12 +520,12 @@ class ControllerExtensionPaymentKlarnaAccount extends Controller {
 					if (isset($match[1])) {
 						preg_match('/<member><name>faultCode<\/name><value><int>([0-9]+)<\/int><\/value><\/member>/', $response, $match2);
 
-						$log = new Log('klarna_account.log');
+						$log = new \Log('klarna_account.log');
 						$log->write('Failed to create an invoice for order #' . $order_info['order_id'] . '. Message: ' . utf8_encode($match[1]) . ' Code: ' . $match2[1]);
 
 						$json['error'] = utf8_encode($match[1]);
 					} else {
-						$xml = new DOMDocument();
+						$xml = new \DOMDocument();
 						$xml->loadXML($response);
 
 						$invoice_number = $xml->getElementsByTagName('string')->item(0)->nodeValue;
@@ -627,7 +627,7 @@ class ControllerExtensionPaymentKlarnaAccount extends Controller {
 				break;
 
 			default:
-				$log = new Log('klarna.log');
+				$log = new \Log('klarna.log');
 				$log->write('Unknown country ' . $country);
 
 				$amount = null;

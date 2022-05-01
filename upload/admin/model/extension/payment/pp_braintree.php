@@ -5,7 +5,7 @@ class ModelExtensionPaymentPPBraintree extends Model {
 			if ($gateway != null) {
 				$client_token = $gateway->clientToken()->generate($data);
 			} else {
-				$client_token = Braintree_ClientToken::generate($data);
+				$client_token = \Braintree_ClientToken::generate($data);
 			}
 
 			return $client_token;
@@ -21,7 +21,7 @@ class ModelExtensionPaymentPPBraintree extends Model {
 			if ($gateway != null) {
 				$transaction = $gateway->transaction()->find($transaction_id);
 			} else {
-				$transaction = Braintree_Transaction::find($transaction_id);
+				$transaction = \Braintree_Transaction::find($transaction_id);
 			}
 
 			if ($transaction) {
@@ -41,7 +41,7 @@ class ModelExtensionPaymentPPBraintree extends Model {
 			if ($gateway != null) {
 				$transactions = $gateway->transaction()->search($data);
 			} else {
-				$transactions = Braintree_Transaction::search($data);
+				$transactions = \Braintree_Transaction::search($data);
 			}
 
 			if ($transactions) {
@@ -61,7 +61,7 @@ class ModelExtensionPaymentPPBraintree extends Model {
 			if ($gateway != null) {
 				$transaction = $gateway->transaction()->void($transaction_id);
 			} else {
-				$transaction = Braintree_Transaction::void($transaction_id);
+				$transaction = \Braintree_Transaction::void($transaction_id);
 			}
 
 			if ($transaction) {
@@ -81,7 +81,7 @@ class ModelExtensionPaymentPPBraintree extends Model {
 			if ($gateway != null) {
 				$transaction = $gateway->transaction()->submitForSettlement($transaction_id, $amount);
 			} else {
-				$transaction = Braintree_Transaction::submitForSettlement($transaction_id, $amount);
+				$transaction = \Braintree_Transaction::submitForSettlement($transaction_id, $amount);
 			}
 
 			if ($transaction) {
@@ -101,7 +101,7 @@ class ModelExtensionPaymentPPBraintree extends Model {
 			if ($gateway != null) {
 				$transaction = $gateway->transaction()->refund($transaction_id, $amount);
 			} else {
-				$transaction = Braintree_Transaction::refund($transaction_id, $amount);
+				$transaction = \Braintree_Transaction::refund($transaction_id, $amount);
 			}
 
 			if ($transaction) {
@@ -122,7 +122,7 @@ class ModelExtensionPaymentPPBraintree extends Model {
 			if ($gateway != null) {
 				$client_token = $gateway->clientToken()->generate();
 			} else {
-				$client_token = Braintree_ClientToken::generate();
+				$client_token = \Braintree_ClientToken::generate();
 			}
 
 			return $client_token;

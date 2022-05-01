@@ -96,7 +96,7 @@ class ModelUpgrade1006 extends Model {
         $files = array();
 
         foreach ($directories as $dir) {
-			if (is_dir($dir)){
+			if (is_dir($dir)) {
 				// Make path into an array
 				$path = array($dir . '*');
 
@@ -172,7 +172,7 @@ class ModelUpgrade1006 extends Model {
 		$this->db->query("UPDATE `" . DB_PREFIX . "information_description` SET `description` = REPLACE (description, 'data/', 'catalog/')");
 	}
 
-	private function recursive_move($src, $dest){
+	private function recursive_move($src, $dest) {
 	    // If source is not a directory stop processing
 	    if (!is_dir($src)) return false;
 
@@ -186,6 +186,7 @@ class ModelUpgrade1006 extends Model {
 
 	    // Open the source directory to read in files
 	    $i = new \DirectoryIterator($src);
+		
 	    foreach ($i as $f) {
 	        if ($f->isFile() && !file_exists("$dest/" . $f->getFilename())) {
 	            @rename($f->getRealPath(), "$dest/" . $f->getFilename());

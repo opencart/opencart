@@ -194,13 +194,16 @@ class ModelExtensionPaymentRealex extends Model {
 			$this->logger('Rebate XML request:\r\n' . print_r(simplexml_load_string($xml), 1));
 
 			$ch = curl_init();
+			
 			curl_setopt($ch, CURLOPT_URL, "https://epage.payandshop.com/epage-remote.cgi");
 			curl_setopt($ch, CURLOPT_POST, 1);
 			curl_setopt($ch, CURLOPT_USERAGENT, "OpenCart " . VERSION);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 			curl_setopt($ch, CURLOPT_POSTFIELDS, $xml);
 			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+			
 			$response = curl_exec ($ch);
+			
 			curl_close ($ch);
 
 			return simplexml_load_string($response);
@@ -237,11 +240,11 @@ class ModelExtensionPaymentRealex extends Model {
 	}
 
 	public function addTransaction($realex_order_id, $type, $total) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "realex_order_transaction` SET `realex_order_id` = '" . (int)$realex_order_id . "', `date_added` = now(), `type` = '" . $this->db->escape($type) . "', `amount` = '" . (float)$total . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "realex_order_transaction` SET `realex_order_id` = '" . (int)$realex_order_id . "', `date_added` = NOW(), `type` = '" . $this->db->escape($type) . "', `amount` = '" . (float)$total . "'");
 	}
 
 	public function logger($message) {
-		if ($this->config->get('payment_realex_debug') == 1) {
+		if ($this->config->get('payment_realex_debug')) {
 			$log = new \Log('realex.log');
 			$log->write($message);
 		}

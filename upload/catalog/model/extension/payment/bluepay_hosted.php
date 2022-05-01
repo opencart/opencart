@@ -1,7 +1,5 @@
 <?php
-
 class ModelExtensionPaymentBluePayHosted extends Model {
-
 	public function getMethod($address, $total) {
 		$this->load->language('extension/payment/bluepay_hosted');
 
@@ -49,7 +47,7 @@ class ModelExtensionPaymentBluePayHosted extends Model {
 
 	public function logger($message) {
 		if ($this->config->get('payment_bluepay_hosted_debug') == 1) {
-			$log = new Log('bluepay_hosted.log');
+			$log = new \Log('bluepay_hosted.log');
 			$log->write($message);
 		}
 	}

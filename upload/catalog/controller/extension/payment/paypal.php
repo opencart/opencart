@@ -21,7 +21,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 		$country = $this->model_localisation_country->getCountry($this->config->get('config_country_id'));
 				
 		// Setting
-		$_config = new Config();
+		$_config = new \Config();
 		$_config->load('paypal');
 			
 		$config_setting = $_config->get('paypal_setting');
@@ -89,7 +89,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 			'environment' => $data['environment']
 		);
 		
-		$paypal = new PayPal($paypal_info);
+		$paypal = new \PayPal($paypal_info);
 		
 		$token_info = array(
 			'grant_type' => 'client_credentials'
@@ -133,7 +133,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 		
 		// Setting
-		$_config = new Config();
+		$_config = new \Config();
 		$_config->load('paypal');
 			
 		$config_setting = $_config->get('paypal_setting');
@@ -159,7 +159,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 			'environment' => $environment
 		);
 		
-		$paypal = new PayPal($paypal_info);
+		$paypal = new \PayPal($paypal_info);
 		
 		$token_info = array(
 			'grant_type' => 'client_credentials'
@@ -341,7 +341,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 		$this->load->model('extension/payment/paypal');
 		
 		// Setting
-		$_config = new Config();
+		$_config = new \Config();
 		$_config->load('paypal');
 			
 		$config_setting = $_config->get('paypal_setting');
@@ -388,7 +388,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 				'environment' => $environment
 			);
 		
-			$paypal = new PayPal($paypal_info);
+			$paypal = new \PayPal($paypal_info);
 			
 			$token_info = array(
 				'grant_type' => 'client_credentials'
@@ -466,7 +466,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 		
 		if (isset($webhook_data['event_type']) && isset($webhook_data['resource']['invoice_id'])) {
 			// Setting
-			$_config = new Config();
+			$_config = new \Config();
 			$_config->load('paypal');
 			
 			$config_setting = $_config->get('paypal_setting');

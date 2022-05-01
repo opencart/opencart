@@ -19,7 +19,7 @@ class ControllerStartupRouter extends Controller {
 		}
 		
 		// We dont want to use the loader class as it would make an controller callable.
-		$action = new Action($route);
+		$action = new \Action($route);
 		
 		// Any output needs to be another Action object.
 		$output = $action->execute($this->registry); 

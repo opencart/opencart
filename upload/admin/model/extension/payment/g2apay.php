@@ -1,7 +1,6 @@
 <?php
 
 class ModelExtensionPaymentG2aPay extends Model {
-
 	public function install() {
 		$this->db->query("
 			CREATE TABLE `" . DB_PREFIX . "g2apay_order` (
@@ -36,7 +35,6 @@ class ModelExtensionPaymentG2aPay extends Model {
 	}
 
 	public function getOrder($order_id) {
-
 		$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "g2apay_order` WHERE `order_id` = '" . (int)$order_id . "' LIMIT 1");
 
 		if ($qry->num_rows) {
@@ -87,6 +85,7 @@ class ModelExtensionPaymentG2aPay extends Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "g2apay_order_transaction` WHERE `g2apay_order_id` = '" . (int)$g2apay_order_id . "'");
 
 		$transactions = array();
+		
 		if ($query->num_rows) {
 			foreach ($query->rows as $row) {
 				$row['amount'] = $this->currency->format($row['amount'], $currency_code, true, true);
@@ -105,18 +104,21 @@ class ModelExtensionPaymentG2aPay extends Model {
 	public function getTotalRefunded($g2apay_order_id) {
 		$query = $this->db->query("SELECT SUM(`amount`) AS `total` FROM `" . DB_PREFIX . "g2apay_order_transaction` WHERE `g2apay_order_id` = '" . (int)$g2apay_order_id . "' AND 'refund'");
 
-		return (double)$query->row['total'];
+		return (float)$query->row['total'];
 	}
 
 	public function sendCurl($url, $fields) {
 		$curl = curl_init($url);
+		
 		curl_setopt($curl, CURLOPT_URL, $url);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PUT");
 		curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($fields));
 
 		$auth_hash = hash('sha256', $this->config->get('payment_g2apay_api_hash') . $this->config->get('payment_g2apay_username') . html_entity_decode($this->config->get('payment_g2apay_secret')));
+		
 		$authorization = $this->config->get('payment_g2apay_api_hash') . ";" . $auth_hash;
+		
 		curl_setopt(
 				$curl, CURLOPT_HTTPHEADER, array(
 			"Authorization: " . $authorization
@@ -126,6 +128,7 @@ class ModelExtensionPaymentG2aPay extends Model {
 		$response = json_decode(curl_exec($curl));
 
 		curl_close($curl);
+		
 		if (is_object($response)) {
 			return (string)$response->status;
 		} else {
@@ -135,8 +138,9 @@ class ModelExtensionPaymentG2aPay extends Model {
 
 	public function logger($message) {
 		if ($this->config->get('payment_g2apay_debug') == 1) {
-			$log = new Log('g2apay.log');
 			$backtrace = debug_backtrace();
+			
+			$log = new \Log('g2apay.log');			
 			$log->write('Origin: ' . $backtrace[6]['class'] . '::' . $backtrace[6]['function']);
 			$log->write(print_r($message, 1));
 		}

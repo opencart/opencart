@@ -52,7 +52,7 @@ function handleError($errno, $errstr, $errfile, $errline, array $errcontext) {
 	if (0 === error_reporting()) {
 		return false;
 	}
-	throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
+	throw new \ErrorException($errstr, 0, $errno, $errfile, $errline);
 }
 
 set_error_handler('handleError');
@@ -93,7 +93,7 @@ function get_options($argv) {
 	for ($i=0; $i < $total; $i=$i+2) {
 		$is_flag = preg_match('/^--(.*)$/', $argv[$i], $match);
 		if (!$is_flag) {
-			throw new Exception($argv[$i] . ' found in command line args instead of a valid option name starting with \'--\'');
+			throw new \Exception($argv[$i] . ' found in command line args instead of a valid option name starting with \'--\'');
 		}
 		$options[$match[1]] = $argv[$i+1];
 	}

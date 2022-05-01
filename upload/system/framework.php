@@ -1,15 +1,15 @@
 <?php
 // Registry
-$registry = new Registry();
+$registry = new \Registry();
 
 // Config
-$config = new Config();
+$config = new \Config();
 $config->load('default');
 $config->load($application_config);
 $registry->set('config', $config);
 
 // Log
-$log = new Log($config->get('error_filename'));
+$log = new \Log($config->get('error_filename'));
 $registry->set('log', $log);
 
 date_default_timezone_set($config->get('date_timezone'));
@@ -50,7 +50,7 @@ set_error_handler(function($code, $message, $file, $line) use($log, $config) {
 });
 
 // Event
-$event = new Event($registry);
+$event = new \Event($registry);
 $registry->set('event', $event);
 
 // Event Register
@@ -63,21 +63,21 @@ if ($config->has('action_event')) {
 }
 
 // Loader
-$loader = new Loader($registry);
+$loader = new \Loader($registry);
 $registry->set('load', $loader);
 
 // Request
-$registry->set('request', new Request());
+$registry->set('request', new \Request());
 
 // Response
-$response = new Response();
+$response = new \Response();
 $response->addHeader('Content-Type: text/html; charset=utf-8');
 $response->setCompression($config->get('config_compression'));
 $registry->set('response', $response);
 
 // Database
 if ($config->get('db_autostart')) {
-	$db = new DB($config->get('db_engine'), $config->get('db_hostname'), $config->get('db_username'), $config->get('db_password'), $config->get('db_database'), $config->get('db_port'));
+	$db = new \DB($config->get('db_engine'), $config->get('db_hostname'), $config->get('db_username'), $config->get('db_password'), $config->get('db_database'), $config->get('db_port'));
 	$registry->set('db', $db);
 
 	// Sync PHP and DB time zones
@@ -85,7 +85,7 @@ if ($config->get('db_autostart')) {
 }
 
 // Session
-$session = new Session($config->get('session_engine'), $registry);
+$session = new \Session($config->get('session_engine'), $registry);
 $registry->set('session', $session);
 
 if ($config->get('session_autostart')) {
@@ -113,19 +113,19 @@ if ($config->get('session_autostart')) {
 }
 
 // Cache
-$registry->set('cache', new Cache($config->get('cache_engine'), $config->get('cache_expire')));
+$registry->set('cache', new \Cache($config->get('cache_engine'), $config->get('cache_expire')));
 
 // Url
 if ($config->get('url_autostart')) {
-	$registry->set('url', new Url($config->get('site_url'), $config->get('site_ssl')));
+	$registry->set('url', new \Url($config->get('site_url'), $config->get('site_ssl')));
 }
 
 // Language
-$language = new Language($config->get('language_directory'));
+$language = new \Language($config->get('language_directory'));
 $registry->set('language', $language);
 
 // Document
-$registry->set('document', new Document());
+$registry->set('document', new \Document());
 
 // Config Autoload
 if ($config->has('config_autoload')) {
@@ -156,17 +156,17 @@ if ($config->has('model_autoload')) {
 }
 
 // Route
-$route = new Router($registry);
+$route = new \Router($registry);
 
 // Pre Actions
 if ($config->has('action_pre_action')) {
 	foreach ($config->get('action_pre_action') as $value) {
-		$route->addPreAction(new Action($value));
+		$route->addPreAction(new \Action($value));
 	}
 }
 
 // Dispatch
-$route->dispatch(new Action($config->get('action_router')), new Action($config->get('action_error')));
+$route->dispatch(new \Action($config->get('action_router')), new \Action($config->get('action_error')));
 
 // Output
 $response->output();

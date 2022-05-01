@@ -58,7 +58,7 @@ class ControllerMarketplaceInstall extends Controller {
 			$file = DIR_UPLOAD . $this->session->data['install'] . '.tmp';
 					
 			// Unzip the files
-			$zip = new ZipArchive();
+			$zip = new \ZipArchive();
 
 			if ($zip->open($file)) {
 				$zip->extractTo(DIR_UPLOAD . 'tmp-' . $this->session->data['install']);
@@ -266,7 +266,7 @@ class ControllerMarketplaceInstall extends Controller {
 	
 				if ($xml) {
 					try {
-						$dom = new DOMDocument('1.0', 'UTF-8');
+						$dom = new \DOMDocument('1.0', 'UTF-8');
 						$dom->loadXml($xml);
 	
 						$name = $dom->getElementsByTagName('name')->item(0);

@@ -1,7 +1,6 @@
 <?php
 
 class ModelExtensionPaymentEway extends Model {
-
 	public function install() {
 		$this->db->query("
 			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "eway_order` (
@@ -70,6 +69,7 @@ class ModelExtensionPaymentEway extends Model {
 		if (isset($order['refund_transaction_id']) && !empty($order['refund_transaction_id'])) {
 			$order['refund_transaction_id'] .= ',';
 		}
+		
 		$order['refund_transaction_id'] .= $transaction_id;
 
 		$this->db->query("UPDATE `" . DB_PREFIX . "eway_order` SET `modified` = NOW(), refund_amount = '" . (double)$refund_amount . "', `refund_transaction_id` = '" . $this->db->escape($order['refund_transaction_id']) . "' WHERE eway_order_id = '" . $order['eway_order_id'] . "'");
@@ -79,9 +79,8 @@ class ModelExtensionPaymentEway extends Model {
 		$eway_order = $this->getOrder($order_id);
 
 		if ($eway_order && $capture_amount > 0 ) {
-
-			$capture_data = new stdClass();
-			$capture_data->Payment = new stdClass();
+			$capture_data = new \stdClass();
+			$capture_data->Payment = new \stdClass();
 			$capture_data->Payment->TotalAmount = (int)(number_format($capture_amount, 2, '.', '') * 100);
 			$capture_data->Payment->CurrencyCode = $currency;
 			$capture_data->TransactionID = $eway_order['transaction_id'];
@@ -112,8 +111,7 @@ class ModelExtensionPaymentEway extends Model {
 	public function void($order_id) {
 		$eway_order = $this->getOrder($order_id);
 		if ($eway_order) {
-
-			$data = new stdClass();
+			$data = new \stdClass();
 			$data->TransactionID = $eway_order['transaction_id'];
 
 			if ($this->config->get('payment_eway_test')) {
@@ -139,9 +137,8 @@ class ModelExtensionPaymentEway extends Model {
 		$eway_order = $this->getOrder($order_id);
 
 		if ($eway_order && $refund_amount > 0) {
-
-			$refund_data = new stdClass();
-			$refund_data->Refund = new stdClass();
+			$refund_data = new \stdClass();
+			$refund_data->Refund = new \stdClass();
 			$refund_data->Refund->TotalAmount = (int)(number_format($refund_amount, 2, '.', '') * 100);
 			$refund_data->Refund->TransactionID = $eway_order['transaction_id'];
                         $refund_data->Refund->CurrencyCode = $eway_order['currency_code'];
@@ -181,13 +178,13 @@ class ModelExtensionPaymentEway extends Model {
 		$response = curl_exec($ch);
 
 		if (curl_errno($ch) != CURLE_OK) {
-			$response = new stdClass();
+			$response = new \stdClass();
 			$response->Errors = "POST Error: " . curl_error($ch) . " URL: $url";
 			$response = json_encode($response);
 		} else {
 			$info = curl_getinfo($ch);
 			if ($info['http_code'] == 401 || $info['http_code'] == 404) {
-				$response = new stdClass();
+				$response = new \stdClass();
 				$response->Errors = "Please check the API Key and Password";
 				$response = json_encode($response);
 			}

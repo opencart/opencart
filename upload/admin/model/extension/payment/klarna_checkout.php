@@ -6,7 +6,7 @@ use Klarna\Rest\OrderManagement\Order as KCOrder;
 class ModelExtensionPaymentKlarnaCheckout extends Model {
 	public function connector($merchant_id, $secret, $url) {
 		try {
-			$connector = KCConnector::create(
+			$connector = \KCConnector::create(
 				$merchant_id,
 				$secret,
 				$url
@@ -20,9 +20,9 @@ class ModelExtensionPaymentKlarnaCheckout extends Model {
 		}
 	}
 
-	public function omRetrieve(KCConnector $connector, $order_id) {
+	public function omRetrieve(\KCConnector $connector, $order_id) {
 		try {
-			$order = new KCOrder($connector, $order_id);
+			$order = new \KCOrder($connector, $order_id);
 
 			return $order->fetch();
 		} catch (\Exception $e) {
@@ -32,9 +32,9 @@ class ModelExtensionPaymentKlarnaCheckout extends Model {
 		}
 	}
 
-	public function omCancel(KCConnector $connector, $order_id) {
+	public function omCancel(\KCConnector $connector, $order_id) {
 		try {
-			$order = new KCOrder($connector, $order_id);
+			$order = new \KCOrder($connector, $order_id);
 
 			return $order->cancel();
 		} catch (\Exception $e) {
@@ -44,9 +44,9 @@ class ModelExtensionPaymentKlarnaCheckout extends Model {
 		}
 	}
 
-	public function omCapture(KCConnector $connector, $order_id, $data) {
+	public function omCapture(\KCConnector $connector, $order_id, $data) {
 		try {
-			$order = new KCOrder($connector, $order_id);
+			$order = new \KCOrder($connector, $order_id);
 
 			return $order->createCapture($data);
 		} catch (\Exception $e) {
@@ -56,9 +56,9 @@ class ModelExtensionPaymentKlarnaCheckout extends Model {
 		}
 	}
 
-	public function omRefund(KCConnector $connector, $order_id, $data) {
+	public function omRefund(\KCConnector $connector, $order_id, $data) {
 		try {
-			$order = new KCOrder($connector, $order_id);
+			$order = new \KCOrder($connector, $order_id);
 
 			return $order->refund($data);
 		} catch (\Exception $e) {
@@ -68,9 +68,9 @@ class ModelExtensionPaymentKlarnaCheckout extends Model {
 		}
 	}
 
-	public function omExtendAuthorizationTime(KCConnector $connector, $order_id) {
+	public function omExtendAuthorizationTime(\KCConnector $connector, $order_id) {
 		try {
-			$order = new KCOrder($connector, $order_id);
+			$order = new \KCOrder($connector, $order_id);
 
 			return $order->extendAuthorizationTime();
 		} catch (\Exception $e) {
@@ -80,9 +80,9 @@ class ModelExtensionPaymentKlarnaCheckout extends Model {
 		}
 	}
 
-	public function omUpdateMerchantReference(KCConnector $connector, $order_id, $data) {
+	public function omUpdateMerchantReference(\KCConnector $connector, $order_id, $data) {
 		try {
-			$order = new KCOrder($connector, $order_id);
+			$order = new \KCOrder($connector, $order_id);
 
 			return $order->updateMerchantReferences($data);
 		} catch (\Exception $e) {
@@ -92,9 +92,9 @@ class ModelExtensionPaymentKlarnaCheckout extends Model {
 		}
 	}
 
-	public function omUpdateAddress(KCConnector $connector, $order_id, $data) {
+	public function omUpdateAddress(\KCConnector $connector, $order_id, $data) {
 		try {
-			$order = new KCOrder($connector, $order_id);
+			$order = new \KCOrder($connector, $order_id);
 
 			return $order->updateCustomerDetails($data);
 		} catch (\Exception $e) {
@@ -104,9 +104,9 @@ class ModelExtensionPaymentKlarnaCheckout extends Model {
 		}
 	}
 
-	public function omReleaseAuthorization(KCConnector $connector, $order_id) {
+	public function omReleaseAuthorization(\KCConnector $connector, $order_id) {
 		try {
-			$order = new KCOrder($connector, $order_id);
+			$order = new \KCOrder($connector, $order_id);
 
 			return $order->releaseRemainingAuthorization();
 		} catch (\Exception $e) {
@@ -116,9 +116,9 @@ class ModelExtensionPaymentKlarnaCheckout extends Model {
 		}
 	}
 
-	public function omShippingInfo(KCConnector $connector, $order_id, $capture_id, $data) {
+	public function omShippingInfo(\KCConnector $connector, $order_id, $capture_id, $data) {
 		try {
-			$order = new KCOrder($connector, $order_id);
+			$order = new \KCOrder($connector, $order_id);
 
 			$capture = $order->fetchCapture($capture_id);
 			return $capture->addShippingInfo($data);
@@ -129,9 +129,9 @@ class ModelExtensionPaymentKlarnaCheckout extends Model {
 		}
 	}
 
-	public function omCustomerDetails(KCConnector $connector, $order_id, $capture_id, $data) {
+	public function omCustomerDetails(\KCConnector $connector, $order_id, $capture_id, $data) {
 		try {
-			$order = new KCOrder($connector, $order_id);
+			$order = new \KCOrder($connector, $order_id);
 
 			$capture = $order->fetchCapture($capture_id);
 			return $capture->updateCustomerDetails($data);
@@ -142,9 +142,9 @@ class ModelExtensionPaymentKlarnaCheckout extends Model {
 		}
 	}
 
-	public function omTriggerSendOut(KCConnector $connector, $order_id, $capture_id) {
+	public function omTriggerSendOut(\KCConnector $connector, $order_id, $capture_id) {
 		try {
-			$order = new KCOrder($connector, $order_id);
+			$order = new \KCOrder($connector, $order_id);
 
 			$capture = $order->fetchCapture($capture_id);
 			return $capture->triggerSendout();
@@ -164,19 +164,20 @@ class ModelExtensionPaymentKlarnaCheckout extends Model {
 				if ($account['currency'] == $currency) {
 					if ($account['environment'] == 'test') {
 						if ($account['api'] == 'NA') {
-							$base_url = KCConnectorInterface::NA_TEST_BASE_URL;
+							$base_url = \KCConnectorInterface::NA_TEST_BASE_URL;
 						} elseif ($account['api'] == 'EU')  {
-							$base_url = KCConnectorInterface::EU_TEST_BASE_URL;
+							$base_url = \KCConnectorInterface::EU_TEST_BASE_URL;
 						}
 					} elseif ($account['environment'] == 'live') {
 						if ($account['api'] == 'NA') {
-							$base_url = KCConnectorInterface::NA_BASE_URL;
+							$base_url = \KCConnectorInterface::NA_BASE_URL;
 						} elseif ($account['api'] == 'EU')  {
-							$base_url = KCConnectorInterface::EU_BASE_URL;
+							$base_url = \KCConnectorInterface::EU_BASE_URL;
 						}
 					}
 
 					$klarna_account = $account;
+					
 					$connector = $this->connector(
 						$account['merchant_id'],
 						$account['secret'],
@@ -217,9 +218,10 @@ class ModelExtensionPaymentKlarnaCheckout extends Model {
 	}
 
 	public function log($data) {
-		if ($this->config->get('klarna_checkout_debug')) {
+		if ($this->config->get('payment_klarna_checkout_debug')) {
 			$backtrace = debug_backtrace();
-			$log = new Log('klarna_checkout.log');
+			
+			$log = new \Log('klarna_checkout.log');
 			$log->write('(' . $backtrace[1]['class'] . '::' . $backtrace[1]['function'] . ') - ' . print_r($data, true));
 		}
 	}

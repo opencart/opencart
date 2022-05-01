@@ -31,7 +31,7 @@ class ControllerApiLogin extends Controller {
 			if (!$json) {
 				$json['success'] = $this->language->get('text_success');
 				
-				$session = new Session($this->config->get('session_engine'), $this->registry);
+				$session = new \Session($this->config->get('session_engine'), $this->registry);
 				
 				$session->start();
 				

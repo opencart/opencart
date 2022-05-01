@@ -1,14 +1,13 @@
 <?php
 class ControllerExtensionPaymentPPProIframe extends Controller {
 	public function index() {
+		$this->load->language('extension/payment/pp_pro_iframe');
+		
 		$this->load->model('checkout/order');
 		$this->load->model('extension/payment/pp_pro_iframe');
 
-		$this->load->language('extension/payment/pp_pro_iframe');
-
 		if ($this->config->get('payment_pp_pro_iframe_checkout_method') == 'redirect') {
-
-			if(!isset($this->session->data['order_id'])) {
+			if (!isset($this->session->data['order_id'])) {
 				return false;
 			}
 
@@ -39,6 +38,7 @@ class ControllerExtensionPaymentPPProIframe extends Controller {
 
 	public function create() {
 		$this->load->language('extension/payment/pp_pro_iframe');
+		
 		$this->load->model('checkout/order');
 		$this->load->model('extension/payment/pp_pro_iframe');
 
@@ -112,12 +112,12 @@ class ControllerExtensionPaymentPPProIframe extends Controller {
 
 			if (curl_errno($curl)) {
 				if ($this->config->get('payment_pp_pro_iframe_debug')) {
-					$log = new Log('pp_pro_iframe.log');
+					$log = new \Log('pp_pro_iframe.log');
 					$log->write('pp_pro_iframe :: CURL failed ' . curl_error($curl) . '(' . curl_errno($curl) . ')');
 				}				
 			} else {
 				if ($this->config->get('payment_pp_pro_iframe_debug')) {
-					$log = new Log('pp_pro_iframe.log');
+					$log = new \Log('pp_pro_iframe.log');
 					$log->write('pp_pro_iframe :: IPN REQUEST: ' . $request);
 					$log->write('pp_pro_iframe :: IPN RESPONSE: ' . $response);
 				}				
@@ -172,7 +172,7 @@ class ControllerExtensionPaymentPPProIframe extends Controller {
 						$paypal_transaction_data = array(
 							'paypal_iframe_order_id' => $paypal_iframe_order_id,
 							'transaction_id'         => $this->request->post['txn_id'],
-							'parent_id'  => '',
+							'parent_id'  		 => '',
 							'note'                   => '',
 							'msgsubid'               => '',
 							'receipt_id'             => $this->request->post['receipt_id'],
@@ -201,6 +201,7 @@ class ControllerExtensionPaymentPPProIframe extends Controller {
 
 	private function constructButtonData($order_info) {
 		$s_data = array();
+		
 		$s_data['METHOD'] = 'BMCreateButton';
 		$s_data['VERSION'] = '65.2';
 		$s_data['BUTTONCODE'] = 'TOKEN';
@@ -296,7 +297,7 @@ class ControllerExtensionPaymentPPProIframe extends Controller {
 		parse_str($response, $response_data);
 		
 		if ($this->config->get('payment_pp_pro_iframe_debug')) {
-			$log = new Log('pp_pro_iframe.log');
+			$log = new \Log('pp_pro_iframe.log');
 			$log->write(print_r(json_encode($response_data), 1));
 		}
 		

@@ -17,18 +17,21 @@ class ModelExtensionPaymentPilibaba extends Model {
 
 		$this->disablePiliExpress();
 
-		$this->log('Module uninstalled');
+		$this->addLog('Module uninstalled');
 	}
 
 	public function getCurrencies() {
 		$ch = curl_init();
+		
 		curl_setopt($ch, CURLOPT_URL, 'http://www.pilibaba.com/pilipay/getCurrency');
 		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch, CURLOPT_HEADER, false);
 		curl_setopt($ch, CURLOPT_TIMEOUT, 30);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+		
 		$response = curl_exec($ch);
+		
 		curl_close($ch);
 
 		return json_decode($response, true);
@@ -36,13 +39,16 @@ class ModelExtensionPaymentPilibaba extends Model {
 
 	public function getWarehouses() {
 		$ch = curl_init();
+		
 		curl_setopt($ch, CURLOPT_URL, 'http://www.pilibaba.com/pilipay/getAddressList');
 		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch, CURLOPT_HEADER, false);
 		curl_setopt($ch, CURLOPT_TIMEOUT, 30);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+		
 		$response = curl_exec($ch);
+		
 		curl_close($ch);
 
 		return json_decode($response, true);
@@ -59,7 +65,7 @@ class ModelExtensionPaymentPilibaba extends Model {
 	}
 
 	public function register($email, $password, $currency, $warehouse, $country, $environment) {
-		$this->log('Posting register');
+		$this->addLog('Posting register');
 
 		if ($warehouse == 'other') {
 			$warehouse = '';
@@ -75,7 +81,7 @@ class ModelExtensionPaymentPilibaba extends Model {
 			$url = 'http://preen.pilibaba.com/autoRegist';
 		}
 
-		$this->log('URL: ' . $url);
+		$this->addLog('URL: ' . $url);
 
 		$app_secret = strtoupper(md5((($warehouse) ? $warehouse : $country) . '0210000574' . '0b8l3ww5' . $currency . $email . md5($password)));
 
@@ -89,11 +95,12 @@ class ModelExtensionPaymentPilibaba extends Model {
 			'countryCode' => $country
 		);
 
-		$this->log('Data: ' . print_r($data, true));
+		$this->addLog('Data: ' . print_r($data, true));
 
 		$headers = array('Accept: application/json','Content-Type: application/json');
 
 		$ch = curl_init();
+		
 		curl_setopt($ch, CURLOPT_URL, $url);
 		curl_setopt($ch, CURLOPT_POST, true);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
@@ -101,19 +108,22 @@ class ModelExtensionPaymentPilibaba extends Model {
 		curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 		curl_setopt($ch, CURLOPT_TIMEOUT, 30);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+		
 		$response = curl_exec($ch);
+		
 		if (curl_errno($ch)) {
-			$this->log('cURL error: ' . curl_errno($ch));
+			$this->addLog('cURL error: ' . curl_errno($ch));
 		}
+		
 		curl_close($ch);
 
-		$this->log('Response: ' . print_r($response, true));
+		$this->addLog('Response: ' . print_r($response, true));
 
 		return json_decode($response, true);
 	}
 
 	public function updateTrackingNumber($order_id, $tracking_number, $merchant_number) {
-		$this->log('Posting tracking');
+		$this->addLog('Posting tracking');
 
 		$sign_msg = strtoupper(md5($order_id . $tracking_number . $merchant_number . $this->config->get('payment_pilibaba_secret_key')));
 
@@ -125,19 +135,23 @@ class ModelExtensionPaymentPilibaba extends Model {
 
 		$url .= '?orderNo=' . $order_id . '&logisticsNo=' . $tracking_number . '&merchantNo=' . $merchant_number . '&signMsg=' . $sign_msg;
 
-		$this->log('URL: ' . $url);
+		$this->addLog('URL: ' . $url);
 
 		$ch = curl_init();
+		
 		curl_setopt($ch, CURLOPT_URL, $url);
 		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch, CURLOPT_HEADER, false);
 		curl_setopt($ch, CURLOPT_TIMEOUT, 30);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+		
 		$response = curl_exec($ch);
+		
 		if (curl_errno($ch)) {
-			$this->log('cURL error: ' . curl_errno($ch));
+			$this->addLog('cURL error: ' . curl_errno($ch));
 		}
+		
 		curl_close($ch);
 
 		$this->db->query("UPDATE `" . DB_PREFIX . "pilibaba_order` SET `tracking` = '" . $this->db->escape($tracking_number) . "' WHERE `order_id` = '" . (int)$order_id . "'");
@@ -155,9 +169,9 @@ class ModelExtensionPaymentPilibaba extends Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "extension` WHERE `type` = 'shipping' AND `code` = 'pilibaba'");
 	}
 
-	public function log($data) {
+	public function addLog($data) {
 		if ($this->config->has('payment_pilibaba_logging') && $this->config->get('payment_pilibaba_logging')) {
-			$log = new Log('pilibaba.log');
+			$log = new \Log('pilibaba.log');
 
 			$log->write($data);
 		}

@@ -36,6 +36,7 @@ class ModelExtensionPaymentRealexRemote extends Model {
 
 		$tmp = $timestamp . '.' . $merchant_id . '.' . $order_ref . '.' . $amount . '.' . $currency . '.' . $this->request->post['cc_number'];
 		$hash = sha1($tmp);
+		
 		$tmp = $hash . '.' . $secret;
 		$hash = sha1($tmp);
 
@@ -59,13 +60,16 @@ class ModelExtensionPaymentRealexRemote extends Model {
 		$this->logger($xml);
 
 		$ch = curl_init();
+		
 		curl_setopt($ch, CURLOPT_URL, "https://epage.payandshop.com/epage-3dsecure.cgi");
 		curl_setopt($ch, CURLOPT_POST, 1);
 		curl_setopt($ch, CURLOPT_USERAGENT, "OpenCart " . VERSION);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $xml);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+		
 		$response = curl_exec ($ch);
+		
 		curl_close ($ch);
 
 		$this->logger('checkEnrollment xml response');
@@ -83,6 +87,7 @@ class ModelExtensionPaymentRealexRemote extends Model {
 
 		$tmp = $timestamp . '.' . $merchant_id . '.' . $order_ref . '.' . $amount . '.' . $currency . '.' . $card_number;
 		$hash = sha1($tmp);
+		
 		$tmp = $hash . '.' . $secret;
 		$hash = sha1($tmp);
 
@@ -107,13 +112,16 @@ class ModelExtensionPaymentRealexRemote extends Model {
 		$this->logger($xml);
 
 		$ch = curl_init();
+		
 		curl_setopt($ch, CURLOPT_URL, "https://epage.payandshop.com/epage-3dsecure.cgi");
 		curl_setopt($ch, CURLOPT_POST, 1);
 		curl_setopt($ch, CURLOPT_USERAGENT, "OpenCart " . VERSION);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $xml);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+		
 		$response = curl_exec ($ch);
+		
 		curl_close ($ch);
 
 		$this->logger('enrollmentSignature xml response');
@@ -131,6 +139,7 @@ class ModelExtensionPaymentRealexRemote extends Model {
 
 		$tmp = $timestamp . '.' . $merchant_id . '.' . $order_ref . '.' . $amount . '.' . $currency . '.' . $card_number;
 		$hash = sha1($tmp);
+		
 		$tmp = $hash . '.' . $secret;
 		$hash = sha1($tmp);
 
@@ -221,13 +230,16 @@ class ModelExtensionPaymentRealexRemote extends Model {
 		$this->logger($xml);
 
 		$ch = curl_init();
+		
 		curl_setopt($ch, CURLOPT_URL, "https://epage.payandshop.com/epage-remote.cgi");
 		curl_setopt($ch, CURLOPT_POST, 1);
 		curl_setopt($ch, CURLOPT_USERAGENT, "OpenCart " . VERSION);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $xml);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+		
 		$response = curl_exec ($ch);
+		
 		curl_close ($ch);
 
 		$this->logger('capturePayment xml response');
@@ -341,8 +353,8 @@ class ModelExtensionPaymentRealexRemote extends Model {
 	}
 
 	public function logger($message) {
-		if ($this->config->get('payment_realex_remote_debug') == 1) {
-			$log = new Log('realex_remote.log');
+		if ($this->config->get('payment_realex_remote_debug')) {
+			$log = new \Log('realex_remote.log');
 			$log->write($message);
 		}
 	}

@@ -273,12 +273,12 @@ class ControllerExtensionPaymentCardinity extends Controller {
 		if (!isset($this->request->post['exp_month']) || !isset($this->request->post['exp_year'])) {
 			$error['expiry_date'] = true;
 		} else {
-			$expiry = new DateTime();
+			$expiry = new \DateTime();
 			$expiry->setDate($this->request->post['exp_year'], $this->request->post['exp_month'], '1');
 			$expiry->modify('+1 month');
 			$expiry->modify('-1 day');
 
-			$now = new DateTime();
+			$now = new \DateTime();
 
 			if ($expiry < $now) {
 				$error['expiry_date'] = true;

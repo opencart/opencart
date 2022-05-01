@@ -231,13 +231,9 @@ class ModelExtensionPaymentRealex extends Model {
 	}
 
 	private function getTransactions($realex_order_id) {
-		$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "realex_order_transaction` WHERE `realex_order_id` = '" . (int)$realex_order_id . "'");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "realex_order_transaction` WHERE `realex_order_id` = '" . (int)$realex_order_id . "'");
 
-		if ($qry->num_rows) {
-			return $qry->rows;
-		} else {
-			return false;
-		}
+		return $query->rows;
 	}
 
 	public function addTransaction($realex_order_id, $type, $total) {
@@ -246,7 +242,7 @@ class ModelExtensionPaymentRealex extends Model {
 
 	public function logger($message) {
 		if ($this->config->get('payment_realex_debug') == 1) {
-			$log = new Log('realex.log');
+			$log = new \Log('realex.log');
 			$log->write($message);
 		}
 	}

@@ -76,7 +76,7 @@ class Language {
 			$this->data = array_merge($this->data, $_);
 		} else {
 			// Put the language into a sub key
-			$this->data[$key] = new Language($this->directory);
+			$this->data[$key] = new \Language($this->directory);
 			$this->data[$key]->load($filename);
 		}
 		

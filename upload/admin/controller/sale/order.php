@@ -379,7 +379,7 @@ class ControllerSaleOrder extends Controller {
 		$api_info = $this->model_user_api->getApi($this->config->get('config_api_id'));
 
 		if ($api_info && $this->user->hasPermission('modify', 'sale/order')) {
-			$session = new Session($this->config->get('session_engine'), $this->registry);
+			$session = new \Session($this->config->get('session_engine'), $this->registry);
 			
 			$session->start();
 					
@@ -712,7 +712,7 @@ class ControllerSaleOrder extends Controller {
 		$api_info = $this->model_user_api->getApi($this->config->get('config_api_id'));
 
 		if ($api_info && $this->user->hasPermission('modify', 'sale/order')) {
-			$session = new Session($this->config->get('session_engine'), $this->registry);
+			$session = new \Session($this->config->get('session_engine'), $this->registry);
 			
 			$session->start();
 					
@@ -1253,7 +1253,7 @@ class ControllerSaleOrder extends Controller {
 			$api_info = $this->model_user_api->getApi($this->config->get('config_api_id'));
 
 			if ($api_info && $this->user->hasPermission('modify', 'sale/order')) {
-				$session = new Session($this->config->get('session_engine'), $this->registry);
+				$session = new \Session($this->config->get('session_engine'), $this->registry);
 				
 				$session->start();
 				

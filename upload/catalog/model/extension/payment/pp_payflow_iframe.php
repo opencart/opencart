@@ -46,13 +46,7 @@ class ModelExtensionPaymentPPPayflowIframe extends Model {
 	}
 
 	public function updateOrder($data) {
-		$this->db->query("
-			UPDATE `" . DB_PREFIX . "paypal_payflow_iframe_order`
-			SET `transaction_reference` = '" . $this->db->escape($data['transaction_reference']) . "',
-				`transaction_type` = '" . $this->db->escape($data['transaction_type']) . "',
-				`complete` = " . (int)$data['complete'] . "
-			WHERE `secure_token_id` = '" . $this->db->escape($data['secure_token_id']) . "'
-		");
+		$this->db->query("UPDATE `" . DB_PREFIX . "paypal_payflow_iframe_order` SET `transaction_reference` = '" . $this->db->escape($data['transaction_reference']) . "', `transaction_type` = '" . $this->db->escape($data['transaction_type']) . "', `complete` = " . (int)$data['complete'] . " WHERE `secure_token_id` = '" . $this->db->escape($data['secure_token_id']) . "'");
 	}
 
 	public function call($data) {
@@ -94,25 +88,19 @@ class ModelExtensionPaymentPPPayflowIframe extends Model {
 		$this->log('Response data: ' . $response);
 
 		$response_params = array();
+		
 		parse_str($response, $response_params);
 
 		return $response_params;
 	}
 
 	public function addTransaction($data) {
-		$this->db->query("
-			INSERT INTO " . DB_PREFIX . "paypal_payflow_iframe_order_transaction
-			SET order_id = " . (int)$data['order_id'] . ",
-				transaction_reference = '" . $this->db->escape($data['transaction_reference']) . "',
-				transaction_type = '" . $this->db->escape($data['type']) . "',
-				`time` = NOW(),
-				`amount` = '" . $this->db->escape($data['amount']) .  "'
-		");
+		$this->db->query("INSERT INTO " . DB_PREFIX . "paypal_payflow_iframe_order_transaction SET order_id = " . (int)$data['order_id'] . ", transaction_reference = '" . $this->db->escape($data['transaction_reference']) . "', transaction_type = '" . $this->db->escape($data['type']) . "', `time` = NOW(), `amount` = '" . $this->db->escape($data['amount']) .  "'");
 	}
 
 	public function log($message) {
 		if ($this->config->get('payment_pp_payflow_iframe_debug')) {
-			$log = new Log('payflow-iframe.log');
+			$log = new \Log('payflow-iframe.log');
 			$log->write($message);
 		}
 	}

@@ -158,7 +158,7 @@ class ModelExtensionPaymentDivido extends Model {
 		$api_key = $this->config->get('payment_divido_api_key');
 		
 		if (!$api_key) {
-			throw new Exception("No Divido api-key defined");
+			throw new \Exception("No Divido api-key defined");
 		}
 
 		\Divido::setMerchant($api_key);

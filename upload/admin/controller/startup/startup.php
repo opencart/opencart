@@ -31,7 +31,7 @@ class ControllerStartupStartup extends Controller {
 		}
 		
 		// Language
-		$language = new Language($this->config->get('config_admin_language'));
+		$language = new \Language($this->config->get('config_admin_language'));
 		$language->load($this->config->get('config_admin_language'));
 		$this->registry->set('language', $language);
 		

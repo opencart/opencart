@@ -18,9 +18,6 @@ class Log extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('tool/log', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		//echo $this->session->data['error'];
-
-
 		if (isset($this->session->data['error'])) {
 			$data['error_warning'] = $this->session->data['error'];
 
@@ -104,7 +101,6 @@ class Log extends \Opencart\System\Engine\Controller {
 
 		if (!filesize($file)) {
 			$this->session->data['error'] = sprintf($this->language->get('error_empty'), $filename);
-			//echo sprintf($this->language->get('error_empty'), $filename);
 
 			$this->response->redirect($this->url->link('tool/log', 'user_token=' . $this->session->data['user_token']));
 		}
@@ -116,7 +112,7 @@ class Log extends \Opencart\System\Engine\Controller {
 		$this->response->addheader('Content-Disposition: attachment; filename="' . $this->config->get('config_name') . '_' . date('Y-m-d_H-i-s', time()) . '_error.log"');
 		$this->response->addheader('Content-Transfer-Encoding: binary');
 
-		//$this->response->setOutput(file_get_contents($file, FILE_USE_INCLUDE_PATH, null));
+		$this->response->setOutput(file_get_contents($file, FILE_USE_INCLUDE_PATH, null));
 	}
 	
 	public function clear(): void {

@@ -128,7 +128,7 @@ class Upload extends \Opencart\System\Engine\Controller {
 			$data['uploads'][] = [
 				'upload_id'  => $result['upload_id'],
 				'name'       => $result['name'],
-				'filename'   => $result['filename'],
+				'code'       => $result['code'],
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'download'   => $this->url->link('tool/upload|download', 'user_token=' . $this->session->data['user_token'] . '&code=' . $result['code'] . $url)
 			];
@@ -155,7 +155,7 @@ class Upload extends \Opencart\System\Engine\Controller {
 		}
 
 		$data['sort_name'] = $this->url->link('tool/upload|list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
-		$data['sort_filename'] = $this->url->link('tool/upload|list', 'user_token=' . $this->session->data['user_token'] . '&sort=filename' . $url);
+		$data['sort_code'] = $this->url->link('tool/upload|list', 'user_token=' . $this->session->data['user_token'] . '&sort=code' . $url);
 		$data['sort_date_added'] = $this->url->link('tool/upload|list', 'user_token=' . $this->session->data['user_token'] . '&sort=date_added' . $url);
 
 		$url = '';
@@ -205,13 +205,13 @@ class Upload extends \Opencart\System\Engine\Controller {
 			$selected = [];
 		}
 
-		$this->load->model('tool/upload');
-
 		if (!$this->user->hasPermission('modify', 'tool/upload')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
 		if (!$json) {
+			$this->load->model('tool/upload');
+
 			foreach ($selected as $upload_id) {
 				// Remove file before deleting DB record.
 				$upload_info = $this->model_tool_upload->getUpload($upload_id);
@@ -231,13 +231,15 @@ class Upload extends \Opencart\System\Engine\Controller {
 	}
 
 	public function download(): void {
-		$this->load->model('tool/upload');
+		$this->load->language('tool/upload');
 
 		if (isset($this->request->get['code'])) {
 			$code = $this->request->get['code'];
 		} else {
 			$code = 0;
 		}
+
+		$this->load->model('tool/upload');
 
 		$upload_info = $this->model_tool_upload->getUploadByCode($code);
 
@@ -357,7 +359,7 @@ class Upload extends \Opencart\System\Engine\Controller {
 
 			$json['code'] = $this->model_tool_upload->addUpload($filename, $file);
 
-			$json['success'] = $this->language->get('text_upload');
+			$json['success'] = $this->language->get('text_success');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

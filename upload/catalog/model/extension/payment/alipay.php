@@ -13,7 +13,6 @@ class ModelExtensionPaymentAlipay extends Model {
 	private $returnUrl;
 	private $format = "json";
 	private $signtype = "RSA2";
-
 	private $apiParas = array();
 
 	public function getMethod($address, $total) {
@@ -56,42 +55,48 @@ class ModelExtensionPaymentAlipay extends Model {
 		$this->returnUrl = $alipay_config['return_url'];
 
 		if (empty($this->appid)||trim($this->appid)=="") {
-			throw new Exception("appid should not be NULL!");
+			throw new \Exception("appid should not be NULL!");
 		}
+		
 		if (empty($this->private_key)||trim($this->private_key)=="") {
-			throw new Exception("private_key should not be NULL!");
+			throw new \Exception("private_key should not be NULL!");
 		}
+		
 		if (empty($this->alipay_public_key)||trim($this->alipay_public_key)=="") {
-			throw new Exception("alipay_public_key should not be NULL!");
+			throw new \Exception("alipay_public_key should not be NULL!");
 		}
+		
 		if (empty($this->postCharset)||trim($this->postCharset)=="") {
-			throw new Exception("charset should not be NULL!");
+			throw new \Exception("charset should not be NULL!");
 		}
+		
 		if (empty($this->gateway_url)||trim($this->gateway_url)=="") {
-			throw new Exception("gateway_url should not be NULL!");
+			throw new \Exception("gateway_url should not be NULL!");
 		}
 	}
 
-	function pagePay($builder,$config) {
+	function pagePay($builder, $config) {
 		$this->setParams($config);
-		$biz_content=null;
-		if(!empty($builder)){
-			$biz_content = json_encode($builder,JSON_UNESCAPED_UNICODE);
+		
+		$biz_content = null;
+		
+		if (!empty($builder)) {
+			$biz_content = json_encode($builder, JSON_UNESCAPED_UNICODE);
 		}
 
-		$log = new Log($this->logFileName);
+		$log = new \Log($this->logFileName);
 		$log->write($biz_content);
 
-		$this->apiParas["biz_content"] = $biz_content;
+		$this->apiParas['biz_content'] = $biz_content;
 
-		$response = $this->pageExecute($this, "post");
-		$log = new Log($this->logFileName);
-		$log->write("response: ".var_export($response,true));
+		$response = $this->pageExecute($this, 'post');
+		
+		$log->write("response: ".var_export($response, true));
 
 		return $response;
 	}
 
-	function check($arr, $config){
+	function check($arr, $config) {
 		$this->setParams($config);
 
 		$result = $this->rsaCheckV1($arr, $this->signtype);
@@ -99,7 +104,7 @@ class ModelExtensionPaymentAlipay extends Model {
 		return $result;
 	}
 
-	public function pageExecute($request, $httpmethod = "POST") {
+	public function pageExecute($request, $httpmethod = 'POST') {
 		$iv=$this->apiVersion;
 
 		$sysParams["app_id"] = $this->appid;
@@ -118,22 +123,25 @@ class ModelExtensionPaymentAlipay extends Model {
 
 		$totalParams = array_merge($apiParams, $sysParams);
 
-		$totalParams["sign"] = $this->generateSign($totalParams, $this->signtype);
+		$totalParams['sign'] = $this->generateSign($totalParams, $this->signtype);
 
-		if ("GET" == strtoupper($httpmethod)) {
-			$preString=$this->getSignContentUrlencode($totalParams);
-			$requestUrl = $this->gateway_url."?".$preString;
+		if (strtoupper($httpmethod) == "GET") {
+			$preString = $this->getSignContentUrlencode($totalParams);
+			
+			$requestUrl = $this->gateway_url . "?" . $preString;
 
 			return $requestUrl;
 		} else {
 			foreach ($totalParams as $key => $value) {
-				if (false === $this->checkEmpty($value)) {
-					$value = str_replace("\"", "&quot;", $value);
+				if ($this->checkEmpty($value) === false) {
+					$value = str_replace('"', '&quot;', $value);
+					
 					$totalParams[$key] = $value;
 				} else {
 					unset($totalParams[$key]);
 				}
 			}
+			
 			return $totalParams;
 		}
 	}
@@ -151,20 +159,23 @@ class ModelExtensionPaymentAlipay extends Model {
 
 	public function rsaCheckV1($params, $signType='RSA') {
 		$sign = $params['sign'];
+		
 		$params['sign_type'] = null;
 		$params['sign'] = null;
+		
 		return $this->verify($this->getSignContent($params), $sign, $signType);
 	}
 
 	function verify($data, $sign, $signType = 'RSA') {
 		$pubKey= $this->alipay_public_key;
+		
 		$res = "-----BEGIN PUBLIC KEY-----\n" .
 			wordwrap($pubKey, 64, "\n", true) .
 			"\n-----END PUBLIC KEY-----";
 
 		(trim($pubKey)) or die('Alipay public key error!');
 
-		if ("RSA2" == $signType) {
+		if ($signType == 'RSA2') {
 			$result = (bool)openssl_verify($data, base64_decode($sign), $res, OPENSSL_ALGO_SHA256);
 		} else {
 			$result = (bool)openssl_verify($data, base64_decode($sign), $res);
@@ -177,19 +188,23 @@ class ModelExtensionPaymentAlipay extends Model {
 		ksort($params);
 
 		$stringToBeSigned = "";
+		
 		$i = 0;
+		
 		foreach ($params as $k => $v) {
-			if (false === $this->checkEmpty($v) && "@" != substr($v, 0, 1)) {
+			if ($this->checkEmpty($v) === false && "@" != substr($v, 0, 1)) {
 				if ($i == 0) {
 					$stringToBeSigned .= "$k" . "=" . "$v";
 				} else {
 					$stringToBeSigned .= "&" . "$k" . "=" . "$v";
 				}
+				
 				$i++;
 			}
 		}
 
 		unset ($k, $v);
+		
 		return $stringToBeSigned;
 	}
 
@@ -199,6 +214,7 @@ class ModelExtensionPaymentAlipay extends Model {
 
 	protected function sign($data, $signType = "RSA") {
 		$priKey=$this->private_key;
+		
 		$res = "-----BEGIN RSA PRIVATE KEY-----\n" .
 			wordwrap($priKey, 64, "\n", true) .
 			"\n-----END RSA PRIVATE KEY-----";
@@ -210,6 +226,7 @@ class ModelExtensionPaymentAlipay extends Model {
 		}
 
 		$sign = base64_encode($sign);
+		
 		return $sign;
 	}
 

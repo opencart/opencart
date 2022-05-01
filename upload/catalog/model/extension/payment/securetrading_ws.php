@@ -63,7 +63,6 @@ class ModelExtensionPaymentSecureTradingWs extends Model {
 	}
 
 	public function format($number, $currency, $value = '', $format = false) {
-
 		$decimal_place = $this->currency->getDecimalPlace($currency);
 
 		if (!$value) {
@@ -80,9 +79,9 @@ class ModelExtensionPaymentSecureTradingWs extends Model {
 	}
 
 	public function getOrder($order_id) {
-		$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "securetrading_ws_order` WHERE `order_id` = '" . (int)$order_id . "' LIMIT 1");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "securetrading_ws_order` WHERE `order_id` = '" . (int)$order_id . "' LIMIT 1");
 
-		return $qry->row;
+		return $query->row;
 	}
 
 	public function addMd($order_id, $md) {
@@ -102,13 +101,9 @@ class ModelExtensionPaymentSecureTradingWs extends Model {
 	}
 
 	public function getOrderId($md) {
-		$row = $this->db->query("SELECT order_id FROM " . DB_PREFIX . "securetrading_ws_order WHERE md = '" . $this->db->escape($md) . "' LIMIT 1")->row;
+		$query = $this->db->query("SELECT order_id FROM " . DB_PREFIX . "securetrading_ws_order WHERE md = '" . $this->db->escape($md) . "' LIMIT 1");
 
-		if (isset($row['order_id']) && !empty($row['order_id'])) {
-			return $row['order_id'];
-		} else {
-			return false;
-		}
+		return $query->row['order_id'];
 	}
 
 	public function confirmOrder($order_id, $order_status_id, $comment = '', $notify = false) {
@@ -124,7 +119,7 @@ class ModelExtensionPaymentSecureTradingWs extends Model {
 
 		$amount = $this->currency->format($order_info['total'], $order_info['currency_code'], false, false);
 
-		switch($this->config->get('payment_securetrading_ws_settle_status')){
+		switch($this->config->get('payment_securetrading_ws_settle_status')) {
 			case 0:
 				$trans_type = 'auth';
 				break;
@@ -155,7 +150,7 @@ class ModelExtensionPaymentSecureTradingWs extends Model {
 	}
 
 	public function logger($message) {
-		$log = new Log('secure.log');
+		$log = new \Log('secure.log');
 		$log->write($message);
 	}
 }

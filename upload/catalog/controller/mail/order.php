@@ -57,7 +57,7 @@ class ControllerMailOrder extends Controller {
 		}
 		
 		// Load the language for any mails that might be required to be sent out
-		$language = new Language($order_info['language_code']);
+		$language = new \Language($order_info['language_code']);
 		$language->load($order_info['language_code']);
 		$language->load('mail/order_add');
 
@@ -259,7 +259,7 @@ class ControllerMailOrder extends Controller {
 			$from = $this->config->get('config_email');
 		}
 		
-		$mail = new Mail($this->config->get('config_mail_engine'));
+		$mail = new \Mail($this->config->get('config_mail_engine'));
 		$mail->parameter = $this->config->get('config_mail_parameter');
 		$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
 		$mail->smtp_username = $this->config->get('config_mail_smtp_username');
@@ -276,7 +276,7 @@ class ControllerMailOrder extends Controller {
 	}
 	
 	public function edit($order_info, $order_status_id, $comment) {
-		$language = new Language($order_info['language_code']);
+		$language = new \Language($order_info['language_code']);
 		$language->load($order_info['language_code']);
 		$language->load('mail/order_edit');
 
@@ -314,7 +314,7 @@ class ControllerMailOrder extends Controller {
 			$from = $this->config->get('config_email');
 		}
 		
-		$mail = new Mail($this->config->get('config_mail_engine'));
+		$mail = new \Mail($this->config->get('config_mail_engine'));
 		$mail->parameter = $this->config->get('config_mail_parameter');
 		$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
 		$mail->smtp_username = $this->config->get('config_mail_smtp_username');
@@ -444,7 +444,7 @@ class ControllerMailOrder extends Controller {
 
 			$data['comment'] = strip_tags($order_info['comment']);
 
-			$mail = new Mail($this->config->get('config_mail_engine'));
+			$mail = new \Mail($this->config->get('config_mail_engine'));
 			$mail->parameter = $this->config->get('config_mail_parameter');
 			$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
 			$mail->smtp_username = $this->config->get('config_mail_smtp_username');

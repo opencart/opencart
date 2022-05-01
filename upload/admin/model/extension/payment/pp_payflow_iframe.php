@@ -31,7 +31,7 @@ class ModelExtensionPaymentPPPayflowIFrame extends Model {
 
 	public function log($message) {
 		if ($this->config->get('payment_pp_payflow_iframe_debug')) {
-			$log = new Log('payflow-iframe.log');
+			$log = new \Log('payflow-iframe.log');
 			$log->write($message);
 		}
 	}
@@ -39,13 +39,7 @@ class ModelExtensionPaymentPPPayflowIFrame extends Model {
 	public function getOrder($order_id) {
 		$result = $this->db->query("SELECT * FROM " . DB_PREFIX . "paypal_payflow_iframe_order WHERE order_id = " . (int)$order_id);
 
-		if ($result->num_rows) {
-			$order = $result->row;
-		} else {
-			$order = false;
-		}
-
-		return $order;
+		return $result->row;
 	}
 
 	public function updateOrderStatus($order_id, $status) {
@@ -57,37 +51,19 @@ class ModelExtensionPaymentPPPayflowIFrame extends Model {
 	}
 
 	public function addTransaction($data) {
-		$this->db->query("
-			INSERT INTO " . DB_PREFIX . "paypal_payflow_iframe_order_transaction
-			SET order_id = " . (int)$data['order_id'] . ",
-				transaction_reference = '" . $this->db->escape($data['transaction_reference']) . "',
-				transaction_type = '" . $this->db->escape($data['type']) . "',
-				`time` = NOW(),
-				`amount` = '" . $this->db->escape($data['amount']) .  "'
-		");
+		$this->db->query("INSERT INTO " . DB_PREFIX . "paypal_payflow_iframe_order_transaction SET order_id = " . (int)$data['order_id'] . ", transaction_reference = '" . $this->db->escape($data['transaction_reference']) . "', transaction_type = '" . $this->db->escape($data['type']) . "', `time` = NOW(), `amount` = '" . $this->db->escape($data['amount']) .  "'");
 	}
 
 	public function getTransactions($order_id) {
-		return $this->db->query("
-			SELECT *
-			FROM " . DB_PREFIX . "paypal_payflow_iframe_order_transaction
-			WHERE order_id = " . (int)$order_id . "
-			ORDER BY `time` ASC")->rows;
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "paypal_payflow_iframe_order_transaction WHERE order_id = " . (int)$order_id . " ORDER BY `time` ASC");
+		
+		return $query->rows;
 	}
 
 	public function getTransaction($transaction_reference) {
-		$result = $this->db->query("
-			SELECT *
-			FROM " . DB_PREFIX . "paypal_payflow_iframe_order_transaction
-			WHERE transaction_reference = '" . $this->db->escape($transaction_reference) . "'")->row;
+		$result = $this->db->query("SELECT * FROM " . DB_PREFIX . "paypal_payflow_iframe_order_transaction WHERE transaction_reference = '" . $this->db->escape($transaction_reference) . "'");
 
-		if ($result) {
-			$transaction = $result;
-		} else {
-			$transaction = false;
-		}
-
-		return $transaction;
+		return $result->row;
 	}
 
 	public function call($data) {

@@ -51,16 +51,20 @@ class ModelExtensionPaymentPilibaba extends Model {
 		$this->log('URL: ' . $url);
 
 		$ch = curl_init();
+		
 		curl_setopt($ch, CURLOPT_URL, $url);
 		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch, CURLOPT_HEADER, false);
 		curl_setopt($ch, CURLOPT_TIMEOUT, 30);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+		
 		$response = curl_exec($ch);
+		
 		if (curl_errno($ch)) {
 			$this->log('cURL error: ' . curl_errno($ch));
 		}
+		
 		curl_close($ch);
 
 		$this->log('Response: ' . print_r($response, true));
@@ -80,7 +84,7 @@ class ModelExtensionPaymentPilibaba extends Model {
 
 	public function log($data) {
 		if ($this->config->get('payment_pilibaba_logging')) {
-			$log = new Log('pilibaba.log');
+			$log = new \Log('pilibaba.log');
 
 			$log->write($data);
 		}

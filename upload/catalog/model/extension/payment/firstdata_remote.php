@@ -47,7 +47,9 @@ class ModelExtensionPaymentFirstdataRemote extends Model {
 		$currency = $this->mapCurrency($order_info['currency_code']);
 
 		$token = '';
+		
 		$payment_token = '';
+		
 		if ($this->config->get('firstdata_remote_card_storage') == 1) {
 			if (isset($this->request->post['cc_choice']) && $this->request->post['cc_choice'] != 'new') {
 				$payment_token = $this->request->post['cc_choice'];
@@ -127,6 +129,7 @@ class ModelExtensionPaymentFirstdataRemote extends Model {
 		$fault = $xml->xpath('//soap:Fault');
 
 		$response['fault'] = '';
+		
 		if (!empty($fault[0]) && isset($fault[0]->detail)) {
 			$response['fault'] = (string)$fault[0]->detail;
 		}
@@ -195,6 +198,7 @@ class ModelExtensionPaymentFirstdataRemote extends Model {
 
 	public function call($xml) {
 		$ch = curl_init();
+		
 		curl_setopt($ch, CURLOPT_URL, "https://test.ipg-online.com/ipgapi/services");
 		curl_setopt($ch, CURLOPT_POST, 1);
 		curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Type: text/xml"));
@@ -209,6 +213,7 @@ class ModelExtensionPaymentFirstdataRemote extends Model {
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $xml);
 		//curl_setopt($ch, CURLOPT_STDERR, fopen(DIR_LOGS . "/headers.txt", "w+"));
 		curl_setopt($ch, CURLOPT_VERBOSE, true);
+		
 		$response = curl_exec ($ch);
 
 		$this->logger('Post data: ' . print_r($this->request->post, 1));
@@ -247,7 +252,7 @@ class ModelExtensionPaymentFirstdataRemote extends Model {
 
 	public function logger($message) {
 		if ($this->config->get('firstdata_remote_debug') == 1) {
-			$log = new Log('firstdata_remote.log');
+			$log = new \Log('firstdata_remote.log');
 			$log->write($message);
 		}
 	}

@@ -62,6 +62,7 @@ class ModelExtensionPaymentFirstdata extends Model {
 
 			$tmp = $timestamp . ' . ' . $merchant_id . ' . ' . $firstdata_order['order_ref'] . ' . . . ';
 			$hash = sha1($tmp);
+			
 			$tmp = $hash . ' . ' . $secret;
 			$hash = sha1($tmp);
 
@@ -78,13 +79,16 @@ class ModelExtensionPaymentFirstdata extends Model {
 			$this->logger('Void XML request:\r\n' . print_r(simplexml_load_string($xml), 1));
 
 			$ch = curl_init();
+			
 			curl_setopt($ch, CURLOPT_URL, "https://epage.payandshop.com/epage-remote.cgi");
 			curl_setopt($ch, CURLOPT_POST, 1);
 			curl_setopt($ch, CURLOPT_USERAGENT, "OpenCart " . VERSION);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 			curl_setopt($ch, CURLOPT_POSTFIELDS, $xml);
 			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+			
 			$response = curl_exec ($ch);
+			
 			curl_close ($ch);
 
 			return simplexml_load_string($response);
@@ -129,6 +133,7 @@ class ModelExtensionPaymentFirstdata extends Model {
 			}
 
 			$xml = '';
+			
 			$xml .= '<request type="' . $settle_type . '" timestamp="' . $timestamp . '">';
 			$xml .= '<merchantid>' . $merchant_id . '</merchantid>';
 			$xml .= '<account>' . $firstdata_order['account'] . '</account>';
@@ -143,13 +148,16 @@ class ModelExtensionPaymentFirstdata extends Model {
 			$this->logger('Settle XML request:\r\n' . print_r(simplexml_load_string($xml), 1));
 
 			$ch = curl_init();
+			
 			curl_setopt($ch, CURLOPT_URL, "https://epage.payandshop.com/epage-remote.cgi");
 			curl_setopt($ch, CURLOPT_POST, 1);
 			curl_setopt($ch, CURLOPT_USERAGENT, "OpenCart " . VERSION);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 			curl_setopt($ch, CURLOPT_POSTFIELDS, $xml);
 			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+			
 			$response = curl_exec ($ch);
+			
 			curl_close ($ch);
 
 			return simplexml_load_string($response);
@@ -195,7 +203,7 @@ class ModelExtensionPaymentFirstdata extends Model {
 
 	public function logger($message) {
 		if ($this->config->get('payment_firstdata_debug') == 1) {
-			$log = new Log('firstdata.log');
+			$log = new \Log('firstdata.log');
 			$log->write($message);
 		}
 	}

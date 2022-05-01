@@ -9,7 +9,7 @@ class ModelExtensionPaymentPPBraintree extends Model {
 			}
 
 			return $client_token;
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			$this->log($e->getMessage());
 
 			return false;
@@ -29,7 +29,7 @@ class ModelExtensionPaymentPPBraintree extends Model {
 			} else {
 				return false;
 			}
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			$this->log($e->getMessage());
 
 			return false;
@@ -49,7 +49,7 @@ class ModelExtensionPaymentPPBraintree extends Model {
 			} else {
 				return false;
 			}
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			$this->log($e->getMessage());
 
 			return false;
@@ -69,7 +69,7 @@ class ModelExtensionPaymentPPBraintree extends Model {
 			} else {
 				return false;
 			}
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			$this->log($e->getMessage());
 
 			return false;
@@ -89,7 +89,7 @@ class ModelExtensionPaymentPPBraintree extends Model {
 			} else {
 				return false;
 			}
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			$this->log($e->getMessage());
 
 			return false;
@@ -109,7 +109,7 @@ class ModelExtensionPaymentPPBraintree extends Model {
 			} else {
 				return false;
 			}
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
             $this->log($e->getMessage());
 
 			return false;
@@ -126,7 +126,7 @@ class ModelExtensionPaymentPPBraintree extends Model {
 			}
 
 			return $client_token;
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
             $this->log($e->getMessage());
 
 			return false;
@@ -147,7 +147,7 @@ class ModelExtensionPaymentPPBraintree extends Model {
 			} else {
 				return false;
 			}
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
             $this->log($e->getMessage());
 
 			return false;
@@ -158,10 +158,11 @@ class ModelExtensionPaymentPPBraintree extends Model {
 		return new Braintree_Gateway(array('accessToken' => $access_token));
 	}
 
-	public function log($data) {
+	public function addLog($data) {
 		if ($this->config->get('payment_pp_braintree_debug')) {
 			$backtrace = debug_backtrace();
-			$log = new Log('braintree.log');
+			
+			$log = new \Log('braintree.log');
 			$log->write('(' . $backtrace[1]['class'] . '::' . $backtrace[1]['function'] . ') - ' . print_r($data, true));
 		}
 	}

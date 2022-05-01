@@ -309,7 +309,7 @@ class ControllerSettingStore extends Controller {
 		$data['themes'] = array();
 
 		// Create a new language container so we don't pollute the current one
-		$language = new Language($this->config->get('config_language'));
+		$language = new \Language($this->config->get('config_language'));
 
 		$this->load->model('setting/extension');
 

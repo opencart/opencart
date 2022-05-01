@@ -48,7 +48,6 @@ class ModelExtensionPaymentBluepayredirect extends Model {
 		$bluepay_redirect_order = $this->getOrder($order_id);
 
 		if (!empty($bluepay_redirect_order) && $bluepay_redirect_order['release_status'] == 1) {
-
 			$void_data = array();
 
 			$void_data['MERCHANT'] = $this->config->get('payment_bluepay_redirect_account_id');
@@ -82,6 +81,7 @@ class ModelExtensionPaymentBluepayredirect extends Model {
 
 	public function release($order_id, $amount) {
 		$bluepay_redirect_order = $this->getOrder($order_id);
+		
 		$total_released = $this->getTotalReleased($bluepay_redirect_order['bluepay_redirect_order_id']);
 
 		if (!empty($bluepay_redirect_order) && $bluepay_redirect_order['release_status'] == 0 && ($total_released + $amount <= $bluepay_redirect_order['total'])) {
@@ -156,11 +156,11 @@ class ModelExtensionPaymentBluepayredirect extends Model {
 	}
 
 	public function getOrder($order_id) {
-
 		$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "bluepay_redirect_order` WHERE `order_id` = '" . (int)$order_id . "' LIMIT 1");
 
 		if ($qry->num_rows) {
 			$order = $qry->row;
+			
 			$order['transactions'] = $this->getTransactions($order['bluepay_redirect_order_id']);
 
 			return $order;
@@ -209,6 +209,7 @@ class ModelExtensionPaymentBluepayredirect extends Model {
 		curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($post_data));
 
 		$response_data = curl_exec($curl);
+		
 		curl_close($curl);
 
 		return json_decode($response_data, true);
@@ -221,7 +222,7 @@ class ModelExtensionPaymentBluepayredirect extends Model {
 
 	public function logger($message) {
 		if ($this->config->get('payment_bluepay_redirect_debug') == 1) {
-			$log = new Log('bluepay_redirect.log');
+			$log = new \Log('bluepay_redirect.log');
 			$log->write($message);
 		}
 	}

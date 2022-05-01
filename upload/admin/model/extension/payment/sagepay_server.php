@@ -74,17 +74,19 @@ class ModelExtensionPaymentSagepayServer extends Model {
 		$sagepay_server_order = $this->getOrder($order_id);
 
 		if (!empty($sagepay_server_order) && $sagepay_server_order['release_status'] == 0) {
-
 			$void_data = array();
 
 			if ($this->config->get('payment_sagepay_server_test') == 'live') {
 				$url = 'https://live.sagepay.com/gateway/service/void.vsp';
+				
 				$void_data['VPSProtocol'] = '3.00';
 			} elseif ($this->config->get('payment_sagepay_server_test') == 'test') {
 				$url = 'https://test.sagepay.com/gateway/service/void.vsp';
+				
 				$void_data['VPSProtocol'] = '3.00';
 			} elseif ($this->config->get('payment_sagepay_server_test') == 'sim') {
 				$url = 'https://test.sagepay.com/Simulator/VSPServerGateway.asp?Service=VendorVoidTx';
+				
 				$void_data['VPSProtocol'] = '2.23';
 			}
 
@@ -116,11 +118,14 @@ class ModelExtensionPaymentSagepayServer extends Model {
 
 			if ($this->config->get('payment_sagepay_server_test') == 'live') {
 				$url = 'https://live.sagepay.com/gateway/service/release.vsp';
+				
 				$release_data['VPSProtocol'] = '3.00';
 			} elseif ($this->config->get('payment_sagepay_server_test') == 'test') {
 				$url = 'https://test.sagepay.com/gateway/service/release.vsp';
+				
 				$release_data['VPSProtocol'] = '3.00';
 			} elseif ($this->config->get('payment_sagepay_server_test') == 'sim') {
+				
 				$url = 'https://test.sagepay.com/Simulator/VSPServerGateway.asp?Service=VendorReleaseTx';
 				$release_data['VPSProtocol'] = '2.23';
 			}
@@ -153,17 +158,19 @@ class ModelExtensionPaymentSagepayServer extends Model {
 		$sagepay_server_order = $this->getOrder($order_id);
 
 		if (!empty($sagepay_server_order) && $sagepay_server_order['rebate_status'] != 1) {
-
 			$refund_data = array();
 
 			if ($this->config->get('payment_sagepay_server_test') == 'live') {
 				$url = 'https://live.sagepay.com/gateway/service/refund.vsp';
+				
 				$refund_data['VPSProtocol'] = '3.00';
 			} elseif ($this->config->get('payment_sagepay_server_test') == 'test') {
 				$url = 'https://test.sagepay.com/gateway/service/refund.vsp';
+				
 				$refund_data['VPSProtocol'] = '3.00';
 			} elseif ($this->config->get('payment_sagepay_server_test') == 'sim') {
 				$url = 'https://test.sagepay.com/Simulator/VSPServerGateway.asp?Service=VendorRefundTx';
+				
 				$refund_data['VPSProtocol'] = '2.23';
 			}
 
@@ -187,11 +194,10 @@ class ModelExtensionPaymentSagepayServer extends Model {
 	}
 
 	public function getOrder($order_id) {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "sagepay_server_order` WHERE `order_id` = '" . (int)$order_id . "' LIMIT 1");
 
-		$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "sagepay_server_order` WHERE `order_id` = '" . (int)$order_id . "' LIMIT 1");
-
-		if ($qry->num_rows) {
-			$order = $qry->row;
+		if ($query->num_rows) {
+			$order = $query->row;
 			$order['transactions'] = $this->getTransactions($order['sagepay_server_order_id']);
 
 			return $order;
@@ -201,10 +207,10 @@ class ModelExtensionPaymentSagepayServer extends Model {
 	}
 
 	private function getTransactions($sagepay_server_order_id) {
-		$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "sagepay_server_order_transaction` WHERE `sagepay_server_order_id` = '" . (int)$sagepay_server_order_id . "'");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "sagepay_server_order_transaction` WHERE `sagepay_server_order_id` = '" . (int)$sagepay_server_order_id . "'");
 
-		if ($qry->num_rows) {
-			return $qry->rows;
+		if ($query->num_rows) {
+			return $query->rows;
 		} else {
 			return false;
 		}
@@ -248,18 +254,21 @@ class ModelExtensionPaymentSagepayServer extends Model {
 		foreach ($response_info as $string) {
 			if (strpos($string, '=') && isset($i)) {
 				$parts = explode('=', $string, 2);
+				
 				$data['RepeatResponseData_' . $i][trim($parts[0])] = trim($parts[1]);
 			} elseif (strpos($string, '=')) {
 				$parts = explode('=', $string, 2);
+				
 				$data[trim($parts[0])] = trim($parts[1]);
 			}
 		}
+		
 		return $data;
 	}
 
 	public function logger($title, $data) {
 		if ($this->config->get('payment_sagepay_server_debug')) {
-			$log = new Log('sagepay_server.log');
+			$log = new \Log('sagepay_server.log');
 			$log->write($title . ': ' . print_r($data, 1));
 		}
 	}

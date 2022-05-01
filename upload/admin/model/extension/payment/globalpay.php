@@ -45,6 +45,7 @@ class ModelExtensionPaymentGlobalpay extends Model {
 
 			$tmp = $timestamp . '.' . $merchant_id . '.' . $globalpay_order['order_ref'] . '...';
 			$hash = sha1($tmp);
+			
 			$tmp = $hash . '.' . $secret;
 			$hash = sha1($tmp);
 
@@ -61,13 +62,16 @@ class ModelExtensionPaymentGlobalpay extends Model {
 			$this->logger('Void XML request:\r\n' . print_r(simplexml_load_string($xml), 1));
 
 			$ch = curl_init();
+			
 			curl_setopt($ch, CURLOPT_URL, "https://epage.payandshop.com/epage-remote.cgi");
 			curl_setopt($ch, CURLOPT_POST, 1);
 			curl_setopt($ch, CURLOPT_USERAGENT, "OpenCart " . VERSION);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 			curl_setopt($ch, CURLOPT_POSTFIELDS, $xml);
 			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+			
 			$response = curl_exec ($ch);
+			
 			curl_close ($ch);
 
 			return simplexml_load_string($response);
@@ -126,13 +130,16 @@ class ModelExtensionPaymentGlobalpay extends Model {
 			$this->logger('Settle XML request:\r\n' . print_r(simplexml_load_string($xml), 1));
 
 			$ch = curl_init();
+			
 			curl_setopt($ch, CURLOPT_URL, "https://epage.payandshop.com/epage-remote.cgi");
 			curl_setopt($ch, CURLOPT_POST, 1);
 			curl_setopt($ch, CURLOPT_USERAGENT, "OpenCart " . VERSION);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 			curl_setopt($ch, CURLOPT_POSTFIELDS, $xml);
 			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+			
 			$response = curl_exec ($ch);
+			
 			curl_close ($ch);
 
 			return simplexml_load_string($response);
@@ -174,6 +181,7 @@ class ModelExtensionPaymentGlobalpay extends Model {
 
 			$tmp = $timestamp . '.' . $merchant_id . '.' . $order_ref . '.' . (int)round($amount*100) . '.' . $globalpay_order['currency_code'] . '.';
 			$hash = sha1($tmp);
+			
 			$tmp = $hash . '.' . $secret;
 			$hash = sha1($tmp);
 
@@ -194,13 +202,16 @@ class ModelExtensionPaymentGlobalpay extends Model {
 			$this->logger('Rebate XML request:\r\n' . print_r(simplexml_load_string($xml), 1));
 
 			$ch = curl_init();
+			
 			curl_setopt($ch, CURLOPT_URL, "https://epage.payandshop.com/epage-remote.cgi");
 			curl_setopt($ch, CURLOPT_POST, 1);
 			curl_setopt($ch, CURLOPT_USERAGENT, "OpenCart " . VERSION);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 			curl_setopt($ch, CURLOPT_POSTFIELDS, $xml);
 			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+			
 			$response = curl_exec ($ch);
+			
 			curl_close ($ch);
 
 			return simplexml_load_string($response);
@@ -246,7 +257,7 @@ class ModelExtensionPaymentGlobalpay extends Model {
 
 	public function logger($message) {
 		if ($this->config->get('payment_globalpay_debug') == 1) {
-			$log = new Log('globalpay.log');
+			$log = new \Log('globalpay.log');
 			$log->write($message);
 		}
 	}

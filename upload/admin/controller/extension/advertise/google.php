@@ -69,7 +69,7 @@ class ControllerExtensionAdvertiseGoogle extends Controller {
 
             // Pull the campaign reports
             $this->googleshopping->getCampaignReports();
-        } catch (ConnectionException $e) {
+        } catch (\ConnectionException $e) {
             $this->session->data['error'] = $e->getMessage();
 
             $this->response->redirect($this->url->link('extension/advertise/google/connect', 'store_id=' . $this->store_id . '&user_token=' . $this->session->data['user_token'], true));
@@ -88,7 +88,7 @@ class ControllerExtensionAdvertiseGoogle extends Controller {
                 $this->session->data['success'] = $this->language->get('success_index');
 
                 $this->response->redirect($this->url->link('extension/advertise/google', 'store_id=' . $this->store_id . '&user_token=' . $this->session->data['user_token'], true));
-            } catch (ConnectionException $e) {
+            } catch (\ConnectionException $e) {
                 $this->session->data['error'] = $e->getMessage();
 
                 $this->response->redirect($this->url->link('extension/advertise/google/connect', 'store_id=' . $this->store_id . '&user_token=' . $this->session->data['user_token'], true));
@@ -368,7 +368,7 @@ class ControllerExtensionAdvertiseGoogle extends Controller {
                 $this->session->data['advertise_google']['state'] = $state;
 
                 $this->response->redirect($this->googleshopping->getMerchantAuthUrl($auth_url_data));
-            } catch (ConnectionException $e) {
+            } catch (\ConnectionException $e) {
                 $this->session->data['error'] = $e->getMessage();
 
                 $this->response->redirect($this->url->link('extension/advertise/google/connect', 'store_id=' . $this->store_id . '&user_token=' . $this->session->data['user_token'], true));
@@ -452,7 +452,7 @@ class ControllerExtensionAdvertiseGoogle extends Controller {
                 $this->session->data['success'] = $this->language->get('success_shipping_taxes');
 
                 $this->response->redirect($this->url->link('extension/advertise/google', 'store_id=' . $this->store_id . '&user_token=' . $this->session->data['user_token'], true));
-            } catch (ConnectionException $e) {
+            } catch (\ConnectionException $e) {
                 $this->session->data['error'] = $e->getMessage();
 
                 $this->response->redirect($this->url->link('extension/advertise/google/connect', 'store_id=' . $this->store_id . '&user_token=' . $this->session->data['user_token'], true));
@@ -465,7 +465,7 @@ class ControllerExtensionAdvertiseGoogle extends Controller {
 
         try {
             $available_carriers = $this->googleshopping->getAvailableCarriers();
-        } catch (ConnectionException $e) {
+        } catch (\ConnectionException $e) {
             $this->session->data['error'] = $e->getMessage();
 
             $this->response->redirect($this->url->link('extension/advertise/google/connect', 'store_id=' . $this->store_id . '&user_token=' . $this->session->data['user_token'], true));
@@ -609,7 +609,7 @@ class ControllerExtensionAdvertiseGoogle extends Controller {
                 $this->session->data['success'] = $this->language->get('success_mapping');
 
                 $this->response->redirect($this->url->link('extension/advertise/google', 'store_id=' . $this->store_id . '&user_token=' . $this->session->data['user_token'], true));
-            } catch (ConnectionException $e) {
+            } catch (\ConnectionException $e) {
                 $this->session->data['error'] = $e->getMessage();
 
                 $this->response->redirect($this->url->link('extension/advertise/google/connect', 'store_id=' . $this->store_id . '&user_token=' . $this->session->data['user_token'], true));
@@ -739,7 +739,7 @@ class ControllerExtensionAdvertiseGoogle extends Controller {
         if ($this->validatePermission()) {
             try {
                 $json['status'] = $this->googleshopping->testCampaigns();
-            } catch (ConnectionException $e) {
+            } catch (\ConnectionException $e) {
                 $this->session->data['error'] = $e->getMessage();
 
                 $json['redirect'] = html_entity_decode($this->url->link('extension/advertise/google/connect', 'store_id=' . $this->store_id . '&user_token=' . $this->session->data['user_token'], true), ENT_QUOTES, 'UTF-8');
@@ -899,7 +899,7 @@ class ControllerExtensionAdvertiseGoogle extends Controller {
                     $this->googleshopping->pushTargets();
 
                     $json['success'] = $this->language->get('success_target_add');
-                } catch (ConnectionException $e) {
+                } catch (\ConnectionException $e) {
                     $this->session->data['error'] = $e->getMessage();
 
                     $json['redirect'] = html_entity_decode($this->url->link('extension/advertise/google/connect', 'store_id=' . $this->store_id . '&user_token=' . $this->session->data['user_token'], true), ENT_QUOTES, 'UTF-8');
@@ -961,7 +961,7 @@ class ControllerExtensionAdvertiseGoogle extends Controller {
                     $this->googleshopping->pushTargets();
 
                     $json['success'] = $this->language->get('success_target_edit');
-                } catch (ConnectionException $e) {
+                } catch (\ConnectionException $e) {
                     $this->session->data['error'] = $e->getMessage();
 
                     $json['redirect'] = html_entity_decode($this->url->link('extension/advertise/google/connect', 'store_id=' . $this->store_id . '&user_token=' . $this->session->data['user_token'], true), ENT_QUOTES, 'UTF-8');
@@ -1018,7 +1018,7 @@ class ControllerExtensionAdvertiseGoogle extends Controller {
                     $this->googleshopping->deleteTarget($advertise_google_target_id);
 
                     $json['success'] = $this->language->get('success_target_delete');
-                } catch (ConnectionException $e) {
+                } catch (\ConnectionException $e) {
                     $this->session->data['error'] = $e->getMessage();
 
                     $json['redirect'] = html_entity_decode($this->url->link('extension/advertise/google/connect', 'store_id=' . $this->store_id . '&user_token=' . $this->session->data['user_token'], true), ENT_QUOTES, 'UTF-8');
@@ -1105,7 +1105,7 @@ class ControllerExtensionAdvertiseGoogle extends Controller {
                 if (count($this->googleshopping->getTargets($this->store_id)) > 0) {
                     $this->response->redirect($this->url->link('extension/advertise/google/campaign', 'store_id=' . $this->store_id . '&user_token=' . $this->session->data['user_token'], true));
                 }
-            } catch (ConnectionException $e) {
+            } catch (\ConnectionException $e) {
                 $this->session->data['error'] = $e->getMessage();
 
                 unset($this->session->data['advertise_google']);
@@ -1164,7 +1164,7 @@ class ControllerExtensionAdvertiseGoogle extends Controller {
                 if (count($this->googleshopping->getTargets($this->store_id)) > 0 && $this->setting->get('advertise_google_gmc_account_selected')) {
                     $this->response->redirect($this->url->link('extension/advertise/google/campaign', 'store_id=' . $this->store_id . '&user_token=' . $this->session->data['user_token'], true));
                 }
-            } catch (ConnectionException $e) {
+            } catch (\ConnectionException $e) {
                 $this->session->data['error'] = $e->getMessage();
 
                 $this->response->redirect($this->url->link('extension/advertise/google/connect', 'store_id=' . $this->store_id . '&user_token=' . $this->session->data['user_token'], true));
@@ -1321,7 +1321,7 @@ class ControllerExtensionAdvertiseGoogle extends Controller {
                 $this->model_setting_setting->editSetting('advertise_google', $setting, $this->store_id);
 
                 $this->session->data['success'] = $this->language->get('success_disconnect');
-            } catch (ConnectionException $e) {
+            } catch (\ConnectionException $e) {
                 $this->session->data['error'] = $e->getMessage();
 
                 $this->response->redirect($this->url->link('extension/advertise/google/connect', 'store_id=' . $this->store_id . '&user_token=' . $this->session->data['user_token'], true));

@@ -18,7 +18,7 @@ class ModelExtensionPaymentCardinity extends Model {
 	}
 
 	public function verifyCredentials($client) {
-		$method = new Payment\GetAll(10);
+		$method = new \Payment\GetAll(10);
 
 		try {
 			$client->call($method);
@@ -32,7 +32,7 @@ class ModelExtensionPaymentCardinity extends Model {
 	}
 
 	public function getPayment($client, $payment_id) {
-		$method = new Payment\Get($payment_id);
+		$method = new \Payment\Get($payment_id);
 
 		try {
 			$payment = $client->call($method);
@@ -46,7 +46,7 @@ class ModelExtensionPaymentCardinity extends Model {
 	}
 
 	public function getRefunds($client, $payment_id) {
-		$method = new Refund\GetAll($payment_id);
+		$method = new \Refund\GetAll($payment_id);
 
 		try {
 			$refunds = $client->call($method);
@@ -60,7 +60,7 @@ class ModelExtensionPaymentCardinity extends Model {
 	}
 
 	public function refundPayment($client, $payment_id, $amount, $description) {
-		$method = new Refund\Create($payment_id, $amount, $description);
+		$method = new \Refund\Create($payment_id, $amount, $description);
 
 		try {
 			$refund = $client->call($method);
@@ -76,7 +76,8 @@ class ModelExtensionPaymentCardinity extends Model {
 	public function log($data) {
 		if ($this->config->get('payment_cardinity_debug')) {
 			$backtrace = debug_backtrace();
-			$log = new Log('cardinity.log');
+			
+			$log = new \Log('cardinity.log');			
 			$log->write('(' . $backtrace[1]['class'] . '::' . $backtrace[1]['function'] . ') - ' . print_r($data, true));
 		}
 	}

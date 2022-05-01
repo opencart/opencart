@@ -73,7 +73,6 @@ class ModelExtensionPaymentSagepayDirect extends Model {
 		$sagepay_direct_order = $this->getOrder($order_id);
 
 		if (!empty($sagepay_direct_order) && $sagepay_direct_order['release_status'] == 0) {
-
 			$void_data = array();
 
 			if ($this->config->get('payment_sagepay_direct_test') == 'live') {
@@ -108,6 +107,7 @@ class ModelExtensionPaymentSagepayDirect extends Model {
 
 	public function release($order_id, $amount) {
 		$sagepay_direct_order = $this->getOrder($order_id);
+		
 		$total_released = $this->getTotalReleased($sagepay_direct_order['sagepay_direct_order_id']);
 
 		if (!empty($sagepay_direct_order) && $sagepay_direct_order['release_status'] == 0 && ($total_released + $amount <= $sagepay_direct_order['total'])) {
@@ -148,7 +148,6 @@ class ModelExtensionPaymentSagepayDirect extends Model {
 		$sagepay_direct_order = $this->getOrder($order_id);
 
 		if (!empty($sagepay_direct_order) && $sagepay_direct_order['rebate_status'] != 1) {
-
 			$refund_data = array();
 
 			if ($this->config->get('payment_sagepay_direct_test') == 'live') {
@@ -186,11 +185,10 @@ class ModelExtensionPaymentSagepayDirect extends Model {
 	}
 
 	public function getOrder($order_id) {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "sagepay_direct_order` WHERE `order_id` = '" . (int)$order_id . "' LIMIT 1");
 
-		$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "sagepay_direct_order` WHERE `order_id` = '" . (int)$order_id . "' LIMIT 1");
-
-		if ($qry->num_rows) {
-			$order = $qry->row;
+		if ($query->num_rows) {
+			$order = $query->row;
 			$order['transactions'] = $this->getTransactions($order['sagepay_direct_order_id']);
 
 			return $order;
@@ -200,13 +198,9 @@ class ModelExtensionPaymentSagepayDirect extends Model {
 	}
 
 	private function getTransactions($sagepay_direct_order_id) {
-		$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "sagepay_direct_order_transaction` WHERE `sagepay_direct_order_id` = '" . (int)$sagepay_direct_order_id . "'");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "sagepay_direct_order_transaction` WHERE `sagepay_direct_order_id` = '" . (int)$sagepay_direct_order_id . "'");
 
-		if ($qry->num_rows) {
-			return $qry->rows;
-		} else {
-			return false;
-		}
+		return $query->rows;
 	}
 
 	public function addTransaction($sagepay_direct_order_id, $type, $total) {
@@ -253,12 +247,13 @@ class ModelExtensionPaymentSagepayDirect extends Model {
 				$data[trim($parts[0])] = trim($parts[1]);
 			}
 		}
+		
 		return $data;
 	}
 
 	public function logger($title, $data) {
 		if ($this->config->get('payment_sagepay_direct_debug')) {
-			$log = new Log('sagepay_direct.log');
+			$log = new \Log('sagepay_direct.log');
 			$log->write($title . ': ' . print_r($data, 1));
 		}
 	}

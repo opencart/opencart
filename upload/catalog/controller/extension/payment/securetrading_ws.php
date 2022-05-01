@@ -1,8 +1,9 @@
 <?php
 class ControllerExtensionPaymentSecureTradingWs extends Controller {
 	public function index() {
-		$this->load->model('checkout/order');
 		$this->load->language('extension/payment/securetrading_ws');
+		
+		$this->load->model('checkout/order');		
 
 		if(!isset($this->session->data['order_id'])) {
 			return false;
@@ -76,7 +77,7 @@ class ControllerExtensionPaymentSecureTradingWs extends Controller {
 
 		if ($order_info) {
 			if ($this->config->get('payment_securetrading_ws_3d_secure')) {
-				$requestblock_xml = new SimpleXMLElement('<requestblock></requestblock>');
+				$requestblock_xml = new \SimpleXMLElement('<requestblock></requestblock>');
 				$requestblock_xml->addAttribute('version', '3.67');
 				$requestblock_xml->addChild('alias', $this->config->get('payment_securetrading_ws_username'));
 
@@ -141,7 +142,7 @@ class ControllerExtensionPaymentSecureTradingWs extends Controller {
 								$json['pareq'] = $pareq;
 								$json['term_url'] = $this->url->link('extension/payment/securetrading_ws/threedreturn', '', true);
 							} else {
-								$requestblock_xml = new SimpleXMLElement('<requestblock></requestblock>');
+								$requestblock_xml = new \SimpleXMLElement('<requestblock></requestblock>');
 								$requestblock_xml->addAttribute('version', '3.67');
 								$requestblock_xml->addChild('alias', $this->config->get('payment_securetrading_ws_username'));
 
@@ -175,7 +176,7 @@ class ControllerExtensionPaymentSecureTradingWs extends Controller {
 
 				$json = array();
 
-				$requestblock_xml = new SimpleXMLElement('<requestblock></requestblock>');
+				$requestblock_xml = new \SimpleXMLElement('<requestblock></requestblock>');
 				$requestblock_xml->addAttribute('version', '3.67');
 				$requestblock_xml->addChild('alias', $this->config->get('payment_securetrading_ws_username'));
 
@@ -236,7 +237,7 @@ class ControllerExtensionPaymentSecureTradingWs extends Controller {
 			$order_id = $this->model_extension_payment_securetrading_ws->getOrderId($md);
 
 			if ($order_id) {
-				$requestblock_xml = new SimpleXMLElement('<requestblock></requestblock>');
+				$requestblock_xml = new \SimpleXMLElement('<requestblock></requestblock>');
 				$requestblock_xml->addAttribute('version', '3.67');
 				$requestblock_xml->addChild('alias', $this->config->get('payment_securetrading_ws_username'));
 

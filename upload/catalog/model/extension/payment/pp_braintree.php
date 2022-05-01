@@ -123,7 +123,7 @@ class ModelExtensionPaymentPPBraintree extends Model {
 			}
 
 			return $response;
-		} catch (\xception $e) {
+		} catch (\Exception $e) {
 			$this->log($e->getMessage());
 
 			return false;

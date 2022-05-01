@@ -14,15 +14,17 @@ class ModelExtensionPaymentDivido extends Model {
 		}
 
 		$api_key = $this->config->get('payment_divido_api_key');
+		
 		if (!$api_key) {
-			throw new Exception("No Divido api-key defined");
+			throw new \Exception("No Divido api-key defined");
 		}
 
 		Divido::setMerchant($api_key);
 
 		$response = Divido_Finances::all();
+		
 		if ($response->status != 'ok') {
-			throw new Exception("Can't get list of finance plans from Divido!");
+			throw new \Exception("Can't get list of finance plans from Divido!");
 		}
 
 		$plans = $response->finances;
@@ -30,8 +32,9 @@ class ModelExtensionPaymentDivido extends Model {
 		// OpenCart 2.1 switched to json for their file storage cache, so
 		// we need to convert to a simple object.
 		$plans_plain = array();
+		
 		foreach ($plans as $plan) {
-			$plan_copy = new stdClass();
+			$plan_copy = new \stdClass();
 			$plan_copy->id                 = $plan->id;
 			$plan_copy->text               = $plan->text;
 			$plan_copy->country            = $plan->country;

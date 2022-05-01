@@ -160,7 +160,7 @@ class ModelExtensionShippingFedex extends Model {
 
 			curl_close($curl);
 
-			$dom = new DOMDocument('1.0', 'UTF-8');
+			$dom = new \DOMDocument('1.0', 'UTF-8');
 			$dom->loadXml($response);
 
 			if ($dom->getElementsByTagName('faultcode')->length > 0) {

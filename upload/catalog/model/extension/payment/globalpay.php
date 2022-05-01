@@ -30,7 +30,7 @@ class ModelExtensionPaymentGlobalpay extends Model {
 	}
 
 	public function addOrder($order_info, $pas_ref, $auth_code, $account, $order_ref) {
-		if ($this->config->get('payment_globalpay_auto_settle')) {
+		if ($this->config->get('payment_globalpay_auto_settle') == 1) {
 			$settle_status = 1;
 		} else {
 			$settle_status = 0;

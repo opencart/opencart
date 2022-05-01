@@ -51,7 +51,7 @@ class ControllerExtensionModulePayPalSmartButton extends Controller {
 		}
 		
 		// Setting 		
-		$_config = new Config();
+		$_config = new \Config();
 		$_config->load('paypal_smart_button');
 		
 		$data['setting'] = $_config->get('paypal_smart_button_setting');

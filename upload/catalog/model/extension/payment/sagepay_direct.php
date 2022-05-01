@@ -30,15 +30,11 @@ class ModelExtensionPaymentSagePayDirect extends Model {
 	}
 
 	public function getCards($customer_id) {
-
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "sagepay_direct_card WHERE customer_id = '" . (int)$customer_id . "' ORDER BY card_id");
 
 		$card_data = array();
 
-		$this->load->model('account/address');
-
 		foreach ($query->rows as $row) {
-
 			$card_data[] = array(
 				'card_id' => $row['card_id'],
 				'customer_id' => $row['customer_id'],
@@ -48,6 +44,7 @@ class ModelExtensionPaymentSagePayDirect extends Model {
 				'type' => $row['type'],
 			);
 		}
+		
 		return $card_data;
 	}
 
@@ -82,10 +79,10 @@ class ModelExtensionPaymentSagePayDirect extends Model {
 	}
 
 	public function getOrder($order_id) {
-		$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "sagepay_direct_order` WHERE `order_id` = '" . (int)$order_id . "' LIMIT 1");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "sagepay_direct_order` WHERE `order_id` = '" . (int)$order_id . "' LIMIT 1");
 
-		if ($qry->num_rows) {
-			$order = $qry->row;
+		if ($query->num_rows) {
+			$order = $query->row;
 			$order['transactions'] = $this->getTransactions($order['sagepay_direct_order_id']);
 
 			return $order;
@@ -109,19 +106,17 @@ class ModelExtensionPaymentSagePayDirect extends Model {
 	}
 
 	private function getTransactions($sagepay_direct_order_id) {
-		$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "sagepay_direct_order_transaction` WHERE `sagepay_direct_order_id` = '" . (int)$sagepay_direct_order_id . "'");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "sagepay_direct_order_transaction` WHERE `sagepay_direct_order_id` = '" . (int)$sagepay_direct_order_id . "'");
 
-		if ($qry->num_rows) {
-			return $qry->rows;
-		} else {
-			return false;
-		}
+		return $query->rows;
 	}
 
 	public function recurringPayment($item, $vendor_tx_code) {
-
+		$this->load->language('checkout/recurring');
+		
 		$this->load->model('checkout/recurring');
 		$this->load->model('extension/payment/sagepay_direct');
+		
 		//trial information
 		if ($item['recurring']['trial'] == 1) {
 			$price = $item['recurring']['trial_price'];
@@ -150,29 +145,29 @@ class ModelExtensionPaymentSagePayDirect extends Model {
 
 		$response_data = $this->setPaymentData($order_info, $sagepay_order_info, $price, $order_recurring_id, $item['recurring']['name']);
 
-		$next_payment = new DateTime('now');
-		$trial_end = new DateTime('now');
-		$subscription_end = new DateTime('now');
+		$next_payment = new \DateTime('now');
+		$trial_end = new \DateTime('now');
+		$subscription_end = new \DateTime('now');
 
 		if ($item['recurring']['trial'] == 1 && $item['recurring']['trial_duration'] != 0) {
 			$next_payment = $this->calculateSchedule($item['recurring']['trial_frequency'], $next_payment, $item['recurring']['trial_cycle']);
 			$trial_end = $this->calculateSchedule($item['recurring']['trial_frequency'], $trial_end, $item['recurring']['trial_cycle'] * $item['recurring']['trial_duration']);
 		} elseif ($item['recurring_trial'] == 1) {
 			$next_payment = $this->calculateSchedule($item['recurring']['trial_frequency'], $next_payment, $item['recurring']['trial_cycle']);
-			$trial_end = new DateTime('0000-00-00');
+			$trial_end = new \DateTime('0000-00-00');
 		}
 
 		if ($trial_end > $subscription_end && $item['recurring']['duration'] != 0) {
-			$subscription_end = new DateTime(date_format($trial_end, 'Y-m-d H:i:s'));
+			$subscription_end = new \DateTime(date_format($trial_end, 'Y-m-d H:i:s'));
 			$subscription_end = $this->calculateSchedule($item['recurring']['frequency'], $subscription_end, $item['recurring']['cycle'] * $item['recurring']['duration']);
 		} elseif ($trial_end == $subscription_end && $item['recurring']['duration'] != 0) {
 			$next_payment = $this->calculateSchedule($item['recurring']['frequency'], $next_payment, $item['recurring']['cycle']);
 			$subscription_end = $this->calculateSchedule($item['recurring']['frequency'], $subscription_end, $item['recurring']['cycle'] * $item['recurring']['duration']);
 		} elseif ($trial_end > $subscription_end && $item['recurring']['duration'] == 0) {
-			$subscription_end = new DateTime('0000-00-00');
+			$subscription_end = new \DateTime('0000-00-00');
 		} elseif ($trial_end == $subscription_end && $item['recurring']['duration'] == 0) {
 			$next_payment = $this->calculateSchedule($item['recurring']['frequency'], $next_payment, $item['recurring']['cycle']);
-			$subscription_end = new DateTime('0000-00-00');
+			$subscription_end = new \DateTime('0000-00-00');
 		}
 
 		$this->addRecurringOrder($this->session->data['order_id'], $response_data, $order_recurring_id, date_format($trial_end, 'Y-m-d H:i:s'), date_format($subscription_end, 'Y-m-d H:i:s'));
@@ -189,12 +184,15 @@ class ModelExtensionPaymentSagePayDirect extends Model {
 	private function setPaymentData($order_info, $sagepay_order_info, $price, $order_recurring_id, $recurring_name, $i = null) {
 		if ($this->config->get('payment_sagepay_direct_test') == 'live') {
 			$url = 'https://live.sagepay.com/gateway/service/repeat.vsp';
+			
 			$payment_data['VPSProtocol'] = '3.00';
 		} elseif ($this->config->get('payment_sagepay_direct_test') == 'test') {
 			$url = 'https://test.sagepay.com/gateway/service/repeat.vsp';
+			
 			$payment_data['VPSProtocol'] = '3.00';
 		} elseif ($this->config->get('payment_sagepay_direct_test') == 'sim') {
 			$url = 'https://test.sagepay.com/Simulator/VSPServerGateway.asp?Service=VendorRepeatTx';
+			
 			$payment_data['VPSProtocol'] = '2.23';
 		}
 
@@ -247,6 +245,7 @@ class ModelExtensionPaymentSagePayDirect extends Model {
 
 			$payment_data['DeliveryPhone'] = $order_info['telephone'];
 		}
+		
 		$response_data = $this->sendCurl($url, $payment_data, $i);
 		$response_data['VendorTxCode'] = $payment_data['VendorTxCode'];
 		$response_data['Amount'] = $payment_data['Amount'];
@@ -256,14 +255,15 @@ class ModelExtensionPaymentSagePayDirect extends Model {
 	}
 
 	public function cronPayment() {
-
 		$this->load->model('account/order');
-		$recurrings = $this->getProfiles();
+		
+		$recurrings = $this->getProfiles();		
+		
 		$cron_data = array();
+		
 		$i = 0;
 
 		foreach ($recurrings as $recurring) {
-
 			$recurring_order = $this->getRecurringOrder($recurring['order_recurring_id']);
 
 			$today = new DateTime('now');
@@ -294,23 +294,30 @@ class ModelExtensionPaymentSagePayDirect extends Model {
 
 			if ($response_data['RepeatResponseData_' . $i++]['Status'] == 'OK') {
 				$this->addRecurringTransaction($recurring['order_recurring_id'], $response_data, 1);
+				
 				$next_payment = $this->calculateSchedule($frequency, $next_payment, $cycle);
 				$next_payment = date_format($next_payment, 'Y-m-d H:i:s');
+				
 				$this->updateRecurringOrder($recurring['order_recurring_id'], $next_payment);
 			} else {
 				$this->addRecurringTransaction($recurring['order_recurring_id'], $response_data, 4);
 			}
 		}
-		$log = new Log('sagepay_direct_recurring_orders.log');
+		
+		$log = new \Log('sagepay_direct_recurring_orders.log');
 		$log->write(print_r($cron_data, 1));
+		
 		return $cron_data;
 	}
 
 	private function calculateSchedule($frequency, $next_payment, $cycle) {
 		if ($frequency == 'semi_month') {
 			$day = date_format($next_payment, 'd');
+			
 			$value = 15 - $day;
+			
 			$is_even = false;
+			
 			if ($cycle % 2 == 0) {
 				$is_even = true;
 			}
@@ -341,6 +348,7 @@ class ModelExtensionPaymentSagePayDirect extends Model {
 		} else {
 			$next_payment->modify('+' . $cycle . ' ' . $frequency);
 		}
+		
 		return $next_payment;
 	}
 
@@ -353,8 +361,9 @@ class ModelExtensionPaymentSagePayDirect extends Model {
 	}
 
 	private function getRecurringOrder($order_recurring_id) {
-		$qry = $this->db->query("SELECT * FROM " . DB_PREFIX . "sagepay_direct_order_recurring WHERE order_recurring_id = '" . (int)$order_recurring_id . "'");
-		return $qry->row;
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "sagepay_direct_order_recurring WHERE order_recurring_id = '" . (int)$order_recurring_id . "'");
+		
+		return $query->row;
 	}
 
 	private function addRecurringTransaction($order_recurring_id, $response_data, $type) {
@@ -362,7 +371,6 @@ class ModelExtensionPaymentSagePayDirect extends Model {
 	}
 
 	private function getProfiles() {
-
 		$sql = "
 			SELECT `or`.order_recurring_id
 			FROM `" . DB_PREFIX . "order_recurring` `or`
@@ -376,16 +384,19 @@ class ModelExtensionPaymentSagePayDirect extends Model {
 		foreach ($qry->rows as $recurring) {
 			$order_recurring[] = $this->getProfile($recurring['order_recurring_id']);
 		}
+		
 		return $order_recurring;
 	}
 
 	private function getProfile($order_recurring_id) {
-		$qry = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_recurring WHERE order_recurring_id = " . (int)$order_recurring_id);
-		return $qry->row;
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_recurring WHERE order_recurring_id = " . (int)$order_recurring_id);
+		
+		return $query->row;
 	}
 
 	public function updateCronJobRunTime() {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `code` = 'sagepay_direct' AND `key` = 'payment_sagepay_direct_last_cron_job_run'");
+		
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` (`store_id`, `code`, `key`, `value`, `serialized`) VALUES (0, 'sagepay_direct', 'payment_sagepay_direct_last_cron_job_run', NOW(), 0)");
 	}
 
@@ -411,19 +422,23 @@ class ModelExtensionPaymentSagePayDirect extends Model {
 		foreach ($response_info as $string) {
 			if (strpos($string, '=') && isset($i)) {
 				$parts = explode('=', $string, 2);
+				
 				$data['RepeatResponseData_' . $i][trim($parts[0])] = trim($parts[1]);
 			} elseif (strpos($string, '=')) {
 				$parts = explode('=', $string, 2);
+				
 				$data[trim($parts[0])] = trim($parts[1]);
 			}
 		}
+		
 		return $data;
 	}
 
 	public function logger($title, $data) {
 		if ($this->config->get('payment_sagepay_direct_debug')) {
-			$log = new Log('sagepay_direct.log');
 			$backtrace = debug_backtrace();
+			
+			$log = new \Log('sagepay_direct.log');			
 			$log->write($backtrace[6]['class'] . '::' . $backtrace[6]['function'] . ' - ' . $title . ': ' . print_r($data, 1));
 		}
 	}

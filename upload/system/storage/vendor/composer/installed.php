@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../../../../',
         'aliases' => array(),
-        'reference' => '94a8e8254518f4f649aa21315810b9ff2499895a',
+        'reference' => 'bda229a0d5731c603ea1e89a7512f01de05786c6',
         'name' => 'opencart/opencart',
         'dev' => true,
     ),
@@ -97,7 +97,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../../../../',
             'aliases' => array(),
-            'reference' => '94a8e8254518f4f649aa21315810b9ff2499895a',
+            'reference' => 'bda229a0d5731c603ea1e89a7512f01de05786c6',
             'dev_requirement' => false,
         ),
         'psr/log' => array(
@@ -119,12 +119,12 @@
             'dev_requirement' => false,
         ),
         'scssphp/scssphp' => array(
-            'pretty_version' => '1.1.1',
-            'version' => '1.1.1.0',
+            'pretty_version' => 'v1.10.2',
+            'version' => '1.10.2.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../scssphp/scssphp',
             'aliases' => array(),
-            'reference' => '824e4cec10b2bfa88eec5dac23991cb9106622c1',
+            'reference' => '387f4f4abf5d99f16be16314c5ab856f81c82f46',
             'dev_requirement' => false,
         ),
         'symfony/polyfill-ctype' => array(

@@ -47,9 +47,9 @@ class ControllerExtensionPaymentEway extends Controller {
 		$shipping_zone_info = $this->model_localisation_zone->getZone($order_info['shipping_zone_id']);
 		$shipping_zone_code = isset($shipping_zone_info['code']) ? $shipping_zone_info['code'] : '';
 
-		$request = new stdClass();
+		$request = new \stdClass();
 
-		$request->Customer = new stdClass();
+		$request->Customer = new \stdClass();
 		$request->Customer->Title = 'Mr.';
 		$request->Customer->FirstName = (string)substr($order_info['payment_firstname'], 0, 50);
 		$request->Customer->LastName = (string)substr($order_info['payment_lastname'], 0, 50);
@@ -63,7 +63,7 @@ class ControllerExtensionPaymentEway extends Controller {
 		$request->Customer->Email = $order_info['email'];
 		$request->Customer->Phone = (string)substr($order_info['telephone'], 0, 32);
 
-		$request->ShippingAddress = new stdClass();
+		$request->ShippingAddress = new \stdClass();
 		$request->ShippingAddress->FirstName = (string)substr($order_info['shipping_firstname'], 0, 50);
 		$request->ShippingAddress->LastName = (string)substr($order_info['shipping_lastname'], 0, 50);
 		$request->ShippingAddress->Street1 = (string)substr($order_info['shipping_address_1'], 0, 50);
@@ -80,7 +80,7 @@ class ControllerExtensionPaymentEway extends Controller {
 		foreach ($this->cart->getProducts() as $product) {
 			$item_price = $this->currency->format($product['price'], $order_info['currency_code'], false, false);
 			$item_total = $this->currency->format($product['total'], $order_info['currency_code'], false, false);
-			$item = new stdClass();
+			$item = new \stdClass();
 			$item->SKU = (string)substr($product['product_id'], 0, 12);
 			$item->Description = (string)substr($product['name'], 0, 26);
 			$item->Quantity = strval($product['quantity']);
@@ -98,7 +98,7 @@ class ControllerExtensionPaymentEway extends Controller {
 		$shipping = $this->currency->format($order_info['total'] - $this->cart->getSubTotal(), $order_info['currency_code'], false, false);
 
 		if ($shipping > 0) {
-			$item = new stdClass();
+			$item = new \stdClass();
 			$item->SKU = '';
 			$item->Description = (string)substr($this->language->get('text_shipping'), 0, 26);
 			$item->Quantity = 1;
@@ -108,11 +108,11 @@ class ControllerExtensionPaymentEway extends Controller {
 			$request->Items[] = $item;
 		}
 
-		$opt1 = new stdClass();
+		$opt1 = new \stdClass();
 		$opt1->Value = $order_info['order_id'];
 		$request->Options = array($opt1);
 
-		$request->Payment = new stdClass();
+		$request->Payment = new \stdClass();
 		$request->Payment->TotalAmount = $this->lowestDenomination($amount, $order_info['currency_code']);
 		$request->Payment->InvoiceNumber = $this->session->data['order_id'];
 		$request->Payment->InvoiceDescription = $invoice_desc;

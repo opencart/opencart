@@ -72,11 +72,11 @@ class ControllerExtensionPaymentCardinity extends Controller {
 
 			try {
 				$payment = $this->model_extension_payment_cardinity->createPayment($this->config->get('payment_cardinity_key'), $this->config->get('payment_cardinity_secret'), $payment_data);
-			} catch (Cardinity\Exception\Declined $exception) {
+			} catch (\Cardinity\Exception\Declined $exception) {
 				$this->failedOrder($this->language->get('error_payment_declined'), $this->language->get('error_payment_declined'));
 
 				$json['redirect'] = $this->url->link('checkout/checkout', '', true);
-			} catch (Exception $exception) {
+			} catch (\Exception $exception) {
 				$this->failedOrder();
 
 				$json['redirect'] = $this->url->link('checkout/checkout', '', true);

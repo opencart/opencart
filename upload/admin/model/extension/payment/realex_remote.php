@@ -45,6 +45,7 @@ class ModelExtensionPaymentRealexRemote extends Model {
 
 			$tmp = $timestamp . '.' . $merchant_id . '.' . $realex_order['order_ref'] . '...';
 			$hash = sha1($tmp);
+			
 			$tmp = $hash . '.' . $secret;
 			$hash = sha1($tmp);
 
@@ -61,13 +62,16 @@ class ModelExtensionPaymentRealexRemote extends Model {
 			$this->logger('Void XML request:\r\n' . print_r(simplexml_load_string($xml), 1));
 
 			$ch = curl_init();
+			
 			curl_setopt($ch, CURLOPT_URL, "https://epage.payandshop.com/epage-remote.cgi");
 			curl_setopt($ch, CURLOPT_POST, 1);
 			curl_setopt($ch, CURLOPT_USERAGENT, "OpenCart " . VERSION);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 			curl_setopt($ch, CURLOPT_POSTFIELDS, $xml);
 			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+			
 			$response = curl_exec ($ch);
+			
 			curl_close ($ch);
 
 			return simplexml_load_string($response);
@@ -93,6 +97,7 @@ class ModelExtensionPaymentRealexRemote extends Model {
 
 				$tmp = $timestamp . '.' . $merchant_id . '.' . $realex_order['order_ref'] . '.' . (int)round($amount*100) . '.' . (string)$realex_order['currency_code'] . '.';
 				$hash = sha1($tmp);
+				
 				$tmp = $hash . '.' . $secret;
 				$hash = sha1($tmp);
 
@@ -104,6 +109,7 @@ class ModelExtensionPaymentRealexRemote extends Model {
 
 				$tmp = $timestamp . '.' . $merchant_id . '.' . $realex_order['order_ref'] . '.' . (int)round($amount*100) . '.' . (string)$realex_order['currency_code'] . '.';
 				$hash = sha1($tmp);
+				
 				$tmp = $hash . '.' . $secret;
 				$hash = sha1($tmp);
 
@@ -125,13 +131,16 @@ class ModelExtensionPaymentRealexRemote extends Model {
 			$this->logger('Settle XML request:\r\n' . print_r(simplexml_load_string($xml), 1));
 
 			$ch = curl_init();
+			
 			curl_setopt($ch, CURLOPT_URL, "https://epage.payandshop.com/epage-remote.cgi");
 			curl_setopt($ch, CURLOPT_POST, 1);
 			curl_setopt($ch, CURLOPT_USERAGENT, "OpenCart " . VERSION);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 			curl_setopt($ch, CURLOPT_POSTFIELDS, $xml);
 			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+			
 			$response = curl_exec ($ch);
+			
 			curl_close ($ch);
 
 			return simplexml_load_string($response);
@@ -173,6 +182,7 @@ class ModelExtensionPaymentRealexRemote extends Model {
 
 			$tmp = $timestamp . '.' . $merchant_id . '.' . $order_ref . '.' . (int)round($amount*100) . '.' . $realex_order['currency_code'] . '.';
 			$hash = sha1($tmp);
+			
 			$tmp = $hash . '.' . $secret;
 			$hash = sha1($tmp);
 
@@ -193,13 +203,16 @@ class ModelExtensionPaymentRealexRemote extends Model {
 			$this->logger('Rebate XML request:\r\n' . print_r(simplexml_load_string($xml), 1));
 
 			$ch = curl_init();
+			
 			curl_setopt($ch, CURLOPT_URL, "https://epage.payandshop.com/epage-remote.cgi");
 			curl_setopt($ch, CURLOPT_POST, 1);
 			curl_setopt($ch, CURLOPT_USERAGENT, "OpenCart " . VERSION);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 			curl_setopt($ch, CURLOPT_POSTFIELDS, $xml);
 			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+			
 			$response = curl_exec ($ch);
+			
 			curl_close ($ch);
 
 			return simplexml_load_string($response);
@@ -213,10 +226,10 @@ class ModelExtensionPaymentRealexRemote extends Model {
 	}
 
 	public function getOrder($order_id) {
-		$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "realex_remote_order` WHERE `order_id` = '" . (int)$order_id . "' LIMIT 1");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "realex_remote_order` WHERE `order_id` = '" . (int)$order_id . "' LIMIT 1");
 
-		if ($qry->num_rows) {
-			$order = $qry->row;
+		if ($query->num_rows) {
+			$order = $query->row;
 			$order['transactions'] = $this->getTransactions($order['realex_remote_order_id']);
 
 			return $order;
@@ -226,10 +239,10 @@ class ModelExtensionPaymentRealexRemote extends Model {
 	}
 
 	private function getTransactions($realex_remote_order_id) {
-		$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "realex_remote_order_transaction` WHERE `realex_remote_order_id` = '" . (int)$realex_remote_order_id . "'");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "realex_remote_order_transaction` WHERE `realex_remote_order_id` = '" . (int)$realex_remote_order_id . "'");
 
-		if ($qry->num_rows) {
-			return $qry->rows;
+		if ($query->num_rows) {
+			return $query->rows;
 		} else {
 			return false;
 		}
@@ -241,7 +254,7 @@ class ModelExtensionPaymentRealexRemote extends Model {
 
 	public function logger($message) {
 		if ($this->config->get('payment_realex_remote_debug') == 1) {
-			$log = new Log('realex_remote.log');
+			$log = new \Log('realex_remote.log');
 			$log->write($message);
 		}
 	}
@@ -255,6 +268,6 @@ class ModelExtensionPaymentRealexRemote extends Model {
 	public function getTotalRebated($realex_order_id) {
 		$query = $this->db->query("SELECT SUM(`amount`) AS `total` FROM `" . DB_PREFIX . "realex_remote_order_transaction` WHERE `realex_remote_order_id` = '" . (int)$realex_order_id . "' AND 'rebate'");
 
-		return (double)$query->row['total'];
+		return (float)$query->row['total'];
 	}
 }

@@ -16,12 +16,12 @@ class ControllerExtensionModulePayPalSmartButton extends Controller {
 			$status = false;
 			
 			// Setting
-			$_config = new Config();
+			$_config = new \Config();
 			$_config->load('paypal');
 			
 			$paypal_setting = $_config->get('paypal_setting');
 				
-			$_config = new Config();
+			$_config = new \Config();
 			$_config->load('paypal_smart_button');
 			
 			$config_setting = $_config->get('paypal_smart_button_setting');
@@ -204,7 +204,7 @@ class ControllerExtensionModulePayPalSmartButton extends Controller {
 		
 		if (!$errors) {					
 			// Setting
-			$_config = new Config();
+			$_config = new \Config();
 			$_config->load('paypal');
 			
 			$config_setting = $_config->get('paypal_setting');
@@ -229,7 +229,7 @@ class ControllerExtensionModulePayPalSmartButton extends Controller {
 				'environment' => $environment
 			);
 		
-			$paypal = new PayPal($paypal_info);
+			$paypal = new \PayPal($paypal_info);
 			
 			$token_info = array(
 				'grant_type' => 'client_credentials'
@@ -367,7 +367,7 @@ class ControllerExtensionModulePayPalSmartButton extends Controller {
 		}
 		
 		// Setting
-		$_config = new Config();
+		$_config = new \Config();
 		$_config->load('paypal');
 			
 		$config_setting = $_config->get('paypal_setting');
@@ -391,7 +391,7 @@ class ControllerExtensionModulePayPalSmartButton extends Controller {
 			'environment' => $environment
 		);
 		
-		$paypal = new PayPal($paypal_info);
+		$paypal = new \PayPal($paypal_info);
 		
 		$token_info = array(
 			'grant_type' => 'client_credentials'
@@ -1217,7 +1217,7 @@ class ControllerExtensionModulePayPalSmartButton extends Controller {
 			$this->session->data['order_id'] = $this->model_checkout_order->addOrder($order_data);
 			
 			// Setting
-			$_config = new Config();
+			$_config = new \Config();
 			$_config->load('paypal');
 			
 			$config_setting = $_config->get('paypal_setting');
@@ -1242,7 +1242,7 @@ class ControllerExtensionModulePayPalSmartButton extends Controller {
 				'environment' => $environment
 			);
 		
-			$paypal = new PayPal($paypal_info);
+			$paypal = new \PayPal($paypal_info);
 			
 			$token_info = array(
 				'grant_type' => 'client_credentials'

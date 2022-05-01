@@ -52,7 +52,7 @@ class ControllerExtensionPaymentSquareup extends Controller {
             ));
         }
 
-        $previous_config = new Config();
+        $previous_config = new \Config();
 
         foreach ($previous_setting as $key => $value) {
             $previous_config->set($key, $value);
@@ -268,7 +268,7 @@ class ControllerExtensionPaymentSquareup extends Controller {
         $api_info = $this->model_user_api->getApi($this->config->get('config_api_id'));
 
         if ($api_info && $this->user->hasPermission('modify', 'sale/order')) {
-            $session = new Session($this->config->get('session_engine'), $this->registry);
+            $session = new \Session($this->config->get('session_engine'), $this->registry);
             
             $session->start();
                     
@@ -427,7 +427,7 @@ class ControllerExtensionPaymentSquareup extends Controller {
         $api_info = $this->model_user_api->getApi($this->config->get('config_api_id'));
 
         if ($api_info && $this->user->hasPermission('modify', 'sale/order')) {
-            $session = new Session($this->config->get('session_engine'), $this->registry);
+            $session = new \Session($this->config->get('session_engine'), $this->registry);
             
             $session->start();
                     
@@ -795,7 +795,7 @@ class ControllerExtensionPaymentSquareup extends Controller {
         $api_info = $this->model_user_api->getApi($this->config->get('config_api_id'));
 
         if ($api_info && $this->user->hasPermission('modify', 'sale/order')) {
-            $session = new Session($this->config->get('session_engine'), $this->registry);
+            $session = new \Session($this->config->get('session_engine'), $this->registry);
             
             $session->start();
                     
@@ -868,7 +868,7 @@ class ControllerExtensionPaymentSquareup extends Controller {
         $api_info = $this->model_user_api->getApi($this->config->get('config_api_id'));
 
         if ($api_info && $this->user->hasPermission('modify', 'sale/order')) {
-            $session = new Session($this->config->get('session_engine'), $this->registry);
+            $session = new \Session($this->config->get('session_engine'), $this->registry);
             
             $session->start();
                     

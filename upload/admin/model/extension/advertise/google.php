@@ -113,7 +113,7 @@ class ModelExtensionAdvertiseGoogle extends Model {
 
         if ($result->num_rows > 0) {
             try {
-                $googleshopping = new Googleshopping($this->registry, (int)$result->row['store_id']);
+                $googleshopping = new \Googleshopping($this->registry, (int)$result->row['store_id']);
 
                 return $googleshopping->isConnected();
             } catch (\RuntimeException $e) {

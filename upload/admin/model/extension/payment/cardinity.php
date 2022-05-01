@@ -24,7 +24,7 @@ class ModelExtensionPaymentCardinity extends Model {
 			$client->call($method);
 
 			return true;
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			$this->log($e->getMessage());
 
 			return false;
@@ -38,7 +38,7 @@ class ModelExtensionPaymentCardinity extends Model {
 			$payment = $client->call($method);
 
 			return $payment;
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			$this->log($e->getMessage());
 
 			return false;
@@ -52,7 +52,7 @@ class ModelExtensionPaymentCardinity extends Model {
 			$refunds = $client->call($method);
 
 			return $refunds;
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			$this->log($e->getMessage());
 
 			return false;
@@ -66,7 +66,7 @@ class ModelExtensionPaymentCardinity extends Model {
 			$refund = $client->call($method);
 
 			return $refund;
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			$this->log($e->getMessage());
 
 			return false;

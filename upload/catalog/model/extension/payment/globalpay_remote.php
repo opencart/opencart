@@ -36,6 +36,7 @@ class ModelExtensionPaymentGlobalpayRemote extends Model {
 
 		$tmp = $timestamp . '.' . $merchant_id . '.' . $order_ref . '.' . $amount . '.' . $currency . '.' . $this->request->post['cc_number'];
 		$hash = sha1($tmp);
+		
 		$tmp = $hash . '.' . $secret;
 		$hash = sha1($tmp);
 
@@ -59,13 +60,16 @@ class ModelExtensionPaymentGlobalpayRemote extends Model {
 		$this->logger($xml);
 
 		$ch = curl_init();
+		
 		curl_setopt($ch, CURLOPT_URL, "https://remote.globaliris.com/realmpi");
 		curl_setopt($ch, CURLOPT_POST, 1);
 		curl_setopt($ch, CURLOPT_USERAGENT, "OpenCart " . VERSION);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $xml);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+		
 		$response = curl_exec ($ch);
+		
 		curl_close ($ch);
 
 		$this->logger('checkEnrollment xml response');
@@ -83,6 +87,7 @@ class ModelExtensionPaymentGlobalpayRemote extends Model {
 
 		$tmp = $timestamp . '.' . $merchant_id . '.' . $order_ref . '.' . $amount . '.' . $currency . '.' . $card_number;
 		$hash = sha1($tmp);
+		
 		$tmp = $hash . '.' . $secret;
 		$hash = sha1($tmp);
 
@@ -107,13 +112,16 @@ class ModelExtensionPaymentGlobalpayRemote extends Model {
 		$this->logger($xml);
 
 		$ch = curl_init();
+		
 		curl_setopt($ch, CURLOPT_URL, "https://remote.globaliris.com/realmpi");
 		curl_setopt($ch, CURLOPT_POST, 1);
 		curl_setopt($ch, CURLOPT_USERAGENT, "OpenCart " . VERSION);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $xml);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-		$response = curl_exec ($ch);
+		
+		$response = curl_exec($ch);
+		
 		curl_close ($ch);
 
 		$this->logger('enrollmentSignature xml response');
@@ -131,6 +139,7 @@ class ModelExtensionPaymentGlobalpayRemote extends Model {
 
 		$tmp = $timestamp . '.' . $merchant_id . '.' . $order_ref . '.' . $amount . '.' . $currency . '.' . $card_number;
 		$hash = sha1($tmp);
+		
 		$tmp = $hash . '.' . $secret;
 		$hash = sha1($tmp);
 
@@ -221,13 +230,16 @@ class ModelExtensionPaymentGlobalpayRemote extends Model {
 		$this->logger($xml);
 
 		$ch = curl_init();
+		
 		curl_setopt($ch, CURLOPT_URL, "https://remote.globaliris.com/realauth");
 		curl_setopt($ch, CURLOPT_POST, 1);
 		curl_setopt($ch, CURLOPT_USERAGENT, "OpenCart " . VERSION);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $xml);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+		
 		$response = curl_exec ($ch);
+		
 		curl_close ($ch);
 
 		$this->logger('capturePayment xml response');
@@ -341,8 +353,8 @@ class ModelExtensionPaymentGlobalpayRemote extends Model {
 	}
 
 	public function logger($message) {
-		if ($this->config->get('payment_globalpay_remote_debug') == 1) {
-			$log = new Log('globalpay_remote.log');
+		if ($this->config->get('payment_globalpay_remote_debug')) {
+			$log = new \Log('globalpay_remote.log');
 			$log->write($message);
 		}
 	}

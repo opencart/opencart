@@ -3,8 +3,6 @@
     var option_map = {{ option_map }};
 
     var submitGtag = function(ecomm_prodid) {
-        console.log("[GTAG] Submit product view: " + ecomm_prodid);
-
         gtag('event', 'view_item', {
             'send_to': '{{ send_to }}',
             'ecomm_prodid': [ecomm_prodid],

@@ -64,7 +64,7 @@ class Googleshopping extends Library {
 
         $this->loadStore($this->store_id);
 
-        $this->debug_log = new Log(sprintf(self::DEBUG_LOG_FILENAME, $this->store_id));
+        $this->debug_log = new \Log(sprintf(self::DEBUG_LOG_FILENAME, $this->store_id));
     }
 
     public function getStoreUrl() {

@@ -508,9 +508,10 @@ class ControllerExtensionPaymentKlarnaAccount extends Controller {
 				curl_setopt($curl, CURLOPT_POSTFIELDS, $xml);
 
 				$response = curl_exec($curl);
+				
+				$log = new \Log('klarna_account.log');
 
-				if (curl_errno($curl)) {
-					$log = new Log('klarna_account.log');
+				if (curl_errno($curl)) {					
 					$log->write('HTTP Error for order #' . $order_info['order_id'] . '. Code: ' . curl_errno($curl) . ' message: ' . curl_error($curl));
 
 					$json['error'] = $this->language->get('error_network');
@@ -520,12 +521,11 @@ class ControllerExtensionPaymentKlarnaAccount extends Controller {
 					if (isset($match[1])) {
 						preg_match('/<member><name>faultCode<\/name><value><int>([0-9]+)<\/int><\/value><\/member>/', $response, $match2);
 
-						$log = new Log('klarna_account.log');
 						$log->write('Failed to create an invoice for order #' . $order_info['order_id'] . '. Message: ' . utf8_encode($match[1]) . ' Code: ' . $match2[1]);
 
 						$json['error'] = utf8_encode($match[1]);
 					} else {
-						$xml = new DOMDocument();
+						$xml = new \DOMDocument();
 						$xml->loadXML($response);
 
 						$invoice_number = $xml->getElementsByTagName('string')->item(0)->nodeValue;
@@ -625,9 +625,8 @@ class ControllerExtensionPaymentKlarnaAccount extends Controller {
 			case 'NLD':
 				$amount = 5.00;
 				break;
-
 			default:
-				$log = new Log('klarna.log');
+				$log = new \Log('klarna.log');
 				$log->write('Unknown country ' . $country);
 
 				$amount = null;

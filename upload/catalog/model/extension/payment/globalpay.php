@@ -30,7 +30,7 @@ class ModelExtensionPaymentGlobalpay extends Model {
 	}
 
 	public function addOrder($order_info, $pas_ref, $auth_code, $account, $order_ref) {
-		if ($this->config->get('payment_globalpay_auto_settle') == 1) {
+		if ($this->config->get('payment_globalpay_auto_settle')) {
 			$settle_status = 1;
 		} else {
 			$settle_status = 0;
@@ -50,8 +50,8 @@ class ModelExtensionPaymentGlobalpay extends Model {
 	}
 
 	public function logger($message) {
-		if ($this->config->get('payment_globalpay_debug') == 1) {
-			$log = new Log('globalpay.log');
+		if ($this->config->get('payment_globalpay_debug')) {
+			$log = new \Log('globalpay.log');
 			$log->write($message);
 		}
 	}

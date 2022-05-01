@@ -38,8 +38,7 @@ class ModelExtensionPaymentSecureTradingWs extends Model {
 		$securetrading_ws_order = $this->getOrder($order_id);
 
 		if (!empty($securetrading_ws_order) && $securetrading_ws_order['release_status'] == 0) {
-
-			$requestblock_xml = new SimpleXMLElement('<requestblock></requestblock>');
+			$requestblock_xml = new \SimpleXMLElement('<requestblock></requestblock>');
 			$requestblock_xml->addAttribute('version', '3.67');
 			$requestblock_xml->addChild('alias', $this->config->get('payment_securetrading_ws_username'));
 
@@ -64,11 +63,11 @@ class ModelExtensionPaymentSecureTradingWs extends Model {
 
 	public function release($order_id, $amount) {
 		$securetrading_ws_order = $this->getOrder($order_id);
+		
 		$total_released = $this->getTotalReleased($securetrading_ws_order['securetrading_ws_order_id']);
 
 		if (!empty($securetrading_ws_order) && $securetrading_ws_order['release_status'] == 0 && $total_released <= $amount) {
-
-			$requestblock_xml = new SimpleXMLElement('<requestblock></requestblock>');
+			$requestblock_xml = new \SimpleXMLElement('<requestblock></requestblock>');
 			$requestblock_xml->addAttribute('version', '3.67');
 			$requestblock_xml->addChild('alias', $this->config->get('payment_securetrading_ws_username'));
 
@@ -101,8 +100,7 @@ class ModelExtensionPaymentSecureTradingWs extends Model {
 		$securetrading_ws_order = $this->getOrder($order_id);
 
 		if (!empty($securetrading_ws_order) && $securetrading_ws_order['rebate_status'] != 1) {
-
-			$requestblock_xml = new SimpleXMLElement('<requestblock></requestblock>');
+			$requestblock_xml = new \SimpleXMLElement('<requestblock></requestblock>');
 			$requestblock_xml->addAttribute('version', '3.67');
 			$requestblock_xml->addChild('alias', $this->config->get('payment_securetrading_ws_username'));
 
@@ -127,10 +125,10 @@ class ModelExtensionPaymentSecureTradingWs extends Model {
 	}
 
 	public function getOrder($order_id) {
-		$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "securetrading_ws_order` WHERE `order_id` = '" . (int)$order_id . "' LIMIT 1");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "securetrading_ws_order` WHERE `order_id` = '" . (int)$order_id . "' LIMIT 1");
 
-		if ($qry->num_rows) {
-			$order = $qry->row;
+		if ($query->num_rows) {
+			$order = $query->row;
 			$order['transactions'] = $this->getTransactions($order['securetrading_ws_order_id']);
 
 			return $order;
@@ -140,10 +138,10 @@ class ModelExtensionPaymentSecureTradingWs extends Model {
 	}
 
 	private function getTransactions($securetrading_ws_order_id) {
-		$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "securetrading_ws_order_transaction` WHERE `securetrading_ws_order_id` = '" . (int)$securetrading_ws_order_id . "'");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "securetrading_ws_order_transaction` WHERE `securetrading_ws_order_id` = '" . (int)$securetrading_ws_order_id . "'");
 
-		if ($qry->num_rows) {
-			return $qry->rows;
+		if ($query->num_rows) {
+			return $query->rows;
 		} else {
 			return false;
 		}
@@ -156,13 +154,13 @@ class ModelExtensionPaymentSecureTradingWs extends Model {
 	public function getTotalReleased($securetrading_ws_order_id) {
 		$query = $this->db->query("SELECT SUM(`amount`) AS `total` FROM `" . DB_PREFIX . "securetrading_ws_order_transaction` WHERE `securetrading_ws_order_id` = '" . (int)$securetrading_ws_order_id . "' AND (`type` = 'payment' OR `type` = 'rebate')");
 
-		return (double)$query->row['total'];
+		return (float)$query->row['total'];
 	}
 
 	public function getTotalRebated($securetrading_ws_order_id) {
 		$query = $this->db->query("SELECT SUM(`amount`) AS `total` FROM `" . DB_PREFIX . "securetrading_ws_order_transaction` WHERE `securetrading_ws_order_id` = '" . (int)$securetrading_ws_order_id . "' AND 'rebate'");
 
-		return (double)$query->row['total'];
+		return (float)$query->row['total'];
 	}
 
 	public function increaseRefundedAmount($order_id, $amount) {
@@ -173,6 +171,7 @@ class ModelExtensionPaymentSecureTradingWs extends Model {
 		$ch = curl_init();
 
 		$post_data = array();
+		
 		$post_data['sitereferences'] = $this->config->get('payment_securetrading_ws_site_reference');
 		$post_data['startdate'] = $data['date_from'];
 		$post_data['enddate'] = $data['date_to'];
@@ -345,7 +344,7 @@ class ModelExtensionPaymentSecureTradingWs extends Model {
 	}
 
 	public function logger($message) {
-		$log = new Log('securetrading_ws.log');
+		$log = new \Log('securetrading_ws.log');
 		$log->write($message);
 	}
 }

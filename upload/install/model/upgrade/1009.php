@@ -6,7 +6,7 @@ class ModelUpgrade1009 extends Model {
 		
 		if ($query->num_rows) {
 			// Removing affiliate and moving to the customer account.
-			$config = new Config();
+			$config = new \Config();
 			
 			$setting_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE store_id = '0'");
 			

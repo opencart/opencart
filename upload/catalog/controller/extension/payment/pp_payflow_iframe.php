@@ -107,7 +107,7 @@ class ControllerExtensionPaymentPPPayflowIframe extends Controller {
 		$this->load->model('checkout/order');
 
 		if ($this->config->get('payment_pp_pro_iframe_debug')) {
-			$log = new Log('pp_pro_iframe.log');
+			$log = new \Log('pp_pro_iframe.log');
 			$log->write('POST: ' . print_r($this->request->post, 1));
 		}
 						

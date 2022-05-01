@@ -84,12 +84,11 @@ class ModelExtensionPaymentWorldpay extends Model {
 	}
 
 	public function getOrder($order_id) {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "worldpay_order` WHERE `order_id` = '" . (int)$order_id . "' LIMIT 1");
 
-		$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "worldpay_order` WHERE `order_id` = '" . (int)$order_id . "' LIMIT 1");
-
-		if ($qry->num_rows) {
-			$order = $qry->row;
-			$order['transactions'] = $this->getTransactions($order['worldpay_order_id'], $qry->row['currency_code']);
+		if ($query->num_rows) {
+			$order = $query->row;
+			$order['transactions'] = $this->getTransactions($order['worldpay_order_id'], $query->row['currency_code']);
 
 			return $order;
 		} else {
@@ -101,11 +100,14 @@ class ModelExtensionPaymentWorldpay extends Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "worldpay_order_transaction` WHERE `worldpay_order_id` = '" . (int)$worldpay_order_id . "'");
 
 		$transactions = array();
+		
 		if ($query->num_rows) {
 			foreach ($query->rows as $row) {
 				$row['amount'] = $this->currency->format($row['amount'], $currency_code, false);
+				
 				$transactions[] = $row;
 			}
+			
 			return $transactions;
 		} else {
 			return false;
@@ -119,17 +121,16 @@ class ModelExtensionPaymentWorldpay extends Model {
 	public function getTotalReleased($worldpay_order_id) {
 		$query = $this->db->query("SELECT SUM(`amount`) AS `total` FROM `" . DB_PREFIX . "worldpay_order_transaction` WHERE `worldpay_order_id` = '" . (int)$worldpay_order_id . "' AND (`type` = 'payment' OR `type` = 'refund')");
 
-		return (double)$query->row['total'];
+		return (float)$query->row['total'];
 	}
 
 	public function getTotalRefunded($worldpay_order_id) {
 		$query = $this->db->query("SELECT SUM(`amount`) AS `total` FROM `" . DB_PREFIX . "worldpay_order_transaction` WHERE `worldpay_order_id` = '" . (int)$worldpay_order_id . "' AND 'refund'");
 
-		return (double)$query->row['total'];
+		return (float)$query->row['total'];
 	}
 
 	public function sendCurl($url, $order) {
-
 		$json = json_encode($order);
 
 		$curl = curl_init();
@@ -141,15 +142,15 @@ class ModelExtensionPaymentWorldpay extends Model {
 		curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 0);
 		curl_setopt($curl, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_0);
 		curl_setopt($curl, CURLOPT_TIMEOUT, 10);
-		curl_setopt(
-				$curl, CURLOPT_HTTPHEADER, array(
-			"Authorization: " . $this->config->get('payment_worldpay_service_key'),
-			"Content-Type: application/json",
-			"Content-Length: " . strlen($json)
-				)
+		curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+				"Authorization: " . $this->config->get('payment_worldpay_service_key'),
+				"Content-Type: application/json",
+				"Content-Length: " . strlen($json)
+			)
 		);
 
 		$result = json_decode(curl_exec($curl));
+		
 		curl_close($curl);
 
 		$response = array();
@@ -167,7 +168,7 @@ class ModelExtensionPaymentWorldpay extends Model {
 
 	public function logger($message) {
 		if ($this->config->get('payment_worldpay_debug') == 1) {
-			$log = new Log('worldpay.log');
+			$log = new \Log('worldpay.log');
 			$log->write($message);
 		}
 	}

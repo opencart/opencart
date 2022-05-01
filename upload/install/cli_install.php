@@ -46,7 +46,6 @@ $registry = new \Registry();
 $loader = new \Loader($registry);
 $registry->set('load', $loader);
 
-
 function handleError($errno, $errstr, $errfile, $errline, array $errcontext) {
 	// error was suppressed with the @-operator
 	if (0 === error_reporting()) {
@@ -56,7 +55,6 @@ function handleError($errno, $errstr, $errfile, $errline, array $errcontext) {
 }
 
 set_error_handler('handleError');
-
 
 function usage() {
 	echo "Usage:\n";
@@ -77,7 +75,6 @@ function usage() {
 	echo 'php cli_install.php install ' . $options . "\n\n";
 }
 
-
 function get_options($argv) {
 	$defaults = array(
 		'db_hostname' => 'localhost',
@@ -89,7 +86,9 @@ function get_options($argv) {
 	);
 
 	$options = array();
+	
 	$total = count($argv);
+	
 	for ($i=0; $i < $total; $i=$i+2) {
 		$is_flag = preg_match('/^--(.*)$/', $argv[$i], $match);
 		if (!$is_flag) {
@@ -97,9 +96,9 @@ function get_options($argv) {
 		}
 		$options[$match[1]] = $argv[$i+1];
 	}
+	
 	return array_merge($defaults, $options);
 }
-
 
 function valid($options) {
 	$required = array(
@@ -127,7 +126,6 @@ function valid($options) {
 	return array($valid, $missing);
 }
 
-
 function install($options) {
 	$check = check_requirements();
 	if ($check[0]) {
@@ -139,7 +137,6 @@ function install($options) {
 		exit(1);
 	}
 }
-
 
 function check_requirements() {
 	$error = null;
@@ -177,7 +174,6 @@ function check_requirements() {
 
 	return array($error === null, $error);
 }
-
 
 function setup_db($data) {
 	$db = new \DB($data['db_driver'], htmlspecialchars_decode($data['db_hostname']), htmlspecialchars_decode($data['db_username']), htmlspecialchars_decode($data['db_password']), htmlspecialchars_decode($data['db_database']), $data['db_port']);
@@ -231,7 +227,6 @@ function setup_db($data) {
 		$db->query("INSERT INTO `" . $data['db_prefix'] . "setting` SET `code` = 'config', `key` = 'config_api_id', value = '" . (int)$api_id . "'");
 	}
 }
-
 
 function write_config_files($options) {
 	$output  = '<?php' . "\n";
@@ -317,7 +312,6 @@ function write_config_files($options) {
 	fclose($file);
 }
 
-
 function dir_permissions() {
 	$dirs = array(
 		DIR_OPENCART . 'image/',
@@ -330,29 +324,32 @@ function dir_permissions() {
 	exec('chmod o+w -R ' . implode(' ', $dirs));
 }
 
-
 $argv = $_SERVER['argv'];
 $script = array_shift($argv);
 $subcommand = array_shift($argv);
-
 
 switch ($subcommand) {
 
 case "install":
 	try {
 		$options = get_options($argv);
+		
 		define('HTTP_OPENCART', $options['http_server']);
+		
 		$valid = valid($options);
+		
 		if (!$valid[0]) {
 			echo "FAILED! Following inputs were missing or invalid: ";
 			echo implode(', ', $valid[1]) . "\n\n";
 			exit(1);
 		}
+		
 		install($options);
+		
 		echo "SUCCESS! Opencart successfully installed on your server\n";
 		echo "Store link: " . $options['http_server'] . "\n";
 		echo "Admin link: " . $options['http_server'] . "admin/\n\n";
-	} catch (ErrorException $e) {
+	} catch (\ErrorException $e) {
 		echo 'FAILED!: ' . $e->getMessage() . "\n";
 		exit(1);
 	}

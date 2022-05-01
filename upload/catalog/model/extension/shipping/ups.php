@@ -229,7 +229,7 @@ class ModelExtensionShippingUps extends Model {
 				
 				$previous_value = libxml_use_internal_errors(true);
 				
-				$dom = new DOMDocument('1.0', 'UTF-8');
+				$dom = new \DOMDocument('1.0', 'UTF-8');
 				$dom->loadXml($result);
 
 				libxml_use_internal_errors($previous_value);

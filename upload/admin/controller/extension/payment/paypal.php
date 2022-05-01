@@ -50,7 +50,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 		}
 		
 		// Setting 		
-		$_config = new Config();
+		$_config = new \Config();
 		$_config->load('paypal');
 		
 		$data['setting'] = $_config->get('paypal_setting');
@@ -65,7 +65,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 				'environment' => $environment
 			);
 					
-			$paypal = new PayPal($paypal_info);
+			$paypal = new \PayPal($paypal_info);
 			
 			$token_info = array(
 				'grant_type' => 'authorization_code',
@@ -266,7 +266,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 				'environment' => $data['environment']
 			);
 		
-			$paypal = new PayPal($paypal_info);
+			$paypal = new \PayPal($paypal_info);
 			
 			$token_info = array(
 				'grant_type' => 'client_credentials'
@@ -346,7 +346,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 			'environment' => $this->request->post['payment_paypal_environment']
 		);
 		
-		$paypal = new PayPal($paypal_info);
+		$paypal = new \PayPal($paypal_info);
 		
 		$token_info = array(
 			'grant_type' => 'client_credentials'

@@ -36,13 +36,13 @@ class ControllerStartupStartup extends Controller {
 		$this->registry->set('language', $language);
 		
 		// Customer
-		$this->registry->set('customer', new Cart\Customer($this->registry));
+		$this->registry->set('customer', new \Cart\Customer($this->registry));
 
 		// Currency
-		$this->registry->set('currency', new Cart\Currency($this->registry));
+		$this->registry->set('currency', new \Cart\Currency($this->registry));
 	
 		// Tax
-		$this->registry->set('tax', new Cart\Tax($this->registry));
+		$this->registry->set('tax', new \Cart\Tax($this->registry));
 		
 		if ($this->config->get('config_tax_default') == 'shipping') {
 			$this->tax->setShippingAddress($this->config->get('config_country_id'), $this->config->get('config_zone_id'));
@@ -55,15 +55,15 @@ class ControllerStartupStartup extends Controller {
 		$this->tax->setStoreAddress($this->config->get('config_country_id'), $this->config->get('config_zone_id'));
 
 		// Weight
-		$this->registry->set('weight', new Cart\Weight($this->registry));
+		$this->registry->set('weight', new \Cart\Weight($this->registry));
 		
 		// Length
-		$this->registry->set('length', new Cart\Length($this->registry));
+		$this->registry->set('length', new \Cart\Length($this->registry));
 		
 		// Cart
-		$this->registry->set('cart', new Cart\Cart($this->registry));
+		$this->registry->set('cart', new \Cart\Cart($this->registry));
 		
 		// Encryption
-		$this->registry->set('encryption', new Encryption($this->config->get('config_encryption')));
+		$this->registry->set('encryption', new \Encryption($this->config->get('config_encryption')));
 	}
 }

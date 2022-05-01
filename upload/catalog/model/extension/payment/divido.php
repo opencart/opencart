@@ -10,6 +10,7 @@ class ModelExtensionPaymentDivido extends Model {
 
 	public function getMethod($payment_address, $total) {
 		$this->load->language('extension/payment/divido');
+		
 		$this->load->model('localisation/currency');
 
 		if (!$this->isEnabled()) {
@@ -25,6 +26,7 @@ class ModelExtensionPaymentDivido extends Model {
 		}
 
 		$cart_threshold = $this->config->get('payment_divido_cart_threshold');
+		
 		if ($cart_threshold > $total) {
 			return array();
 		}
@@ -34,6 +36,7 @@ class ModelExtensionPaymentDivido extends Model {
 
 		foreach ($plans as $plan) {
 			$planMinTotal = $total - ($total * ($plan->min_deposit / 100));
+			
 			if ($plan->min_amount <= $planMinTotal) {
 				$has_plan = true;
 				break;
@@ -45,6 +48,7 @@ class ModelExtensionPaymentDivido extends Model {
 		}
 
 		$title = $this->language->get('text_checkout_title');
+		
 		if ($title_override = $this->config->get('payment_divido_title')) {
 			$title = $title_override;
 		}
@@ -82,6 +86,7 @@ class ModelExtensionPaymentDivido extends Model {
 		$deposit_amount = $this->db->escape($deposit_amount);
 
 		$query_get_lookup = "SELECT `application_id` from `" . DB_PREFIX . "divido_lookup` WHERE order_id = " . $order_id;
+		
 		$result_get_lookup = $this->db->query($query_get_lookup);
 
 		if ($result_get_lookup->num_rows == 0) {
@@ -123,11 +128,13 @@ class ModelExtensionPaymentDivido extends Model {
 		}
 
 		$selected_plans = $this->config->get('payment_divido_plans_selected');
+		
 		if (!$selected_plans) {
 			return array();
 		}
 
 		$plans = array();
+		
 		foreach ($all_plans as $plan) {
 			if (in_array($plan->id, $selected_plans)) {
 				$plans[] = $plan;
@@ -149,15 +156,16 @@ class ModelExtensionPaymentDivido extends Model {
 		}
 
 		$api_key = $this->config->get('payment_divido_api_key');
+		
 		if (!$api_key) {
 			throw new Exception("No Divido api-key defined");
 		}
 
-		Divido::setMerchant($api_key);
+		\Divido::setMerchant($api_key);
 
-		$response = Divido_Finances::all();
+		$response = \Divido_Finances::all();
 		if ($response->status != 'ok') {
-			throw new Exception("Can't get list of finance plans from Divido!");
+			throw new \Exception("Can't get list of finance plans from Divido!");
 		}
 
 		$plans = $response->finances;
@@ -165,8 +173,9 @@ class ModelExtensionPaymentDivido extends Model {
 		// OpenCart 2.1 switched to json for their file storage cache, so
 		// we need to convert to a simple object.
 		$plans_plain = array();
+		
 		foreach ($plans as $plan) {
-			$plan_copy = new stdClass();
+			$plan_copy = new \stdClass();
 			$plan_copy->id                 = $plan->id;
 			$plan_copy->text               = $plan->text;
 			$plan_copy->country            = $plan->country;
@@ -187,7 +196,9 @@ class ModelExtensionPaymentDivido extends Model {
 
 	public function getCartPlans($cart)	{
 		$plans = array();
+		
 		$products = $cart->getProducts();
+		
 		foreach ($products as $product) {
 			$product_plans = $this->getProductPlans($product['product_id']);
 			if ($product_plans) {
@@ -265,9 +276,11 @@ class ModelExtensionPaymentDivido extends Model {
 			$product_categories = $this->model_catalog_product->getCategories($product_id);
 
 			$all_categories = array();
+			
 			foreach ($product_categories as $product_category) {
 				$all_categories[] = $product_category['category_id'];
 			}
+			
 			$category_matches = array_intersect($all_categories, $divido_categories);
 
 			if (!$category_matches) {
@@ -287,6 +300,7 @@ class ModelExtensionPaymentDivido extends Model {
 		}
 
 		$price = 0;
+		
 		if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
 			$base_price = !empty($product_info['special']) ? $product_info['special'] : $product_info['price'];
 			$price = $this->tax->calculate($base_price, $product_info['tax_class_id'], $this->config->get('config_tax'));
@@ -298,14 +312,17 @@ class ModelExtensionPaymentDivido extends Model {
 
 		if ($settings['display'] == 'default') {
 			$plans = $this->getPlans(true);
+			
 			return $plans;
 		}
 
 		// If the product has non-default plans, fetch all of them.
 		$available_plans = $this->getPlans(false);
+		
 		$selected_plans  = explode(',', $settings['plans']);
 
 		$plans = array();
+		
 		foreach ($available_plans as $plan) {
 			if (in_array($plan->id, $selected_plans)) {
 				$plans[] = $plan;

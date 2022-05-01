@@ -44,7 +44,7 @@ final class Loader {
 		if ($result != null && !$result instanceof Exception) {
 			$output = $result;
 		} else {
-			$action = new Action($route);
+			$action = new \Action($route);
 			$output = $action->execute($this->registry, array(&$data));
 		}
 		
@@ -76,7 +76,7 @@ final class Loader {
 			if (is_file($file)) {
 				include_once($file);
 	
-				$proxy = new Proxy();
+				$proxy = new \Proxy();
 				
 				// Overriding models is a little harder so we have to use PHP's magic methods
 				// In future version we can use runkit
@@ -116,7 +116,7 @@ final class Loader {
 		if ($result && !$result instanceof Exception) {
 			$output = $result;
 		} else {
-			$template = new Template($this->registry->get('config')->get('template_engine'));
+			$template = new \Template($this->registry->get('config')->get('template_engine'));
 				
 			foreach ($data as $key => $value) {
 				$template->set($key, $value);

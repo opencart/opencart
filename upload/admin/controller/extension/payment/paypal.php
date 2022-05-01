@@ -58,7 +58,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 		if (isset($this->session->data['environment']) && isset($this->session->data['authorization_code']) && isset($this->session->data['shared_id']) && isset($this->session->data['seller_nonce']) && isset($this->request->get['merchantIdInPayPal'])) {						
 			$environment = $this->session->data['environment'];
 			
-			require_once DIR_SYSTEM . 'library/paypal/paypal.php';
+			require_once(DIR_SYSTEM . 'library/paypal/paypal.php');
 			
 			$paypal_info = array(
 				'client_id' => $this->session->data['shared_id'],
@@ -121,7 +121,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 						$error_messages[] = $error['message'];
 					}
 					
-					$this->model_extension_payment_paypal->log($error, $error['message']);
+					$this->model_extension_payment_paypal->addLog($error, $error['message']);
 				}
 				
 				$this->error['warning'] = implode(' ', $error_messages);
@@ -292,7 +292,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 						$error_messages[] = $error['message'];
 					}
 					
-					$this->model_extension_payment_paypal->log($error, $error['message']);
+					$this->model_extension_payment_paypal->addLog($error, $error['message']);
 				}
 				
 				$this->error['warning'] = implode(' ', $error_messages);
@@ -370,7 +370,7 @@ class ControllerExtensionPaymentPayPal extends Controller {
 					$error_messages[] = $error['message'];
 				}
 					
-				$this->model_extension_payment_paypal->log($error, $error['message']);
+				$this->model_extension_payment_paypal->addLog($error, $error['message']);
 			}
 				
 			$this->error['warning'] = implode(' ', $error_messages);

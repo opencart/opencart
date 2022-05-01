@@ -332,7 +332,7 @@ class ControllerMarketplaceInstall extends Controller {
 	
 							$this->model_setting_modification->addModification($modification_data);
 						}
-					} catch (Exception $exception) {
+					} catch (\Exception $exception) {
 						$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
 					}
 				}

@@ -4,7 +4,7 @@ class ControllerExtensionModuleStore extends Controller {
 		$status = true;
 
 		if ($this->config->get('module_store_admin')) {
-			$this->user = new Cart\User($this->registry);
+			$this->user = new \Cart\User($this->registry);
 
 			$status = $this->user->isLogged();
 		}

@@ -1,5 +1,4 @@
 <?php
-
 class ModelExtensionPaymentAmazonLoginPay extends Model {
     const LOG_FILENAME = "amazon_pay.log";
 
@@ -912,7 +911,7 @@ class ModelExtensionPaymentAmazonLoginPay extends Model {
 
         curl_close($ch);
 
-        $result = new stdClass;
+        $result = new \stdClass;
         $result->Status = (int)$info['http_code'];
 
         libxml_use_internal_errors(true);

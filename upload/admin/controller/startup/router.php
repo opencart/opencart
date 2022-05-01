@@ -20,7 +20,7 @@ class ControllerStartupRouter extends Controller {
 			return $result;
 		}
 		
-		$action = new Action($route);
+		$action = new \Action($route);
 		
 		// Any output needs to be another Action object. 
 		$output = $action->execute($this->registry, $data);

@@ -5,6 +5,7 @@ class ModelExtensionPaymentEway extends Model {
 
 		if ($this->config->get('payment_eway_status')) {
 			$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$this->config->get('payment_eway_standard_geo_zone_id') . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
+			
 			if (!$this->config->get('payment_eway_standard_geo_zone_id')) {
 				$status = true;
 			} elseif ($query->num_rows) {
@@ -31,11 +32,12 @@ class ModelExtensionPaymentEway extends Model {
 	}
 
 	public function addOrder($order_data) {
-
 		$cap = '';
+		
 		if ($this->config->get('payment_eway_transaction_method') == 'payment') {
 			$cap = ",`capture_status` = '1'";
 		}
+		
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "eway_order` SET `order_id` = '" . (int)$order_data['order_id'] . "', `created` = NOW(), `modified` = NOW(), `debug_data` = '" . $this->db->escape($order_data['debug_data']) . "', `amount` = '" . $this->currency->format($order_data['amount'], $order_data['currency_code'], false, false) . "', `currency_code` = '" . $this->db->escape($order_data['currency_code']) . "', `transaction_id` = '" . $this->db->escape($order_data['transaction_id']) . "'{$cap}");
 
 		return $this->db->getLastId();
@@ -48,15 +50,11 @@ class ModelExtensionPaymentEway extends Model {
 	}
 
 	public function getCards($customer_id) {
-
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "eway_card WHERE customer_id = '" . (int)$customer_id . "'");
 
 		$card_data = array();
 
-		$this->load->model('account/address');
-
 		foreach ($query->rows as $row) {
-
 			$card_data[] = array(
 				'card_id' => $row['card_id'],
 				'customer_id' => $row['customer_id'],
@@ -66,11 +64,13 @@ class ModelExtensionPaymentEway extends Model {
 				'type' => $row['type'],
 			);
 		}
+		
 		return $card_data;
 	}
 
 	public function checkToken($token_id) {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "eway_card WHERE token_id = '" . (int)$token_id . "'");
+		
 		if ($query->num_rows) {
 			return true;
 		} else {
@@ -141,12 +141,14 @@ class ModelExtensionPaymentEway extends Model {
 
 		curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Type: application/json"));
 		curl_setopt($ch, CURLOPT_USERPWD, $eway_username . ":" . $eway_password);
+		
 		if ($is_post) {
 		curl_setopt($ch, CURLOPT_POST, 1);
 			curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
 		} else {
 			curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
 		}
+		
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($ch, CURLOPT_TIMEOUT, 60);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 1);
@@ -156,14 +158,18 @@ class ModelExtensionPaymentEway extends Model {
 		$response = curl_exec($ch);
 
 		if (curl_errno($ch) != CURLE_OK) {
-			$response = new stdClass();
+			$response = new \stdClass();
 			$response->Errors = "POST Error: " . curl_error($ch) . " URL: $url";
+			
 			$this->log->write(array('error' => curl_error($ch), 'errno' => curl_errno($ch)), 'cURL failed');
+			
 			$response = json_encode($response);
 		} else {
 			$info = curl_getinfo($ch);
+			
 			if ($info['http_code'] != 200) {
-				$response = new stdClass();
+				$response = new \stdClass();
+				
 				if ($info['http_code'] == 401 || $info['http_code'] == 404 || $info['http_code'] == 403) {
 					$response->Errors = "Please check the API Key and Password";
 				} else {

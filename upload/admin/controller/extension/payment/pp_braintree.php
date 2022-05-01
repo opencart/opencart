@@ -902,15 +902,15 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 
 		if ($filter_date_from || $filter_date_to) {
 			if ($filter_date_from) {
-				$date_from = new DateTime($filter_date_from);
+				$date_from = new \DateTime($filter_date_from);
 			} else {
-				$date_from = new DateTime('2012-01-01 00:00');
+				$date_from = new \DateTime('2012-01-01 00:00');
 			}
 
 			if ($filter_date_to) {
-				$date_to = new DateTime($filter_date_to . ' +1 day -1 minute');
+				$date_to = new \DateTime($filter_date_to . ' +1 day -1 minute');
 			} else {
-				$date_to = new DateTime('tomorrow -1 minute');
+				$date_to = new \DateTime('tomorrow -1 minute');
 			}
 
 			$search[] = Braintree_TransactionSearch::createdAt()->between($date_from, $date_to);

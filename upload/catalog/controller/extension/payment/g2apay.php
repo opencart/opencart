@@ -12,6 +12,7 @@ class ControllerExtensionPaymentG2APay extends Controller {
 		$this->load->model('checkout/order');
 		$this->load->model('account/order');
 		$this->load->model('extension/payment/g2apay');
+		$this->load->model('setting/extension');
 
 		if(!isset($this->session->data['order_id'])) {
 			return false;
@@ -20,8 +21,6 @@ class ControllerExtensionPaymentG2APay extends Controller {
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
 		$order_data = array();
-
-		$this->load->model('setting/extension');
 
 		$totals = array();
 		$taxes = $this->cart->getTaxes();
@@ -47,7 +46,7 @@ class ControllerExtensionPaymentG2APay extends Controller {
 
 				if (isset($order_data['totals'][$i])) {
 					if (strstr(strtolower($order_data['totals'][$i]['code']), 'total') === false) {
-						$item = new stdClass();
+						$item = new \stdClass();
 						$item->sku = $order_data['totals'][$i]['code'];
 						$item->name = $order_data['totals'][$i]['title'];
 						$item->amount = number_format($order_data['totals'][$i]['value'], 2);
@@ -66,7 +65,7 @@ class ControllerExtensionPaymentG2APay extends Controller {
 		$ordered_products = $this->model_account_order->getOrderProducts($this->session->data['order_id']);
 
 		foreach ($ordered_products as $product) {
-			$item = new stdClass();
+			$item = new \stdClass();
 			$item->sku = $product['product_id'];
 			$item->name = $product['name'];
 			$item->amount = $product['price'] * $product['quantity'];

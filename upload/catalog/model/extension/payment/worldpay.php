@@ -1,7 +1,6 @@
 <?php
 
 class ModelExtensionPaymentWorldpay extends Model {
-
 	public function getMethod($address, $total) {
 		$this->load->language('extension/payment/worldpay');
 
@@ -32,15 +31,11 @@ class ModelExtensionPaymentWorldpay extends Model {
 	}
 
 	public function getCards($customer_id) {
-
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "worldpay_card WHERE customer_id = '" . (int)$customer_id . "'");
 
 		$card_data = array();
 
-		$this->load->model('account/address');
-
 		foreach ($query->rows as $row) {
-
 			$card_data[] = array(
 				'card_id' => $row['card_id'],
 				'customer_id' => $row['customer_id'],
@@ -50,6 +45,7 @@ class ModelExtensionPaymentWorldpay extends Model {
 				'type' => $row['type'],
 			);
 		}
+		
 		return $card_data;
 	}
 
@@ -74,10 +70,10 @@ class ModelExtensionPaymentWorldpay extends Model {
 	}
 
 	public function getOrder($order_id) {
-		$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "worldpay_order` WHERE `order_id` = '" . (int)$order_id . "' LIMIT 1");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "worldpay_order` WHERE `order_id` = '" . (int)$order_id . "' LIMIT 1");
 
-		if ($qry->num_rows) {
-			$order = $qry->row;
+		if ($query->num_rows) {
+			$order = $query->row;
 			$order['transactions'] = $this->getTransactions($order['worldpay_order_id']);
 
 			return $order;
@@ -91,19 +87,21 @@ class ModelExtensionPaymentWorldpay extends Model {
 	}
 
 	public function getTransactions($worldpay_order_id) {
-		$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "worldpay_order_transaction` WHERE `worldpay_order_id` = '" . (int)$worldpay_order_id . "'");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "worldpay_order_transaction` WHERE `worldpay_order_id` = '" . (int)$worldpay_order_id . "'");
 
-		if ($qry->num_rows) {
-			return $qry->rows;
+		if ($query->num_rows) {
+			return $query->rows;
 		} else {
 			return false;
 		}
 	}
 
 	public function recurringPayment($item, $order_id_rand, $token) {
-
-		$this->load->model('checkout/recurring');
+		$this->load->language('extension/payment/worldpay');
+		
+		$this->load->model('checkout/recurring');		
 		$this->load->model('extension/payment/worldpay');
+		
 		//trial information
 		if ($item['recurring']['trial'] == 1) {
 			$price = $item['recurring']['trial_price'];
@@ -143,29 +141,29 @@ class ModelExtensionPaymentWorldpay extends Model {
 
 		$this->model_extension_payment_worldpay->logger($response_data);
 
-		$next_payment = new DateTime('now');
-		$trial_end = new DateTime('now');
-		$subscription_end = new DateTime('now');
+		$next_payment = new \DateTime('now');
+		$trial_end = new \DateTime('now');
+		$subscription_end = new \DateTime('now');
 
 		if ($item['recurring']['trial'] == 1 && $item['recurring']['trial_duration'] != 0) {
 			$next_payment = $this->calculateSchedule($item['recurring']['trial_frequency'], $next_payment, $item['recurring']['trial_cycle']);
 			$trial_end = $this->calculateSchedule($item['recurring']['trial_frequency'], $trial_end, $item['recurring']['trial_cycle'] * $item['recurring']['trial_duration']);
 		} elseif ($item['recurring']['trial'] == 1) {
 			$next_payment = $this->calculateSchedule($item['recurring']['trial_frequency'], $next_payment, $item['recurring']['trial_cycle']);
-			$trial_end = new DateTime('0000-00-00');
+			$trial_end = new \DateTime('0000-00-00');
 		}
 
 		if ($trial_end > $subscription_end && $item['recurring']['duration'] != 0) {
-			$subscription_end = new DateTime(date_format($trial_end, 'Y-m-d H:i:s'));
+			$subscription_end = new \DateTime(date_format($trial_end, 'Y-m-d H:i:s'));
 			$subscription_end = $this->calculateSchedule($item['recurring']['frequency'], $subscription_end, $item['recurring']['cycle'] * $item['recurring']['duration']);
 		} elseif ($trial_end == $subscription_end && $item['recurring']['duration'] != 0) {
 			$next_payment = $this->calculateSchedule($item['recurring']['frequency'], $next_payment, $item['recurring']['cycle']);
 			$subscription_end = $this->calculateSchedule($item['recurring']['frequency'], $subscription_end, $item['recurring']['cycle'] * $item['recurring']['duration']);
 		} elseif ($trial_end > $subscription_end && $item['recurring']['duration'] == 0) {
-			$subscription_end = new DateTime('0000-00-00');
+			$subscription_end = new \DateTime('0000-00-00');
 		} elseif ($trial_end == $subscription_end && $item['recurring']['duration'] == 0) {
 			$next_payment = $this->calculateSchedule($item['recurring']['frequency'], $next_payment, $item['recurring']['cycle']);
-			$subscription_end = new DateTime('0000-00-00');
+			$subscription_end = new \DateTime('0000-00-00');
 		}
 
 		if (isset($response_data->paymentStatus) && $response_data->paymentStatus == 'SUCCESS') {
@@ -180,20 +178,20 @@ class ModelExtensionPaymentWorldpay extends Model {
 	}
 
 	public function cronPayment() {
-
 		$this->load->model('account/order');
 		$this->load->model('checkout/order');
+		
 		$profiles = $this->getProfiles();
 		$cron_data = array();
 		$i = 1;
 		foreach ($profiles as $profile) {
 			$recurring_order = $this->getRecurringOrder($profile['order_recurring_id']);
 
-			$today = new DateTime('now');
-			$unlimited = new DateTime('0000-00-00');
-			$next_payment = new DateTime($recurring_order['next_payment']);
-			$trial_end = new DateTime($recurring_order['trial_end']);
-			$subscription_end = new DateTime($recurring_order['subscription_end']);
+			$today = new \DateTime('now');
+			$unlimited = new \DateTime('0000-00-00');
+			$next_payment = new \DateTime($recurring_order['next_payment']);
+			$trial_end = new \DateTime($recurring_order['trial_end']);
+			$subscription_end = new \DateTime($recurring_order['subscription_end']);
 
 			$order_info = $this->model_checkout_order->getOrder($profile['order_id']);
 
@@ -236,16 +234,21 @@ class ModelExtensionPaymentWorldpay extends Model {
 				$this->addProfileTransaction($profile['order_recurring_id'], '', $price, 4);
 			}
 		}
-		$log = new Log('worldpay_recurring_orders.log');
+		
+		$log = new \Log('worldpay_recurring_orders.log');
 		$log->write(print_r($cron_data, 1));
+		
 		return $cron_data;
 	}
 
 	private function calculateSchedule($frequency, $next_payment, $cycle) {
 		if ($frequency == 'semi_month') {
 			$day = date_format($next_payment, 'd');
+			
 			$value = 15 - $day;
+			
 			$isEven = false;
+			
 			if ($cycle % 2 == 0) {
 				$isEven = true;
 			}
@@ -276,6 +279,7 @@ class ModelExtensionPaymentWorldpay extends Model {
 		} else {
 			$next_payment->modify('+' . $cycle . ' ' . $frequency);
 		}
+		
 		return $next_payment;
 	}
 
@@ -288,8 +292,9 @@ class ModelExtensionPaymentWorldpay extends Model {
 	}
 
 	private function getRecurringOrder($order_recurring_id) {
-		$qry = $this->db->query("SELECT * FROM " . DB_PREFIX . "worldpay_order_recurring WHERE order_recurring_id = '" . (int)$order_recurring_id . "'");
-		return $qry->row;
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "worldpay_order_recurring WHERE order_recurring_id = '" . (int)$order_recurring_id . "'");
+		
+		return $query->row;
 	}
 
 	private function addProfileTransaction($order_recurring_id, $order_code, $price, $type) {
@@ -297,68 +302,72 @@ class ModelExtensionPaymentWorldpay extends Model {
 	}
 
 	private function getProfiles() {
-		$sql = "
-			SELECT `or`.order_recurring_id
-			FROM `" . DB_PREFIX . "order_recurring` `or`
-			JOIN `" . DB_PREFIX . "order` `o` USING(`order_id`)
-			WHERE o.payment_code = 'worldpay'";
-
-		$qry = $this->db->query($sql);
-
 		$order_recurring = array();
+		
+		$query = $this->db->query("SELECT `or`.order_recurring_id FROM `" . DB_PREFIX . "order_recurring` `or` JOIN `" . DB_PREFIX . "order` `o` USING(`order_id`) WHERE o.payment_code = 'worldpay'");
 
-		foreach ($qry->rows as $profile) {
+		foreach ($query->rows as $profile) {
 			$order_recurring[] = $this->getProfile($profile['order_recurring_id']);
 		}
+		
 		return $order_recurring;
 	}
 
 	private function getProfile($order_recurring_id) {
-		$qry = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_recurring WHERE order_recurring_id = " . (int)$order_recurring_id);
-		return $qry->row;
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_recurring WHERE order_recurring_id = " . (int)$order_recurring_id);
+		
+		return $query->row;
 	}
 
 	public function getWorldpayOrder($worldpay_order_id) {
-		$qry = $this->db->query("SELECT * FROM " . DB_PREFIX . "worldpay_order WHERE order_code = " . (int)$worldpay_order_id);
-		return $qry->row;
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "worldpay_order WHERE order_code = " . (int)$worldpay_order_id);
+		
+		return $query->row;
 	}
 
 	public function updateCronJobRunTime() {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `code` = 'payment_worldpay' AND `key` = 'payment_worldpay_last_cron_job_run'");
+		
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` (`store_id`, `code`, `key`, `value`, `serialized`) VALUES (0, 'payment_worldpay', 'payment_worldpay_last_cron_job_run', NOW(), 0)");
 	}
 
 	public function sendCurl($url, $order = null) {
 		$curl = curl_init();
+		
 		curl_setopt($curl, CURLOPT_URL, 'https://api.worldpay.com/v1/' . $url);
+		
 		$content_length = 0;
+		
 		if ($order) {
 			$json = json_encode($order);
 			$content_length = strlen($json);
 			curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'POST');
 			curl_setopt($curl, CURLOPT_POSTFIELDS, $json);
 		}
+		
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 0);
 		curl_setopt($curl, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_0);
 		curl_setopt($curl, CURLOPT_TIMEOUT, 10);
-		curl_setopt(
-				$curl, CURLOPT_HTTPHEADER, array(
-			"Authorization: " . $this->config->get('payment_worldpay_service_key'),
-			"Content-Type: application/json",
-			"Content-Length: " . $content_length
-				)
+		curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+				"Authorization: " . $this->config->get('payment_worldpay_service_key'),
+				"Content-Type: application/json",
+				"Content-Length: " . $content_length
+			)
 		);
 
 		$result = json_decode(curl_exec($curl));
+		
 		curl_close($curl);
+		
 		return $result;
 	}
 
 	public function logger($data) {
 		if ($this->config->get('payment_worldpay_debug')) {
-			$log = new Log('worldpay_debug.log');
 			$backtrace = debug_backtrace();
+			
+			$log = new \Log('worldpay_debug.log');			
 			$log->write($backtrace[6]['class'] . '::' . $backtrace[6]['function'] . ' Data:  ' . print_r($data, 1));
 		}
 	}
@@ -368,6 +377,7 @@ class ModelExtensionPaymentWorldpay extends Model {
 		 * Used by the checkout to state the module
 		 * supports recurring profiles.
 		 */
+		
 		return true;
 	}
 

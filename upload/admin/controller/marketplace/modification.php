@@ -138,7 +138,7 @@ class ControllerMarketplaceModification extends Controller {
 					continue;
 				}
 				
-				$dom = new DOMDocument('1.0', 'UTF-8');
+				$dom = new \DOMDocument('1.0', 'UTF-8');
 				$dom->preserveWhiteSpace = false;
 				$dom->loadXml($xml);
 
@@ -396,7 +396,7 @@ class ControllerMarketplaceModification extends Controller {
 			}
 
 			// Log
-			$ocmod = new Log('ocmod.log');
+			$ocmod = new \Log('ocmod.log');
 			$ocmod->write(implode("\n", $log));
 
 			// Write all modification files

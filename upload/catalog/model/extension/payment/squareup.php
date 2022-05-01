@@ -71,8 +71,8 @@ class ModelExtensionPaymentSquareup extends Model {
             return;
         }
 
-        $mail = new Mail();
-
+        $mail = new \Mail();
+        
         $mail->protocol = $this->config->get('config_mail_protocol');
         $mail->parameter = $this->config->get('config_mail_parameter');
 
@@ -100,7 +100,7 @@ class ModelExtensionPaymentSquareup extends Model {
             return;
         }
 
-        $mail = new Mail();
+        $mail = new \Mail();
 
         $mail->protocol = $this->config->get('config_mail_protocol');
         $mail->parameter = $this->config->get('config_mail_parameter');
@@ -125,7 +125,7 @@ class ModelExtensionPaymentSquareup extends Model {
     }
 
     public function cronEmail($result) {
-        $mail = new Mail();
+        $mail = new \Mail();
         
         $mail->protocol = $this->config->get('config_mail_protocol');
         $mail->parameter = $this->config->get('config_mail_parameter');
@@ -141,7 +141,6 @@ class ModelExtensionPaymentSquareup extends Model {
         $subject = $this->language->get('text_cron_subject');
 
         $message = $this->language->get('text_cron_message') . $br . $br;
-
         $message .= '<strong>' . $this->language->get('text_cron_summary_token_heading') . '</strong>' . $br;
 
         if ($result['token_update_error']) {
@@ -231,11 +230,11 @@ class ModelExtensionPaymentSquareup extends Model {
 
         $this->load->library('squareup');
 
-        $recurring_sql = "SELECT * FROM `" . DB_PREFIX . "order_recurring` `or` INNER JOIN `" . DB_PREFIX . "squareup_transaction` st ON (st.transaction_id = `or`.reference) WHERE `or`.status='" . self::RECURRING_ACTIVE . "'";
+        $query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_recurring` `or` INNER JOIN `" . DB_PREFIX . "squareup_transaction` st ON (st.transaction_id = `or`.reference) WHERE `or`.status = '" . self::RECURRING_ACTIVE . "'");
 
         $this->load->model('checkout/order');
 
-        foreach ($this->db->query($recurring_sql)->rows as $recurring) {
+        foreach ($query->rows as $recurring) {
             if (!$this->paymentIsDue($recurring['order_recurring_id'])) {
                 continue;
             }
@@ -351,13 +350,15 @@ class ModelExtensionPaymentSquareup extends Model {
     }
 
     private function getRecurring($order_recurring_id) {
-        $recurring_sql = "SELECT * FROM `" . DB_PREFIX . "order_recurring` WHERE order_recurring_id='" . (int)$order_recurring_id . "'";
+        $query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_recurring` WHERE order_recurring_id='" . (int)$order_recurring_id . "'");
 
-        return $this->db->query($recurring_sql)->row;
+        return $query->row;
     }
 
     private function getTotalSuccessfulPayments($order_recurring_id) {
-        return $this->db->query("SELECT COUNT(*) as total FROM `" . DB_PREFIX . "order_recurring_transaction` WHERE order_recurring_id='" . (int)$order_recurring_id . "' AND type='" . self::TRANSACTION_PAYMENT . "'")->row['total'];
+        $query = $this->db->query("SELECT COUNT(*) as total FROM `" . DB_PREFIX . "order_recurring_transaction` WHERE order_recurring_id='" . (int)$order_recurring_id . "' AND type='" . self::TRANSACTION_PAYMENT . "'");
+        
+        return $query->row['total'];
     }
 
     private function paymentIsDue($order_recurring_id) {

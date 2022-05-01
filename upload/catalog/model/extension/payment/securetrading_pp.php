@@ -30,9 +30,9 @@ class ModelExtensionPaymentSecureTradingPp extends Model {
 	}
 
 	public function getOrder($order_id) {
-		$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "securetrading_pp_order` WHERE `order_id` = '" . (int)$order_id . "' LIMIT 1");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "securetrading_pp_order` WHERE `order_id` = '" . (int)$order_id . "' LIMIT 1");
 
-		return $qry->row;
+		return $query->row;
 	}
 
 	public function editOrder($order_id, $order) {
@@ -44,7 +44,6 @@ class ModelExtensionPaymentSecureTradingPp extends Model {
 	}
 
 	public function confirmOrder($order_id, $order_status_id, $comment = '', $notify = false) {
-
 		$this->logger('confirmOrder');
 
 		$this->load->model('checkout/order');
@@ -59,7 +58,7 @@ class ModelExtensionPaymentSecureTradingPp extends Model {
 
 		$amount = $this->currency->format($order_info['total'], $order_info['currency_code'], false, false);
 
-		switch($this->config->get('payment_securetrading_pp_settle_status')){
+		switch($this->config->get('payment_securetrading_pp_settle_status')) {
 			case 0:
 				$trans_type = 'auth';
 				break;
@@ -79,7 +78,6 @@ class ModelExtensionPaymentSecureTradingPp extends Model {
 		$this->db->query("UPDATE `" . DB_PREFIX . "securetrading_pp_order` SET `settle_type` = '" . $this->config->get('payment_securetrading_pp_settle_status') . "', `modified` = now(), `currency_code` = '" . $this->db->escape($order_info['currency_code']) . "', `total` = '" . $amount . "' WHERE order_id = " . (int)$order_info['order_id']);
 
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "securetrading_pp_order_transaction` SET `securetrading_pp_order_id` = '" . (int)$securetrading_pp_order['securetrading_pp_order_id'] . "', `amount` = '" . $amount . "', type = '" . $trans_type . "',  `created` = now()");
-
 	}
 
 	public function updateOrder($order_id, $order_status_id, $comment = '', $notify = false) {
@@ -95,7 +93,7 @@ class ModelExtensionPaymentSecureTradingPp extends Model {
 	}
 
 	public function logger($message) {
-		$log = new Log('secure.log');
+		$log = new \Log('secure.log');
 		$log->write($message);
 	}
 }

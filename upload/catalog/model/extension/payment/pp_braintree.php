@@ -5,11 +5,11 @@ class ModelExtensionPaymentPPBraintree extends Model {
 			if ($gateway != null) {
 				$client_token = $gateway->clientToken()->generate($data);
 			} else {
-				$client_token = Braintree_ClientToken::generate($data);
+				$client_token = \Braintree_ClientToken::generate($data);
 			}
 
 			return $client_token;
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			$this->log($e->getMessage());
 
 			return false;
@@ -21,11 +21,11 @@ class ModelExtensionPaymentPPBraintree extends Model {
 			if ($gateway != null) {
 				$transaction = $gateway->transaction()->sale($data);
 			} else {
-				$transaction = Braintree_Transaction::sale($data);
+				$transaction = \Braintree_Transaction::sale($data);
 			}
 
 			return $transaction;
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			$this->log($e->getMessage());
 
 			return false;
@@ -37,11 +37,11 @@ class ModelExtensionPaymentPPBraintree extends Model {
 			if ($gateway != null) {
 				$customer = $gateway->customer()->find($customer_id);
 			} else {
-				$customer = Braintree_Customer::find($customer_id);
+				$customer = \Braintree_Customer::find($customer_id);
 			}
 
 			return $customer;
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			if ($log) {
 				$this->log($e->getMessage());
 			}
@@ -55,11 +55,11 @@ class ModelExtensionPaymentPPBraintree extends Model {
 			if ($gateway != null) {
 				$payment_method = $gateway->paymentMethod()->find($token);
 			} else {
-				$payment_method = Braintree_PaymentMethod::find($token);
+				$payment_method = \Braintree_PaymentMethod::find($token);
 			}
 
 			return $payment_method;
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			$this->log($e->getMessage());
 
 			return false;
@@ -71,11 +71,11 @@ class ModelExtensionPaymentPPBraintree extends Model {
 			if ($gateway != null) {
 				$payment_method = $gateway->paymentMethod()->create($data);
 			} else {
-				$payment_method = Braintree_PaymentMethod::create($data);
+				$payment_method = \Braintree_PaymentMethod::create($data);
 			}
 
 			return $payment_method;
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			$this->log($e->getMessage());
 
 			return false;
@@ -87,11 +87,11 @@ class ModelExtensionPaymentPPBraintree extends Model {
 			if ($gateway != null) {
 				$gateway->paymentMethod()->delete($token);
 			} else {
-				Braintree_PaymentMethod::delete($token);
+				\Braintree_PaymentMethod::delete($token);
 			}
 
 			return true;
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			$this->log($e->getMessage());
 
 			return false;
@@ -103,11 +103,11 @@ class ModelExtensionPaymentPPBraintree extends Model {
 			if ($gateway != null) {
 				$response = $gateway->paymentMethodNonce()->find($token);
 			} else {
-				$response = Braintree_PaymentMethodNonce::find($token);
+				$response = \Braintree_PaymentMethodNonce::find($token);
 			}
 
 			return $response;
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			$this->log($e->getMessage());
 
 			return false;
@@ -119,11 +119,11 @@ class ModelExtensionPaymentPPBraintree extends Model {
 			if ($gateway != null) {
 				$response = $gateway->paymentMethodNonce()->create($token);
 			} else {
-				$response = Braintree_PaymentMethodNonce::create($token);
+				$response = \Braintree_PaymentMethodNonce::create($token);
 			}
 
 			return $response;
-		} catch (Exception $e) {
+		} catch (\xception $e) {
 			$this->log($e->getMessage());
 
 			return false;
@@ -131,10 +131,10 @@ class ModelExtensionPaymentPPBraintree extends Model {
 	}
 
 	public function setCredentials() {
-		Braintree_Configuration::environment($this->config->get('payment_pp_braintree_environment'));
-		Braintree_Configuration::merchantId($this->config->get('payment_pp_braintree_merchant_id'));
-		Braintree_Configuration::publicKey($this->config->get('payment_pp_braintree_public_key'));
-		Braintree_Configuration::privateKey($this->config->get('payment_pp_braintree_private_key'));
+		\Braintree_Configuration::environment($this->config->get('payment_pp_braintree_environment'));
+		\Braintree_Configuration::merchantId($this->config->get('payment_pp_braintree_merchant_id'));
+		\Braintree_Configuration::publicKey($this->config->get('payment_pp_braintree_public_key'));
+		\Braintree_Configuration::privateKey($this->config->get('payment_pp_braintree_private_key'));
 	}
 
 	public function setGateway($access_token) {
@@ -184,7 +184,7 @@ class ModelExtensionPaymentPPBraintree extends Model {
 
 	public function log($data) {
 		if ($this->config->get('payment_pp_braintree_debug')) {
-			$log = new Log('braintree.log');
+			$log = new \Log('braintree.log');
 			$log->write(print_r($data, true));
 		}
 	}

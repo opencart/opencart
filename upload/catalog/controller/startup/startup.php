@@ -108,7 +108,7 @@ class ControllerStartupStartup extends Controller {
 		}
 				
 		// Overwrite the default language object
-		$language = new Language($code);
+		$language = new \Language($code);
 		$language->load($code);
 		
 		$this->registry->set('language', $language);
@@ -117,7 +117,7 @@ class ControllerStartupStartup extends Controller {
 		$this->config->set('config_language_id', $languages[$code]['language_id']);	
 
 		// Customer
-		$customer = new Cart\Customer($this->registry);
+		$customer = new \Cart\Customer($this->registry);
 		$this->registry->set('customer', $customer);
 		
 		// Customer Group

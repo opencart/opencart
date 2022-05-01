@@ -18,7 +18,6 @@ class ModelExtensionPaymentLaybuy extends Model {
 
 	public function getInitialPayments() {
 		$minimum = $this->config->get('payment_laybuy_min_deposit') ? $this->config->get('payment_laybuy_min_deposit') : 20;
-
 		$maximum = $this->config->get('payment_laybuy_max_deposit') ? $this->config->get('payment_laybuy_max_deposit') : 50;
 
 		$initial_payments = array();
@@ -283,7 +282,7 @@ class ModelExtensionPaymentLaybuy extends Model {
 			`laybuy_ref_no` int(11) NOT NULL DEFAULT '0',
 			`date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
 			PRIMARY KEY (`laybuy_transaction_id`)
-		) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci");
+		) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;");
 
 		$this->db->query("CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "laybuy_revise_request` (
 			`laybuy_revise_request_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -315,7 +314,7 @@ class ModelExtensionPaymentLaybuy extends Model {
 			`payment_type` tinyint(1) NOT NULL DEFAULT '1',
 			`date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
 			PRIMARY KEY (`laybuy_revise_request_id`)
-		) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci");
+		) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;");
 
 		$this->load->model('setting/event');
 
@@ -326,7 +325,7 @@ class ModelExtensionPaymentLaybuy extends Model {
 		if ($this->config->get('payment_laybuy_logging')) {
 			$backtrace = debug_backtrace();
 
-			$log = new Log('laybuy.log');
+			$log = new \Log('laybuy.log');
 
 			$log->write('(' . $backtrace[$step]['class'] . '::' . $backtrace[$step]['function'] . ') - ' . $data);
 		}
@@ -334,7 +333,6 @@ class ModelExtensionPaymentLaybuy extends Model {
 
 	public function uninstall() {
 		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "laybuy_transaction`");
-
 		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "laybuy_revise_request`");
 
 		$this->load->model('setting/event');

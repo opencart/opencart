@@ -453,7 +453,7 @@ class ControllerExtensionPaymentPPBraintree extends Controller {
 
 			curl_close($curl);
 
-			if ($curl_response['url']) {
+			if (isset($curl_response['url']) ? $curl_response['url'] : '') {
 				$data['auth_connect_url'] = $curl_response['url'];
 			}
 		}

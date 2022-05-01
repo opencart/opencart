@@ -525,9 +525,9 @@ class ControllerMarketplaceMarketplace extends Controller {
 		$string .= $extension_id . "\n";
 		$string .= $time . "\n";
 
-		$signature = base64_encode(hash_hmac('sha1', $string, $this->config->get('opencart_secret'), 1));
+		$signature = base64_encode(hash_hmac('sha1', $string, (string)$this->config->get('opencart_secret'), 1));
 
-		$url  = '&username=' . urlencode($this->config->get('opencart_username'));
+		$url  = '&username=' . urlencode((string)$this->config->get('opencart_username'));
 		$url .= '&domain=' . $this->request->server['HTTP_HOST'];
 		$url .= '&version=' . urlencode(VERSION);
 		$url .= '&extension_id=' . $extension_id;
@@ -558,7 +558,7 @@ class ControllerMarketplaceMarketplace extends Controller {
 			if (isset($response_info['error'])) {
 				$data['error_signature'] = $response_info['error'];
 			} else {
-        $data['error_signature'] = '';
+				$data['error_signature'] = '';
 			}
 
 			$data['user_token'] = $this->session->data['user_token'];

@@ -321,7 +321,7 @@ class ControllerExtensionModulePayPalSmartButton extends Controller {
 						$error_messages[] = $error['message'];
 					}
 					
-					$this->model_extension_module_paypal_smart_button->log($error, $error['message']);
+					$this->model_extension_module_paypal_smart_button->addLog($error, $error['message']);
 				}
 				
 				$this->error['warning'] = implode(' ', $error_messages);
@@ -417,7 +417,7 @@ class ControllerExtensionModulePayPalSmartButton extends Controller {
 					$error_messages[] = $error['message'];
 				}
 					
-				$this->model_extension_module_paypal_smart_button->log($error, $error['message']);
+				$this->model_extension_module_paypal_smart_button->addLog($error, $error['message']);
 			}
 				
 			$this->error['warning'] = implode(' ', $error_messages);
@@ -1401,7 +1401,7 @@ class ControllerExtensionModulePayPalSmartButton extends Controller {
 						$error_messages[] = $error['message'];
 					}
 					
-					$this->model_extension_module_paypal_smart_button->log($error, $error['message']);
+					$this->model_extension_module_paypal_smart_button->addLog($error, $error['message']);
 				}
 				
 				$this->error['warning'] = implode(' ', $error_messages);

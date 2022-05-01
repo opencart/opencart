@@ -132,16 +132,20 @@ class ModelExtensionPaymentCardConnect extends Model {
 		$this->model_extension_payment_cardconnect->log('URL: ' . $url);
 
 		$ch = curl_init();
+		
 		curl_setopt($ch, CURLOPT_URL, $url);
 		curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
 		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch, CURLOPT_TIMEOUT, 30);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+		
 		$response_data = curl_exec($ch);
+		
 		if (curl_errno($ch)) {
 			$this->model_extension_payment_cardconnect->log('cURL error: ' . curl_errno($ch));
 		}
+		
 		curl_close($ch);
 
 		$response_data = json_decode($response_data, true);
@@ -163,7 +167,7 @@ class ModelExtensionPaymentCardConnect extends Model {
 
 	public function log($data) {
 		if ($this->config->get('cardconnect_logging')) {
-			$log = new Log('cardconnect.log');
+			$log = new \Log('cardconnect.log');
 
 			$log->write($data);
 		}

@@ -58,7 +58,7 @@ class ControllerExtensionPaymentWechatPay extends Controller {
 			'appid'			 	=>  $this->config->get('payment_wechat_pay_app_id'),
 			'appsecret'		 	=>  $this->config->get('payment_wechat_pay_app_secret'),
 			'mch_id'			=>  $this->config->get('payment_wechat_pay_mch_id'),
-			'partnerkey'		=>  $this->config->get('payment_wechat_pay_api_secret')
+			'partnerkey'			=>  $this->config->get('payment_wechat_pay_api_secret')
 		);
 
 		\Wechat\Loader::config($options);
@@ -114,7 +114,7 @@ class ControllerExtensionPaymentWechatPay extends Controller {
 			'appid'			 	=>  $this->config->get('payment_wechat_pay_app_id'),
 			'appsecret'		 	=>  $this->config->get('payment_wechat_pay_app_secret'),
 			'mch_id'			=>  $this->config->get('payment_wechat_pay_mch_id'),
-			'partnerkey'		=>  $this->config->get('payment_wechat_pay_api_secret')
+			'partnerkey'			=>  $this->config->get('payment_wechat_pay_api_secret')
 		);
 
 		\Wechat\Loader::config($options);

@@ -277,7 +277,7 @@ class ControllerExtensionPaymentGlobalpay extends Controller {
 				$json['error'] = isset($void_response->message) && !empty($void_response->message) ? (string)$void_response->message : $this->language->get('error_void');
 			}
 		} else {
-			$json['error'] = $this->language->get('error_missing_data');
+			$json['error'] = $this->language->get('error_data_missing');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -373,7 +373,7 @@ class ControllerExtensionPaymentGlobalpay extends Controller {
 				$json['error'] = isset($rebate_response->message) && !empty($rebate_response->message) ? (string)$rebate_response->message : 'Unable to rebate';
 			}
 		} else {
-			$json['error'] = $this->language->get('error_missing_data');
+			$json['error'] = $this->language->get('error_data_missing');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

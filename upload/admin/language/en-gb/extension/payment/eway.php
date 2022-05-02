@@ -172,4 +172,4 @@ $_['error_permission']			= 'Warning: You do not have permission to modify the eW
 $_['error_username']			= 'eWAY API Key is required!';
 $_['error_password']			= 'eWAY password is required!';
 $_['error_payment_type']		= 'At least one payment type is required!';
-$_['error_missing_data']  = 'Error: Missing data!';
+$_['error_missing_data']      = 'Error: Missing data!';

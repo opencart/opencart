@@ -99,3 +99,5 @@ $_['error_live_url']				 = 'Live URL is required';
 $_['error_demo_url']				 = 'Demo URL is required';
 $_['error_data_missing']			 = 'Data missing';
 $_['error_use_select_card']			 = 'You must have "Select Card" enabled for subaccount routing by card type to work';
+$_['error_void']              = 'Error: The order cannot be void!';
+$_['error_capture']           = 'Error: The order cannot be captured!';

@@ -480,19 +480,19 @@ class ControllerExtensionPaymentCardConnect extends Controller {
 			$this->error['payment_cardconnect_merchant_id'] = $this->language->get('error_merchant_id');
 		}
 
-		if (!$this->request->post['cardconnect_api_username']) {
+		if (!$this->request->post['payment_cardconnect_api_username']) {
 			$this->error['payment_cardconnect_api_username'] = $this->language->get('error_api_username');
 		}
 
-		if (!$this->request->post['cardconnect_api_password']) {
+		if (!$this->request->post['payment_cardconnect_api_password']) {
 			$this->error['payment_cardconnect_api_password'] = $this->language->get('error_api_password');
 		}
 
-		if (!$this->request->post['cardconnect_token']) {
+		if (!$this->request->post['payment_cardconnect_token']) {
 			$this->error['payment_cardconnect_token'] = $this->language->get('error_token');
 		}
 
-		if (!$this->request->post['cardconnect_site']) {
+		if (!$this->request->post['payment_cardconnect_site']) {
 			$this->error['payment_cardconnect_site'] = $this->language->get('error_site');
 		}
 

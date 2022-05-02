@@ -285,7 +285,9 @@ $(document).on('click', '[data-oc-toggle=\'upload\']', function () {
                         }
 
                         if (json['code']) {
-                            $($(element).attr('data-oc-target')).attr('value', json['code']);
+                            $($(element).attr('data-oc-target')).val(json['code']);
+
+                            $(element).parent().find('[data-oc-toggle=\'download\'], [data-oc-toggle=\'clear\']').prop('disabled', false);
                         }
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
@@ -297,20 +299,13 @@ $(document).on('click', '[data-oc-toggle=\'upload\']', function () {
     }
 });
 
-/*
-$(document).on('change', 'button[data-oc-toggle=\'download\']', function() {
-    location = $(this).attr('data-oc-url') + '&code=' + this.value;
-});
-//$($(element).attr('data-oc-target'))
-*/
-
 $(document).on('click', '[data-oc-toggle=\'download\']', function (e) {
     var element = this;
 
     var value = $($(element).attr('data-oc-target')).val();
 
     if (value != '') {
-        location = 'index.php?route=tool/upload|upload&user_token=' + getURLVar('user_token') + '&code=' + value;
+        location = 'index.php?route=tool/upload|download&user_token=' + getURLVar('user_token') + '&code=' + value;
     }
 });
 
@@ -318,8 +313,12 @@ $(document).on('click', '[data-oc-toggle=\'clear\']', function () {
     var element = this;
 
     if ($(element).attr('data-oc-thumb')) {
-        $(element).attr('src', $($(this).attr('data-oc-thumb')).attr('data-oc-placeholder'));
+        var thumb = $(this).attr('data-oc-thumb');
+
+        $(thumb).attr('src', $(thumb).attr('data-oc-placeholder'));
     }
+
+    $(element).parent().find('[data-oc-toggle=\'download\'], [data-oc-toggle=\'clear\']').prop('disabled', true);
 
     $($(this).attr('data-oc-target')).val('');
 });
@@ -340,8 +339,6 @@ $(document).on('click', '[data-oc-toggle=\'image\']', function (e) {
             $(element).prop('disabled', false).removeClass('loading');
         },
         success: function (html) {
-            console.log(html);
-
             $('body').append(html);
 
             var element = document.querySelector('#modal-image');

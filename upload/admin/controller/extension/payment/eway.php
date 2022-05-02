@@ -1,6 +1,5 @@
 <?php
 class ControllerExtensionPaymentEway extends Controller {
-
 	private $error = array();
 
 	public function index() {
@@ -243,20 +242,25 @@ class ControllerExtensionPaymentEway extends Controller {
 		$this->load->language('extension/payment/eway');
 
 		$order_id = $this->request->post['order_id'];
+		
 		$refund_amount = (double)$this->request->post['refund_amount'];
 
 		if ($order_id && $refund_amount > 0) {
 			$this->load->model('extension/payment/eway');
+			
 			$result = $this->model_extension_payment_eway->refund($order_id, $refund_amount);
 
 			// Check if any error returns
 			if (isset($result->Errors) || $result === false) {
 				$json['error'] = true;
+				
 				$reason = '';
+				
 				if ($result === false) {
 					$reason = $this->language->get('text_unknown_failure');
 				} else {
 					$errors = explode(',', $result->Errors);
+					
 					foreach ($errors as $error) {
 						$reason .= $this->language->get('text_card_message_' . $result->Errors);
 					}
@@ -295,6 +299,8 @@ class ControllerExtensionPaymentEway extends Controller {
 	}
 
 	public function capture() {
+		$json = array();
+		
 		$this->load->language('extension/payment/eway');
 
 		$order_id = $this->request->post['order_id'];
@@ -302,21 +308,27 @@ class ControllerExtensionPaymentEway extends Controller {
 
 		if ($order_id && $capture_amount > 0) {
 			$this->load->model('extension/payment/eway');
+			
 			$eway_order = $this->model_extension_payment_eway->getOrder($order_id);
+			
 			$result = $this->model_extension_payment_eway->capture($order_id, $capture_amount, $eway_order['currency_code']);
 
 			// Check if any error returns
 			if (isset($result->Errors) || $result === false) {
 				$json['error'] = true;
+				
 				$reason = '';
+				
 				if ($result === false) {
 					$reason = $this->language->get('text_unknown_failure');
 				} else {
 					$errors = explode(',', $result->Errors);
+					
 					foreach ($errors as $error) {
 						$reason .= $this->language->get('text_card_message_' . $result->Errors);
 					}
 				}
+				
 				$json['message'] = $this->language->get('text_capture_failed') . $reason;
 			} else {
 				$this->model_extension_payment_eway->addTransaction($eway_order['eway_order_id'], $result->TransactionID, 'payment', $capture_amount, $eway_order['currency_code']);
@@ -325,6 +337,7 @@ class ControllerExtensionPaymentEway extends Controller {
 				$total_refunded = $this->model_extension_payment_eway->getTotalRefunded($eway_order['eway_order_id']);
 
 				$remaining = $eway_order['amount'] - $capture_amount;
+				
 				if ($remaining <= 0) {
 					$remaining = 0;
 				}
@@ -340,11 +353,11 @@ class ControllerExtensionPaymentEway extends Controller {
 				$json['data']['capture_status'] = 1;
 				$json['data']['remaining'] = $remaining;
 				$json['message'] = $this->language->get('text_capture_success');
+				
 				$json['error'] = false;
 			}
 		} else {
-			$json['error'] = true;
-			$json['message'] = 'Missing data';
+			$json['error'] = $this->language->get('error_missing_data');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -355,12 +368,15 @@ class ControllerExtensionPaymentEway extends Controller {
 		if (!$this->user->hasPermission('modify', 'extension/payment/eway')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
+		
 		if (!$this->request->post['payment_eway_username']) {
 			$this->error['username'] = $this->language->get('error_username');
 		}
+		
 		if (!$this->request->post['payment_eway_password']) {
 			$this->error['password'] = $this->language->get('error_password');
 		}
+		
 		if (!isset($this->request->post['payment_eway_payment_type'])) {
 			$this->error['payment_type'] = $this->language->get('error_payment_type');
 		}

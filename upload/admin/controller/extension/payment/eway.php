@@ -252,8 +252,6 @@ class ControllerExtensionPaymentEway extends Controller {
 
 			// Check if any error returns
 			if (isset($result->Errors) || $result === false) {
-				$json['error'] = true;
-				
 				$reason = '';
 				
 				if ($result === false) {
@@ -265,21 +263,26 @@ class ControllerExtensionPaymentEway extends Controller {
 						$reason .= $this->language->get('text_card_message_' . $result->Errors);
 					}
 				}
-				$json['message'] = $this->language->get('text_refund_failed') . $reason;
+				
+				$json['error'] = $this->language->get('text_refund_failed') . $reason;
 			} else {
 				$eway_order = $this->model_extension_payment_eway->getOrder($order_id);
+				
 				$this->model_extension_payment_eway->addTransaction($eway_order['eway_order_id'], $result->Refund->TransactionID, 'refund', $result->Refund->TotalAmount / 100, $eway_order['currency_code']);
 
 				$total_captured = $this->model_extension_payment_eway->getTotalCaptured($eway_order['eway_order_id']);
 				$total_refunded = $this->model_extension_payment_eway->getTotalRefunded($eway_order['eway_order_id']);
+				
 				$refund_status = 0;
 
 				if ($total_captured == $total_refunded) {
 					$refund_status = 1;
+					
 					$this->model_extension_payment_eway->updateRefundStatus($eway_order['eway_order_id'], $refund_status);
 				}
 
 				$json['data'] = array();
+				
 				$json['data']['transactionid'] = $result->TransactionID;
 				$json['data']['created'] = date("Y-m-d H:i:s");
 				$json['data']['amount'] = number_format($refund_amount, 2, '.', '');
@@ -287,11 +290,12 @@ class ControllerExtensionPaymentEway extends Controller {
 				$json['data']['refund_status'] = $refund_status;
 				$json['data']['remaining'] = $total_captured - $total_refunded;
 				$json['message'] = $this->language->get('text_refund_success');
+				
 				$json['error'] = false;
 			}
 		} else {
 			$json['error'] = true;
-			$json['message'] = 'Missing data';
+			$json['message'] = $this->language->get('error_data_missing');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -357,7 +361,7 @@ class ControllerExtensionPaymentEway extends Controller {
 				$json['error'] = false;
 			}
 		} else {
-			$json['error'] = $this->language->get('error_missing_data');
+			$json['error'] = $this->language->get('error_data_missing');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

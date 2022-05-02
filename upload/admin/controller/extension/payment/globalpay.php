@@ -152,10 +152,10 @@ class ControllerExtensionPaymentGlobalpay extends Controller {
 			$data['payment_globalpay_tss_check'] = $this->config->get('payment_globalpay_tss_check');
 		}
 
-		if (isset($this->request->post['globalpay_order_status_success_settled_id'])) {
-			$data['globalpay_order_status_success_settled_id'] = $this->request->post['globalpay_order_status_success_settled_id'];
+		if (isset($this->request->post['payment_globalpay_order_status_success_settled_id'])) {
+			$data['payment_globalpay_order_status_success_settled_id'] = $this->request->post['payment_globalpay_order_status_success_settled_id'];
 		} else {
-			$data['globalpay_order_status_success_settled_id'] = $this->config->get('globalpay_order_status_success_settled_id');
+			$data['payment_globalpay_order_status_success_settled_id'] = $this->config->get('payment_globalpay_order_status_success_settled_id');
 		}
 
 		if (isset($this->request->post['payment_globalpay_order_status_success_unsettled_id'])) {
@@ -253,8 +253,9 @@ class ControllerExtensionPaymentGlobalpay extends Controller {
 	}
 
 	public function void() {
-		$this->load->language('extension/payment/globalpay');
 		$json = array();
+		
+		$this->load->language('extension/payment/globalpay');		
 
 		if (isset($this->request->post['order_id']) && $this->request->post['order_id'] != '') {
 			$this->load->model('extension/payment/globalpay');
@@ -270,16 +271,13 @@ class ControllerExtensionPaymentGlobalpay extends Controller {
 				$this->model_extension_payment_globalpay->updateVoidStatus($globalpay_order['globalpay_order_id'], 1);
 
 				$json['msg'] = $this->language->get('text_void_ok');
-				$json['data'] = array();
+				
 				$json['data']['date_added'] = date("Y-m-d H:i:s");
-				$json['error'] = false;
 			} else {
-				$json['error'] = true;
-				$json['msg'] = isset($void_response->message) && !empty($void_response->message) ? (string)$void_response->message : 'Unable to void';
+				$json['error'] = isset($void_response->message) && !empty($void_response->message) ? (string)$void_response->message : $this->language->get('error_void');
 			}
 		} else {
-			$json['error'] = true;
-			$json['msg'] = 'Missing data';
+			$json['error'] = $this->language->get('error_missing_data');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -287,8 +285,9 @@ class ControllerExtensionPaymentGlobalpay extends Controller {
 	}
 
 	public function capture() {
-		$this->load->language('extension/payment/globalpay');
 		$json = array();
+		
+		$this->load->language('extension/payment/globalpay');		
 
 		if (isset($this->request->post['order_id']) && $this->request->post['order_id'] != '' && isset($this->request->post['amount']) && $this->request->post['amount'] > 0) {
 			$this->load->model('extension/payment/globalpay');
@@ -316,18 +315,16 @@ class ControllerExtensionPaymentGlobalpay extends Controller {
 				$this->model_extension_payment_globalpay->updateForRebate($globalpay_order['globalpay_order_id'], $capture_response->pasref, $capture_response->orderid);
 
 				$json['data'] = array();
+				
 				$json['data']['date_added'] = date("Y-m-d H:i:s");
 				$json['data']['amount'] = $this->request->post['amount'];
 				$json['data']['capture_status'] = $capture_status;
 				$json['data']['total'] = (float)$total_captured;
-				$json['error'] = false;
 			} else {
-				$json['error'] = true;
-				$json['msg'] = isset($capture_response->message) && !empty($capture_response->message) ? (string)$capture_response->message : 'Unable to capture';
+				$json['error'] = isset($capture_response->message) && !empty($capture_response->message) ? (string)$capture_response->message : $this->language->get('error_capture');
 			}
 		} else {
-			$json['error'] = true;
-			$json['msg'] = $this->language->get('error_data_missing');
+			$json['error'] = $this->language->get('error_data_missing');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -338,7 +335,7 @@ class ControllerExtensionPaymentGlobalpay extends Controller {
 		$this->load->language('extension/payment/globalpay');
 		$json = array();
 
-		if (isset($this->request->post['order_id']) && !empty($this->request->post['order_id'])) {
+		if (isset($this->request->post['order_id'])) {
 			$this->load->model('extension/payment/globalpay');
 
 			$globalpay_order = $this->model_extension_payment_globalpay->getOrder($this->request->post['order_id']);
@@ -355,27 +352,28 @@ class ControllerExtensionPaymentGlobalpay extends Controller {
 
 				if ($total_captured <= 0 && $globalpay_order['capture_status'] == 1) {
 					$this->model_extension_payment_globalpay->updateRebateStatus($globalpay_order['globalpay_order_id'], 1);
+					
 					$rebate_status = 1;
+					
 					$json['msg'] = $this->language->get('text_rebate_ok_order');
 				} else {
 					$rebate_status = 0;
+					
 					$json['msg'] = $this->language->get('text_rebate_ok');
 				}
 
 				$json['data'] = array();
+				
 				$json['data']['date_added'] = date("Y-m-d H:i:s");
 				$json['data']['amount'] = $this->request->post['amount']*-1;
 				$json['data']['total_captured'] = (float)$total_captured;
 				$json['data']['total_rebated'] = (float)$total_rebated;
 				$json['data']['rebate_status'] = $rebate_status;
-				$json['error'] = false;
 			} else {
-				$json['error'] = true;
-				$json['msg'] = isset($rebate_response->message) && !empty($rebate_response->message) ? (string)$rebate_response->message : 'Unable to rebate';
+				$json['error'] = isset($rebate_response->message) && !empty($rebate_response->message) ? (string)$rebate_response->message : 'Unable to rebate';
 			}
 		} else {
-			$json['error'] = true;
-			$json['msg'] = 'Missing data';
+			$json['error'] = $this->language->get('error_missing_data');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

@@ -47,8 +47,8 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-debug"><span data-toggle="tooltip" title="{{ help_debug }}">{{ entry_debug }}</span></label>
                 <div class="col-sm-10">
-                  <select name="klarna_checkout_debug" id="input-debug" class="form-control">
-                    {% if klarna_checkout_debug %}
+                  <select name="payment_klarna_checkout_debug" id="input-debug" class="form-control">
+                    {% if payment_klarna_checkout_debug %}
                     <option value="1" selected="selected">{{ text_enabled }}</option>
                     <option value="0">{{ text_disabled }}</option>
                     {% else %}
@@ -61,44 +61,44 @@
 			  <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-colour-button">{{ entry_colour_button }}</label>
                 <div class="col-sm-10">
-                  <input type="color" name="klarna_checkout_colour_button" value="{{ klarna_checkout_colour_button }}" id="input-colour-button" />
+                  <input type="color" name="payment_klarna_checkout_colour_button" value="{{ payment_klarna_checkout_colour_button }}" id="input-colour-button" />
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-colour-button-text">{{ entry_colour_button_text }}</label>
                 <div class="col-sm-10">
-                  <input type="color" name="klarna_checkout_colour_button_text" value="{{ klarna_checkout_colour_button_text }}" id="input-colour-button-text" />
+                  <input type="color" name="payment_klarna_checkout_colour_button_text" value="{{ payment_klarna_checkout_colour_button_text }}" id="input-colour-button-text" />
                 </div>
               </div>
 			  <div class="form-group">
 			    <label class="col-sm-2 control-label" for="input-colour-checkbox">{{ entry_colour_checkbox }}</label>
 			    <div class="col-sm-10">
-				  <input type="color" name="klarna_checkout_colour_checkbox" value="{{ klarna_checkout_colour_checkbox }}" id="input-colour-checkbox" />
+				  <input type="color" name="payment_klarna_checkout_colour_checkbox" value="{{ payment_klarna_checkout_colour_checkbox }}" id="input-colour-checkbox" />
 			    </div>
 			  </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-colour-checkbox-checkmark">{{ entry_colour_checkbox_checkmark }}</label>
                 <div class="col-sm-10">
-                  <input type="color" name="klarna_checkout_colour_checkbox_checkmark" value="{{ klarna_checkout_colour_checkbox_checkmark }}" id="input-colour-checkbox-checkmark" />
+                  <input type="color" name="payment_klarna_checkout_colour_checkbox_checkmark" value="{{ payment_klarna_checkout_colour_checkbox_checkmark }}" id="input-colour-checkbox-checkmark" />
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-colour-header">{{ entry_colour_header }}</label>
                 <div class="col-sm-10">
-                  <input type="color" name="klarna_checkout_colour_header" value="{{ klarna_checkout_colour_header }}" id="input-colour-header" />
+                  <input type="color" name="payment_klarna_checkout_colour_header" value="{{ payment_klarna_checkout_colour_header }}" id="input-colour-header" />
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-colour-link">{{ entry_colour_link }}</label>
                 <div class="col-sm-10">
-                  <input type="color" name="klarna_checkout_colour_link" value="{{ klarna_checkout_colour_link }}" id="input-colour-link" />
+                  <input type="color" name="payment_klarna_checkout_colour_link" value="{{ payment_klarna_checkout_colour_link }}" id="input-colour-link" />
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-separate-shipping-address"><span data-toggle="tooltip" title="{{ help_separate_shipping_address }}">{{ entry_separate_shipping_address }}</span></label>
                 <div class="col-sm-10">
-                  <select name="klarna_checkout_separate_shipping_address" id="input-separate-shipping-address" class="form-control">
-                    {% if klarna_checkout_separate_shipping_address %}
+                  <select name="payment_klarna_checkout_separate_shipping_address" id="input-separate-shipping-address" class="form-control">
+                    {% if payment_klarna_checkout_separate_shipping_address %}
                     <option value="1" selected="selected">{{ text_yes }}</option>
                     <option value="0">{{ text_no }}</option>
                     {% else %}
@@ -111,8 +111,8 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-dob-mandatory"><span data-toggle="tooltip" title="{{ help_dob_mandatory }}">{{ entry_dob_mandatory }}</span></label>
                 <div class="col-sm-10">
-                  <select name="klarna_checkout_dob_mandatory" id="input-dob-mandatory" class="form-control">
-                    {% if klarna_checkout_dob_mandatory %}
+                  <select name="payment_klarna_checkout_dob_mandatory" id="input-dob-mandatory" class="form-control">
+                    {% if payment_klarna_checkout_dob_mandatory %}
                     <option value="1" selected="selected">{{ text_yes }}</option>
                     <option value="0">{{ text_no }}</option>
                     {% else %}
@@ -125,8 +125,8 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-title-mandatory"><span data-toggle="tooltip" title="{{ help_title_mandatory }}">{{ entry_title_mandatory }}</span></label>
                 <div class="col-sm-10">
-                  <select name="klarna_checkout_title_mandatory" id="input-title-mandatory" class="form-control">
-                    {% if klarna_checkout_title_mandatory %}
+                  <select name="payment_klarna_checkout_title_mandatory" id="input-title-mandatory" class="form-control">
+                    {% if payment_klarna_checkout_title_mandatory %}
                     <option value="1" selected="selected">{{ text_yes }}</option>
                     <option value="0">{{ text_no }}</option>
                     {% else %}
@@ -139,8 +139,8 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-additional-text-box"><span data-toggle="tooltip" title="{{ help_additional_text_box }}">{{ entry_additional_text_box }}</span></label>
                 <div class="col-sm-10">
-                  <select name="klarna_checkout_additional_text_box" id="input-additional-text-box" class="form-control">
-                    {% if klarna_checkout_additional_text_box %}
+                  <select name="payment_klarna_checkout_additional_text_box" id="input-additional-text-box" class="form-control">
+                    {% if payment_klarna_checkout_additional_text_box %}
                     <option value="1" selected="selected">{{ text_yes }}</option>
                     <option value="0">{{ text_no }}</option>
                     {% else %}
@@ -153,13 +153,13 @@
 			  <div class="form-group">
 			    <label class="col-sm-2 control-label" for="input-total"><span data-toggle="tooltip" title="{{ help_total }}">{{ entry_total }}</span></label>
 			    <div class="col-sm-10">
-			  	  <input type="text" name="klarna_checkout_total" value="{{ klarna_checkout_total }}" placeholder="{{ entry_total }}" id="input-total" class="form-control" />
+			  	  <input type="text" name="payment_klarna_checkout_total" value="{{ payment_klarna_checkout_total }}" placeholder="{{ entry_total }}" id="input-total" class="form-control" />
 				</div>
 			  </div>
 			  <div class="form-group">
 				<label class="col-sm-2 control-label" for="input-terms">{{ entry_terms }}</label>
 				<div class="col-sm-10">
-				  <select name="klarna_checkout_terms" id="input-terms" class="form-control">
+				  <select name="payment_klarna_checkout_terms" id="input-terms" class="form-control">
 					{% for information in informations %}
 					{% if information.information_id == klarna_checkout_terms %}
 					<option value="{{ information.information_id }}" selected="selected">{{ information.title }}</option>
@@ -173,8 +173,8 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
                 <div class="col-sm-10">
-                  <select name="klarna_checkout_status" id="input-status" class="form-control">
-                    {% if klarna_checkout_status %}
+                  <select name="payment_klarna_checkout_status" id="input-status" class="form-control">
+                    {% if payment_klarna_checkout_status %}
                     <option value="1" selected="selected">{{ text_enabled }}</option>
                     <option value="0">{{ text_disabled }}</option>
                     {% else %}
@@ -189,7 +189,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-order-status-authorised">{{ entry_order_status_authorised }}</label>
                 <div class="col-sm-10">
-                  <select name="klarna_checkout_order_status_authorised_id" id="input-order-status-authorised" class="form-control">
+                  <select name="payment_klarna_checkout_order_status_authorised_id" id="input-order-status-authorised" class="form-control">
                     {% for order_status in order_statuses %}
                     {% if order_status.order_status_id == klarna_checkout_order_status_authorised_id %}
                     <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
@@ -203,7 +203,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-order-status-part-captured">{{ entry_order_status_part_captured }}</label>
                 <div class="col-sm-10">
-                  <select name="klarna_checkout_order_status_part_captured_id" id="input-order-status-part-captured" class="form-control">
+                  <select name="payment_klarna_checkout_order_status_part_captured_id" id="input-order-status-part-captured" class="form-control">
                     {% for order_status in order_statuses %}
                     {% if order_status.order_status_id == klarna_checkout_order_status_part_captured_id %}
                     <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
@@ -217,7 +217,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-order-status-captured">{{ entry_order_status_captured }}</label>
                 <div class="col-sm-10">
-                  <select name="klarna_checkout_order_status_captured_id" id="input-order-status-captured" class="form-control">
+                  <select name="payment_klarna_checkout_order_status_captured_id" id="input-order-status-captured" class="form-control">
                     {% for order_status in order_statuses %}
                     {% if order_status.order_status_id == klarna_checkout_order_status_captured_id %}
                     <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
@@ -231,7 +231,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-order-status-cancelled">{{ entry_order_status_cancelled }}</label>
                 <div class="col-sm-10">
-                  <select name="klarna_checkout_order_status_cancelled_id" id="input-order-status-cancelled" class="form-control">
+                  <select name="payment_klarna_checkout_order_status_cancelled_id" id="input-order-status-cancelled" class="form-control">
                     {% for order_status in order_statuses %}
                     {% if order_status.order_status_id == klarna_checkout_order_status_cancelled_id %}
                     <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
@@ -245,7 +245,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-order-status-refund">{{ entry_order_status_refund }}</label>
                 <div class="col-sm-10">
-                  <select name="klarna_checkout_order_status_refund_id" id="input-order-status-refund" class="form-control">
+                  <select name="payment_klarna_checkout_order_status_refund_id" id="input-order-status-refund" class="form-control">
                     {% for order_status in order_statuses %}
                     {% if order_status.order_status_id == klarna_checkout_order_status_refund_id %}
                     <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
@@ -259,7 +259,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-order-status-fraud-rejected">{{ entry_order_status_fraud_rejected }}</label>
                 <div class="col-sm-10">
-                  <select name="klarna_checkout_order_status_fraud_rejected_id" id="input-order-status-fraud-rejected" class="form-control">
+                  <select name="payment_klarna_checkout_order_status_fraud_rejected_id" id="input-order-status-fraud-rejected" class="form-control">
                     {% for order_status in order_statuses %}
                     {% if order_status.order_status_id == klarna_checkout_order_status_fraud_rejected_id %}
                     <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
@@ -273,7 +273,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-order-status-fraud-pending">{{ entry_order_status_fraud_pending }}</label>
                 <div class="col-sm-10">
-                  <select name="klarna_checkout_order_status_fraud_pending_id" id="input-order-status-fraud-pending" class="form-control">
+                  <select name="payment_klarna_checkout_order_status_fraud_pending_id" id="input-order-status-fraud-pending" class="form-control">
                     {% for order_status in order_statuses %}
                     {% if order_status.order_status_id == klarna_checkout_order_status_fraud_pending_id %}
                     <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
@@ -287,7 +287,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-order-status-fraud-accepted">{{ entry_order_status_fraud_accepted }}</label>
                 <div class="col-sm-10">
-                  <select name="klarna_checkout_order_status_fraud_accepted_id" id="input-order-status-fraud-accepted" class="form-control">
+                  <select name="payment_klarna_checkout_order_status_fraud_accepted_id" id="input-order-status-fraud-accepted" class="form-control">
                     {% for order_status in order_statuses %}
                     {% if order_status.order_status_id == klarna_checkout_order_status_fraud_accepted_id %}
                     <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
@@ -322,19 +322,19 @@
                   {% for key, account in klarna_checkout_account %}
 				  <tr id="account-row{{ account_row }}">
 					<td class="text-left">
-					  <input type="text" name="klarna_checkout_account[{{ account_row }}][merchant_id]" placeholder="{{ entry_merchant_id }}" class="form-control" value="{{ account.merchant_id }}" />
+					  <input type="text" name="payment_klarna_checkout_account[{{ account_row }}][merchant_id]" placeholder="{{ entry_merchant_id }}" class="form-control" value="{{ account.merchant_id }}" />
                       {% if error_account[key].merchant_id is defined %}
 					  <div class="text-danger">{{ error_account[key].merchant_id }}</div>
 					  {% endif %}
 					</td>
 					<td class="text-left">
-					  <input type="text" name="klarna_checkout_account[{{ account_row }}][secret]" placeholder="{{ entry_merchant_id }}" class="form-control" value="{{ account.secret }}" />
+					  <input type="text" name="payment_klarna_checkout_account[{{ account_row }}][secret]" placeholder="{{ entry_merchant_id }}" class="form-control" value="{{ account.secret }}" />
                       {% if error_account[key].secret is defined %}
 					  <div class="text-danger">{{ error_account[key].secret }}</div>
 					  {% endif %}
 					</td>
 					<td class="text-left">
-					  <select name="klarna_checkout_account[{{ account_row }}][environment]" class="form-control">
+					  <select name="payment_klarna_checkout_account[{{ account_row }}][environment]" class="form-control">
 						{% if account.environment == 'live' %}
 						<option value="test">{{ text_test }}</option>
 						<option value="live" selected="selected">{{ text_live }}</option>
@@ -345,7 +345,7 @@
 					  </select>
 					</td>
 					<td class="text-left">
-					  <select name="klarna_checkout_account[{{ account_row }}][country]" class="form-control">
+					  <select name="payment_klarna_checkout_account[{{ account_row }}][country]" class="form-control">
 						{% for country in countries %}
                         {% if country.country_id == account.country %}
 						<option value="{{ country.country_id }}" selected="selected">{{ country.name }}</option>
@@ -356,7 +356,7 @@
 					  </select>
 					</td>
 					<td class="text-left">
-					  <select name="klarna_checkout_account[{{ account_row }}][shipping]" class="form-control">
+					  <select name="payment_klarna_checkout_account[{{ account_row }}][shipping]" class="form-control">
 						{% for geo_zone in geo_zones %}
                         {% if geo_zone.geo_zone_id == account.shipping %}
 						<option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
@@ -367,7 +367,7 @@
 					  </select>
 					</td>
 					<td class="text-left">
-					  <select name="klarna_checkout_account[{{ account_row }}][currency]" class="form-control">
+					  <select name="payment_klarna_checkout_account[{{ account_row }}][currency]" class="form-control">
 						{% for currency in currencies %}
                         {% if currency.code == account.currency %}
 						<option value="{{ currency.code }}" selected="selected">{{ currency.title }}</option>
@@ -378,13 +378,13 @@
 					  </select>
 					</td>
 					<td class="text-left">
-					  <input type="text" name="klarna_checkout_account[{{ account_row }}][locale]" placeholder="{{ entry_locale }}" class="form-control" value="{{ account.locale }}" />
+					  <input type="text" name="payment_klarna_checkout_account[{{ account_row }}][locale]" placeholder="{{ entry_locale }}" class="form-control" value="{{ account.locale }}" />
                       {% if error_account[key].locale is defined %}
 					  <div class="text-danger">{{ error_account[key].locale }}</div>
 					  {% endif %}
 					</td>
 					<td class="text-left">
-					  <select name="klarna_checkout_account[{{ account_row }}][api]" class="form-control klarna-checkout-api">
+					  <select name="payment_klarna_checkout_account[{{ account_row }}][api]" class="form-control klarna-checkout-api">
 						{% for api_location in api_locations %}
                         {% if api_location.code == account.api %}
 						<option value="{{ api_location.code }}" selected="selected">{{ api_location.name }}</option>
@@ -411,19 +411,19 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-sftp-username"><span data-toggle="tooltip" title="{{ help_sftp_username }}">{{ entry_sftp_username }}</span></label>
                 <div class="col-sm-10">
-                  <input type="text" name="klarna_checkout_sftp_username" placeholder="{{ entry_sftp_username }}" class="form-control" value="{{ klarna_checkout_sftp_username }}" />
+                  <input type="text" name="payment_klarna_checkout_sftp_username" placeholder="{{ entry_sftp_username }}" class="form-control" value="{{ payment_klarna_checkout_sftp_username }}" />
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-sftp-password"><span data-toggle="tooltip" title="{{ help_sftp_password }}">{{ entry_sftp_password }}</span></label>
                 <div class="col-sm-10">
-                  <input type="text" name="klarna_checkout_sftp_password" placeholder="{{ entry_sftp_password }}" class="form-control" value="{{ klarna_checkout_sftp_password }}" />
+                  <input type="text" name="payment_klarna_checkout_sftp_password" placeholder="{{ entry_sftp_password }}" class="form-control" value="{{ payment_klarna_checkout_sftp_password }}" />
                 </div>
               </div>
 			  <div class="form-group">
 				<label class="col-sm-2 control-label" for="input-settlement-order-status"><span data-toggle="tooltip" title="{{ help_settlement_order_status }}">{{ entry_settlement_order_status }}</span></label>
 				<div class="col-sm-10">
-				  <select name="klarna_checkout_settlement_order_status_id" id="input-settlement-order-status" class="form-control">
+				  <select name="payment_klarna_checkout_settlement_order_status_id" id="input-settlement-order-status" class="form-control">
 					{% for order_status in order_statuses %}
 					{% if order_status.order_status_id == klarna_checkout_settlement_order_status_id %}
 					<option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
@@ -541,31 +541,31 @@ var account_row = {{ account_row }};
 
 function addAccount() {
 	html  = '<tr id="account-row' + account_row + '">';
-    html += '  <td class="text-left"><input type="text" name="klarna_checkout_account[' + account_row + '][merchant_id]" placeholder="{{ entry_merchant_id }}" class="form-control" value="" /></td>';
-    html += '  <td class="text-left"><input type="text" name="klarna_checkout_account[' + account_row + '][secret]" placeholder="{{ entry_secret }}" class="form-control" value="" /></td>';
-	html += '  <td class="text-left"><select name="klarna_checkout_account[' + account_row + '][environment]" class="form-control">';
+    html += '  <td class="text-left"><input type="text" name="payment_klarna_checkout_account[' + account_row + '][merchant_id]" placeholder="{{ entry_merchant_id }}" class="form-control" value="" /></td>';
+    html += '  <td class="text-left"><input type="text" name="payment_klarna_checkout_account[' + account_row + '][secret]" placeholder="{{ entry_secret }}" class="form-control" value="" /></td>';
+	html += '  <td class="text-left"><select name="payment_klarna_checkout_account[' + account_row + '][environment]" class="form-control">';
 	html += '    <option value="live">{{ text_live }}</option>';
 	html += '    <option value="test" selected="selected">{{ text_test }}</option>';
 	html += '  </select>';
-	html += '  <td class="text-left"><select name="klarna_checkout_account[' + account_row + '][country]" class="form-control">';
+	html += '  <td class="text-left"><select name="payment_klarna_checkout_account[' + account_row + '][country]" class="form-control">';
 	{% for country in countries %}
 	html += '    <option value="{{ country.country_id }}">{{ country.name|escape('js') }}</option>';
 	{% endfor %}
 	html += '  </select></td>';
 
-	html += '  <td class="text-left"><select name="klarna_checkout_account[' + account_row + '][shipping]" class="form-control">';
+	html += '  <td class="text-left"><select name="payment_klarna_checkout_account[' + account_row + '][shipping]" class="form-control">';
 	{% for geo_zone in geo_zones %}
 	html += '    <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name|escape('js') }}</option>';
 	{% endfor %}
 	html += '  </select></td>';
 
-	html += '  <td class="text-left"><select name="klarna_checkout_account[' + account_row + '][currency]" class="form-control">';
+	html += '  <td class="text-left"><select name="payment_klarna_checkout_account[' + account_row + '][currency]" class="form-control">';
 	{% for currency in currencies %}
 	html += '    <option value="{{ currency.code }}">{{ currency.title }}</option>';
 	{% endfor %}
 	html += '  </select></td>';
-    html += '  <td class="text-left"><input type="text" name="klarna_checkout_account[' + account_row + '][locale]" placeholder="{{ entry_locale }}" class="form-control" value="" /></td>';
-	html += '  <td class="text-left"><select name="klarna_checkout_account[' + account_row + '][api]" class="form-control">';
+    html += '  <td class="text-left"><input type="text" name="payment_klarna_checkout_account[' + account_row + '][locale]" placeholder="{{ entry_locale }}" class="form-control" value="" /></td>';
+	html += '  <td class="text-left"><select name="payment_klarna_checkout_account[' + account_row + '][api]" class="form-control">';
 	{% for api_location in api_locations %}
 	html += '    <option value="{{ api_location.code }}">{{ api_location.name }}</option>';
 	{% endfor %}

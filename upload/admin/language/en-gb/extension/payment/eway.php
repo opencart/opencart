@@ -29,12 +29,6 @@ $_['entry_geo_zone']			= 'Geo Zone';
 $_['entry_sort_order']			= 'Sort order';
 $_['entry_transaction_method']	= 'Transaction Method';
 
-// Error
-$_['error_permission']			= 'Warning: You do not have permission to modify the eWAY payment module';
-$_['error_username']			= 'eWAY API Key is required!';
-$_['error_password']			= 'eWAY password is required!';
-$_['error_payment_type']		= 'At least one payment type is required!';
-
 // Help hints
 $_['help_testmode']				= 'Set to Yes to use the eWAY Sandbox.';
 $_['help_username']				= 'Your eWAY API Key from your MYeWAY account.';
@@ -172,3 +166,10 @@ $_['text_card_message_V6150'] 	= 'Invalid Refund Amount';
 $_['text_card_message_V6151'] 	= 'Refund amount greater than original transaction';
 $_['text_card_message_D4406'] 	= 'Unknown error';
 $_['text_card_message_S5010'] 	= 'Unknown error';
+
+// Error
+$_['error_permission']			= 'Warning: You do not have permission to modify the eWAY payment module';
+$_['error_username']			= 'eWAY API Key is required!';
+$_['error_password']			= 'eWAY password is required!';
+$_['error_payment_type']		= 'At least one payment type is required!';
+$_['error_missing_data']  = 'Error: Missing data!';

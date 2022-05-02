@@ -208,11 +208,11 @@ class ControllerExtensionPaymentSagepayDirect extends Controller {
 				$json['error'] = false;
 			} else {
 				$json['error'] = true;
-				$json['msg'] = isset($void_response['StatuesDetail']) && !empty($void_response['StatuesDetail']) ? (string)$void_response['StatuesDetail'] : 'Unable to void';
+				$json['msg'] = isset($void_response['StatuesDetail']) && !empty($void_response['StatuesDetail']) ? (string)$void_response['StatuesDetail'] : $this->language->get('error_void');
 			}
 		} else {
 			$json['error'] = true;
-			$json['msg'] = 'Missing data';
+			$json['msg'] = $this->language->get('error_data_missing');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -254,7 +254,7 @@ class ControllerExtensionPaymentSagepayDirect extends Controller {
 				$json['error'] = false;
 			} else {
 				$json['error'] = true;
-				$json['msg'] = isset($release_response['StatusDetail']) && !empty($release_response['StatusDetail']) ? (string)$release_response['StatusDetail'] : 'Unable to release';
+				$json['msg'] = isset($release_response['StatusDetail']) && !empty($release_response['StatusDetail']) ? (string)$release_response['StatusDetail'] : $this->language->get('error_release');
 			}
 		} else {
 			$json['error'] = true;
@@ -302,11 +302,11 @@ class ControllerExtensionPaymentSagepayDirect extends Controller {
 				$json['error'] = false;
 			} else {
 				$json['error'] = true;
-				$json['msg'] = isset($rebate_response['StatusDetail']) && !empty($rebate_response['StatusDetail']) ? (string)$rebate_response['StatusDetail'] : 'Unable to rebate';
+				$json['msg'] = isset($rebate_response['StatusDetail']) && !empty($rebate_response['StatusDetail']) ? (string)$rebate_response['StatusDetail'] : $this->language->get('error_rebate');
 			}
 		} else {
 			$json['error'] = true;
-			$json['msg'] = 'Missing data';
+			$json['msg'] = $this->language->get('error_data_missing');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

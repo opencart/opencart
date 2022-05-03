@@ -29,7 +29,7 @@ class ControllerExtensionPaymentGlobalpayRemote extends Controller {
 
 		for ($i = 1; $i <= 12; $i++) {
 			$data['months'][] = array(
-				'text'  => strftime('%B', mktime(0, 0, 0, $i, 1, 2000)),
+				'text'  => sprintf('%02d', $i),
 				'value' => sprintf('%02d', $i)
 			);
 		}
@@ -40,8 +40,8 @@ class ControllerExtensionPaymentGlobalpayRemote extends Controller {
 
 		for ($i = $today['year']; $i < $today['year'] + 11; $i++) {
 			$data['year_expire'][] = array(
-				'text'  => strftime('%Y', mktime(0, 0, 0, 1, 1, $i)),
-				'value' => strftime('%y', mktime(0, 0, 0, 1, 1, $i))
+				'text'  => sprintf('%02d', $i % 100),
+				'value' => sprintf('%02d', $i % 100)
 			);
 		}
 
@@ -74,7 +74,7 @@ class ControllerExtensionPaymentGlobalpayRemote extends Controller {
 
 		$order_id = $this->session->data['order_id'];
 
-		$order_ref = $order_id . 'T' . strftime("%Y%m%d%H%M%S") . mt_rand(1, 999);
+		$order_ref = $order_id . 'T' . date("YmdHis") . mt_rand(1, 999);
 
 		$order_info = $this->model_checkout_order->getOrder($order_id);
 
@@ -282,7 +282,7 @@ class ControllerExtensionPaymentGlobalpayRemote extends Controller {
 
 					$message = $this->language->get('error_3d_unsuccessful');
 					$message .= '<br /><strong>' . $this->language->get('text_eci') . ':</strong> (' . $eci . ') ' . $this->language->get('text_3d_s' . (int)$eci_ref);
-					$message .= '<br /><strong>' . $this->language->get('text_timestamp') . ':</strong> ' . (string)strftime("%Y%m%d%H%M%S");
+					$message .= '<br /><strong>' . $this->language->get('text_timestamp') . ':</strong> ' . (string)date("YmdHis");
 					$message .= '<br /><strong>' . $this->language->get('text_order_ref') . ':</strong> ' . (string)$md['order_ref'];
 
 					if ($this->config->get('payment_globalpay_remote_card_data_status') == 1) {

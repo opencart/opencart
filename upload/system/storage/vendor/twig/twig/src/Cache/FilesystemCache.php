@@ -18,36 +18,32 @@ namespace Twig\Cache;
  */
 class FilesystemCache implements CacheInterface
 {
-    const FORCE_BYTECODE_INVALIDATION = 1;
+    public const FORCE_BYTECODE_INVALIDATION = 1;
 
     private $directory;
     private $options;
 
-    /**
-     * @param string $directory The root cache directory
-     * @param int    $options   A set of options
-     */
-    public function __construct($directory, $options = 0)
+    public function __construct(string $directory, int $options = 0)
     {
         $this->directory = rtrim($directory, '\/').'/';
         $this->options = $options;
     }
 
-    public function generateKey($name, $className)
+    public function generateKey(string $name, string $className): string
     {
-        $hash = hash('sha256', $className);
+        $hash = hash(\PHP_VERSION_ID < 80100 ? 'sha256' : 'xxh128', $className);
 
         return $this->directory.$hash[0].$hash[1].'/'.$hash.'.php';
     }
 
-    public function load($key)
+    public function load(string $key): void
     {
-        if (file_exists($key)) {
+        if (is_file($key)) {
             @include_once $key;
         }
     }
 
-    public function write($key, $content)
+    public function write(string $key, string $content): void
     {
         $dir = \dirname($key);
         if (!is_dir($dir)) {
@@ -67,7 +63,7 @@ class FilesystemCache implements CacheInterface
 
             if (self::FORCE_BYTECODE_INVALIDATION == ($this->options & self::FORCE_BYTECODE_INVALIDATION)) {
                 // Compile cached file into bytecode cache
-                if (\function_exists('opcache_invalidate') && filter_var(ini_get('opcache.enable'), FILTER_VALIDATE_BOOLEAN)) {
+                if (\function_exists('opcache_invalidate') && filter_var(ini_get('opcache.enable'), \FILTER_VALIDATE_BOOLEAN)) {
                     @opcache_invalidate($key, true);
                 } elseif (\function_exists('apc_compile_file')) {
                     apc_compile_file($key);
@@ -80,14 +76,12 @@ class FilesystemCache implements CacheInterface
         throw new \RuntimeException(sprintf('Failed to write cache file "%s".', $key));
     }
 
-    public function getTimestamp($key)
+    public function getTimestamp(string $key): int
     {
-        if (!file_exists($key)) {
+        if (!is_file($key)) {
             return 0;
         }
 
         return (int) @filemtime($key);
     }
 }
-
-class_alias('Twig\Cache\FilesystemCache', 'Twig_Cache_Filesystem');

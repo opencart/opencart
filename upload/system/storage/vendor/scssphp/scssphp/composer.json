@@ -30,22 +30,82 @@
         "ext-json": "*",
         "ext-ctype": "*"
     },
+    "suggest": {
+        "ext-mbstring": "For best performance, mbstring should be installed as it is faster than ext-iconv",
+        "ext-iconv": "Can be used as fallback when ext-mbstring is not available"
+    },
     "require-dev": {
+        "bamarni/composer-bin-plugin": "^1.4",
+        "phpunit/phpunit": "^5.7 || ^6.5 || ^7.5 || ^8.3 || ^9.4",
+        "sass/sass-spec": "*",
         "squizlabs/php_codesniffer": "~3.5",
-        "phpunit/phpunit": "^5.7 || ^6.5 || ^7.5 || ^8.3",
-        "twbs/bootstrap": "~4.3",
+        "symfony/phpunit-bridge": "^5.1",
+        "thoughtbot/bourbon": "^7.0",
+        "twbs/bootstrap": "~5.0",
+        "twbs/bootstrap4": "4.6.1",
         "zurb/foundation": "~6.5"
     },
-    "minimum-stability": "dev",
+    "repositories": [
+        {
+            "type": "package",
+            "package": {
+                "name": "sass/sass-spec",
+                "version": "2022.02.24",
+                "source": {
+                    "type": "git",
+                    "url": "https://github.com/sass/sass-spec.git",
+                    "reference": "f41b9bfb9a3013392f2136c79f7f3356f15fb8ba"
+                },
+                "dist": {
+                    "type": "zip",
+                    "url": "https://api.github.com/repos/sass/sass-spec/zipball/f41b9bfb9a3013392f2136c79f7f3356f15fb8ba",
+                    "reference": "f41b9bfb9a3013392f2136c79f7f3356f15fb8ba",
+                    "shasum": ""
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "thoughtbot/bourbon",
+                "version": "v7.0.0",
+                "source": {
+                    "type": "git",
+                    "url": "https://github.com/thoughtbot/bourbon.git",
+                    "reference": "fbe338ee6807e7f7aa996d82c8a16f248bb149b3"
+                },
+                "dist": {
+                    "type": "zip",
+                    "url": "https://api.github.com/repos/thoughtbot/bourbon/zipball/fbe338ee6807e7f7aa996d82c8a16f248bb149b3",
+                    "reference": "fbe338ee6807e7f7aa996d82c8a16f248bb149b3",
+                    "shasum": ""
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "twbs/bootstrap4",
+                "version": "v4.6.1",
+                "source": {
+                    "type": "git",
+                    "url": "https://github.com/twbs/bootstrap.git",
+                    "reference": "043a03c95a2ad6738f85b65e53b9dbdfb03b8d10"
+                },
+                "dist": {
+                    "type": "zip",
+                    "url": "https://api.github.com/repos/twbs/bootstrap/zipball/043a03c95a2ad6738f85b65e53b9dbdfb03b8d10",
+                    "reference": "043a03c95a2ad6738f85b65e53b9dbdfb03b8d10",
+                    "shasum": ""
+                }
+            }
+        }
+    ],
     "bin": ["bin/pscss"],
-    "archive": {
-        "exclude": [
-            "/Makefile",
-            "/.gitattributes",
-            "/.gitignore",
-            "/.travis.yml",
-            "/phpunit.xml.dist",
-            "/tests"
-        ]
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "bamarni/composer-bin-plugin": true
+        }
     }
 }

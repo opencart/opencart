@@ -1,4 +1,5 @@
 <?php
+
 /**
  * SCSSPHP
  *
@@ -18,5 +19,5 @@ namespace ScssPhp\ScssPhp;
  */
 class Version
 {
-    const VERSION = '1.1.1';
+    const VERSION = '1.10.2';
 }

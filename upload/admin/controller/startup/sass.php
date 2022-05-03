@@ -14,7 +14,7 @@ class ControllerStartupSass extends Controller {
 					$scss = new \ScssPhp\ScssPhp\Compiler();
 					$scss->setImportPaths(DIR_APPLICATION . 'view/stylesheet/');
 
-					$output = $scss->compile('@import "' . $filename . '.scss"');
+					$output = $scss->compileString('@import "' . $filename . '.scss"')->getCss();
 
 					$handle = fopen($stylesheet, 'w');
 

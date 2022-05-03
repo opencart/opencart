@@ -1,4 +1,5 @@
 <?php
+
 /**
  * SCSSPHP
  *
@@ -17,6 +18,10 @@ use ScssPhp\ScssPhp\Formatter;
  * Compact formatter
  *
  * @author Leaf Corcoran <leafot@gmail.com>
+ *
+ * @deprecated since 1.4.0. Use the Compressed formatter instead.
+ *
+ * @internal
  */
 class Compact extends Formatter
 {
@@ -25,6 +30,8 @@ class Compact extends Formatter
      */
     public function __construct()
     {
+        @trigger_error('The Compact formatter is deprecated since 1.4.0. Use the Compressed formatter instead.', E_USER_DEPRECATED);
+
         $this->indentLevel = 0;
         $this->indentChar = '';
         $this->break = '';

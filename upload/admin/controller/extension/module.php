@@ -126,7 +126,7 @@ class Module extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('setting/extension');
 
-			$this->model_setting_extension->install('module', $extension, $this->request->get['code']);
+			$this->model_setting_extension->install('module', $extension, $code);
 
 			$this->load->model('user/user_group');
 

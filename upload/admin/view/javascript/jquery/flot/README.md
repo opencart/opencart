@@ -107,4 +107,4 @@ examples/axes-time-zones/index.html.
 [excanvas]: http://code.google.com/p/explorercanvas/
 [flashcanvas]: http://code.google.com/p/flashcanvas/
 [timezone-js]: https://github.com/mde/timezone-js
-[olson]: ftp://ftp.iana.org/tz/
+[olson]: http://ftp.iana.org/time-zones

@@ -1,6 +1,6 @@
 /* Flot plugin for drawing all elements of a plot on the canvas.
 
-Copyright (c) 2007-2013 IOLA and Ole Laursen.
+Copyright (c) 2007-2014 IOLA and Ole Laursen.
 Licensed under the MIT license.
 
 Flot normally produces certain elements, like axis labels and the legend, using

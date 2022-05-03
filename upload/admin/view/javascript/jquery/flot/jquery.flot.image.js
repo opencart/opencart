@@ -1,6 +1,6 @@
 /* Flot plugin for plotting images.
 
-Copyright (c) 2007-2013 IOLA and Ole Laursen.
+Copyright (c) 2007-2014 IOLA and Ole Laursen.
 Licensed under the MIT license.
 
 The data syntax is [ [ image, x1, y1, x2, y2 ], ... ] where (x1, y1) and

@@ -1,6 +1,6 @@
 /* Flot plugin for showing crosshairs when the mouse hovers over the plot.
 
-Copyright (c) 2007-2013 IOLA and Ole Laursen.
+Copyright (c) 2007-2014 IOLA and Ole Laursen.
 Licensed under the MIT license.
 
 The plugin supports these options:
@@ -139,7 +139,7 @@ The plugin also adds four public methods:
             ctx.translate(plotOffset.left, plotOffset.top);
 
             if (crosshair.x != -1) {
-                var adj = plot.getOptions().crosshair.lineWidth % 2 === 0 ? 0 : 0.5;
+                var adj = plot.getOptions().crosshair.lineWidth % 2 ? 0.5 : 0;
 
                 ctx.strokeStyle = c.color;
                 ctx.lineWidth = c.lineWidth;
@@ -147,12 +147,12 @@ The plugin also adds four public methods:
 
                 ctx.beginPath();
                 if (c.mode.indexOf("x") != -1) {
-                    var drawX = Math.round(crosshair.x) + adj;
+                    var drawX = Math.floor(crosshair.x) + adj;
                     ctx.moveTo(drawX, 0);
                     ctx.lineTo(drawX, plot.height());
                 }
                 if (c.mode.indexOf("y") != -1) {
-                    var drawY = Math.round(crosshair.y) + adj;
+                    var drawY = Math.floor(crosshair.y) + adj;
                     ctx.moveTo(0, drawY);
                     ctx.lineTo(plot.width(), drawY);
                 }

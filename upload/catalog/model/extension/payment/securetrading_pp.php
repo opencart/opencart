@@ -89,7 +89,9 @@ class ModelExtensionPaymentSecureTradingPp extends Model {
 	}
 
 	public function getCountry($iso_code_2) {
-		return $this->db->query("SELECT * FROM " . DB_PREFIX . "country WHERE LOWER(iso_code_2) = '" . $this->db->escape($iso_code_2) . "'")->row;
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "country WHERE LOWER(iso_code_2) = '" . $this->db->escape($iso_code_2) . "'");
+		
+		return $query->row;
 	}
 
 	public function logger($message) {

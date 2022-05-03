@@ -162,9 +162,9 @@
                         <div class="col-sm-10">
 
                           <div class="input-group">
+                            <button type="button" data-oc-toggle="upload" data-oc-target="#input-custom-field-{{ custom_field.custom_field_id }}" data-oc-size-max="{{ config_file_max_size }}" data-oc-size-error="{{ error_upload_size }}" class="btn btn-primary"><i class="fas fa-upload"></i> {{ button_upload }}</button>
                             <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control" readonly/>
-                            <button type="button" data-oc-toggle="upload" data-oc-target="#input-custom-field-{{ custom_field.custom_field_id }}" data-oc-size-max="{{ config_file_max_size }}" data-oc-size-error="{{ error_upload_size }}" class="btn btn-outline-secondary"><i class="fas fa-upload"></i> {{ button_upload }}</button>
-                            <button type="button" data-oc-toggle="download" data-oc-target="#input-custom-field-{{ custom_field.custom_field_id }}"{% if not account_custom_field[custom_field.custom_field_id] %} disabled{% endif %} class="btn btn-outline-warning"><i class="fas fa-download"></i> {{ button_download }}</button>
+                            <button type="button" data-oc-toggle="download" data-oc-target="#input-custom-field-{{ custom_field.custom_field_id }}"{% if not account_custom_field[custom_field.custom_field_id] %} disabled{% endif %} class="btn btn-outline-secondary"><i class="fas fa-download"></i> {{ button_download }}</button>
                             <button type="button" data-oc-toggle="clear" data-bs-toggle="tooltip" title="{{ button_clear }}" data-oc-target="#input-custom-field-{{ custom_field.custom_field_id }}"{% if not account_custom_field[custom_field.custom_field_id] %} disabled{% endif %} class="btn btn-outline-danger"><i class="fas fa-eraser"></i></button>
                           </div>
 
@@ -413,9 +413,9 @@
                           <label class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
                           <div class="col-sm-10">
                             <div class="input-group">
+                              <button type="button" data-oc-toggle="upload" data-oc-target="#input-address-{{ address_row }}-custom-field-{{ custom_field.custom_field_id }}" data-oc-size-max="{{ config_file_max_size }}" data-oc-size-error="{{ error_upload_size }}" class="btn btn-primary"><i class="fas fa-upload"></i> {{ button_upload }}</button>
                               <input type="text" name="address[{{ address_row }}][custom_field][{{ custom_field.custom_field_id }}]" value="{{ address.custom_field[custom_field.custom_field_id] ? address.custom_field[custom_field.custom_field_id] }}" id="input-address-{{ address_row }}-custom-field-{{ custom_field.custom_field_id }}" class="form-control" readonly/>
-                              <button type="button" data-oc-toggle="upload" data-oc-target="#input-address-{{ address_row }}-custom-field-{{ custom_field.custom_field_id }}" data-oc-size-max="{{ config_file_max_size }}" data-oc-size-error="{{ error_upload_size }}" class="btn btn-outline-success"><i class="fas fa-upload"></i> {{ button_upload }}</button>
-                              <button type="button" data-oc-toggle="download" data-oc-target="#input-address-{{ address_row }}-custom-field-{{ custom_field.custom_field_id }}" class="btn btn-outline-warning"{% if not address.custom_field[custom_field.custom_field_id] %} disabled{% endif %}><i class="fas fa-download"></i> {{ button_download }}</button>
+                             <button type="button" data-oc-toggle="download" data-oc-target="#input-address-{{ address_row }}-custom-field-{{ custom_field.custom_field_id }}" class="btn btn-outline-secondary"{% if not address.custom_field[custom_field.custom_field_id] %} disabled{% endif %}><i class="fas fa-download"></i> {{ button_download }}</button>
                               <button type="button" data-oc-toggle="clear" data-oc-target="#input-address-{{ address_row }}-custom-field-{{ custom_field.custom_field_id }}" data-bs-toggle="tooltip" title="{{ button_clear }}" class="btn btn-outline-danger"{% if not account_custom_field[custom_field.custom_field_id] %} disabled{% endif %}><i class="fas fa-eraser"></i></button>
                             </div>
                             <div id="error-address-{{ address_row }}-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
@@ -765,9 +765,9 @@ $('#button-address').on('click', function (e) {
     html += '  <label class="col-sm-2 col-form-label">{{ custom_field.name|e('js') }}</label>';
     html += '  <div class="col-sm-10">';
     html += '    <div class="input-group">';
+    html += '      <button type="button" data-oc-toggle="upload" data-oc-target="#input-address-' + address_row + '-custom-field-{{ custom_field.custom_field_id }}" data-oc-size-max="{{ config_file_max_size }}" data-oc-size-error="{{ error_upload_size }}" class="btn btn-primary"><i class="fas fa-upload"></i> {{ button_upload }}</button>';
     html += '      <input type="text" name="address[' + address_row + '][custom_field][{{ custom_field.custom_field_id }}]" value="" id="input-address-' + address_row + '-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>';
-    html += '      <button type="button" data-oc-toggle="upload" data-oc-target="#input-address-' + address_row + '-custom-field-{{ custom_field.custom_field_id }}" data-oc-size-max="{{ config_file_max_size }}" data-oc-size-error="{{ error_upload_size }}" class="btn btn-outline-success"><i class="fas fa-upload"></i> {{ button_upload }}</button>';
-    html += '      <button type="button" data-oc-toggle="download" data-oc-target="#input-address-' + address_row + '-custom-field-{{ custom_field.custom_field_id }}" class="btn btn-outline-warning" disabled><i class="fas fa-download"></i> {{ button_download }}</button>';
+    html += '      <button type="button" data-oc-toggle="download" data-oc-target="#input-address-' + address_row + '-custom-field-{{ custom_field.custom_field_id }}" class="btn btn-outline-secondary" disabled><i class="fas fa-download"></i> {{ button_download }}</button>';
     html += '      <button type="button" data-oc-toggle="clear" data-bs-toggle="tooltip" title="{{ button_clear }}" data-oc-target="#input-address-' + address_row + '-custom-field-{{ custom_field.custom_field_id }}" class="btn btn-outline-danger" disabled><i class="fas fa-eraser"></i></button>';
     html += '    </div>';
     html += '	   <div id="error-address-' + address_row + '-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>';

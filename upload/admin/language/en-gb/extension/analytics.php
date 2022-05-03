@@ -13,3 +13,4 @@ $_['column_action']    = 'Action';
 
 // Error
 $_['error_permission'] = 'Warning: You do not have permission to modify analytics!';
+$_['error_directory']  = 'Warning: extension directory does not exist!';

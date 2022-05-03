@@ -61,22 +61,52 @@ class Currency extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
+		if (isset($this->request->get['extension'])) {
+			$extension = basename($this->request->get['extension']);
+		} else {
+			$extension = '';
+		}
+
+		if (isset($this->request->get['code'])) {
+			$code = basename($this->request->get['code']);
+		} else {
+			$code = '';
+		}
+
 		if (!$this->user->hasPermission('modify', 'extension/currency')) {
 			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!is_dir(DIR_EXTENSION . 'extension/' . $extension . '/analytics/' . $code)) {
+			$json['error'] = $this->language->get('error_directory');
 		}
 
 		if (!$json) {
 			$this->load->model('setting/extension');
 
-			$this->model_setting_extension->install('currency', $this->request->get['extension'], $this->request->get['code']);
+			$this->model_setting_extension->install('currency', $extension, $code);
 
 			$this->load->model('user/user_group');
 
-			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'extension/' . $this->request->get['extension'] . '/currency/' . $this->request->get['code']);
-			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'extension/' . $this->request->get['extension'] . '/currency/' . $this->request->get['code']);
+			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'extension/' . $extension . '/currency/' . $code);
+			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'extension/' . $extension . '/currency/' . $code);
+
+			// Register controllers, models and system extension folders
+			$this->autoloader->register('Opencart\Admin\Controller\Extension\\' . $extension, DIR_EXTENSION . $extension . '/admin/controller/');
+			$this->autoloader->register('Opencart\Admin\Model\Extension\\' . $extension, DIR_EXTENSION . $extension . '/admin/model/');
+			$this->autoloader->register('Opencart\System\Extension\\' . $extension, DIR_EXTENSION . $extension . '/system/');
+
+			// Template directory
+			$this->template->addPath('extension/' . $extension, DIR_EXTENSION . $extension . '/admin/view/template/');
+
+			// Language directory
+			$this->language->addPath('extension/' . $extension, DIR_EXTENSION . $extension . '/admin/language/');
+
+			// Config directory
+			$this->config->addPath('extension/' . $extension, DIR_EXTENSION . $extension . '/system/config/');
 
 			// Call install method if it exists
-			$this->load->controller('extension/' . $this->request->get['extension'] . '/currency/' . $this->request->get['code'] . '|install');
+			$this->load->controller('extension/' . $extension . '/currency/' . $code . '|install');
 
 			$json['success'] = $this->language->get('text_success');
 		}

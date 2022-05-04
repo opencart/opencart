@@ -1015,7 +1015,7 @@
                     {% if option.type == 'file' %}
                       <div class="row mb-3{% if option.required %} required{% endif %}">
                         <label class="col-sm-2 col-form-label">{{ option.name }}</label>
-                        <div class="col-sm-10 col-md-4">
+                        <div class="col-sm-10">
                           <div class="input-group">
                             <button type="button" data-oc-toggle="upload" id="button-upload-{{ option.product_option_id }}" data-oc-target="#input-option-{{ option.product_option_id }}" data-oc-size-max="{{ config_file_max_size }}" data-oc-size-error="{{ error_upload_size }}" class="btn btn-primary"><i class="fas fa-upload"></i> {{ button_upload }}</button>
                             <input type="text" name="variant[{{ option.product_option_id }}]" value="{{ variant[option.product_option_id] ? variant[option.product_option_id] : option.value }}" id="input-option-{{ option.product_option_id }}" class="form-control"/>

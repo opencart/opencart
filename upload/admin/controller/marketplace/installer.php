@@ -393,7 +393,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		if (!$this->user->hasPermission('modify', 'marketplace/vendor')) {
+		if (!$this->user->hasPermission('modify', 'marketplace/installer')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 

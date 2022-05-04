@@ -954,7 +954,8 @@
                             <div id="input-option-{{ option.product_option_id }}" class="form-control" style="height: 150px; overflow: auto;">
                               {% for option_value in option.product_option_value %}
                                 <div class="form-check">
-                                  <input type="checkbox" name="variant[{{ option.product_option_id }}][]" value="{{ option_value.product_option_value_id }}" id="input-option-value-{{ option_value.product_option_value_id }}" class="form-check-input"{% if variant[option.product_option_id] and option_value.product_option_value_id in variant[option.product_option_id] %} checked{% endif %}/> <label for="input-option-value-{{ option_value.product_option_value_id }}" class="form-check-label">{% if option_value.image %} <img src="{{ option_value.image }}" alt="{{ option_value.name }} {% if option_value.price %} {{ option_value.price_prefix }} {{ option_value.price }} {% endif %}" class="img-thumbnail"/>{% endif %}
+                                  <input type="checkbox" name="variant[{{ option.product_option_id }}][]" value="{{ option_value.product_option_value_id }}" id="input-option-value-{{ option_value.product_option_value_id }}" class="form-check-input"{% if variant[option.product_option_id] and option_value.product_option_value_id in variant[option.product_option_id] %} checked{% endif %}/>
+                                  <label for="input-option-value-{{ option_value.product_option_value_id }}" class="form-check-label">{% if option_value.image %} <img src="{{ option_value.image }}" alt="{{ option_value.name }} {% if option_value.price %} {{ option_value.price_prefix }} {{ option_value.price }} {% endif %}" class="img-thumbnail"/>{% endif %}
                                     {{ option_value.name }}
                                     {% if option_value.price %}
                                       ({{ option_value.price_prefix }}{{ option_value.price }})
@@ -965,7 +966,8 @@
                             </div>
                             <div class="input-group-text">
                               <div class="form-check form-switch">
-                                <input type="checkbox" name="override[variant][{{ option.product_option_id }}]" value="1" id="input-variant-option-{{ option.product_option_id }}" data-oc-toggle="switch" data-oc-target="#input-option-{{ option.product_option_id }}" class="form-check-input"{% if override.variant[option.product_option_id] %} checked{% endif %}/> <label for="input-variant-option-{{ option.product_option_id }}" class="form-check-label"></label>
+                                <input type="checkbox" name="override[variant][{{ option.product_option_id }}]" value="1" id="input-variant-option-{{ option.product_option_id }}" data-oc-toggle="switch" data-oc-target="#input-option-{{ option.product_option_id }}" class="form-check-input"{% if override.variant[option.product_option_id] %} checked{% endif %}/>
+                                <label for="input-variant-option-{{ option.product_option_id }}" class="form-check-label"></label>
                               </div>
                             </div>
                           </div>
@@ -982,7 +984,8 @@
                             <input type="text" name="variant[{{ option.product_option_id }}]" value="{{ variant[option.product_option_id] ? variant[option.product_option_id] : option.value }}" placeholder="{{ option.name }}" id="input-option-{{ option.product_option_id }}" class="form-control"/>
                             <div class="input-group-text">
                               <div class="form-check form-switch">
-                                <input type="checkbox" name="override[variant][{{ option.product_option_id }}]" value="1" id="input-variant-option-{{ option.product_option_id }}" data-oc-toggle="switch" data-oc-target="#input-option-{{ option.product_option_id }}" class="form-check-input"{% if override.variant[option.product_option_id] %} checked{% endif %}/> <label for="input-variant-option-{{ option.product_option_id }}" class="form-check-label"></label>
+                                <input type="checkbox" name="override[variant][{{ option.product_option_id }}]" value="1" id="input-variant-option-{{ option.product_option_id }}" data-oc-toggle="switch" data-oc-target="#input-option-{{ option.product_option_id }}" class="form-check-input"{% if override.variant[option.product_option_id] %} checked{% endif %}/>
+                                <label for="input-variant-option-{{ option.product_option_id }}" class="form-check-label"></label>
                               </div>
                             </div>
                           </div>
@@ -999,7 +1002,8 @@
                             <textarea name="variant[{{ option.product_option_id }}]" rows="5" placeholder="{{ option.name }}" id="input-option-{{ option.product_option_id }}" class="form-control">{{ variant[option.product_option_id] ? variant[option.product_option_id] : option.value }}</textarea>
                             <div class="input-group-text">
                               <div class="form-check form-switch">
-                                <input type="checkbox" name="override[variant][{{ option.product_option_id }}]" value="1" id="input-variant-option-{{ option.product_option_id }}" data-oc-toggle="switch" data-oc-target="#input-option-{{ option.product_option_id }}" class="form-check-input"{% if override.variant[option.product_option_id] %} checked{% endif %}/> <label for="input-variant-option-{{ option.product_option_id }}" class="form-check-label"></label>
+                                <input type="checkbox" name="override[variant][{{ option.product_option_id }}]" value="1" id="input-variant-option-{{ option.product_option_id }}" data-oc-toggle="switch" data-oc-target="#input-option-{{ option.product_option_id }}" class="form-check-input"{% if override.variant[option.product_option_id] %} checked{% endif %}/>
+                                <label for="input-variant-option-{{ option.product_option_id }}" class="form-check-label"></label>
                               </div>
                             </div>
                           </div>
@@ -1012,18 +1016,18 @@
                       <div class="row mb-3{% if option.required %} required{% endif %}">
                         <label class="col-sm-2 col-form-label">{{ option.name }}</label>
                         <div class="col-sm-10 col-md-4">
-
                           <div class="input-group">
-                            <button type="button" data-oc-toggle="upload" data-oc-size-max="{{ config_file_max_size }}" data-oc-size-error="{{ error_upload_size }}" data-oc-target="#input-option-{{ option.product_option_id }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
-
+                            <button type="button" data-oc-toggle="upload" id="button-upload-{{ option.product_option_id }}" data-oc-target="#input-option-{{ option.product_option_id }}" data-oc-size-max="{{ config_file_max_size }}" data-oc-size-error="{{ error_upload_size }}" class="btn btn-primary"><i class="fas fa-upload"></i> {{ button_upload }}</button>
+                            <input type="text" name="variant[{{ option.product_option_id }}]" value="{{ variant[option.product_option_id] ? variant[option.product_option_id] : option.value }}" id="input-option-{{ option.product_option_id }}" class="form-control"/>
+                            <button type="button" data-oc-toggle="download" data-oc-target="#input-option-{{ option.product_option_id }}"{% if not variant[option.product_option_id] %} disabled{% endif %} class="btn btn-outline-secondary"><i class="fas fa-download"></i> {{ button_download }}</button>
+                            <button type="button" data-oc-toggle="clear" data-bs-toggle="tooltip" title="{{ button_clear }}" data-oc-target="#input-option-{{ option.product_option_id }}"{% if not variant[option.product_option_id] %} disabled{% endif %} class="btn btn-outline-danger"><i class="fas fa-eraser"></i></button>
                             <div class="input-group-text">
                               <div class="form-check form-switch">
-                                <input type="checkbox" name="override[variant][{{ option.product_option_id }}]" value="1" id="input-variant-option-{{ option.product_option_id }}" data-oc-toggle="switch" data-oc-target="#button-upload-{{ option.product_option_id }}" class="form-check-input"{% if override.variant[option.product_option_id] %} checked{% endif %}/> <label for="input-variant-option-{{ option.product_option_id }}" class="form-check-label"></label>
+                                <input type="checkbox" name="override[variant][{{ option.product_option_id }}]" value="1" id="input-variant-option-{{ option.product_option_id }}" data-oc-toggle="switch" data-oc-target="#button-upload-{{ option.product_option_id }}" class="form-check-input"{% if override.variant[option.product_option_id] %} checked{% endif %}/>
+                                <label for="input-variant-option-{{ option.product_option_id }}" class="form-check-label"></label>
                               </div>
                             </div>
                           </div>
-
-                          <input type="hidden" name="variant[{{ option.product_option_id }}]" value="{{ variant[option.product_option_id] ? variant[option.product_option_id] : option.value }}" id="input-option-{{ option.product_option_id }}"/>
                           <div id="error-option-{{ option.product_option_id }}" class="invalid-feedback"></div>
                         </div>
                       </div>

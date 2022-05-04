@@ -97,7 +97,7 @@ class Theme extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		if (!is_dir(DIR_EXTENSION . 'extension/' . $extension . '/analytics/' . $code)) {
+		if (!is_dir(DIR_EXTENSION . $extension . '/analytics/' . $code)) {
 			$json['error'] = $this->language->get('error_directory');
 		}
 

@@ -46,11 +46,13 @@
             </div>
           </div>
         </div>
+
         <div class="row">
           {% for product in products %}
             <div class="product-layout product-list col-12">{{ product }}</div>
           {% endfor %}
         </div>
+
         <div class="row">
           <div class="col-sm-6 text-start">{{ pagination }}</div>
           <div class="col-sm-6 text-end">{{ results }}</div>

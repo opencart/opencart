@@ -3,7 +3,7 @@ $(document).ready(function() {
 	$('[data-toggle=\'summernote\']').each(function() {
 		var element = this;
 
-		if ($(this).attr('data-lang') && $(this).attr('data-lang')!='en-gb') {
+		if ($(this).attr('data-lang') && $(this).attr('data-lang') != 'en-gb') {
 			$('head').append('<script type="text/javascript" src="view/javascript/summernote/lang/summernote-' + $(this).attr('data-lang') + '.min.js"></script>');
 		}
 

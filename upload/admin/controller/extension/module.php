@@ -133,10 +133,12 @@ class Module extends \Opencart\System\Engine\Controller {
 			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'extension/' . $extension . '/module/' . $code);
 			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'extension/' . $extension . '/module/' . $code);
 
+			$namespace = str_replace(['_', '/'], ['', '\\'], ucwords($extension, '_/'));
+
 			// Register controllers, models and system extension folders
-			$this->autoloader->register('Opencart\Admin\Controller\Extension\\' . $extension, DIR_EXTENSION . $extension . '/admin/controller/');
-			$this->autoloader->register('Opencart\Admin\Model\Extension\\' . $extension, DIR_EXTENSION . $extension . '/admin/model/');
-			$this->autoloader->register('Opencart\System\Extension\\' . $extension, DIR_EXTENSION . $extension . '/system/');
+			$this->autoloader->register('Opencart\Admin\Controller\Extension\\' . $namespace, DIR_EXTENSION . $extension . '/admin/controller/');
+			$this->autoloader->register('Opencart\Admin\Model\Extension\\' . $namespace, DIR_EXTENSION . $extension . '/admin/model/');
+			$this->autoloader->register('Opencart\System\Extension\\' . $namespace, DIR_EXTENSION . $extension . '/system/');
 
 			// Template directory
 			$this->template->addPath('extension/' . $extension, DIR_EXTENSION . $extension . '/admin/view/template/');

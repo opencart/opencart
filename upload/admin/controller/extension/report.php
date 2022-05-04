@@ -78,8 +78,8 @@ class Report extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		if (!is_dir(DIR_EXTENSION . $extension . '/analytics/' . $code)) {
-			$json['error'] = $this->language->get('error_directory');
+		if (!is_file(DIR_EXTENSION . $extension . '/admin/controller/report/' . $code . '.php')) {
+			$json['error'] = $this->language->get('error_file');
 		}
 
 		if (!$json) {

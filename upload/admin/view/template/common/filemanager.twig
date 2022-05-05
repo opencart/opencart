@@ -32,13 +32,13 @@
   $('#modal-image').on('click', '#button-search', function(e) {
       var url = 'index.php?route=common/filemanager|list&user_token={{ user_token }}';
 
-      var directory = $('##input-directory').val();
+      var directory = $('#input-directory').val();
 
       if (directory) {
           url += '&directory=' + encodeURIComponent(directory);
       }
 
-      var filter_name = $('##input-search').val();
+      var filter_name = $('#input-search').val();
 
       if (filter_name) {
           url += '&filter_name=' + encodeURIComponent(filter_name);

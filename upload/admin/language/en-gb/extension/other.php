@@ -13,4 +13,4 @@ $_['column_action']    = 'Action';
 
 // Error
 $_['error_permission'] = 'Warning: You do not have permission to modify other extension!';
-$_['error_directory']  = 'Warning: Extension directory does not exist!';
+$_['error_extension']  = 'Warning: Extension does not exist!';

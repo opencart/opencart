@@ -79,7 +79,7 @@ class Shipping extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!is_file(DIR_EXTENSION . $extension . '/admin/controller/shipping/' . $code . '.php')) {
-			$json['error'] = $this->language->get('error_file');
+			$json['error'] = $this->language->get('error_extension');
 		}
 
 		if (!$json) {

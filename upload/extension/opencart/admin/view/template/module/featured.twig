@@ -28,11 +28,12 @@
           <div class="row mb-3">
             <label class="col-sm-2 col-form-label">{{ entry_product }}</label>
             <div class="col-sm-10">
-              <input type="text" name="product_name" value="" placeholder="{{ entry_product }}" id="input-product" class="form-control"/>
+              <input type="text" name="product" value="" placeholder="{{ entry_product }}" id="input-product" list="list-product" class="form-control"/>
+              <datalist id="list-product"></datalist>
               <div class="form-control p-0" style="height: 150px; overflow: auto;">
                 <table id="featured-product" class="table table-sm m-0">
                   {% for product in products %}
-                    <tr id="featured-product{{ product.product_id }}">
+                    <tr id="featured-product-{{ product.product_id }}">
                       <td>{{ product.name }}<input type="hidden" name="product[]" value="{{ product.product_id }}"/></td>
                       <td class="text-end"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>
                     </tr>
@@ -46,7 +47,7 @@
             <label for="input-axis" class="col-sm-2 col-form-label">{{ entry_axis }}</label>
             <div class="col-sm-10">
               <select name="axis" id="input-axis" class="form-select">
-                <option value="0"{% if axis == 'horizontal' %} selected="selected"{% endif %}>{{ text_horizontal }}</option>
+                <option value="horizontal"{% if axis == 'horizontal' %} selected="selected"{% endif %}>{{ text_horizontal }}</option>
                 <option value="vertical"{% if axis == 'vertical' %} selected="selected"{% endif %}>{{ text_vertical }}</option>
               </select>
             </div>
@@ -79,13 +80,13 @@
     </div>
   </div>
   <script type="text/javascript"><!--
-  $('input[name=\'product_name\']').autocomplete({
-      source: function(request, response) {
+  $('#input-product').autocomplete({
+      source: function (request, response) {
           $.ajax({
               url: 'index.php?route=catalog/product|autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
               dataType: 'json',
-              success: function(json) {
-                  response($.map(json, function(item) {
+              success: function (json) {
+                  response($.map(json, function (item) {
                       return {
                           label: item['name'],
                           value: item['product_id']
@@ -94,12 +95,12 @@
               }
           });
       },
-      select: function(item) {
-          $('input[name=\'product_name\']').val('');
+      select: function (item) {
+          $('#input-product').val('');
 
-          $('#featured-product' + item['value']).remove();
+          $('#featured-product-' + item['value']).remove();
 
-          html = '<tr id="featured-product' + item['value'] + '">';
+          html = '<tr id="featured-product-' + item['value'] + '">';
           html += '  <td>' + item['label'] + '<input type="hidden" name="product[]" value="' + item['value'] + '"/></td>';
           html += '  <td class="text-end"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>';
           html += '</tr>';
@@ -108,7 +109,7 @@
       }
   });
 
-  $('#featured-product').on('click', '.btn', function() {
+  $('#featured-product').on('click', '.btn', function () {
       $(this).parent().parent().remove();
   });
   //--></script>

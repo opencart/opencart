@@ -114,7 +114,7 @@ $('#button-filter').on('click', function () {
         url += '&filter_ip=' + encodeURIComponent(filter_ip);
     }
 
-    $('#report').load('index.php?route=report/report&code=customer_search&user_token={{ user_token }}' + url);
+    $('#report').load('index.php?route=extension/opencart/report/customer_search|report&user_token={{ user_token }}' + url);
 });
 
 $('#input-customer').autocomplete({

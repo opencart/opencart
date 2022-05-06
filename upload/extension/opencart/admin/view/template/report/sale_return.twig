@@ -106,6 +106,6 @@ $('#button-filter').on('click', function() {
         url += '&filter_date_end=' + encodeURIComponent(filter_date_end);
     }
 
-    $('#report').load('index.php?route=report/report&code=sale_return&user_token={{ user_token }}' + url);
+    $('#report').load('index.php?route=extension/opencart/report/sale_return|report&user_token={{ user_token }}' + url);
 });
 //--></script>

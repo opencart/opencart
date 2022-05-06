@@ -78,7 +78,7 @@
 $('#button-filter').on('click', function() {
     var url = '';
 
-    var filter_order_status_id = $('#input-order_status').val();
+    var filter_order_status_id = $('#input-order-status').val();
 
     if (filter_order_status_id != 0) {
         url += '&filter_order_status_id=' + encodeURIComponent(filter_order_status_id);
@@ -96,6 +96,6 @@ $('#button-filter').on('click', function() {
         url += '&filter_date_end=' + encodeURIComponent(filter_date_end);
     }
 
-    $('#report').load('index.php?route=report/report&code=marketing&user_token={{ user_token }}' + url);
+    $('#report').load('index.php?route=extension/opencart/report/marketing|report&user_token={{ user_token }}' + url);
 });
 //--></script>

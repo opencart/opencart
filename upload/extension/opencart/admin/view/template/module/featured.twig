@@ -79,39 +79,39 @@
       </div>
     </div>
   </div>
-  <script type="text/javascript"><!--
-  $('#input-product').autocomplete({
-      source: function (request, response) {
-          $.ajax({
-              url: 'index.php?route=catalog/product|autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
-              dataType: 'json',
-              success: function (json) {
-                  response($.map(json, function (item) {
-                      return {
-                          label: item['name'],
-                          value: item['product_id']
-                      }
-                  }));
-              }
-          });
-      },
-      select: function (item) {
-          $('#input-product').val('');
-
-          $('#featured-product-' + item['value']).remove();
-
-          html = '<tr id="featured-product-' + item['value'] + '">';
-          html += '  <td>' + item['label'] + '<input type="hidden" name="product[]" value="' + item['value'] + '"/></td>';
-          html += '  <td class="text-end"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>';
-          html += '</tr>';
-
-          $('#featured-product').append(html);
-      }
-  });
-
-  $('#featured-product').on('click', '.btn', function () {
-      $(this).parent().parent().remove();
-  });
-  //--></script>
 </div>
+<script type="text/javascript"><!--
+$('#input-product').autocomplete({
+    source: function (request, response) {
+        $.ajax({
+            url: 'index.php?route=catalog/product|autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
+            dataType: 'json',
+            success: function (json) {
+                response($.map(json, function (item) {
+                    return {
+                        label: item['name'],
+                        value: item['product_id']
+                    }
+                }));
+            }
+        });
+    },
+    select: function (item) {
+        $('#input-product').val('');
+
+        $('#featured-product-' + item['value']).remove();
+
+        html = '<tr id="featured-product-' + item['value'] + '">';
+        html += '  <td>' + item['label'] + '<input type="hidden" name="product[]" value="' + item['value'] + '"/></td>';
+        html += '  <td class="text-end"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>';
+        html += '</tr>';
+
+        $('#featured-product').append(html);
+    }
+});
+
+$('#featured-product').on('click', '.btn', function () {
+    $(this).parent().parent().remove();
+});
+//--></script>
 {{ footer }}

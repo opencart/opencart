@@ -4,9 +4,19 @@
       <div class="card-header"><i class="fas fa-filter"></i> {{ text_filter }}</div>
       <div class="card-body">
         <div class="mb-3">
-          <label for="input-group" class="col-form-label">{{ entry_group }}</label> <select name="filter_group" id="input-group" class="form-select">
+          <label for="input-group" class="col-form-label">{{ entry_group }}</label>
+          <select name="filter_group" id="input-group" class="form-select">
             {% for group in groups %}
               <option value="{{ group.value }}"{% if group.value == filter_group %} selected="selected"{% endif %}>{{ group.text }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="input-status" class="col-form-label">{{ entry_return_status }}</label>
+          <select name="filter_return_status_id" id="input-status" class="form-select">
+            <option value="0">{{ text_all_status }}</option>
+            {% for return_status in return_statuses %}
+              <option value="{{ return_status.return_status_id }}"{% if return_status.return_status_id == filter_return_status_id %} selected="selected"{% endif %}>{{ return_status.name }}</option>
             {% endfor %}
           </select>
         </div>
@@ -23,14 +33,6 @@
             <input type="text" name="filter_date_end" value="{{ filter_date_end }}" placeholder="{{ entry_date_end }}" id="input-date-end" class="form-control date"/>
             <div class="input-group-text"><i class="fas fa-calendar"></i></div>
           </div>
-        </div>
-        <div class="mb-3">
-          <label for="input-status" class="col-form-label">{{ entry_return_status }}</label> <select name="filter_return_status_id" id="input-status" class="form-select">
-            <option value="0">{{ text_all_status }}</option>
-            {% for return_status in return_statuses %}
-              <option value="{{ return_status.return_status_id }}"{% if return_status.return_status_id == filter_return_status_id %} selected="selected"{% endif %}>{{ return_status.name }}</option>
-            {% endfor %}
-          </select>
         </div>
         <div class="text-end">
           <button type="button" id="button-filter" class="btn btn-light"><i class="fas fa-filter"></i> {{ button_filter }}</button>
@@ -80,18 +82,6 @@
 $('#button-filter').on('click', function() {
     var url = '';
 
-    var filter_date_start = $('#input-date_start').val();
-
-    if (filter_date_start) {
-        url += '&filter_date_start=' + encodeURIComponent(filter_date_start);
-    }
-
-    var filter_date_end = $('i#input-date_end').val();
-
-    if (filter_date_end) {
-        url += '&filter_date_end=' + encodeURIComponent(filter_date_end);
-    }
-
     var filter_group = $('#input-group').val();
 
     if (filter_group) {
@@ -104,6 +94,18 @@ $('#button-filter').on('click', function() {
         url += '&filter_order_status_id=' + encodeURIComponent(filter_order_status_id);
     }
 
-    location = 'index.php?route=report/report&code=sale_return&user_token={{ user_token }}' + url;
+    var filter_date_start = $('#input-date_start').val();
+
+    if (filter_date_start) {
+        url += '&filter_date_start=' + encodeURIComponent(filter_date_start);
+    }
+
+    var filter_date_end = $('i#input-date-end').val();
+
+    if (filter_date_end) {
+        url += '&filter_date_end=' + encodeURIComponent(filter_date_end);
+    }
+
+    $('#report').load('index.php?route=report/report&code=sale_return&user_token={{ user_token }}' + url);
 });
 //--></script>

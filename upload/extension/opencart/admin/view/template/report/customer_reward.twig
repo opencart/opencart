@@ -5,7 +5,8 @@
       <div class="card-body">
         <div class="mb-3">
           <label for="input-customer" class="col-form-label">{{ entry_customer }}</label>
-          <input type="text" name="filter_customer" value="{{ filter_customer }}" placeholder="{{ entry_customer }}" id="input-customer" class="form-control"/>
+          <input type="text" name="filter_customer" value="{{ filter_customer }}" placeholder="{{ entry_customer }}" id="input-customer" list="list-customer" class="form-control"/>
+          <datalist id="list-customer"></datalist>
         </div>
         <div class="mb-3">
           <label for="input-date-start" class="col-form-label">{{ entry_date_start }}</label>
@@ -85,7 +86,7 @@ $('#button-filter').on('click', function () {
         url += '&filter_customer=' + encodeURIComponent(filter_customer);
     }
 
-    var filter_date_start = $('#input-date_start').val();
+    var filter_date_start = $('#input-date-start').val();
 
     if (filter_date_start) {
         url += '&filter_date_start=' + encodeURIComponent(filter_date_start);
@@ -97,7 +98,7 @@ $('#button-filter').on('click', function () {
         url += '&filter_date_end=' + encodeURIComponent(filter_date_end);
     }
 
-    location = 'index.php?route=report/report&code=customer_reward&user_token={{ user_token }}' + url;
+    $('#report').load('index.php?route=report/report&code=customer_reward&user_token={{ user_token }}' + url);
 });
 
 $('#input-customer').autocomplete({

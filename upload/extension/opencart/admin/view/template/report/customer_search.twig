@@ -5,7 +5,8 @@
       <div class="card-body">
         <div class="mb-3">
           <label for="input-customer" class="col-form-label">{{ entry_customer }}</label>
-          <input type="text" name="filter_customer" value="{{ filter_customer }}" placeholder="{{ entry_customer }}" id="input-customer" class="form-control"/>
+          <input type="text" name="filter_customer" value="{{ filter_customer }}" placeholder="{{ entry_customer }}" id="input-customer" list="list-customer" class="form-control"/>
+          <datalist id="list-customer"></datalist>
         </div>
         <div class="mb-3">
           <label for="input-keyword" class="col-form-label">{{ entry_keyword }}</label>
@@ -95,12 +96,6 @@ $('#button-filter').on('click', function () {
         url += '&filter_keyword=' + encodeURIComponent(filter_keyword);
     }
 
-    var filter_ip = $('#input-ip').val();
-
-    if (filter_ip) {
-        url += '&filter_ip=' + encodeURIComponent(filter_ip);
-    }
-
     var filter_date_start = $('#input-date_start').val();
 
     if (filter_date_start) {
@@ -113,7 +108,13 @@ $('#button-filter').on('click', function () {
         url += '&filter_date_end=' + encodeURIComponent(filter_date_end);
     }
 
-    location = 'index.php?route=report/report&code=customer_search&user_token={{ user_token }}' + url;
+    var filter_ip = $('#input-ip').val();
+
+    if (filter_ip) {
+        url += '&filter_ip=' + encodeURIComponent(filter_ip);
+    }
+
+    $('#report').load('index.php?route=report/report&code=customer_search&user_token={{ user_token }}' + url);
 });
 
 $('#input-customer').autocomplete({

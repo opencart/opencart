@@ -47,9 +47,9 @@
           </div>
         </div>
 
-        <div class="row">
+        <div id="product-list" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4">
           {% for product in products %}
-            <div class="product-layout product-list col-12">{{ product }}</div>
+            <div class="col">{{ product }}</div>
           {% endfor %}
         </div>
 

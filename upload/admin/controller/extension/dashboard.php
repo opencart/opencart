@@ -88,7 +88,7 @@ class Dashboard extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!is_file(DIR_EXTENSION . $extension . '/admin/controller/dashboard/' . $code . '.php')) {
-			$json['error'] = $this->language->get('error_file');
+			$json['error'] = $this->language->get('error_extension');
 		}
 
 		if (!$json) {

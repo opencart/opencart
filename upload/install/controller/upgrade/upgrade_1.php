@@ -32,6 +32,7 @@ class Upgrade1 extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$capture = [
 				'APPLICATION',
+				'HOST_NAME',
 				'HTTP_SERVER',
 				'HTTPS_SERVER',
 				'HTTP_CATALOG',
@@ -110,10 +111,15 @@ class Upgrade1 extends \Opencart\System\Engine\Controller {
 
 			$output .= '// HTTP' . "\n";
 
-			if (!empty($config['HTTPS_SERVER'])) {
-				$output .= 'define(\'HTTP_SERVER\', \'' . $config['HTTPS_SERVER'] . '\');' . "\n\n";
+			if (!empty($config['HOST_NAME'])) {
+				$output .= 'define(\'HOST_NAME\', getenv(\'HOST_NAME\', true));' . "\n";
+				$output .= 'define(\'HTTP_SERVER\', HOST_NAME . \'/\');' . "\n\n";
 			} else {
-				$output .= 'define(\'HTTP_SERVER\', \'' . $config['HTTP_SERVER'] . '\');' . "\n\n";
+				if (!empty($config['HTTPS_SERVER'])) {
+					$output .= 'define(\'HTTP_SERVER\', \'' . $config['HTTPS_SERVER'] . '\');' . "\n\n";
+				} else {
+					$output .= 'define(\'HTTP_SERVER\', \'' . $config['HTTP_SERVER'] . '\');' . "\n\n";
+				}
 			}
 
 			$output .= '// DIR' . "\n";

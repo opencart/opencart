@@ -215,7 +215,23 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 			'common/footer',
 			'common/header',
 			'error/not_found',
-			'error/permission'
+			'error/permission',
+			'event/currency',
+			'event/debug',
+			'event/language',
+			'event/statistics',
+			'startup/application',
+			'startup/error',
+			'startup/event',
+			'startup/extension',
+			'startup/language',
+			'startup/login',
+			'startup/notification',
+			'startup/permission',
+			'startup/sass',
+			'startup/session',
+			'startup/setting',
+			'startup/startup'
 		];
 
 		$files = [];

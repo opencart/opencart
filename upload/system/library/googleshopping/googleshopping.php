@@ -583,7 +583,7 @@ class Googleshopping extends Library {
         return implode(",", array_map(array($this, 'integer'), $product_ids));
     }
 
-    public function integer(&$product_id) {
+    public function integer($product_id) {
         if (!is_numeric($product_id)) {
             return 0;
         } else {
@@ -946,7 +946,7 @@ class Googleshopping extends Library {
         return $log_message;
     }
 
-    protected function sendEmailReport(&$report) {
+    protected function sendEmailReport($report) {
         if (!$this->setting->get('advertise_google_cron_email_status')) {
             return; //Do nothing
         }

@@ -485,6 +485,14 @@ footer h5 {
   text-shadow: 0 1px 0 #FFF;
 }
 /* product list */
+.price-new {
+  font-weight: 600;
+}
+.price-old {
+  color: #999;
+  text-decoration: line-through;
+  margin-left: 10px;
+}
 .product-thumb {
   border: 1px solid #ddd;
   margin-bottom: 20px;
@@ -525,14 +533,6 @@ footer h5 {
 }
 .product-thumb .price {
   color: #444;
-}
-.product-thumb .price-new {
-  font-weight: 600;
-}
-.product-thumb .price-old {
-  color: #999;
-  text-decoration: line-through;
-  margin-left: 10px;
 }
 .product-thumb .price-tax {
   color: #999;

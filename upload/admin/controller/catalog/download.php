@@ -400,59 +400,52 @@ class Download extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
+		if (empty($this->request->files['file']['name']) || !is_file($this->request->files['file']['tmp_name'])) {
+			$json['error'] = $this->language->get('error_upload');
+		}
+
 		if (!$json) {
-			if (!empty($this->request->files['file']['name']) && is_file($this->request->files['file']['tmp_name'])) {
-				// Sanitize the filename
-				$filename = basename(html_entity_decode($this->request->files['file']['name'], ENT_QUOTES, 'UTF-8'));
+			// Sanitize the filename
+			$filename = basename(html_entity_decode($this->request->files['file']['name'], ENT_QUOTES, 'UTF-8'));
 
-				// Validate the filename length
-				if ((utf8_strlen($filename) < 3) || (utf8_strlen($filename) > 128)) {
-					$json['error'] = $this->language->get('error_filename');
-				}
+			// Validate the filename length
+			if ((utf8_strlen($filename) < 3) || (utf8_strlen($filename) > 128)) {
+				$json['error'] = $this->language->get('error_filename');
+			}
 
-				// Allowed file extension types
-				$allowed = [];
+			// Allowed file extension types
+			$allowed = [];
 
-				$extension_allowed = preg_replace('~\r?\n~', "\n", $this->config->get('config_file_ext_allowed'));
+			$extension_allowed = preg_replace('~\r?\n~', "\n", $this->config->get('config_file_ext_allowed'));
 
-				$filetypes = explode("\n", $extension_allowed);
+			$filetypes = explode("\n", $extension_allowed);
 
-				foreach ($filetypes as $filetype) {
-					$allowed[] = trim($filetype);
-				}
+			foreach ($filetypes as $filetype) {
+				$allowed[] = trim($filetype);
+			}
 
-				if (!in_array(strtolower(substr(strrchr($filename, '.'), 1)), $allowed)) {
-					$json['error'] = $this->language->get('error_file_type');
-				}
+			if (!in_array(strtolower(substr(strrchr($filename, '.'), 1)), $allowed)) {
+				$json['error'] = $this->language->get('error_file_type');
+			}
 
-				// Allowed file mime types
-				$allowed = [];
+			// Allowed file mime types
+			$allowed = [];
 
-				$mime_allowed = preg_replace('~\r?\n~', "\n", $this->config->get('config_file_mime_allowed'));
+			$mime_allowed = preg_replace('~\r?\n~', "\n", $this->config->get('config_file_mime_allowed'));
 
-				$filetypes = explode("\n", $mime_allowed);
+			$filetypes = explode("\n", $mime_allowed);
 
-				foreach ($filetypes as $filetype) {
-					$allowed[] = trim($filetype);
-				}
+			foreach ($filetypes as $filetype) {
+				$allowed[] = trim($filetype);
+			}
 
-				if (!in_array($this->request->files['file']['type'], $allowed)) {
-					$json['error'] = $this->language->get('error_file_type');
-				}
+			if (!in_array($this->request->files['file']['type'], $allowed)) {
+				$json['error'] = $this->language->get('error_file_type');
+			}
 
-				// Check to see if any PHP files are trying to be uploaded
-				$content = file_get_contents($this->request->files['file']['tmp_name']);
-
-				if (preg_match('/\<\?php/i', $content)) {
-					$json['error'] = $this->language->get('error_file_type');
-				}
-
-				// Return any upload error
-				if ($this->request->files['file']['error'] != UPLOAD_ERR_OK) {
-					$json['error'] = $this->language->get('error_upload_' . $this->request->files['file']['error']);
-				}
-			} else {
-				$json['error'] = $this->language->get('error_upload');
+			// Return any upload error
+			if ($this->request->files['file']['error'] != UPLOAD_ERR_OK) {
+				$json['error'] = $this->language->get('error_upload_' . $this->request->files['file']['error']);
 			}
 		}
 
@@ -469,6 +462,67 @@ class Download extends \Opencart\System\Engine\Controller {
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
+	}
+
+	public function download(): void {
+		$this->load->language('catalog/download');
+
+		if (isset($this->request->get['code'])) {
+			$code = $this->request->get['code'];
+		} else {
+			$code = 0;
+		}
+
+		$this->load->model('tool/upload');
+
+		$upload_info = $this->model_tool_upload->getUploadByCode($code);
+
+		if ($upload_info) {
+			$file = DIR_UPLOAD . $upload_info['filename'];
+			$mask = basename($upload_info['name']);
+
+			if (!headers_sent()) {
+				if (is_file($file)) {
+					header('Content-Type: application/octet-stream');
+					header('Content-Description: File Transfer');
+					header('Content-Disposition: attachment; filename="' . ($mask ? $mask : basename($file)) . '"');
+					header('Content-Transfer-Encoding: binary');
+					header('Expires: 0');
+					header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+					header('Pragma: public');
+					header('Content-Length: ' . filesize($file));
+
+					readfile($file, 'rb');
+					exit;
+				} else {
+					exit(sprintf($this->language->get('error_not_found'), basename($file)));
+				}
+			} else {
+				exit($this->language->get('error_headers_sent'));
+			}
+		} else {
+			$this->load->language('error/not_found');
+
+			$this->document->setTitle($this->language->get('heading_title'));
+
+			$data['breadcrumbs'] = [];
+
+			$data['breadcrumbs'][] = [
+				'text' => $this->language->get('text_home'),
+				'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+			];
+
+			$data['breadcrumbs'][] = [
+				'text' => $this->language->get('heading_title'),
+				'href' => $this->url->link('error/not_found', 'user_token=' . $this->session->data['user_token'])
+			];
+
+			$data['header'] = $this->load->controller('common/header');
+			$data['column_left'] = $this->load->controller('common/column_left');
+			$data['footer'] = $this->load->controller('common/footer');
+
+			$this->response->setOutput($this->load->view('error/not_found', $data));
+		}
 	}
 
 	public function autocomplete(): void {

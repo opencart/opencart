@@ -680,6 +680,16 @@ footer {
 }
 
 /* product list */
+.price-new {
+  font-weight: 600;
+}
+
+.price-old {
+  color: #999;
+  text-decoration: line-through;
+  margin-left: 10px;
+}
+
 .product-thumb {
   border: 1px solid #ddd;
   margin-bottom: 20px;
@@ -734,16 +744,6 @@ footer {
 
   .price {
     color: #444;
-  }
-
-  .price-new {
-    font-weight: 600;
-  }
-
-  .price-old {
-    color: #999;
-    text-decoration: line-through;
-    margin-left: 10px;
   }
 
   .price-tax {

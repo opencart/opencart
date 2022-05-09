@@ -595,23 +595,6 @@ class Order extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		/*
-		// Custom Fields
-		$this->load->model('tool/upload');
-
-		if ($custom_field['type'] == 'file') {
-			$upload_info = $this->model_tool_upload->getUploadByCode($order_info['account_custom_field'][$custom_field['custom_field_id']]);
-
-			if ($upload_info) {
-				$data['account_custom_field'][] = [
-					'name'       => $custom_field['name'],
-					'value'      => $upload_info['name'],
-					'sort_order' => $custom_field['sort_order']
-				];
-			}
-		}
-		*/
-
 		// Reset the session
 		unset($this->session->data['api_session']);
 
@@ -842,20 +825,6 @@ class Order extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['payment_custom_field'] = [];
 		}
-
-		/*
-		if ($custom_field['type'] == 'file') {
-			$upload_info = $this->model_tool_upload->getUploadByCode($order_info['payment_custom_field'][$custom_field['custom_field_id']]);
-
-			if ($upload_info) {
-				$data['payment_custom_fields'][] = [
-					'name'       => $custom_field['name'],
-					'value'      => $upload_info['name'],
-					'sort_order' => $custom_field['sort_order']
-				];
-			}
-		}
-		*/
 
 		// Payment Method
 		if (!empty($order_info)) {

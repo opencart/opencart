@@ -5,15 +5,15 @@
 			<div class="card-body">
 				<div class="mb-3">
 					<label for="input-date-start" class="col-form-label">{{ entry_date_start }}</label>
-					<div class="input-group date">
-						<input type="text" name="filter_date_start" value="{{ filter_date_start }}" placeholder="{{ entry_date_start }}" id="input-date-start" class="form-control"/>
+					<div class="input-group">
+						<input type="text" name="filter_date_start" value="{{ filter_date_start }}" placeholder="{{ entry_date_start }}" id="input-date-start" class="form-control date"/>
 						<div class="input-group-text"><i class="fas fa-calendar"></i></div>
 					</div>
 				</div>
 				<div class="mb-3">
 					<label for="input-date-end" class="col-form-label">{{ entry_date_end }}</label>
-					<div class="input-group date">
-						<input type="text" name="filter_date_end" value="{{ filter_date_end }}" placeholder="{{ entry_date_end }}" id="input-date-end" class="form-control"/>
+					<div class="input-group">
+						<input type="text" name="filter_date_end" value="{{ filter_date_end }}" placeholder="{{ entry_date_end }}" id="input-date-end" class="form-control date"/>
 						<div class="input-group-text"><i class="fas fa-calendar"></i></div>
 					</div>
 				</div>
@@ -69,25 +69,18 @@
 $('#button-filter').on('click', function() {
     var url = '';
 
-    var filter_date_start = $('input[name=\'filter_date_start\']').val();
+    var filter_date_start = $('#input-date-start').val();
 
     if (filter_date_start) {
         url += '&filter_date_start=' + encodeURIComponent(filter_date_start);
     }
 
-    var filter_date_end = $('input[name=\'filter_date_end\']').val();
+    var filter_date_end = $('#input-date-end').val();
 
     if (filter_date_end) {
         url += '&filter_date_end=' + encodeURIComponent(filter_date_end);
     }
 
-    location = 'index.php?route=report/report&code=sale_coupon&user_token={{ user_token }}' + url;
-});
-//--></script>
-<script type="text/javascript"><!--
-$('.date').datetimepicker({
-    'format': 'YYYY-MM-DD',
-    'locale': '{{ datepicker }}',
-    'allowInputToggle': true
+		$('#report').load('index.php?route=extension/opencart/report/sale_coupon|report&user_token={{ user_token }}' + url);
 });
 //--></script>

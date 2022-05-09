@@ -31,9 +31,7 @@
                 <div class="row mb-3 required" class="tab-pane active">
                   <label for="input-customer" class="col-sm-2 col-form-label">{{ entry_customer }}</label>
                   <div class="col-sm-10">
-                    <input type="text" name="customer" value="{{ customer }}" placeholder="{{ entry_customer }}" id="input-customer" list="list-customer" class="form-control"{% if customer_id %} disabled{% endif %}/>
-                    <input type="hidden" name="customer_id" value="{{ customer_id }}" id="input-customer-id"/>
-                    <input type="hidden" name="customer_group_id" value="{{ customer_group_id }}" id="input-customer-group"/>
+                    <input type="text" name="customer" value="{{ customer }}" placeholder="{{ entry_customer }}" id="input-customer" list="list-customer" class="form-control"{% if customer_id %} disabled{% endif %}/> <input type="hidden" name="customer_id" value="{{ customer_id }}" id="input-customer-id"/> <input type="hidden" name="customer_group_id" value="{{ customer_group_id }}" id="input-customer-group"/>
                     <datalist id="list-customer"></datalist>
                     <div id="error-customer" class="invalid-feedback"></div>
                   </div>
@@ -145,9 +143,9 @@
                         <label class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
                         <div class="col-sm-10">
                           <div class="input-group">
+                            <button type="button" data-oc-toggle="upload" data-oc-target="#input-custom-field-{{ custom_field.custom_field_id }}" data-oc-size-max="{{ config_file_max_size }}" data-oc-size-error="{{ error_upload_size }}" class="btn btn-primary"><i class="fas fa-upload"></i> {{ button_upload }}</button>
                             <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ affiliate_custom_field[custom_field.custom_field_id] ? affiliate_custom_field[custom_field.custom_field_id] }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control" readonly/>
-                            <button type="button" data-oc-toggle="upload" data-oc-target="#input-custom-field-{{ custom_field.custom_field_id }}" data-oc-size-max="{{ config_file_max_size }}" data-oc-size-error="{{ error_upload_size }}" class="btn btn-outline-success"><i class="fas fa-upload"></i> {{ button_upload }}</button>
-                            <button type="button" data-oc-toggle="download" data-oc-target="#input-custom-field-{{ custom_field.custom_field_id }}"{% if not affiliate_custom_field[custom_field.custom_field_id] %} disabled{% endif %} class="btn btn-outline-warning"><i class="fas fa-download"></i> {{ button_download }}</button>
+                            <button type="button" data-oc-toggle="download" data-oc-target="#input-custom-field-{{ custom_field.custom_field_id }}"{% if not affiliate_custom_field[custom_field.custom_field_id] %} disabled{% endif %} class="btn btn-outline-secondary"><i class="fas fa-download"></i> {{ button_download }}</button>
                             <button type="button" data-oc-toggle="clear" data-bs-toggle="tooltip" title="{{ button_clear }}" data-oc-target="#input-custom-field-{{ custom_field.custom_field_id }}"{% if not affiliate_custom_field[custom_field.custom_field_id] %} disabled{% endif %} class="btn btn-outline-danger"><i class="fas fa-eraser"></i></button>
                           </div>
                           <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
@@ -345,12 +343,12 @@
 </div>
 <script type="text/javascript"><!--
 $('#input-customer').autocomplete({
-    'source': function(request, response) {
+    'source': function (request, response) {
         $.ajax({
             url: 'index.php?route=customer/customer|autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
-            success: function(json) {
-                response($.map(json, function(item) {
+            success: function (json) {
+                response($.map(json, function (item) {
                     return {
                         category: item['customer_group'],
                         label: item['name'],
@@ -361,7 +359,7 @@ $('#input-customer').autocomplete({
             }
         });
     },
-    'select': function(item) {
+    'select': function (item) {
         $('#input-customer').val(item['label']);
         $('#input-customer-id').val(item['value']);
         $('#input-customer-group').val(item['customer_group_id']);
@@ -370,11 +368,11 @@ $('#input-customer').autocomplete({
     }
 });
 
-$('#input-customer-group').on('change', function() {
+$('#input-customer-group').on('change', function () {
     $.ajax({
         url: 'index.php?route=customer/customer|customfield&user_token={{ user_token }}&customer_group_id=' + this.value,
         dataType: 'json',
-        success: function(json) {
+        success: function (json) {
             $('.custom-field').hide();
             $('.custom-field').removeClass('required');
 
@@ -388,7 +386,7 @@ $('#input-customer-group').on('change', function() {
                 }
             }
         },
-        error: function(xhr, ajaxOptions, thrownError) {
+        error: function (xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
@@ -396,13 +394,13 @@ $('#input-customer-group').on('change', function() {
 
 $('#input-customer-group').trigger('change');
 
-$('#history').on('click', '.pagination a', function(e) {
+$('#history').on('click', '.pagination a', function (e) {
     e.preventDefault();
 
     $('#history').load(this.href);
 });
 
-$('#button-history').on('click', function(e) {
+$('#button-history').on('click', function (e) {
     var element = this;
 
     $.ajax({
@@ -410,13 +408,13 @@ $('#button-history').on('click', function(e) {
         type: 'post',
         dataType: 'json',
         data: 'comment=' + encodeURIComponent($('#input-comment').val()),
-        beforeSend: function() {
+        beforeSend: function () {
             $(element).prop('disabled', true).addClass('loading');
         },
-        complete: function() {
+        complete: function () {
             $(element).prop('disabled', false).removeClass('loading');
         },
-        success: function(json) {
+        success: function (json) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
@@ -431,19 +429,19 @@ $('#button-history').on('click', function(e) {
                 $('#input-comment').val('');
             }
         },
-        error: function(xhr, ajaxOptions, thrownError) {
+        error: function (xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 });
 
-$('#transaction').on('click', '.pagination a', function(e) {
+$('#transaction').on('click', '.pagination a', function (e) {
     e.preventDefault();
 
     $('#transaction').load(this.href);
 });
 
-$('#button-transaction').on('click', function(e) {
+$('#button-transaction').on('click', function (e) {
     e.preventDefault();
 
     $.ajax({
@@ -451,13 +449,13 @@ $('#button-transaction').on('click', function(e) {
         type: 'post',
         dataType: 'json',
         data: 'description=' + encodeURIComponent($('#input-transaction-description').val()) + '&amount=' + encodeURIComponent($('#input-transaction-amount').val()),
-        beforeSend: function() {
+        beforeSend: function () {
             $('#button-transaction').prop('disabled', true).addClass('loading');
         },
-        complete: function() {
+        complete: function () {
             $('#button-transaction').prop('disabled', false).removeClass('loading');
         },
-        success: function(json) {
+        success: function (json) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
@@ -473,19 +471,19 @@ $('#button-transaction').on('click', function(e) {
                 $('#input-transaction-description').val('');
             }
         },
-        error: function(xhr, ajaxOptions, thrownError) {
+        error: function (xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 });
 
-$('#report').on('click', '.pagination a', function(e) {
+$('#report').on('click', '.pagination a', function (e) {
     e.preventDefault();
 
     $('#report').load(this.href);
 });
 
-$('input[name=\'payment\']').on('change', function() {
+$('input[name=\'payment\']').on('change', function () {
     $('.payment').hide();
 
     $('#payment-' + this.value).show();

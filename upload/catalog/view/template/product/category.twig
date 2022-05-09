@@ -19,6 +19,7 @@
         </div>
         <hr/>
       {% endif %}
+
       {% if categories %}
         <h3>{{ text_refine }}</h3>
         {% if categories|length <= 5 %}
@@ -46,6 +47,7 @@
           <br/>
         {% endif %}
       {% endif %}
+
       {% if products %}
         <div id="display-control" class="row">
           <div class="col-lg-3">
@@ -62,8 +64,7 @@
           <div class="col-lg-4 offset-lg-1 col-6">
             <div class="input-group mb-3">
               <div class="input-group">
-                <label for="input-sort" class="input-group-text">{{ text_sort }}</label>
-                <select id="input-sort" class="form-select" onchange="location = this.value;">
+                <label for="input-sort" class="input-group-text">{{ text_sort }}</label> <select id="input-sort" class="form-select" onchange="location = this.value;">
                   {% for sorts in sorts %}
                     <option value="{{ sorts.href }}"{% if sorts.value == '%s-%s'|format(sort, order) %} selected{% endif %}>{{ sorts.text }}</option>
                   {% endfor %}
@@ -74,8 +75,7 @@
           <div class="col-lg-3 col-6">
             <div class="input-group mb-3">
               <div class="input-group">
-                <label for="input-limit" class="input-group-text">{{ text_limit }}</label>
-                <select id="input-limit" class="form-select" onchange="location = this.value;">
+                <label for="input-limit" class="input-group-text">{{ text_limit }}</label> <select id="input-limit" class="form-select" onchange="location = this.value;">
                   {% for limits in limits %}
                     <option value="{{ limits.href }}"{% if limits.value == limit %} selected{% endif %}>{{ limits.text }}</option>
                   {% endfor %}
@@ -85,7 +85,7 @@
           </div>
         </div>
 
-        <div class="row row-cols-2">
+        <div id="product-list" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4">
           {% for product in products %}
             <div class="col">{{ product }}</div>
           {% endfor %}

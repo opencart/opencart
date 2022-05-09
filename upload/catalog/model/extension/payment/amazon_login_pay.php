@@ -941,7 +941,7 @@ class ModelExtensionPaymentAmazonLoginPay extends Model {
     }
 
     public function logHandler($code, $message, $file, $line) {
-        if (error_reporting() === 0) {
+        if (!(error_reporting() & $code)) {
             return false;
         }
 

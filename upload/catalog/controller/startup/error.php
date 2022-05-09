@@ -8,7 +8,7 @@ class ControllerStartupError extends Controller {
 	
 	public function handler($code, $message, $file, $line) {
 		// error suppressed with @
-		if (error_reporting() === 0) {
+		if (!(error_reporting() & $code)) {
 			return false;
 		}
 	

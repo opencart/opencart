@@ -1065,7 +1065,7 @@ class Googleshopping extends Library {
 
     protected function setRuntimeExceptionErrorHandler() {
         set_error_handler(function($code, $message, $file, $line) {
-            if (error_reporting() === 0) {
+            if (!(error_reporting() & $code)) {
                 return false;
             }
 

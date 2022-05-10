@@ -6173,7 +6173,7 @@ function db_schema() {
 			],
 			[
 				'name' => 'date_added',
-				'type' => 'text',
+				'type' => 'datetime',
 				'not_null' => true
 			]
 		],

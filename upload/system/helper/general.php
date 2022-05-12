@@ -135,7 +135,6 @@ function format_size($file = '', $max = true) {
 	}
 
 	if ($size) {
-
 		$suffix = [];
 
 		$suffix = [
@@ -147,7 +146,6 @@ function format_size($file = '', $max = true) {
 		
 		$code = !empty($suffix[intval(log($size, 1024))]) ? $suffix[intval(log($size, 1024))] : end($suffix);
 		$format_size = $size/(1024 ** array_search($code, $suffix));
-
 		
 		return [$code, $format_size, $size];	
 	}

@@ -196,12 +196,12 @@ class Installer extends \Opencart\System\Engine\Controller {
                         $extension_data = [
                             'extension_id'          => 0,
                             'extension_download_id' => 0,
-                            'name'                  => isset($install_info['name']) ? $install_info['name'] : 'Unknown',
+                            'name'                  => isset($install_info['name']) ? $install_info['name'] : $this->language->get('text_unknown'),
                             'package_name'          => basename($filename, '.ocmod.zip'),
                             'code'              	=> basename($filename, '.ocmod.zip'),
-                            'version'               => isset($install_info['version']) ? $install_info['version'] : 'Unknown',
-                            'author'                => isset($install_info['author']) ? $install_info['author'] : 'Unknown',
-                            'link'                  => isset($install_info['link']) ? $install_info['link'] : 'Unknown'
+                            'version'               => isset($install_info['version']) ? $install_info['version'] : $this->language->get('text_unknown'),
+                            'author'                => isset($install_info['author']) ? $install_info['author'] : $this->language->get('text_unknown'),
+                            'link'                  => isset($install_info['link']) ? $install_info['link'] : $this->language->get('text_unknown')
                         ];
             
                         $this->load->model('setting/extension');
@@ -235,12 +235,12 @@ class Installer extends \Opencart\System\Engine\Controller {
                                 $extension_data = [
                                     'extension_id'          => 0,
                                     'extension_download_id' => 0,
-                                    'name'                  => isset($install_info['name']) ? $install_info['name'] : 'Unknown',
+                                    'name'                  => isset($install_info['name']) ? $install_info['name'] : $this->language->get('text_unknown'),
                                     'package_name'          => basename($filename, '.ocmod.zip'),
                                     'code'              	=> $code,
-                                    'version'               => isset($install_info['version']) ? $install_info['version'] : 'Unknown',
-                                    'author'                => isset($install_info['author']) ? $install_info['author'] : 'Unknown',
-                                    'link'                  => isset($install_info['link']) ? $install_info['link'] : 'Unknown'
+                                    'version'               => isset($install_info['version']) ? $install_info['version'] : $this->language->get('text_unknown'),
+                                    'author'                => isset($install_info['author']) ? $install_info['author'] : $this->language->get('text_unknown'),
+                                    'link'                  => isset($install_info['link']) ? $install_info['link'] : $this->language->get('text_unknown')
                                 ];
     
                                 $this->load->model('setting/extension');		

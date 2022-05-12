@@ -327,7 +327,7 @@ class Installer extends \Opencart\System\Engine\Controller {
                         $destination = str_replace('\\', '/', $source);
 
                         // Only extract the contents of the upload folder
-                        $path = $extension_install_info['code'] . '/' . $destination;						
+                        $path = $extension_install_info['code'] . '/' . $destination;
                         $base = DIR_EXTENSION;
 
                         // image > image

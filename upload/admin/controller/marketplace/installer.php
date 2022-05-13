@@ -661,10 +661,10 @@ class Installer extends \Opencart\System\Engine\Controller {
 						
 						unlink($file);
 					} else {
-						for ($i=0; $i<$zip->numFiles; $i++) {
+						for ($i = 0; $i < $zip->numFiles; $i++) {
 							$entry_info = $zip->statIndex($i);
 							
-							if (substr($entry_info["name"],0,strlen($extension_install_info['code'] . '/')) == $extension_install_info['code'] . '/') {
+							if (substr($entry_info["name"], 0, strlen($extension_install_info['code'] . '/')) == $extension_install_info['code'] . '/') {
 								$zip->deleteIndex($i);
 							}
 						}

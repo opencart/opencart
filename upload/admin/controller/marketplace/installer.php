@@ -211,7 +211,7 @@ class Installer extends \Opencart\System\Engine\Controller {
                         $json['success'] = $this->language->get('text_upload');
                     }
 				} else {
-                    $file_pathes = [];
+                    $file_paths = [];
 					
                     for ($i = 0; $i < $zip->numFiles; $i++) {
                         $path = $zip->getNameIndex($i);
@@ -219,12 +219,12 @@ class Installer extends \Opencart\System\Engine\Controller {
                         $path_parts = explode('/', $path);
 						
                         if (!empty($path_parts[1]) && $path_parts[1] == 'install.json') {
-                            $file_pathes[] = $path;
+                            $file_paths[] = $path;
                         }
                     }
 
-                    if ($file_pathes) {
-                        foreach ($file_pathes as $file_path) {
+                    if ($file_paths) {
+                        foreach ($file_paths as $file_path) {
                             $path_parts = explode('/', $file_path);
 							
                             $install_info = json_decode($zip->getFromName($path_parts[0] . '/install.json'), true);

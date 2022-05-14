@@ -9,6 +9,7 @@ $_['text_uninstall']    = 'Success: The extension has been uninstalled!';
 $_['text_delete']       = 'Success: The extension has been deleted!';
 $_['text_progress']     = 'Install Progress';
 $_['text_installed']    = 'Installed Extensions';
+$_['text_unknown']		= 'Unknown';
 
 // Column
 $_['column_image']      = 'Image';

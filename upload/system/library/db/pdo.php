@@ -44,6 +44,8 @@ class PDO {
 				}
 
 				$statement->closeCursor();
+			} else {
+				return true;
 			}
 		} catch (\PDOException $e) {
 			throw new \Exception('Error: ' . $e->getMessage() . ' Error Code : ' . $e->getCode() . ' <br />' . $sql);

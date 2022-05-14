@@ -78,8 +78,8 @@ $(document).ready(function () {
     });
 
     // Product List
-    $('#list-view').click(function () {
-        $('#content .product-grid > .clearfix').remove();
+    $('#button-list').on('click', function () {
+        var element = this;
 
         $('#content .row > .product-grid').attr('class', 'product-layout product-list col-12');
 
@@ -90,7 +90,7 @@ $(document).ready(function () {
     });
 
     // Product Grid
-    $('#grid-view').click(function () {
+    $('#grid-view').on('click', function () {
         // What a shame bootstrap does not take into account dynamically loaded columns
         $('#content .product-list').attr('class', 'product-layout product-grid');
 
@@ -100,11 +100,10 @@ $(document).ready(function () {
         localStorage.setItem('display', 'grid');
     });
 
+    // Local Storage
     if (localStorage.getItem('display') == 'list') {
-        $('#list-view').trigger('click');
         $('#list-view').addClass('active');
     } else {
-        $('#grid-view').trigger('click');
         $('#grid-view').addClass('active');
     }
 
@@ -362,7 +361,6 @@ class Chain {
 
 var chain = new Chain();
 
-
 // Autocomplete
 (function($) {
     $.fn.autocomplete = function(option) {
@@ -406,8 +404,6 @@ var chain = new Chain();
                 var category = {};
                 var name;
                 var i = 0, j = 0;
-
-                console.log(json);
 
                 if (json.length) {
                     for (i = 0; i < json.length; i++) {

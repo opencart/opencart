@@ -345,7 +345,7 @@ class Cart {
 		return $product_data;
 	}
 
-	public function getWeight(): int {
+	public function getWeight(): float {
 		$weight = 0;
 
 		foreach ($this->getProducts() as $product) {

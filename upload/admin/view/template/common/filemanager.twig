@@ -104,7 +104,7 @@
                       $('#button-upload').prop('disabled', true).addClass('loading');
                   },
                   complete: function() {
-                      $(button).prop('disabled', false).removeClass('loading');
+                      $('#button-upload').prop('disabled', false).removeClass('loading');
                   },
                   success: function(json) {
                       if (json['error']) {
@@ -144,10 +144,10 @@
           dataType: 'json',
           data: 'folder=' + encodeURIComponent($('#input-folder').val()),
           beforeSend: function() {
-              $('#button-create').prop('disabled', true);
+              $('#button-create').prop('disabled', true).addClass('loading');
           },
           complete: function() {
-              $('#button-create').prop('disabled', false);
+              $('#button-create').prop('disabled', false).removeClass('loading');
           },
           success: function(json) {
               if (json['error']) {
@@ -174,12 +174,10 @@
               dataType: 'json',
               data: $('input[name^=\'path\']:checked'),
               beforeSend: function() {
-                  $('#button-delete i').replaceWith('<i class="fas fa-circle-notch fa-spin fa-fw"></i>');
-                  $('#button-delete').prop('disabled', true);
+                  $('#button-delete').prop('disabled', true).addClass('loading');
               },
               complete: function() {
-                  $('#button-delete i').replaceWith('<i class="fas fa-trash-alt fa-fw"></i>');
-                  $('#button-delete').prop('disabled', false);
+                  $('#button-delete').prop('disabled', false).removeClass('loading');
               },
               success: function(json) {
                   if (json['error']) {

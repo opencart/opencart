@@ -18,6 +18,7 @@ $_['text_forum_visit']            = 'Visit our forums';
 $_['text_commercial']             = 'Commercial support';
 $_['text_commercial_description'] = 'Development services from OpenCart partners';
 $_['text_commercial_visit']       = 'Visit our partner page';
+$_['text_sale_info']		  	  = 'Please note that some payment and shipping service providers might be stricter than other services when it comes to sale dangerous goods online. Please ensure to follow their guidelines prior to add any products to the store!';
 
 // Button
 $_['button_mail']                 = 'Join here';

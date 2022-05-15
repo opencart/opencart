@@ -81,7 +81,7 @@ $(document).ready(function () {
     $('#button-list').on('click', function () {
         var element = this;
 
-        $('#product-list').attr('class', 'product-list col-12');
+        $('#product-list').attr('class', 'row row-cols-1 product-list');
 
         $('#button-grid').removeClass('active');
         $('#button-list').addClass('active');
@@ -94,7 +94,7 @@ $(document).ready(function () {
         var element = this;
 
         // What a shame bootstrap does not take into account dynamically loaded columns
-        $('#product-list').attr('class', 'product-grid');
+        $('#product-list').attr('class', 'row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4');
 
         $('#button-list').removeClass('active');
         $('#button-grid').addClass('active');

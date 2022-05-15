@@ -51,14 +51,12 @@
               <a href="{{ compare }}" id="compare-total" class="btn btn-primary d-block"><i class="fas fa-exchange-alt"></i> <span class="d-inline d-md-none d-lg-inline">{{ text_compare }}</span></a>
             </div>
           </div>
-
           <div class="col-md-1 d-none d-md-block">
             <div class="btn-group">
               <button type="button" id="button-list" class="btn btn-light" data-bs-toggle="tooltip" title="{{ button_list }}"><i class="fas fa-th-list"></i></button>
               <button type="button" id="button-grid" class="btn btn-light" data-bs-toggle="tooltip" title="{{ button_grid }}"><i class="fas fa-th"></i></button>
             </div>
           </div>
-
           <div class="col-md-4 offset-md-1 col-6">
             <div class="input-group mb-3">
               <div class="input-group">
@@ -70,7 +68,6 @@
               </div>
             </div>
           </div>
-
           <div class="col-md-3 col-6">
             <div class="input-group mb-3">
               <div class="input-group">
@@ -82,15 +79,12 @@
               </div>
             </div>
           </div>
-
         </div>
-
         <div id="product-list" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4">
           {% for product in products %}
             <div class="col">{{ product }}</div>
           {% endfor %}
         </div>
-
         <div class="row">
           <div class="col-sm-6 text-start">{{ pagination }}</div>
           <div class="col-sm-6 text-end">{{ results }}</div>

@@ -481,39 +481,31 @@ footer h5 {
   cursor: pointer;
 }
 .product-thumb .button-group button + button {
-  width: 30%;
+  width: 32.5%;
   border-left: 1px solid #ddd;
 }
-.product-list .product-thumb {
-  display: flex;
-  /*
-  .product-thumb {
-    .image {
-      padding: 0 15px;
-      //display: inline-block;
-
-      + div {
-        //display: inline-block;
-        margin-left: 0;
-        //width: 69.5%;
-      }
-    }
-  */
-}
-.product-list .product-thumb .image {
-  margin-right: 0px;
-  margin-bottom: 0px;
-  flex-direction: column;
-}
-.product-list .product-thumb .content {
-  border: 1px solid #000000;
-  height: 250px;
-  flex-direction: column;
-  flex: 75%;
-}
-.product-list .product-thumb .button-group {
-  position: absolute;
-  bottom: 0px;
+@media (min-width: 960px) {
+  .product-list .product-thumb {
+    display: flex;
+  }
+  .product-list .product-thumb .image {
+    margin-right: 0px;
+    margin-bottom: 0px;
+    flex-direction: column;
+  }
+  .product-list .product-thumb .content {
+    height: 250px;
+    flex-direction: column;
+    flex: 75%;
+    position: relative;
+  }
+  .product-list .product-thumb .button-group {
+    display: block;
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    border-left: 1px solid #ddd;
+  }
 }
 .rating {
   padding-bottom: 10px;

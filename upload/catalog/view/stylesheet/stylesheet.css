@@ -459,12 +459,13 @@ footer h5 {
   padding: 15px;
 }
 .product-thumb .button-group {
+  display: flex;
   border-top: 1px solid #ddd;
   background-color: #eee;
 }
 .product-thumb .button-group button {
+  flex: 33%;
   border-radius: 0;
-  width: 33%;
   display: inline-block;
   border: none;
   background-color: #eee;
@@ -481,7 +482,6 @@ footer h5 {
   cursor: pointer;
 }
 .product-thumb .button-group button + button {
-  width: 32.5%;
   border-left: 1px solid #ddd;
 }
 @media (min-width: 960px) {
@@ -489,18 +489,15 @@ footer h5 {
     display: flex;
   }
   .product-list .product-thumb .image {
-    margin-right: 0px;
-    margin-bottom: 0px;
     flex-direction: column;
+    margin-bottom: 0px;
   }
   .product-list .product-thumb .content {
-    height: 250px;
     flex-direction: column;
     flex: 75%;
     position: relative;
   }
   .product-list .product-thumb .button-group {
-    display: block;
     position: absolute;
     bottom: 0px;
     width: 100%;

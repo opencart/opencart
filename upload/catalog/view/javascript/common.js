@@ -94,7 +94,7 @@ $(document).ready(function () {
         var element = this;
 
         // What a shame bootstrap does not take into account dynamically loaded columns
-        $('#product-list').attr('class', 'row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4');
+        $('#product-list').attr('class', 'row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3');
 
         $('#button-list').removeClass('active');
         $('#button-grid').addClass('active');
@@ -104,8 +104,10 @@ $(document).ready(function () {
 
     // Local Storage
     if (localStorage.getItem('display') == 'list') {
+        $('#product-list').attr('class', 'row row-cols-1 product-list');
         $('#button-list').addClass('active');
     } else {
+        $('#product-list').attr('class', 'row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3');
         $('#button-grid').addClass('active');
     }
 

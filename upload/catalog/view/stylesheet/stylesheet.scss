@@ -613,7 +613,6 @@ footer {
   }
 }
 
-
 .product-thumb {
   border: 1px solid #ddd;
   margin-bottom: 15px;
@@ -638,12 +637,13 @@ footer {
   }
 
   .button-group {
+    display: flex;
     border-top: 1px solid #ddd;
     background-color: #eee;
 
     button {
+      flex: 33%;
       border-radius: 0;
-      width: 33%;
       display: inline-block;
       border: none;
       background-color: #eee;
@@ -661,7 +661,6 @@ footer {
       }
 
       + button {
-        width: 32.5%;
         border-left: 1px solid #ddd;
       }
     }
@@ -672,20 +671,17 @@ footer {
     display: flex;
 
     .image {
-      margin-right: 0px;
-      margin-bottom: 0px;
       flex-direction: column;
+      margin-bottom: 0px;
     }
 
     .content {
-      height: 250px;
       flex-direction: column;
       flex: 75%;
       position: relative;
     }
 
     .button-group {
-      display: block;
       position: absolute;
       bottom: 0px;
       width: 100%;

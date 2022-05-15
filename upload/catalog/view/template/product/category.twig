@@ -19,7 +19,6 @@
         </div>
         <hr/>
       {% endif %}
-
       {% if categories %}
         <h3>{{ text_refine }}</h3>
         {% if categories|length <= 5 %}
@@ -47,7 +46,6 @@
           <br/>
         {% endif %}
       {% endif %}
-
       {% if products %}
         <div id="display-control" class="row">
           <div class="col-lg-3">
@@ -84,18 +82,15 @@
             </div>
           </div>
         </div>
-
-        <div id="product-list" class="row row-cols-1 product-list">
+        <div id="product-list" class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-4">
           {% for product in products %}
             <div class="col">{{ product }}</div>
           {% endfor %}
         </div>
-
         <div class="row">
           <div class="col-sm-6 text-start">{{ pagination }}</div>
           <div class="col-sm-6 text-end">{{ results }}</div>
         </div>
-
       {% endif %}
       {% if not categories and not products %}
         <p>{{ text_no_results }}</p>

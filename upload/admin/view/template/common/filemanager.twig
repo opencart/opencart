@@ -101,12 +101,10 @@
                   contentType: false,
                   processData: false,
                   beforeSend: function() {
-                      $('#button-upload i').replaceWith('<i class="fas fa-circle-notch fa-spin fa-fw"></i>');
-                      $('#button-upload').prop('disabled', true);
+                      $('#button-upload').prop('disabled', true).addClass('loading');
                   },
                   complete: function() {
-                      $('#button-upload i').replaceWith('<i class="fas fa-upload fa-fw"></i>');
-                      $('#button-upload').prop('disabled', false);
+                      $(button).prop('disabled', false).removeClass('loading');
                   },
                   success: function(json) {
                       if (json['error']) {

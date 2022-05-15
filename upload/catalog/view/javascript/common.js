@@ -81,30 +81,32 @@ $(document).ready(function () {
     $('#button-list').on('click', function () {
         var element = this;
 
-        $('#content .row > .product-grid').attr('class', 'product-layout product-list col-12');
+        $('#product-list').attr('class', 'product-list col-12');
 
-        $('#grid-view').removeClass('active');
-        $('#list-view').addClass('active');
+        $('#button-grid').removeClass('active');
+        $('#button-list').addClass('active');
 
         localStorage.setItem('display', 'list');
     });
 
     // Product Grid
-    $('#grid-view').on('click', function () {
-        // What a shame bootstrap does not take into account dynamically loaded columns
-        $('#content .product-list').attr('class', 'product-layout product-grid');
+    $('#button-grid').on('click', function () {
+        var element = this;
 
-        $('#list-view').removeClass('active');
-        $('#grid-view').addClass('active');
+        // What a shame bootstrap does not take into account dynamically loaded columns
+        $('#product-list').attr('class', 'product-grid');
+
+        $('#button-list').removeClass('active');
+        $('#button-grid').addClass('active');
 
         localStorage.setItem('display', 'grid');
     });
 
     // Local Storage
     if (localStorage.getItem('display') == 'list') {
-        $('#list-view').addClass('active');
+        $('#button-list').addClass('active');
     } else {
-        $('#grid-view').addClass('active');
+        $('#button-grid').addClass('active');
     }
 
     /* Agree to Terms */

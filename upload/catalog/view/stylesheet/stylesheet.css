@@ -459,8 +459,6 @@ footer h5 {
   padding: 15px;
 }
 .product-thumb .button-group {
-  position: relative;
-  bottom: 0px;
   border-top: 1px solid #ddd;
   background-color: #eee;
 }
@@ -503,13 +501,19 @@ footer h5 {
   */
 }
 .product-list .product-thumb .image {
-  margin-right: 10px;
+  margin-right: 0px;
   margin-bottom: 0px;
   flex-direction: column;
 }
 .product-list .product-thumb .content {
+  border: 1px solid #000000;
+  height: 250px;
   flex-direction: column;
   flex: 75%;
+}
+.product-list .product-thumb .button-group {
+  position: absolute;
+  bottom: 0px;
 }
 .rating {
   padding-bottom: 10px;

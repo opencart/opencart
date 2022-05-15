@@ -642,8 +642,6 @@ footer {
   }
 
   .button-group {
-    position: relative;
-    bottom: 0px;
     border-top: 1px solid #ddd;
     background-color: #eee;
 
@@ -678,15 +676,23 @@ footer {
   display: flex;
 
   .image {
-    margin-right: 10px;
+    margin-right: 0px;
     margin-bottom: 0px;
     flex-direction: column;
   }
 
   .content {
+    border: 1px solid #000000;
+    height: 250px;
     flex-direction: column;
     flex: 75%;
   }
+
+  .button-group {
+    position: absolute;
+    bottom: 0px;
+  }
+
 
   /*
   .product-thumb {

@@ -152,7 +152,7 @@ $(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function (e) {
 
     var enctype = $(element).attr('enctype');
 
-    if (typeof enctype === undefined) {
+    if (enctype === undefined) {
         enctype = 'application/x-www-form-urlencoded';
     }
 

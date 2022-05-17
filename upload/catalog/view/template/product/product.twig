@@ -8,42 +8,24 @@
   <div class="row">{{ column_left }}
     <div id="content" class="col">
       {{ content_top }}
-
-      {% if column_left or column_right %}
-        {% set class = 'col-sm-6' %}
-      {% else %}
-        {% set class = 'col-sm-4' %}
-      {% endif %}
-
-
-      <div class="row">
-
+      <div class="row mb-3">
         <div class="col-sm">
-
           {% if thumb or images %}
             <div class="image magnific-popup">
-
               {% if thumb %}
                 <a href="{{ popup }}" title="{{ heading_title }}"><img src="{{ thumb }}" title="{{ heading_title }}" alt="{{ heading_title }}" class="img-thumbnail mb-3"/></a>
               {% endif %}
-
-
               {% if images %}
-
-                <div class="">
+                <div>
                   {% for image in images %}
                     <a href="{{ image.popup }}" title="{{ heading_title }}"><img src="{{ image.thumb }}" title="{{ heading_title }}" alt="{{ heading_title }}" class="img-thumbnail"/></a>&nbsp;
                   {% endfor %}
                 </div>
-
               {% endif %}
-
             </div>
           {% endif %}
 
         </div>
-
-
         <div class="col-sm">
           <h1>{{ heading_title }}</h1>
 
@@ -86,7 +68,6 @@
               {% endif %}
             </ul>
           {% endif %}
-
           <form method="post" data-oc-toggle="ajax">
             <div class="btn-group">
               <button type="submit" formaction="{{ add_to_wishlist }}" data-bs-toggle="tooltip" class="btn btn-light" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product_id }}');"><i class="fas fa-heart"></i></button>
@@ -94,10 +75,11 @@
             </div>
             <input type="hidden" name="product_id" value="{{ product_id }}"/>
           </form>
-          <hr/>
+          <br/>
 
           <div id="product">
             <form id="form-product">
+
               {% if options %}
             <hr>
               <h3>{{ text_option }}</h3>

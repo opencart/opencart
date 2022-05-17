@@ -45,15 +45,6 @@
 
 
         <div class="col-sm">
-
-          <form method="post" data-oc-toggle="ajax">
-            <div class="btn-group">
-              <button type="submit" formaction="{{ add_to_wishlist }}" data-bs-toggle="tooltip" class="btn btn-light" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product_id }}');"><i class="fas fa-heart"></i></button>
-              <button type="submit" formaction="{{ add_to_compare }}" data-bs-toggle="tooltip" class="btn btn-light" title="{{ button_compare }}" onclick="compare.add('{{ product_id }}');"><i class="fas fa-exchange-alt"></i></button>
-            </div>
-            <input type="hidden" name="product_id" value="{{ product_id }}"/>
-          </form>
-
           <h1>{{ heading_title }}</h1>
 
           <ul class="list-unstyled">
@@ -66,6 +57,7 @@
             {% endif %}
             <li>{{ text_stock }} {{ stock }}</li>
           </ul>
+
           {% if price %}
             <ul class="list-unstyled">
               {% if not special %}
@@ -94,6 +86,15 @@
               {% endif %}
             </ul>
           {% endif %}
+
+          <form method="post" data-oc-toggle="ajax">
+            <div class="btn-group">
+              <button type="submit" formaction="{{ add_to_wishlist }}" data-bs-toggle="tooltip" class="btn btn-light" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product_id }}');"><i class="fas fa-heart"></i></button>
+              <button type="submit" formaction="{{ add_to_compare }}" data-bs-toggle="tooltip" class="btn btn-light" title="{{ button_compare }}" onclick="compare.add('{{ product_id }}');"><i class="fas fa-exchange-alt"></i></button>
+            </div>
+            <input type="hidden" name="product_id" value="{{ product_id }}"/>
+          </form>
+<hr/>
 
           <div id="product">
             <form id="form-product">

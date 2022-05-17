@@ -228,7 +228,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->post['subscription_plan_id'])) {
-			$subscription_plan_id = $this->request->post['subscription_plan_id'];
+			$subscription_plan_id = (int)$this->request->post['subscription_plan_id'];
 		} else {
 			$subscription_plan_id = 0;
 		}

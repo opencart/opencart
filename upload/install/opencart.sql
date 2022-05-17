@@ -2251,7 +2251,7 @@ INSERT INTO `oc_stock_status` (`stock_status_id`, `language_id`, `name`) VALUES
 -----------------------------------------------------------
 
 --
--- Dumping data for table `oc_stock_status`
+-- Dumping data for table `oc_subscription_status`
 --
 
 INSERT INTO `oc_subscription_status` (`subscription_status_id`, `language_id`, `name`) VALUES

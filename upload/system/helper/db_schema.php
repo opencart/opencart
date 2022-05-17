@@ -5369,7 +5369,7 @@ function db_schema() {
 			],
 			[
 				'name' => 'trial_frequency',
-				'type' => 'varchar(25)',
+				'type' => 'enum(\'day\',\'week\',\'semi_month\',\'month\',\'year\')',
 				'not_null' => true
 			],
 			[

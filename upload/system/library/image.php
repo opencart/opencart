@@ -207,7 +207,7 @@ class Image {
      * @param	string	$watermark
 	 * @param	string	$position
      */
-	public function watermark(string $watermark, string $position = 'bottomright'): void {
+	public function watermark(\Opencart\System\Library\Image $watermark, string $position = 'bottomright'): void {
 		switch($position) {
 			case 'topleft':
 				$watermark_pos_x = 0;

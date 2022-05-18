@@ -209,7 +209,7 @@
     {% if thumb %}
       $('{{ thumb|escape('js') }}').attr('src', $(this).find('img').attr('src'));
 
-      $('{{ target|escape('js') }}').val($(this).parent().find('input').val());
+      $('{{ target|escape('js') }}').val('catalog/' + $(this).parent().find('input').val());
     {% endif %}
 
     {% if ckeditor %}

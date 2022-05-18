@@ -251,8 +251,8 @@ class Order extends \Opencart\System\Engine\Controller {
 			'filter_date_modified'   => $filter_date_modified,
 			'sort'                   => $sort,
 			'order'                  => $order,
-			'start'                  => ($page - 1) * $this->config->get('config_pagination_admin'),
-			'limit'                  => $this->config->get('config_pagination_admin')
+			'start'                  => ($page - 1) * (int)$this->config->get('config_pagination_admin'),
+			'limit'                  =>  (int)$this->config->get('config_pagination_admin')
 		];
 
 		$this->load->model('sale/order');

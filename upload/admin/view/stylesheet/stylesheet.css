@@ -590,6 +590,9 @@ div.required .col-form-label:not(span):before, td.required:before {
     z-index: 999;
 }
 
+.card-body .jqvmap-zoomin, .jqvmap-zoomout {
+    padding: 0px;
+}
 /* Filemanager Folder Size */
 #filemanager .fa-folder.fa-5x {
     font-size: 10.5em;

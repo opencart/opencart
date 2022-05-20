@@ -467,36 +467,27 @@ class Download extends \Opencart\System\Engine\Controller {
 	public function download(): void {
 		$this->load->language('catalog/download');
 
-		if (isset($this->request->get['code'])) {
-			$code = $this->request->get['code'];
+		if (isset($this->request->get['filename'])) {
+			$filename = basename($this->request->get['filename']);
 		} else {
-			$code = 0;
+			$filename = '';
 		}
 
-		$this->load->model('tool/upload');
+		$file = DIR_DOWNLOAD . $filename;
 
-		$upload_info = $this->model_tool_upload->getUploadByCode($code);
-
-		if ($upload_info) {
-			$file = DIR_UPLOAD . $upload_info['filename'];
-			$mask = basename($upload_info['name']);
-
+		if (is_file($file)) {
 			if (!headers_sent()) {
-				if (is_file($file)) {
-					header('Content-Type: application/octet-stream');
-					header('Content-Description: File Transfer');
-					header('Content-Disposition: attachment; filename="' . ($mask ? $mask : basename($file)) . '"');
-					header('Content-Transfer-Encoding: binary');
-					header('Expires: 0');
-					header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-					header('Pragma: public');
-					header('Content-Length: ' . filesize($file));
+				header('Content-Type: application/octet-stream');
+				header('Content-Description: File Transfer');
+				header('Content-Disposition: attachment; filename="' . $filename . '"');
+				header('Content-Transfer-Encoding: binary');
+				header('Expires: 0');
+				header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+				header('Pragma: public');
+				header('Content-Length: ' . filesize($file));
 
-					readfile($file, 'rb');
-					exit;
-				} else {
-					exit(sprintf($this->language->get('error_not_found'), basename($file)));
-				}
+				readfile($file, 'rb');
+				exit;
 			} else {
 				exit($this->language->get('error_headers_sent'));
 			}

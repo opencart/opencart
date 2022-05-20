@@ -41,6 +41,8 @@ class PDO {
 					return $result;
 				} else {
 					$this->affected = $statement->rowCount();
+
+					return true;
 				}
 
 				$statement->closeCursor();
@@ -50,6 +52,8 @@ class PDO {
 		} catch (\PDOException $e) {
 			throw new \Exception('Error: ' . $e->getMessage() . ' Error Code : ' . $e->getCode() . ' <br />' . $sql);
 		}
+
+		return false;
 	}
 
 	public function escape(string $value) {

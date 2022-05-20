@@ -104,6 +104,8 @@ class ControllerExtensionDashboardSale extends Controller {
 
 		$sale_total = $this->model_extension_dashboard_sale->getTotalSales();
 
+		if (!isset($sale_total))  $sale_total = 0;
+		
 		if ($sale_total > 1000000000000) {
 			$data['total'] = round($sale_total / 1000000000000, 1) . 'T';
 		} elseif ($sale_total > 1000000000) {

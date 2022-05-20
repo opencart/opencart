@@ -257,7 +257,7 @@ class Download extends \Opencart\System\Engine\Controller {
 			$json['error']['filename'] = $this->language->get('error_filename');
 		}
 
-		if (substr(realpath(DIR_DOWNLOAD . $this->request->post['filename']), 0, utf8_strlen(DIR_DOWNLOAD)) != DIR_DOWNLOAD) {
+		if (substr(str_replace('\\', '/', realpath(DIR_DOWNLOAD . $this->request->post['filename'])), 0, utf8_strlen(DIR_DOWNLOAD)) != DIR_DOWNLOAD) {
 			$json['error']['filename'] = $this->language->get('error_directory');
 		}
 

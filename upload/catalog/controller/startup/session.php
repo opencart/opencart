@@ -29,9 +29,6 @@ class Session extends \Opencart\System\Engine\Controller {
 
 		Is it not better to have multiple cookies when accessing parts of the system
 		that requires different cookie sessions for security reasons.
-
-		Also cookies can be accessed via the URL parameters. So why force only one cookie
-		for all sessions!
 		*/
 
 		// Update the session lifetime

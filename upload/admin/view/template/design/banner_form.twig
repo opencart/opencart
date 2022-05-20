@@ -37,13 +37,13 @@
           <br/>
           <ul class="nav nav-tabs" id="language">
             {% for language in languages %}
-              <li class="nav-item"><a href="#language-{{ language.language_id }}" data-bs-toggle="tab" class="nav-link{% if languages.index == 0 %} active{% endif %}"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/> {{ language.name }}</a></li>
+              <li class="nav-item"><a href="#language-{{ language.language_id }}" data-bs-toggle="tab" class="nav-link{% if loop.first %} active{% endif %}"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/> {{ language.name }}</a></li>
             {% endfor %}
           </ul>
           <div class="tab-content">
             {% set image_row = 0 %}
             {% for language in languages %}
-              <div id="language-{{ language.language_id }}" class="tab-pane{% if languages.index == 0 %} active{% endif %}">
+              <div id="language-{{ language.language_id }}" class="tab-pane{% if loop.first %} active{% endif %}">
                 <table id="image-{{ language.language_id }}" class="table table-bordered table-hover">
                   <thead>
                     <tr>

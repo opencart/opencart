@@ -43,7 +43,7 @@
                   <div class="input-group">
                     <button type="button" id="button-upload" class="btn btn-primary"><i class="fas fa-upload"></i> {{ button_upload }}</button>
                     <input type="text" name="filename" value="{{ filename }}" placeholder="{{ entry_filename }}" id="input-filename" class="form-control"/>
-                    <button type="button" id="button-download" class="btn btn-outline-secondary"><i class="fas fa-download"></i> {{ button_download }}</button>
+                    <button type="button" id="button-download" class="btn btn-outline-secondary"{% if not filename %} disabled{% endif %}><i class="fas fa-download"></i> {{ button_download }}</button>
                   </div>
                   <div class="form-text">{{ help_filename }}</div>
                   <div id="error-filename" class="invalid-feedback"></div>
@@ -127,6 +127,8 @@ $('#button-upload').on('click', function () {
 
                         $('#input-filename').val(json['filename']);
                         $('#input-mask').val(json['mask']);
+
+                        $('#button-download').prop('disabled', false);
                     }
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
@@ -135,6 +137,20 @@ $('#button-upload').on('click', function () {
             });
         }
     }, 500);
+});
+
+$('#input-filename').on('change', function (e) {
+    var value = $(this).val();
+
+    if (value != '') {
+        $('#button-download').prop('disabled', false);
+    } else {
+        $('#button-download').prop('disabled', true);
+    }
+});
+
+$('#button-download').on('click', function (e) {
+    location = 'index.php?route=catalog/download|download&user_token=' + getURLVar('user_token') + '&filename=' + $('#input-filename').val();
 });
 //--></script>
 {{ footer }}

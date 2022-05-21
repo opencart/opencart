@@ -790,15 +790,15 @@ class Product extends \Opencart\System\Engine\Model {
 		}
 
 		if (!empty($data['filter_name'])) {
-			$sql .= " AND pd.`name` LIKE '" . $this->db->escape((string)$data['filter_name']) . "%'";
+			$sql .= " AND pd.`name` LIKE '" . $this->db->escape((string)$data['filter_name'] . '%') . "'";
 		}
 
 		if (!empty($data['filter_model'])) {
-			$sql .= " AND p.`model` LIKE '" . $this->db->escape((string)$data['filter_model']) . "%'";
+			$sql .= " AND p.`model` LIKE '" . $this->db->escape((string)$data['filter_model'] . '%') . "'";
 		}
 
 		if (!empty($data['filter_price'])) {
-			$sql .= " AND p.`price` LIKE '" . $this->db->escape((string)$data['filter_price']) . "%'";
+			$sql .= " AND p.`price` LIKE '" . $this->db->escape((string)$data['filter_price'] . '%') . "'";
 		}
 
 		if (isset($data['filter_quantity']) && $data['filter_quantity'] !== '') {
@@ -1070,15 +1070,15 @@ class Product extends \Opencart\System\Engine\Model {
 		}
 
 		if (!empty($data['filter_name'])) {
-			$sql .= " AND pd.`name` LIKE '" . $this->db->escape((string)$data['filter_name']) . "%'";
+			$sql .= " AND pd.`name` LIKE '" . $this->db->escape((string)$data['filter_name'] . '%') . "'";
 		}
 
 		if (!empty($data['filter_model'])) {
-			$sql .= " AND p.`model` LIKE '" . $this->db->escape((string)$data['filter_model']) . "%'";
+			$sql .= " AND p.`model` LIKE '" . $this->db->escape((string)$data['filter_model'] . '%') . "'";
 		}
 
 		if (isset($data['filter_price']) && !is_null($data['filter_price'])) {
-			$sql .= " AND p.`price` LIKE '" . $this->db->escape((string)$data['filter_price']) . "%'";
+			$sql .= " AND p.`price` LIKE '" . $this->db->escape((string)$data['filter_price'] . '%') . "'";
 		}
 
 		if (isset($data['filter_quantity']) && $data['filter_quantity'] !== '') {

@@ -27,7 +27,6 @@ class Footer extends \Opencart\System\Engine\Controller {
 		}
 
 		$data['sitemap'] = $this->url->link('information/sitemap', 'language=' . $this->config->get('config_language'));
-		$data['tracking'] = $this->url->link('information/tracking', 'language=' . $this->config->get('config_language'));
 		$data['manufacturer'] = $this->url->link('product/manufacturer', 'language=' . $this->config->get('config_language'));
 		$data['voucher'] = $this->url->link('checkout/voucher', 'language=' . $this->config->get('config_language'));
 

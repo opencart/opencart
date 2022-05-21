@@ -2,7 +2,7 @@
 namespace Opencart\Admin\Model\Extension\Opencart\Report;
 class Product extends \Opencart\System\Engine\Model {
 	public function getViewed(array $data = []): array {
-		$sql = "SELECT pd.`name`, p.`model`, COUNT(pr.`product_id`) AS viewed FROM `" . DB_PREFIX . "product_report` pr LEFT JOIN `" . DB_PREFIX . "product` p ON (pr.`product_id` = p.`product_id`) LEFT JOIN `" . DB_PREFIX . "product_description` pd ON (p.`product_id` = pd.`product_id`) WHERE pd.`language_id` = '" . (int)$this->config->get('config_language_id') . "' GROUP BY pr.product_id ORDER BY p.`viewed` DESC";
+		$sql = "SELECT pd.`name`, p.`model`, COUNT(pr.`product_id`) AS `viewed` FROM `" . DB_PREFIX . "product_report` pr LEFT JOIN `" . DB_PREFIX . "product` p ON (pr.`product_id` = p.`product_id`) LEFT JOIN `" . DB_PREFIX . "product_description` pd ON (p.`product_id` = pd.`product_id`) WHERE pd.`language_id` = '" . (int)$this->config->get('config_language_id') . "' GROUP BY pr.product_id ORDER BY p.`viewed` DESC";
 
 		if (isset($data['start']) || isset($data['limit'])) {
 			if ($data['start'] < 0) {

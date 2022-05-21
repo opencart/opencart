@@ -363,7 +363,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		if (!empty($affiliate_info)) {
 			$data['tracking'] = $affiliate_info['tracking'];
 		} else {
-			$data['tracking'] = token(10);
+			$data['tracking'] = token(64);
 		}
 
 		if (!empty($affiliate_info)) {

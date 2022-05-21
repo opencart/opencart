@@ -26,9 +26,6 @@ $_['text_week']                  = 'week';
 $_['text_semi_month']            = 'half-month';
 $_['text_month']                 = 'month';
 $_['text_year']                  = 'year';
-
-
-
 $_['text_history']               = 'History';
 $_['text_history_add']           = 'Add History';
 $_['text_transaction']           = 'Transactions';

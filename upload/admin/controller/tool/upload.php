@@ -236,7 +236,7 @@ class Upload extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['code'])) {
 			$code = $this->request->get['code'];
 		} else {
-			$code = 0;
+			$code = '';
 		}
 
 		$this->load->model('tool/upload');

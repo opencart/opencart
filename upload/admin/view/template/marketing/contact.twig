@@ -58,7 +58,7 @@
 							<input type="text" name="customers" value="" placeholder="{{ entry_customer }}" id="input-customer" list="list-customer" class="form-control"/>
               <datalist id="list-customer"></datalist>
 							<div class="form-control p-0" style="height: 150px; overflow: auto;">
-								<table id="mail-customer" class="table table-sm m-0"></table>
+								<table id="mail-customer" class="table table-sm m-0"><tbody></tbody></table>
 							</div>
 							<div class="form-text">{{ help_customer }}</div>
 						</div>
@@ -69,7 +69,7 @@
 							<input type="text" name="affiliates" value="" placeholder="{{ entry_affiliate }}" id="input-affiliate" list="list-affiliate" class="form-control"/>
               <datalist id="list-affiliate"></datalist>
 							<div class="form-control p-0" style="height: 150px; overflow: auto;">
-								<table id="mail-affiliate" class="table table-sm m-0"></table>
+								<table id="mail-affiliate" class="table table-sm m-0"><tbody></tbody></table>
 							</div>
 							<div class="form-text">{{ help_affiliate }}</div>
 						</div>
@@ -80,7 +80,7 @@
 							<input type="text" name="products" value="" placeholder="{{ entry_product }}" id="input-product" list="list-product" class="form-control"/>
               <datalist id="list-product"></datalist>
 							<div class="form-control p-0" style="height: 150px; overflow: auto;">
-								<table id="mail-product" class="table table-sm m-0"></table>
+								<table id="mail-product" class="table table-sm m-0"><tbody></tbody></table>
 							</div>
 							<div class="form-text">{{ help_product }}</div>
 						</div>
@@ -144,7 +144,7 @@ $('#input-customer').autocomplete({
         html += '  <td class="text-end"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>';
         html += '</tr>';
 
-        $('#mail-customer').append(html);
+        $('#mail-customer tbody').append(html);
     }
 });
 
@@ -181,7 +181,7 @@ $('#input-affiliate').autocomplete({
         html += '  <td class="text-end"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>';
         html += '</tr>';
 
-        $('#mail-affiliate').append(html);
+        $('#mail-affiliate tbody').append(html);
     }
 });
 
@@ -218,7 +218,7 @@ $('#input-product').autocomplete({
         html += '  <td class="text-end"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>';
         html += '</tr>';
 
-        $('#mail-product').append(html);
+        $('#mail-product tbody').append(html);
     }
 });
 

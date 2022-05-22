@@ -12,6 +12,8 @@ class Search extends \Opencart\System\Engine\Controller {
 			$data['search'] = '';
 		}
 
+		$data['language'] = $this->config->get('config_language');
+
 		return $this->load->view('common/search', $data);
 	}
 }

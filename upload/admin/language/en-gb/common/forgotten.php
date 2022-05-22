@@ -6,10 +6,8 @@ $_['heading_reset'] = 'Reset your password';
 // Text
 $_['text_email']    = 'Enter the e-mail address associated with your account. Click submit to have a password reset link e-mailed to you.';
 $_['text_success']  = 'An email with a confirmation link has been sent your admin email address.';
-
-// Text
-$_['text_password']  = 'Enter the new password you wish to use.';
-$_['text_success']   = 'Success: Your password has been successfully updated.';
+$_['text_password'] = 'Enter the new password you wish to use.';
+$_['text_reset']    = 'Success: Your password has been successfully updated.';
 
 // Entry
 $_['entry_password'] = 'Password';

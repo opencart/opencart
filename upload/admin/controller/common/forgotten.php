@@ -184,7 +184,7 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->model_user_user->editPassword($user_info['user_id'], $this->request->post['password']);
 
-			$this->session->data['success'] = $this->language->get('text_success');
+			$this->session->data['success'] = $this->language->get('text_reset');
 
 			unset($this->session->data['reset_token']);
 

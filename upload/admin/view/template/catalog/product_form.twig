@@ -41,12 +41,12 @@
             <div class="tab-pane active" id="tab-general">
               <ul class="nav nav-tabs" id="language">
                 {% for language in languages %}
-                  <li class="nav-item"><a href="#language-{{ language.language_id }}" data-bs-toggle="tab" class="nav-link{% if languages.index == 0 %} active{% endif %}"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/> {{ language.name }}</a></li>
+                  <li class="nav-item"><a href="#language-{{ language.language_id }}" data-bs-toggle="tab" class="nav-link{% if loop.first %} active{% endif %}"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/> {{ language.name }}</a></li>
                 {% endfor %}
               </ul>
               <div class="tab-content">
                 {% for language in languages %}
-                  <div id="language-{{ language.language_id }}" class="tab-pane{% if languages.index == 0 %} active{% endif %}">
+                  <div id="language-{{ language.language_id }}" class="tab-pane{% if loop.first %} active{% endif %}">
                     <div class="row mb-3 required">
                       <label for="input-name-{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_name }}</label>
                       <div class="col-sm-10">
@@ -590,12 +590,14 @@
                   <div class="input-group">
                     <div class="form-control p-0" style="height: 150px; overflow: auto;">
                       <table id="product-filter" class="table table-sm m-0">
-                        {% for product_filter in product_filters %}
-                          <tr id="product-filter-{{ product_filter.filter_id }}">
-                            <td>{{ product_filter.name }}<input type="hidden" name="product_filter[]" value="{{ product_filter.filter_id }}"/></td>
-                            <td class="text-end"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>
-                          </tr>
-                        {% endfor %}
+                        <tbody>
+                          {% for product_filter in product_filters %}
+                            <tr id="product-filter-{{ product_filter.filter_id }}">
+                              <td>{{ product_filter.name }}<input type="hidden" name="product_filter[]" value="{{ product_filter.filter_id }}"/></td>
+                              <td class="text-end"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>
+                            </tr>
+                          {% endfor %}
+                        </tbody>
                       </table>
                     </div>
                     {% if master_id %}
@@ -638,12 +640,14 @@
                   <div class="input-group">
                     <div class="form-control p-0" style="height: 150px; overflow: auto;">
                       <table id="product-download" class="table table-sm m-0">
-                        {% for product_download in product_downloads %}
-                          <tr id="product-download-{{ product_download.download_id }}">
-                            <td>{{ product_download.name }}<input type="hidden" name="product_download[]" value="{{ product_download.download_id }}"/></td>
-                            <td class="text-end"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>
-                          </tr>
-                        {% endfor %}
+                        <tbody>
+                          {% for product_download in product_downloads %}
+                            <tr id="product-download-{{ product_download.download_id }}">
+                              <td>{{ product_download.name }}<input type="hidden" name="product_download[]" value="{{ product_download.download_id }}"/></td>
+                              <td class="text-end"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>
+                            </tr>
+                          {% endfor %}
+                        </tbody>
                       </table>
                     </div>
                     {% if master_id %}
@@ -665,12 +669,14 @@
                   <div class="input-group">
                     <div class="form-control p-0" style="height: 150px; overflow: auto;">
                       <table id="product-related" class="table table-sm m-0">
-                        {% for product_related in product_relateds %}
-                          <tr id="product-related-{{ product_related.product_id }}">
-                            <td>{{ product_related.name }}<input type="hidden" name="product_related[]" value="{{ product_related.product_id }}"/></td>
-                            <td class="text-end"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>
-                          </tr>
-                        {% endfor %}
+                        <tbody>
+                          {% for product_related in product_relateds %}
+                            <tr id="product-related-{{ product_related.product_id }}">
+                              <td>{{ product_related.name }}<input type="hidden" name="product_related[]" value="{{ product_related.product_id }}"/></td>
+                              <td class="text-end"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>
+                            </tr>
+                          {% endfor %}
+                        </tbody>
                       </table>
                     </div>
                     {% if master_id %}
@@ -705,8 +711,7 @@
                     {% set attribute_row = 0 %}
                     {% for product_attribute in product_attributes %}
                       <tr id="attribute-row-{{ attribute_row }}">
-                        <td class="text-start"><input type="text" name="product_attribute[{{ attribute_row }}][name]" value="{{ product_attribute.name }}" placeholder="{{ entry_attribute }}" id="input-attribute-{{ attribute_row }}" list="list-attribute-{{ attribute_row }}" class="form-control"/>
-                          <input type="hidden" name="product_attribute[{{ attribute_row }}][attribute_id]" value="{{ product_attribute.attribute_id }}" id="input-attribute-id-{{ attribute_row }}"/>
+                        <td class="text-start"><input type="text" name="product_attribute[{{ attribute_row }}][name]" value="{{ product_attribute.name }}" placeholder="{{ entry_attribute }}" id="input-attribute-{{ attribute_row }}" list="list-attribute-{{ attribute_row }}" class="form-control"/> <input type="hidden" name="product_attribute[{{ attribute_row }}][attribute_id]" value="{{ product_attribute.attribute_id }}" id="input-attribute-id-{{ attribute_row }}"/>
                           <datalist id="list-attribute-{{ attribute_row }}"></datalist>
                         </td>
                         <td class="text-start">
@@ -954,8 +959,7 @@
                             <div id="input-option-{{ option.product_option_id }}" class="form-control" style="height: 150px; overflow: auto;">
                               {% for option_value in option.product_option_value %}
                                 <div class="form-check">
-                                  <input type="checkbox" name="variant[{{ option.product_option_id }}][]" value="{{ option_value.product_option_value_id }}" id="input-option-value-{{ option_value.product_option_value_id }}" class="form-check-input"{% if variant[option.product_option_id] and option_value.product_option_value_id in variant[option.product_option_id] %} checked{% endif %}/>
-                                  <label for="input-option-value-{{ option_value.product_option_value_id }}" class="form-check-label">{% if option_value.image %} <img src="{{ option_value.image }}" alt="{{ option_value.name }} {% if option_value.price %} {{ option_value.price_prefix }} {{ option_value.price }} {% endif %}" class="img-thumbnail"/>{% endif %}
+                                  <input type="checkbox" name="variant[{{ option.product_option_id }}][]" value="{{ option_value.product_option_value_id }}" id="input-option-value-{{ option_value.product_option_value_id }}" class="form-check-input"{% if variant[option.product_option_id] and option_value.product_option_value_id in variant[option.product_option_id] %} checked{% endif %}/> <label for="input-option-value-{{ option_value.product_option_value_id }}" class="form-check-label">{% if option_value.image %} <img src="{{ option_value.image }}" alt="{{ option_value.name }} {% if option_value.price %} {{ option_value.price_prefix }} {{ option_value.price }} {% endif %}" class="img-thumbnail"/>{% endif %}
                                     {{ option_value.name }}
                                     {% if option_value.price %}
                                       ({{ option_value.price_prefix }}{{ option_value.price }})
@@ -966,8 +970,7 @@
                             </div>
                             <div class="input-group-text">
                               <div class="form-check form-switch">
-                                <input type="checkbox" name="override[variant][{{ option.product_option_id }}]" value="1" id="input-variant-option-{{ option.product_option_id }}" data-oc-toggle="switch" data-oc-target="#input-option-{{ option.product_option_id }}" class="form-check-input"{% if override.variant[option.product_option_id] %} checked{% endif %}/>
-                                <label for="input-variant-option-{{ option.product_option_id }}" class="form-check-label"></label>
+                                <input type="checkbox" name="override[variant][{{ option.product_option_id }}]" value="1" id="input-variant-option-{{ option.product_option_id }}" data-oc-toggle="switch" data-oc-target="#input-option-{{ option.product_option_id }}" class="form-check-input"{% if override.variant[option.product_option_id] %} checked{% endif %}/> <label for="input-variant-option-{{ option.product_option_id }}" class="form-check-label"></label>
                               </div>
                             </div>
                           </div>
@@ -984,8 +987,7 @@
                             <input type="text" name="variant[{{ option.product_option_id }}]" value="{{ variant[option.product_option_id] ? variant[option.product_option_id] : option.value }}" placeholder="{{ option.name }}" id="input-option-{{ option.product_option_id }}" class="form-control"/>
                             <div class="input-group-text">
                               <div class="form-check form-switch">
-                                <input type="checkbox" name="override[variant][{{ option.product_option_id }}]" value="1" id="input-variant-option-{{ option.product_option_id }}" data-oc-toggle="switch" data-oc-target="#input-option-{{ option.product_option_id }}" class="form-check-input"{% if override.variant[option.product_option_id] %} checked{% endif %}/>
-                                <label for="input-variant-option-{{ option.product_option_id }}" class="form-check-label"></label>
+                                <input type="checkbox" name="override[variant][{{ option.product_option_id }}]" value="1" id="input-variant-option-{{ option.product_option_id }}" data-oc-toggle="switch" data-oc-target="#input-option-{{ option.product_option_id }}" class="form-check-input"{% if override.variant[option.product_option_id] %} checked{% endif %}/> <label for="input-variant-option-{{ option.product_option_id }}" class="form-check-label"></label>
                               </div>
                             </div>
                           </div>
@@ -1002,8 +1004,7 @@
                             <textarea name="variant[{{ option.product_option_id }}]" rows="5" placeholder="{{ option.name }}" id="input-option-{{ option.product_option_id }}" class="form-control">{{ variant[option.product_option_id] ? variant[option.product_option_id] : option.value }}</textarea>
                             <div class="input-group-text">
                               <div class="form-check form-switch">
-                                <input type="checkbox" name="override[variant][{{ option.product_option_id }}]" value="1" id="input-variant-option-{{ option.product_option_id }}" data-oc-toggle="switch" data-oc-target="#input-option-{{ option.product_option_id }}" class="form-check-input"{% if override.variant[option.product_option_id] %} checked{% endif %}/>
-                                <label for="input-variant-option-{{ option.product_option_id }}" class="form-check-label"></label>
+                                <input type="checkbox" name="override[variant][{{ option.product_option_id }}]" value="1" id="input-variant-option-{{ option.product_option_id }}" data-oc-toggle="switch" data-oc-target="#input-option-{{ option.product_option_id }}" class="form-check-input"{% if override.variant[option.product_option_id] %} checked{% endif %}/> <label for="input-variant-option-{{ option.product_option_id }}" class="form-check-label"></label>
                               </div>
                             </div>
                           </div>
@@ -1023,8 +1024,7 @@
                             <button type="button" data-oc-toggle="clear" data-bs-toggle="tooltip" title="{{ button_clear }}" data-oc-target="#input-option-{{ option.product_option_id }}"{% if not variant[option.product_option_id] %} disabled{% endif %} class="btn btn-outline-danger"><i class="fas fa-eraser"></i></button>
                             <div class="input-group-text">
                               <div class="form-check form-switch">
-                                <input type="checkbox" name="override[variant][{{ option.product_option_id }}]" value="1" id="input-variant-option-{{ option.product_option_id }}" data-oc-toggle="switch" data-oc-target="#button-upload-{{ option.product_option_id }}" class="form-check-input"{% if override.variant[option.product_option_id] %} checked{% endif %}/>
-                                <label for="input-variant-option-{{ option.product_option_id }}" class="form-check-label"></label>
+                                <input type="checkbox" name="override[variant][{{ option.product_option_id }}]" value="1" id="input-variant-option-{{ option.product_option_id }}" data-oc-toggle="switch" data-oc-target="#button-upload-{{ option.product_option_id }}" class="form-check-input"{% if override.variant[option.product_option_id] %} checked{% endif %}/> <label for="input-variant-option-{{ option.product_option_id }}" class="form-check-label"></label>
                               </div>
                             </div>
                           </div>
@@ -1494,7 +1494,7 @@ $('#input-category').autocomplete({
         html += '  <td class="text-end"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>';
         html += '</tr>';
 
-        $('#product-category').append(html);
+        $('#product-category tbody').append(html);
     }
 });
 
@@ -1528,7 +1528,7 @@ $('#input-filter').autocomplete({
         html += '  <td class="text-end"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>';
         html += '</tr>';
 
-        $('#product-filter').append(html);
+        $('#product-filter tbody').append(html);
     }
 });
 
@@ -1562,7 +1562,7 @@ $('#input-download').autocomplete({
         html += '  <td class="text-end"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>';
         html += '</tr>';
 
-        $('#product-download').append(html);
+        $('#product-download tbody').append(html);
     }
 });
 
@@ -1596,7 +1596,7 @@ $('#input-related').autocomplete({
         html += '  <td class="text-end"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>';
         html += '</tr>';
 
-        $('#product-related').append(html);
+        $('#product-related tbody').append(html);
     }
 });
 
@@ -1959,7 +1959,7 @@ $('#button-discount').on('click', function () {
     html += '  <td class="text-end"><button type="button" onclick="$(\'#discount-row-' + discount_row + '\').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
     html += '</tr>';
 
-    $('#product-discount').append(html);
+    $('#product-discount tbody').append(html);
 
     discount_row++;
 });
@@ -1980,7 +1980,7 @@ $('#button-special').on('click', function () {
     html += '  <td class="text-end"><button type="button" onclick="$(\'#special-row-' + special_row + '\').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
     html += '</tr>';
 
-    $('#product-special').append(html);
+    $('#product-special tbody').append(html);
 
     special_row++;
 });
@@ -2000,7 +2000,7 @@ $('#button-image').on('click', function () {
     html += '  <td class="text-end"><button type="button" onclick="$(\'#product-image-row-' + image_row + '\').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
     html += '</tr>';
 
-    $('#product-image').append(html);
+    $('#product-image tbody').append(html);
 
     image_row++;
 });
@@ -2022,7 +2022,7 @@ $('#button-subscription').on('click', function () {
     html += '  <td class="text-end"><button type="button" onclick="$(\'#subscription-row-' + subscription_row + '\').remove()" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
     html += '</tr>';
 
-    $('#product-subscription').append(html);
+    $('#product-subscription tbody').append(html);
 
     subscription_row++;
 });
@@ -2101,7 +2101,7 @@ $('input[data-oc-toggle=\'switch\']').on('change', function (e) {
 $('input[data-oc-toggle=\'switch\']').trigger('change');
 {% endif %}
 
-$('#report').on('click', '.pagination a', function(e) {
+$('#report').on('click', '.pagination a', function (e) {
     e.preventDefault();
 
     $('#report').load(this.href);

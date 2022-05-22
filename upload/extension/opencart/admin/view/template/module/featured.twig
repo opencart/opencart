@@ -32,12 +32,14 @@
               <datalist id="list-product"></datalist>
               <div class="form-control p-0" style="height: 150px; overflow: auto;">
                 <table id="featured-product" class="table table-sm m-0">
-                  {% for product in products %}
-                    <tr id="featured-product-{{ product.product_id }}">
-                      <td>{{ product.name }}<input type="hidden" name="product[]" value="{{ product.product_id }}"/></td>
-                      <td class="text-end"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>
-                    </tr>
-                  {% endfor %}
+                  <tbody>
+                    {% for product in products %}
+                      <tr id="featured-product-{{ product.product_id }}">
+                        <td>{{ product.name }}<input type="hidden" name="product[]" value="{{ product.product_id }}"/></td>
+                        <td class="text-end"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>
+                      </tr>
+                    {% endfor %}
+                  </tbody>
                 </table>
               </div>
               <div class="form-text text-muted">{{ help_product }}</div>
@@ -101,12 +103,12 @@ $('#input-product').autocomplete({
 
         $('#featured-product-' + item['value']).remove();
 
-        html = '<tr id="featured-product-' + item['value'] + '">';
+        html  = '<tr id="featured-product-' + item['value'] + '">';
         html += '  <td>' + item['label'] + '<input type="hidden" name="product[]" value="' + item['value'] + '"/></td>';
         html += '  <td class="text-end"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle"></i></button></td>';
         html += '</tr>';
 
-        $('#featured-product').append(html);
+        $('#featured-product tbody').append(html);
     }
 });
 

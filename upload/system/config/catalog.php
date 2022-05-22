@@ -22,7 +22,6 @@ $_['action_pre_action']  = [
 	'startup/language',
 	'startup/seo_url',
 	'startup/customer',
-	'startup/language',
 	'startup/currency',
 	'startup/tax',
 	'startup/application',

@@ -245,7 +245,7 @@ class Product extends \Opencart\System\Engine\Model {
 			$this->cache->set('product.latest.' . (int)$this->config->get('config_language_id') . '.' . (int)$this->config->get('config_store_id') . '.' . $this->config->get('config_customer_group_id') . '.' . (int)$limit, $product_data);
 		}
 
-		return $product_data;
+		return (array)$product_data;
 	}
 
 	public function getPopular(int $limit): array {

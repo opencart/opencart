@@ -78,43 +78,6 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 			// Country
 			$this->db->query("UPDATE `" . DB_PREFIX . "country` SET `address_format_id` = '1' WHERE `address_format_id` = '0'");
 
-			// order_recurring
-			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "order_recurring' AND COLUMN_NAME = 'created'");
-
-			if ($query->num_rows) {
-				$this->db->query("UPDATE `" . DB_PREFIX . "order_recurring` SET `date_added` = `created` WHERE `date_added` IS NULL or `date_added` = ''");
-			}
-
-			// order_recurring
-			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "order_recurring' AND COLUMN_NAME = 'profile_id'");
-
-			if ($query->num_rows) {
-				$this->db->query("UPDATE `" . DB_PREFIX . "order_recurring` SET `recurring_id` = `profile_id` WHERE `recurring_id` IS NULL OR `recurring_id` = ''");
-			}
-
-			// order_recurring
-			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "order_recurring' AND COLUMN_NAME = 'profile_name'");
-
-			if ($query->num_rows) {
-				$this->db->query("UPDATE `" . DB_PREFIX . "order_recurring` SET `recurring_name` = `profile_name` WHERE `recurring_name` IS NULL or `recurring_name` = ''");
-			}
-
-			// order_recurring
-			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "order_recurring' AND COLUMN_NAME = 'profile_description'");
-
-			if ($query->num_rows) {
-				$this->db->query("UPDATE `" . DB_PREFIX . "order_recurring` SET `recurring_description` = `profile_description` WHERE `recurring_description` IS NULL OR `recurring_description` = ''");
-
-			}
-
-			// order_recurring_transaction
-			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "order_recurring_transaction' AND COLUMN_NAME = 'created'");
-
-			if ($query->num_rows) {
-				$this->db->query("UPDATE `" . DB_PREFIX . "order_recurring_transaction` SET `date_added` = `created` WHERE `date_added` IS NULL or `date_added` = ''");
-
-			}
-
 			// Api
 			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "api' AND COLUMN_NAME = 'name'");
 
@@ -176,33 +139,8 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 			];
 
 			$remove[] = [
-				'table' => 'order_recurring',
-				'field' => 'profile_name'
-			];
-
-			$remove[] = [
 				'table' => 'order',
 				'field' => 'fax'
-			];
-
-			$remove[] = [
-				'table' => 'order_recurring',
-				'field' => 'profile_description'
-			];
-
-			$remove[] = [
-				'table' => 'order_recurring',
-				'field' => 'profile_id'
-			];
-
-			$remove[] = [
-				'table' => 'order_recurring',
-				'field' => 'created'
-			];
-
-			$remove[] = [
-				'table' => 'order_recurring_transaction',
-				'field' => 'created'
 			];
 
 			$remove[] = [

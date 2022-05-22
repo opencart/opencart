@@ -6,7 +6,6 @@ $_['heading_title']                        = 'Subscriptions';
 $_['text_account']                         = 'Account';
 $_['text_recurring']                       = 'Recurring Payment Information';
 $_['text_recurring_detail']                = 'Recurring Payment Details';
-$_['text_order_recurring_id']              = 'Recurring ID:';
 $_['text_date_added']                      = 'Date Added:';
 $_['text_status']                          = 'Status:';
 $_['text_payment_method']                  = 'Payment Method:';

@@ -127,6 +127,15 @@ var datetimepicker = function () {
 $(document).ready(datetimepicker);
 $(document).on('click', 'button', datetimepicker);
 
+// Alert Fade
+$(document).ready(function () {
+    window.setTimeout(function() {
+        $('.alert-dismissible').fadeTo(1000, 0).slideUp(1000, function(){
+            $(this).remove();
+        });
+    }, 5000);
+});
+
 // Forms
 $(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function (e) {
     e.preventDefault();
@@ -355,14 +364,6 @@ $(document).on('click', '[data-oc-toggle=\'image\']', function (e) {
             modal.show();
         }
     });
-});
-
-$(document).ready(function () {
-    window.setTimeout(function() {
-        $('.alert-dismissible').fadeTo(1000, 0).slideUp(1000, function(){
-            $(this).remove();
-        });
-    }, 5000);
 });
 
 // Chain ajax calls.

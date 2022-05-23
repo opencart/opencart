@@ -359,7 +359,7 @@ $(document).on('click', '[data-oc-toggle=\'image\']', function (e) {
 
 $(document).ready(function () {
     window.setTimeout(function() {
-        $('.alert-dismissible').fadeTo(1000, 0, function() {
+        $('.alert-dismissible').fadeTo(1000, 0).slideUp(1000, function(){
             $(this).remove();
         });
     }, 5000);

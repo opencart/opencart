@@ -237,12 +237,10 @@
                 </div>
               </div>
               <div class="row mb-3">
-                <label class="col-sm-2 col-form-label">{{ entry_currency_auto }}</label>
+                <label for="input-currency-auto" class="col-sm-2 col-form-label">{{ entry_currency_auto }}</label>
                 <div class="col-sm-10">
-                  <div class="btn-group">
-                    <div class="btn-group">
-                      <input type="radio" name="config_currency_auto" value="1" id="input-currency-auto-yes" class="btn-check"{% if config_currency_auto %} checked{% endif %}/> <label for="input-currency-auto-yes" class="btn btn-outline-secondary">{{ text_yes }}</label> <input type="radio" name="config_currency_auto" value="0" id="input-currency-auto-no" class="btn-check"{% if not config_currency_auto %} checked{% endif %}/> <label for="input-currency-auto-no" class="btn btn-outline-secondary">{{ text_no }}</label>
-                    </div>
+                  <div class="form-check form-switch">
+                    <input type="checkbox" name="config_currency_auto" value="1" id="input-currency-auto" class="form-check-input"{% if config_currency_auto %} checked{% endif %}/>
                   </div>
                   <div class="form-text">{{ help_currency_auto }}</div>
                 </div>
@@ -298,12 +296,13 @@
                       <div class="row mb-3">
                         <label class="col-sm-2 col-form-label">{{ entry_product_count }}</label>
                         <div class="col-sm-10">
-                          <div class="btn-group">
-                            <input type="radio" name="config_product_count" value="1" id="input-product-count-yes" class="btn-check"{% if config_product_count %} checked{% endif %}/> <label for="input-product-count-yes" class="btn btn-outline-secondary">{{ text_yes }}</label> <input type="radio" name="config_product_count" value="0" id="input-product-count-no" class="btn-check"{% if not config_product_count %} checked{% endif %}/> <label for="input-product-count-no" class="btn btn-outline-secondary">{{ text_no }}</label>
+                          <div class="form-check form-switch">
+                            <input type="checkbox" name="config_product_count" value="1" id="input-product-count" class="form-check-input"{% if config_product_count %} checked{% endif %}/>
                           </div>
                           <div class="form-text">{{ help_product_count }}</div>
                         </div>
                       </div>
+
                       <div class="row mb-3 required">
                         <label for="input-pagination-admin" class="col-sm-2 col-form-label">{{ entry_pagination_admin }}</label>
                         <div class="col-sm-10">
@@ -314,15 +313,14 @@
                       </div>
 
                       <div class="row mb-3 required">
-                        <label class="col-sm-2 col-form-label">{{ entry_product_report }}</label>
+                        <label for="input-product-report" class="col-sm-2 col-form-label">{{ entry_product_report }}</label>
                         <div class="col-sm-10">
-                          <div class="btn-group">
-                            <input type="radio" name="config_product_report_status" value="1" id="input-product-report-yes" class="btn-check"{% if config_product_report_status %} checked{% endif %}/> <label for="input-product-report-yes" class="btn btn-outline-secondary">{{ text_yes }}</label> <input type="radio" name="config_product_report_status" value="0" id="input-product-report-no" class="btn-check"{% if not config_product_report_status %} checked{% endif %}/> <label for="input-product-report-no" class="btn btn-outline-secondary">{{ text_no }}</label>
+                          <div class="form-check form-switch">
+                            <input type="checkbox" name="config_product_report_status" value="1" id="input-product-report" class="form-check-input"{% if config_product_report_status %} checked{% endif %}/>
                           </div>
                           <div class="form-text">{{ help_product_report }}</div>
                         </div>
                       </div>
-
                     </div>
                   </div>
                 </div>
@@ -334,8 +332,8 @@
                       <div class="row mt-2 mb-3">
                         <label class="col-sm-2 col-form-label">{{ entry_review_status }}</label>
                         <div class="col-sm-10">
-                          <div class="btn-group">
-                            <input type="radio" name="config_review_status" value="1" id="input-review-status-yes" class="btn-check"{% if config_review_status %} checked{% endif %}/> <label for="input-review-status-yes" class="btn btn-outline-secondary">{{ text_yes }}</label> <input type="radio" name="config_review_status" value="0" id="input-review-status-no" class="btn-check"{% if not config_review_status %} checked{% endif %}/> <label for="input-review-status-no" class="btn btn-outline-secondary">{{ text_no }}</label>
+                          <div class="form-check form-switch">
+                            <input type="checkbox" name="config_review_status" value="1" id="input-review-status" class="form-check-input"{% if config_review_status %} checked{% endif %}/>
                           </div>
                           <div class="form-text">{{ help_review }}</div>
                         </div>
@@ -343,8 +341,8 @@
                       <div class="row mb-3">
                         <label class="col-sm-2 col-form-label">{{ entry_review_guest }}</label>
                         <div class="col-sm-10">
-                          <div class="btn-group">
-                            <input type="radio" name="config_review_guest" value="1" id="input-review-guest-yes" class="btn-check"{% if config_review_guest %} checked{% endif %}/> <label for="input-review-guest-yes" class="btn btn-outline-secondary">{{ text_yes }}</label> <input type="radio" name="config_review_guest" value="0" id="input-review-guest-no" class="btn-check"{% if not config_review_guest %} checked{% endif %}/> <label for="input-review-guest-no" class="btn btn-outline-secondary">{{ text_no }}</label>
+                          <div class="form-check form-switch">
+                            <input type="checkbox" name="config_review_guest" value="1" id="input-review-guest" class="form-check-input"{% if config_review_guest %} checked{% endif %}/>
                           </div>
                           <div class="form-text">{{ help_review_guest }}</div>
                         </div>
@@ -357,7 +355,6 @@
                   <h2 class="accordion-header"><button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapse-voucher">{{ text_voucher }}</button></h2>
                   <div id="collapse-voucher" class="accordion-collapse collapse" data-bs-parent="#accordion-option">
                     <div class="accordion-body">
-
                       <div class="row mt-2 mb-3 required">
                         <label for="input-voucher-min" class="col-sm-2 col-form-label">{{ entry_voucher_min }}</label>
                         <div class="col-sm-10">
@@ -366,7 +363,6 @@
                           <div id="error-voucher-min" class="invalid-feedback"></div>
                         </div>
                       </div>
-
                       <div class="row mb-3 required">
                         <label for="input-voucher-max" class="col-sm-2 col-form-label">{{ entry_voucher_max }}</label>
                         <div class="col-sm-10">
@@ -375,7 +371,6 @@
                           <div id="error-voucher-max" class="invalid-feedback"></div>
                         </div>
                       </div>
-
                     </div>
                   </div>
                 </div>
@@ -423,12 +418,11 @@
                   <h2 class="accordion-header"><button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapse-tax">{{ text_tax }}</button></h2>
                   <div id="collapse-tax" class="accordion-collapse collapse" data-bs-parent="#accordion-option">
                     <div class="accordion-body">
-
                       <div class="row mt-2 mb-3">
                         <label class="col-sm-2 col-form-label">{{ entry_tax }}</label>
                         <div class="col-sm-10">
-                          <div class="btn-group">
-                            <input type="radio" name="config_tax" value="1" id="input-tax-yes" class="btn-check"{% if config_tax %} checked{% endif %}/> <label for="input-tax-yes" class="btn btn-outline-secondary">{{ text_yes }}</label> <input type="radio" name="config_tax" value="0" id="input-tax-no" class="btn-check"{% if not config_tax %} checked{% endif %}/> <label for="input-tax-no" class="btn btn-outline-secondary">{{ text_no }}</label>
+                          <div class="form-check form-switch">
+                            <input type="checkbox" name="config_tax" value="1" id="input-tax" class="form-check-input"{% if config_tax %} checked{% endif %}/>
                           </div>
                         </div>
                       </div>
@@ -468,8 +462,8 @@
                       <div class="row mt-2 mb-3">
                         <label class="col-sm-2 col-form-label">{{ entry_customer_online }}</label>
                         <div class="col-sm-10">
-                          <div class="btn-group">
-                            <input type="radio" name="config_customer_online" value="1" id="input-customer-online-yes" class="btn-check"{% if config_customer_online %} checked{% endif %}/> <label for="input-customer-online-yes" class="btn btn-outline-secondary">{{ text_yes }}</label> <input type="radio" name="config_customer_online" value="0" id="input-customer-online-no" class="btn-check"{% if not config_customer_online %} checked{% endif %}/> <label for="input-customer-online-no" class="btn btn-outline-secondary">{{ text_no }}</label>
+                          <div class="form-check form-switch">
+                            <input type="checkbox" name="config_customer_online" value="1" id="input-customer-online" class="form-check-input"{% if config_customer_online %} checked{% endif %}/>
                           </div>
                           <div class="form-text">{{ help_customer_online }}</div>
                         </div>
@@ -487,8 +481,8 @@
                       <div class="row mb-3">
                         <label class="col-sm-2 col-form-label">{{ entry_customer_activity }}</label>
                         <div class="col-sm-10">
-                          <div class="btn-group">
-                            <input type="radio" name="config_customer_activity" value="1" id="input-customer-activity-yes" class="btn-check"{% if config_customer_activity %} checked{% endif %}/> <label for="input-customer-activity-yes" class="btn btn-outline-secondary">{{ text_yes }}</label> <input type="radio" name="config_customer_activity" value="0" id="input-customer-activity-no" class="btn-check"{% if not config_customer_activity %} checked{% endif %}/> <label for="input-customer-activity-no" class="btn btn-outline-secondary">{{ text_no }}</label>
+                          <div class="form-check form-switch">
+                            <input type="checkbox" name="config_customer_activity" value="1" id="input-customer-activity" class="form-check-input"{% if config_customer_activity %} checked{% endif %}/>
                           </div>
                           <div class="form-text">{{ help_customer_activity }}</div>
                         </div>
@@ -496,8 +490,8 @@
                       <div class="row mb-3">
                         <label class="col-sm-2 col-form-label">{{ entry_customer_search }}</label>
                         <div class="col-sm-10">
-                          <div class="btn-group">
-                            <input type="radio" name="config_customer_search" value="1" id="input-customer-search-yes" class="btn-check"{% if config_customer_search %} checked{% endif %}/> <label for="input-customer-search-yes" class="btn btn-outline-secondary">{{ text_yes }}</label> <input type="radio" name="config_customer_search" value="0" id="input-customer-search-no" class="btn-check"{% if not config_customer_search %} checked{% endif %}/> <label for="input-customer-search-no" class="btn btn-outline-secondary">{{ text_no }}</label>
+                          <div class="form-check form-switch">
+                            <input type="checkbox" name="config_customer_search" value="1" id="input-customer-search" class="form-check-input"{% if config_customer_search %} checked{% endif %}/>
                           </div>
                         </div>
                       </div>
@@ -526,55 +520,31 @@
                           <div id="error-customer-group-display" class="invalid-feedback"></div>
                         </div>
                       </div>
-
-
-
                       <div class="row mb-3">
                         <label class="col-sm-2 col-form-label">{{ entry_customer_price }}</label>
                         <div class="col-sm-10">
-                          <div class="btn-group">
-                            <input type="radio" name="config_customer_price" value="1" id="input-customer-price-yes" class="btn-check"{% if config_customer_price %} checked{% endif %}/>
-                            <label for="input-customer-price-yes" class="btn btn-outline-secondary">{{ text_yes }}</label>
-
-                            <input type="radio" name="config_customer_price" value="0" id="input-customer-price-no" class="btn-check"{% if not config_customer_price %} checked{% endif %}/>
-                            <label for="input-customer-price-no" class="btn btn-outline-secondary">{{ text_no }}</label>
+                          <div class="form-check form-switch">
+                            <input type="checkbox" name="config_customer_price" value="1" id="input-customer-price" class="form-check-input"{% if config_customer_price %} checked{% endif %}/>
                           </div>
                           <div class="form-text">{{ help_customer_price }}</div>
                         </div>
                       </div>
-
-
                       <div class="row mb-3">
                         <label class="col-sm-2 col-form-label">{{ entry_telephone_display }}</label>
                         <div class="col-sm-10">
-                          <div class="btn-group">
-
-                            <input type="radio" name="config_telephone_display" value="1" id="input-telephone-display-yes" class="btn-check"{% if config_telephone_display %} checked{% endif %}/>
-                            <label for="input-telephone-display-yes" class="btn btn-outline-secondary">{{ text_yes }}</label>
-
-                            <input type="radio" name="config_telephone_display" value="0" id="input-telephone-display-no" class="btn-check"{% if not config_telephone_display %} checked{% endif %}/>
-                            <label for="input-telephone-display-no" class="btn btn-outline-secondary">{{ text_no }}</label>
-
+                          <div class="form-check form-switch">
+                            <input type="checkbox" name="config_telephone_display" value="1" id="input-telephone-display" class="form-check-input"{% if config_telephone_display %} checked{% endif %}/>
                           </div>
                         </div>
                       </div>
-
-
                       <div class="row mb-3">
                         <label class="col-sm-2 col-form-label">{{ entry_telephone_required }}</label>
                         <div class="col-sm-10">
-                          <div class="btn-group">
-                            <input type="radio" name="config_telephone_required" value="1" id="input-telephone-required-yes" class="btn-check"{% if config_telephone_required %} checked{% endif %}/>
-                            <label for="input-telephone-required-yes" class="btn btn-outline-secondary">{{ text_yes }}</label>
-                            <input type="radio" name="config_telephone_required" value="0" id="input-telephone-required-no" class="btn-check"{% if not config_telephone_required %} checked{% endif %}/>
-                            <label for="input-telephone-required-no" class="btn btn-outline-secondary">{{ text_no }}</label>
+                          <div class="form-check form-switch">
+                            <input type="checkbox" name="config_telephone_required" value="1" id="input-telephone-required" class="form-check-input"{% if config_telephone_required %} checked{% endif %}/>
                           </div>
                         </div>
                       </div>
-
-
-
-
                       <div class="row mb-3">
                         <label for="input-login-attempts" class="col-sm-2 col-form-label">{{ entry_login_attempts }}</label>
                         <div class="col-sm-10">
@@ -583,7 +553,6 @@
                           <div id="error-login-attempts" class="invalid-feedback"></div>
                         </div>
                       </div>
-
                       <div class="row mb-3">
                         <label for="input-account" class="col-sm-2 col-form-label">{{ entry_account }}</label>
                         <div class="col-sm-10">
@@ -617,8 +586,8 @@
                       <div class="row mb-3">
                         <label class="col-sm-2 col-form-label">{{ entry_cart_weight }}</label>
                         <div class="col-sm-10">
-                          <div class="btn-group">
-                            <input type="radio" name="config_cart_weight" value="1" id="input-cart-weight-yes" class="btn-check"{% if config_cart_weight %} checked{% endif %}/> <label for="input-cart-weight-yes" class="btn btn-outline-secondary">{{ text_yes }}</label> <input type="radio" name="config_cart_weight" value="0" id="input-cart-weight-no" class="btn-check"{% if not config_cart_weight %} checked{% endif %}/> <label for="input-cart-weight-no" class="btn btn-outline-secondary">{{ text_no }}</label>
+                          <div class="form-check form-switch">
+                            <input type="checkbox" name="config_cart_weight" value="1" id="input-cart-weight" class="form-check-input"{% if config_cart_weight %} checked{% endif %}/>
                           </div>
                           <div class="form-text">{{ help_cart_weight }}</div>
                         </div>
@@ -626,8 +595,8 @@
                       <div class="row mb-3">
                         <label class="col-sm-2 col-form-label">{{ entry_checkout_guest }}</label>
                         <div class="col-sm-10">
-                          <div class="btn-group">
-                            <input type="radio" name="config_checkout_guest" value="1" id="input-checkout-guest-yes" class="btn-check"{% if config_checkout_guest %} checked{% endif %}/> <label for="input-checkout-guest-yes" class="btn btn-outline-secondary">{{ text_yes }}</label> <input type="radio" name="config_checkout_guest" value="0" id="input-checkout-guest-no" class="btn-check"{% if not config_checkout_guest %} checked{% endif %}/> <label for="input-checkout-guest-no" class="btn btn-outline-secondary">{{ text_no }}</label>
+                          <div class="form-check form-switch">
+                            <input type="checkbox" name="config_checkout_guest" value="1" id="input-checkout-guest" class="form-check-input"{% if config_checkout_guest %} checked{% endif %}/>
                           </div>
                           <div class="form-text">{{ help_checkout_guest }}</div>
                         </div>
@@ -635,8 +604,8 @@
                       <div class="row mb-3">
                         <label class="col-sm-2 col-form-label">{{ entry_checkout_address }}</label>
                         <div class="col-sm-10">
-                          <div class="btn-group">
-                            <input type="radio" name="config_checkout_address" value="1" id="input-checkout-address-yes" class="btn-check"{% if config_checkout_address %} checked{% endif %}/> <label for="input-checkout-address-yes" class="btn btn-outline-secondary">{{ text_yes }}</label> <input type="radio" name="config_checkout_address" value="0" id="input-checkout-address-no" class="btn-check"{% if not config_checkout_address %} checked{% endif %}/> <label for="input-checkout-address-no" class="btn btn-outline-secondary">{{ text_no }}</label>
+                          <div class="form-check form-switch">
+                            <input type="checkbox" name="config_checkout_address" value="1" id="input-checkout-address" class="form-check-input"{% if config_checkout_address %} checked{% endif %}/>
                           </div>
                           <div class="form-text">{{ help_checkout_address }}</div>
                         </div>
@@ -794,8 +763,8 @@
                       <div class="row mt-2 mb-3">
                         <label class="col-sm-2 col-form-label">{{ entry_stock_display }}</label>
                         <div class="col-sm-10">
-                          <div class="btn-group">
-                            <input type="radio" name="config_stock_display" value="1" id="input-stock-display-yes" class="btn-check"{% if config_stock_display %} checked{% endif %}/> <label for="input-stock-display-yes" class="btn btn-outline-secondary">{{ text_yes }}</label> <input type="radio" name="config_stock_display" value="0" id="input-stock-display-no" class="btn-check"{% if not config_stock_display %} checked{% endif %}/> <label for="input-stock-display-no" class="btn btn-outline-secondary">{{ text_no }}</label>
+                          <div class="form-check form-switch">
+                            <input type="checkbox" name="config_stock_display" value="1" id="input-stock-display" class="form-check-input"{% if config_stock_display %} checked{% endif %}/>
                           </div>
                           <div class="form-text">{{ help_stock_display }}</div>
                         </div>
@@ -803,8 +772,8 @@
                       <div class="row mb-3">
                         <label class="col-sm-2 col-form-label">{{ entry_stock_warning }}</label>
                         <div class="col-sm-10">
-                          <div class="btn-group">
-                            <input type="radio" name="config_stock_warning" value="1" id="input-stock-warning-yes" class="btn-check"{% if config_stock_warning %} checked{% endif %}/> <label for="input-stock-warning-yes" class="btn btn-outline-secondary">{{ text_yes }}</label> <input type="radio" name="config_stock_warning" value="0" id="input-stock-warning-no" class="btn-check"{% if not config_stock_warning %} checked{% endif %}/> <label for="input-stock-warning-no" class="btn btn-outline-secondary">{{ text_no }}</label>
+                          <div class="form-check form-switch">
+                            <input type="checkbox" name="config_stock_warning" value="1" id="input-stock-warning" class="form-check-input"{% if config_stock_warning %} checked{% endif %}/>
                           </div>
                           <div class="form-text">{{ help_stock_warning }}</div>
                         </div>
@@ -812,8 +781,8 @@
                       <div class="row mb-3">
                         <label class="col-sm-2 col-form-label">{{ entry_stock_checkout }}</label>
                         <div class="col-sm-10">
-                          <div class="btn-group">
-                            <input type="radio" name="config_stock_checkout" value="1" id="input-stock-checkout-yes" class="btn-check"{% if config_stock_checkout %} checked{% endif %}/> <label for="input-stock-checkout-yes" class="btn btn-outline-secondary">{{ text_yes }}</label> <input type="radio" name="config_stock_checkout" value="0" id="input-stock-checkout-no" class="btn-check"{% if not config_stock_checkout %} checked{% endif %}/> <label for="input-stock-checkout-no" class="btn btn-outline-secondary">{{ text_no }}</label>
+                          <div class="form-check form-switch">
+                            <input type="checkbox" name="config_stock_checkout" value="1" id="input-stock-checkout" class="form-check-input"{% if config_stock_checkout %} checked{% endif %}/>
                           </div>
                           <div class="form-text">{{ help_stock_checkout }}</div>
                         </div>
@@ -828,8 +797,8 @@
                       <div class="row mt-2 mb-3">
                         <label class="col-sm-2 col-form-label">{{ entry_affiliate_status }}</label>
                         <div class="col-sm-10">
-                          <div class="btn-group">
-                            <input type="radio" name="config_affiliate_status" value="1" id="input-affiliate-status-yes" class="btn-check"{% if config_affiliate_status %} checked{% endif %}/> <label for="input-affiliate-status-yes" class="btn btn-outline-secondary">{{ text_yes }}</label> <input type="radio" name="config_affiliate_status" value="0" id="input-affiliate-status-no" class="btn-check"{% if not config_affiliate_status %} checked{% endif %}/> <label for="input-affiliate-status-no" class="btn btn-outline-secondary">{{ text_no }}</label>
+                          <div class="form-check form-switch">
+                            <input type="checkbox" name="config_affiliate_status" value="1" id="input-affiliate-status" class="form-check-input"{% if config_affiliate_status %} checked{% endif %}/>
                           </div>
                           <div class="form-text">{{ help_affiliate_status }}</div>
                         </div>
@@ -847,8 +816,8 @@
                       <div class="row mb-3">
                         <label class="col-sm-2 col-form-label">{{ entry_affiliate_approval }}</label>
                         <div class="col-sm-10">
-                          <div class="btn-group">
-                            <input type="radio" name="config_affiliate_approval" value="1" id="input-affiliate-approval-yes" class="btn-check"{% if config_affiliate_approval %} checked{% endif %}/> <label for="input-affiliate-approval-yes" class="btn btn-outline-secondary">{{ text_yes }}</label> <input type="radio" name="config_affiliate_approval" value="0" id="input-affiliate-approval-no" class="btn-check"{% if not config_affiliate_approval %} checked{% endif %}/> <label for="input-affiliate-approval-no" class="btn btn-outline-secondary">{{ text_no }}</label>
+                          <div class="form-check form-switch">
+                            <input type="checkbox" name="config_affiliate_approval" value="1" id="input-affiliate-approval" class="form-check-input"{% if config_affiliate_approval %} checked{% endif %}/>
                           </div>
                           <div class="form-text">{{ help_affiliate_approval }}</div>
                         </div>
@@ -856,8 +825,8 @@
                       <div class="row mb-3">
                         <label class="col-sm-2 col-form-label">{{ entry_affiliate_auto }}</label>
                         <div class="col-sm-10">
-                          <div class="btn-group">
-                            <input type="radio" name="config_affiliate_auto" value="1" id="input-affiliate-auto-yes" class="btn-check"{% if config_affiliate_auto %} checked{% endif %}/> <label for="input-affiliate-auto-yes" class="btn btn-outline-secondary">{{ text_yes }}</label> <input type="radio" name="config_affiliate_auto" value="0" id="input-affiliate-auto-no" class="btn-check"{% if not config_affiliate_auto %} checked{% endif %}/> <label for="input-affiliate-auto-no" class="btn btn-outline-secondary">{{ text_no }}</label>
+                          <div class="form-check form-switch">
+                            <input type="checkbox" name="config_affiliate_auto" value="1" id="input-affiliate-auto" class="form-check-input"{% if config_affiliate_auto %} checked{% endif %}/>
                           </div>
                           <div class="form-text">{{ help_affiliate_auto }}</div>
                         </div>
@@ -1201,8 +1170,8 @@
                 <div class="row mb-3">
                   <label class="col-sm-2 col-form-label">{{ entry_maintenance }}</label>
                   <div class="col-sm-10">
-                    <div class="btn-group">
-                      <input type="radio" name="config_maintenance" value="1" id="input-maintenance-yes" class="btn-check"{% if config_maintenance %} checked{% endif %}/> <label for="input-maintenance-yes" class="btn btn-outline-secondary">{{ text_yes }}</label> <input type="radio" name="config_maintenance" value="0" id="input-maintenance-no" class="btn-check"{% if not config_maintenance %} checked{% endif %}/> <label for="input-maintenance-no" class="btn btn-outline-secondary">{{ text_no }}</label>
+                    <div class="form-check form-switch">
+                      <input type="checkbox" name="config_maintenance" value="1" id="input-maintenance" class="form-check-input"{% if config_maintenance %} checked{% endif %}/>
                     </div>
                     <div class="form-text">{{ help_maintenance }}</div>
                   </div>
@@ -1217,8 +1186,8 @@
                 <div class="row mb-3">
                   <label class="col-sm-2 col-form-label">{{ entry_seo_url }}</label>
                   <div class="col-sm-10">
-                    <div class="btn-group">
-                      <input type="radio" name="config_seo_url" value="1" id="input-seo-url-yes" class="btn-check"{% if config_seo_url %} checked{% endif %}/> <label for="input-seo-url-yes" class="btn btn-outline-secondary">{{ text_yes }}</label> <input type="radio" name="config_seo_url" value="0" id="input-seo-url-no" class="btn-check"{% if not config_seo_url %} checked{% endif %}/> <label for="input-seo-url-no" class="btn btn-outline-secondary">{{ text_no }}</label>
+                    <div class="form-check form-switch">
+                      <input type="checkbox" name="config_seo_url" value="1" id="input-seo-url" class="form-check-input"{% if config_seo_url %} checked{% endif %}/>
                     </div>
                     <div class="form-text">{{ help_seo_url }}</div>
                   </div>
@@ -1243,8 +1212,8 @@
                 <div class="row mb-3">
                   <label class="col-sm-2 col-form-label">{{ entry_shared }}</label>
                   <div class="col-sm-10">
-                    <div class="btn-group">
-                      <input type="radio" name="config_shared" value="1" id="input-shared-yes" class="btn-check"{% if config_shared %} checked{% endif %}/> <label for="input-shared-yes" class="btn btn-outline-secondary">{{ text_yes }}</label> <input type="radio" name="config_shared" value="0" id="input-shared-no" class="btn-check"{% if not config_shared %} checked{% endif %}/> <label for="input-shared-no" class="btn btn-outline-secondary">{{ text_no }}</label>
+                    <div class="form-check form-switch">
+                      <input type="checkbox" name="config_shared" value="1" id="input-shared" class="form-check-input"{% if config_shared %} checked{% endif %}/>
                     </div>
                     <div class="form-text">{{ help_shared }}</div>
                   </div>
@@ -1290,16 +1259,16 @@
                 <div class="row mb-3">
                   <label class="col-sm-2 col-form-label">{{ entry_error_display }}</label>
                   <div class="col-sm-10">
-                    <div class="btn-group">
-                      <input type="radio" name="config_error_display" value="1" id="input-error-display-yes" class="btn-check"{% if config_error_display %} checked{% endif %}/> <label for="input-error-display-yes" class="btn btn-outline-secondary">{{ text_yes }}</label> <input type="radio" name="config_error_display" value="0" id="input-error-display-no" class="btn-check"{% if not config_error_display %} checked{% endif %}/> <label for="input-error-display-no" class="btn btn-outline-secondary">{{ text_no }}</label>
+                    <div class="form-check form-switch">
+                      <input type="checkbox" name="config_error_display" value="1" id="input-error-display" class="form-check-input"{% if config_error_display %} checked{% endif %}/>
                     </div>
                   </div>
                 </div>
                 <div class="row mb-3">
                   <label class="col-sm-2 col-form-label">{{ entry_error_log }}</label>
                   <div class="col-sm-10">
-                    <div class="btn-group">
-                      <input type="radio" name="config_error_log" value="1" id="input-error-log-yes" class="btn-check"{% if config_error_log %} checked{% endif %}/> <label for="input-error-log-yes" class="btn btn-outline-secondary">{{ text_yes }}</label> <input type="radio" name="config_error_log" value="0" id="input-error-log-no" class="btn-check"{% if not config_error_log %} checked{% endif %}/> <label for="input-error-log-no" class="btn btn-outline-secondary">{{ text_no }}</label>
+                    <div class="form-check form-switch">
+                      <input type="checkbox" name="config_error_log" value="1" id="input-error-log" class="form-check-input"{% if config_error_log %} checked{% endif %}/>
                     </div>
                   </div>
                 </div>

@@ -330,13 +330,11 @@
                     <div class="input-group">
                       <input type="text" name="minimum" value="{{ minimum }}" placeholder="{{ entry_minimum }}" id="input-minimum" class="form-control"/>
                       {% if master_id %}
-
                         <div class="input-group-text">
                           <div class="form-check form-switch">
                             <input type="checkbox" name="override[minimum]" value="1" id="input-variant-minimum" data-oc-toggle="switch" data-oc-target="#input-minimum" class="form-check-input"{% if override.minimum %} checked{% endif %}/> <label for="input-variant-minimum" class="form-check-label"></label>
                           </div>
                         </div>
-
                       {% endif %}
                     </div>
                     <div class="form-text">{{ help_minimum }}</div>
@@ -346,9 +344,11 @@
                   <label class="col-sm-2 col-form-label">{{ entry_subtract }}</label>
                   <div class="col-sm-10">
                     <div class="input-group">
-                      <div class="btn-group" id="input-subtract">
-                        <input type="radio" name="subtract" value="1" id="input-subtract-yes" class="btn-check"{% if subtract %} checked{% endif %}/> <label for="input-subtract-yes" class="btn btn-outline-secondary">{{ text_yes }}</label> <input type="radio" name="subtract" value="0" id="input-subtract-no" class="btn-check"{% if not subtract %} checked{% endif %}/> <label for="input-subtract-no" class="btn btn-outline-secondary">{{ text_no }}</label>
+
+                      <div class="form-check form-switch">
+                        <input type="checkbox" name="bottom" value="1" id="input-subtract" class="form-check-input"{% if subtract %} checked{% endif %}/>
                       </div>
+
                       {% if master_id %}
                         <div class="input-group-text">
                           <div class="form-check form-switch">

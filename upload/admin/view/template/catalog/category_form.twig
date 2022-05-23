@@ -125,12 +125,10 @@
                 </div>
               </div>
               <div class="row mb-3">
-                <label class="col-sm-2 col-form-label">{{ entry_top }}</label>
+                <label for="input-top" class="col-sm-2 col-form-label">{{ entry_top }}</label>
                 <div class="col-sm-10">
-                  <div>
-                    <div class="btn-group">
-                      <input type="radio" name="top" value="1" id="input-top-yes" class="btn-check"{% if top %} checked{% endif %}/> <label for="input-top-yes" class="btn btn-outline-secondary">{{ text_yes }}</label> <input type="radio" name="top" value="0" id="input-top-no" class="btn-check"{% if not top %} checked{% endif %}/> <label for="input-top-no" class="btn btn-outline-secondary">{{ text_no }}</label>
-                    </div>
+                  <div class="form-check form-switch">
+                    <input type="checkbox" name="top" value="1" id="input-top" class="form-check-input"{% if top %} checked{% endif %}/>
                   </div>
                   <div class="form-text">{{ help_top }}</div>
                 </div>

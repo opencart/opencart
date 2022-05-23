@@ -427,6 +427,12 @@ a {
     font-weight: bold;
 }
 
+.form-switch-lg {
+    font-size: 26px;
+    min-height: 36px;
+    line-height: 36px;
+}
+
 @media (min-width: 992px) {
     .col-form-label {
         text-align: right;

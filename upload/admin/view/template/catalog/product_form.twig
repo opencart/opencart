@@ -343,20 +343,24 @@
                 <div class="row mb-3">
                   <label class="col-sm-2 col-form-label">{{ entry_subtract }}</label>
                   <div class="col-sm-10">
+
                     <div class="input-group">
 
-                      <div class="form-check form-switch">
-                        <input type="checkbox" name="bottom" value="1" id="input-subtract" class="form-check-input"{% if subtract %} checked{% endif %}/>
+                      <div id="input-subtract" class="form-check form-switch form-switch-lg">
+                        <input type="checkbox" name="subtract" value="1" class="form-check-input"{% if subtract %} checked{% endif %}/>
                       </div>
 
                       {% if master_id %}
                         <div class="input-group-text">
                           <div class="form-check form-switch">
-                            <input type="checkbox" name="override[subtract]" value="1" id="input-variant-subtract" data-oc-toggle="switch" data-oc-target="#input-subtract" class="form-check-input"{% if override.subtract %} checked{% endif %}/> <label for="input-variant-subtract" class="form-check-label"></label>
+                            <input type="checkbox" name="override[subtract]" value="1" id="input-variant-subtract" data-oc-toggle="switch" data-oc-target="#input-subtract" class="form-check-input"{% if override.subtract %} checked{% endif %}/>
+                            <label for="input-variant-subtract" class="form-check-label"></label>
                           </div>
                         </div>
                       {% endif %}
+
                     </div>
+
                   </div>
                 </div>
                 <div class="row mb-3">
@@ -402,9 +406,11 @@
                   <label class="col-sm-2 col-form-label">{{ entry_shipping }}</label>
                   <div class="col-sm-10">
                     <div class="input-group">
-                      <div class="btn-group" id="input-shipping">
-                        <input type="radio" name="shipping" value="1" id="input-shipping-yes" class="btn-check"{% if shipping %} checked{% endif %}/> <label for="input-shipping-yes" class="btn btn-outline-secondary">{{ text_yes }}</label> <input type="radio" name="shipping" value="0" id="input-shipping-no" class="btn-check"{% if not shipping %} checked{% endif %}/> <label for="input-shipping-no" class="btn btn-outline-secondary">{{ text_no }}</label>
+
+                      <div id="input-shipping" class="form-check form-switch form-switch-lg">
+                        <input type="checkbox" name="shipping" value="1" class="form-check-input"{% if shipping %} checked{% endif %}/>
                       </div>
+
                       {% if master_id %}
                         <div class="input-group-text">
                           <div class="form-check form-switch">

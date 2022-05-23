@@ -128,13 +128,16 @@ $(document).ready(datetimepicker);
 $(document).on('click', 'button', datetimepicker);
 
 // Alert Fade
-$(document).ready(function () {
+var alert = function () {
     window.setTimeout(function() {
-        $('.alert-dismissible').fadeTo(1000, 0).slideUp(1000, function(){
+        $('.alert-dismissible').fadeTo(1000, 0, function() {
             $(this).remove();
         });
-    }, 5000);
-});
+    }, 7000);
+}
+
+$(document).ready(alert);
+$(document).on('click', 'button', alert);
 
 // Forms
 $(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function (e) {

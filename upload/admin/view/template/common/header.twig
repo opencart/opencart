@@ -38,13 +38,9 @@
   <header id="header" class="navbar navbar-expand navbar-light bg-light">
     <div class="container-fluid">
       <a href="{{ home }}" class="navbar-brand d-none d-lg-block"><img src="view/image/logo.png" alt="{{ heading_title }}" title="{{ heading_title }}"/></a>
-
       {% if logged %}
         <button type="button" id="button-menu" class="btn btn-link d-inline-block d-lg-none"><i class="fas fa-bars"></i></button>
-
-
         <ul class="nav navbar-nav">
-
           <li id="header-notification" class="nav-item dropdown">
             <a href="#" data-bs-toggle="dropdown" class="nav-link dropdown-toggle"><i class="far fa-bell"></i>{% if notification_total %} <span class="badge bg-danger">{{ notification_total }}</span>{% endif %}</a>
             <div class="dropdown-menu dropdown-menu-right">
@@ -58,11 +54,8 @@
               {% endif %}
             </div>
           </li>
-
           <li id="header-profile" class="nav-item dropdown">
-
             <a href="#" data-bs-toggle="dropdown" class="nav-link dropdown-toggle"><img src="{{ image }}" alt="{{ firstname }} {{ lastname }}" title="{{ username }}" class="rounded-circle"/><span class="d-none d-md-inline d-lg-inline">&nbsp;&nbsp;&nbsp;{{ firstname }} {{ lastname }} <i class="fas fa-caret-down fa-fw"></i></span></a>
-
             <ul class="dropdown-menu dropdown-menu-right">
               <li><a href="{{ profile }}" class="dropdown-item"><i class="fa fa-user-circle fa-fw"></i> {{ text_profile }}</a></li>
               <li><hr class="dropdown-divider"></li>
@@ -76,12 +69,9 @@
               <li><a href="http://docs.opencart.com" target="_blank" class="dropdown-item"><i class="fas fa-file-alt fa-fw"></i> {{ text_documentation }}</a></li>
               <li><a href="http://forum.opencart.com" target="_blank" class="dropdown-item"><i class="fas fa-comments fa-fw"></i> {{ text_support }}</a></li>
             </ul>
-
           </li>
-
           <li id="header-logout" class="nav-item"><a href="{{ logout }}" class="nav-link"><i class="fas fa-sign-out-alt"></i> <span class="d-none d-md-inline">{{ text_logout }}</span></a></li>
         </ul>
       {% endif %}
-
     </div>
   </header>

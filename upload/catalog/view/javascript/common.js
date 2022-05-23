@@ -36,6 +36,15 @@ $(document).ready(tooltip);
 // Makes tooltips work on ajax generated content
 $(document).on('click', 'button', tooltip);
 
+// Alert Fade
+$(document).ready(function () {
+    window.setTimeout(function() {
+        $('.alert-dismissible').fadeTo(1000, 0).slideUp(1000, function(){
+            $(this).remove();
+        });
+    }, 5000);
+});
+
 $(document).ready(function () {
     // Currency
     $('#form-currency .dropdown-item').on('click', function (e) {

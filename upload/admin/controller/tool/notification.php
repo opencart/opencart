@@ -104,7 +104,7 @@ class Notification extends \Opencart\System\Engine\Controller {
 
 			$this->load->helper('bbcode');
 
-			$data['message'] = \Opencart\System\Helper\bbcode_decode($notification_info['message']);
+			$data['text'] = \Opencart\System\Helper\bbcode_decode($notification_info['text']);
 
 			$this->model_tool_notification->editStatus($notification_id, 1);
 

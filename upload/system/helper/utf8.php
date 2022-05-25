@@ -7,11 +7,11 @@ if (extension_loaded('mbstring')) {
 		return mb_strlen($string);
 	}
 
-	function utf8_strpos(string $string, int $needle, int $offset = 0) {
+	function utf8_strpos(string $string, string $needle, int $offset = 0) {
 		return mb_strpos($string, $needle, $offset);
 	}
 
-	function utf8_strrpos(string $string, int $needle, int $offset = 0) {
+	function utf8_strrpos(string $string, string $needle, int $offset = 0) {
 		return mb_strrpos($string, $needle, $offset);
 	}
 
@@ -36,11 +36,11 @@ if (extension_loaded('mbstring')) {
 		return iconv_strlen($string, 'UTF-8');
 	}
 
-	function utf8_strpos(string $string, int $needle, int $offset = 0) {
+	function utf8_strpos(string $string, string $needle, int $offset = 0) {
 		return iconv_strpos($string, $needle, $offset, 'UTF-8');
 	}
 
-	function utf8_strrpos(string $string, int $needle) {
+	function utf8_strrpos(string $string, string $needle) {
 		return iconv_strrpos($string, $needle, 'UTF-8');
 	}
 

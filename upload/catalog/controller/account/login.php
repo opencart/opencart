@@ -209,7 +209,7 @@ class Login extends \Opencart\System\Engine\Controller {
 			// Default Addresses
 			$this->load->model('account/address');
 
-			$address_info = $this->model_account_address->getAddress($customer_info['address_id']);
+			$address_info = $this->model_account_address->getAddress($this->customer->getAddressId());
 
 			if ($this->config->get('config_tax_customer') && $address_info) {
 				$this->session->data[$this->config->get('config_tax_customer') . '_address'] = $address_info;

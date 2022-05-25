@@ -1,6 +1,6 @@
 <?php
 //namespace Opencart\System\Helper;
-function token($length = 32) {
+function token(int $length = 32) {
 	if (intval($length) <= 8) {
 		$length = 32;
 	}
@@ -40,7 +40,7 @@ if (!function_exists('hash_equals')) {
 	}
 }
 
-function date_added($date) {
+function date_added(string $date) {
 	$second = time() - strtotime($date);
 
 	if ($second < 10) {
@@ -114,23 +114,23 @@ function date_added($date) {
 	return [$code, $date_added];
 }
 
-function format_size($file = '', $max = true) {
+function format_size(string $file = '', bool $max = true) {
 	if ($max) {
 		$size = ini_get('upload_max_filesize');
 
 		$unit = substr($size, -1);
 		switch ($unit){
 			case 'K':
-			$size = (int)$size*1024;
+			$size = (int)$size * 1024;
 			break;
 			case 'M':
-			$size = (int)$size*1024*1024;
+			$size = (int)$size * 1024 * 1024;
 			break;
 			case 'G':
-			$size = (int)$size*1024*1024*1024;
+			$size = (int)$size*1024 * 1024 * 1024;
 			break;
 		}
-	} elseif (is_file($file) && !$max) {
+	} elseif (is_file($file)) {
 		$size = sprintf('%u', filesize($file));
 	}
 

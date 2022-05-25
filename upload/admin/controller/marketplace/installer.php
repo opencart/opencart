@@ -165,7 +165,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 			if (is_file($file)) {
 				$json['error'] = $this->language->get('error_file_exists');
 
-				unlink($this->request->files['file']['name']);
+				unlink($this->request->files['file']['tmp_name']);
 			}
 
 			if ($this->request->files['file']['error'] != UPLOAD_ERR_OK) {

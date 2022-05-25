@@ -1,0 +1,39 @@
+<form id="form-event" method="post" data-oc-toggle="ajax" data-oc-load="{{ action }}" data-oc-target="#event">
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <td class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', $(this).prop('checked'));" class="form-check-input"/></td>
+          <td class="text-start"><a href="{{ sort_code }}"{% if sort == 'code' %} class="{{ order|lower }}"{% endif %}>{{ column_code }}</a></td>
+          <td class="text-end d-none d-lg-table-cell"><a href="{{ sort_sort_order }}"{% if sort == 'sort_order' %} class="{{ order|lower }}"{% endif %}>{{ column_sort_order }}</a></td>
+          <td class="text-end" style="min-width: 103px;">{{ column_action }}</td>
+        </tr>
+      </thead>
+      <tbody>
+        {% if events %}
+          {% for event in events %}
+            <tr>
+              <td class="text-center"><input type="checkbox" name="selected[]" value="{{ event.event_id }}" class="form-check-input"/></td>
+              <td class="text-start">{{ event.code }}</td>
+              <td class="text-end d-none d-lg-table-cell">{{ event.sort_order }}</td>
+              <td class="text-end"><button type="button" data-oc-description="{{ event.description }}" data-oc-trigger="{{ event.trigger }}" data-oc-action="{{ event.action }}" class="btn btn-info"><i class="fas fa-info-circle"></i></button>
+                {% if not event.status %}
+                  <button type="button" value="{{ event.enable }}" data-bs-toggle="tooltip" title="{{ button_enable }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></button>
+                {% else %}
+                  <button type="button" value="{{ event.disable }}" data-bs-toggle="tooltip" title="{{ button_disable }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button>
+                {% endif %}</td>
+            </tr>
+          {% endfor %}
+        {% else %}
+          <tr>
+            <td class="text-center" colspan="4">{{ text_no_results }}</td>
+          </tr>
+        {% endif %}
+      </tbody>
+    </table>
+  </div>
+  <div class="row">
+    <div class="col-sm-6 text-start">{{ pagination }}</div>
+    <div class="col-sm-6 text-end">{{ results }}</div>
+  </div>
+</form>

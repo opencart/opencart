@@ -1,0 +1,84 @@
+{{ header }}
+<div id="account-voucher" class="container">
+  <ul class="breadcrumb">
+    {% for breadcrumb in breadcrumbs %}
+      <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+    {% endfor %}
+  </ul>
+  {% if error_warning %}
+    <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}</div>
+  {% endif %}
+  <div class="row">{{ column_left }}
+    <div id="content" class="col">{{ content_top }}
+      <h1>{{ heading_title }}</h1>
+      <p>{{ text_description }}</p>
+      <form id="form-voucher" action="{{ save }}" method="post" data-oc-toggle="ajax">
+        <div class="row mb-3 required">
+          <label for="input-to-name" class="col-sm-2 col-form-label">{{ entry_to_name }}</label>
+          <div class="col-sm-10">
+            <input type="text" name="to_name" value="{{ to_name }}" placeholder="{{ entry_to_name }}" id="input-to-name" class="form-control"/>
+            <div id="error-to-name" class="invalid-feedback"></div>
+          </div>
+        </div>
+        <div class="row mb-3 required">
+          <label for="input-to-email" class="col-sm-2 col-form-label">{{ entry_to_email }}</label>
+          <div class="col-sm-10">
+            <input type="text" name="to_email" value="{{ to_email }}" placeholder="{{ entry_to_email }}" id="input-to-email" class="form-control"/>
+            <div id="error-to-email" class="invalid-feedback"></div>
+          </div>
+        </div>
+        <div class="row mb-3 required">
+          <label for="input-from-name" class="col-sm-2 col-form-label">{{ entry_from_name }}</label>
+          <div class="col-sm-10">
+            <input type="text" name="from_name" value="{{ from_name }}" placeholder="{{ entry_from_name }}" id="input-from-name" class="form-control"/>
+            <div id="error-from-name" class="invalid-feedback"></div>
+          </div>
+        </div>
+        <div class="row mb-3 required">
+          <label for="input-from-email" class="col-sm-2 col-form-label">{{ entry_from_email }}</label>
+          <div class="col-sm-10">
+            <input type="text" name="from_email" value="{{ from_email }}" placeholder="{{ entry_from_email }}" id="input-from-email" class="form-control"/>
+            <div id="error-from-email" class="invalid-feedback"></div>
+          </div>
+        </div>
+        <div class="row mb-3 required">
+          <label class="col-sm-2 col-form-label">{{ entry_theme }}</label>
+          <div class="col-sm-10">
+            <div id="input-theme">
+              {% for voucher_theme in voucher_themes %}
+                <div class="form-check">
+                  <input type="radio" name="voucher_theme_id" value="{{ voucher_theme.voucher_theme_id }}" id="input-theme-{{ voucher_theme.voucher_theme_id }}" class="form-check-input"{% if voucher_theme.voucher_theme_id == voucher_theme_id %} checked{% endif %}/>
+                  <label for="input-theme-{{ voucher_theme.voucher_theme_id }}" class="form-check-label">{{ voucher_theme.name }}</label>
+                </div>
+              {% endfor %}
+            </div>
+            <div id="error-theme" class="invalid-feedback"></div>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <label for="input-message" class="col-sm-2 col-form-label"><span data-bs-toggle="tooltip" title="{{ help_message }}" class="col-sm-2 col-form-label">{{ entry_message }}</span></label>
+          <div class="col-sm-10">
+            <textarea name="message" cols="40" rows="5" placeholder="{{ entry_message }}" id="input-message" class="form-control">{{ message }}</textarea>
+          </div>
+        </div>
+        <div class="row mb-3 required">
+          <label for="input-amount" class="col-sm-2 col-form-label"><span data-bs-toggle="tooltip" title="{{ help_amount }}">{{ entry_amount }}</span></label>
+          <div class="col-sm-10">
+            <input type="text" name="amount" value="{{ amount }}" placeholder="{{ entry_amount }}" id="input-amount" class="form-control" size="5"/>
+            <div id="error-amount" class="invalid-feedback"></div>
+          </div>
+        </div>
+        <div class="d-inline-block pt-2 pd-2 w-100">
+          <div class="float-end">
+            <div class="form-check form-check-inline">
+              <label class="form-check-label">{{ text_agree }}</label> <input type="checkbox" name="agree" value="1" class="form-check-input"/>
+              &nbsp;
+            </div>
+            <button type="submit" class="btn btn-primary">{{ button_continue }}</button>
+          </div>
+        </div>
+      </form>
+      {{ content_bottom }}</div>
+    {{ column_right }}</div>
+</div>
+{{ footer }}

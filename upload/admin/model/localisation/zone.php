@@ -2,7 +2,7 @@
 namespace Opencart\Admin\Model\Localisation;
 class Zone extends \Opencart\System\Engine\Model {
 	public function addZone(array $data): int {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "zone` SET ``name` = '" . $this->db->escape((string)$data['name']) . "', `code` = '" . $this->db->escape((string)$data['code']) . "', `country_id` = '" . (int)$data['country_id'] . "', `status` = '" . (bool)$data['status'] . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "zone` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `code` = '" . $this->db->escape((string)$data['code']) . "', `country_id` = '" . (int)$data['country_id'] . "', `status` = '" . (bool)$data['status'] . "'");
 
 		$this->cache->delete('zone');
 
@@ -33,15 +33,15 @@ class Zone extends \Opencart\System\Engine\Model {
 		$implode = [];
 
 		if (!empty($data['filter_name'])) {
-			$implode[] = "z.`name` LIKE '" . $this->db->escape((string)$data['filter_name']) . "%'";
+			$implode[] = "z.`name` LIKE '" . $this->db->escape((string)$data['filter_name'] . '%') . "'";
 		}
 
 		if (!empty($data['filter_country'])) {
-			$implode[] = "c.`name` LIKE '" . $this->db->escape((string)$data['filter_country']) . "%'";
+			$implode[] = "c.`name` LIKE '" . $this->db->escape((string)$data['filter_country'] . '%') . "'";
 		}
 
 		if (!empty($data['filter_code'])) {
-			$implode[] = "z.`code` LIKE '" . $this->db->escape((string)$data['filter_code']) . "%'";
+			$implode[] = "z.`code` LIKE '" . $this->db->escape((string)$data['filter_code'] . '%') . "'";
 		}
 
 		if ($implode) {
@@ -107,15 +107,15 @@ class Zone extends \Opencart\System\Engine\Model {
 		$implode = [];
 
 		if (!empty($data['filter_name'])) {
-			$implode[] = "z.`name` LIKE '" . $this->db->escape((string)$data['filter_name']) . "%'";
+			$implode[] = "z.`name` LIKE '" . $this->db->escape((string)$data['filter_name'] . '%') . "'";
 		}
 
 		if (!empty($data['filter_country'])) {
-			$implode[] = "c.`name` LIKE '" . $this->db->escape((string)$data['filter_country']) . "%'";
+			$implode[] = "c.`name` LIKE '" . $this->db->escape((string)$data['filter_country'] . '%') . "'";
 		}
 
 		if (!empty($data['filter_code'])) {
-			$implode[] = "z.`code` LIKE '" . $this->db->escape((string)$data['filter_code']) . "%'";
+			$implode[] = "z.`code` LIKE '" . $this->db->escape((string)$data['filter_code'] . '%') . "'";
 		}
 
 		if ($implode) {

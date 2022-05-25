@@ -1,28 +1,10 @@
 <?php
 namespace Opencart\Admin\Controller\Extension\Opencart\Dashboard;
 class Activity extends \Opencart\System\Engine\Controller {
-	private $error = [];
-
 	public function index(): void {
 		$this->load->language('extension/opencart/dashboard/activity');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('setting/setting');
-
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('dashboard_activity', $this->request->post);
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=dashboard'));
-		}
-
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
 
 		$data['breadcrumbs'] = [];
 
@@ -41,15 +23,10 @@ class Activity extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('extension/opencart/dashboard/activity', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		$data['action'] = $this->url->link('extension/opencart/dashboard/activity', 'user_token=' . $this->session->data['user_token']);
+		$data['save'] = $this->url->link('extension/opencart/dashboard/activity|save', 'user_token=' . $this->session->data['user_token']);
+		$data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=dashboard');
 
-		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=dashboard');
-
-		if (isset($this->request->post['dashboard_activity_width'])) {
-			$data['dashboard_activity_width'] = $this->request->post['dashboard_activity_width'];
-		} else {
-			$data['dashboard_activity_width'] = $this->config->get('dashboard_activity_width');
-		}
+		$data['dashboard_activity_width'] = $this->config->get('dashboard_activity_width');
 
 		$data['columns'] = [];
 
@@ -57,17 +34,8 @@ class Activity extends \Opencart\System\Engine\Controller {
 			$data['columns'][] = $i;
 		}
 
-		if (isset($this->request->post['dashboard_activity_status'])) {
-			$data['dashboard_activity_status'] = $this->request->post['dashboard_activity_status'];
-		} else {
-			$data['dashboard_activity_status'] = $this->config->get('dashboard_activity_status');
-		}
-
-		if (isset($this->request->post['dashboard_activity_sort_order'])) {
-			$data['dashboard_activity_sort_order'] = $this->request->post['dashboard_activity_sort_order'];
-		} else {
-			$data['dashboard_activity_sort_order'] = $this->config->get('dashboard_activity_sort_order');
-		}
+		$data['dashboard_activity_status'] = $this->config->get('dashboard_activity_status');
+		$data['dashboard_activity_sort_order'] = $this->config->get('dashboard_activity_sort_order');
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -76,18 +44,29 @@ class Activity extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('extension/opencart/dashboard/activity_form', $data));
 	}
 
-	protected function validate(): bool {
+	public function save(): void {
+		$this->load->language('extension/opencart/dashboard/activity');
+
+		$json = [];
+
 		if (!$this->user->hasPermission('modify', 'extension/opencart/dashboard/activity')) {
-			$this->error['warning'] = $this->language->get('error_permission');
+			$json['error'] = $this->language->get('error_permission');
 		}
 
-		return !$this->error;
+		if (!$json) {
+			$this->load->model('setting/setting');
+
+			$this->model_setting_setting->editSetting('dashboard_activity', $this->request->post);
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function dashboard(): string {
 		$this->load->language('extension/opencart/dashboard/activity');
-
-		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['activities'] = [];
 
@@ -105,9 +84,9 @@ class Activity extends \Opencart\System\Engine\Controller {
 			];
 
 			$replace = [
-				$this->url->link('customer/customer|edit', 'user_token=' . $this->session->data['user_token'] . '&customer_id='),
+				$this->url->link('customer/customer|form', 'user_token=' . $this->session->data['user_token'] . '&customer_id='),
 				$this->url->link('sale/order|info', 'user_token=' . $this->session->data['user_token'] . '&order_id='),
-				$this->url->link('sale/return|edit', 'user_token=' . $this->session->data['user_token'] . '&return_id=')
+				$this->url->link('sale/return|form', 'user_token=' . $this->session->data['user_token'] . '&return_id=')
 			];
 
 			$data['activities'][] = [
@@ -115,6 +94,8 @@ class Activity extends \Opencart\System\Engine\Controller {
 				'date_added' => date($this->language->get('datetime_format'), strtotime($result['date_added']))
 			];
 		}
+
+		$data['user_token'] = $this->session->data['user_token'];
 
 		return $this->load->view('extension/opencart/dashboard/activity_info', $data);
 	}

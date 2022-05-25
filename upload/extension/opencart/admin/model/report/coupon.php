@@ -7,11 +7,11 @@ class Coupon extends \Opencart\System\Engine\Model {
 		$implode = [];
 
 		if (!empty($data['filter_date_start'])) {
-			$implode[] = "DATE(ch.`date_added`) >= '" . $this->db->escape((string)$data['filter_date_start']) . "'";
+			$implode[] = "DATE(ch.`date_added`) >= DATE('" . $this->db->escape((string)$data['filter_date_start']) . "')";
 		}
 
 		if (!empty($data['filter_date_end'])) {
-			$implode[] = "DATE(ch.`date_added`) <= '" . $this->db->escape((string)$data['filter_date_end']) . "'";
+			$implode[] = "DATE(ch.`date_added`) <= DATE('" . $this->db->escape((string)$data['filter_date_end']) . "')";
 		}
 
 		if ($implode) {
@@ -43,11 +43,11 @@ class Coupon extends \Opencart\System\Engine\Model {
 		$implode = [];
 
 		if (!empty($data['filter_date_start'])) {
-			$implode[] = "DATE(`date_added`) >= '" . $this->db->escape((string)$data['filter_date_start']) . "'";
+			$implode[] = "DATE(`date_added`) >= DATE('" . $this->db->escape((string)$data['filter_date_start']) . "')";
 		}
 
 		if (!empty($data['filter_date_end'])) {
-			$implode[] = "DATE(`date_added`) <= '" . $this->db->escape((string)$data['filter_date_end']) . "'";
+			$implode[] = "DATE(`date_added`) <= DATE('" . $this->db->escape((string)$data['filter_date_end']) . "')";
 		}
 
 		if ($implode) {

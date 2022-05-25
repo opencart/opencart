@@ -32,6 +32,7 @@ $_['help_value']           = 'The value of your default currency in the current 
 
 // Error
 $_['error_permission']     = 'Warning: You do not have permission to modify currencies!';
+$_['error_extension']      = 'Warning: The currency extension could not be found!';
 $_['error_title']          = 'Currency Title must be between 3 and 32 characters!';
 $_['error_code']           = 'Currency Code must contain 3 characters!';
 $_['error_default']        = 'Warning: This currency cannot be deleted as it is currently assigned as the default store currency!';

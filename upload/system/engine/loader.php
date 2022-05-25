@@ -12,7 +12,7 @@
  */
 namespace Opencart\System\Engine;
 use \Opencart\System\Engine\Action as Action;
-final class Loader {
+class Loader {
 	protected $registry;
 
 	/**
@@ -122,14 +122,12 @@ final class Loader {
 	 *
 	 * @return   string
 	 */
-	public function view(string $route, array $data = []): string {
+	public function view(string $route, array $data = [], string $code = ''): string {
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', $route);
 
 		// Keep the original trigger
 		$trigger = $route;
-
-		$code = '';
 
 		// Trigger the pre events
 		$this->event->trigger('view/' . $trigger . '/before', [&$route, &$data, &$code]);

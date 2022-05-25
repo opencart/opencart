@@ -1,0 +1,79 @@
+<div class="table-responsive">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <td class="text-center">{{ column_image }}</td>
+        <td class="text-start">{{ column_name }}</td>
+        <td class="text-start">{{ column_model }}</td>
+        <td class="text-start">{{ column_quantity }}</td>
+        <td class="text-end">{{ column_price }}</td>
+        <td class="text-end">{{ column_total }}</td>
+      </tr>
+    </thead>
+    <tbody>
+      {% for product in products %}
+        <tr>
+          <td class="text-center">{% if product.thumb %} <a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-thumbnail"/></a> {% endif %}</td>
+          <td class="text-start"><a href="{{ product.href }}">{{ product.name }}</a>{% if not product.stock %} <span class="text-danger">***</span>{% endif %}
+            {% if product.option %}
+              {% for option in product.option %}
+                <br/>
+                <small> - {{ option.name }}: {{ option.value }}</small>
+              {% endfor %}
+            {% endif %}
+            {% if product.reward %}
+              <br/>
+              <small>{{ text_points }}: {{ product.reward }}</small>
+            {% endif %}
+            {% if product.subscription %}
+              <br/>
+              <small>{{ text_subscription }}: {{ product.subscription }}</small>
+            {% endif %}
+          </td>
+          <td class="text-start">{{ product.model }}</td>
+          <td class="text-start">
+
+            <form method="post" data-oc-toggle="ajax" data-oc-load="{{ list }}" data-oc-target="#shopping-cart">
+              <div class="input-group">
+                <input type="text" name="quantity" value="{{ product.quantity }}" size="1" class="form-control"> <input type="hidden" name="key" value="{{ product.cart_id }}">
+                <button type="submit" formaction="{{ product_edit }}" data-bs-toggle="tooltip" title="{{ button_update }}" class="btn btn-primary"><i class="fas fa-sync-alt"></i></button>
+                <button type="submit" formaction="{{ product_remove }}" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-times-circle"></i></button>
+              </div>
+            </form>
+
+          </td>
+          <td class="text-end">{{ product.price }}</td>
+          <td class="text-end">{{ product.total }}</td>
+        </tr>
+      {% endfor %}
+      {% for voucher in vouchers %}
+        <tr>
+          <td></td>
+          <td class="text-start">{{ voucher.description }}</td>
+          <td class="text-start"></td>
+          <td class="text-start">
+
+            <form method="post" data-oc-toggle="ajax" data-oc-load="{{ list }}" data-oc-target="#shopping-cart">
+              <div class="input-group">
+                <input type="text" name="quantity" value="1" size="1" disabled="disabled" class="form-control"/>
+                <button type="submit" formaction="{{ voucher_remove }}" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-times-circle"></i></button>
+              </div>
+              <input type="hidden" name="key" value="{{ voucher.key }}"/>
+            </form>
+
+          </td>
+          <td class="text-end">{{ voucher.amount }}</td>
+          <td class="text-end">{{ voucher.amount }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+    <tfoot id="checkout-total">
+      {% for total in totals %}
+        <tr>
+          <td colspan="5" class="text-end"><strong>{{ total.title }}</strong></td>
+          <td class="text-end">{{ total.text }}</td>
+        </tr>
+      {% endfor %}
+    </tfoot>
+  </table>
+</div>

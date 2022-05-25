@@ -2,16 +2,13 @@
 <div id="content">
 	<div class="page-header">
 		<div class="container-fluid">
-			<div class="float-right">
-
+			<div class="float-end">
 				{% if not error_signature %}
-					<button type="button" id="button-opencart" data-toggle="tooltip" title="{{ button_opencart }}" class="btn btn-info"><i class="fas fa-cog"></i></button>
+					<button type="button" id="button-opencart" data-bs-toggle="tooltip" title="{{ button_opencart }}" class="btn btn-info"><i class="fas fa-cog"></i></button>
 				{% else %}
-					<button type="button" id="button-opencart" data-toggle="tooltip" title="{{ error_signature }}" data-placement="left" class="btn btn-danger"><i class="fas fa-exclamation-triangle"></i></button>
+					<button type="button" id="button-opencart" data-bs-toggle="tooltip" title="{{ error_signature }}" data-placement="left" class="btn btn-danger"><i class="fas fa-exclamation-triangle"></i></button>
 				{% endif %}
-
-				<a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fas fa-reply"></i></a>
-
+				<a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a>
 			</div>
 			<h1>{{ heading_title }}</h1>
 			<ol class="breadcrumb">
@@ -24,7 +21,7 @@
 	<div id="marketplace-extension-info" class="container-fluid">
 		{% if error_warning %}
 			<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
-				<button type="button" class="close" data-dismiss="alert">&times;</button>
+				<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
 			</div>
 		{% endif %}
 		<div class="card">
@@ -41,10 +38,10 @@
 							{% endfor %}
 						</div>
 						<ul class="nav nav-tabs">
-							<li class="nav-item"><a href="#tab-description" class="nav-link active" data-toggle="tab">{{ tab_general }}</a></li>
-							<li class="nav-item"><a href="#tab-documentation" class="nav-link" data-toggle="tab">{{ tab_documentation }}</a></li>
-							<li class="nav-item"><a href="#tab-download" class="nav-link" data-toggle="tab">{{ tab_download }}</a></li>
-							<li class="nav-item"><a href="#tab-comment" class="nav-link" data-toggle="tab">{{ tab_comment }} ({{ comment_total }})</a></li>
+							<li class="nav-item"><a href="#tab-description" class="nav-link active" data-bs-toggle="tab">{{ tab_general }}</a></li>
+							<li class="nav-item"><a href="#tab-documentation" class="nav-link" data-bs-toggle="tab">{{ tab_documentation }}</a></li>
+							<li class="nav-item"><a href="#tab-download" class="nav-link" data-bs-toggle="tab">{{ tab_download }}</a></li>
+							<li class="nav-item"><a href="#tab-comment" class="nav-link" data-bs-toggle="tab">{{ tab_comment }} ({{ comment_total }})</a></li>
 						</ul>
 						<div class="tab-content">
 							<div id="tab-description" class="tab-pane fade show active">{{ description }}</div>
@@ -58,10 +55,10 @@
 							<div id="tab-comment" class="tab-pane">
 								<fieldset>
 									<legend>{{ text_comment_add }}</legend>
-									<div class="form-group">
+									<div class="mb-3">
 										<textarea name="comment" rows="5" placeholder="{{ text_write }}" id="input-comment" class="form-control"></textarea>
 									</div>
-									<div class="text-right">
+									<div class="text-end">
 										<button type="button" id="button-comment" class="btn btn-primary">{{ button_comment }}</button>
 									</div>
 								</fieldset>
@@ -77,11 +74,11 @@
 						<div id="buy" class="card mb-3">
 							<div class="card-body">
 								{% if license == '1' and not purchased %}
-									<button id="button-buy" class="btn btn-success btn-lg btn-block">{{ button_purchase }}</button>
+									<button type="button" id="button-buy" class="btn btn-success btn-lg btn-block">{{ button_purchase }}</button>
 								{% endif %}
 								<div id="price" class="row">
 									<div class="col-lg-5"><strong>{{ text_price }}</strong></div>
-									<div class="col-lg-7 text-right">{% if license %}
+									<div class="col-lg-7 text-end">{% if license %}
 											{{ price }}
 										{% else %}
 											{{ text_free }}
@@ -97,7 +94,7 @@
 								<hr>
 								<div class="row">
 									<div class="col-md-5"><strong>{{ text_rating }}</strong></div>
-									<div class="col-md-7 text-right">{% for i in 1..5 %}
+									<div class="col-md-7 text-end">{% for i in 1..5 %}
 											{% if rating >= i %}<i class="fas fa-star"></i>{% else %}<i class="fas fa-star-o"></i>{% endif %}
 										{% endfor %} ({{ rating_total }})
 									</div>
@@ -105,12 +102,12 @@
 								<hr>
 								<div class="row">
 									<div class="col-md-5"><strong>{{ text_date_modified }}</strong></div>
-									<div class="col-md-7 text-right">{{ date_modified }}</div>
+									<div class="col-md-7 text-end">{{ date_modified }}</div>
 								</div>
 								<hr>
 								<div class="row">
 									<div class="col-md-5"><strong>{{ text_date_added }}</strong></div>
-									<div class="col-md-7 text-right">{{ date_added }}</div>
+									<div class="col-md-7 text-end">{{ date_added }}</div>
 								</div>
 							</div>
 						</div>
@@ -147,10 +144,10 @@ $('#button-opencart').on('click', function(e) {
         url: 'index.php?route=marketplace/api&user_token={{ user_token }}',
         dataType: 'html',
         beforeSend: function() {
-            $('#button-opencart').button('loading');
+            $('#button-opencart').prop('disabled', true).addClass('loading');
         },
         complete: function() {
-            $('#button-opencart').button('reset');
+            $('#button-opencart').prop('disabled', false).removeClass('loading');
         },
         success: function(html) {
             $('body').append(html);
@@ -158,7 +155,7 @@ $('#button-opencart').on('click', function(e) {
             $('#modal-opencart').modal('show');
         },
         error: function(xhr, ajaxOptions, thrownError) {
-            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 });
@@ -174,18 +171,18 @@ $('#button-buy').on('click', function(e) {
     html += '    <div class="modal-content">';
     html += '      <div class="modal-header">';
     html += '        <h5 class="modal-title">{{ text_purchase }}</h5>';
-    html += '        <button type="button" class="close" data-dismiss="modal">&times;</button>';
+    html += '        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>';
     html += '      </div>';
     html += '      <div class="modal-body">';
     html += '        <p>{{ text_pin }}</p>';
     html += '        <p>{{ text_secure }}</p>';
-    html += '        <div class="form-group">';
+    html += '        <div class="mb-3">';
     html += '          <label for="input-pin">{{ entry_pin }}</label>';
-    html += '          <input type="password" name="pin" value="" placeholder="{{ entry_pin }}" id="input-pin" class="form-control" />';
+    html += '          <input type="password" name="pin" value="" placeholder="{{ entry_pin }}" id="input-pin" class="form-control"/>';
     html += '        </div>';
-    html += '        <div class="form-group text-right">';
-    html += '          <div class="float-left"><a href="https://www.opencart.com/index.php?route=support/contact" class="btn btn-light btn-lg" target="_blank">{{ button_forgot_pin }}</a></div>';
-    html += '          <button type="button" id="button-purchase" data-loading-text="{{ text_loading }}" class="btn btn-primary btn-lg">{{ button_purchase }}</button>';
+    html += '        <div class="mb-3 text-end">';
+    html += '          <div class="text-end"><a href="https://www.opencart.com/index.php?route=support/contact" class="btn btn-light btn-lg" target="_blank">{{ button_forgot_pin }}</a></div>';
+    html += '          <button type="button" id="button-purchase" class="btn btn-primary btn-lg">{{ button_purchase }}</button>';
     html += '        </div>';
     html += '      </div>';
     html += '    </div>';
@@ -205,31 +202,31 @@ $('body').on('click', '#modal-purchase #button-purchase', function(e) {
     $.ajax({
         url: 'index.php?route=marketplace/marketplace|purchase&user_token={{ user_token }}&extension_id={{ extension_id }}',
         type: 'post',
-        data: $('input[name=\'pin\']'),
+        data: $('#input-pin'),
         dataType: 'json',
         beforeSend: function() {
-            $(element).button('loading');
+            $(element).prop('disabled', true).addClass('loading');
         },
         complete: function() {
-            $(element).button('reset');
+            $(element).prop('disabled', false).removeClass('loading');
         },
         success: function(json) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
-                $('#modal-purchase .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                $('#modal-purchase .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
 
             if (json['success']) {
-                $('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-
                 $('#modal-purchase').modal('hide');
+
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                 $('#download').load('index.php?route=marketplace/marketplace|extension&user_token={{ user_token }}&extension_id={{ extension_id }}');
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
-            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 });
@@ -246,26 +243,26 @@ $('#tab-download').on('click', '.btn-primary', function(e) {
         url: $(element).val(),
         dataType: 'json',
         beforeSend: function() {
-            $(element).button('loading');
+            $(element).prop('disabled', true).addClass('loading');
         },
         complete: function() {
-            $(element).button('reset');
+            $(element).prop('disabled', false).removeClass('loading');
         },
         success: function(json) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
-                $('#download').before('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div></div>');
+                $('#download').before('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div></div>');
             }
 
             if (json['success']) {
-                $('#download').before('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                $('#download').before('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + '  <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                 $(element).parent().addClass();
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
-            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 });
@@ -279,26 +276,26 @@ $('#tab-download').on('click', '.dropdown-item', function(e) {
         url: $(element).attr('href'),
         dataType: 'json',
         beforeSend: function() {
-            $(element).button('loading');
+            $(element).prop('disabled', true).addClass('loading');
         },
         complete: function() {
-            $(element).button('reset');
+            $(element).prop('disabled', false).removeClass('loading');
         },
         success: function(json) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
-                $('#download').before('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div></div>');
+                $('#download').before('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + '  <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div></div>');
             }
 
             if (json['success']) {
-                $('#download').before('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                $('#download').before('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + '  <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                 $('#download').load('index.php?route=marketplace/marketplace|extension&user_token={{ user_token }}&extension_id={{ extension_id }}');
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
-            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 });
@@ -318,30 +315,30 @@ $('#button-comment').on('click', function() {
         url: 'index.php?route=marketplace/marketplace|addcomment&user_token={{ user_token }}&extension_id={{ extension_id }}',
         type: 'post',
         dataType: 'json',
-        data: 'comment=' + encodeURIComponent($('textarea[name=\'comment\']').val()),
+        data: 'comment=' + encodeURIComponent($('#input-comment').val()),
         beforeSend: function() {
-            $('#button-comment').button('loading');
+            $('#button-comment').prop('disabled', true).addClass('loading');
         },
         complete: function() {
-            $('#button-comment').button('reset');
+            $('#button-comment').prop('disabled', false).removeClass('loading');
         },
         success: function(json) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
-                $('#tab-comment').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                $('#tab-comment').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
 
             if (json['success']) {
-                $('#tab-comment').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                $('#tab-comment').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                 $('#comment').load('index.php?route=marketplace/marketplace|comment&user_token={{ user_token }}&extension_id={{ extension_id }}');
 
-                $('textarea[name=\'comment\']').val('');
+                $('#input-comment').val('');
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
-            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 });
@@ -356,10 +353,10 @@ $('#comment').on('click', '.btn-block', function(e) {
         url: $(element).attr('href'),
         dataType: 'html',
         beforeSend: function() {
-            $(element).button('loading');
+            $(element).prop('disabled', true).addClass('loading');
         },
         complete: function() {
-            $(element).button('reset');
+            $(element).prop('disabled', false).removeClass('loading');
         },
         success: function(html) {
             $(element).parent().parent().parent().append(html);
@@ -367,7 +364,7 @@ $('#comment').on('click', '.btn-block', function(e) {
             $(element).parent().remove();
         },
         error: function(xhr, ajaxOptions, thrownError) {
-            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 });
@@ -391,20 +388,20 @@ $('#comment').on('click', '.btn-primary', function(e) {
         dataType: 'json',
         data: 'comment=' + encodeURIComponent($(element).parents('.reply-input-box').find('textarea[name=\'comment\']').val()),
         beforeSend: function() {
-            $(element).button('loading');
+            $(element).prop('disabled', true).addClass('loading');
         },
         complete: function() {
-            $(element).button('reset');
+            $(element).prop('disabled', false).removeClass('loading');
         },
         success: function(json) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
-                $(element).parents('.reply-input-box').before('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                $(element).parents('.reply-input-box').before('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
 
             if (json['success']) {
-                $(element).parents('.reply-input-box').before('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                $(element).parents('.reply-input-box').before('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                 $(element).parents('.reply-input-box').parents('.media').find('.reply-refresh').last().trigger('click');
 
@@ -412,7 +409,7 @@ $('#comment').on('click', '.btn-primary', function(e) {
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
-            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 });
@@ -427,21 +424,20 @@ $('#comment').on('click', '.reply-refresh', function(e) {
         url: $(element).attr('href'),
         dataType: 'html',
         beforeSend: function() {
-            $(element).button('loading');
+            $(element).prop('disabled', true).addClass('loading');
         },
         complete: function() {
-            $(element).button('reset');
+            $(element).prop('disabled', false).removeClass('loading');
         },
         success: function(html) {
             $(element).parent().replaceWith(html);
         },
         error: function(xhr, ajaxOptions, thrownError) {
-            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 });
-//--></script>
-<script type="text/javascript"><!--
+
 $(document).ready(function() {
     $('.thumbnails').magnificPopup({
         type: 'image',

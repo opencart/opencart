@@ -23,49 +23,20 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 
 		$data['button_continue'] = $this->language->get('button_continue');
 
-		$data['store'] = HTTP_OPENCART;
+		$file = DIR_OPENCART . 'admin/config.php';
 
-		$data['total'] = count(glob(DIR_APPLICATION . 'model/upgrade/*.php'));
+		if (!is_file($file)) {
+			$data['error_warning'] = sprintf($this->language->get('error_admin'), $file);
+		} else {
+			$data['error_warning'] = '';
+		}
+
+		$data['total'] = count(glob(DIR_APPLICATION . 'controller/upgrade/upgrade_*.php'));
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['column_left'] = $this->load->controller('common/column_left');
 
 		$this->response->setOutput($this->load->view('upgrade/upgrade', $data));
-	}
-
-	public function next(): void {
-		$this->load->language('upgrade/upgrade');
-
-		$json = [];
-
-		if (isset($this->request->get['step'])) {
-			$step = $this->request->get['step'];
-		} else {
-			$step = 1;
-		}
-
-		$files = glob(DIR_APPLICATION . 'model/upgrade/*.php');
-
-		if (isset($files[$step - 1])) {
-			// Get the upgrade file
-			try {
-				$this->load->model('upgrade/' . basename($files[$step - 1], '.php'));
-
-				// All upgrade methods require a upgrade method
-				$this->{'model_upgrade_' . str_replace('.', '', basename($files[$step - 1], '.php'))}->upgrade();
-
-				$json['success'] = sprintf($this->language->get('text_progress'), basename($files[$step - 1], '.php'), $step, count($files));
-
-				$json['next'] = $this->url->link('upgrade/upgrade|next', 'step=' . ($step + 1), true);
-			} catch(\ErrorException $exception) {
-				$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
-			}
-		} else {
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
 	}
 }

@@ -7,6 +7,9 @@
     </div>
   </div>
   <div class="container">
+    {% if error_warning %}
+      <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}</div>
+    {% endif %}
     <div class="card">
       <div class="card-header"><i class="fab fa-opencart"></i>&nbsp;&nbsp;&nbsp;{{ text_upgrade }}</div>
       <div class="card-body">
@@ -39,69 +42,61 @@
       </div>
     </div>
   </div>
-
 </div>
 <script type="text/javascript"><!--
-var step = 0;
-
-$('#button-continue').on('click', function() {
-    step = 0;
-
-    $('#button-continue').button('loading');
+$('#button-continue').on('click', function () {
+    var step = 1;
 
     $('#progress-bar').addClass('progress-bar-success').css('width', '0%').removeClass('progress-bar-danger');
     $('#progress-text').html('');
 
+    var next = 'index.php?route=upgrade/upgrade_1';
 
-    upgrade('index.php?route=upgrade/upgrade|next');
+    var upgrade = function () {
+        return $.ajax({
+            url: next,
+            dataType: 'json',
+            beforeSend: function () {
+                $('#button-continue').prop('disabled', true).addClass('loading');
+            },
+            complete: function () {
+                $('#button-continue').prop('disabled', false).removeClass('loading');
+            },
+            success: function (json) {
+                if (json['redirect']) {
+                    location = json['redirect'];
+                }
+
+                if (json['error']) {
+                    $('#progress-bar').addClass('progress-bar-danger');
+                    $('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
+                }
+
+                if (json['text']) {
+                    $('#progress-text').html('<span class="text-success">' + json['text'] + '</span>');
+                }
+
+                if (json['success']) {
+                    $('#progress-text').html('<span class="text-success">' + json['success'] + '</span>');
+                }
+
+                $('#progress-bar').css('width', Math.round((step / {{ total }}) * 100) + '%');
+
+                step++;
+
+                if (json['next']) {
+                    next = json['next'];
+
+                    chain.attach(upgrade);
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
+        });
+    }
+
+    chain.attach(upgrade);
 });
-
-var upgrade = function(url) {
-    $.ajax({
-        url: url,
-        type: 'post',
-        dataType: 'json',
-        success: function(json) {
-            console.log(json);
-
-            if (json['error']) {
-                $('#progress-bar').addClass('progress-bar-danger');
-                $('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
-
-                $('#button-continue').prop('disabled', false);
-                $('#button-continue').button('reset');
-            }
-
-            if (json['success']) {
-                $('#progress-text').html('<span class="text-success">' + json['success'] + '</span>');
-                $('#progress-bar').css('width', ((step / {{ total }}) * 100) + '%');
-            }
-
-            if (json['next']) {
-                next = json['next'];
-
-
-            } else {
-                next = '';
-            }
-
-            if (!json['error']) {
-             //   $('#button-continue').replaceWith('<a href="{{ store }}" class="btn btn-primary">{{ button_continue }}</a>');
-             //   $('#button-continue').button('reset');
-            }
-
-            step++;
-        },
-        error: function(xhr, ajaxOptions, thrownError) {
-            $('#progress-bar').addClass('progress-bar-danger');
-            $('#progress-text').html('<div class="text-danger">' + (thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText) + '</div>');
-            $('#button-continue').button('reset');
-        }
-    }).done(function() {
-        if (next) {
-            upgrade(next);
-        }
-    });
-}
 //--></script>
 {{ footer }}

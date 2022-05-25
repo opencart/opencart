@@ -27,21 +27,23 @@ class File {
 		if ($files) {
 			$handle = fopen($files[0], 'r');
 
-			flock($handle, LOCK_SH);
+			if (is_resource($handle)) {
+				flock($handle, LOCK_SH);
 
-			$size = filesize($files[0]);
+				$size = filesize($files[0]);
 
-			if ($size > 0) {
-				$data = fread($handle, $size);
-			} else {
-				$data = '';
+				if ($size > 0) {
+					$data = fread($handle, $size);
+				} else {
+					$data = '';
+				}
+
+				flock($handle, LOCK_UN);
+
+				fclose($handle);
+
+				return json_decode($data, true);
 			}
-
-			flock($handle, LOCK_UN);
-
-			fclose($handle);
-
-			return json_decode($data, true);
 		}
 
 		return [];

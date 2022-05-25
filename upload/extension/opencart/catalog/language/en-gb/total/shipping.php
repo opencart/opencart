@@ -3,9 +3,10 @@
 $_['heading_title']        = 'Estimate Shipping &amp; Taxes';
 
 // Text
+$_['text_shipping_method'] = 'Shipping method options';
+$_['text_destination']     = 'Enter your destination to get a shipping estimate.';
+$_['text_estimate']        = 'Please select the preferred shipping method to use on this order.';
 $_['text_success']         = 'Success: Your shipping estimate has been applied!';
-$_['text_shipping']        = 'Enter your destination to get a shipping estimate.';
-$_['text_shipping_method'] = 'Please select the preferred shipping method to use on this order.';
 
 // Entry
 $_['entry_country']        = 'Country';

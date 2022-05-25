@@ -94,7 +94,7 @@ class CustomField extends \Opencart\System\Engine\Model {
 		}
 
 		if (!empty($data['filter_name'])) {
-			$sql .= " AND cfd.`name` LIKE '" . $this->db->escape((string)$data['filter_name']) . "%'";
+			$sql .= " AND cfd.`name` LIKE '" . $this->db->escape((string)$data['filter_name'] . '%') . "'";
 		}
 
 		if (isset($data['filter_status'])) {

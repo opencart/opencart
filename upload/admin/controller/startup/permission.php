@@ -11,7 +11,7 @@ class Permission extends \Opencart\System\Engine\Controller {
 				$route = substr($this->request->get['route'], 0, $pos);
 			}
 
-			// We want to ingore some pages from having its permission checked.
+			// We want to ignore some pages from having its permission checked.
 			$ignore = [
 				'common/dashboard',
 				'common/login',

@@ -1,0 +1,128 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="float-end">
+        <button type="button" data-bs-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-subscription').toggleClass('d-none');" class="btn btn-light d-md-none"><i class="fas fa-filter"></i></button>
+      </div>
+      <h1>{{ heading_title }}</h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div id="filter-subscription" class="col-lg-3 col-md-12 order-lg-last d-none d-lg-block mb-3">
+        <div class="card">
+          <div class="card-header"><i class="fas fa-filter"></i> {{ text_filter }}</div>
+          <div class="card-body">
+            <div class="mb-3">
+              <label for="input-subscription-id" class="form-label">{{ entry_subscription_id }}</label>
+              <input type="text" name="filter_subscription_id" value="{{ filter_subscription_id }}" placeholder="{{ entry_subscription_id }}" id="input-subscription-id" class="form-control"/>
+            </div>
+            <div class="mb-3">
+              <label for="input-order-id" class="form-label">{{ entry_order_id }}</label>
+              <input type="text" name="filter_order_id" value="{{ filter_order_id }}" placeholder="{{ entry_order_id }}" id="input-order-id" class="form-control"/>
+            </div>
+            <div class="mb-3">
+              <label for="input-customer" class="form-label">{{ entry_customer }}</label>
+              <input type="text" name="filter_customer" value="{{ filter_customer }}" placeholder="{{ entry_customer }}" id="input-customer" list="list-customer" class="form-control"/>
+              <datalist id="list-customer"></datalist>
+            </div>
+            <div class="mb-3">
+              <label for="input-status" class="form-label">{{ entry_subscription_status }}</label>
+                <select name="filter_subscription_status_id" id="input-subscription-status" class="form-select">
+                  <option value=""></option>
+                  {% for subscription_status in subscription_statuses %}
+                    <option value="{{ subscription_status.subscription_status_id }}"{% if subscription_status.subscription_status_id == filter_subscription_status_id %} selected="selected"{% endif %}>{{ subscription_status.name }}</option>
+                  {% endfor %}
+                </select>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="input-date-date_added" class="form-label">{{ entry_date_added }}</label>
+              <div class="input-group">
+                <input type="text" name="filter_date_added" value="{{ filter_date_added }}" placeholder="{{ entry_date_added }}" id="input-date-date_added" class="form-control date"/>
+                <div class="input-group-text"><i class="fas fa-calendar"></i></div>
+              </div>
+            </div>
+            <div class="text-end">
+              <button type="button" id="button-filter" class="btn btn-light"><i class="fas fa-filter"></i> {{ button_filter }}</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-9 col-md-12">
+        <div class="card">
+          <div class="card-header"><i class="fas fa-list"></i> {{ text_list }}</div>
+          <div id="subscription" class="card-body">{{ list }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript"><!--
+$('#subscription').on('click', 'thead a, .pagination a', function (e) {
+    e.preventDefault();
+
+    $('#subscription').load(this.href);
+});
+
+$('#button-filter').on('click', function () {
+    url = '';
+
+    var filter_subscription_id = $('#input-subscription-id').val();
+
+    if (filter_subscription_id) {
+        url += '&filter_subscription_id=' + filter_subscription_id;
+    }
+
+    var filter_order_id = $('#input-order_id').val();
+
+    if (filter_order_id) {
+        url += '&filter_order_id=' + filter_order_id;
+    }
+
+    var filter_customer = $('#input-customer').val();
+
+    if (filter_customer) {
+        url += '&filter_customer=' + encodeURIComponent(filter_customer);
+    }
+
+    var filter_subscription_status_id = $('#input-subscription-status').val();
+
+    if (filter_subscription_status_id !== '') {
+        url += '&filter_subscription_status_id=' + filter_subscription_status_id;
+    }
+
+    var filter_date_added = $('#input-date_added').val();
+
+    if (filter_date_added != '') {
+        url += '&filter_date_added=' + encodeURIComponent(filter_date_added);
+    }
+
+    $('#subscription').load('index.php?route=sale/subscription|list&user_token={{ user_token }}' + url);
+});
+
+$('#input-customer').autocomplete({
+    'source': function (request, response) {
+        $.ajax({
+            url: 'index.php?route=customer/customer|autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
+            dataType: 'json',
+            success: function (json) {
+                response($.map(json, function (item) {
+                    return {
+                        label: item['name'],
+                        value: item['customer_id']
+                    }
+                }));
+            }
+        });
+    },
+    'select': function (item) {}
+});
+//--></script>
+{{ footer }}

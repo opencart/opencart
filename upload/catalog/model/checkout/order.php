@@ -6,6 +6,8 @@ class Order extends \Opencart\System\Engine\Model {
 
 		$order_id = $this->db->getLastId();
 
+		$this->load->model('checkout/subscription');
+
 		// Products
 		if (isset($data['products'])) {
 			foreach ($data['products'] as $product) {
@@ -16,20 +18,40 @@ class Order extends \Opencart\System\Engine\Model {
 				foreach ($product['option'] as $option) {
 					$this->db->query("INSERT INTO `" . DB_PREFIX . "order_option` SET `order_id` = '" . (int)$order_id . "', `order_product_id` = '" . (int)$order_product_id . "', `product_option_id` = '" . (int)$option['product_option_id'] . "', `product_option_value_id` = '" . (int)$option['product_option_value_id'] . "', `name` = '" . $this->db->escape($option['name']) . "', `value` = '" . $this->db->escape($option['value']) . "', `type` = '" . $this->db->escape($option['type']) . "'");
 				}
+
+				if ($product['subscription']) {
+					$subscription_data = [
+						'order_product_id' => $order_product_id,
+						'name'             => $product['subscription']['name'],
+						'description'      => $product['subscription']['description'],
+						'trial_price'      => $product['subscription']['trial_price'],
+						'trial_frequency'  => $product['subscription']['trial_frequency'],
+						'trial_cycle'      => $product['subscription']['trial_cycle'],
+						'trial_duration'   => $product['subscription']['trial_duration'],
+						'trial_status'     => $product['subscription']['trial_status'],
+						'price'            => $product['subscription']['price'],
+						'frequency'        => $product['subscription']['frequency'],
+						'cycle'            => $product['subscription']['cycle'],
+						'duration'         => $product['subscription']['duration'],
+						'remaining'        => $product['subscription']['duration'],
+						'date_next'        => $product['subscription']['date_next']
+					];
+
+					$this->model_checkout_subscription->addSubscription($order_id, $subscription_data);
+				}
 			}
 		}
 
-		// Gift Voucher
-		$this->load->model('account/voucher');
-
 		// Vouchers
 		if (isset($data['vouchers'])) {
+			$this->load->model('checkout/voucher');
+
 			foreach ($data['vouchers'] as $voucher) {
 				$this->db->query("INSERT INTO `" . DB_PREFIX . "order_voucher` SET `order_id` = '" . (int)$order_id . "', `description` = '" . $this->db->escape($voucher['description']) . "', `code` = '" . $this->db->escape($voucher['code']) . "', `from_name` = '" . $this->db->escape($voucher['from_name']) . "', `from_email` = '" . $this->db->escape($voucher['from_email']) . "', `to_name` = '" . $this->db->escape($voucher['to_name']) . "', `to_email` = '" . $this->db->escape($voucher['to_email']) . "', `voucher_theme_id` = '" . (int)$voucher['voucher_theme_id'] . "', `message` = '" . $this->db->escape($voucher['message']) . "', `amount` = '" . (float)$voucher['amount'] . "'");
 
 				$order_voucher_id = $this->db->getLastId();
 
-				$voucher_id = $this->model_account_voucher->addVoucher($order_id, $voucher);
+				$voucher_id = $this->model_checkout_voucher->addVoucher($order_id, $voucher);
 
 				$this->db->query("UPDATE `" . DB_PREFIX . "order_voucher` SET `voucher_id` = '" . (int)$voucher_id . "' WHERE `order_voucher_id` = '" . (int)$order_voucher_id . "'");
 			}
@@ -54,18 +76,19 @@ class Order extends \Opencart\System\Engine\Model {
 		if ($order_info) {
 			// 2. Merge the old order data with the new data
 			foreach ($order_info as $key => $value) {
-				if (isset($data[$key])) {
-					$order[$key] = $data[$key];
-				} elseif (isset($order_data[$key])) {
-					$order[$key] = $order_info[$key];
+				if (!isset($data[$key])) {
+					$data[$key] = $value;
 				}
 			}
-
 
 			$this->db->query("UPDATE `" . DB_PREFIX . "order` SET `invoice_prefix` = '" . $this->db->escape((string)$data['invoice_prefix']) . "', `store_id` = '" . (int)$data['store_id'] . "', `store_name` = '" . $this->db->escape((string)$data['store_name']) . "', `store_url` = '" . $this->db->escape((string)$data['store_url']) . "', `customer_id` = '" . (int)$data['customer_id'] . "', `customer_group_id` = '" . (int)$data['customer_group_id'] . "', `firstname` = '" . $this->db->escape((string)$data['firstname']) . "', `lastname` = '" . $this->db->escape((string)$data['lastname']) . "', `email` = '" . $this->db->escape((string)$data['email']) . "', `telephone` = '" . $this->db->escape((string)$data['telephone']) . "', `custom_field` = '" . $this->db->escape(json_encode($data['custom_field'])) . "', `payment_firstname` = '" . $this->db->escape((string)$data['payment_firstname']) . "', `payment_lastname` = '" . $this->db->escape((string)$data['payment_lastname']) . "', `payment_company` = '" . $this->db->escape((string)$data['payment_company']) . "', `payment_address_1` = '" . $this->db->escape((string)$data['payment_address_1']) . "', `payment_address_2` = '" . $this->db->escape((string)$data['payment_address_2']) . "', `payment_city` = '" . $this->db->escape((string)$data['payment_city']) . "', `payment_postcode` = '" . $this->db->escape((string)$data['payment_postcode']) . "', `payment_country` = '" . $this->db->escape((string)$data['payment_country']) . "', `payment_country_id` = '" . (int)$data['payment_country_id'] . "', `payment_zone` = '" . $this->db->escape((string)$data['payment_zone']) . "', `payment_zone_id` = '" . (int)$data['payment_zone_id'] . "', `payment_address_format` = '" . $this->db->escape((string)$data['payment_address_format']) . "', `payment_custom_field` = '" . $this->db->escape(json_encode($data['payment_custom_field'])) . "', `payment_method` = '" . $this->db->escape((string)$data['payment_method']) . "', `payment_code` = '" . $this->db->escape((string)$data['payment_code']) . "', `shipping_firstname` = '" . $this->db->escape((string)$data['shipping_firstname']) . "', `shipping_lastname` = '" . $this->db->escape((string)$data['shipping_lastname']) . "', `shipping_company` = '" . $this->db->escape((string)$data['shipping_company']) . "', `shipping_address_1` = '" . $this->db->escape((string)$data['shipping_address_1']) . "', `shipping_address_2` = '" . $this->db->escape((string)$data['shipping_address_2']) . "', `shipping_city` = '" . $this->db->escape((string)$data['shipping_city']) . "', `shipping_postcode` = '" . $this->db->escape((string)$data['shipping_postcode']) . "', `shipping_country` = '" . $this->db->escape((string)$data['shipping_country']) . "', `shipping_country_id` = '" . (int)$data['shipping_country_id'] . "', `shipping_zone` = '" . $this->db->escape((string)$data['shipping_zone']) . "', `shipping_zone_id` = '" . (int)$data['shipping_zone_id'] . "', `shipping_address_format` = '" . $this->db->escape((string)$data['shipping_address_format']) . "', `shipping_custom_field` = '" . $this->db->escape(json_encode($data['shipping_custom_field'])) . "', `shipping_method` = '" . $this->db->escape((string)$data['shipping_method']) . "', `shipping_code` = '" . $this->db->escape((string)$data['shipping_code']) . "', `comment` = '" . $this->db->escape((string)$data['comment']) . "', `total` = '" . (float)$data['total'] . "', `affiliate_id` = '" . (int)$data['affiliate_id'] . "', `commission` = '" . (float)$data['commission'] . "', `date_modified` = NOW() WHERE `order_id` = '" . (int)$order_id . "'");
 
 			$this->db->query("DELETE FROM `" . DB_PREFIX . "order_product` WHERE `order_id` = '" . (int)$order_id . "'");
 			$this->db->query("DELETE FROM `" . DB_PREFIX . "order_option` WHERE `order_id` = '" . (int)$order_id . "'");
+
+			$this->load->model('checkout/subscription');
+
+			$this->model_checkout_subscription->deleteSubscriptionByOrderId($order_id);
 
 			// Products
 			if (isset($data['products'])) {
@@ -77,13 +100,17 @@ class Order extends \Opencart\System\Engine\Model {
 					foreach ($product['option'] as $option) {
 						$this->db->query("INSERT INTO `" . DB_PREFIX . "order_option` SET `order_id` = '" . (int)$order_id . "', `order_product_id` = '" . (int)$order_product_id . "', `product_option_id` = '" . (int)$option['product_option_id'] . "', `product_option_value_id` = '" . (int)$option['product_option_value_id'] . "', `name` = '" . $this->db->escape($option['name']) . "', `value` = '" . $this->db->escape($option['value']) . "', `type` = '" . $this->db->escape($option['type']) . "'");
 					}
+
+					if ($product['subscription']) {
+						$this->model_checkout_subscription->addSubscription($order_id, $product['subscription'] + ['order_product_id' => $order_product_id]);
+					}
 				}
 			}
 
 			// Gift Voucher
-			$this->load->model('account/voucher');
+			$this->load->model('checkout/voucher');
 
-			$this->model_account_voucher->disableVoucher($order_id);
+			$this->model_checkout_voucher->deleteVoucherByOrderId($order_id);
 
 			// Vouchers
 			$this->db->query("DELETE FROM `" . DB_PREFIX . "order_voucher` WHERE `order_id` = '" . (int)$order_id . "'");
@@ -94,7 +121,7 @@ class Order extends \Opencart\System\Engine\Model {
 
 					$order_voucher_id = $this->db->getLastId();
 
-					$voucher_id = $this->model_account_voucher->addVoucher($order_id, $voucher);
+					$voucher_id = $this->model_checkout_voucher->addVoucher($order_id, $voucher);
 
 					$this->db->query("UPDATE `" . DB_PREFIX . "order_voucher` SET `voucher_id` = '" . (int)$voucher_id . "' WHERE `order_voucher_id` = '" . (int)$order_voucher_id . "'");
 				}
@@ -111,6 +138,10 @@ class Order extends \Opencart\System\Engine\Model {
 		}
 	}
 
+	public function editTransactionId(int $order_id, string $transaction_id): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "order` SET `transaction_id` = '" . $this->db->escape($transaction_id) . "' WHERE `order_id` = '" . (int)$order_id . "'");
+	}
+
 	public function deleteOrder(int $order_id): void {
 		// Void the order first
 		$this->addHistory($order_id, 0);
@@ -121,13 +152,14 @@ class Order extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "order_voucher` WHERE `order_id` = '" . (int)$order_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "order_total` WHERE `order_id` = '" . (int)$order_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "order_history` WHERE `order_id` = '" . (int)$order_id . "'");
-		$this->db->query("DELETE or, ort FROM `" . DB_PREFIX . "order_recurring` `or`, `" . DB_PREFIX . "order_recurring_transaction` `ort` WHERE `order_id` = '" . (int)$order_id . "' AND ort.`order_recurring_id` = or.`order_recurring_id`");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "subscription` WHERE `order_id` = '" . (int)$order_id . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "subscription_transaction` WHERE `order_id` = '" . (int)$order_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_transaction` WHERE `order_id` = '" . (int)$order_id . "'");
 
 		// Gift Voucher
-		$this->load->model('account/voucher');
+		$this->load->model('checkout/voucher');
 
-		$this->model_account_voucher->disableVoucher($order_id);
+		$this->model_checkout_voucher->deleteVoucherByOrderId($order_id);
 	}
 
 	public function getOrder(int $order_id): array {
@@ -138,6 +170,8 @@ class Order extends \Opencart\System\Engine\Model {
 
 			$this->load->model('localisation/country');
 			$this->load->model('localisation/zone');
+
+			$order_data['custom_field'] = json_decode($order_query->row['custom_field'], true);
 
 			foreach (['payment', 'shipping'] as $column) {
 				$country_info = $this->model_localisation_country->getCountry($order_query->row[$column . '_country_id']);
@@ -160,18 +194,6 @@ class Order extends \Opencart\System\Engine\Model {
 
 				$order_data[$column . '_custom_field'] = json_decode($order_query->row[$column . '_custom_field'], true);
 			}
-
-			$this->load->model('localisation/language');
-
-			$language_info = $this->model_localisation_language->getLanguage($order_query->row['language_id']);
-
-			if ($language_info) {
-				$order_data['language_code'] = $language_info['code'];
-			} else {
-				$order_data['language_code'] = $this->config->get('config_language');
-			}
-
-			$order_data['custom_field'] = json_decode($order_query->row['custom_field'], true);
 
 			return $order_data;
 		} else {
@@ -276,16 +298,17 @@ class Order extends \Opencart\System\Engine\Model {
 						$this->db->query("UPDATE `" . DB_PREFIX . "product_option_value` SET `quantity` = (`quantity` - " . (int)$order_product['quantity'] . ") WHERE `product_option_value_id` = '" . (int)$order_option['product_option_value_id'] . "' AND `subtract` = '1'");
 					}
 				}
+			}
 
+			// Affiliate add commission if complete status
+			if (!in_array($order_info['order_status_id'], (array)$this->config->get('config_complete_status')) && in_array($order_status_id, (array)$this->config->get('config_complete_status')) && $order_info['affiliate_id'] && $this->config->get('config_affiliate_auto')) {
 				// Add commission if sale is linked to affiliate referral.
-				if ($order_info['affiliate_id'] && $this->config->get('config_affiliate_auto')) {
-					$this->load->language('account/order');
+				$this->load->language('account/order');
 
-					$this->load->model('account/customer');
+				$this->load->model('account/customer');
 
-					if (!$this->model_account_customer->getTotalTransactionsByOrderId($order_id)) {
-						$this->model_account_customer->addTransaction($order_info['affiliate_id'], $this->language->get('text_order_id') . ' #' . $order_id, $order_info['commission'], $order_id);
-					}
+				if (!$this->model_account_customer->getTotalTransactionsByOrderId($order_id)) {
+					$this->model_account_customer->addTransaction($order_info['affiliate_id'], $this->language->get('text_order_id') . ' #' . $order_id, $order_info['commission'], $order_id);
 				}
 			}
 
@@ -326,13 +349,13 @@ class Order extends \Opencart\System\Engine\Model {
 						$this->{'model_extension_' . $order_total['extension'] . '_total_' . $order_total['code']}->unconfirm($order_id);
 					}
 				}
+			}
 
-				// Remove commission if sale is linked to affiliate referral.
-				if ($order_info['affiliate_id']) {
-					$this->load->model('account/customer');
+			// Affiliate remove commission.
+			if (in_array($order_info['order_status_id'], (array)$this->config->get('config_complete_status')) && !in_array($order_status_id, (array)$this->config->get('config_complete_status')) && $order_info['affiliate_id']) {
+				$this->load->model('account/customer');
 
-					$this->model_account_customer->deleteTransactionByOrderId($order_id);
-				}
+				$this->model_account_customer->deleteTransactionByOrderId($order_id);
 			}
 
 			$this->cache->delete('product');

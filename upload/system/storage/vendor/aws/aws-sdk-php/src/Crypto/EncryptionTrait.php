@@ -173,7 +173,7 @@ trait EncryptionTrait
                     $cipherTextStream->createStream()
                 ]);
                 $cipherOptions['Tag'] = $cipherTextStream->getTag();
-                $appendStream->addStream(Psr7\stream_for($cipherOptions['Tag']));
+                $appendStream->addStream(Psr7\Utils::streamFor($cipherOptions['Tag']));
                 return [$appendStream, $cipherTextStream->getAesName()];
             default:
                 $cipherMethod = $this->buildCipherMethod(

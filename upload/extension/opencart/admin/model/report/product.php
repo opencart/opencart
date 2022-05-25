@@ -1,8 +1,8 @@
 <?php
 namespace Opencart\Admin\Model\Extension\Opencart\Report;
 class Product extends \Opencart\System\Engine\Model {
-	public function getProductsViewed(array $data = []): array {
-		$sql = "SELECT pd.`name`, p.`model`, p.`viewed` FROM `" . DB_PREFIX . "product` p LEFT JOIN `" . DB_PREFIX . "product_description` pd ON (p.`product_id` = pd.`product_id`) WHERE pd.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND p.`viewed` > '0' ORDER BY p.`viewed` DESC";
+	public function getViewed(array $data = []): array {
+		$sql = "SELECT pd.`name`, p.`model`, COUNT(pr.`product_id`) AS `viewed` FROM `" . DB_PREFIX . "product_report` pr LEFT JOIN `" . DB_PREFIX . "product` p ON (pr.`product_id` = p.`product_id`) LEFT JOIN `" . DB_PREFIX . "product_description` pd ON (p.`product_id` = pd.`product_id`) WHERE pd.`language_id` = '" . (int)$this->config->get('config_language_id') . "' GROUP BY pr.product_id ORDER BY p.`viewed` DESC";
 
 		if (isset($data['start']) || isset($data['limit'])) {
 			if ($data['start'] < 0) {
@@ -21,20 +21,14 @@ class Product extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function getTotalProductViews(): int {
-		$query = $this->db->query("SELECT SUM(`viewed`) AS `total` FROM `" . DB_PREFIX . "product`");
-
-		return $query->row['total'];
-	}
-
-	public function getTotalProductsViewed(): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "product` WHERE `viewed` > '0'");
+	public function getTotalViewed(): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "product_report`");
 
 		return $query->row['total'];
 	}
 
 	public function reset(): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "product` SET `viewed` = '0'");
+		$this->db->query("TRUNCATE `" . DB_PREFIX . "product_report`");
 	}
 
 	public function getPurchased(array $data = []): array {
@@ -47,11 +41,11 @@ class Product extends \Opencart\System\Engine\Model {
 		}
 
 		if (!empty($data['filter_date_start'])) {
-			$sql .= " AND DATE(o.`date_added`) >= '" . $this->db->escape((string)$data['filter_date_start']) . "'";
+			$sql .= " AND DATE(o.`date_added`) >= DATE('" . $this->db->escape((string)$data['filter_date_start']) . "')";
 		}
 
 		if (!empty($data['filter_date_end'])) {
-			$sql .= " AND DATE(o.`date_added`) <= '" . $this->db->escape((string)$data['filter_date_end']) . "'";
+			$sql .= " AND DATE(o.`date_added`) <= DATE('" . $this->db->escape((string)$data['filter_date_end']) . "')";
 		}
 
 		$sql .= " GROUP BY op.`product_id` ORDER BY total DESC";
@@ -83,11 +77,11 @@ class Product extends \Opencart\System\Engine\Model {
 		}
 
 		if (!empty($data['filter_date_start'])) {
-			$sql .= " AND DATE(o.`date_added`) >= '" . $this->db->escape((string)$data['filter_date_start']) . "'";
+			$sql .= " AND DATE(o.`date_added`) >= DATE('" . $this->db->escape((string)$data['filter_date_start']) . "')";
 		}
 
 		if (!empty($data['filter_date_end'])) {
-			$sql .= " AND DATE(o.`date_added`) <= '" . $this->db->escape((string)$data['filter_date_end']) . "'";
+			$sql .= " AND DATE(o.`date_added`) <= DATE('" . $this->db->escape((string)$data['filter_date_end']) . "')";
 		}
 
 		$query = $this->db->query($sql);

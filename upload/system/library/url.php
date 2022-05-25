@@ -53,7 +53,7 @@ class Url {
 			if (is_array($args)) {
 				$url .= '&' . http_build_query($args);
 			} else {
-				$url .= '&' . ltrim($args, '&');
+				$url .= '&' . trim($args, '&');
 			}
 		}
 

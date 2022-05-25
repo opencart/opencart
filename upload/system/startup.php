@@ -48,16 +48,13 @@ if ((isset($_SERVER['HTTPS']) && (($_SERVER['HTTPS'] == 'on') || ($_SERVER['HTTP
 // Check IP if forwarded IP
 if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
 	$_SERVER['REMOTE_ADDR'] = $_SERVER['HTTP_X_FORWARDED_FOR'];
-} elseif(!empty($_SERVER['HTTP_CLIENT_IP'])) {
+} elseif (!empty($_SERVER['HTTP_CLIENT_IP'])) {
 	$_SERVER['REMOTE_ADDR'] = $_SERVER['HTTP_CLIENT_IP'];
 }
 
 // Helper
 require_once(DIR_SYSTEM . 'helper/general.php');
 require_once(DIR_SYSTEM . 'helper/utf8.php');
-
-// Vendor Autoloader
-require_once(DIR_STORAGE . 'vendor/autoload.php');
 
 // OpenCart Autoloader
 require_once(DIR_SYSTEM . 'engine/autoloader.php');

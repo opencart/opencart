@@ -2,13 +2,13 @@
 namespace Opencart\Admin\Model\Tool;
 class Notification extends \Opencart\System\Engine\Model {
 	public function addNotification(array $data): int {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "notification` SET `title` = '" . $this->db->escape((string)$data['title']) . "', `message` = '" . $this->db->escape((string)$data['message']) . "', `status` = '" . (bool)$data['status'] . "', `date_added` = NOW()");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "notification` SET `title` = '" . $this->db->escape((string)$data['title']) . "', `text` = '" . $this->db->escape((string)$data['text']) . "', `status` = '" . (bool)$data['status'] . "', `date_added` = NOW()");
 
 		return $this->db->getLastId();
 	}
 
-	public function editStatus(int $notification_id, $status): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "notification` SET `status` = '" . (int)$status . "' WHERE `notification_id` = '" . (int)$notification_id . "'");
+	public function editStatus(int $notification_id, bool $status): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "notification` SET `status` = '" . (bool)$status . "' WHERE `notification_id` = '" . (int)$notification_id . "'");
 	}
 
 	public function deleteNotification(int $notification_id): void {
@@ -25,7 +25,7 @@ class Notification extends \Opencart\System\Engine\Model {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "notification`";
 
 		if (isset($data['filter_status']) && $data['filter_status'] !== '') {
-			$sql .= " WHERE `status` = '" . (int)$data['filter_status'] . "'";
+			$sql .= " WHERE `status` = '" . (bool)$data['filter_status'] . "'";
 		}
 
 		$sql .= " ORDER BY `date_added` DESC";
@@ -51,7 +51,7 @@ class Notification extends \Opencart\System\Engine\Model {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "notification`";
 
 		if (isset($data['filter_status']) && $data['filter_status'] !== '') {
-			$sql .= " WHERE `status` = '" . (int)$data['filter_status'] . "'";
+			$sql .= " WHERE `status` = '" . (bool)$data['filter_status'] . "'";
 		}
 
 		$query = $this->db->query($sql);

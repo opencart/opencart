@@ -17,7 +17,7 @@ class SubTotal extends \Opencart\System\Engine\Model {
 			'code'       => 'sub_total',
 			'title'      => $this->language->get('text_sub_total'),
 			'value'      => $sub_total,
-			'sort_order' => $this->config->get('total_sub_total_sort_order')
+			'sort_order' => (int)$this->config->get('total_sub_total_sort_order')
 		];
 
 		$total += $sub_total;

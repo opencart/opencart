@@ -39,7 +39,9 @@ class File {
 		flock($handle, LOCK_EX);
 
 		fwrite($handle, json_encode($data));
+
 		ftruncate($handle, ftell($handle));
+
 		fflush($handle);
 
 		flock($handle, LOCK_UN);
@@ -64,7 +66,7 @@ class File {
 			$files = glob(DIR_SESSION . 'sess_*');
 
 			foreach ($files as $file) {
-				if (is_file($file) && filemtime($file) > $expire) {
+				if (is_file($file) && filemtime($file) < $expire) {
 					unlink($file);
 				}
 			}

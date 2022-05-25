@@ -1,34 +1,10 @@
 <?php
 namespace Opencart\Admin\Controller\Extension\Opencart\Payment;
 class Cheque extends \Opencart\System\Engine\Controller {
-	private $error = [];
-
 	public function index(): void {
 		$this->load->language('extension/opencart/payment/cheque');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('setting/setting');
-
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('payment_cheque', $this->request->post);
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment'));
-		}
-
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-
-		if (isset($this->error['payable'])) {
-			$data['error_payable'] = $this->error['payable'];
-		} else {
-			$data['error_payable'] = '';
-		}
 
 		$data['breadcrumbs'] = [];
 
@@ -47,53 +23,24 @@ class Cheque extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('extension/opencart/payment/cheque', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		$data['action'] = $this->url->link('extension/opencart/payment/cheque', 'user_token=' . $this->session->data['user_token']);
+		$data['save'] = $this->url->link('extension/opencart/payment/cheque|save', 'user_token=' . $this->session->data['user_token']);
+		$data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment');
 
-		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment');
-
-		if (isset($this->request->post['payment_cheque_payable'])) {
-			$data['payment_cheque_payable'] = $this->request->post['payment_cheque_payable'];
-		} else {
-			$data['payment_cheque_payable'] = $this->config->get('payment_cheque_payable');
-		}
-
-		if (isset($this->request->post['payment_cheque_total'])) {
-			$data['payment_cheque_total'] = $this->request->post['payment_cheque_total'];
-		} else {
-			$data['payment_cheque_total'] = $this->config->get('payment_cheque_total');
-		}
-
-		if (isset($this->request->post['payment_cheque_order_status_id'])) {
-			$data['payment_cheque_order_status_id'] = $this->request->post['payment_cheque_order_status_id'];
-		} else {
-			$data['payment_cheque_order_status_id'] = $this->config->get('payment_cheque_order_status_id');
-		}
+		$data['payment_cheque_payable'] = $this->config->get('payment_cheque_payable');
+		$data['payment_cheque_order_status_id'] = $this->config->get('payment_cheque_order_status_id');
 
 		$this->load->model('localisation/order_status');
 
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 
-		if (isset($this->request->post['payment_cheque_geo_zone_id'])) {
-			$data['payment_cheque_geo_zone_id'] = $this->request->post['payment_cheque_geo_zone_id'];
-		} else {
-			$data['payment_cheque_geo_zone_id'] = $this->config->get('payment_cheque_geo_zone_id');
-		}
+		$data['payment_cheque_geo_zone_id'] = $this->config->get('payment_cheque_geo_zone_id');
 
 		$this->load->model('localisation/geo_zone');
 
 		$data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 
-		if (isset($this->request->post['payment_cheque_status'])) {
-			$data['payment_cheque_status'] = $this->request->post['payment_cheque_status'];
-		} else {
-			$data['payment_cheque_status'] = $this->config->get('payment_cheque_status');
-		}
-
-		if (isset($this->request->post['payment_cheque_sort_order'])) {
-			$data['payment_cheque_sort_order'] = $this->request->post['payment_cheque_sort_order'];
-		} else {
-			$data['payment_cheque_sort_order'] = $this->config->get('payment_cheque_sort_order');
-		}
+		$data['payment_cheque_status'] = $this->config->get('payment_cheque_status');
+		$data['payment_cheque_sort_order'] = $this->config->get('payment_cheque_sort_order');
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -102,15 +49,28 @@ class Cheque extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('extension/opencart/payment/cheque', $data));
 	}
 
-	protected function validate(): bool {
+	public function save(): void {
+		$this->load->language('extension/opencart/payment/cheque');
+
+		$json = [];
+
 		if (!$this->user->hasPermission('modify', 'extension/opencart/payment/cheque')) {
-			$this->error['warning'] = $this->language->get('error_permission');
+			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
 		if (!$this->request->post['payment_cheque_payable']) {
-			$this->error['payable'] = $this->language->get('error_payable');
+			$json['error']['payable'] = $this->language->get('error_payable');
 		}
 
-		return !$this->error;
+		if (!$json) {
+			$this->load->model('setting/setting');
+
+			$this->model_setting_setting->editSetting('payment_cheque', $this->request->post);
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 }

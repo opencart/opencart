@@ -27,7 +27,7 @@ class Upload extends \Opencart\System\Engine\Controller {
 			}
 
 			if (!in_array(strtolower(substr(strrchr($filename, '.'), 1)), $allowed)) {
-				$json['error'] = $this->language->get('error_filetype');
+				$json['error'] = $this->language->get('error_file_type');
 			}
 
 			// Allowed file mime types
@@ -42,7 +42,7 @@ class Upload extends \Opencart\System\Engine\Controller {
 			}
 
 			if (!in_array($this->request->files['file']['type'], $allowed)) {
-				$json['error'] = $this->language->get('error_filetype');
+				$json['error'] = $this->language->get('error_file_type');
 			}
 
 			// Return any upload error

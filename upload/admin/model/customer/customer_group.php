@@ -2,7 +2,7 @@
 namespace Opencart\Admin\Model\Customer;
 class CustomerGroup extends \Opencart\System\Engine\Model {
 	public function addCustomerGroup(array $data): int {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "customer_group` SET `approval` = '" . (int)$data['approval'] . "', `sort_order` = '" . (int)$data['sort_order'] . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "customer_group` SET `approval` = '" . (isset($data['approval']) ? (bool)$data['approval'] : 0) . "', `sort_order` = '" . (int)$data['sort_order'] . "'");
 
 		$customer_group_id = $this->db->getLastId();
 
@@ -14,7 +14,7 @@ class CustomerGroup extends \Opencart\System\Engine\Model {
 	}
 
 	public function editCustomerGroup(int $customer_group_id, array $data): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "customer_group` SET `approval` = '" . (int)$data['approval'] . "', `sort_order` = '" . (int)$data['sort_order'] . "' WHERE `customer_group_id` = '" . (int)$customer_group_id . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "customer_group` SET `approval` = '" . (isset($data['approval']) ? (bool)$data['approval'] : 0) . "', `sort_order` = '" . (int)$data['sort_order'] . "' WHERE `customer_group_id` = '" . (int)$customer_group_id . "'");
 
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_group_description` WHERE `customer_group_id` = '" . (int)$customer_group_id . "'");
 

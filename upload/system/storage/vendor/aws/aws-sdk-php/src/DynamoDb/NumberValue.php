@@ -17,6 +17,7 @@ class NumberValue implements \JsonSerializable
         $this->value = (string) $value;
     }
 
+    #[\ReturnTypeWillChange]
     public function jsonSerialize()
     {
         return $this->value;

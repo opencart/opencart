@@ -1,16 +1,12 @@
 <?php
 namespace Opencart\Catalog\Controller\Extension\Opencart\Captcha;
 class Basic extends \Opencart\System\Engine\Controller {
-	public function index(array $error = []): string {
+	public function index(): string {
 		$this->load->language('extension/opencart/captcha/basic');
 
-		if (isset($error['captcha'])) {
-			$data['error_captcha'] = $error['captcha'];
-		} else {
-			$data['error_captcha'] = '';
-		}
-
 		$data['route'] = (string)$this->request->get['route'];
+
+		$this->session->data['captcha'] = substr(token(100), rand(0, 94), 6);
 
 		return $this->load->view('extension/opencart/captcha/basic', $data);
 	}
@@ -18,7 +14,7 @@ class Basic extends \Opencart\System\Engine\Controller {
 	public function validate(): string {
 		$this->load->language('extension/opencart/captcha/basic');
 
-		if (empty($this->session->data['captcha']) || ($this->session->data['captcha'] != $this->request->post['captcha'])) {
+		if (!isset($this->session->data['captcha']) || !isset($this->request->post['captcha']) || ($this->session->data['captcha'] != $this->request->post['captcha'])) {
 			return $this->language->get('error_captcha');
 		} else {
 			return '';
@@ -26,8 +22,6 @@ class Basic extends \Opencart\System\Engine\Controller {
 	}
 
 	public function captcha(): void {
-		$this->session->data['captcha'] = substr(token(100), rand(0, 94), 6);
-
 		$image  = imagecreatetruecolor(150, 35);
 
 		$width  = imagesx($image);

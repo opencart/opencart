@@ -5,6 +5,9 @@ class Coupon extends \Opencart\System\Engine\Controller {
 		if ($this->config->get('total_coupon_status')) {
 			$this->load->language('extension/opencart/total/coupon');
 
+			$data['save'] = $this->url->link('extension/opencart/total/coupon|save', 'language=' . $this->config->get('config_language'), true);
+			$data['list'] = $this->url->link('checkout/cart|list', 'language=' . $this->config->get('config_language'), true);
+
 			if (isset($this->session->data['coupon'])) {
 				$data['coupon'] = $this->session->data['coupon'];
 			} else {
@@ -13,14 +16,14 @@ class Coupon extends \Opencart\System\Engine\Controller {
 
 			return $this->load->view('extension/opencart/total/coupon', $data);
 		}
+
+		return '';
 	}
 
-	public function coupon(): void {
+	public function save(): void {
 		$this->load->language('extension/opencart/total/coupon');
 
 		$json = [];
-
-		$this->load->model('extension/opencart/total/coupon');
 
 		if (isset($this->request->post['coupon'])) {
 			$coupon = $this->request->post['coupon'];
@@ -28,37 +31,31 @@ class Coupon extends \Opencart\System\Engine\Controller {
 			$coupon = '';
 		}
 
-		$coupon_info = $this->model_extension_opencart_total_coupon->getCoupon($coupon);
-
-		if (empty($this->request->post['coupon'])) {
-			$json['error'] = $this->language->get('error_empty');
-
-			unset($this->session->data['coupon']);
-		} elseif ($coupon_info) {
-			$this->session->data['coupon'] = $this->request->post['coupon'];
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
-		} else {
-			$json['error'] = $this->language->get('error_coupon');
+		if (!$this->config->get('total_coupon_status')) {
+			$json['error'] = $this->language->get('error_status');
 		}
 
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
+		if ($coupon) {
+			$this->load->model('marketing/coupon');
 
-	public function remove(): void {
-		$this->load->language('extension/opencart/total/coupon');
+			$coupon_info = $this->model_marketing_coupon->getCoupon($coupon);
 
-		$json = [];
-
-		if (isset($this->session->data['coupon'])) {
-			unset($this->session->data['coupon']);
-
-			$this->session->data['success'] = $this->language->get('text_remove');
+			if (!$coupon_info) {
+				$json['error'] = $this->language->get('error_coupon');
+			}
 		}
 
-		$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
+		if (!$json) {
+			if ($coupon) {
+				$this->session->data['coupon'] = $coupon;
+
+				$json['success'] = $this->language->get('text_success');
+			} else {
+				unset($this->session->data['coupon']);
+
+				$json['success'] = $this->language->get('text_remove');
+			}
+		}
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

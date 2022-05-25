@@ -41,7 +41,7 @@ class Marketing extends \Opencart\System\Engine\Model {
 		$implode = [];
 
 		if (!empty($data['filter_name'])) {
-			$implode[] = "m.`name` LIKE '" . $this->db->escape((string)$data['filter_name']) . "%'";
+			$implode[] = "m.`name` LIKE '" . $this->db->escape((string)$data['filter_name'] . '%') . "'";
 		}
 
 		if (!empty($data['filter_code'])) {

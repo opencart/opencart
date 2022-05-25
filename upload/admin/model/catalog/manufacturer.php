@@ -20,9 +20,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 		if (isset($data['manufacturer_seo_url'])) {
 			foreach ($data['manufacturer_seo_url'] as $store_id => $language) {
 				foreach ($language as $language_id => $keyword) {
-					if ($keyword) {
-						$this->db->query("INSERT INTO `" . DB_PREFIX . "seo_url` SET `store_id` = '" . (int)$store_id . "', `language_id` = '" . (int)$language_id . "', `key` = 'manufacturer_id', `value` = '" . (int)$manufacturer_id . "', `keyword` = '" . $this->db->escape($keyword) . "'");
-					}
+					$this->db->query("INSERT INTO `" . DB_PREFIX . "seo_url` SET `store_id` = '" . (int)$store_id . "', `language_id` = '" . (int)$language_id . "', `key` = 'manufacturer_id', `value` = '" . (int)$manufacturer_id . "', `keyword` = '" . $this->db->escape($keyword) . "'");
 				}
 			}
 		}
@@ -58,9 +56,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 		if (isset($data['manufacturer_seo_url'])) {
 			foreach ($data['manufacturer_seo_url'] as $store_id => $language) {
 				foreach ($language as $language_id => $keyword) {
-					if ($keyword) {
-						$this->db->query("INSERT INTO `" . DB_PREFIX . "seo_url` SET `store_id` = '" . (int)$store_id . "', `language_id` = '" . (int)$language_id . "', `key` = 'manufacturer_id', `value` = '" . (int)$manufacturer_id . "', `keyword` = '" . $this->db->escape($keyword) . "'");
-					}
+					$this->db->query("INSERT INTO `" . DB_PREFIX . "seo_url` SET `store_id` = '" . (int)$store_id . "', `language_id` = '" . (int)$language_id . "', `key` = 'manufacturer_id', `value` = '" . (int)$manufacturer_id . "', `keyword` = '" . $this->db->escape($keyword) . "'");
 				}
 			}
 		}
@@ -95,7 +91,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "manufacturer`";
 
 		if (!empty($data['filter_name'])) {
-			$sql .= " WHERE `name` LIKE '" . $this->db->escape((string)$data['filter_name']) . "%'";
+			$sql .= " WHERE `name` LIKE '" . $this->db->escape((string)$data['filter_name'] . '%') . "'";
 		}
 
 		$sort_data = [

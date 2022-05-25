@@ -1,73 +1,16 @@
 <?php
 namespace Opencart\Admin\Controller\Extension;
 class Payment extends \Opencart\System\Engine\Controller {
-	private array $error = [];
-
 	public function index(): void {
-		$this->load->language('extension/payment');
-		
-		$this->load->model('setting/extension');
-
-		$this->response->setOutput($this->getList());
-	}
-
-	public function install(): void {
-		$this->load->language('extension/payment');
-
-		$this->load->model('setting/extension');
-
-		if ($this->validate()) {
-			$this->model_setting_extension->install('payment', $this->request->get['extension'], $this->request->get['code']);
-
-			$this->load->model('user/user_group');
-
-			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'extension/' . $this->request->get['extension'] . '/payment/' . $this->request->get['code']);
-			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'extension/' . $this->request->get['extension'] . '/payment/' . $this->request->get['code']);
-
-			// Call install method if it exists
-			$this->load->controller('extension/' . $this->request->get['extension'] . '/payment/' . $this->request->get['code'] . '|install');
-
-			$this->session->data['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->setOutput($this->getList());
-	}
-
-	public function uninstall(): void {
-		$this->load->language('extension/payment');
-
-		$this->load->model('setting/extension');
-
-		if ($this->validate()) {
-			$this->model_setting_extension->uninstall('payment', $this->request->get['code']);
-
-			// Call uninstall method if it exists
-			$this->load->controller('extension/' . $this->request->get['extension'] . '/payment/' . $this->request->get['code'] . '|uninstall');
-
-			$this->session->data['success'] = $this->language->get('text_success');
-		}
-
 		$this->response->setOutput($this->getList());
 	}
 
 	public function getList(): string {
 		$this->load->language('extension/payment');
 
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-
-		if (isset($this->session->data['success'])) {
-			$data['success'] = $this->session->data['success'];
-
-			unset($this->session->data['success']);
-		} else {
-			$data['success'] = '';
-		}
-
 		$available = [];
+
+		$this->load->model('setting/extension');
 
 		$results = $this->model_setting_extension->getPaths('%/admin/controller/payment/%.php');
 
@@ -123,11 +66,88 @@ class Payment extends \Opencart\System\Engine\Controller {
 		return $this->load->view('extension/payment', $data);
 	}
 
-	protected function validate(): bool {
-		if (!$this->user->hasPermission('modify', 'extension/payment')) {
-			$this->error['warning'] = $this->language->get('error_permission');
+	public function install(): void {
+		$this->load->language('extension/payment');
+
+		$json = [];
+
+		if (isset($this->request->get['extension'])) {
+			$extension = basename($this->request->get['extension']);
+		} else {
+			$extension = '';
 		}
 
-		return !$this->error;
+		if (isset($this->request->get['code'])) {
+			$code = basename($this->request->get['code']);
+		} else {
+			$code = '';
+		}
+
+		if (!$this->user->hasPermission('modify', 'extension/payment')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!is_file(DIR_EXTENSION . $extension . '/admin/controller/payment/' . $code . '.php')) {
+			$json['error'] = $this->language->get('error_extension');
+		}
+
+		if (!$json) {
+			$this->load->model('setting/extension');
+
+			$this->model_setting_extension->install('payment', $extension, $code);
+
+			$this->load->model('user/user_group');
+
+			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'extension/' . $extension . '/payment/' . $code);
+			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'extension/' . $extension . '/payment/' . $code);
+
+			$namespace = str_replace(['_', '/'], ['', '\\'], ucwords($extension, '_/'));
+
+			// Register controllers, models and system extension folders
+			$this->autoloader->register('Opencart\Admin\Controller\Extension\\' . $namespace, DIR_EXTENSION . $extension . '/admin/controller/');
+			$this->autoloader->register('Opencart\Admin\Model\Extension\\' . $namespace, DIR_EXTENSION . $extension . '/admin/model/');
+			$this->autoloader->register('Opencart\System\Extension\\' . $namespace, DIR_EXTENSION . $extension . '/system/');
+
+			// Template directory
+			$this->template->addPath('extension/' . $extension, DIR_EXTENSION . $extension . '/admin/view/template/');
+
+			// Language directory
+			$this->language->addPath('extension/' . $extension, DIR_EXTENSION . $extension . '/admin/language/');
+
+			// Config directory
+			$this->config->addPath('extension/' . $extension, DIR_EXTENSION . $extension . '/system/config/');
+
+			// Call install method if it exists
+			$this->load->controller('extension/' . $extension . '/payment/' . $code . '|install');
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	public function uninstall(): void {
+		$this->load->language('extension/payment');
+
+		$json = [];
+
+		if (!$this->user->hasPermission('modify', 'extension/payment')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			$this->load->model('setting/extension');
+
+			$this->model_setting_extension->uninstall('payment', $this->request->get['code']);
+
+			// Call uninstall method if it exists
+			$this->load->controller('extension/' . $this->request->get['extension'] . '/payment/' . $this->request->get['code'] . '|uninstall');
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 }

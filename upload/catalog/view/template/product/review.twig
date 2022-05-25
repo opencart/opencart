@@ -3,7 +3,7 @@
     <table class="table table-striped table-bordered">
       <tr>
         <td style="width: 50%;"><strong>{{ review.author }}</strong></td>
-        <td class="text-right">{{ review.date_added }}</td>
+        <td class="text-end">{{ review.date_added }}</td>
       </tr>
       <tr>
         <td colspan="2"><p>{{ review.text }}</p>
@@ -13,7 +13,7 @@
       </tr>
     </table>
   {% endfor %}
-  <div class="text-right">{{ pagination }}</div>
+  <div class="text-end">{{ pagination }}</div>
 {% else %}
   <p class="text-center">{{ text_no_reviews }}</p>
 {% endif %} 

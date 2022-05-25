@@ -1,28 +1,10 @@
 <?php
 namespace Opencart\Admin\Controller\Extension\Opencart\Total;
 class Total extends \Opencart\System\Engine\Controller {
-	private $error = [];
-
 	public function index(): void {
 		$this->load->language('extension/opencart/total/total');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('setting/setting');
-
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('total_total', $this->request->post);
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=total'));
-		}
-
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
 
 		$data['breadcrumbs'] = [];
 
@@ -41,21 +23,11 @@ class Total extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('extension/opencart/total/total', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		$data['action'] = $this->url->link('extension/opencart/total/total', 'user_token=' . $this->session->data['user_token']);
+		$data['save'] = $this->url->link('extension/opencart/total/total|save', 'user_token=' . $this->session->data['user_token']);
+		$data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=total');
 
-		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=total');
-
-		if (isset($this->request->post['total_total_status'])) {
-			$data['total_total_status'] = $this->request->post['total_total_status'];
-		} else {
-			$data['total_total_status'] = $this->config->get('total_total_status');
-		}
-
-		if (isset($this->request->post['total_total_sort_order'])) {
-			$data['total_total_sort_order'] = $this->request->post['total_total_sort_order'];
-		} else {
-			$data['total_total_sort_order'] = $this->config->get('total_total_sort_order');
-		}
+		$data['total_total_status'] = $this->config->get('total_total_status');
+		$data['total_total_sort_order'] = $this->config->get('total_total_sort_order');
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -64,11 +36,24 @@ class Total extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('extension/opencart/total/total', $data));
 	}
 
-	protected function validate(): bool {
+	public function save(): void {
+		$this->load->language('extension/opencart/total/total');
+
+		$json = [];
+
 		if (!$this->user->hasPermission('modify', 'extension/opencart/total/total')) {
-			$this->error['warning'] = $this->language->get('error_permission');
+			$json['error'] = $this->language->get('error_permission');
 		}
 
-		return !$this->error;
+		if (!$json) {
+			$this->load->model('setting/setting');
+
+			$this->model_setting_setting->editSetting('total_total', $this->request->post);
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 }

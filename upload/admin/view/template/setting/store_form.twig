@@ -2,9 +2,9 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="float-right">
-        <button type="submit" form="form-store" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
-        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
+      <div class="float-end">
+        <button type="submit" form="form-store" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
+        <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
       <ol class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -14,798 +14,621 @@
     </div>
   </div>
   <div class="container-fluid">
-    {% if error_warning %}
-      <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-      </div>
-    {% endif %}
-    {% if success %}
-      <div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> {{ success }}
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-      </div>
-    {% endif %}
     <div class="card">
       <div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_form }}</div>
       <div class="card-body">
-        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-store">
+        <form id="form-store" action="{{ save }}" method="post" data-oc-toggle="ajax">
           <ul class="nav nav-tabs">
-            <li class="nav-item"><a href="#tab-general" data-toggle="tab" class="nav-link active">{{ tab_general }}</a></li>
-            <li class="nav-item"><a href="#tab-store" data-toggle="tab" class="nav-link">{{ tab_store }}</a></li>
-            <li class="nav-item"><a href="#tab-local" data-toggle="tab" class="nav-link">{{ tab_local }}</a></li>
-            <li class="nav-item"><a href="#tab-option" data-toggle="tab" class="nav-link">{{ tab_option }}</a></li>
-            <li class="nav-item"><a href="#tab-image" data-toggle="tab" class="nav-link">{{ tab_image }}</a></li>
+            <li class="nav-item"><a href="#tab-general" data-bs-toggle="tab" class="nav-link active">{{ tab_general }}</a></li>
+            <li class="nav-item"><a href="#tab-store" data-bs-toggle="tab" class="nav-link">{{ tab_store }}</a></li>
+            <li class="nav-item"><a href="#tab-local" data-bs-toggle="tab" class="nav-link">{{ tab_local }}</a></li>
+            <li class="nav-item"><a href="#tab-option" data-bs-toggle="tab" class="nav-link">{{ tab_option }}</a></li>
+            <li class="nav-item"><a href="#tab-image" data-bs-toggle="tab" class="nav-link">{{ tab_image }}</a></li>
           </ul>
           <div class="tab-content">
-            <div class="tab-pane active" id="tab-general">
-              <div class="form-group row required">
+            <div id="tab-general" class="tab-pane active">
+              <div class="row mb-3 required">
                 <label for="input-url" class="col-sm-2 col-form-label">{{ entry_url }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="config_url" value="{{ config_url }}" placeholder="{{ entry_url }}" id="input-url" class="form-control"/>
-                  {% if error_url %}
-                    <div class="invalid-tooltip">{{ error_url }}</div>
-                  {% endif %}
-                  <small class="form-text text-muted">{{ help_url }}</small>
+                  <div class="form-text">{{ help_url }}</div>
+                  <div id="error-url" class="invalid-feedback"></div>
                 </div>
               </div>
-              <div class="form-group row required">
+              <div class="row mb-3 required">
                 <label for="input-meta-title" class="col-sm-2 col-form-label">{{ entry_meta_title }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="config_meta_title" value="{{ config_meta_title }}" placeholder="{{ entry_meta_title }}" id="input-meta-title" class="form-control"/>
-                  {% if error_meta_title %}
-                    <div class="invalid-tooltip">{{ error_meta_title }}</div>
-                  {% endif %}
+                  <div id="error-meta-title" class="invalid-feedback"></div>
                 </div>
               </div>
-              <div class="form-group row">
+              <div class="row mb-3">
                 <label for="input-meta-description" class="col-sm-2 col-form-label">{{ entry_meta_description }}</label>
                 <div class="col-sm-10">
                   <textarea name="config_meta_description" rows="5" placeholder="{{ entry_meta_description }}" id="input-meta-description" class="form-control">{{ config_meta_description }}</textarea>
                 </div>
               </div>
-              <div class="form-group row">
+              <div class="row mb-3">
                 <label for="input-meta-keyword" class="col-sm-2 col-form-label">{{ entry_meta_keyword }}</label>
                 <div class="col-sm-10">
                   <textarea name="config_meta_keyword" rows="5" placeholder="{{ entry_meta_keyword }}" id="input-meta-keyword" class="form-control">{{ config_meta_keyword }}</textarea>
                 </div>
               </div>
-              <div class="form-group row">
+              <div class="row mb-3">
+                <label for="input-logo" class="col-sm-2 col-form-label">{{ entry_logo }}</label>
+                <div class="col-sm-10">
+                  <div class="card image">
+                    <img src="{{ logo }}" alt="" title="" id="thumb-logo" data-oc-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="config_logo" value="{{ config_logo }}" id="input-logo"/>
+                    <div class="card-body">
+                      <button type="button" data-oc-toggle="image" data-oc-target="#input-logo" data-oc-thumb="#thumb-logo" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>
+                      <button type="button" data-oc-toggle="clear" data-oc-target="#input-logo" data-oc-thumb="#thumb-logo" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row mb-3">
                 <label for="input-theme" class="col-sm-2 col-form-label">{{ entry_theme }}</label>
                 <div class="col-sm-10">
-                  <select name="config_theme" id="input-theme" class="form-control">
+                  <select name="config_theme" id="input-theme" class="form-select">
                     {% for theme in themes %}
-                      {% if theme.value == config_theme %}
-                        <option value="{{ theme.value }}" selected="selected">{{ theme.text }}</option>
-                      {% else %}
-                        <option value="{{ theme.value }}">{{ theme.text }}</option>
-                      {% endif %}
+                      <option value="{{ theme.value }}"{% if theme.value == config_theme %} selected{% endif %}>{{ theme.text }}</option>
                     {% endfor %}
                   </select>
                   <br/>
                   <img src="" alt="" id="theme" class="img-thumbnail"/></div>
               </div>
-              <div class="form-group row">
+              <div class="row mb-3">
                 <label for="input-layout" class="col-sm-2 col-form-label">{{ entry_layout }}</label>
                 <div class="col-sm-10">
-                  <select name="config_layout_id" id="input-layout" class="form-control">
+                  <select name="config_layout_id" id="input-layout" class="form-select">
                     {% for layout in layouts %}
-                      {% if layout.layout_id == config_layout_id %}
-                        <option value="{{ layout.layout_id }}" selected="selected">{{ layout.name }}</option>
-                      {% else %}
-                        <option value="{{ layout.layout_id }}">{{ layout.name }}</option>
-                      {% endif %}
+                      <option value="{{ layout.layout_id }}"{% if layout.layout_id == config_layout_id %} selected{% endif %}>{{ layout.name }}</option>
                     {% endfor %}
                   </select>
                 </div>
               </div>
             </div>
             <div id="tab-store" class="tab-pane">
-              <div class="form-group row required">
+              <div class="row mb-3 required">
                 <label for="input-name" class="col-sm-2 col-form-label">{{ entry_name }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="config_name" value="{{ config_name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
-                  {% if error_name %}
-                    <div class="invalid-tooltip">{{ error_name }}</div>
-                  {% endif %}
+                  <div id="error-name" class="invalid-feedback"></div>
                 </div>
               </div>
-              <div class="form-group row required">
+              <div class="row mb-3 required">
                 <label for="input-owner" class="col-sm-2 col-form-label">{{ entry_owner }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="config_owner" value="{{ config_owner }}" placeholder="{{ entry_owner }}" id="input-owner" class="form-control"/>
-                  {% if error_owner %}
-                    <div class="invalid-tooltip">{{ error_owner }}</div>
-                  {% endif %}
+                  <div id="error-owner" class="invalid-feedback"></div>
                 </div>
               </div>
-              <div class="form-group row required">
+              <div class="row mb-3 required">
                 <label for="input-address" class="col-sm-2 col-form-label">{{ entry_address }}</label>
                 <div class="col-sm-10">
                   <textarea name="config_address" rows="5" placeholder="{{ entry_address }}" id="input-address" class="form-control">{{ config_address }}</textarea>
-                  {% if error_address %}
-                    <div class="invalid-tooltip">{{ error_address }}</div>
-                  {% endif %}
+                  <div id="error-address" class="invalid-feedback"></div>
                 </div>
               </div>
-              <div class="form-group row">
+              <div class="row mb-3">
                 <label for="input-geocode" class="col-sm-2 col-form-label">{{ entry_geocode }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="config_geocode" value="{{ config_geocode }}" placeholder="{{ entry_geocode }}" id="input-geocode" class="form-control"/>
-                  <small class="form-text text-muted">{{ help_geocode }}</small>
+                  <div class="form-text">{{ help_geocode }}</div>
                 </div>
               </div>
-              <div class="form-group row required">
+              <div class="row mb-3 required">
                 <label for="input-email" class="col-sm-2 col-form-label">{{ entry_email }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="config_email" value="{{ config_email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control"/>
-                  {% if error_email %}
-                    <div class="invalid-tooltip">{{ error_email }}</div>
-                  {% endif %}
+                  <div id="error-email" class="invalid-feedback"></div>
                 </div>
               </div>
-              <div class="form-group row required">
+              <div class="row mb-3 required">
                 <label for="input-telephone" class="col-sm-2 col-form-label">{{ entry_telephone }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="config_telephone" value="{{ config_telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control"/>
-                  {% if error_telephone %}
-                    <div class="invalid-tooltip">{{ error_telephone }}</div>
-                  {% endif %}
+                  <div id="error-telephone" class="invalid-feedback"></div>
                 </div>
               </div>
-              <div class="form-group row">
+              <div class="row mb-3">
                 <label for="input-image" class="col-sm-2 col-form-label">{{ entry_image }}</label>
                 <div class="col-sm-10">
                   <div class="card image">
-                    <img src="{{ thumb }}" alt="" title="" id="thumb-image" data-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="config_image" value="{{ config_image }}" id="input-image"/>
+                    <img src="{{ thumb }}" alt="" title="" id="thumb-image" data-oc-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="config_image" value="{{ config_image }}" id="input-image"/>
                     <div class="card-body">
-                      <button type="button" data-toggle="image" data-target="#input-image" data-thumb="#thumb-image" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>
-                      <button type="button" data-toggle="clear" data-target="#input-image" data-thumb="#thumb-image" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>
+                      <button type="button" data-oc-toggle="image" data-oc-target="#input-image" data-oc-thumb="#thumb-image" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>
+                      <button type="button" data-oc-toggle="clear" data-oc-target="#input-image" data-oc-thumb="#thumb-image" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="form-group row">
+              <div class="row mb-3">
                 <label for="input-open" class="col-sm-2 col-form-label">{{ entry_open }}</label>
                 <div class="col-sm-10">
                   <textarea name="config_open" rows="5" placeholder="{{ entry_open }}" id="input-open" class="form-control">{{ config_open }}</textarea>
-                  <small class="form-text text-muted">{{ help_open }}</small>
+                  <div class="form-text">{{ help_open }}</div>
                 </div>
               </div>
-              <div class="form-group row">
+              <div class="row mb-3">
                 <label for="input-comment" class="col-sm-2 col-form-label">{{ entry_comment }}</label>
                 <div class="col-sm-10">
                   <textarea name="config_comment" rows="5" placeholder="{{ entry_comment }}" id="input-comment" class="form-control">{{ config_comment }}</textarea>
-                  <small class="form-text text-muted">{{ help_comment }}</small>
+                  <div class="form-text">{{ help_comment }}</div>
                 </div>
               </div>
               {% if locations %}
-                <div class="form-group row">
+                <div class="row mb-3">
                   <label class="col-sm-2 col-form-label">{{ entry_location }}</label>
                   <div class="col-sm-10">
                     <div class="form-control" style="height: 150px; overflow: auto;">
                       {% for location in locations %}
-                        <label class="form-check">
-                          {% if location.location_id in config_location %}
-                            <input type="checkbox" name="config_location[]" value="{{ location.location_id }}" checked="checked" class="form-check-input"/>
-                            {{ location.name }}
-                          {% else %}
-                            <input type="checkbox" name="config_location[]" value="{{ location.location_id }}" class="form-check-input"/>
-                            {{ location.name }}
-                          {% endif %}
-                        </label>
+                        <div class="form-check">
+                          <input type="checkbox" name="config_location[]" value="{{ location.location_id }}" id="input-location-{{ location.location_id }}" class="form-check-input"{% if location.location_id in config_location %} checked{% endif %}/> <label for="input-location-{{ location.location_id }}" class="form-check-label">{{ location.name }}</label>
+                        </div>
                       {% endfor %}
                     </div>
-                    <small class="form-text text-muted">{{ help_location }}</small>
+                    <div class="form-text">{{ help_location }}</div>
                   </div>
                 </div>
               {% endif %}
             </div>
             <div id="tab-local" class="tab-pane">
-              <div class="form-group row">
+              <div class="row mb-3">
                 <label for="input-country" class="col-sm-2 col-form-label">{{ entry_country }}</label>
                 <div class="col-sm-10">
-                  <select name="config_country_id" id="input-country" class="form-control">
+                  <select name="config_country_id" id="input-country" class="form-select">
                     {% for country in countries %}
-                      {% if country.country_id == config_country_id %}
-                        <option value="{{ country.country_id }}" selected="selected">{{ country.name }}</option>
-                      {% else %}
-                        <option value="{{ country.country_id }}">{{ country.name }}</option>
-                      {% endif %}
+                      <option value="{{ country.country_id }}"{% if country.country_id == config_country_id %} selected="selected"{% endif %}>{{ country.name }}</option>
                     {% endfor %}
                   </select>
                 </div>
               </div>
-              <div class="form-group row">
+              <div class="row mb-3">
                 <label for="input-zone" class="col-sm-2 col-form-label">{{ entry_zone }}</label>
                 <div class="col-sm-10">
-                  <select name="config_zone_id" id="input-zone" class="form-control"> </select>
+                  <select name="config_zone_id" id="input-zone" class="form-select"></select>
                 </div>
               </div>
-              <div class="form-group row">
+              <div class="row mb-3">
                 <label for="input-language" class="col-sm-2 col-form-label">{{ entry_language }}</label>
                 <div class="col-sm-10">
-                  <select name="config_language" id="input-language" class="form-control">
+                  <select name="config_language" id="input-language" class="form-select">
                     {% for language in languages %}
-                      {% if language.code == config_language %}
-                        <option value="{{ language.code }}" selected="selected">{{ language.name }}</option>
-                      {% else %}
-                        <option value="{{ language.code }}">{{ language.name }}</option>
-                      {% endif %}
+                      <option value="{{ language.code }}"{% if language.code == config_language %} selected="selected"{% endif %}>{{ language.name }}</option>
                     {% endfor %}
                   </select>
                 </div>
               </div>
-              <div class="form-group row">
+              <div class="row mb-3">
                 <label for="input-currency" class="col-sm-2 col-form-label">{{ entry_currency }}</label>
                 <div class="col-sm-10">
-                  <select name="config_currency" id="input-currency" class="form-control">
+                  <select name="config_currency" id="input-currency" class="form-select">
                     {% for currency in currencies %}
-                      {% if currency.code == config_currency %}
-                        <option value="{{ currency.code }}" selected="selected">{{ currency.title }}</option>
-                      {% else %}
-                        <option value="{{ currency.code }}">{{ currency.title }}</option>
-                      {% endif %}
+                      <option value="{{ currency.code }}"{% if currency.code == config_currency %} selected="selected"{% endif %}>{{ currency.title }}</option>
                     {% endfor %}
                   </select>
-                  <small class="form-text text-muted">{{ help_currency }}</small>
+                  <div class="form-text">{{ help_currency }}</div>
                 </div>
               </div>
             </div>
             <div id="tab-option" class="tab-pane">
-
-              <fieldset>
-
-                <legend><a href="#collapse-product" data-toggle="collapse">{{ text_product }}</a></legend>
-                <div id="collapse-product" class="collapse" data-parent="#tab-option">
-                  <div class="form-group row required">
-                    <label for="input-description-length" class="col-sm-2 col-form-label">{{ entry_product_description_length }}</label>
-                    <div class="col-sm-10">
-                      <input type="text" name="config_product_description_length" value="{{ config_product_description_length }}" placeholder="{{ entry_product_description_length }}" id="input-description-length" class="form-control"/>
-                      <small class="form-text text-muted">{{ help_product_description_length }}</small>
-                      {% if error_product_description_length %}
-                        <div class="invalid-tooltip">{{ error_product_description_length }}</div>
-                      {% endif %}
-                    </div>
-                  </div>
-                  <div class="form-group row required">
-                    <label for="input-pagination" class="col-sm-2 col-form-label">{{ entry_pagination }}</label>
-                    <div class="col-sm-10">
-                      <input type="text" name="config_pagination" value="{{ config_pagination }}" placeholder="{{ entry_pagination }}" id="input-pagination" class="form-control"/>
-                      <small class="form-text text-muted">{{ help_pagination }}</small>
-                      {% if error_pagination %}
-                        <div class="invalid-tooltip">{{ error_pagination }}</div>
-                      {% endif %}
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-sm-2 col-form-label">{{ entry_product_count }}</label>
-                    <div class="col-sm-10">
-                      <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                        {% if config_product_count %}
-                          <label class="btn btn-outline-secondary active"><input type="radio" name="config_product_count" value="1" checked="checked"/> {{ text_yes }}</label>
-                          <label class="btn btn-outline-secondary"><input type="radio" name="config_product_count" value="0"/> {{ text_no }}</label>
-                        {% else %}
-                          <label class="btn btn-outline-secondary"><input type="radio" name="config_product_count" value="1"/> {{ text_yes }}</label>
-                          <label class="btn btn-outline-secondary active"><input type="radio" name="config_product_count" value="0" checked="checked"/> {{ text_no }}</label>
-                        {% endif %}
+              <div class="accordion" id="accordion-option">
+                <div class="accordion-item">
+                  <h2 class="accordion-header"><button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapse-product">{{ text_product }}</button></h2>
+                  <div id="collapse-product" class="accordion-collapse collapse" data-bs-parent="#accordion-option">
+                    <div class="accordion-body">
+                      <div class="row mb-3 required">
+                        <label for="input-description-length" class="col-sm-2 col-form-label">{{ entry_product_description_length }}</label>
+                        <div class="col-sm-10">
+                          <input type="text" name="config_product_description_length" value="{{ config_product_description_length }}" placeholder="{{ entry_product_description_length }}" id="input-product-description-length" class="form-control"/>
+                          <div class="form-text">{{ help_product_description_length }}</div>
+                          <div id="error-product-description-length" class="invalid-feedback"></div>
+                        </div>
                       </div>
-                      <small class="form-text text-muted">{{ help_product_count }}</small>
+                      <div class="row mb-3 required">
+                        <label for="input-pagination" class="col-sm-2 col-form-label">{{ entry_pagination }}</label>
+                        <div class="col-sm-10">
+                          <input type="text" name="config_pagination" value="{{ config_pagination }}" placeholder="{{ entry_pagination }}" id="input-pagination" class="form-control"/>
+                          <div class="form-text">{{ help_pagination }}</div>
+                          <div id="error-pagination" class="invalid-feedback"></div>
+                        </div>
+                      </div>
+                      <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label">{{ entry_product_count }}</label>
+                        <div class="col-sm-10">
+                          <div class="form-check form-switch form-switch-lg">
+                            <input type="checkbox" name="config_product_count" value="1" id="input-product-count" class="form-check-input"{% if config_product_count %} checked{% endif %}/>
+                          </div>
+                          <div class="form-text">{{ help_product_count }}</div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </fieldset>
-
-              <fieldset>
-                <legend><a href="#collapse-legal" data-toggle="collapse">{{ text_legal }}</a></legend>
-                <div id="collapse-legal" class="collapse" data-parent="#tab-option">
-                  <div class="form-group row">
-                    <label for="input-gdpr" class="col-sm-2 col-form-label">{{ entry_gdpr }}</label>
-                    <div class="col-sm-10">
-                      <select name="config_gdpr_id" id="input-gdpr" class="form-control">
-                        <option value="0">{{ text_none }}</option>
-                        {% for information in informations %}
-                          {% if information.information_id == config_gdpr_id %}
-                            <option value="{{ information.information_id }}" selected="selected">{{ information.title }}</option>
-                          {% else %}
-                            <option value="{{ information.information_id }}">{{ information.title }}</option>
-                          {% endif %}
-                        {% endfor %}
-                      </select>
-                      <small class="form-text text-muted">{{ help_gdpr }}</small>
+                <div class="accordion-item">
+                  <h2 class="accordion-header"><button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapse-legal">{{ text_legal }}</button></h2>
+                  <div id="collapse-legal" class="accordion-collapse collapse" data-bs-parent="#accordion-option">
+                    <div class="accordion-body">
+                      <div class="row mb-3">
+                        <label for="input-gdpr" class="col-sm-2 col-form-label">{{ entry_gdpr }}</label>
+                        <div class="col-sm-10">
+                          <select name="config_gdpr_id" id="input-gdpr" class="form-select">
+                            <option value="0">{{ text_none }}</option>
+                            {% for information in informations %}
+                              <option value="{{ information.information_id }}"{% if information.information_id == config_gdpr_id %} selected="selected"{% endif %}>{{ information.title }}</option>
+                            {% endfor %}
+                          </select>
+                          <div class="form-text">{{ help_gdpr }}</div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </fieldset>
-              <fieldset>
-                <legend><a href="#collapse-tax" data-toggle="collapse">{{ text_tax }}</a></legend>
-                <div id="collapse-tax" class="collapse" data-parent="#tab-option">
-                  <div class="form-group row">
-                    <label class="col-sm-2 col-form-label">{{ entry_tax }}</label>
-                    <div class="col-sm-10">
-                      <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                        {% if config_tax %}
-                          <label class="btn btn-outline-secondary active"><input type="radio" name="config_tax" value="1" checked="checked"/> {{ text_yes }}</label>
-                          <label class="btn btn-outline-secondary"><input type="radio" name="config_tax" value="0"/> {{ text_no }}</label>
-                        {% else %}
-                          <label class="btn btn-outline-secondary"><input type="radio" name="config_tax" value="1"/> {{ text_yes }}</label>
-                          <label class="btn btn-outline-secondary active"><input type="radio" name="config_tax" value="0" checked="checked"/> {{ text_no }}</label>
-                        {% endif %}
+                <div class="accordion-item">
+                  <h2 class="accordion-header"><button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapse-tax">{{ text_tax }}</button></h2>
+                  <div id="collapse-tax" class="accordion-collapse collapse" data-bs-parent="#accordion-option">
+                    <div class="accordion-body">
+                      <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label">{{ entry_tax }}</label>
+                        <div class="col-sm-10">
+                          <div class="form-check form-switch form-switch-lg">
+                            <input type="checkbox" name="config_tax" value="1" id="input-tax" class="form-check-input"{% if config_tax %} checked{% endif %}/>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label for="input-tax-default" class="col-sm-2 col-form-label">{{ entry_tax_default }}</label>
-                    <div class="col-sm-10">
-                      <select name="config_tax_default" id="input-tax-default" class="form-control">
-                        <option value="">{{ text_none }}</option>
-                        {% if config_tax_default == 'shipping' %}
-                          <option value="shipping" selected="selected">{{ text_shipping }}</option>
-                        {% else %}
-                          <option value="shipping">{{ text_shipping }}</option>
-                        {% endif %}
-                        {% if config_tax_default == 'payment' %}
-                          <option value="payment" selected="selected">{{ text_payment }}</option>
-                        {% else %}
-                          <option value="payment">{{ text_payment }}</option>
-                        {% endif %}
-                      </select>
-                      <small class="form-text text-muted">{{ help_tax_default }}</small>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label for="input-tax-customer" class="col-sm-2 col-form-label">{{ entry_tax_customer }}</label>
-                    <div class="col-sm-10">
-                      <select name="config_tax_customer" id="input-tax-customer" class="form-control">
-                        <option value="">{{ text_none }}</option>
-                        {% if config_tax_customer == 'shipping' %}
-                          <option value="shipping" selected="selected">{{ text_shipping }}</option>
-                        {% else %}
-                          <option value="shipping">{{ text_shipping }}</option>
-                        {% endif %}
-                        {% if config_tax_customer == 'payment' %}
-                          <option value="payment" selected="selected">{{ text_payment }}</option>
-                        {% else %}
-                          <option value="payment">{{ text_payment }}</option>
-                        {% endif %}
-                      </select>
-                      <small class="form-text text-muted">{{ help_tax_customer }}</small>
+                      <div class="row mb-3">
+                        <label for="input-tax-default" class="col-sm-2 col-form-label">{{ entry_tax_default }}</label>
+                        <div class="col-sm-10">
+                          <select name="config_tax_default" id="input-tax-default" class="form-select">
+                            <option value="">{{ text_none }}</option>
+                            <option value="shipping"{% if config_tax_default == 'shipping' %} selected="selected"{% endif %}>{{ text_shipping }}</option>
+                            <option value="payment"{% if config_tax_default == 'payment' %} selected="selected"{% endif %}>{{ text_payment }}</option>
+                          </select>
+                          <div class="form-text">{{ help_tax_default }}</div>
+                        </div>
+                      </div>
+                      <div class="row mb-3">
+                        <label for="input-tax-customer" class="col-sm-2 col-form-label">{{ entry_tax_customer }}</label>
+                        <div class="col-sm-10">
+                          <select name="config_tax_customer" id="input-tax-customer" class="form-select">
+                            <option value="">{{ text_none }}</option>
+                            <option value="shipping"{% if config_tax_customer == 'shipping' %} selected="selected"{% endif %}>{{ text_shipping }}</option>
+                            <option value="payment"{% if config_tax_customer == 'payment' %} selected="selected"{% endif %}>{{ text_payment }}</option>
+                          </select>
+                          <div class="form-text">{{ help_tax_customer }}</div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </fieldset>
-              <fieldset>
-                <legend><a href="#collapse-account" data-toggle="collapse">{{ text_account }}</a></legend>
-                <div id="collapse-account" class="collapse" data-parent="#tab-option">
-                  <div class="form-group row">
-                    <label for="input-customer-group" class="col-sm-2 col-form-label">{{ entry_customer_group }}</label>
-                    <div class="col-sm-10">
-                      <select name="config_customer_group_id" id="input-customer-group" class="form-control">
-                        {% for customer_group in customer_groups %}
-                          {% if customer_group.customer_group_id == config_customer_group_id %}
-                            <option value="{{ customer_group.customer_group_id }}" selected="selected">{{ customer_group.name }}</option>
-                          {% else %}
-                            <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name }}</option>
-                          {% endif %}
-                        {% endfor %}
-                      </select>
-                      <small class="form-text text-muted">{{ help_customer_group }}</small>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-sm-2 col-form-label">{{ entry_customer_group_display }}</label>
-                    <div class="col-sm-10">
-                      <div class="form-control" style="height: 150px; overflow: auto;">
-                        {% for customer_group in customer_groups %}
-                          <label class="form-check">
-                            {% if customer_group.customer_group_id in config_customer_group_display %}
-                              <input type="checkbox" name="config_customer_group_display[]" value="{{ customer_group.customer_group_id }}" checked="checked" class="form-check-input"/>
-                              {{ customer_group.name }}
-                            {% else %}
-                              <input type="checkbox" name="config_customer_group_display[]" value="{{ customer_group.customer_group_id }}" class="form-check-input"/>
-                              {{ customer_group.name }}
-                            {% endif %}
-                          </label>
-                        {% endfor %}
+                <div class="accordion-item">
+                  <h2 class="accordion-header"><button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapse-account">{{ text_account }}</button></h2>
+                  <div id="collapse-account" class="accordion-collapse collapse" data-bs-parent="#accordion-option">
+                    <div class="accordion-body">
+                      <div class="row mb-3">
+                        <label for="input-customer-group" class="col-sm-2 col-form-label">{{ entry_customer_group }}</label>
+                        <div class="col-sm-10">
+                          <select name="config_customer_group_id" id="input-customer-group" class="form-select">
+                            {% for customer_group in customer_groups %}
+                              <option value="{{ customer_group.customer_group_id }}"{% if customer_group.customer_group_id == config_customer_group_id %} selected="selected"{% endif %}>{{ customer_group.name }}</option>
+                            {% endfor %}
+                          </select>
+                          <div class="form-text">{{ help_customer_group }}</div>
+                        </div>
                       </div>
-                      <small class="form-text text-muted">{{ help_customer_group_display }}</small>
-                      {% if error_customer_group_display %}
-                        <div class="invalid-tooltip">{{ error_customer_group_display }}</div>
-                      {% endif %}
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-sm-2 col-form-label">{{ entry_customer_price }}</label>
-                    <div class="col-sm-10">
-                      <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                        {% if config_customer_price %}
-                          <label class="btn btn-outline-secondary active"><input type="radio" name="config_customer_price" value="1" checked="checked"/> {{ text_yes }}</label>
-                          <label class="btn btn-outline-secondary"><input type="radio" name="config_customer_price" value="0"/> {{ text_no }}</label>
-                        {% else %}
-                          <label class="btn btn-outline-secondary"><input type="radio" name="config_customer_price" value="1"/> {{ text_yes }}</label>
-                          <label class="btn btn-outline-secondary active"><input type="radio" name="config_customer_price" value="0" checked="checked"/> {{ text_no }}</label>
-                        {% endif %}
+                      <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label">{{ entry_customer_group_display }}</label>
+                        <div class="col-sm-10">
+                          <div id="input-customer-group-display" class="form-control" style="height: 150px; overflow: auto;">
+                            {% for customer_group in customer_groups %}
+                              <div class="form-check">
+                                <input type="checkbox" name="config_customer_group_display[]" value="{{ customer_group.customer_group_id }}" id="input-customer-group-{{ customer_group.customer_group_id }}" class="form-check-input"{% if customer_group.customer_group_id in config_customer_group_display %} checked{% endif %}/> <label for="input-customer-group-{{ customer_group.customer_group_id }}" class="form-check-label">{{ customer_group.name }}</label>
+                              </div>
+                            {% endfor %}
+                          </div>
+                          <div class="form-text">{{ help_customer_group_display }}</div>
+                          <div id="error-customer-group-display" class="invalid-feedback"></div>
+                        </div>
                       </div>
-                      <small class="form-text text-muted">{{ help_customer_price }}</small>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label for="input-account" class="col-sm-2 col-form-label">{{ entry_account }}</label>
-                    <div class="col-sm-10">
-                      <select name="config_account_id" id="input-account" class="form-control">
-                        <option value="0">{{ text_none }}</option>
-                        {% for information in informations %}
-                          {% if information.information_id == config_account_id %}
-                            <option value="{{ information.information_id }}" selected="selected">{{ information.title }}</option>
-                          {% else %}
-                            <option value="{{ information.information_id }}">{{ information.title }}</option>
-                          {% endif %}
-                        {% endfor %}
-                      </select>
-                      <small class="form-text text-muted">{{ help_account }}</small>
+                      <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label">{{ entry_customer_price }}</label>
+                        <div class="col-sm-10">
+                          <div class="form-check form-switch form-switch-lg">
+                            <input type="checkbox" name="config_customer_price" value="1" id="input-customer-price" class="form-check-input"{% if config_customer_price %} checked{% endif %}/>
+                          </div>
+                          <div class="form-text">{{ help_customer_price }}</div>
+                        </div>
+                      </div>
+                      <div class="row mb-3">
+                        <label for="input-account" class="col-sm-2 col-form-label">{{ entry_account }}</label>
+                        <div class="col-sm-10">
+                          <select name="config_account_id" id="input-account" class="form-select">
+                            <option value="0">{{ text_none }}</option>
+                            {% for information in informations %}
+                              <option value="{{ information.information_id }}"{% if information.information_id == config_account_id %} selected="selected"{% endif %}>{{ information.title }}</option>
+                            {% endfor %}
+                          </select>
+                          <div class="form-text">{{ help_account }}</div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </fieldset>
-              <fieldset>
-                <legend><a href="#collapse-checkout" data-toggle="collapse">{{ text_checkout }}</a></legend>
-                <div id="collapse-checkout" class="collapse" data-parent="#tab-option">
-                  <div class="form-group row">
-                    <label class="col-sm-2 col-form-label">{{ entry_cart_weight }}</label>
-                    <div class="col-sm-10">
-                      <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                        {% if config_cart_weight %}
-                          <label class="btn btn-outline-secondary active"><input type="radio" name="config_cart_weight" value="1" checked="checked"/> {{ text_yes }}</label>
-                          <label class="btn btn-outline-secondary"><input type="radio" name="config_cart_weight" value="0"/> {{ text_no }}</label>
-                        {% else %}
-                          <label class="btn btn-outline-secondary"><input type="radio" name="config_cart_weight" value="1"/> {{ text_yes }}</label>
-                          <label class="btn btn-outline-secondary active"><input type="radio" name="config_cart_weight" value="0" checked="checked"/> {{ text_no }}</label>
-                        {% endif %}
+                <div class="accordion-item">
+                  <h2 class="accordion-header"><button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapse-checkout">{{ text_checkout }}</button></h2>
+                  <div id="collapse-checkout" class="accordion-collapse collapse" data-bs-parent="#accordion-option">
+                    <div class="accordion-body">
+                      <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label">{{ entry_cart_weight }}</label>
+                        <div class="col-sm-10">
+                          <div class="form-check form-switch form-switch-lg">
+                            <input type="checkbox" name="config_cart_weight" value="1" id="input-cart-weight" class="form-check-input"{% if config_cart_weight %} checked{% endif %}/>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-sm-2 col-form-label">{{ entry_checkout_guest }}</label>
-                    <div class="col-sm-10">
-                      <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                        {% if config_checkout_guest %}
-                          <label class="btn btn-outline-secondary active"><input type="radio" name="config_checkout_guest" value="1" checked="checked"/> {{ text_yes }}</label>
-                          <label class="btn btn-outline-secondary"><input type="radio" name="config_checkout_guest" value="0"/> {{ text_no }}</label>
-                        {% else %}
-                          <label class="btn btn-outline-secondary"><input type="radio" name="config_checkout_guest" value="1"/> {{ text_yes }}</label>
-                          <label class="btn btn-outline-secondary active"><input type="radio" name="config_checkout_guest" value="0" checked="checked"/> {{ text_no }}</label>
-                        {% endif %}
+                      <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label">{{ entry_checkout_guest }}</label>
+                        <div class="col-sm-10">
+                          <div class="form-check form-switch form-switch-lg">
+                            <input type="checkbox" name="config_checkout_guest" value="1" id="input-checkout-guest" class="form-check-input"{% if config_checkout_guest %} checked{% endif %}/>
+                          </div>
+                          <div class="form-text">{{ help_checkout_guest }}</div>
+                        </div>
                       </div>
-                      <small class="form-text text-muted">{{ help_checkout_guest }}</small>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label for="input-checkout" class="col-sm-2 col-form-label">{{ entry_checkout }}</label>
-                    <div class="col-sm-10">
-                      <select name="config_checkout_id" id="input-checkout" class="form-control">
-                        <option value="0">{{ text_none }}</option>
-                        {% for information in informations %}
-                          {% if information.information_id == config_checkout_id %}
-                            <option value="{{ information.information_id }}" selected="selected">{{ information.title }}</option>
-                          {% else %}
-                            <option value="{{ information.information_id }}">{{ information.title }}</option>
-                          {% endif %}
-                        {% endfor %}
-                      </select>
-                      <small class="form-text text-muted">{{ help_checkout }}</small>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label for="input-order-status" class="col-sm-2 col-form-label">{{ entry_order_status }}</label>
-                    <div class="col-sm-10">
-                      <select name="config_order_status_id" id="input-order-status" class="form-control">
-                        {% for order_status in order_statuses %}
-                          {% if order_status.order_status_id == config_order_status_id %}
-                            <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
-                          {% else %}
-                            <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-                          {% endif %}
-                        {% endfor %}
-                      </select>
-                      <small class="form-text text-muted">{{ help_order_status }}</small>
+                      <div class="row mb-3">
+                        <label for="input-checkout" class="col-sm-2 col-form-label">{{ entry_checkout }}</label>
+                        <div class="col-sm-10">
+                          <select name="config_checkout_id" id="input-checkout" class="form-select">
+                            <option value="0">{{ text_none }}</option>
+                            {% for information in informations %}
+                              <option value="{{ information.information_id }}"{% if information.information_id == config_checkout_id %} selected="selected"{% endif %}>{{ information.title }}</option>
+                            {% endfor %}
+                          </select>
+                          <div class="form-text">{{ help_checkout }}</div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </fieldset>
-              <fieldset>
-                <legend><a href="#collapse-stock" data-toggle="collapse">{{ text_stock }}</a></legend>
-                <div id="collapse-stock" class="collapse" data-parent="#tab-option">
-                  <div class="form-group row">
-                    <label class="col-sm-2 col-form-label">{{ entry_stock_display }}</label>
-                    <div class="col-sm-10">
-                      <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                        {% if config_stock_display %}
-                          <label class="btn btn-outline-secondary active"><input type="radio" name="config_stock_display" value="1" checked="checked"/> {{ text_yes }}</label>
-                          <label class="btn btn-outline-secondary"><input type="radio" name="config_stock_display" value="0"/> {{ text_no }}</label>
-                        {% else %}
-                          <label class="btn btn-outline-secondary"><input type="radio" name="config_stock_display" value="1"/> {{ text_yes }}</label>
-                          <label class="btn btn-outline-secondary active"><input type="radio" name="config_stock_display" value="0" checked="checked"/> {{ text_no }}</label>
-                        {% endif %}
+                <div class="accordion-item">
+                  <h2 class="accordion-header"><button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapse-stock">{{ text_stock }}</button></h2>
+                  <div id="collapse-stock" class="accordion-collapse collapse" data-bs-parent="#accordion-option">
+                    <div class="accordion-body">
+                      <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label">{{ entry_stock_display }}</label>
+                        <div class="col-sm-10">
+                          <div class="form-check form-switch form-switch-lg">
+                            <input type="checkbox" name="config_stock_display" value="1" id="input-stock-display" class="form-check-input"{% if config_stock_display %} checked{% endif %}/>
+                          </div>
+                          <div class="form-text">{{ help_stock_display }}</div>
+                        </div>
                       </div>
-                      <small class="form-text text-muted">{{ help_stock_display }}</small>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-sm-2 col-form-label">{{ entry_stock_checkout }}</label>
-                    <div class="col-sm-10">
-                      <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                        {% if config_stock_checkout %}
-                          <label class="btn btn-outline-secondary active"><input type="radio" name="config_stock_checkout" value="1" checked="checked"/> {{ text_yes }}</label>
-                          <label class="btn btn-outline-secondary"><input type="radio" name="config_stock_checkout" value="0"/> {{ text_no }}</label>
-                        {% else %}
-                          <label class="btn btn-outline-secondary"><input type="radio" name="config_stock_checkout" value="1"/> {{ text_yes }}</label>
-                          <label class="btn btn-outline-secondary active"><input type="radio" name="config_stock_checkout" value="0" checked="checked"/> {{ text_no }}</label>
-                        {% endif %}
+                      <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label">{{ entry_stock_checkout }}</label>
+                        <div class="col-sm-10">
+                          <div class="form-check form-switch form-switch-lg">
+                            <input type="checkbox" name="config_stock_checkout" value="1" id="input-stock-checkout" class="form-check-input"{% if config_stock_checkout %} checked{% endif %}/>
+                          </div>
+                          <div class="form-text">{{ help_stock_checkout }}</div>
+                        </div>
                       </div>
-                      <small class="form-text text-muted">{{ help_stock_checkout }}</small>
                     </div>
                   </div>
                 </div>
-              </fieldset>
+              </div>
             </div>
             <div id="tab-image" class="tab-pane">
               <fieldset>
                 <legend>{{ text_image }}</legend>
-                <div class="form-group row">
-                  <label for="input-logo" class="col-sm-2 col-form-label">{{ entry_logo }}</label>
-                  <div class="col-sm-10">
-                    <div class="card image">
-                      <img src="{{ logo }}" alt="" title="" id="thumb-logo" data-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="config_logo" value="{{ config_logo }}" id="input-logo"/>
-                      <div class="card-body">
-                        <button type="button" data-toggle="image" data-target="#input-logo" data-thumb="#thumb-logo" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>
-                        <button type="button" data-toggle="clear" data-target="#input-logo" data-thumb="#thumb-logo" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label for="input-icon" class="col-sm-2 col-form-label">{{ entry_icon }}</label>
-                  <div class="col-sm-10">
-                    <div class="card image">
-                      <img src="{{ icon }}" alt="" title="" id="thumb-icon" data-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="config_icon" value="{{ config_icon }}" id="input-icon"/>
-                      <div class="card-body">
-                        <button type="button" data-toggle="image" data-target="#input-icon" data-thumb="#thumb-icon" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>
-                        <button type="button" data-toggle="clear" data-target="#input-icon" data-thumb="#thumb-icon" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>
-                      </div>
-                    </div>
-                    <small class="form-text text-muted">{{ help_icon }}</small>
-                  </div>
-                </div>
-              </fieldset>
-              <fieldset>
-                <legend>{{ text_image }}</legend>
-                <div class="alert alert-info"><i class="fas fa-check-circle"></i> {{ success }}</div>
-                <div class="form-group row required">
+                <div class="row mb-3 required">
                   <label for="input-image-category-width" class="col-sm-2 col-form-label">{{ entry_image_category }}</label>
                   <div class="col-sm-10">
-                    <div class="row">
+                    <div id="input-image-category" class="row">
                       <div class="col-sm-6">
                         <input type="text" name="config_image_category_width" value="{{ config_image_category_width }}" placeholder="{{ entry_width }}" id="input-image-category-width" class="form-control"/>
                       </div>
                       <div class="col-sm-6">
-                        <input type="text" name="config_image_category_height" value="{{ config_image_category_height }}" placeholder="{{ entry_height }}" class="form-control"/>
+                        <input type="text" name="config_image_category_height" value="{{ config_image_category_height }}" placeholder="{{ entry_height }}" id="input-image-category-height" class="form-control"/>
                       </div>
                     </div>
-                    {% if error_image_category %}
-                      <div class="invalid-tooltip">{{ error_image_category }}</div>
-                    {% endif %}
+                    <div id="error-image-category" class="invalid-feedback"></div>
                   </div>
                 </div>
-                <div class="form-group row required">
+                <div class="row mb-3 required">
                   <label for="input-image-thumb-width" class="col-sm-2 col-form-label">{{ entry_image_thumb }}</label>
                   <div class="col-sm-10">
-                    <div class="row">
+                    <div id="input-image-thumb" class="row">
                       <div class="col-sm-6">
                         <input type="text" name="config_image_thumb_width" value="{{ config_image_thumb_width }}" placeholder="{{ entry_width }}" id="input-image-thumb-width" class="form-control"/>
                       </div>
                       <div class="col-sm-6">
-                        <input type="text" name="config_image_thumb_height" value="{{ config_image_thumb_height }}" placeholder="{{ entry_height }}" class="form-control"/>
+                        <input type="text" name="config_image_thumb_height" value="{{ config_image_thumb_height }}" placeholder="{{ entry_height }}" id="input-image-thumb-height" class="form-control"/>
                       </div>
                     </div>
-                    {% if error_image_thumb %}
-                      <div class="invalid-tooltip">{{ error_image_thumb }}</div>
-                    {% endif %}
+                    <div id="error-image-thumb" class="invalid-feedback"></div>
                   </div>
                 </div>
-                <div class="form-group row required">
+                <div class="row mb-3 required">
                   <label for="input-image-popup-width" class="col-sm-2 col-form-label">{{ entry_image_popup }}</label>
                   <div class="col-sm-10">
-                    <div class="row">
+                    <div id="input-image-popup" class="row">
                       <div class="col-sm-6">
                         <input type="text" name="config_image_popup_width" value="{{ config_image_popup_width }}" placeholder="{{ entry_width }}" id="input-image-popup-width" class="form-control"/>
                       </div>
                       <div class="col-sm-6">
-                        <input type="text" name="config_image_popup_height" value="{{ config_image_popup_height }}" placeholder="{{ entry_height }}" class="form-control"/>
+                        <input type="text" name="config_image_popup_height" value="{{ config_image_popup_height }}" placeholder="{{ entry_height }}" id="input-image-popup-height" class="form-control"/>
                       </div>
                     </div>
-                    {% if error_image_popup %}
-                      <div class="invalid-tooltip">{{ error_image_popup }}</div>
-                    {% endif %}
+                    <div id="error-image-popup" class="invalid-feedback"></div>
                   </div>
                 </div>
-                <div class="form-group row required">
+                <div class="row mb-3 required">
                   <label for="input-image-product-width" class="col-sm-2 col-form-label">{{ entry_image_product }}</label>
                   <div class="col-sm-10">
-                    <div class="row">
+                    <div id="input-image-product" class="row">
                       <div class="col-sm-6">
                         <input type="text" name="config_image_product_width" value="{{ config_image_product_width }}" placeholder="{{ entry_width }}" id="input-image-product-width" class="form-control"/>
                       </div>
                       <div class="col-sm-6">
-                        <input type="text" name="config_image_product_height" value="{{ config_image_product_height }}" placeholder="{{ entry_height }}" class="form-control"/>
+                        <input type="text" name="config_image_product_height" value="{{ config_image_product_height }}" placeholder="{{ entry_height }}" id="input-image-product-height" class="form-control"/>
                       </div>
                     </div>
-                    {% if error_image_product %}
-                      <div class="invalid-tooltip">{{ error_image_product }}</div>
-                    {% endif %}
+                    <div id="error-image-product" class="invalid-feedback"></div>
                   </div>
                 </div>
-                <div class="form-group row required">
+                <div class="row mb-3 required">
                   <label for="input-image-additional-width" class="col-sm-2 col-form-label">{{ entry_image_additional }}</label>
                   <div class="col-sm-10">
-                    <div class="row">
+                    <div id="input-image-additional" class="row">
                       <div class="col-sm-6">
                         <input type="text" name="config_image_additional_width" value="{{ config_image_additional_width }}" placeholder="{{ entry_width }}" id="input-image-additional-width" class="form-control"/>
                       </div>
                       <div class="col-sm-6">
-                        <input type="text" name="config_image_additional_height" value="{{ config_image_additional_height }}" placeholder="{{ entry_height }}" class="form-control"/>
+                        <input type="text" name="config_image_additional_height" value="{{ config_image_additional_height }}" placeholder="{{ entry_height }}" id="input-image-additional-height" class="form-control"/>
                       </div>
                     </div>
-                    {% if error_image_additional %}
-                      <div class="invalid-tooltip">{{ error_image_additional }}</div>
-                    {% endif %}
+                    <div id="error-image-additional" class="invalid-feedback"></div>
                   </div>
                 </div>
-                <div class="form-group row required">
+                <div class="row mb-3 required">
                   <label for="input-image-related" class="col-sm-2 col-form-label">{{ entry_image_related }}</label>
                   <div class="col-sm-10">
-                    <div class="row">
+                    <div id="input-image-related" class="row">
                       <div class="col-sm-6">
-                        <input type="text" name="config_image_related_width" value="{{ config_image_related_width }}" placeholder="{{ entry_width }}" id="input-image-related" class="form-control"/>
+                        <input type="text" name="config_image_related_width" value="{{ config_image_related_width }}" placeholder="{{ entry_width }}" id="input-image-related-width" class="form-control"/>
                       </div>
                       <div class="col-sm-6">
-                        <input type="text" name="config_image_related_height" value="{{ config_image_related_height }}" placeholder="{{ entry_height }}" class="form-control"/>
+                        <input type="text" name="config_image_related_height" value="{{ config_image_related_height }}" placeholder="{{ entry_height }}" id="input-image-related-height" class="form-control"/>
                       </div>
                     </div>
-                    {% if error_image_related %}
-                      <div class="invalid-tooltip">{{ error_image_related }}</div>
-                    {% endif %}
+                    <div id="error-image-related" class="invalid-feedback"></div>
                   </div>
                 </div>
-                <div class="form-group row required">
+                <div class="row mb-3 required">
                   <label for="input-image-compare" class="col-sm-2 col-form-label">{{ entry_image_compare }}</label>
                   <div class="col-sm-10">
-                    <div class="row">
+                    <div id="input-image-compare" class="row">
                       <div class="col-sm-6">
-                        <input type="text" name="config_image_compare_width" value="{{ config_image_compare_width }}" placeholder="{{ entry_width }}" id="input-image-compare" class="form-control"/>
+                        <input type="text" name="config_image_compare_width" value="{{ config_image_compare_width }}" placeholder="{{ entry_width }}" id="input-image-compare-width" class="form-control"/>
                       </div>
                       <div class="col-sm-6">
-                        <input type="text" name="config_image_compare_height" value="{{ config_image_compare_height }}" placeholder="{{ entry_height }}" class="form-control"/>
+                        <input type="text" name="config_image_compare_height" value="{{ config_image_compare_height }}" placeholder="{{ entry_height }}" id="input-image-compare-height" class="form-control"/>
                       </div>
                     </div>
-                    {% if error_image_compare %}
-                      <div class="invalid-tooltip">{{ error_image_compare }}</div>
-                    {% endif %}
+                    <div id="error-image-compare" class="invalid-feedback"></div>
                   </div>
                 </div>
-                <div class="form-group row required">
+                <div class="row mb-3 required">
                   <label for="input-image-wishlist" class="col-sm-2 col-form-label">{{ entry_image_wishlist }}</label>
                   <div class="col-sm-10">
-                    <div class="row">
+                    <div id="input-image-wishlist" class="row">
                       <div class="col-sm-6">
-                        <input type="text" name="config_image_wishlist_width" value="{{ config_image_wishlist_width }}" placeholder="{{ entry_width }}" id="input-image-wishlist" class="form-control"/>
+                        <input type="text" name="config_image_wishlist_width" value="{{ config_image_wishlist_width }}" placeholder="{{ entry_width }}" id="input-image-wishlist-width" class="form-control"/>
                       </div>
                       <div class="col-sm-6">
-                        <input type="text" name="config_image_wishlist_height" value="{{ config_image_wishlist_height }}" placeholder="{{ entry_height }}" class="form-control"/>
+                        <input type="text" name="config_image_wishlist_height" value="{{ config_image_wishlist_height }}" placeholder="{{ entry_height }}" id="input-image-wishlist-height" class="form-control"/>
                       </div>
                     </div>
-                    {% if error_image_wishlist %}
-                      <div class="invalid-tooltip">{{ error_image_wishlist }}</div>
-                    {% endif %}
+                    <div id="error-image-wishlist" class="invalid-feedback"></div>
                   </div>
                 </div>
-                <div class="form-group row required">
+                <div class="row mb-3 required">
                   <label for="input-image-cart" class="col-sm-2 col-form-label">{{ entry_image_cart }}</label>
                   <div class="col-sm-10">
-                    <div class="row">
+                    <div id="input-image-cart" class="row">
                       <div class="col-sm-6">
-                        <input type="text" name="config_image_cart_width" value="{{ config_image_cart_width }}" placeholder="{{ entry_width }}" id="input-image-cart" class="form-control"/>
+                        <input type="text" name="config_image_cart_width" value="{{ config_image_cart_width }}" placeholder="{{ entry_width }}" id="input-image-cart-width" class="form-control"/>
                       </div>
                       <div class="col-sm-6">
-                        <input type="text" name="config_image_cart_height" value="{{ config_image_cart_height }}" placeholder="{{ entry_height }}" class="form-control"/>
+                        <input type="text" name="config_image_cart_height" value="{{ config_image_cart_height }}" placeholder="{{ entry_height }}" id="input-image-cart-height" class="form-control"/>
                       </div>
                     </div>
-                    {% if error_image_cart %}
-                      <div class="invalid-tooltip">{{ error_image_cart }}</div>
-                    {% endif %}
+                    <div id="error-image-cart" class="invalid-feedback"></div>
                   </div>
                 </div>
-                <div class="form-group row required">
+                <div class="row mb-3 required">
                   <label for="input-image-location" class="col-sm-2 col-form-label">{{ entry_image_location }}</label>
                   <div class="col-sm-10">
-                    <div class="row">
+                    <div id="input-image-location" class="row">
                       <div class="col-sm-6">
-                        <input type="text" name="config_image_location_width" value="{{ config_image_location_width }}" placeholder="{{ entry_width }}" id="input-image-location" class="form-control"/>
+                        <input type="text" name="config_image_location_width" value="{{ config_image_location_width }}" placeholder="{{ entry_width }}" id="input-image-location-width" class="form-control"/>
                       </div>
                       <div class="col-sm-6">
-                        <input type="text" name="config_image_location_height" value="{{ config_image_location_height }}" placeholder="{{ entry_height }}" class="form-control"/>
+                        <input type="text" name="config_image_location_height" value="{{ config_image_location_height }}" placeholder="{{ entry_height }}" id="input-image-location-height" class="form-control"/>
                       </div>
                     </div>
-                    {% if error_image_location %}
-                      <div class="invalid-tooltip">{{ error_image_location }}</div>
-                    {% endif %}
+                    <div id="error-image-location" class="invalid-feedback"></div>
                   </div>
                 </div>
               </fieldset>
-
-
             </div>
           </div>
-        </form>
+          <input type="hidden" name="store_id" value="{{ store_id }}" id="input-store-id"/></form>
       </div>
     </div>
   </div>
 </div>
 <script type="text/javascript"><!--
-$('select[name=\'config_theme\']').on('change', function() {
-	$.ajax({
-		url: 'index.php?route=setting/setting|theme&user_token={{ user_token }}&theme=' + this.value,
-		dataType: 'html',
-		beforeSend: function() {
-			$('select[name=\'config_theme\']').prop('disabled', true);
-		},
-		complete: function() {
-			$('select[name=\'config_theme\']').prop('disabled', false);
-		},
-		success: function(html) {
-			$('#theme').attr('src', html);
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});
+$('#input-theme').on('change', function () {
+    $.ajax({
+        url: 'index.php?route=setting/setting|theme&user_token={{ user_token }}&theme=' + this.value,
+        dataType: 'html',
+        beforeSend: function () {
+            $('#input-theme').prop('disabled', true);
+        },
+        complete: function () {
+            $('#input-theme').prop('disabled', false);
+        },
+        success: function (html) {
+            $('#theme').attr('src', html);
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
 });
 
-$('select[name=\'config_theme\']').trigger('change');
+$('#input-theme').trigger('change');
 //--></script>
 <script type="text/javascript"><!--
-$('select[name=\'config_country_id\']').on('change', function() {
-	$.ajax({
-		url: 'index.php?route=localisation/country|country&user_token={{ user_token }}&country_id=' + this.value,
-		dataType: 'json',
-		beforeSend: function() {
-			$('select[name=\'config_country_id\']').prop('disabled', true);
-		},
-		complete: function() {
-			$('select[name=\'config_country_id\']').prop('disabled', false);
-		},
-		success: function(json) {
-			html = '<option value="">{{ text_select }}</option>';
+$('#input-country').on('change', function () {
+    var element = this;
 
-			if (json['zone'] && json['zone'] != '') {
-				for (i = 0; i < json['zone'].length; i++) {
-					html += '<option value="' + json['zone'][i]['zone_id'] + '"';
+    $.ajax({
+        url: 'index.php?route=localisation/country|country&user_token={{ user_token }}&country_id=' + this.value,
+        dataType: 'json',
+        beforeSend: function () {
+            $(element).prop('disabled', true);
+        },
+        complete: function () {
+            $(element).prop('disabled', false);
+        },
+        success: function (json) {
+            html = '<option value="">{{ text_select }}</option>';
 
-					if (json['zone'][i]['zone_id'] == '{{ config_zone_id }}') {
-						html += ' selected="selected"';
-					}
+            if (json['zone'] && json['zone'] != '') {
+                for (i = 0; i < json['zone'].length; i++) {
+                    html += '<option value="' + json['zone'][i]['zone_id'] + '"';
 
-					html += '>' + json['zone'][i]['name'] + '</option>';
-				}
-			} else {
-				html += '<option value="0" selected="selected">{{ text_none }}</option>';
-			}
+                    if (json['zone'][i]['zone_id'] == '{{ config_zone_id }}') {
+                        html += ' selected="selected"';
+                    }
 
-			$('select[name=\'config_zone_id\']').html(html);
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});
+                    html += '>' + json['zone'][i]['name'] + '</option>';
+                }
+            } else {
+                html += '<option value="0" selected="selected">{{ text_none }}</option>';
+            }
+
+            $('#input-zone').html(html);
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
 });
 
-$('select[name=\'config_country_id\']').trigger('change');
+$('#input-country').trigger('change');
 //--></script>
 {{ footer }} 

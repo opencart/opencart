@@ -249,7 +249,7 @@ class RetryMiddleware
             }
             if ($value instanceof \Exception || $value instanceof \Throwable) {
                 if (!$decider($retries, $command, $request, null, $value)) {
-                    return Promise\rejection_for(
+                    return Promise\Create::rejectionFor(
                         $this->bindStatsToReturn($value, $requestStats)
                     );
                 }

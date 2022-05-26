@@ -219,8 +219,10 @@ class Login extends \Opencart\System\Engine\Controller {
 			
 			// Default Addresses
 			$this->load->model('account/address');
+			
 			$address_info = $this->model_account_address->getAddress($this->customer->getAddressId());
-			if($address_info){
+			
+			if ($address_info) {
 				$this->session->data['shipping_address'] = $address_info;
 			}
 

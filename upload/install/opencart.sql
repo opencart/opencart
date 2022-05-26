@@ -2033,7 +2033,6 @@ INSERT INTO `oc_setting` (`store_id`, `code`, `key`, `value`, `serialized`) VALU
 (0, 'config', 'config_error_display', '1', 0),
 (0, 'config', 'config_error_log', '1', 0),
 (0, 'config', 'config_error_filename', 'error.log', 0),
-(0, 'config', 'config_google_analytics', '', 0),
 (0, 'config', 'config_mail_engine', 'mail', 0),
 (0, 'config', 'config_mail_parameter', '', 0),
 (0, 'config', 'config_mail_smtp_hostname', '', 0),

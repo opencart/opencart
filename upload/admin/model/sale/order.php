@@ -473,7 +473,7 @@ class Order extends \Opencart\System\Engine\Model {
 		return (int)$query->row['total'];
 	}
 
-	public function getHistories(int $order_id, int $start = 0, int $limit = 10) {
+	public function getHistories(int $order_id, int $start = 0, int $limit = 10): array {
 		if ($start < 0) {
 			$start = 0;
 		}

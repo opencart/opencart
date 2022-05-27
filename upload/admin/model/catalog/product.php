@@ -1077,7 +1077,7 @@ class Product extends \Opencart\System\Engine\Model {
 			$sql .= " AND p.`model` LIKE '" . $this->db->escape((string)$data['filter_model'] . '%') . "'";
 		}
 
-		if (isset($data['filter_price']) && !is_null($data['filter_price'])) {
+		if (isset($data['filter_price']) && $data['filter_price'] !== '') {
 			$sql .= " AND p.`price` LIKE '" . $this->db->escape((string)$data['filter_price'] . '%') . "'";
 		}
 

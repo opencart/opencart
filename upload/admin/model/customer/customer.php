@@ -79,7 +79,7 @@ class Customer extends \Opencart\System\Engine\Model {
 			$sql .= " AND c.`email` LIKE '" . $this->db->escape((string)$data['filter_email'] . '%') . "'";
 		}
 
-		if (isset($data['filter_newsletter']) && !is_null($data['filter_newsletter'])) {
+		if (isset($data['filter_newsletter']) && $data['filter_newsletter'] !== '') {
 			$sql .= " AND c.`newsletter` = '" . (int)$data['filter_newsletter'] . "'";
 		}
 
@@ -158,7 +158,7 @@ class Customer extends \Opencart\System\Engine\Model {
 			$implode[] = "c.`email` LIKE '" . $this->db->escape((string)$data['filter_email'] . '%') . "'";
 		}
 
-		if (isset($data['filter_newsletter']) && !is_null($data['filter_newsletter'])) {
+		if (isset($data['filter_newsletter']) && $data['filter_newsletter'] !== '') {
 			$implode[] = "c.`newsletter` = '" . (int)$data['filter_newsletter'] . "'";
 		}
 

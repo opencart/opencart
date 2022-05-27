@@ -26,9 +26,6 @@ $_['text_week']                  = 'week';
 $_['text_semi_month']            = 'half-month';
 $_['text_month']                 = 'month';
 $_['text_year']                  = 'year';
-
-
-
 $_['text_history']               = 'History';
 $_['text_history_add']           = 'Add History';
 $_['text_transaction']           = 'Transactions';
@@ -61,7 +58,6 @@ $_['entry_description']          = 'Description';
 $_['entry_amount']               = 'Amount';
 $_['entry_notify']               = 'Notify Customer';
 $_['entry_override']             = 'Override';
-$_['entry_comment']              = 'Comment';
 $_['entry_date_added']           = 'Date Added';
 
 // Error

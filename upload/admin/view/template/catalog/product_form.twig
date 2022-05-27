@@ -750,7 +750,7 @@
                   {% for product_option in product_options %}
 
                     <fieldset id="option-row-{{ option_row }}">
-                      <legend>{{ product_option.name }} <button type="button" class="btn btn-danger btn-sm float-end" onclick="$('#option-row-{{ option_row }}').remove();"><i class="fas fa-minus-circle"></i></button></legend>
+                      <legend class="float-none">{{ product_option.name }} <button type="button" class="btn btn-danger btn-sm float-end" onclick="$('#option-row-{{ option_row }}').remove();"><i class="fas fa-minus-circle"></i></button></legend>
                       <input type="hidden" name="product_option[{{ option_row }}][product_option_id]" value="{{ product_option.product_option_id }}"/> <input type="hidden" name="product_option[{{ option_row }}][name]" value="{{ product_option.name }}"/> <input type="hidden" name="product_option[{{ option_row }}][option_id]" value="{{ product_option.option_id }}"/> <input type="hidden" name="product_option[{{ option_row }}][type]" value="{{ product_option.type }}"/>
 
                       <div class="row mb-3">
@@ -884,7 +884,7 @@
                 </div>
 
                 <fieldset>
-                  <legend>{{ text_option_add }}</legend>
+                  <legend class="float-none">{{ text_option_add }}</legend>
                   <div class="row mb-3">
                     <label for="input-option" class="col-sm-2 col-form-label">{{ entry_option }}</label>
                     <div class="col-sm-10">
@@ -901,7 +901,7 @@
               <div id="tab-option" class="tab-pane">
                 {% for option in options %}
                   <fieldset>
-                    <legend>{{ option.name }}</legend>
+                    <legend class="float-none">{{ option.name }}</legend>
 
                     {% if option.type == 'select' %}
                       <div class="row mb-3{% if option.required %} required{% endif %}">
@@ -1690,7 +1690,7 @@ $('#input-option').autocomplete({
     },
     'select': function (item) {
         html = '<fieldset id="option-row-' + option_row + '">';
-        html += '  <legend>' + item['label'] + ' <button type="button" class="btn btn-danger btn-sm float-end" onclick="$(\'#option-row-' + option_row + '\').remove();"><i class="fas fa-minus-circle"></i></button></legend>';
+        html += '  <legend class="float-none">' + item['label'] + ' <button type="button" class="btn btn-danger btn-sm float-end" onclick="$(\'#option-row-' + option_row + '\').remove();"><i class="fas fa-minus-circle"></i></button></legend>';
         html += '  <input type="hidden" name="product_option[' + option_row + '][product_option_id]" value="" />';
         html += '  <input type="hidden" name="product_option[' + option_row + '][name]" value="' + item['label'] + '" />';
         html += '  <input type="hidden" name="product_option[' + option_row + '][option_id]" value="' + item['value'] + '" />';

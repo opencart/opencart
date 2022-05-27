@@ -11,7 +11,7 @@ $_['text_storage_description'] = 'It is very important that you move the storage
 $_['text_storage_success']     = 'Success: Storage directory has been moved!';
 $_['text_admin']               = 'Rename admin directory';
 $_['text_admin_description']   = 'Please type in a new admin directory name in the field below.';
-$_['text_admin_success']       = 'Success: Storage directory has been renamed!';
+$_['text_admin_success']       = 'Success: Admin directory has been renamed!';
 $_['text_path']                = 'Path';
 
 // Entry

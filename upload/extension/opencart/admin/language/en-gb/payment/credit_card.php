@@ -13,11 +13,6 @@ $_['text_deny']          = 'Deny';
 // Entry
 $_['entry_response']     = 'Card Processor Response';
 
-$_['entry_response']     = 'Card Processor Response';
-$_['entry_response']     = 'Card Processor Response';
-$_['entry_response']     = 'Card Processor Response';
-
-
 $_['entry_order_status'] = 'Order Status';
 $_['entry_fraud_status'] = 'Order Status';
 $_['entry_complete_status'] = 'Order Status';

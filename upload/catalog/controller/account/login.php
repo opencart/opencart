@@ -206,10 +206,23 @@ class Login extends \Opencart\System\Engine\Controller {
 		$customer_info = $this->model_account_customer->getCustomerByEmail($email);
 
 		if ($customer_info && $customer_info['token'] && $customer_info['token'] == $token && $this->customer->login($customer_info['email'], '', true)) {
+			// Add customer details into session
+			$this->session->data['customer'] = [
+				'customer_id'       => $customer_info['customer_id'],
+				'customer_group_id' => $customer_info['customer_group_id'],
+				'firstname'         => $customer_info['firstname'],
+				'lastname'          => $customer_info['lastname'],
+				'email'             => $customer_info['email'],
+				'telephone'         => $customer_info['telephone'],
+				'custom_field'      => $customer_info['custom_field']
+			];
+			
 			// Default Addresses
 			$this->load->model('account/address');
-
-			$address_info = $this->model_account_address->getAddress($customer_info['address_id']);
+			$address_info = $this->model_account_address->getAddress($this->customer->getAddressId());
+			if($address_info){
+				$this->session->data['shipping_address'] = $address_info;
+			}
 
 			if ($this->config->get('config_tax_customer') && $address_info) {
 				$this->session->data[$this->config->get('config_tax_customer') . '_address'] = $address_info;

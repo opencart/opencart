@@ -1,5 +1,5 @@
 <?php
-// Text
+// Heading
 $_['heading_title']      = 'Credit Card Payment';
 
 // Text

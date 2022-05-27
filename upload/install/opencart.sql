@@ -11,7 +11,7 @@ SET sql_mode = '';
 -----------------------------------------------------------
 
 --
--- Dumping data for table `oc_attribute`
+-- Dumping data for table `oc_address_format`
 --
 
 INSERT INTO `oc_address_format` (`address_format_id`, `name`, `address_format`) VALUES

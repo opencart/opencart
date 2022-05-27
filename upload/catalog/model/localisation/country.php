@@ -7,6 +7,18 @@ class Country extends \Opencart\System\Engine\Model {
 		return $query->row;
 	}
 
+	public function getCountryByIsoCode2($iso_code_2) {
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "country WHERE `iso_code_2` = '" . $this->db->escape($iso_code_2) . "' AND `status` = '1'");
+
+		return $query->row;
+	}
+
+	public function getCountryByIsoCode3($iso_code_3) {
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "country WHERE `iso_code_3` = '" . $this->db->escape($iso_code_3) . "' AND `status` = '1'");
+
+		return $query->row;
+	}
+
 	public function getCountries(): array {
 		$country_data = $this->cache->get('country.catalog');
 

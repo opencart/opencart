@@ -1167,7 +1167,7 @@ $('#button-collapse').on('click', function () {
 
 $(document).on('click', '#button-invoice', function () {
     $.ajax({
-        url: 'index.php?route=sale/order|createinvoiceno&user_token={{ user_token }}&order_id={{ order_id }}',
+        url: 'index.php?route=sale/order|createInvoiceNo&user_token={{ user_token }}&order_id={{ order_id }}',
         dataType: 'json',
         beforeSend: function () {
             $('#button-invoice').prop('disabled', true).addClass('loading');

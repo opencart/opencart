@@ -1101,7 +1101,7 @@ $('#form-reward').on('submit', function (e) {
     e.preventDefault();
 
     $.ajax({
-        url: 'index.php?route=customer/customer|addreward&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val(),
+        url: 'index.php?route=customer/customer|addReward&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val(),
         type: 'post',
         data: $('#form-reward').serialize(),
         dataType: 'json',

@@ -293,7 +293,12 @@ class Upgrade4 extends \Opencart\System\Engine\Controller {
 				if (!is_dir(DIR_IMAGE . 'catalog')) {
 					rename(DIR_IMAGE . 'data', DIR_IMAGE . 'catalog'); // Rename data to catalog
 				} else {
-					$this->recursive_move(DIR_IMAGE . 'data', DIR_IMAGE . 'catalog');
+					$params = [
+						'src'	=> DIR_IMAGE . 'data',
+						'dest'	=> DIR_IMAGE . 'catalog'
+					];
+				
+					$this->load->controller('common/recursive', $params);
 
 					@unlink(DIR_IMAGE . 'data');
 				}

@@ -197,7 +197,6 @@ class Installer extends \Opencart\System\Engine\Controller {
                             'extension_id'          => 0,
                             'extension_download_id' => 0,
                             'name'                  => isset($install_info['name']) ? $install_info['name'] : $this->language->get('text_unknown'),
-                            'package_name'          => basename($filename, '.ocmod.zip'),
                             'code'              	=> basename($filename, '.ocmod.zip'),
                             'version'               => isset($install_info['version']) ? $install_info['version'] : $this->language->get('text_unknown'),
                             'author'                => isset($install_info['author']) ? $install_info['author'] : $this->language->get('text_unknown'),
@@ -291,10 +290,10 @@ class Installer extends \Opencart\System\Engine\Controller {
 		$extension_install_info = $this->model_setting_extension->getInstall($extension_install_id);
 
 		if ($extension_install_info) {
-			$file = DIR_STORAGE . 'marketplace/' . $extension_install_info['package_name'] . '.ocmod.zip';
+			$file = DIR_STORAGE . 'marketplace/' . $extension_install_info['code'] . '.ocmod.zip';
 
 			if (!is_file($file)) {
-				$json['error'] = sprintf($this->language->get('error_file'), $extension_install_info['package_name'] . '.ocmod.zip');
+				$json['error'] = sprintf($this->language->get('error_file'), $extension_install_info['code'] . '.ocmod.zip');
 			}
 
 			if ($page == 1 && is_dir(DIR_EXTENSION . $extension_install_info['code'] . '/')) {

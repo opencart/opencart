@@ -302,14 +302,24 @@ class Upgrade1 extends \Opencart\System\Engine\Controller {
 				fclose($handle);
 			}
 		}
-
+		
 		// Merge system/upload to system/storage/upload
 		if (is_dir(DIR_SYSTEM . 'upload')) {
-			$this->recursive_move(DIR_SYSTEM . 'upload', DIR_STORAGE . 'upload');
+			$params = [
+				'src'	=> DIR_SYSTEM . 'upload',
+				'dest'	=> DIR_STORAGE . 'upload'
+			];
+			
+			$this->load->controller('common/recursive', $params);
 		}
 
 		if (is_dir(DIR_SYSTEM . 'download')) {
-			$this->recursive_move(DIR_SYSTEM . 'download', DIR_STORAGE . 'download');
+			$params = [
+				'src'	=> DIR_SYSTEM . 'download',
+				'dest'	=> DIR_STORAGE . 'download'
+			];
+			
+			$this->load->controller('common/recursive', $params);
 		}
 
 		// Cleanup files in old directories
@@ -377,34 +387,5 @@ class Upgrade1 extends \Opencart\System\Engine\Controller {
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
-	}
-
-	private function recursive_move($src, $dest) {
-		// If source is not a directory stop processing
-		if (!is_dir($src)) return false;
-
-		// If the destination directory does not exist create it
-		if (!is_dir($dest)) {
-			if (!@mkdir($dest)) {
-				// If the destination directory could not be created stop processing
-				return false;
-			}
-		}
-
-		// Open the source directory to read in files
-		$i = new \DirectoryIterator($src);
-
-		foreach ($i as $f) {
-			if ($f->isFile() && !file_exists("$dest/" . $f->getFilename())) {
-				@rename($f->getRealPath(), "$dest/" . $f->getFilename());
-			} elseif (!$f->isDot() && $f->isDir()) {
-				$this->recursive_move($f->getRealPath(), "$dest/$f");
-
-				@unlink($f->getRealPath());
-			}
-		}
-
-		// Remove source folder after move
-		@unlink($src);
 	}
 }

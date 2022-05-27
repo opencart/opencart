@@ -305,21 +305,21 @@ class Upgrade1 extends \Opencart\System\Engine\Controller {
 		
 		// Merge system/upload to system/storage/upload
 		if (is_dir(DIR_SYSTEM . 'upload')) {
-			$params = [
+			$filter_data = [
 				'src'	=> DIR_SYSTEM . 'upload',
 				'dest'	=> DIR_STORAGE . 'upload'
 			];
 			
-			$this->load->controller('common/recursive', $params);
+			$this->load->controller('common/recursive', $filter_data);
 		}
 
 		if (is_dir(DIR_SYSTEM . 'download')) {
-			$params = [
+			$filter_data = [
 				'src'	=> DIR_SYSTEM . 'download',
 				'dest'	=> DIR_STORAGE . 'download'
 			];
 			
-			$this->load->controller('common/recursive', $params);
+			$this->load->controller('common/recursive', $filter_data);
 		}
 
 		// Cleanup files in old directories

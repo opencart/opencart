@@ -6395,12 +6395,10 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `name`, `code`, `status`) VALUES
 (4332, 176, 'Khanty–Mansi Autonomous Okrug – Yugra', 'RU-KHM', 1),
 (4333, 176, 'Chukotka Autonomous Okrug', 'RU-CHU', 1),
 (4334, 176, 'Yamalo-Nenets Autonomous Okrug', 'RU-YAN', 1),
-(4335, 176, 'Republic of Crimea', 'UA-43', 1),
-(4336, 176, 'Sevastopol', 'UA-40', 1),
-(4337, 117, 'Aglonas novads', '001', 1),
-(4338, 99, 'Chhattisgarh', 'CT', 1),
-(4339, 99, 'Ladakh', 'LA', 1),
-(4340, 99, 'Uttarakhand', 'UT', 1);
+(4335, 117, 'Aglonas novads', '001', 1),
+(4336, 99, 'Chhattisgarh', 'CT', 1),
+(4337, 99, 'Ladakh', 'LA', 1),
+(4338, 99, 'Uttarakhand', 'UT', 1);
 
 -----------------------------------------------------------
 

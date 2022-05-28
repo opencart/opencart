@@ -87,7 +87,7 @@ $('#ip').load('index.php?route=extension/opencart/fraud/ip|ip&user_token={{ user
 
 $('#button-ip-add').on('click', function() {
 	$.ajax({
-		url: 'index.php?route=extension/opencart/fraud/ip|addip&user_token={{ user_token }}',
+		url: 'index.php?route=extension/opencart/fraud/ip|addIp&user_token={{ user_token }}',
 		type: 'post',
 		dataType: 'json',
 		data: 'ip=' + encodeURIComponent($('#input-ip').val()),
@@ -122,7 +122,7 @@ $('#ip').on('click', 'button', function() {
 	var element = this;
 
 	$.ajax({
-		url: 'index.php?route=extension/opencart/fraud/ip|removeip&user_token={{ user_token }}',
+		url: 'index.php?route=extension/opencart/fraud/ip|removeIp&user_token={{ user_token }}',
 		type: 'post',
 		dataType: 'json',
 		data: 'ip=' + encodeURIComponent($(element).val()),

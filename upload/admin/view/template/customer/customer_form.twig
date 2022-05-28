@@ -1076,7 +1076,7 @@ $('#button-reward').on('click', function(e) {
 	e.preventDefault();
 
 	$.ajax({
-		url: 'index.php?route=customer/customer|addreward&user_token={{ user_token }}&customer_id={{ customer_id }}',
+		url: 'index.php?route=customer/customer|addReward&user_token={{ user_token }}&customer_id={{ customer_id }}',
 		type: 'post',
 		dataType: 'json',
 		data: 'description=' + encodeURIComponent($('#tab-reward input[name=\'description\']').val()) + '&points=' + encodeURIComponent($('#tab-reward input[name=\'points\']').val()),

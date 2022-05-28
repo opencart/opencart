@@ -26,7 +26,7 @@ class Weight extends \Opencart\System\Engine\Model {
 			if ($status) {
 				$cost = '';
 
-				$rates = explode(',', $this->config->get('shipping_weight_' . $result['geo_zone_id'] . '_rate'));
+				$rates = explode(',', (string)$this->config->get('shipping_weight_' . $result['geo_zone_id'] . '_rate'));
 
 				foreach ($rates as $rate) {
 					$data = explode(':', $rate);

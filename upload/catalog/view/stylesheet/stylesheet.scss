@@ -156,13 +156,16 @@ footer a {
     font-size: 12px;
     line-height: 18px;
     color: #FFF;
-
   }
 
   .btn-lg {
     padding: 0.65rem 1rem;
   }
 
+  .btn:hover {
+    color: #FFF;
+  }
+	
   &.open {
     > .btn {
       background-image: none;

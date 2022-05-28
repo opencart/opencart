@@ -1,9 +1,6 @@
 <div id="banner{{ module }}" class="carousel fade" data-bs-ride="carousel">
 
-
   <div class="carousel-inner">
-
-
     {% for banner in banners %}
       <div class="carousel-item active">
         {% if banner.link %}
@@ -13,10 +10,8 @@
         {% endif %}
       </div>
     {% endfor %}
-
-
-
   </div>
+  
 </div>
 <script type="text/javascript"><!--
 $('#banner{{ module }}').carousel({

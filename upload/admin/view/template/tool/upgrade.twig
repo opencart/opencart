@@ -153,17 +153,14 @@ $('#button-upgrade').on('click', function() {
 					$('#progress-text').html('<div class="invalid-tooltip">' + json['error'] + '</div>');
 					$('#log').append(json['error'] + "\n");
 				}
-
-
+				
 				if (json['success']) {
 					$('#progress-bar').addClass('progress-bar-success');
 					$('#progress-text').html('<div class="text-success">' + json['success'] + '</div>');
 					$('#log').append(json['success'] + "\n");
 
-
 					$('#button-upgrade').button('reset');
 				}
-
 
 				if (json['text']) {
 					i = i + 1;

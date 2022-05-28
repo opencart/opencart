@@ -630,19 +630,19 @@ class Product extends \Opencart\System\Engine\Controller {
 		$this->load->language('product/product');
 
 		if (isset($this->request->post['product_id'])) {
-			$product_id = $this->request->post['product_id'];
+			$product_id = (int)$this->request->post['product_id'];
 		} else {
 			$product_id = 0;
 		}
 
 		if (isset($this->request->post['recurring_id'])) {
-			$recurring_id = $this->request->post['recurring_id'];
+			$recurring_id = (int)$this->request->post['recurring_id'];
 		} else {
 			$recurring_id = 0;
 		}
 
 		if (isset($this->request->post['quantity'])) {
-			$quantity = $this->request->post['quantity'];
+			$quantity = (int)$this->request->post['quantity'];
 		} else {
 			$quantity = 1;
 		}

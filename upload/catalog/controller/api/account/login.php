@@ -12,7 +12,7 @@ class Login extends \Opencart\System\Engine\Controller {
 		if (!empty($this->request->post['username']) && !empty($this->request->post['key'])) {
 			$api_info = $this->model_account_api->login($this->request->post['username'], $this->request->post['key']);
 		} else {
-			$api_info = array();
+			$api_info = [];
 		}
 
 		if ($api_info) {

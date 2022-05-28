@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\Catalog\Controller\Api;
+namespace Opencart\Catalog\Controller\Api\Account;
 class Login extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('api/account/login');
@@ -9,7 +9,11 @@ class Login extends \Opencart\System\Engine\Controller {
 		$this->load->model('account/api');
 
 		// Login with API Key
-		$api_info = $this->model_account_api->login($this->request->post['username'], $this->request->post['key']);
+		if (!empty($this->request->post['username']) && !empty($this->request->post['key'])) {
+			$api_info = $this->model_account_api->login($this->request->post['username'], $this->request->post['key']);
+		} else {
+			$api_info = array();
+		}
 
 		if ($api_info) {
 			// Check if IP is allowed

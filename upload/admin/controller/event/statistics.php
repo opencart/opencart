@@ -19,13 +19,13 @@ class Statistics extends \Opencart\System\Engine\Controller {
 	public function addReturn(&$route, &$args, &$output) {
 		$this->load->model('report/statistics');
 
-		$this->model_report_statistics->addValue('return', 1);
+		$this->model_report_statistics->addValue('returns', 1);
 	}
 
 	// admin/model/sale/returns/deleteReturn/after
 	public function deleteReturn(&$route, &$args, &$output) {
 		$this->load->model('report/statistics');
 
-		$this->model_report_statistics->removeValue('return', 1);
+		$this->model_report_statistics->removeValue('returns', 1);
 	}
 }

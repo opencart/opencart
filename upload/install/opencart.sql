@@ -854,7 +854,7 @@ INSERT INTO `oc_event` (`code`, `trigger`, `action`, `status`) VALUES
 ('mail_review', 'catalog/model/catalog/review/addReview/after', 'mail/review', 1),
 ('statistics_review_add', 'catalog/model/catalog/review/addReview/after', 'event/statistics|addReview', 1),
 ('statistics_return_add', 'catalog/model/account/returns/addReturn/after', 'event/statistics|addReturn', 1),
-('statistics_return_add', 'admin/model/sale/returns/deleteReturn/after', 'event/statistics|deleteReturn', 1),
+('statistics_return_delete', 'admin/model/sale/returns/deleteReturn/after', 'event/statistics|deleteReturn', 1),
 ('statistics_order_history', 'catalog/model/checkout/order/addHistory/before', 'event/statistics|addHistory', 1),
 ('admin_mail_affiliate_approve', 'admin/model/customer/customer_approval/approveAffiliate/after', 'mail/affiliate|approve', 1),
 ('admin_mail_affiliate_deny', 'admin/model/customer/customer_approval/denyAffiliate/after', 'mail/affiliate|deny', 1),

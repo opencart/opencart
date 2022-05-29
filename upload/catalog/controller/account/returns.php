@@ -78,7 +78,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
-		$this->response->setOutput($this->load->view('account/return_list', $data));
+		$this->response->setOutput($this->load->view('account/returns_list', $data));
 	}
 
 	public function info(): void {
@@ -100,7 +100,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('account/returns');
 
-		$return_info = $this->model_account_return->getReturn($return_id);
+		$return_info = $this->model_account_returns->getReturn($return_id);
 
 		if ($return_info) {
 			$data['breadcrumbs'] = [];
@@ -149,7 +149,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 
 			$data['histories'] = [];
 
-			$results = $this->model_account_return->getHistories($this->request->get['return_id']);
+			$results = $this->model_account_returns->getHistories($this->request->get['return_id']);
 
 			foreach ($results as $result) {
 				$data['histories'][] = [
@@ -168,7 +168,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 			$data['footer'] = $this->load->controller('common/footer');
 			$data['header'] = $this->load->controller('common/header');
 
-			$this->response->setOutput($this->load->view('account/return_info', $data));
+			$this->response->setOutput($this->load->view('account/returns_info', $data));
 		} else {
 			$data['breadcrumbs'] = [];
 
@@ -342,7 +342,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
-		$this->response->setOutput($this->load->view('account/return_form', $data));
+		$this->response->setOutput($this->load->view('account/returns_form', $data));
 	}
 
 	public function save(): void {

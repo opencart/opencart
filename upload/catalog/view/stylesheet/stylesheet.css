@@ -128,6 +128,9 @@ footer a {
 #header-cart .btn-lg {
   padding: 0.65rem 1rem;
 }
+#header-cart .btn:hover {
+  color: #FFF;
+}
 #header-cart.open > .btn {
   background-image: none;
   background-color: #FFFFFF;

@@ -32,7 +32,7 @@ If you have __1.5.x__ and want to upgrade __to 3.0.x__, You may try to [contact 
 
 7. Goto the admin side of your store and press `Ctrl+F5` or `Ctrl+Shift+R` for several times to refresh your browser cache. That will prevent oddly shifted elements due to stylesheet changes. Login to your admin as the main administrator.
 
-8. Goto `Admin -> Users -> User Groups` and Edit the Top Adminstrator group. Check All boxes.
+8. Goto `Admin -> Users -> User Groups` and Edit the Top Administrator group. Check All boxes.
     * This will ensure you have permissions for all the new files
 
 9. Goto `Admin -> Extensions -> Extensions -> Theme` enabled and save the default theme again.

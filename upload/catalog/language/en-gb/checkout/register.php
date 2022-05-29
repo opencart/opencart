@@ -9,7 +9,7 @@ $_['text_guest']              = 'Guest Checkout';
 $_['text_payment_address']    = 'Payment Address';
 $_['text_shipping_address']   = 'Shipping Address';
 $_['text_your_password']      = 'Your Password';
-$_['text_agree']              = 'I have read and agree to the <a href="%s" class="modal-link"><b>%s</b></a>';
+$_['text_agree']              = 'I have read and take note of the <a href="%s" class="modal-link"><b>%s</b></a>';
 $_['text_success_add']        = 'Success: Your account has been created!';
 $_['text_success_edit']       = 'Success: Your account has been successfully updated.';
 
@@ -36,7 +36,7 @@ $_['error_guest']             = 'Warning: Items in your shopping cart require yo
 $_['error_firstname']         = 'First Name must be between 1 and 32 characters!';
 $_['error_lastname']          = 'Last Name must be between 1 and 32 characters!';
 $_['error_customer_group']    = 'Customer Group does not appear to be valid!';
-$_['error_customer_approval'] = 'Warning: Your this customer group requires approval and can not be used with guest account.';
+$_['error_customer_approval'] = 'Warning: this customer group requires approval and can not be used with guest account.';
 $_['error_email']             = 'E-Mail address does not appear to be valid!';
 $_['error_exists']            = 'Warning: E-Mail Address is already registered!';
 $_['error_telephone']         = 'Telephone must be between 3 and 32 characters!';
@@ -47,6 +47,6 @@ $_['error_city']              = 'City must be between 2 and 128 characters!';
 $_['error_postcode']          = 'Postcode must be between 2 and 10 characters!';
 $_['error_country']           = 'Please select a country!';
 $_['error_zone']              = 'Please select a region / state!';
-$_['error_agree']             = 'Warning: You must agree to the %s!';
+$_['error_agree']             = 'Warning: You have to take note of the %s!';
 $_['error_custom_field']      = '%s required!';
 $_['error_regex']             = '%s not a valid input!';

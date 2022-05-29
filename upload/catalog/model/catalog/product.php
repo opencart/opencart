@@ -165,7 +165,7 @@ class Product extends \Opencart\System\Engine\Model {
 		foreach ($query->rows as $result) {
 			// for never get one more time with same product id
 			if (!isset($product_data[$result['product_id']])) {
-				$product_data[$result['product_id']] = $this->getProduct($result['product_id']);
+				$product_data[$result['product_id']] = $this->model_catalog_product->getProduct($result['product_id']);
 			}
 		}
 
@@ -216,7 +216,7 @@ class Product extends \Opencart\System\Engine\Model {
 		$query = $this->db->query($sql);
 
 		foreach ($query->rows as $result) {
-			$product_data[$result['product_id']] = $this->getProduct($result['product_id']);
+			$product_data[$result['product_id']] = $this->model_catalog_product->getProduct($result['product_id']);
 		}
 
 		return $product_data;
@@ -239,7 +239,7 @@ class Product extends \Opencart\System\Engine\Model {
 			$query = $this->db->query("SELECT p.`product_id` FROM `" . DB_PREFIX . "product` p LEFT JOIN `" . DB_PREFIX . "product_to_store` p2s ON (p.`product_id` = p2s.`product_id`) WHERE p.`status` = '1' AND p.`date_available` <= NOW() AND p2s.`store_id` = '" . (int)$this->config->get('config_store_id') . "' ORDER BY p.`product_id` DESC LIMIT " . (int)$limit);
 
 			foreach ($query->rows as $result) {
-				$product_data[$result['product_id']] = $this->getProduct($result['product_id']);
+				$product_data[$result['product_id']] = $this->model_catalog_product->getProduct($result['product_id']);
 			}
 
 			$this->cache->set('product.latest.' . (int)$this->config->get('config_language_id') . '.' . (int)$this->config->get('config_store_id') . '.' . $this->config->get('config_customer_group_id') . '.' . (int)$limit, $product_data);
@@ -256,7 +256,7 @@ class Product extends \Opencart\System\Engine\Model {
 			$query = $this->db->query("SELECT p.`product_id` FROM `" . DB_PREFIX . "product` p LEFT JOIN `" . DB_PREFIX . "product_to_store` p2s ON (p.`product_id` = p2s.`product_id`) WHERE p.`status` = '1' AND p.`date_available` <= NOW() AND p2s.`store_id` = '" . (int)$this->config->get('config_store_id') . "' ORDER BY p.`viewed` DESC, p.`date_added` DESC LIMIT " . (int)$limit);
 
 			foreach ($query->rows as $result) {
-				$product_data[$result['product_id']] = $this->getProduct($result['product_id']);
+				$product_data[$result['product_id']] = $this->model_catalog_product->getProduct($result['product_id']);
 			}
 
 			$this->cache->set('product.popular.' . (int)$this->config->get('config_language_id') . '.' . (int)$this->config->get('config_store_id') . '.' . $this->config->get('config_customer_group_id') . '.' . (int)$limit, $product_data);
@@ -274,7 +274,7 @@ class Product extends \Opencart\System\Engine\Model {
 			$query = $this->db->query("SELECT op.`product_id`, SUM(op.`quantity`) AS `total` FROM `" . DB_PREFIX . "order_product` op LEFT JOIN `" . DB_PREFIX . "order` o ON (op.`order_id` = o.`order_id`) LEFT JOIN `" . DB_PREFIX . "product` p ON (op.`product_id` = p.`product_id`) LEFT JOIN `" . DB_PREFIX . "product_to_store` p2s ON (p.`product_id` = p2s.`product_id`) WHERE o.`order_status_id` > '0' AND p.`status` = '1' AND p.`date_available` <= NOW() AND p2s.`store_id` = '" . (int)$this->config->get('config_store_id') . "' GROUP BY op.`product_id` ORDER BY `total` DESC LIMIT " . (int)$limit);
 
 			foreach ($query->rows as $result) {
-				$product_data[$result['product_id']] = $this->getProduct($result['product_id']);
+				$product_data[$result['product_id']] = $this->model_catalog_product->getProduct($result['product_id']);
 			}
 
 			$this->cache->set('product.bestseller.' . (int)$this->config->get('config_language_id') . '.' . (int)$this->config->get('config_store_id') . '.' . $this->config->get('config_customer_group_id') . '.' . (int)$limit, $product_data);
@@ -368,7 +368,7 @@ class Product extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_related` pr LEFT JOIN `" . DB_PREFIX . "product` p ON (pr.`related_id` = p.`product_id`) LEFT JOIN `" . DB_PREFIX . "product_to_store` p2s ON (p.`product_id` = p2s.`product_id`) WHERE pr.`product_id` = '" . (int)$product_id . "' AND p.`status` = '1' AND p.`date_available` <= NOW() AND p2s.`store_id` = '" . (int)$this->config->get('config_store_id') . "'");
 
 		foreach ($query->rows as $result) {
-			$product_data[$result['related_id']] = $this->getProduct($result['related_id']);
+			$product_data[$result['related_id']] = $this->model_catalog_product->getProduct($result['related_id']);
 		}
 
 		return $product_data;

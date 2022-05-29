@@ -88,7 +88,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -116,7 +116,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -159,7 +159,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -187,7 +187,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -230,7 +230,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -258,7 +258,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -286,7 +286,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -309,7 +309,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -337,7 +337,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -365,7 +365,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -414,7 +414,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -484,7 +484,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -552,7 +552,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -608,7 +608,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -631,7 +631,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -659,7 +659,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -687,7 +687,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -710,7 +710,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -759,7 +759,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -842,7 +842,7 @@ function db_schema() {
 		],
 		'engine'  => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -865,7 +865,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -908,7 +908,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -936,7 +936,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -989,7 +989,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -1047,7 +1047,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -1152,7 +1152,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -1195,7 +1195,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -1293,7 +1293,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -1336,7 +1336,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -1369,7 +1369,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -1397,7 +1397,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -1430,7 +1430,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -1463,7 +1463,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -1520,7 +1520,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -1571,7 +1571,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -1608,7 +1608,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -1654,7 +1654,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -1697,7 +1697,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -1765,7 +1765,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -1793,7 +1793,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -1841,7 +1841,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -1869,7 +1869,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -1897,7 +1897,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -1925,7 +1925,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -1958,7 +1958,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -1991,7 +1991,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -2019,7 +2019,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -2062,7 +2062,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -2112,7 +2112,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -2145,7 +2145,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -2208,7 +2208,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -2244,7 +2244,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -2272,7 +2272,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -2305,7 +2305,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -2328,7 +2328,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -2356,7 +2356,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -2409,7 +2409,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -2447,7 +2447,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -2483,7 +2483,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -2531,7 +2531,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -2559,7 +2559,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -2582,7 +2582,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -2639,7 +2639,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -2662,7 +2662,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -2700,7 +2700,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -2733,7 +2733,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -2756,7 +2756,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -2789,7 +2789,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -2850,7 +2850,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -2883,7 +2883,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -2911,7 +2911,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -2934,7 +2934,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -2978,7 +2978,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -3021,7 +3021,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -3054,7 +3054,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -3092,7 +3092,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -3120,7 +3120,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -3148,7 +3148,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -3181,7 +3181,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -3214,7 +3214,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -3544,7 +3544,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -3588,7 +3588,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -3642,7 +3642,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -3721,7 +3721,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -3750,7 +3750,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -3807,7 +3807,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -3880,7 +3880,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -3961,7 +3961,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -4162,7 +4162,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -4196,7 +4196,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -4257,7 +4257,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -4321,7 +4321,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -4344,7 +4344,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -4386,7 +4386,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -4424,7 +4424,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -4502,7 +4502,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -4531,7 +4531,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -4554,7 +4554,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -4599,7 +4599,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -4635,7 +4635,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -4693,7 +4693,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -4724,7 +4724,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -4747,7 +4747,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -4775,7 +4775,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -4799,7 +4799,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -4907,7 +4907,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -4937,7 +4937,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -4980,7 +4980,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -5010,7 +5010,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -5040,7 +5040,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -5107,7 +5107,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -5145,7 +5145,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -5173,7 +5173,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -5208,7 +5208,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -5253,7 +5253,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -5282,7 +5282,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -5310,7 +5310,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -5446,7 +5446,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -5490,7 +5490,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -5564,7 +5564,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -5597,7 +5597,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -5626,7 +5626,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -5698,7 +5698,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -5736,7 +5736,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -5786,7 +5786,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -5809,7 +5809,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -5848,7 +5848,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -5886,7 +5886,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -5934,7 +5934,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -5972,7 +5972,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -6035,7 +6035,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -6111,7 +6111,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -6139,7 +6139,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -6177,7 +6177,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -6250,7 +6250,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -6288,7 +6288,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -6311,7 +6311,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -6339,7 +6339,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -6363,7 +6363,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -6396,7 +6396,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -6435,7 +6435,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -6479,7 +6479,7 @@ function db_schema() {
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	return $tables;

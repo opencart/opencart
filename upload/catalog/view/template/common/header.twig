@@ -20,7 +20,7 @@
     <link href="{{ style.href }}" type="text/css" rel="{{ style.rel }}" media="{{ style.media }}"/>
   {% endfor %}
   {% for script in scripts %}
-    <script src="{{ script }}" type="text/javascript"></script>
+    <script src="{{ script.href }}" type="text/javascript"></script>
   {% endfor %}
   <script src="catalog/view/javascript/common.js" type="text/javascript"></script>
   {% for link in links %}

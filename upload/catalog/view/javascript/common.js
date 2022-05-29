@@ -27,7 +27,7 @@ var tooltip = function () {
    $('.tooltip').remove();
 
     // Apply to all on current page
-    $('[data-bs-toggle=\'tooltip\']').each(function(i, element) {
+    $('[data-bs-toggle=\'tooltip\']').each(function (i, element) {
         bootstrap.Tooltip.getOrCreateInstance(element);
     });
 }
@@ -39,7 +39,7 @@ $(document).on('click', 'button', tooltip);
 // Alert Fade
 var alert = function () {
     window.setTimeout(function() {
-        $('.alert-dismissible').fadeTo(1000, 0, function() {
+        $('.alert-dismissible').fadeTo(1000, 0, function () {
             $(this).remove();
         });
     }, 7000);

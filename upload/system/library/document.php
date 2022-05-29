@@ -104,11 +104,12 @@ class Document {
 	 * @param	string	$rel
 	 * @param	string	$media
      */
-	public function addStyle(string $href, $rel = 'stylesheet', $media = 'screen'): void {
+	public function addStyle(string $href, $rel = 'stylesheet', $media = 'screen', $sort = 10): void {
 		$this->styles[$href] = [
 			'href'  => $href,
 			'rel'   => $rel,
-			'media' => $media
+			'media' => $media,
+			'sort'  => (int)$sort
 		];
 	}
 
@@ -118,6 +119,10 @@ class Document {
 	 * @return	array
      */
 	public function getStyles(): array {
+		usort($this->styles, static function ($a, $b) {
+			return ($a['sort'] <=> $b['sort']);
+		});
+
 		return $this->styles;
 	}
 
@@ -127,8 +132,11 @@ class Document {
      * @param	string	$href
 	 * @param	string	$position
      */
-	public function addScript(string $href, $position = 'header'): void {
-		$this->scripts[$position][$href] = $href;
+	public function addScript(string $href, $position = 'header', $sort = 10): void {
+		$this->scripts[$position][$href] = [
+			'href' => $href,
+			'sort' => (int)$sort
+		];
 	}
 
 	/**
@@ -140,6 +148,10 @@ class Document {
      */
 	public function getScripts($position = 'header'): array {
 		if (isset($this->scripts[$position])) {
+			uasort($this->scripts[$position], static function ($a, $b) {
+				return ($a['sort'] <=> $b['sort']);
+			});
+
 			return $this->scripts[$position];
 		} else {
 			return [];

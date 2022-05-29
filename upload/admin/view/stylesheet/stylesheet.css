@@ -862,3 +862,12 @@ div.required .col-form-label:not(span):before, td.required:before {
 td {
     position: relative;
 }
+
+.input-group.form-floating select:focus + label,
+.input-group.form-floating input:focus + label {
+    z-index: 3;
+}
+
+.form-control .lead {
+    font-size: inherit;
+}

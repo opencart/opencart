@@ -8,7 +8,7 @@ function token(int $length = 32) {
 	if (function_exists('random_bytes')) {
 		$token = bin2hex(random_bytes($length));
 	}
-	
+
 	return substr($token, -$length, $length);
 }
 

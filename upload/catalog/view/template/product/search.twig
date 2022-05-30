@@ -6,8 +6,7 @@
     {% endfor %}
   </ul>
   <div class="row">{{ column_left }}
-    <div id="content" class="col">
-      {{ content_top }}
+    <div id="content" class="col">{{ content_top }}
       <h1>{{ heading_title }}</h1>
       <div class="row">
         <div class="col"><label for="input-search" class="col-form-label">{{ entry_search }}</label></div>
@@ -92,10 +91,8 @@
       {% else %}
         <p>{{ text_no_results }}</p>
       {% endif %}
-      {{ content_bottom }}
-    </div>
-    {{ column_right }}
-  </div>
+      {{ content_bottom }}</div>
+    {{ column_right }}</div>
 </div>
 <script type="text/javascript"><!--
 $('#button-search').bind('click', function () {

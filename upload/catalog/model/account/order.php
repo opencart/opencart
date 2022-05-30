@@ -101,7 +101,7 @@ class Order extends \Opencart\System\Engine\Model {
 		}
 	}
 
-	public function getOrders(int $start = 0, int $limit = 20) {
+	public function getOrders(int $start = 0, int $limit = 20): array {
 		if ($start < 0) {
 			$start = 0;
 		}

@@ -225,7 +225,7 @@ $('#button-upload').on('click', function() {
     }
 
     timer = setInterval(function() {
-        if ($('#form-upload input[name=\'upload\']').val() != '') {
+        if ($('#form-upload input[name=\'upload\']').val() !== '') {
             clearInterval(timer);
 
             $.ajax({

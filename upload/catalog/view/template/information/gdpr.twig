@@ -9,8 +9,7 @@
     <div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> {{ success }} <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>
   {% endif %}
   <div class="row">{{ column_left }}
-    <div id="content" class="col">
-      {{ content_top }}
+    <div id="content" class="col">{{ content_top }}
       <h1>{{ heading_title }}</h1>
       <p>{{ text_gdpr|format(store, gdpr, title) }}</p>
       <form action="{{ action }}" method="post" data-oc-toggle="ajax">
@@ -52,10 +51,8 @@
           <div class="float-end"><button type="submit" id="button-continue" class="btn btn-primary">{{ button_continue }}</button></div>
         </div>
       </form>
-      {{ content_bottom }}
-    </div>
-    {{ column_right }}
-  </div>
+      {{ content_bottom }}</div>
+    {{ column_right }}</div>
 </div>
 <script type="text/javascript"><!--
 $('input[name=\'action\']').on('change', function() {

@@ -36,7 +36,7 @@ class User {
 		}
 	}
 
-	public function login($username, $password) {
+	public function login($username, $password): bool {
 		$user_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "user` WHERE `username` = '" . $this->db->escape($username) . "' AND `status` = '1'");
 
 		if ($user_query->num_rows) {
@@ -76,7 +76,7 @@ class User {
 		}
 	}
 
-	public function logout() {
+	public function logout(): void {
 		unset($this->session->data['user_id']);
 
 		$this->user_id = '';
@@ -91,19 +91,19 @@ class User {
 		}
 	}
 
-	public function isLogged() {
+	public function isLogged(): int {
 		return $this->user_id;
 	}
 
-	public function getId() {
+	public function getId(): int {
 		return $this->user_id;
 	}
 
-	public function getUserName() {
+	public function getUserName(): string {
 		return $this->username;
 	}
 
-	public function getGroupId() {
+	public function getGroupId(): int {
 		return $this->user_group_id;
 	}
 }

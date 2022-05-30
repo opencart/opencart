@@ -44,7 +44,7 @@ class Session {
 	 *
 	 * @return	string
  	*/	
-	public function getId() {
+	public function getId(): string {
 		return $this->session_id;
 	}
 

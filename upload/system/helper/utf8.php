@@ -16,7 +16,7 @@ if (extension_loaded('mbstring')) {
 	}
 
 	function utf8_substr(string $string, int $offset, int $length = 0) {
-		if ($length === '') {
+		if ($length == 0) {
 			return mb_substr($string, $offset, utf8_strlen($string));
 		} else {
 			return mb_substr($string, $offset, $length);
@@ -45,7 +45,7 @@ if (extension_loaded('mbstring')) {
 	}
 
 	function utf8_substr(string $string, int $offset, int $length = 0) {
-		if ($length === '') {
+		if ($length == 0) {
 			return iconv_substr($string, $offset, utf8_strlen($string), 'UTF-8');
 		} else {
 			return iconv_substr($string, $offset, $length, 'UTF-8');

@@ -136,7 +136,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function remove() {
+	public function remove(): void {
 		$this->load->language('checkout/voucher');
 
 		$json = [];

@@ -6,7 +6,7 @@
     {% endfor %}
   </ul>
   <div class="row">{{ column_left }}
-    <div id="content" class="col"> {{ content_top }}
+    <div id="content" class="col">{{ content_top }}
       <h1>{{ heading_title }}</h1>
       <p>{{ text_description }}</p>
       <form id="form-return" action="{{ save }}" method="post" data-oc-toggle="ajax">
@@ -85,8 +85,7 @@
               <div id="input-reason">
                 {% for return_reason in return_reasons %}
                   <div class="form-check">
-                    <input type="radio" name="return_reason_id" value="{{ return_reason.return_reason_id }}" id="input-return-reason-{{ return_reason.return_reason_id }}" class="form-check-input"/>
-                    <label for="input-return-reason-{{ return_reason.return_reason_id }}" class="form-check-label">{{ return_reason.name }}</label>
+                    <input type="radio" name="return_reason_id" value="{{ return_reason.return_reason_id }}" id="input-return-reason-{{ return_reason.return_reason_id }}" class="form-check-input"/> <label for="input-return-reason-{{ return_reason.return_reason_id }}" class="form-check-label">{{ return_reason.name }}</label>
                   </div>
                 {% endfor %}
               </div>
@@ -97,12 +96,10 @@
             <label class="col-sm-2 col-form-label">{{ entry_opened }}</label>
             <div class="col-sm-10">
               <div class="form-check form-check-inline">
-                <input type="radio" name="opened" value="1" id="input-opened-yes" class="form-check-input" checked/>
-                <label for="input-opened-yes" class="form-check-label">{{ text_yes }}</label>
+                <input type="radio" name="opened" value="1" id="input-opened-yes" class="form-check-input" checked/> <label for="input-opened-yes" class="form-check-label">{{ text_yes }}</label>
               </div>
               <div class="form-check form-check-inline">
-                <input type="radio" name="opened" value="0" id="input-opened-no" class="form-check-input"/>
-                <label for="input-opened-no" class="form-check-label">{{ text_no }}</label>
+                <input type="radio" name="opened" value="0" id="input-opened-no" class="form-check-input"/> <label for="input-opened-no" class="form-check-label">{{ text_no }}</label>
               </div>
             </div>
           </div>
@@ -127,10 +124,8 @@
           </div>
         </div>
       </form>
-      {{ content_bottom }}
-    </div>
-    {{ column_right }}
-  </div>
+      {{ content_bottom }}</div>
+    {{ column_right }}</div>
 </div>
 <script type="text/javascript"><!--
 $(document).ready(function () {

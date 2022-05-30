@@ -5,11 +5,8 @@
       <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
     {% endfor %}
   </ul>
-  <div class="row">
-
-    {{ column_left }}
-    <div id="content" class="col">
-      {{ content_top }}
+  <div class="row">{{ column_left }}
+    <div id="content" class="col">{{ content_top }}
       <h1>{{ heading_title }}</h1>
       <form id="form-affiliate" action="{{ save }}" method="post" data-oc-toggle="ajax">
 
@@ -235,10 +232,8 @@
         </div>
 
       </form>
-      {{ content_bottom }}
-    </div>
-    {{ column_right }}
-  </div>
+      {{ content_bottom }}</div>
+    {{ column_right }}</div>
 </div>
 <script type="text/javascript"><!--
 $('input[name=\'payment\']').on('change', function() {

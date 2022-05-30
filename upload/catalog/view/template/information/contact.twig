@@ -5,8 +5,7 @@
 			<li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
 		{% endfor %}
 	</ul>
-	<div class="row">
-		{{ column_left }}
+	<div class="row">{{ column_left }}
 		<div id="content" class="col">{{ content_top }}
 			<h1>{{ heading_title }}</h1>
 			<h3>{{ text_location }}</h3>
@@ -72,7 +71,7 @@
 											{% endif %}
 										</div>
 										<div class="col-sm-3"><strong>{{ text_telephone }}</strong>
-											<br>
+											<br/>
 											{{ location.telephone }}
 											<br/>
 											<br/>

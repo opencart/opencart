@@ -73,7 +73,7 @@ class Map extends \Opencart\System\Engine\Controller {
 		return $this->load->view('extension/opencart/dashboard/map_info', $data);
 	}
 
-	public function map() {
+	public function map(): void {
 		$json = [];
 
 		$this->load->model('extension/opencart/dashboard/map');

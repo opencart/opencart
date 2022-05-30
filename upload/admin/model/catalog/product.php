@@ -809,7 +809,7 @@ class Product extends \Opencart\System\Engine\Model {
 			$sql .= " AND p.`status` = '" . (int)$data['filter_status'] . "'";
 		}
 
-		$sql .= " GROUP BY p.product_id";
+		$sql .= " GROUP BY p.`product_id`";
 
 		$sort_data = [
 			'pd.name',

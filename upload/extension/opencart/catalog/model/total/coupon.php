@@ -12,12 +12,14 @@ class Coupon extends \Opencart\System\Engine\Model {
 			if ($coupon_info) {
 				$discount_total = 0;
 
+				$products = $this->cart->getProducts();
+
 				if (!$coupon_info['product']) {
 					$sub_total = $this->cart->getSubTotal();
 				} else {
 					$sub_total = 0;
 
-					foreach ($this->cart->getProducts() as $product) {
+					foreach ($products as $product) {
 						if (in_array($product['product_id'], $coupon_info['product'])) {
 							$sub_total += $product['total'];
 						}
@@ -28,7 +30,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 					$coupon_info['discount'] = min($coupon_info['discount'], $sub_total);
 				}
 
-				foreach ($this->cart->getProducts() as $product) {
+				foreach ($products as $product) {
 					$discount = 0;
 
 					if (!$coupon_info['product']) {

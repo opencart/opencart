@@ -504,7 +504,7 @@ class Product extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function addReport(int $product_id, string $ip, string $country = '') {
+	public function addReport(int $product_id, string $ip, string $country = ''): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "product_report` SET `product_id` = '" . (int)$product_id . "', `store_id` = '" . (int)$this->config->get('config_store_id') . "', `ip` = '" . $this->db->escape($ip) . "', `country` = '" . $this->db->escape($country) . "', `date_added` = NOW()");
 	}
 }

@@ -325,7 +325,7 @@ class Security extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function delete() {
+	public function delete(): void {
 		$status = true;
 
 		if (!$this->user->hasPermission('modify', 'common/security')) {

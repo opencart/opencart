@@ -266,10 +266,10 @@ $('#form-payment-address').on('submit', function (e) {
                 $('#button-payment-address').prop('disabled', false).removeClass('loading');
             },
             success: function(json) {
+                console.log(json);
+
                 $('#form-payment-address').find('.is-invalid').removeClass('is-invalid');
                 $('#form-payment-address').find('.invalid-feedback').removeClass('d-block');
-
-                console.log(json);
 
                 if (json['redirect']) {
                     location = json['redirect'];

@@ -182,14 +182,6 @@ $(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function (e) {
         }
     }
 
-    console.log(e);
-    console.log('element ' + element);
-    console.log('action ' + action);
-    console.log('button ' + button);
-    console.log('formaction ' + formaction);
-    console.log('method ' + method);
-    console.log('enctype ' + enctype);
-
     $.ajax({
         url: action,
         type: method,
@@ -203,11 +195,11 @@ $(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function (e) {
             $(button).prop('disabled', false).removeClass('loading');
         },
         success: function (json) {
+            console.log(json);
+
             $('.alert-dismissible').remove();
             $(element).find('.is-invalid').removeClass('is-invalid');
             $(element).find('.invalid-feedback').removeClass('d-block');
-
-            console.log(json);
 
             if (json['redirect']) {
                 location = json['redirect'];

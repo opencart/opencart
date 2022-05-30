@@ -8,13 +8,9 @@
   {% if success %}
     <div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> {{ success }}</div>
   {% endif %}
-  <div class="row">
-    {{ column_left }}
-    <div id="content" class="col">
-      {{ content_top }}
-      <h2>
-        {{ text_my_account }}
-      </h2>
+  <div class="row">{{ column_left }}
+    <div id="content" class="col">{{ content_top }}
+      <h2>{{ text_my_account }}</h2>
       <ul class="list-unstyled">
         <li><a href="{{ edit }}">{{ text_edit }}</a></li>
         <li><a href="{{ password }}">{{ text_password }}</a></li>
@@ -54,9 +50,7 @@
       <ul class="list-unstyled">
         <li><a href="{{ newsletter }}">{{ text_newsletter }}</a></li>
       </ul>
-      {{ content_bottom }}
-    </div>
-    {{ column_right }}
-  </div>
+      {{ content_bottom }}</div>
+    {{ column_right }}</div>
 </div>
 {{ footer }}

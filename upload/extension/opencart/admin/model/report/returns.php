@@ -24,16 +24,16 @@ class Returns extends \Opencart\System\Engine\Model {
 			$group = 'week';
 		}
 
-		switch($group) {
+		switch ($group) {
 			case 'day';
 				$sql .= " GROUP BY YEAR(r.`date_added`), MONTH(r.`date_added`), DAY(r.`date_added`)";
 				break;
 			default:
 			case 'week':
-				$sql .= " GROUP BY YEAR(r.`date_added`), WEEK(r.date_added)";
+				$sql .= " GROUP BY YEAR(r.`date_added`), WEEK(r.`date_added`)";
 				break;
 			case 'month':
-				$sql .= " GROUP BY YEAR(r.`date_added`), MONTH(r.date_added)";
+				$sql .= " GROUP BY YEAR(r.`date_added`), MONTH(r.`date_added`)";
 				break;
 			case 'year':
 				$sql .= " GROUP BY YEAR(r.`date_added`)";
@@ -64,7 +64,7 @@ class Returns extends \Opencart\System\Engine\Model {
 			$group = 'week';
 		}
 
-		switch($group) {
+		switch ($group) {
 			case 'day';
 				$sql = "SELECT COUNT(DISTINCT YEAR(`date_added`), MONTH(`date_added`), DAY(`date_added`)) AS `total` FROM `" . DB_PREFIX . "return`";
 				break;

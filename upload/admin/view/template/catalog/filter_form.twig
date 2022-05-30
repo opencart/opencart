@@ -84,7 +84,7 @@
 <script type="text/javascript"><!--
 var filter_row = {{ filter_row }};
 
-$('#button-filter').on('click', function() {
+$('#button-filter').on('click', function () {
     html = '<tr id="filter-row-' + filter_row + '">';
     html += '  <td class="text-start" style="width: 70%;"><input type="hidden" name="filter[' + filter_row + '][filter_id]" value=""/>';
   {% for language in languages %}

@@ -200,7 +200,7 @@
   </div>
 </fieldset>
 <script type="text/javascript"><!--
-$('input[name=\'payment_existing\']').on('change', function() {
+$('input[name=\'payment_existing\']').on('change', function () {
     if ($(this).val() == 1) {
         $('#payment-existing').show();
         $('#payment-new').hide();
@@ -211,7 +211,7 @@ $('input[name=\'payment_existing\']').on('change', function() {
 });
 
 // Existing Payment Address
-$('#input-payment-address').on('change', function() {
+$('#input-payment-address').on('change', function () {
     var element = this;
 
     chain.attach(function() {
@@ -249,7 +249,7 @@ $('#input-payment-address').on('change', function() {
 });
 
 // New Payment Address
-$('#form-payment-address').on('submit', function(e) {
+$('#form-payment-address').on('submit', function (e) {
     e.preventDefault();
 
     chain.attach(function() {
@@ -349,7 +349,7 @@ $('#form-payment-address').on('submit', function(e) {
     });
 });
 
-$('#input-payment-country').on('change', function() {
+$('#input-payment-country').on('change', function () {
     var element = this;
 
     chain.attach(function() {

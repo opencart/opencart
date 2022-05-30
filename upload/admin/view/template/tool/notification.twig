@@ -21,14 +21,14 @@
 	</div>
 </div>
 <script type="text/javascript"><!--
-$('#notification').on('click', '.pagination a', function(e) {
+$('#notification').on('click', '.pagination a', function (e) {
     e.preventDefault();
 
     $('#notification').load(this.href);
 });
 
 // View
-$('#notification').on('click', 'table a', function(e) {
+$('#notification').on('click', 'table a', function (e) {
     e.preventDefault();
 
     var element = this;
@@ -54,7 +54,7 @@ $('#notification').on('click', 'table a', function(e) {
     });
 });
 
-$('#notification').on('click', '.btn', function(e) {
+$('#notification').on('click', '.btn', function (e) {
     var element = this;
 
     $('#modal-notification').remove();
@@ -85,7 +85,7 @@ $('#notification').on('click', '.btn', function(e) {
 });
 
 // Delete
-$('#button-delete').on('click', function(e) {
+$('#button-delete').on('click', function (e) {
     e.preventDefault();
 
     var element = this;

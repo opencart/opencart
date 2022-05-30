@@ -71,7 +71,7 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#input-language').on('change', function() {
+$('#input-language').on('change', function () {
     $.ajax({
         url: 'index.php?route=design/translation|path&user_token={{ user_token }}&language_id=' + $('#input-language').val(),
         dataType: 'json',
@@ -108,7 +108,7 @@ $('#input-language').on('change', function() {
     });
 });
 
-$('#input-route').on('change', function() {
+$('#input-route').on('change', function () {
     $.ajax({
         url: 'index.php?route=design/translation|translation&user_token={{ user_token }}&language_id=' + $('#input-language').val() + '&path=' + $('#input-route').val(),
         dataType: 'json',
@@ -149,7 +149,7 @@ $('#input-route').on('change', function() {
     });
 });
 
-$('#input-key').on('change', function() {
+$('#input-key').on('change', function () {
     if (translation[$('#input-key').val()]) {
         $('#input-default').val(translation[$('#input-key').val()]);
 

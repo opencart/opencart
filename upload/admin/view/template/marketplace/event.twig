@@ -22,13 +22,13 @@
 	</div>
 </div>
 <script type="text/javascript"><!--
-$('#event').on('click', 'thead a, .pagination a', function(e) {
+$('#event').on('click', 'thead a, .pagination a', function (e) {
     e.preventDefault();
 
     $('#event').load(this.href);
 });
 
-$('#event').on('click', '.btn-success, .btn-danger', function(e) {
+$('#event').on('click', '.btn-success, .btn-danger', function (e) {
     e.preventDefault();
 
     var element = this;
@@ -61,7 +61,7 @@ $('#event').on('click', '.btn-success, .btn-danger', function(e) {
     });
 });
 
-$('#event').on('click', '.btn-info', function() {
+$('#event').on('click', '.btn-info', function () {
     var element = this;
 
     $('#modal-event').remove();

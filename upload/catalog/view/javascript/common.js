@@ -390,12 +390,12 @@ var chain = new Chain();
             $.extend(this, option);
 
             // Focus
-            $this.on('focus', function() {
+            $this.on('focus', function () {
                 this.request();
             });
 
             // Keydown
-            $this.on('input', function(e) {
+            $this.on('input', function (e) {
                 this.request();
 
                 var value = $this.val();

@@ -179,7 +179,7 @@
   </div>
 </fieldset>
 <script type="text/javascript"><!--
-$('input[name=\'shipping_existing\']').on('change', function() {
+$('input[name=\'shipping_existing\']').on('change', function () {
     if ($(this).val() == 1) {
         $('#shipping-existing').show();
         $('#shipping-new').hide();
@@ -190,7 +190,7 @@ $('input[name=\'shipping_existing\']').on('change', function() {
 });
 
 // Existing Shipping Address
-$('#input-shipping-address').on('change', function() {
+$('#input-shipping-address').on('change', function () {
     var element = this;
 
     chain.attach(function() {
@@ -226,7 +226,7 @@ $('#input-shipping-address').on('change', function() {
 });
 
 // New Shipping Address
-$('#form-shipping-address').on('submit', function(e) {
+$('#form-shipping-address').on('submit', function (e) {
     e.preventDefault();
 
     chain.attach(function() {
@@ -325,7 +325,7 @@ $('#form-shipping-address').on('submit', function(e) {
     });
 });
 
-$('#input-shipping-country').on('change', function() {
+$('#input-shipping-country').on('change', function () {
     var element = this;
 
     chain.attach(function() {

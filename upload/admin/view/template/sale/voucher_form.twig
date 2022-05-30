@@ -115,7 +115,7 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#button-send').on('click', function() {
+$('#button-send').on('click', function () {
     var element = this;
 
     $.ajax({
@@ -146,7 +146,7 @@ $('#button-send').on('click', function() {
     });
 });
 
-$('#history').on('click', '.pagination a', function(e) {
+$('#history').on('click', '.pagination a', function (e) {
     e.preventDefault();
 
     $('#history').load(this.href);

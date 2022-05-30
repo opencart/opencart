@@ -60,7 +60,7 @@
 <script type="text/javascript" src="view/javascript/codemirror/mode/xml.js"></script>
 <script type="text/javascript" src="view/javascript/codemirror/mode/htmlmixed.js"></script>
 <script type="text/javascript"><!--
-$('#input-store').on('change', function(e) {
+$('#input-store').on('change', function (e) {
     var element = this;
 
     $.ajax({
@@ -97,7 +97,7 @@ $('#input-store').on('change', function(e) {
 
 $('#input-store').trigger('change');
 
-$('#path').on('click', 'a.directory', function(e) {
+$('#path').on('click', 'a.directory', function (e) {
     e.preventDefault();
 
     var element = this;
@@ -156,7 +156,7 @@ $('#path').on('click', 'a.directory', function(e) {
 
 var editor = [];
 
-$('#path').on('click', 'a.file', function(e) {
+$('#path').on('click', 'a.file', function (e) {
     e.preventDefault();
 
     var element = this;
@@ -226,7 +226,7 @@ $('#path').on('click', 'a.file', function(e) {
     }
 });
 
-$('#code .nav-tabs').on('click', 'i.fas.fa-minus-circle', function(e) {
+$('#code .nav-tabs').on('click', 'i.fas.fa-minus-circle', function (e) {
     e.preventDefault();
 
     // 1. Remove tab functionality
@@ -255,7 +255,7 @@ $('#code .nav-tabs').on('click', 'i.fas.fa-minus-circle', function(e) {
     }
 });
 
-$('.tab-content').on('click', '.btn-primary', function(e) {
+$('.tab-content').on('click', '.btn-primary', function (e) {
     var element = this;
 
     var editor = $('.tab-content .active .CodeMirror')[0].CodeMirror;
@@ -290,7 +290,7 @@ $('.tab-content').on('click', '.btn-primary', function(e) {
     });
 });
 
-$('.tab-content').on('click', '.btn-danger', function(e) {
+$('.tab-content').on('click', '.btn-danger', function (e) {
     if (confirm('{{ text_confirm }}')) {
         var element = this;
 
@@ -326,7 +326,7 @@ $('.tab-content').on('click', '.btn-danger', function(e) {
     }
 });
 
-$('#history').on('click', '.pagination a', function(e) {
+$('#history').on('click', '.pagination a', function (e) {
     e.preventDefault();
 
     $('#history').load(this.href);

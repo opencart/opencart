@@ -70,13 +70,13 @@
 	</div>
 </div>
 <script type="text/javascript"><!--
-$('#affiliate').on('click', 'thead a, .pagination a', function(e) {
+$('#affiliate').on('click', 'thead a, .pagination a', function (e) {
     e.preventDefault();
 
     $('#affiliate').load(this.href);
 });
 
-$('#button-filter').on('click', function() {
+$('#button-filter').on('click', function () {
     url = '';
 
     var filter_customer = $('#input-customer').val();

@@ -119,7 +119,7 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#button-generate').on('click', function() {
+$('#button-generate').on('click', function () {
     rand = '';
 
     string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -134,7 +134,7 @@ $('#button-generate').on('click', function() {
 <script type="text/javascript"><!--
 var ip_row = {{ ip_row }};
 
-$('#button-ip').on('click', function() {
+$('#button-ip').on('click', function () {
     html = '<tr id="ip-row-' + ip_row + '">';
     html += '  <td class="text-end"><input type="text" name="api_ip[]" value="" placeholder="{{ entry_ip }}" class="form-control"/></td>';
     html += '  <td class="text-end"><button type="button" onclick="$(\'#ip-row-' + ip_row + '\').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
@@ -146,7 +146,7 @@ $('#button-ip').on('click', function() {
 });
 //--></script>
 <script type="text/javascript"><!--
-$('#session button').on('click', function(e) {
+$('#session button').on('click', function (e) {
     e.preventDefault();
 
     var element = this;

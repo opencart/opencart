@@ -33,7 +33,7 @@
   {{ security }}
 </div>
 <script type="text/javascript"><!--
-$('#button-setting').on('click', function() {
+$('#button-setting').on('click', function () {
     $.ajax({
         url: 'index.php?route=common/developer&user_token={{ user_token }}',
         dataType: 'html',
@@ -56,7 +56,7 @@ $('#button-setting').on('click', function() {
     });
 });
 
-$('input[name=\'developer_sass\']').on('change', function() {
+$('input[name=\'developer_sass\']').on('change', function () {
     $.ajax({
         url: 'index.php?route=common/developer|edit&user_token={{ user_token }}',
         type: 'post',
@@ -84,7 +84,7 @@ $('input[name=\'developer_sass\']').on('change', function() {
     });
 });
 
-$('#modal-developer table button').on('click', function() {
+$('#modal-developer table button').on('click', function () {
     var element = this;
 
     $.ajax({

@@ -72,13 +72,13 @@
 	</div>
 </div>
 <script type="text/javascript"><!--
-$('#customer-approval').on('click', '.pagination a', function(e) {
+$('#customer-approval').on('click', '.pagination a', function (e) {
     e.preventDefault();
 
     $('#customer-approval').load(this.href);
 });
 
-$('#customer-approval').on('click', '.btn-success, .btn-danger', function(e) {
+$('#customer-approval').on('click', '.btn-success, .btn-danger', function (e) {
     e.preventDefault();
 
     var element = this;
@@ -109,7 +109,7 @@ $('#customer-approval').on('click', '.btn-success, .btn-danger', function(e) {
     });
 });
 
-$('#button-filter').on('click', function() {
+$('#button-filter').on('click', function () {
     var url = '';
 
     var filter_customer = $('#input-customer').val();

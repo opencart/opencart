@@ -63,7 +63,7 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#button-backup').on('click', function() {
+$('#button-backup').on('click', function () {
     var element = this;
 
     $('#progress-bar').css('width', '0%');
@@ -131,7 +131,7 @@ $('#button-backup').on('click', function() {
 });
 
 // Restore
-$('#history').on('click', '.btn-warning', function() {
+$('#history').on('click', '.btn-warning', function () {
     var element = this;
 
     $('#progress-bar').css('width', '0%');
@@ -205,14 +205,14 @@ $('#history').on('click', '.btn-warning', function() {
 });
 
 // Upload
-$('#button-upload').on('click', function() {
+$('#button-upload').on('click', function () {
     $('#form-upload').remove();
 
     $('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="upload" /></form>');
 
     $('#form-upload input[name=\'upload\']').trigger('click');
 
-    $('#form-upload input[name=\'upload\']').on('change', function() {
+    $('#form-upload input[name=\'upload\']').on('change', function () {
         if ((this.files[0].size / 1024) > {{ config_file_max_size }}) {
           	alert('{{ error_upload_size }}');
 
@@ -264,7 +264,7 @@ $('#button-upload').on('click', function() {
 });
 
 // Delete
-$('#history').on('click', '.btn-danger', function() {
+$('#history').on('click', '.btn-danger', function () {
     var element = this;
 
     $.ajax({

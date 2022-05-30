@@ -107,7 +107,7 @@
 	</div>
 </div>
 <script type="text/javascript"><!--
-$('#input-to').on('change', function() {
+$('#input-to').on('change', function () {
     $('.to').hide();
 
     $('#to-' + this.value.replaceAll('_', '-')).show();
@@ -148,7 +148,7 @@ $('#input-customer').autocomplete({
     }
 });
 
-$('#mail-customer').on('click', '.btn', function() {
+$('#mail-customer').on('click', '.btn', function () {
     $(this).parent().parent().remove();
 });
 
@@ -185,7 +185,7 @@ $('#input-affiliate').autocomplete({
     }
 });
 
-$('#input-affiliate').on('click', '.btn', function() {
+$('#input-affiliate').on('click', '.btn', function () {
     $(this).parent().parent().remove();
 });
 
@@ -222,7 +222,7 @@ $('#input-product').autocomplete({
     }
 });
 
-$('#mail-product').on('click', '.btn', function() {
+$('#mail-product').on('click', '.btn', function () {
     $(this).parent().parent().remove();
 });
 
@@ -230,7 +230,7 @@ $('textarea[data-oc-toggle=\'ckeditor\']').ckeditor({
     language:'{{ ckeditor }}'
 });
 
-$('#button-send').on('click', function() {
+$('#button-send').on('click', function () {
     var element = this;
 
     for (instance in CKEDITOR.instances) {

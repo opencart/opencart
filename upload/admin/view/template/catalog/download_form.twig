@@ -100,7 +100,7 @@ $('#button-upload').on('click', function () {
     }
 
     var timer = setInterval(function () {
-        if ($('#form-upload input[name=\'file\']').val() != '') {
+        if ($('#form-upload input[name=\'file\']').val() !== '') {
             clearInterval(timer);
 
             $.ajax({

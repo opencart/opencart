@@ -81,7 +81,7 @@
       }
 
       timer = setInterval(function () {
-          if ($('#form-upload input[name=\'file[]\']').val() != '') {
+          if ($('#form-upload input[name=\'file[]\']').val() !== '') {
               clearInterval(timer);
 
               var url = 'index.php?route=common/filemanager|upload&user_token={{ user_token }}';

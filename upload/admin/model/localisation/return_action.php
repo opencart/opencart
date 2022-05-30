@@ -27,7 +27,7 @@ class ReturnAction extends \Opencart\System\Engine\Model {
 		$this->cache->delete('return_action');
 	}
 
-	public function deleteReturnAction(int $return_action_id) {
+	public function deleteReturnAction(int $return_action_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "return_action` WHERE `return_action_id` = '" . (int)$return_action_id . "'");
 
 		$this->cache->delete('return_action');

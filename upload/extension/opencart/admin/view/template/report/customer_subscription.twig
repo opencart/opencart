@@ -112,8 +112,8 @@ $('input[name=\'filter_customer\']').autocomplete({
         $.ajax({
             url: 'index.php?route=customer/customer|autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
-            success: function(json) {
-                response($.map(json, function(item) {
+            success: function (json) {
+                response($.map(json, function (item) {
                     return {
                         label: item['name'],
                         value: item['customer_id']
@@ -122,7 +122,7 @@ $('input[name=\'filter_customer\']').autocomplete({
             }
         });
     },
-    'select': function(item) {
+    'select': function (item) {
         $('input[name=\'filter_customer\']').val(item['label']);
     }
 });

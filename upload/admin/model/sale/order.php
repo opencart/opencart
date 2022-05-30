@@ -449,7 +449,7 @@ class Order extends \Opencart\System\Engine\Model {
 		return (int)$query->row['total'];
 	}
 
-	public function createInvoiceNo(int $order_id) {
+	public function createInvoiceNo(int $order_id): string {
 		$order_info = $this->getOrder($order_id);
 
 		if ($order_info && !$order_info['invoice_no']) {
@@ -499,7 +499,7 @@ class Order extends \Opencart\System\Engine\Model {
 		return (int)$query->row['total'];
 	}
 
-	public function getEmailsByProductsOrdered(array $products, int $start, int $end) {
+	public function getEmailsByProductsOrdered(array $products, int $start, int $end): array {
 		$implode = [];
 
 		foreach ($products as $product_id) {

@@ -83,8 +83,6 @@ $('#gdpr').on('click', '.btn-success, .btn-warning, .btn-danger', function(e) {
 
     var element = this;
 
-    console.log($(element).val());
-
     $.ajax({
         url: $(element).val(),
         dataType: 'json',

@@ -202,7 +202,7 @@ $(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function (e) {
             $(element).find('.invalid-feedback').removeClass('d-block');
 
             if (json['redirect']) {
-                location = json['redirect'];
+                location = json['redirect'].replaceAll('&amp;', '&');
             }
 
             if (typeof json['error'] == 'string') {

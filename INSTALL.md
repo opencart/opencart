@@ -55,7 +55,7 @@ Godaddy Issues
 
 If your hosting on godaddy you might need to rename the php.ini to user.ini
 
-It seems godadddy has started changing the industry standard names of files.
+It seems godaddy has started changing the industry standard names of files.
 
 ----------------------------
 

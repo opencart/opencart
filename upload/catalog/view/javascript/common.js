@@ -237,7 +237,7 @@ $(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function (e) {
             console.log(json);
 
             if (json['redirect']) {
-                location = json['redirect'];
+                location = json['redirect'].replaceAll('&amp;', '&');
             }
 
             if (typeof json['error'] == 'string') {

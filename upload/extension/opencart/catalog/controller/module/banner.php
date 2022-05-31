@@ -34,7 +34,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 
 			return $this->load->view('extension/opencart/module/banner', $data);
 		} else {
-			return false;
+			return '';
 		}
 	}
 }

@@ -356,7 +356,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 		$data['sort'] = $sort;
 		$data['order'] = $order;
 
-		return $this->load->view('sale/return_list', $data);
+		return $this->load->view('sale/returns_list', $data);
 	}
 
 	public function form(): void {
@@ -561,7 +561,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('sale/return_form', $data));
+		$this->response->setOutput($this->load->view('sale/returns_form', $data));
 	}
 
 	public function save(): void {
@@ -699,7 +699,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($history_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($history_total - 10)) ? $history_total : ((($page - 1) * 10) + 10), $history_total, ceil($history_total / 10));
 
-		return $this->load->view('sale/return_history', $data);
+		return $this->load->view('sale/returns_history', $data);
 	}
 
 	public function addHistory(): void {

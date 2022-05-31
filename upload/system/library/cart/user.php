@@ -1,9 +1,9 @@
 <?php
 namespace Opencart\System\Library\Cart;
 class User {
-	private $user_id;
-	private $username;
-	private $user_group_id;
+	private int $user_id = 0;
+	private string $username = '';
+	private int $user_group_id = 0;
 	private $permission = [];
 
 	public function __construct($registry) {
@@ -79,7 +79,7 @@ class User {
 	public function logout(): void {
 		unset($this->session->data['user_id']);
 
-		$this->user_id = '';
+		$this->user_id = 0;
 		$this->username = '';
 	}
 

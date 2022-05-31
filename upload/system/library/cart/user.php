@@ -91,8 +91,8 @@ class User {
 		}
 	}
 
-	public function isLogged(): int {
-		return $this->user_id;
+	public function isLogged(): bool {
+		return $this->user_id ? true : false;
 	}
 
 	public function getId(): int {

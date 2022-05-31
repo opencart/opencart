@@ -40,7 +40,7 @@ final class DB {
 
 	public function gc(): bool {
 		if (round(rand(1, $this->config->get('session_divisor') / $this->config->get('session_probability'))) == 1) {
-			$this->db->query("DELETE FROM `" . DB_PREFIX . "session` WHERE `expire` < '" . $this->db->escape(gmdate('Y-m-d H:i:s', time())) . "'");
+			$this->db->query("DELETE FROM `" . DB_PREFIX . "session` WHERE `expire` < '" . $this->db->escape(gmdate('Y-m-d H:i:s', time())) . "' OR  `expire` > '" . $this->db->escape(gmdate('Y-m-d H:i:s', time() + $this->config->get('session_expire'))) . "'");
 		}
 
 		return true;

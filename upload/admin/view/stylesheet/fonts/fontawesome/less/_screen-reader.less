@@ -1,5 +1,14 @@
-// Screen Readers
+// screen-reader utilities
 // -------------------------
 
-.sr-only { .sr-only(); }
-.sr-only-focusable { .sr-only-focusable(); }
+// only display content to screen readers
+.sr-only,
+.@{fa-css-prefix}-sr-only {
+  .fa-sr-only();
+}
+
+// use in conjunction with .sr-only to only display content when it's focused
+.sr-only-focusable,
+.@{fa-css-prefix}-sr-only-focusable {
+  .fa-sr-only-focusable();
+}

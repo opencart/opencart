@@ -288,17 +288,6 @@ class Upgrade4 extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-			// Merge image/data to image/catalog
-			if (is_dir(DIR_IMAGE . 'data')) {
-				if (!is_dir(DIR_IMAGE . 'catalog')) {
-					rename(DIR_IMAGE . 'data', DIR_IMAGE . 'catalog'); // Rename data to catalog
-				} else {
-					$this->recursive_move(DIR_IMAGE . 'data', DIR_IMAGE . 'catalog');
-
-					@unlink(DIR_IMAGE . 'data');
-				}
-			}
-
 			// Convert image/data to image/catalog
 			$this->db->query("UPDATE `" . DB_PREFIX . "banner_image` SET `image` = REPLACE (image, 'data/', 'catalog/')");
 			$this->db->query("UPDATE `" . DB_PREFIX . "category` SET `image` = REPLACE (image, 'data/', 'catalog/')");

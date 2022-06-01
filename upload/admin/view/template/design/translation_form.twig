@@ -75,17 +75,17 @@ $('#input-language').on('change', function () {
     $.ajax({
         url: 'index.php?route=design/translation|path&user_token={{ user_token }}&language_id=' + $('#input-language').val(),
         dataType: 'json',
-        beforeSend: function() {
+        beforeSend: function () {
             $('#input-language').prop('disabled', true);
             $('#input-route').prop('disabled', true);
             $('#input-key').prop('disabled', true);
         },
-        complete: function() {
+        complete: function () {
             $('#input-language').prop('disabled', false);
             $('#input-route').prop('disabled', false);
             $('#input-key').prop('disabled', false);
         },
-        success: function(json) {
+        success: function (json) {
             html = '';
 
             if (json) {
@@ -102,7 +102,7 @@ $('#input-language').on('change', function () {
 
             $('#input-route').trigger('change');
         },
-        error: function(xhr, ajaxOptions, thrownError) {
+        error: function (xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
@@ -112,17 +112,17 @@ $('#input-route').on('change', function () {
     $.ajax({
         url: 'index.php?route=design/translation|translation&user_token={{ user_token }}&language_id=' + $('#input-language').val() + '&path=' + $('#input-route').val(),
         dataType: 'json',
-        beforeSend: function() {
+        beforeSend: function () {
             $('#input-language').prop('disabled', true);
             $('#input-route').prop('disabled', true);
             $('#input-key').prop('disabled', true);
         },
-        complete: function() {
+        complete: function () {
             $('#input-language').prop('disabled', false);
             $('#input-route').prop('disabled', false);
             $('#input-key').prop('disabled', false);
         },
-        success: function(json) {
+        success: function (json) {
             translation = [];
 
             html = '<option value=""></option>';
@@ -143,7 +143,7 @@ $('#input-route').on('change', function () {
 
             $('#input-key').trigger('change');
         },
-        error: function(xhr, ajaxOptions, thrownError) {
+        error: function (xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });

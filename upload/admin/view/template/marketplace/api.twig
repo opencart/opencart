@@ -29,13 +29,13 @@ $('#button-save').on('click', function (e) {
         type: 'post',
         dataType: 'json',
         data: $('#modal-opencart :input'),
-        beforeSend: function() {
+        beforeSend: function () {
             $('#button-save').prop('disabled', true).addClass('loading');
         },
-        complete: function() {
+        complete: function () {
             $('#button-save').prop('disabled', false).removeClass('loading');
         },
-        success: function(json) {
+        success: function (json) {
             console.log(json);
 
             $('.alert-dismissible').remove();

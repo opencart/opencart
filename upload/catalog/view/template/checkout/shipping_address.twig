@@ -193,17 +193,17 @@ $('input[name=\'shipping_existing\']').on('change', function () {
 $('#input-shipping-address').on('change', function () {
     var element = this;
 
-    chain.attach(function() {
+    chain.attach(function () {
         return $.ajax({
             url: 'index.php?route=checkout/shipping_address|address&language={{ language }}&address_id=' + $(element).val(),
             dataType: 'json',
-            beforeSend: function() {
+            beforeSend: function () {
                 $(element).prop('disabled', true);
             },
-            complete: function() {
+            complete: function () {
                 $(element).prop('disabled', false);
             },
-            success: function(json) {
+            success: function (json) {
                 if (json['redirect']) {
                     location = json['redirect'];
                 }
@@ -218,7 +218,7 @@ $('#input-shipping-address').on('change', function () {
                     $('#button-shipping-method').trigger('click');
                 }
             },
-            error: function(xhr, ajaxOptions, thrownError) {
+            error: function (xhr, ajaxOptions, thrownError) {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });
@@ -229,20 +229,20 @@ $('#input-shipping-address').on('change', function () {
 $('#form-shipping-address').on('submit', function (e) {
     e.preventDefault();
 
-    chain.attach(function() {
+    chain.attach(function () {
         return $.ajax({
             url: 'index.php?route=checkout/shipping_address|save&language={{ language }}',
             type: 'post',
             data: $('#form-shipping-address').serialize(),
             dataType: 'json',
             contentType: 'application/x-www-form-urlencoded',
-            beforeSend: function() {
+            beforeSend: function () {
                 $('#button-shipping-address').prop('disabled', true).addClass('loading');
             },
-            complete: function() {
+            complete: function () {
                 $('#button-shipping-address').prop('disabled', false).removeClass('loading');
             },
-            success: function(json) {
+            success: function (json) {
                 $('#form-shipping-address').find('.is-invalid').removeClass('is-invalid');
                 $('#form-shipping-address').find('.invalid-feedback').removeClass('d-block');
 
@@ -318,7 +318,7 @@ $('#form-shipping-address').on('submit', function (e) {
                     $('#button-shipping-method').trigger('click');
                 }
             },
-            error: function(xhr, ajaxOptions, thrownError) {
+            error: function (xhr, ajaxOptions, thrownError) {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });
@@ -328,17 +328,17 @@ $('#form-shipping-address').on('submit', function (e) {
 $('#input-shipping-country').on('change', function () {
     var element = this;
 
-    chain.attach(function() {
+    chain.attach(function () {
         return $.ajax({
             url: 'index.php?route=localisation/country&language={{ language }}&country_id=' + $('#input-shipping-country').val(),
             dataType: 'json',
-            beforeSend: function() {
+            beforeSend: function () {
                 $(element).prop('disabled', true);
             },
-            complete: function() {
+            complete: function () {
                 $(element).prop('disabled', false);
             },
-            success: function(json) {
+            success: function (json) {
                 if (json['postcode_required'] == '1') {
                     $('#input-shipping-postcode').parent().addClass('required');
                 } else {
@@ -363,7 +363,7 @@ $('#input-shipping-country').on('change', function () {
 
                 $('#input-shipping-zone').html(html);
             },
-            error: function(xhr, ajaxOptions, thrownError) {
+            error: function (xhr, ajaxOptions, thrownError) {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });

@@ -155,13 +155,13 @@ $('#session button').on('click', function (e) {
         url: 'index.php?route=user/api|deletesession&user_token={{ user_token }}&api_session_id=' + $(element).val(),
         type: 'post',
         dataType: 'json',
-        beforeSend: function() {
+        beforeSend: function () {
             $(element).prop('disabled', true).addClass('loading');
         },
-        complete: function() {
+        complete: function () {
             $(element).prop('disabled', false).removeClass('loading');
         },
-        success: function(json) {
+        success: function (json) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
@@ -174,7 +174,7 @@ $('#session button').on('click', function (e) {
                 $(element).parent().parent().remove();
             }
         },
-        error: function(xhr, ajaxOptions, thrownError) {
+        error: function (xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });

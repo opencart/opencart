@@ -25,14 +25,14 @@
 $('#button-shipping-method').on('click', function () {
     var element = this;
 
-    chain.attach(function() {
+    chain.attach(function () {
         return $.ajax({
             url: 'index.php?route=checkout/shipping_method|getMethods&language={{ language }}',
             dataType: 'json',
-            beforeSend: function() {
+            beforeSend: function () {
                 $('#input-shipping-method').prop('disabled', true);
             },
-            success: function(json) {
+            success: function (json) {
                 console.log(json);
 
                 if (json['redirect']) {
@@ -79,7 +79,7 @@ $('#button-shipping-method').on('click', function () {
 
                 $('#checkout-confirm').load('index.php?route=checkout/confirm|confirm&language={{ language }}');
             },
-            error: function(xhr, ajaxOptions, thrownError) {
+            error: function (xhr, ajaxOptions, thrownError) {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });
@@ -90,20 +90,20 @@ $('#button-shipping-method').on('click', function () {
 $('#input-shipping-method').on('change', function () {
     var element = this;
 
-    chain.attach(function() {
+    chain.attach(function () {
         return $.ajax({
             url: 'index.php?route=checkout/shipping_method|save&language={{ language }}',
             type: 'post',
             data: $('#form-shipping-method').serialize(),
             dataType: 'json',
             contentType: 'application/x-www-form-urlencoded',
-            beforeSend: function() {
+            beforeSend: function () {
                 $(element).prop('disabled', true);
             },
-            complete: function() {
+            complete: function () {
                 $(element).prop('disabled', false);
             },
-            success: function(json) {
+            success: function (json) {
                 if (json['redirect']) {
                     location = json['redirect'];
                 }
@@ -118,7 +118,7 @@ $('#input-shipping-method').on('change', function () {
                     $('#button-payment-method').trigger('click');
                 }
             },
-            error: function(xhr, ajaxOptions, thrownError) {
+            error: function (xhr, ajaxOptions, thrownError) {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });

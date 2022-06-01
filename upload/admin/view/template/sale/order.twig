@@ -140,12 +140,12 @@ $('#button-filter').on('click', function () {
 });
 
 $('#input-customer').autocomplete({
-    'source': function(request, response) {
+    'source': function (request, response) {
         $.ajax({
             url: 'index.php?route=customer/customer|autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
-            success: function(json) {
-                response($.map(json, function(item) {
+            success: function (json) {
+                response($.map(json, function (item) {
                     return {
                         label: item['name'],
                         value: item['customer_id']
@@ -154,7 +154,7 @@ $('#input-customer').autocomplete({
             }
         });
     },
-    'select': function(item) {}
+    'select': function (item) {}
 });
 
 $('input[name^=\'selected\']').on('change', function () {
@@ -188,13 +188,13 @@ $('#button-delete').on('click', function (e) {
             type: 'post',
             data: $('#form-order').serialize(),
             dataType: 'json',
-            beforeSend: function() {
+            beforeSend: function () {
                 $(element).prop('disabled', true).addClass('loading');
             },
-            complete: function() {
+            complete: function () {
                 $(element).prop('disabled', false).removeClass('loading');
             },
-            success: function(json) {
+            success: function (json) {
                 $('.alert-dismissible').remove();
 
                 if (json['error']) {
@@ -207,7 +207,7 @@ $('#button-delete').on('click', function (e) {
                     $('#order').load($('#form-order').attr('data-load'));
                 }
             },
-            error: function(xhr, ajaxOptions, thrownError) {
+            error: function (xhr, ajaxOptions, thrownError) {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });

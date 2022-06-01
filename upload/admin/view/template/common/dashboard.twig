@@ -37,20 +37,20 @@ $('#button-setting').on('click', function () {
     $.ajax({
         url: 'index.php?route=common/developer&user_token={{ user_token }}',
         dataType: 'html',
-        beforeSend: function() {
+        beforeSend: function () {
             $('#button-setting').prop('disabled', true).addClass('loading');
         },
-        complete: function() {
+        complete: function () {
             $('#button-setting').prop('disabled', false).removeClass('loading');
         },
-        success: function(html) {
+        success: function (html) {
             $('#modal-developer').remove();
 
             $('body').prepend(html);
 
             $('#modal-developer').modal('show');
         },
-        error: function(xhr, ajaxOptions, thrownError) {
+        error: function (xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
@@ -62,13 +62,13 @@ $('input[name=\'developer_sass\']').on('change', function () {
         type: 'post',
         data: $('input[name=\'developer_sass\']:checked'),
         dataType: 'json',
-        beforeSend: function() {
+        beforeSend: function () {
             $('input[name=\'developer_sass\']').prop('disabled', true);
         },
-        complete: function() {
+        complete: function () {
             $('input[name=\'developer_sass\']').prop('disabled', false);
         },
-        success: function(json) {
+        success: function (json) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
@@ -78,7 +78,7 @@ $('input[name=\'developer_sass\']').on('change', function () {
                 $('#modal-developer .modal-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
         },
-        error: function(xhr, ajaxOptions, thrownError) {
+        error: function (xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
@@ -90,13 +90,13 @@ $('#modal-developer table button').on('click', function () {
     $.ajax({
         url: 'index.php?route=common/developer|' + $(element).attr('value') + '&user_token={{ user_token }}',
         dataType: 'json',
-        beforeSend: function() {
+        beforeSend: function () {
             $(element).prop('disabled', true).addClass('loading');
         },
-        complete: function() {
+        complete: function () {
             $(element).prop('disabled', false).removeClass('loading');
         },
-        success: function(json) {
+        success: function (json) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
@@ -107,7 +107,7 @@ $('#modal-developer table button').on('click', function () {
                 $('#modal-developer .modal-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
         },
-        error: function(xhr, ajaxOptions, thrownError) {
+        error: function (xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });

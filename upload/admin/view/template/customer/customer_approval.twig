@@ -86,7 +86,7 @@ $('#customer-approval').on('click', '.btn-success, .btn-danger', function (e) {
     $.ajax({
         url: $(element).val(),
         dataType: 'json',
-        beforeSend: function() {
+        beforeSend: function () {
             $(element).prop('disabled', true).addClass('loading');
         },
         complete: function() {

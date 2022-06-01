@@ -123,13 +123,13 @@ $('#button-send').on('click', function () {
         type: 'post',
         dataType: 'json',
         data: 'voucher_id=' + $('#input-voucher-id').val(),
-        beforeSend: function() {
+        beforeSend: function () {
             $(element).prop('disabled', true);
         },
-        complete: function() {
+        complete: function () {
             $(element).prop('disabled', false);
         },
-        success: function(json) {
+        success: function (json) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
@@ -140,7 +140,7 @@ $('#button-send').on('click', function () {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
         },
-        error: function(xhr, ajaxOptions, thrownError) {
+        error: function (xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });

@@ -214,17 +214,17 @@ $('input[name=\'payment_existing\']').on('change', function () {
 $('#input-payment-address').on('change', function () {
     var element = this;
 
-    chain.attach(function() {
+    chain.attach(function () {
         return $.ajax({
             url: 'index.php?route=checkout/payment_address|address&language={{ language }}&address_id=' + $(element).val(),
             dataType: 'json',
-            beforeSend: function() {
+            beforeSend: function () {
                 $(element).prop('disabled', true);
             },
-            complete: function() {
+            complete: function () {
                 $(element).prop('disabled', false);
             },
-            success: function(json) {
+            success: function (json) {
                 console.log(json);
 
                 if (json['redirect']) {
@@ -241,7 +241,7 @@ $('#input-payment-address').on('change', function () {
                     $('#button-payment-method').trigger('click');
                 }
             },
-            error: function(xhr, ajaxOptions, thrownError) {
+            error: function (xhr, ajaxOptions, thrownError) {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });
@@ -252,20 +252,20 @@ $('#input-payment-address').on('change', function () {
 $('#form-payment-address').on('submit', function (e) {
     e.preventDefault();
 
-    chain.attach(function() {
+    chain.attach(function () {
         return $.ajax({
             url: 'index.php?route=checkout/payment_address|save&language={{ language }}',
             type: 'post',
             data: $('#form-payment-address').serialize(),
             dataType: 'json',
             contentType: 'application/x-www-form-urlencoded',
-            beforeSend: function() {
+            beforeSend: function () {
                 $('#button-payment-address').prop('disabled', true).addClass('loading');
             },
-            complete: function() {
+            complete: function () {
                 $('#button-payment-address').prop('disabled', false).removeClass('loading');
             },
-            success: function(json) {
+            success: function (json) {
                 console.log(json);
 
                 $('#form-payment-address').find('.is-invalid').removeClass('is-invalid');
@@ -342,7 +342,7 @@ $('#form-payment-address').on('submit', function (e) {
                     $('#button-payment-method').trigger('click');
                 }
             },
-            error: function(xhr, ajaxOptions, thrownError) {
+            error: function (xhr, ajaxOptions, thrownError) {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });
@@ -352,17 +352,17 @@ $('#form-payment-address').on('submit', function (e) {
 $('#input-payment-country').on('change', function () {
     var element = this;
 
-    chain.attach(function() {
+    chain.attach(function () {
         return $.ajax({
             url: 'index.php?route=localisation/country&language={{ language }}&country_id=' + $('#input-payment-country').val(),
             dataType: 'json',
-            beforeSend: function() {
+            beforeSend: function () {
                 $(element).prop('disabled', true);
             },
-            complete: function() {
+            complete: function () {
                 $(element).prop('disabled', false);
             },
-            success: function(json) {
+            success: function (json) {
                 if (json['postcode_required'] == '1') {
                     $('#input-payment-postcode').parent().addClass('required');
                 } else {
@@ -387,7 +387,7 @@ $('#input-payment-country').on('change', function () {
 
                 $('#input-payment-zone').html(html);
             },
-            error: function(xhr, ajaxOptions, thrownError) {
+            error: function (xhr, ajaxOptions, thrownError) {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });

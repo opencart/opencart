@@ -463,7 +463,7 @@
       </div>
       {% if text_agree %}
         <div id="agree" class="form-check">
-          <input type="checkbox" name="agree" value="1" id="input-register-agree" class="form-check-input"/> <label class="form-check-label">{{ text_agree }}</label>
+          <label for="input-register-agree" class="form-check-label">{{ text_agree }}</label> <input type="checkbox" name="agree" value="1" id="input-register-agree" class="form-check-input"/> 
         </div>
       {% endif %}
       <button type="submit" id="button-register" class="btn btn-primary">{{ button_continue }}</button>

@@ -356,7 +356,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 		$data['sort'] = $sort;
 		$data['order'] = $order;
 
-		return $this->load->view('sale/return_list', $data);
+		return $this->load->view('sale/returns_list', $data);
 	}
 
 	public function form(): void {

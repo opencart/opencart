@@ -435,7 +435,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 			$extension_install_id = 0;
 		}
 
-		// Should'nt be able to uninstall a main extension
+		// Shouldn't be able to uninstall a main extension
 		if(in_array($extension_install_id, $oc_extensions)) {
 			$json['error'] = $this->language->get('error_permission');
 		}

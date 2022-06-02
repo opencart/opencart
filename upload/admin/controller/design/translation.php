@@ -347,7 +347,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 			while (count($path) != 0) {
 				$next = array_shift($path);
 
-				foreach ((array)glob($next . '/*') as $file) {
+				foreach (glob(trim($next, '/') . '/{*,.[!.]*,..?*}', GLOB_BRACE) as $file) {
 					if (is_dir($file)) {
 						$path[] = $file;
 					}

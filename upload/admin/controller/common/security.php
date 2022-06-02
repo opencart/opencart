@@ -115,7 +115,7 @@ class Security extends \Opencart\System\Engine\Controller {
 
 		if ($this->user->hasPermission('modify', 'common/security')) {
 			$path_old = DIR_STORAGE;
-			$path_new = $this->request->post['path'] . 'storage/';
+			$path_new = $this->request->post['path'] . basename($this->request->post['name']) . '/';
 
 			$path = '';
 
@@ -180,6 +180,19 @@ class Security extends \Opencart\System\Engine\Controller {
 
 				if (is_file($file)) {
 					copy($file, $destination);
+				}
+			}
+
+			rsort($files);
+
+			foreach ($files as $file) {
+				// If file just delete
+				if (is_file($file)) {
+					unlink($file);
+
+					// If directory use the remove directory function
+				} elseif (is_dir($file)) {
+					rmdir($file);
 				}
 			}
 

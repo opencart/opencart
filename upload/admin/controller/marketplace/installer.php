@@ -512,7 +512,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 							while (count($directories) != 0) {
 								$next = array_shift($directories);
 
-								foreach (glob($next . '*') as $file) {
+								foreach (glob(trim($next, '/') . '/{*,.[!.]*,..?*}', GLOB_BRACE) as $file) {
 									if (is_dir($file)) {
 										$directories[] = $file . '/';
 									}

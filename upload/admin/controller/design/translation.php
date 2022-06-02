@@ -331,13 +331,15 @@ class Translation extends \Opencart\System\Engine\Controller {
 			while (count($path) != 0) {
 				$next = array_shift($path);
 
-				foreach (glob(trim($next, '/') . '/{*,.[!.]*,..?*}', GLOB_BRACE) as $file) {
-					if (is_dir($file)) {
-						$path[] = $file;
-					}
+				if (is_dir($next)) {
+					foreach (glob(trim($next, '/') . '/{*,.[!.]*,..?*}', GLOB_BRACE) as $file) {
+						if (is_dir($file)) {
+							$path[] = $file;
+						}
 
-					if (substr($file, -4) == '.php') {
-						$json[] = substr(substr($file, utf8_strlen(DIR_CATALOG . 'language/' . $language_info['code'] . '/')), 0, -4);
+						if (substr($file, -4) == '.php') {
+							$json[] = substr(substr($file, utf8_strlen(DIR_CATALOG . 'language/' . $language_info['code'] . '/')), 0, -4);
+						}
 					}
 				}
 			}
@@ -347,21 +349,23 @@ class Translation extends \Opencart\System\Engine\Controller {
 			while (count($path) != 0) {
 				$next = array_shift($path);
 
-				foreach (glob(trim($next, '/') . '/{*,.[!.]*,..?*}', GLOB_BRACE) as $file) {
-					if (is_dir($file)) {
-						$path[] = $file;
-					}
+				if (is_dir($next)) {
+					foreach (glob(trim($next, '/') . '/{*,.[!.]*,..?*}', GLOB_BRACE) as $file) {
+						if (is_dir($file)) {
+							$path[] = $file;
+						}
 
-					if (substr($file, -4) == '.php') {
-						$new_path = substr($file, utf8_strlen(DIR_EXTENSION));
+						if (substr($file, -4) == '.php') {
+							$new_path = substr($file, utf8_strlen(DIR_EXTENSION));
 
-						$code = substr($new_path, 0, strpos($new_path, '/'));
+							$code = substr($new_path, 0, strpos($new_path, '/'));
 
-						$length = utf8_strlen(DIR_EXTENSION . $code . '/catalog/language/' . $language_info['code'] . '/');
+							$length = utf8_strlen(DIR_EXTENSION . $code . '/catalog/language/' . $language_info['code'] . '/');
 
-						$route = substr(substr($file, $length), 0, -4);
+							$route = substr(substr($file, $length), 0, -4);
 
-						$json[] = 'extension/' . $code . '/' . $route;
+							$json[] = 'extension/' . $code . '/' . $route;
+						}
 					}
 				}
 			}

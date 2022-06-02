@@ -33,8 +33,8 @@
           <li class="nav-item"><a href="#tab-ip" data-bs-toggle="tab" class="nav-link">{{ tab_ip }}</a></li>
         </ul>
         <div class="tab-content">
-          <div id="tab-general" class="tab-pane active">
-            <form id="form-customer" action="{{ save }}" method="post" data-oc-toggle="ajax">
+          <form id="form-customer" action="{{ save }}" method="post" data-oc-toggle="ajax">
+            <div id="tab-general" class="tab-pane active">
               <fieldset>
                 <legend>{{ text_account }}</legend>
                 <div class="row mb-3">
@@ -260,11 +260,8 @@
                   </div>
                 </div>
               </fieldset>
-            </form>
-          </div>
-
-          <div id="tab-address" class="tab-pane">
-            <form id="form-address" action="{{ save }}" method="post">
+            </div>
+            <div id="tab-address" class="tab-pane">
               {% set address_row = 0 %}
               {% for address in addresses %}
                 <fieldset id="address-row-{{ address_row }}">
@@ -482,8 +479,8 @@
                 <button type="button" id="button-address" class="btn btn-primary"><i class="fas fa-plus-circle"></i> {{ button_address_add }}</button>
               </div>
               <input type="hidden" name="customer_id" value="{{ customer_id }}" id="input-customer-id"/>
-            </form>
-          </div>
+            </div>
+          </form>
           <div id="tab-payment" class="tab-pane">
             <fieldset>
               <legend>{{ text_payment_method }}</legend>
@@ -916,52 +913,6 @@ $('#tab-address').on('change', 'select[name$=\'[country_id]\']', function () {
 });
 
 $('#tab-address select[name$=\'[country_id]\']:first').trigger('change');
-
-$('#form-customer, #form-address').on('submit', function (e) {
-    e.preventDefault();
-
-    $.ajax({
-        url: 'index.php?route=customer/customer|save&user_token={{ user_token }}',
-        type: 'post',
-        data: $('#form-customer, #form-address').serialize(),
-        dataType: 'json',
-        contentType: 'application/x-www-form-urlencoded',
-        beforeSend: function () {
-            $('#button-customer').prop('disabled', true).addClass('loading');
-        },
-        complete: function () {
-            $('#button-customer').prop('disabled', false).removeClass('loading');
-        },
-        success: function (json) {
-            $('.alert-dismissible').remove();
-            $('.is-invalid').removeClass('is-invalid');
-            $('.invalid-feedback').removeClass('d-block');
-
-            if (json['error']) {
-                if (json['error']['warning']) {
-                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-                }
-
-                for (key in json['error']) {
-                    $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
-                    $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
-                }
-            }
-
-            if (json['success']) {
-                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                // Replace any form values that correspond to form names.
-                for (key in json) {
-                    $('#form-customer, #form-address').find('[name=\'' + key + '\']').val(json[key]);
-                }
-            }
-        },
-        error: function (xhr, ajaxOptions, thrownError) {
-            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-        }
-    });
-});
 
 $('#payment-method').on('click', '.pagination a', function (e) {
     e.preventDefault();

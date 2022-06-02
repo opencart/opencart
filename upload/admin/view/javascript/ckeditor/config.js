@@ -27,7 +27,7 @@ CKEDITOR.editorConfig = function( config ) {
 		['Maximize'],
 		['Bold','Italic','Underline','Strike','-','Subscript','Superscript'],
 		['NumberedList','BulletedList','-','Outdent','Indent'],
-		['JustifyLeft','JustifyCenter','JustifyRight','JustifyFull'],
+		['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
 		['SpecialChar'],
 		'/',
 		['Undo','Redo'],

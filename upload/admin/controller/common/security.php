@@ -78,14 +78,16 @@ class Security extends \Opencart\System\Engine\Controller {
 			while (count($directory) != 0) {
 				$next = array_shift($directory);
 
-				foreach (glob(trim($next, '/') . '/{*,.[!.]*,..?*}', GLOB_BRACE) as $file) {
-					// If directory add to path array
-					if (is_dir($file)) {
-						$directory[] = $file;
-					}
+				if (is_dir($next)) {
+					foreach (glob(trim($next, '/') . '/{*,.[!.]*,..?*}', GLOB_BRACE) as $file) {
+						// If directory add to path array
+						if (is_dir($file)) {
+							$directory[] = $file;
+						}
 
-					// Add the file to the files to be deleted array
-					$files[] = $file;
+						// Add the file to the files to be deleted array
+						$files[] = $file;
+					}
 				}
 			}
 

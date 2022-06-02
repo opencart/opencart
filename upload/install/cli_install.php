@@ -69,7 +69,7 @@ set_error_handler(function($code, $message, $file, $line, array $errcontext) {
 });
 
 class CliInstall extends \Opencart\System\Engine\Controller {
-	public function index():  void {
+	public function index(): void {
 		if (isset($this->request->server['argv'])) {
 			$argv = $this->request->server['argv'];
 		} else {

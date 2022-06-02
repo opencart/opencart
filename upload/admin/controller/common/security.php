@@ -78,7 +78,7 @@ class Security extends \Opencart\System\Engine\Controller {
 			while (count($directory) != 0) {
 				$next = array_shift($directory);
 
-				foreach (glob($next . '/*') as $file) {
+				foreach (glob(trim($next, '/') . '/{*,.[!.]*,..?*}', GLOB_BRACE) as $file) {
 					// If directory add to path array
 					if (is_dir($file)) {
 						$directory[] = $file;
@@ -156,7 +156,7 @@ class Security extends \Opencart\System\Engine\Controller {
 			while (count($directory) != 0) {
 				$next = array_shift($directory);
 
-				foreach (glob($next . '/*') as $file) {
+				foreach (glob(trim($next, '/') . '/{*,.[!.]*,..?*}', GLOB_BRACE) as $file) {
 					// If directory add to path array
 					if (is_dir($file)) {
 						$directory[] = $file;
@@ -189,9 +189,10 @@ class Security extends \Opencart\System\Engine\Controller {
 				// If file just delete
 				if (is_file($file)) {
 					unlink($file);
+				}
 
-					// If directory use the remove directory function
-				} elseif (is_dir($file)) {
+				// If directory use the remove directory function
+				if (is_dir($file)) {
 					rmdir($file);
 				}
 			}

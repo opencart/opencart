@@ -38,6 +38,6 @@ class Log {
      *
      */
 	public function __destruct() {
-		file_put_contents($this->file, $this->message, FILE_APPEND);
+		if (is_file($this->file)) file_put_contents($this->file, $this->message, FILE_APPEND);
 	}
 }

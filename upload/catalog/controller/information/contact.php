@@ -140,7 +140,7 @@ class Contact extends \Opencart\System\Engine\Controller {
 			$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
 
 			$mail->setTo($this->config->get('config_email'));
-			// less spam and fix bug when using SMPT like sendgrid
+			// Less spam and fix bug when using SMTP like sendgrid.
 			$mail->setFrom($this->config->get('config_email'));
 			$mail->setReplyTo($this->request->post['email']);
 			$mail->setSender(html_entity_decode($this->request->post['name'], ENT_QUOTES, 'UTF-8'));

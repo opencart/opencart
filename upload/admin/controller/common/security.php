@@ -351,7 +351,7 @@ class Security extends \Opencart\System\Engine\Controller {
 			$status = false;
 		}
 
-		if ($path_old != DIR_APPLICATION) {
+		if ($path_old == DIR_APPLICATION) {
 			$status = false;
 		}
 

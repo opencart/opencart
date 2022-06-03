@@ -132,7 +132,7 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 
 		$this->session->data['reset_token'] = substr(bin2hex(openssl_random_pseudo_bytes(26)), 0, 26);
 
-		$data['reset'] = $this->url->link('account/forgotten|password', 'language=' . $this->config->get('config_language') . '&email=' . urlencode($email) . '&code=' . $code . '&reset_token=' . $this->session->data['reset_token']);
+		$data['save'] = $this->url->link('account/forgotten|password', 'language=' . $this->config->get('config_language') . '&email=' . urlencode($email) . '&code=' . $code . '&reset_token=' . $this->session->data['reset_token']);
 		$data['back'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'));
 
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -145,7 +145,7 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('account/forgotten_reset', $data));
 	}
 
-	protected function password(): void {
+	public function password(): void {
 		$this->load->language('account/forgotten');
 
 		$json = [];

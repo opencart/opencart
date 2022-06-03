@@ -421,7 +421,6 @@ class Product extends \Opencart\System\Engine\Controller {
 			}else{
 				$data['review_on_purchase'] = true;
 			}
-			var_dump($this->config->get('config_review_on_purchase') ,$this->model_catalog_product->cutomerHasPurchase($this->customer->getId(),$product_id) > 0,$data['review_guest'] );
 
 			if ($this->customer->isLogged()) {
 				$data['customer_name'] = $this->customer->getFirstName() . '&nbsp;' . $this->customer->getLastName();

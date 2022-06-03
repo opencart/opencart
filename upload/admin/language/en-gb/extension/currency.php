@@ -4,7 +4,6 @@ $_['heading_title']    = 'Currency Rates';
 
 // Text
 $_['text_success']     = 'Success: You have modified currencies rates!';
-$_['text_list']        = 'Currency Rate List';
 
 // Column
 $_['column_name']      = 'Currency Rate Name';

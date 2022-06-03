@@ -4,7 +4,6 @@ $_['heading_title']     = 'Reports';
 
 // Text
 $_['text_success']      = 'Success: You have modified reports!';
-$_['text_list']         = 'Reports List';
 
 // Column
 $_['column_name']       = 'Report Name';

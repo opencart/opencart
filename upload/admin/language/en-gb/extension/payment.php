@@ -4,7 +4,6 @@ $_['heading_title']     = 'Payments';
 
 // Text
 $_['text_success']      = 'Success: You have modified payments!';
-$_['text_list']         = 'Payment List';
 
 // Column
 $_['column_name']       = 'Payment Method';

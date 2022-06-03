@@ -4,7 +4,6 @@ $_['heading_title']     = 'Dashboard';
 
 // Text
 $_['text_success']      = 'Success: You have modified dashboards!';
-$_['text_list']         = 'Dashboard List';
 
 // Column
 $_['column_name']       = 'Dashboard Name';

@@ -459,7 +459,7 @@ class FileManager extends \Opencart\System\Engine\Controller {
 					$next = array_shift($directory);
 
 					if (is_dir($next)) {
-						foreach (glob($next . '/*') as $file) {
+						foreach (glob(trim($next, '/') . '/{*,.[!.]*,..?*}', GLOB_BRACE) as $file) {
 							// If directory add to path array
 							$directory[] = $file;
 						}

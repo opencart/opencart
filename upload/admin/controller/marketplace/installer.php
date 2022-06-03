@@ -512,13 +512,15 @@ class Installer extends \Opencart\System\Engine\Controller {
 							while (count($directories) != 0) {
 								$next = array_shift($directories);
 
-								foreach (glob($next . '*') as $file) {
-									if (is_dir($file)) {
-										$directories[] = $file . '/';
-									}
+								if (is_dir($next)) {
+									foreach (glob(trim($next, '/') . '/{*,.[!.]*,..?*}', GLOB_BRACE) as $file) {
+										if (is_dir($file)) {
+											$directories[] = $file . '/';
+										}
 
-									if (is_file($file)) {
-										$autoload[substr(dirname($file), strlen(DIR_STORAGE . 'vendor/' . $directory . $classmap) + 1)] = substr(dirname($file), strlen(DIR_STORAGE . 'vendor/'));
+										if (is_file($file)) {
+											$autoload[substr(dirname($file), strlen(DIR_STORAGE . 'vendor/' . $directory . $classmap) + 1)] = substr(dirname($file), strlen(DIR_STORAGE . 'vendor/'));
+										}
 									}
 								}
 							}

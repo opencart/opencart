@@ -115,7 +115,7 @@ class Security extends \Opencart\System\Engine\Controller {
 
 		if ($this->user->hasPermission('modify', 'common/security')) {
 			$path_old = DIR_STORAGE;
-			$path_new = $this->request->post['path'] . basename($this->request->post['name']) . '/';
+			$path_new = $this->request->post['path'] . preg_replace('[^a-zA-z0-9]', '', basename(html_entity_decode(trim($this->request->post['name']), ENT_QUOTES, 'UTF-8'))) . '/';
 
 			$path = '';
 

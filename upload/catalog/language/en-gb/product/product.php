@@ -15,6 +15,7 @@ $_['text_minimum']               = 'This product has a minimum quantity of %s';
 $_['text_reviews']               = '%s reviews';
 $_['text_write']                 = 'Write a review';
 $_['text_login']                 = 'Please <a href="%s">login</a> or <a href="%s">register</a> to review';
+$_['text_purchase']              = 'Please Buy this product to review';
 $_['text_no_reviews']            = 'There are no reviews for this product.';
 $_['text_note']                  = '<span class="text-danger">Note:</span> HTML is not translated!';
 $_['text_success']               = 'Thank you for your review. It has been submitted to the webmaster for approval.';

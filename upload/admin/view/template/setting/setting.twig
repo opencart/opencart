@@ -347,6 +347,15 @@
                           <div class="form-text">{{ help_review_guest }}</div>
                         </div>
                       </div>
+                      <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label">{{ entry_review_on_purchase }}</label>
+                        <div class="col-sm-10">
+                          <div class="form-check form-switch form-switch-lg">
+                            <input type="checkbox" name="config_review_on_purchase" value="1" id="input-review-on-purchase" class="form-check-input"{% if config_review_on_purchase %} checked{% endif %}/>
+                          </div>
+                          <div class="form-text">{{ help_review_on_purchase }}</div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>

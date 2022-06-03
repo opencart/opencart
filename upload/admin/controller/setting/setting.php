@@ -193,6 +193,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 
 		$data['config_review_status'] = $this->config->get('config_review_status');
 		$data['config_review_guest'] = $this->config->get('config_review_guest');
+		$data['config_review_on_purchase'] = $this->config->get('config_review_on_purchase');
 
 		$data['config_voucher_min'] = $this->config->get('config_voucher_min');
 		$data['config_voucher_max'] = $this->config->get('config_voucher_max');

@@ -69,7 +69,7 @@ class Product extends \Opencart\System\Engine\Model {
 				$words = explode(' ', trim(preg_replace('/\s+/', ' ', $data['filter_name'])));
 
 				foreach ($words as $word) {
-					$implode[] = "pd.`name` LIKE '%" . $this->db->escape($word) . "%'";
+					$implode[] = "pd.`name` LIKE '" . $this->db->escape('%' . $word . '%') . "'";
 				}
 
 				if ($implode) {
@@ -77,7 +77,7 @@ class Product extends \Opencart\System\Engine\Model {
 				}
 
 				if (!empty($data['filter_description'])) {
-					$sql .= " OR pd.`description` LIKE '%" . $this->db->escape((string)$data['filter_name']) . "%'";
+					$sql .= " OR pd.`description` LIKE '" . $this->db->escape('%' . (string)$data['filter_name'] . '%') . "'";
 				}
 			}
 
@@ -91,7 +91,7 @@ class Product extends \Opencart\System\Engine\Model {
 				$words = explode(' ', trim(preg_replace('/\s+/', ' ', $data['filter_tag'])));
 
 				foreach ($words as $word) {
-					$implode[] = "pd.`tag` LIKE '%" . $this->db->escape($word) . "%'";
+					$implode[] = "pd.`tag` LIKE '" . $this->db->escape('%' . $word . '%') . "'";
 				}
 
 				if ($implode) {
@@ -440,7 +440,7 @@ class Product extends \Opencart\System\Engine\Model {
 				$words = explode(' ', trim(preg_replace('/\s+/', ' ', $data['filter_name'])));
 
 				foreach ($words as $word) {
-					$implode[] = "pd.`name` LIKE '%" . $this->db->escape($word) . "%'";
+					$implode[] = "pd.`name` LIKE '" . $this->db->escape('%' . $word . '%') . "'";
 				}
 
 				if ($implode) {
@@ -448,7 +448,7 @@ class Product extends \Opencart\System\Engine\Model {
 				}
 
 				if (!empty($data['filter_description'])) {
-					$sql .= " OR pd.`description` LIKE '%" . $this->db->escape((string)$data['filter_name']) . "%'";
+					$sql .= " OR pd.`description` LIKE '" . $this->db->escape('%' . (string)$data['filter_name'] . '%') . "'";
 				}
 			}
 
@@ -462,7 +462,7 @@ class Product extends \Opencart\System\Engine\Model {
 				$words = explode(' ', trim(preg_replace('/\s+/', ' ', $data['filter_tag'])));
 
 				foreach ($words as $word) {
-					$implode[] = "pd.`tag` LIKE '%" . $this->db->escape($word) . "%'";
+					$implode[] = "pd.`tag` LIKE '" . $this->db->escape('%' . $word . '%') . "'";
 				}
 
 				if ($implode) {
@@ -506,5 +506,11 @@ class Product extends \Opencart\System\Engine\Model {
 
 	public function addReport(int $product_id, string $ip, string $country = ''): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "product_report` SET `product_id` = '" . (int)$product_id . "', `store_id` = '" . (int)$this->config->get('config_store_id') . "', `ip` = '" . $this->db->escape($ip) . "', `country` = '" . $this->db->escape($country) . "', `date_added` = NOW()");
+	}
+
+	public function cutomerHasPurchase($customer_id,$product_id){
+		$query =  $this->db->query("SELECT count(`order`.order_id) as `total_order` FROM `" . DB_PREFIX . "order` as `order` inner JOIN `" . DB_PREFIX . "order_product` as `op` on `op`.order_id = `order`.`order_id` WHERE `order`.customer_id = " . (int)$customer_id . " AND `op`.`product_id` = " . (int)$product_id . " and `order`.`order_status_id` = 5");
+		return $query->row['total_order'];
+
 	}
 }

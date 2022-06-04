@@ -4,6 +4,7 @@ class BestSeller extends \Opencart\System\Engine\Controller {
 	public function index(array $setting): string {
 		$this->load->language('extension/opencart/module/bestseller');
 
+		$this->load->model('extension/opencart/module/bestseller');
 		$this->load->model('catalog/product');
 		$this->load->model('tool/image');
 
@@ -11,7 +12,7 @@ class BestSeller extends \Opencart\System\Engine\Controller {
 
 		$data['products'] = [];
 
-		$results = $this->model_catalog_product->getBestSeller($setting['limit']);
+		$results = $this->model_extension_opencart_module_bestseller->getBestSeller($setting['limit']);
 
 		if ($results) {
 			foreach ($results as $result) {

@@ -22,9 +22,7 @@ class Marketing extends \Opencart\System\Engine\Controller {
 				$this->model_marketing_marketing->addReport($marketing_info['marketing_id'], $this->request->server['REMOTE_ADDR']);
 			}
 
-
 			if ($this->config->get('config_affiliate_status')) {
-
 				$this->load->model('account/affiliate');
 
 				$affiliate_info = $this->model_account_affiliate->getAffiliateByTracking($tracking);

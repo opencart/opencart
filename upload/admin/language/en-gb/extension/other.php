@@ -4,6 +4,7 @@ $_['heading_title']    = 'Other';
 
 // Text
 $_['text_success']     = 'Success: You have modified other extension!';
+$_['text_list']        = 'Other List';
 
 // Column
 $_['column_name']      = 'Other Name';

@@ -4,6 +4,7 @@ $_['heading_title']    = 'Analytics';
 
 // Text
 $_['text_success']     = 'Success: You have modified analytics!';
+$_['text_list']        = 'Analytics List';
 
 // Column
 $_['column_name']      = 'Analytics Name';

@@ -11,6 +11,12 @@ class Session extends \Opencart\System\Engine\Controller {
 			$session_id = '';
 		}
 
+		if (!empty($this->request->server['PHP_SELF']) && $this->request->server['PHP_SELF'] != '/') {
+			$path = dirname($this->request->server['PHP_SELF']) . '/';
+		} else {
+			$path = '/';
+		}
+
 		$session->start($session_id);
 
 		// Setting the cookie path to the store front so admin users can login to cutomers accounts.

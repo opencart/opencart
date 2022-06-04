@@ -78,14 +78,16 @@ class Security extends \Opencart\System\Engine\Controller {
 			while (count($directory) != 0) {
 				$next = array_shift($directory);
 
-				foreach (glob(trim($next, '/') . '/{*,.[!.]*,..?*}', GLOB_BRACE) as $file) {
-					// If directory add to path array
-					if (is_dir($file)) {
-						$directory[] = $file;
-					}
+				if (is_dir($next)) {
+					foreach (glob(trim($next, '/') . '/{*,.[!.]*,..?*}', GLOB_BRACE) as $file) {
+						// If directory add to path array
+						if (is_dir($file)) {
+							$directory[] = $file;
+						}
 
-					// Add the file to the files to be deleted array
-					$files[] = $file;
+						// Add the file to the files to be deleted array
+						$files[] = $file;
+					}
 				}
 			}
 
@@ -115,7 +117,7 @@ class Security extends \Opencart\System\Engine\Controller {
 
 		if ($this->user->hasPermission('modify', 'common/security')) {
 			$path_old = DIR_STORAGE;
-			$path_new = $this->request->post['path'] . basename($this->request->post['name']) . '/';
+			$path_new = $this->request->post['path'] . preg_replace('[^a-zA-z0-9]', '', basename(html_entity_decode(trim($this->request->post['name']), ENT_QUOTES, 'UTF-8'))) . '/';
 
 			$path = '';
 

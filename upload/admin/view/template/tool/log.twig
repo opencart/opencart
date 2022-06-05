@@ -29,7 +29,7 @@
           {% for log in logs %}
             <div id="tab-log-{{ i }}" class="tab-pane{% if i == 0 %} active{% endif %}">
               {% if log.error %}
-                <div class="alert alert-danger">{{ log.error }}</div>
+                <div class="alert alert-danger alert-dismissible">{{ log.error }}</div>
               {% endif %}
               <textarea name="log" wrap="off" rows="15" id="input-log" class="form-control" readonly>{{ log.output }}</textarea>
               <br/>

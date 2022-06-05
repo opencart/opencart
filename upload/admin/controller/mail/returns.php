@@ -57,7 +57,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 				$this->language->load($language_code, 'mail', $language_code);
 				$this->language->load('mail/returns', 'mail', $language_code);
 
-				$subject = sprintf($this->language->get('text_subject'), $store_name, $return_id);
+				$subject = sprintf($this->language->get('mail_text_subject'), $store_name, $return_id);
 
 				$data['return_id'] = $return_id;
 				$data['date_added'] = date($this->language->get('date_format_short'), strtotime($return_info['date_modified']));

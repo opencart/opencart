@@ -223,7 +223,7 @@
 <script type="text/javascript"><!--
 $('#input-customer-group').on('change', function () {
     $.ajax({
-        URL: 'INDEX.php?route=account/custom_field&customer_group_id=' + this.value + '&language={{ language }}',
+        url: 'index.php?route=account/custom_field&customer_group_id=' + this.value + '&language={{ language }}',
         dataType: 'json',
         success: function (json) {
             $('.custom-field').hide();

@@ -8,6 +8,8 @@ class Register extends \Opencart\System\Engine\Controller {
 
 		$this->load->language('account/register');
 
+		$data['language'] = $this->config->get('config_language');
+
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment.min.js');

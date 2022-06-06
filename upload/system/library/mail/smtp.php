@@ -32,53 +32,47 @@ class Smtp {
 			$to = $this->to;
 		}
 
-		if (version_compare(phpversion(), '8.0', '>=') || substr(PHP_OS, 0, 3) == 'WIN') {
-			$eol = "\r\n";
-		} else {
-			$eol = PHP_EOL;
-		}
-
 		$boundary = '----=_NextPart_' . md5(time());
 
-		$header = 'MIME-Version: 1.0' . $eol;
-		$header .= 'To: <' . $to . '>' . $eol;
-		$header .= 'Subject: =?UTF-8?B?' . base64_encode($this->subject) . '?=' . $eol;
-		$header .= 'Date: ' . date('D, d M Y H:i:s O') . $eol;
-		$header .= 'From: =?UTF-8?B?' . base64_encode($this->sender) . '?= <' . $this->from . '>' . $eol;
+		$header = 'MIME-Version: 1.0' . PHP_EOL;
+		$header .= 'To: <' . $to . '>' . PHP_EOL;
+		$header .= 'Subject: =?UTF-8?B?' . base64_encode($this->subject) . '?=' . PHP_EOL;
+		$header .= 'Date: ' . date('D, d M Y H:i:s O') . PHP_EOL;
+		$header .= 'From: =?UTF-8?B?' . base64_encode($this->sender) . '?= <' . $this->from . '>' . PHP_EOL;
 
 		if (!$this->reply_to) {
-			$header .= 'Reply-To: =?UTF-8?B?' . base64_encode($this->sender) . '?= <' . $this->from . '>' . $eol;
+			$header .= 'Reply-To: =?UTF-8?B?' . base64_encode($this->sender) . '?= <' . $this->from . '>' . PHP_EOL;
 		} else {
-			$header .= 'Reply-To: =?UTF-8?B?' . base64_encode($this->reply_to) . '?= <' . $this->reply_to . '>' . $eol;
+			$header .= 'Reply-To: =?UTF-8?B?' . base64_encode($this->reply_to) . '?= <' . $this->reply_to . '>' . PHP_EOL;
 		}
 
-		$header .= 'Return-Path: ' . $this->from . $eol;
-		$header .= 'X-Mailer: PHP/' . phpversion() . $eol;
-		$header .= 'Content-Type: multipart/mixed; boundary="' . $boundary . '"' . $eol . $eol;
+		$header .= 'Return-Path: ' . $this->from . PHP_EOL;
+		$header .= 'X-Mailer: PHP/' . phpversion() . PHP_EOL;
+		$header .= 'Content-Type: multipart/mixed; boundary="' . $boundary . '"' . PHP_EOL . PHP_EOL;
 
 		if (!$this->html) {
-			$message = '--' . $boundary . $eol;
-			$message .= 'Content-Type: text/plain; charset="utf-8"' . $eol;
-			$message .= 'Content-Transfer-Encoding: base64' . $eol . $eol;
-			$message .= base64_encode($this->text) . $eol;
+			$message = '--' . $boundary . PHP_EOL;
+			$message .= 'Content-Type: text/plain; charset="utf-8"' . PHP_EOL;
+			$message .= 'Content-Transfer-Encoding: base64' . PHP_EOL . PHP_EOL;
+			$message .= base64_encode($this->text) . PHP_EOL;
 		} else {
-			$message = '--' . $boundary . $eol;
-			$message .= 'Content-Type: multipart/alternative; boundary="' . $boundary . '_alt"' . $eol . $eol;
-			$message .= '--' . $boundary . '_alt' . $eol;
-			$message .= 'Content-Type: text/plain; charset="utf-8"' . $eol;
-			$message .= 'Content-Transfer-Encoding: base64' . $eol . $eol;
+			$message = '--' . $boundary . PHP_EOL;
+			$message .= 'Content-Type: multipart/alternative; boundary="' . $boundary . '_alt"' . PHP_EOL . PHP_EOL;
+			$message .= '--' . $boundary . '_alt' . PHP_EOL;
+			$message .= 'Content-Type: text/plain; charset="utf-8"' . PHP_EOL;
+			$message .= 'Content-Transfer-Encoding: base64' . PHP_EOL . PHP_EOL;
 
 			if ($this->text) {
-				$message .= base64_encode($this->text) . $eol;
+				$message .= base64_encode($this->text) . PHP_EOL;
 			} else {
-				$message .= base64_encode('This is a HTML email and your email client software does not support HTML email!') . $eol;
+				$message .= base64_encode('This is a HTML email and your email client software does not support HTML email!') . PHP_EOL;
 			}
 
-			$message .= '--' . $boundary . '_alt' . $eol;
-			$message .= 'Content-Type: text/html; charset="utf-8"' . $eol;
-			$message .= 'Content-Transfer-Encoding: base64' . $eol . $eol;
-			$message .= base64_encode($this->html) . $eol;
-			$message .= '--' . $boundary . '_alt--' . $eol;
+			$message .= '--' . $boundary . '_alt' . PHP_EOL;
+			$message .= 'Content-Type: text/html; charset="utf-8"' . PHP_EOL;
+			$message .= 'Content-Transfer-Encoding: base64' . PHP_EOL . PHP_EOL;
+			$message .= base64_encode($this->html) . PHP_EOL;
+			$message .= '--' . $boundary . '_alt--' . PHP_EOL;
 		}
 
 		foreach ($this->attachments as $attachment) {
@@ -89,17 +83,17 @@ class Smtp {
 
 				fclose($handle);
 
-				$message .= '--' . $boundary . $eol;
-				$message .= 'Content-Type: application/octet-stream; name="' . basename($attachment) . '"' . $eol;
-				$message .= 'Content-Transfer-Encoding: base64' . $eol;
-				$message .= 'Content-Disposition: attachment; filename="' . basename($attachment) . '"' . $eol;
-				$message .= 'Content-ID: <' . urlencode(basename($attachment)) . '>' . $eol;
-				$message .= 'X-Attachment-Id: ' . urlencode(basename($attachment)) . $eol . $eol;
+				$message .= '--' . $boundary . PHP_EOL;
+				$message .= 'Content-Type: application/octet-stream; name="' . basename($attachment) . '"' . PHP_EOL;
+				$message .= 'Content-Transfer-Encoding: base64' . PHP_EOL;
+				$message .= 'Content-Disposition: attachment; filename="' . basename($attachment) . '"' . PHP_EOL;
+				$message .= 'Content-ID: <' . urlencode(basename($attachment)) . '>' . PHP_EOL;
+				$message .= 'X-Attachment-Id: ' . urlencode(basename($attachment)) . PHP_EOL . PHP_EOL;
 				$message .= chunk_split(base64_encode($content));
 			}
 		}
 
-		$message .= '--' . $boundary . '--' . $eol;
+		$message .= '--' . $boundary . '--' . PHP_EOL;
 
 		if (substr($this->smtp_hostname, 0, 3) == 'tls') {
 			$hostname = substr($this->smtp_hostname, 6);
@@ -210,19 +204,13 @@ class Smtp {
 			$message = str_replace("\r\n", "\n", $header . $message);
 			$message = str_replace("\r", "\n", $message);
 
-			$length = (mb_detect_encoding($message, mb_detect_order(), true) == 'ASCII') ? 998 : 249;
-
 			$lines = explode("\n", $message);
 
 			foreach ($lines as $line) {
-				$results = str_split($line, $length);
+				$results = str_split($line, 998);
 
 				foreach ($results as $result) {
-					if (substr(PHP_OS, 0, 3) != 'WIN') {
-						fputs($handle, $result . "\r\n");
-					} else {
-						fputs($handle, str_replace("\n", "\r\n", $result) . "\r\n");
-					}
+					fputs($handle, $result . "\r\n");
 				}
 			}
 

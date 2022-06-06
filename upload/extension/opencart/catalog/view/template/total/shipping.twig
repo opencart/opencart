@@ -3,9 +3,7 @@
   <div id="collapse-shipping" class="accordion-collapse collapse" data-bs-parent="#accordion">
     <div class="accordion-body">
       <form id="form-quote">
-
         <p>{{ text_destination }}</p>
-
         <div class="row mb-3 required">
           <label for="input-country" class="col-md-4 col-form-label">{{ entry_country }}</label>
           <div class="col-md-8">
@@ -18,7 +16,6 @@
             <div id="error-country" class="invalid-feedback"></div>
           </div>
         </div>
-
         <div class="row mb-3 required">
           <label for="input-zone" class="col-md-4 col-form-label">{{ entry_zone }}</label>
           <div class="col-md-8">
@@ -26,7 +23,6 @@
             <div id="error-zone" class="invalid-feedback"></div>
           </div>
         </div>
-
         <div class="row mb-3 required">
           <label for="input-postcode" class="col-md-4 col-form-label">{{ entry_postcode }}</label>
           <div class="col-md-8">
@@ -34,11 +30,9 @@
             <div id="error-postcode" class="invalid-feedback"></div>
           </div>
         </div>
-
         <div class="text-end">
           <button type="submit" id="button-quote" class="btn btn-primary">{{ button_quote }}</button>
         </div>
-
       </form>
     </div>
   </div>
@@ -47,7 +41,7 @@
       e.preventDefault();
 
       $.ajax({
-          url: 'index.php?route=extension/opencart/total/shipping|quote',
+          url: 'index.php?route=extension/opencart/total/shipping|quote&language={{ language }}',
           type: 'post',
           data: $('#form-quote').serialize(),
           dataType: 'json',
@@ -132,7 +126,7 @@
       e.preventDefault();
 
       $.ajax({
-          url: 'index.php?route=extension/opencart/total/shipping|save',
+          url: 'index.php?route=extension/opencart/total/shipping|save&language={{ language }}',
           type: 'post',
           data: $('#form-shipping').serialize(),
           dataType: 'json',
@@ -151,7 +145,7 @@
               }
 
               if (json['success']) {
-                  $('#alert').prepend('<div class="alert alert-success"><i class="fas fa-exclamation-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                  $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                   $('#shopping-cart').load('index.php?route=checkout/cart|list&language={{ language }}');
 
@@ -170,7 +164,7 @@
       var element = this;
 
       $.ajax({
-          url: 'index.php?route=localisation/country&country_id=' + this.value,
+          url: 'index.php?route=localisation/country&country_id=' + this.value + '&language={{ language }}',
           dataType: 'json',
           beforeSend: function () {
               $(element).prop('disabled', true);

@@ -1,46 +1,43 @@
 <div class="card h-100 product-thumb">
-	<div class="image"><a href="{{ href }}"><img src="{{ thumb }}" alt="{{ name }}" title="{{ name }}" class="img-fluid m-auto"/></a></div>
-
-    <div class="card-body">
-      <div class="content description">
-        <h4><a href="{{ href }}">{{ name }}</a></h4>
-        <p>{{ description }}</p>
-        {% if price %}
-          <div class="price">
-            {% if not special %}
-              <span class="price-new">{{ price }}</span>
-            {% else %}
-              <span class="price-new">{{ special }}</span> <span class="price-old">{{ price }}</span>
-            {% endif %}
-            {% if tax %}
-              <span class="price-tax">{{ text_tax }} {{ tax }}</span>
-            {% endif %}
-          </div>
+  <div class="image"><a href="{{ href }}"><img src="{{ thumb }}" alt="{{ name }}" title="{{ name }}"class="img-fluid m-auto" /></a></div>
+  <div class="card-body">
+    <div class="content description">
+      <h4><a href="{{ href }}">{{ name }}</a></h4>
+      <p>{{ description }}</p>
+      {% if price %}
+      <div class="price">
+        {% if not special %}
+        <span class="price-new">{{ price }}</span>
+        {% else %}
+        <span class="price-new">{{ special }}</span> <span class="price-old">{{ price }}</span>
         {% endif %}
-        {% if review_status and rating %}
-          <div class="rating">
-            {% for i in 1..5 %}
-              {% if rating < i %}
-                <span class="fas fa-stack"><i class="far fa-star fa-stack-2x"></i></span>
-              {% else %}
-                <span class="fas fa-stack"><i class="fas fa-star fa-stack-2x"></i><i class="far fa-star fa-stack-2x"></i></span>
-              {% endif %}
-            {% endfor %}
-          </div>
+        {% if tax %}
+        <span class="price-tax">{{ text_tax }} {{ tax }}</span>
         {% endif %}
       </div>
+      {% endif %}
+      {% if review_status and rating %}
+      <div class="rating">
+        {% for i in 1..5 %}
+        {% if rating < i %} <span class="fas fa-stack"><i class="far fa-star fa-stack-2x"></i></span>
+          {% else %}
+          <span class="fas fa-stack"><i class="fas fa-star fa-stack-2x"></i><i
+              class="far fa-star fa-stack-2x"></i></span>
+          {% endif %}
+          {% endfor %}
+      </div>
+      {% endif %}
     </div>
-	<div class=""> 
-		<form method="post" data-oc-toggle="ajax" data-oc-load="{{ cart }}" data-oc-target="#header-cart">
-
-	<div class=" button-group">
-        <button type="submit"  formaction="	{{ add_to_cart }}" data-bs-toggle="tooltip" title="{{ button_cart }}"><i class="fas fa-shopping-cart"></i></button>
-        <button type="submit"  formaction="{{ add_to_wishlist }}" data-bs-toggle="tooltip" title="{{ button_wishlist }}"><i class="fas fa-heart"></i></button>
-        <button type="submit" formaction="{{ add_to_compare }}" data-bs-toggle="tooltip" title="{{ button_compare }}"><i class="fas fa-exchange-alt"></i></button>
-    </div>
-
-		<input type="hidden" name="product_id" value="{{ product_id }}"/>
-		<input type="hidden" name="quantity" value="{{ minimum }}"/>
-	</form>
-</div>
+  </div>
+  <div>
+    <form method="post" data-oc-toggle="ajax" data-oc-load="{{ cart }}" data-oc-target="#header-cart">
+      <div class=" button-group">
+        <button type="submit" formaction="	{{ add_to_cart }}" data-bs-toggle="tooltip" title="{{ button_cart }}"><iclass="fas fa-shopping-cart"></i></button>
+        <button type="submit" formaction="{{ add_to_wishlist }}" data-bs-toggle="tooltip"title="{{ button_wishlist }}"><i class="fas fa-heart"></i></button>
+        <button type="submit" formaction="{{ add_to_compare }}" data-bs-toggle="tooltip" title="{{ button_compare }}"><iclass="fas fa-exchange-alt"></i></button>
+      </div>
+      <input type="hidden" name="product_id" value="{{ product_id }}" />
+      <input type="hidden" name="quantity" value="{{ minimum }}" />
+    </form>
+  </div>
 </div>

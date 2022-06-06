@@ -617,6 +617,8 @@ footer {
 }
 
 .product-thumb {
+  border: 1px solid #ddd;
+  margin-bottom: 15px;
 
   h4 {
     font-weight: bold;
@@ -631,6 +633,10 @@ footer {
         opacity: 0.8;
       }
     }
+  }
+
+  .description {
+    padding: 15px;
   }
 
   .button-group {

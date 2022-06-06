@@ -444,6 +444,7 @@ footer h5 {
   background-color: #222222;
   background-image: linear-gradient(to bottom, #333333, #111111);
 }
+
 .product-thumb h4 {
   font-weight: bold;
 }
@@ -453,6 +454,9 @@ footer h5 {
 }
 .product-thumb .image a:hover {
   opacity: 0.8;
+}
+.product-thumb .description {
+  padding: 15px;
 }
 .product-thumb .button-group {
   display: flex;

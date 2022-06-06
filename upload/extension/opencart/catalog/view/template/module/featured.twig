@@ -1,5 +1,5 @@
 <h3>{{ heading_title }}</h3>
-<div class="row{% if axis == 'horizontal' %} row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4{% endif %}">
+<div class="row{% if axis == 'horizontal' %} row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4{% endif %} mb-3">
   {% for product in products %}
     <div class="col">{{ product }}</div>
   {% endfor %}

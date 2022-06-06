@@ -83,7 +83,7 @@ class Mail {
 
 				$message .= '--' . $boundary . $eol;
 				$message .= 'Content-Type: application/octet-stream; name="' . basename($attachment) . '"' . $eol;
-				$message .= 'Content-Transfer-Encoding: base64' . PHP_EOL;
+				$message .= 'Content-Transfer-Encoding: base64' . $eol;
 				$message .= 'Content-Disposition: attachment; filename="' . basename($attachment) . '"' . $eol;
 				$message .= 'Content-ID: <' . urlencode(basename($attachment)) . '>' . $eol;
 				$message .= 'X-Attachment-Id: ' . urlencode(basename($attachment)) . $eol . $eol;

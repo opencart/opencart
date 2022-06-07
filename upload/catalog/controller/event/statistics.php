@@ -12,7 +12,7 @@ class Statistics extends \Opencart\System\Engine\Controller {
 	public function addReturn(string &$route, array &$args, mixed &$output): void {
 		$this->load->model('report/statistics');
 
-		$this->model_report_statistics->addValue('return', 1);
+		$this->model_report_statistics->addValue('returns', 1);
 	}
 	
 	// catalog/model/checkout/order/addHistory/before

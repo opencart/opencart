@@ -22,6 +22,8 @@ class Tracking extends \Opencart\System\Engine\Controller {
 
 		$this->load->language('account/tracking');
 
+		$data['language'] = $this->config->get('config_language');
+
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$data['breadcrumbs'] = [];

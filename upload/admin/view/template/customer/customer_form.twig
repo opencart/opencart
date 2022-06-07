@@ -930,15 +930,13 @@ $('#payment-method').on('click', 'button', function (e) {
 
     $.ajax({
         url: $(element).val(),
-        type: 'post',
-        data: $('#form-transaction').serialize(),
         dataType: 'json',
         contentType: 'application/x-www-form-urlencoded',
         beforeSend: function () {
             $(element).prop('disabled', true).addClass('loading');
         },
         complete: function () {
-            $('element').prop('disabled', false).removeClass('loading');
+            $(element).prop('disabled', false).removeClass('loading');
         },
         success: function (json) {
             $('.alert-dismissible').remove();
@@ -950,10 +948,7 @@ $('#payment-method').on('click', 'button', function (e) {
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#transaction').load('index.php?route=customer/customer|transaction&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val());
-
-                $('#input-transaction-amount').val('');
-                $('#input-transaction-description').val('');
+                $('#payment-method').load('index.php?route=customer/customer|getPayment&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val());
             }
         },
         error: function (xhr, ajaxOptions, thrownError) {

@@ -17,7 +17,7 @@ $('#button-confirm').on('click', function() {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=extension/opencart/payment/cheque|confirm',
+        url: 'index.php?route=extension/opencart/payment/cheque|confirm&language={{ language }}',
         dataType: 'json',
         beforeSend: function() {
             $(element).prop('disabled', true).addClass('loading');

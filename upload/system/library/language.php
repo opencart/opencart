@@ -48,7 +48,7 @@ class Language {
 	 * 
 	 * @return	string
      */
-	public function get(string $key) {
+	public function get(string $key): array|string {
 		return isset($this->data[$key]) ? $this->data[$key] : $key;
 	}
 
@@ -58,7 +58,7 @@ class Language {
      * @param	string	$key
 	 * @param	string	$value
      */	
-	public function set(string $key, string $value) {
+	public function set(string $key, string $value): array {
 		$this->data[$key] = $value;
 	}
 	

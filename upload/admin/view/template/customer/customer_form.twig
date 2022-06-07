@@ -993,7 +993,7 @@ $('#form-history').on('submit', function (e) {
 
                 $('#history').load('index.php?route=customer/customer|history&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val());
 
-                $('#input-comment').val('');
+                $('#input-history-comment').val('');
             }
         },
         error: function (xhr, ajaxOptions, thrownError) {

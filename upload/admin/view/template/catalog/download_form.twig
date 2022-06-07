@@ -150,6 +150,8 @@ $('#input-filename').on('change', function (e) {
 });
 
 $('#button-download').on('click', function (e) {
+    e.preventDefault();
+    
     location = 'index.php?route=catalog/download|download&user_token=' + getURLVar('user_token') + '&filename=' + $('#input-filename').val();
 });
 //--></script>

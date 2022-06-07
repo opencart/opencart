@@ -36,12 +36,12 @@ class Mail {
 
 		$header  = 'MIME-Version: 1.0' . $eol;
 		$header .= 'Date: ' . date('D, d M Y H:i:s O') . $eol;
-		$header .= 'From: =?UTF-8?B?' . base64_encode($this->sender) . '?= <' . $this->from . '>' . $eol;
+		$header .= 'From: =?UTF-8?B?' . chunk_split(base64_encode($this->sender)) . '?= <' . $this->from . '>' . $eol;
 
 		if (!$this->reply_to) {
-			$header .= 'Reply-To: =?UTF-8?B?' . base64_encode($this->sender) . '?= <' . $this->from . '>' . $eol;
+			$header .= 'Reply-To: =?UTF-8?B?' . chunk_split(base64_encode($this->sender)) . '?= <' . $this->from . '>' . $eol;
 		} else {
-			$header .= 'Reply-To: =?UTF-8?B?' . base64_encode($this->reply_to) . '?= <' . $this->reply_to . '>' . $eol;
+			$header .= 'Reply-To: =?UTF-8?B?' . chunk_split(base64_encode($this->reply_to)) . '?= <' . $this->reply_to . '>' . $eol;
 		}
 
 		$header .= 'Return-Path: ' . $this->from . $eol;
@@ -52,7 +52,7 @@ class Mail {
 			$message  = '--' . $boundary . $eol;
 			$message .= 'Content-Type: text/plain; charset="utf-8"' . $eol;
 			$message .= 'Content-Transfer-Encoding: base64' . $eol . $eol;
-			$message .= base64_encode($this->text) . $eol;
+			$message .= chunk_split(base64_encode($this->text)) . $eol;
 		} else {
 			$message  = '--' . $boundary . $eol;
 			$message .= 'Content-Type: multipart/alternative; boundary="' . $boundary . '_alt"' . $eol . $eol;
@@ -63,7 +63,7 @@ class Mail {
 			if ($this->text) {
 				$message .= chunk_split(base64_encode($this->text)) . $eol;
 			} else {
-				$message .= base64_encode('This is a HTML email and your email client software does not support HTML email!') . $eol;
+				$message .= chunk_split(base64_encode('This is a HTML email and your email client software does not support HTML email!')) . $eol;
 			}
 
 			$message .= '--' . $boundary . '_alt' . $eol;
@@ -96,9 +96,9 @@ class Mail {
 		ini_set('sendmail_from', $this->from);
 
 		if ($this->parameter) {
-			return mail($to, '=?UTF-8?B?' . base64_encode($this->subject) . '?=', $message, $header, $this->parameter);
+			return mail($to, '=?UTF-8?B?' . chunk_split(base64_encode($this->subject)) . '?=', $message, $header, $this->parameter);
 		} else {
-			return mail($to, '=?UTF-8?B?' . base64_encode($this->subject) . '?=', $message, $header);
+			return mail($to, '=?UTF-8?B?' . chunk_split(base64_encode($this->subject)) . '?=', $message, $header);
 		}
 	}
 }

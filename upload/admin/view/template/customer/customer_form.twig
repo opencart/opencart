@@ -927,7 +927,7 @@ $('#form-payment-method').on('submit', function (e) {
     e.preventDefault();
 
     $.ajax({
-        url: 'index.php?route=customer/customer|addtransaction&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val(),
+        url: 'index.php?route=customer/customer|addTransaction&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val(),
         type: 'post',
         data: $('#form-transaction').serialize(),
         dataType: 'json',

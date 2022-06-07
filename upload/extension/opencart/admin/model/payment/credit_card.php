@@ -8,8 +8,6 @@ class CreditCard extends \Opencart\System\Engine\Model {
 
 		if (!$json) {
 
-
-
 		}
 
 		return $this->config->get('config_subscription_active_status_id');

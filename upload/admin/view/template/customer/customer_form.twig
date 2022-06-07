@@ -955,17 +955,17 @@ $('#payment-method').on('click', 'button', function (e) {
     });
 });
 
-$('#payment-method').on('click', 'input[name=\'status'\], function (e) {
+$('#payment-method').on('change', 'input[name=\'status\']', function (e) {
     e.preventDefault();
 
     var element = this;
 
     $.ajax({
-        url: 'customer/customer|disablePaymen',
+        url: 'index.php?route=customer/customer|disablePayment&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val(),
         dataType: 'json',
         contentType: 'application/x-www-form-urlencoded',
         beforeSend: function () {
-            $(element).prop('disabled', true));
+            $(element).prop('disabled', true);
         },
         complete: function () {
             $(element).prop('disabled', false);
@@ -988,9 +988,6 @@ $('#payment-method').on('click', 'input[name=\'status'\], function (e) {
         }
     });
 });
-
-
-
 
 $('#history').on('click', '.pagination a', function (e) {
     e.preventDefault();

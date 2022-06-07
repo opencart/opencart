@@ -837,33 +837,6 @@ class Customer extends \Opencart\System\Engine\Controller {
 		return $this->load->view('customer/customer_payment', $data);
 	}
 
-	public function disablePayment(): void {
-		$this->load->language('customer/customer');
-
-		$json = [];
-
-		if (isset($this->request->get['customer_payment_id'])) {
-			$customer_payment_id = (int)$this->request->get['customer_payment_id'];
-		} else {
-			$customer_payment_id = 0;
-		}
-
-		if (!$this->user->hasPermission('modify', 'customer/customer')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (!$json) {
-			$this->load->model('customer/customer');
-
-			$this->model_customer_customer->editPaymentMethodStatus($customer_payment_id, $this->request->post['status']);
-
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
 	public function deletePayment(): void {
 		$this->load->language('customer/customer');
 
@@ -883,6 +856,33 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$this->load->model('customer/customer');
 
 			$this->model_customer_customer->deletePaymentMethod($customer_payment_id);
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	public function disablePayment(): void {
+		$this->load->language('customer/customer');
+
+		$json = [];
+
+		if (isset($this->request->get['customer_payment_id'])) {
+			$customer_payment_id = (int)$this->request->get['customer_payment_id'];
+		} else {
+			$customer_payment_id = 0;
+		}
+
+		if (!$this->user->hasPermission('modify', 'customer/customer')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			$this->load->model('customer/customer');
+
+			$this->model_customer_customer->editPaymentMethodStatus($customer_payment_id, $this->request->post['status']);
 
 			$json['success'] = $this->language->get('text_success');
 		}

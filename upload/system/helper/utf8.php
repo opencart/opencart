@@ -15,12 +15,8 @@ if (extension_loaded('mbstring')) {
 		return mb_strrpos($string, $needle, $offset);
 	}
 
-	function utf8_substr(string $string, int $offset, int $length = 0) {
-		if ($length == 0) {
-			return mb_substr($string, $offset, utf8_strlen($string));
-		} else {
-			return mb_substr($string, $offset, $length);
-		}
+	function utf8_substr(string $string, int $offset, ?int $length = null) {
+		return mb_substr($string, $offset, $length);
 	}
 
 	function utf8_strtoupper(string $string) {
@@ -44,12 +40,8 @@ if (extension_loaded('mbstring')) {
 		return iconv_strrpos($string, $needle, 'UTF-8');
 	}
 
-	function utf8_substr(string $string, int $offset, int $length = 0) {
-		if ($length == 0) {
-			return iconv_substr($string, $offset, utf8_strlen($string), 'UTF-8');
-		} else {
-			return iconv_substr($string, $offset, $length, 'UTF-8');
-		}
+	function utf8_substr(string $string, int $offset, ?int $length = null) {
+		return iconv_substr($string, $offset, $length, 'UTF-8');
 	}
 
 	function utf8_strtolower(string $string) {

@@ -312,7 +312,7 @@ $('#comment').load('index.php?route=marketplace/marketplace|comment&user_token={
 // Add comment
 $('#button-comment').on('click', function() {
     $.ajax({
-        url: 'index.php?route=marketplace/marketplace|addcomment&user_token={{ user_token }}&extension_id={{ extension_id }}',
+        url: 'index.php?route=marketplace/marketplace|addComment&user_token={{ user_token }}&extension_id={{ extension_id }}',
         type: 'post',
         dataType: 'json',
         data: 'comment=' + encodeURIComponent($('#input-comment').val()),

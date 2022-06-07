@@ -179,9 +179,9 @@
                   </div>
                 </div>
                 <div class="row mb-3">
-                  <label for="input-history-comment" class="col-sm-2 col-form-label">{{ entry_comment }}</label>
+                  <label for="input-history" class="col-sm-2 col-form-label">{{ entry_comment }}</label>
                   <div class="col-sm-10">
-                    <textarea name="comment" rows="8" placeholder="{{ entry_comment }}" id="input-history-comment" class="form-control"></textarea>
+                    <textarea name="comment" rows="8" placeholder="{{ entry_comment }}" id="input-history" class="form-control"></textarea>
                   </div>
                 </div>
                 <div class="text-end">
@@ -260,7 +260,7 @@ $('#button-history').on('click', function (e) {
     e.preventDefault();
 
     $.ajax({
-        url: 'index.php?route=sale/returns|addhistory&user_token={{ user_token }}&return_id=' + $('#input-return-id').val(),
+        url: 'index.php?route=sale/returns|addHistory&user_token={{ user_token }}&return_id=' + $('#input-return-id').val(),
         type: 'post',
         dataType: 'json',
         data: 'return_status_id=' + $('#input-return-status').val() + '&notify=' + ($('#input-notify').prop('checked') ? 1 : 0) + '&comment=' + encodeURIComponent($('#input-comment').val()),
@@ -282,7 +282,7 @@ $('#button-history').on('click', function (e) {
 
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#input-comment').val('');
+                $('#input-history-comment').val('');
             }
         }
     });

@@ -31,14 +31,14 @@
               {% if log.error %}
                 <div class="alert alert-danger alert-dismissible">{{ log.error }}</div>
               {% endif %}
-              <textarea name="log" wrap="off" rows="15" id="input-log" class="form-control" readonly>{{ log.output }}</textarea>
+              <textarea name="log" wrap="off" rows="15" id="input-log-{{ i }}" class="form-control" readonly>{{ log.output }}</textarea>
               <br/>
               <div class="row row-cols-2">
                 <div class="col">
                   <a href="{{ log.download }}" class="btn btn-primary w-100"{% if not log.download %} disabled{% endif %}><i class="fas fa-download"></i> {{ button_download }}</a>
                 </div>
                 <div class="col">
-                  <button type="button" value="{{ log.clear }}" class="btn btn-danger w-100"><i class="fas fa-eraser"></i> {{ button_clear }}</button>
+                  <button type="button" value="{{ log.clear }}" data-oc-target="input-log-{{ i }}" class="btn btn-danger w-100"><i class="fas fa-eraser"></i> {{ button_clear }}</button>
                 </div>
               </div>
             </div>
@@ -73,7 +73,7 @@ $('.tab-content .btn-danger').on('click', function () {
                 if (json['success']) {
                     $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                    $('#input-log').val('');
+                    $($(element).attr('data-oc-target')).val('');
                 }
             },
             error: function (xhr, ajaxOptions, thrownError) {

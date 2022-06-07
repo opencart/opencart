@@ -30,6 +30,8 @@ $('#category').on('click', 'thead a, .pagination a', function (e) {
 });
 
 $('#button-repair').on('click', function (e) {
+    e.preventDefault();
+    
     var element = this;
 
     $.ajax({

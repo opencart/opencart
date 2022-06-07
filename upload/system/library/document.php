@@ -93,7 +93,7 @@ class Document {
 	 *
 	 * @return	array
      */
-	public function getLinks() {
+	public function getLinks(): array {
 		return $this->links;
 	}
 

@@ -61,7 +61,7 @@ class Mail {
 			$message .= 'Content-Transfer-Encoding: base64' . $eol . $eol;
 
 			if ($this->text) {
-				$message .= base64_encode($this->text) . $eol;
+				$message .= chunk_split(base64_encode($this->text)) . $eol;
 			} else {
 				$message .= base64_encode('This is a HTML email and your email client software does not support HTML email!') . $eol;
 			}
@@ -69,7 +69,7 @@ class Mail {
 			$message .= '--' . $boundary . '_alt' . $eol;
 			$message .= 'Content-Type: text/html; charset="utf-8"' . $eol;
 			$message .= 'Content-Transfer-Encoding: base64' . $eol . $eol;
-			$message .= base64_encode($this->html) . $eol;
+			$message .= chunk_split(base64_encode($this->html)) . $eol;
 			$message .= '--' . $boundary . '_alt--' . $eol;
 		}
 

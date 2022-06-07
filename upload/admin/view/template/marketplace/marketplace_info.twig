@@ -56,7 +56,7 @@
 								<fieldset>
 									<legend>{{ text_comment_add }}</legend>
 									<div class="mb-3">
-										<textarea name="comment" rows="5" placeholder="{{ text_write }}" id="input-comment" class="form-control"></textarea>
+										<textarea name="comment" rows="5" placeholder="{{ text_write }}" id="input-history-comment" class="form-control"></textarea>
 									</div>
 									<div class="text-end">
 										<button type="button" id="button-comment" class="btn btn-primary">{{ button_comment }}</button>
@@ -315,7 +315,7 @@ $('#button-comment').on('click', function() {
         url: 'index.php?route=marketplace/marketplace|addComment&user_token={{ user_token }}&extension_id={{ extension_id }}',
         type: 'post',
         dataType: 'json',
-        data: 'comment=' + encodeURIComponent($('#input-comment').val()),
+        data: 'comment=' + encodeURIComponent($('#input-history-comment').val()),
         beforeSend: function() {
             $('#button-comment').prop('disabled', true).addClass('loading');
         },
@@ -334,7 +334,7 @@ $('#button-comment').on('click', function() {
 
                 $('#comment').load('index.php?route=marketplace/marketplace|comment&user_token={{ user_token }}&extension_id={{ extension_id }}');
 
-                $('#input-comment').val('');
+                $('#input-history-comment').val('');
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {

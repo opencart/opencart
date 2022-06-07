@@ -818,7 +818,8 @@ class Customer extends \Opencart\System\Engine\Controller {
 				'type'                => $result['type'],
 				'status'              => $result['status'],
 				'date_expire'         => date($this->language->get('date_format_short'), strtotime($result['date_expire'])),
-				'delete'              => $this->url->link('customer/customer|deletePayment', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $customer_id)
+				'disable'             => $this->url->link('customer/customer|disablePayment', 'user_token=' . $this->session->data['user_token'] . '&customer_payment_id=' . $result['customer_payment_id']),
+				'delete'              => $this->url->link('customer/customer|deletePayment', 'user_token=' . $this->session->data['user_token'] . '&customer_payment_id=' . $result['customer_payment_id'])
 			];
 		}
 
@@ -841,10 +842,10 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		if (isset($this->request->get['customer_id'])) {
-			$customer_id = (int)$this->request->get['customer_id'];
+		if (isset($this->request->get['customer_payment_id'])) {
+			$customer_payment_id = (int)$this->request->get['customer_payment_id'];
 		} else {
-			$customer_id = 0;
+			$customer_payment_id = 0;
 		}
 
 		if (!$this->user->hasPermission('modify', 'customer/customer')) {
@@ -854,7 +855,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('customer/customer');
 
-			$this->model_customer_customer->addHistory($customer_id, $this->request->post['comment']);
+			$this->model_customer_customer->editPaymentMethodStatus($customer_payment_id, $this->request->post['status']);
 
 			$json['success'] = $this->language->get('text_success');
 		}
@@ -868,10 +869,10 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		if (isset($this->request->get['customer_id'])) {
-			$customer_id = (int)$this->request->get['customer_id'];
+		if (isset($this->request->get['customer_payment_id'])) {
+			$customer_payment_id = (int)$this->request->get['customer_payment_id'];
 		} else {
-			$customer_id = 0;
+			$customer_payment_id = 0;
 		}
 
 		if (!$this->user->hasPermission('modify', 'customer/customer')) {
@@ -881,7 +882,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('customer/customer');
 
-			$this->model_customer_customer->addHistory($customer_id, $this->request->post['comment']);
+			$this->model_customer_customer->deletePaymentMethod($customer_payment_id);
 
 			$json['success'] = $this->language->get('text_success');
 		}

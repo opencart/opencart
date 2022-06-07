@@ -19,11 +19,8 @@
             <td class="text-start">{% if payment_method.image %}<img src="{{ payment_method.image }}" alt=""/>{% endif %}</td>
             <td class="text-start">{{ payment_method.type }}</td>
             <td class="text-start">
-              <div class="btn-group">
-                <input type="radio" name="status" value="1" id="input-status-yes-{{ payment_method.customer_payment_id }}" class="btn-check"{% if payment_method.status %} checked{% endif %}/>
-                <label for="input-status-yes-{{ payment_method.customer_payment_id }}" class="btn btn-outline-secondary">{{ text_on }}</label>
-                <input type="radio" name="status" value="0" id="input-status-no-{{ payment_method.customer_payment_id }}" class="btn-check"{% if not payment_method.status %} checked{% endif %}/>
-                <label for="input-status-no-{{ payment_method.customer_payment_id }}" class="btn btn-outline-secondary">{{ text_off }}</label>
+              <div class="form-check form-switch form-switch-lg">
+                <input type="checkbox" name="status" value="1" id="input-status-{{ payment_method.customer_payment_id }}" class="form-check-input"{% if status %} checked{% endif %}/>
               </div>
             </td>
             <td class="text-start">{{ payment_method.date_expire }}</td>

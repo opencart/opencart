@@ -401,6 +401,8 @@ $('#history').on('click', '.pagination a', function (e) {
 });
 
 $('#button-history').on('click', function (e) {
+    e.preventDefault();
+    
     var element = this;
 
     $.ajax({

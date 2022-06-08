@@ -20,7 +20,6 @@
     <div class="card">
       <div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_form }}</div>
       <div class="card-body">
-
         <form id="form-customer" action="{{ save }}" method="post" data-oc-toggle="ajax">
           <ul class="nav nav-tabs">
             <li class="nav-item"><a href="#tab-general" data-bs-toggle="tab" class="nav-link active">{{ tab_general }}</a></li>
@@ -31,9 +30,7 @@
             <li class="nav-item"><a href="#tab-reward" data-bs-toggle="tab" class="nav-link">{{ tab_reward }}</a></li>
             <li class="nav-item"><a href="#tab-ip" data-bs-toggle="tab" class="nav-link">{{ tab_ip }}</a></li>
           </ul>
-
           <div class="tab-content">
-
             <div id="tab-general" class="tab-pane active">
               <fieldset>
                 <legend>{{ text_account }}</legend>
@@ -86,9 +83,7 @@
                   </div>
                 </div>
                 {% for custom_field in custom_fields %}
-
                   {% if custom_field.location == 'account' %}
-
                     {% if custom_field.type == 'select' %}
                       <div class="row mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
                         <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
@@ -103,7 +98,6 @@
                         </div>
                       </div>
                     {% endif %}
-
                     {% if custom_field.type == 'radio' %}
                       <div class="row mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
                         <label class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
@@ -119,7 +113,6 @@
                         </div>
                       </div>
                     {% endif %}
-
                     {% if custom_field.type == 'checkbox' %}
                       <div class="row mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
                         <label class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
@@ -135,7 +128,6 @@
                         </div>
                       </div>
                     {% endif %}
-
                     {% if custom_field.type == 'text' %}
                       <div class="row mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
                         <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
@@ -145,7 +137,6 @@
                         </div>
                       </div>
                     {% endif %}
-
                     {% if custom_field.type == 'textarea' %}
                       <div class="row mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
                         <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
@@ -155,24 +146,20 @@
                         </div>
                       </div>
                     {% endif %}
-
                     {% if custom_field.type == 'file' %}
                       <div class="row mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
                         <label class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
                         <div class="col-sm-10">
-
                           <div class="input-group">
                             <button type="button" data-oc-toggle="upload" data-oc-target="#input-custom-field-{{ custom_field.custom_field_id }}" data-oc-size-max="{{ config_file_max_size }}" data-oc-size-error="{{ error_upload_size }}" class="btn btn-primary"><i class="fas fa-upload"></i> {{ button_upload }}</button>
                             <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control" readonly/>
                             <button type="button" data-oc-toggle="download" data-oc-target="#input-custom-field-{{ custom_field.custom_field_id }}"{% if not account_custom_field[custom_field.custom_field_id] %} disabled{% endif %} class="btn btn-outline-secondary"><i class="fas fa-download"></i> {{ button_download }}</button>
                             <button type="button" data-oc-toggle="clear" data-bs-toggle="tooltip" title="{{ button_clear }}" data-oc-target="#input-custom-field-{{ custom_field.custom_field_id }}"{% if not account_custom_field[custom_field.custom_field_id] %} disabled{% endif %} class="btn btn-outline-danger"><i class="fas fa-eraser"></i></button>
                           </div>
-
                           <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                         </div>
                       </div>
                     {% endif %}
-
                     {% if custom_field.type == 'date' %}
                       <div class="row mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
                         <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
@@ -185,7 +172,6 @@
                         </div>
                       </div>
                     {% endif %}
-
                     {% if custom_field.type == 'time' %}
                       <div class="row mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
                         <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
@@ -198,7 +184,6 @@
                         </div>
                       </div>
                     {% endif %}
-
                     {% if custom_field.type == 'datetime' %}
                       <div class="row mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
                         <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
@@ -211,7 +196,6 @@
                         </div>
                       </div>
                     {% endif %}
-
                   {% endif %}
                 {% endfor %}
               </fieldset>
@@ -267,7 +251,6 @@
                 <fieldset id="address-row-{{ address_row }}">
                   <legend>{{ text_address }} {{ address_row + 1 }} <button type="button" onclick="$('#address-row-{{ address_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-sm float-end"><i class="fas fa-minus-circle"></i></button></legend>
                   <input type="hidden" name="address[{{ address_row }}][address_id]" value="{{ address.address_id }}"/>
-
                   <div class="row mb-3 required">
                     <label for="input-address-{{ address_row }}-firstname" class="col-sm-2 col-form-label">{{ entry_firstname }}</label>
                     <div class="col-sm-10">
@@ -334,10 +317,8 @@
                       <div id="error-address-{{ address_row }}-zone" class="invalid-feedback"></div>
                     </div>
                   </div>
-
                   {% for custom_field in custom_fields %}
                     {% if custom_field.location == 'address' %}
-
                       {% if custom_field.type == 'select' %}
                         <div class="row mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
                           <label for="input-address-{{ address_row }}-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
@@ -352,7 +333,6 @@
                           </div>
                         </div>
                       {% endif %}
-
                       {% if custom_field.type == 'radio' %}
                         <div class="row mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
                           <label class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
@@ -368,7 +348,6 @@
                           </div>
                         </div>
                       {% endif %}
-
                       {% if custom_field.type == 'checkbox' %}
                         <div class="row mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
                           <label class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
@@ -384,7 +363,6 @@
                           </div>
                         </div>
                       {% endif %}
-
                       {% if custom_field.type == 'text' %}
                         <div class="row mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
                           <label for="input-address-{{ address_row }}-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
@@ -394,7 +372,6 @@
                           </div>
                         </div>
                       {% endif %}
-
                       {% if custom_field.type == 'textarea' %}
                         <div class="row mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
                           <label for="input-address-{{ address_row }}-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
@@ -404,7 +381,6 @@
                           </div>
                         </div>
                       {% endif %}
-
                       {% if custom_field.type == 'file' %}
                         <div class="row mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
                           <label class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
@@ -419,7 +395,6 @@
                           </div>
                         </div>
                       {% endif %}
-
                       {% if custom_field.type == 'date' %}
                         <div class="row mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
                           <label for="input-address-{{ address_row }}-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
@@ -432,7 +407,6 @@
                           </div>
                         </div>
                       {% endif %}
-
                       {% if custom_field.type == 'time' %}
                         <div class="row mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
                           <label for="input-address-{{ address_row }}-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
@@ -445,7 +419,6 @@
                           </div>
                         </div>
                       {% endif %}
-
                       {% if custom_field.type == 'datetime' %}
                         <div class="row mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
                           <label for="input-address-{{ address_row }}-custom-field-{{ custom_field.custom_field_id }}" class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
@@ -458,11 +431,8 @@
                           </div>
                         </div>
                       {% endif %}
-
                     {% endif %}
-
                   {% endfor %}
-
                   <div class="row mb-3">
                     <label for="input-address-{{ address_row }}-default" class="col-sm-2 col-form-label">{{ entry_default }}</label>
                     <div class="col-sm-10">
@@ -471,7 +441,6 @@
                       </div>
                     </div>
                   </div>
-
                 </fieldset>
                 {% set address_row = address_row + 1 %}
               {% endfor %}
@@ -480,7 +449,6 @@
               </div>
               <input type="hidden" name="customer_id" value="{{ customer_id }}" id="input-customer-id"/>
             </div>
-
             <div id="tab-payment" class="tab-pane">
               <fieldset>
                 <legend>{{ text_payment_method }}</legend>

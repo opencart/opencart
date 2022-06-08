@@ -16,7 +16,6 @@
       <div class="card-header"><i class="fas fa-info-circle"></i> {{ text_form }}</div>
       <div class="card-body">
         <div class="row row-cols-1 row-cols-sm-1 row-cols-md-3 row-cols-xl-3">
-
           <div class="col">
             <div class="input-group mb-3">
               <div class="form-control border rounded-start">
@@ -32,7 +31,6 @@
               {% endif %}
             </div>
           </div>
-
           <div class="col">
             <div class="input-group mb-3">
               <div class="form-control border rounded-start">
@@ -48,7 +46,6 @@
               <button type="button" data-bs-toggle="modal" data-bs-target="#modal-customer" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
             </div>
           </div>
-
           <div class="col">
             <div class="form-control p-0 border rounded mb-3">
               <div class="lead p-2"><strong>{{ text_date_added }}</strong>
@@ -58,7 +55,6 @@
             </div>
           </div>
         </div>
-
         <table class="table table-bordered">
           <thead>
             <tr>
@@ -91,7 +87,6 @@
                     <br/>
                     <small> - {{ text_subscription }}: {{ subscription.description }}</small>
                   {% endif %}
-
                 </td>
                 <td class="text-start">{{ order_product.model }}</td>
                 <td class="text-end">{{ order_product.quantity }}</td>
@@ -122,13 +117,11 @@
                 </td>
               </tr>
             {% endfor %}
-
             {% if not order_products and not order_vouchers %}
               <tr>
                 <td colspan="6" class="text-center">{{ text_no_results }}</td>
               </tr>
             {% endif %}
-
           </tbody>
           <tfoot>
             <tr>
@@ -137,7 +130,6 @@
             </tr>
           </tfoot>
         </table>
-
         <div id="collapse-order" class="collapse">
           <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4">
 
@@ -152,7 +144,6 @@
                 </div>
               </form>
             </div>
-
             <div class="col">
               <form id="form-language" class="mb-3">
                 <div class="form-floating">
@@ -164,7 +155,6 @@
                 </div>
               </form>
             </div>
-
             <div class="col">
               <form id="form-currency" class="mb-3">
                 <div class="form-floating">
@@ -176,7 +166,6 @@
                 </div>
               </form>
             </div>
-
             <div class="col">
               <form id="form-coupon" class="mb-3">
                 <div class="input-group form-floating">
@@ -185,7 +174,6 @@
                 </div>
               </form>
             </div>
-
             <div class="col">
               <form id="form-voucher">
                 <div class="input-group form-floating">
@@ -194,7 +182,6 @@
                 </div>
               </form>
             </div>
-
             <div class="col">
               <form id="form-reward" class="mb-3">
                 <div class="input-group form-floating">
@@ -203,7 +190,6 @@
                 </div>
               </form>
             </div>
-
             <div class="col">
               <div class="input-group">
                 <div class="form-control border rounded-start">
@@ -219,7 +205,6 @@
                 {% endif %}
               </div>
             </div>
-
             <div class="col">
               <div class="input-group mb-3">
                 <div class="form-control border rounded-start">
@@ -235,7 +220,6 @@
                 <button type="button" data-bs-toggle="modal" data-bs-target="#modal-affiliate" class="btn btn-outline-primary"><i class="fas fa-cog"></i></button>
               </div>
             </div>
-
             <div class="col">
               <div class="input-group mb-3">
                 <div class="form-control border rounded-start">
@@ -255,12 +239,9 @@
                 {% endif %}
               </div>
             </div>
-
           </div>
         </div>
-
         <button type="button" id="button-collapse" class="btn btn-light btn-lg w-100 mb-3">{{ text_more }} <i class="fas fa-angle-down"></i></button>
-
         <div class="row">
           <div class="col-md">
             <div class="input-group mb-3">
@@ -272,32 +253,26 @@
                       {{ payment_firstname }} {{ payment_lastname }}
                       <br/>
                     {% endif %}
-
                     {% if payment_company %}
                       {{ payment_company }}
                       <br/>
                     {% endif %}
-
                     {% if payment_address_1 %}
                       {{ payment_address_1 }}
                       <br/>
                     {% endif %}
-
                     {% if payment_address_2 %}
                       {{ payment_address_2 }}
                       <br/>
                     {% endif %}
-
                     {% if payment_city %}
                       {{ payment_city }}
                       <br/>
                     {% endif %}
-
                     {% if payment_postcode %}
                       {{ payment_postcode }}
                       <br/>
                     {% endif %}
-
                     {% if payment_zone %}
                       {{ payment_zone }}
                       <br/>
@@ -356,7 +331,6 @@
           </div>
         </div>
         <div class="row mb-3">
-
           <div id="shipping-method" class="col-md{% if not shipping_method %} d-none{% endif %}">
             <form id="form-shipping-method">
               <div class="input-group form-floating">
@@ -370,7 +344,6 @@
               </div>
             </form>
           </div>
-
           <div id="payment-method" class="col-md">
             <form id="form-payment-method">
               <div class="input-group form-floating">
@@ -384,9 +357,7 @@
               </div>
             </form>
           </div>
-
         </div>
-
         <div class="row">
           <div class="col">
             <div class="input-group mb-3">
@@ -404,7 +375,6 @@
             </div>
           </div>
         </div>
-
         <table class="table table-bordered">
           <tbody id="order-totals">
             {% for order_total in order_totals %}
@@ -421,7 +391,6 @@
         </div>
       </div>
     </div>
-
     <div class="card mb-3">
       <div class="card-header"><i class="fas fa-comment"></i> {{ text_history }}</div>
       <div class="card-body">
@@ -520,7 +489,6 @@
     </div>
   </div>
 </div>
-
 <div id="modal-customer" class="modal">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -878,7 +846,6 @@
                   <div id="error-payment-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               {% endif %}
-
               {% if custom_field.type == 'file' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
                   <label class="form-label">{{ custom_field.name }}</label>
@@ -891,7 +858,6 @@
                   <div id="error-payment-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               {% endif %}
-
               {% if custom_field.type == 'date' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
                   <label for="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
@@ -932,7 +898,6 @@
     </div>
   </div>
 </div>
-
 <div id="modal-shipping-address" class="modal">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -942,7 +907,6 @@
       </div>
       <div class="modal-body">
         <form id="form-shipping-address">
-
           <div class="mb-3">
             <label for="input-shipping-address" class="form-label">{{ entry_address }}</label> <select name="shipping_address" id="input-shipping-address" class="form-select">
               <option value="0" selected="selected">{{ text_none }}</option>
@@ -951,26 +915,21 @@
               {% endfor %}
             </select>
           </div>
-
           <div class="mb-3 required">
             <label for="input-shipping-firstname" class="form-label">{{ entry_firstname }}</label> <input type="text" name="firstname" value="{{ shipping_firstname }}" placeholder="{{ entry_firstname }}" id="input-shipping-firstname" class="form-control"/>
             <div id="error-shipping-firstname" class="invalid-feedback"></div>
           </div>
-
           <div class="mb-3 required">
             <label for="input-shipping-lastname" class="form-label">{{ entry_lastname }}</label> <input type="text" name="lastname" value="{{ shipping_lastname }}" placeholder="{{ entry_lastname }}" id="input-shipping-lastname" class="form-control"/>
             <div id="error-shipping-lastname" class="invalid-feedback"></div>
           </div>
-
           <div class="mb-3">
             <label for="input-shipping-company" class="form-label">{{ entry_company }}</label> <input type="text" name="company" value="{{ shipping_company }}" placeholder="{{ entry_company }}" id="input-shipping-company" class="form-control"/>
           </div>
-
           <div class="mb-3 required">
             <label for="input-shipping-address-1" class="form-label">{{ entry_address_1 }}</label> <input type="text" name="address_1" value="{{ shipping_address_1 }}" placeholder="{{ entry_address_1 }}" id="input-shipping-address-1" class="form-control"/>
             <div id="error-shipping-address-1" class="invalid-feedback"></div>
           </div>
-
           <div class="mb-3">
             <label for="input-shipping-address-2" class="form-label">{{ entry_address_2 }}</label> <input type="text" name="address_2" value="{{ shipping_address_2 }}" placeholder="{{ entry_address_2 }}" id="input-shipping-address-2" class="form-control"/>
           </div>
@@ -978,12 +937,10 @@
             <label for="input-shipping-city" class="form-label">{{ entry_city }}</label> <input type="text" name="city" value="{{ shipping_city }}" placeholder="{{ entry_city }}" id="input-shipping-city" class="form-control"/>
             <div id="error-shipping-city" class="invalid-feedback"></div>
           </div>
-
           <div class="mb-3 required">
             <label for="input-shipping-postcode" class="form-label">{{ entry_postcode }}</label> <input type="text" name="postcode" value="{{ shipping_postcode }}" placeholder="{{ entry_postcode }}" id="input-shipping-postcode" class="form-control"/>
             <div id="error-shipping-postcode" class="invalid-feedback"></div>
           </div>
-
           <div class="mb-3 required">
             <label for="input-shipping-country" class="form-label">{{ entry_country }}</label> <select name="country_id" id="input-shipping-country" class="form-select">
               <option value="">{{ text_select }}</option>
@@ -993,15 +950,12 @@
             </select>
             <div id="error-shipping-country" class="invalid-feedback"></div>
           </div>
-
           <div class="mb-3 required">
             <label for="input-shipping-zone" class="form-label">{{ entry_zone }}</label> <select name="zone_id" id="input-shipping-zone" class="form-select"></select>
             <div id="error-shipping-zone" class="invalid-feedback"></div>
           </div>
-
           {% for custom_field in custom_fields %}
             {% if custom_field.location == 'address' %}
-
               {% if custom_field.type == 'select' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
                   <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <select name="custom_field[{{ custom_field.custom_field_id }}]" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-select">
@@ -1013,46 +967,38 @@
                   <div id="error-shipping-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               {% endif %}
-
               {% if custom_field.type == 'radio' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
                   <label class="form-label">{{ custom_field.name }}</label>
                   <div id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-control" style="height: 150px; overflow: auto;">
-
                     {% for custom_field_value in custom_field.custom_field_value %}
                       <div class="form-check">
                         <input type="radio" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ custom_field_value.custom_field_value_id }}" id="input-shipping-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-input"{% if shipping_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id == shipping_custom_field[custom_field.custom_field_id] %} checked{% endif %}/> <label for="input-shipping-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-label">{{ custom_field_value.name }}</label>
                       </div>
                     {% endfor %}
-
                   </div>
                   <div id="error-shipping-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               {% endif %}
-
               {% if custom_field.type == 'checkbox' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
                   <label class="form-label">{{ custom_field.name }}</label>
                   <div id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-control" style="height: 150px; overflow: auto;">
-
                     {% for custom_field_value in custom_field.custom_field_value %}
                       <div class="form-check">
                         <input type="checkbox" name="custom_field[{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" id="input-shipping-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-input"{% if shipping_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id in shipping_custom_field[custom_field.custom_field_id] %} checked{% endif %}/> <label for="input-shipping-custom-value-{{ custom_field_value.custom_field_value_id }}" class="form-check-label">{{ custom_field_value.name }}</label>
                       </div>
                     {% endfor %}
-
                   </div>
                   <div id="error-shipping-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               {% endif %}
-
               {% if custom_field.type == 'text' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
                   <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ shipping_custom_field[custom_field.custom_field_id] ? shipping_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-control"/>
                   <div id="error-shipping-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               {% endif %}
-
               {% if custom_field.type == 'textarea' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
                   <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
@@ -1060,7 +1006,6 @@
                   <div id="error-shipping-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               {% endif %}
-
               {% if custom_field.type == 'file' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
                   <label class="form-label">{{ custom_field.name }}</label>
@@ -1073,7 +1018,6 @@
                   <div id="error-shipping-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               {% endif %}
-
               {% if custom_field.type == 'date' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
                   <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
@@ -1084,7 +1028,6 @@
                   <div id="error-shipping-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               {% endif %}
-
               {% if custom_field.type == 'time' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
                   <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
@@ -1095,7 +1038,6 @@
                   <div id="error-shipping-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               {% endif %}
-
               {% if custom_field.type == 'datetime' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
                   <label for="input-shipping-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
@@ -1106,22 +1048,16 @@
                   <div id="error-shipping-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               {% endif %}
-
             {% endif %}
-
           {% endfor %}
-
           <div class="text-end">
             <button type="submit" id="button-shipping-address" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
           </div>
-
         </form>
       </div>
-
     </div>
   </div>
 </div>
-
 <div id="modal-comment" class="modal">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -1135,9 +1071,7 @@
             <textarea name="comment" rows="5" placeholder="{{ entry_comment }}" id="input-comment" class="form-control">{{ comment }}</textarea>
           </div>
           <div class="text-end">
-
             <button type="submit" id="button-comment" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>
-
           </div>
         </form>
       </div>

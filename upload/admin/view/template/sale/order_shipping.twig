@@ -15,7 +15,6 @@
   {% for order in orders %}
     <div style="page-break-after: always;">
       <h1>{{ text_picklist }} #{{ order.order_id }}</h1>
-
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4">
         <div class="col">
           <div class="form-control-plaintext p-0 border rounded mb-3">
@@ -29,7 +28,6 @@
             </div>
           </div>
         </div>
-
         <div class="col">
           <div class="form-control-plaintext p-0 border rounded mb-3">
             <div class="lead p-2"><strong>{{ text_order_id }}</strong>
@@ -38,7 +36,6 @@
             </div>
           </div>
         </div>
-
         <div class="col">
           <div class="form-control-plaintext p-0 border rounded mb-3">
             <div class="lead p-2"><strong>{{ text_date_added }}</strong>
@@ -47,7 +44,6 @@
             </div>
           </div>
         </div>
-
         <div class="col">
           <div class="form-control-plaintext p-0 border rounded mb-3">
             <div class="lead p-2"><strong>{{ text_store }}</strong>
@@ -56,7 +52,6 @@
             </div>
           </div>
         </div>
-
         <div class="col">
           <div class="form-control-plaintext p-0 border rounded mb-3">
             <div class="lead p-2"><strong>{{ text_store_telephone }}</strong>
@@ -65,7 +60,6 @@
             </div>
           </div>
         </div>
-
         <div class="col">
           <div class="form-control-plaintext p-0 border rounded mb-3">
             <div class="lead p-2"><strong>{{ text_store_email }}</strong>
@@ -74,7 +68,6 @@
             </div>
           </div>
         </div>
-
         <div class="col">
           <div class="form-control-plaintext p-0 border rounded mb-3">
             <div class="lead p-2"><strong>{{ text_website }}</strong>
@@ -83,7 +76,6 @@
             </div>
           </div>
         </div>
-
         <div class="col">
           <div class="form-control-plaintext p-0 border rounded mb-3">
             <div class="lead p-2"><strong>{{ text_shipping_method }}</strong>
@@ -92,7 +84,6 @@
             </div>
           </div>
         </div>
-
         <div class="col">
           <div class="form-control-plaintext p-0 border rounded mb-3">
             <div class="lead p-2"><strong>{{ text_customer_email }}</strong>
@@ -102,11 +93,9 @@
               {% else %}
                 &nbsp;
               {% endif %}
-
             </div>
           </div>
         </div>
-
         <div class="col">
           <div class="form-control-plaintext p-0 border rounded mb-3">
             <div class="lead p-2"><strong>{{ text_customer_telephone }}</strong>
@@ -119,9 +108,7 @@
             </div>
           </div>
         </div>
-
       </div>
-
       <div class="row row-cols-1 row-cols-sm-2">
         <div class="col">
           <div class="form-control-plaintext p-0 border rounded mb-3">
@@ -144,7 +131,6 @@
           </div>
         </div>
       </div>
-
       <table class="table table-bordered">
         <thead>
           <tr>
@@ -165,49 +151,40 @@
                   {{ text_sku }} {{ product.sku }}
                   <br/>
                 {% endif %}
-
                 {% if product.upc %}
                   {{ text_upc }} {{ product.upc }}
                   <br/>
                 {% endif %}
-
                 {% if product.ean %}
                   {{ text_ean }} {{ product.ean }}
                   <br/>
                 {% endif %}
-
                 {% if product.jan %}
                   {{ text_jan }} {{ product.jan }}
                   <br/>
                 {% endif %}
-
                 {% if product.isbn %}
                   {{ text_isbn }} {{ product.isbn }}
                   <br/>
                 {% endif %}
-
                 {% if product.mpn %}
                   {{ text_mpn }}{{ product.mpn }}
                   <br/>
                 {% endif %}
               </td>
               <td>{{ product.name }}
-
                 {% for option in product.option %}
                   <br/>
                   <small> - {{ option.name }}: {{ option.value }}</small>
                 {% endfor %}
-
                 {% if product.reward %}
                   <br/>
                   <small> - {{ text_points }} {{ product.reward }}</small>
                 {% endif %}
-
                 {% if product.subscription %}
                   <br/>
                   <small> - {{ text_subscription }} {{ product.subscription }} </small>
                 {% endif %}
-
               </td>
               <td>{{ product.weight }}</td>
               <td>{{ product.model }}</td>

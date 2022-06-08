@@ -24,11 +24,8 @@
 							<td class="text-start d-none d-lg-table-cell">{{ customer.date_added }}</td>
 							<td class="text-end">
 								<div class="btn-group dropdown">
-
 									<a href="{{ customer.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a>
-
 									<button type="button" data-bs-toggle="dropdown" class="btn btn-primary dropdown-toggle dropdown-toggle-split"><span class="fas fa-caret-down"></span></button>
-
 									<ul class="dropdown-menu dropdown-menu-right">
 										<li><h6 class="dropdown-header">{{ text_option }}</h6></li>
 										{% if customer.unlock %}

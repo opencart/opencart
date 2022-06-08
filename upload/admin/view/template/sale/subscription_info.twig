@@ -15,7 +15,6 @@
     <div class="card mb-3">
       <div class="card-header">{{ text_subscription }}</div>
       <div class="card-body">
-
         <form id="form-subscription">
           <div class="row row-cols-1 row-cols-sm-1 row-cols-md-3 row-cols-xl-3">
             <div class="col">
@@ -38,7 +37,6 @@
                 </div>
               </div>
             </div>
-
             <div class="col">
               <div class="input-group mb-3">
                 <div class="form-control border rounded-start">
@@ -48,7 +46,6 @@
                 </div>
               </div>
             </div>
-
             <div class="col">
               <div class="form-control p-0 border rounded mb-3">
                 <div class="lead p-2"><strong>{{ text_date_added }}</strong>
@@ -57,7 +54,6 @@
                 </div>
               </div>
             </div>
-
             <div class="col">
               <div class="form-control p-0 border rounded mb-3">
                 <div class="lead p-2"><strong>{{ text_remaining }}</strong>
@@ -70,7 +66,6 @@
                 </div>
               </div>
             </div>
-
             <div class="col">
               <div class="form-control p-0 border rounded mb-3">
                 <div class="lead p-2"><strong>{{ text_date_next }}</strong>
@@ -79,7 +74,6 @@
                 </div>
               </div>
             </div>
-
             <div class="col">
               <div class="form-control p-0 border rounded mb-3">
                 <div class="lead p-2"><strong>{{ text_order_status }}</strong>
@@ -88,7 +82,6 @@
                 </div>
               </div>
             </div>
-
             <div class="col">
               <div class="form-floating mb-3">
                 <select name="subscription_plan_id" id="input-subscription-plan" class="form-select">
@@ -99,7 +92,6 @@
                 </select> <label for="input-subscription-plan">{{ entry_subscription_plan }}</label>
               </div>
             </div>
-
             <div class="col">
               <div class="form-floating mb-3">
                 <select name="customer_payment_id" id="input-payment-method" class="form-select">
@@ -111,9 +103,7 @@
                 <label for="input-payment-method">{{ entry_payment_method }}</label>
               </div>
             </div>
-
           </div>
-
           <fieldset>
             <legend>{{ text_product }}</legend>
             <table class="table table-bordered">
@@ -133,13 +123,10 @@
               </tbody>
             </table>
           </fieldset>
-
           <input type="hidden" name="subscription_id" value="{{ subscription_id }}" id="input-subscription-id"/>
         </form>
-
       </div>
     </div>
-
     <div class="card">
       <div class="card-header"><i class="fas fa-list"></i> {{ text_history }}</div>
       <div class="card-body">
@@ -151,7 +138,6 @@
           {% endfor %}
         </ul>
         <div class="tab-content">
-
           <div id="tab-history" class="tab-pane active">
             <fieldset>
               <legend>{{ text_history }}</legend>
@@ -197,10 +183,8 @@
                   <button type="submit" id="button-history" class="btn btn-primary"><i class="fas fa-plus-circle"></i> {{ button_history_add }}</button>
                 </div>
               </fieldset>
-
             </form>
           </div>
-
           <div id="tab-transaction" class="tab-pane">
             <fieldset>
               <legend>{{ text_transaction }}</legend>
@@ -228,11 +212,9 @@
               <input type="hidden" name="subscription_id" value="{{ subscription_id }}" id="input-subscription-id"/>
             </form>
           </div>
-
           {% for tab in tabs %}
             <div id="tab-{{ tab.code }}" class="tab-pane">{{ tab.content }}</div>
           {% endfor %}
-
         </div>
       </div>
     </div>

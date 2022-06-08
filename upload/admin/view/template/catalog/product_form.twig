@@ -21,7 +21,6 @@
       <div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_form }}</div>
       <div class="card-body">
         <form id="form-product" action="{{ save }}" method="post" data-oc-toggle="ajax">
-
           <ul class="nav nav-tabs">
             <li class="nav-item"><a href="#tab-general" data-bs-toggle="tab" class="nav-link active">{{ tab_general }}</a></li>
             <li class="nav-item"><a href="#tab-data" data-bs-toggle="tab" class="nav-link">{{ tab_data }}</a></li>
@@ -343,13 +342,10 @@
                 <div class="row mb-3">
                   <label class="col-sm-2 col-form-label">{{ entry_subtract }}</label>
                   <div class="col-sm-10">
-
                     <div class="input-group">
-
                       <div id="input-subtract" class="form-check form-switch form-switch-lg">
                         <input type="checkbox" name="subtract" value="1" class="form-check-input"{% if subtract %} checked{% endif %}/>
                       </div>
-
                       {% if master_id %}
                         <div class="input-group-text">
                           <div class="form-check form-switch">
@@ -358,9 +354,7 @@
                           </div>
                         </div>
                       {% endif %}
-
                     </div>
-
                   </div>
                 </div>
                 <div class="row mb-3">
@@ -406,11 +400,9 @@
                   <label class="col-sm-2 col-form-label">{{ entry_shipping }}</label>
                   <div class="col-sm-10">
                     <div class="input-group">
-
                       <div id="input-shipping" class="form-check form-switch form-switch-lg">
                         <input type="checkbox" name="shipping" value="1" class="form-check-input"{% if shipping %} checked{% endif %}/>
                       </div>
-
                       {% if master_id %}
                         <div class="input-group-text">
                           <div class="form-check form-switch">
@@ -743,16 +735,13 @@
             </div>
             {% if not master_id %}
               <div id="tab-option" class="tab-pane">
-
                 <div id="option">
                   {% set option_row = 0 %}
                   {% set option_value_row = 0 %}
                   {% for product_option in product_options %}
-
                     <fieldset id="option-row-{{ option_row }}">
                       <legend class="float-none">{{ product_option.name }} <button type="button" class="btn btn-danger btn-sm float-end" onclick="$('#option-row-{{ option_row }}').remove();"><i class="fas fa-minus-circle"></i></button></legend>
                       <input type="hidden" name="product_option[{{ option_row }}][product_option_id]" value="{{ product_option.product_option_id }}"/> <input type="hidden" name="product_option[{{ option_row }}][name]" value="{{ product_option.name }}"/> <input type="hidden" name="product_option[{{ option_row }}][option_id]" value="{{ product_option.option_id }}"/> <input type="hidden" name="product_option[{{ option_row }}][type]" value="{{ product_option.type }}"/>
-
                       <div class="row mb-3">
                         <label for="input-required-{{ option_row }}" class="col-sm-2 col-form-label">{{ entry_required }}</label>
                         <div class="col-sm-10">
@@ -762,7 +751,6 @@
                           </select>
                         </div>
                       </div>
-
                       {% if product_option.type == 'text' %}
                         <div class="row mb-3">
                           <label for="input-option-{{ option_row }}" class="col-sm-2 col-form-label">{{ entry_option_value }}</label>
@@ -771,7 +759,6 @@
                           </div>
                         </div>
                       {% endif %}
-
                       {% if product_option.type == 'textarea' %}
                         <div class="row mb-3">
                           <label for="input-option-{{ option_row }}" class="col-sm-2 col-form-label">{{ entry_option_value }}</label>
@@ -780,14 +767,12 @@
                           </div>
                         </div>
                       {% endif %}
-
                       {% if product_option.type == 'file' %}
                         <div class="row mb-3 d-none">
                           <label for="input-option-{{ option_row }}" class="col-sm-2 col-form-label">{{ entry_option_value }}</label>
                           <div class="col-sm-10"><input type="text" name="product_option[{{ option_row }}][value]" value="{{ product_option.value }}" placeholder="{{ entry_option_value }}" id="input-option-{{ option_row }}" class="form-control"/></div>
                         </div>
                       {% endif %}
-
                       {% if product_option.type == 'date' %}
                         <div class="row mb-3">
                           <label for="input-option-{{ option_row }}" class="col-sm-2 col-form-label">{{ entry_option_value }}</label>
@@ -799,7 +784,6 @@
                           </div>
                         </div>
                       {% endif %}
-
                       {% if product_option.type == 'time' %}
                         <div class="row mb-3">
                           <label for="input-option-{{ option_row }}" class="col-sm-2 col-form-label">{{ entry_option_value }}</label>
@@ -811,7 +795,6 @@
                           </div>
                         </div>
                       {% endif %}
-
                       {% if product_option.type == 'datetime' %}
                         <div class="row mb-3">
                           <label for="input-option-{{ option_row }}" class="col-sm-2 col-form-label">{{ entry_option_value }}</label>
@@ -823,7 +806,6 @@
                           </div>
                         </div>
                       {% endif %}
-
                       {% if product_option.type == 'select' or product_option.type == 'radio' or product_option.type == 'checkbox' or product_option.type == 'image' %}
                         <div class="table-responsive">
                           <table class="table table-bordered table-hover">
@@ -878,11 +860,9 @@
                         </div>
                       {% endif %}
                     </fieldset>
-
                     {% set option_row = option_row + 1 %}
                   {% endfor %}
                 </div>
-
                 <fieldset>
                   <legend class="float-none">{{ text_option_add }}</legend>
                   <div class="row mb-3">
@@ -895,14 +875,11 @@
                   </div>
                 </fieldset>
               </div>
-
             {% else %}
-
               <div id="tab-option" class="tab-pane">
                 {% for option in options %}
                   <fieldset>
                     <legend class="float-none">{{ option.name }}</legend>
-
                     {% if option.type == 'select' %}
                       <div class="row mb-3{% if option.required %} required{% endif %}">
                         <label class="col-sm-2 col-form-label">{{ option.name }}</label>
@@ -927,7 +904,6 @@
                         </div>
                       </div>
                     {% endif %}
-
                     {% if option.type == 'radio' %}
                       <div class="row mb-3{% if option.required %} required{% endif %}">
                         <label class="col-sm-2 col-form-label">{{ option.name }}</label>
@@ -956,7 +932,6 @@
                         </div>
                       </div>
                     {% endif %}
-
                     {% if option.type == 'checkbox' %}
                       <div class="row mb-3{% if option.required %} required{% endif %}">
                         <label class="col-sm-2 col-form-label">{{ option.name }}</label>
@@ -984,7 +959,6 @@
                         </div>
                       </div>
                     {% endif %}
-
                     {% if option.type == 'text' %}
                       <div class="row mb-3{% if option.required %} required{% endif %}">
                         <label for="input-option-{{ option.product_option_id }}" class="col-sm-2 col-form-label">{{ option.name }}</label>
@@ -1001,7 +975,6 @@
                         </div>
                       </div>
                     {% endif %}
-
                     {% if option.type == 'textarea' %}
                       <div class="row mb-3{% if option.required %} required{% endif %}">
                         <label for="input-option-{{ option.product_option_id }}" class="col-sm-2 col-form-label">{{ option.name }}</label>
@@ -1018,7 +991,6 @@
                         </div>
                       </div>
                     {% endif %}
-
                     {% if option.type == 'file' %}
                       <div class="row mb-3{% if option.required %} required{% endif %}">
                         <label class="col-sm-2 col-form-label">{{ option.name }}</label>
@@ -1038,7 +1010,6 @@
                         </div>
                       </div>
                     {% endif %}
-
                     {% if option.type == 'date' %}
                       <div class="row mb-3{% if option.required %} required{% endif %}">
                         <label for="input-option-{{ option.product_option_id }}" class="col-sm-2 col-form-label">{{ option.name }}</label>
@@ -1056,7 +1027,6 @@
                         </div>
                       </div>
                     {% endif %}
-
                     {% if option.type == 'time' %}
                       <div class="row mb-3{% if option.required %} required{% endif %}">
                         <label for="input-option-{{ option.product_option_id }}" class="col-sm-2 col-form-label">{{ option.name }}</label>
@@ -1074,7 +1044,6 @@
                         </div>
                       </div>
                     {% endif %}
-
                     {% if option.type == 'datetime' %}
                       <div class="row mb-3{% if option.required %} required{% endif %}">
                         <label for="input-option-{{ option.product_option_id }}" class="col-sm-2 col-form-label">{{ option.name }}</label>
@@ -1092,12 +1061,10 @@
                         </div>
                       </div>
                     {% endif %}
-
                   </fieldset>
                 {% endfor %}
               </div>
             {% endif %}
-
             <div id="tab-subscription" class="tab-pane">
               <div class="table-responsive">
                 <table id="product-subscription" class="table table-bordered table-hover">
@@ -1142,7 +1109,6 @@
                 </table>
               </div>
             </div>
-
             <div id="tab-discount" class="tab-pane">
               <div class="table-responsive">
                 <table id="product-discount" class="table table-bordered table-hover">
@@ -1199,7 +1165,6 @@
                 </table>
               </div>
             </div>
-
             <div id="tab-special" class="tab-pane">
               <div class="table-responsive">
                 <table id="product-special" class="table table-bordered table-hover">
@@ -1254,7 +1219,6 @@
                 </table>
               </div>
             </div>
-
             <div id="tab-image" class="tab-pane">
               <fieldset>
                 <legend>{{ text_image }}</legend>
@@ -1321,7 +1285,6 @@
                 </div>
               </fieldset>
             </div>
-
             <div id="tab-reward" class="tab-pane">
               <fieldset>
                 <legend>{{ text_reward }}</legend>
@@ -1370,7 +1333,6 @@
                 </div>
               </fieldset>
             </div>
-
             <div id="tab-seo" class="tab-pane">
               <div class="alert alert-info"><i class="fas fa-info-circle"></i> {{ text_keyword }}</div>
               <div id="product-seo" class="table-responsive">

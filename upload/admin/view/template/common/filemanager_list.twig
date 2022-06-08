@@ -27,7 +27,6 @@
 <hr/>
 <div class="row">
   {% set path_row = 0 %}
-
   {% for directory in directories %}
     <div class="col-sm-3 col-6 mb-3 text-center">
       <div class="h-100">
@@ -42,7 +41,6 @@
     </div>
     {% set path_row = path_row + 1 %}
   {% endfor %}
-
   {% for image in images %}
     <div class="col-sm-3 col-6 mb-3 text-center">
       <div class="h-100">
@@ -57,7 +55,6 @@
     </div>
     {% set path_row = path_row + 1 %}
   {% endfor %}
-
 </div>
 {% if pagination %}
   <div class="modal-footer">{{ pagination }}</div>

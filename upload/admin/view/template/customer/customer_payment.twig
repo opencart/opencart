@@ -17,11 +17,6 @@
             <td class="text-start">{{ payment_method.name }}</td>
             <td class="text-start">{% if payment_method.image %}<img src="{{ payment_method.image }}" alt=""/>{% endif %}</td>
             <td class="text-start">{{ payment_method.type }}</td>
-            <td class="text-start">
-              <div class="form-check form-switch form-switch-lg">
-                <input type="checkbox" name="status" value="1" id="input-status-{{ payment_method.customer_payment_id }}" class="form-check-input"{% if status %} checked{% endif %}/>
-              </div>
-            </td>
             <td class="text-start">{{ payment_method.date_expire }}</td>
             <td class="text-end"><button type="button" value="{{ payment_method.delete }}" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
           </tr>

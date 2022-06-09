@@ -783,42 +783,102 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	public function getProducts(array $data = []): array {
-		$sql = "SELECT * FROM `" . DB_PREFIX . "product` p LEFT JOIN `" . DB_PREFIX . "product_description` pd ON (p.`product_id` = pd.`product_id`) WHERE pd.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+		$sql = "SELECT * FROM `" . DB_PREFIX . "product` p LEFT JOIN `" . DB_PREFIX . "product_description` pd ON (p.`product_id` = pd.`product_id`)";
 
-		if (!empty($data['filter_master_id'])) {
-			$sql .= " AND p.`master_id` = '" . (int)$data['filter_master_id'] . "'";
+        $where = " WHERE pd.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+
+        $columns_p_int = ['product_id', 'master_id', 'quantity', 'status', 'manufacturer_id', 'shipping', 'points', 'tax_class_id', 'weight_class_id', 'length_class_id', 'subtract', 'minimum', 'sort_order', 'viewed'];
+        foreach ($columns_p_int as $column) {
+            if (!empty($data['filter_' . $column])) {
+                if (empty($data['filteroper_' . $column])) {
+                    $operator = '=';
+                } else {
+                    $operator = $data['filteroper_' . $column];
+                }
+                $where .= " AND p.`" . $column . "` " . $operator . " '" . (int)$data['filter_' . $column] . "'";
+            }
+        }
+
+        $columns_p_str = ['model', 'sku', 'upc', 'ean', 'jan', 'isbn', 'mpn', 'location', 'variant', 'override', 'image'];
+        foreach ($columns_p_str as $column) {
+            if (!empty($data['filter_' . $column])) {
+                if (empty($data['filteroper_' . $column])) {
+                    $operator = 'LIKE';
+                } else {
+                    $operator = $data['filteroper_' . $column];
+                }
+                $where .= " AND p.`" . $column . "` " . $operator . " '" . $this->db->escape((string)$data['filter_' . $column] . '%') . "'";
+            }
+        }
+
+        $columns_p_dec = ['price', 'weight', 'length', 'width', 'height'];
+        foreach ($columns_p_dec as $column) {
+            if (!empty($data['filter_' . $column])) {
+                if (empty($data['filteroper_' . $column])) {
+                    $operator = 'LIKE';
+                } else {
+                    $operator = $data['filteroper_' . $column];
+                }
+                $where .= " AND p.`" . $column . "` " . $operator . " '" . $this->db->escape((string)$data['filter_' . $column] . '%') . "'";
+            }
+        }
+
+        $columns_p_dat = ['date_available', 'date_added', 'date_modified'];
+        foreach ($columns_p_dat as $column) {
+            if (!empty($data['filter_' . $column])) {
+                if (empty($data['filteroper_' . $column])) {
+                    $operator = '=';
+                } else {
+                    $operator = $data['filteroper_' . $column];
+                }
+                $where .= " AND DATE(p.`" . $column . "`) " . $operator . " DATE('" . $this->db->escape((string)$data['filter_' . $column]) . "')";
+            }
+        }
+
+        $columns_pd = ['name', 'description', 'tag', 'meta_title', 'meta_description', 'meta_keyword'];
+        foreach ($columns_pd as $column) {
+            if (!empty($data['filter_' . $column])) {
+                if (empty($data['filteroper_' . $column])) {
+                    $operator = 'LIKE';
+                } else {
+                    $operator = $data['filteroper_' . $column];
+                }
+                $where .= " AND pd.`" . $column . "` " . $operator . " '" . $this->db->escape((string)$data['filter_' . $column] . '%') . "'";
+            }
+        }
+
+        if (!empty($data['filter_category_id'])) {
+            if ($data['filter_category_id'] == 'no') {
+                $where .= " AND p.`product_id` NOT IN (SELECT DISTINCT `product_id` FROM `" . DB_PREFIX . "product_to_category`)";
+            } else {
+                if ($data['filter_sub_category']) {
+                    $where .= " AND p.`product_id` IN (SELECT `product_id` FROM `" . DB_PREFIX . "product_to_category` WHERE `category_id` IN (SELECT `category_id` FROM `" . DB_PREFIX . "category_path` WHERE `path_id` = '" . (int)$data['filter_category_id'] . "'))";
+                } else {
+                    $where .= " AND p.`product_id` IN (SELECT DISTINCT `product_id` FROM `" . DB_PREFIX . "product_to_category` WHERE `category_id` = '" . (int)$data['filter_category_id'] . "')";
+                }
+            }
 		}
 
-		if (!empty($data['filter_name'])) {
-			$sql .= " AND pd.`name` LIKE '" . $this->db->escape((string)$data['filter_name'] . '%') . "'";
+        if (!empty($data['filter_manufacturer'])) {
+            $where .= " AND p.`manufacturer_id` IN (SELECT `manufacturer_id` FROM `" . DB_PREFIX . "manufacturer` WHERE `name` LIKE '" . $this->db->escape((string)$data['filter_manufacturer']) . "%')";
 		}
 
-		if (!empty($data['filter_model'])) {
-			$sql .= " AND p.`model` LIKE '" . $this->db->escape((string)$data['filter_model'] . '%') . "'";
+        if (!empty($data['filter_store_id'])) {
+			$where .= " AND p.`product_id` IN (SELECT `product_id` FROM `" . DB_PREFIX . "product_to_store` WHERE `store_id` = '" . (int)$data['filter_store_id'] . "')";
 		}
 
-		if (!empty($data['filter_price'])) {
-			$sql .= " AND p.`price` LIKE '" . $this->db->escape((string)$data['filter_price'] . '%') . "'";
+        if (!empty($data['filter_keyword'])) {
+			$where .= " AND p.`product_id` IN (SELECT `value` FROM `" . DB_PREFIX . "seo_url` WHERE `key` = 'product_id' AND `keyword` LIKE '" . $this->db->escape($data['filter_keyword']) . "%')";
 		}
 
-		if (isset($data['filter_quantity']) && $data['filter_quantity'] !== '') {
-			$sql .= " AND p.`quantity` = '" . (int)$data['filter_quantity'] . "'";
-		}
-
-		if (isset($data['filter_status']) && $data['filter_status'] !== '') {
-			$sql .= " AND p.`status` = '" . (int)$data['filter_status'] . "'";
-		}
+        $sql .= $where;
 
 		$sql .= " GROUP BY p.`product_id`";
 
-		$sort_data = [
-			'pd.name',
-			'p.model',
-			'p.price',
-			'p.quantity',
-			'p.status',
-			'p.sort_order'
-		];
+		$sort_data = array_merge(
+            preg_filter('/^/', 'p.', array_merge($columns_p_int, $columns_p_str, $columns_p_dec, $columns_p_dat)),
+            preg_filter('/^/', 'pd.', $columns_pd)
+        );
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 			$sql .= " ORDER BY " . $data['sort'];
@@ -845,6 +905,12 @@ class Product extends \Opencart\System\Engine\Model {
 		}
 
 		$query = $this->db->query($sql);
+
+        if (isset($data['total'])) {
+            // Return total rows for current where conditions, to use in pagination
+            $query1 = $this->db->query("SELECT COUNT(DISTINCT p.`product_id`) AS `total` FROM `" . DB_PREFIX . "product` p LEFT JOIN `" . DB_PREFIX . "product_description` pd ON (p.`product_id` = pd.`product_id`)" . $where);
+            $data['total'] = $query1->row['total'];
+        }
 
 		return $query->rows;
 	}

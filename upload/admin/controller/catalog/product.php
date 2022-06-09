@@ -152,6 +152,7 @@ class Product extends \Opencart\System\Engine\Controller {
 
 		$data['products'] = [];
 
+        $product_total = 0;
 		$filter_data = [
 			'filter_name'     => $filter_name,
 			'filter_model'    => $filter_model,
@@ -161,14 +162,15 @@ class Product extends \Opencart\System\Engine\Controller {
 			'sort'            => $sort,
 			'order'           => $order,
 			'start'           => ($page - 1) * $this->config->get('config_pagination_admin'),
-			'limit'           => $this->config->get('config_pagination_admin')
+			'limit'           => $this->config->get('config_pagination_admin'),
+            'total'           => &$product_total
 		];
 
 		$this->load->model('catalog/product');
 
 		$this->load->model('tool/image');
 
-		$product_total = $this->model_catalog_product->getTotalProducts($filter_data);
+		//$product_total = $this->model_catalog_product->getTotalProducts($filter_data);
 
 		$results = $this->model_catalog_product->getProducts($filter_data);
 

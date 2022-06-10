@@ -90,13 +90,12 @@ class ProductViewed extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
-		$this->load->model('catalog/product');
-
-		$product_total = $this->model_catalog_product->getTotalProducts();
-
 		$data['products'] = [];
 
 		$this->load->model('extension/opencart/report/product_viewed');
+		$this->load->model('catalog/product');
+
+		$total = $this->model_extension_opencart_report_product_viewed->getTotal();
 
 		$viewed_total = $this->model_extension_opencart_report_product_viewed->getTotalViewed();
 
@@ -107,7 +106,7 @@ class ProductViewed extends \Opencart\System\Engine\Controller {
 
 			if ($product_info) {
 				if ($result['viewed']) {
-					$percent = round($result['viewed'] / $viewed_total * 100, 2);
+					$percent = round(($result['viewed'] / $total) * 100, 2);
 				} else {
 					$percent = 0;
 				}
@@ -128,13 +127,13 @@ class ProductViewed extends \Opencart\System\Engine\Controller {
 		}
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
-			'total' => $product_total,
+			'total' => $viewed_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination'),
 			'url'   => $this->url->link('extension/opencart/report/product_viewed|list', 'user_token=' . $this->session->data['user_token'] . '&code=product_viewed&page={page}')
 		]);
 
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($product_total) ? (($page - 1) * $this->config->get('config_pagination')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination')) > ($product_total - $this->config->get('config_pagination'))) ? $product_total : ((($page - 1) * $this->config->get('config_pagination')) + $this->config->get('config_pagination')), $product_total, ceil($product_total / $this->config->get('config_pagination')));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($viewed_total) ? (($page - 1) * $this->config->get('config_pagination')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination')) > ($viewed_total - $this->config->get('config_pagination'))) ? $viewed_total : ((($page - 1) * $this->config->get('config_pagination')) + $this->config->get('config_pagination')), $viewed_total, ceil($viewed_total / $this->config->get('config_pagination')));
 
 		return $this->load->view('extension/opencart/report/product_viewed_list', $data);
 	}

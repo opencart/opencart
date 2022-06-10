@@ -36,9 +36,9 @@
                 <tr>
                   <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
                   <td class="text-left">{% if sort == 'username' %}
-                    <a href="{{ sort_name }}" class="{{ order|lower }}">{{ column_username }}</a>
+                    <a href="{{ sort_username }}" class="{{ order|lower }}">{{ column_username }}</a>
                     {% else %}
-                    <a href="{{ sort_name }}">{{ column_username }}</a>
+                    <a href="{{ sort_username }}">{{ column_username }}</a>
                     {% endif %}</td>
                   <td class="text-left">{% if sort == 'status' %}
                     <a href="{{ sort_status }}" class="{{ order|lower }}">{{ column_status }}</a>

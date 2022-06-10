@@ -1,0 +1,36 @@
+<div class="table-responsive">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <td class="text-start">{{ column_date_start }}</td>
+        <td class="text-start">{{ column_date_end }}</td>
+        <td class="text-end">{{ column_orders }}</td>
+        <td class="text-end">{{ column_products }}</td>
+        <td class="text-end">{{ column_tax }}</td>
+        <td class="text-end">{{ column_total }}</td>
+      </tr>
+    </thead>
+    <tbody>
+      {% if orders %}
+        {% for order in orders %}
+          <tr>
+            <td class="text-start">{{ order.date_start }}</td>
+            <td class="text-start">{{ order.date_end }}</td>
+            <td class="text-end">{{ order.orders }}</td>
+            <td class="text-end">{{ order.products }}</td>
+            <td class="text-end">{{ order.tax }}</td>
+            <td class="text-end">{{ order.total }}</td>
+          </tr>
+        {% endfor %}
+      {% else %}
+        <tr>
+          <td class="text-center" colspan="6">{{ text_no_results }}</td>
+        </tr>
+      {% endif %}
+    </tbody>
+  </table>
+</div>
+<div class="row">
+  <div class="col-sm-6 text-start">{{ pagination }}</div>
+  <div class="col-sm-6 text-end">{{ results }}</div>
+</div>

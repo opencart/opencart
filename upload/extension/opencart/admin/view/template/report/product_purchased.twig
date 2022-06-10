@@ -34,44 +34,17 @@
   <div class="col col-lg-9 col-md-12">
     <div class="card">
       <div class="card-header"><i class="fas fa-chart-bar"></i> {{ heading_title }}</div>
-      <div class="card-body">
-        <div class="table-responsive">
-          <table class="table table-bordered">
-            <thead>
-              <tr>
-                <td class="text-start">{{ column_name }}</td>
-                <td class="text-start">{{ column_model }}</td>
-                <td class="text-end">{{ column_quantity }}</td>
-                <td class="text-end">{{ column_total }}</td>
-              </tr>
-            </thead>
-            <tbody>
-              {% if products %}
-                {% for product in products %}
-                  <tr>
-                    <td class="text-start">{{ product.name }}</td>
-                    <td class="text-start">{{ product.model }}</td>
-                    <td class="text-end">{{ product.quantity }}</td>
-                    <td class="text-end">{{ product.total }}</td>
-                  </tr>
-                {% endfor %}
-              {% else %}
-                <tr>
-                  <td class="text-center" colspan="4">{{ text_no_results }}</td>
-                </tr>
-              {% endif %}
-            </tbody>
-          </table>
-        </div>
-        <div class="row">
-          <div class="col-sm-6 text-start">{{ pagination }}</div>
-          <div class="col-sm-6 text-end">{{ results }}</div>
-        </div>
-      </div>
+      <div id="product-purchased" class="card-body">{{ list }}</div>
     </div>
   </div>
 </div>
 <script type="text/javascript"><!--
+$('#product-purchased').on('click', '.pagination a', function (e) {
+    e.preventDefault();
+
+    $('#product-purchased').load(this.href);
+});
+
 $('#button-filter').on('click', function() {
     var url = '';
 
@@ -93,6 +66,6 @@ $('#button-filter').on('click', function() {
         url += '&filter_date_end=' + encodeURIComponent(filter_date_end);
     }
 
-    $('#report').load('index.php?route=extension/opencart/report/product_purchased|report&user_token={{ user_token }}' + url);
+    $('#product-purchased').load('index.php?route=extension/opencart/report/product_purchased|list&user_token={{ user_token }}' + url);
 });
 //--></script>

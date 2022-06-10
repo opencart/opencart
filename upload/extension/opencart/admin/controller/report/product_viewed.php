@@ -70,6 +70,8 @@ class ProductViewed extends \Opencart\System\Engine\Controller {
 	}
 
 	public function report(): void {
+		$this->load->language('extension/opencart/report/product_viewed');
+
 		$data['list'] = $this->getReport();
 
 		$data['user_token'] = $this->session->data['user_token'];
@@ -78,12 +80,12 @@ class ProductViewed extends \Opencart\System\Engine\Controller {
 	}
 
 	public function list(): void {
+		$this->load->language('extension/opencart/report/product_viewed');
+
 		$this->response->setOutput($this->getReport());
 	}
 
 	public function getReport(): string {
-		$this->load->language('extension/opencart/report/product_viewed');
-
 		if (isset($this->request->get['page'])) {
 			$page = (int)$this->request->get['page'];
 		} else {

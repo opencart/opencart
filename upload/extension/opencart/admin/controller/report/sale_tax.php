@@ -59,7 +59,21 @@ class SaleTax extends \Opencart\System\Engine\Controller {
 
 	public function report(): void {
 		$this->load->language('extension/opencart/report/sale_tax');
-		
+
+		$data['list'] = $this->getReport();
+
+		$data['user_token'] = $this->session->data['user_token'];
+
+		$this->response->setOutput($this->load->view('extension/opencart/report/sale_tax', $data));
+	}
+
+	public function list(): void {
+		$this->load->language('extension/opencart/report/sale_tax');
+
+		$this->response->setOutput($this->getReport());
+	}
+
+	public function getReport(): string {
 		if (isset($this->request->get['filter_date_start'])) {
 			$filter_date_start = $this->request->get['filter_date_start'];
 		} else {
@@ -179,6 +193,6 @@ class SaleTax extends \Opencart\System\Engine\Controller {
 
 		$data['user_token'] = $this->session->data['user_token'];
 
-		$this->response->setOutput($this->load->view('extension/opencart/report/sale_tax', $data));
+		return $this->load->view('extension/opencart/report/sale_tax_list', $data);
 	}
 }

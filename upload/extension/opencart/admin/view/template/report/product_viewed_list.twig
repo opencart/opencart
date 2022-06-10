@@ -1,0 +1,32 @@
+<div class="table-responsive">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <td class="text-start">{{ column_name }}</td>
+        <td class="text-start">{{ column_model }}</td>
+        <td class="text-end">{{ column_viewed }}</td>
+        <td class="text-end">{{ column_percent }}</td>
+      </tr>
+    </thead>
+    <tbody>
+      {% if products %}
+        {% for product in products %}
+          <tr>
+            <td class="text-start">{{ product.name }}</td>
+            <td class="text-start">{{ product.model }}</td>
+            <td class="text-end">{{ product.viewed }}</td>
+            <td class="text-end">{{ product.percent }}</td>
+          </tr>
+        {% endfor %}
+      {% else %}
+        <tr>
+          <td class="text-center" colspan="4">{{ text_no_results }}</td>
+        </tr>
+      {% endif %}
+    </tbody>
+  </table>
+</div>
+<div class="row">
+  <div class="col-sm-6 text-start">{{ pagination }}</div>
+  <div class="col-sm-6 text-end">{{ results }}</div>
+</div>

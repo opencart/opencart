@@ -70,6 +70,18 @@ class ProductViewed extends \Opencart\System\Engine\Controller {
 	}
 
 	public function report(): void {
+		$data['list'] = $this->getReport();
+
+		$data['user_token'] = $this->session->data['user_token'];
+
+		$this->response->setOutput($this->load->view('extension/opencart/report/product_viewed', $data));
+	}
+
+	public function list(): void {
+		$this->response->setOutput($this->getReport());
+	}
+
+	public function getReport(): string {
 		$this->load->language('extension/opencart/report/product_viewed');
 
 		if (isset($this->request->get['page'])) {
@@ -78,12 +90,15 @@ class ProductViewed extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
+		$this->load->model('catalog/product');
+
+		$product_total = $this->model_catalog_product->getTotalProducts();
+
 		$data['products'] = [];
 
 		$this->load->model('extension/opencart/report/product_viewed');
-		$this->load->model('catalog/product');
 
-		$product_total = $this->model_extension_opencart_report_product_viewed->getTotalViewed();
+		$viewed_total = $this->model_extension_opencart_report_product_viewed->getTotalViewed();
 
 		$results = $this->model_extension_opencart_report_product_viewed->getViewed(($page - 1) * $this->config->get('config_pagination'), $this->config->get('config_pagination'));
 
@@ -92,7 +107,7 @@ class ProductViewed extends \Opencart\System\Engine\Controller {
 
 			if ($product_info) {
 				if ($result['viewed']) {
-					$percent = round($result['viewed'] / $product_total * 100, 2);
+					$percent = round($result['viewed'] / $viewed_total * 100, 2);
 				} else {
 					$percent = 0;
 				}
@@ -116,14 +131,12 @@ class ProductViewed extends \Opencart\System\Engine\Controller {
 			'total' => $product_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination'),
-			'url'   => $this->url->link('extension/opencart/report/product_viewed|report', 'user_token=' . $this->session->data['user_token'] . '&code=product_viewed&page={page}')
+			'url'   => $this->url->link('extension/opencart/report/product_viewed|list', 'user_token=' . $this->session->data['user_token'] . '&code=product_viewed&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($product_total) ? (($page - 1) * $this->config->get('config_pagination')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination')) > ($product_total - $this->config->get('config_pagination'))) ? $product_total : ((($page - 1) * $this->config->get('config_pagination')) + $this->config->get('config_pagination')), $product_total, ceil($product_total / $this->config->get('config_pagination')));
 
-		$data['user_token'] = $this->session->data['user_token'];
-
-		$this->response->setOutput($this->load->view('extension/opencart/report/product_viewed', $data));
+		return $this->load->view('extension/opencart/report/product_viewed_list', $data);
 	}
 
 	public function generate(): void {
@@ -166,7 +179,7 @@ class ProductViewed extends \Opencart\System\Engine\Controller {
 			if (($page * 10) <= $product_total) {
 				$json['text'] = sprintf($this->language->get('text_progress'), ($page - 1) * 10, $product_total);
 
-				$json['next'] = $this->url->link('extension/opencart/report/product_viewed|generate', '&page=' . ($page + 1), true);
+				$json['next'] = $this->url->link('extension/opencart/report/product_viewed|generate', 'user_token=' . $this->session->data['user_token'] . '&page=' . ($page + 1), true);
 			} else {
 				$json['success'] = $this->language->get('text_success');
 			}

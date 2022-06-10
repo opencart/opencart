@@ -17,22 +17,16 @@ class ProductViewed extends \Opencart\System\Engine\Model {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "product_viewed` SET `product_id` = '" . (int)$product_id . "', `viewed` = '" . (int)$viewed . "'");
 	}
 
-	public function getViewed(int $start, int $limit): array {
-		$sql = "SELECT `product_id`, `viewed` FROM `" . DB_PREFIX . "product_viewed` ORDER BY `viewed` DESC";
-
-		if (isset($data['start']) || isset($data['limit'])) {
-			if ($data['start'] < 0) {
-				$data['start'] = 0;
-			}
-
-			if ($data['limit'] < 1) {
-				$data['limit'] = 20;
-			}
-
-			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
+	public function getViewed(int $start = 0, int $limit = 10): array {
+		if ($start < 0) {
+			$start = 0;
 		}
 
-		$query = $this->db->query($sql);
+		if ($limit < 1) {
+			$limit = 10;
+		}
+
+		$query = $this->db->query("SELECT `product_id`, `viewed` FROM `" . DB_PREFIX . "product_viewed` ORDER BY `viewed` DESC LIMIT " . (int)$start . "," . (int)$limit);
 
 		return $query->rows;
 	}

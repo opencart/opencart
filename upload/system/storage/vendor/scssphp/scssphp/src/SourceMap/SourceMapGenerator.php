@@ -21,6 +21,8 @@ use ScssPhp\ScssPhp\Exception\CompilerException;
  *
  * @author Josh Schmidt <oyejorge@gmail.com>
  * @author Nicolas FRANÇOIS <nicolas.francois@frog-labs.com>
+ *
+ * @internal
  */
 class SourceMapGenerator
 {
@@ -33,6 +35,7 @@ class SourceMapGenerator
      * Array of default options
      *
      * @var array
+     * @phpstan-var array{sourceRoot: string, sourceMapFilename: string|null, sourceMapURL: string|null, sourceMapWriteTo: string|null, outputSourceFiles: bool, sourceMapRootpath: string, sourceMapBasepath: string}
      */
     protected $defaultOptions = [
         // an optional source root, useful for relocating source files
@@ -70,6 +73,7 @@ class SourceMapGenerator
      * Array of mappings
      *
      * @var array
+     * @phpstan-var list<array{generated_line: int, generated_column: int, original_line: int, original_column: int, source_file: string}>
      */
     protected $mappings = [];
 
@@ -83,30 +87,40 @@ class SourceMapGenerator
     /**
      * File to content map
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $sources = [];
+
+    /**
+     * @var array<string, int>
+     */
     protected $sourceKeys = [];
 
     /**
      * @var array
+     * @phpstan-var array{sourceRoot: string, sourceMapFilename: string|null, sourceMapURL: string|null, sourceMapWriteTo: string|null, outputSourceFiles: bool, sourceMapRootpath: string, sourceMapBasepath: string}
      */
     private $options;
 
+    /**
+     * @phpstan-param array{sourceRoot?: string, sourceMapFilename?: string|null, sourceMapURL?: string|null, sourceMapWriteTo?: string|null, outputSourceFiles?: bool, sourceMapRootpath?: string, sourceMapBasepath?: string} $options
+     */
     public function __construct(array $options = [])
     {
-        $this->options = array_merge($this->defaultOptions, $options);
+        $this->options = array_replace($this->defaultOptions, $options);
         $this->encoder = new Base64VLQ();
     }
 
     /**
      * Adds a mapping
      *
-     * @param integer $generatedLine   The line number in generated file
-     * @param integer $generatedColumn The column number in generated file
-     * @param integer $originalLine    The line number in original file
-     * @param integer $originalColumn  The column number in original file
-     * @param string  $sourceFile      The original source file
+     * @param int    $generatedLine   The line number in generated file
+     * @param int    $generatedColumn The column number in generated file
+     * @param int    $originalLine    The line number in original file
+     * @param int    $originalColumn  The column number in original file
+     * @param string $sourceFile      The original source file
+     *
+     * @return void
      */
     public function addMapping($generatedLine, $generatedColumn, $originalLine, $originalColumn, $sourceFile)
     {
@@ -126,13 +140,15 @@ class SourceMapGenerator
      *
      * @param string $content The content to write
      *
-     * @return string
+     * @return string|null
      *
      * @throws \ScssPhp\ScssPhp\Exception\CompilerException If the file could not be saved
+     * @deprecated
      */
     public function saveMap($content)
     {
         $file = $this->options['sourceMapWriteTo'];
+        assert($file !== null);
         $dir  = \dirname($file);
 
         // directory does not exist
@@ -186,7 +202,7 @@ class SourceMapGenerator
         // A list of original sources used by the 'mappings' entry.
         $sourceMap['sources'] = [];
 
-        foreach ($this->sources as $sourceUri => $sourceFilename) {
+        foreach ($this->sources as $sourceFilename) {
             $sourceMap['sources'][] = $this->normalizeFilename($sourceFilename);
         }
 
@@ -208,13 +224,21 @@ class SourceMapGenerator
             unset($sourceMap['sourceRoot']);
         }
 
-        return json_encode($sourceMap, JSON_UNESCAPED_SLASHES);
+        $jsonSourceMap = json_encode($sourceMap, JSON_UNESCAPED_SLASHES);
+
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            throw new \RuntimeException(json_last_error_msg());
+        }
+
+        assert($jsonSourceMap !== false);
+
+        return $jsonSourceMap;
     }
 
     /**
      * Returns the sources contents
      *
-     * @return array|null
+     * @return string[]|null
      */
     protected function getSourcesContent()
     {
@@ -311,7 +335,7 @@ class SourceMapGenerator
      *
      * @param string $filename
      *
-     * @return integer|false
+     * @return int|false
      */
     protected function findFileIndex($filename)
     {
@@ -347,8 +371,8 @@ class SourceMapGenerator
     /**
      * Fix windows paths
      *
-     * @param string  $path
-     * @param boolean $addEndSlash
+     * @param string $path
+     * @param bool   $addEndSlash
      *
      * @return string
      */

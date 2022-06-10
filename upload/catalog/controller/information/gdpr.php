@@ -1,7 +1,7 @@
 <?php
-namespace Opencart\Application\Controller\Information;
+namespace Opencart\Catalog\Controller\Information;
 class Gdpr extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): object|null {
 		$this->load->model('catalog/information');
 
 		$information_info = $this->model_catalog_information->getInformation($this->config->get('config_gdpr_id'));
@@ -23,6 +23,8 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 				'href' => $this->url->link('information/gdpr', 'language=' . $this->config->get('config_language'))
 			];
 
+			$data['action'] = $this->url->link('information/gdpr|action', 'language=' . $this->config->get('config_language'));
+
 			$data['title'] = $information_info['title'];
 
 			$data['gdpr'] = $this->url->link('information/information', 'language=' . $this->config->get('config_language') . '&information_id=' . $information_info['information_id']);
@@ -41,6 +43,8 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 			$data['header'] = $this->load->controller('common/header');
 
 			$this->response->setOutput($this->load->view('information/gdpr', $data));
+
+			return null;
 		} else {
 			return new \Opencart\System\Engine\Action('error/not_found');
 		}
@@ -69,7 +73,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 	 *	processing = 2
 	 *	denied     = -1
 	*/
-	public function action() {
+	public function action(): void {
 		$this->load->language('information/gdpr');
 
 		$json = [];
@@ -128,7 +132,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function success() {
+	public function success(): object|null {
 		if (isset($this->request->get['code'])) {
 			$code = $this->request->get['code'];
 		} else {
@@ -179,6 +183,8 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 			$data['header'] = $this->load->controller('common/header');
 
 			$this->response->setOutput($this->load->view('common/success', $data));
+
+			return null;
 		} else {
 			return new \Opencart\System\Engine\Action('error/not_found');
 		}

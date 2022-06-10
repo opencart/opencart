@@ -1,7 +1,7 @@
 <?php
-namespace Opencart\Application\Controller\Common;
+namespace Opencart\Catalog\Controller\Common;
 class Cookie extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): string {
 		if ($this->config->get('config_cookie_id') && !isset($this->request->cookie['policy'])) {
 			$this->load->model('catalog/information');
 
@@ -18,9 +18,11 @@ class Cookie extends \Opencart\System\Engine\Controller {
 				return $this->load->view('common/cookie', $data);
 			}
 		}
+
+		return '';
 	}
 
-	public function confirm() {
+	public function confirm(): void {
 		$json = [];
 
 		if ($this->config->get('config_cookie_id') && !isset($this->request->cookie['policy'])) {
@@ -34,11 +36,11 @@ class Cookie extends \Opencart\System\Engine\Controller {
 
 			$option = [
 				'expires'  => time() + 60 * 60 * 24 * 365,
-				'path'     => !empty($_SERVER['PHP_SELF']) ? dirname($_SERVER['PHP_SELF']) . '/' : '',
-				'SameSite' => 'Strict'
+				'path'     => !empty($this->request->server['PHP_SELF']) ? rtrim(dirname($this->request->server['PHP_SELF']), '/') . '/' : '/',
+				'SameSite' => $this->config->get('session_samesite')
 			];
 
-			oc_setcookie('policy', $agree, $option);
+			setcookie('policy', $agree, $option);
 
 			$json['success'] = $this->language->get('text_success');
 		}

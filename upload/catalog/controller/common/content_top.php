@@ -1,7 +1,7 @@
 <?php
-namespace Opencart\Application\Controller\Common;
+namespace Opencart\Catalog\Controller\Common;
 class ContentTop extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): string {
 		$this->load->model('design/layout');
 
 		if (isset($this->request->get['route'])) {
@@ -55,7 +55,7 @@ class ContentTop extends \Opencart\System\Engine\Controller {
 		foreach ($modules as $module) {
 			$part = explode('.', $module['code']);
 
-			if (isset($part[1]) && $this->config->get('module_' . $part[0] . '_status')) {
+			if (isset($part[1]) && $this->config->get('module_' . $part[1] . '_status')) {
 				$module_data = $this->load->controller('extension/' .  $part[0] . '/module/' . $part[1]);
 
 				if ($module_data) {

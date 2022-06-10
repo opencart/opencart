@@ -1,11 +1,15 @@
 <?php
 namespace Opencart\System\Library\DB;
 class PDO {
-	private $connection;
-	private $data = [];
-	private $affected;
+	private object $connection;
+	private array $data = [];
+	private int $affected;
 
-	public function __construct($hostname, $username, $password, $database, $port = '3306') {
+	public function __construct(string $hostname, string $username, string $password, string $database, string $port = '') {
+		if (!$port) {
+			$port = '3306';
+		}
+
 		try {
 			$pdo = @new \PDO('mysql:host=' . $hostname . ';port=' . $port . ';dbname=' . $database, $username, $password, array(\PDO::ATTR_PERSISTENT => false));
 		} catch (\PDOException $e) {
@@ -18,8 +22,10 @@ class PDO {
 		}
 	}
 
-	public function query($sql) {
-		$statement = $this->connection->prepare(preg_replace('/(?:\'\:)([a-z0-9]*.)(?:\')/', ':$1', $sql));
+	public function query(string $sql): bool|object {
+		$sql = preg_replace('/(?:\'\:)([a-z0-9]*.)(?:\')/', ':$1', $sql);
+
+		$statement = $this->connection->prepare($sql);
 
 		try {
 			if ($statement && $statement->execute($this->data)) {
@@ -29,7 +35,7 @@ class PDO {
 					$data = $statement->fetchAll(\PDO::FETCH_ASSOC);
 
 					$result = new \stdClass();
-					$result->row = (isset($data[0]) ? $data[0] : []);
+					$result->row = isset($data[0]) ? $data[0] : [];
 					$result->rows = $data;
 					$result->num_rows = count($data);
 					$this->affected = 0;
@@ -37,16 +43,22 @@ class PDO {
 					return $result;
 				} else {
 					$this->affected = $statement->rowCount();
+
+					return true;
 				}
 
 				$statement->closeCursor();
+			} else {
+				return true;
 			}
 		} catch (\PDOException $e) {
 			throw new \Exception('Error: ' . $e->getMessage() . ' Error Code : ' . $e->getCode() . ' <br />' . $sql);
 		}
+
+		return false;
 	}
 
-	public function escape($value) {
+	public function escape(string $value): string {
 		$key = ':' . count($this->data);
 
 		$this->data[$key] = $value;
@@ -54,15 +66,15 @@ class PDO {
 		return $key;
 	}
 
-	public function countAffected() {
+	public function countAffected(): int {
 		return $this->affected;
 	}
 
-	public function getLastId() {
+	public function getLastId(): int {
 		return $this->connection->lastInsertId();
 	}
 
-	public function isConnected() {
+	public function isConnected(): bool {
 		if ($this->connection) {
 			return true;
 		} else {
@@ -77,6 +89,6 @@ class PDO {
 	 *
 	 */
 	public function __destruct() {
-		$this->connection = '';
+		unset($this->connection);
 	}
 }

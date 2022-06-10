@@ -39,5 +39,4 @@
 # /upload/install/*
 
 # IDE Project files
-/.idea
-/upload/.idea
+/upload/.idea/*

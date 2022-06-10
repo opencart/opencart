@@ -1,9 +1,9 @@
 <?php
 namespace Opencart\System\Library\Cache;
 class File {
-	private $expire;
+	private int $expire;
 
-	public function __construct($expire = 3600) {
+	public function __construct(int $expire = 3600) {
 		$this->expire = $expire;
 
 		$files = glob(DIR_CACHE . 'cache.*');
@@ -21,33 +21,35 @@ class File {
 		}
 	}
 
-	public function get($key) {
+	public function get(string $key): array|string|null {
 		$files = glob(DIR_CACHE . 'cache.' . basename($key) . '.*');
 
 		if ($files) {
 			$handle = fopen($files[0], 'r');
 
-			flock($handle, LOCK_SH);
+			if (is_resource($handle)) {
+				flock($handle, LOCK_SH);
 
-			$size = filesize($files[0]);
+				$size = filesize($files[0]);
 
-			if ($size > 0) {
-				$data = fread($handle, $size);
-			} else {
-				$data = '';
+				if ($size > 0) {
+					$data = fread($handle, $size);
+				} else {
+					$data = '';
+				}
+
+				flock($handle, LOCK_UN);
+
+				fclose($handle);
+
+				return json_decode($data, true);
 			}
-
-			flock($handle, LOCK_UN);
-
-			fclose($handle);
-
-			return json_decode($data, true);
 		}
 
-		return false;
+		return [];
 	}
 
-	public function set($key, $value, $expire = '') {
+	public function set(string $key, array|string|null $value, int $expire = 0): void {
 		$this->delete($key);
 
 		if (!$expire) {
@@ -69,7 +71,7 @@ class File {
 		fclose($handle);
 	}
 
-	public function delete($key) {
+	public function delete(string $key): void {
 		$files = glob(DIR_CACHE . 'cache.' . basename($key) . '.*');
 
 		if ($files) {

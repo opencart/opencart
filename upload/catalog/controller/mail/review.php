@@ -1,8 +1,8 @@
 <?php
-namespace Opencart\Application\Controller\Mail;
+namespace Opencart\Catalog\Controller\Mail;
 class Review extends \Opencart\System\Engine\Controller {
 	// catalog/model/catalog/review/addReview/after
-	public function index(&$route, &$args, &$output) {
+	public function index(string &$route, array &$args, mixed &$output): void {
 		if (in_array('review', (array)$this->config->get('config_mail_alert'))) {
 			$this->load->language('mail/review');
 

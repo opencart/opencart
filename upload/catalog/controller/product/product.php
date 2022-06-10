@@ -1,9 +1,7 @@
 <?php
-namespace Opencart\Application\Controller\Product;
+namespace Opencart\Catalog\Controller\Product;
 class Product extends \Opencart\System\Engine\Controller {
-	private $error = [];
-
-	public function index() {
+	public function index(): void {
 		$this->load->language('product/product');
 
 		$data['breadcrumbs'] = [];
@@ -223,21 +221,27 @@ class Product extends \Opencart\System\Engine\Controller {
 			$this->document->addScript('catalog/view/javascript/jquery/magnific/jquery.magnific-popup.min.js');
 			$this->document->addStyle('catalog/view/javascript/jquery/magnific/magnific-popup.css');
 
-			$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment/moment.min.js');
-			$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment/moment-with-locales.min.js');
-			$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js');
-			$this->document->addStyle('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css');
+			$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment.min.js');
+			$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment-with-locales.min.js');
+			$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/daterangepicker.js');
+			$this->document->addStyle('catalog/view/javascript/jquery/datetimepicker/daterangepicker.css');
 
 			$data['heading_title'] = $product_info['name'];
 
 			$data['text_minimum'] = sprintf($this->language->get('text_minimum'), $product_info['minimum']);
-			$data['text_login'] = sprintf($this->language->get('text_login'), $this->url->link('account/login', 'language=' . $this->config->get('config_language')), $this->url->link('account|register', 'language=' . $this->config->get('config_language')));
+			$data['text_login'] = sprintf($this->language->get('text_login'), $this->url->link('account/login', 'language=' . $this->config->get('config_language')), $this->url->link('account/register', 'language=' . $this->config->get('config_language')));
 
 			$data['tab_review'] = sprintf($this->language->get('tab_review'), $product_info['reviews']);
 
 			$data['error_upload_size'] = sprintf($this->language->get('error_upload_size'), $this->config->get('config_file_max_size'));
 
-			$data['config_file_max_size'] = $this->config->get('config_file_max_size');
+			$data['config_file_max_size'] = ((int)$this->config->get('config_file_max_size') * 1024 * 1024);
+
+			$data['add_to_wishlist'] = $this->url->link('account/wishlist|add', 'language=' . $this->config->get('config_language'));
+			$data['add_to_compare'] = $this->url->link('product/compare|add', 'language=' . $this->config->get('config_language'));
+			$data['upload'] = $this->url->link('tool/upload', 'language=' . $this->config->get('config_language'));
+
+			$data['language'] = $this->config->get('config_language');
 
 			$data['product_id'] = (int)$this->request->get['product_id'];
 			$data['manufacturer'] = $product_info['manufacturer'];
@@ -365,6 +369,41 @@ class Product extends \Opencart\System\Engine\Controller {
 				}
 			}
 
+			// Subscriptions
+			$data['subscription_plans']  = [];
+
+			$results = $this->model_catalog_product->getSubscriptions($this->request->get['product_id']);
+
+			foreach ($results as $result) {
+				$description = '';
+
+				$trial_price = $this->currency->format($this->tax->calculate($result['trial_price'], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
+				$trial_cycle = $result['trial_cycle'];
+				$trial_frequency = $this->language->get('text_' . $result['trial_frequency']);
+				$trial_duration = $result['trial_duration'];
+
+				if ($result['trial_status']) {
+					$description .= sprintf($this->language->get('text_subscription_trial'), $trial_price, $trial_cycle, $trial_frequency, $trial_duration);
+				}
+
+				$price = $this->currency->format($this->tax->calculate($result['price'], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
+				$cycle = $result['cycle'];
+				$frequency = $this->language->get('text_' . $result['frequency']);
+				$duration = $result['duration'];
+
+				if ($duration) {
+					$description .= sprintf($this->language->get('text_subscription_duration'), $price, $cycle, $frequency, $duration);
+				} else {
+					$description .= sprintf($this->language->get('text_subscription_cancel'), $price, $cycle, $frequency);
+				}
+
+				$data['subscription_plans'][] = [
+					'subscription_plan_id' => $result['subscription_plan_id'],
+					'name'                 => $result['name'],
+					'description'          => $description
+				];
+			}
+
 			if ($product_info['minimum']) {
 				$data['minimum'] = $product_info['minimum'];
 			} else {
@@ -385,7 +424,7 @@ class Product extends \Opencart\System\Engine\Controller {
 
 			$data['reviews'] = sprintf($this->language->get('text_reviews'), (int)$product_info['reviews']);
 			$data['rating'] = (int)$product_info['rating'];
-			$data['review_status'] = $this->config->get('config_review_status');
+			$data['review_status'] = (int)$this->config->get('config_review_status');
 
 			// Captcha
 			$this->load->model('setting/extension');
@@ -460,9 +499,9 @@ class Product extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-			$data['recurrings'] = $this->model_catalog_product->getProfiles($this->request->get['product_id']);
-
-			$this->model_catalog_product->updateViewed($this->request->get['product_id']);
+			if ($this->config->get('config_product_report_status')) {
+				$this->model_catalog_product->addReport($this->request->get['product_id'], $this->request->server['REMOTE_ADDR']);
+			}
 
 			$data['column_left'] = $this->load->controller('common/column_left');
 			$data['column_right'] = $this->load->controller('common/column_right');
@@ -543,6 +582,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			$this->response->setOutput($this->load->view('error/not_found', $data));
 		}
 	}
+<<<<<<< HEAD
 
 	public function review() {
 		$this->load->language('product/product');
@@ -687,4 +727,6 @@ class Product extends \Opencart\System\Engine\Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
+=======
+>>>>>>> origin/patch-980
 }

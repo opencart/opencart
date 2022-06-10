@@ -1,8 +1,8 @@
 <?php
-namespace Opencart\Application\Model\Localisation;
+namespace Opencart\Admin\Model\Localisation;
 class Currency extends \Opencart\System\Engine\Model {
-	public function addCurrency($data) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "currency` SET `title` = '" . $this->db->escape((string)$data['title']) . "', `code` = '" . $this->db->escape((string)$data['code']) . "', `symbol_left` = '" . $this->db->escape((string)$data['symbol_left']) . "', `symbol_right` = '" . $this->db->escape((string)$data['symbol_right']) . "', `decimal_place` = '" . $this->db->escape((string)$data['decimal_place']) . "', `value` = '" . (float)$data['value'] . "', `status` = '" . (int)$data['status'] . "', `date_modified` = NOW()");
+	public function addCurrency(array $data): int {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "currency` SET `title` = '" . $this->db->escape((string)$data['title']) . "', `code` = '" . $this->db->escape((string)$data['code']) . "', `symbol_left` = '" . $this->db->escape((string)$data['symbol_left']) . "', `symbol_right` = '" . $this->db->escape((string)$data['symbol_right']) . "', `decimal_place` = '" . $this->db->escape((string)$data['decimal_place']) . "', `value` = '" . (float)$data['value'] . "', `status` = '" . (bool)$data['status'] . "', `date_modified` = NOW()");
 
 		$currency_id = $this->db->getLastId();
 
@@ -11,37 +11,37 @@ class Currency extends \Opencart\System\Engine\Model {
 		return $currency_id;
 	}
 
-	public function editCurrency($currency_id, $data) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "currency` SET `title` = '" . $this->db->escape((string)$data['title']) . "', `code` = '" . $this->db->escape((string)$data['code']) . "', `symbol_left` = '" . $this->db->escape((string)$data['symbol_left']) . "', `symbol_right` = '" . $this->db->escape((string)$data['symbol_right']) . "', `decimal_place` = '" . $this->db->escape((string)$data['decimal_place']) . "', `value` = '" . (float)$data['value'] . "', `status` = '" . (int)$data['status'] . "', `date_modified` = NOW() WHERE `currency_id` = '" . (int)$currency_id . "'");
+	public function editCurrency(int $currency_id, array $data): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "currency` SET `title` = '" . $this->db->escape((string)$data['title']) . "', `code` = '" . $this->db->escape((string)$data['code']) . "', `symbol_left` = '" . $this->db->escape((string)$data['symbol_left']) . "', `symbol_right` = '" . $this->db->escape((string)$data['symbol_right']) . "', `decimal_place` = '" . $this->db->escape((string)$data['decimal_place']) . "', `value` = '" . (float)$data['value'] . "', `status` = '" . (bool)$data['status'] . "', `date_modified` = NOW() WHERE `currency_id` = '" . (int)$currency_id . "'");
 
 		$this->cache->delete('currency');
 	}
 
-	public function editValueByCode($code, $value) {
+	public function editValueByCode(string $code, float $value): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "currency` SET `value` = '" . (float)$value . "', `date_modified` = NOW() WHERE `code` = '" . $this->db->escape((string)$code) . "'");
 
 		$this->cache->delete('currency');
 	}
 
-	public function deleteCurrency($currency_id) {
+	public function deleteCurrency(int $currency_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "currency` WHERE `currency_id` = '" . (int)$currency_id . "'");
 
 		$this->cache->delete('currency');
 	}
 
-	public function getCurrency($currency_id) {
+	public function getCurrency(int $currency_id): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "currency` WHERE `currency_id` = '" . (int)$currency_id . "'");
 
 		return $query->row;
 	}
 
-	public function getCurrencyByCode($currency) {
+	public function getCurrencyByCode(string $currency): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "currency` WHERE `code` = '" . $this->db->escape($currency) . "'");
 
 		return $query->row;
 	}
 
-	public function getCurrencies($data = []) {
+	public function getCurrencies(array $data = []): array {
 		if ($data) {
 			$sql = "SELECT * FROM `" . DB_PREFIX . "currency`";
 
@@ -53,7 +53,7 @@ class Currency extends \Opencart\System\Engine\Model {
 			];
 
 			if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
-				$sql .= " ORDER BY " . $data['sort'];
+				$sql .= " ORDER BY `" . $data['sort'] . "`";
 			} else {
 				$sql .= " ORDER BY `title`";
 			}
@@ -108,9 +108,9 @@ class Currency extends \Opencart\System\Engine\Model {
 		}
 	}
 
-	public function getTotalCurrencies() {
+	public function getTotalCurrencies(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "currency`");
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
 	}
 }

@@ -155,6 +155,8 @@ use Aws\Credentials\CredentialsInterface;
 class SesClient extends \Aws\AwsClient
 {
     /**
+     * @deprecated This method will no longer work due to the deprecation of
+     *             V2 credentials with SES as of 03/25/2021
      * Create an SMTP password for a given IAM user's credentials.
      *
      * The SMTP username is the Access Key ID for the provided credentials.
@@ -173,6 +175,45 @@ class SesClient extends \Aws\AwsClient
         $signature = hash_hmac($algo, $message, $creds->getSecretKey(), true);
 
         return base64_encode($version . $signature);
+    }
+
+    /**
+     * Create an SMTP password for a given IAM user's credentials.
+     *
+     * The SMTP username is the Access Key ID for the provided credentials. This
+     * utility method is not guaranteed to work indefinitely and is provided as
+     * a convenience to customers using the generateSmtpPassword method.  It is
+     * not recommended for use in production
+     *
+     * @link https://docs.aws.amazon.com/ses/latest/DeveloperGuide/smtp-credentials.html#smtp-credentials-convert
+     *
+     * @param CredentialsInterface $creds
+     * @param string $region
+     *
+     * @return string
+     */
+    public static function generateSmtpPasswordV4(CredentialsInterface $creds, $region)
+    {
+        $key = $creds->getSecretKey();
+
+        $date = "11111111";
+        $service = "ses";
+        $terminal = "aws4_request";
+        $message = "SendRawEmail";
+        $version = 0x04;
+
+        $signature = self::sign($date, "AWS4" . $key);
+        $signature = self::sign($region, $signature);
+        $signature = self::sign($service, $signature);
+        $signature = self::sign($terminal, $signature);
+        $signature = self::sign($message, $signature);
+        $signatureAndVersion = pack('c', $version) . $signature;
+
+        return  base64_encode($signatureAndVersion);
+    }
+
+    private static function sign($key, $message) {
+        return hash_hmac('sha256', $key, $message, true);
     }
 
     /**

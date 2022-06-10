@@ -33,26 +33,31 @@ class EventParsingIterator implements Iterator
         $this->parser = $parser;
     }
 
+    #[\ReturnTypeWillChange]
     public function current()
     {
         return $this->parseEvent($this->decodingIterator->current());
     }
 
+    #[\ReturnTypeWillChange]
     public function key()
     {
         return $this->decodingIterator->key();
     }
 
+    #[\ReturnTypeWillChange]
     public function next()
     {
         $this->decodingIterator->next();
     }
 
+    #[\ReturnTypeWillChange]
     public function rewind()
     {
         $this->decodingIterator->rewind();
     }
 
+    #[\ReturnTypeWillChange]
     public function valid()
     {
         return $this->decodingIterator->valid();

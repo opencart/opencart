@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <div id="banner{{ module }}" class="carousel fade" data-bs-ride="carousel">
 
   <div class="carousel-inner">
@@ -8,14 +9,52 @@
         {% else %}
           <img src="{{ banner.image }}" alt="{{ banner.title }}" class="img-fluid"/>
         {% endif %}
+=======
+<div id="carousel-banner-{{ module }}" class="carousel slide{% if effect == 'fade' %} carousel-fade{% endif %}" data-bs-ride="carousel">
+  {% if indicators and banners|batch(items)|length > 1 %}
+    <div class="carousel-indicators">
+      {% set banner_row = 0 %}
+      {% for banner in banners|batch(items) %}
+        <button type="button" data-bs-target="#carousel-banner-{{ module }}" data-bs-slide-to="{{ banner_row }}"{% if banner_row == 0 %} class="active"{% endif %}></button>
+        {% set banner_row = banner_row + 1 %}
+      {% endfor %}
+    </div>
+  {% endif %}
+  <div class="carousel-inner">
+    {% set banner_row = 0 %}
+    {% for carousel in banners|batch(items) %}
+      <div class="carousel-item{% if banner_row == 0 %} active{% endif %}">
+        <div class="row justify-content-center">
+          {% for banner in carousel %}
+            <div class="col-{{ (12 / items)|round }} text-center">
+              {% if banner.link %}
+                <a href="{{ banner.link }}"><img src="{{ banner.image }}" alt="{{ banner.title }}" class="img-fluid"/></a>
+              {% else %}
+                <img src="{{ banner.image }}" alt="{{ banner.title }}" class="img-fluid"/>
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+>>>>>>> origin/patch-980
       </div>
+      {% set banner_row = banner_row + 1 %}
     {% endfor %}
   </div>
+<<<<<<< HEAD
   
+=======
+  {% if controls and banners|batch(items)|length > 1 %}
+    <button type="button" class="carousel-control-prev" data-bs-target="#carousel-banner-{{ module }}" data-bs-slide="prev"><span class="fas fa-chevron-left"></span></button>
+    <button type="button" class="carousel-control-next" data-bs-target="#carousel-banner-{{ module }}" data-bs-slide="next"><span class="fas fa-chevron-right"></span></button>
+  {% endif %}
+>>>>>>> origin/patch-980
 </div>
 <script type="text/javascript"><!--
-$('#banner{{ module }}').carousel({
-	interval: 2500,
-	wrap: false
+$(document).ready(function () {
+    new bootstrap.Carousel(document.querySelector('#carousel-banner-{{ module }}'), {
+        ride: 'carousel',
+        interval: {{ interval|escape('js') }},
+        wrap: true
+    });
 });
---></script> 
+//--></script>

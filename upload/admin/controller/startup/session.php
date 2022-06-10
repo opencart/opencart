@@ -1,7 +1,7 @@
 <?php
-namespace Opencart\Application\Controller\Startup;
+namespace Opencart\Admin\Controller\Startup;
 class Session extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): void {
 		$session = new \Opencart\System\Library\Session($this->config->get('session_engine'), $this->registry);
 		$this->registry->set('session', $session);
 
@@ -13,20 +13,20 @@ class Session extends \Opencart\System\Engine\Controller {
 
 		$session->start($session_id);
 
-		// Setting the cookie path to the store front so admin users can login to cutomers accounts.
-		$path = dirname($_SERVER['PHP_SELF']);
-
-		$path = substr($path, 0, strrpos($path, '/')) . '/';
+		// Update the session lifetime
+		if ($this->config->get('config_session_expire')) {
+			$this->config->set('session_expire', $this->config->get('config_session_expire'));
+		}
 
 		// Require higher security for session cookies
 		$option = [
-			'expires'  => time() + $this->config->get('session_expire'),
-			'path'     => !empty($_SERVER['PHP_SELF']) ? $path : '',
+			'expires'  => $this->config->get('config_session_expire') ? time() + (int)$this->config->get('config_session_expire') : 0,
+			'path'     => !empty($this->request->server['PHP_SELF']) ? rtrim(dirname($this->request->server['PHP_SELF']), '/') . '/' : '/',
 			'secure'   => $this->request->server['HTTPS'],
 			'httponly' => false,
-			'SameSite' => 'Strict'
+			'SameSite' => $this->config->get('session_samesite')
 		];
 
-		oc_setcookie($this->config->get('session_name'), $session->getId(), $option);
+		setcookie($this->config->get('session_name'), $session->getId(), $option);
 	}
 }

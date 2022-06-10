@@ -131,6 +131,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise putDedicatedIpWarmupAttributesAsync(array $args = [])
  * @method \Aws\Result putDeliverabilityDashboardOption(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putDeliverabilityDashboardOptionAsync(array $args = [])
+ * @method \Aws\Result putEmailIdentityConfigurationSetAttributes(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise putEmailIdentityConfigurationSetAttributesAsync(array $args = [])
  * @method \Aws\Result putEmailIdentityDkimAttributes(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putEmailIdentityDkimAttributesAsync(array $args = [])
  * @method \Aws\Result putEmailIdentityDkimSigningAttributes(array $args = [])

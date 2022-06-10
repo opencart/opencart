@@ -12,10 +12,10 @@
 */
 namespace Opencart\System\Library;
 class Language {
-	protected $code;
-	protected $directory;
-	protected $path = [];
-	protected $data = [];
+	protected string $code;
+	protected string $directory;
+	protected array $path = [];
+	protected array $data = [];
 
 	/**
 	 * Constructor
@@ -23,7 +23,7 @@ class Language {
 	 * @param    string $code
 	 *
 	 */
-	public function __construct($code) {
+	public function __construct(string $code) {
 		$this->code = $code;
 	}
 
@@ -33,7 +33,7 @@ class Language {
 	 * @param    string $namespace
 	 * @param    string $directory
 	 */
-	public function addPath($namespace, $directory = '') {
+	public function addPath(string $namespace, string $directory = ''): void {
 		if (!$directory) {
 			$this->directory = $namespace;
 		} else {
@@ -48,8 +48,8 @@ class Language {
 	 * 
 	 * @return	string
      */
-	public function get($key) {
-		return (isset($this->data[$key]) ? $this->data[$key] : $key);
+	public function get(string $key) {
+		return isset($this->data[$key]) ? $this->data[$key] : $key;
 	}
 
 	/**
@@ -58,7 +58,7 @@ class Language {
      * @param	string	$key
 	 * @param	string	$value
      */	
-	public function set($key, $value) {
+	public function set(string $key, string $value) {
 		$this->data[$key] = $value;
 	}
 	
@@ -67,7 +67,7 @@ class Language {
      *
 	 * @return	array
      */
-	public function all($prefix = '') {
+	public function all(string $prefix = ''): array {
 		if (!$prefix) {
 			return $this->data;
 		}
@@ -90,7 +90,7 @@ class Language {
 	 *
 	 * @return	array
 	 */
-	public function clear() {
+	public function clear(): void {
 		$this->data = [];
 	}
 
@@ -102,7 +102,7 @@ class Language {
 	 * 
 	 * @return	array
      */
-	public function load($filename, $prefix = '', $code = '') {
+	public function load(string $filename, string $prefix = '', string $code = ''): array {
 		if (!$code) {
 			$code = $this->code;
 		}

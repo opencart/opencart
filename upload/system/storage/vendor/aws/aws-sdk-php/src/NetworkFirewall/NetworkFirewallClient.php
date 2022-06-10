@@ -33,6 +33,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise describeResourcePolicyAsync(array $args = [])
  * @method \Aws\Result describeRuleGroup(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeRuleGroupAsync(array $args = [])
+ * @method \Aws\Result describeRuleGroupMetadata(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeRuleGroupMetadataAsync(array $args = [])
  * @method \Aws\Result disassociateSubnets(array $args = [])
  * @method \GuzzleHttp\Promise\Promise disassociateSubnetsAsync(array $args = [])
  * @method \Aws\Result listFirewallPolicies(array $args = [])

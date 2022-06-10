@@ -1,7 +1,7 @@
 <?php
-namespace Opencart\Application\Controller\Tool;
+namespace Opencart\Admin\Controller\Tool;
 class Notification extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): void {
 		$this->load->language('tool/notification');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -18,6 +18,8 @@ class Notification extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('tool/notification', 'user_token=' . $this->session->data['user_token'])
 		];
 
+		$data['list'] = $this->getList();
+
 		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
@@ -27,9 +29,13 @@ class Notification extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('tool/notification', $data));
 	}
 
-	public function list() {
+	public function list(): void {
 		$this->load->language('tool/notification');
-		
+
+		$this->response->setOutput($this->getList());
+	}
+
+	public function getList(): string {
 		if (isset($this->request->get['page'])) {
 			$page = (int)$this->request->get['page'];
 		} else {
@@ -41,8 +47,6 @@ class Notification extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
-
-		$language_data = $this->load->language->all();
 
 		$data['notifications'] = [];
 
@@ -79,10 +83,10 @@ class Notification extends \Opencart\System\Engine\Controller {
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($notification_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($notification_total - $this->config->get('config_pagination_admin'))) ? $notification_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $notification_total, ceil($notification_total / $this->config->get('config_pagination_admin')));
 
-		$this->response->setOutput($this->load->view('tool/notification_list', $data));
+		return $this->load->view('tool/notification_list', $data);
 	}
 
-	public function info() {
+	public function info(): void {
 		if (isset($this->request->get['notification_id'])) {
 			$notification_id = $this->request->get['notification_id'];
 		} else {
@@ -100,7 +104,7 @@ class Notification extends \Opencart\System\Engine\Controller {
 
 			$this->load->helper('bbcode');
 
-			$data['message'] = bbcode_decode($notification_info['message']);
+			$data['text'] = \Opencart\System\Helper\bbcode_decode($notification_info['text']);
 
 			$this->model_tool_notification->editStatus($notification_id, 1);
 
@@ -108,7 +112,7 @@ class Notification extends \Opencart\System\Engine\Controller {
 		}
 	}
 
-	public function delete() {
+	public function delete(): void {
 		$this->load->language('tool/notification');
 
 		$json = [];
@@ -121,7 +125,9 @@ class Notification extends \Opencart\System\Engine\Controller {
 
 		if (!$this->user->hasPermission('modify', 'tool/notification')) {
 			$json['error'] = $this->language->get('error_permission');
-		} else {
+		}
+
+		if (!$json) {
 			$this->load->model('tool/notification');
 
 			foreach ($selected as $notification_id) {

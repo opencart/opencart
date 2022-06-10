@@ -1,4 +1,5 @@
 <?php
+//namespace Opencart\System\Helper;
 function db_schema() {
 	$tables = [];
 
@@ -67,6 +68,11 @@ function db_schema() {
 				'name' => 'custom_field',
 				'type' => 'text',
 				'not_null' => true
+			],
+			[
+				'name' => 'default',
+				'type' => 'tinyint(1)',
+				'not_null' => true
 			]
 		],
 		'primary' => [
@@ -81,8 +87,36 @@ function db_schema() {
 			]
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
+	];
+
+	$tables[] = [
+		'name' => 'address_format',
+		'field' => [
+			[
+				'name' => 'address_format_id',
+				'type' => 'int(11)',
+				'not_null' => true,
+				'auto_increment' => true
+			],
+			[
+				'name' => 'name',
+				'type' => 'varchar(128)',
+				'not_null' => true
+			],
+			[
+				'name' => 'address_format',
+				'type' => 'text',
+				'not_null' => true
+			]
+		],
+		'primary' => [
+			'address_format_id'
+		],
+		'engine' => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -124,8 +158,8 @@ function db_schema() {
 			'api_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -152,8 +186,8 @@ function db_schema() {
 			'api_ip_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -195,8 +229,8 @@ function db_schema() {
 			'api_session_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -223,8 +257,8 @@ function db_schema() {
 			'attribute_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -251,8 +285,8 @@ function db_schema() {
 			'language_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -274,8 +308,8 @@ function db_schema() {
 			'attribute_group_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -302,8 +336,8 @@ function db_schema() {
 			'language_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -330,8 +364,8 @@ function db_schema() {
 			'banner_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -379,8 +413,8 @@ function db_schema() {
 			'banner_image_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -413,7 +447,7 @@ function db_schema() {
 				'not_null' => true
 			],
 			[
-				'name' => 'recurring_id',
+				'name' => 'subscription_plan_id',
 				'type' => 'int(11)',
 				'not_null' => true
 			],
@@ -444,13 +478,13 @@ function db_schema() {
 					'customer_id',
 					'session_id',
 					'product_id',
-					'recurring_id'
+					'subscription_plan_id'
 				]
 			]
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -517,8 +551,8 @@ function db_schema() {
 			]
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -573,8 +607,8 @@ function db_schema() {
 			]
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -596,8 +630,8 @@ function db_schema() {
 			'filter_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -624,8 +658,8 @@ function db_schema() {
 			'path_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -652,8 +686,8 @@ function db_schema() {
 			'store_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -675,8 +709,8 @@ function db_schema() {
 			'store_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -704,8 +738,8 @@ function db_schema() {
 				'not_null' => true
 			],
 			[
-				'name' => 'address_format',
-				'type' => 'text',
+				'name' => 'address_format_id',
+				'type' => 'int(11)',
 				'not_null' => true
 			],
 			[
@@ -724,8 +758,8 @@ function db_schema() {
 			'country_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -807,8 +841,8 @@ function db_schema() {
 			'coupon_id'
 		],
 		'engine'  => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -830,8 +864,8 @@ function db_schema() {
 			'category_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -873,8 +907,8 @@ function db_schema() {
 			'coupon_history_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -901,8 +935,8 @@ function db_schema() {
 			'coupon_product_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -916,7 +950,12 @@ function db_schema() {
 			],
 			[
 				'name' => 'code',
-				'type' => 'varchar(64)',
+				'type' => 'varchar(128)',
+				'not_null' => true
+			],
+			[
+				'name' => 'description',
+				'type' => 'text',
 				'not_null' => true
 			],
 			[
@@ -949,8 +988,8 @@ function db_schema() {
 			'cron_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -1007,8 +1046,8 @@ function db_schema() {
 			'currency_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -1062,12 +1101,7 @@ function db_schema() {
 				'not_null' => true
 			],
 			[
-				'name' => 'cart',
-				'type' => 'text',
-				'not_null' => true
-			],
-			[
-				'name' => 'wishlist',
+				'name' => 'custom_field',
 				'type' => 'text',
 				'not_null' => true
 			],
@@ -1076,17 +1110,6 @@ function db_schema() {
 				'type' => 'tinyint(1)',
 				'not_null' => true,
 				'default' => '0'
-			],
-			[
-				'name' => 'address_id',
-				'type' => 'int(11)',
-				'not_null' => true,
-				'default' => '0'
-			],
-			[
-				'name' => 'custom_field',
-				'type' => 'text',
-				'not_null' => true
 			],
 			[
 				'name' => 'ip',
@@ -1123,8 +1146,8 @@ function db_schema() {
 			'customer_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -1166,8 +1189,8 @@ function db_schema() {
 			'customer_activity_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -1264,8 +1287,8 @@ function db_schema() {
 			'customer_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -1307,8 +1330,8 @@ function db_schema() {
 			'customer_affiliate_report_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -1340,8 +1363,8 @@ function db_schema() {
 			'customer_approval_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -1368,8 +1391,8 @@ function db_schema() {
 			'customer_group_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -1401,8 +1424,8 @@ function db_schema() {
 			'language_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -1434,8 +1457,8 @@ function db_schema() {
 			'customer_history_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -1491,8 +1514,8 @@ function db_schema() {
 			]
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -1542,8 +1565,8 @@ function db_schema() {
 			]
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -1579,8 +1602,8 @@ function db_schema() {
 			'ip'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -1625,8 +1648,8 @@ function db_schema() {
 			'customer_reward_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -1668,8 +1691,8 @@ function db_schema() {
 			'customer_transaction_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -1736,8 +1759,8 @@ function db_schema() {
 			'customer_search_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -1764,8 +1787,8 @@ function db_schema() {
 			'product_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -1812,8 +1835,8 @@ function db_schema() {
 			'custom_field_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -1840,8 +1863,8 @@ function db_schema() {
 			'customer_group_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -1868,8 +1891,8 @@ function db_schema() {
 			'language_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -1896,8 +1919,8 @@ function db_schema() {
 			'custom_field_value_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -1929,8 +1952,8 @@ function db_schema() {
 			'language_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -1962,8 +1985,8 @@ function db_schema() {
 			'download_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -1990,8 +2013,8 @@ function db_schema() {
 			'language_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -2033,8 +2056,8 @@ function db_schema() {
 			'download_report_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -2048,7 +2071,7 @@ function db_schema() {
 			],
 			[
 				'name' => 'code',
-				'type' => 'varchar(64)',
+				'type' => 'varchar(128)',
 				'not_null' => true
 			],
 			[
@@ -2083,8 +2106,8 @@ function db_schema() {
 			'event_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -2108,7 +2131,7 @@ function db_schema() {
 			],
 			[
 				'name' => 'code',
-				'type' => 'varchar(32)',
+				'type' => 'varchar(128)',
 				'not_null' => true
 			]
 		],
@@ -2116,8 +2139,8 @@ function db_schema() {
 			'extension_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -2179,8 +2202,8 @@ function db_schema() {
 			'extension_install_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -2215,8 +2238,8 @@ function db_schema() {
 			]
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -2243,8 +2266,8 @@ function db_schema() {
 			'filter_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -2276,8 +2299,8 @@ function db_schema() {
 			'language_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -2299,8 +2322,8 @@ function db_schema() {
 			'filter_group_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -2327,8 +2350,8 @@ function db_schema() {
 			'language_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -2380,8 +2403,8 @@ function db_schema() {
 			'gdpr_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -2418,8 +2441,8 @@ function db_schema() {
 			'geo_zone_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -2454,8 +2477,8 @@ function db_schema() {
 			'information_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -2502,8 +2525,8 @@ function db_schema() {
 			'language_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -2530,8 +2553,8 @@ function db_schema() {
 			'store_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -2553,8 +2576,8 @@ function db_schema() {
 			'store_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -2610,8 +2633,8 @@ function db_schema() {
 			]
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -2633,8 +2656,8 @@ function db_schema() {
 			'layout_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -2671,8 +2694,8 @@ function db_schema() {
 			'layout_module_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -2704,8 +2727,8 @@ function db_schema() {
 			'layout_route_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -2727,8 +2750,8 @@ function db_schema() {
 			'length_class_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -2760,8 +2783,8 @@ function db_schema() {
 			'language_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -2785,11 +2808,6 @@ function db_schema() {
 			],
 			[
 				'name' => 'telephone',
-				'type' => 'varchar(32)',
-				'not_null' => true
-			],
-			[
-				'name' => 'fax',
 				'type' => 'varchar(32)',
 				'not_null' => true
 			],
@@ -2826,8 +2844,8 @@ function db_schema() {
 			]
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -2859,8 +2877,8 @@ function db_schema() {
 			'manufacturer_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -2887,8 +2905,8 @@ function db_schema() {
 			'store_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -2910,8 +2928,8 @@ function db_schema() {
 			'store_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -2954,8 +2972,8 @@ function db_schema() {
 			'marketing_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -2997,8 +3015,8 @@ function db_schema() {
 			'marketing_report_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -3030,8 +3048,8 @@ function db_schema() {
 			'module_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -3068,8 +3086,8 @@ function db_schema() {
 			'notification_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -3096,8 +3114,8 @@ function db_schema() {
 			'option_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -3124,8 +3142,8 @@ function db_schema() {
 			'language_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -3157,8 +3175,8 @@ function db_schema() {
 			'option_value_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -3190,8 +3208,8 @@ function db_schema() {
 			'language_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -3202,6 +3220,11 @@ function db_schema() {
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
+			],
+			[
+				'name' => 'transaction_id',
+				'type' => 'varchar(100)',
+				'not_null' => true
 			],
 			[
 				'name' => 'invoice_no',
@@ -3259,11 +3282,6 @@ function db_schema() {
 			],
 			[
 				'name' => 'telephone',
-				'type' => 'varchar(32)',
-				'not_null' => true
-			],
-			[
-				'name' => 'fax',
 				'type' => 'varchar(32)',
 				'not_null' => true
 			],
@@ -3465,6 +3483,11 @@ function db_schema() {
 				'not_null' => true
 			],
 			[
+				'name' => 'language_code',
+				'type' => 'varchar(5)',
+				'not_null' => true
+			],
+			[
 				'name' => 'currency_id',
 				'type' => 'int(11)',
 				'not_null' => true
@@ -3515,8 +3538,8 @@ function db_schema() {
 			'order_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -3559,8 +3582,8 @@ function db_schema() {
 			'order_history_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -3613,8 +3636,8 @@ function db_schema() {
 			'order_option_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -3692,229 +3715,8 @@ function db_schema() {
 			]
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
-	];
-
-	$tables[] = [
-		'name' => 'order_recurring',
-		'field' => [
-			[
-				'name' => 'order_recurring_id',
-				'type' => 'int(11)',
-				'not_null' => true,
-				'auto_increment' => true
-			],
-			[
-				'name' => 'order_id',
-				'type' => 'int(11)',
-				'not_null' => true
-			],
-			[
-				'name' => 'reference',
-				'type' => 'varchar(255)',
-				'not_null' => true
-			],
-			[
-				'name' => 'product_id',
-				'type' => 'int(11)',
-				'not_null' => true
-			],
-			[
-				'name' => 'product_name',
-				'type' => 'varchar(255)',
-				'not_null' => true
-			],
-			[
-				'name' => 'product_quantity',
-				'type' => 'int(11)',
-				'not_null' => true
-			],
-			[
-				'name' => 'recurring_id',
-				'type' => 'int(11)',
-				'not_null' => true
-			],
-			[
-				'name' => 'recurring_name',
-				'type' => 'varchar(255)',
-				'not_null' => true
-			],
-			[
-				'name' => 'recurring_description',
-				'type' => 'varchar(255)',
-				'not_null' => true
-			],
-			[
-				'name' => 'recurring_frequency',
-				'type' => 'varchar(25)',
-				'not_null' => true
-			],
-			[
-				'name' => 'recurring_cycle',
-				'type' => 'smallint(6)',
-				'not_null' => true
-			],
-			[
-				'name' => 'recurring_duration',
-				'type' => 'smallint(6)',
-				'not_null' => true
-			],
-			[
-				'name' => 'recurring_price',
-				'type' => 'decimal(10,4)',
-				'not_null' => true
-			],
-			[
-				'name' => 'trial',
-				'type' => 'tinyint(1)',
-				'not_null' => true
-			],
-			[
-				'name' => 'trial_frequency',
-				'type' => 'varchar(25)',
-				'not_null' => true
-			],
-			[
-				'name' => 'trial_cycle',
-				'type' => 'smallint(6)',
-				'not_null' => true
-			],
-			[
-				'name' => 'trial_duration',
-				'type' => 'smallint(6)',
-				'not_null' => true
-			],
-			[
-				'name' => 'trial_price',
-				'type' => 'decimal(10,4)',
-				'not_null' => true
-			],
-			[
-				'name' => 'status',
-				'type' => 'tinyint(4)',
-				'not_null' => true
-			],
-			[
-				'name' => 'date_added',
-				'type' => 'datetime',
-				'not_null' => true
-			]
-		],
-		'primary' => [
-			'order_recurring_id'
-		],
-		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
-	];
-
-	$tables[] = [
-		'name' => 'order_recurring_transaction',
-		'field' => [
-			[
-				'name' => 'order_recurring_transaction_id',
-				'type' => 'int(11)',
-				'not_null' => true,
-				'auto_increment' => true
-			],
-			[
-				'name' => 'order_recurring_id',
-				'type' => 'int(11)',
-				'not_null' => true
-			],
-			[
-				'name' => 'reference',
-				'type' => 'varchar(255)',
-				'not_null' => true
-			],
-			[
-				'name' => 'type',
-				'type' => 'int(11)',
-				'not_null' => true
-			],
-			[
-				'name' => 'amount',
-				'type' => 'decimal(10,4)',
-				'not_null' => true
-			],
-			[
-				'name' => 'date_added',
-				'type' => 'datetime',
-				'not_null' => true
-			]
-		],
-		'primary' => [
-			'order_recurring_transaction_id'
-		],
-		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
-	];
-
-	$tables[] = [
-		'name' => 'order_shipment',
-		'field' => [
-			[
-				'name' => 'order_shipment_id',
-				'type' => 'int(11)',
-				'not_null' => true,
-				'auto_increment' => true
-			],
-			[
-				'name' => 'order_id',
-				'type' => 'int(11)',
-				'not_null' => true
-			],
-			[
-				'name' => 'date_added',
-				'type' => 'datetime',
-				'not_null' => true
-			],
-			[
-				'name' => 'shipping_courier_id',
-				'type' => 'varchar(255)',
-				'not_null' => true
-			],
-			[
-				'name' => 'tracking_number',
-				'type' => 'varchar(255)',
-				'not_null' => true
-			]
-		],
-		'primary' => [
-			'order_shipment_id'
-		],
-		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
-	];
-
-	$tables[] = [
-		'name' => 'shipping_courier',
-		'field' => [
-			[
-				'name' => 'shipping_courier_id',
-				'type' => 'int(11)',
-				'not_null' => true
-			],
-			[
-				'name' => 'shipping_courier_code',
-				'type' => 'varchar(255)',
-				'not_null' => true
-			],
-			[
-				'name' => 'shipping_courier_name',
-				'type' => 'varchar(255)',
-				'not_null' => true
-			]
-		],
-		'primary' => [
-			'shipping_courier_id'
-		],
-		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -3942,8 +3744,8 @@ function db_schema() {
 			'language_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -3999,8 +3801,8 @@ function db_schema() {
 			]
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -4072,8 +3874,89 @@ function db_schema() {
 			'order_voucher_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
+	];
+
+	$tables[] = [
+		'name' => 'customer_payment',
+		'field' => [
+			[
+				'name' => 'customer_payment_id',
+				'type' => 'int(11)',
+				'not_null' => true,
+				'auto_increment' => true
+			],
+			[
+				'name' => 'customer_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'name',
+				'type' => 'varchar(32)',
+				'not_null' => true
+			],
+			[
+				'name' => 'image',
+				'type' => 'varchar(255)',
+				'not_null' => true
+			],
+			[
+				'name' => 'type',
+				'type' => 'varchar(64)',
+				'not_null' => true
+			],
+			[
+				'name' => 'extension',
+				'type' => 'varchar(255)',
+				'not_null' => true
+			],
+			[
+				'name' => 'code',
+				'type' => 'varchar(32)',
+				'not_null' => true
+			],
+			[
+				'name' => 'token',
+				'type' => 'varchar(96)',
+				'not_null' => true
+			],
+			[
+				'name' => 'date_expire',
+				'type' => 'date',
+				'not_null' => true
+			],
+			[
+				'name' => 'default',
+				'type' => 'tinyint(1)',
+				'not_null' => true
+			],
+			[
+				'name' => 'status',
+				'type' => 'tinyint(1)',
+				'not_null' => true
+			],
+			[
+				'name' => 'date_added',
+				'type' => 'datetime',
+				'not_null' => true
+			]
+		],
+		'primary' => [
+			'customer_payment_id'
+		],
+		'index' => [
+			[
+				'name' => 'customer_id',
+				'key' => [
+					'customer_id'
+				]
+			]
+		],
+		'engine' => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -4273,8 +4156,8 @@ function db_schema() {
 			'product_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -4307,8 +4190,8 @@ function db_schema() {
 			'language_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -4368,8 +4251,8 @@ function db_schema() {
 			]
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -4432,8 +4315,8 @@ function db_schema() {
 			]
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -4455,8 +4338,8 @@ function db_schema() {
 			'filter_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -4497,8 +4380,8 @@ function db_schema() {
 			]
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -4535,8 +4418,8 @@ function db_schema() {
 			'product_option_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -4613,12 +4496,12 @@ function db_schema() {
 			'product_option_value_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
-		'name' => 'product_recurring',
+		'name' => 'product_subscription',
 		'field' => [
 			[
 				'name' => 'product_id',
@@ -4626,7 +4509,7 @@ function db_schema() {
 				'not_null' => true
 			],
 			[
-				'name' => 'recurring_id',
+				'name' => 'subscription_plan_id',
 				'type' => 'int(11)',
 				'not_null' => true
 			],
@@ -4638,12 +4521,12 @@ function db_schema() {
 		],
 		'primary' => [
 			'product_id',
-			'recurring_id',
+			'subscription_plan_id',
 			'customer_group_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -4665,8 +4548,53 @@ function db_schema() {
 			'related_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
+	];
+
+	$tables[] = [
+		'name' => 'product_report',
+		'field' => [
+			[
+				'name' => 'product_report_id',
+				'type' => 'int(11)',
+				'not_null' => true,
+				'auto_increment' => true
+			],
+			[
+				'name' => 'product_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'store_id',
+				'type' => 'int(11)',
+				'not_null' => true,
+				'default'  => 0
+			],
+			[
+				'name' => 'ip',
+				'type' => 'varchar(40)',
+				'not_null' => true
+			],
+			[
+				'name' => 'country',
+				'type' => 'varchar(2)',
+				'not_null' => true
+			],
+			[
+				'name' => 'date_added',
+				'type' => 'datetime',
+				'not_null' => true
+			]
+
+		],
+		'primary' => [
+			'product_report_id'
+		],
+		'engine' => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -4701,8 +4629,8 @@ function db_schema() {
 			'product_reward_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -4759,8 +4687,8 @@ function db_schema() {
 			]
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -4790,8 +4718,8 @@ function db_schema() {
 			]
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -4813,8 +4741,8 @@ function db_schema() {
 			'download_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -4841,8 +4769,8 @@ function db_schema() {
 			'store_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -4865,109 +4793,8 @@ function db_schema() {
 			'store_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
-	];
-
-	$tables[] = [
-		'name' => 'recurring',
-		'field' => [
-			[
-				'name' => 'recurring_id',
-				'type' => 'int(11)',
-				'not_null' => true,
-				'auto_increment' => true
-			],
-			[
-				'name' => 'price',
-				'type' => 'decimal(10,4)',
-				'not_null' => true
-			],
-			[
-				'name' => 'frequency',
-				'type' => 'enum(\'day\',\'week\',\'semi_month\',\'month\',\'year\')',
-				'not_null' => true
-			],
-			[
-				'name' => 'duration',
-				'type' => 'int(10)',
-				'not_null' => true
-			],
-			[
-				'name' => 'cycle',
-				'type' => 'int(10)',
-				'not_null' => true
-			],
-			[
-				'name' => 'trial_status',
-				'type' => 'tinyint(4)',
-				'not_null' => true
-			],
-			[
-				'name' => 'trial_price',
-				'type' => 'decimal(10,4)',
-				'not_null' => true
-			],
-			[
-				'name' => 'trial_frequency',
-				'type' => 'enum(\'day\',\'week\',\'semi_month\',\'month\',\'year\')',
-				'not_null' => true
-			],
-			[
-				'name' => 'trial_duration',
-				'type' => 'int(10)',
-				'not_null' => true
-			],
-			[
-				'name' => 'trial_cycle',
-				'type' => 'int(10)',
-				'not_null' => true
-			],
-			[
-				'name' => 'status',
-				'type' => 'tinyint(4)',
-				'not_null' => true
-			],
-			[
-				'name' => 'sort_order',
-				'type' => 'int(11)',
-				'not_null' => true
-			]
-		],
-		'primary' => [
-			'recurring_id'
-		],
-		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
-	];
-
-	$tables[] = [
-		'name' => 'recurring_description',
-		'field' => [
-			[
-				'name' => 'recurring_id',
-				'type' => 'int(11)',
-				'not_null' => true
-			],
-			[
-				'name' => 'language_id',
-				'type' => 'int(11)',
-				'not_null' => true
-			],
-			[
-				'name' => 'name',
-				'type' => 'varchar(255)',
-				'not_null' => true
-			]
-		],
-		'primary' => [
-			'recurring_id',
-			'language_id'
-		],
-		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -5074,8 +4901,8 @@ function db_schema() {
 			'return_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -5104,8 +4931,8 @@ function db_schema() {
 			'language_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -5147,8 +4974,8 @@ function db_schema() {
 			'return_history_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -5177,8 +5004,8 @@ function db_schema() {
 			'language_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -5207,8 +5034,8 @@ function db_schema() {
 			'language_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -5274,8 +5101,8 @@ function db_schema() {
 			]
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -5312,8 +5139,8 @@ function db_schema() {
 			'startup_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -5340,8 +5167,8 @@ function db_schema() {
 			'statistics_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -5366,9 +5193,17 @@ function db_schema() {
 		'primary' => [
 			'session_id'
 		],
+		'index' => [
+			[
+				'name' => 'expire',
+				'key' => [
+					'expire'
+				]
+			]
+		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -5412,8 +5247,8 @@ function db_schema() {
 			'setting_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -5441,8 +5276,8 @@ function db_schema() {
 			'language_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -5469,8 +5304,396 @@ function db_schema() {
 			'store_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
+	];
+
+	$tables[] = [
+		'name' => 'subscription',
+		'field' => [
+			[
+				'name' => 'subscription_id',
+				'type' => 'int(11)',
+				'not_null' => true,
+				'auto_increment' => true
+			],
+			[
+				'name' => 'customer_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'order_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'order_product_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'subscription_plan_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'customer_payment_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'name',
+				'type' => 'varchar(255)',
+				'not_null' => true
+			],
+			[
+				'name' => 'description',
+				'type' => 'text',
+				'not_null' => true
+			],
+			[
+				'name' => 'trial_price',
+				'type' => 'decimal(10,4)',
+				'not_null' => true
+			],
+			[
+				'name' => 'trial_frequency',
+				'type' => 'enum(\'day\',\'week\',\'semi_month\',\'month\',\'year\')',
+				'not_null' => true
+			],
+			[
+				'name' => 'trial_cycle',
+				'type' => 'smallint(6)',
+				'not_null' => true
+			],
+			[
+				'name' => 'trial_duration',
+				'type' => 'smallint(6)',
+				'not_null' => true
+			],
+			[
+				'name' => 'trial_remaining',
+				'type' => 'smallint(6)',
+				'not_null' => true
+			],
+			[
+				'name' => 'trial_status',
+				'type' => 'tinyint(1)',
+				'not_null' => true
+			],
+			[
+				'name' => 'price',
+				'type' => 'decimal(10,4)',
+				'not_null' => true
+			],
+			[
+				'name' => 'frequency',
+				'type' => 'enum(\'day\',\'week\',\'semi_month\',\'month\',\'year\')',
+				'not_null' => true
+			],
+			[
+				'name' => 'cycle',
+				'type' => 'smallint(6)',
+				'not_null' => true
+			],
+			[
+				'name' => 'duration',
+				'type' => 'smallint(6)',
+				'not_null' => true
+			],
+			[
+				'name' => 'remaining',
+				'type' => 'smallint(6)',
+				'not_null' => true
+			],
+			[
+				'name' => 'date_next',
+				'type' => 'datetime',
+				'not_null' => true
+			],
+			[
+				'name' => 'subscription_status_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'date_added',
+				'type' => 'datetime',
+				'not_null' => true
+			],
+			[
+				'name' => 'date_modified',
+				'type' => 'datetime',
+				'not_null' => true
+			]
+		],
+		'primary' => [
+			'subscription_id'
+		],
+		'index' => [
+			[
+				'name' => 'order_id',
+				'key' => [
+					'order_id'
+				]
+			]
+		],
+		'engine' => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
+	];
+
+	$tables[] = [
+		'name' => 'subscription_history',
+		'field' => [
+			[
+				'name' => 'subscription_history_id',
+				'type' => 'int(11)',
+				'not_null' => true,
+				'auto_increment' => true
+			],
+			[
+				'name' => 'subscription_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'subscription_status_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'notify',
+				'type' => 'tinyint(1)',
+				'not_null' => true,
+				'default' => '0'
+			],
+			[
+				'name' => 'comment',
+				'type' => 'text',
+				'not_null' => true
+			],
+			[
+				'name' => 'date_added',
+				'type' => 'datetime',
+				'not_null' => true
+			]
+		],
+		'primary' => [
+			'subscription_history_id'
+		],
+		'engine' => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
+	];
+
+	$tables[] = [
+		'name' => 'subscription_plan',
+		'field' => [
+			[
+				'name' => 'subscription_plan_id',
+				'type' => 'int(11)',
+				'not_null' => true,
+				'auto_increment' => true
+			],
+
+			[
+				'name' => 'trial_price',
+				'type' => 'decimal(10,4)',
+				'not_null' => true
+			],
+			[
+				'name' => 'trial_frequency',
+				'type' => 'enum(\'day\',\'week\',\'semi_month\',\'month\',\'year\')',
+				'not_null' => true
+			],
+			[
+				'name' => 'trial_duration',
+				'type' => 'int(10)',
+				'not_null' => true
+			],
+			[
+				'name' => 'trial_cycle',
+				'type' => 'int(10)',
+				'not_null' => true
+			],
+			[
+				'name' => 'trial_status',
+				'type' => 'tinyint(4)',
+				'not_null' => true
+			],
+			[
+				'name' => 'price',
+				'type' => 'decimal(10,4)',
+				'not_null' => true
+			],
+			[
+				'name' => 'frequency',
+				'type' => 'enum(\'day\',\'week\',\'semi_month\',\'month\',\'year\')',
+				'not_null' => true
+			],
+			[
+				'name' => 'duration',
+				'type' => 'int(10)',
+				'not_null' => true
+			],
+			[
+				'name' => 'cycle',
+				'type' => 'int(10)',
+				'not_null' => true
+			],
+			[
+				'name' => 'status',
+				'type' => 'tinyint(1)',
+				'not_null' => true
+			],
+			[
+				'name' => 'sort_order',
+				'type' => 'int(3)',
+				'not_null' => true
+			]
+		],
+		'primary' => [
+			'subscription_plan_id'
+		],
+		'engine' => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
+	];
+
+	$tables[] = [
+		'name' => 'subscription_plan_description',
+		'field' => [
+			[
+				'name' => 'subscription_plan_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'language_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'name',
+				'type' => 'varchar(255)',
+				'not_null' => true
+			],
+			[
+				'name' => 'description',
+				'type' => 'text',
+				'not_null' => true
+			]
+		],
+		'primary' => [
+			'subscription_plan_id',
+			'language_id'
+		],
+		'engine' => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
+	];
+
+	$tables[] = [
+		'name' => 'subscription_status',
+		'field' => [
+			[
+				'name' => 'subscription_status_id',
+				'type' => 'int(11)',
+				'not_null' => true,
+				'auto_increment' => true
+			],
+			[
+				'name' => 'language_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'name',
+				'type' => 'varchar(32)',
+				'not_null' => true
+			]
+		],
+		'primary' => [
+			'subscription_status_id',
+			'language_id'
+		],
+		'engine' => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
+	];
+
+	$tables[] = [
+		'name' => 'subscription_transaction',
+		'field' => [
+			[
+				'name' => 'subscription_transaction_id',
+				'type' => 'int(11)',
+				'not_null' => true,
+				'auto_increment' => true
+			],
+			[
+				'name' => 'subscription_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'order_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'transaction_id',
+				'type' => 'varchar(255)',
+				'not_null' => true
+			],
+			[
+				'name' => 'description',
+				'type' => 'text',
+				'not_null' => true
+			],
+			[
+				'name' => 'amount',
+				'type' => 'decimal(10,4)',
+				'not_null' => true
+			],
+			[
+				'name' => 'payment_method',
+				'type' => 'varchar(128)',
+				'not_null' => true
+			],
+			[
+				'name' => 'payment_code',
+				'type' => 'varchar(128)',
+				'not_null' => true
+			],
+			[
+				'name' => 'date_added',
+				'type' => 'datetime',
+				'not_null' => true
+			]
+		],
+		'primary' => [
+			'subscription_transaction_id'
+		],
+		'index' => [
+			[
+				'name' => 'subscription_id',
+				'key' => [
+					'subscription_id'
+				]
+			],
+			[
+				'name' => 'order_id',
+				'key' => [
+					'order_id'
+				]
+			]
+		],
+		'engine' => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -5507,8 +5730,8 @@ function db_schema() {
 			'tax_class_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -5557,8 +5780,8 @@ function db_schema() {
 			'tax_rate_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -5580,8 +5803,8 @@ function db_schema() {
 			'customer_group_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -5619,8 +5842,8 @@ function db_schema() {
 			'tax_rule_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -5657,8 +5880,8 @@ function db_schema() {
 			'theme_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -5705,8 +5928,8 @@ function db_schema() {
 			'translation_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -5743,64 +5966,8 @@ function db_schema() {
 			'upload_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
-	];
-
-	$tables[] = [
-		'name' => 'seo_profile',
-		'field' => [
-			[
-				'name' => 'seo_profile_id',
-				'type' => 'int(11)',
-				'not_null' => true,
-				'auto_increment' => true
-			],
-			[
-				'name' => 'name',
-				'type' => 'varchar(64)',
-				'not_null' => true
-			],
-			[
-				'name' => 'key',
-				'type' => 'varchar(64)',
-				'not_null' => true
-			],
-			[
-				'name' => 'regex',
-				'type' => 'varchar(255)',
-				'not_null' => true
-			],
-			[
-				'name' => 'push',
-				'type' => 'varchar(255)',
-				'not_null' => true
-			],
-			[
-				'name' => 'remove',
-				'type' => 'varchar(255)',
-				'not_null' => true
-			],
-			[
-				'name' => 'sort_order',
-				'type' => 'int(3)',
-				'not_null' => true
-			]
-		],
-		'primary' => [
-			'seo_profile_id'
-		],
-		'index' => [
-			[
-				'name' => 'key',
-				'key' => [
-					'key'
-				]
-			]
-		],
-		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -5836,6 +6003,11 @@ function db_schema() {
 				'name' => 'keyword',
 				'type' => 'varchar(255)',
 				'not_null' => true
+			],
+			[
+				'name' => 'sort_order',
+				'type' => 'int(3)',
+				'not_null' => true
 			]
 		],
 		'primary' => [
@@ -5857,8 +6029,8 @@ function db_schema() {
 			]
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -5933,8 +6105,8 @@ function db_schema() {
 			'user_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -5961,8 +6133,46 @@ function db_schema() {
 			'user_group_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
+	];
+
+	$tables[] = [
+		'name' => 'vendor',
+		'field' => [
+			[
+				'name' => 'vendor_id',
+				'type' => 'int(11)',
+				'not_null' => true,
+				'auto_increment' => true
+			],
+			[
+				'name' => 'name',
+				'type' => 'varchar(64)',
+				'not_null' => true
+			],
+			[
+				'name' => 'code',
+				'type' => 'text',
+				'not_null' => true
+			],
+			[
+				'name' => 'version',
+				'type' => 'text',
+				'not_null' => true
+			],
+			[
+				'name' => 'date_added',
+				'type' => 'datetime',
+				'not_null' => true
+			]
+		],
+		'primary' => [
+			'vendor_id'
+		],
+		'engine' => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -6034,8 +6244,8 @@ function db_schema() {
 			'voucher_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -6072,8 +6282,8 @@ function db_schema() {
 			'voucher_history_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -6095,8 +6305,8 @@ function db_schema() {
 			'voucher_theme_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -6123,8 +6333,8 @@ function db_schema() {
 			'language_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -6147,8 +6357,8 @@ function db_schema() {
 			'weight_class_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -6180,8 +6390,8 @@ function db_schema() {
 			'language_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -6219,8 +6429,8 @@ function db_schema() {
 			'zone_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	$tables[] = [
@@ -6263,8 +6473,8 @@ function db_schema() {
 			'zone_to_geo_zone_id'
 		],
 		'engine' => 'InnoDB',
-		'charset' => 'utf8',
-		'collate' => 'utf8_general_ci'
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
 	];
 
 	return $tables;

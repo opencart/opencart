@@ -1,7 +1,7 @@
 <?php
-namespace Opencart\Application\Model\Extension\Opencart\Shipping;
+namespace Opencart\Catalog\Model\Extension\Opencart\Shipping;
 class Free extends \Opencart\System\Engine\Model {
-	function getQuote($address) {
+	function getQuote(array $address): array {
 		$this->load->language('extension/opencart/shipping/free');
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone_to_geo_zone` WHERE `geo_zone_id` = '" . (int)$this->config->get('shipping_free_geo_zone_id') . "' AND `country_id` = '" . (int)$address['country_id'] . "' AND (`zone_id` = '" . (int)$address['zone_id'] . "' OR `zone_id` = '0')");
@@ -33,7 +33,7 @@ class Free extends \Opencart\System\Engine\Model {
 
 			$method_data = [
 				'code'       => 'free',
-				'title'      => $this->language->get('text_title'),
+				'title'      => $this->language->get('heading_title'),
 				'quote'      => $quote_data,
 				'sort_order' => $this->config->get('shipping_free_sort_order'),
 				'error'      => false

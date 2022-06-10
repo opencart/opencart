@@ -1,41 +1,37 @@
 <?php
-namespace Opencart\Application\Controller\Startup;
+namespace Opencart\Catalog\Controller\Startup;
 class Language extends \Opencart\System\Engine\Controller {
-	public function index() {
-		$code = $this->config->get('language_code');
-
+	public function index(): void {
 		$this->load->model('localisation/language');
 
 		$languages = $this->model_localisation_language->getLanguages();
 
 		$language_codes = array_column($languages, 'language_id', 'code');
 
-		// Language Cookie
-		if (isset($this->request->cookie['language']) && array_key_exists($this->request->cookie['language'], $language_codes)) {
-			$code = $this->request->cookie['language'];
-		}
+		$code = '';
 
-		// No cookie then use the language in the url
-		if (!$code && isset($this->request->get['language']) && array_key_exists($this->request->get['language'], $language_codes)) {
+		if (isset($this->request->get['language'])) {
 			$code = $this->request->get['language'];
 		}
 
 		// Language Detection
-		if (!$code && !empty($this->request->server['HTTP_ACCEPT_LANGUAGE'])) {
+		if (!$code) {
 			$detect = '';
 
 			$browser_codes = [];
 
-			$browser_languages = explode(',', strtolower($this->request->server['HTTP_ACCEPT_LANGUAGE']));
+			if (!empty($this->request->server['HTTP_ACCEPT_LANGUAGE'])) {
+				$browser_languages = explode(',', strtolower($this->request->server['HTTP_ACCEPT_LANGUAGE']));
 
-			// Try using local to detect the language
-			foreach ($browser_languages as $browser_language) {
-				$position = strpos($browser_language, ';q=');
+				// Try using local to detect the language
+				foreach ($browser_languages as $browser_language) {
+					$position = strpos($browser_language, ';q=');
 
-				if ($position !== false) {
-					$browser_codes[][substr($browser_language, 0, $position)] = (float)substr($browser_language, $position + 3);
-				} else {
-					$browser_codes[][$browser_language] = 1.0;
+					if ($position !== false) {
+						$browser_codes[][substr($browser_language, 0, $position)] = (float)substr($browser_language, $position + 3);
+					} else {
+						$browser_codes[][$browser_language] = 1.0;
+					}
 				}
 			}
 
@@ -71,36 +67,9 @@ class Language extends \Opencart\System\Engine\Controller {
 			$code = $this->config->get('config_language');
 		}
 
-		// Redirect to the new language
-		if (isset($this->request->get['language']) && $this->request->get['language'] != $code) {
-			if (isset($this->request->get['route'])) {
-				$route = $this->request->get['route'];
-			} else {
-				$route = $this->config->get('action_default');
-			}
-
-			unset($this->request->get['route']);
-			unset($this->request->get['language']);
-
-			$url = '';
-
-			if ($this->request->get) {
-				$url = '&' . urldecode(http_build_query($this->request->get));
-			}
-
-			$this->response->redirect($this->url->link($route, 'language=' . $code . $url));
-		}
-
-		// Set a new language cookie if the code does not match the current one
-		if (!isset($this->request->cookie['language']) || $this->request->cookie['language'] != $code) {
-			$option = [
-				'expires'  => time() + 60 * 60 * 24 * 30,
-				'path'     => '/',
-				'SameSite' => 'Lax'
-			];
-
-			oc_setcookie('language', $code, $option);
-		}
+		// Set the config language_id
+		$this->config->set('config_language_id', $language_codes[$code]);
+		$this->config->set('config_language', $code);
 
 		// Language
 		$language = new \Opencart\System\Library\Language($code);
@@ -108,12 +77,5 @@ class Language extends \Opencart\System\Engine\Controller {
 		$language->load($code);
 
 		$this->registry->set('language', $language);
-
-		// Set the config language_id
-		if (isset($language_codes[$code])) {
-			$this->config->set('config_language_id', $language_codes[$code]);
-		}
-
-		$this->config->set('config_language', $code);
 	}
 }

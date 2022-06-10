@@ -1,7 +1,7 @@
 <?php
-namespace Opencart\Application\Controller\Common;
+namespace Opencart\Admin\Controller\Common;
 class Notification extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): void {
 		if (empty($this->request->cookie['notification'])) {
 			$curl = curl_init();
 
@@ -27,7 +27,7 @@ class Notification extends \Opencart\System\Engine\Controller {
 				foreach ($notification['notifications'] as $result) {
 					$notification_info = $this->model_notification->addNotification($result['notification_id']);
 
-					if (!$notification_info){
+					if (!$notification_info) {
 						$this->model_notification->addNotification($result);
 					}
 				}
@@ -36,13 +36,13 @@ class Notification extends \Opencart\System\Engine\Controller {
 			// Only grab the
 			$option = [
 				'expires'  => time() + 3600 * 24 * 7,
-				'path'     => !empty($_SERVER['PHP_SELF']) ? dirname($_SERVER['PHP_SELF']) . '/' : '',
+				'path'     => !empty($this->request->server['PHP_SELF']) ? rtrim(dirname($this->request->server['PHP_SELF']), '/') . '/' : '/',
 				'secure'   => $this->request->server['HTTPS'],
 				'httponly' => false,
-				'SameSite' => 'Strict'
+				'SameSite' => $this->config->get('session_samesite')
 			];
 
-			oc_setcookie('notification', true, $option);
+			setcookie('notification', true, $option);
 		}
 	}
 }

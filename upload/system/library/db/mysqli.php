@@ -1,29 +1,29 @@
 <?php
 namespace Opencart\System\Library\DB;
 class MySQLi {
-	private $connection;
+	private object $connection;
 
-	public function __construct($hostname, $username, $password, $database, $port = '3306') {
-		try {
-			$mysqli = @new \MySQLi($hostname, $username, $password, $database, $port);
-		} catch (mysqli_sql_exception $e) {
-			throw new \Exception('Error: Could not make a database link using ' . $username . '@' . $hostname . '!');
+	public function __construct(string $hostname, string $username, string $password, string $database, string $port = '') {
+		if (!$port) {
+			$port = '3306';
 		}
 
-		if (!$mysqli->connect_errno) {
+		try {
+			$mysqli = @new \MySQLi($hostname, $username, $password, $database, $port);
+
 			$this->connection = $mysqli;
 			$this->connection->report_mode = MYSQLI_REPORT_ERROR;
-			$this->connection->set_charset('utf8');
-			$this->connection->query("SET SESSION sql_mode = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION'");
-		} else {
+			$this->connection->set_charset('utf8mb4');
+			$this->connection->query("SET SESSION sql_mode = 'NO_ZERO_IN_DATE,NO_ENGINE_SUBSTITUTION'");
+		} catch (\mysqli_sql_exception $e) {
 			throw new \Exception('Error: Could not make a database link using ' . $username . '@' . $hostname . '!');
 		}
 	}
 
-	public function query($sql) {
-		$query = $this->connection->query($sql);
+	public function query(string $sql): bool|object {
+		try {
+			$query = $this->connection->query($sql);
 
-		if (!$this->connection->errno) {
 			if ($query instanceof \mysqli_result) {
 				$data = [];
 
@@ -44,24 +44,24 @@ class MySQLi {
 			} else {
 				return true;
 			}
-		} else {
+		} catch (\mysqli_sql_exception $e) {
 			throw new \Exception('Error: ' . $this->connection->error  . '<br />Error No: ' . $this->connection->errno . '<br />' . $sql);
 		}
 	}
 
-	public function escape($value) {
+	public function escape(string $value): string {
 		return $this->connection->real_escape_string($value);
 	}
 	
-	public function countAffected() {
+	public function countAffected(): int {
 		return $this->connection->affected_rows;
 	}
 
-	public function getLastId() {
+	public function getLastId(): int {
 		return $this->connection->insert_id;
 	}
 	
-	public function isConnected() {
+	public function isConnected(): bool {
 		if ($this->connection) {
 			return $this->connection->ping();
 		} else {
@@ -79,7 +79,7 @@ class MySQLi {
 		if ($this->connection) {
 			$this->connection->close();
 
-			$this->connection = '';
+			unset($this->connection);
 		}
 	}
 }

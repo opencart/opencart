@@ -15,14 +15,40 @@ class Registry {
 	private $data = [];
 
 	/**
+	 * __get
+	 *
+	 * https://www.php.net/manual/en/language.oop5.overloading.php#object.get
+	 *
+	 * @param    string $key
+	 *
+	 * @return   object
+	 */
+	public function __get(string $key): object|null {
+		return $this->get($key);
+	}
+
+	/**
+	 * __set
+	 *
+	 * https://www.php.net/manual/en/language.oop5.overloading.php#object.set
+	 *
+	 * @param    string $key
+	 * @param    object $value
+	 *
+	 * @return    object
+	 */
+	public function __set(string $key, object $value): void {
+		$this->set($key, $value);
+	}
+	/**
      * Get
      *
      * @param	string	$key
 	 * 
 	 * @return	mixed
      */
-	public function get($key) {
-		return isset($this->data[$key]) ? $this->data[$key] : '';
+	public function get(string $key): object|null {
+		return isset($this->data[$key]) ? $this->data[$key] : null;
 	}
 
     /**
@@ -31,7 +57,7 @@ class Registry {
      * @param	string	$key
 	 * @param	string	$value
      */	
-	public function set($key, $value) {
+	public function set(string $key, object $value): void {
 		$this->data[$key] = $value;
 	}
 	
@@ -42,7 +68,7 @@ class Registry {
 	 *
 	 * @return	bool
      */
-	public function has($key) {
+	public function has(string $key): bool {
 		return isset($this->data[$key]);
 	}
 
@@ -55,7 +81,7 @@ class Registry {
 	 *
 	 * @return	void
 	 */
-	public function unset($key) {
+	public function unset(string $key): void {
 		if (isset($this->data[$key])) {
 			unset($this->data[$key]);
 		}

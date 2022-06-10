@@ -1,0 +1,115 @@
+{{ header }}
+<div id="account-return" class="container">
+  <ul class="breadcrumb">
+    {% for breadcrumb in breadcrumbs %}
+      <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+    {% endfor %}
+  </ul>
+  <div class="row">{{ column_left }}
+    <div id="content" class="col">{{ content_top }}
+      <h1>{{ heading_title }}</h1>
+      <table class="table table-bordered table-hover">
+        <thead>
+          <tr>
+            <td class="text-start" colspan="2">{{ text_return_detail }}</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="text-start" style="width: 50%;"><b>{{ text_return_id }}</b> #{{ return_id }}
+              <br/>
+              <b>{{ text_date_added }}</b> {{ date_added }}</td>
+            <td class="text-start" style="width: 50%;"><b>{{ text_orders_id }}</b> #{{ order_id }}
+              <br/>
+              <b>{{ text_date_ordered }}</b> {{ date_ordered }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <h3>{{ text_product }}</h3>
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+          <thead>
+            <tr>
+              <td class="text-start" style="width: 33.3%;">{{ column_product }}</td>
+              <td class="text-start" style="width: 33.3%;">{{ column_model }}</td>
+              <td class="text-end" style="width: 33.3%;">{{ column_quantity }}</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-start">{{ product }}</td>
+              <td class="text-start">{{ model }}</td>
+              <td class="text-end">{{ quantity }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <h3>{{ text_reason }}</h3>
+      <div class="table-responsive">
+        <table class="list table table-bordered table-hover">
+          <thead>
+            <tr>
+              <td class="text-start" style="width: 33.3%;">{{ column_reason }}</td>
+              <td class="text-start" style="width: 33.3%;">{{ column_opened }}</td>
+              <td class="text-start" style="width: 33.3%;">{{ column_action }}</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-start">{{ reason }}</td>
+              <td class="text-start">{{ opened }}</td>
+              <td class="text-start">{{ action }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      {% if comment %}
+        <div class="table-responsive">
+          <table class="table table-bordered table-hover">
+            <thead>
+              <tr>
+                <td class="text-start">{{ text_comment }}</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="text-start">{{ comment }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      {% endif %}
+      <h3>{{ text_history }}</h3>
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+          <thead>
+            <tr>
+              <td class="text-start" style="width: 33.3%;">{{ column_date_added }}</td>
+              <td class="text-start" style="width: 33.3%;">{{ column_status }}</td>
+              <td class="text-start" style="width: 33.3%;">{{ column_comment }}</td>
+            </tr>
+          </thead>
+          <tbody>
+            {% if histories %}
+              {% for history in histories %}
+                <tr>
+                  <td class="text-start">{{ history.date_added }}</td>
+                  <td class="text-start">{{ history.status }}</td>
+                  <td class="text-start">{{ history.comment }}</td>
+                </tr>
+              {% endfor %}
+            {% else %}
+              <tr>
+                <td colspan="3" class="text-center">{{ text_no_results }}</td>
+              </tr>
+            {% endif %}
+          </tbody>
+        </table>
+      </div>
+      <div class="d-inline-block pt-2 pd-2 w-100">
+        <div class="float-end"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
+      </div>
+      {{ content_bottom }}</div>
+    {{ column_right }}</div>
+</div>
+{{ footer }}

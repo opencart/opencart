@@ -1,7 +1,7 @@
 <?php
-namespace Opencart\Application\Model\Install;
+namespace Opencart\Install\Model\Install;
 class Install extends \Opencart\System\Engine\Model {
-	public function database($data) {
+	public function database(array $data): void {
 		$db = new \Opencart\System\Library\DB($data['db_driver'], html_entity_decode($data['db_hostname'], ENT_QUOTES, 'UTF-8'), html_entity_decode($data['db_username'], ENT_QUOTES, 'UTF-8'), html_entity_decode($data['db_password'], ENT_QUOTES, 'UTF-8'), html_entity_decode($data['db_database'], ENT_QUOTES, 'UTF-8'), $data['db_port']);
 
 		// Structure

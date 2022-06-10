@@ -95,7 +95,7 @@ class CliInstall extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($output);
 	}
 
-	public function install($argv) {
+	public function install($argv): string {
 		// Options
 		$option = [
 			'username'    => 'admin',

@@ -1,13 +1,13 @@
 <?php
 namespace Opencart\System\Library\Cart;
 class Customer {
-	private $customer_id = 0;
-	private $firstname = '';
-	private $lastname = '';
-	private $customer_group_id = 0;
-	private $email = '';
-	private $telephone = '';
-	private $newsletter = false;
+	private int $customer_id = 0;
+	private string $firstname = '';
+	private string $lastname = '';
+	private int $customer_group_id = 0;
+	private string $email = '';
+	private string $telephone = '';
+	private bool $newsletter = false;
 
 	public function __construct(\Opencart\System\Engine\Registry $registry) {
 		$this->config = $registry->get('config');

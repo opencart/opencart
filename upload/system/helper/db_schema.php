@@ -2605,8 +2605,8 @@ function db_schema() {
 				'not_null' => true
 			],
 			[
-				'name' => 'image',
-				'type' => 'varchar(64)',
+				'name' => 'path',
+				'type' => 'varchar(255)',
 				'not_null' => true
 			],
 			[
@@ -4132,12 +4132,6 @@ function db_schema() {
 			[
 				'name' => 'status',
 				'type' => 'tinyint(1)',
-				'not_null' => true,
-				'default' => '0'
-			],
-			[
-				'name' => 'viewed',
-				'type' => 'int(5)',
 				'not_null' => true,
 				'default' => '0'
 			],

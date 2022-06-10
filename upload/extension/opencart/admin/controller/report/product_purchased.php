@@ -94,11 +94,11 @@ class ProductPurchased extends \Opencart\System\Engine\Controller {
 			'limit'                  => $this->config->get('config_pagination')
 		];
 
-		$this->load->model('extension/opencart/report/product');
+		$this->load->model('extension/opencart/report/product_purchased');
 
-		$product_total = $this->model_extension_opencart_report_product->getTotalPurchased($filter_data);
+		$product_total = $this->model_extension_opencart_report_product_purchased->getTotalPurchased($filter_data);
 
-		$results = $this->model_extension_opencart_report_product->getPurchased($filter_data);
+		$results = $this->model_extension_opencart_report_product_purchased->getPurchased($filter_data);
 
 		foreach ($results as $result) {
 			$data['products'][] = [

@@ -334,12 +334,6 @@ class Store extends \Opencart\System\Engine\Controller {
 			$data['config_product_count'] = 10;
 		}
 
-		if (isset($store_info['config_cookie_id'])) {
-			$data['config_cookie_id'] = $store_info['config_cookie_id'];
-		} else {
-			$data['config_cookie_id'] = '';
-		}
-
 		if (isset($store_info['config_gdpr_id'])) {
 			$data['config_gdpr_id'] = $store_info['config_gdpr_id'];
 		} else {

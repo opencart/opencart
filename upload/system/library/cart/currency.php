@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\System\Library\Cart;
 class Currency {
-	private $currencies = [];
+	private array $currencies = [];
 
 	public function __construct(\Opencart\System\Engine\Registry $registry) {
 		$this->db = $registry->get('db');

@@ -62,6 +62,10 @@ class ProductPurchased extends \Opencart\System\Engine\Controller {
 
 		$data['list'] = $this->getReport();
 
+		$this->load->model('localisation/order_status');
+
+		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
+
 		$data['user_token'] = $this->session->data['user_token'];
 
 		$this->response->setOutput($this->load->view('extension/opencart/report/product_purchased', $data));
@@ -122,10 +126,6 @@ class ProductPurchased extends \Opencart\System\Engine\Controller {
 				'total'    => $this->currency->format($result['total'], $this->config->get('config_currency'))
 			];
 		}
-
-		$this->load->model('localisation/order_status');
-
-		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 
 		$url = '';
 

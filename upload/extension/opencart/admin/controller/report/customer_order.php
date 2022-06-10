@@ -62,6 +62,10 @@ class CustomerOrder extends \Opencart\System\Engine\Controller {
 
 		$data['list'] = $this->getReport();
 
+		$this->load->model('localisation/order_status');
+
+		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
+
 		$data['user_token'] = $this->session->data['user_token'];
 
 		$this->response->setOutput($this->load->view('extension/opencart/report/customer_order', $data));
@@ -133,10 +137,6 @@ class CustomerOrder extends \Opencart\System\Engine\Controller {
 				'edit'           => $this->url->link('customer/customer|form', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id'])
 			];
 		}
-
-		$this->load->model('localisation/order_status');
-
-		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 
 		$url = '';
 

@@ -62,6 +62,32 @@ class SaleReturn extends \Opencart\System\Engine\Controller {
 
 		$data['list'] = $this->getReport();
 
+		$this->load->model('localisation/return_status');
+
+		$data['return_statuses'] = $this->model_localisation_return_status->getReturnStatuses();
+
+		$data['groups'] = [];
+
+		$data['groups'][] = [
+			'text'  => $this->language->get('text_year'),
+			'value' => 'year',
+		];
+
+		$data['groups'][] = [
+			'text'  => $this->language->get('text_month'),
+			'value' => 'month',
+		];
+
+		$data['groups'][] = [
+			'text'  => $this->language->get('text_week'),
+			'value' => 'week',
+		];
+
+		$data['groups'][] = [
+			'text'  => $this->language->get('text_day'),
+			'value' => 'day',
+		];
+
 		$data['user_token'] = $this->session->data['user_token'];
 
 		$this->response->setOutput($this->load->view('extension/opencart/report/sale_return', $data));
@@ -128,32 +154,6 @@ class SaleReturn extends \Opencart\System\Engine\Controller {
 				'returns'    => $result['returns']
 			];
 		}
-
-		$this->load->model('localisation/return_status');
-
-		$data['return_statuses'] = $this->model_localisation_return_status->getReturnStatuses();
-
-		$data['groups'] = [];
-
-		$data['groups'][] = [
-			'text'  => $this->language->get('text_year'),
-			'value' => 'year',
-		];
-
-		$data['groups'][] = [
-			'text'  => $this->language->get('text_month'),
-			'value' => 'month',
-		];
-
-		$data['groups'][] = [
-			'text'  => $this->language->get('text_week'),
-			'value' => 'week',
-		];
-
-		$data['groups'][] = [
-			'text'  => $this->language->get('text_day'),
-			'value' => 'day',
-		];
 
 		$url = '';
 

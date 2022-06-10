@@ -62,6 +62,32 @@ class SaleOrder extends \Opencart\System\Engine\Controller {
 
 		$data['list'] = $this->getReport();
 
+		$this->load->model('localisation/order_status');
+
+		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
+
+		$data['groups'] = [];
+
+		$data['groups'][] = [
+			'text'  => $this->language->get('text_year'),
+			'value' => 'year',
+		];
+
+		$data['groups'][] = [
+			'text'  => $this->language->get('text_month'),
+			'value' => 'month',
+		];
+
+		$data['groups'][] = [
+			'text'  => $this->language->get('text_week'),
+			'value' => 'week',
+		];
+
+		$data['groups'][] = [
+			'text'  => $this->language->get('text_day'),
+			'value' => 'day',
+		];
+
 		$data['user_token'] = $this->session->data['user_token'];
 
 		$this->response->setOutput($this->load->view('extension/opencart/report/sale_order', $data));
@@ -131,32 +157,6 @@ class SaleOrder extends \Opencart\System\Engine\Controller {
 				'total'      => $this->currency->format($result['total'], $this->config->get('config_currency'))
 			];
 		}
-
-		$this->load->model('localisation/order_status');
-
-		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
-
-		$data['groups'] = [];
-
-		$data['groups'][] = [
-			'text'  => $this->language->get('text_year'),
-			'value' => 'year',
-		];
-
-		$data['groups'][] = [
-			'text'  => $this->language->get('text_month'),
-			'value' => 'month',
-		];
-
-		$data['groups'][] = [
-			'text'  => $this->language->get('text_week'),
-			'value' => 'week',
-		];
-
-		$data['groups'][] = [
-			'text'  => $this->language->get('text_day'),
-			'value' => 'day',
-		];
 
 		$url = '';
 

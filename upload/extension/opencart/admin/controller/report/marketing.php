@@ -62,6 +62,10 @@ class Marketing extends \Opencart\System\Engine\Controller {
 
 		$data['list'] = $this->getReport();
 
+		$this->load->model('localisation/order_status');
+
+		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
+
 		$data['user_token'] = $this->session->data['user_token'];
 
 		$this->response->setOutput($this->load->view('extension/opencart/report/marketing', $data));
@@ -121,13 +125,9 @@ class Marketing extends \Opencart\System\Engine\Controller {
 				'clicks'   => $result['clicks'],
 				'orders'   => $result['orders'],
 				'total'    => $this->currency->format((float)$result['total'], $this->config->get('config_currency')),
-				'save'   => $this->url->link('marketing/marketing/edit', 'user_token=' . $this->session->data['user_token'] . '&marketing_id=' . $result['marketing_id'])
+				'save'     => $this->url->link('marketing/marketing/edit', 'user_token=' . $this->session->data['user_token'] . '&marketing_id=' . $result['marketing_id'])
 			];
 		}
-
-		$this->load->model('localisation/order_status');
-
-		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 
 		$url = '';
 

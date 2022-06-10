@@ -36,7 +36,7 @@ class Marketing extends \Opencart\System\Engine\Model {
 			$implode[] = "o.`order_status_id` = '" . (int)$order_status_id . "'";
 		}
 
-		$sql = "SELECT *, (SELECT COUNT(*) FROM `" . DB_PREFIX . "order` o WHERE (" . implode(" OR ", $implode) . ") AND o.`marketing_id` = m.`marketing_id`) AS orders FROM `" . DB_PREFIX . "marketing` m";
+		$sql = "SELECT *, (SELECT COUNT(*) FROM `" . DB_PREFIX . "order` o WHERE (" . implode(" OR ", $implode) . ") AND o.`marketing_id` = m.`marketing_id`) AS `orders` FROM `" . DB_PREFIX . "marketing` m";
 
 		$implode = [];
 

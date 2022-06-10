@@ -17,7 +17,7 @@ class StockStatus extends \Opencart\System\Engine\Model {
 		return $stock_status_id;
 	}
 
-	public function editStockStatus(int $stock_status_id, array $data) {
+	public function editStockStatus(int $stock_status_id, array $data): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "stock_status` WHERE `stock_status_id` = '" . (int)$stock_status_id . "'");
 
 		foreach ($data['stock_status'] as $language_id => $value) {

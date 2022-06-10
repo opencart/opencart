@@ -77,7 +77,7 @@ $_['entry_width']                      = 'Width';
 $_['entry_height']                     = 'Height';
 
 // Help
-$_['help_url']                         = 'Include the full URL to your store. Make sure to add \'/\' at the end. Example: http://www.yourdomain.com/path/<br /><br />Don\'t use directories to create a new store. You should always point another domain or sub domain to your hosting.';
+$_['help_url']                         = 'Include the full URL to your store. Make sure to add \'/\' at the end. Example: http://www.yourdomain.com/path/<br/><br/>Don\'t use directories to create a new store. You should always point another domain or sub domain to your hosting.';
 $_['help_geocode']                     = 'Please enter your store location geocode manually.';
 $_['help_open']                        = 'Fill in your stores opening times.';
 $_['help_comment']                     = 'This field is for any special notes you would like to tell the customer i.e. Store does not accept cheques.';

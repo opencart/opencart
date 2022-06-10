@@ -11,7 +11,7 @@ class PDO {
 		}
 
 		try {
-			$pdo = @new \PDO('mysql:host=' . $hostname . ';port=' . $port . ';dbname=' . $database, $username, $password, array(\PDO::ATTR_PERSISTENT => false));
+			$pdo = @new \PDO('mysql:host=' . $hostname . ';port=' . $port . ';dbname=' . $database . ';charset=utf8mb4', $username, $password, array(\PDO::ATTR_PERSISTENT => false, \PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8mb4 COLLATE utf8mb4_general_ci'));
 		} catch (\PDOException $e) {
 			throw new \Exception('Error: Could not make a database link using ' . $username . '@' . $hostname . '!');
 		}
@@ -52,7 +52,7 @@ class PDO {
 				return true;
 			}
 		} catch (\PDOException $e) {
-			throw new \Exception('Error: ' . $e->getMessage() . ' Error Code : ' . $e->getCode() . ' <br />' . $sql);
+			throw new \Exception('Error: ' . $e->getMessage() . ' <br/>Error Code : ' . $e->getCode() . ' <br/>' . $sql);
 		}
 
 		return false;

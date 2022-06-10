@@ -83,7 +83,7 @@ class User {
 		$this->username = '';
 	}
 
-	public function hasPermission($key, $value) {
+	public function hasPermission($key, $value): bool {
 		if (isset($this->permission[$key])) {
 			return in_array($value, $this->permission[$key]);
 		} else {

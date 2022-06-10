@@ -445,7 +445,7 @@ $('#button-transaction').on('click', function (e) {
     e.preventDefault();
 
     $.ajax({
-        url: 'index.php?route=customer/customer|addtransaction&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val(),
+        url: 'index.php?route=customer/customer|addTransaction&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val(),
         type: 'post',
         dataType: 'json',
         data: 'description=' + encodeURIComponent($('#input-transaction-description').val()) + '&amount=' + encodeURIComponent($('#input-transaction-amount').val()),

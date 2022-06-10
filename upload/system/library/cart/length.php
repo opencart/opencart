@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\System\Library\Cart;
 class Length {
-	private $lengths = [];
+	private array $lengths = [];
 
 	public function __construct(\Opencart\System\Engine\Registry $registry) {
 		$this->db = $registry->get('db');

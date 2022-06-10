@@ -83,7 +83,7 @@ class Address extends \Opencart\System\Engine\Model {
 				'country'   => $country
 			];
 
-			$address_format = str_replace(["\r\n", "\r", "\n"], '<br />', preg_replace(["/\s\s+/", "/\r\r+/", "/\n\n+/"], '<br />', trim(str_replace($find, $replace, $address_format))));
+			$address_format = str_replace(["\r\n", "\r", "\n"], '<br/>', preg_replace(["/\s\s+/", "/\r\r+/", "/\n\n+/"], '<br/>', trim(str_replace($find, $replace, $address_format))));
 
 			return [
 				'address_id'     => $address_query->row['address_id'],

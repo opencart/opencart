@@ -1106,11 +1106,6 @@ function db_schema() {
 				'not_null' => true
 			],
 			[
-				'name' => 'wishlist',
-				'type' => 'text',
-				'not_null' => true
-			],
-			[
 				'name' => 'newsletter',
 				'type' => 'tinyint(1)',
 				'not_null' => true,

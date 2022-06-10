@@ -142,7 +142,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	public function getTotalCustomers(array $data = []): int {
-		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer` `c`";
+		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer` c";
 
 		if (!empty($data['filter_affiliate'])) {
 			$sql .= " LEFT JOIN `" . DB_PREFIX . "customer_affiliate` ca ON (ca.`customer_id` = c.`customer_id`)";
@@ -195,7 +195,7 @@ class Customer extends \Opencart\System\Engine\Model {
 		$address_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "address` WHERE `address_id` = '" . (int)$address_id . "'");
 
 		if ($address_query->num_rows) {
-			$country_query = $this->db->query("SELECT *, c.name FROM `" . DB_PREFIX . "country` `c` LEFT JOIN `" . DB_PREFIX . "address_format` `af` ON (`c`.`address_format_id` = `af`.`address_format_id`) WHERE `country_id` = '" . (int)$address_query->row['country_id'] . "'");
+			$country_query = $this->db->query("SELECT *, c.name FROM `" . DB_PREFIX . "country` c LEFT JOIN `" . DB_PREFIX . "address_format` af ON (c.`address_format_id` = af.`address_format_id`) WHERE `country_id` = '" . (int)$address_query->row['country_id'] . "'");
 
 			if ($country_query->num_rows) {
 				$country = $country_query->row['name'];
@@ -344,7 +344,6 @@ class Customer extends \Opencart\System\Engine\Model {
 	public function getTransactionTotal(int $customer_id): int {
 		$query = $this->db->query("SELECT SUM(`amount`) AS `total` FROM `" . DB_PREFIX . "customer_transaction` WHERE `customer_id` = '" . (int)$customer_id . "'");
 
-
 		return (int)$query->row['total'];
 	}
 
@@ -356,6 +355,10 @@ class Customer extends \Opencart\System\Engine\Model {
 
 	public function deletePaymentMethod(int $customer_payment_id): void {
 		$this->db->query("DELETE `" . DB_PREFIX . "customer_payment` WHERE `customer_payment_id` = '" . (int)$customer_payment_id . "'");
+	}
+
+	public function editPaymentMethodStatus(int $customer_payment_id, bool $status): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "customer_payment` SET `status` = '" . (int)$status . "' WHERE `customer_payment_id` = '" . (int)$customer_payment_id . "'");
 	}
 
 	public function getPaymentMethod(int $customer_id, int $customer_payment_id): array {

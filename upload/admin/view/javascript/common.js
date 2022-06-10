@@ -137,7 +137,6 @@ var alert = function () {
 }
 
 $(document).ready(alert);
-$(document).on('click', 'button', alert);
 
 // Forms
 $(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function (e) {

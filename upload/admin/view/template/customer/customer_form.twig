@@ -6,9 +6,7 @@
         {% if orders %}
           <a href="{{ orders }}" data-bs-toggle="tooltip" title="{{ button_order }}" class="btn btn-warning"><i class="fas fa-receipt"></i></a>
         {% endif %}
-
         <button type="submit" form="form-customer" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
-
         <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
       <ol class="breadcrumb">
@@ -498,9 +496,9 @@
                 <fieldset>
                   <legend>{{ text_history_add }}</legend>
                   <div class="row mb-3">
-                    <label for="input-history-comment" class="col-sm-2 col-form-label">{{ entry_comment }}</label>
+                    <label for="input-history" class="col-sm-2 col-form-label">{{ entry_comment }}</label>
                     <div class="col-sm-10">
-                      <textarea name="comment" rows="8" placeholder="{{ entry_comment }}" id="input-history-comment" class="form-control"></textarea>
+                      <textarea name="comment" rows="8" placeholder="{{ entry_comment }}" id="input-history" class="form-control"></textarea>
                     </div>
                   </div>
                   <div class="text-end">
@@ -923,20 +921,20 @@ $('#payment-method').on('click', '.pagination a', function (e) {
     $('#payment-method').load(this.href);
 });
 
-$('#form-payment-method').on('submit', function (e) {
+$('#payment-method').on('click', 'button', function (e) {
     e.preventDefault();
 
+    var element = this;
+
     $.ajax({
-        url: 'index.php?route=customer/customer|addtransaction&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val(),
-        type: 'post',
-        data: $('#form-transaction').serialize(),
+        url: $(element).val(),
         dataType: 'json',
         contentType: 'application/x-www-form-urlencoded',
         beforeSend: function () {
-            $('#button-transaction').prop('disabled', true).addClass('loading');
+            $(element).prop('disabled', true).addClass('loading');
         },
         complete: function () {
-            $('#button-transaction').prop('disabled', false).removeClass('loading');
+            $(element).prop('disabled', false).removeClass('loading');
         },
         success: function (json) {
             $('.alert-dismissible').remove();
@@ -948,10 +946,41 @@ $('#form-payment-method').on('submit', function (e) {
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#transaction').load('index.php?route=customer/customer|transaction&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val());
+                $('#payment-method').load('index.php?route=customer/customer|getPayment&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val());
+            }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
 
-                $('#input-transaction-amount').val('');
-                $('#input-transaction-description').val('');
+$('#payment-method').on('change', 'input[name=\'status\']', function (e) {
+    e.preventDefault();
+
+    var element = this;
+
+    $.ajax({
+        url: 'index.php?route=customer/customer|disablePayment&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val(),
+        dataType: 'json',
+        contentType: 'application/x-www-form-urlencoded',
+        beforeSend: function () {
+            $(element).prop('disabled', true);
+        },
+        complete: function () {
+            $(element).prop('disabled', false);
+        },
+        success: function (json) {
+            $('.alert-dismissible').remove();
+
+            if (json['error']) {
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            if (json['success']) {
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                $('#payment-method').load('index.php?route=customer/customer|getPayment&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val());
             }
         },
         error: function (xhr, ajaxOptions, thrownError) {
@@ -970,7 +999,7 @@ $('#form-history').on('submit', function (e) {
     e.preventDefault();
 
     $.ajax({
-        url: 'index.php?route=customer/customer|addhistory&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val(),
+        url: 'index.php?route=customer/customer|addHistory&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val(),
         type: 'post',
         data: $('#form-history').serialize(),
         dataType: 'json',

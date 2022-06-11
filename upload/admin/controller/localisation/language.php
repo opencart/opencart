@@ -218,7 +218,13 @@ class Language extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['locale'] = '';
 		}
-		
+
+		if (!empty($language_info)) {
+			$data['extension'] = $language_info['extension'];
+		} else {
+			$data['extension'] = '';
+		}
+
 		if (!empty($language_info)) {
 			$data['sort_order'] = $language_info['sort_order'];
 		} else {
@@ -228,7 +234,7 @@ class Language extends \Opencart\System\Engine\Controller {
 		if (!empty($language_info)) {
 			$data['status'] = $language_info['status'];
 		} else {
-			$data['status'] = true;
+			$data['status'] = 1;
 		}
 
 		$data['header'] = $this->load->controller('common/header');

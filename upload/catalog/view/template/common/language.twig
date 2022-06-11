@@ -10,7 +10,7 @@
     </div>
     <ul class="dropdown-menu">
       {% for language in languages %}
-        <li><a href="{{ language.href }}" class="dropdown-item"><img src="catalog/language/{{ language.code }}/{{ language.code }}.png" alt="{{ language.name }}" title="{{ language.name }}"/> {{ language.name }}</a></li>
+        <li><a href="{{ language.href }}" class="dropdown-item"><img src="{{ language.image }}" alt="{{ language.name }}" title="{{ language.name }}"/> {{ language.name }}</a></li>
       {% endfor %}
     </ul>
   </div>

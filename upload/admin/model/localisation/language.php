@@ -2,7 +2,7 @@
 namespace Opencart\Admin\Model\Localisation;
 class Language extends \Opencart\System\Engine\Model {
 	public function addLanguage(array $data): int {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "language` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `code` = '" . $this->db->escape((string)$data['code']) . "', `locale` = '" . $this->db->escape((string)$data['locale']) . "', `sort_order` = '" . (int)$data['sort_order'] . "', `status` = '" . (bool)$data['status'] . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "language` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `code` = '" . $this->db->escape((string)$data['code']) . "', `locale` = '" . $this->db->escape((string)$data['locale']) . "', `extension` = '" . $this->db->escape((string)$data['extension']) . "', `sort_order` = '" . (int)$data['sort_order'] . "', `status` = '" . (bool)$data['status'] . "'");
 
 		$this->cache->delete('catalog.language');
 		$this->cache->delete('admin.language');
@@ -201,7 +201,7 @@ class Language extends \Opencart\System\Engine\Model {
 	public function editLanguage(int $language_id, array $data): void {
 		$language_query = $this->db->query("SELECT `code` FROM `" . DB_PREFIX . "language` WHERE `language_id` = '" . (int)$language_id . "'");
 
-		$this->db->query("UPDATE `" . DB_PREFIX . "language` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `code` = '" . $this->db->escape((string)$data['code']) . "', `locale` = '" . $this->db->escape((string)$data['locale']) . "', `sort_order` = '" . (int)$data['sort_order'] . "', `status` = '" . (bool)$data['status'] . "' WHERE `language_id` = '" . (int)$language_id . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "language` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `code` = '" . $this->db->escape((string)$data['code']) . "', `locale` = '" . $this->db->escape((string)$data['locale']) . "', `extension` = '" . $this->db->escape((string)$data['extension']) . "', `sort_order` = '" . (int)$data['sort_order'] . "', `status` = '" . (bool)$data['status'] . "' WHERE `language_id` = '" . (int)$language_id . "'");
 
 		if ($language_query->row['code'] != $data['code']) {
 			$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `value` = '" . $this->db->escape((string)$data['code']) . "' WHERE `key` = 'config_language' AND `value` = '" . $this->db->escape($language_query->row['code']) . "'");

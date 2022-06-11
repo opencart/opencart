@@ -2605,7 +2605,7 @@ function db_schema() {
 				'not_null' => true
 			],
 			[
-				'name' => 'extension',
+				'name' => 'image',
 				'type' => 'varchar(255)',
 				'not_null' => true
 			],

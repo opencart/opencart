@@ -4136,6 +4136,12 @@ function db_schema() {
 				'default' => '0'
 			],
 			[
+				'name' => 'viewed',
+				'type' => 'int(5)',
+				'not_null' => true,
+				'default' => '0'
+			],
+			[
 				'name' => 'date_added',
 				'type' => 'datetime',
 				'not_null' => true

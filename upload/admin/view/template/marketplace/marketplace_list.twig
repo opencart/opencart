@@ -129,31 +129,31 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#button-opencart').on('click', function(e) {
+$('#button-opencart').on('click', function (e) {
     $('#modal-opencart').remove();
 
     $.ajax({
         url: 'index.php?route=marketplace/api&user_token={{ user_token }}',
         dataType: 'html',
-        beforeSend: function() {
+        beforeSend: function () {
             $('#button-opencart').prop('disabled', true).addClass('loading');
         },
-        complete: function() {
+        complete: function () {
             $('#button-opencart').prop('disabled', false).removeClass('loading');
         },
-        success: function(html) {
+        success: function (html) {
             $('body').append(html);
 
             $('#modal-opencart').modal('show');
         },
-        error: function(xhr, ajaxOptions, thrownError) {
+        error: function (xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 });
 //--></script>
 <script type="text/javascript"><!--
-$('#button-filter').on('click', function(e) {
+$('#button-filter').on('click', function (e) {
     var url = 'index.php?route=marketplace/marketplace&user_token={{ user_token }}';
 
     var input = $('#extension-filter :input');
@@ -167,7 +167,7 @@ $('#button-filter').on('click', function(e) {
     location = url;
 });
 
-$('#input-search').keydown(function(e) {
+$('#input-search').keydown(function (e) {
     if (e.keyCode == 13) {
         e.preventDefault();
 

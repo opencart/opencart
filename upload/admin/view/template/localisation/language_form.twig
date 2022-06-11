@@ -28,11 +28,7 @@
           <div class="row mb-3 required">
             <label for="input-code" class="col-sm-2 col-form-label">{{ entry_code }}</label>
             <div class="col-sm-10">
-              <select name="code" id="input-code" class="form-select">
-                {% for language in languages %}
-                  <option value="{{ language }}"{% if language == code %} selected="selected"{% endif %}>{{ language }}</option>
-                {% endfor %}
-              </select>
+              <input type="text" name="code" value="{{ code }}" placeholder="{{ entry_code }}" id="input-code" class="form-control"/>
               <div id="error-code" class="invalid-feedback"></div>
             </div>
           </div>

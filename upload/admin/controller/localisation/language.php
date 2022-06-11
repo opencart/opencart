@@ -212,14 +212,6 @@ class Language extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['code'] = '';
 		}
-		
-		$data['languages'] = [];
-		
-		$folders = glob(DIR_LANGUAGE . '*', GLOB_ONLYDIR);
-
-		foreach ($folders as $folder) {
-			$data['languages'][] = basename($folder);
-		}
 
 		if (!empty($language_info)) {
 			$data['locale'] = $language_info['locale'];

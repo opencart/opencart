@@ -126,6 +126,7 @@ var datetimepicker = function () {
 
 $(document).ready(datetimepicker);
 $(document).on('click', 'button', datetimepicker);
+$(document).on('click', 'button', datetimepicker);
 
 // Alert Fade
 var alert = function () {

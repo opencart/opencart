@@ -36,6 +36,50 @@ $(document).ready(tooltip);
 // Makes tooltips work on ajax generated content
 $(document).on('click', 'button', tooltip);
 
+// Daterangepicker
+var datetimepicker = function () {
+    $('.date').daterangepicker({
+        singleDatePicker: true,
+        autoApply: true,
+        autoUpdateInput: false,
+        locale: {
+            format: 'YYYY-MM-DD'
+        }
+    }, function (start, end) {
+        $(this.element).val(start.format('YYYY-MM-DD'));
+    });
+
+    $('.time').daterangepicker({
+        singleDatePicker: true,
+        datePicker: false,
+        autoApply: true,
+        autoUpdateInput: false,
+        timePicker: true,
+        timePicker24Hour: true,
+        locale: {
+            format: 'HH:mm'
+        }
+    }).on('show.daterangepicker', function (ev, picker) {
+        picker.container.find('.calendar-table').hide();
+    });
+
+    $('.datetime').daterangepicker({
+        singleDatePicker: true,
+        autoApply: true,
+        autoUpdateInput: false,
+        timePicker: true,
+        timePicker24Hour: true,
+        locale: {
+            format: 'YYYY-MM-DD HH:mm'
+        }
+    }, function (start, end) {
+        $(this.element).val(start.format('YYYY-MM-DD HH:mm'));
+    });
+}
+
+$(document).ready(datetimepicker);
+$(document).on('click', 'button', datetimepicker);
+
 // Alert Fade
 var alert = function () {
     window.setTimeout(function() {

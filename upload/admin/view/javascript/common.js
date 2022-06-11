@@ -87,7 +87,6 @@ var tooltip = function () {
 }
 
 $(document).ready(tooltip);
-// Makes tooltips work on ajax generated content
 $(document).on('click', 'button', tooltip);
 
 // Daterangepicker
@@ -95,15 +94,19 @@ var datetimepicker = function () {
     $('.date').daterangepicker({
         singleDatePicker: true,
         autoApply: true,
+        autoUpdateInput: false,
         locale: {
             format: 'YYYY-MM-DD'
         }
+    }, function (start, end) {
+        $(this.element).val(start.format('YYYY-MM-DD'));
     });
 
     $('.time').daterangepicker({
         singleDatePicker: true,
         datePicker: false,
         autoApply: true,
+        autoUpdateInput: false,
         timePicker: true,
         timePicker24Hour: true,
         locale: {
@@ -116,22 +119,24 @@ var datetimepicker = function () {
     $('.datetime').daterangepicker({
         singleDatePicker: true,
         autoApply: true,
+        autoUpdateInput: false,
         timePicker: true,
         timePicker24Hour: true,
         locale: {
             format: 'YYYY-MM-DD HH:mm'
         }
+    }, function (start, end) {
+        $(this.element).val(start.format('YYYY-MM-DD HH:mm'));
     });
 }
 
 $(document).ready(datetimepicker);
 $(document).on('click', 'button', datetimepicker);
-$(document).on('click', 'button', datetimepicker);
 
 // Alert Fade
 var alert = function () {
-    window.setTimeout(function() {
-        $('.alert-dismissible').fadeTo(1000, 0, function() {
+    window.setTimeout(function () {
+        $('.alert-dismissible').fadeTo(1000, 0, function () {
             $(this).remove();
         });
     }, 7000);
@@ -148,8 +153,6 @@ $(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function (e) {
     var form = e.target;
 
     var action = $(form).attr('action');
-
-    console.log();
 
     if (e.originalEvent.submitter !== undefined) {
         var button = e.originalEvent.submitter;
@@ -174,6 +177,14 @@ $(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function (e) {
     if (enctype === undefined) {
         enctype = 'application/x-www-form-urlencoded';
     }
+
+    console.log(e);
+    console.log('element ' + element);
+    console.log('action ' + action);
+    console.log('button ' + button);
+    console.log('formaction ' + formaction);
+    console.log('method ' + method);
+    console.log('enctype ' + enctype);
 
     // https://github.com/opencart/opencart/issues/9690
     if (typeof CKEDITOR != 'undefined') {

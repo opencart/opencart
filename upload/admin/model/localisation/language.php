@@ -291,7 +291,6 @@ class Language extends \Opencart\System\Engine\Model {
 						'name'        => $result['name'],
 						'code'        => $result['code'],
 						'locale'      => $result['locale'],
-						'image'       => $result['image'],
 						'sort_order'  => $result['sort_order'],
 						'status'      => $result['status']
 					];

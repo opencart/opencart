@@ -62,6 +62,32 @@ class SaleShipping extends \Opencart\System\Engine\Controller {
 
 		$data['list'] = $this->getReport();
 
+		$this->load->model('localisation/order_status');
+
+		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
+
+		$data['groups'] = [];
+
+		$data['groups'][] = [
+			'text'  => $this->language->get('text_year'),
+			'value' => 'year',
+		];
+
+		$data['groups'][] = [
+			'text'  => $this->language->get('text_month'),
+			'value' => 'month',
+		];
+
+		$data['groups'][] = [
+			'text'  => $this->language->get('text_week'),
+			'value' => 'week',
+		];
+
+		$data['groups'][] = [
+			'text'  => $this->language->get('text_day'),
+			'value' => 'day',
+		];
+
 		$data['user_token'] = $this->session->data['user_token'];
 
 		$this->response->setOutput($this->load->view('extension/opencart/report/sale_shipping', $data));
@@ -131,32 +157,6 @@ class SaleShipping extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		$this->load->model('localisation/order_status');
-
-		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
-
-		$data['groups'] = [];
-
-		$data['groups'][] = [
-			'text'  => $this->language->get('text_year'),
-			'value' => 'year',
-		];
-
-		$data['groups'][] = [
-			'text'  => $this->language->get('text_month'),
-			'value' => 'month',
-		];
-
-		$data['groups'][] = [
-			'text'  => $this->language->get('text_week'),
-			'value' => 'week',
-		];
-
-		$data['groups'][] = [
-			'text'  => $this->language->get('text_day'),
-			'value' => 'day',
-		];
-
 		$url = '';
 
 		if (isset($this->request->get['filter_date_start'])) {
@@ -179,7 +179,7 @@ class SaleShipping extends \Opencart\System\Engine\Controller {
 			'total' => $order_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination'),
-			'url'   => $this->url->link('extension/opencart/report/sale_shipping|report', 'user_token=' . $this->session->data['user_token'] . '&code=sale_shipping' . $url . '&page={page}')
+			'url'   => $this->url->link('extension/opencart/report/sale_shipping|list', 'user_token=' . $this->session->data['user_token'] . '&code=sale_shipping' . $url . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($order_total) ? (($page - 1) * $this->config->get('config_pagination')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination')) > ($order_total - $this->config->get('config_pagination'))) ? $order_total : ((($page - 1) * $this->config->get('config_pagination')) + $this->config->get('config_pagination')), $order_total, ceil($order_total / $this->config->get('config_pagination')));

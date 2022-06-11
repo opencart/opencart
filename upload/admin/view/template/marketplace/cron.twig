@@ -41,19 +41,19 @@ $('#cron').on('click', 'thead a, .pagination a', function (e) {
     $('#cron').load(this.href);
 });
 
-$('#cron').on('click', '.btn-success, .btn-warning, .btn-danger', function() {
+$('#cron').on('click', '.btn-success, .btn-warning, .btn-danger', function () {
     var element = this;
 
     $.ajax({
         url: $(element).val(),
         dataType: 'json',
-        beforeSend: function() {
+        beforeSend: function () {
             $(element).prop('disabled', true).addClass('loading');
         },
-        complete: function() {
+        complete: function () {
             $(element).prop('disabled', false).removeClass('loading');
         },
-        success: function(json) {
+        success: function (json) {
             if (json['error']) {
                 $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
@@ -64,13 +64,13 @@ $('#cron').on('click', '.btn-success, .btn-warning, .btn-danger', function() {
                 $('#cron').load($('#form-cron').attr('data-oc-load'));
             }
         },
-        error: function(xhr, ajaxOptions, thrownError) {
+        error: function (xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 });
 
-$('#cron').on('click', '.btn-info', function() {
+$('#cron').on('click', '.btn-info', function () {
     var element = this;
 
     $('#modal-cron').remove();

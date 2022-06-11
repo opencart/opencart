@@ -2,19 +2,19 @@
   <button type="button" id="button-confirm" class="btn btn-primary">{{ button_confirm }}</button>
 </div>
 <script type="text/javascript"><!--
-$('#button-confirm').on('click', function() {
+$('#button-confirm').on('click', function () {
     var element = this;
 
     $.ajax({
         url: 'index.php?route=extension/opencart/payment/cod|confirm&language={{ language }}',
         dataType: 'json',
-        beforeSend: function() {
+        beforeSend: function () {
             $(element).prop('disabled', true).addClass('loading');
         },
-        complete: function() {
+        complete: function () {
             $(element).prop('disabled', false).removeClass('loading');
         },
-        success: function(json) {
+        success: function (json) {
             if (json['error']) {
                 $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
@@ -23,7 +23,7 @@ $('#button-confirm').on('click', function() {
                 location = json['redirect'];
             }
         },
-        error: function(xhr, ajaxOptions, thrownError) {
+        error: function (xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });

@@ -89,9 +89,9 @@ var tooltip = function () {
 $(document).ready(tooltip);
 $(document).on('click', 'button', tooltip);
 
-// Daterangepicker
+// Date
 var datetimepicker = function () {
-    $('.date').daterangepicker({
+    $(this).daterangepicker({
         singleDatePicker: true,
         autoApply: true,
         autoUpdateInput: false,
@@ -101,8 +101,13 @@ var datetimepicker = function () {
     }, function (start, end) {
         $(this.element).val(start.format('YYYY-MM-DD'));
     });
+}
 
-    $('.time').daterangepicker({
+$(document).on('focus', '.date', datetimepicker);
+
+// Time
+var datetimepicker = function () {
+    $(this).daterangepicker({
         singleDatePicker: true,
         datePicker: false,
         autoApply: true,
@@ -115,7 +120,12 @@ var datetimepicker = function () {
     }).on('show.daterangepicker', function (ev, picker) {
         picker.container.find('.calendar-table').hide();
     });
+}
 
+$(document).on('focus', '.time', datetimepicker);
+
+// Date Time
+var datetimepicker = function () {
     $('.datetime').daterangepicker({
         singleDatePicker: true,
         autoApply: true,
@@ -130,8 +140,7 @@ var datetimepicker = function () {
     });
 }
 
-$(document).ready(datetimepicker);
-$(document).on('click', 'button', datetimepicker);
+$(document).on('focus', '.datetime', datetimepicker);
 
 // Alert Fade
 var alert = function () {

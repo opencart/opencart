@@ -78,16 +78,12 @@ $(document).ready(function () {
 
 // Tooltip
 var tooltip = function () {
-    $('.tooltip').remove();
-
     // Apply to all on current page
-    $('[data-bs-toggle=\'tooltip\']').each(function (i, element) {
-        bootstrap.Tooltip.getOrCreateInstance(element);
-    });
+    tooltip = bootstrap.Tooltip.getOrCreateInstance(this);
+    tooltip.show();
 }
 
-$(document).ready(tooltip);
-$(document).on('click', 'button', tooltip);
+$(document).on('mouseenter', '[data-bs-toggle=\'tooltip\']', tooltip);
 
 // Date
 var datetimepicker = function () {

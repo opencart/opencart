@@ -7,7 +7,7 @@ class Backup extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SHOW TABLES FROM `" . DB_DATABASE . "`");
 
 		foreach ($query->rows as $result) {
-			if (isset($result['Tables_in_' . DB_DATABASE]) && utf8_substr($result['Tables_in_' . DB_DATABASE], 0, strlen(DB_PREFIX)) == DB_PREFIX) {
+			if (isset($result['Tables_in_' . DB_DATABASE]) && substr($result['Tables_in_' . DB_DATABASE], 0, strlen(DB_PREFIX)) == DB_PREFIX) {
 				$table_data[] = $result['Tables_in_' . DB_DATABASE];
 			}
 		}

@@ -1,7 +1,7 @@
 <?php
-namespace Opencart\Application\Controller\Mail;
+namespace Opencart\Admin\Controller\Mail;
 class Returns extends \Opencart\System\Engine\Controller {
-	public function index($route, $args, $output) {
+	public function index(string &$route, array &$args, mixed &$output): void {
 		if (isset($args[0])) {
 			$return_id = $args[0];
 		} else {
@@ -57,7 +57,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 				$this->language->load($language_code, 'mail', $language_code);
 				$this->language->load('mail/returns', 'mail', $language_code);
 
-				$subject = sprintf($this->language->get('text_subject'), $store_name, $return_id);
+				$subject = sprintf($this->language->get('mail_text_subject'), $store_name, $return_id);
 
 				$data['return_id'] = $return_id;
 				$data['date_added'] = date($this->language->get('date_format_short'), strtotime($return_info['date_modified']));

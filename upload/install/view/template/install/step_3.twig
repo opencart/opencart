@@ -8,8 +8,8 @@
   </div>
   <div class="container">
     {% if error_warning %}
-      <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
+        <button type="button" class="close" data-bs-dismiss="alert"></button>
       </div>
     {% endif %}
     <div class="card">
@@ -33,11 +33,7 @@
                   <div class="form-group col">
                     <label for="input-db-driver" class="col-form-label">{{ entry_db_driver }}</label> <select name="db_driver" id="input-db-driver" class="form-control">
                       {% for driver in drivers %}
-                        {% if db_driver == driver.value %}
-                          <option value="{{ driver.value }}" selected="selected">{{ driver.text }}</option>
-                        {% else %}
-                          <option value="{{ driver.value }}">{{ driver.text }}</option>
-                        {% endif %}
+                        <option value="{{ driver.value }}"{% if db_driver == driver.value %} selected="selected"{% endif %}>{{ driver.text }}</option>
                       {% endfor %}
                     </select>
                     {% if error_db_driver %}
@@ -59,7 +55,7 @@
                     {% endif %}
                   </div>
                   <div class="form-group col">
-                    <label for="input-db-password" class="col-form-label">{{ entry_db_password }}</label> <input type="password" name="db_password" value="{{ db_password }}" id="input-db-password" class="form-control"/>
+                    <label for="input-db-password" class="col-form-label">{{ entry_db_password }}</label> <input type="password" name="db_password" value="{{ db_password }}" id="input-db-password" class="form-control" autocomplete="new-password"/>
                   </div>
                 </div>
                 <div class="form-row">

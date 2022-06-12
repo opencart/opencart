@@ -5,6 +5,8 @@ use Aws\AwsClient;
 
 /**
  * This client is used to interact with the **AWS MediaConnect** service.
+ * @method \Aws\Result addFlowMediaStreams(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise addFlowMediaStreamsAsync(array $args = [])
  * @method \Aws\Result addFlowOutputs(array $args = [])
  * @method \GuzzleHttp\Promise\Promise addFlowOutputsAsync(array $args = [])
  * @method \Aws\Result addFlowSources(array $args = [])
@@ -35,6 +37,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array $args = [])
  * @method \Aws\Result purchaseOffering(array $args = [])
  * @method \GuzzleHttp\Promise\Promise purchaseOfferingAsync(array $args = [])
+ * @method \Aws\Result removeFlowMediaStream(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise removeFlowMediaStreamAsync(array $args = [])
  * @method \Aws\Result removeFlowOutput(array $args = [])
  * @method \GuzzleHttp\Promise\Promise removeFlowOutputAsync(array $args = [])
  * @method \Aws\Result removeFlowSource(array $args = [])
@@ -55,6 +59,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise updateFlowAsync(array $args = [])
  * @method \Aws\Result updateFlowEntitlement(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateFlowEntitlementAsync(array $args = [])
+ * @method \Aws\Result updateFlowMediaStream(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateFlowMediaStreamAsync(array $args = [])
  * @method \Aws\Result updateFlowOutput(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateFlowOutputAsync(array $args = [])
  * @method \Aws\Result updateFlowSource(array $args = [])

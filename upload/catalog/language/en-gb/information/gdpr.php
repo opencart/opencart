@@ -15,6 +15,7 @@ $_['text_access']       = 'You will no longer have access to your %s account.';
 $_['text_history']      = 'You will no longer have access to your order history, invoices, wishlists or downloads.';
 $_['text_limit']        = 'Account deletion requests will be processed after <strong>%s days</strong> so any fraud detection, chargebacks or refunds can be processed.';
 $_['text_success']      = 'Success: An email has been sent to your email address!';
+$_['text_cancel']		= 'Cancel';
 
 // Entry
 $_['entry_email']       = 'E-Mail';

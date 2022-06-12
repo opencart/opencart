@@ -9,6 +9,8 @@ $_['text_default']          = 'Default';
 $_['text_customer']         = 'Customer';
 $_['text_affiliate']        = 'Affiliate';
 $_['text_filter']           = 'Filter';
+$_['text_approve']          = 'Approve';
+$_['text_deny']             = 'Deny';
 
 // Column
 $_['column_customer']       = 'Customer';

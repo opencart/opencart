@@ -1,7 +1,13 @@
 <?php
-namespace Opencart\Application\Controller\Cron;
+namespace Opencart\Admin\Controller\Cron;
 class Currency extends \Opencart\System\Engine\Controller {
-	public function index($cron_id, $code, $cycle, $date_added, $date_modified) {
-		$this->load->controller('extension/currency/' . $this->config->get('config_currency_engine') . '|currency', $this->config->get('config_currency'));
+	public function index(int $cron_id, string $code, string $cycle, string $date_added, string $date_modified): void {
+		$this->load->model('setting/extension');
+
+		$extension_info = $this->model_setting_extension->getExtensionByCode('currency', $this->config->get('config_currency_engine'));
+
+		if ($extension_info) {
+			$this->load->controller('extension/' . $extension_info['extension'] . '/currency/' . $extension_info['code'] . '|currency', $this->config->get('config_currency'));
+		}
 	}
 }

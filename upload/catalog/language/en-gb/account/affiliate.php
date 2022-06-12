@@ -10,7 +10,7 @@ $_['text_payment']              = 'Payment Information';
 $_['text_cheque']               = 'Cheque';
 $_['text_paypal']               = 'PayPal';
 $_['text_bank']                 = 'Bank Transfer';
-$_['text_success']              = 'Success: Your account has been successfully updated.';
+$_['text_success']              = 'Success: Your affiliate account has been successfully updated.';
 $_['text_agree']                = 'I have read and agree to the <a href="%s" class="modal-link"><b>%s</b></a>';
 
 // Entry
@@ -27,6 +27,7 @@ $_['entry_bank_account_name']   = 'Account Name';
 $_['entry_bank_account_number'] = 'Account Number';
 
 // Error
+$_['error_token']               = 'Warning: Affiliate token invalid!';
 $_['error_agree']               = 'Warning: You must agree to the %s!';
 $_['error_cheque']              = 'Cheque Payee Name required!';
 $_['error_paypal']              = 'PayPal Email Address does not appear to be valid!';

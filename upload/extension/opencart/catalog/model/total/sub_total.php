@@ -1,7 +1,7 @@
 <?php
-namespace Opencart\Application\Model\Extension\Opencart\Total;
+namespace Opencart\Catalog\Model\Extension\Opencart\Total;
 class SubTotal extends \Opencart\System\Engine\Model {
-	public function getTotal(&$totals, &$taxes, &$total) {
+	public function getTotal(array &$totals, array &$taxes, float &$total): void {
 		$this->load->language('extension/opencart/total/sub_total');
 
 		$sub_total = $this->cart->getSubTotal();
@@ -17,7 +17,7 @@ class SubTotal extends \Opencart\System\Engine\Model {
 			'code'       => 'sub_total',
 			'title'      => $this->language->get('text_sub_total'),
 			'value'      => $sub_total,
-			'sort_order' => $this->config->get('total_sub_total_sort_order')
+			'sort_order' => (int)$this->config->get('total_sub_total_sort_order')
 		];
 
 		$total += $sub_total;

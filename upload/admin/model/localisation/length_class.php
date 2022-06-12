@@ -1,7 +1,7 @@
 <?php
-namespace Opencart\Application\Model\Localisation;
+namespace Opencart\Admin\Model\Localisation;
 class LengthClass extends \Opencart\System\Engine\Model {
-	public function addLengthClass($data) {
+	public function addLengthClass(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "length_class` SET `value` = '" . (float)$data['value'] . "'");
 
 		$length_class_id = $this->db->getLastId();
@@ -15,7 +15,7 @@ class LengthClass extends \Opencart\System\Engine\Model {
 		return $length_class_id;
 	}
 
-	public function editLengthClass($length_class_id, $data) {
+	public function editLengthClass(int $length_class_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "length_class` SET `value` = '" . (float)$data['value'] . "' WHERE `length_class_id` = '" . (int)$length_class_id . "'");
 
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "length_class_description` WHERE `length_class_id` = '" . (int)$length_class_id . "'");
@@ -27,14 +27,14 @@ class LengthClass extends \Opencart\System\Engine\Model {
 		$this->cache->delete('length_class');
 	}
 
-	public function deleteLengthClass($length_class_id) {
+	public function deleteLengthClass(int $length_class_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "length_class` WHERE `length_class_id` = '" . (int)$length_class_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "length_class_description` WHERE `length_class_id` = '" . (int)$length_class_id . "'");
 
 		$this->cache->delete('length_class');
 	}
 
-	public function getLengthClasses($data = []) {
+	public function getLengthClasses(array $data = []): array {
 		if ($data) {
 			$sql = "SELECT * FROM `" . DB_PREFIX . "length_class` lc LEFT JOIN `" . DB_PREFIX . "length_class_description` lcd ON (lc.`length_class_id` = lcd.`length_class_id`) WHERE lcd.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
@@ -86,19 +86,19 @@ class LengthClass extends \Opencart\System\Engine\Model {
 		}
 	}
 
-	public function getLengthClass($length_class_id) {
+	public function getLengthClass(int $length_class_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "length_class` lc LEFT JOIN `" . DB_PREFIX . "length_class_description` lcd ON (lc.`length_class_id` = lcd.`length_class_id`) WHERE lc.`length_class_id` = '" . (int)$length_class_id . "' AND lcd.`language_id` = '" . (int)$this->config->get('config_language_id') . "'");
 
 		return $query->row;
 	}
 
-	public function getDescriptionByUnit($unit) {
+	public function getDescriptionByUnit(string $unit): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "length_class_description` WHERE `unit` = '" . $this->db->escape($unit) . "' AND `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
 
 		return $query->row;
 	}
 
-	public function getDescriptions($length_class_id) {
+	public function getDescriptions(int $length_class_id): array {
 		$length_class_data = [];
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "length_class_description` WHERE `length_class_id` = '" . (int)$length_class_id . "'");
@@ -113,9 +113,9 @@ class LengthClass extends \Opencart\System\Engine\Model {
 		return $length_class_data;
 	}
 
-	public function getTotalLengthClasses() {
+	public function getTotalLengthClasses(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "length_class`");
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
 	}
 }

@@ -25,6 +25,7 @@ $_['entry_zone']         = 'Region / State';
 $_['entry_default']      = 'Default Address';
 
 // Error
+$_['error_token']        = 'Warning: Address token invalid!';
 $_['error_delete']       = 'Warning: You must have at least one address!';
 $_['error_default']      = 'Warning: You can not delete your default address!';
 $_['error_firstname']    = 'First Name must be between 1 and 32 characters!';

@@ -1,14 +1,14 @@
 <?php
-namespace Opencart\Application\Controller\Account;
+namespace Opencart\Catalog\Controller\Account;
 class Order extends \Opencart\System\Engine\Controller {
-	public function index() {
-		if (!$this->customer->isLogged()) {
+	public function index(): void {
+		$this->load->language('account/order');
+
+		if (!$this->customer->isLogged() || (!isset($this->request->get['customer_token']) || !isset($this->session->data['customer_token']) || ($this->request->get['customer_token'] != $this->session->data['customer_token']))) {
 			$this->session->data['redirect'] = $this->url->link('account/order', 'language=' . $this->config->get('config_language'));
 
 			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language')));
 		}
-
-		$this->load->language('account/order');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -27,12 +27,12 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_account'),
-			'href' => $this->url->link('account/account', 'language=' . $this->config->get('config_language'))
+			'href' => $this->url->link('account/account', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'])
 		];
 		
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('account/order', 'language=' . $this->config->get('config_language') . $url)
+			'href' => $this->url->link('account/order', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . $url)
 		];
 
 		if (isset($this->request->get['page'])) {
@@ -60,7 +60,7 @@ class Order extends \Opencart\System\Engine\Controller {
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'products'   => ($product_total + $voucher_total),
 				'total'      => $this->currency->format($result['total'], $result['currency_code'], $result['currency_value']),
-				'view'       => $this->url->link('account/order|info', 'language=' . $this->config->get('config_language') . '&order_id=' . $result['order_id']),
+				'view'       => $this->url->link('account/order|info', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&order_id=' . $result['order_id']),
 			];
 		}
 
@@ -68,12 +68,12 @@ class Order extends \Opencart\System\Engine\Controller {
 			'total' => $order_total,
 			'page'  => $page,
 			'limit' => 10,
-			'url'   => $this->url->link('account/order', 'language=' . $this->config->get('config_language') . '&page={page}')
+			'url'   => $this->url->link('account/order', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($order_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($order_total - 10)) ? $order_total : ((($page - 1) * 10) + 10), $order_total, ceil($order_total / 10));
 
-		$data['continue'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language'));
+		$data['continue'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']);
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
@@ -85,19 +85,19 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('account/order_list', $data));
 	}
 
-	public function info() {
+	public function info(): object|null {
 		$this->load->language('account/order');
+
+		if (!$this->customer->isLogged() || (!isset($this->request->get['customer_token']) || !isset($this->session->data['customer_token']) || ($this->request->get['customer_token'] != $this->session->data['customer_token']))) {
+			$this->session->data['redirect'] = $this->url->link('account/order', 'language=' . $this->config->get('config_language'));
+
+			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language')));
+		}
 
 		if (isset($this->request->get['order_id'])) {
 			$order_id = (int)$this->request->get['order_id'];
 		} else {
 			$order_id = 0;
-		}
-
-		if (!$this->customer->isLogged()) {
-			$this->session->data['redirect'] = $this->url->link('account/order|info', 'language=' . $this->config->get('config_language') . '&order_id=' . $order_id);
-
-			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language')));
 		}
 
 		$this->load->model('account/order');
@@ -122,34 +122,18 @@ class Order extends \Opencart\System\Engine\Controller {
 
 			$data['breadcrumbs'][] = [
 				'text' => $this->language->get('text_account'),
-				'href' => $this->url->link('account/account', 'language=' . $this->config->get('config_language'))
+				'href' => $this->url->link('account/account', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'])
 			];
 
 			$data['breadcrumbs'][] = [
 				'text' => $this->language->get('heading_title'),
-				'href' => $this->url->link('account/order', 'language=' . $this->config->get('config_language') . $url)
+				'href' => $this->url->link('account/order', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . $url)
 			];
 
 			$data['breadcrumbs'][] = [
 				'text' => $this->language->get('text_order'),
-				'href' => $this->url->link('account/order|info', 'language=' . $this->config->get('config_language') . '&order_id=' . $this->request->get['order_id'] . $url)
+				'href' => $this->url->link('account/order|info', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&order_id=' . $order_id . $url)
 			];
-
-			if (isset($this->session->data['error'])) {
-				$data['error_warning'] = $this->session->data['error'];
-
-				unset($this->session->data['error']);
-			} else {
-				$data['error_warning'] = '';
-			}
-
-			if (isset($this->session->data['success'])) {
-				$data['success'] = $this->session->data['success'];
-
-				unset($this->session->data['success']);
-			} else {
-				$data['success'] = '';
-			}
 
 			if ($order_info['invoice_no']) {
 				$data['invoice_no'] = $order_info['invoice_prefix'] . $order_info['invoice_no'];
@@ -157,7 +141,7 @@ class Order extends \Opencart\System\Engine\Controller {
 				$data['invoice_no'] = '';
 			}
 
-			$data['order_id'] = (int)$this->request->get['order_id'];
+			$data['order_id'] = $order_id;
 			$data['date_added'] = date($this->language->get('date_format_short'), strtotime($order_info['date_added']));
 
 			if ($order_info['payment_address_format']) {
@@ -192,7 +176,7 @@ class Order extends \Opencart\System\Engine\Controller {
 				'country'   => $order_info['payment_country']
 			];
 
-			$data['payment_address'] = str_replace(["\r\n", "\r", "\n"], '<br />', preg_replace(["/\s\s+/", "/\r\r+/", "/\n\n+/"], '<br />', trim(str_replace($find, $replace, $format))));
+			$data['payment_address'] = str_replace(["\r\n", "\r", "\n"], '<br/>', preg_replace(["/\s\s+/", "/\r\r+/", "/\n\n+/"], '<br/>', trim(str_replace($find, $replace, $format))));
 
 			$data['payment_method'] = $order_info['payment_method'];
 
@@ -228,7 +212,7 @@ class Order extends \Opencart\System\Engine\Controller {
 				'country'   => $order_info['shipping_country']
 			];
 
-			$data['shipping_address'] = str_replace(["\r\n", "\r", "\n"], '<br />', preg_replace(["/\s\s+/", "/\r\r+/", "/\n\n+/"], '<br />', trim(str_replace($find, $replace, $format))));
+			$data['shipping_address'] = str_replace(["\r\n", "\r", "\n"], '<br/>', preg_replace(["/\s\s+/", "/\r\r+/", "/\n\n+/"], '<br/>', trim(str_replace($find, $replace, $format))));
 
 			$data['shipping_method'] = $order_info['shipping_method'];
 
@@ -238,12 +222,12 @@ class Order extends \Opencart\System\Engine\Controller {
 			// Products
 			$data['products'] = [];
 
-			$products = $this->model_account_order->getProducts($this->request->get['order_id']);
+			$products = $this->model_account_order->getProducts($order_id);
 
 			foreach ($products as $product) {
 				$option_data = [];
 
-				$options = $this->model_account_order->getOptions($this->request->get['order_id'], $product['order_product_id']);
+				$options = $this->model_account_order->getOptions($order_id, $product['order_product_id']);
 
 				foreach ($options as $option) {
 					if ($option['type'] != 'file') {
@@ -267,7 +251,7 @@ class Order extends \Opencart\System\Engine\Controller {
 				$product_info = $this->model_catalog_product->getProduct($product['product_id']);
 
 				if ($product_info) {
-					$reorder = $this->url->link('account/order|reorder', 'language=' . $this->config->get('config_language') . '&order_id=' . $order_id . '&order_product_id=' . $product['order_product_id']);
+					$reorder = $this->url->link('account/order|reorder', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&order_id=' . $order_id . '&order_product_id=' . $product['order_product_id']);
 				} else {
 					$reorder = '';
 				}
@@ -287,7 +271,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			// Voucher
 			$data['vouchers'] = [];
 
-			$vouchers = $this->model_account_order->getVouchers($this->request->get['order_id']);
+			$vouchers = $this->model_account_order->getVouchers($order_id);
 
 			foreach ($vouchers as $voucher) {
 				$data['vouchers'][] = [
@@ -299,7 +283,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			// Totals
 			$data['totals'] = [];
 
-			$totals = $this->model_account_order->getTotals($this->request->get['order_id']);
+			$totals = $this->model_account_order->getTotals($order_id);
 
 			foreach ($totals as $total) {
 				$data['totals'][] = [
@@ -313,7 +297,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			// History
 			$data['histories'] = [];
 
-			$results = $this->model_account_order->getHistories($this->request->get['order_id']);
+			$results = $this->model_account_order->getHistories($order_id);
 
 			foreach ($results as $result) {
 				$data['histories'][] = [
@@ -323,7 +307,7 @@ class Order extends \Opencart\System\Engine\Controller {
 				];
 			}
 
-			$data['continue'] = $this->url->link('account/order', 'language=' . $this->config->get('config_language'));
+			$data['continue'] = $this->url->link('account/order', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']);
 
 			$data['column_left'] = $this->load->controller('common/column_left');
 			$data['column_right'] = $this->load->controller('common/column_right');
@@ -333,13 +317,21 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['header'] = $this->load->controller('common/header');
 
 			$this->response->setOutput($this->load->view('account/order_info', $data));
+
+			return null;
 		} else {
 			return new \Opencart\System\Engine\Action('error/not_found');
 		}
 	}
 
-	public function reorder() {
+	public function reorder(): void {
 		$this->load->language('account/order');
+
+		if (!$this->customer->isLogged() || (!isset($this->request->get['customer_token']) || !isset($this->session->data['customer_token']) || ($this->request->get['customer_token'] != $this->session->data['customer_token']))) {
+			$this->session->data['redirect'] = $this->url->link('account/order', 'language=' . $this->config->get('config_language'));
+
+			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language')));
+		}
 
 		if (isset($this->request->get['order_id'])) {
 			$order_id = (int)$this->request->get['order_id'];
@@ -396,6 +388,6 @@ class Order extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$this->response->redirect($this->url->link('account/order|info', 'language=' . $this->config->get('config_language') . '&order_id=' . $order_id));
+		$this->response->redirect($this->url->link('account/order|info', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&order_id=' . $order_id));
 	}
 }

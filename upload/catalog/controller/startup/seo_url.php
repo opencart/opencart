@@ -1,13 +1,12 @@
 <?php
-namespace Opencart\Application\Controller\Startup;
+namespace Opencart\Catalog\Controller\Startup;
 class SeoUrl extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): void {
 		// Add rewrite to URL class
 		if ($this->config->get('config_seo_url')) {
 			$this->url->addRewrite($this);
 		}
 
-		$this->load->model('design/seo_profile');
 		$this->load->model('design/seo_url');
 
 		// Decode URL
@@ -24,21 +23,12 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 
 				if ($seo_url_info) {
 					$this->request->get[$seo_url_info['key']] = html_entity_decode($seo_url_info['value'], ENT_QUOTES, 'UTF-8');
-
-					$results = $this->model_design_seo_profile->getSeoProfilesByKey($seo_url_info['key']);
-
-					foreach ($results as $result) {
-						// Push additional query string vars into GET data
-						parse_str(html_entity_decode($result['push'], ENT_QUOTES, 'UTF-8'), $push);
-
-						$this->request->get = array_merge($this->request->get, $push);
-					}
 				}
 			}
 		}
 	}
 
-	public function rewrite($link) {
+	public function rewrite(string $link): string {
 		$url_info = parse_url(str_replace('&amp;', '&', $link));
 
 		// Build the url
@@ -58,62 +48,44 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 			$url .= ':' . $url_info['port'];
 		}
 
-		// Start changing the URL query into a path
-		$path_data = [];
-
-		$query = [];
-
-		// Parse the query into its separate parts
 		parse_str($url_info['query'], $query);
 
-		foreach ($query as $key => $value) {
-			$results = $this->model_design_seo_profile->getSeoProfilesByKey($key);
+		// Start changing the URL query into a path
+		$paths = [];
 
-			foreach ($results as $result) {
-				$match = [];
+		// Parse the query into its separate parts
+		$parts = explode('&', $url_info['query']);
 
-				$regex = html_entity_decode($result['regex'], ENT_QUOTES, 'UTF-8');
+		foreach ($parts as $part) {
+			[$key, $value] = explode('=', $part);
 
-				if (preg_match($regex, html_entity_decode($value, ENT_QUOTES, 'UTF-8'), $match)) {
-					$keyword = $this->model_design_seo_url->getKeywordByKeyValue($key, $match[0]);
+			$result = $this->model_design_seo_url->getSeoUrlByKeyValue($key, $value);
 
-					if ($keyword) {
-						$path_data[] = [
-							'keyword'    => $keyword,
-							'remove'     => $result['remove'],
-							'sort_order' => $result['sort_order']
-						];
-					}
-				}
+			if ($result) {
+				$paths[] = $result;
+
+				unset($query[$key]);
 			}
 		}
 
 		$sort_order = [];
 
-		foreach ($path_data as $key => $value) {
+		foreach ($paths as $key => $value) {
 			$sort_order[$key] = $value['sort_order'];
 		}
 
-		array_multisort($sort_order, SORT_ASC, $path_data);
+		array_multisort($sort_order, SORT_ASC, $paths);
 
 		// Build the path
 		$url .= str_replace('/index.php', '', $url_info['path']);
 
-		foreach ($path_data as $result) {
+		foreach ($paths as $result) {
 			$url .= '/' . $result['keyword'];
-
-			if ($result['remove']) {
-				$keys = explode(',', $result['remove']);
-
-				foreach ($keys as $key) {
-					unset($query[$key]);
-				}
-			}
 		}
 
 		// Rebuild the URL query
 		if ($query) {
-			$url .= '?' . str_replace('%2F', '/', http_build_query($query));
+			$url .= '?' . str_replace(['%2F', '%7C'], ['/', '|'], http_build_query($query));
 		}
 
 		return $url;

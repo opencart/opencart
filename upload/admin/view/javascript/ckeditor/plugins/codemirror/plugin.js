@@ -1118,8 +1118,8 @@
                 }
             });
 
-            if (typeof (jQuery) != 'undefined' && jQuery('a[data-toggle="tab"]') && window["codemirror_" + editor.id]) {
-                jQuery('a[data-toggle="tab"]').on('shown.bs.tab', function() {
+            if (typeof (jQuery) != 'undefined' && jQuery('a[data-bs-toggle="tab"]') && window["codemirror_" + editor.id]) {
+                jQuery('a[data-bs-toggle="tab"]').on('shown.bs.tab', function() {
                     window["codemirror_" + editor.id].refresh();
                 });
             }

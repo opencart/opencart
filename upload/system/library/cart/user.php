@@ -1,10 +1,10 @@
 <?php
 namespace Opencart\System\Library\Cart;
 class User {
-	private $user_id;
-	private $username;
-	private $user_group_id;
-	private $permission = [];
+	private int $user_id = 0;
+	private string $username = '';
+	private int $user_group_id = 0;
+	private array $permission = [];
 
 	public function __construct($registry) {
 		$this->db = $registry->get('db');
@@ -36,7 +36,7 @@ class User {
 		}
 	}
 
-	public function login($username, $password) {
+	public function login($username, $password): bool {
 		$user_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "user` WHERE `username` = '" . $this->db->escape($username) . "' AND `status` = '1'");
 
 		if ($user_query->num_rows) {
@@ -76,14 +76,14 @@ class User {
 		}
 	}
 
-	public function logout() {
+	public function logout(): void {
 		unset($this->session->data['user_id']);
 
-		$this->user_id = '';
+		$this->user_id = 0;
 		$this->username = '';
 	}
 
-	public function hasPermission($key, $value) {
+	public function hasPermission($key, $value): bool {
 		if (isset($this->permission[$key])) {
 			return in_array($value, $this->permission[$key]);
 		} else {
@@ -91,19 +91,19 @@ class User {
 		}
 	}
 
-	public function isLogged() {
+	public function isLogged(): bool {
+		return $this->user_id ? true : false;
+	}
+
+	public function getId(): int {
 		return $this->user_id;
 	}
 
-	public function getId() {
-		return $this->user_id;
-	}
-
-	public function getUserName() {
+	public function getUserName(): string {
 		return $this->username;
 	}
 
-	public function getGroupId() {
+	public function getGroupId(): int {
 		return $this->user_group_id;
 	}
 }

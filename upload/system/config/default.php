@@ -40,9 +40,10 @@ $_['session_engine']       = 'file'; // db or file
 $_['session_name']         = 'OCSESSID';
 $_['session_domain']       = '';
 $_['session_path']         = '/';
-$_['session_expire']       = 360000;
+$_['session_expire']       = 999999999;
 $_['session_probability']  = 1;
 $_['session_divisor']      = 5;
+$_['session_samesite']     = 'Strict';
 
 // Template
 $_['template_engine']      = 'twig';

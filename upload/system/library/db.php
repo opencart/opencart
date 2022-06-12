@@ -12,7 +12,7 @@
 */
 namespace Opencart\System\Library;
 class DB {
-	private $adaptor;
+	private object $adaptor;
 
 	/**
 	 * Constructor
@@ -25,7 +25,7 @@ class DB {
 	 * @param	int		$port
 	 *
  	*/
-	public function __construct($adaptor, $hostname, $username, $password, $database, $port = '') {
+	public function __construct(string $adaptor, string $hostname, string $username, string $password, string $database, string $port = '') {
 		$class = 'Opencart\System\Library\DB\\' . $adaptor;
 
 		if (class_exists($class)) {
@@ -42,7 +42,7 @@ class DB {
 	 * 
 	 * @return	array
      */
-	public function query($sql) {
+	public function query(string $sql): bool|object {
 		return $this->adaptor->query($sql);
 	}
 
@@ -53,7 +53,7 @@ class DB {
 	 * 
 	 * @return	string
      */
-	public function escape($value) {
+	public function escape(string $value): string {
 		return $this->adaptor->escape($value);
 	}
 
@@ -64,7 +64,7 @@ class DB {
 	 *
 	 * @return	int	returns the total number of affected rows.
      */
-	public function countAffected() {
+	public function countAffected(): int {
 		return $this->adaptor->countAffected();
 	}
 
@@ -75,7 +75,7 @@ class DB {
 	 *
 	 * @return	int returns last ID
      */
-	public function getLastId() {
+	public function getLastId(): int {
 		return $this->adaptor->getLastId();
 	}
 	
@@ -86,7 +86,7 @@ class DB {
 	 *
 	 * @return	bool
      */	
-	public function isConnected() {
+	public function isConnected(): bool {
 		return $this->adaptor->isConnected();
 	}
 }

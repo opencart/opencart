@@ -1,7 +1,7 @@
 <?php
-namespace Opencart\Application\Model\Account;
+namespace Opencart\Catalog\Model\Account;
 class Transaction extends \Opencart\System\Engine\Model {
-	public function getTransactions($data = []) {
+	public function getTransactions(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "customer_transaction` WHERE `customer_id` = '" . (int)$this->customer->getId() . "'";
 
 		$sort_data = [
@@ -39,13 +39,13 @@ class Transaction extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function getTotalTransactions() {
+	public function getTotalTransactions(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer_transaction` WHERE `customer_id` = '" . (int)$this->customer->getId() . "'");
 
 		return $query->row['total'];
 	}
 
-	public function getTotalAmount() {
+	public function getTotalAmount(): int {
 		$query = $this->db->query("SELECT SUM(amount) AS `total` FROM `" . DB_PREFIX . "customer_transaction` WHERE `customer_id` = '" . (int)$this->customer->getId() . "' GROUP BY `customer_id`");
 
 		if ($query->num_rows) {

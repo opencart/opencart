@@ -1,7 +1,7 @@
 <?php
-namespace Opencart\Application\Controller\Mail;
+namespace Opencart\Admin\Controller\Mail;
 class Reward extends \Opencart\System\Engine\Controller {
-	public function index($route, $args, $output) {
+	public function index(string $route, array $args, mixed $output): void {
 		if (isset($args[0])) {
 			$customer_id = $args[0];
 		} else {

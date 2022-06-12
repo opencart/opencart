@@ -10,7 +10,7 @@ $_['decimal_point']         = '.';
 $_['thousand_point']        = ',';
 
 // Text
-$_['text_home']             = '<i class="fa fa-home"></i>';
+$_['text_home']             = '<i class="fas fa-home"></i>';
 $_['text_yes']              = 'Yes';
 $_['text_no']               = 'No';
 $_['text_none']             = ' --- None --- ';
@@ -84,9 +84,9 @@ $_['error_upload_8']        = 'Warning: File upload stopped by extension!';
 $_['error_upload_999']      = 'Warning: No error code available!';
 $_['error_upload_size']     = 'Warning: The uploaded file exceeds the %smb max file size!';
 $_['error_curl']            = 'CURL: Error Code(%s): %s';
+$_['error_session']         = 'Warning: Session has expired please submit the form again!';
 
 /* When doing translations only include the matching language code */
-
 // Datepicker
 //$_['datepicker']            = 'af';
 //$_['datepicker']            = 'ar-dz';

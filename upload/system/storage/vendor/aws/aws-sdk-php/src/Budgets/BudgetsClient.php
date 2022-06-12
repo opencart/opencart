@@ -31,6 +31,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise describeBudgetActionsForAccountAsync(array $args = [])
  * @method \Aws\Result describeBudgetActionsForBudget(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeBudgetActionsForBudgetAsync(array $args = [])
+ * @method \Aws\Result describeBudgetNotificationsForAccount(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeBudgetNotificationsForAccountAsync(array $args = [])
  * @method \Aws\Result describeBudgetPerformanceHistory(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeBudgetPerformanceHistoryAsync(array $args = [])
  * @method \Aws\Result describeBudgets(array $args = [])

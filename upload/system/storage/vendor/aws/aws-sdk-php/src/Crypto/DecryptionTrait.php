@@ -143,7 +143,7 @@ trait DecryptionTrait
         $cek,
         $cipherOptions
     ) {
-        $cipherTextStream = Psr7\stream_for($cipherText);
+        $cipherTextStream = Psr7\Utils::streamFor($cipherText);
         switch ($cipherOptions['Cipher']) {
             case 'gcm':
                 $cipherOptions['Tag'] = $this->getTagFromCiphertextStream(

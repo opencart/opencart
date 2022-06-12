@@ -1,49 +1,16 @@
-<div class="card">
-  <h4 class="card-header collapsed" data-toggle="collapse" data-target="#collapse-reward">{{ heading_title }}</h4>
-  <div id="collapse-reward" class="collapse" data-parent="#accordion">
-    <div class="card-body">
-      <div class="row">
-        <label for="input-reward" class="col-md-2 col-form-label">{{ entry_reward }}</label>
-        <div class="col-md-10">
-          <div class="input-group">
+<div class="accordion-item">
+  <h2 class="accordion-header"><button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapse-reward">{{ heading_title }}</button></h2>
+  <div id="collapse-reward" class="accordion-collapse collapse" data-bs-parent="#accordion">
+    <div class="accordion-body">
+      <form id="form-reward" action="{{ save }}" method="post" data-oc-toggle="ajax" data-oc-load="{{ list }}" data-oc-target="#shopping-cart">
+        <div class="row mb-3">
+          <label for="input-reward" class="col-md-4 col-form-label">{{ entry_reward }}</label>
+          <div class="col-md-8">
             <input type="text" name="reward" value="{{ reward }}" placeholder="{{ entry_reward }}" id="input-reward" class="form-control"/>
-            <div class="input-group-append">
-              <button type="submit" id="button-reward" data-loading-text="{{ text_loading }}" class="btn btn-primary">{{ button_reward }}</button>
-            </div>
           </div>
         </div>
-      </div>
+        <div class="text-end"><button type="submit" class="btn btn-primary">{{ button_reward }}</button></div>
+      </form>
     </div>
   </div>
-  <script type="text/javascript"><!--
-  $('#button-reward').on('click', function() {
-	  $.ajax({
-		  url: 'index.php?route=extension/opencart/total/reward|reward',
-		  type: 'post',
-		  data: 'reward=' + encodeURIComponent($('input[name=\'reward\']').val()),
-		  dataType: 'json',
-		  beforeSend: function() {
-			  $('#button-reward').button('loading');
-		  },
-		  complete: function() {
-			  $('#button-reward').button('reset');
-		  },
-		  success: function(json) {
-			  $('.alert-dismissible').remove();
-
-			  if (json['error']) {
-				  $('#collapse-reward .card-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-			  }
-
-			  if (json['redirect']) {
-				  location = json['redirect'];
-			  }
-		  },
-		  error: function(xhr, ajaxOptions, thrownError) {
-			  alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		  }
-	  });
-  });
-  //-->
-  </script>
 </div>

@@ -1,7 +1,7 @@
 <?php
-namespace Opencart\Application\Controller\Extension\Opencart\Module;
+namespace Opencart\Catalog\Controller\Extension\Opencart\Module;
 class Banner extends \Opencart\System\Engine\Controller {
-	public function index($setting) {
+	public function index(array $setting): string {
 		static $module = 0;
 
 		$this->load->model('design/banner');
@@ -21,16 +21,20 @@ class Banner extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$data['module'] = $module++;
+		if ($data['banners']) {
+			$data['module'] = $module++;
 
-		$data['effect'] = $setting['effect'];
-		$data['controls'] = $setting['controls'];
-		$data['indicators'] = $setting['indicators'];
-		$data['items'] = $setting['items'];
-		$data['interval'] = $setting['interval'];
-		$data['width'] = $setting['width'];
-		$data['height'] = $setting['height'];
+			$data['effect'] = $setting['effect'];
+			$data['controls'] = $setting['controls'];
+			$data['indicators'] = $setting['indicators'];
+			$data['items'] = $setting['items'];
+			$data['interval'] = $setting['interval'];
+			$data['width'] = $setting['width'];
+			$data['height'] = $setting['height'];
 
-		return $this->load->view('extension/opencart/module/banner', $data);
+			return $this->load->view('extension/opencart/module/banner', $data);
+		} else {
+			return '';
+		}
 	}
 }

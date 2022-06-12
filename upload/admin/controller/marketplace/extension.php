@@ -1,7 +1,7 @@
 <?php
-namespace Opencart\Application\Controller\Marketplace;
+namespace Opencart\Admin\Controller\Marketplace;
 class Extension extends \Opencart\System\Engine\Controller {
-	public function index() {
+	public function index(): void {
 		$this->load->language('marketplace/extension');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -17,8 +17,6 @@ class Extension extends \Opencart\System\Engine\Controller {
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'])
 		];
-
-		$data['user_token'] = $this->session->data['user_token'];
 
 		if (isset($this->request->get['type'])) {
 			$data['type'] = $this->request->get['type'];
@@ -49,12 +47,14 @@ class Extension extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->get['type'])) {
-			$data['extension'] = $this->load->controller('extension/' . $this->request->get['type'] . '|getList');
+			$data['extension'] = $this->load->controller('extension/' . basename($this->request->get['type']) . '|getList');
 		} elseif ($data['categories']) {
 			$data['extension'] = $this->load->controller('extension/' . $data['categories'][0]['code'] . '|getList');
 		} else {
 			$data['extension'] = '';
 		}
+
+		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

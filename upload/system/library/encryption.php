@@ -12,8 +12,8 @@
 */
 namespace Opencart\System\Library;
 class Encryption {
-	private $cipher = 'aes-256-ctr';
-	private $digest = 'sha256';
+	private string $cipher = 'aes-256-ctr';
+	private string $digest = 'sha256';
 	
     /**
      * 
@@ -23,7 +23,7 @@ class Encryption {
      * 
      * @return	string
      */	
-	public function encrypt($key, $value) {
+	public function encrypt(string $key, string $value): string {
 		$key       = openssl_digest($key, $this->digest, true);
 		$iv_length = openssl_cipher_iv_length($this->cipher);
 		$iv        = openssl_random_pseudo_bytes($iv_length);
@@ -39,7 +39,7 @@ class Encryption {
      * 
      * @return	string
      */
-	public function decrypt($key, $value) {
+	public function decrypt(string $key, string $value): string {
 		$result    = '';
 
 		$key       = openssl_digest($key, $this->digest, true);

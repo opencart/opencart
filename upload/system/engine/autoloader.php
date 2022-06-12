@@ -1,18 +1,22 @@
 <?php
 namespace Opencart\System\Engine;
 class Autoloader {
-	private $path = [];
+	private array $path = [];
 
 	public function __construct() {
 		spl_autoload_register([$this, 'load']);
 		spl_autoload_extensions('.php');
 	}
 
-	public function register($namespace, $directory) {
-		$this->path[$namespace] = $directory;
+	// psr-4 filename standard is stupid composer has lower case file structure than its packages have camelcase file names!
+	public function register(string $namespace, string $directory, $psr4 = false): void {
+		$this->path[$namespace] = [
+			'directory' => $directory,
+			'psr4'      => $psr4
+		];
 	}
 
-	public function load($class) {
+	public function load(string $class): bool {
 		$namespace = '';
 
 		$parts = explode('\\', $class);
@@ -25,7 +29,11 @@ class Autoloader {
 			}
 
 			if (isset($this->path[$namespace])) {
-				$file = $this->path[$namespace] . trim(str_replace('\\', '/', strtolower(preg_replace('~([a-z])([A-Z]|[0-9])~', '\\1_\\2', substr($class, strlen($namespace))))), '/') . '.php';
+				if (!$this->path[$namespace]['psr4']) {
+					$file = $this->path[$namespace]['directory'] . trim(str_replace('\\', '/', strtolower(preg_replace('~([a-z])([A-Z]|[0-9])~', '\\1_\\2', substr($class, strlen($namespace))))), '/') . '.php';
+				} else {
+					$file = $this->path[$namespace]['directory'] . trim(str_replace('\\', '/', substr($class, strlen($namespace))), '/') . '.php';
+				}
 			}
 		}
 

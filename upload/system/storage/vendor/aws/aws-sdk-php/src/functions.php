@@ -519,3 +519,26 @@ function is_valid_epoch($input)
     }
     return false;
 }
+
+/**
+ * Checks if an input is a fips pseudo region
+ *
+ * @param $region
+ * @return bool
+ */
+function is_fips_pseudo_region($region)
+{
+    return strpos($region, 'fips-') !== false || strpos($region, '-fips') !== false;
+}
+
+/**
+ * Returns a region without a fips label
+ *
+ * @param $region
+ * @return string
+ */
+function strip_fips_pseudo_regions($region)
+{
+    return str_replace(['fips-', '-fips'], ['', ''], $region);
+}
+

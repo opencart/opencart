@@ -37,7 +37,6 @@ $_['entry_address']                    = 'Address';
 $_['entry_geocode']                    = 'Geocode';
 $_['entry_email']                      = 'E-Mail';
 $_['entry_telephone']                  = 'Telephone';
-$_['entry_fax']                        = 'Fax';
 $_['entry_image']                      = 'Image';
 $_['entry_open']                       = 'Opening Times';
 $_['entry_comment']                    = 'Comment';
@@ -61,11 +60,9 @@ $_['entry_account']                    = 'Account Terms';
 $_['entry_cart_weight']                = 'Display Weight on Cart Page';
 $_['entry_checkout_guest']             = 'Guest Checkout';
 $_['entry_checkout']                   = 'Checkout Terms';
-$_['entry_order_status']               = 'Order Status';
 $_['entry_stock_display']              = 'Display Stock';
 $_['entry_stock_checkout']             = 'Stock Checkout';
 $_['entry_logo']                       = 'Store Logo';
-$_['entry_icon']                       = 'Icon';
 $_['entry_image_category']             = 'Category Image Size (W x H)';
 $_['entry_image_thumb']                = 'Product Image Thumb Size (W x H)';
 $_['entry_image_popup']                = 'Product Image Popup Size (W x H)';
@@ -80,7 +77,7 @@ $_['entry_width']                      = 'Width';
 $_['entry_height']                     = 'Height';
 
 // Help
-$_['help_url']                         = 'Include the full URL to your store. Make sure to add \'/\' at the end. Example: http://www.yourdomain.com/path/<br /><br />Don\'t use directories to create a new store. You should always point another domain or sub domain to your hosting.';
+$_['help_url']                         = 'Include the full URL to your store. Make sure to add \'/\' at the end. Example: http://www.yourdomain.com/path/<br/><br/>Don\'t use directories to create a new store. You should always point another domain or sub domain to your hosting.';
 $_['help_geocode']                     = 'Please enter your store location geocode manually.';
 $_['help_open']                        = 'Fill in your stores opening times.';
 $_['help_comment']                     = 'This field is for any special notes you would like to tell the customer i.e. Store does not accept cheques.';
@@ -98,10 +95,8 @@ $_['help_customer_price']              = 'Only show prices when a customer is lo
 $_['help_account']                     = 'Forces people to agree to terms before an account can be created.';
 $_['help_checkout_guest']              = 'Allow customers to checkout without creating an account. This will not be available when a downloadable product is in the shopping cart.';
 $_['help_checkout']                    = 'Forces people to agree to terms before an a customer can checkout.';
-$_['help_order_status']                = 'Set the default order status when an order is processed.';
 $_['help_stock_display']               = 'Display stock quantity on the product page.';
 $_['help_stock_checkout']              = 'Allow customers to still checkout if the products they are ordering are not in stock.';
-$_['help_icon']                        = 'The icon should be a PNG that is 16px x 16px.';
 
 // Error
 $_['error_warning']                    = 'Warning: Please check the form carefully for errors!';
@@ -115,6 +110,7 @@ $_['error_email']                      = 'E-Mail Address does not appear to be v
 $_['error_telephone']                  = 'Telephone must be between 3 and 32 characters!';
 $_['error_product_description_length'] = 'Product description length required!';
 $_['error_pagination']                 = 'Pagination required!';
+$_['help_product_count']               = 'Show the number of products inside the subcategories in the storefront header category menu. Be warned, this will cause an extreme performance hit for stores with a lot of subcategories!';
 $_['error_customer_group_display']     = 'You must include the default customer group if you are going to use this feature!';
 $_['error_default']                    = 'Warning: You can not delete your default store!';
 $_['error_store']                      = 'Warning: This Store cannot be deleted as it is currently assigned to %s orders!';

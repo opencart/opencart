@@ -1,53 +1,12 @@
 <?php
-/* Compatibility function Due to PHP 7.3 only being the PHP version to be able to use samesite attribute */
-function oc_setcookie(string $key, string $value, $option = []) {
-	if (version_compare(phpversion(), '7.3.0', '>=')) {
-		// PHP needs to update their setcookie function.
-		setcookie($key, $value, $option);
-	} else {
-		$string = '';
-
-		if (isset($option['expires'])) {
-			$string .= '; expires=' . $option['expires'];
-		} else {
-			$string .= '; expires=0';
-		}
-
-		if (!empty($option['path'])) {
-			$string .= '; path=' . $option['path'];
-		}
-
-		if (!empty($option['domain'])) {
-			$string .= '; domain=' . $option['domain'];
-		}
-
-		if (!empty($option['HttpOnly'])) {
-			$string .= '; HttpOnly';
-		}
-
-		if (!empty($option['Secure'])) {
-			$string .= '; Secure';
-		}
-
-		if (isset($option['SameSite'])) {
-			$string .= '; SameSite=' . $option['SameSite'];
-		}
-
-		header('Set-Cookie: ' . rawurlencode($key) . '=' . rawurlencode($value) . $string);
-	}
-}
-
-function token($length = 32) {
+//namespace Opencart\System\Helper;
+function token(int $length = 32) {
 	if (intval($length) <= 8) {
 		$length = 32;
 	}
 
 	if (function_exists('random_bytes')) {
 		$token = bin2hex(random_bytes($length));
-	}
-
-	if (function_exists('openssl_random_pseudo_bytes')) {
-		$token = bin2hex(openssl_random_pseudo_bytes($length));
 	}
 
 	return substr($token, -$length, $length);
@@ -60,9 +19,9 @@ function token($length = 32) {
  */
 
 if (!function_exists('hash_equals')) {
-	function hash_equals($known_string, $user_string) {
-		$known_string = (string)$known_string;
-		$user_string = (string)$user_string;
+	function hash_equals(string $known_string, string $user_string) {
+		$known_string = $known_string;
+		$user_string = $user_string;
 
 		if (strlen($known_string) != strlen($user_string)) {
 			return false;
@@ -77,7 +36,7 @@ if (!function_exists('hash_equals')) {
 	}
 }
 
-function date_added($date) {
+function date_added(string $date) {
 	$second = time() - strtotime($date);
 
 	if ($second < 10) {
@@ -149,4 +108,41 @@ function date_added($date) {
 	}
 
 	return [$code, $date_added];
+}
+
+function format_size(string $file = '', bool $max = true) {
+	if ($max) {
+		$size = ini_get('upload_max_filesize');
+
+		$unit = substr($size, -1);
+		switch ($unit){
+			case 'K':
+			$size = (int)$size * 1024;
+			break;
+			case 'M':
+			$size = (int)$size * 1024 * 1024;
+			break;
+			case 'G':
+			$size = (int)$size*1024 * 1024 * 1024;
+			break;
+		}
+	} elseif (is_file($file)) {
+		$size = sprintf('%u', filesize($file));
+	}
+
+	if ($size) {
+		$suffix = [];
+
+		$suffix = [
+			'b',
+			'kb',
+			'mb',
+			'gb'
+		];
+		
+		$code = !empty($suffix[intval(log($size, 1024))]) ? $suffix[intval(log($size, 1024))] : end($suffix);
+		$format_size = $size / (1024 ** array_search($code, $suffix));
+		
+		return [$code, $format_size, $size];	
+	}
 }

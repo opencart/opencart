@@ -1,28 +1,10 @@
 <?php
-namespace Opencart\Application\Controller\Extension\Opencart\Dashboard;
+namespace Opencart\Admin\Controller\Extension\Opencart\Dashboard;
 class Recent extends \Opencart\System\Engine\Controller {
-	private $error = [];
-
-	public function index() {
+	public function index(): void {
 		$this->load->language('extension/opencart/dashboard/recent');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('setting/setting');
-
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('dashboard_recent', $this->request->post);
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=dashboard'));
-		}
-
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
 
 		$data['breadcrumbs'] = [];
 
@@ -41,33 +23,19 @@ class Recent extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('extension/opencart/dashboard/recent', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		$data['action'] = $this->url->link('extension/opencart/dashboard/recent', 'user_token=' . $this->session->data['user_token']);
+		$data['save'] = $this->url->link('extension/opencart/dashboard/recent|save', 'user_token=' . $this->session->data['user_token']);
+		$data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=dashboard');
 
-		$data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=dashboard');
-
-		if (isset($this->request->post['dashboard_recent_width'])) {
-			$data['dashboard_recent_width'] = $this->request->post['dashboard_recent_width'];
-		} else {
-			$data['dashboard_recent_width'] = $this->config->get('dashboard_recent_width');
-		}
+		$data['dashboard_recent_width'] = $this->config->get('dashboard_recent_width');
 
 		$data['columns'] = [];
 		
 		for ($i = 3; $i <= 12; $i++) {
 			$data['columns'][] = $i;
 		}
-				
-		if (isset($this->request->post['dashboard_recent_status'])) {
-			$data['dashboard_recent_status'] = $this->request->post['dashboard_recent_status'];
-		} else {
-			$data['dashboard_recent_status'] = $this->config->get('dashboard_recent_status');
-		}
 
-		if (isset($this->request->post['dashboard_recent_sort_order'])) {
-			$data['dashboard_recent_sort_order'] = $this->request->post['dashboard_recent_sort_order'];
-		} else {
-			$data['dashboard_recent_sort_order'] = $this->config->get('dashboard_recent_sort_order');
-		}
+		$data['dashboard_recent_status'] = $this->config->get('dashboard_recent_status');
+		$data['dashboard_recent_sort_order'] = $this->config->get('dashboard_recent_sort_order');
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -76,18 +44,29 @@ class Recent extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('extension/opencart/dashboard/recent_form', $data));
 	}
 
-	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'extension/opencart/dashboard/recent')) {
-			$this->error['warning'] = $this->language->get('error_permission');
-		}
-
-		return !$this->error;
-	}
-	
-	public function dashboard() {
+	public function save(): void {
 		$this->load->language('extension/opencart/dashboard/recent');
 
-		$data['user_token'] = $this->session->data['user_token'];
+		$json = [];
+
+		if (!$this->user->hasPermission('modify', 'extension/opencart/dashboard/recent')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			$this->load->model('setting/setting');
+
+			$this->model_setting_setting->editSetting('dashboard_recent', $this->request->post);
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+	
+	public function dashboard(): string {
+		$this->load->language('extension/opencart/dashboard/recent');
 
 		// Last 5 Orders
 		$data['orders'] = [];
@@ -113,6 +92,8 @@ class Recent extends \Opencart\System\Engine\Controller {
 				'view'       => $this->url->link('sale/order|info', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $result['order_id'])
 			];
 		}
+
+		$data['user_token'] = $this->session->data['user_token'];
 
 		return $this->load->view('extension/opencart/dashboard/recent_info', $data);
 	}

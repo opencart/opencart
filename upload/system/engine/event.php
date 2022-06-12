@@ -17,14 +17,14 @@
 namespace Opencart\System\Engine;
 class Event {
 	protected $registry;
-	protected $data = [];
+	protected array $data = [];
 	
 	/**
 	 * Constructor
 	 *
 	 * @param	object	$route
  	*/
-	public function __construct($registry) {
+	public function __construct(\Opencart\System\Engine\Registry $registry) {
 		$this->registry = $registry;
 	}
 	
@@ -35,7 +35,7 @@ class Event {
 	 * @param	object	$action
 	 * @param	int		$priority
  	*/	
-	public function register($trigger, Action $action, $priority = 0) {
+	public function register(string $trigger, \Opencart\System\Engine\Action $action, int $priority = 0): void {
 		$this->data[] = [
 			'trigger'  => $trigger,
 			'action'   => $action,
@@ -57,16 +57,18 @@ class Event {
 	 * @param	string	$event
 	 * @param	array	$args
  	*/		
-	public function trigger($event, array $args = []) {
+	public function trigger(string $event, array $args = []): mixed {
 		foreach ($this->data as $value) {
 			if (preg_match('/^' . str_replace(['\*', '\?'], ['.*', '.'], preg_quote($value['trigger'], '/')) . '/', $event)) {
 				$result = $value['action']->execute($this->registry, $args);
 
-				if (!is_null($result) && !($result instanceof Exception)) {
+				if (!is_null($result) && !($result instanceof \Exception)) {
 					return $result;
 				}
 			}
 		}
+
+		return '';
 	}
 	
 	/**
@@ -75,7 +77,7 @@ class Event {
 	 * @param	string	$trigger
 	 * @param	string	$route
  	*/	
-	public function unregister($trigger, $route) {
+	public function unregister(string $trigger, string $route): void {
 		foreach ($this->data as $key => $value) {
 			if ($trigger == $value['trigger'] && $value['action']->getId() == $route) {
 				unset($this->data[$key]);
@@ -88,7 +90,7 @@ class Event {
 	 *
 	 * @param	string	$trigger
  	*/		
-	public function clear($trigger) {
+	public function clear(string $trigger): void {
 		foreach ($this->data as $key => $value) {
 			if ($trigger == $value['trigger']) {
 				unset($this->data[$key]);

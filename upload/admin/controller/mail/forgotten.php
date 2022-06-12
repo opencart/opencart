@@ -1,7 +1,8 @@
 <?php
-namespace Opencart\Application\Controller\Mail;
+namespace Opencart\Admin\Controller\Mail;
 class Forgotten extends \Opencart\System\Engine\Controller {
-	public function index(&$route, &$args, &$output) {
+	// admin/model/user/user/editCode/after
+	public function index(string &$route, array &$args, mixed &$output): void {
 		if (isset($args[0]) && isset($args[1]) && $args[0] && $args[1]) {
 			$this->load->language('mail/forgotten');
 
@@ -11,7 +12,7 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 
 			$data['text_greeting'] = sprintf($this->language->get('text_greeting'), $store_name);
 
-			$data['reset'] = $this->url->link('common/reset', 'email=' . urlencode($args[0]) . '&code=' . $args[1], true);
+			$data['reset'] = $this->url->link('common/forgotten|reset', 'email=' . urlencode($args[0]) . '&code=' . $args[1], true);
 			$data['ip'] = $this->request->server['REMOTE_ADDR'];
 
 			$data['store'] = $store_name;

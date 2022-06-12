@@ -1,96 +1,102 @@
 {{ header }}
-<div class="container">
-	<div class="page-header">
-		<div class="container">
-			<div class="float-right">{{ language }}</div>
-			<h1>{{ heading_title }}</h1>
-		</div>
-	</div>
-	<div class="container">
-		<div class="card">
-			<div class="card-header"><i class="fab fa-opencart"></i>&nbsp;&nbsp;&nbsp;{{ text_upgrade }}</div>
-			<div class="card-body">
-				<fieldset>
-					<legend>{{ text_server }}</legend>
-					<ol>
-						<li>{{ text_error }}</li>
-						<li>{{ text_clear }}</li>
-						<li>{{ text_admin }}</li>
-						<li>{{ text_user }}</li>
-						<li>{{ text_setting }}</li>
-						<li>{{ text_store }}</li>
-					</ol>
-				</fieldset>
-				<fieldset>
-					<legend>{{ text_steps }}</legend>
-					<div class="form-group">
-						<label class="col-sm-2 control-label">{{ entry_progress }}</label>
-						<div class="col-sm-10">
-							<div class="progress">
-								<div id="progress-bar" class="progress-bar" style="width: 0%;"></div>
-							</div>
-							<div id="progress-text"></div>
-						</div>
-					</div>
-				</fieldset>
-				<div class="buttons">
-					<div class="text-right">
-						<input type="button" value="{{ button_continue }}" data-loading="{{ text_loading }}" id="button-continue" class="btn btn-primary"/>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+<div id="content">
+  <div class="page-header">
+    <div class="container">
+      <div class="float-right">{{ language }}</div>
+      <h1>{{ heading_title }}</h1>
+    </div>
+  </div>
+  <div class="container">
+    {% if error_warning %}
+      <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}</div>
+    {% endif %}
+    <div class="card">
+      <div class="card-header"><i class="fab fa-opencart"></i>&nbsp;&nbsp;&nbsp;{{ text_upgrade }}</div>
+      <div class="card-body">
+        <fieldset>
+          <legend>{{ text_server }}</legend>
+          <ol>
+            <li>{{ text_error }}</li>
+            <li>{{ text_clear }}</li>
+            <li>{{ text_admin }}</li>
+            <li>{{ text_user }}</li>
+            <li>{{ text_setting }}</li>
+            <li>{{ text_store }}</li>
+          </ol>
+        </fieldset>
+        <fieldset>
+          <legend>{{ text_steps }}</legend>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">{{ entry_progress }}</label>
+            <div class="col-sm-10">
+              <div class="progress">
+                <div id="progress-bar" class="progress-bar" style="width: 0%;"></div>
+              </div>
+              <div id="progress-text"></div>
+            </div>
+          </div>
+        </fieldset>
+        <div class="row mt-3">
+          <div class="col text-right"><button type="button" id="button-continue" data-loading="{{ text_loading }}" class="btn btn-primary">{{ button_continue }}</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 <script type="text/javascript"><!--
-var step = 0;
+$('#button-continue').on('click', function () {
+    var step = 1;
 
-$('#button-continue').on('click', function() {
-	$('#progress-bar').addClass('progress-bar-success').css('width', '0%').removeClass('progress-bar-danger');
-	$('#progress-text').html('');
-	$('#button-continue').button('loading');
+    $('#progress-bar').addClass('progress-bar-success').css('width', '0%').removeClass('progress-bar-danger');
+    $('#progress-text').html('');
 
-	start('index.php?route=upgrade/upgrade|next');
+    var next = 'index.php?route=upgrade/upgrade_1';
+
+    var upgrade = function () {
+        return $.ajax({
+            url: next,
+            dataType: 'json',
+            beforeSend: function () {
+                $('#button-continue').prop('disabled', true).addClass('loading');
+            },
+            complete: function () {
+                $('#button-continue').prop('disabled', false).removeClass('loading');
+            },
+            success: function (json) {
+                if (json['redirect']) {
+                    location = json['redirect'];
+                }
+
+                if (json['error']) {
+                    $('#progress-bar').addClass('progress-bar-danger');
+                    $('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
+                }
+
+                if (json['text']) {
+                    $('#progress-text').html('<span class="text-success">' + json['text'] + '</span>');
+                }
+
+                if (json['success']) {
+                    $('#progress-text').html('<span class="text-success">' + json['success'] + '</span>');
+                }
+
+                $('#progress-bar').css('width', Math.round((step / {{ total }}) * 100) + '%');
+
+                step++;
+
+                if (json['next']) {
+                    next = json['next'];
+
+                    chain.attach(upgrade);
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
+        });
+    }
+
+    chain.attach(upgrade);
 });
-
-function start(url) {
-	setTimeout(function() {
-		$.ajax({
-			url: url,
-			type: 'post',
-			dataType: 'json',
-			success: function(json) {
-				console.log(json);
-				if (json['error']) {
-					$('#progress-bar').addClass('progress-bar-danger');
-					$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
-
-					$('#button-continue').prop('disabled', false);
-					$('#button-continue').button('reset');
-				}
-
-				if (json['success']) {
-					$('#progress-text').html('<span class="text-success">' + json['success'] + '</span>');
-					$('#progress-bar').css('width', ((step / {{ total }}) * 100) + '%');
-				}
-
-				if (json['next']) {
-					start(json['next']);
-				} else if (!json['error']) {
-					$('#button-continue').replaceWith('<a href="{{ store }}" class="btn btn-primary">{{ button_continue }}</a>');
-					$('#button-continue').button('reset');
-				}
-
-				step++;
-			},
-			error: function(xhr, ajaxOptions, thrownError) {
-				$('#progress-bar').addClass('progress-bar-danger');
-				$('#progress-text').html('<div class="text-danger">' + (thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText) + '</div>');
-				$('#button-continue').button('reset');
-			}
-		});
-	}, 1000);
-}
-
 //--></script>
 {{ footer }}

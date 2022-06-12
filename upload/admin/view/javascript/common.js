@@ -117,6 +117,8 @@ var datetimepicker = function () {
         locale: {
             format: 'HH:mm'
         }
+    }, function (start, end) {
+        $(this.element).val(start.format('HH:mm'));
     }).on('show.daterangepicker', function (ev, picker) {
         picker.container.find('.calendar-table').hide();
     });

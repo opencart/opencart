@@ -43,46 +43,17 @@
   <div class="col col-lg-9 col-md-12">
     <div class="card">
       <div class="card-header"><i class="fas fa-chart-bar"></i> {{ heading_title }}</div>
-      <div class="card-body">
-        <div class="table-responsive">
-          <table class="table table-bordered">
-            <thead>
-              <tr>
-                <td class="text-start">{{ column_date_start }}</td>
-                <td class="text-start">{{ column_date_end }}</td>
-                <td class="text-start">{{ column_title }}</td>
-                <td class="text-end">{{ column_orders }}</td>
-                <td class="text-end">{{ column_total }}</td>
-              </tr>
-            </thead>
-            <tbody>
-              {% if orders %}
-                {% for order in orders %}
-                  <tr>
-                    <td class="text-start">{{ order.date_start }}</td>
-                    <td class="text-start">{{ order.date_end }}</td>
-                    <td class="text-start">{{ order.title }}</td>
-                    <td class="text-end">{{ order.orders }}</td>
-                    <td class="text-end">{{ order.total }}</td>
-                  </tr>
-                {% endfor %}
-              {% else %}
-                <tr>
-                  <td class="text-center" colspan="5">{{ text_no_results }}</td>
-                </tr>
-              {% endif %}
-            </tbody>
-          </table>
-        </div>
-        <div class="row">
-          <div class="col-sm-6 text-start">{{ pagination }}</div>
-          <div class="col-sm-6 text-end">{{ results }}</div>
-        </div>
-      </div>
+      <div id="sale-tax" class="card-body">{{ list }}</div>
     </div>
   </div>
 </div>
 <script type="text/javascript"><!--
+$('#sale-tax').on('click', '.pagination a', function (e) {
+    e.preventDefault();
+
+    $('#sale-tax').load(this.href);
+});
+
 $('#button-filter').on('click', function() {
     var url = '';
 
@@ -110,6 +81,6 @@ $('#button-filter').on('click', function() {
         url += '&filter_date_end=' + encodeURIComponent(filter_date_end);
     }
 
-    $('#report').load('index.php?route=extension/opencart/report/sale_tax|report&user_token={{ user_token }}' + url);
+    $('#sale-tax').load('index.php?route=extension/opencart/report/sale_tax|list&user_token={{ user_token }}' + url);
 });
 //--></script>

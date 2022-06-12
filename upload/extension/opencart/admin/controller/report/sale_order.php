@@ -56,10 +56,50 @@ class SaleOrder extends \Opencart\System\Engine\Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
-		
+
 	public function report(): void {
 		$this->load->language('extension/opencart/report/sale_order');
 
+		$data['list'] = $this->getReport();
+
+		$this->load->model('localisation/order_status');
+
+		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
+
+		$data['groups'] = [];
+
+		$data['groups'][] = [
+			'text'  => $this->language->get('text_year'),
+			'value' => 'year',
+		];
+
+		$data['groups'][] = [
+			'text'  => $this->language->get('text_month'),
+			'value' => 'month',
+		];
+
+		$data['groups'][] = [
+			'text'  => $this->language->get('text_week'),
+			'value' => 'week',
+		];
+
+		$data['groups'][] = [
+			'text'  => $this->language->get('text_day'),
+			'value' => 'day',
+		];
+
+		$data['user_token'] = $this->session->data['user_token'];
+
+		$this->response->setOutput($this->load->view('extension/opencart/report/sale_order', $data));
+	}
+
+	public function list(): void {
+		$this->load->language('extension/opencart/report/sale_order');
+
+		$this->response->setOutput($this->getReport());
+	}
+
+	public function getReport(): string {
 		if (isset($this->request->get['filter_date_start'])) {
 			$filter_date_start = $this->request->get['filter_date_start'];
 		} else {
@@ -118,32 +158,6 @@ class SaleOrder extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		$this->load->model('localisation/order_status');
-
-		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
-
-		$data['groups'] = [];
-
-		$data['groups'][] = [
-			'text'  => $this->language->get('text_year'),
-			'value' => 'year',
-		];
-
-		$data['groups'][] = [
-			'text'  => $this->language->get('text_month'),
-			'value' => 'month',
-		];
-
-		$data['groups'][] = [
-			'text'  => $this->language->get('text_week'),
-			'value' => 'week',
-		];
-
-		$data['groups'][] = [
-			'text'  => $this->language->get('text_day'),
-			'value' => 'day',
-		];
-
 		$url = '';
 
 		if (isset($this->request->get['filter_date_start'])) {
@@ -178,6 +192,6 @@ class SaleOrder extends \Opencart\System\Engine\Controller {
 
 		$data['user_token'] = $this->session->data['user_token'];
 
-		$this->response->setOutput($this->load->view('extension/opencart/report/sale_order', $data));
+		return $this->load->view('extension/opencart/report/sale_order_list', $data);
 	}
 }

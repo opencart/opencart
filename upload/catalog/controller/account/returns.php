@@ -229,11 +229,6 @@ class Returns extends \Opencart\System\Engine\Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment.min.js');
-		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment-with-locales.min.js');
-		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/daterangepicker.js');
-		$this->document->addStyle('catalog/view/javascript/jquery/datetimepicker/daterangepicker.css');
-
 		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = [

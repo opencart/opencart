@@ -1,0 +1,36 @@
+<div class="table-responsive">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <td class="text-start">{{ column_keyword }}</td>
+        <td class="text-start">{{ column_products }}</td>
+        <td class="text-start">{{ column_category }}</td>
+        <td class="text-start">{{ column_customer }}</td>
+        <td class="text-start">{{ column_ip }}</td>
+        <td class="text-start">{{ column_date_added }}</td>
+      </tr>
+    </thead>
+    <tbody>
+      {% if searches %}
+        {% for search in searches %}
+          <tr>
+            <td class="text-start">{{ search.keyword }}</td>
+            <td class="text-start">{{ search.products }}</td>
+            <td class="text-start">{{ search.category }}</td>
+            <td class="text-start">{{ search.customer }}</td>
+            <td class="text-start">{{ search.ip }}</td>
+            <td class="text-start">{{ search.date_added }}</td>
+          </tr>
+        {% endfor %}
+      {% else %}
+        <tr>
+          <td class="text-center" colspan="6">{{ text_no_results }}</td>
+        </tr>
+      {% endif %}
+    </tbody>
+  </table>
+</div>
+<div class="row">
+  <div class="col-sm-6 text-start">{{ pagination }}</div>
+  <div class="col-sm-6 text-end">{{ results }}</div>
+</div>

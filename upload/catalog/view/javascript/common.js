@@ -22,11 +22,11 @@ function getURLVar(key) {
 	}
 }
 
-$(document).ready(function() {
+$(document).ready(function () {
 	$('form').trigger('reset');
 
 	// Highlight any found errors
-	$('.text-danger').each(function() {
+	$('.text-danger').each(function () {
 		var element = $(this).parent().find(':input');
 
 		if (element.hasClass('form-control')) {
@@ -38,12 +38,12 @@ $(document).ready(function() {
 	$('[data-toggle=\'tooltip\']').tooltip({container: 'body'});
 
 	// Makes tooltips work on ajax generated content
-	$(document).ajaxStop(function() {
+	$(document).ajaxStop(function () {
 		$('[data-toggle=\'tooltip\']').tooltip({container: 'body'});
 	});
 
 	// Currency
-	$('#form-currency .dropdown-item').on('click', function(e) {
+	$('#form-currency .dropdown-item').on('click', function (e) {
 		e.preventDefault();
 
 		$('#form-currency input[name=\'code\']').val($(this).attr('href'));
@@ -52,7 +52,7 @@ $(document).ready(function() {
 	});
 
 	// Search
-	$('#search input[name=\'search\']').parent().find('button').on('click', function() {
+	$('#search input[name=\'search\']').parent().find('button').on('click', function () {
 		var url = $('base').attr('href') + 'index.php?route=product/search&language=' + $(this).attr('data-lang');
 
 		var value = $('header #search input[name=\'search\']').val();
@@ -64,14 +64,14 @@ $(document).ready(function() {
 		location = url;
 	});
 
-	$('#search input[name=\'search\']').on('keydown', function(e) {
+	$('#search input[name=\'search\']').on('keydown', function (e) {
 		if (e.keyCode == 13) {
 			$('header #search input[name=\'search\']').parent().find('button').trigger('click');
 		}
 	});
 
 	// Menu
-	$('#menu .dropdown-menu').each(function() {
+	$('#menu .dropdown-menu').each(function () {
 		var menu = $('#menu').offset();
 		var dropdown = $(this).parent().offset();
 
@@ -85,7 +85,7 @@ $(document).ready(function() {
 
 
 	// Product List
-	$('#list-view').click(function() {
+	$('#list-view').click(function () {
 		$('#content .product-grid > .clearfix').remove();
 
 		$('#content .row > .product-grid').attr('class', 'product-layout product-list col-12');
@@ -99,7 +99,7 @@ $(document).ready(function() {
 	var cols = $('#column-left, #column-right').length;
 
 	// Product Grid
-	$('#grid-view').click(function() {
+	$('#grid-view').click(function () {
 		// What a shame bootstrap does not take into account dynamically loaded columns
 		if (cols == 2) {
 			$('#content .product-list').attr('class', 'product-layout product-grid col-lg-6 col-md-6 col-sm-12 col-12');
@@ -143,7 +143,7 @@ $(document).ready(function() {
 
 
 	/* Agree to Terms */
-	$('body').on('click', '.modal-link', function(e) {
+	$('body').on('click', '.modal-link', function (e) {
 		e.preventDefault();
 
 		var element = this;
@@ -153,7 +153,7 @@ $(document).ready(function() {
 		$.ajax({
 			url: $(element).attr('href'),
 			dataType: 'html',
-			success: function(html) {
+			success: function (html) {
 				$('body').append(html);
 
 				$('#modal-information').modal('show');
@@ -162,27 +162,27 @@ $(document).ready(function() {
 	});
 
 	// Cookie Policy
-	$('#cookie button').on('click', function() {
+	$('#cookie button').on('click', function () {
 		var element = this;
 
 		$.ajax({
 			url: $(this).val(),
 			type: 'get',
 			dataType: 'json',
-			beforeSend: function() {
+			beforeSend: function () {
 				$(element).button('loading');
 			},
-			complete: function() {
+			complete: function () {
 				$(element).button('reset');
 			},
-			success: function(json) {
+			success: function (json) {
 				if (json['success']) {
-					$('#cookie').fadeOut(400, function() {
+					$('#cookie').fadeOut(400, function () {
 						$('#cookie').remove();
 					});
 				}
 			},
-			error: function(xhr, ajaxOptions, thrownError) {
+			error: function (xhr, ajaxOptions, thrownError) {
 				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 			}
 		});
@@ -191,19 +191,19 @@ $(document).ready(function() {
 
 // Cart add remove functions
 var cart = {
-	'add': function(product_id, quantity) {
+	'add': function (product_id, quantity) {
 		$.ajax({
 			url: 'index.php?route=checkout/cart|add',
 			type: 'post',
 			data: 'product_id=' + product_id + '&quantity=' + (typeof (quantity) != 'undefined' ? quantity : 1),
 			dataType: 'json',
-			beforeSend: function() {
+			beforeSend: function () {
 				$('#cart > button').button('loading');
 			},
-			complete: function() {
+			complete: function () {
 				$('#cart > button').button('reset');
 			},
-			success: function(json) {
+			success: function (json) {
 				$('.text-danger, .toast').remove();
 				$('.form-control').removeClass('is-invalid');
 
@@ -225,55 +225,55 @@ var cart = {
 					$('#cart').parent().load('index.php?route=common/cart|info');
 				}
 			},
-			error: function(xhr, ajaxOptions, thrownError) {
+			error: function (xhr, ajaxOptions, thrownError) {
 				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 			}
 		});
 	},
-	'update': function(key, quantity) {
+	'update': function (key, quantity) {
 		$.ajax({
 			url: 'index.php?route=checkout/cart|edit',
 			type: 'post',
 			data: 'key=' + key + '&quantity=' + (typeof (quantity) != 'undefined' ? quantity : 1),
 			dataType: 'json',
-			beforeSend: function() {
+			beforeSend: function () {
 				$('#cart > button').button('loading');
 			},
-			complete: function() {
+			complete: function () {
 				$('#cart > button').button('reset');
 			},
-			success: function(json) {
+			success: function (json) {
 				if (getURLVar('route') == 'checkout/cart' || getURLVar('route') == 'checkout/checkout') {
 					location = 'index.php?route=checkout/cart';
 				} else {
 					$('#cart').parent().load('index.php?route=common/cart|info');
 				}
 			},
-			error: function(xhr, ajaxOptions, thrownError) {
+			error: function (xhr, ajaxOptions, thrownError) {
 				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 			}
 		});
 	},
-	'remove': function(key) {
+	'remove': function (key) {
 		$.ajax({
 			url: 'index.php?route=checkout/cart|remove',
 			type: 'post',
 			data: 'key=' + key,
 			dataType: 'json',
-			beforeSend: function() {
+			beforeSend: function () {
 				$('#cart > button').button('loading');
 			},
-			complete: function() {
+			complete: function () {
 				$('#cart > button').button('reset');
 			},
-			success: function(json) {
+			success: function (json) {
 				if (getURLVar('route') == 'checkout/cart' || getURLVar('route') == 'checkout/checkout') {
 					location = 'index.php?route=checkout/cart';
 				} else {
 					$('#cart').parent().load('index.php?route=common/cart|info');
 				}
 			},
-			error: function(xhr, ajaxOptions, thrownError) {
+			error: function (xhr, ajaxOptions, thrownError) {
 				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 			}
 		});
@@ -281,29 +281,29 @@ var cart = {
 };
 
 var voucher = {
-	'add': function() {
+	'add': function () {
 
 	},
-	'remove': function(key) {
+	'remove': function (key) {
 		$.ajax({
 			url: 'index.php?route=checkout/cart|remove',
 			type: 'post',
 			data: 'key=' + key,
 			dataType: 'json',
-			beforeSend: function() {
+			beforeSend: function () {
 				$('#cart > button').button('loading');
 			},
-			complete: function() {
+			complete: function () {
 				$('#cart > button').button('reset');
 			},
-			success: function(json) {
+			success: function (json) {
 				if (getURLVar('route') == 'checkout/cart' || getURLVar('route') == 'checkout/checkout') {
 					location = 'index.php?route=checkout/cart';
 				} else {
 					$('#cart').parent().load('index.php?route=common/cart|info');
 				}
 			},
-			error: function(xhr, ajaxOptions, thrownError) {
+			error: function (xhr, ajaxOptions, thrownError) {
 				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 			}
 		});
@@ -311,13 +311,13 @@ var voucher = {
 };
 
 var wishlist = {
-	'add': function(product_id) {
+	'add': function (product_id) {
 		$.ajax({
 			url: 'index.php?route=account/wishlist|add',
 			type: 'post',
 			data: 'product_id=' + product_id,
 			dataType: 'json',
-			success: function(json) {
+			success: function (json) {
 				$('.toast').remove();
 
 				if (json['redirect']) {
@@ -338,24 +338,24 @@ var wishlist = {
 				$('#wishlist-total span').html(json['total']);
 				$('#wishlist-total').attr('title', json['total']);
 			},
-			error: function(xhr, ajaxOptions, thrownError) {
+			error: function (xhr, ajaxOptions, thrownError) {
 				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 			}
 		});
 	},
-	'remove': function() {
+	'remove': function () {
 
 	}
 };
 
 var compare = {
-	'add': function(product_id) {
+	'add': function (product_id) {
 		$.ajax({
 			url: 'index.php?route=product/compare|add',
 			type: 'post',
 			data: 'product_id=' + product_id,
 			dataType: 'json',
-			success: function(json) {
+			success: function (json) {
 				$('.toast').remove();
 
 				if (json['success']) {
@@ -371,12 +371,12 @@ var compare = {
 					$('#compare-total').html(json['total']);
 				}
 			},
-			error: function(xhr, ajaxOptions, thrownError) {
+			error: function (xhr, ajaxOptions, thrownError) {
 				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 			}
 		});
 	},
-	'remove': function() {
+	'remove': function () {
 
 	}
 };
@@ -400,7 +400,7 @@ class Chain {
 		if (this.data.length) {
 			this.start = true;
 
-			(this.data.shift())().done(function() {
+			(this.data.shift())().done(function () {
 				chain.execute();
 			});
 		} else {
@@ -412,9 +412,9 @@ class Chain {
 var chain = new Chain();
 
 // Autocomplete
-(function($) {
-	$.fn.autocomplete = function(option) {
-		return this.each(function() {
+(function ($) {
+	$.fn.autocomplete = function (option) {
+		return this.each(function () {
 			var $this = $(this);
 			var $dropdown = $('<div class="dropdown-menu"/>');
 
@@ -433,27 +433,27 @@ var chain = new Chain();
 			$this.active = false;
 
 			// Focus
-			$this.on('focus', function() {
+			$this.on('focus', function () {
 				this.request();
 			});
 
 			// Blur
-			$this.on('blur', function(e) {
+			$this.on('blur', function (e) {
 				if (!$this.active) {
 					this.hide();
 				}
 			});
 
-			$this.parent().on('mouseover', function(e) {
+			$this.parent().on('mouseover', function (e) {
 				$this.active = true;
 			});
 
-			$this.parent().on('mouseout', function(e) {
+			$this.parent().on('mouseout', function (e) {
 				$this.active = false;
 			});
 
 			// Keydown
-			$this.on('keydown', function(event) {
+			$this.on('keydown', function (event) {
 				switch (event.keyCode) {
 					case 27: // escape
 						this.hide();
@@ -465,7 +465,7 @@ var chain = new Chain();
 			});
 
 			// Click
-			this.click = function(event) {
+			this.click = function (event) {
 				event.preventDefault();
 
 				var value = $(event.target).attr('href');
@@ -478,26 +478,26 @@ var chain = new Chain();
 			}
 
 			// Show
-			this.show = function() {
+			this.show = function () {
 				$dropdown.addClass('show');
 			}
 
 			// Hide
-			this.hide = function() {
+			this.hide = function () {
 				$dropdown.removeClass('show');
 			}
 
 			// Request
-			this.request = function() {
+			this.request = function () {
 				clearTimeout(this.timer);
 
-				this.timer = setTimeout(function(object) {
+				this.timer = setTimeout(function (object) {
 					object.source($(object).val(), $.proxy(object.response, object));
 				}, 50, this);
 			}
 
 			// Response
-			this.response = function(json) {
+			this.response = function (json) {
 				var html = '';
 				var category = {};
 				var name;
@@ -548,13 +548,13 @@ var chain = new Chain();
 	}
 })(window.jQuery);
 
-+function($) {
++function ($) {
 	'use strict';
 
 	// BUTTON PUBLIC CLASS DEFINITION
 	// ==============================
 
-	var Button = function(element, options) {
+	var Button = function (element, options) {
 		this.$element = $(element)
 		this.options = $.extend({}, Button.DEFAULTS, options)
 		this.isLoading = false
@@ -566,7 +566,7 @@ var chain = new Chain();
 		loadingText: 'loading...'
 	}
 
-	Button.prototype.setState = function(state) {
+	Button.prototype.setState = function (state) {
 		var d = 'disabled'
 		var $el = this.$element
 		var val = $el.is('input') ? 'val' : 'html'
@@ -577,7 +577,7 @@ var chain = new Chain();
 		if (data.resetText == null) $el.data('resetText', $el[val]())
 
 		// push to event loop to allow forms to submit
-		setTimeout($.proxy(function() {
+		setTimeout($.proxy(function () {
 			$el[val](data[state] == null ? this.options[state] : data[state])
 
 			if (state == 'loadingText') {
@@ -590,7 +590,7 @@ var chain = new Chain();
 		}, this), 0)
 	}
 
-	Button.prototype.toggle = function() {
+	Button.prototype.toggle = function () {
 		var changed = true
 		var $parent = this.$element.closest('[data-toggle="buttons"]')
 
@@ -617,7 +617,7 @@ var chain = new Chain();
 	// ========================
 
 	function Plugin(option) {
-		return this.each(function() {
+		return this.each(function () {
 			var $this = $(this)
 			var data = $this.data('bs.button')
 			var options = typeof option == 'object' && option
@@ -638,7 +638,7 @@ var chain = new Chain();
 	// BUTTON NO CONFLICT
 	// ==================
 
-	$.fn.button.noConflict = function() {
+	$.fn.button.noConflict = function () {
 		$.fn.button = old
 		return this
 	}
@@ -647,7 +647,7 @@ var chain = new Chain();
 	// BUTTON DATA-API
 	// ===============
 
-	$(document).on('click.bs.button.data-api', '[data-toggle^="button"]', function(e) {
+	$(document).on('click.bs.button.data-api', '[data-toggle^="button"]', function (e) {
 		var $btn = $(e.target);
 
 		if (!$btn.hasClass('btn')) $btn = $btn.closest('.btn');
@@ -655,7 +655,7 @@ var chain = new Chain();
 		Plugin.call($btn, 'toggle');
 
 		if (!($(e.target).is('input[type="radio"]') || $(e.target).is('input[type="checkbox"]'))) e.preventDefault();
-	}).on('focus.bs.button.data-api blur.bs.button.data-api', '[data-toggle^="button"]', function(e) {
+	}).on('focus.bs.button.data-api blur.bs.button.data-api', '[data-toggle^="button"]', function (e) {
 		$(e.target).closest('.btn').toggleClass('focus', /^focus(in)?$/.test(e.type));
 	});
 }(jQuery);

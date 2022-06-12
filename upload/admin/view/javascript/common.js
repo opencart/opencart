@@ -27,11 +27,11 @@ function isIE() {
     if (!!window.ActiveXObject || "ActiveXObject" in window) return true;
 }
 
-$(document).ready(function() {
+$(document).ready(function () {
 	$('form').trigger('reset');
 
 	// Highlight any found errors
-	$('.invalid-tooltip').each(function() {
+	$('.invalid-tooltip').each(function () {
 		var element = $(this).parent().find(':input');
 
 		if (element.hasClass('form-control')) {
@@ -45,37 +45,37 @@ $(document).ready(function() {
 	$('[data-toggle=\'tooltip\']').tooltip({container: 'body', html: true});
 
 	// Makes tooltips work on ajax generated content
-	$(document).ajaxStop(function() {
+	$(document).ajaxStop(function () {
 		$('[data-toggle=\'tooltip\']').tooltip({container: 'body'});
 	});
 
 	// tooltip remove
-	$('[data-toggle=\'tooltip\']').on('remove', function() {
+	$('[data-toggle=\'tooltip\']').on('remove', function () {
 		$(this).tooltip('dispose');
 	});
 
 	// Tooltip remove fixed
-	$(document).on('click', '[data-toggle=\'tooltip\']', function(e) {
+	$(document).on('click', '[data-toggle=\'tooltip\']', function (e) {
 		$('body > .tooltip').remove();
 	});
 
 	// https://github.com/opencart/opencart/issues/2595
 	$.event.special.remove = {
-		remove: function(o) {
+		remove: function (o) {
 			if (o.handler) {
 				o.handler.apply(this, arguments);
 			}
 		}
 	}
 
-	$('#button-menu').on('click', function(e) {
+	$('#button-menu').on('click', function (e) {
 		e.preventDefault();
 
 		$('#column-left').toggleClass('active');
 	});
 
 	// Set last page opened on the menu
-	$('#menu a[href]').on('click', function() {
+	$('#menu a[href]').on('click', function () {
 		sessionStorage.setItem('menu', $(this).attr('href'));
 	});
 
@@ -92,7 +92,7 @@ $(document).ready(function() {
 
 	$('#menu a[href=\'' + sessionStorage.getItem('menu') + '\']').parents('li').addClass('active');
 
-	$('#header-notification [data-toggle=\'modal\']').on('click', function(e) {
+	$('#header-notification [data-toggle=\'modal\']').on('click', function (e) {
 		e.preventDefault();
 
 		var element = this;
@@ -102,7 +102,7 @@ $(document).ready(function() {
 		$.ajax({
 			url: $(element).attr('href'),
 			dataType: 'html',
-			success: function(html) {
+			success: function (html) {
 				$('body').append(html);
 
 				$('#modal-notification').modal('show');
@@ -112,7 +112,7 @@ $(document).ready(function() {
 });
 
 // Image Manager
-$(document).on('click', '[data-toggle=\'image\']', function(e) {
+$(document).on('click', '[data-toggle=\'image\']', function (e) {
 	e.preventDefault();
 
 	var element = this;
@@ -122,13 +122,13 @@ $(document).on('click', '[data-toggle=\'image\']', function(e) {
 	$.ajax({
 		url: 'index.php?route=common/filemanager&user_token=' + getURLVar('user_token') + '&target=' + encodeURIComponent($(this).attr('data-target')) + '&thumb=' + encodeURIComponent($(this).attr('data-thumb')),
 		dataType: 'html',
-		beforeSend: function() {
+		beforeSend: function () {
 			$(element).button('loading');
 		},
-		complete: function() {
+		complete: function () {
 			$(element).button('reset');
 		},
-		success: function(html) {
+		success: function (html) {
 			$('body').append(html);
 
 			$('#modal-image').modal('show');
@@ -136,7 +136,7 @@ $(document).on('click', '[data-toggle=\'image\']', function(e) {
 	});
 });
 
-$(document).on('click', '[data-toggle=\'clear\']', function() {
+$(document).on('click', '[data-toggle=\'clear\']', function () {
 	$($(this).attr('data-thumb')).attr('src', $($(this).attr('data-thumb')).attr('data-placeholder'));
 
 	$($(this).attr('data-target')).val('');
@@ -161,7 +161,7 @@ class Chain {
 		if (this.data.length) {
 			this.start = true;
 
-			(this.data.shift())().done(function() {
+			(this.data.shift())().done(function () {
 				chain.execute();
 			});
 		} else {
@@ -173,9 +173,9 @@ class Chain {
 var chain = new Chain();
 
 // Autocomplete
-(function($) {
-	$.fn.autocomplete = function(option) {
-		return this.each(function() {
+(function ($) {
+	$.fn.autocomplete = function (option) {
+		return this.each(function () {
 			var $this = $(this);
 			var $dropdown = $('<div class="dropdown-menu"/>');
 
@@ -194,27 +194,27 @@ var chain = new Chain();
 			$this.active = false;
 
 			// Focus
-			$this.on('focus', function() {
+			$this.on('focus', function () {
 				this.request();
 			});
 
 			// Blur
-			$this.on('blur', function(e) {
+			$this.on('blur', function (e) {
 				if (!$this.active) {
 					this.hide();
 				}
 			});
 
-			$this.parent().on('mouseover', function(e) {
+			$this.parent().on('mouseover', function (e) {
 				$this.active = true;
 			});
 
-			$this.parent().on('mouseout', function(e) {
+			$this.parent().on('mouseout', function (e) {
 				$this.active = false;
 			});
 
 			// Keydown
-			$this.on('keydown', function(event) {
+			$this.on('keydown', function (event) {
 				switch (event.keyCode) {
 					case 27: // escape
 						this.hide();
@@ -226,7 +226,7 @@ var chain = new Chain();
 			});
 
 			// Click
-			this.click = function(event) {
+			this.click = function (event) {
 				event.preventDefault();
 
 				var value = $(event.target).attr('href');
@@ -239,26 +239,26 @@ var chain = new Chain();
 			}
 
 			// Show
-			this.show = function() {
+			this.show = function () {
 				$dropdown.addClass('show');
 			}
 
 			// Hide
-			this.hide = function() {
+			this.hide = function () {
 				$dropdown.removeClass('show');
 			}
 
 			// Request
-			this.request = function() {
+			this.request = function () {
 				clearTimeout(this.timer);
 
-				this.timer = setTimeout(function(object) {
+				this.timer = setTimeout(function (object) {
 					object.source($(object).val(), $.proxy(object.response, object));
 				}, 50, this);
 			}
 
 			// Response
-			this.response = function(json) {
+			this.response = function (json) {
 				var html = '';
 				var category = {};
 				var name;
@@ -309,13 +309,13 @@ var chain = new Chain();
 	}
 })(window.jQuery);
 
-+function($) {
++function ($) {
 	'use strict';
 
 	// BUTTON PUBLIC CLASS DEFINITION
 	// ==============================
 
-	var Button = function(element, options) {
+	var Button = function (element, options) {
 		this.$element = $(element)
 		this.options = $.extend({}, Button.DEFAULTS, options)
 		this.isLoading = false
@@ -327,7 +327,7 @@ var chain = new Chain();
 		loadingText: 'loading...'
 	}
 
-	Button.prototype.setState = function(state) {
+	Button.prototype.setState = function (state) {
 		var d = 'disabled'
 		var $el = this.$element
 		var val = $el.is('input') ? 'val' : 'html'
@@ -338,7 +338,7 @@ var chain = new Chain();
 		if (data.resetText == null) $el.data('resetText', $el[val]())
 
 		// push to event loop to allow forms to submit
-		setTimeout($.proxy(function() {
+		setTimeout($.proxy(function () {
 			$el[val](data[state] == null ? this.options[state] : data[state])
 
 			if (state == 'loadingText') {
@@ -351,7 +351,7 @@ var chain = new Chain();
 		}, this), 0)
 	}
 
-	Button.prototype.toggle = function() {
+	Button.prototype.toggle = function () {
 		var changed = true
 		var $parent = this.$element.closest('[data-toggle="buttons"]')
 
@@ -378,7 +378,7 @@ var chain = new Chain();
 	// ========================
 
 	function Plugin(option) {
-		return this.each(function() {
+		return this.each(function () {
 			var $this = $(this)
 			var data = $this.data('bs.button')
 			var options = typeof option == 'object' && option
@@ -399,7 +399,7 @@ var chain = new Chain();
 	// BUTTON NO CONFLICT
 	// ==================
 
-	$.fn.button.noConflict = function() {
+	$.fn.button.noConflict = function () {
 		$.fn.button = old
 		return this
 	}
@@ -409,13 +409,13 @@ var chain = new Chain();
 	// ===============
 
 	$(document)
-		.on('click.bs.button.data-api', '[data-toggle^="button"]', function(e) {
+		.on('click.bs.button.data-api', '[data-toggle^="button"]', function (e) {
 			var $btn = $(e.target)
 			if (!$btn.hasClass('btn')) $btn = $btn.closest('.btn')
 			Plugin.call($btn, 'toggle')
 			if (!($(e.target).is('input[type="radio"]') || $(e.target).is('input[type="checkbox"]'))) e.preventDefault()
 		})
-		.on('focus.bs.button.data-api blur.bs.button.data-api', '[data-toggle^="button"]', function(e) {
+		.on('focus.bs.button.data-api blur.bs.button.data-api', '[data-toggle^="button"]', function (e) {
 			$(e.target).closest('.btn').toggleClass('focus', /^focus(in)?$/.test(e.type))
 		})
 }(jQuery);

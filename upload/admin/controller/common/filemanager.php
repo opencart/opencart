@@ -67,7 +67,7 @@ class FileManager extends \Opencart\System\Engine\Controller {
 			$images = array_slice($directories, ($page - 1) * 16, 16);
 
 			foreach ($images as $image) {
-				if (utf8_substr(str_replace('\\', '/', realpath($image)), 0, strlen($base)) == $base) {
+				if (substr(str_replace('\\', '/', realpath($image)), 0, strlen($base)) == $base) {
 					$name = basename($image);
 
 					$url = '';
@@ -129,7 +129,7 @@ class FileManager extends \Opencart\System\Engine\Controller {
 				continue;
 			}
 
-			$extension = utf8_substr($files[$key], $pos + 1);
+			$extension = substr($files[$key], $pos + 1);
 
 			if (!in_array($extension, $allowed)) {
 				unset($files[$key]);
@@ -143,7 +143,7 @@ class FileManager extends \Opencart\System\Engine\Controller {
 			$images = array_slice($files, ($page - 1) * 16, 16 - count($data['directories']));
 
 			foreach ($images as $image) {
-				if (utf8_substr(str_replace('\\', '/', realpath($image)), 0, strlen($base)) == $base) {
+				if (substr(str_replace('\\', '/', realpath($image)), 0, strlen($base)) == $base) {
 					$name = basename($image);
 
 					$data['images'][] = [
@@ -380,7 +380,7 @@ class FileManager extends \Opencart\System\Engine\Controller {
 		}
 
 		// Check its a directory
-		if (!is_dir($directory) || utf8_substr(str_replace('\\', '/', realpath($directory)) . '/', 0, strlen($base)) != $base) {
+		if (!is_dir($directory) || substr(str_replace('\\', '/', realpath($directory)) . '/', 0, strlen($base)) != $base) {
 			$json['error'] = $this->language->get('error_directory');
 		}
 
@@ -437,7 +437,7 @@ class FileManager extends \Opencart\System\Engine\Controller {
 			$path = html_entity_decode($path, ENT_QUOTES, 'UTF-8');
 
 			// Check path exists
-			if (($path == $base) || (utf8_substr(str_replace('\\', '/', realpath($base . $path)) . '/', 0, strlen($base)) != $base)) {
+			if (($path == $base) || (substr(str_replace('\\', '/', realpath($base . $path)) . '/', 0, strlen($base)) != $base)) {
 				$json['error'] = $this->language->get('error_delete');
 
 				break;

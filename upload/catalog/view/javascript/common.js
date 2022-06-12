@@ -97,7 +97,6 @@ var alert = function () {
     }, 7000);
 }
 
-$(document).ready(alert);
 $(document).on('click', 'button', alert);
 
 $(document).ready(function () {

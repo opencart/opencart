@@ -4792,6 +4792,28 @@ function db_schema() {
 	];
 
 	$tables[] = [
+		'name' => 'product_viewed',
+		'field' => [
+			[
+				'name' => 'product_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'viewed',
+				'type' => 'int(11)',
+				'not_null' => true
+			]
+		],
+		'primary' => [
+			'product_id'
+		],
+		'engine' => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
+	];
+
+	$tables[] = [
 		'name' => 'return',
 		'field' => [
 			[

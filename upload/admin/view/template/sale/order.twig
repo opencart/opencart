@@ -56,16 +56,30 @@
               <input type="text" name="filter_total" value="{{ filter_total }}" placeholder="{{ entry_total }}" id="input-total" class="form-control"/>
             </div>
             <div class="mb-3">
-              <label for="input-date-added" class="form-label">{{ entry_date_added }}</label>
+              <label for="input-date-added-from" class="form-label">{{ entry_date_added_from }}</label>
               <div class="input-group">
-                <input type="text" name="filter_date_added" value="{{ filter_date_added }}" placeholder="{{ entry_date_added }}" id="input-date-added" class="form-control date"/>
+                <input type="text" name="filter_date_added_from" value="{{ filter_date_added_from }}" placeholder="{{ entry_date_added_from }}" id="input-date-added-from" class="form-control date"/>
                 <div class="input-group-text"><i class="fas fa-calendar"></i></div>
               </div>
             </div>
             <div class="mb-3">
-              <label for="input-date-modified" class="form-label">{{ entry_date_modified }}</label>
+              <label for="input-date-added-to" class="form-label">{{ entry_date_added_to }}</label>
               <div class="input-group">
-                <input type="text" name="filter_date_modified" value="{{ filter_date_modified }}" placeholder="{{ entry_date_modified }}" id="input-date-modified" class="form-control date"/>
+                <input type="text" name="filter_date_added_to" value="{{ filter_date_added_to }}" placeholder="{{ entry_date_added_to }}" id="input-date-added-to" class="form-control date"/>
+                <div class="input-group-text"><i class="fas fa-calendar"></i></div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="input-date-modified-from" class="form-label">{{ entry_date_modified_from }}</label>
+              <div class="input-group">
+                <input type="text" name="filter_date_modified_from" value="{{ filter_date_modified_from }}" placeholder="{{ entry_date_modified_from }}" id="input-date-modified-from" class="form-control date"/>
+                <div class="input-group-text"><i class="fas fa-calendar"></i></div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="input-date-modified-to" class="form-label">{{ entry_date_modified_to }}</label>
+              <div class="input-group">
+                <input type="text" name="filter_date_modified_to" value="{{ filter_date_modified_to }}" placeholder="{{ entry_date_modified_to }}" id="input-date-modified-to" class="form-control date"/>
                 <div class="input-group-text"><i class="fas fa-calendar"></i></div>
               </div>
             </div>
@@ -124,16 +138,28 @@ $('#button-filter').on('click', function () {
         url += '&filter_total=' + encodeURIComponent(filter_total);
     }
 
-    var filter_date_added = $('#input-date-added').val();
+    var filter_date_added_from = $('#input-date-added-from').val();
 
-    if (filter_date_added) {
-        url += '&filter_date_added=' + encodeURIComponent(filter_date_added);
+    if (filter_date_added_from) {
+        url += '&filter_date_added_from=' + encodeURIComponent(filter_date_added_from);
     }
 
-    var filter_date_modified = $('#input-date-modified').val();
+    var filter_date_added_to = $('#input-date-added-to').val();
 
-    if (filter_date_modified) {
-        url += '&filter_date_modified=' + encodeURIComponent(filter_date_modified);
+    if (filter_date_added_to) {
+        url += '&filter_date_added_to=' + encodeURIComponent(filter_date_added_to);
+    }
+
+    var filter_date_modified_from = $('#input-date-modified-from').val();
+
+    if (filter_date_modified_from) {
+        url += '&filter_date_modified_from=' + encodeURIComponent(filter_date_modified_from);
+    }
+
+    var filter_date_modified_to = $('#input-date-modified-to').val();
+
+    if (filter_date_modified_to) {
+        url += '&filter_date_modified_to=' + encodeURIComponent(filter_date_modified_to);
     }
 
     $('#order').load('index.php?route=sale/order|list&user_token={{ user_token }}' + url);

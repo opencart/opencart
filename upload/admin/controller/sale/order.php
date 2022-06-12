@@ -40,8 +40,24 @@ class Order extends \Opencart\System\Engine\Controller {
 			$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
 		}
 
+		if (isset($this->request->get['filter_date_added_from'])) {
+			$url .= '&filter_date_added_from=' . $this->request->get['filter_date_added_from'];
+		}
+
+		if (isset($this->request->get['filter_date_added_to'])) {
+			$url .= '&filter_date_added_to=' . $this->request->get['filter_date_added_to'];
+		}
+
 		if (isset($this->request->get['filter_date_modified'])) {
 			$url .= '&filter_date_modified=' . $this->request->get['filter_date_modified'];
+		}
+
+		if (isset($this->request->get['filter_date_modified_from'])) {
+			$url .= '&filter_date_modified_from=' . $this->request->get['filter_date_modified_from'];
+		}
+
+		if (isset($this->request->get['filter_date_modified_to'])) {
+			$url .= '&filter_date_modified_to=' . $this->request->get['filter_date_modified_to'];
 		}
 
 		if (isset($this->request->get['sort'])) {
@@ -161,10 +177,34 @@ class Order extends \Opencart\System\Engine\Controller {
 			$filter_date_added = '';
 		}
 
+		if (isset($this->request->get['filter_date_added_from'])) {
+			$filter_date_added_from = $this->request->get['filter_date_added_from'];
+		} else {
+			$filter_date_added_from = '';
+		}
+
+		if (isset($this->request->get['filter_date_added_to'])) {
+			$filter_date_added_to = $this->request->get['filter_date_added_to'];
+		} else {
+			$filter_date_added_to = '';
+		}
+
 		if (isset($this->request->get['filter_date_modified'])) {
 			$filter_date_modified = $this->request->get['filter_date_modified'];
 		} else {
 			$filter_date_modified = '';
+		}
+
+		if (isset($this->request->get['filter_date_modified_from'])) {
+			$filter_date_modified_from = $this->request->get['filter_date_modified_from'];
+		} else {
+			$filter_date_modified_from = '';
+		}
+
+		if (isset($this->request->get['filter_date_modified_to'])) {
+			$filter_date_modified_to = $this->request->get['filter_date_modified_to'];
+		} else {
+			$filter_date_modified_to = '';
 		}
 
 		if (isset($this->request->get['sort'])) {
@@ -219,8 +259,24 @@ class Order extends \Opencart\System\Engine\Controller {
 			$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
 		}
 
+		if (isset($this->request->get['filter_date_added_from'])) {
+			$url .= '&filter_date_added_from=' . $this->request->get['filter_date_added_from'];
+		}
+
+		if (isset($this->request->get['filter_date_added_to'])) {
+			$url .= '&filter_date_added_to=' . $this->request->get['filter_date_added_to'];
+		}
+
 		if (isset($this->request->get['filter_date_modified'])) {
 			$url .= '&filter_date_modified=' . $this->request->get['filter_date_modified'];
+		}
+
+		if (isset($this->request->get['filter_date_modified_from'])) {
+			$url .= '&filter_date_modified_from=' . $this->request->get['filter_date_modified_from'];
+		}
+
+		if (isset($this->request->get['filter_date_modified_to'])) {
+			$url .= '&filter_date_modified_to=' . $this->request->get['filter_date_modified_to'];
 		}
 
 		if (isset($this->request->get['sort'])) {
@@ -248,7 +304,11 @@ class Order extends \Opencart\System\Engine\Controller {
 			'filter_order_status_id' => $filter_order_status_id,
 			'filter_total'           => $filter_total,
 			'filter_date_added'      => $filter_date_added,
+			'filter_date_added_from' => $filter_date_added_from,
+			'filter_date_added_to'   => $filter_date_added_to,
 			'filter_date_modified'   => $filter_date_modified,
+			'filter_date_modified_from' => $filter_date_modified_from,
+			'filter_date_modified_to' => $filter_date_modified_to,
 			'sort'                   => $sort,
 			'order'                  => $order,
 			'start'                  => ($page - 1) * (int)$this->config->get('config_pagination_admin'),
@@ -309,8 +369,24 @@ class Order extends \Opencart\System\Engine\Controller {
 			$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
 		}
 
+		if (isset($this->request->get['filter_date_added_from'])) {
+			$url .= '&filter_date_added_from=' . $this->request->get['filter_date_added_from'];
+		}
+
+		if (isset($this->request->get['filter_date_added_to'])) {
+			$url .= '&filter_date_added_to=' . $this->request->get['filter_date_added_to'];
+		}
+
 		if (isset($this->request->get['filter_date_modified'])) {
 			$url .= '&filter_date_modified=' . $this->request->get['filter_date_modified'];
+		}
+
+		if (isset($this->request->get['filter_date_modified_from'])) {
+			$url .= '&filter_date_modified_from=' . $this->request->get['filter_date_modified_from'];
+		}
+
+		if (isset($this->request->get['filter_date_modified_to'])) {
+			$url .= '&filter_date_modified_to=' . $this->request->get['filter_date_modified_to'];
 		}
 
 		if ($order == 'ASC') {
@@ -361,8 +437,24 @@ class Order extends \Opencart\System\Engine\Controller {
 			$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
 		}
 
+		if (isset($this->request->get['filter_date_added_from'])) {
+			$url .= '&filter_date_added_from=' . $this->request->get['filter_date_added_from'];
+		}
+
+		if (isset($this->request->get['filter_date_added_to'])) {
+			$url .= '&filter_date_added_to=' . $this->request->get['filter_date_added_to'];
+		}
+
 		if (isset($this->request->get['filter_date_modified'])) {
 			$url .= '&filter_date_modified=' . $this->request->get['filter_date_modified'];
+		}
+
+		if (isset($this->request->get['filter_date_modified_from'])) {
+			$url .= '&filter_date_modified_from=' . $this->request->get['filter_date_modified_from'];
+		}
+
+		if (isset($this->request->get['filter_date_modified_to'])) {
+			$url .= '&filter_date_modified_to=' . $this->request->get['filter_date_modified_to'];
 		}
 
 		if (isset($this->request->get['sort'])) {
@@ -390,7 +482,11 @@ class Order extends \Opencart\System\Engine\Controller {
 		$data['filter_order_status_id'] = $filter_order_status_id;
 		$data['filter_total'] = $filter_total;
 		$data['filter_date_added'] = $filter_date_added;
+		$data['filter_date_added_from'] = $filter_date_added_from;
+		$data['filter_date_added_to'] = $filter_date_added_to;
 		$data['filter_date_modified'] = $filter_date_modified;
+		$data['filter_date_modified_from'] = $filter_date_modified_from;
+		$data['filter_date_modified_to'] = $filter_date_modified_to;
 
 		$data['sort'] = $sort;
 		$data['order'] = $order;
@@ -450,8 +546,24 @@ class Order extends \Opencart\System\Engine\Controller {
 			$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
 		}
 
+		if (isset($this->request->get['filter_date_added_from'])) {
+			$url .= '&filter_date_added_from=' . $this->request->get['filter_date_added_from'];
+		}
+
+		if (isset($this->request->get['filter_date_added_to'])) {
+			$url .= '&filter_date_added_to=' . $this->request->get['filter_date_added_to'];
+		}
+
 		if (isset($this->request->get['filter_date_modified'])) {
 			$url .= '&filter_date_modified=' . $this->request->get['filter_date_modified'];
+		}
+
+		if (isset($this->request->get['filter_date_modified_from'])) {
+			$url .= '&filter_date_modified_from=' . $this->request->get['filter_date_modified_from'];
+		}
+
+		if (isset($this->request->get['filter_date_modified_to'])) {
+			$url .= '&filter_date_modified_to=' . $this->request->get['filter_date_modified_to'];
 		}
 
 		if (isset($this->request->get['sort'])) {

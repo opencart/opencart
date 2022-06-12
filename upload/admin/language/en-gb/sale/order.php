@@ -112,7 +112,11 @@ $_['entry_payment_method']   = 'Payment Method';
 $_['entry_order_id']         = 'Order ID';
 $_['entry_total']            = 'Total';
 $_['entry_date_added']       = 'Date Added';
+$_['entry_date_added_from']  = 'Date Added From';
+$_['entry_date_added_to']    = 'Date Added To';
 $_['entry_date_modified']    = 'Date Modified';
+$_['entry_date_modified_from'] = 'Date Modified From';
+$_['entry_date_modified_to'] = 'Date Modified To';
 
 // Help
 $_['help_override']          = 'If the customers order is being blocked from changing the order status due to an anti-fraud extension enable override.';

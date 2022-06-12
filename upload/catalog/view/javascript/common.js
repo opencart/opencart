@@ -31,7 +31,7 @@ var tooltip = function () {
 
 $(document).on('mouseenter', '[data-bs-toggle=\'tooltip\']', tooltip);
 
-$(document).on('click', 'button', function() {
+$(document).on('click', 'button', function () {
     $('.tooltip').remove();
 });
 
@@ -63,6 +63,8 @@ var datetimepicker = function () {
         locale: {
             format: 'HH:mm'
         }
+    }, function (start, end) {
+        $(this.element).val(start.format('HH:mm'));
     }).on('show.daterangepicker', function (ev, picker) {
         picker.container.find('.calendar-table').hide();
     });
@@ -90,7 +92,7 @@ $(document).on('focus', '.datetime', datetimepicker);
 
 // Alert Fade
 var alert = function () {
-    window.setTimeout(function() {
+    window.setTimeout(function () {
         $('.alert-dismissible').fadeTo(1000, 0, function () {
             $(this).remove();
         });
@@ -278,7 +280,7 @@ $(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function (e) {
             $(button).prop('disabled', true).addClass('loading');
         },
         complete: function () {
-           $(button).prop('disabled', false).removeClass('loading');
+            $(button).prop('disabled', false).removeClass('loading');
         },
         success: function (json) {
             $('.alert-dismissible').remove();
@@ -417,7 +419,7 @@ class Chain {
 
             var jqxhr = call();
 
-            jqxhr.done(function() {
+            jqxhr.done(function () {
                 chain.execute();
             });
         } else {
@@ -429,9 +431,9 @@ class Chain {
 var chain = new Chain();
 
 // Autocomplete
-(function($) {
-    $.fn.autocomplete = function(option) {
-        return this.each(function() {
+(function ($) {
+    $.fn.autocomplete = function (option) {
+        return this.each(function () {
             var $this = $(this);
             var $dropdown = $('#' + $this.attr('list'));
 
@@ -457,16 +459,16 @@ var chain = new Chain();
             });
 
             // Request
-            this.request = function() {
+            this.request = function () {
                 clearTimeout(this.timer);
 
-                this.timer = setTimeout(function(object) {
+                this.timer = setTimeout(function (object) {
                     object.source($(object).val(), $.proxy(object.response, object));
                 }, 50, this);
             }
 
             // Response
-            this.response = function(json) {
+            this.response = function (json) {
                 var html = '';
                 var category = {};
                 var name;

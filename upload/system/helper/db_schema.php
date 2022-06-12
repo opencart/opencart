@@ -6095,6 +6095,12 @@ function db_schema() {
 				'default' => ''
 			],
 			[
+				'name' => 'pin',
+				'type' => 'varchar(40)',
+				'not_null' => true,
+				'default' => ''
+			],
+			[
 				'name' => 'code',
 				'type' => 'varchar(40)',
 				'not_null' => true,
@@ -6119,6 +6125,44 @@ function db_schema() {
 		],
 		'primary' => [
 			'user_id'
+		],
+		'engine' => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
+	];
+
+	$tables[] = [
+		'name' => 'user_auth',
+		'field' => [
+			[
+				'name' => 'user_auth_id',
+				'type' => 'int(11)',
+				'not_null' => true,
+				'auto_increment' => true
+			],
+			[
+				'name' => 'user_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'token',
+				'type' => 'varchar(96)',
+				'not_null' => true
+			],
+			[
+				'name' => 'ip',
+				'type' => 'varchar(40)',
+				'not_null' => true
+			],
+			[
+				'name' => 'date_added',
+				'type' => 'datetime',
+				'not_null' => true
+			]
+		],
+		'primary' => [
+			'user_auth_id'
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',

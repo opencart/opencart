@@ -1,0 +1,32 @@
+{{ header }}
+<div id="content">
+  <div class="container-fluid">
+    <br/>
+    <br/>
+    <div class="row justify-content-sm-center">
+      <div class="col-sm-4 col-md-6">
+        <div class="card">
+          <div class="card-header"><i class="fas fa-lock"></i> {{ heading_title }}</div>
+          <div class="card-body">
+            <form id="form-pin" action="{{ action }}" method="post" data-oc-toggle="ajax">
+              <h3>{{ text_setup }}</h3>
+              <p>{{ text_pin }}</p>
+              <div class="mb-3">
+                <label for="input-pin" class="form-label">{{ entry_pin }}</label>
+                <input type="password" name="pin" value="{{ pin }}" placeholder="{{ entry_pin }}" id="input-pin" class="form-control"/>
+                <div id="error-pin" class="invalid-feedback"></div>
+              </div>
+              {% if redirect %}
+                <input type="hidden" name="redirect" value="{{ redirect }}"/>
+              {% endif %}
+              <div class="text-end">
+                <button type="submit" class="btn btn-primary">{{ button_submit }}</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{{ footer }}

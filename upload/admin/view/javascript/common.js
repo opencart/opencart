@@ -85,7 +85,7 @@ var tooltip = function () {
 
 $(document).on('mouseenter', '[data-bs-toggle=\'tooltip\']', tooltip);
 
-$(document).on('click', 'button', function() {
+$(document).on('click', 'button', function () {
     $('.tooltip').remove();
 });
 
@@ -117,6 +117,8 @@ var datetimepicker = function () {
         locale: {
             format: 'HH:mm'
         }
+    }, function (start, end) {
+        $(this.element).val(start.format('HH:mm'));
     }).on('show.daterangepicker', function (ev, picker) {
         picker.container.find('.calendar-table').hide();
     });

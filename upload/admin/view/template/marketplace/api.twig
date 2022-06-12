@@ -61,7 +61,7 @@ $('#button-save').on('click', function (e) {
                 window.location.reload();
             }
         },
-        error: function(xhr, ajaxOptions, thrownError) {
+        error: function (xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });

@@ -108,7 +108,8 @@ class FileManager extends \Opencart\System\Engine\Controller {
 			'JPG',
 			'JPEG',
 			'PNG',
-			'GIF'
+			'GIF',
+			'svg',
 		];
 
 		// Validate the file is an image
@@ -316,7 +317,8 @@ class FileManager extends \Opencart\System\Engine\Controller {
 						'JPG',
 						'JPEG',
 						'PNG',
-						'GIF'
+						'GIF',
+						'svg'
 					];
 
 					if (!in_array(substr($filename, strrpos($filename, '.') + 1), $allowed)) {
@@ -331,7 +333,8 @@ class FileManager extends \Opencart\System\Engine\Controller {
 						'image/png',
 						'image/x-png',
 						'image/gif',
-						'image/webp'
+						'image/webp',
+						'image/svg+xml'
 					];
 
 					if (!in_array($file['type'], $allowed)) {

@@ -69,9 +69,8 @@
       $('#form-upload input[name=\'file[]\']').on('change', function () {
           for (i = 0; i < this.files.length; i++) {
               if (this.files[i].size > {{ config_file_max_size }}) {
-                  $(this).val('');
-
-                  alert('{{ error_upload_size }}');
+                $(this).val('');
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-check-circle"></i> ' + '{{ error_upload_size }}' + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
               }
           }
       });
@@ -108,13 +107,12 @@
                   },
                   success: function (json) {
                       if (json['error']) {
-                          alert(json['error']);
+                        $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                       }
 
                       if (json['success']) {
-                          alert(json['success']);
-
-                          $('#button-refresh').trigger('click');
+                        $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                        $('#button-refresh').trigger('click');
                       }
                   },
                   error: function (xhr, ajaxOptions, thrownError) {
@@ -151,13 +149,12 @@
           },
           success: function (json) {
               if (json['error']) {
-                  alert(json['error']);
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
               }
 
               if (json['success']) {
-                  alert(json['success']);
-
-                  $('#button-refresh').trigger('click');
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#button-refresh').trigger('click');
               }
           },
           error: function (xhr, ajaxOptions, thrownError) {
@@ -181,13 +178,12 @@
               },
               success: function (json) {
                   if (json['error']) {
-                      alert(json['error']);
+                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                   }
 
                   if (json['success']) {
-                      alert(json['success']);
-
-                      $('#button-refresh').trigger('click');
+                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    $('#button-refresh').trigger('click');
                   }
               },
               error: function (xhr, ajaxOptions, thrownError) {

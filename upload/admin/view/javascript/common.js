@@ -85,7 +85,7 @@ var tooltip = function () {
 
 $(document).on('mouseenter', '[data-bs-toggle=\'tooltip\']', tooltip);
 
-$(document).on('click', 'button', function() {
+$(document).on('click', 'button', function () {
     $('.tooltip').remove();
 });
 

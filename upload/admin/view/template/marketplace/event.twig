@@ -38,13 +38,13 @@ $('#event').on('click', '.btn-success, .btn-danger', function (e) {
         type: 'post',
         data: $('#event input[name=\'selected[]\']:checked'),
         dataType: 'json',
-        beforeSend: function() {
+        beforeSend: function () {
             $(element).prop('disabled', true).addClass('loading');
         },
-        complete: function() {
+        complete: function () {
             $(element).prop('disabled', false).removeClass('loading');
         },
-        success: function(json) {
+        success: function (json) {
             if (json['error']) {
                 $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
@@ -55,7 +55,7 @@ $('#event').on('click', '.btn-success, .btn-danger', function (e) {
                 $('#event').load($('#form-event').attr('data-oc-load'));
             }
         },
-        error: function(xhr, ajaxOptions, thrownError) {
+        error: function (xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });

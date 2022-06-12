@@ -280,7 +280,7 @@ function addModule(type) {
 
     $('#module-' + type + ' tbody').append(html);
 
-    $('#module-' + type + ' tbody input[name*=\'sort_order\']').each(function(i, element) {
+    $('#module-' + type + ' tbody input[name*=\'sort_order\']').each(function (i, element) {
         $(element).val(i);
     });
 

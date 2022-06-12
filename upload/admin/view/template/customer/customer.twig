@@ -122,12 +122,12 @@ $('#button-filter').on('click', function () {
 });
 
 $('#input-name').autocomplete({
-    'source': function(request, response) {
+    'source': function (request, response) {
         $.ajax({
             url: 'index.php?route=customer/customer|autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
-            success: function(json) {
-                response($.map(json, function(item) {
+            success: function (json) {
+                response($.map(json, function (item) {
                     return {
                         label: item['name'],
                         value: item['customer_id']
@@ -136,16 +136,16 @@ $('#input-name').autocomplete({
             }
         });
     },
-    'select': function(item) {}
+    'select': function (item) {}
 });
 
 $('#input-email').autocomplete({
-    'source': function(request, response) {
+    'source': function (request, response) {
         $.ajax({
             url: 'index.php?route=customer/customer|autocomplete&user_token={{ user_token }}&filter_email=' + encodeURIComponent(request),
             dataType: 'json',
-            success: function(json) {
-                response($.map(json, function(item) {
+            success: function (json) {
+                response($.map(json, function (item) {
                     return {
                         label: item['email'],
                         value: item['customer_id']
@@ -154,7 +154,7 @@ $('#input-email').autocomplete({
             }
         });
     },
-    'select': function(item) {}
+    'select': function (item) {}
 });
 //--></script>
 {{ footer }}

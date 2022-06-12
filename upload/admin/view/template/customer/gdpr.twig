@@ -72,13 +72,13 @@
 	</div>
 </div>
 <script type="text/javascript"><!--
-$('#gdpr').on('click', '.pagination a', function(e) {
+$('#gdpr').on('click', '.pagination a', function (e) {
     e.preventDefault();
 
     $('#gdpr').load(this.href);
 });
 
-$('#gdpr').on('click', '.btn-success, .btn-warning, .btn-danger', function(e) {
+$('#gdpr').on('click', '.btn-success, .btn-warning, .btn-danger', function (e) {
     e.preventDefault();
 
     var element = this;
@@ -86,13 +86,13 @@ $('#gdpr').on('click', '.btn-success, .btn-warning, .btn-danger', function(e) {
     $.ajax({
         url: $(element).val(),
         dataType: 'json',
-        beforeSend: function() {
+        beforeSend: function () {
             $(element).prop('disabled', true).addClass('loading');
         },
-        complete: function() {
+        complete: function () {
             $(element).prop('disabled', false).removeClass('loading');
         },
-        success: function(json) {
+        success: function (json) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
@@ -105,13 +105,13 @@ $('#gdpr').on('click', '.btn-success, .btn-warning, .btn-danger', function(e) {
                 $('#gdpr').load($('#form-gdpr').attr('data-oc-load'));
             }
         },
-        error: function(xhr, ajaxOptions, thrownError) {
+        error: function (xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 });
 
-$('#button-filter').on('click', function() {
+$('#button-filter').on('click', function () {
     var url = '';
 
     var filter_email = $('#input-email').val();
@@ -142,12 +142,12 @@ $('#button-filter').on('click', function() {
 });
 
 $('#input-email').autocomplete({
-    'source': function(request, response) {
+    'source': function (request, response) {
         $.ajax({
             url: 'index.php?route=customer/customer|autocomplete&user_token={{ user_token }}&filter_email=' + encodeURIComponent(request),
             dataType: 'json',
-            success: function(json) {
-                response($.map(json, function(item) {
+            success: function (json) {
+                response($.map(json, function (item) {
                     return {
                         label: item['email'],
                         value: item['customer_id']
@@ -156,7 +156,7 @@ $('#input-email').autocomplete({
             }
         });
     },
-    'select': function(item) {}
+    'select': function (item) {}
 });
 //--></script>
 {{ footer }}

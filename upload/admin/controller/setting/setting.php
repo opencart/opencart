@@ -302,7 +302,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 		if ($this->config->has('config_affiliate_status')) {
 			$data['config_affiliate_status'] = $this->config->get('config_affiliate_status');
 		} else {
-			$data['config_affiliate_status'] = true;
+			$data['config_affiliate_status'] = '';
 		}
 
 		$data['config_affiliate_group_id'] = $this->config->get('config_affiliate_group_id');

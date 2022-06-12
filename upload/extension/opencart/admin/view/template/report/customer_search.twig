@@ -39,48 +39,17 @@
   <div class="col col-lg-9 col-md-12">
     <div class="card">
       <div class="card-header"><i class="fas fa-chart-bar"></i> {{ heading_title }}</div>
-      <div class="card-body">
-        <div class="table-responsive">
-          <table class="table table-bordered">
-            <thead>
-              <tr>
-                <td class="text-start">{{ column_keyword }}</td>
-                <td class="text-start">{{ column_products }}</td>
-                <td class="text-start">{{ column_category }}</td>
-                <td class="text-start">{{ column_customer }}</td>
-                <td class="text-start">{{ column_ip }}</td>
-                <td class="text-start">{{ column_date_added }}</td>
-              </tr>
-            </thead>
-            <tbody>
-              {% if searches %}
-                {% for search in searches %}
-                  <tr>
-                    <td class="text-start">{{ search.keyword }}</td>
-                    <td class="text-start">{{ search.products }}</td>
-                    <td class="text-start">{{ search.category }}</td>
-                    <td class="text-start">{{ search.customer }}</td>
-                    <td class="text-start">{{ search.ip }}</td>
-                    <td class="text-start">{{ search.date_added }}</td>
-                  </tr>
-                {% endfor %}
-              {% else %}
-                <tr>
-                  <td class="text-center" colspan="6">{{ text_no_results }}</td>
-                </tr>
-              {% endif %}
-            </tbody>
-          </table>
-        </div>
-        <div class="row">
-          <div class="col-sm-6 text-start">{{ pagination }}</div>
-          <div class="col-sm-6 text-end">{{ results }}</div>
-        </div>
-      </div>
+      <div id="customer-search" class="card-body">{{ list }}</div>
     </div>
   </div>
 </div>
 <script type="text/javascript"><!--
+$('#customer-search').on('click', '.pagination a', function (e) {
+    e.preventDefault();
+
+    $('#customer-search').load(this.href);
+});
+
 $('#button-filter').on('click', function () {
     var url = '';
 
@@ -114,7 +83,7 @@ $('#button-filter').on('click', function () {
         url += '&filter_ip=' + encodeURIComponent(filter_ip);
     }
 
-    $('#report').load('index.php?route=extension/opencart/report/customer_search|report&user_token={{ user_token }}' + url);
+    $('#customer-searc').load('index.php?route=extension/opencart/report/customer_search|list&user_token={{ user_token }}' + url);
 });
 
 $('#input-customer').autocomplete({

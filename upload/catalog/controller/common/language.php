@@ -29,10 +29,17 @@ class Language extends \Opencart\System\Engine\Controller {
 		$results = $this->model_localisation_language->getLanguages();
 
 		foreach ($results as $result) {
+			if (!$result['extension']) {
+				$image = DIR_LANGUAGE . $result['code'] . '/' . $result['code'] . '.png';
+			} else {
+				$image = DIR_EXTENSION . $result['extension'] . '/catalog/language/' . $result['code'] . '/' . $result['code'] . '.png';
+			}
+
 			$data['languages'][] = [
-				'name' => $result['name'],
-				'code' => $result['code'],
-				'href' => $this->url->link('common/language|save', 'language=' . $this->config->get('config_language') . '&code=' . $result['code'] . '&redirect=' . urlencode(str_replace('&amp;', '&', $this->url->link($route, 'language=' . $result['code'] . $url))))
+				'name'  => $result['name'],
+				'code'  => $result['code'],
+				'image' => $image,
+				'href'  => $this->url->link('common/language|save', 'language=' . $this->config->get('config_language') . '&code=' . $result['code'] . '&redirect=' . urlencode(str_replace('&amp;', '&', $this->url->link($route, 'language=' . $result['code'] . $url))))
 			];
 		}
 

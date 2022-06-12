@@ -1,0 +1,40 @@
+<div class="table-responsive">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <td class="text-start">{{ column_customer }}</td>
+        <td class="text-start">{{ column_email }}</td>
+        <td class="text-start">{{ column_customer_group }}</td>
+        <td class="text-start">{{ column_status }}</td>
+        <td class="text-end">{{ column_points }}</td>
+        <td class="text-end">{{ column_orders }}</td>
+        <td class="text-end">{{ column_total }}</td>
+        <td class="text-end">{{ column_action }}</td>
+      </tr>
+    </thead>
+    <tbody>
+      {% if customers %}
+        {% for customer in customers %}
+          <tr>
+            <td class="text-start">{{ customer.customer }}</td>
+            <td class="text-start">{{ customer.email }}</td>
+            <td class="text-start">{{ customer.customer_group }}</td>
+            <td class="text-start">{{ customer.status }}</td>
+            <td class="text-end">{{ customer.points }}</td>
+            <td class="text-end">{{ customer.orders }}</td>
+            <td class="text-end">{{ customer.total }}</td>
+            <td class="text-end"><a href="{{ customer.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a></td>
+          </tr>
+        {% endfor %}
+      {% else %}
+        <tr>
+          <td class="text-center" colspan="8">{{ text_no_results }}</td>
+        </tr>
+      {% endif %}
+    </tbody>
+  </table>
+</div>
+<div class="row">
+  <div class="col-sm-6 text-start">{{ pagination }}</div>
+  <div class="col-sm-6 text-end">{{ results }}</div>
+</div>

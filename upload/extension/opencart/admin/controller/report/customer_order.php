@@ -60,6 +60,24 @@ class CustomerOrder extends \Opencart\System\Engine\Controller {
 	public function report(): void {
 		$this->load->language('extension/opencart/report/customer_order');
 
+		$data['list'] = $this->getReport();
+
+		$this->load->model('localisation/order_status');
+
+		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
+
+		$data['user_token'] = $this->session->data['user_token'];
+
+		$this->response->setOutput($this->load->view('extension/opencart/report/customer_order', $data));
+	}
+
+	public function list(): void {
+		$this->load->language('extension/opencart/report/customer_order');
+
+		$this->response->setOutput($this->getReport());
+	}
+
+	public function getReport(): string {
 		if (isset($this->request->get['filter_date_start'])) {
 			$filter_date_start = $this->request->get['filter_date_start'];
 		} else {
@@ -120,10 +138,6 @@ class CustomerOrder extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		$this->load->model('localisation/order_status');
-
-		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
-
 		$url = '';
 
 		if (isset($this->request->get['filter_date_start'])) {
@@ -158,6 +172,6 @@ class CustomerOrder extends \Opencart\System\Engine\Controller {
 
 		$data['user_token'] = $this->session->data['user_token'];
 
-		$this->response->setOutput($this->load->view('extension/opencart/report/customer_order', $data));
+		return $this->load->view('extension/opencart/report/customer_order_list', $data);
 	}
 }

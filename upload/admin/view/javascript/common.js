@@ -78,32 +78,40 @@ $(document).ready(function () {
 
 // Tooltip
 var tooltip = function () {
-    $('.tooltip').remove();
-
     // Apply to all on current page
-    $('[data-bs-toggle=\'tooltip\']').each(function (i, element) {
-        bootstrap.Tooltip.getOrCreateInstance(element);
-    });
+    tooltip = bootstrap.Tooltip.getOrCreateInstance(this);
+    tooltip.show();
 }
 
-$(document).ready(tooltip);
-// Makes tooltips work on ajax generated content
-$(document).on('click', 'button', tooltip);
+$(document).on('mouseenter', '[data-bs-toggle=\'tooltip\']', tooltip);
 
-// Daterangepicker
+$(document).on('click', 'button', function() {
+    $('.tooltip').remove();
+});
+
+// Date
 var datetimepicker = function () {
-    $('.date').daterangepicker({
+    $(this).daterangepicker({
         singleDatePicker: true,
         autoApply: true,
+        autoUpdateInput: false,
         locale: {
             format: 'YYYY-MM-DD'
         }
+    }, function (start, end) {
+        $(this.element).val(start.format('YYYY-MM-DD'));
     });
+}
 
-    $('.time').daterangepicker({
+$(document).on('focus', '.date', datetimepicker);
+
+// Time
+var datetimepicker = function () {
+    $(this).daterangepicker({
         singleDatePicker: true,
         datePicker: false,
         autoApply: true,
+        autoUpdateInput: false,
         timePicker: true,
         timePicker24Hour: true,
         locale: {
@@ -112,31 +120,38 @@ var datetimepicker = function () {
     }).on('show.daterangepicker', function (ev, picker) {
         picker.container.find('.calendar-table').hide();
     });
+}
 
+$(document).on('focus', '.time', datetimepicker);
+
+// Date Time
+var datetimepicker = function () {
     $('.datetime').daterangepicker({
         singleDatePicker: true,
         autoApply: true,
+        autoUpdateInput: false,
         timePicker: true,
         timePicker24Hour: true,
         locale: {
             format: 'YYYY-MM-DD HH:mm'
         }
+    }, function (start, end) {
+        $(this.element).val(start.format('YYYY-MM-DD HH:mm'));
     });
 }
 
-$(document).ready(datetimepicker);
-$(document).on('click', 'button', datetimepicker);
+$(document).on('focus', '.datetime', datetimepicker);
 
 // Alert Fade
 var alert = function () {
-    window.setTimeout(function() {
-        $('.alert-dismissible').fadeTo(1000, 0, function() {
+    window.setTimeout(function () {
+        $('.alert-dismissible').fadeTo(1000, 0, function () {
             $(this).remove();
         });
     }, 7000);
 }
 
-$(document).ready(alert);
+$(document).on('click', 'button', alert);
 
 // Forms
 $(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function (e) {
@@ -147,8 +162,6 @@ $(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function (e) {
     var form = e.target;
 
     var action = $(form).attr('action');
-
-    console.log();
 
     if (e.originalEvent.submitter !== undefined) {
         var button = e.originalEvent.submitter;
@@ -173,6 +186,14 @@ $(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function (e) {
     if (enctype === undefined) {
         enctype = 'application/x-www-form-urlencoded';
     }
+
+    console.log(e);
+    console.log('element ' + element);
+    console.log('action ' + action);
+    console.log('button ' + button);
+    console.log('formaction ' + formaction);
+    console.log('method ' + method);
+    console.log('enctype ' + enctype);
 
     // https://github.com/opencart/opencart/issues/9690
     if (typeof CKEDITOR != 'undefined') {

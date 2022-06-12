@@ -36,7 +36,9 @@
 </div>
 <script type="text/javascript"><!--
 $('#input-report').on('change', function (e) {
-    $('#report').load(this.value);
+    if ($(this).val()) {
+        $('#report').load(this.value);
+    }
 });
 
 $('#input-report').trigger('change');

@@ -32,10 +32,9 @@
           <div class="row mb-3">
             <label for="input-status" class="col-sm-2 col-form-label"> {{ entry_status }} </label>
             <div class="col-sm-10">
-              <select name="fraud_ip_status" id="input-status" class="form-select">
-                <option value="1"{% if fraud_ip_status %} selected="selected"{% endif %}>{{ text_enabled }}</option>
-                <option value="0"{% if not fraud_ip_status %} selected="selected"{% endif %}>{{ text_disabled }}</option>
-              </select>
+              <div class="form-check form-switch form-switch-lg">
+                <input type="checkbox" name="fraud_ip_status" value="1" id="input-status" class="form-check-input"{% if fraud_ip_status %} checked{% endif %}/>
+              </div>
             </div>
           </div>
           <fieldset>

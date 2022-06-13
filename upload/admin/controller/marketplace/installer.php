@@ -19,7 +19,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 		];
 
 		// Use the  for the max file size
-		$data['error_upload_size'] = sprintf($this->language->get('error_file_size'), ini_get('upload_max_filesize') * 1024 * 1024);
+		$data['error_upload_size'] = sprintf($this->language->get('error_file_size'), ini_get('upload_max_filesize'));
 
 		$data['config_file_max_size'] = ((int)preg_filter('/[^0-9]/', '', ini_get('upload_max_filesize')) * 1024 * 1024);
 

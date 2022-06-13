@@ -95,7 +95,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		$data['filter_order_id'] = $filter_order_id;
 		$data['filter_customer'] = $filter_customer;
 		$data['filter_subscription_status_id'] = $filter_subscription_status_id;
-		$data['filter_date_added'] = $filter_date_added;\
+		$data['filter_date_added'] = $filter_date_added;
 
 		$data['user_token'] = $this->session->data['user_token'];
 

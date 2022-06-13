@@ -4,9 +4,11 @@ class FileManager extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('common/filemanager');
 
-		$data['error_upload_size'] = sprintf($this->language->get('error_upload_size'), $this->config->get('config_file_max_size'));
+		[$code, $format_size, $size] = format_size();
 
-		$data['config_file_max_size'] = ((int)$this->config->get('config_file_max_size') * 1024 * 1024);
+		$data['error_upload_size'] = sprintf($this->language->get('error_format_' . $code), $format_size);
+
+		$data['config_file_max_size'] = ((int)preg_filter('/[^0-9]/', '', ini_get('upload_max_filesize')) * 1024 * 1024);
 
 		// Return the target ID for the file manager to set the value
 		if (isset($this->request->get['target'])) {

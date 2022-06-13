@@ -1217,16 +1217,9 @@ class Customer extends \Opencart\System\Engine\Controller {
 				$filter_email = '';
 			}
 
-			if (isset($this->request->get['filter_affiliate'])) {
-				$filter_affiliate = $this->request->get['filter_affiliate'];
-			} else {
-				$filter_affiliate = '';
-			}
-
 			$filter_data = [
 				'filter_name'      => $filter_name,
 				'filter_email'     => $filter_email,
-				'filter_affiliate' => $filter_affiliate,
 				'start'            => 0,
 				'limit'            => 5
 			];

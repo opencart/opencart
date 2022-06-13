@@ -2,7 +2,7 @@
 namespace Opencart\Admin\Model\Design;
 class Banner extends \Opencart\System\Engine\Model {
 	public function addBanner(array $data): int {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "banner` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `status` = '" . (bool)$data['status'] . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "banner` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `status` = '" . (bool)(isset($data['status']) ? $data['status'] : 0) . "'");
 
 		$banner_id = $this->db->getLastId();
 
@@ -18,7 +18,7 @@ class Banner extends \Opencart\System\Engine\Model {
 	}
 
 	public function editBanner(int $banner_id, array $data): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "banner` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `status` = '" . (bool)$data['status'] . "' WHERE `banner_id` = '" . (int)$banner_id . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "banner` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `status` = '" . (bool)(isset($data['status']) ? $data['status'] : 0) . "' WHERE `banner_id` = '" . (int)$banner_id . "'");
 
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "banner_image` WHERE `banner_id` = '" . (int)$banner_id . "'");
 

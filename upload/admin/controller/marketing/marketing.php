@@ -91,6 +91,24 @@ class Marketing extends \Opencart\System\Engine\Controller {
 	}
 
 	protected function getList(): string {
+		if (isset($this->request->get['filter_name'])) {
+			$filter_name = $this->request->get['filter_name'];
+		} else {
+			$filter_name = '';
+		}
+
+		if (isset($this->request->get['filter_code'])) {
+			$filter_code = $this->request->get['filter_code'];
+		} else {
+			$filter_code = '';
+		}
+
+		if (isset($this->request->get['filter_date_added'])) {
+			$filter_date_added = $this->request->get['filter_date_added'];
+		} else {
+			$filter_date_added = '';
+		}
+
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
 		} else {

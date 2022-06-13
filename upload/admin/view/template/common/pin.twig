@@ -6,22 +6,35 @@
     <div class="row justify-content-sm-center">
       <div class="col-sm-4 col-md-6">
         <div class="card">
-          <div class="card-header"><i class="fas fa-lock"></i> {{ heading_title }}</div>
+          <div class="card-header"><i class="fas fa-lock"></i> {{ text_security }}</div>
           <div class="card-body">
             <form id="form-pin" action="{{ action }}" method="post" data-oc-toggle="ajax">
-              <h3>{{ text_setup }}</h3>
-              <p>{{ text_pin }}</p>
+
+              {% if pin_total >= 3 %}
+                <div class="alert alert-danger">
+                  <p><i class="fa fa-exclamation-circle"></i> You have exceeded the allowed number of PIN attempts! Please use the <strong>Reset PIN button</strong> or <a href="{{ contact }}" class="alert-link">contact us</a> page to request your account to be unlocked.</p>
+                </div>
+
+              {% elseif error_warning %}
+                <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
+              {% endif %}
+
+
+              <h2>{{ text_confirm }}</h2>
+              <p>{{ text_protect }}</p>
               <div class="mb-3">
                 <label for="input-pin" class="form-label">{{ entry_pin }}</label>
-                <input type="password" name="pin" value="{{ pin }}" placeholder="{{ entry_pin }}" id="input-pin" class="form-control"/>
-                <div id="error-pin" class="invalid-feedback"></div>
+                <div class="input-group">
+                  <input type="password" name="pin" value="{{ pin }}" placeholder="{{ entry_pin }}" id="input-pin" class="form-control"/>
+                  <button type="button" id="button-reset" class="btn btn-danger"><i class="fa fa-refresh"></i> {{ button_reset }}</button>
+                </div>
+              </div>
+              <div class="text-end">
+                <button type="submit" class="btn btn-primary">{{ button_submit }}</button>
               </div>
               {% if redirect %}
                 <input type="hidden" name="redirect" value="{{ redirect }}"/>
               {% endif %}
-              <div class="text-end">
-                <button type="submit" class="btn btn-primary">{{ button_submit }}</button>
-              </div>
             </form>
           </div>
         </div>
@@ -29,4 +42,32 @@
     </div>
   </div>
 </div>
+<script type="text/javascript"><!--
+$('#button-reset').on('click', function () {
+    $.ajax({
+        url: 'index.php?route=common/pin|reset',
+        dataType: 'json',
+        beforeSend: function () {
+            $('#button-reset').button('loading');
+        },
+        complete: function () {
+            $('#button-reset').button('reset');
+        },
+        success: function (json) {
+            $('.alert-dismissible').remove();
+
+            if (json['error']) {
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            if (json['success']) {
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+//--></script>
 {{ footer }}

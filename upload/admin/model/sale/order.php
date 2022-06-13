@@ -186,12 +186,12 @@ class Order extends \Opencart\System\Engine\Model {
 			$sql .= " AND o.`email` LIKE '" . $this->db->escape('%' . (string)$data['filter_email'] . '%') . "'";
 		}
 
-		if (!empty($data['filter_date_added'])) {
-			$sql .= " AND DATE(o.`date_added`) = DATE('" . $this->db->escape((string)$data['filter_date_added']) . "')";
+		if (!empty($data['filter_date_from'])) {
+			$sql .= " AND DATE(o.`date_added`) >= DATE('" . $this->db->escape((string)$data['filter_date_from']) . "')";
 		}
 
-		if (!empty($data['filter_date_modified'])) {
-			$sql .= " AND DATE(o.`date_modified`) = DATE('" . $this->db->escape((string)$data['filter_date_modified']) . "')";
+		if (!empty($data['filter_date_to'])) {
+			$sql .= " AND DATE(o.`date_added`) <= DATE('" . $this->db->escape((string)$data['date_added']) . "')";
 		}
 
 		if (!empty($data['filter_total'])) {
@@ -314,12 +314,12 @@ class Order extends \Opencart\System\Engine\Model {
 			$sql .= " AND `email` LIKE '" . $this->db->escape('%' . (string)$data['filter_email'] . '%') . "'";
 		}
 
-		if (!empty($data['filter_date_added'])) {
-			$sql .= " AND DATE(`date_added`) = DATE('" . $this->db->escape((string)$data['filter_date_added']) . "')";
+		if (!empty($data['filter_date_from'])) {
+			$sql .= " AND DATE(`date_added`) >= DATE('" . $this->db->escape((string)$data['filter_date_from']) . "')";
 		}
 
-		if (!empty($data['filter_date_modified'])) {
-			$sql .= " AND DATE(`date_modified`) = DATE('" . $this->db->escape((string)$data['filter_date_modified']) . "')";
+		if (!empty($data['filter_date_to'])) {
+			$sql .= " AND DATE(`date_added`) <= DATE('" . $this->db->escape((string)$data['filter_date_to']) . "')";
 		}
 
 		if (!empty($data['filter_total'])) {

@@ -159,7 +159,9 @@ class Download extends \Opencart\System\Engine\Controller {
 		$data['text_form'] = !isset($this->request->get['download_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
 		// Use the ini_get('upload_max_filesize') for the max file size
-		$data['error_upload_size'] = sprintf($this->language->get('error_upload_size'), ini_get('upload_max_filesize'));
+		[$code, $format_size, $size] = format_size();
+
+		$data['error_upload_size'] = sprintf($this->language->get('error_format_' . $code), $format_size);
 
 		$data['config_file_max_size'] = ((int)preg_filter('/[^0-9]/', '', ini_get('upload_max_filesize')) * 1024 * 1024);
 

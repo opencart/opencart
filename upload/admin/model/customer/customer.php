@@ -65,10 +65,6 @@ class Customer extends \Opencart\System\Engine\Model {
 	public function getCustomers(array $data = []): array {
 		$sql = "SELECT *, CONCAT(c.`firstname`, ' ', c.`lastname`) AS `name`, cgd.`name` AS `customer_group` FROM `" . DB_PREFIX . "customer` c LEFT JOIN `" . DB_PREFIX . "customer_group_description` cgd ON (c.`customer_group_id` = cgd.`customer_group_id`)";
 
-		if (!empty($data['filter_affiliate'])) {
-			$sql .= " LEFT JOIN `" . DB_PREFIX . "customer_affiliate` ca ON (ca.`customer_id` = c.`customer_id`)";
-		}
-
 		$sql .= " WHERE cgd.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
 		if (!empty($data['filter_name'])) {
@@ -85,10 +81,6 @@ class Customer extends \Opencart\System\Engine\Model {
 
 		if (!empty($data['filter_customer_group_id'])) {
 			$sql .= " AND c.`customer_group_id` = '" . (int)$data['filter_customer_group_id'] . "'";
-		}
-
-		if (!empty($data['filter_affiliate'])) {
-			$sql .= " AND (SELECT ca.`customer_id` FROM `" . DB_PREFIX . "customer_affiliate` ca WHERE ca.`customer_id` = c.`customer_id`)";
 		}
 
 		if (!empty($data['filter_ip'])) {
@@ -144,10 +136,6 @@ class Customer extends \Opencart\System\Engine\Model {
 	public function getTotalCustomers(array $data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer` c";
 
-		if (!empty($data['filter_affiliate'])) {
-			$sql .= " LEFT JOIN `" . DB_PREFIX . "customer_affiliate` ca ON (ca.`customer_id` = c.`customer_id`)";
-		}
-
 		$implode = [];
 
 		if (!empty($data['filter_name'])) {
@@ -164,10 +152,6 @@ class Customer extends \Opencart\System\Engine\Model {
 
 		if (!empty($data['filter_customer_group_id'])) {
 			$implode[] = "c.`customer_group_id` = '" . (int)$data['filter_customer_group_id'] . "'";
-		}
-
-		if (!empty($data['filter_affiliate'])) {
-			$implode[] = "ca.`status` = '" . (int)$data['filter_affiliate'] . "'";
 		}
 
 		if (!empty($data['filter_ip'])) {

@@ -44,7 +44,7 @@ class Category extends \Opencart\System\Engine\Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('catalog/category ', $data));
+		$this->response->setOutput($this->load->view('catalog/category', $data));
 	}
 
 	public function list(): void {

@@ -6,6 +6,36 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
+		if (isset($this->request->get['filter_keyword'])) {
+			$filter_keyword = (string)$this->request->get['filter_keyword'];
+		} else {
+			$filter_keyword = '';
+		}
+
+		if (isset($this->request->get['filter_key'])) {
+			$filter_key = (string)$this->request->get['filter_key'];
+		} else {
+			$filter_key = '';
+		}
+
+		if (isset($this->request->get['filter_value'])) {
+			$filter_value = (string)$this->request->get['filter_value'];
+		} else {
+			$filter_value = '';
+		}
+
+		if (isset($this->request->get['filter_store_id'])) {
+			$filter_store_id = (int)$this->request->get['filter_store_id'];
+		} else {
+			$filter_store_id = '';
+		}
+
+		if (isset($this->request->get['filter_language_id'])) {
+			$filter_language_id = (int)$this->request->get['filter_language_id'];
+		} else {
+			$filter_language_id = 0;
+		}
+
 		$url = '';
 
 		if (isset($this->request->get['filter_keyword'])) {
@@ -56,6 +86,20 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 		$data['delete'] = $this->url->link('design/seo_url|delete', 'user_token=' . $this->session->data['user_token']);
 
 		$data['list'] = $this->getList();
+
+		$this->load->model('setting/store');
+
+		$data['stores'] = $this->model_setting_store->getStores();
+
+		$this->load->model('localisation/language');
+
+		$data['languages'] = $this->model_localisation_language->getLanguages();
+
+		$data['filter_keyword'] = $filter_keyword;
+		$data['filter_key'] = $filter_key;
+		$data['filter_value'] = $filter_value;
+		$data['filter_store_id'] = $filter_store_id;
+		$data['filter_language_id'] = $filter_language_id;
 
 		$data['user_token'] = $this->session->data['user_token'];
 
@@ -271,22 +315,8 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($seo_url_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($seo_url_total - $this->config->get('config_pagination_admin'))) ? $seo_url_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $seo_url_total, ceil($seo_url_total / $this->config->get('config_pagination_admin')));
 
-		$data['filter_keyword'] = $filter_keyword;
-		$data['filter_key'] = $filter_key;
-		$data['filter_value'] = $filter_value;
-		$data['filter_store_id'] = $filter_store_id;
-		$data['filter_language_id'] = $filter_language_id;
-
 		$data['sort'] = $sort;
 		$data['order'] = $order;
-
-		$this->load->model('setting/store');
-
-		$data['stores'] = $this->model_setting_store->getStores();
-
-		$this->load->model('localisation/language');
-
-		$data['languages'] = $this->model_localisation_language->getLanguages();
 
 		return $this->load->view('design/seo_url_list', $data);
 	}

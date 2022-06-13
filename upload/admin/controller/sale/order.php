@@ -6,6 +6,60 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
+		if (isset($this->request->get['filter_order_id'])) {
+			$filter_order_id = (int)$this->request->get['filter_order_id'];
+		} else {
+			$filter_order_id = '';
+		}
+
+		if (isset($this->request->get['filter_customer_id'])) {
+			$filter_customer_id = $this->request->get['filter_customer_id'];
+		} else {
+			$filter_customer_id = '';
+		}
+
+		if (isset($this->request->get['filter_customer'])) {
+			$filter_customer = $this->request->get['filter_customer'];
+		} else {
+			$filter_customer = '';
+		}
+
+		if (isset($this->request->get['filter_store_id'])) {
+			$filter_store_id = (int)$this->request->get['filter_store_id'];
+		} else {
+			$filter_store_id = '';
+		}
+
+		if (isset($this->request->get['filter_order_status'])) {
+			$filter_order_status = $this->request->get['filter_order_status'];
+		} else {
+			$filter_order_status = '';
+		}
+
+		if (isset($this->request->get['filter_order_status_id'])) {
+			$filter_order_status_id = (int)$this->request->get['filter_order_status_id'];
+		} else {
+			$filter_order_status_id = '';
+		}
+
+		if (isset($this->request->get['filter_total'])) {
+			$filter_total = $this->request->get['filter_total'];
+		} else {
+			$filter_total = '';
+		}
+
+		if (isset($this->request->get['filter_date_added'])) {
+			$filter_date_added = $this->request->get['filter_date_added'];
+		} else {
+			$filter_date_added = '';
+		}
+
+		if (isset($this->request->get['filter_date_modified'])) {
+			$filter_date_modified = $this->request->get['filter_date_modified'];
+		} else {
+			$filter_date_modified = '';
+		}
+
 		$url = '';
 
 		if (isset($this->request->get['filter_order_id'])) {
@@ -96,6 +150,16 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->load->model('localisation/order_status');
 
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
+
+		$data['filter_order_id'] = $filter_order_id;
+		$data['filter_customer_id'] = $filter_customer_id;
+		$data['filter_customer'] = $filter_customer;
+		$data['filter_store_id'] = $filter_store_id;
+		$data['filter_order_status'] = $filter_order_status;
+		$data['filter_order_status_id'] = $filter_order_status_id;
+		$data['filter_total'] = $filter_total;
+		$data['filter_date_added'] = $filter_date_added;
+		$data['filter_date_modified'] = $filter_date_modified;
 
 		$data['user_token'] = $this->session->data['user_token'];
 
@@ -381,16 +445,6 @@ class Order extends \Opencart\System\Engine\Controller {
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($order_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($order_total - $this->config->get('config_pagination_admin'))) ? $order_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $order_total, ceil($order_total / $this->config->get('config_pagination_admin')));
-
-		$data['filter_order_id'] = $filter_order_id;
-		$data['filter_customer_id'] = $filter_customer_id;
-		$data['filter_customer'] = $filter_customer;
-		$data['filter_store_id'] = $filter_store_id;
-		$data['filter_order_status'] = $filter_order_status;
-		$data['filter_order_status_id'] = $filter_order_status_id;
-		$data['filter_total'] = $filter_total;
-		$data['filter_date_added'] = $filter_date_added;
-		$data['filter_date_modified'] = $filter_date_modified;
 
 		$data['sort'] = $sort;
 		$data['order'] = $order;

@@ -6,6 +6,24 @@ class Country extends \Opencart\System\Engine\Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
+		if (isset($this->request->get['filter_name'])) {
+			$filter_name = (string)$this->request->get['filter_name'];
+		} else {
+			$filter_name = '';
+		}
+
+		if (isset($this->request->get['filter_iso_code_2'])) {
+			$filter_iso_code_2 = (string)$this->request->get['filter_iso_code_2'];
+		} else {
+			$filter_iso_code_2 = '';
+		}
+
+		if (isset($this->request->get['filter_iso_code_3'])) {
+			$filter_iso_code_3 = (string)$this->request->get['filter_iso_code_3'];
+		} else {
+			$filter_iso_code_3 = '';
+		}
+
 		$url = '';
 
 		if (isset($this->request->get['sort'])) {
@@ -36,6 +54,10 @@ class Country extends \Opencart\System\Engine\Controller {
 		$data['delete'] = $this->url->link('localisation/country|delete', 'user_token=' . $this->session->data['user_token']);
 
 		$data['list'] = $this->getList();
+
+		$data['filter_name'] = $filter_name;
+		$data['filter_iso_code_2'] = $filter_iso_code_2;
+		$data['filter_iso_code_3'] = $filter_iso_code_3;
 
 		$data['user_token'] = $this->session->data['user_token'];
 
@@ -203,10 +225,6 @@ class Country extends \Opencart\System\Engine\Controller {
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($country_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($country_total - $this->config->get('config_pagination_admin'))) ? $country_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $country_total, ceil($country_total / $this->config->get('config_pagination_admin')));
-
-		$data['filter_name'] = $filter_name;
-		$data['filter_iso_code_2'] = $filter_iso_code_2;
-		$data['filter_iso_code_3'] = $filter_iso_code_3;
 
 		$data['sort'] = $sort;
 		$data['order'] = $order;

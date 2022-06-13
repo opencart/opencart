@@ -6,6 +6,36 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
+		if (isset($this->request->get['filter_subscription_id'])) {
+			$filter_subscription_id = (int)$this->request->get['filter_subscription_id'];
+		} else {
+			$filter_subscription_id = '';
+		}
+
+		if (isset($this->request->get['filter_order_id'])) {
+			$filter_order_id = $this->request->get['filter_order_id'];
+		} else {
+			$filter_order_id = '';
+		}
+
+		if (isset($this->request->get['filter_customer'])) {
+			$filter_customer = $this->request->get['filter_customer'];
+		} else {
+			$filter_customer = '';
+		}
+
+		if (isset($this->request->get['filter_subscription_status_id'])) {
+			$filter_subscription_status_id = (int)$this->request->get['filter_subscription_status_id'];
+		} else {
+			$filter_subscription_status_id = '';
+		}
+
+		if (isset($this->request->get['filter_date_added'])) {
+			$filter_date_added = $this->request->get['filter_date_added'];
+		} else {
+			$filter_date_added = '';
+		}
+
 		$url = '';
 
 		if (isset($this->request->get['filter_subscription_id'])) {
@@ -60,6 +90,12 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		$this->load->model('localisation/subscription_status');
 
 		$data['subscription_statuses'] = $this->model_localisation_subscription_status->getSubscriptionStatuses();
+
+		$data['filter_subscription_id'] = $filter_subscription_id;
+		$data['filter_order_id'] = $filter_order_id;
+		$data['filter_customer'] = $filter_customer;
+		$data['filter_subscription_status_id'] = $filter_subscription_status_id;
+		$data['filter_date_added'] = $filter_date_added;\
 
 		$data['user_token'] = $this->session->data['user_token'];
 
@@ -268,12 +304,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($subscription_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($subscription_total - $this->config->get('config_pagination_admin'))) ? $subscription_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $subscription_total, ceil($subscription_total / $this->config->get('config_pagination_admin')));
 
-		$data['filter_subscription_id'] = $filter_subscription_id;
-		$data['filter_order_id'] = $filter_order_id;
-		$data['filter_customer'] = $filter_customer;
-		$data['filter_subscription_status_id'] = $filter_subscription_status_id;
-		$data['filter_date_added'] = $filter_date_added;
-		
 		$data['sort'] = $sort;
 		$data['order'] = $order;
 

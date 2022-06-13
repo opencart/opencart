@@ -6,6 +6,24 @@ class Zone extends \Opencart\System\Engine\Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
+		if (isset($this->request->get['filter_name'])) {
+			$filter_name = (string)$this->request->get['filter_name'];
+		} else {
+			$filter_name = '';
+		}
+
+		if (isset($this->request->get['filter_country'])) {
+			$filter_country = (string)$this->request->get['filter_country'];
+		} else {
+			$filter_country = '';
+		}
+
+		if (isset($this->request->get['filter_code'])) {
+			$filter_code = (string)$this->request->get['filter_code'];
+		} else {
+			$filter_code = '';
+		}
+
 		$url = '';
 
 		if (isset($this->request->get['sort'])) {
@@ -36,6 +54,10 @@ class Zone extends \Opencart\System\Engine\Controller {
 		$data['delete'] = $this->url->link('localisation/zone|delete', 'user_token=' . $this->session->data['user_token']);
 
 		$data['list'] = $this->getList();
+
+		$data['filter_name'] = $filter_name;
+		$data['filter_country'] = $filter_country;
+		$data['filter_code'] = $filter_code;
 
 		$data['user_token'] = $this->session->data['user_token'];
 
@@ -203,10 +225,6 @@ class Zone extends \Opencart\System\Engine\Controller {
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($zone_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($zone_total - $this->config->get('config_pagination_admin'))) ? $zone_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $zone_total, ceil($zone_total / $this->config->get('config_pagination_admin')));
-
-		$data['filter_name'] = $filter_name;
-		$data['filter_country'] = $filter_country;
-		$data['filter_code'] = $filter_code;
 
 		$data['sort'] = $sort;
 		$data['order'] = $order;

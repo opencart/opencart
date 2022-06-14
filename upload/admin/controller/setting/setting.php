@@ -121,6 +121,16 @@ class Setting extends \Opencart\System\Engine\Controller {
 				'value' => $timezone
 			];
 		}
+		
+		$this->load->model('localisation/address_format');
+
+		$data['address_formats'] = $this->model_localisation_address_format->getAddressFormats();
+		
+		if (isset($this->request->post['config_address_format_id'])) {
+			$data['config_address_format_id'] = $this->request->post['config_address_format_id'];
+		} else {
+			$data['config_address_format_id'] = $this->config->get('config_address_format_id');
+		}
 
 		$this->load->model('localisation/language');
 

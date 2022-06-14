@@ -136,7 +136,7 @@ class Country extends \Opencart\System\Engine\Model {
 	}
 
 	public function getTotalCountriesByAddressFormatId(int $address_format_id): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "country` WHERE `address_format_id` = '" . $address_format_id . "'");
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "country` WHERE `address_format_id` = '" . (int)$address_format_id . "'");
 
 		return (int)$query->row['total'];
 	}

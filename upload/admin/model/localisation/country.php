@@ -27,13 +27,13 @@ class Country extends \Opencart\System\Engine\Model {
 		return $query->row;
 	}
 
-	public function getCountryByIsoCode2($iso_code_2) {
+	public function getCountryByIsoCode2($iso_code_2): array {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "country WHERE `iso_code_2` = '" . $this->db->escape($iso_code_2) . "' AND `status` = '1'");
 
 		return $query->row;
 	}
 
-	public function getCountryByIsoCode3($iso_code_3) {
+	public function getCountryByIsoCode3($iso_code_3): array {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "country WHERE `iso_code_3` = '" . $this->db->escape($iso_code_3) . "' AND `status` = '1'");
 
 		return $query->row;
@@ -136,7 +136,7 @@ class Country extends \Opencart\System\Engine\Model {
 	}
 
 	public function getTotalCountriesByAddressFormatId(int $address_format_id): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "country` WHERE `address_format_id` = '" . $address_format_id . "'");
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "country` WHERE `address_format_id` = '" . (int)$address_format_id . "'");
 
 		return (int)$query->row['total'];
 	}

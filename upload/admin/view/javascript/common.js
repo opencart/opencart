@@ -424,17 +424,7 @@ var chain = new Chain();
             var $this = $(this);
             var $dropdown = $('#' + $this.attr('list'));
 
-            this.timer = null;
             this.items = [];
-
-            // Request
-            this.request = function () {
-                clearTimeout(this.timer);
-
-                this.timer = setTimeout(function (object) {
-                    object.source($(object).val(), $.proxy(object.response, object));
-                }, 0, this);
-            }
 
             // Response
             this.response = function (json) {
@@ -471,6 +461,11 @@ var chain = new Chain();
                 }
 
                 $dropdown.html(html);
+            }
+
+            // Request
+            this.request = function () {
+                this.source($this.val(), $.proxy(this.response, this));
             }
 
             $.extend(this, option);

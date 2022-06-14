@@ -410,11 +410,11 @@ class Cart {
 	}
 
 	public function hasProducts(): bool {
-		return count($this->getProducts()) ? true : false;
+		return count($this->getProducts()) > 0;
 	}
 
 	public function hasSubscription(): bool {
-		return count($this->getSubscription()) ? true : false;
+		return count($this->getSubscription()) > 0;
 	}
 
 	public function hasStock(): bool {

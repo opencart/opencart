@@ -46,23 +46,18 @@ class Pin extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-
 		$this->load->model('fraud/pin');
 
 		$pin_total = $this->model_user_user->getPinByMemberId($this->user->getId());
 
 		if ($pin_total >= 3) {
-
-			$json['error'] = 'PIN does not match!';
+			$json['error'] = $this->language->get('error_match');
 
 		} elseif (!isset($this->request->post['pin']) || ($this->user->getPin() != $this->request->post['pin'])) {
-
 			$this->model_fraud_pin->addPin($this->user->getId());
 
-			$json['error'] = 'PIN does not match!';
-
+			$json['error'] = $this->language->get('error_match');
 		} else {
-
 			$this->model_fraud_pin->deletePin($this->member->getId());
 		}
 
@@ -205,24 +200,22 @@ class Pin extends \Opencart\System\Engine\Controller {
 			$this->member->logout();
 
 			$this->model_user_user->editPin($member_info['member_id'], '');
-
+			
 			$this->model_user_user->editCode($member_info['email'], '');
 
 			$this->load->model('fraud/pin');
 
 			$this->model_user_user->deletePin($member_info['member_id']);
 
-			$this->session->data['success'] = 'Success: Your PIN has been reset!';
+			$this->session->data['success'] = $this->language->get('text_success');
 
 
 		} else {
 			$this->model_user_user->editCode($email, '');
 
-			$this->session->data['error'] = 'Warning: Could not reset your PIN!';
-
-
+			$this->session->data['error'] = $this->language->get('error_reset');
 		}
-
+		
 		$this->response->redirect($this->url->link('account/login'));
 	}
 }

@@ -433,7 +433,7 @@ var chain = new Chain();
 
                 this.timer = setTimeout(function (object) {
                     object.source($(object).val(), $.proxy(object.response, object));
-                }, 50, this);
+                }, 0, this);
             }
 
             // Response
@@ -475,12 +475,10 @@ var chain = new Chain();
 
             $.extend(this, option);
 
-            this.request();
-
-            // Focus
-            /* $this.on('focus', function () {
+            // Museover
+            $this.one('mouseover', function () {
                 this.request();
-            }); */
+            });
 
             // Keydown
             $this.on('input', function (e) {

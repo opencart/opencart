@@ -43,7 +43,7 @@ class Upload extends \Opencart\System\Engine\Model {
 		}
 
 		if (!empty($data['filter_date_to'])) {
-			$implode[] = "DATE(`date_added`) <= DATE('" . $this->db->escape((string)$data['date_added']) . "')";
+			$implode[] = "DATE(`date_added`) <= DATE('" . $this->db->escape((string)$data['filter_date_to']) . "')";
 		}
 
 		if ($implode) {
@@ -103,7 +103,7 @@ class Upload extends \Opencart\System\Engine\Model {
 		}
 
 		if (!empty($data['filter_date_to'])) {
-			$implode[] = "DATE(`date_added`) <= DATE('" . $this->db->escape((string)$data['date_added']) . "')";
+			$implode[] = "DATE(`date_added`) <= DATE('" . $this->db->escape((string)$data['filter_date_to']) . "')";
 		}
 
 		if ($implode) {

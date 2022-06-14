@@ -30,7 +30,7 @@ $_['action_pre_action'] = [
 	'startup/event',
 	'startup/sass',
 	'startup/login',
-	'startup/pin',
+	//'startup/pin',
 	'startup/permission'
 ];
 

@@ -29,7 +29,7 @@ $_['entry_image']           = 'Image';
 $_['entry_status']          = 'Status';
 
 // Tab
-$_['tab_authorization']     = 'Authorization';
+$_['tab_login']             = 'Login';
 
 // Error
 $_['error_permission']      = 'Warning: You do not have permission to modify users!';

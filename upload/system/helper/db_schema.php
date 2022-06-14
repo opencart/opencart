@@ -6132,10 +6132,10 @@ function db_schema() {
 	];
 
 	$tables[] = [
-		'name' => 'user_auth',
+		'name' => 'user_login',
 		'field' => [
 			[
-				'name' => 'user_auth_id',
+				'name' => 'user_login_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
@@ -6162,7 +6162,7 @@ function db_schema() {
 			]
 		],
 		'primary' => [
-			'user_auth_id'
+			'user_login_id'
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',

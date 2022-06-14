@@ -23,6 +23,10 @@ class User extends \Opencart\System\Engine\Model {
 		$this->db->query("UPDATE `" . DB_PREFIX . "user` SET `code` = '" . $this->db->escape($code) . "' WHERE LCASE(`email`) = '" . $this->db->escape(utf8_strtolower($email)) . "'");
 	}
 
+	public function editPin(int $user_id, string $pin): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "user` SET `pin` = '" . $this->db->escape($pin) . "' WHERE `user_id` = '" . (int)$user_id . "'");
+	}
+
 	public function deleteUser(int $user_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "user` WHERE `user_id` = '" . (int)$user_id . "'");
 	}
@@ -105,5 +109,19 @@ class User extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "user` WHERE LCASE(`email`) = '" . $this->db->escape(utf8_strtolower($email)) . "'");
 
 		return (int)$query->row['total'];
+	}
+
+	public function addLogin(int $user_id, string $token): void {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "user_login` SET `user_id` = '" . (int)$user_id . "', `token` = '" . $this->db->escape($token) . "', `date_added` = NOW()");
+	}
+
+	public function deleteLogin(int $user_login_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "user_login` WHERE `user_login_id` = '" . (int)$user_login_id . "'");
+	}
+
+	public function getLoginByToken(int $user_id, string $token): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "user_login` WHERE `user_id` = '" . (int)$user_id . "' AND `token` = '" . $this->db->escape($token) . "'");
+
+		return $query->row;
 	}
 }

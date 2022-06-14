@@ -13,11 +13,11 @@ $_['text_link']     = 'Success: An email with a reset link has been sent your em
 $_['text_reset']    = 'Success: Your PIN has been reset!';
 
 // Entry
-$_['entry_pin']      = 'PIN';
+$_['entry_pin']     = 'PIN';
 
 // Error
-$_['error_pin']      = 'PIN must be 4 digits!';
-$_['error_pin']      = 'PIN does not match!';
-$_['error_pin']      = 'Warning: Could not reset your PIN!';
+$_['error_warning'] = 'You have exceeded the allowed number of PIN attempts!';
+$_['error_pin']     = 'PIN must be 4 digits!';
+$_['error_match']   = 'PIN does not match!';
+$_['error_reset']   = 'Warning: Could not reset your PIN!';
 
-$_['error_attempts'] = 'You have exceeded the allowed number of PIN attempts! Please use the <strong>Reset PIN button</strong> or <a href="{{ contact }}" class="alert-link">contact us</a> page to request your account to be unlocked.';

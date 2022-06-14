@@ -36,7 +36,6 @@ class Login extends \Opencart\System\Engine\Controller {
 			'common/reset',
 			'common/cron',
 			'common/pin',
-			'common/security',
 			'error/not_found',
 			'error/permission'
 		];

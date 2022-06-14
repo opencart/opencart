@@ -8,9 +8,13 @@ class Pin extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('user/user');
 
-		//$this->load->model('fraud/pin');
+		$pin_total = $this->model_user_user->getPinByUserId($this->user->getId());
 
-		//$data['pin_total'] = $this->model_fraud_pin->getPinByUserId($this->user->getId());
+		if ($pin_total) {
+			$data['error_warning'] = sprintf($this->language->get('error_warning'), $pin_total);
+		} else {
+			$data['error_warning'] = '';
+		}
 
 		$data['action'] = $this->url->link('common/pin|validate', 'user_token=' . $this->session->data['user_token'], true);
 
@@ -79,7 +83,7 @@ class Pin extends \Opencart\System\Engine\Controller {
 			}
 
 			if (isset($this->request->post['redirect']) && substr($this->request->post['redirect'], 0, strlen(HTTP_SERVER)) == HTTP_SERVER) {
-				$json['redirect'] = str_replace('&amp;', '&', $this->request->post['redirect']) . '&user_token=' . $this->session->data['user_token']);
+				$json['redirect'] = str_replace('&amp;', '&', $this->request->post['redirect']) . '&user_token=' . $this->session->data['user_token'];
 			} else {
 				$json['redirect'] = $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token']);
 			}
@@ -94,7 +98,7 @@ class Pin extends \Opencart\System\Engine\Controller {
 
 		// Make sure no one can override the PIN.
 		if ($this->user->getPin()) {
-			$this->response->redirect($this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token']));
+			$this->response->redirect($this->url->link('common/pin', 'user_token=' . $this->session->data['user_token']));
 		}
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -135,27 +139,21 @@ class Pin extends \Opencart\System\Engine\Controller {
 
 		if (!$json) {
 
-
-
 			// Register the cookie for security.
 			$this->load->model('user/user');
 
 			$this->model_user_user->editPin($this->user->getId(), $this->request->post['pin']);
 
-			if (empty($this->request->cookie['opencart'])) {
+			if (empty($this->request->cookie['secure'])) {
+				$token = token(32);
 
-
-				$cookie = $this->member->getCookie();
-
-				setcookie('opencart', $cookie, time() + 60 * 60 * 24 * 365 * 10);
+				setcookie('secure', $token, time() + 60 * 60 * 24 * 365 * 10);
 			} else {
-				$cookie = $this->request->cookie['opencart'];
+				$token = $this->request->cookie['secure'];
 			}
 
-			if (!$this->model_user_user->getTotalCookiesByCookie($cookie)) {
-				$this->model_user_user->addAuth($cookie);
-			} else {
-				$this->model_user_user->edit($cookie);
+			if (!$this->model_user_user->getLoginByToken($token)) {
+				$this->model_user_user->addLogin($token);
 			}
 
 			if (isset($this->request->post['redirect']) && substr($this->request->post['redirect'], 0, strlen(HTTP_SERVER)) == HTTP_SERVER) {
@@ -174,16 +172,10 @@ class Pin extends \Opencart\System\Engine\Controller {
 
 		$json = array();
 
-		$this->load->model('fraud/pin');
-
-		if (!$this->user->isLogged()) {
-			$json['error'] = $this->language->get('error_format');
-		}
-
 		if (!$json) {
 			$this->load->model('user/user');
 
-			$this->model_user_user->editCode($this->user->getEmail(), token(40));
+			$this->model_user_user->editUser($this->user->getEmail(), token(40));
 
 			$json['success'] = $this->language->get('text_link');
 		}
@@ -207,7 +199,7 @@ class Pin extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('account/member');
 
-		$member_info = $this->model_account_member->getMemberByEmail($email);
+		$member_info = $this->model_user_user->getUserByEmail($email);
 
 		if ($member_info && $member_info['code'] && $code && $member_info['code'] === $code) {
 			$this->member->logout();

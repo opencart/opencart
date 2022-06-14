@@ -18,10 +18,16 @@ class Marketing extends \Opencart\System\Engine\Controller {
 			$filter_code = '';
 		}
 
-		if (isset($this->request->get['filter_date_added'])) {
-			$filter_date_added = $this->request->get['filter_date_added'];
+		if (isset($this->request->get['filter_date_from'])) {
+			$filter_date_from = $this->request->get['filter_date_from'];
 		} else {
-			$filter_date_added = '';
+			$filter_date_from = '';
+		}
+
+		if (isset($this->request->get['filter_date_to'])) {
+			$filter_date_to = $this->request->get['filter_date_to'];
+		} else {
+			$filter_date_to = '';
 		}
 
 		$url = '';
@@ -34,12 +40,12 @@ class Marketing extends \Opencart\System\Engine\Controller {
 			$url .= '&filter_code=' . $this->request->get['filter_code'];
 		}
 
-		if (isset($this->request->get['filter_date_added'])) {
-			$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
+		if (isset($this->request->get['filter_date_from'])) {
+			$url .= '&filter_date_from=' . $this->request->get['filter_date_from'];
 		}
 
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
+		if (isset($this->request->get['filter_date_to'])) {
+			$url .= '&filter_date_to=' . $this->request->get['filter_date_to'];
 		}
 
 		if (isset($this->request->get['sort'])) {
@@ -73,7 +79,8 @@ class Marketing extends \Opencart\System\Engine\Controller {
 
 		$data['filter_name'] = $filter_name;
 		$data['filter_code'] = $filter_code;
-		$data['filter_date_added'] = $filter_date_added;
+		$data['filter_date_from'] = $filter_date_from;
+		$data['filter_date_to'] = $filter_date_to;
 
 		$data['user_token'] = $this->session->data['user_token'];
 
@@ -103,10 +110,16 @@ class Marketing extends \Opencart\System\Engine\Controller {
 			$filter_code = '';
 		}
 
-		if (isset($this->request->get['filter_date_added'])) {
-			$filter_date_added = $this->request->get['filter_date_added'];
+		if (isset($this->request->get['filter_date_from'])) {
+			$filter_date_from = $this->request->get['filter_date_from'];
 		} else {
-			$filter_date_added = '';
+			$filter_date_from = '';
+		}
+
+		if (isset($this->request->get['filter_date_to'])) {
+			$filter_date_to = $this->request->get['filter_date_to'];
+		} else {
+			$filter_date_to = '';
 		}
 
 		if (isset($this->request->get['sort'])) {
@@ -137,8 +150,12 @@ class Marketing extends \Opencart\System\Engine\Controller {
 			$url .= '&filter_code=' . $this->request->get['filter_code'];
 		}
 
-		if (isset($this->request->get['filter_date_added'])) {
-			$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
+		if (isset($this->request->get['filter_date_from'])) {
+			$url .= '&filter_date_from=' . $this->request->get['filter_date_from'];
+		}
+
+		if (isset($this->request->get['filter_date_to'])) {
+			$url .= '&filter_date_to=' . $this->request->get['filter_date_to'];
 		}
 
 		if (isset($this->request->get['sort'])) {
@@ -164,7 +181,8 @@ class Marketing extends \Opencart\System\Engine\Controller {
 		$filter_data = [
 			'filter_name'       => $filter_name,
 			'filter_code'       => $filter_code,
-			'filter_date_added' => $filter_date_added,
+			'filter_date_from'  => $filter_date_from,
+			'filter_date_to'    => $filter_date_to,
 			'sort'              => $sort,
 			'order'             => $order,
 			'start'             => ($page - 1) * $this->config->get('config_pagination_admin'),
@@ -199,10 +217,13 @@ class Marketing extends \Opencart\System\Engine\Controller {
 			$url .= '&filter_code=' . $this->request->get['filter_code'];
 		}
 
-		if (isset($this->request->get['filter_date_added'])) {
-			$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
+		if (isset($this->request->get['filter_date_from'])) {
+			$url .= '&filter_date_from=' . $this->request->get['filter_date_from'];
 		}
 
+		if (isset($this->request->get['filter_date_to'])) {
+			$url .= '&filter_date_to=' . $this->request->get['filter_date_to'];
+		}
 		if ($order == 'ASC') {
 			$url .= '&order=DESC';
 		} else {
@@ -227,8 +248,12 @@ class Marketing extends \Opencart\System\Engine\Controller {
 			$url .= '&filter_code=' . $this->request->get['filter_code'];
 		}
 
-		if (isset($this->request->get['filter_date_added'])) {
-			$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
+		if (isset($this->request->get['filter_date_from'])) {
+			$url .= '&filter_date_from=' . $this->request->get['filter_date_from'];
+		}
+
+		if (isset($this->request->get['filter_date_to'])) {
+			$url .= '&filter_date_to=' . $this->request->get['filter_date_to'];
 		}
 
 		if (isset($this->request->get['sort'])) {
@@ -271,8 +296,12 @@ class Marketing extends \Opencart\System\Engine\Controller {
 			$url .= '&filter_code=' . $this->request->get['filter_code'];
 		}
 
-		if (isset($this->request->get['filter_date_added'])) {
-			$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
+		if (isset($this->request->get['filter_date_from'])) {
+			$url .= '&filter_date_from=' . $this->request->get['filter_date_from'];
+		}
+
+		if (isset($this->request->get['filter_date_to'])) {
+			$url .= '&filter_date_to=' . $this->request->get['filter_date_to'];
 		}
 
 		if (isset($this->request->get['sort'])) {

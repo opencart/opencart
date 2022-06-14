@@ -30,9 +30,16 @@
               <label for="input-code" class="form-label">{{ entry_code }}</label> <input type="text" name="filter_code" value="{{ filter_code }}" placeholder="{{ entry_code }}" id="input-code" class="form-control"/>
             </div>
             <div class="mb-3">
-              <label for="input-date-added" class="form-label">{{ entry_date_added }}</label>
+              <label for="input-date-from" class="form-label">{{ entry_date_from }}</label>
               <div class="input-group">
-                <input type="text" name="filter_date_added" value="{{ filter_date_added }}" placeholder="{{ entry_date_added }}" class="form-control date"/>
+                <input type="text" name="filter_date_from" value="{{ filter_date_from }}" placeholder="{{ entry_date_from }}" id="input-date-from" class="form-control date"/>
+                <div class="input-group-text"><i class="fas fa-calendar"></i></div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="input-date-to" class="form-label">{{ entry_date_to }}</label>
+              <div class="input-group">
+                <input type="text" name="filter_date_to" value="{{ filter_date_to }}" placeholder="{{ entry_date_to }}" id="input-date-to" class="form-control date"/>
                 <div class="input-group-text"><i class="fas fa-calendar"></i></div>
               </div>
             </div>
@@ -73,10 +80,16 @@ $('#button-filter').on('click', function () {
         url += '&filter_code=' + encodeURIComponent(filter_code);
     }
 
-    var filter_date_added = $('#input-date-added').val();
+    var filter_date_from = $('#input-date-from').val();
 
-    if (filter_date_added) {
-        url += '&filter_date_added=' + encodeURIComponent(filter_date_added);
+    if (filter_date_from) {
+        url += '&filter_date_from=' + encodeURIComponent(filter_date_from);
+    }
+
+    var filter_date_to = $('#input-date-to').val();
+
+    if (filter_date_to) {
+        url += '&filter_date_to=' + encodeURIComponent(filter_date_to);
     }
 
     $('#marketing').load('index.php?route=marketing/marketing|list&user_token={{ user_token }}' + url);

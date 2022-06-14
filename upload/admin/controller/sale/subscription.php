@@ -30,10 +30,16 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$filter_subscription_status_id = '';
 		}
 
-		if (isset($this->request->get['filter_date_added'])) {
-			$filter_date_added = $this->request->get['filter_date_added'];
+		if (isset($this->request->get['filter_date_from'])) {
+			$filter_date_from = $this->request->get['filter_date_from'];
 		} else {
-			$filter_date_added = '';
+			$filter_date_from = '';
+		}
+
+		if (isset($this->request->get['filter_date_to'])) {
+			$filter_date_to = $this->request->get['filter_date_to'];
+		} else {
+			$filter_date_to = '';
 		}
 
 		$url = '';
@@ -54,8 +60,12 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$url .= '&filter_subscription_status_id=' . $this->request->get['filter_subscription_status_id'];
 		}
 
-		if (isset($this->request->get['filter_date_added'])) {
-			$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
+		if (isset($this->request->get['filter_date_from'])) {
+			$url .= '&filter_date_from=' . $this->request->get['filter_date_from'];
+		}
+
+		if (isset($this->request->get['filter_date_to'])) {
+			$url .= '&filter_date_to=' . $this->request->get['filter_date_to'];
 		}
 
 		if (isset($this->request->get['sort'])) {
@@ -95,7 +105,8 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		$data['filter_order_id'] = $filter_order_id;
 		$data['filter_customer'] = $filter_customer;
 		$data['filter_subscription_status_id'] = $filter_subscription_status_id;
-		$data['filter_date_added'] = $filter_date_added;
+		$data['filter_date_from'] = $filter_date_from;
+		$data['filter_date_to'] = $filter_date_to;
 
 		$data['user_token'] = $this->session->data['user_token'];
 
@@ -137,10 +148,16 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$filter_subscription_status_id = '';
 		}
 
-		if (isset($this->request->get['filter_date_added'])) {
-			$filter_date_added = $this->request->get['filter_date_added'];
+		if (isset($this->request->get['filter_date_from'])) {
+			$filter_date_from = $this->request->get['filter_date_from'];
 		} else {
-			$filter_date_added = '';
+			$filter_date_from = '';
+		}
+
+		if (isset($this->request->get['filter_date_to'])) {
+			$filter_date_to = $this->request->get['filter_date_to'];
+		} else {
+			$filter_date_to = '';
 		}
 
 		if (isset($this->request->get['sort'])) {
@@ -179,8 +196,12 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$url .= '&filter_subscription_status_id=' . $this->request->get['filter_subscription_status_id'];
 		}
 
-		if (isset($this->request->get['filter_date_added'])) {
-			$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
+		if (isset($this->request->get['filter_date_from'])) {
+			$url .= '&filter_date_from=' . $this->request->get['filter_date_from'];
+		}
+
+		if (isset($this->request->get['filter_date_to'])) {
+			$url .= '&filter_date_to=' . $this->request->get['filter_date_to'];
 		}
 
 		if (isset($this->request->get['sort'])) {
@@ -202,7 +223,8 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			'filter_order_id'               => $filter_order_id,
 			'filter_customer'               => $filter_customer,
 			'filter_subscription_status_id' => $filter_subscription_status_id,
-			'filter_date_added'             => $filter_date_added,
+			'filter_date_from'              => $filter_date_from,
+			'filter_date_to'                => $filter_date_to,
 			'order'                         => $order,
 			'sort'                          => $sort,
 			'start'                         => ($page - 1) * $this->config->get('config_pagination_admin'),
@@ -245,8 +267,12 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$url .= '&filter_subscription_status_id=' . $this->request->get['filter_subscription_status_id'];
 		}
 
-		if (isset($this->request->get['filter_date_added'])) {
-			$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
+		if (isset($this->request->get['filter_date_from'])) {
+			$url .= '&filter_date_from=' . $this->request->get['filter_date_from'];
+		}
+
+		if (isset($this->request->get['filter_date_to'])) {
+			$url .= '&filter_date_to=' . $this->request->get['filter_date_to'];
 		}
 
 		if ($order == 'ASC') {
@@ -283,8 +309,12 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$url .= '&filter_status=' . $this->request->get['filter_status'];
 		}
 
-		if (isset($this->request->get['filter_date_added'])) {
-			$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
+		if (isset($this->request->get['filter_date_from'])) {
+			$url .= '&filter_date_from=' . $this->request->get['filter_date_from'];
+		}
+
+		if (isset($this->request->get['filter_date_to'])) {
+			$url .= '&filter_date_to=' . $this->request->get['filter_date_to'];
 		}
 
 		if (isset($this->request->get['sort'])) {
@@ -339,8 +369,12 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$url .= '&filter_subscription_status_id=' . $this->request->get['filter_subscription_status_id'];
 		}
 
-		if (isset($this->request->get['filter_date_added'])) {
-			$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
+		if (isset($this->request->get['filter_date_from'])) {
+			$url .= '&filter_date_from=' . $this->request->get['filter_date_from'];
+		}
+
+		if (isset($this->request->get['filter_date_to'])) {
+			$url .= '&filter_date_to=' . $this->request->get['filter_date_to'];
 		}
 
 		if (isset($this->request->get['sort'])) {

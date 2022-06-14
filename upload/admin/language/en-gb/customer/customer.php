@@ -73,7 +73,8 @@ $_['entry_amount']          = 'Amount';
 $_['entry_points']          = 'Points';
 $_['entry_name']            = 'Customer Name';
 $_['entry_ip']              = 'IP';
-$_['entry_date_added']      = 'Date Added';
+$_['entry_date_from']       = 'Date From';
+$_['entry_date_to']         = 'Date To';
 
 // Button
 $_['button_order']          = 'Orders';

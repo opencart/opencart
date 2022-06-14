@@ -44,8 +44,12 @@ class Review extends \Opencart\System\Engine\Model {
 			$sql .= " AND r.`status` = '" . (int)$data['filter_status'] . "'";
 		}
 
-		if (!empty($data['filter_date_added'])) {
-			$sql .= " AND DATE(r.`date_added`) = DATE('" . $this->db->escape((string)$data['filter_date_added']) . "')";
+		if (!empty($data['filter_date_from'])) {
+			$sql .= " AND DATE(r.`date_added`) >= DATE('" . $this->db->escape((string)$data['filter_date_from']) . "')";
+		}
+
+		if (!empty($data['filter_date_to'])) {
+			$sql .= " AND DATE(r.`date_added`) <= DATE('" . $this->db->escape((string)$data['filter_date_to']) . "')";
 		}
 
 		$sort_data = [
@@ -100,8 +104,12 @@ class Review extends \Opencart\System\Engine\Model {
 			$sql .= " AND r.`status` = '" . (int)$data['filter_status'] . "'";
 		}
 
-		if (!empty($data['filter_date_added'])) {
-			$sql .= " AND DATE(r.`date_added`) = DATE('" . $this->db->escape((string)$data['filter_date_added']) . "')";
+		if (!empty($data['filter_date_from'])) {
+			$sql .= " AND DATE(r.`date_added`) >= DATE('" . $this->db->escape((string)$data['filter_date_from']) . "')";
+		}
+
+		if (!empty($data['filter_date_to'])) {
+			$sql .= " AND DATE(r.`date_added`) <= DATE('" . $this->db->escape((string)$data['filter_date_to']) . "')";
 		}
 
 		$query = $this->db->query($sql);

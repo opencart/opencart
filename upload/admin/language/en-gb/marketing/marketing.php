@@ -29,7 +29,8 @@ $_['entry_name']        = 'Campaign Name';
 $_['entry_description'] = 'Campaign Description';
 $_['entry_code']        = 'Tracking Code';
 $_['entry_example']     = 'Examples';
-$_['entry_date_added']  = 'Date Added';
+$_['entry_date_from']   = 'Date From';
+$_['entry_date_to']     = 'Date To';
 
 // Help
 $_['help_code']         = 'The tracking code that will be used to track marketing campaigns.';

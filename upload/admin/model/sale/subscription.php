@@ -56,8 +56,12 @@ class Subscription extends \Opencart\System\Engine\Model {
 			$implode[] = "`s`.`subscription_status_id` = '" . (int)$data['filter_subscription_status_id'] . "'";
 		}
 
-		if (!empty($data['filter_date_added'])) {
-			$implode[] = "DATE(`s`.`date_added`) = DATE('" . $this->db->escape((string)$data['filter_date_added']) . "')";
+		if (!empty($data['filter_date_from'])) {
+			$implode[] = "DATE(s.`date_added`) >= DATE('" . $this->db->escape((string)$data['filter_date_from']) . "')";
+		}
+
+		if (!empty($data['filter_date_to'])) {
+			$implode[] = "DATE(s.`date_added`) <= DATE('" . $this->db->escape((string)$data['filter_date_to']) . "')";
 		}
 
 		if ($implode) {
@@ -127,8 +131,12 @@ class Subscription extends \Opencart\System\Engine\Model {
 			$implode[] .= "`s`.`subscription_status_id` = '" . (int)$data['filter_subscription_status_id'] . "'";
 		}
 
-		if (!empty($data['filter_date_added'])) {
-			$implode[] .= "DATE(`s`.`date_added`) = DATE('" . $this->db->escape((string)$data['filter_date_added']) . "')";
+		if (!empty($data['filter_date_from'])) {
+			$implode[] = "DATE(s.`date_added`) >= DATE('" . $this->db->escape((string)$data['filter_date_from']) . "')";
+		}
+
+		if (!empty($data['filter_date_to'])) {
+			$implode[] = "DATE(s.`date_added`) <= DATE('" . $this->db->escape((string)$data['filter_date_to']) . "')";
 		}
 
 		if ($implode) {

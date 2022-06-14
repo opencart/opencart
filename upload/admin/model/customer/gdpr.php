@@ -22,8 +22,12 @@ class Gdpr extends \Opencart\System\Engine\Model {
 			$implode[] = "`status` = '" . (int)$data['filter_status'] . "'";
 		}
 
-		if (!empty($data['filter_date_added'])) {
-			$implode[] = "DATE(`date_added`) = DATE('" . $this->db->escape((string)$data['filter_date_added']) . "')";
+		if (!empty($data['filter_date_from'])) {
+			$implode[] = "DATE(`date_added`) >= DATE('" . $this->db->escape((string)$data['filter_date_from']) . "')";
+		}
+
+		if (!empty($data['filter_date_to'])) {
+			$implode[] = "DATE(`date_added`) <= DATE('" . $this->db->escape((string)$data['filter_date_to']) . "')";
 		}
 
 		if ($implode) {
@@ -72,8 +76,12 @@ class Gdpr extends \Opencart\System\Engine\Model {
 			$implode[] = "`status` = '" . (int)$data['filter_status'] . "'";
 		}
 
-		if (!empty($data['filter_date_added'])) {
-			$implode[] = "DATE(`date_added`) = DATE('" . $this->db->escape((string)$data['filter_date_added']) . "')";
+		if (!empty($data['filter_date_from'])) {
+			$implode[] = "DATE(`date_added`) >= DATE('" . $this->db->escape((string)$data['filter_date_from']) . "')";
+		}
+
+		if (!empty($data['filter_date_to'])) {
+			$implode[] = "DATE(`date_added`) <= DATE('" . $this->db->escape((string)$data['filter_date_to']) . "')";
 		}
 
 		if ($implode) {

@@ -47,13 +47,20 @@
 								<option value="affiliate">{{ text_affiliate }}</option>
 							</select>
 						</div>
-						<div class="mb-3">
-							<label for="input-date-added" class="form-label">{{ entry_date_added }}</label>
-							<div class="input-group">
-								<input type="text" name="filter_date_added" value="" placeholder="{{ entry_date_added }}" id="input-date-added" class="form-control date"/>
-								<div class="input-group-text"><i class="fas fa-calendar"></i></div>
-							</div>
-						</div>
+            <div class="mb-3">
+              <label for="input-date-from" class="form-label">{{ entry_date_from }}</label>
+              <div class="input-group">
+                <input type="text" name="filter_date_from" value="{{ filter_date_from }}" placeholder="{{ entry_date_from }}" id="input-date-from" class="form-control date"/>
+                <div class="input-group-text"><i class="fas fa-calendar"></i></div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="input-date-to" class="form-label">{{ entry_date_to }}</label>
+              <div class="input-group">
+                <input type="text" name="filter_date_to" value="{{ filter_date_to }}" placeholder="{{ entry_date_to }}" id="input-date-to" class="form-control date"/>
+                <div class="input-group-text"><i class="fas fa-calendar"></i></div>
+              </div>
+            </div>
 						<div class="text-end">
 							<button type="button" id="button-filter" class="btn btn-light"><i class="fas fa-filter"></i> {{ button_filter }}</button>
 						</div>
@@ -136,10 +143,16 @@ $('#button-filter').on('click', function () {
         url += '&filter_type=' + filter_type;
     }
 
-    var filter_date_added = $('#input-date-added').val();
+    var filter_date_from = $('#input-date-from').val();
 
-    if (filter_date_added) {
-        url += '&filter_date_added=' + encodeURIComponent(filter_date_added);
+    if (filter_date_from) {
+        url += '&filter_date_from=' + encodeURIComponent(filter_date_from);
+    }
+
+    var filter_date_to = $('#input-date-to').val();
+
+    if (filter_date_to) {
+        url += '&filter_date_to=' + encodeURIComponent(filter_date_to);
     }
 
     $('#customer-approval').load('index.php?route=customer/customer_approval|list&user_token={{ user_token }}' + url);

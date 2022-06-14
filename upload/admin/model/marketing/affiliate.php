@@ -47,8 +47,12 @@ class Affiliate extends \Opencart\System\Engine\Model {
 			$implode[] = "ca.`status` = '" . (int)$data['filter_status'] . "'";
 		}
 
-		if (!empty($data['filter_date_added'])) {
-			$implode[] = "DATE(ca.`date_added`) = DATE('" . $this->db->escape((string)$data['filter_date_added']) . "')";
+		if (!empty($data['filter_date_from'])) {
+			$implode[] = "DATE(ca.`date_added`) >= DATE('" . $this->db->escape((string)$data['filter_date_from']) . "')";
+		}
+
+		if (!empty($data['filter_date_to'])) {
+			$implode[] = "DATE(ca.`date_added`) <= DATE('" . $this->db->escape((string)$data['filter_date_to']) . "')";
 		}
 
 		if ($implode) {
@@ -113,8 +117,12 @@ class Affiliate extends \Opencart\System\Engine\Model {
 			$implode[] = "ca.`status` = '" . (int)$data['filter_status'] . "'";
 		}
 
-		if (!empty($data['filter_date_added'])) {
-			$implode[] = "DATE(ca.`date_added`) = DATE('" . $this->db->escape((string)$data['filter_date_added']) . "')";
+		if (!empty($data['filter_date_from'])) {
+			$implode[] = "DATE(ca.`date_added`) >= DATE('" . $this->db->escape((string)$data['filter_date_from']) . "')";
+		}
+
+		if (!empty($data['filter_date_to'])) {
+			$implode[] = "DATE(ca.`date_added`) <= DATE('" . $this->db->escape((string)$data['filter_date_to']) . "')";
 		}
 
 		if ($implode) {

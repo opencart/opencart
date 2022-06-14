@@ -38,8 +38,12 @@ class Upload extends \Opencart\System\Engine\Model {
 			$implode[] = "`code` LIKE '" . $this->db->escape((string)$data['filter_code'] . '%') . "'";
 		}
 
-		if (!empty($data['filter_date_added'])) {
-			$implode[] = "DATE(`date_added`) = DATE('" . $this->db->escape((string)$data['filter_date_added']) . "')";
+		if (!empty($data['filter_date_from'])) {
+			$implode[] = "DATE(`date_added`) >= DATE('" . $this->db->escape((string)$data['filter_date_from']) . "')";
+		}
+
+		if (!empty($data['filter_date_to'])) {
+			$implode[] = "DATE(`date_added`) <= DATE('" . $this->db->escape((string)$data['date_added']) . "')";
 		}
 
 		if ($implode) {
@@ -94,8 +98,12 @@ class Upload extends \Opencart\System\Engine\Model {
 			$implode[] = "`code` LIKE '" . $this->db->escape((string)$data['filter_code'] . '%') . "'";
 		}
 
-		if (!empty($data['filter_date_added'])) {
-			$implode[] = "DATE(`date_added`) = DATE('" . $this->db->escape((string)$data['filter_date_added']) . "')";
+		if (!empty($data['filter_date_from'])) {
+			$implode[] = "DATE(`date_added`) >= DATE('" . $this->db->escape((string)$data['filter_date_from']) . "')";
+		}
+
+		if (!empty($data['filter_date_to'])) {
+			$implode[] = "DATE(`date_added`) <= DATE('" . $this->db->escape((string)$data['date_added']) . "')";
 		}
 
 		if ($implode) {

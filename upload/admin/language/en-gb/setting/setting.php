@@ -58,6 +58,7 @@ $_['entry_location']                      = 'Store Location';
 $_['entry_country']                       = 'Country';
 $_['entry_zone']                          = 'Region / State';
 $_['entry_timezone']                      = 'Time Zone';
+$_['entry_address_format']				  = 'Address Format';
 $_['entry_language']                      = 'Language';
 $_['entry_language_admin']                = 'Administration Language';
 $_['entry_currency']                      = 'Currency';

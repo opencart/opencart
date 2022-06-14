@@ -427,24 +427,6 @@ var chain = new Chain();
             this.timer = null;
             this.items = [];
 
-            $.extend(this, option);
-
-            // Focus
-            $this.on('focus', function () {
-                this.request();
-            });
-
-            // Keydown
-            $this.on('input', function (e) {
-                this.request();
-
-                var value = $this.val();
-
-                if (value && this.items[value]) {
-                    this.select(this.items[value]);
-                }
-            });
-
             // Request
             this.request = function () {
                 clearTimeout(this.timer);
@@ -490,6 +472,26 @@ var chain = new Chain();
 
                 $dropdown.html(html);
             }
+
+            $.extend(this, option);
+
+            this.request();
+
+            // Focus
+            /* $this.on('focus', function () {
+                this.request();
+            }); */
+
+            // Keydown
+            $this.on('input', function (e) {
+                this.request();
+
+                var value = $this.val();
+
+                if (value && this.items[value]) {
+                    this.select(this.items[value]);
+                }
+            });
         });
     }
 }(jQuery);

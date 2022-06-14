@@ -191,7 +191,7 @@ class Order extends \Opencart\System\Engine\Model {
 		}
 
 		if (!empty($data['filter_date_to'])) {
-			$sql .= " AND DATE(o.`date_added`) <= DATE('" . $this->db->escape((string)$data['date_added']) . "')";
+			$sql .= " AND DATE(o.`date_added`) <= DATE('" . $this->db->escape((string)$data['filter_date_to']) . "')";
 		}
 
 		if (!empty($data['filter_total'])) {

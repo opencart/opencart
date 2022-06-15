@@ -134,12 +134,6 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 			if (!$query->num_rows) {
 				$this->db->query("ALTER TABLE `" . DB_PREFIX . "country` ADD COLUMN `address_format_id` int(11) NOT NULL AFTER `address_format`");
 				$this->db->query("ALTER TABLE `" . DB_PREFIX . "country` DROP COLUMN `address_format`");
-
-				$countries = $this->db->query("SELECT * FROM `" . DB_PREFIX . "country`");
-
-				foreach ($countries->rows as $country) {
-					$this->db->query("UPDATE `" . DB_PREFIX . "country` SET `address_format_id` = '1' WHERE `status` = '1'");
-				}
 			}		
 
 			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "address_format'");

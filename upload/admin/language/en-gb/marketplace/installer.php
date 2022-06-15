@@ -7,7 +7,6 @@ $_['text_upload']            = 'Success: The extension has been uploaded!';
 $_['text_success']           = 'Success: You have modified extensions!';
 $_['text_progress']          = 'Install Progress';
 $_['text_installed']         = 'Installed Extensions';
-$_['text_unknown']		     = 'Unknown';
 
 // Column
 $_['column_image']           = 'Image';
@@ -21,8 +20,15 @@ $_['entry_progress']         = 'Progress';
 
 // Error
 $_['error_permission']       = 'Warning: You do not have permission to modify extensions!';
-$_['error_install']          = 'Install could not be found!';
+$_['error_install']          = 'Warning: Could not find install.json!';
+
+$_['error_extension']        = 'Installed extension could not be found!';
 $_['error_installed']        = 'Extension already installed!';
+$_['error_name']             = 'Name must be between 3 and 128 characters!';
+$_['error_version']          = 'Version must be between 3 and 128 characters!';
+$_['error_author']           = 'Author must be between 3 and 128 characters!';
+$_['error_link']             = 'Link must be between 3 and 128 characters!';
+
 $_['error_filename']         = 'Filename must be between 3 and 128 characters!';
 $_['error_file']             = 'Install file %s could not be found!';
 $_['error_file_exists']      = 'File already exist!';

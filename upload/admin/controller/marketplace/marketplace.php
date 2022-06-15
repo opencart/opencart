@@ -897,7 +897,7 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 						'code' 				    => basename($response_info['filename'], '.ocmod.zip'),
 						'author'                => $response_info['author'],
 						'version'               => $response_info['version'],
-						'link' 					=> ''
+						'link' 					=> OPENCART_SERVER . 'index.php?route=marketplace/extension|info&extension_id=' . $extension_id
 					];
 
 					$json['extension_install_id'] = $this->model_setting_extension->addInstall($extension_data);

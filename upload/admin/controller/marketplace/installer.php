@@ -70,8 +70,6 @@ class Installer extends \Opencart\System\Engine\Controller {
 		$data['extensions'] = [];
 		
 		$this->load->model('setting/extension');
-		
-		$filter_data = [];
 
 		$filter_data = [
 			'filter_extension_download_id' => $filter_extension_download_id,
@@ -169,6 +167,10 @@ class Installer extends \Opencart\System\Engine\Controller {
 			if ($this->request->files['file']['error'] != UPLOAD_ERR_OK) {
 				$json['error'] = $this->language->get('error_upload_' . $this->request->files['file']['error']);
 			}
+
+			if ($this->model_setting_extension->getInstallByCode(basename($filename, '.ocmod.zip'))) {
+				$json['error'] = $this->language->get('error_installed');
+			}
 		} else {
 			$json['error'] = $this->language->get('error_upload');
 		}
@@ -179,84 +181,53 @@ class Installer extends \Opencart\System\Engine\Controller {
 
 			// Unzip the files
 			$zip = new \ZipArchive();
-			
-			$extension_data = [];
 
 			if ($zip->open($file, \ZipArchive::RDONLY)) {
                 $install_info = json_decode($zip->getFromName('install.json'), true);
 
-				if ($install_info) {                    
-                    if ($this->model_setting_extension->getInstallByCode(basename($filename, '.ocmod.zip'))) {
-                        $json['error'] = $this->language->get('error_installed');
-                    }
+				if ($install_info) {
+					if (!$install_info['name']) {
+						$json['error'] = $this->language->get('error_name');
+					}
 
-                    if (!$json) {
-                        $extension_data = [
-                            'extension_id'          => 0,
-                            'extension_download_id' => 0,
-                            'name'                  => isset($install_info['name']) ? $install_info['name'] : $this->language->get('text_unknown'),
-                            'code'              	=> basename($filename, '.ocmod.zip'),
-                            'version'               => isset($install_info['version']) ? $install_info['version'] : $this->language->get('text_unknown'),
-                            'author'                => isset($install_info['author']) ? $install_info['author'] : $this->language->get('text_unknown'),
-                            'link'                  => isset($install_info['link']) ? $install_info['link'] : $this->language->get('text_unknown')
-                        ];
-            
-                        $this->load->model('setting/extension');
-            
-                        $this->model_setting_extension->addInstall($extension_data);
+					if (!$install_info['version']) {
+						$json['error'] = $this->language->get('error_version');
+					}
 
-                        $json['success'] = $this->language->get('text_upload');
-                    }
+					if (!$install_info['author']) {
+						$json['error'] = $this->language->get('error_author');
+					}
+
+					if (!$install_info['link']) {
+						$json['error'] = $this->language->get('error_link');
+					}
 				} else {
-                    $file_paths = [];
-					
-                    for ($i = 0; $i < $zip->numFiles; $i++) {
-                        $path = $zip->getNameIndex($i);
-						
-                        $path_parts = explode('/', $path);
-						
-                        if (!empty($path_parts[1]) && $path_parts[1] == 'install.json') {
-                            $file_paths[] = $path;
-                        }
-                    }
-
-                    if ($file_paths) {
-                        foreach ($file_paths as $file_path) {
-                            $path_parts = explode('/', $file_path);
-							
-                            $install_info = json_decode($zip->getFromName($path_parts[0] . '/install.json'), true);
-							
-                            $code = $path_parts[0];							
-
-                            if (!$this->model_setting_extension->getInstallByCode($code)) {
-                                $extension_data = [
-                                    'extension_id'          => 0,
-                                    'extension_download_id' => 0,
-                                    'name'                  => isset($install_info['name']) ? $install_info['name'] : $this->language->get('text_unknown'),
-                                    'package_name'          => basename($filename, '.ocmod.zip'),
-                                    'code'              	=> $code,
-                                    'version'               => isset($install_info['version']) ? $install_info['version'] : $this->language->get('text_unknown'),
-                                    'author'                => isset($install_info['author']) ? $install_info['author'] : $this->language->get('text_unknown'),
-                                    'link'                  => isset($install_info['link']) ? $install_info['link'] : $this->language->get('text_unknown')
-                                ];
-    
-                                $this->load->model('setting/extension');		
-								
-                                $this->model_setting_extension->addInstall($extension_data);
-    
-                                $json['success'] = $this->language->get('text_upload');
-                            }
-                        }
-                    } else {
-                        $json['error'] = $this->language->get('error_unzip');
-                    }
+					$json['error'] = $this->language->get('error_install');
 				}
 
 				$zip->close();
 			} else {
 				$json['error'] = $this->language->get('error_unzip');
 			}
-		}		
+		}
+
+		if (!$json) {
+			$extension_data = [
+				'extension_id'          => 0,
+				'extension_download_id' => 0,
+				'name'                  => $install_info['name'],
+				'code'              	=> basename($filename, '.ocmod.zip'),
+				'version'               => $install_info['version'],
+				'author'                => $install_info['author'],
+				'link'                  => $install_info['link']
+			];
+
+			$this->load->model('setting/extension');
+
+			$this->model_setting_extension->addInstall($extension_data);
+
+			$json['success'] = $this->language->get('text_upload');
+		}
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
@@ -302,7 +273,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 				$json['error'] = sprintf($this->language->get('error_directory'), $extension_install_info['code'] . '/');
 			}
 		} else {
-			$json['error'] = $this->language->get('error_install');
+			$json['error'] = $this->language->get('error_extension');
 		}
 
 		if (!$json) {
@@ -364,6 +335,10 @@ class Installer extends \Opencart\System\Engine\Controller {
                         }
                     }
 				} else {
+
+					// garbage code needs restoring to orinanl
+
+
 					$total = $zip->numFiles;
 
                     for ($i = 0; $i < $zip->numFiles; $i++) {
@@ -416,6 +391,12 @@ class Installer extends \Opencart\System\Engine\Controller {
                     }
                 }
 
+
+
+
+
+
+
 				$zip->close();
 
 				$this->model_setting_extension->editStatus($extension_install_id, 1);
@@ -436,7 +417,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 			if (($page * 200) <= $total) {
 				$json['next'] = $this->url->link('marketplace/installer|install', 'user_token=' . $this->session->data['user_token'] . $url . '&page=' . ($page + 1), true);
 			} else {
-				$json['next'] = $this->url->link('marketplace/installer|autoload', 'user_token=' . $this->session->data['user_token'] . $url, true);
+				$json['next'] = $this->url->link('marketplace/installer|vendor', 'user_token=' . $this->session->data['user_token'] . $url, true);
 			}
 		}
 
@@ -464,7 +445,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 		$extension_install_info = $this->model_setting_extension->getInstall($extension_install_id);
 
 		if (!$extension_install_info) {
-			$json['error'] = $this->language->get('error_install');
+			$json['error'] = $this->language->get('error_extension');
 		}
 
 		if (!$json) {
@@ -513,7 +494,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 				$url .= '&extension_install_id=' . $this->request->get['extension_install_id'];
 			}
 
-			$json['next'] = $this->url->link('marketplace/installer|autoload', 'user_token=' . $this->session->data['user_token'] . $url, true);
+			$json['next'] = $this->url->link('marketplace/installer|vendor', 'user_token=' . $this->session->data['user_token'] . $url, true);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -521,7 +502,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 	}
 
 	/* Generate new autoloader file */
-	public function autoload(): void {
+	public function vendor(): void {
 		$this->load->language('marketplace/installer');
 
 		$json = [];
@@ -647,11 +628,11 @@ class Installer extends \Opencart\System\Engine\Controller {
 		$extension_install_info = $this->model_setting_extension->getInstall($extension_install_id);
 
 		if (!$extension_install_info) {
-			$json['error'] = $this->language->get('error_install');
+			$json['error'] = $this->language->get('error_extension');
 		}
 
 		if (!$json) {
-			$file = DIR_STORAGE . 'marketplace/' . $extension_install_info['package_name'] . '.ocmod.zip';
+			$file = DIR_STORAGE . 'marketplace/' . $extension_install_info['code'] . '.ocmod.zip';
 			
 			// Unzip the files
 			$zip = new \ZipArchive();

@@ -30,7 +30,7 @@ class Log {
      * @param	string	$message
      */
 	public function write(string|array $message): void {
-		$this->message .= date('Y-m-d G:i:s') . ' - ' . print_r($message, true) . "\n";
+		$this->message .= date('Y-m-d H:i:s') . ' - ' . print_r($message, true) . "\n";
 	}
 	
 	/**

@@ -432,7 +432,7 @@ var chain = new Chain();
             // Focus
             $this.on('focus', function () {
                 $this[0].blur();
-                $this.unbind();
+                $this.unbind('focus');
                 this.request();
             });
 

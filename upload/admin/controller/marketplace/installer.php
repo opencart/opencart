@@ -281,121 +281,56 @@ class Installer extends \Opencart\System\Engine\Controller {
 			$zip = new \ZipArchive();
 
 			if ($zip->open($file)) {
-                $install_info = json_decode($zip->getFromName('install.json'), true);
-				
-                if ($install_info) {
-                    $total = $zip->numFiles;
+				$total = $zip->numFiles;
 
-                    $start = ($page - 1) * 200;
+				$start = ($page - 1) * 200;
 
-                    // Check if any of the files already exist.
-                    for ($i = $start; $i < ($start + 200); $i++) {
-                        $source = $zip->getNameIndex($i);
+				// Check if any of the files already exist.
+				for ($i = $start; $i < ($start + 200); $i++) {
+					$source = $zip->getNameIndex($i);
 
-                        $destination = str_replace('\\', '/', $source);
+					$destination = str_replace('\\', '/', $source);
 
-                        // Only extract the contents of the upload folder
-                        $path = $extension_install_info['code'] . '/' . $destination;
-                        $base = DIR_EXTENSION;
+					// Only extract the contents of the upload folder
+					$path = $extension_install_info['code'] . '/' . $destination;
+					$base = DIR_EXTENSION;
 
-                        // image > image
-                        if (substr($destination, 0, 6) == 'image/') {
-                            $path = $destination;
-                            $base = substr(DIR_IMAGE, 0, -6);
-                        }
+					// image > image
+					if (substr($destination, 0, 6) == 'image/') {
+						$path = $destination;
+						$base = substr(DIR_IMAGE, 0, -6);
+					}
 
-                        // We need to store the path differently for vendor folders.
-                        if (substr($destination, 0, 22) == 'system/storage/vendor/') {
-                            $path = substr($destination, 15);
-                            $base = DIR_STORAGE;
-                        }
+					// We need to store the path differently for vendor folders.
+					if (substr($destination, 0, 22) == 'system/storage/vendor/') {
+						$path = substr($destination, 15);
+						$base = DIR_STORAGE;
+					}
 
-                        // Must not have a path before files and directories can be moved
-                        $path_new = '';
+					// Must not have a path before files and directories can be moved
+					$path_new = '';
 
-                        $directories = explode('/', dirname($path));
+					$directories = explode('/', dirname($path));
 
-                        foreach ($directories as $directory) {
-                            if (!$path_new) {
-                                $path_new = $directory;
-                            } else {
-                                $path_new = $path_new . '/' . $directory;
-                            }
+					foreach ($directories as $directory) {
+						if (!$path_new) {
+							$path_new = $directory;
+						} else {
+							$path_new = $path_new . '/' . $directory;
+						}
 
-                            if (!is_dir($base . $path_new) && mkdir($base . $path_new, 0777)) {
-                                $this->model_setting_extension->addPath($extension_install_id, $path_new);
-                            }
-                        }
+						if (!is_dir($base . $path_new) && mkdir($base . $path_new, 0777)) {
+							$this->model_setting_extension->addPath($extension_install_id, $path_new);
+						}
+					}
 
-                        // If check if the path is not directory and check there is no existing file
-                        if (substr($path, -1) != '/') {
-                            if (!is_file($base . $path) && copy('zip://' . $file . '#' . $source, $base . $path)) {
-                                $this->model_setting_extension->addPath($extension_install_id, $path);
-                            }
-                        }
-                    }
-				} else {
-
-					// garbage code needs restoring to orinanl
-
-
-					$total = $zip->numFiles;
-
-                    for ($i = 0; $i < $zip->numFiles; $i++) {
-                        $source = $zip->getNameIndex($i);
-
-                        $destination = str_replace('\\', '/', $source);
-
-                        $name_folder_length = strlen($extension_install_info['code']) + 1;
-						
-                        if (substr($destination, 0, $name_folder_length) == $extension_install_info['code'] . '/') {
-                            $path = $destination;
-                            $base = DIR_EXTENSION;
-
-                            // image > image
-                            if (substr($destination, $name_folder_length, $name_folder_length + 6) == 'image/') {
-                                $path = $destination;
-                                $base = substr(DIR_IMAGE, 0, -6);
-                            }
-
-                            // We need to store the path differently for vendor folders.
-                            if (substr($destination, $name_folder_length, $name_folder_length + 22) == 'system/storage/vendor/') {
-                                $path = substr($destination, $name_folder_length + 15);
-                                $base = DIR_STORAGE;
-                            }
-
-                            // Must not have a path before files and directories can be moved
-                            $path_new = '';
-
-                            $directories = explode('/', dirname($path));
-
-                            foreach ($directories as $directory) {
-                                if (!$path_new) {
-                                    $path_new = $directory;
-                                } else {
-                                    $path_new = $path_new . '/' . $directory;
-                                }
-
-                                if (!is_dir($base . $path_new) && mkdir($base . $path_new, 0777)) {
-                                    $this->model_setting_extension->addPath($extension_install_id, $path_new);
-                                }
-                            }
-
-                            // If check if the path is not directory and check there is no existing file
-                            if (substr($path, -1) != '/') {
-                                if (!is_file($base . $path) && copy('zip://' . $file . '#' . $source, $base . $path)) {
-                                    $this->model_setting_extension->addPath($extension_install_id, $path);
-                                }
-                            }
-                        }
-                    }
-                }
-
-
-
-
-
-
+					// If check if the path is not directory and check there is no existing file
+					if (substr($path, -1) != '/') {
+						if (!is_file($base . $path) && copy('zip://' . $file . '#' . $source, $base . $path)) {
+							$this->model_setting_extension->addPath($extension_install_id, $path);
+						}
+					}
+				}
 
 				$zip->close();
 

@@ -424,7 +424,37 @@ var chain = new Chain();
             var $this = $(this);
             var $dropdown = $('#' + $this.attr('list'));
 
+            this.timer = null;
             this.items = [];
+
+            $.extend(this, option);
+
+            // Focus
+            $this.on('focus', function () {
+                $this[0].blur();
+                $this.unbind();
+                this.request();
+            });
+
+            // Keydown
+            $this.on('input', function (e) {
+                this.request();
+
+                var value = $this.val();
+
+                if (value && this.items[value]) {
+                    this.select(this.items[value]);
+                }
+            });
+
+            // Request
+            this.request = function () {
+                clearTimeout(this.timer);
+
+                this.timer = setTimeout(function (object) {
+                    object.source($(object).val(), $.proxy(object.response, object));
+                }, 50, this);
+            }
 
             // Response
             this.response = function (json) {
@@ -462,29 +492,6 @@ var chain = new Chain();
 
                 $dropdown.html(html);
             }
-
-            // Request
-            this.request = function () {
-                this.source($this.val(), $.proxy(this.response, this));
-            }
-
-            $.extend(this, option);
-
-            // Museover
-            $this.one('mouseover', function () {
-                this.request();
-            });
-
-            // Keydown
-            $this.on('input', function (e) {
-                this.request();
-
-                var value = $this.val();
-
-                if (value && this.items[value]) {
-                    this.select(this.items[value]);
-                }
-            });
         });
     }
 }(jQuery);

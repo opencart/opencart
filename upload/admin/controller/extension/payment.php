@@ -38,7 +38,7 @@ class Payment extends \Opencart\System\Engine\Controller {
 
 				$code = basename($result['path'], '.php');
 
-				$this->load->language('extension/' . $extension . '/payment/' . $code, $code);
+				$this->load->language('extension/' . $extension . '/payment/' . $code);
 
 				$text_link = $this->language->get($code . '_text_' . $code);
 

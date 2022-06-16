@@ -1,8 +1,8 @@
 <?php
 namespace Opencart\Admin\Model\Setting;
 class Startup extends \Opencart\System\Engine\Model {
-	public function addStartup(string $code, string $action, bool $status = true, int $sort_order = 0): int {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "startup` SET `code` = '" . $this->db->escape($code) . "', `action` = '" . $this->db->escape($action) . "', `status` = '" . (int)$status . "', `sort_order` = '" . (int)$sort_order . "'");
+	public function addStartup(array $data): int {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "startup` SET `code` = '" . $this->db->escape($data['code']) . "', `action` = '" . $this->db->escape($data['action']) . "', `status` = '" . (bool)$data['status'] . "', `sort_order` = '" . (int)$data['sort_order'] . "'");
 
 		return $this->db->getLastId();
 	}

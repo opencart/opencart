@@ -648,15 +648,15 @@ class Setting extends \Opencart\System\Engine\Controller {
 			$json['error']['telephone'] = $this->language->get('error_telephone');
 		}
 
-		if (!$this->request->post['config_product_description_length']) {
+		if (!(int)$this->request->post['config_product_description_length']) {
 			$json['error']['product_description_length'] = $this->language->get('error_product_description_length');
 		}
 
-		if (!$this->request->post['config_pagination']) {
+		if (!(int)$this->request->post['config_pagination']) {
 			$json['error']['pagination'] = $this->language->get('error_pagination');
 		}
 
-		if (!$this->request->post['config_pagination_admin']) {
+		if (!(int)$this->request->post['config_pagination_admin']) {
 			$json['error']['pagination_admin'] = $this->language->get('error_pagination');
 		}
 

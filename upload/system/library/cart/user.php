@@ -4,7 +4,6 @@ class User {
 	private int $user_id = 0;
 	private string $username = '';
 	private int $user_group_id = 0;
-	private string $pin = '';
 	private array $permission = [];
 
 	public function __construct($registry) {
@@ -61,7 +60,6 @@ class User {
 			$this->user_id = $user_query->row['user_id'];
 			$this->username = $user_query->row['username'];
 			$this->user_group_id = $user_query->row['user_group_id'];
-			$this->pin = $user_query->row['pin'];
 
 			$user_group_query = $this->db->query("SELECT `permission` FROM `" . DB_PREFIX . "user_group` WHERE `user_group_id` = '" . (int)$user_query->row['user_group_id'] . "'");
 
@@ -85,7 +83,6 @@ class User {
 		$this->user_id = 0;
 		$this->username = '';
 		$this->user_group_id = 0;
-		$this->pin = '';
 	}
 
 	public function hasPermission($key, $value): bool {
@@ -110,9 +107,5 @@ class User {
 
 	public function getGroupId(): int {
 		return $this->user_group_id;
-	}
-
-	public function getPin(): string {
-		return $this->pin;
 	}
 }

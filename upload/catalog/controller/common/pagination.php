@@ -14,7 +14,7 @@ class Pagination extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
-		if (isset($setting['limit'])) {
+		if (!empty($setting['limit'])) {
 			$limit = (int)$setting['limit'];
 		} else {
 			$limit = 10;

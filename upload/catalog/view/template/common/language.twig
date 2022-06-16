@@ -3,7 +3,7 @@
     <div class="dropdown-toggle" data-bs-toggle="dropdown">
       {% for language in languages %}
         {% if language.code == code %}
-          <img src="catalog/language/{{ language.code }}/{{ language.code }}.png" alt="{{ language.name }}" title="{{ language.name }}">
+          <img src="{{ language.image }}" alt="{{ language.name }}" title="{{ language.name }}">
         {% endif %}
       {% endfor %}
       <span class="d-none d-md-inline">{{ text_language }}</span> <i class="fas fa-caret-down"></i>

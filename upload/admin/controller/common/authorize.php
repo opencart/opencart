@@ -1,22 +1,26 @@
 <?php
 namespace Opencart\Admin\Controller\Common;
-class Pin extends \Opencart\System\Engine\Controller {
+class Authorize extends \Opencart\System\Engine\Controller {
 	public function index(): void {
-		$this->load->language('common/pin');
+() {		$this->load->language('common/authorize');
 
-		$this->document->setTitle($this->language->get('heading_title'));
+			$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('user/user');
+			$this->load->model('user/user');
 
-		$pin_total = $this->model_user_user->getPinByUserId($this->user->getId());
+			if
 
-		if ($pin_total) {
-			$data['error_warning'] = sprintf($this->language->get('error_warning'), $pin_total);
+		}
+
+		$login_total = $this->model_user_user->getTotalLoginsByUserId($this->user->getId());
+
+		if ($login_total > 3) {
+			$data['error_warning'] = $this->language->get('error_warning');
 		} else {
 			$data['error_warning'] = '';
 		}
 
-		$data['action'] = $this->url->link('common/pin|validate', 'user_token=' . $this->session->data['user_token'], true);
+		$data['action'] = $this->url->link('common/authorize|validate', 'user_token=' . $this->session->data['user_token']);
 
 		if (isset($this->request->get['route']) && $this->request->get['route'] != 'common/login') {
 			$route = $this->request->get['route'];
@@ -38,7 +42,7 @@ class Pin extends \Opencart\System\Engine\Controller {
 		$data['header'] = $this->load->controller('common/header');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('common/pin', $data));
+		$this->response->setOutput($this->load->view('common/authorize', $data));
 	}
 
 	private function validate(): void {
@@ -46,14 +50,13 @@ class Pin extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-
 		$this->load->model('fraud/pin');
 
-		$pin_total = $this->model_user_user->getPinByMemberId($this->user->getId());
+		$pin_total = $this->model_user_user->getTotalLoginsByUserId($this->user->getId());
 
 		if ($pin_total >= 3) {
 
-			$json['error'] = 'PIN does not match!';
+			$json['error'] = $this->language->get('error_match');
 
 		} elseif (!isset($this->request->post['pin']) || ($this->user->getPin() != $this->request->post['pin'])) {
 
@@ -82,7 +85,7 @@ class Pin extends \Opencart\System\Engine\Controller {
 				$this->model_account_member->editCookie($cookie);
 			}
 
-			if (isset($this->request->post['redirect']) && substr($this->request->post['redirect'], 0, strlen(HTTP_SERVER)) == HTTP_SERVER) {
+			if (isset($this->request->post['redirect']) && (strpos($this->request->post['redirect'], HTTP_SERVER) === 0)) {
 				$json['redirect'] = str_replace('&amp;', '&', $this->request->post['redirect']) . '&user_token=' . $this->session->data['user_token'];
 			} else {
 				$json['redirect'] = $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token']);
@@ -138,7 +141,6 @@ class Pin extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-
 			// Register the cookie for security.
 			$this->load->model('user/user');
 
@@ -156,7 +158,7 @@ class Pin extends \Opencart\System\Engine\Controller {
 				$this->model_user_user->addLogin($token);
 			}
 
-			if (isset($this->request->post['redirect']) && substr($this->request->post['redirect'], 0, strlen(HTTP_SERVER)) == HTTP_SERVER) {
+			if (isset($this->request->post['redirect']) && (strpos($this->request->post['redirect'], HTTP_SERVER) === 0)) {
 				$json['redirect'] = str_replace('&amp;', '&', $this->request->post['redirect']) . '&user_token=' . $this->session->data['user_token'];
 			} else {
 				$json['redirect'] = $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token']);
@@ -197,30 +199,24 @@ class Pin extends \Opencart\System\Engine\Controller {
 			$code = '';
 		}
 
-		$this->load->model('account/member');
+		$this->load->model('user/user');
 
 		$member_info = $this->model_user_user->getUserByEmail($email);
 
 		if ($member_info && $member_info['code'] && $code && $member_info['code'] === $code) {
-			$this->member->logout();
+			$this->user->logout();
 
 			$this->model_user_user->editPin($member_info['member_id'], '');
 
 			$this->model_user_user->editCode($member_info['email'], '');
 
-			$this->load->model('fraud/pin');
-
 			$this->model_user_user->deletePin($member_info['member_id']);
 
 			$this->session->data['success'] = 'Success: Your PIN has been reset!';
-
-
 		} else {
 			$this->model_user_user->editCode($email, '');
 
 			$this->session->data['error'] = 'Warning: Could not reset your PIN!';
-
-
 		}
 
 		$this->response->redirect($this->url->link('account/login'));

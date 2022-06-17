@@ -23,10 +23,6 @@ class User extends \Opencart\System\Engine\Model {
 		$this->db->query("UPDATE `" . DB_PREFIX . "user` SET `code` = '" . $this->db->escape($code) . "' WHERE LCASE(`email`) = '" . $this->db->escape(utf8_strtolower($email)) . "'");
 	}
 
-	public function editPin(int $user_id, string $pin): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "user` SET `pin` = '" . $this->db->escape($pin) . "' WHERE `user_id` = '" . (int)$user_id . "'");
-	}
-
 	public function deleteUser(int $user_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "user` WHERE `user_id` = '" . (int)$user_id . "'");
 	}
@@ -123,5 +119,21 @@ class User extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "user_login` WHERE `user_id` = '" . (int)$user_id . "' AND `token` = '" . $this->db->escape($token) . "'");
 
 		return $query->row;
+	}
+
+	public function getLogins(int $user_id): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "user_login` WHERE `user_id` = '" . (int)$user_id . "'");
+
+		return $query->row;
+	}
+
+	public function getTotalLogins(int $user_id): int {
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "user_login` WHERE `user_id` = '" . (int)$user_id . "' AND `status` = '0'");
+
+		if ($query->num_row) {
+			return (int)$query->row['total'];
+		} else {
+			return 0;
+		}
 	}
 }

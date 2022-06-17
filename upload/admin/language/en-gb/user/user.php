@@ -9,11 +9,13 @@ $_['text_add']              = 'Add User';
 $_['text_edit']             = 'Edit User';
 $_['text_user']             = 'Users Details';
 $_['text_password']         = 'Password';
+$_['text_user_login']       = 'Users Login';
 $_['text_other']            = 'Other';
 
 // Column
 $_['column_username']       = 'Username';
 $_['column_status']         = 'Status';
+$_['column_ip']             = 'IP';
 $_['column_date_added']     = 'Date Added';
 $_['column_action']         = 'Action';
 
@@ -29,7 +31,7 @@ $_['entry_image']           = 'Image';
 $_['entry_status']          = 'Status';
 
 // Tab
-$_['tab_login']             = 'Login';
+$_['tab_login']             = 'Logins';
 
 // Error
 $_['error_permission']      = 'Warning: You do not have permission to modify users!';

@@ -108,7 +108,32 @@
               <input type="hidden" name="user_id" value="{{ user_id }}" id="input-user-id"/>
             </div>
             <div id="tab-login" class="tab-pane">
-
+              <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <td class="text-start">{{ column_ip }}</td>
+                      <td class="text-start">{{ column_status }}</td>
+                      <td class="text-start">{{ column_date_added }}</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% if user_logins %}
+                      {% for user_login in user_logins %}
+                        <tr>
+                          <td class="text-start"><a href="https://whatismyipaddress.com/ip/{{ ip.ip }}" target="_blank">{{ ip.ip }}</a></td>
+                          <td class="text-start">{{ ip.status }}</td>
+                          <td class="text-start">{{ ip.date_added }}</td>
+                        </tr>
+                      {% endfor %}
+                    {% else %}
+                      <tr>
+                        <td class="text-center" colspan="3">{{ text_no_results }}</td>
+                      </tr>
+                    {% endif %}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </form>

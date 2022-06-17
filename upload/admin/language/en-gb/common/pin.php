@@ -20,4 +20,3 @@ $_['error_warning'] = 'You have exceeded the allowed number of PIN attempts!';
 $_['error_pin']     = 'PIN must be 4 digits!';
 $_['error_match']   = 'PIN does not match!';
 $_['error_reset']   = 'Warning: Could not reset your PIN!';
-

@@ -1,6 +1,6 @@
 <?php
 namespace Opencart\Admin\Controller\Startup;
-class Login extends \Opencart\System\Engine\Controller {
+class Security extends \Opencart\System\Engine\Controller {
 	public function index(): object|null {
 		if (isset($this->request->get['route'])) {
 			$route = (string)$this->request->get['route'];
@@ -18,7 +18,6 @@ class Login extends \Opencart\System\Engine\Controller {
 		$ignore = [
 			'common/login',
 			'common/forgotten',
-			'common/reset',
 			'common/cron'
 		];
 
@@ -33,17 +32,19 @@ class Login extends \Opencart\System\Engine\Controller {
 			'common/login',
 			'common/logout',
 			'common/forgotten',
-			'common/reset',
 			'common/cron',
-			'common/pin',
 			'error/not_found',
 			'error/permission'
 		];
 
 		if (!in_array($route, $ignore) && (!isset($this->request->get['user_token']) || !isset($this->session->data['user_token']) || ($this->request->get['user_token'] != $this->session->data['user_token']))) {
 			return new \Opencart\System\Engine\Action('common/login');
-		} else {
-			return null;
 		}
+
+		if ($this->config->get('config_security') && $this->user->isLogged() && $route != 'common/security') {
+			return new \Opencart\System\Engine\Action('common/security');
+		}
+
+		return null;
 	}
 }

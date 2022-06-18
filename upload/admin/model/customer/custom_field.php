@@ -87,27 +87,7 @@ class CustomField extends \Opencart\System\Engine\Model {
 	}
 
 	public function getCustomFields(array $data = []): array {
-		if (empty($data['filter_customer_group_id'])) {
-			$sql = "SELECT * FROM `" . DB_PREFIX . "custom_field` cf LEFT JOIN `" . DB_PREFIX . "custom_field_description` cfd ON (cf.`custom_field_id` = cfd.`custom_field_id`) WHERE cfd.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
-		} else {
 			$sql = "SELECT * FROM `" . DB_PREFIX . "custom_field_customer_group` cfcg LEFT JOIN `" . DB_PREFIX . "custom_field` cf ON (cfcg.`custom_field_id` = cf.`custom_field_id`) LEFT JOIN `" . DB_PREFIX . "custom_field_description` cfd ON (cf.`custom_field_id` = cfd.`custom_field_id`) WHERE cfd.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
-		}
-
-		if (!empty($data['filter_name'])) {
-			$sql .= " AND cfd.`name` LIKE '" . $this->db->escape((string)$data['filter_name'] . '%') . "'";
-		}
-
-		if (isset($data['filter_status'])) {
-			$sql .= " AND cf.`status` = '" . (int)$data['filter_status'] . "'";
-		}
-
-		if (isset($data['filter_location'])) {
-			$sql .= " AND cf.`location` = '" . $this->db->escape((string)$data['filter_location']) . "'";
-		}
-
-		if (!empty($data['filter_customer_group_id'])) {
-			$sql .= " AND cfcg.`customer_group_id` = '" . (int)$data['filter_customer_group_id'] . "'";
-		}
 
 		$sort_data = [
 			'cfd.name',

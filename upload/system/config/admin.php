@@ -29,7 +29,8 @@ $_['action_pre_action'] = [
 	'startup/error',
 	'startup/event',
 	'startup/sass',
-	'startup/security',
+	'startup/login',
+	'startup/authorize',
 	'startup/permission'
 ];
 

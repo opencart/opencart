@@ -2,17 +2,11 @@
 namespace Opencart\Admin\Controller\Common;
 class Authorize extends \Opencart\System\Engine\Controller {
 	public function index(): void {
-() {		$this->load->language('common/authorize');
+		$this->load->language('common/authorize');
 
-			$this->document->setTitle($this->language->get('heading_title'));
+		$this->document->setTitle($this->language->get('heading_title'));
 
-			$this->load->model('user/user');
 
-			if
-
-		}
-
-		$login_total = $this->model_user_user->getTotalLoginsByUserId($this->user->getId());
 
 		if ($login_total > 3) {
 			$data['error_warning'] = $this->language->get('error_warning');
@@ -46,13 +40,23 @@ class Authorize extends \Opencart\System\Engine\Controller {
 	}
 
 	private function validate(): void {
-		$this->load->language('common/pin');
+		$this->load->language('common/authorize');
 
 		$json = [];
 
-		$this->load->model('fraud/pin');
+		if (isset($this->request->get['email'])) {
+			$email = (string)$this->request->get['email'];
+		} else {
+			$email = '';
+		}
 
-		$pin_total = $this->model_user_user->getTotalLoginsByUserId($this->user->getId());
+		$user_info = $this->model_user_user->getUserByEmail($this->user->getId(), $code);
+
+		if ($user_info) {
+			$json['error'] = $this->language->get('error_user');
+		}
+
+		$pin_total = $this->model_user_user->getTotalLoginsByCode($this->user->getId(), $this->request->get['code']);
 
 		if ($pin_total >= 3) {
 
@@ -65,9 +69,11 @@ class Authorize extends \Opencart\System\Engine\Controller {
 			$json['error'] = 'PIN does not match!';
 
 		} else {
-
 			$this->model_fraud_pin->deletePin($this->member->getId());
 		}
+
+
+		//$this->model_user_user->getTotalLoginsByCode($this->user->getId(), $this->request->get['code']);
 
 		if (!$json) {
 			// Register the cookie for security.
@@ -96,8 +102,29 @@ class Authorize extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+
+
+
+
+
+
 	public function setup() {
-		$this->load->language('common/pin');
+
+			if (isset($this->request->cookie['authorize'])) {
+				$token = (string)$this->request->cookie['authorize'];
+			} else {
+				$token = '';
+			}
+
+			$this->load->model('user/user');
+
+			$token_info = $this->model_user_user->getLoginByToken($this->user->getId(), $token);
+
+			if ($token_info) {
+
+
+			}
+		$this->load->language('common/authorize');
 
 		// Make sure no one can override the PIN.
 		if ($this->user->getPin()) {
@@ -163,23 +190,6 @@ class Authorize extends \Opencart\System\Engine\Controller {
 			} else {
 				$json['redirect'] = $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token']);
 			}
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	public function reset() {
-		$this->load->language('common/pin');
-
-		$json = array();
-
-		if (!$json) {
-			$this->load->model('user/user');
-
-			$this->model_user_user->editUser($this->user->getEmail(), token(40));
-
-			$json['success'] = $this->language->get('text_link');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

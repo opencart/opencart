@@ -11,6 +11,7 @@ $_['text_user']             = 'Users Details';
 $_['text_password']         = 'Password';
 $_['text_user_login']       = 'Users Login';
 $_['text_other']            = 'Other';
+$_['text_login']            = 'Login History';
 
 // Column
 $_['column_username']       = 'Username';

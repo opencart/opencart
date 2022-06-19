@@ -1,4 +1,8 @@
 <?php
+/*
+https://www.youtube.com/watch?v=F5SoQTBrFbI&ab_channel=GladiusNews
+*/
+
 // Version
 define('VERSION', '4.0.0.0');
 

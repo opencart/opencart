@@ -1,6 +1,6 @@
 <?php
 namespace Opencart\Admin\Controller\Startup;
-class Authroize extends \Opencart\System\Engine\Controller {
+class Authorize extends \Opencart\System\Engine\Controller {
 	public function index(): object|null {
 		if (isset($this->request->get['route'])) {
 			$route = (string)$this->request->get['route'];

@@ -9,16 +9,25 @@
           <div class="card-header"><i class="fas fa-lock"></i> {{ heading_title }}</div>
           <div class="card-body">
             <form id="form-pin" action="{{ action }}" method="post" data-oc-toggle="ajax">
-              <h3>{{ text_setup }}</h3>
-              <p>{{ text_pin }}</p>
+
+              <p>{{ text_security }}</p>
+
+              <p>{{ text_code }}</p>
+
               <div class="mb-3">
-                <label for="input-pin" class="form-label">{{ entry_pin }}</label>
-                <input type="password" name="pin" value="{{ pin }}" placeholder="{{ entry_pin }}" id="input-pin" class="form-control"/>
-                <div id="error-pin" class="invalid-feedback"></div>
+                <label for="input-code" class="form-label">{{ entry_code }}</label>
+                <div class="input-group">
+                  <input type="text" name="code" value="" placeholder="{{ entry_code }}" id="input-code" class="form-control"/>
+                  <button type="button" class="btn btn-danger"><i class="fas fa-mail-bulk"></i> {{ button_resend }}</button>
+                </div>
+                <div id="error-code" class="invalid-feedback"></div>
               </div>
+
+
               <div class="text-end">
                 <button type="submit" class="btn btn-primary">{{ button_submit }}</button>
               </div>
+
               {% if redirect %}
                 <input type="hidden" name="redirect" value="{{ redirect }}"/>
               {% endif %}

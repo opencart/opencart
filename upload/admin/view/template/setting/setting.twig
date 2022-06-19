@@ -1200,6 +1200,15 @@
               <fieldset>
                 <legend>{{ text_security }}</legend>
                 <div class="row mb-3">
+                  <label class="col-sm-2 col-form-label">{{ entry_security }}</label>
+                  <div class="col-sm-10">
+                    <div class="form-check form-switch form-switch-lg">
+                      <input type="checkbox" name="config_security" value="1" id="input-security" class="form-check-input"{% if config_security %} checked{% endif %}/>
+                    </div>
+                    <div class="form-text">{{ help_security }}</div>
+                  </div>
+                </div>
+                <div class="row mb-3">
                   <label class="col-sm-2 col-form-label">{{ entry_shared }}</label>
                   <div class="col-sm-10">
                     <div class="form-check form-switch form-switch-lg">

@@ -6,26 +6,22 @@ class Authorize extends \Opencart\System\Engine\Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-
-
-		if ($login_total > 3) {
-			$data['error_warning'] = $this->language->get('error_warning');
-		} else {
-			$data['error_warning'] = '';
-		}
+		$this->session->data['authorize'] = token(4);
 
 		$data['action'] = $this->url->link('common/authorize|validate', 'user_token=' . $this->session->data['user_token']);
 
 		if (isset($this->request->get['route']) && $this->request->get['route'] != 'common/login') {
-			$route = $this->request->get['route'];
+			$args = $this->request->get;
 
-			unset($this->request->get['route']);
-			unset($this->request->get['user_token']);
+			$route = $args['route'];
+
+			unset($args['route']);
+			unset($args['user_token']);
 
 			$url = '';
 
-			if ($this->request->get) {
-				$url .= http_build_query($this->request->get);
+			if ($args) {
+				$url .= http_build_query($args);
 			}
 
 			$data['redirect'] = $this->url->link($route, $url);
@@ -43,54 +39,45 @@ class Authorize extends \Opencart\System\Engine\Controller {
 		$this->load->language('common/authorize');
 
 		$json = [];
+		$this->session->data['authorize'] = token(4);
 
-		if (isset($this->request->get['email'])) {
-			$email = (string)$this->request->get['email'];
+		if (!isset($this->request->post['code']) || !isset($this->session->data['code']) || $this->request->post['code'] != $this->session->data['code']) {
+			$json['error'] = $this->language->get('error_code');
+
+			///$this->model_fraud_pin->addPin($this->user->getId());
 		} else {
-			$email = '';
+			//$this->model_fraud_pin->deletePin($this->member->getId());
 		}
 
-		$user_info = $this->model_user_user->getUserByEmail($this->user->getId(), $code);
+		$login_info = $this->model_user_user->getTotalAttempts($this->user->getId(), $this->request->get['code']);
+
+		if ($login_info && $login_info['total'] >= 3) {
+			$json['error'] = $this->language->get('error_retries');
+		}
 
 		if ($user_info) {
 			$json['error'] = $this->language->get('error_user');
 		}
 
-		$pin_total = $this->model_user_user->getTotalLoginsByCode($this->user->getId(), $this->request->get['code']);
-
-		if ($pin_total >= 3) {
-
-			$json['error'] = $this->language->get('error_match');
-
-		} elseif (!isset($this->request->post['pin']) || ($this->user->getPin() != $this->request->post['pin'])) {
-
-			$this->model_fraud_pin->addPin($this->user->getId());
-
-			$json['error'] = 'PIN does not match!';
-
-		} else {
-			$this->model_fraud_pin->deletePin($this->member->getId());
-		}
-
-
 		//$this->model_user_user->getTotalLoginsByCode($this->user->getId(), $this->request->get['code']);
 
 		if (!$json) {
+			$token = token(64);
+
+			$login_data = [
+				'token'      => $token,
+				'ip'         => $this->request->server['REMOTE_ADDR'],
+				'user_agent' => $this->request->server['HTTP_USER_AGENT'],
+				'status'     => 1
+			];
+
+			$this->model_user_user->addLogin($token);
+
+			setcookie('opencart', $token, time() + 60 * 60 * 24 * 365 * 10);
+
+			//$this->model_user_user->addLogin($token);
+
 			// Register the cookie for security.
-			if (empty($this->request->cookie['opencart'])) {
-				setcookie('opencart', $this->member->getCookie(), time() + 60 * 60 * 24 * 365 * 10);
-
-				$cookie = $this->member->getCookie();
-			} else {
-				$cookie = $this->request->cookie['opencart'];
-			}
-
-			if (!$this->model_account_member->getTotalCookiesByCookie($cookie)) {
-				$this->model_account_member->addCookie($cookie);
-			} else {
-				$this->model_account_member->editCookie($cookie);
-			}
-
 			if (isset($this->request->post['redirect']) && (strpos($this->request->post['redirect'], HTTP_SERVER) === 0)) {
 				$json['redirect'] = str_replace('&amp;', '&', $this->request->post['redirect']) . '&user_token=' . $this->session->data['user_token'];
 			} else {
@@ -102,101 +89,27 @@ class Authorize extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-
-
-
-
-
-
-	public function setup() {
-
-			if (isset($this->request->cookie['authorize'])) {
-				$token = (string)$this->request->cookie['authorize'];
-			} else {
-				$token = '';
-			}
-
-			$this->load->model('user/user');
-
-			$token_info = $this->model_user_user->getLoginByToken($this->user->getId(), $token);
-
-			if ($token_info) {
-
-
-			}
+	public function resend() {
 		$this->load->language('common/authorize');
 
-		// Make sure no one can override the PIN.
-		if ($this->user->getPin()) {
-			$this->response->redirect($this->url->link('common/pin', 'user_token=' . $this->session->data['user_token']));
-		}
+		$json = [];
 
-		$this->document->setTitle($this->language->get('heading_title'));
+		$json['success'] = $this->language->get('text_reset');
 
-		$data['action'] = $this->url->link('common/pin|save', 'user_token=' . $this->session->data['user_token']);
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
 
-		if (isset($this->request->get['route']) && $this->request->get['route'] != 'common/login') {
-			$route = $this->request->get['route'];
-
-			unset($this->request->get['route']);
-			unset($this->request->get['user_token']);
-
-			$url = '';
-
-			if ($this->request->get) {
-				$url .= http_build_query($this->request->get);
-			}
-
-			$data['redirect'] = $this->url->link($route, $url);
-		} else {
-			$data['redirect'] = '';
-		}
+	public function unlock() {
+		$this->load->language('common/authorize');
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('common/pin_setup', $data));
+		$this->response->setOutput($this->load->view('common/authorize_unlock', $data));
 	}
 
-	public function save(): void {
-		$this->load->language('common/pin');
-
-		$json = [];
-
-		if (strlen($this->request->post['pin']) < 4) {
-			$json['error'] = $this->language->get('error_pin');
-		}
-
-		if (!$json) {
-			// Register the cookie for security.
-			$this->load->model('user/user');
-
-			$this->model_user_user->editPin($this->user->getId(), $this->request->post['pin']);
-
-			if (empty($this->request->cookie['secure'])) {
-				$token = token(32);
-
-				setcookie('secure', $token, time() + 60 * 60 * 24 * 365 * 10);
-			} else {
-				$token = $this->request->cookie['secure'];
-			}
-
-			if (!$this->model_user_user->getLoginByToken($token)) {
-				$this->model_user_user->addLogin($token);
-			}
-
-			if (isset($this->request->post['redirect']) && (strpos($this->request->post['redirect'], HTTP_SERVER) === 0)) {
-				$json['redirect'] = str_replace('&amp;', '&', $this->request->post['redirect']) . '&user_token=' . $this->session->data['user_token'];
-			} else {
-				$json['redirect'] = $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token']);
-			}
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	public function confirm() {
+	public function reset() {
 		if (isset($this->request->get['email'])) {
 			$email = (string)$this->request->get['email'];
 		} else {
@@ -230,5 +143,51 @@ class Authorize extends \Opencart\System\Engine\Controller {
 		}
 
 		$this->response->redirect($this->url->link('account/login'));
+	}
+
+	public function save(): void {
+		$this->load->language('common/pin');
+
+		$json = [];
+
+		if (!isset($this->request->post['code'])) {
+			$json['error'] = $this->language->get('error_code');
+		}
+
+		if (!isset($this->session->data['authorize'])) {
+
+		}
+
+		if (!$json) {
+			// Register the cookie for security.
+			$this->load->model('user/user');
+
+			$this->model_user_user->editPin($this->user->getId(), $this->request->post['pin']);
+
+			if (empty($this->request->cookie['secure'])) {
+				$token = token(32);
+
+				setcookie('secure', $token, time() + 60 * 60 * 24 * 365 * 10);
+			} else {
+				$token = $this->request->cookie['secure'];
+			}
+
+			if (!$this->model_user_user->getLoginByToken($token)) {
+				$login_data = [
+
+				];
+
+				$this->model_user_user->addLogin($token);
+			}
+
+			if (isset($this->request->post['redirect']) && (strpos($this->request->post['redirect'], HTTP_SERVER) === 0)) {
+				$json['redirect'] = str_replace('&amp;', '&', $this->request->post['redirect']) . '&user_token=' . $this->session->data['user_token'];
+			} else {
+				$json['redirect'] = $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token']);
+			}
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 }

@@ -2,14 +2,6 @@
 /*
  * HELP SAVE BABY OCEAN
  *
- * Baby ocean was taken from nursery by a student posing as a social worker using a fake name. No court orders exist to take the child into care.
- *
- * This has all been done so a foster carer from Zimbabwe living in the UK can collect 800 GBP per week and the social worker can collect 32,000 GBP agency fee for finding a foster placement.
- *
- * The social worker has registered her home address as a hospital so the children don't have to go to hospital after being abused.
- *
- * UK Police have refused to look for the child even after they have been told to by an MP and other non-local police forces.
- *
  * Abuse
  *
  * - Starvation  				Oct 2020
@@ -17,8 +9,8 @@
  * - Lip Injuries				Feb 2021
  * - Head Injuries				Mar 2021
  * - Face/eye Injuries			Aug 2021
- * - Neck slashed		  		Nov 2021/
- * - Initials stitched into
+ * - Neck slashed		  		Nov 2021
+ *   Initials stitched into
  *   the back of neck by the
  *   social worker. Child did
  *   not go to hospital or see
@@ -38,6 +30,28 @@
  * https://www.youtube.com/watch?v=OX0u1JNR6as&ab_channel=janekelly
  * https://www.youtube.com/watch?v=BvvozmP4SmU&ab_channel=janekelly
  * https://www.youtube.com/watch?v=svZv4JOJi_s&ab_channel=janekelly
+ *
+ * Details of the abusers
+ *
+ * Alex Taylor Kubeyinje
+ * He runs the trafficking ring in Cryodon. This guy quites his job at fist sign of complaints.
+ * https://www.linkedin.com/in/alex-taylor-kubeyinje-a082a3ab/
+ *
+ * Trish kudzai Tozowonoh / Alice DZVENGWE
+ * Zimbabwean nurse running a medical practice from her home in the UK. The name she uses for social work practice is Trish Tozowonoh but the name she uses to run her medical practice from her home in Northampton is Alice Dzwenge.
+ * She stitched baby Oceans neck up at her home so the incident would not be reported to police. She also stitched the mothers initials into the child's neck.
+ * This is all being done so a foster carer from Zimbabwe who uses multiple names can collect 800 GBP per week and the social worker can collect 32,000 GBP in agency fees.
+ * https://www.socialworkengland.org.uk/umbraco/surface/searchregister/socialworker/SW87996
+ * https://find-and-update.company-information.service.gov.uk/company/08840300
+ *
+ * Tapiwa Julius (Trish's brother)
+ * This guy has tried to intimidate baby's oceans mother by waiting outside her house and following her when she goes out.
+ * https://www.facebook.com/greytapiwa.dzvengwe
+ * https://www.linkedin.com/in/tapiwa-julius-76389771/ He used a fake picture so he can not be found.
+ *
+ * Monika Marta Wesolowska
+ * Intimidated and assaulted baby oceans mother to keep her quite.
+ * https://www.socialworkengland.org.uk/umbraco/surface/searchregister/socialworker/SW19322
  *
 */
 

@@ -121,6 +121,10 @@ class Tax {
 
 		return $tax_rate_data;
 	}
+	
+	public function getTaxRates(): array {
+		return $this->tax_rates;
+	}
 
 	public function clear(): void {
 		$this->tax_rates = [];

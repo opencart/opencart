@@ -1,12 +1,16 @@
 <?php
 namespace Opencart\Catalog\Model\Tool;
 class Image extends \Opencart\System\Engine\Model {
-	public function resize(string $filename, int $width, int $height): string {
+	public function resize(string $filename, int $width, int $height, string $extension = ''): string {
 		if (!is_file(DIR_IMAGE . $filename) || substr(str_replace('\\', '/', realpath(DIR_IMAGE . $filename)), 0, strlen(DIR_IMAGE)) != DIR_IMAGE) {
 			return '';
 		}
 
-		$extension = pathinfo($filename, PATHINFO_EXTENSION);
+		$old_extension = pathinfo($filename, PATHINFO_EXTENSION);
+		
+		if(!$extension){
+			$extension = $old_extension;
+		}
 
 		$image_old = $filename;
 		$image_new = 'cache/' . utf8_substr($filename, 0, utf8_strrpos($filename, '.')) . '-' . (int)$width . 'x' . (int)$height . '.' . $extension;
@@ -34,7 +38,7 @@ class Image extends \Opencart\System\Engine\Model {
 				}
 			}
 
-			if ($width_orig != $width || $height_orig != $height) {
+			if ($width_orig != $width || $height_orig != $height || $old_extension != $extension) {
 				$image = new \Opencart\System\Library\Image(DIR_IMAGE . $image_old);
 				$image->resize($width, $height);
 				$image->save(DIR_IMAGE . $image_new);

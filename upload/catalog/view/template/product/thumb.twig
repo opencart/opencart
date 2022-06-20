@@ -20,10 +20,12 @@
         {% if review_status and rating %}
           <div class="rating">
             {% for i in 1..5 %}
-              {% if rating < i %}
-                <span class="fas fa-stack"><i class="far fa-star fa-stack-2x"></i></span>
-              {% else %}
+              {% if rating >= i %}
                 <span class="fas fa-stack"><i class="fas fa-star fa-stack-2x"></i><i class="far fa-star fa-stack-2x"></i></span>
+              {% elseif (i - rating) < 1 %}
+                <span class="fas fa-stack"><i class="fas fa-star-half-stroke fa-stack-2x"></i></span>
+              {% else %}
+                <span class="fas fa-stack"><i class="far fa-star fa-stack-2x"></i></span>
               {% endif %}
             {% endfor %}
           </div>

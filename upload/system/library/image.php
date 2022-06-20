@@ -166,10 +166,10 @@ class Image {
 			return;
 		}
 
-		$new_width = (int)($this->width * $scale);
-		$new_height = (int)($this->height * $scale);
-		$xpos = (int)(($width - $new_width) / 2);
-		$ypos = (int)(($height - $new_height) / 2);
+		$new_width = round($this->width * $scale);
+		$new_height = round($this->height * $scale);
+		$xpos = round(($width - $new_width) / 2);
+		$ypos = round(($height - $new_height) / 2);
 
 		$image_old = $this->image;
 		$this->image = imagecreatetruecolor($width, $height);
@@ -215,7 +215,7 @@ class Image {
 				$watermark_pos_y = 0;
 				break;
 			case 'topcenter':
-				$watermark_pos_x = (int)(($this->width - $watermark->getWidth()) / 2);
+				$watermark_pos_x = round(($this->width - $watermark->getWidth()) / 2);
 				$watermark_pos_y = 0;
 				break;
 			case 'topright':
@@ -224,22 +224,22 @@ class Image {
 				break;
 			case 'middleleft':
 				$watermark_pos_x = 0;
-				$watermark_pos_y = (int)(($this->height - $watermark->getHeight()) / 2);
+				$watermark_pos_y = round(($this->height - $watermark->getHeight()) / 2);
 				break;
 			case 'middlecenter':
-				$watermark_pos_x = (int)(($this->width - $watermark->getWidth()) / 2);
-				$watermark_pos_y = (int)(($this->height - $watermark->getHeight()) / 2);
+				$watermark_pos_x = round(($this->width - $watermark->getWidth()) / 2);
+				$watermark_pos_y = round(($this->height - $watermark->getHeight()) / 2);
 				break;
 			case 'middleright':
 				$watermark_pos_x = ($this->width - $watermark->getWidth());
-				$watermark_pos_y = (int)(($this->height - $watermark->getHeight()) / 2);
+				$watermark_pos_y = round(($this->height - $watermark->getHeight()) / 2);
 				break;
 			case 'bottomleft':
 				$watermark_pos_x = 0;
 				$watermark_pos_y = ($this->height - $watermark->getHeight());
 				break;
 			case 'bottomcenter':
-				$watermark_pos_x = (int)(($this->width - $watermark->getWidth()) / 2);
+				$watermark_pos_x = round(($this->width - $watermark->getWidth()) / 2);
 				$watermark_pos_y = ($this->height - $watermark->getHeight());
 				break;
 			case 'bottomright':

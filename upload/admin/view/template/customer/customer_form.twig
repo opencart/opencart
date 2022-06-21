@@ -263,7 +263,7 @@
               {% for address in addresses %}
                 <fieldset id="address-row-{{ address_row }}">
                   <legend>{{ text_address }} {{ address_row + 1 }} <button type="button" onclick="$('#address-row-{{ address_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-sm float-end"><i class="fas fa-minus-circle"></i></button></legend>
-                  <input type="hidden" name="address[{{ address_row }}][address_id]" value="{{ address.address_id }}"/>
+
 
                   <div class="row mb-3 required">
                     <label for="input-address-{{ address_row }}-firstname" class="col-sm-2 col-form-label">{{ entry_firstname }}</label>
@@ -272,6 +272,7 @@
                       <div id="error-address-{{ address_row }}-firstname" class="invalid-feedback"></div>
                     </div>
                   </div>
+
                   <div class="row mb-3 required">
                     <label for="input-address-{{ address_row }}-lastname" class="col-sm-2 col-form-label">{{ entry_lastname }}</label>
                     <div class="col-sm-10">
@@ -468,7 +469,7 @@
                       </div>
                     </div>
                   </div>
-
+                  <input type="hidden" name="address[{{ address_row }}][address_id]" value="{{ address.address_id }}"/>
                 </fieldset>
                 {% set address_row = address_row + 1 %}
               {% endfor %}

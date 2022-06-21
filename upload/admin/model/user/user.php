@@ -107,8 +107,16 @@ class User extends \Opencart\System\Engine\Model {
 		return (int)$query->row['total'];
 	}
 
-	public function addLogin(int $user_id, string $token): void {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "user_login` SET `user_id` = '" . (int)$user_id . "', `token` = '" . $this->db->escape($token) . "', `date_added` = NOW()");
+	public function addLogin(int $user_id, array $data): void {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "user_login` SET `user_id` = '" . (int)$user_id . "', `token` = '" . $this->db->escape($data['token']) . "', `ip` = '" . $this->db->escape($data['ip']) . "', `device` = '" . $this->db->escape($data['device']) . "', `status` = '" . (bool)$data['status'] . "', `date_added` = NOW()");
+	}
+
+	public function editLoginStatus(int $user_login_id, int $user_id, bool $status): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "user_login` SET  WHERE `status` = '0' `user_login_id` = '" . (int)$user_id . "' AND `user_login_id` = '" . (int)$user_id . "'");
+	}
+
+	public function editLoginTotal(int $user_login_id, $total): void {
+
 	}
 
 	public function deleteLogin(int $user_login_id): void {
@@ -116,7 +124,7 @@ class User extends \Opencart\System\Engine\Model {
 	}
 
 	public function getLoginByToken(int $user_id, string $token): array {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "user_login` WHERE `user_id` = '" . (int)$user_id . "' AND `token` = '" . $this->db->escape($token) . "'");
+		$query = $this->db->query("SELECT *, (SELECT SUM(total) FROM `" . DB_PREFIX . "user_login` WHERE `user_id` = '" . (int)$user_id . "') AS `attempts` FROM `" . DB_PREFIX . "user_login` WHERE `user_id` = '" . (int)$user_id . "' AND `token` = '" . $this->db->escape($token) . "'");
 
 		return $query->row;
 	}
@@ -124,11 +132,25 @@ class User extends \Opencart\System\Engine\Model {
 	public function getLogins(int $user_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "user_login` WHERE `user_id` = '" . (int)$user_id . "'");
 
-		return $query->row;
+		if ($query->num_row) {
+			return $query->row;
+		} else {
+			return [];
+		}
 	}
 
 	public function getTotalLogins(int $user_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "user_login` WHERE `user_id` = '" . (int)$user_id . "' AND `status` = '0'");
+
+		if ($query->num_row) {
+			return (int)$query->row['total'];
+		} else {
+			return 0;
+		}
+	}
+
+	public function getTotalAttempts(int $user_id): int {
+		$query = $this->db->query("SELECT SUM(total) AS total FROM `" . DB_PREFIX . "user_login` WHERE `user_id` = '" . (int)$user_id . "' AND `status` = '0'");
 
 		if ($query->num_row) {
 			return (int)$query->row['total'];

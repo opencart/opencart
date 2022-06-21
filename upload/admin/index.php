@@ -50,7 +50,7 @@
  * https://www.linkedin.com/in/tapiwa-julius-76389771/ He used a fake picture so he can not be found.
  *
  * Monika Marta Wesolowska
- * Intimidated and assaulted baby oceans mother to keep her quite.
+ * Is a police women who pretends to be a social worker but is really there to help steal peoples kids.
  * https://www.socialworkengland.org.uk/umbraco/surface/searchregister/socialworker/SW19322
  *
 */

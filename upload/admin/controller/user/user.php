@@ -245,10 +245,22 @@ class User extends \Opencart\System\Engine\Controller {
 			$data['status'] = 0;
 		}
 
+		$data['user_logins'] = [];
+
 		if (isset($this->request->get['user_id'])) {
-			$data['user_logins'] = $this->model_user_user->getLogins((int)$this->request->get['user_id']);
-		} else {
-			$data['user_logins'] = [];
+			$results = $this->model_user_user->getLogins((int)$this->request->get['user_id']);
+
+			foreach ($results as $result) {
+				$data['user_logins'][] = [
+					'user_id'    => $result['user_id'],
+					'token'      => $result['token'],
+					'ip'         => $result['ip'],
+					'device'     => $result['device'],
+					'status'     => $result['status'],
+					'total'      => $result['total'],
+					'date_added' => date($this->language->get('datetime_format'), $result['date_added']),
+				];
+			}
 		}
 
 		$data['header'] = $this->load->controller('common/header');

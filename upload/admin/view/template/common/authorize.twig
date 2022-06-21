@@ -9,9 +9,7 @@
           <div class="card-header"><i class="fas fa-lock"></i> {{ heading_title }}</div>
           <div class="card-body">
             <form id="form-pin" action="{{ action }}" method="post" data-oc-toggle="ajax">
-
               <p>{{ text_security }}</p>
-
               <p>{{ text_code }}</p>
 
               <div class="mb-3">
@@ -23,9 +21,8 @@
                 <div id="error-code" class="invalid-feedback"></div>
               </div>
 
-
               <div class="text-end">
-                <button type="submit" class="btn btn-primary">{{ button_submit }}</button>
+                <button type="submit" class="btn btn-primary"><i class="fas fa-key"></i> {{ button_submit }}</button>
               </div>
 
               {% if redirect %}

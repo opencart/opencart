@@ -6151,7 +6151,7 @@ function db_schema() {
 			],
 			[
 				'name' => 'device',
-				'type' => 'varchar(64)',
+				'type' => 'varchar(255)',
 				'not_null' => true
 			],
 			[

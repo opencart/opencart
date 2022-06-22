@@ -12,7 +12,7 @@ class Login extends \Opencart\System\Engine\Controller {
 		$pos = strrpos($route, '|');
 
 		if ($pos !== false) {
-			$route = substr($this->request->get['route'], 0, $pos);
+			$route = substr($route, 0, $pos);
 		}
 
 		$ignore = [

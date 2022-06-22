@@ -205,7 +205,7 @@ $(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function (e) {
     }
 
     $.ajax({
-        url: action,
+        url: action.replaceAll('&amp;', '&'),
         type: method,
         data: $(form).serialize(),
         dataType: 'json',
@@ -224,7 +224,7 @@ $(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function (e) {
             $(element).find('.invalid-feedback').removeClass('d-block');
 
             if (json['redirect']) {
-                location = json['redirect'].replaceAll('&amp;', '&');
+                location = json['redirect'];
             }
 
             if (typeof json['error'] == 'string') {

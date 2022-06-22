@@ -334,7 +334,7 @@ class Security extends \Opencart\System\Engine\Controller {
 			fclose($file);
 
 			// 6. redirect to the new admin
-			$json['redirect'] = substr(HTTP_SERVER, 0, strrpos(HTTP_SERVER, 'admin/')) . '/' . $name . '/index.php?route=common/security|delete&user_token=' . $this->session->data['user_token'];
+			$json['redirect'] = str_replace('&amp;', '&', substr(HTTP_SERVER, 0, strrpos(HTTP_SERVER, 'admin/') . '/' . $name . '/index.php?route=common/security|delete&user_token=' . $this->session->data['user_token']));
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

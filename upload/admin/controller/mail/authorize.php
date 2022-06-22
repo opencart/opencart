@@ -2,9 +2,6 @@
 namespace Opencart\Admin\Controller\Mail;
 class Authorize extends Controller {
 	public function index(&$route, &$args, &$output) {
-
-
-
 		if (isset($args[0])) {
 			$email = urldecode((string)$args[0]);
 		} else {
@@ -48,9 +45,12 @@ class Authorize extends Controller {
 	}
 
 	public function reset(&$route, &$args, &$output) {
+
 		if (isset($this->session->data['code']) && (isset($this->request->get['route']) && $this->request->get['route'] == 'account/mail/reset') && filter_var($email, FILTER_VALIDATE_EMAIL)) {
 
 		}
+
+
 		$data['username'] = $this->user->getUsername();
 		$data['reset'] = $this->url->link('common/authorize|confirm', 'email=' . urlencode($email) . '&code=' . $code, true);
 		$data['ip'] = $this->request->server['REMOTE_ADDR'];

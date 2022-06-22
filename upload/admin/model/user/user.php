@@ -108,15 +108,15 @@ class User extends \Opencart\System\Engine\Model {
 	}
 
 	public function addLogin(int $user_id, array $data): void {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "user_login` SET `user_id` = '" . (int)$user_id . "', `token` = '" . $this->db->escape($data['token']) . "', `ip` = '" . $this->db->escape($data['ip']) . "', `device` = '" . $this->db->escape($data['device']) . "', `status` = '" . (bool)$data['status'] . "', `date_added` = NOW()");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "user_login` SET `user_id` = '" . (int)$user_id . "', `token` = '" . $this->db->escape($data['token']) . "', `ip` = '" . $this->db->escape($data['ip']) . "', `device` = '" . $this->db->escape($data['device']) . "', `date_added` = NOW()");
 	}
 
-	public function editLoginStatus(int $user_login_id, int $user_id, bool $status): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "user_login` SET  WHERE `status` = '0' `user_login_id` = '" . (int)$user_id . "' AND `user_login_id` = '" . (int)$user_id . "'");
+	public function editLoginStatus(int $user_login_id, bool $status): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "user_login` SET `status` = '" . (bool)$status . "' WHERE `user_login_id` = '" . (int)$user_login_id . "'");
 	}
 
-	public function editLoginTotal(int $user_login_id, $total): void {
-
+	public function editLoginTotal(int $user_login_id, int $total): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "user_login` SET `total` = '" . (int)$total . "' WHERE `user_login_id` = '" . (int)$user_login_id . "'");
 	}
 
 	public function deleteLogin(int $user_login_id): void {

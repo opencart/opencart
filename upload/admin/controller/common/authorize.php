@@ -41,7 +41,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		// Create a token that can be stored as a cookie and will be used to identify device is safe.
-		if (!isset($this->session->data['authorize'])) {
+		if (!isset($this->request->cookie['authorize'])) {
 			$token = token(32);
 
 			$login_data = [
@@ -54,9 +54,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 
 			$this->model_user_user->addLogin($this->user->getId(), $login_data);
 
-			$this->session->data['authorize'] = $token;
-
-			setcookie('opencart', $token, time() + 60 * 60 * 24 * 365 * 10);
+			setcookie('authorize', $token, time() + 60 * 60 * 24 * 365 * 10);
 		}
 
 		// Set the code to be emailed
@@ -73,8 +71,8 @@ class Authorize extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		if (isset($this->session->data['authorize'])) {
-			$token = $this->session->data['authorize'];
+		if (isset($this->request->cookie['authorize'])) {
+			$token = $this->request->cookie['authorize'];
 		} else {
 			$token = '';
 		}

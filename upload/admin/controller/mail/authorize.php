@@ -9,11 +9,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 			$route = '';
 		}
 
-		if (isset($args[0])) {
-			$email = urldecode((string)$args[0]);
-		} else {
-			$email = '';
-		}
+		$email = $this->user->getEmail();
 
 		if (isset($this->session->data['code'])) {
 			$code = $this->session->data['code'];

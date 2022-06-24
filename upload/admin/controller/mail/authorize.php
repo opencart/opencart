@@ -1,6 +1,6 @@
 <?php
 namespace Opencart\Admin\Controller\Mail;
-class Authorize extends Controller {
+class Authorize extends \Opencart\System\Engine\Controller {
 	// admin/model/user/user/editCode/after
 	public function index(&$route, &$args, &$output) {
 		if (isset($this->request->get['route'])) {
@@ -66,15 +66,18 @@ class Authorize extends Controller {
 			$code = '';
 		}
 
-		if ($email && $code && ($route == 'common/authorize|reset') && filter_var($email, FILTER_VALIDATE_EMAIL)) {
-			$this->load->language('common/authorize_reset');
+		print_r($this->request->get);
+		print_r($args);
 
+		if ($email && $code && ($route == 'common/authorize|confirm') && filter_var($email, FILTER_VALIDATE_EMAIL)) {
+			$this->load->language('common/authorize_reset');
+echo 'hi';
 			$data['username'] = $this->user->getUsername();
 			$data['reset'] = $this->url->link('common/authorize|reset', 'email=' . $email . '&code=' . $code, true);
 			$data['ip'] = $this->request->server['REMOTE_ADDR'];
 			$data['store'] = $this->config->get('config_store');
 
-			$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'));
+			$mail = new \Opencart\System\ bLibrary\Mail($this->config->get('config_mail_engine'));
 			$mail->parameter = $this->config->get('config_mail_parameter');
 			$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
 			$mail->smtp_username = $this->config->get('config_mail_smtp_username');

@@ -868,8 +868,8 @@ INSERT INTO `oc_event` (`code`, `trigger`, `action`, `status`) VALUES
 ('admin_mail_reward', 'admin/model/customer/customer/addReward/after', 'mail/reward', 1),
 ('admin_mail_return', 'admin/model/sale/returns/addHistory/after', 'mail/returns', 1),
 ('admin_mail_user_forgotten', 'admin/model/user/user/editCode/after', 'mail/forgotten', 1),
-('admin_mail_user_authorize', 'admin/controller/common/authorize/send/after', 'mail/authorise', 1),
-('admin_mail_user_authorize_reset', 'admin/model/user/user/editCode/after', 'mail/authorise|reset', 1);
+('admin_mail_user_authorize', 'admin/controller/common/authorize|send/after', 'mail/authorize', 1),
+('admin_mail_user_authorize_reset', 'admin/model/user/user/editCode/after', 'mail/authorize|reset', 1);
 
 -----------------------------------------------------------
 

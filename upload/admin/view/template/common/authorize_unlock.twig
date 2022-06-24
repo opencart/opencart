@@ -23,7 +23,7 @@ $('#button-reset').on('click', function (e) {
     e.preventDefault();
 
     $.ajax({
-        url: 'index.php?route=common/authorize|reset&user_token={{ user_token }}',
+        url: 'index.php?route=common/authorize|confirm&user_token={{ user_token }}',
         dataType: 'json',
         beforeSend: function () {
             $('#button-reset').prop('disabled', true).addClass('loading');

@@ -35,11 +35,11 @@ class Authorize extends \Opencart\System\Engine\Controller {
 			$token_info = $this->model_user_user->getLoginByToken($this->user->getId(), $token);
 
 			if (!$token_info || !$token_info['status']) {
-				//return new \Opencart\System\Engine\Action('common/authorize');
+				return new \Opencart\System\Engine\Action('common/authorize');
 			}
 
 			if ($token_info && !$token_info['status'] && $token_info['attempts'] > 3) {
-				//return new \Opencart\System\Engine\Action('common/authorize|unlock');
+				return new \Opencart\System\Engine\Action('common/authorize|unlock');
 			}
 		}
 

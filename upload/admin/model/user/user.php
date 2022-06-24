@@ -108,7 +108,7 @@ class User extends \Opencart\System\Engine\Model {
 	}
 
 	public function addLogin(int $user_id, array $data): void {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "user_login` SET `user_id` = '" . (int)$user_id . "', `token` = '" . $this->db->escape($data['token']) . "', `ip` = '" . $this->db->escape($data['ip']) . "', `device` = '" . $this->db->escape($data['device']) . "', `date_added` = NOW()");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "user_login` SET `user_id` = '" . (int)$user_id . "', `token` = '" . $this->db->escape($data['token']) . "', `ip` = '" . $this->db->escape($data['ip']) . "', `user_agent` = '" . $this->db->escape($data['user_agent']) . "', `date_added` = NOW()");
 	}
 
 	public function editLoginStatus(int $user_login_id, bool $status): void {
@@ -129,11 +129,19 @@ class User extends \Opencart\System\Engine\Model {
 		return $query->row;
 	}
 
-	public function getLogins(int $user_id): array {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "user_login` WHERE `user_id` = '" . (int)$user_id . "'");
+	public function getLogins(int $user_id, int $start = 0, int $limit = 10): array {
+		if ($start < 0) {
+			$start = 0;
+		}
 
-		if ($query->num_row) {
-			return $query->row;
+		if ($limit < 1) {
+			$limit = 10;
+		}
+
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "user_login` WHERE `user_id` = '" . (int)$user_id . "' LIMIT " . (int)$start . "," . (int)$limit);
+
+		if ($query->num_rows) {
+			return $query->rows;
 		} else {
 			return [];
 		}
@@ -142,17 +150,7 @@ class User extends \Opencart\System\Engine\Model {
 	public function getTotalLogins(int $user_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "user_login` WHERE `user_id` = '" . (int)$user_id . "' AND `status` = '0'");
 
-		if ($query->num_row) {
-			return (int)$query->row['total'];
-		} else {
-			return 0;
-		}
-	}
-
-	public function getTotalAttempts(int $user_id): int {
-		$query = $this->db->query("SELECT SUM(total) AS total FROM `" . DB_PREFIX . "user_login` WHERE `user_id` = '" . (int)$user_id . "' AND `status` = '0'");
-
-		if ($query->num_row) {
+		if ($query->num_rows) {
 			return (int)$query->row['total'];
 		} else {
 			return 0;

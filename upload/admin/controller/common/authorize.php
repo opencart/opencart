@@ -45,9 +45,9 @@ class Authorize extends \Opencart\System\Engine\Controller {
 			$token = token(32);
 
 			$login_data = [
-				'token'  => $token,
-				'ip'     => $this->request->server['REMOTE_ADDR'],
-				'device' => $this->request->server['HTTP_USER_AGENT']
+				'token'      => $token,
+				'ip'         => $this->request->server['REMOTE_ADDR'],
+				'user_agent' => $this->request->server['HTTP_USER_AGENT']
 			];
 
 			$this->load->model('user/user');
@@ -134,7 +134,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 		// Create reset code
 		$this->load->model('user/user');
 
-		$this->model_user_user->editCode($this->user->getId(), token(32));
+		$this->model_user_user->editCode($this->user->getEmail(), token(32));
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
@@ -155,13 +155,13 @@ class Authorize extends \Opencart\System\Engine\Controller {
 			$code = '';
 		}
 
+		$this->user->logout();
+
 		$this->load->model('user/user');
 
 		$user_info = $this->model_user_user->getUserByEmail($email);
 
 		if ($user_info && $user_info['code'] && $code && $user_info['code'] === $code) {
-			$this->user->logout();
-
 			$this->model_user_user->editCode($user_info['email'], '');
 
 			$this->model_user_user->deleteUserLogin($user_info['user_id']);

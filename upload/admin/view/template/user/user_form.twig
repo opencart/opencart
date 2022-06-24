@@ -110,32 +110,7 @@
             <div id="tab-login" class="tab-pane">
               <fieldset>
                 <legend>{{ text_login }}</legend>
-                <div class="table-responsive">
-                  <table class="table table-bordered table-hover">
-                    <thead>
-                      <tr>
-                        <td class="text-start">{{ column_ip }}</td>
-                        <td class="text-start">{{ column_status }}</td>
-                        <td class="text-start">{{ column_date_added }}</td>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {% if user_logins %}
-                        {% for user_login in user_logins %}
-                          <tr>
-                            <td class="text-start"><a href="https://whatismyipaddress.com/ip/{{ ip.ip }}" target="_blank">{{ ip.ip }}</a></td>
-                            <td class="text-start">{{ ip.status }}</td>
-                            <td class="text-start">{{ ip.date_added }}</td>
-                          </tr>
-                        {% endfor %}
-                      {% else %}
-                        <tr>
-                          <td class="text-center" colspan="3">{{ text_no_results }}</td>
-                        </tr>
-                      {% endif %}
-                    </tbody>
-                  </table>
-                </div>
+                <div id="login">{{ user_login }}</div>
               </fieldset>
             </div>
           </div>
@@ -144,4 +119,46 @@
     </div>
   </div>
 </div>
+<script type="text/javascript"><!--
+$('#login').on('click', '.pagination a', function (e) {
+    e.preventDefault();
+
+    $('#login').load(this.href);
+});
+
+$('#login').on('click', '.btn', function (e) {
+    e.preventDefault();
+
+    var element = this;
+
+    if (confirm('{{ text_confirm }}')) {
+        $.ajax({
+            url: $(element).attr('href'),
+            dataType: 'json',
+            beforeSend: function () {
+                $(element).prop('disabled', true).addClass('loading');
+            },
+            complete: function () {
+                $(element).prop('disabled', false).removeClass('loading');
+            },
+            success: function (json) {
+                $('.alert-dismissible').remove();
+
+                if (json['error']) {
+                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                }
+
+                if (json['success']) {
+                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                    $('#login').load('index.php?route=user/user|login&user_token={{ user_token }}&user_id={{ user_id }}');
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
+        });
+    }
+});
+//--></script>
 {{ footer }} 

@@ -1,0 +1,34 @@
+<div class="table-responsive">
+  <table class="table table-bordered table-hover">
+    <thead>
+      <tr>
+        <td class="text-start">{{ column_ip }}</td>
+        <td class="text-start">{{ column_user_agent }}</td>
+        <td class="text-start">{{ column_status }}</td>
+        <td class="text-start">{{ column_date_added }}</td>
+        <td class="text-end">{{ column_action }}</td>
+      </tr>
+    </thead>
+    <tbody>
+      {% if user_logins %}
+        {% for user_login in user_logins %}
+          <tr>
+            <td class="text-start"><a href="https://whatismyipaddress.com/ip/{{ user_login.ip }}" target="_blank">{{ user_login.ip }}</a></td>
+            <td class="text-start">{{ user_login.user_agent }}</td>
+            <td class="text-start">{{ user_login.status }}</td>
+            <td class="text-start">{{ user_login.date_added }}</td>
+            <td class="text-end"><a href="{{ user_login.delete }}" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></td>
+          </tr>
+        {% endfor %}
+      {% else %}
+        <tr>
+          <td class="text-center" colspan="5">{{ text_no_results }}</td>
+        </tr>
+      {% endif %}
+    </tbody>
+  </table>
+</div>
+<div class="row">
+  <div class="col-sm-6 text-start">{{ pagination }}</div>
+  <div class="col-sm-6 text-end">{{ results }}</div>
+</div>

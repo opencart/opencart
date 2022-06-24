@@ -35,10 +35,10 @@ $_['action_pre_action'] = [
 ];
 
 // Actions
-$_['action_default']    = 'common/dashboard';
+$_['action_default']     = 'common/dashboard';
 
 // Action Events
-$_['action_event']      = [
+$_['action_event']       = [
 	'controller/*/before' => [
 		0 => 'event/language|before'
 	],

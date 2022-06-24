@@ -6145,12 +6145,17 @@ function db_schema() {
 				'not_null' => true
 			],
 			[
+				'name' => 'total',
+				'type' => 'int(1)',
+				'not_null' => true
+			],
+			[
 				'name' => 'ip',
 				'type' => 'varchar(40)',
 				'not_null' => true
 			],
 			[
-				'name' => 'device',
+				'name' => 'user_agent',
 				'type' => 'varchar(255)',
 				'not_null' => true
 			],

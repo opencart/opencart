@@ -1513,10 +1513,10 @@ class Order extends \Opencart\System\Engine\Controller {
 		$data['bootstrap_js'] = 'view/javascript/bootstrap/js/bootstrap.bundle.min.js';
 
 		$this->load->model('sale/order');
-
 		$this->load->model('catalog/product');
-
 		$this->load->model('setting/setting');
+		$this->load->model('tool/upload');
+		$this->load->model('sale/subscription');
 
 		$data['orders'] = [];
 
@@ -1586,8 +1586,13 @@ class Order extends \Opencart\System\Engine\Controller {
 				];
 
 				$shipping_address = str_replace(["\r\n", "\r", "\n"], '<br/>', preg_replace(["/\s\s+/", "/\r\r+/", "/\n\n+/"], '<br/>', trim(str_replace($find, $replace, $format))));
-
-				$this->load->model('tool/upload');
+				
+				// Subscription
+				$filter_data = [
+					'order_id'	=> $order_id
+				];
+					
+				$subscriptions = $this->model_sale_subscription->getSubscriptions($filter_data);
 
 				$product_data = [];
 
@@ -1631,20 +1636,32 @@ class Order extends \Opencart\System\Engine\Controller {
 								}
 							}
 						}
+						
+						// Subscription
+						$subscription_data = '';
+							
+						foreach ($subscriptions as $subscription) {
+							$subscription_info = $this->model_sale_subscription->getSubscriptionByOrderProductId($subscription['subscription_id'], $product['order_product_id']);
+								
+							if ($subscription_info) {
+								$subscription_data = $subscription['name'];
+							}
+						}
 
 						$product_data[] = [
-							'name'     => $product_info['name'],
-							'model'    => $product_info['model'],
-							'option'   => $option_data,
-							'quantity' => $product['quantity'],
-							'location' => $product_info['location'],
-							'sku'      => $product_info['sku'],
-							'upc'      => $product_info['upc'],
-							'ean'      => $product_info['ean'],
-							'jan'      => $product_info['jan'],
-							'isbn'     => $product_info['isbn'],
-							'mpn'      => $product_info['mpn'],
-							'weight'   => $this->weight->format(($product_info['weight'] + (float)$option_weight) * $product['quantity'], $product_info['weight_class_id'], $this->language->get('decimal_point'), $this->language->get('thousand_point'))
+							'name'     		=> $product_info['name'],
+							'model'    		=> $product_info['model'],
+							'option'   		=> $option_data,
+							'subscription'	=> $subscription_data,
+							'quantity' 		=> $product['quantity'],
+							'location' 		=> $product_info['location'],
+							'sku'      		=> $product_info['sku'],
+							'upc'      		=> $product_info['upc'],
+							'ean'      		=> $product_info['ean'],
+							'jan'      		=> $product_info['jan'],
+							'isbn'     		=> $product_info['isbn'],
+							'mpn'      		=> $product_info['mpn'],
+							'weight'   		=> $this->weight->format(($product_info['weight'] + (float)$option_weight) * $product['quantity'], $product_info['weight_class_id'], $this->language->get('decimal_point'), $this->language->get('thousand_point'))
 						];
 					}
 				}

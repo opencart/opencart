@@ -22,7 +22,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 		}
 
 		if ($email && $code && ($route == 'common/authorize|send') && filter_var($email, FILTER_VALIDATE_EMAIL)) {
-			$this->load->language('common/authorize');
+			$this->load->language('mail/authorize');
 
 			$data['username'] = $this->user->getUsername();
 			$data['code'] = $code;
@@ -55,7 +55,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($args[0])) {
-			$email = urldecode((string)$args[0]);
+			$email = (string)$args[0];
 		} else {
 			$email = '';
 		}
@@ -66,18 +66,15 @@ class Authorize extends \Opencart\System\Engine\Controller {
 			$code = '';
 		}
 
-		print_r($this->request->get);
-		print_r($args);
-
 		if ($email && $code && ($route == 'common/authorize|confirm') && filter_var($email, FILTER_VALIDATE_EMAIL)) {
-			$this->load->language('common/authorize_reset');
-echo 'hi';
+			$this->load->language('mail/authorize_reset');
+
 			$data['username'] = $this->user->getUsername();
 			$data['reset'] = $this->url->link('common/authorize|reset', 'email=' . $email . '&code=' . $code, true);
 			$data['ip'] = $this->request->server['REMOTE_ADDR'];
 			$data['store'] = $this->config->get('config_store');
 
-			$mail = new \Opencart\System\ bLibrary\Mail($this->config->get('config_mail_engine'));
+			$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'));
 			$mail->parameter = $this->config->get('config_mail_parameter');
 			$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
 			$mail->smtp_username = $this->config->get('config_mail_smtp_username');

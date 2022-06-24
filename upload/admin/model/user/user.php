@@ -123,6 +123,10 @@ class User extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "user_login` WHERE `user_login_id` = '" . (int)$user_login_id . "'");
 	}
 
+	public function resetUserLogins(int $user_id): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "user_login` SET total = '0' WHERE `user_id` = '" . (int)$user_id . "'");
+	}
+
 	public function getLoginByToken(int $user_id, string $token): array {
 		$query = $this->db->query("SELECT *, (SELECT SUM(total) FROM `" . DB_PREFIX . "user_login` WHERE `user_id` = '" . (int)$user_id . "') AS `attempts` FROM `" . DB_PREFIX . "user_login` WHERE `user_id` = '" . (int)$user_id . "' AND `token` = '" . $this->db->escape($token) . "'");
 
@@ -156,4 +160,5 @@ class User extends \Opencart\System\Engine\Model {
 			return 0;
 		}
 	}
+
 }

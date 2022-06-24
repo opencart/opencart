@@ -162,9 +162,9 @@ class Authorize extends \Opencart\System\Engine\Controller {
 		$user_info = $this->model_user_user->getUserByEmail($email);
 
 		if ($user_info && $user_info['code'] && $code && $user_info['code'] === $code) {
-			$this->model_user_user->editCode($user_info['email'], '');
+			$this->model_user_user->resetUserLogins($user_info['user_id']);
 
-			$this->model_user_user->deleteUserLogin($user_info['user_id']);
+			$this->model_user_user->editCode($email, '');
 
 			$this->session->data['success'] = $this->language->get('text_unlocked');
 		} else {

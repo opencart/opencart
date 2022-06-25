@@ -428,16 +428,35 @@ class User extends \Opencart\System\Engine\Controller {
 			$user_login_id = 0;
 		}
 
+		if (isset($this->request->cookie['authorize'])) {
+			$token = $this->request->cookie['authorize'];
+		} else {
+			$token = '';
+		}
+
 		if (!$this->user->hasPermission('modify', 'user/user')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		if (!$json) {
-			$this->load->model('user/user');
+		$this->load->model('user/user');
 
+		$login_info = $this->model_user_user->getLogin($user_login_id);
+
+		if (!$login_info) {
+			$json['error'] = $this->language->get('error_login');
+		}
+
+		if (!$json) {
 			$this->model_user_user->deleteLogin($user_login_id);
 
-			$json['success'] = $this->language->get('text_success');
+			// If current token in use then log user out.
+			if ($login_info['token'] == $token) {
+				$this->session->data['success'] = $this->language->get('text_success');
+
+				$json['redirect'] = $this->url->link('common/login', '', true);
+			} else {
+				$json['success'] = $this->language->get('text_success');
+			}
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

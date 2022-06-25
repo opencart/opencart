@@ -123,8 +123,14 @@ class User extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "user_login` WHERE `user_login_id` = '" . (int)$user_login_id . "'");
 	}
 
-	public function resetUserLogins(int $user_id): void {
+	public function resetLogins(int $user_id): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "user_login` SET total = '0' WHERE `user_id` = '" . (int)$user_id . "'");
+	}
+
+	public function getLogin(int $user_login_id): array {
+		$query = $this->db->query("SELECT *, (SELECT SUM(total) FROM `" . DB_PREFIX . "user_login` `ul2` WHERE `ul2`.`user_id` = `ul1`.`user_id`) AS `attempts` FROM `" . DB_PREFIX . "user_login` `ul1` WHERE `user_login_id` = '" . (int)$user_login_id . "'");
+
+		return $query->row;
 	}
 
 	public function getLoginByToken(int $user_id, string $token): array {
@@ -152,7 +158,7 @@ class User extends \Opencart\System\Engine\Model {
 	}
 
 	public function getTotalLogins(int $user_id): int {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "user_login` WHERE `user_id` = '" . (int)$user_id . "' AND `status` = '0'");
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "user_login` WHERE `user_id` = '" . (int)$user_id . "'");
 
 		if ($query->num_rows) {
 			return (int)$query->row['total'];

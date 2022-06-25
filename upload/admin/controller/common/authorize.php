@@ -6,42 +6,35 @@ class Authorize extends \Opencart\System\Engine\Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$data['action'] = $this->url->link('common/authorize|validate', 'user_token=' . $this->session->data['user_token']);
-
-		if (isset($this->request->get['route']) && $this->request->get['route'] != 'common/login') {
-			$args = $this->request->get;
-
-			$route = $args['route'];
-
-			unset($args['route']);
-			unset($args['user_token']);
-
-			$url = '';
-
-			if ($args) {
-				$url .= http_build_query($args);
-			}
-
-			$data['redirect'] = $this->url->link($route, $url);
+		if (isset($this->request->cookie['authorize'])) {
+			$token = $this->request->cookie['authorize'];
 		} else {
-			$data['redirect'] = '';
+			$token = '';
 		}
 
-		$data['user_token'] = $this->session->data['user_token'];
+		// Check to see if user is using incorrect token
+		if (isset($this->session->data['error'])) {
+			$data['error_warning'] = $this->session->data['error'];
 
-		$data['header'] = $this->load->controller('common/header');
-		$data['footer'] = $this->load->controller('common/footer');
+			unset($this->session->data['error']);
+		} else {
+			$data['error_warning'] = '';
+		}
 
-		$this->response->setOutput($this->load->view('common/authorize', $data));
-	}
+		if (isset($this->session->data['success'])) {
+			$data['success'] = $this->session->data['success'];
 
-	public function send() {
-		$this->load->language('common/authorize');
+			unset($this->session->data['success']);
+		} else {
+			$data['success'] = '';
+		}
 
-		$json = [];
+		$this->load->model('user/user');
 
-		// Create a token that can be stored as a cookie and will be used to identify device is safe.
-		if (!isset($this->request->cookie['authorize'])) {
+		$login_info = $this->model_user_user->getLoginByToken($this->user->getId(), $token);
+
+		if (!$login_info) {
+			// Create a token that can be stored as a cookie and will be used to identify device is safe.
 			$token = token(32);
 
 			$login_data = [
@@ -57,8 +50,42 @@ class Authorize extends \Opencart\System\Engine\Controller {
 			setcookie('authorize', $token, time() + 60 * 60 * 24 * 365 * 10);
 		}
 
+		$data['action'] = $this->url->link('common/authorize|validate', 'user_token=' . $this->session->data['user_token']);
+
 		// Set the code to be emailed
 		$this->session->data['code'] = token(4);
+
+		if (isset($this->request->get['route']) && $this->request->get['route'] != 'common/login' && $this->request->get['route'] != 'common/authorize') {
+			$args = $this->request->get;
+
+			$route = $args['route'];
+
+			unset($args['route']);
+			unset($args['user_token']);
+
+			$url = '';
+
+			if ($args) {
+				$url .= http_build_query($args);
+			}
+
+			$data['redirect'] = $this->url->link($route, $url);
+		} else {
+			$json['redirect'] = $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true);
+		}
+
+		$data['user_token'] = $this->session->data['user_token'];
+
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
+
+		$this->response->setOutput($this->load->view('common/authorize', $data));
+	}
+
+	public function send() {
+		$this->load->language('common/authorize');
+
+		$json = [];
 
 		$json['success'] = $this->language->get('text_resend');
 
@@ -82,14 +109,14 @@ class Authorize extends \Opencart\System\Engine\Controller {
 		$login_info = $this->model_user_user->getLoginByToken($this->user->getId(), $token);
 
 		if ($login_info) {
-			if (($login_info['total'] < 3) && (!isset($this->request->post['code']) || !isset($this->session->data['code']) || ($this->request->post['code'] != $this->session->data['code']))) {
+			if (($login_info['attempts'] <= 2) && (!isset($this->request->post['code']) || !isset($this->session->data['code']) || ($this->request->post['code'] != $this->session->data['code']))) {
 				$json['error'] = $this->language->get('error_code');
 
 				$this->model_user_user->editLoginTotal($login_info['user_login_id'], $login_info['total'] + 1);
 			}
 
-			if ($login_info['total'] > 3) {
-				$json['error'] = $this->language->get('error_locked');
+			if ($login_info['attempts'] >= 2) {
+				$json['redirect'] = $this->url->link('common/authorize|unlock', 'user_token=' . $this->session->data['user_token'], true);
 			}
 		} else {
 			$json['error'] = $this->language->get('error_code');
@@ -113,6 +140,21 @@ class Authorize extends \Opencart\System\Engine\Controller {
 
 	public function unlock() {
 		$this->load->language('common/authorize');
+
+		if (isset($this->request->cookie['authorize'])) {
+			$token = $this->request->cookie['authorize'];
+		} else {
+			$token = '';
+		}
+
+		$this->load->model('user/user');
+
+		$login_info = $this->model_user_user->getLoginByToken($this->user->getId(), $token);
+
+		if ($login_info && $login_info['status']) {
+			// Redirect if already have a valid token.
+			$this->response->redirect($this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true));
+		}
 
 		$data['user_token'] = $this->session->data['user_token'];
 
@@ -153,24 +195,26 @@ class Authorize extends \Opencart\System\Engine\Controller {
 			$code = '';
 		}
 
-		$this->user->logout();
-
 		$this->load->model('user/user');
 
 		$user_info = $this->model_user_user->getUserByEmail($email);
 
 		if ($user_info && $user_info['code'] && $code && $user_info['code'] === $code) {
-			$this->model_user_user->resetUserLogins($user_info['user_id']);
+			$this->model_user_user->resetLogins($user_info['user_id']);
 
 			$this->model_user_user->editCode($email, '');
 
 			$this->session->data['success'] = $this->language->get('text_unlocked');
+
+			$this->response->redirect($this->url->link('common/authorize', 'user_token=' . $this->session->data['user_token'], true));
 		} else {
+			$this->user->logout();
+
 			$this->model_user_user->editCode($email, '');
 
 			$this->session->data['error'] = $this->language->get('error_reset');
-		}
 
-		$this->response->redirect($this->url->link('account/login'));
+			$this->response->redirect($this->url->link('common/login', '', true));
+		}
 	}
 }

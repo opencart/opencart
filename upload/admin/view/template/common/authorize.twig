@@ -9,6 +9,12 @@
           <div class="card-header"><i class="fas fa-lock"></i> {{ heading_title }}</div>
           <div class="card-body">
             <form id="form-authorize" action="{{ action }}" method="post" data-oc-toggle="ajax">
+              {% if error_warning %}
+                <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }} <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>
+              {% endif %}
+              {% if success %}
+                <div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> {{ success }} <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>
+              {% endif %}
               <p>{{ text_security }}</p>
               <p>{{ text_code }}</p>
               <div class="mb-3">

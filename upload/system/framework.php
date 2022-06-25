@@ -204,9 +204,13 @@ foreach ($config->get('action_pre_action') as $pre_action) {
 }
 
 // Route
+if (isset($request->get['route'])) {
+	$request->get['route'] = str_replace('%7C', '|', (string)$request->get['route']);
+}
+
 if (!$action) {
 	if (!empty($request->get['route'])) {
-		$action = new \Opencart\System\Engine\Action(str_replace('%7C', '|', (string)$request->get['route']));
+		$action = new \Opencart\System\Engine\Action((string)$request->get['route']);
 	} else {
 		$action = new \Opencart\System\Engine\Action($config->get('action_default'));
 	}

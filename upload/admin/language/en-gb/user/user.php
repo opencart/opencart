@@ -38,6 +38,7 @@ $_['tab_login']             = 'Logins';
 // Error
 $_['error_permission']      = 'Warning: You do not have permission to modify users!';
 $_['error_account']         = 'Warning: You can not delete your own account!';
+$_['error_login']           = 'Warning: User login does not exist!';
 $_['error_username']        = 'Username must be between 3 and 20 characters!';
 $_['error_username_exists'] = 'Warning: Username is already in use!';
 $_['error_firstname']       = 'First Name must be between 1 and 32 characters!';

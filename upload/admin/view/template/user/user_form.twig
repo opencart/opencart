@@ -144,6 +144,10 @@ $('#login').on('click', '.btn', function (e) {
             success: function (json) {
                 $('.alert-dismissible').remove();
 
+                if (json['redirect']) {
+                    location = json['redirect'];
+                }
+
                 if (json['error']) {
                     $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                 }

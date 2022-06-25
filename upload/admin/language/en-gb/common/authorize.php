@@ -17,5 +17,4 @@ $_['entry_code']    = 'Security Code';
 // Error
 $_['error_warning'] = 'You have exceeded the allowed number of sSecurity code attempts!';
 $_['error_code']    = 'Security code does not match!';
-$_['error_locked']  = 'Security code attempts were to many times!';
 $_['error_reset']   = 'Warning: Could not reset your security code!';

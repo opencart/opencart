@@ -509,7 +509,11 @@ class Installer extends \Opencart\System\Engine\Controller {
 										}
 
 										if (is_file($file)) {
-											$autoload[substr(dirname($file), strlen(DIR_STORAGE . 'vendor/' . $directory . $classmap) + 1)] = substr(dirname($file), strlen(DIR_STORAGE . 'vendor/'));
+											$namespace = substr(dirname($file), strlen(DIR_STORAGE . 'vendor/' . $directory . $classmap) + 1);
+
+											if ($namespace) {
+												$autoload[$namespace] = substr(dirname($file), strlen(DIR_STORAGE . 'vendor/'));
+											}
 										}
 									}
 								}

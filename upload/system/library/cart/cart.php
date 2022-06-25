@@ -264,6 +264,7 @@ class Cart {
 							'cycle'                	=> $subscription_query->row['cycle'],
 							'duration'             	=> $subscription_query->row['duration'],
 							'remaining'            	=> $subscription_query->row['duration'],
+							'date_next'				=> $subscription_query->row['date_next'],
 							'status'				=> $subscription_query->row['status']
 						];
 					}

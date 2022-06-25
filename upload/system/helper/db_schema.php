@@ -5357,7 +5357,7 @@ function db_schema() {
 				'name' => 'customer_payment_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			],
+			],			
 			[
 				'name' => 'name',
 				'type' => 'varchar(255)',
@@ -5366,6 +5366,11 @@ function db_schema() {
 			[
 				'name' => 'description',
 				'type' => 'text',
+				'not_null' => true
+			],
+			[
+				'name' => 'reference',
+				'type' => 'varchar(255)',
 				'not_null' => true
 			],
 			[

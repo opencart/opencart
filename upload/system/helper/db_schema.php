@@ -5357,7 +5357,7 @@ function db_schema() {
 				'name' => 'customer_payment_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			],
+			],			
 			[
 				'name' => 'name',
 				'type' => 'varchar(255)',
@@ -5366,6 +5366,11 @@ function db_schema() {
 			[
 				'name' => 'description',
 				'type' => 'text',
+				'not_null' => true
+			],
+			[
+				'name' => 'reference',
+				'type' => 'varchar(255)',
 				'not_null' => true
 			],
 			[
@@ -5431,6 +5436,11 @@ function db_schema() {
 			[
 				'name' => 'subscription_status_id',
 				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'status',
+				'type' => 'tinyint(1)',
 				'not_null' => true
 			],
 			[
@@ -5672,6 +5682,11 @@ function db_schema() {
 			[
 				'name' => 'amount',
 				'type' => 'decimal(10,4)',
+				'not_null' => true
+			],
+			[
+				'name' => 'type',
+				'type' => 'tinyint(2)',
 				'not_null' => true
 			],
 			[

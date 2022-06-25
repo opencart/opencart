@@ -1428,8 +1428,13 @@ class Order extends \Opencart\System\Engine\Controller {
 					$subscription_data = '';
 						
 					foreach ($subscriptions as $subscription) {
-						$subscription_info = $this->model_sale_subscription->getSubscriptionByOrderProductId($subscription['subscription_id'], $product['order_product_id']);
-							
+						$filter_data = array(
+							'filter_subscription_id'	=> $subscription['subscription_id'],
+							'filter_order_product_id'	=> $product['order_product_id']
+						);
+
+						$subscription_info = $this->model_sale_subscription->getSubscriptions($filter_data);
+
 						if ($subscription_info) {
 							$subscription_data = $subscription['name'];
 						}
@@ -1641,8 +1646,13 @@ class Order extends \Opencart\System\Engine\Controller {
 						$subscription_data = '';
 							
 						foreach ($subscriptions as $subscription) {
-							$subscription_info = $this->model_sale_subscription->getSubscriptionByOrderProductId($subscription['subscription_id'], $product['order_product_id']);
-								
+							$filter_data = array(
+								'filter_subscription_id'	=> $subscription['subscription_id'],
+								'filter_order_product_id'	=> $product['order_product_id']
+							);
+
+							$subscription_info = $this->model_sale_subscription->getSubscriptions($filter_data);
+
 							if ($subscription_info) {
 								$subscription_data = $subscription['name'];
 							}

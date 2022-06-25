@@ -43,7 +43,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function addTransaction(int $subscription_id, int $order_id, int $transaction_id, string $description, float $amount, string $type, string $payment_method, string $payment_code): void {
+	public function addTransaction(int $subscription_id, int $order_id, int $transaction_id, string $description, float $amount, int $type, string $payment_method, string $payment_code): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "subscription_transaction` SET `subscription_id` = '" . (int)$subscription_id . "', `order_id` = '" . (int)$order_id . "', `transaction_id` = '" . (int)$transaction_id . "', `description` = '" . $this->db->escape($description) . "', `amount` = '" . (float)$amount . "', `type` = '" . (int)$type . "', `payment_method` = '" . $this->db->escape($payment_method) . "', `payment_code` = '" . $this->db->escape($payment_code) . "', `date_added` = NOW()");
 	}
 }

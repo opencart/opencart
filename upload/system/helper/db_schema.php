@@ -6161,7 +6161,7 @@ function db_schema() {
 			],
 			[
 				'name' => 'status',
-				'type' => 'tinyint(96)',
+				'type' => 'tinyint(1)',
 				'not_null' => true
 			],
 			[

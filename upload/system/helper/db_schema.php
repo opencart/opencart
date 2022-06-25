@@ -5434,6 +5434,11 @@ function db_schema() {
 				'not_null' => true
 			],
 			[
+				'name' => 'status',
+				'type' => 'tinyint(1)',
+				'not_null' => true
+			],
+			[
 				'name' => 'date_added',
 				'type' => 'datetime',
 				'not_null' => true
@@ -5672,6 +5677,11 @@ function db_schema() {
 			[
 				'name' => 'amount',
 				'type' => 'decimal(10,4)',
+				'not_null' => true
+			],
+			[
+				'name' => 'type',
+				'type' => 'tinyint(2)',
 				'not_null' => true
 			],
 			[

@@ -413,7 +413,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 					if (is_file($path)) {
 						unlink($path);
 					} elseif (is_dir($path)) {
-						rmdir($path);
+						$this->recursiveDelDir($path);
 					}
 				}
 
@@ -435,6 +435,19 @@ class Installer extends \Opencart\System\Engine\Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
+
+    protected function recursiveDelDir($directory) {
+        if (is_dir($directory)) {
+            foreach (glob($directory . '/*') as $file) {
+                if (is_dir($file)) { 
+                    $this->recursiveDelDir($file);
+                } else {
+                    unlink($file);
+                }
+            }
+            @rmdir($directory);
+        }
+    }
 
 	/* Generate new autoloader file */
 	public function vendor(): void {

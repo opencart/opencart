@@ -96,6 +96,6 @@ class Returns extends \Opencart\System\Engine\Model {
 
 		$query = $this->db->query($sql);
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
 	}
 }

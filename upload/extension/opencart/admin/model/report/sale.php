@@ -234,7 +234,7 @@ class Sale extends \Opencart\System\Engine\Model {
 
 		$query = $this->db->query($sql);
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
 	}
 
 	public function getTaxes(array $data = []): array {
@@ -334,7 +334,7 @@ class Sale extends \Opencart\System\Engine\Model {
 
 		$query = $this->db->query($sql);
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
 	}
 
 	public function getShipping(array $data = []): array {
@@ -434,6 +434,6 @@ class Sale extends \Opencart\System\Engine\Model {
 
 		$query = $this->db->query($sql);
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
 	}
 }

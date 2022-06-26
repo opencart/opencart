@@ -379,6 +379,10 @@ class Installer extends \Opencart\System\Engine\Controller {
 
 		$extension_install_info = $this->model_setting_extension->getInstall($extension_install_id);
 
+		if ($extension_install_info && $extension_install_info['code'] == 'opencart') {
+			$json['error'] = $this->language->get('error_default');
+		}
+
 		if (!$extension_install_info) {
 			$json['error'] = $this->language->get('error_extension');
 		}
@@ -565,6 +569,10 @@ class Installer extends \Opencart\System\Engine\Controller {
 		$this->load->model('setting/extension');
 
 		$extension_install_info = $this->model_setting_extension->getInstall($extension_install_id);
+
+		if ($extension_install_info && $extension_install_info['code'] == 'opencart') {
+			$json['error'] = $this->language->get('error_default');
+		}
 
 		if (!$extension_install_info) {
 			$json['error'] = $this->language->get('error_extension');

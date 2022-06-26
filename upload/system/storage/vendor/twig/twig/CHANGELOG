@@ -1,3 +1,15 @@
+# 3.4.1 (2022-05-17)
+
+* Fix optimizing non-public named closures
+
+# 3.4.0 (2022-05-22)
+
+ * Add support for named closures
+
+# 3.3.10 (2022-04-06)
+
+ * Enable bytecode invalidation when auto_reload is enabled
+
 # 3.3.9 (2022-03-25)
 
  * Fix custom escapers when using multiple Twig environments

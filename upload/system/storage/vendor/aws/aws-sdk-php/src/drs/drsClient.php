@@ -5,6 +5,8 @@ use Aws\AwsClient;
 
 /**
  * This client is used to interact with the **Elastic Disaster Recovery Service** service.
+ * @method \Aws\Result createExtendedSourceServer(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise createExtendedSourceServerAsync(array $args = [])
  * @method \Aws\Result createReplicationConfigurationTemplate(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createReplicationConfigurationTemplateAsync(array $args = [])
  * @method \Aws\Result deleteJob(array $args = [])
@@ -39,6 +41,10 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getReplicationConfigurationAsync(array $args = [])
  * @method \Aws\Result initializeService(array $args = [])
  * @method \GuzzleHttp\Promise\Promise initializeServiceAsync(array $args = [])
+ * @method \Aws\Result listExtensibleSourceServers(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listExtensibleSourceServersAsync(array $args = [])
+ * @method \Aws\Result listStagingAccounts(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listStagingAccountsAsync(array $args = [])
  * @method \Aws\Result listTagsForResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array $args = [])
  * @method \Aws\Result retryDataReplication(array $args = [])

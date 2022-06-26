@@ -14,6 +14,8 @@ namespace ScssPhp\ScssPhp\Logger;
 
 /**
  * A logger that prints to a PHP stream (for instance stderr)
+ *
+ * @final
  */
 class StreamLogger implements LoggerInterface
 {

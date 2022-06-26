@@ -364,6 +364,11 @@ class AwsClient implements AwsClientInterface
                     $version = 'v4-unsigned-body';
                     break;
             }
+            if (isset($c['@context']['signature_version'])) {
+                if ($c['@context']['signature_version'] == 'v4a') {
+                    $version = 'v4a';
+                }
+            }
             return SignatureProvider::resolve($provider, $version, $name, $region);
         };
         $this->handlerList->appendSign(

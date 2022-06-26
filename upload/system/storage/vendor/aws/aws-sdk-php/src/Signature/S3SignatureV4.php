@@ -2,14 +2,6 @@
 namespace Aws\Signature;
 
 use Aws\Credentials\CredentialsInterface;
-use AWS\CRT\Auth\SignatureType;
-use AWS\CRT\Auth\Signing;
-use AWS\CRT\Auth\SigningAlgorithm;
-use AWS\CRT\Auth\SigningConfigAWS;
-use AWS\CRT\Auth\StaticCredentialsProvider;
-use AWS\CRT\HTTP\Request;
-use AWS\CRT\Auth\Signable;
-use Aws\Exception\CommonRuntimeException;
 use Psr\Http\Message\RequestInterface;
 
 /**
@@ -22,6 +14,8 @@ class S3SignatureV4 extends SignatureV4
      *
      * {@inheritdoc}
      */
+    use SignatureTrait;
+
     public function signRequest(
         RequestInterface $request,
         CredentialsInterface $credentials,
@@ -43,6 +37,7 @@ class S3SignatureV4 extends SignatureV4
             }
             return parent::signRequest($request, $credentials);
         }
+        $signingService = $signingService ?: 's3';
         return $this->signWithV4a($credentials, $request, $signingService);
     }
 
@@ -89,68 +84,5 @@ class S3SignatureV4 extends SignatureV4
             $path = substr($path, 1);
         }
         return '/' . $path;
-    }
-
-    /**
-     * @param CredentialsInterface $credentials
-     * @param RequestInterface $request
-     * @param $signingService
-     * @return RequestInterface
-     */
-    private function signWithV4a(CredentialsInterface $credentials, RequestInterface $request, $signingService)
-    {
-        if (!extension_loaded('awscrt')) {
-            throw new CommonRuntimeException(
-                "AWS Common Runtime for PHP is required to use Signature V4A and multi-region"
-                . " access points.  Please install it using the instructions found at"
-                . " https://github.com/aws/aws-sdk-php/blob/master/CRT_INSTRUCTIONS.md"
-            );
-        }
-        $credentials_provider = new StaticCredentialsProvider([
-            'access_key_id' => $credentials->getAccessKeyId(),
-            'secret_access_key' => $credentials->getSecretKey(),
-            'session_token' => $credentials->getSecurityToken(),
-        ]);
-        $signingService = $signingService ?: 's3';
-        $sha = $this->getPayload($request);
-        $signingConfig = new SigningConfigAWS([
-            'algorithm' => SigningAlgorithm::SIGv4_ASYMMETRIC,
-            'signature_type' => SignatureType::HTTP_REQUEST_HEADERS,
-            'credentials_provider' => $credentials_provider,
-            'signed_body_value' => $sha,
-            'region' => "*",
-            'service' => $signingService,
-            'date' => time(),
-        ]);
-        $sha = $request->getHeader("x-amz-content-sha256");
-        $request = $request->withoutHeader("x-amz-content-sha256");
-        $invocationId = $request->getHeader("aws-sdk-invocation-id");
-        $retry = $request->getHeader("aws-sdk-retry");
-        $request = $request->withoutHeader("aws-sdk-invocation-id");
-        $request = $request->withoutHeader("aws-sdk-retry");
-        $http_request = new Request(
-            $request->getMethod(),
-            (string) $request->getUri(),
-            [],
-            array_map(function ($header) {
-                return $header[0];
-            }, $request->getHeaders())
-        );
-
-        Signing::signRequestAws(
-            Signable::fromHttpRequest($http_request),
-            $signingConfig, function ($signing_result, $error_code) use (&$http_request) {
-            $signing_result->applyToHttpRequest($http_request);
-        });
-        $sigV4AHeaders = $http_request->headers();
-        foreach ($sigV4AHeaders->toArray() as $h => $v) {
-            $request = $request->withHeader($h, $v);
-        }
-        $request = $request->withHeader("aws-sdk-invocation-id", $invocationId);
-        $request = $request->withHeader("x-amz-content-sha256", $sha);
-        $request = $request->withHeader("aws-sdk-retry", $retry);
-        $request = $request->withHeader("x-amz-region-set", "*");
-
-        return $request;
     }
 }

@@ -11,6 +11,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise attachPolicyAsync(array $args = [])
  * @method \Aws\Result cancelHandshake(array $args = [])
  * @method \GuzzleHttp\Promise\Promise cancelHandshakeAsync(array $args = [])
+ * @method \Aws\Result closeAccount(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise closeAccountAsync(array $args = [])
  * @method \Aws\Result createAccount(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createAccountAsync(array $args = [])
  * @method \Aws\Result createGovCloudAccount(array $args = [])

@@ -2,6 +2,14 @@
 namespace Aws\Signature;
 
 use Aws\Credentials\CredentialsInterface;
+use AWS\CRT\Auth\Signable;
+use AWS\CRT\Auth\SignatureType;
+use AWS\CRT\Auth\Signing;
+use AWS\CRT\Auth\SigningAlgorithm;
+use AWS\CRT\Auth\SigningConfigAWS;
+use AWS\CRT\Auth\StaticCredentialsProvider;
+use AWS\CRT\HTTP\Request;
+use Aws\Exception\CommonRuntimeException;
 use Aws\Exception\CouldNotCreateChecksumException;
 use GuzzleHttp\Psr7;
 use Psr\Http\Message\RequestInterface;
@@ -25,6 +33,9 @@ class SignatureV4 implements SignatureInterface
 
     /** @var bool */
     private $unsigned;
+
+    /** @var bool */
+    private $useV4a;
 
     /**
      * The following headers are not signed because signing these headers
@@ -74,6 +85,7 @@ class SignatureV4 implements SignatureInterface
         $this->service = $service;
         $this->region = $region;
         $this->unsigned = isset($options['unsigned-body']) ? $options['unsigned-body'] : false;
+        $this->useV4a = isset($options['use_v4a']) && $options['use_v4a'] === true;
     }
 
     /**
@@ -93,6 +105,11 @@ class SignatureV4 implements SignatureInterface
             $parsed['headers']['X-Amz-Security-Token'] = [$token];
         }
         $service = isset($signingService) ? $signingService : $this->service;
+
+        if ($this->useV4a) {
+            return $this->signWithV4a($credentials, $request, $service);
+        }
+
         $cs = $this->createScope($sdt, $this->region, $service);
         $payload = $this->getPayload($request);
 
@@ -420,5 +437,66 @@ class SignatureV4 implements SignatureInterface
             $req['body'],
             $req['version']
         );
+    }
+
+    /**
+     * @param CredentialsInterface $credentials
+     * @param RequestInterface $request
+     * @param $signingService
+     * @return RequestInterface
+     */
+    protected function signWithV4a(CredentialsInterface $credentials, RequestInterface $request, $signingService)
+    {
+        if (!extension_loaded('awscrt')) {
+            throw new CommonRuntimeException(
+                "AWS Common Runtime for PHP is required to use Signature V4A"
+                . ".  Please install it using the instructions found at"
+                . " https://github.com/aws/aws-sdk-php/blob/master/CRT_INSTRUCTIONS.md"
+            );
+        }
+        $credentials_provider = new StaticCredentialsProvider([
+            'access_key_id' => $credentials->getAccessKeyId(),
+            'secret_access_key' => $credentials->getSecretKey(),
+            'session_token' => $credentials->getSecurityToken(),
+        ]);
+        $sha = $this->getPayload($request);
+        $signingConfig = new SigningConfigAWS([
+            'algorithm' => SigningAlgorithm::SIGv4_ASYMMETRIC,
+            'signature_type' => SignatureType::HTTP_REQUEST_HEADERS,
+            'credentials_provider' => $credentials_provider,
+            'signed_body_value' => $sha,
+            'region' => "*",
+            'service' => $signingService,
+            'date' => time(),
+        ]);
+        $sha = $this->getPayload($request);
+        $invocationId = $request->getHeader("aws-sdk-invocation-id");
+        $retry = $request->getHeader("aws-sdk-retry");
+        $request = $request->withoutHeader("aws-sdk-invocation-id");
+        $request = $request->withoutHeader("aws-sdk-retry");
+        $http_request = new Request(
+            $request->getMethod(),
+            (string) $request->getUri(),
+            [],
+            array_map(function ($header) {
+                return $header[0];
+            }, $request->getHeaders())
+        );
+
+        Signing::signRequestAws(
+            Signable::fromHttpRequest($http_request),
+            $signingConfig, function ($signing_result, $error_code) use (&$http_request) {
+            $signing_result->applyToHttpRequest($http_request);
+        });
+        $sigV4AHeaders = $http_request->headers();
+        foreach ($sigV4AHeaders->toArray() as $h => $v) {
+            $request = $request->withHeader($h, $v);
+        }
+        $request = $request->withHeader("aws-sdk-invocation-id", $invocationId);
+        $request = $request->withHeader("x-amz-content-sha256", $sha);
+        $request = $request->withHeader("aws-sdk-retry", $retry);
+        $request = $request->withHeader("x-amz-region-set", "*");
+
+        return $request;
     }
 }

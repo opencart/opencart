@@ -14,6 +14,8 @@ class EcsCredentialProvider
 {
     const SERVER_URI = 'http://169.254.170.2';
     const ENV_URI = "AWS_CONTAINER_CREDENTIALS_RELATIVE_URI";
+    const ENV_FULL_URI = "AWS_CONTAINER_CREDENTIALS_FULL_URI";
+    const ENV_AUTH_TOKEN = "AWS_CONTAINER_AUTHORIZATION_TOKEN";
     const ENV_TIMEOUT = 'AWS_METADATA_SERVICE_TIMEOUT';
 
     /** @var callable */
@@ -54,11 +56,14 @@ class EcsCredentialProvider
     {
         $client = $this->client;
         $request = new Request('GET', self::getEcsUri());
+        
+        $headers = $this->setHeaderForAuthToken();
         return $client(
             $request,
             [
                 'timeout' => $this->timeout,
                 'proxy' => '',
+                'headers' => $headers
             ]
         )->then(function (ResponseInterface $response) {
             $result = $this->decodeResult((string) $response->getBody());
@@ -76,6 +81,20 @@ class EcsCredentialProvider
             );
         });
     }
+    
+    private function getEcsAuthToken()
+    {
+        return getenv(self::ENV_AUTH_TOKEN);
+    }
+
+    public function setHeaderForAuthToken(){
+        $authToken = self::getEcsAuthToken();
+        $headers = [];
+        if(!empty($authToken))
+            $headers = ['Authorization' => $authToken];
+
+        return $headers;
+    }
 
     /**
      * Fetch credential URI from ECS environment variable
@@ -88,6 +107,16 @@ class EcsCredentialProvider
 
         if ($credsUri === false) {
             $credsUri = isset($_SERVER[self::ENV_URI]) ? $_SERVER[self::ENV_URI] : '';
+        }
+
+        if(empty($credsUri)){
+            $credFullUri = getenv(self::ENV_FULL_URI);
+            if($credFullUri === false){
+                $credFullUri = isset($_SERVER[self::ENV_FULL_URI]) ? $_SERVER[self::ENV_FULL_URI] : '';
+            }
+
+            if(!empty($credFullUri))
+                return $credFullUri;
         }
         
         return self::SERVER_URI . $credsUri;

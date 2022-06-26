@@ -55,6 +55,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getTagsAsync(array $args = [])
  * @method \Aws\Result getUsageForecast(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getUsageForecastAsync(array $args = [])
+ * @method \Aws\Result listCostAllocationTags(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listCostAllocationTagsAsync(array $args = [])
  * @method \Aws\Result listCostCategoryDefinitions(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listCostCategoryDefinitionsAsync(array $args = [])
  * @method \Aws\Result listTagsForResource(array $args = [])
@@ -69,6 +71,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise updateAnomalyMonitorAsync(array $args = [])
  * @method \Aws\Result updateAnomalySubscription(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateAnomalySubscriptionAsync(array $args = [])
+ * @method \Aws\Result updateCostAllocationTagsStatus(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateCostAllocationTagsStatusAsync(array $args = [])
  * @method \Aws\Result updateCostCategoryDefinition(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateCostCategoryDefinitionAsync(array $args = [])
  */

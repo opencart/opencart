@@ -114,7 +114,7 @@ class AssumeRoleWithWebIdentityCredentialProvider
                     }
                     if (empty($token)) {
                         if ($this->tokenFileReadAttempts < $this->retries) {
-                            sleep(pow(1.2, $this->tokenFileReadAttempts));
+                            sleep((int) pow(1.2, $this->tokenFileReadAttempts));
                             $this->tokenFileReadAttempts++;
                             continue;
                         }
@@ -139,7 +139,7 @@ class AssumeRoleWithWebIdentityCredentialProvider
                 } catch (AwsException $e) {
                     if ($e->getAwsErrorCode() == 'InvalidIdentityToken') {
                         if ($this->authenticationAttempts < $this->retries) {
-                            sleep(pow(1.2, $this->authenticationAttempts));
+                            sleep((int) pow(1.2, $this->authenticationAttempts));
                         } else {
                             throw new CredentialsException(
                                 "InvalidIdentityToken, retries exhausted"

@@ -35,6 +35,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listAssociatedResourcesAsync(array $args = [])
  * @method \Aws\Result listAttributeGroups(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listAttributeGroupsAsync(array $args = [])
+ * @method \Aws\Result listAttributeGroupsForApplication(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listAttributeGroupsForApplicationAsync(array $args = [])
  * @method \Aws\Result listTagsForResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array $args = [])
  * @method \Aws\Result syncResource(array $args = [])

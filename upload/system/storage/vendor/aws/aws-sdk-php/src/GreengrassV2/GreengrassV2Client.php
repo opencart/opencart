@@ -21,6 +21,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise deleteComponentAsync(array $args = [])
  * @method \Aws\Result deleteCoreDevice(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteCoreDeviceAsync(array $args = [])
+ * @method \Aws\Result deleteDeployment(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteDeploymentAsync(array $args = [])
  * @method \Aws\Result describeComponent(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeComponentAsync(array $args = [])
  * @method \Aws\Result disassociateServiceRoleFromAccount(array $args = [])

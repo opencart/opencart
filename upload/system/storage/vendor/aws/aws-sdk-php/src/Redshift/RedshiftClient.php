@@ -178,6 +178,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise enableSnapshotCopyAsync(array $args = [])
  * @method \Aws\Result getClusterCredentials(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getClusterCredentialsAsync(array $args = [])
+ * @method \Aws\Result getClusterCredentialsWithIAM(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getClusterCredentialsWithIAMAsync(array $args = [])
  * @method \Aws\Result getReservedNodeExchangeConfigurationOptions(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getReservedNodeExchangeConfigurationOptionsAsync(array $args = [])
  * @method \Aws\Result getReservedNodeExchangeOfferings(array $args = [])

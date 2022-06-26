@@ -7,6 +7,8 @@ use Aws\AwsClient;
  * This client is used to interact with the **AWS IoT Events Data** service.
  * @method \Aws\Result batchAcknowledgeAlarm(array $args = [])
  * @method \GuzzleHttp\Promise\Promise batchAcknowledgeAlarmAsync(array $args = [])
+ * @method \Aws\Result batchDeleteDetector(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise batchDeleteDetectorAsync(array $args = [])
  * @method \Aws\Result batchDisableAlarm(array $args = [])
  * @method \GuzzleHttp\Promise\Promise batchDisableAlarmAsync(array $args = [])
  * @method \Aws\Result batchEnableAlarm(array $args = [])

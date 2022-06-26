@@ -121,5 +121,7 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise untagResourceAsync(array $args = [])
  * @method \Aws\Result updateDatasetEntries(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateDatasetEntriesAsync(array $args = [])
+ * @method \Aws\Result updateStreamProcessor(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateStreamProcessorAsync(array $args = [])
  */
 class RekognitionClient extends AwsClient {}

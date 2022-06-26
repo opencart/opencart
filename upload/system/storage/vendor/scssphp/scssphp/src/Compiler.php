@@ -2350,9 +2350,9 @@ class Compiler
     }
 
     /**
-     * Compile children and throw exception if unexpected `@return`
+     * Compile children and throw exception if unexpected at-return
      *
-     * @param array                                  $stms
+     * @param array[]                                $stms
      * @param \ScssPhp\ScssPhp\Formatter\OutputBlock $out
      * @param \ScssPhp\ScssPhp\Block                 $selfParent
      * @param string                                 $traceName
@@ -2367,13 +2367,13 @@ class Compiler
 
         foreach ($stms as $stm) {
             if ($selfParent && isset($stm[1]) && \is_object($stm[1]) && $stm[1] instanceof Block) {
+                $oldSelfParent = $stm[1]->selfParent;
                 $stm[1]->selfParent = $selfParent;
                 $ret = $this->compileChild($stm, $out);
-                $stm[1]->selfParent = null;
+                $stm[1]->selfParent = $oldSelfParent;
             } elseif ($selfParent && \in_array($stm[0], [Type::T_INCLUDE, Type::T_EXTEND])) {
                 $stm['selfParent'] = $selfParent;
                 $ret = $this->compileChild($stm, $out);
-                unset($stm['selfParent']);
             } else {
                 $ret = $this->compileChild($stm, $out);
             }

@@ -88,7 +88,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	public function getTransactionTotal(int $customer_id): int {
 		$query = $this->db->query("SELECT SUM(`amount`) AS `total` FROM `" . DB_PREFIX . "customer_transaction` WHERE `customer_id` = '" . (int)$customer_id . "'");
 
-		return (float)$query->row['total'];
+		return (int)$query->row['total'];
 	}
 
 	public function getTotalTransactionsByOrderId(int $order_id): int {

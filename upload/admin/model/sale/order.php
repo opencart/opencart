@@ -392,7 +392,7 @@ class Order extends \Opencart\System\Engine\Model {
 	}
 
 	public function getTotalSales(array $data = []): float {
-		$sql = "SELECT SUM(total) AS `total` FROM `" . DB_PREFIX . "order`";
+		$sql = "SELECT SUM(`total`) AS `total` FROM `" . DB_PREFIX . "order`";
 
 		if (!empty($data['filter_order_status'])) {
 			$implode = [];

@@ -25,6 +25,8 @@ class Installer extends \Opencart\System\Engine\Controller {
 
 		$data['upload'] = $this->url->link('tool/installer|upload', 'user_token=' . $this->session->data['user_token']);
 
+		$data['list'] = $this->getList();
+
 		if (isset($this->request->get['filter_extension_id'])) {
 			$data['filter_extension_download_id'] = (int)$this->request->get['filter_extension_download_id'];
 		} else {
@@ -40,7 +42,13 @@ class Installer extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('marketplace/installer', $data));
 	}
 
-	public function extension(): void {
+	public function list(): void {
+		$this->load->language('marketplace/cron');
+
+		$this->response->setOutput($this->getList());
+	}
+
+	public function getList(): void {
 		$this->load->language('marketplace/installer');
 
 		if (isset($this->request->get['filter_extension_download_id'])) {

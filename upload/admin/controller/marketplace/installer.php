@@ -396,17 +396,47 @@ class Installer extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			$files = [];
+
+			// Make path into an array
+			$directory = [DIR_EXTENSION . $extension_install_info['code'] . '/'];
+
+			// While the path array is still populated keep looping through
+			while (count($directory) != 0) {
+				$next = array_shift($directory);
+
+				if (is_dir($next)) {
+					foreach (glob(trim($next, '/') . '/{*,.[!.]*,..?*}', GLOB_BRACE) as $file) {
+						// If directory add to path array
+						$directory[] = $file;
+					}
+				}
+
+				// Add the file to the files to be deleted array
+				$files[] = $next;
+			}
+
+			// Reverse sort the file array
+			rsort($files);
+
+			foreach ($files as $file) {
+				// If file just delete
+				if (is_file($file)) {
+					unlink($file);
+
+					// If directory use the remove directory function
+				} elseif (is_dir($file)) {
+					rmdir($file);
+				}
+			}
+
+			// Remove extension directory and files
 			$results = $this->model_setting_extension->getPathsByExtensionInstallId($extension_install_id);
 
 			rsort($results);
 
 			foreach ($results as $result) {
 				$path = '';
-
-				// Remove extension directory and files
-				if (substr($result['path'], 0, strlen($extension_install_info['code'])) == $extension_install_info['code']) {
-					$path = DIR_EXTENSION . $result['path'];
-				}
 
 				// Remove images
 				if (substr($result['path'], 0, 6) == 'image/') {

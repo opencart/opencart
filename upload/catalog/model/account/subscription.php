@@ -34,7 +34,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 	public function getTotalSubscriptions(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "subscription` `s` LEFT JOIN `" . DB_PREFIX . "order` `o` ON (`s`.`order_id` = `o`.`order_id`) WHERE `o`.`customer_id` = '" . (int)$this->customer->getId() . "'");
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
 	}
 
 	public function getTransactions(int $subscription_id): array {
@@ -43,7 +43,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function addTransaction(int $subscription_id, int $order_id, string $type): void {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "subscription_transaction` SET `subscription_id` = '" . (int)$subscription_id . "', `order_id` = '" . (int)$order_id . "', `type` = '" . (int)$type . "', `date_added` = NOW()");
+	public function addTransaction(int $subscription_id, int $order_id, int $transaction_id, string $description, float $amount, string $type, string $payment_method, string $payment_code): void {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "subscription_transaction` SET `subscription_id` = '" . (int)$subscription_id . "', `order_id` = '" . (int)$order_id . "', `transaction_id` = '" . (int)$transaction_id . "', `description` = '" . $this->db->escape($description) . "', `amount` = '" . (float)$amount . "', `type` = '" . (int)$type . "', `payment_method` = '" . $this->db->escape($payment_method) . "', `payment_code` = '" . $this->db->escape($payment_code) . "', `date_added` = NOW()");
 	}
 }

@@ -210,7 +210,7 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 				$this->db->query("TRUNCATE TABLE `" . DB_PREFIX . "cart`");
 
 				$this->db->query("ALTER TABLE `" . DB_PREFIX . "cart` DROP COLUMN `recurring_id`");
-				$this->db->query("ALTER TABLE `" . DB_PREFIX . "cart` ADD COLUMN `subscription_plan_id`");
+				$this->db->query("ALTER TABLE `" . DB_PREFIX . "cart` ADD COLUMN `subscription_plan_id` int(11) NOT NULL");
 			}
 
 			// Drop Fields

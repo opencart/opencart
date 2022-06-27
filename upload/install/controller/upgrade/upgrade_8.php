@@ -77,15 +77,6 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 			
 			$config_captcha_page = json_decode((array)$config->get('config_captcha_page'), true);
 		
-			// Captcha - Returns
-			$search = array_search('return', $config_captcha_page);
-
-			if ($search) {
-				$config_captcha_page[$search] = str_replace($config_captcha_page[$search], 'returns', $config_captcha_page[$search]);
-
-				$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `value` = '" . json_encode($this->db->escape($config_captcha_page)) . "' WHERE `key` = 'config_captcha_page'");
-			}
-
 			// Config Session Expire
 			$query = $this->db->query("SELECT * FROM `setting` WHERE `key` = 'config_session_expire'");
 
@@ -114,7 +105,7 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 			}
 
 			// Config affiliate Status ID
-			$query = $this->db->query("SELECT * FROM `setting` WHERE `key` = 'config_affiliate_status'");
+			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE `key` = 'config_affiliate_status'");
 
 			if (!$query->num_rows) {
 				$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `store_id` = '0', `code` = 'config', `key` = 'config_affiliate_status', `value` = '1', `serialized` = '0'");

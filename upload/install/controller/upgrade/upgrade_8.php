@@ -202,6 +202,16 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 			if ($query->num_rows) {
 				$this->db->query("UPDATE `" . DB_PREFIX . "api` SET `name` = `username` WHERE `username` IS NULL or `username` = ''");
 			}
+			
+			// Cart - Subscriptions
+			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "cart' AND COLUMN_NAME = 'subscription_plan_id'");
+
+			if (!$query->num_rows) {
+				$this->db->query("TRUNCATE TABLE `" . DB_PREFIX . "cart`");
+
+				$this->db->query("ALTER TABLE `" . DB_PREFIX . "cart` DROP COLUMN `recurring_id`");
+				$this->db->query("ALTER TABLE `" . DB_PREFIX . "cart` ADD COLUMN `subscription_plan_id`");
+			}
 
 			// Drop Fields
 			$remove = [];

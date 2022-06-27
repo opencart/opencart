@@ -160,7 +160,7 @@ class Customer extends \Opencart\System\Engine\Model {
 
 		$query = $this->db->query($sql);
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
 	}
 
 	public function getRewardPoints(array $data = []): array {
@@ -220,7 +220,7 @@ class Customer extends \Opencart\System\Engine\Model {
 
 		$query = $this->db->query($sql);
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
 	}
 
 	public function getCustomerActivities(array $data = []): array {
@@ -294,7 +294,7 @@ class Customer extends \Opencart\System\Engine\Model {
 
 		$query = $this->db->query($sql);
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
 	}
 
 	public function getCustomerSearches(array $data = []): array {
@@ -376,6 +376,6 @@ class Customer extends \Opencart\System\Engine\Model {
 
 		$query = $this->db->query($sql);
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
 	}
 }

@@ -48,7 +48,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->getList());
 	}
 
-	public function getList(): void {
+	public function getList(): string {
 		$this->load->language('marketplace/installer');
 
 		if (isset($this->request->get['filter_extension_download_id'])) {
@@ -141,7 +141,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 		$data['sort'] = $sort;
 		$data['order'] = $order;
 
-		$this->response->setOutput($this->load->view('marketplace/installer_extension', $data));
+		return $this->load->view('marketplace/installer_extension', $data);
 	}
 
 	public function upload(): void {

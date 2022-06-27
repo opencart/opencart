@@ -30,7 +30,7 @@ class Returns extends \Opencart\System\Engine\Model {
 	public function getTotalReturns(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "return` WHERE `customer_id` = '" . $this->customer->getId() . "'");
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
 	}
 
 	public function getHistories(int $return_id): array {

@@ -77,9 +77,9 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 			
 			// Config - Captcha Returns
 			$query = $this->db->query("SELECT * FROM `setting` WHERE `key` = 'config_captcha_page'");
-			
+
 			if ($query->num_rows) {
-				$config_captcha_page = json_decode($query->row->get('config_captcha_page'), true);
+				$config_captcha_page = json_decode($query->row['value'], true);
 
 				$search = array_search('return', $config_captcha_page);
 

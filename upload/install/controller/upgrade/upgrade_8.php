@@ -91,7 +91,7 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 			}
 
 			// Config Session Expire
-			$query = $this->db->query("SELECT * FROM `setting` WHERE `key` = 'config_session_expire'");
+			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE `key` = 'config_session_expire'");
 
 			if (!$query->num_rows) {
 				$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `store_id` = '0', `code` = 'config', `key` = 'config_session_expire', `value` = '3600000000', `serialized` = '0'");

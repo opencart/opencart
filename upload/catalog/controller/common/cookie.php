@@ -37,7 +37,7 @@ class Cookie extends \Opencart\System\Engine\Controller {
 			$option = [
 				'expires'  => time() + 60 * 60 * 24 * 365,
 				'path'     => !empty($this->request->server['PHP_SELF']) ? rtrim(dirname($this->request->server['PHP_SELF']), '/') . '/' : '/',
-				'SameSite' => $this->config->get('session_samesite')
+				'SameSite' => $this->config->get('config_session_samesite')
 			];
 
 			setcookie('policy', $agree, $option);

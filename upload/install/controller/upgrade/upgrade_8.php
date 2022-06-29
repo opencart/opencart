@@ -98,20 +98,20 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 			}
 
 			// Config Cookie ID
-			$query = $this->db->query("SELECT * FROM `setting` WHERE `key` = 'config_cookie_id'");
+			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE `key` = 'config_cookie_id'");
 
 			if (!$query->num_rows) {
 				$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `store_id` = '0', `code` = 'config', `key` = 'config_cookie_id', `value` = '0', `serialized` = '0'");
 			}
 
 			// Config GDPR ID
-			$query = $this->db->query("SELECT * FROM `setting` WHERE `key` = 'config_gdpr_id'");
+			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE `key` = 'config_gdpr_id'");
 
 			if (!$query->num_rows) {
 				$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `store_id` = '0', `code` = 'config', `key` = 'config_gdpr_id', `value` = '0', `serialized` = '0'");
 			}
 
-			$query = $this->db->query("SELECT * FROM `setting` WHERE `key` = 'config_gdpr_limit'");
+			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE `key` = 'config_gdpr_limit'");
 
 			if (!$query->num_rows) {
 				$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `store_id` = '0', `code` = 'config', `key` = 'config_gdpr_limit', `value` = '180', `serialized` = '0'");
@@ -125,51 +125,51 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 			}
 
 			// Config affiliate expire
-			$query = $this->db->query("SELECT * FROM `setting` WHERE `key` = 'config_affiliate_expire'");
+			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE `key` = 'config_affiliate_expire'");
 
 			if (!$query->num_rows) {
 				$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `store_id` = '0', `code` = 'config', `key` = 'config_affiliate_expire', `value` = '3600000000', `serialized` = '0'");
 			}
 
 			// Config Subscriptions
-			$query = $this->db->query("SELECT * FROM `setting` WHERE `key` = 'config_subscription_status_id'");
+			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE `key` = 'config_subscription_status_id'");
 
 			if (!$query->num_rows) {
 				$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `store_id` = '0', `code` = 'config', `key` = 'config_subscription_status_id', `value` = '1', `serialized` = '0'");
 			}
 
-			$query = $this->db->query("SELECT * FROM `setting` WHERE `key` = 'config_subscription_active_status_id'");
+			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE `key` = 'config_subscription_active_status_id'");
 
 			if (!$query->num_rows) {
 				$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `store_id` = '0', `code` = 'config', `key` = 'config_subscription_active_status_id', `value` = '2', `serialized` = '0'");
 			}
 
-			$query = $this->db->query("SELECT * FROM `setting` WHERE `key` = 'config_subscription_expired_status_id'");
+			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE `key` = 'config_subscription_expired_status_id'");
 
 			if (!$query->num_rows) {
 				$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `store_id` = '0', `code` = 'config', `key` = 'config_subscription_expired_status_id', `value` = '6', `serialized` = '0'");
 			}
 
-			$query = $this->db->query("SELECT * FROM `setting` WHERE `key` = 'config_subscription_canceled_status_id'");
+			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE `key` = 'config_subscription_canceled_status_id'");
 
 			if (!$query->num_rows) {
 				$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `store_id` = '0', `code` = 'config', `key` = 'config_subscription_canceled_status_id', `value` = '4', `serialized` = '0'");
 			}
 
-			$query = $this->db->query("SELECT * FROM `setting` WHERE `key` = 'config_subscription_failed_status_id'");
+			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE `key` = 'config_subscription_failed_status_id'");
 
 			if (!$query->num_rows) {
 				$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `store_id` = '0', `code` = 'config', `key` = 'config_subscription_failed_status_id', `value` = '3', `serialized` = '0'");
 			}
 
-			$query = $this->db->query("SELECT * FROM `setting` WHERE `key` = 'config_subscription_denied_status_id'");
+			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE `key` = 'config_subscription_denied_status_id'");
 
 			if (!$query->num_rows) {
 				$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `store_id` = '0', `code` = 'config', `key` = 'config_subscription_denied_status_id', `value` = '5', `serialized` = '0'");
 			}
 
 			// Config - Fraud Status ID
-			$query = $this->db->query("SELECT * FROM `setting` WHERE `key` = 'config_fraud_status_id'");
+			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE `key` = 'config_fraud_status_id'");
 
 			if (!$query->num_rows) {
 				$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `store_id` = '0', `code` = 'config', `key` = 'config_fraud_status_id', `value` = '8', `serialized` = '0'");

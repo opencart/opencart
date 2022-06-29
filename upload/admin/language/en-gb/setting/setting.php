@@ -38,6 +38,9 @@ $_['text_affiliate']                      = 'Affiliate';
 $_['text_return']                         = 'Return';
 $_['text_captcha']                        = 'Captcha';
 $_['text_hour']                           = 'Hour(s)';
+$_['text_none']                           = 'None';
+$_['text_lax']                            = 'Lax';
+$_['text_strict']                         = 'Strict';
 
 // Entry
 $_['entry_meta_title']                    = 'Meta Title';
@@ -151,6 +154,7 @@ $_['entry_file_ext_allowed']              = 'Allowed File Extensions';
 $_['entry_file_mime_allowed']             = 'Allowed File Mime Types';
 $_['entry_maintenance']                   = 'Maintenance Mode';
 $_['entry_session_expire']                = 'Session Lifetime';
+$_['entry_session_samesite']              = 'Session Samesite Cookie';
 $_['entry_compression']                   = 'Output Compression Level';
 $_['entry_security']                      = 'Two-factor Security';
 $_['entry_encryption']                    = 'Encryption Key';
@@ -218,6 +222,7 @@ $_['help_mail_smtp_password']             = 'For Gmail you might need to setup a
 $_['help_mail_alert']                     = 'Select which features you would like to receive an alert email on when a customer uses them.';
 $_['help_mail_alert_email']               = 'Any additional emails you want to receive the alert email, in addition to the main store email. (comma separated).';
 $_['help_session_expire']                 = 'Set the PHP Session lifetime';
+$_['help_session_samesite']               = 'Set the PHP Session samesite cookie';
 $_['help_security']                       = 'Two-factor security for admin users.';
 $_['help_shared']                         = 'Try to share the session cookie between stores so the cart can be passed between different domains.';
 $_['help_robots']                         = 'A list of web crawler user agents that shared sessions will not be used with. Use separate lines for each user agent.';

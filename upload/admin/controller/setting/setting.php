@@ -588,6 +588,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 			$data['config_session_expire'] = 3600;
 		}
 
+		$data['config_session_samesite'] = $this->config->get('config_session_samesite');
 		$data['config_seo_url'] = $this->config->get('config_seo_url');
 		$data['config_robots'] = $this->config->get('config_robots');
 		$data['config_compression'] = $this->config->get('config_compression');

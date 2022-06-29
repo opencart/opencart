@@ -618,31 +618,10 @@ class Installer extends \Opencart\System\Engine\Controller {
 
 		if (!$json) {
 			$file = DIR_STORAGE . 'marketplace/' . $extension_install_info['code'] . '.ocmod.zip';
-			
-			// Unzip the files
-			$zip = new \ZipArchive();
 
 			// Remove file
 			if (is_file($file)) {
-				if ($zip->open($file)) {
-					$install_info = json_decode($zip->getFromName('install.json'), true);
-					
-					if ($install_info) {
-						$zip->close();
-						
-						unlink($file);
-					} else {
-						for ($i = 0; $i < $zip->numFiles; $i++) {
-							$entry_info = $zip->statIndex($i);
-							
-							if (substr($entry_info["name"], 0, strlen($extension_install_info['code'] . '/')) == $extension_install_info['code'] . '/') {
-								$zip->deleteIndex($i);
-							}
-						}
-						
-						$zip->close();
-					}
-				}
+				unlink($file);
 			}
 
 			$this->model_setting_extension->deleteInstall($extension_install_id);

@@ -211,7 +211,7 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 			'common/login',
 			'common/logout',
 			'common/forgotten',
-			'common/reset',			
+			'common/authorize',
 			'common/footer',
 			'common/header',
 			'error/not_found',

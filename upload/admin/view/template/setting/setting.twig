@@ -338,6 +338,15 @@
                           <div class="form-text">{{ help_review }}</div>
                         </div>
                       </div>
+                      <div class="row mt-2 mb-3">
+                        <label class="col-sm-2 col-form-label">{{ entry_review_purchased }}</label>
+                        <div class="col-sm-10">
+                          <div class="form-check form-switch form-switch-lg">
+                            <input type="checkbox" name="config_review_purchased" value="1" id="input-review-purchased" class="form-check-input"{% if config_review_purchased %} checked{% endif %}/>
+                          </div>
+                          <div class="form-text">{{ help_review_purchased }}</div>
+                        </div>
+                      </div>
                       <div class="row mb-3">
                         <label class="col-sm-2 col-form-label">{{ entry_review_guest }}</label>
                         <div class="col-sm-10">
@@ -350,7 +359,6 @@
                     </div>
                   </div>
                 </div>
-
                 <div class="accordion-item">
                   <h2 class="accordion-header"><button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapse-voucher">{{ text_voucher }}</button></h2>
                   <div id="collapse-voucher" class="accordion-collapse collapse" data-bs-parent="#accordion-option">

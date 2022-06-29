@@ -1,10 +1,126 @@
 <?php
 namespace Opencart\Catalog\Controller\Product;
 class Review extends \Opencart\System\Engine\Controller {
-	public function review(): void {
-		$this->load->language('product/product');
+	public function index(): string {
+		$this->load->language('product/review');
 
-		$this->load->model('catalog/review');
+		$data['list'] = $this->getList();
+
+		if ($this->config->get('config_review_guest') || $this->customer->isLogged()) {
+			$data['review_guest'] = true;
+		} else {
+			$data['review_guest'] = false;
+		}
+
+		if ($this->customer->isLogged()) {
+			$data['customer_name'] = $this->customer->getFirstName() . ' ' . $this->customer->getLastName();
+		} else {
+			$data['customer_name'] = '';
+		}
+
+		// Create a login token to prevent brute force attacks
+		$this->session->data['review_token'] = token(32);
+
+		$data['action'] = $this->url->link('product/review|write', 'language=' . $this->config->get('config_language') . '&review_token=' . $this->session->data['review_token'], true);
+
+		// Captcha
+		$this->load->model('setting/extension');
+
+		$extension_info = $this->model_setting_extension->getExtensionByCode('captcha', $this->config->get('config_captcha'));
+
+		if ($extension_info && $this->config->get('captcha_' . $this->config->get('config_captcha') . '_status') && in_array('review', (array)$this->config->get('config_captcha_page'))) {
+			$data['captcha'] = $this->load->controller('extension/'  . $extension_info['extension'] . '/captcha/' . $extension_info['code']);
+		} else {
+			$data['captcha'] = '';
+		}
+
+		return $this->load->view('product/review', $data);
+	}
+
+	public function write(): void {
+		$this->load->language('product/review');
+
+		$json = [];
+
+		if (isset($this->request->get['product_id'])) {
+			$product_id = $this->request->get['product_id'];
+		} else {
+			$product_id = 0;
+		}
+
+		if (!isset($this->request->get['review_token']) || !isset($this->session->data['review_token']) || $this->request->get['review_token'] != $this->session->data['review_token']) {
+			$json['error']['token'] = $this->language->get('error_review');
+		}
+
+		$keys = [
+			'name',
+			'text',
+			'rating'
+		];
+
+		foreach ($keys as $key) {
+			if (!isset($this->request->post[$key])) {
+				$this->request->post[$key] = '';
+			}
+		}
+
+		if ((utf8_strlen($this->request->post['name']) < 3) || (utf8_strlen($this->request->post['name']) > 25)) {
+			$json['error']['name'] = $this->language->get('error_name');
+		}
+
+		if ((utf8_strlen($this->request->post['text']) < 25) || (utf8_strlen($this->request->post['text']) > 1000)) {
+			$json['error']['text'] = $this->language->get('error_text');
+		}
+
+		if ($this->request->post['rating'] < 0 || $this->request->post['rating'] > 5) {
+			$json['error']['rating']  = $this->language->get('error_rating');
+		}
+
+		if (!$this->config->get('config_review_guest') && !$this->customer->isLogged()) {
+			$json['error']['guest']  = $this->language->get('error_guest');
+		}
+
+		if (!$this->config->get('config_review_guest') && !$this->customer->isLogged()) {
+			$json['error']['purchased']  = $this->language->get('error_purchased');
+		}
+		
+		// Captcha
+		$this->load->model('setting/extension');
+
+		$extension_info = $this->model_setting_extension->getExtensionByCode('captcha', $this->config->get('config_captcha'));
+
+		if ($extension_info && $this->config->get('captcha_' . $this->config->get('config_captcha') . '_status') && in_array('review', (array)$this->config->get('config_captcha_page'))) {
+			$captcha = $this->load->controller('extension/'  . $extension_info['extension'] . '/captcha/' . $extension_info['code'] . '|validate');
+
+			if ($captcha) {
+				$json['error']['captcha'] = $captcha;
+			}
+		}
+
+		if (!$json) {
+			$this->load->model('catalog/review');
+
+			$this->model_catalog_review->addReview($product_id, $this->request->post);
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	public function list(): void {
+		$this->load->language('product/review');
+
+		$this->response->setOutput($this->getList());
+	}
+
+	public function getList(): string {
+		if (isset($this->request->get['product_id'])) {
+			$product_id = $this->request->get['product_id'];
+		} else {
+			$product_id = 0;
+		}
 
 		if (isset($this->request->get['page'])) {
 			$page = (int)$this->request->get['page'];
@@ -14,9 +130,11 @@ class Review extends \Opencart\System\Engine\Controller {
 
 		$data['reviews'] = [];
 
-		$review_total = $this->model_catalog_review->getTotalReviewsByProductId($this->request->get['product_id']);
+		$this->load->model('catalog/review');
 
-		$results = $this->model_catalog_review->getReviewsByProductId($this->request->get['product_id'], ($page - 1) * 5, 5);
+		$review_total = $this->model_catalog_review->getTotalReviewsByProductId($product_id);
+
+		$results = $this->model_catalog_review->getReviewsByProductId($product_id, ($page - 1) * 5, 5);
 
 		foreach ($results as $result) {
 			$data['reviews'][] = [
@@ -36,48 +154,6 @@ class Review extends \Opencart\System\Engine\Controller {
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($review_total) ? (($page - 1) * 5) + 1 : 0, ((($page - 1) * 5) > ($review_total - 5)) ? $review_total : ((($page - 1) * 5) + 5), $review_total, ceil($review_total / 5));
 
-		$this->response->setOutput($this->load->view('product/review', $data));
-	}
-
-	public function write(): void {
-		$this->load->language('product/product');
-
-		$json = [];
-
-		if ((utf8_strlen($this->request->post['name']) < 3) || (utf8_strlen($this->request->post['name']) > 25)) {
-			$json['error']['name'] = $this->language->get('error_name');
-		}
-
-		if ((utf8_strlen($this->request->post['text']) < 25) || (utf8_strlen($this->request->post['text']) > 1000)) {
-			$json['error']['text'] = $this->language->get('error_text');
-		}
-
-		if (empty($this->request->post['rating']) || $this->request->post['rating'] < 0 || $this->request->post['rating'] > 5) {
-			$json['error']['rating']  = $this->language->get('error_rating');
-		}
-
-		// Captcha
-		$this->load->model('setting/extension');
-
-		$extension_info = $this->model_setting_extension->getExtensionByCode('captcha', $this->config->get('config_captcha'));
-
-		if ($extension_info && $this->config->get('captcha_' . $this->config->get('config_captcha') . '_status') && in_array('review', (array)$this->config->get('config_captcha_page'))) {
-			$captcha = $this->load->controller('extension/'  . $extension_info['extension'] . '/captcha/' . $extension_info['code'] . '|validate');
-
-			if ($captcha) {
-				$json['error']['captcha'] = $captcha;
-			}
-		}
-
-		if (!$json) {
-			$this->load->model('catalog/review');
-
-			$this->model_catalog_review->addReview($this->request->get['product_id'], $this->request->post);
-
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+		return $this->load->view('product/review_list', $data);
 	}
 }

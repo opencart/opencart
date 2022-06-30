@@ -143,6 +143,6 @@ class Extension extends \Opencart\System\Engine\Model {
 	public function getTotalPaths(string $path): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "extension_path` WHERE `path` LIKE '" . $this->db->escape($path) . "'");
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
 	}
 }

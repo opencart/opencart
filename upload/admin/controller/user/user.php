@@ -245,6 +245,10 @@ class User extends \Opencart\System\Engine\Controller {
 			$data['status'] = 0;
 		}
 
+		$data['user_login'] = $this->getLogin();
+
+		$data['user_token'] = $this->session->data['user_token'];
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -295,11 +299,11 @@ class User extends \Opencart\System\Engine\Controller {
 
 		if (!$this->request->post['user_id']) {
 			if ($user_info) {
-				$json['error']['warning'] = $this->language->get('error_exists_email');
+				$json['error']['warning'] = $this->language->get('error_email_exists');
 			}
 		} else {
 			if ($user_info && ($this->request->post['user_id'] != $user_info['user_id'])) {
-				$json['error']['warning'] = $this->language->get('error_exists_email');
+				$json['error']['warning'] = $this->language->get('error_email_exists');
 			}
 		}
 
@@ -356,6 +360,103 @@ class User extends \Opencart\System\Engine\Controller {
 			}
 
 			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	public function login(): void {
+		$this->load->language('user/user');
+
+		$this->response->setOutput($this->getLogin());
+	}
+
+	public function getLogin(): string {
+		if (isset($this->request->get['user_id'])) {
+			$user_id = (int)$this->request->get['user_id'];
+		} else {
+			$user_id = 0;
+		}
+
+		if (isset($this->request->get['page'])) {
+			$page = (int)$this->request->get['page'];
+		} else {
+			$page = 1;
+		}
+
+		$data['user_logins'] = [];
+
+		$this->load->model('user/user');
+
+		$results = $this->model_user_user->getLogins($user_id, ($page - 1) * 10, 10);
+
+		foreach ($results as $result) {
+			$data['user_logins'][] = [
+				'token'      => $result['token'],
+				'ip'         => $result['ip'],
+				'user_agent' => $result['user_agent'],
+				'status'     => $result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
+				'total'      => $result['total'],
+				'date_added' => date($this->language->get('datetime_format'), strtotime($result['date_added'])),
+				'delete'     => $this->url->link('user/user|deleteLogin', 'user_token=' . $this->session->data['user_token'] . '&user_login_id=' . $result['user_login_id'])
+			];
+		}
+
+		$login_total = $this->model_user_user->getTotalLogins($user_id);
+
+		$data['pagination'] = $this->load->controller('common/pagination', [
+			'total' => $login_total,
+			'page'  => $page,
+			'limit' => 10,
+			'url'   => $this->url->link('user/user|Login', 'user_token=' . $this->session->data['user_token'] . '&user_id=' . $user_id . '&page={page}')
+		]);
+
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($login_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($login_total - 10)) ? $login_total : ((($page - 1) * 10) + 10), $login_total, ceil($login_total / 10));
+
+		return $this->load->view('user/user_login', $data);
+	}
+
+	public function deleteLogin(): void {
+		$this->load->language('user/user');
+
+		$json = [];
+
+		if (isset($this->request->get['user_login_id'])) {
+			$user_login_id = (int)$this->request->get['user_login_id'];
+		} else {
+			$user_login_id = 0;
+		}
+
+		if (isset($this->request->cookie['authorize'])) {
+			$token = $this->request->cookie['authorize'];
+		} else {
+			$token = '';
+		}
+
+		if (!$this->user->hasPermission('modify', 'user/user')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		$this->load->model('user/user');
+
+		$login_info = $this->model_user_user->getLogin($user_login_id);
+
+		if (!$login_info) {
+			$json['error'] = $this->language->get('error_login');
+		}
+
+		if (!$json) {
+			$this->model_user_user->deleteLogin($user_login_id);
+
+			// If current token in use then log user out.
+			if ($login_info['token'] == $token) {
+				$this->session->data['success'] = $this->language->get('text_success');
+
+				$json['redirect'] = $this->url->link('common/login', '', true);
+			} else {
+				$json['success'] = $this->language->get('text_success');
+			}
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

@@ -56,10 +56,24 @@ class SaleCoupon extends \Opencart\System\Engine\Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
-		
+
 	public function report(): void {
 		$this->load->language('extension/opencart/report/sale_coupon');
 
+		$data['list'] = $this->getReport();
+
+		$data['user_token'] = $this->session->data['user_token'];
+
+		$this->response->setOutput($this->load->view('extension/opencart/report/sale_coupon', $data));
+	}
+
+	public function list(): void {
+		$this->load->language('extension/opencart/report/sale_coupon');
+
+		$this->response->setOutput($this->getReport());
+	}
+
+	public function getReport(): string {
 		if (isset($this->request->get['filter_date_start'])) {
 			$filter_date_start = $this->request->get['filter_date_start'];
 		} else {
@@ -127,6 +141,6 @@ class SaleCoupon extends \Opencart\System\Engine\Controller {
 
 		$data['user_token'] = $this->session->data['user_token'];
 
-		$this->response->setOutput($this->load->view('extension/opencart/report/sale_coupon', $data));
+		return $this->load->view('extension/opencart/report/sale_coupon_list', $data);
 	}
 }

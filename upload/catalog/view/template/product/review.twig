@@ -1,19 +1,47 @@
-{% if reviews %}
-  {% for review in reviews %}
-    <table class="table table-striped table-bordered">
-      <tr>
-        <td style="width: 50%;"><strong>{{ review.author }}</strong></td>
-        <td class="text-end">{{ review.date_added }}</td>
-      </tr>
-      <tr>
-        <td colspan="2"><p>{{ review.text }}</p>
-          {% for i in 1..5 %}
-            {% if review.rating < i %} <span class="fas fa-stack"><i class="fas fa-star-o fa-stack-2x"></i></span> {% else %} <span class="fas fa-stack"><i class="fas fa-star fa-stack-2x"></i><i class="fas fa-star-o fa-stack-2x"></i></span> {% endif %}
-          {% endfor %}</td>
-      </tr>
-    </table>
-  {% endfor %}
-  <div class="text-end">{{ pagination }}</div>
-{% else %}
-  <p class="text-center">{{ text_no_reviews }}</p>
-{% endif %} 
+<form id="form-review" action="{{ action }}" data-oc-toggle="ajax" data-oc-load="{{ action }}" data-oc-target="#attribute">
+  <div id="review">{{ list }}</div>
+  <h2>{{ text_write }}</h2>
+  {% if review_guest %}
+    <div class="mb-3 required">
+      <label for="input-name" class="form-label">{{ entry_name }}</label> <input type="text" name="name" value="{{ customer_name }}" id="input-name" class="form-control"/>
+      <div id="error-name" class="invalid-feedback"></div>
+    </div>
+    <div class="mb-3 required">
+      <label for="input-text" class="form-label">{{ entry_review }}</label> <textarea name="text" rows="5" id="input-text" class="form-control"></textarea>
+      <div id="error-text" class="invalid-feedback"></div>
+      <div class="invalid-feedback">{{ text_note }}</div>
+    </div>
+    <div class="row mb-3 required">
+      <label class="form-label">{{ entry_rating }}</label>
+      <div id="input-rating">
+        {{ entry_bad }}&nbsp;
+        <input type="radio" name="rating" value="1" class="form-check-input"/>
+        &nbsp;
+        <input type="radio" name="rating" value="2" class="form-check-input"/>
+        &nbsp;
+        <input type="radio" name="rating" value="3" class="form-check-input"/>
+        &nbsp;
+        <input type="radio" name="rating" value="4" class="form-check-input"/>
+        &nbsp;
+        <input type="radio" name="rating" value="5" class="form-check-input"/>
+        &nbsp;{{ entry_good }}
+      </div>
+      <div id="error-rating" class="invalid-feedback"></div>
+    </div>
+    {{ captcha }}
+    <div class="d-inline-block pt-2 pd-2 w-100">
+      <div class="float-end">
+        <button type="submit" id="button-review" class="btn btn-primary">{{ button_continue }}</button>
+      </div>
+    </div>
+  {% else %}
+    {{ text_login }}
+  {% endif %}
+</form>
+<script type="text/javascript"><!--
+$('#review').on('click', '.pagination a', function (e) {
+    e.preventDefault();
+
+    $('#review').load(this.href);
+});
+//--></script>

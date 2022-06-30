@@ -55,6 +55,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise updateFirewallDeleteProtectionAsync(array $args = [])
  * @method \Aws\Result updateFirewallDescription(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateFirewallDescriptionAsync(array $args = [])
+ * @method \Aws\Result updateFirewallEncryptionConfiguration(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateFirewallEncryptionConfigurationAsync(array $args = [])
  * @method \Aws\Result updateFirewallPolicy(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateFirewallPolicyAsync(array $args = [])
  * @method \Aws\Result updateFirewallPolicyChangeProtection(array $args = [])

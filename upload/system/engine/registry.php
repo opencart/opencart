@@ -12,7 +12,7 @@
 */
 namespace Opencart\System\Engine;
 class Registry {
-	private $data = [];
+	private array $data = [];
 
 	/**
 	 * __get

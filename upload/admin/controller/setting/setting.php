@@ -192,6 +192,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 		$data['config_product_report_status'] = $this->config->get('config_product_report_status');
 
 		$data['config_review_status'] = $this->config->get('config_review_status');
+		$data['config_review_purchased'] = $this->config->get('config_review_purchased');
 		$data['config_review_guest'] = $this->config->get('config_review_guest');
 
 		$data['config_voucher_min'] = $this->config->get('config_voucher_min');
@@ -302,7 +303,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 		if ($this->config->has('config_affiliate_status')) {
 			$data['config_affiliate_status'] = $this->config->get('config_affiliate_status');
 		} else {
-			$data['config_affiliate_status'] = true;
+			$data['config_affiliate_status'] = '';
 		}
 
 		$data['config_affiliate_group_id'] = $this->config->get('config_affiliate_group_id');
@@ -580,8 +581,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 		$data['config_mail_alert_email'] = $this->config->get('config_mail_alert_email');
 
 		// Server
-		$data['config_shared'] = $this->config->get('config_shared');
-		$data['config_robots'] = $this->config->get('config_robots');
+		$data['config_maintenance'] = $this->config->get('config_maintenance');
 
 		if ($this->config->has('config_session_expire')) {
 			$data['config_session_expire'] = $this->config->get('config_session_expire');
@@ -589,8 +589,17 @@ class Setting extends \Opencart\System\Engine\Controller {
 			$data['config_session_expire'] = 3600;
 		}
 
+		$data['config_session_samesite'] = $this->config->get('config_session_samesite');
 		$data['config_seo_url'] = $this->config->get('config_seo_url');
+		$data['config_robots'] = $this->config->get('config_robots');
+		$data['config_compression'] = $this->config->get('config_compression');
 
+		// Security
+		$data['config_security'] = $this->config->get('config_security');
+		$data['config_shared'] = $this->config->get('config_shared');
+		$data['config_encryption'] = $this->config->get('config_encryption');
+
+		// Uploads
 		if ($this->config->get('config_file_max_size')) {
 			$data['config_file_max_size'] = $this->config->get('config_file_max_size');
 		} else {
@@ -599,9 +608,8 @@ class Setting extends \Opencart\System\Engine\Controller {
 
 		$data['config_file_ext_allowed'] = $this->config->get('config_file_ext_allowed');
 		$data['config_file_mime_allowed'] = $this->config->get('config_file_mime_allowed');
-		$data['config_maintenance'] = $this->config->get('config_maintenance');
-		$data['config_encryption'] = $this->config->get('config_encryption');
-		$data['config_compression'] = $this->config->get('config_compression');
+
+		// Errors
 		$data['config_error_display'] = $this->config->get('config_error_display');
 		$data['config_error_log'] = $this->config->get('config_error_log');
 		$data['config_error_filename'] = $this->config->get('config_error_filename');

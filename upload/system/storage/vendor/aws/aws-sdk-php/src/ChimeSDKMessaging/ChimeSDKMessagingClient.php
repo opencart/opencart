@@ -81,6 +81,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise putChannelMembershipPreferencesAsync(array $args = [])
  * @method \Aws\Result redactChannelMessage(array $args = [])
  * @method \GuzzleHttp\Promise\Promise redactChannelMessageAsync(array $args = [])
+ * @method \Aws\Result searchChannels(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise searchChannelsAsync(array $args = [])
  * @method \Aws\Result sendChannelMessage(array $args = [])
  * @method \GuzzleHttp\Promise\Promise sendChannelMessageAsync(array $args = [])
  * @method \Aws\Result tagResource(array $args = [])

@@ -51,12 +51,12 @@ class Returns extends \Opencart\System\Engine\Model {
 			$implode[] = "r.`return_status_id` = '" . (int)$data['filter_return_status_id'] . "'";
 		}
 
-		if (!empty($data['filter_date_added'])) {
-			$implode[] = "DATE(r.`date_added`) = DATE('" . $this->db->escape((string)$data['filter_date_added']) . "')";
+		if (!empty($data['filter_date_from'])) {
+			$implode[] = "DATE(r.`date_added`) >= DATE('" . $this->db->escape((string)$data['filter_date_from']) . "')";
 		}
 
-		if (!empty($data['filter_date_modified'])) {
-			$implode[] = "DATE(r.`date_modified`) = DATE('" . $this->db->escape((string)$data['filter_date_modified']) . "')";
+		if (!empty($data['filter_date_to'])) {
+			$implode[] = "DATE(r.`date_added`) <= DATE('" . $this->db->escape((string)$data['filter_date_to']) . "')";
 		}
 
 		if ($implode) {
@@ -132,12 +132,12 @@ class Returns extends \Opencart\System\Engine\Model {
 			$implode[] = "r.`return_status_id` = '" . (int)$data['filter_return_status_id'] . "'";
 		}
 
-		if (!empty($data['filter_date_added'])) {
-			$implode[] = "DATE(r.`date_added`) = DATE('" . $this->db->escape((string)$data['filter_date_added']) . "')";
+		if (!empty($data['filter_date_from'])) {
+			$implode[] = "DATE(r.`date_added`) >= DATE('" . $this->db->escape((string)$data['filter_date_from']) . "')";
 		}
 
-		if (!empty($data['filter_date_modified'])) {
-			$implode[] = "DATE(r.`date_modified`) = DATE('" . $this->db->escape((string)$data['filter_date_modified']) . "')";
+		if (!empty($data['filter_date_to'])) {
+			$implode[] = "DATE(r.`date_added`) <= DATE('" . $this->db->escape((string)$data['filter_date_to']) . "')";
 		}
 
 		if ($implode) {

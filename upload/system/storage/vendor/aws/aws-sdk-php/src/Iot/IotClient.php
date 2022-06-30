@@ -316,6 +316,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listJobsAsync(array $args = [])
  * @method \Aws\Result listManagedJobTemplates(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listManagedJobTemplatesAsync(array $args = [])
+ * @method \Aws\Result listMetricValues(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listMetricValuesAsync(array $args = [])
  * @method \Aws\Result listMitigationActions(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listMitigationActionsAsync(array $args = [])
  * @method \Aws\Result listOTAUpdates(array $args = [])

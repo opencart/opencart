@@ -5,14 +5,16 @@
       <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
     {% endfor %}
   </ul>
-  <div class="row">{{ column_left }}
+  <div class="row">
+    {{ column_left }}
     <div id="content" class="col">{{ content_top }}
       <h1>{{ heading_title }}</h1>
       <p>{{ text_account_already }}</p>
       <form id="form-register" action="{{ register }}" method="post" data-oc-toggle="ajax">
         <fieldset id="account">
           <legend>{{ text_your_details }}</legend>
-          <div class="row mb-3 required{% if customer_groups|length <= 1 %} d-none{% endif %}">
+          {% if customer_groups|length > 1 %}
+          <div class="row mb-3 required">
             <label class="col-sm-2 col-form-label">{{ entry_customer_group }}</label>
             <div class="col-sm-10">
               <select name="customer_group_id" id="input-customer-group" class="form-select">
@@ -22,6 +24,7 @@
               </select>
             </div>
           </div>
+          {% endif %}
           <div class="row mb-3 required">
             <label for="input-firstname" class="col-sm-2 col-form-label">{{ entry_firstname }}</label>
             <div class="col-sm-10">
@@ -194,10 +197,12 @@
             <label class="col-sm-2 col-form-label">{{ entry_newsletter }}</label>
             <div class="col-sm-10">
               <div class="form-check form-check-inline">
-                <input type="radio" name="newsletter" value="1" id="input-newsletter-yes" class="form-check-input"/> <label for="input-newsletter-yes" class="form-check-label">{{ text_yes }}</label>
+                <input type="radio" name="newsletter" value="1" id="input-newsletter-yes" class="form-check-input"/>
+                <label for="input-newsletter-yes" class="form-check-label">{{ text_yes }}</label>
               </div>
               <div class="form-check form-check-inline">
-                <input type="radio" name="newsletter" value="0" id="input-newsletter-no" class="form-check-input" checked/> <label for="input-newsletter-no" class="form-check-label">{{ text_no }}</label>
+                <input type="radio" name="newsletter" value="0" id="input-newsletter-no" class="form-check-input" checked/>
+                <label for="input-newsletter-no" class="form-check-label">{{ text_no }}</label>
               </div>
             </div>
           </div>

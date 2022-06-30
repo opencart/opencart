@@ -30,14 +30,15 @@ $_['action_pre_action'] = [
 	'startup/event',
 	'startup/sass',
 	'startup/login',
+	'startup/authorize',
 	'startup/permission'
 ];
 
 // Actions
-$_['action_default']    = 'common/dashboard';
+$_['action_default']     = 'common/dashboard';
 
 // Action Events
-$_['action_event']      = [
+$_['action_event']       = [
 	'controller/*/before' => [
 		0 => 'event/language|before'
 	],

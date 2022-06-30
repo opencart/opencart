@@ -56,7 +56,8 @@ $_['entry_bank_account_number'] = 'Account Number';
 $_['entry_comment']             = 'Comment';
 $_['entry_description']         = 'Description';
 $_['entry_amount']              = 'Amount';
-$_['entry_date_added']          = 'Date Added';
+$_['entry_date_from']           = 'Date From';
+$_['entry_date_to']             = 'Date To';
 
 // Help
 $_['help_tracking']             = 'The tracking code that will be used to track referrals.';

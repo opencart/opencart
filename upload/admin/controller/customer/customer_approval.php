@@ -66,11 +66,17 @@ class CustomerApproval extends \Opencart\System\Engine\Controller {
 		} else {
 			$filter_type = '';
 		}
-		
-		if (isset($this->request->get['filter_date_added'])) {
-			$filter_date_added = $this->request->get['filter_date_added'];
+
+		if (isset($this->request->get['filter_date_from'])) {
+			$filter_date_from = $this->request->get['filter_date_from'];
 		} else {
-			$filter_date_added = '';
+			$filter_date_from = '';
+		}
+
+		if (isset($this->request->get['filter_date_to'])) {
+			$filter_date_to = $this->request->get['filter_date_to'];
+		} else {
+			$filter_date_to = '';
 		}
 						
 		if (isset($this->request->get['page'])) {
@@ -97,8 +103,12 @@ class CustomerApproval extends \Opencart\System\Engine\Controller {
 			$url .= '&filter_type=' . $this->request->get['filter_type'];
 		}
 
-		if (isset($this->request->get['filter_date_added'])) {
-			$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
+		if (isset($this->request->get['filter_date_from'])) {
+			$url .= '&filter_date_from=' . $this->request->get['filter_date_from'];
+		}
+
+		if (isset($this->request->get['filter_date_to'])) {
+			$url .= '&filter_date_to=' . $this->request->get['filter_date_to'];
 		}
 
 		if (isset($this->request->get['page'])) {
@@ -114,7 +124,8 @@ class CustomerApproval extends \Opencart\System\Engine\Controller {
 			'filter_email'             => $filter_email,
 			'filter_customer_group_id' => $filter_customer_group_id,
 			'filter_type'              => $filter_type,
-			'filter_date_added'        => $filter_date_added,
+			'filter_date_from'         => $filter_date_from,
+			'filter_date_to'           => $filter_date_to,
 			'start'                    => ($page - 1) * $this->config->get('config_pagination_admin'),
 			'limit'                    => $this->config->get('config_pagination_admin')
 		];
@@ -157,9 +168,13 @@ class CustomerApproval extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['filter_type'])) {
 			$url .= '&filter_type=' . $this->request->get['filter_type'];
 		}
-		
-		if (isset($this->request->get['filter_date_added'])) {
-			$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
+
+		if (isset($this->request->get['filter_date_from'])) {
+			$url .= '&filter_date_from=' . $this->request->get['filter_date_from'];
+		}
+
+		if (isset($this->request->get['filter_date_to'])) {
+			$url .= '&filter_date_to=' . $this->request->get['filter_date_to'];
 		}
 
 		$data['pagination'] = $this->load->controller('common/pagination', [

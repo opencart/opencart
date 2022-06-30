@@ -66,13 +66,13 @@ $('#input-store').on('change', function (e) {
     $.ajax({
         url: 'index.php?route=design/theme|path&user_token={{ user_token }}&store_id=' + $(element).val(),
         dataType: 'json',
-        beforeSend: function() {
+        beforeSend: function () {
             $(element).prop('disabled', true);
         },
-        complete: function() {
+        complete: function () {
             $(element).prop('disabled', false);
         },
-        success: function(json) {
+        success: function (json) {
             html = '';
 
             if (json['directory']) {
@@ -89,7 +89,7 @@ $('#input-store').on('change', function (e) {
 
             $('#path').html(html);
         },
-        error: function(xhr, ajaxOptions, thrownError) {
+        error: function (xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
@@ -105,15 +105,15 @@ $('#path').on('click', 'a.directory', function (e) {
     $.ajax({
         url: 'index.php?route=design/theme|path&user_token={{ user_token }}&store_id=' + $('#input-store').val() + '&path=' + $(element).attr('href'),
         dataType: 'json',
-        beforeSend: function() {
+        beforeSend: function () {
             $(element).find('i').removeClass('fa-arrow-right');
             $(element).find('i').addClass('fa-circle-notch fa-spin');
         },
-        complete: function() {
+        complete: function () {
             $(element).find('i').removeClass('fa-circle-notch fa-spin');
             $(element).find('i').addClass('fa-arrow-right');
         },
-        success: function(json) {
+        success: function (json) {
             html = '';
 
             if (json['directory']) {
@@ -148,7 +148,7 @@ $('#path').on('click', 'a.directory', function (e) {
 
             $('#path').html(html);
         },
-        error: function(xhr, ajaxOptions, thrownError) {
+        error: function (xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
@@ -174,15 +174,15 @@ $('#path').on('click', 'a.file', function (e) {
         editor['#tab-' + tab_id] = $.ajax({
             url: 'index.php?route=design/theme|template&user_token={{ user_token }}&store_id=' + $('#input-store').val() + '&path=' + $(element).attr('href'),
             dataType: 'json',
-            beforeSend: function() {
+            beforeSend: function () {
                 $(element).find('i').removeClass('fa-arrow-right');
                 $(element).find('i').addClass('fa-circle-notch fa-spin');
             },
-            complete: function() {
+            complete: function () {
                 $(element).find('i').removeClass('fa-circle-notch fa-spin');
                 $(element).find('i').addClass('fa-arrow-right');
             },
-            success: function(json) {
+            success: function (json) {
                 if (json['code']) {
                     $('#code').show();
                     $('#recent').hide();
@@ -193,7 +193,7 @@ $('#path').on('click', 'a.file', function (e) {
                     html += '  <textarea name="code" id="input-code" rows="10" class="form-control"></textarea>';
                     html += '  <input type="hidden" name="store_id" value="' + $('#input-store').val() + '" id="input-' + tab_id + '-store"/>';
                     html += '  <input type="hidden" name="path" value="' + $(element).attr('href') + '" id="input-' + tab_id + '-path"/>';
-                    html += '  <br />';
+                    html += '  <br/>';
                     html += '  <div class="float-end">';
                     html += '    <button type="button" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>';
                     html += '    <button class="btn btn-danger"><i class="fas fa-recycle"></i> {{ button_reset }}</button>';
@@ -217,7 +217,7 @@ $('#path').on('click', 'a.file', function (e) {
                     codemirror.setSize('100%', '500px');
                 }
             },
-            error: function(xhr, ajaxOptions, thrownError) {
+            error: function (xhr, ajaxOptions, thrownError) {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });
@@ -265,13 +265,13 @@ $('.tab-content').on('click', '.btn-primary', function (e) {
         type: 'post',
         data: 'code=' + encodeURIComponent(editor.getValue()),
         dataType: 'json',
-        beforeSend: function() {
+        beforeSend: function () {
             $(element).prop('disabled', true).addClass('loading');
         },
-        complete: function() {
+        complete: function () {
             $(element).prop('disabled', false).removeClass('loading');
         },
-        success: function(json) {
+        success: function (json) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
@@ -284,7 +284,7 @@ $('.tab-content').on('click', '.btn-primary', function (e) {
                 $('#history').load('index.php?route=design/theme|history&user_token={{ user_token }}');
             }
         },
-        error: function(xhr, ajaxOptions, thrownError) {
+        error: function (xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
@@ -297,13 +297,13 @@ $('.tab-content').on('click', '.btn-danger', function (e) {
         $.ajax({
             url: 'index.php?route=design/theme|reset&user_token={{ user_token }}&store_id=' + $('.tab-content .active #input-store').val() + '&path=' + $('.tab-content .active input[name=\'path\']').val(),
             dataType: 'json',
-            beforeSend: function() {
+            beforeSend: function () {
                 $(element).prop('disabled', true).addClass('loading');
             },
-            complete: function() {
+            complete: function () {
                 $(element).prop('disabled', false).removeClass('loading');
             },
-            success: function(json) {
+            success: function (json) {
                 $('.alert-dismissible').remove();
 
                 if (json['error']) {
@@ -319,7 +319,7 @@ $('.tab-content').on('click', '.btn-danger', function (e) {
                 codemirror.setValue(json['code']);
                 codemirror.setSize('100%', '500px');
             },
-            error: function(xhr, ajaxOptions, thrownError) {
+            error: function (xhr, ajaxOptions, thrownError) {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });
@@ -334,7 +334,7 @@ $('#history').on('click', '.pagination a', function (e) {
 
 $('#history').load('index.php?route=design/theme|history&user_token={{ user_token }}');
 
-$('#history').on('click', '.btn-primary', function(e) {
+$('#history').on('click', '.btn-primary', function (e) {
     e.preventDefault();
 
     var element = this;
@@ -346,13 +346,13 @@ $('#history').on('click', '.btn-primary', function(e) {
         $.ajax({
             url: 'index.php?route=design/theme|template&user_token={{ user_token }}&store_id=' + $(element).parent().parent().find('input[name=\'store_id\']').val() + '&path=' + $(element).parent().parent().find('input[name=\'path\']').val(),
             dataType: 'json',
-            beforeSend: function() {
+            beforeSend: function () {
                 $(element).prop('disabled', true).addClass('loading');
             },
-            complete: function() {
+            complete: function () {
                 $(element).prop('disabled', false).removeClass('loading');
             },
-            success: function(json) {
+            success: function (json) {
                 if (json['code']) {
                     $('#code').show();
                     $('#recent').hide();
@@ -363,7 +363,7 @@ $('#history').on('click', '.btn-primary', function(e) {
                     html += '  <textarea name="code" rows="10"></textarea>';
                     html += '  <input type="hidden" name="store_id" value="' + $(element).parent().parent().find('input[name=\'store_id\']').val() + '" />';
                     html += '  <input type="hidden" name="path" value="' + $(element).parent().parent().find('input[name=\'path\']').val() + '.twig" />';
-                    html += '  <br />';
+                    html += '  <br/>';
                     html += '  <div class="float-end">';
                     html += '    <button type="button" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_save }}</button>';
                     html += '    <button class="btn btn-danger"><i class="fas fa-recycle"></i> {{ button_reset }}</button>';
@@ -387,7 +387,7 @@ $('#history').on('click', '.btn-primary', function(e) {
                     codemirror.setSize('100%', '500px');
                 }
             },
-            error: function(xhr, ajaxOptions, thrownError) {
+            error: function (xhr, ajaxOptions, thrownError) {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });
@@ -396,7 +396,7 @@ $('#history').on('click', '.btn-primary', function(e) {
     }
 });
 
-$('#history').on('click', '.btn-danger', function(e) {
+$('#history').on('click', '.btn-danger', function (e) {
     e.preventDefault();
 
     if (confirm('{{ text_confirm }}')) {
@@ -405,13 +405,13 @@ $('#history').on('click', '.btn-danger', function(e) {
         $.ajax({
             url: $(element).attr('href'),
             dataType: 'json',
-            beforeSend: function() {
+            beforeSend: function () {
                 $(element).prop('disabled', true).addClass('loading');
             },
-            complete: function() {
+            complete: function () {
                 $(element).prop('disabled', false).removeClass('loading');
             },
-            success: function(json) {
+            success: function (json) {
                 $('.alert-dismissible').remove();
 
                 if (json['error']) {
@@ -424,7 +424,7 @@ $('#history').on('click', '.btn-danger', function(e) {
                     $('#history').load('index.php?route=design/theme|history&user_token={{ user_token }}');
                 }
             },
-            error: function(xhr, ajaxOptions, thrownError) {
+            error: function (xhr, ajaxOptions, thrownError) {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });

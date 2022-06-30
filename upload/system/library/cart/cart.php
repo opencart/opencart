@@ -251,19 +251,20 @@ class Cart {
 
 					if ($subscription_query->num_rows) {
 						$subscription_data = [
-							'subscription_plan_id' => $subscription_query->row['subscription_plan_id'],
-							'name'                 => $subscription_query->row['name'],
-							'description'          => $subscription_query->row['description'],
-							'trial_price'          => $subscription_query->row['trial_price'],
-							'trial_frequency'      => $subscription_query->row['trial_frequency'],
-							'trial_cycle'          => $subscription_query->row['trial_cycle'],
-							'trial_duration'       => $subscription_query->row['trial_duration'],
-							'trial_status'         => $subscription_query->row['trial_status'],
-							'price'                => $subscription_query->row['price'],
-							'frequency'            => $subscription_query->row['frequency'],
-							'cycle'                => $subscription_query->row['cycle'],
-							'duration'             => $subscription_query->row['duration'],
-							'remaining'            => $subscription_query->row['duration']
+							'subscription_plan_id' 	=> $subscription_query->row['subscription_plan_id'],
+							'name'                 	=> $subscription_query->row['name'],
+							'description'          	=> $subscription_query->row['description'],
+							'trial_price'          	=> $subscription_query->row['trial_price'],
+							'trial_frequency'      	=> $subscription_query->row['trial_frequency'],
+							'trial_cycle'          	=> $subscription_query->row['trial_cycle'],
+							'trial_duration'       	=> $subscription_query->row['trial_duration'],
+							'trial_status'         	=> $subscription_query->row['trial_status'],
+							'price'                	=> $subscription_query->row['price'],
+							'frequency'            	=> $subscription_query->row['frequency'],
+							'cycle'                	=> $subscription_query->row['cycle'],
+							'duration'             	=> $subscription_query->row['duration'],
+							'remaining'            	=> $subscription_query->row['duration'],							
+							'status'				=> $subscription_query->row['status']
 						];
 					}
 
@@ -410,11 +411,11 @@ class Cart {
 	}
 
 	public function hasProducts(): bool {
-		return count($this->getProducts()) ? true : false;
+		return count($this->getProducts());
 	}
 
 	public function hasSubscription(): bool {
-		return count($this->getSubscription()) ? true : false;
+		return count($this->getSubscription());
 	}
 
 	public function hasStock(): bool {

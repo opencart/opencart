@@ -50,6 +50,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise generateDataKeyPairWithoutPlaintextAsync(array $args = [])
  * @method \Aws\Result generateDataKeyWithoutPlaintext(array $args = [])
  * @method \GuzzleHttp\Promise\Promise generateDataKeyWithoutPlaintextAsync(array $args = [])
+ * @method \Aws\Result generateMac(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise generateMacAsync(array $args = [])
  * @method \Aws\Result generateRandom(array $args = [])
  * @method \GuzzleHttp\Promise\Promise generateRandomAsync(array $args = [])
  * @method \Aws\Result getKeyPolicy(array $args = [])
@@ -102,5 +104,7 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise updatePrimaryRegionAsync(array $args = [])
  * @method \Aws\Result verify(array $args = [])
  * @method \GuzzleHttp\Promise\Promise verifyAsync(array $args = [])
+ * @method \Aws\Result verifyMac(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise verifyMacAsync(array $args = [])
  */
 class KmsClient extends AwsClient {}

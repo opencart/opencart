@@ -5,6 +5,8 @@ $_['heading_title']         = 'Profile';
 // Text
 $_['text_success']          = 'Success: You have modified your profile!';
 $_['text_edit']             = 'Edit Your Profile';
+$_['text_user']             = 'Users Details';
+$_['text_password']         = 'Password';
 
 // Entry
 $_['entry_username']        = 'Username';

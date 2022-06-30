@@ -47,8 +47,6 @@ class Signer
     {
         if (PHP_MAJOR_VERSION < 8) {
             $this->pkHandle && openssl_pkey_free($this->pkHandle);
-        } else {
-            $this->pkHandle;
         }
     }
 

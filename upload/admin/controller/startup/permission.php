@@ -17,7 +17,7 @@ class Permission extends \Opencart\System\Engine\Controller {
 				'common/login',
 				'common/logout',
 				'common/forgotten',
-				'common/reset',
+				'common/authorize',
 				'common/cron',
 				'error/not_found',
 				'error/permission'

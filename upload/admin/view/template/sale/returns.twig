@@ -53,16 +53,16 @@
               </select>
             </div>
             <div class="mb-3">
-              <label for="input-date-added" class="form-label">{{ entry_date_added }}</label>
+              <label for="input-date-from" class="form-label">{{ entry_date_from }}</label>
               <div class="input-group">
-                <input type="text" name="filter_date_added" value="{{ filter_date_added }}" placeholder="{{ entry_date_added }}" id="input-date-added" class="form-control date"/>
+                <input type="text" name="filter_date_from" value="{{ filter_date_from }}" placeholder="{{ entry_date_from }}" id="input-date-from" class="form-control date"/>
                 <div class="input-group-text"><i class="fas fa-calendar"></i></div>
               </div>
             </div>
             <div class="mb-3">
-              <label for="input-date-modified" class="form-label">{{ entry_date_modified }}</label>
+              <label for="input-date-to" class="form-label">{{ entry_date_to }}</label>
               <div class="input-group">
-                <input type="text" name="filter_date_modified" value="{{ filter_date_modified }}" placeholder="{{ entry_date_modified }}" id="input-date-modified" class="form-control date"/>
+                <input type="text" name="filter_date_to" value="{{ filter_date_to }}" placeholder="{{ entry_date_to }}" id="input-date-to" class="form-control date"/>
                 <div class="input-group-text"><i class="fas fa-calendar"></i></div>
               </div>
             </div>
@@ -127,16 +127,16 @@ $('#button-filter').on('click', function () {
         url += '&filter_return_status_id=' + filter_return_status_id;
     }
 
-    var filter_date_added = $('#input-date-added').val();
+    var filter_date_from = $('#input-date-from').val();
 
-    if (filter_date_added) {
-        url += '&filter_date_added=' + encodeURIComponent(filter_date_added);
+    if (filter_date_from) {
+        url += '&filter_date_from=' + encodeURIComponent(filter_date_from);
     }
 
-    var filter_date_modified = $('#input-date-modified').val();
+    var filter_date_to = $('#input-date-to').val();
 
-    if (filter_date_modified) {
-        url += '&filter_date_modified=' + encodeURIComponent(filter_date_modified);
+    if (filter_date_to) {
+        url += '&filter_date_to=' + encodeURIComponent(filter_date_to);
     }
 
     $('#return').load('index.php?route=sale/returns|list&user_token={{ user_token }}' + url);

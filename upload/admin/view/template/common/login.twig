@@ -4,25 +4,25 @@
     <br/>
     <br/>
     <div class="row justify-content-sm-center">
-      <div class="col-sm-4 col-md-6">
+      <div class="col-sm-10 col-md-8 col-lg-5">
         <div class="card">
           <div class="card-header"><i class="fas fa-lock"></i> {{ text_login }}</div>
           <div class="card-body">
             <form id="form-login" action="{{ login }}" method="post" data-oc-toggle="ajax">
               {% if error_warning %}
-                <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}</div>
+                <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }} <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>
               {% endif %}
               {% if success %}
-                <div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> {{ success }}</div>
+                <div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> {{ success }} <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>
               {% endif %}
-              <div class="row mb-3">
+              <div class="mb-3">
                 <label for="input-username" class="form-label">{{ entry_username }}</label>
                 <div class="input-group">
                   <div class="input-group-text"><i class="fas fa-user"></i></div>
                   <input type="text" name="username" value="" placeholder="{{ entry_username }}" id="input-username" class="form-control"/>
                 </div>
               </div>
-              <div class="row mb-3">
+              <div class="mb-3">
                 <label for="input-password" class="form-label">{{ entry_password }}</label>
                 <div class="input-group mb-2">
                   <div class="input-group-text"><i class="fas fa-lock"></i></div>

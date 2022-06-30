@@ -338,6 +338,15 @@
                           <div class="form-text">{{ help_review }}</div>
                         </div>
                       </div>
+                      <div class="row mt-2 mb-3">
+                        <label class="col-sm-2 col-form-label">{{ entry_review_purchased }}</label>
+                        <div class="col-sm-10">
+                          <div class="form-check form-switch form-switch-lg">
+                            <input type="checkbox" name="config_review_purchased" value="1" id="input-review-purchased" class="form-check-input"{% if config_review_purchased %} checked{% endif %}/>
+                          </div>
+                          <div class="form-text">{{ help_review_purchased }}</div>
+                        </div>
+                      </div>
                       <div class="row mb-3">
                         <label class="col-sm-2 col-form-label">{{ entry_review_guest }}</label>
                         <div class="col-sm-10">
@@ -350,7 +359,6 @@
                     </div>
                   </div>
                 </div>
-
                 <div class="accordion-item">
                   <h2 class="accordion-header"><button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapse-voucher">{{ text_voucher }}</button></h2>
                   <div id="collapse-voucher" class="accordion-collapse collapse" data-bs-parent="#accordion-option">
@@ -1174,6 +1182,17 @@
                   </div>
                 </div>
                 <div class="row mb-3">
+                  <label for="input-session_samesite" class="col-sm-2 col-form-label">{{ entry_session_samesite }}</label>
+                  <div class="col-sm-10">
+                    <select name="config_session_samesite" id="input-session_samesite" class="form-select">
+                      <option value="None"{% if config_session_samesite == 'None' %} selected="selected"{% endif %}>{{ text_none }}</option>
+                      <option value="Lax"{% if config_session_samesite == 'Lax' %} selected="selected"{% endif %}>{{ text_lax }}</option>
+                      <option value="Strict"{% if config_session_samesite == 'Strict' %} selected="selected"{% endif %}>{{ text_strict }}</option>
+                    </select>
+                    <div class="form-text">{{ help_session_samesite }}</div>
+                  </div>
+                </div>
+                <div class="row mb-3">
                   <label class="col-sm-2 col-form-label">{{ entry_seo_url }}</label>
                   <div class="col-sm-10">
                     <div class="form-check form-switch form-switch-lg">
@@ -1199,6 +1218,15 @@
               </fieldset>
               <fieldset>
                 <legend>{{ text_security }}</legend>
+                <div class="row mb-3">
+                  <label class="col-sm-2 col-form-label">{{ entry_security }}</label>
+                  <div class="col-sm-10">
+                    <div class="form-check form-switch form-switch-lg">
+                      <input type="checkbox" name="config_security" value="1" id="input-security" class="form-check-input"{% if config_security %} checked{% endif %}/>
+                    </div>
+                    <div class="form-text">{{ help_security }}</div>
+                  </div>
+                </div>
                 <div class="row mb-3">
                   <label class="col-sm-2 col-form-label">{{ entry_shared }}</label>
                   <div class="col-sm-10">

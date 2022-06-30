@@ -15,6 +15,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise deleteHypervisorAsync(array $args = [])
  * @method \Aws\Result disassociateGatewayFromServer(array $args = [])
  * @method \GuzzleHttp\Promise\Promise disassociateGatewayFromServerAsync(array $args = [])
+ * @method \Aws\Result getGateway(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getGatewayAsync(array $args = [])
  * @method \Aws\Result importHypervisorConfiguration(array $args = [])
  * @method \GuzzleHttp\Promise\Promise importHypervisorConfigurationAsync(array $args = [])
  * @method \Aws\Result listGateways(array $args = [])
@@ -35,6 +37,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise untagResourceAsync(array $args = [])
  * @method \Aws\Result updateGatewayInformation(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateGatewayInformationAsync(array $args = [])
+ * @method \Aws\Result updateGatewaySoftwareNow(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateGatewaySoftwareNowAsync(array $args = [])
  * @method \Aws\Result updateHypervisor(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateHypervisorAsync(array $args = [])
  */

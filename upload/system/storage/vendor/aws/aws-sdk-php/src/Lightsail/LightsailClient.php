@@ -211,6 +211,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getLoadBalancerMetricDataAsync(array $args = [])
  * @method \Aws\Result getLoadBalancerTlsCertificates(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getLoadBalancerTlsCertificatesAsync(array $args = [])
+ * @method \Aws\Result getLoadBalancerTlsPolicies(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getLoadBalancerTlsPoliciesAsync(array $args = [])
  * @method \Aws\Result getLoadBalancers(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getLoadBalancersAsync(array $args = [])
  * @method \Aws\Result getOperation(array $args = [])

@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Install\Controller\Install;
 class Step2 extends \Opencart\System\Engine\Controller {
-	private $error = [];
+	private array $error = [];
 
 	public function index(): void {
 		$this->load->language('install/step_2');

@@ -1,15 +1,7 @@
 <?php
 //namespace Opencart\System\Helper;
-function token(int $length = 32) {
-	if (intval($length) <= 8) {
-		$length = 32;
-	}
-
-	if (function_exists('random_bytes')) {
-		$token = bin2hex(random_bytes($length));
-	}
-
-	return substr($token, -$length, $length);
+function token(int $length = 32): string {
+	return substr(bin2hex(random_bytes($length)), 0, $length);
 }
 
 /**
@@ -36,7 +28,7 @@ if (!function_exists('hash_equals')) {
 	}
 }
 
-function date_added(string $date) {
+function date_added(string $date): array {
 	$second = time() - strtotime($date);
 
 	if ($second < 10) {
@@ -108,41 +100,4 @@ function date_added(string $date) {
 	}
 
 	return [$code, $date_added];
-}
-
-function format_size(string $file = '', bool $max = true) {
-	if ($max) {
-		$size = ini_get('upload_max_filesize');
-
-		$unit = substr($size, -1);
-		switch ($unit){
-			case 'K':
-			$size = (int)$size * 1024;
-			break;
-			case 'M':
-			$size = (int)$size * 1024 * 1024;
-			break;
-			case 'G':
-			$size = (int)$size*1024 * 1024 * 1024;
-			break;
-		}
-	} elseif (is_file($file)) {
-		$size = sprintf('%u', filesize($file));
-	}
-
-	if ($size) {
-		$suffix = [];
-
-		$suffix = [
-			'b',
-			'kb',
-			'mb',
-			'gb'
-		];
-		
-		$code = !empty($suffix[intval(log($size, 1024))]) ? $suffix[intval(log($size, 1024))] : end($suffix);
-		$format_size = $size / (1024 ** array_search($code, $suffix));
-		
-		return [$code, $format_size, $size];	
-	}
 }

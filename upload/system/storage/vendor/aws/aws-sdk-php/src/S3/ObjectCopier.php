@@ -6,6 +6,7 @@ use Aws\Arn\S3\AccessPointArn;
 use Aws\Exception\MultipartUploadException;
 use Aws\Result;
 use Aws\S3\Exception\S3Exception;
+use GuzzleHttp\Promise\Coroutine;
 use GuzzleHttp\Promise\PromisorInterface;
 use InvalidArgumentException;
 
@@ -75,10 +76,12 @@ class ObjectCopier implements PromisorInterface
      * Perform the configured copy asynchronously. Returns a promise that is
      * fulfilled with the result of the CompleteMultipartUpload or CopyObject
      * operation or rejected with an exception.
+     *
+     * @return Coroutine
      */
     public function promise()
     {
-        return \GuzzleHttp\Promise\Coroutine::of(function () {
+        return Coroutine::of(function () {
             $headObjectCommand = $this->client->getCommand(
                 'HeadObject',
                 $this->options['params'] + $this->source

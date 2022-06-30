@@ -12,11 +12,6 @@ class Register extends \Opencart\System\Engine\Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment.min.js');
-		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment-with-locales.min.js');
-		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/daterangepicker.js');
-		$this->document->addStyle('catalog/view/javascript/jquery/datetimepicker/daterangepicker.css');
-
 		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = [
@@ -139,7 +134,7 @@ class Register extends \Opencart\System\Engine\Controller {
 			if ($this->request->post['customer_group_id']) {
 				$customer_group_id = (int)$this->request->post['customer_group_id'];
 			} else {
-				$customer_group_id = $this->config->get('config_customer_group_id');
+				$customer_group_id = (int)$this->config->get('config_customer_group_id');
 			}
 
 			$this->load->model('account/customer_group');

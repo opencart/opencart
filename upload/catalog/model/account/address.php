@@ -83,7 +83,7 @@ class Address extends \Opencart\System\Engine\Model {
 				'country'   => $country
 			];
 
-			$address_format = str_replace(["\r\n", "\r", "\n"], '<br />', preg_replace(["/\s\s+/", "/\r\r+/", "/\n\n+/"], '<br />', trim(str_replace($find, $replace, $address_format))));
+			$address_format = str_replace(["\r\n", "\r", "\n"], '<br/>', preg_replace(["/\s\s+/", "/\r\r+/", "/\n\n+/"], '<br/>', trim(str_replace($find, $replace, $address_format))));
 
 			return [
 				'address_id'     => $address_query->row['address_id'],
@@ -129,6 +129,6 @@ class Address extends \Opencart\System\Engine\Model {
 	public function getTotalAddresses(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "address` WHERE `customer_id` = '" . (int)$this->customer->getId() . "'");
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
 	}
 }

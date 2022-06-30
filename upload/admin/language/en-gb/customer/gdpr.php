@@ -29,7 +29,8 @@ $_['column_action']     = 'Action';
 $_['entry_email']       = 'E-Mail';
 $_['entry_action']      = 'Action';
 $_['entry_status']      = 'Status';
-$_['entry_date_added']  = 'Date Added';
+$_['entry_date_from']   = 'Date From';
+$_['entry_date_to']     = 'Date To';
 
 // Error
 $_['error_permission']  = 'Warning: You do not have permission to modify GDPR approvals!';

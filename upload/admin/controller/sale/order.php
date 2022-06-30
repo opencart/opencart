@@ -6,6 +6,60 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
+		if (isset($this->request->get['filter_order_id'])) {
+			$filter_order_id = (int)$this->request->get['filter_order_id'];
+		} else {
+			$filter_order_id = '';
+		}
+
+		if (isset($this->request->get['filter_customer_id'])) {
+			$filter_customer_id = $this->request->get['filter_customer_id'];
+		} else {
+			$filter_customer_id = '';
+		}
+
+		if (isset($this->request->get['filter_customer'])) {
+			$filter_customer = $this->request->get['filter_customer'];
+		} else {
+			$filter_customer = '';
+		}
+
+		if (isset($this->request->get['filter_store_id'])) {
+			$filter_store_id = (int)$this->request->get['filter_store_id'];
+		} else {
+			$filter_store_id = '';
+		}
+
+		if (isset($this->request->get['filter_order_status'])) {
+			$filter_order_status = $this->request->get['filter_order_status'];
+		} else {
+			$filter_order_status = '';
+		}
+
+		if (isset($this->request->get['filter_order_status_id'])) {
+			$filter_order_status_id = (int)$this->request->get['filter_order_status_id'];
+		} else {
+			$filter_order_status_id = '';
+		}
+
+		if (isset($this->request->get['filter_total'])) {
+			$filter_total = $this->request->get['filter_total'];
+		} else {
+			$filter_total = '';
+		}
+
+		if (isset($this->request->get['filter_date_from'])) {
+			$filter_date_from = $this->request->get['filter_date_from'];
+		} else {
+			$filter_date_from = '';
+		}
+
+		if (isset($this->request->get['filter_date_to'])) {
+			$filter_date_to = $this->request->get['filter_date_to'];
+		} else {
+			$filter_date_to = '';
+		}
+
 		$url = '';
 
 		if (isset($this->request->get['filter_order_id'])) {
@@ -36,12 +90,12 @@ class Order extends \Opencart\System\Engine\Controller {
 			$url .= '&filter_total=' . $this->request->get['filter_total'];
 		}
 
-		if (isset($this->request->get['filter_date_added'])) {
-			$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
+		if (isset($this->request->get['filter_date_from'])) {
+			$url .= '&filter_date_from=' . $this->request->get['filter_date_from'];
 		}
 
-		if (isset($this->request->get['filter_date_modified'])) {
-			$url .= '&filter_date_modified=' . $this->request->get['filter_date_modified'];
+		if (isset($this->request->get['filter_date_to'])) {
+			$url .= '&filter_date_to=' . $this->request->get['filter_date_to'];
 		}
 
 		if (isset($this->request->get['sort'])) {
@@ -96,6 +150,16 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->load->model('localisation/order_status');
 
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
+
+		$data['filter_order_id'] = $filter_order_id;
+		$data['filter_customer_id'] = $filter_customer_id;
+		$data['filter_customer'] = $filter_customer;
+		$data['filter_store_id'] = $filter_store_id;
+		$data['filter_order_status'] = $filter_order_status;
+		$data['filter_order_status_id'] = $filter_order_status_id;
+		$data['filter_total'] = $filter_total;
+		$data['filter_date_from'] = $filter_date_from;
+		$data['filter_date_to'] = $filter_date_to;
 
 		$data['user_token'] = $this->session->data['user_token'];
 
@@ -155,16 +219,16 @@ class Order extends \Opencart\System\Engine\Controller {
 			$filter_total = '';
 		}
 
-		if (isset($this->request->get['filter_date_added'])) {
-			$filter_date_added = $this->request->get['filter_date_added'];
+		if (isset($this->request->get['filter_date_from'])) {
+			$filter_date_from = $this->request->get['filter_date_from'];
 		} else {
-			$filter_date_added = '';
+			$filter_date_from = '';
 		}
 
-		if (isset($this->request->get['filter_date_modified'])) {
-			$filter_date_modified = $this->request->get['filter_date_modified'];
+		if (isset($this->request->get['filter_date_to'])) {
+			$filter_date_to = $this->request->get['filter_date_to'];
 		} else {
-			$filter_date_modified = '';
+			$filter_date_to = '';
 		}
 
 		if (isset($this->request->get['sort'])) {
@@ -215,12 +279,12 @@ class Order extends \Opencart\System\Engine\Controller {
 			$url .= '&filter_total=' . $this->request->get['filter_total'];
 		}
 
-		if (isset($this->request->get['filter_date_added'])) {
-			$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
+		if (isset($this->request->get['filter_date_from'])) {
+			$url .= '&filter_date_from=' . $this->request->get['filter_date_from'];
 		}
 
-		if (isset($this->request->get['filter_date_modified'])) {
-			$url .= '&filter_date_modified=' . $this->request->get['filter_date_modified'];
+		if (isset($this->request->get['filter_date_to'])) {
+			$url .= '&filter_date_to=' . $this->request->get['filter_date_to'];
 		}
 
 		if (isset($this->request->get['sort'])) {
@@ -247,12 +311,12 @@ class Order extends \Opencart\System\Engine\Controller {
 			'filter_order_status'    => $filter_order_status,
 			'filter_order_status_id' => $filter_order_status_id,
 			'filter_total'           => $filter_total,
-			'filter_date_added'      => $filter_date_added,
-			'filter_date_modified'   => $filter_date_modified,
+			'filter_date_from'       => $filter_date_from,
+			'filter_date_to'         => $filter_date_to,
 			'sort'                   => $sort,
 			'order'                  => $order,
 			'start'                  => ($page - 1) * (int)$this->config->get('config_pagination_admin'),
-			'limit'                  =>  (int)$this->config->get('config_pagination_admin')
+			'limit'                  => (int)$this->config->get('config_pagination_admin')
 		];
 
 		$this->load->model('sale/order');
@@ -305,12 +369,12 @@ class Order extends \Opencart\System\Engine\Controller {
 			$url .= '&filter_total=' . $this->request->get['filter_total'];
 		}
 
-		if (isset($this->request->get['filter_date_added'])) {
-			$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
+		if (isset($this->request->get['filter_date_from'])) {
+			$url .= '&filter_date_from=' . $this->request->get['filter_date_from'];
 		}
 
-		if (isset($this->request->get['filter_date_modified'])) {
-			$url .= '&filter_date_modified=' . $this->request->get['filter_date_modified'];
+		if (isset($this->request->get['filter_date_to'])) {
+			$url .= '&filter_date_to=' . $this->request->get['filter_date_to'];
 		}
 
 		if ($order == 'ASC') {
@@ -357,12 +421,12 @@ class Order extends \Opencart\System\Engine\Controller {
 			$url .= '&filter_total=' . $this->request->get['filter_total'];
 		}
 
-		if (isset($this->request->get['filter_date_added'])) {
-			$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
+		if (isset($this->request->get['filter_date_from'])) {
+			$url .= '&filter_date_from=' . $this->request->get['filter_date_from'];
 		}
 
-		if (isset($this->request->get['filter_date_modified'])) {
-			$url .= '&filter_date_modified=' . $this->request->get['filter_date_modified'];
+		if (isset($this->request->get['filter_date_to'])) {
+			$url .= '&filter_date_to=' . $this->request->get['filter_date_to'];
 		}
 
 		if (isset($this->request->get['sort'])) {
@@ -381,16 +445,6 @@ class Order extends \Opencart\System\Engine\Controller {
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($order_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($order_total - $this->config->get('config_pagination_admin'))) ? $order_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $order_total, ceil($order_total / $this->config->get('config_pagination_admin')));
-
-		$data['filter_order_id'] = $filter_order_id;
-		$data['filter_customer_id'] = $filter_customer_id;
-		$data['filter_customer'] = $filter_customer;
-		$data['filter_store_id'] = $filter_store_id;
-		$data['filter_order_status'] = $filter_order_status;
-		$data['filter_order_status_id'] = $filter_order_status_id;
-		$data['filter_total'] = $filter_total;
-		$data['filter_date_added'] = $filter_date_added;
-		$data['filter_date_modified'] = $filter_date_modified;
 
 		$data['sort'] = $sort;
 		$data['order'] = $order;
@@ -446,12 +500,12 @@ class Order extends \Opencart\System\Engine\Controller {
 			$url .= '&filter_total=' . $this->request->get['filter_total'];
 		}
 
-		if (isset($this->request->get['filter_date_added'])) {
-			$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
+		if (isset($this->request->get['filter_date_from'])) {
+			$url .= '&filter_date_from=' . $this->request->get['filter_date_from'];
 		}
 
-		if (isset($this->request->get['filter_date_modified'])) {
-			$url .= '&filter_date_modified=' . $this->request->get['filter_date_modified'];
+		if (isset($this->request->get['filter_date_to'])) {
+			$url .= '&filter_date_to=' . $this->request->get['filter_date_to'];
 		}
 
 		if (isset($this->request->get['sort'])) {
@@ -1225,12 +1279,13 @@ class Order extends \Opencart\System\Engine\Controller {
 		$data['stylesheet'] = 'view/stylesheet/stylesheet.css';
 
 		// Hard coding scripts so they can be replaced via the events system.
-		$data['jquery'] = 'view/javascript/jquery/jquery-3.5.1.min.js';
+		$data['jquery'] = 'view/javascript/jquery/jquery-3.6.0.min.js';
 		$data['bootstrap_js'] = 'view/javascript/bootstrap/js/bootstrap.bundle.min.js';
 
 		$this->load->model('sale/order');
-
 		$this->load->model('setting/setting');
+		$this->load->model('tool/upload');
+		$this->load->model('sale/subscription');
 
 		$data['orders'] = [];
 
@@ -1298,7 +1353,7 @@ class Order extends \Opencart\System\Engine\Controller {
 					'country'   => $order_info['payment_country']
 				];
 
-				$payment_address = str_replace(["\r\n", "\r", "\n"], '<br />', preg_replace(["/\s\s+/", "/\r\r+/", "/\n\n+/"], '<br />', trim(str_replace($find, $replace, $format))));
+				$payment_address = str_replace(["\r\n", "\r", "\n"], '<br/>', preg_replace(["/\s\s+/", "/\r\r+/", "/\n\n+/"], '<br/>', trim(str_replace($find, $replace, $format))));
 
 				if ($order_info['shipping_address_format']) {
 					$format = $order_info['shipping_address_format'];
@@ -1332,9 +1387,14 @@ class Order extends \Opencart\System\Engine\Controller {
 					'country'   => $order_info['shipping_country']
 				];
 
-				$shipping_address = str_replace(["\r\n", "\r", "\n"], '<br />', preg_replace(["/\s\s+/", "/\r\r+/", "/\n\n+/"], '<br />', trim(str_replace($find, $replace, $format))));
-
-				$this->load->model('tool/upload');
+				$shipping_address = str_replace(["\r\n", "\r", "\n"], '<br/>', preg_replace(["/\s\s+/", "/\r\r+/", "/\n\n+/"], '<br/>', trim(str_replace($find, $replace, $format))));
+				
+				// Subscription
+				$filter_data = [
+					'order_id'	=> $order_id
+				];
+					
+				$subscriptions = $this->model_sale_subscription->getSubscriptions($filter_data);
 
 				$product_data = [];
 
@@ -1363,14 +1423,31 @@ class Order extends \Opencart\System\Engine\Controller {
 							'value' => $value
 						];
 					}
+					
+					// Subscription
+					$subscription_data = '';
+						
+					foreach ($subscriptions as $subscription) {
+						$filter_data = array(
+							'filter_subscription_id'	=> $subscription['subscription_id'],
+							'filter_order_product_id'	=> $product['order_product_id']
+						);
+
+						$subscription_info = $this->model_sale_subscription->getSubscriptions($filter_data);
+
+						if ($subscription_info) {
+							$subscription_data = $subscription['name'];
+						}
+					}
 
 					$product_data[] = [
-						'name'     => $product['name'],
-						'model'    => $product['model'],
-						'option'   => $option_data,
-						'quantity' => $product['quantity'],
-						'price'    => $this->currency->format($product['price'] + ($this->config->get('config_tax') ? $product['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']),
-						'total'    => $this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value'])
+						'name'     		=> $product['name'],
+						'model'    		=> $product['model'],
+						'option'   		=> $option_data,
+						'subscription'	=> $subscription_data,
+						'quantity' 		=> $product['quantity'],
+						'price'    		=> $this->currency->format($product['price'] + ($this->config->get('config_tax') ? $product['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']),
+						'total'    		=> $this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value'])
 					];
 				}
 
@@ -1441,10 +1518,10 @@ class Order extends \Opencart\System\Engine\Controller {
 		$data['bootstrap_js'] = 'view/javascript/bootstrap/js/bootstrap.bundle.min.js';
 
 		$this->load->model('sale/order');
-
 		$this->load->model('catalog/product');
-
 		$this->load->model('setting/setting');
+		$this->load->model('tool/upload');
+		$this->load->model('sale/subscription');
 
 		$data['orders'] = [];
 
@@ -1513,9 +1590,14 @@ class Order extends \Opencart\System\Engine\Controller {
 					'country'   => $order_info['shipping_country']
 				];
 
-				$shipping_address = str_replace(["\r\n", "\r", "\n"], '<br />', preg_replace(["/\s\s+/", "/\r\r+/", "/\n\n+/"], '<br />', trim(str_replace($find, $replace, $format))));
-
-				$this->load->model('tool/upload');
+				$shipping_address = str_replace(["\r\n", "\r", "\n"], '<br/>', preg_replace(["/\s\s+/", "/\r\r+/", "/\n\n+/"], '<br/>', trim(str_replace($find, $replace, $format))));
+				
+				// Subscription
+				$filter_data = [
+					'order_id'	=> $order_id
+				];
+					
+				$subscriptions = $this->model_sale_subscription->getSubscriptions($filter_data);
 
 				$product_data = [];
 
@@ -1559,20 +1641,37 @@ class Order extends \Opencart\System\Engine\Controller {
 								}
 							}
 						}
+						
+						// Subscription
+						$subscription_data = '';
+							
+						foreach ($subscriptions as $subscription) {
+							$filter_data = array(
+								'filter_subscription_id'	=> $subscription['subscription_id'],
+								'filter_order_product_id'	=> $product['order_product_id']
+							);
+
+							$subscription_info = $this->model_sale_subscription->getSubscriptions($filter_data);
+
+							if ($subscription_info) {
+								$subscription_data = $subscription['name'];
+							}
+						}
 
 						$product_data[] = [
-							'name'     => $product_info['name'],
-							'model'    => $product_info['model'],
-							'option'   => $option_data,
-							'quantity' => $product['quantity'],
-							'location' => $product_info['location'],
-							'sku'      => $product_info['sku'],
-							'upc'      => $product_info['upc'],
-							'ean'      => $product_info['ean'],
-							'jan'      => $product_info['jan'],
-							'isbn'     => $product_info['isbn'],
-							'mpn'      => $product_info['mpn'],
-							'weight'   => $this->weight->format(($product_info['weight'] + (float)$option_weight) * $product['quantity'], $product_info['weight_class_id'], $this->language->get('decimal_point'), $this->language->get('thousand_point'))
+							'name'     		=> $product_info['name'],
+							'model'    		=> $product_info['model'],
+							'option'   		=> $option_data,
+							'subscription'	=> $subscription_data,
+							'quantity' 		=> $product['quantity'],
+							'location' 		=> $product_info['location'],
+							'sku'      		=> $product_info['sku'],
+							'upc'      		=> $product_info['upc'],
+							'ean'      		=> $product_info['ean'],
+							'jan'      		=> $product_info['jan'],
+							'isbn'     		=> $product_info['isbn'],
+							'mpn'      		=> $product_info['mpn'],
+							'weight'   		=> $this->weight->format(($product_info['weight'] + (float)$option_weight) * $product['quantity'], $product_info['weight_class_id'], $this->language->get('decimal_point'), $this->language->get('thousand_point'))
 						];
 					}
 				}

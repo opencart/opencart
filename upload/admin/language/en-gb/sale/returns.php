@@ -46,8 +46,8 @@ $_['entry_return_action']  = 'Return Action';
 $_['entry_return_status']  = 'Return Status';
 $_['entry_notify']         = 'Notify Customer';
 $_['entry_return_id']      = 'Return ID';
-$_['entry_date_added']     = 'Date Added';
-$_['entry_date_modified']  = 'Date Modified';
+$_['entry_date_from']      = 'Date From';
+$_['entry_date_to']        = 'Date To';
 
 // Help
 $_['help_product']         = '(Autocomplete)';

@@ -225,6 +225,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise updateIAMPolicyAssignmentAsync(array $args = [])
  * @method \Aws\Result updateIpRestriction(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateIpRestrictionAsync(array $args = [])
+ * @method \Aws\Result updatePublicSharingSettings(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updatePublicSharingSettingsAsync(array $args = [])
  * @method \Aws\Result updateTemplate(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateTemplateAsync(array $args = [])
  * @method \Aws\Result updateTemplateAlias(array $args = [])

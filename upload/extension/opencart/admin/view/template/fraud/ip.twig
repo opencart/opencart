@@ -32,10 +32,9 @@
           <div class="row mb-3">
             <label for="input-status" class="col-sm-2 col-form-label"> {{ entry_status }} </label>
             <div class="col-sm-10">
-              <select name="fraud_ip_status" id="input-status" class="form-select">
-                <option value="1"{% if fraud_ip_status %} selected="selected"{% endif %}>{{ text_enabled }}</option>
-                <option value="0"{% if not fraud_ip_status %} selected="selected"{% endif %}>{{ text_disabled }}</option>
-              </select>
+              <div class="form-check form-switch form-switch-lg">
+                <input type="checkbox" name="fraud_ip_status" value="1" id="input-status" class="form-check-input"{% if fraud_ip_status %} checked{% endif %}/>
+              </div>
             </div>
           </div>
           <fieldset>
@@ -61,7 +60,7 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#ip').on('click', '.pagination a', function(e) {
+$('#ip').on('click', '.pagination a', function (e) {
     e.preventDefault();
 
     $('#ip').load(this.href);
@@ -69,40 +68,40 @@ $('#ip').on('click', '.pagination a', function(e) {
 
 $('#ip').load('index.php?route=extension/opencart/fraud/ip|ip&user_token={{ user_token }}');
 
-$('#button-ip-add').on('click', function() {
+$('#button-ip-add').on('click', function () {
     $.ajax({
         url: 'index.php?route=extension/opencart/fraud/ip|addip&user_token={{ user_token }}',
         type: 'post',
         dataType: 'json',
         data: 'ip=' + encodeURIComponent($('#input-ip').val()),
-        beforeSend: function() {
+        beforeSend: function () {
             $('#button-ip-add').prop('disabled', true).addClass('loading');
         },
-        complete: function() {
+        complete: function () {
             $('#button-ip-add').prop('disabled', false).removeClass('loading');
         },
-        success: function(json) {
+        success: function (json) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
-                $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
 
             if (json['success']) {
-                $('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                 $('#ip').load('index.php?route=extension/opencart/fraud/ip|ip&user_token={{ user_token }}');
 
                 $('#input-ip').val('');
             }
         },
-        error: function(xhr, ajaxOptions, thrownError) {
-            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        error: function (xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 });
 
-$('#ip').on('click', 'button', function() {
+$('#ip').on('click', 'button', function () {
     var element = this;
 
     $.ajax({
@@ -110,27 +109,27 @@ $('#ip').on('click', 'button', function() {
         type: 'post',
         dataType: 'json',
         data: 'ip=' + encodeURIComponent($(element).val()),
-        beforeSend: function() {
+        beforeSend: function () {
             $(element).prop('disabled', true).addClass('loading');
         },
-        complete: function() {
+        complete: function () {
             $(element).prop('disabled', false).removeClass('loading');
         },
-        success: function(json) {
+        success: function (json) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
-                $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
 
             if (json['success']) {
-                $('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                 $('#ip').load('index.php?route=extension/opencart/fraud/ip|ip&user_token={{ user_token }}');
             }
         },
-        error: function(xhr, ajaxOptions, thrownError) {
-            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        error: function (xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 });

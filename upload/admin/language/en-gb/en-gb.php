@@ -121,6 +121,7 @@ $_['button_run']                    = 'Run Cron Job';
 $_['button_backup']                 = 'Backup';
 $_['button_developer']              = 'Developer Setting';
 $_['button_master']                 = 'Master Product';
+$_['button_resend']                 = 'Resend';
 
 // Tab
 $_['tab_address']                   = 'Addresses';

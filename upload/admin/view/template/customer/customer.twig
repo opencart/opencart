@@ -40,7 +40,8 @@
               </select>
             </div>
             <div class="mb-3">
-              <label for="input-status" class="form-label">{{ entry_status }}</label> <select name="filter_status" id="input-status" class="form-select">
+              <label for="input-status" class="form-label">{{ entry_status }}</label>
+              <select name="filter_status" id="input-status" class="form-select">
                 <option value=""></option>
                 <option value="1"{% if filter_status == '1' %} selected{% endif %}>{{ text_enabled }}</option>
                 <option value="0" {% if filter_status == '0' %} selected{% endif %}>{{ text_disabled }}</option>
@@ -51,9 +52,16 @@
               <input type="text" name="filter_ip" value="{{ filter_ip }}" placeholder="{{ entry_ip }}" id="input-ip" class="form-control"/>
             </div>
             <div class="mb-3">
-              <label for="input-date-added" class="form-label">{{ entry_date_added }}</label>
+              <label for="input-date-from" class="form-label">{{ entry_date_from }}</label>
               <div class="input-group">
-                <input type="text" name="filter_date_added" value="{{ filter_date_added }}" placeholder="{{ entry_date_added }}" id="input-date-added" class="form-control date"/>
+                <input type="text" name="filter_date_from" value="{{ filter_date_from }}" placeholder="{{ entry_date_from }}" id="input-date-from" class="form-control date"/>
+                <div class="input-group-text"><i class="fas fa-calendar"></i></div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="input-date-to" class="form-label">{{ entry_date_to }}</label>
+              <div class="input-group">
+                <input type="text" name="filter_date_to" value="{{ filter_date_to }}" placeholder="{{ entry_date_to }}" id="input-date-to" class="form-control date"/>
                 <div class="input-group-text"><i class="fas fa-calendar"></i></div>
               </div>
             </div>
@@ -112,22 +120,28 @@ $('#button-filter').on('click', function () {
         url += '&filter_ip=' + encodeURIComponent(filter_ip);
     }
 
-    var filter_date_added = $('#input-date-added').val();
+    var filter_date_from = $('#input-date-from').val();
 
-    if (filter_date_added) {
-        url += '&filter_date_added=' + encodeURIComponent(filter_date_added);
+    if (filter_date_from) {
+        url += '&filter_date_from=' + encodeURIComponent(filter_date_from);
+    }
+
+    var filter_date_to = $('#input-date-to').val();
+
+    if (filter_date_to) {
+        url += '&filter_date_to=' + encodeURIComponent(filter_date_to);
     }
 
     $('#customer').load('index.php?route=customer/customer|list&user_token={{ user_token }}' + url);
 });
 
 $('#input-name').autocomplete({
-    'source': function(request, response) {
+    'source': function (request, response) {
         $.ajax({
             url: 'index.php?route=customer/customer|autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
-            success: function(json) {
-                response($.map(json, function(item) {
+            success: function (json) {
+                response($.map(json, function (item) {
                     return {
                         label: item['name'],
                         value: item['customer_id']
@@ -136,16 +150,16 @@ $('#input-name').autocomplete({
             }
         });
     },
-    'select': function(item) {}
+    'select': function (item) {}
 });
 
 $('#input-email').autocomplete({
-    'source': function(request, response) {
+    'source': function (request, response) {
         $.ajax({
             url: 'index.php?route=customer/customer|autocomplete&user_token={{ user_token }}&filter_email=' + encodeURIComponent(request),
             dataType: 'json',
-            success: function(json) {
-                response($.map(json, function(item) {
+            success: function (json) {
+                response($.map(json, function (item) {
                     return {
                         label: item['email'],
                         value: item['customer_id']
@@ -154,7 +168,7 @@ $('#input-email').autocomplete({
             }
         });
     },
-    'select': function(item) {}
+    'select': function (item) {}
 });
 //--></script>
 {{ footer }}

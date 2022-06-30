@@ -2605,8 +2605,8 @@ function db_schema() {
 				'not_null' => true
 			],
 			[
-				'name' => 'image',
-				'type' => 'varchar(64)',
+				'name' => 'extension',
+				'type' => 'varchar(255)',
 				'not_null' => true
 			],
 			[
@@ -4136,12 +4136,6 @@ function db_schema() {
 				'default' => '0'
 			],
 			[
-				'name' => 'viewed',
-				'type' => 'int(5)',
-				'not_null' => true,
-				'default' => '0'
-			],
-			[
 				'name' => 'date_added',
 				'type' => 'datetime',
 				'not_null' => true
@@ -4798,6 +4792,28 @@ function db_schema() {
 	];
 
 	$tables[] = [
+		'name' => 'product_viewed',
+		'field' => [
+			[
+				'name' => 'product_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'viewed',
+				'type' => 'int(11)',
+				'not_null' => true
+			]
+		],
+		'primary' => [
+			'product_id'
+		],
+		'engine' => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
+	];
+
+	$tables[] = [
 		'name' => 'return',
 		'field' => [
 			[
@@ -5341,7 +5357,7 @@ function db_schema() {
 				'name' => 'customer_payment_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			],
+			],			
 			[
 				'name' => 'name',
 				'type' => 'varchar(255)',
@@ -5350,6 +5366,11 @@ function db_schema() {
 			[
 				'name' => 'description',
 				'type' => 'text',
+				'not_null' => true
+			],
+			[
+				'name' => 'reference',
+				'type' => 'varchar(255)',
 				'not_null' => true
 			],
 			[
@@ -5415,6 +5436,11 @@ function db_schema() {
 			[
 				'name' => 'subscription_status_id',
 				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'status',
+				'type' => 'tinyint(1)',
 				'not_null' => true
 			],
 			[
@@ -5656,6 +5682,11 @@ function db_schema() {
 			[
 				'name' => 'amount',
 				'type' => 'decimal(10,4)',
+				'not_null' => true
+			],
+			[
+				'name' => 'type',
+				'type' => 'tinyint(2)',
 				'not_null' => true
 			],
 			[
@@ -6103,6 +6134,59 @@ function db_schema() {
 		],
 		'primary' => [
 			'user_id'
+		],
+		'engine' => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
+	];
+
+	$tables[] = [
+		'name' => 'user_login',
+		'field' => [
+			[
+				'name' => 'user_login_id',
+				'type' => 'int(11)',
+				'not_null' => true,
+				'auto_increment' => true
+			],
+			[
+				'name' => 'user_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'token',
+				'type' => 'varchar(96)',
+				'not_null' => true
+			],
+			[
+				'name' => 'total',
+				'type' => 'int(1)',
+				'not_null' => true
+			],
+			[
+				'name' => 'ip',
+				'type' => 'varchar(40)',
+				'not_null' => true
+			],
+			[
+				'name' => 'user_agent',
+				'type' => 'varchar(255)',
+				'not_null' => true
+			],
+			[
+				'name' => 'status',
+				'type' => 'tinyint(1)',
+				'not_null' => true
+			],
+			[
+				'name' => 'date_added',
+				'type' => 'datetime',
+				'not_null' => true
+			]
+		],
+		'primary' => [
+			'user_login_id'
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',

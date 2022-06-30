@@ -38,7 +38,7 @@ class Marketing extends \Opencart\System\Engine\Controller {
 						$option = [
 							'expires'  => $this->config->get('config_affiliate_expire') ? time() + (int)$this->config->get('config_affiliate_expire') : 0,
 							'path'     => '/',
-							'SameSite' => $this->config->get('session_samesite')
+							'SameSite' => $this->config->get('config_session_samesite')
 						];
 
 						setcookie('tracking', $tracking, $option);

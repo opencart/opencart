@@ -35,13 +35,13 @@ $('#startup').on('click', '.btn-success, .btn-danger', function (e) {
     $.ajax({
         url: $(element).val(),
         dataType: 'json',
-        beforeSend: function() {
+        beforeSend: function () {
             $(element).prop('disabled', true).addClass('loading');
         },
-        complete: function() {
+        complete: function () {
             $(element).prop('disabled', false).removeClass('loading');
         },
-        success: function(json) {
+        success: function (json) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
@@ -54,7 +54,7 @@ $('#startup').on('click', '.btn-success, .btn-danger', function (e) {
                 $('#startup').load($('#form-startup').attr('data-oc-load'));
             }
         },
-        error: function(xhr, ajaxOptions, thrownError) {
+        error: function (xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });

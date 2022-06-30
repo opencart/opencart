@@ -30,29 +30,31 @@ class Login extends \Opencart\System\Engine\Controller {
 			$data['success'] = '';
 		}
 
-		if (isset($this->request->get['route']) && $this->request->get['route'] != 'common/login') {
-			$route = $this->request->get['route'];
-
-			unset($this->request->get['route']);
-			unset($this->request->get['user_token']);
-
-			$url = '';
-
-			if ($this->request->get) {
-				$url .= http_build_query($this->request->get);
-			}
-
-			$data['redirect'] = $this->url->link($route, $url);
-		} else {
-			$data['redirect'] = '';
-		}
-
 		// Create a login token to prevent brute force attacks
 		$this->session->data['login_token'] = token(32);
 
 		$data['login'] = $this->url->link('common/login|login', 'login_token=' . $this->session->data['login_token'], true);
 
 		$data['forgotten'] = $this->url->link('common/forgotten');
+
+		if (isset($this->request->get['route']) && $this->request->get['route'] != 'common/login') {
+			$args = $this->request->get;
+
+			$route = $args['route'];
+
+			unset($args['route']);
+			unset($args['user_token']);
+
+			$url = '';
+
+			if ($this->request->get) {
+				$url .= http_build_query($args);
+			}
+
+			$data['redirect'] = $this->url->link($route, $url);
+		} else {
+			$data['redirect'] = '';
+		}
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -99,7 +101,7 @@ class Login extends \Opencart\System\Engine\Controller {
 			unset($this->session->data['login_token']);
 
 			if ($this->request->post['redirect'] && (strpos($this->request->post['redirect'], HTTP_SERVER) === 0)) {
-				$json['redirect'] = $this->request->post['redirect'] . '&user_token=' . $this->session->data['user_token'];
+				$json['redirect'] =str_replace('&amp;', '&',  $this->request->post['redirect'] . '&user_token=' . $this->session->data['user_token']);
 			} else {
 				$json['redirect'] = $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true);
 			}

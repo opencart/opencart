@@ -95,7 +95,7 @@ class CliInstall extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($output);
 	}
 
-	public function install($argv) {
+	public function install($argv): string {
 		// Options
 		$option = [
 			'username'    => 'admin',
@@ -324,7 +324,7 @@ class CliInstall extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-			$db->query("SET CHARACTER SET utf8");
+			$db->query("SET CHARACTER SET utf8mb4");
 
 			$db->query("SET @@session.sql_mode = ''");
 

@@ -73,7 +73,7 @@ $('.tab-content .btn-danger').on('click', function () {
                 if (json['success']) {
                     $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                    $($(element).attr('data-oc-target')).val('');
+                    $('#' + $(element).attr('data-oc-target')).val('');
                 }
             },
             error: function (xhr, ajaxOptions, thrownError) {

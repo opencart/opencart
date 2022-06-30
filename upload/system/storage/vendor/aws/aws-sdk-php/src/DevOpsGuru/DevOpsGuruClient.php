@@ -7,6 +7,8 @@ use Aws\AwsClient;
  * This client is used to interact with the **Amazon DevOps Guru** service.
  * @method \Aws\Result addNotificationChannel(array $args = [])
  * @method \GuzzleHttp\Promise\Promise addNotificationChannelAsync(array $args = [])
+ * @method \Aws\Result deleteInsight(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteInsightAsync(array $args = [])
  * @method \Aws\Result describeAccountHealth(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeAccountHealthAsync(array $args = [])
  * @method \Aws\Result describeAccountOverview(array $args = [])

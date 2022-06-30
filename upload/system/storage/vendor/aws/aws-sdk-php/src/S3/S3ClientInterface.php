@@ -4,6 +4,7 @@ namespace Aws\S3;
 use Aws\AwsClientInterface;
 use Aws\CommandInterface;
 use Aws\ResultInterface;
+use Aws\S3\Exception\S3Exception;
 use GuzzleHttp\Promise\PromiseInterface;
 use Psr\Http\Message\RequestInterface;
 
@@ -40,6 +41,8 @@ interface S3ClientInterface extends AwsClientInterface
     public function getObjectUrl($bucket, $key);
 
     /**
+     * @deprecated Use doesBucketExistV2() instead
+     *
      * Determines whether or not a bucket exists by name.
      *
      * @param string $bucket  The name of the bucket
@@ -49,6 +52,24 @@ interface S3ClientInterface extends AwsClientInterface
     public function doesBucketExist($bucket);
 
     /**
+     * Determines whether or not a bucket exists by name. This method uses S3's
+     * HeadBucket operation and requires the relevant bucket permissions in the
+     * default case to prevent errors.
+     *
+     * @param string $bucket  The name of the bucket
+     * @param bool $accept403 Set to true for this method to return true in the case of
+     *                        invalid bucket-level permissions. Credentials MUST be valid
+     *                        to avoid inaccuracies. Using the default value of false will
+     *                        cause an exception to be thrown instead.
+     *
+     * @return bool
+     * @throws S3Exception|Exception if there is an unhandled exception
+     */
+    public function doesBucketExistV2($bucket, $accept403);
+
+    /**
+     * @deprecated Use doesObjectExistV2() instead
+     *
      * Determines whether or not an object exists by name.
      *
      * @param string $bucket  The name of the bucket
@@ -61,9 +82,35 @@ interface S3ClientInterface extends AwsClientInterface
     public function doesObjectExist($bucket, $key, array $options = []);
 
     /**
+     * Determines whether or not an object exists by name. This method uses S3's HeadObject
+     * operation and requires the relevant bucket and object permissions to prevent errors.
+     *
+     * @param string $bucket The name of the bucket
+     * @param string $key The key of the object
+     * @param bool $includeDeleteMarkers Set to true to consider delete markers
+     *                                   existing objects. Using the default value
+     *                                   of false will ignore delete markers and
+     *                                   return false.
+     * @param array $options Additional options available in the HeadObject
+     *                        operation (e.g., VersionId).
+     *
+     * @return bool
+     * @throws S3Exception|Exception if there is an unhandled exception
+     */
+    public function doesObjectExistV2($bucket, $key, $includeDeleteMarkers, array $options = []);
+
+    /**
      * Register the Amazon S3 stream wrapper with this client instance.
      */
     public function registerStreamWrapper();
+
+    /**
+     * Registers the Amazon S3 stream wrapper with this client instance.
+     *
+     *This version uses doesObjectExistV2 and doesBucketExistV2 to check
+     * resource existence.
+     */
+    public function registerStreamWrapperV2();
 
     /**
      * Deletes objects from Amazon S3 that match the result of a ListObjects

@@ -65,10 +65,6 @@ class Customer extends \Opencart\System\Engine\Model {
 	public function getCustomers(array $data = []): array {
 		$sql = "SELECT *, CONCAT(c.`firstname`, ' ', c.`lastname`) AS `name`, cgd.`name` AS `customer_group` FROM `" . DB_PREFIX . "customer` c LEFT JOIN `" . DB_PREFIX . "customer_group_description` cgd ON (c.`customer_group_id` = cgd.`customer_group_id`)";
 
-		if (!empty($data['filter_affiliate'])) {
-			$sql .= " LEFT JOIN `" . DB_PREFIX . "customer_affiliate` ca ON (ca.`customer_id` = c.`customer_id`)";
-		}
-
 		$sql .= " WHERE cgd.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
 		if (!empty($data['filter_name'])) {
@@ -87,10 +83,6 @@ class Customer extends \Opencart\System\Engine\Model {
 			$sql .= " AND c.`customer_group_id` = '" . (int)$data['filter_customer_group_id'] . "'";
 		}
 
-		if (!empty($data['filter_affiliate'])) {
-			$sql .= " AND (SELECT ca.`customer_id` FROM `" . DB_PREFIX . "customer_affiliate` ca WHERE ca.`customer_id` = c.`customer_id`)";
-		}
-
 		if (!empty($data['filter_ip'])) {
 			$sql .= " AND c.`customer_id` IN (SELECT `customer_id` FROM `" . DB_PREFIX . "customer_ip` WHERE `ip` = '" . $this->db->escape((string)$data['filter_ip']) . "')";
 		}
@@ -99,8 +91,12 @@ class Customer extends \Opencart\System\Engine\Model {
 			$sql .= " AND c.`status` = '" . (int)$data['filter_status'] . "'";
 		}
 
-		if (!empty($data['filter_date_added'])) {
-			$sql .= " AND DATE(c.`date_added`) = DATE('" . $this->db->escape((string)$data['filter_date_added']) . "')";
+		if (!empty($data['filter_date_from'])) {
+			$sql .= " AND DATE(c.`date_added`) >= DATE('" . $this->db->escape((string)$data['filter_date_from']) . "')";
+		}
+
+		if (!empty($data['filter_date_to'])) {
+			$sql .= " AND DATE(c.`date_added`) <= DATE('" . $this->db->escape((string)$data['filter_date_to']) . "')";
 		}
 
 		$sort_data = [
@@ -144,10 +140,6 @@ class Customer extends \Opencart\System\Engine\Model {
 	public function getTotalCustomers(array $data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer` c";
 
-		if (!empty($data['filter_affiliate'])) {
-			$sql .= " LEFT JOIN `" . DB_PREFIX . "customer_affiliate` ca ON (ca.`customer_id` = c.`customer_id`)";
-		}
-
 		$implode = [];
 
 		if (!empty($data['filter_name'])) {
@@ -166,10 +158,6 @@ class Customer extends \Opencart\System\Engine\Model {
 			$implode[] = "c.`customer_group_id` = '" . (int)$data['filter_customer_group_id'] . "'";
 		}
 
-		if (!empty($data['filter_affiliate'])) {
-			$implode[] = "ca.`status` = '" . (int)$data['filter_affiliate'] . "'";
-		}
-
 		if (!empty($data['filter_ip'])) {
 			$implode[] = "c.`customer_id` IN (SELECT `customer_id` FROM " . DB_PREFIX . "customer_ip WHERE `ip` = '" . $this->db->escape((string)$data['filter_ip']) . "')";
 		}
@@ -178,8 +166,12 @@ class Customer extends \Opencart\System\Engine\Model {
 			$implode[] = "c.`status` = '" . (int)$data['filter_status'] . "'";
 		}
 
-		if (!empty($data['filter_date_added'])) {
-			$implode[] = "DATE(c.`date_added`) = DATE('" . $this->db->escape((string)$data['filter_date_added']) . "')";
+		if (!empty($data['filter_date_from'])) {
+			$implode[] = "DATE(c.`date_added`) >= DATE('" . $this->db->escape((string)$data['filter_date_from']) . "')";
+		}
+
+		if (!empty($data['filter_date_to'])) {
+			$implode[] = "DATE(c.`date_added`) <= DATE('" . $this->db->escape((string)$data['filter_date_to']) . "')";
 		}
 
 		if ($implode) {
@@ -376,7 +368,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	public function getTotalPaymentMethods(int $customer_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer_payment` WHERE `customer_id` = '" . (int)$customer_id . "'");
 
-		return $query->row['total'];
+		return (int)$query->row['total'];
 	}
 
 	public function addReward(int $customer_id, string $description = '', int $points = 0, int $order_id = 0): void {

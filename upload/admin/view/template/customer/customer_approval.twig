@@ -47,13 +47,20 @@
 								<option value="affiliate">{{ text_affiliate }}</option>
 							</select>
 						</div>
-						<div class="mb-3">
-							<label for="input-date-added" class="form-label">{{ entry_date_added }}</label>
-							<div class="input-group">
-								<input type="text" name="filter_date_added" value="" placeholder="{{ entry_date_added }}" id="input-date-added" class="form-control date"/>
-								<div class="input-group-text"><i class="fas fa-calendar"></i></div>
-							</div>
-						</div>
+            <div class="mb-3">
+              <label for="input-date-from" class="form-label">{{ entry_date_from }}</label>
+              <div class="input-group">
+                <input type="text" name="filter_date_from" value="{{ filter_date_from }}" placeholder="{{ entry_date_from }}" id="input-date-from" class="form-control date"/>
+                <div class="input-group-text"><i class="fas fa-calendar"></i></div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="input-date-to" class="form-label">{{ entry_date_to }}</label>
+              <div class="input-group">
+                <input type="text" name="filter_date_to" value="{{ filter_date_to }}" placeholder="{{ entry_date_to }}" id="input-date-to" class="form-control date"/>
+                <div class="input-group-text"><i class="fas fa-calendar"></i></div>
+              </div>
+            </div>
 						<div class="text-end">
 							<button type="button" id="button-filter" class="btn btn-light"><i class="fas fa-filter"></i> {{ button_filter }}</button>
 						</div>
@@ -89,10 +96,10 @@ $('#customer-approval').on('click', '.btn-success, .btn-danger', function (e) {
         beforeSend: function () {
             $(element).prop('disabled', true).addClass('loading');
         },
-        complete: function() {
+        complete: function () {
             $(element).prop('disabled', false).removeClass('loading');
         },
-        success: function(json) {
+        success: function (json) {
             if (json['error']) {
                 $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
@@ -103,7 +110,7 @@ $('#customer-approval').on('click', '.btn-success, .btn-danger', function (e) {
                 $('#customer-approval').load($('#form-customer-approval').attr('data-oc-load'));
             }
         },
-        error: function(xhr, ajaxOptions, thrownError) {
+        error: function (xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
@@ -136,22 +143,28 @@ $('#button-filter').on('click', function () {
         url += '&filter_type=' + filter_type;
     }
 
-    var filter_date_added = $('#input-date-added').val();
+    var filter_date_from = $('#input-date-from').val();
 
-    if (filter_date_added) {
-        url += '&filter_date_added=' + encodeURIComponent(filter_date_added);
+    if (filter_date_from) {
+        url += '&filter_date_from=' + encodeURIComponent(filter_date_from);
+    }
+
+    var filter_date_to = $('#input-date-to').val();
+
+    if (filter_date_to) {
+        url += '&filter_date_to=' + encodeURIComponent(filter_date_to);
     }
 
     $('#customer-approval').load('index.php?route=customer/customer_approval|list&user_token={{ user_token }}' + url);
 });
 
 $('#input-customer').autocomplete({
-    'source': function(request, response) {
+    'source': function (request, response) {
         $.ajax({
             url: 'index.php?route=customer/customer|autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
-            success: function(json) {
-                response($.map(json, function(item) {
+            success: function (json) {
+                response($.map(json, function (item) {
                     return {
                         label: item['name'],
                         value: item['customer_id']
@@ -160,16 +173,16 @@ $('#input-customer').autocomplete({
             }
         });
     },
-    'select': function(item) {}
+    'select': function (item) {}
 });
 
 $('#input-email').autocomplete({
-    'source': function(request, response) {
+    'source': function (request, response) {
         $.ajax({
             url: 'index.php?route=customer/customer|autocomplete&user_token={{ user_token }}&filter_email=' + encodeURIComponent(request),
             dataType: 'json',
-            success: function(json) {
-                response($.map(json, function(item) {
+            success: function (json) {
+                response($.map(json, function (item) {
                     return {
                         label: item['email'],
                         value: item['customer_id']
@@ -178,7 +191,7 @@ $('#input-email').autocomplete({
             }
         });
     },
-    'select': function(item) {}
+    'select': function (item) {}
 });
 //--></script>
 {{ footer }}

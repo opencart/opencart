@@ -1,0 +1,30 @@
+<div class="table-responsive">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <td class="text-start">{{ column_date_start }}</td>
+        <td class="text-start">{{ column_date_end }}</td>
+        <td class="text-end">{{ column_returns }}</td>
+      </tr>
+    </thead>
+    <tbody>
+      {% if returns %}
+        {% for return in returns %}
+          <tr>
+            <td class="text-start">{{ return.date_start }}</td>
+            <td class="text-start">{{ return.date_end }}</td>
+            <td class="text-end">{{ return.returns }}</td>
+          </tr>
+        {% endfor %}
+      {% else %}
+        <tr>
+          <td class="text-center" colspan="3">{{ text_no_results }}</td>
+        </tr>
+      {% endif %}
+    </tbody>
+  </table>
+</div>
+<div class="row">
+  <div class="col-sm-6 text-start">{{ pagination }}</div>
+  <div class="col-sm-6 text-end">{{ results }}</div>
+</div>

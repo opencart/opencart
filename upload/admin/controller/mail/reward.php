@@ -3,25 +3,25 @@ namespace Opencart\Admin\Controller\Mail;
 class Reward extends \Opencart\System\Engine\Controller {
 	public function index(string $route, array $args, mixed $output): void {
 		if (isset($args[0])) {
-			$customer_id = $args[0];
+			$customer_id = (int)$args[0];
 		} else {
 			$customer_id = 0;
 		}
 
 		if (isset($args[1])) {
-			$description = $args[1];
+			$description = (string)$args[1];
 		} else {
 			$description = '';
 		}
 
 		if (isset($args[2])) {
-			$points = $args[2];
+			$points = (int)$args[2];
 		} else {
 			$points = 0;
 		}
 
 		if (isset($args[3])) {
-			$order_id = $args[3];
+			$order_id = (int)$args[3];
 		} else {
 			$order_id = 0;
 		}

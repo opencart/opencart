@@ -230,7 +230,7 @@ $('#code .nav-tabs').on('click', 'i.fas.fa-minus-circle', function (e) {
     e.preventDefault();
 
     // 1. Remove tab functionality
-    $(this).parent().removeAttr('data-toggle');
+    $(this).parent().removeAttr('data-bs-toggle');
 
     var remove = $(this).parent().attr('href');
 

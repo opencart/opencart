@@ -165,7 +165,7 @@ $(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function (e) {
 
     var action = $(form).attr('action');
 
-    if (e.originalEvent.submitter !== undefined) {
+    if (e.originalEvent !== undefined && e.originalEvent.submitter !== undefined) {
         var button = e.originalEvent.submitter;
     } else {
         var button = '';

@@ -1137,7 +1137,7 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	public function getTotalProductsBySubscriptionPlanId(int $subscription_plan_id): int {
-		$query = $this->db->query("SELECT COUNT(DISTINCT product_id) AS `total` FROM `" . DB_PREFIX . "product_subscription` WHERE `subscription_plan_id` = '" . (int)$subscription_plan_id . "'");
+		$query = $this->db->query("SELECT COUNT(DISTINCT `product_id`) AS `total` FROM `" . DB_PREFIX . "product_subscription` WHERE `subscription_plan_id` = '" . (int)$subscription_plan_id . "'");
 
 		return (int)$query->row['total'];
 	}
@@ -1149,13 +1149,13 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	public function getTotalProductsByOptionId(int $option_id): int {
-		$query = $this->db->query("SELECT COUNT(DISTINCT product_id) AS `total` FROM `" . DB_PREFIX . "product_option` WHERE `option_id` = '" . (int)$option_id . "'");
+		$query = $this->db->query("SELECT COUNT(DISTINCT `product_id`) AS `total` FROM `" . DB_PREFIX . "product_option` WHERE `option_id` = '" . (int)$option_id . "'");
 
 		return (int)$query->row['total'];
 	}
 
 	public function getTotalProductsByOptionValueId(int $option_value_id): int {
-		$query = $this->db->query("SELECT COUNT(DISTINCT product_id) AS `total` FROM `" . DB_PREFIX . "product_option_value` WHERE `option_value_id` = '" . (int)$option_value_id . "'");
+		$query = $this->db->query("SELECT COUNT(DISTINCT `product_id`) AS `total` FROM `" . DB_PREFIX . "product_option_value` WHERE `option_value_id` = '" . (int)$option_value_id . "'");
 
 		return (int)$query->row['total'];
 	}

@@ -49,7 +49,7 @@ class Review extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!isset($this->request->get['review_token']) || !isset($this->session->data['review_token']) || $this->request->get['review_token'] != $this->session->data['review_token']) {
-			$json['error']['token'] = $this->language->get('error_review');
+			$json['error']['warning'] = $this->language->get('error_token');
 		}
 
 		$keys = [
@@ -77,13 +77,17 @@ class Review extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$this->config->get('config_review_guest') && !$this->customer->isLogged()) {
-			$json['error']['guest']  = $this->language->get('error_guest');
+			$json['error']['warning']  = $this->language->get('error_guest');
 		}
 
-		if (!$this->config->get('config_review_guest') && !$this->customer->isLogged()) {
-			$json['error']['purchased']  = $this->language->get('error_purchased');
+		if ($this->customer->isLogged() && $this->config->get('config_review_purchased')) {
+			$this->load->model('account/order');
+
+			if (!$this->model_account_order->getTotalOrdersByProductId($product_id)) {
+				$json['error']['purchased']  = $this->language->get('error_purchased');
+			}
 		}
-		
+
 		// Captcha
 		$this->load->model('setting/extension');
 
@@ -128,6 +132,8 @@ class Review extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
+		$data['action'] = $this->url->link('product/review|write', 'language=' . $this->config->get('config_language') . '&review_token=' . $this->session->data['review_token'], true);
+
 		$data['reviews'] = [];
 
 		$this->load->model('catalog/review');
@@ -149,7 +155,7 @@ class Review extends \Opencart\System\Engine\Controller {
 			'total' => $review_total,
 			'page'  => $page,
 			'limit' => 5,
-			'url'   => $this->url->link('product/product|review', 'language=' . $this->config->get('config_language') . '&product_id=' . $this->request->get['product_id'] . '&page={page}')
+			'url'   => $this->url->link('product/product|review', 'language=' . $this->config->get('config_language') . '&product_id=' . $product_id . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($review_total) ? (($page - 1) * 5) + 1 : 0, ((($page - 1) * 5) > ($review_total - 5)) ? $review_total : ((($page - 1) * 5) + 5), $review_total, ceil($review_total / 5));

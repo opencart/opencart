@@ -233,7 +233,11 @@ $(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function (e) {
 
     var action = $(form).attr('action');
 
-    var button = e.originalEvent.submitter;
+    if (e.originalEvent !== undefined && e.originalEvent.submitter !== undefined) {
+        var button = e.originalEvent.submitter;
+    } else {
+        var button = '';
+    }
 
     var formaction = $(button).attr('formaction');
 

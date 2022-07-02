@@ -10,8 +10,8 @@ class Language extends \Opencart\System\Engine\Controller {
 
 		$code = '';
 
-		if (isset($this->session->data['language'])) {
-			$code = $this->session->data['language'];
+		if (isset($this->session->data['language_admin'])) {
+			$code = $this->session->data['language_admin'];
 		}
 
 		// Language not available then use default

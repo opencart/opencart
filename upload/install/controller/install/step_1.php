@@ -7,7 +7,7 @@ class Step1 extends \Opencart\System\Engine\Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$data['heading_title'] = $this->language->get('heading_title');
-		
+
 		$data['text_step_1'] = $this->language->get('text_step_1');
 		$data['text_terms'] = $this->language->get('text_terms');
 

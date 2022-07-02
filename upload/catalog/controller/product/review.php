@@ -132,8 +132,6 @@ class Review extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
-		$data['action'] = $this->url->link('product/review|write', 'language=' . $this->config->get('config_language') . '&review_token=' . $this->session->data['review_token'], true);
-
 		$data['reviews'] = [];
 
 		$this->load->model('catalog/review');

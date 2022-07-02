@@ -72,11 +72,11 @@ class Review extends \Opencart\System\Engine\Controller {
 			$json['error']['text'] = $this->language->get('error_text');
 		}
 
-		if ($this->request->post['rating'] < 0 || $this->request->post['rating'] > 5) {
+		if ($this->request->post['rating'] < 1 || $this->request->post['rating'] > 5) {
 			$json['error']['rating']  = $this->language->get('error_rating');
 		}
 
-		if (!$this->config->get('config_review_guest') && !$this->customer->isLogged()) {
+		if (!$this->customer->isLogged() && !$this->config->get('config_review_guest')) {
 			$json['error']['warning']  = $this->language->get('error_guest');
 		}
 

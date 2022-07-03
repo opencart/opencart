@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\System\Library\DB;
 class PgSQL {
-	private $connection;
+	private object $connection;
 
 	public function __construct(string $hostname, string $username, string $password, string $database, string $port = '') {
 		if (!$port) {

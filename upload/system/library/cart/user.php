@@ -38,7 +38,7 @@ class User {
 		}
 	}
 
-	public function login($username, $password): bool {
+	public function login(string $username, string $password): bool {
 		$user_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "user` WHERE `username` = '" . $this->db->escape($username) . "' AND `status` = '1'");
 
 		if ($user_query->num_rows) {
@@ -88,7 +88,7 @@ class User {
 		$this->email = '';
 	}
 
-	public function hasPermission($key, $value): bool {
+	public function hasPermission(string $key, mixed $value): bool {
 		if (isset($this->permission[$key])) {
 			return in_array($value, $this->permission[$key]);
 		} else {

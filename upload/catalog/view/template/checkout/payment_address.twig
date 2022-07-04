@@ -149,7 +149,7 @@
             <div class="col mb-3{% if custom_field.required %} required{% endif %} custom-field custom-field-{{ custom_field.custom_field_id }}">
               <label class="form-label">{{ custom_field.name }}</label>
               <div>
-                <button type="button" data-oc-toggle="upload" data-oc-url="{{ upload }}" data-oc-size-max="{{ config_file_max_size }}" data-oc-size-error="{{ error_upload_size }}" data-oc-target="#input-payment-custom-field-{{ custom_field.custom_field_id }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
+                <button type="button" data-oc-toggle="upload" data-oc-url="{{ upload }}" data-oc-size-max="{{ config_file_max_size }}" data-oc-size-error="{{ error_upload_size }}" data-oc-target="#input-payment-custom-field-{{ custom_field.custom_field_id }}" class="btn btn-light"><i class="fa-solid fa-upload"></i> {{ button_upload }}</button>
                 <input type="hidden" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{% if payment_custom_field[custom_field.custom_field_id] %}{{ payment_custom_field[custom_field.custom_field_id] }}{% endif %}" id="input-payment-custom-field-{{ custom_field.custom_field_id }}"/>
               </div>
               <div id="error-payment-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
@@ -161,7 +161,7 @@
               <label for="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
               <div class="input-group">
                 <input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{% if payment_custom_field[custom_field.custom_field_id] %}{{ payment_custom_field[custom_field.custom_field_id] }}{% else %}{{ custom_field.value }}{% endif %}" placeholder="{{ custom_field.name }}" id="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-control date"/>
-                <div class="input-group-text"><i class="fas fa-calendar"></i></div>
+                <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
               </div>
               <div id="error-payment-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
             </div>
@@ -172,7 +172,7 @@
               <label for="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
               <div class="input-group">
                 <input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{% if payment_custom_field[custom_field.custom_field_id] %}{{ payment_custom_field[custom_field.custom_field_id] }}{% else %}{{ custom_field.value }}{% endif %}" placeholder="{{ custom_field.name }}" id="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-control time"/>
-                <div class="input-group-text"><i class="fas fa-calendar"></i></div>
+                <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
               </div>
               <div id="error-payment-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
             </div>
@@ -183,7 +183,7 @@
               <label for="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
               <div class="input-group">
                 <input type="text" name="custom_field[{{ custom_field.location }}][{{ custom_field.custom_field_id }}]" value="{% if payment_custom_field[custom_field.custom_field_id] %}{{ payment_custom_field[custom_field.custom_field_id] }}{% else %}{{ custom_field.value }}{% endif %}" placeholder="{{ custom_field.name }}" id="input-payment-custom-field-{{ custom_field.custom_field_id }}" class="form-control datetime"/>
-                <div class="input-group-text"><i class="fas fa-calendar"></i></div>
+                <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
               </div>
               <div id="error-payment-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
             </div>
@@ -232,11 +232,11 @@ $('#input-payment-address').on('change', function () {
                 }
 
                 if (json['error']) {
-                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                 }
 
                 if (json['success']) {
-                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                     $('#button-payment-method').trigger('click');
                 }
@@ -277,7 +277,7 @@ $('#form-payment-address').on('submit', function (e) {
 
                 if (json['error']) {
                     if (json['error']['warning']) {
-                        $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                        $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                     }
 
                     for (i in json['error']) {
@@ -289,7 +289,7 @@ $('#form-payment-address').on('submit', function (e) {
                 }
 
                 if (json['success']) {
-                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                     var addresses = [];
 

@@ -6,7 +6,7 @@
     {% endfor %}
   </ul>
   {% if success %}
-    <div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> {{ success }} <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>
+    <div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> {{ success }} <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>
   {% endif %}
   <div class="row">{{ column_left }}
     <div id="content" class="col">{{ content_top }}
@@ -19,7 +19,7 @@
             <p><label for="input-email" class="form-check-label">{{ text_email }}</label></p>
             <div class="input-group">
               <input type="text" name="email" value="{{ email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control"/>
-              <div class="input-group-text"><i class="fas fa-envelope"></i></div>
+              <div class="input-group-text"><i class="fa-solid fa-envelope"></i></div>
             </div>
             <div id="error-email" class="invalid-feedback"></div>
           </div>
@@ -37,7 +37,7 @@
           </div>
 
           <div id="collapse-remove" class="alert alert-warning collapse">
-            <p><i class="fas fa-exclamation-triangle"></i> {{ text_warning }}</p>
+            <p><i class="fa-solid fa-triangle-exclamation"></i> {{ text_warning }}</p>
             <ul>
               <li>{{ text_access|format(store) }}</li>
               <li>{{ text_history }}</li>

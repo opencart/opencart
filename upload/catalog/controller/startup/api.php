@@ -8,7 +8,7 @@ class Api extends \Opencart\System\Engine\Controller {
 			$route = '';
 		}
 
-		if (substr($route, 0, 4) == 'api/' && $route !== 'api/login' && !isset($this->session->data['api_id'])) {
+		if (substr($route, 0, 4) == 'api/' && $route !== 'api/account/login' && !isset($this->session->data['api_id'])) {
 			return new \Opencart\System\Engine\Action('error/permission');
 		}
 

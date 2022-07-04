@@ -7,7 +7,7 @@ class User {
 	private string $email = '';
 	private array $permission = [];
 
-	public function __construct($registry) {
+	public function __construct(\Opencart\System\Engine\Registry $registry) {
 		$this->db = $registry->get('db');
 		$this->request = $registry->get('request');
 		$this->session = $registry->get('session');

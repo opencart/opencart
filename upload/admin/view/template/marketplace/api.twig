@@ -2,11 +2,11 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title"><i class="fas fa-cog"></i> {{ heading_title }}</h5>
+        <h5 class="modal-title"><i class="fa-solid fa-cog"></i> {{ heading_title }}</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
-        <div class="alert alert-info"><i class="fas fa-info-circle"></i> {{ text_signup }}</div>
+        <div class="alert alert-info"><i class="fa-solid fa-info-circle"></i> {{ text_signup }}</div>
         <div class="mb-3">
           <label for="input-username" class="form-label">{{ entry_username }}</label> <input type="text" name="opencart_username" value="" placeholder="{{ entry_username }}" id="input-username" class="form-control"/>
           <div id="error-username" class="invalid-feedback"></div>
@@ -45,7 +45,7 @@ $('#button-save').on('click', function (e) {
 
             if (json['error']) {
                 if (json['error']['warning']) {
-                    $('#modal-opencart .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    $('#modal-opencart .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                 }
 
                 for (key in json['error']) {
@@ -56,7 +56,7 @@ $('#button-save').on('click', function (e) {
             }
 
             if (json['success']) {
-                $('#modal-  opencart .modal-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#modal-  opencart .modal-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                 window.location.reload();
             }

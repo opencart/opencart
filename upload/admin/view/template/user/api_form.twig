@@ -3,8 +3,8 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="float-end">
-        <button type="submit" form="form-api" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
-        <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
+        <button type="submit" form="form-api" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i></button>
+        <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fa-solid fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
       <ol class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -15,7 +15,7 @@
   </div>
   <div class="container-fluid">
     <div class="card">
-      <div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_form }}</div>
+      <div class="card-header"><i class="fa-solid fa-pencil"></i> {{ text_form }}</div>
       <div class="card-body">
         <form id="form-api" action="{{ save }}" method="post" data-oc-toggle="ajax">
           <ul class="nav nav-tabs">
@@ -36,7 +36,7 @@
                 <label for="input-key" class="col-sm-2 col-form-label">{{ entry_key }}</label>
                 <div class="col-sm-10">
                   <textarea name="key" placeholder="{{ entry_key }}" rows="5" id="input-key" class="form-control mb-1">{{ key }}</textarea>
-                  <button type="button" id="button-generate" class="btn btn-primary"><i class="fas fa-sync"></i> {{ button_generate }}</button>
+                  <button type="button" id="button-generate" class="btn btn-primary"><i class="fa-solid fa-rotate"></i> {{ button_generate }}</button>
                   <div id="error-key" class="invalid-feedback"></div>
                 </div>
               </div>
@@ -50,7 +50,7 @@
               </div>
             </div>
             <div id="tab-ip" class="tab-pane">
-              <div class="alert alert-info"><i class="fas fa-info-circle"></i> {{ text_ip }}</div>
+              <div class="alert alert-info"><i class="fa-solid fa-info-circle"></i> {{ text_ip }}</div>
               <div class="table-responsive">
                 <table id="ip" class="table table-bordered table-hover">
                   <thead>
@@ -64,7 +64,7 @@
                     {% for api_ip in api_ips %}
                       <tr id="ip-row-{{ ip_row }}">
                         <td class="text-start"><input type="text" name="api_ip[]" value="{{ api_ip }}" placeholder="{{ entry_ip }}" class="form-control"/></td>
-                        <td class="text-end"><button type="button" onclick="$('#ip-row-{{ ip_row }}').remove()" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
+                        <td class="text-end"><button type="button" onclick="$('#ip-row-{{ ip_row }}').remove()" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
                       </tr>
                       {% set ip_row = ip_row + 1 %}
                     {% endfor %}
@@ -72,7 +72,7 @@
                   <tfoot>
                     <tr>
                       <td></td>
-                      <td class="text-end"><button type="button" id="button-ip" data-bs-toggle="tooltip" title="{{ button_ip_add }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i></button></td>
+                      <td class="text-end"><button type="button" id="button-ip" data-bs-toggle="tooltip" title="{{ button_ip_add }}" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i></button></td>
                     </tr>
                   </tfoot>
                 </table>
@@ -98,7 +98,7 @@
                           <td class="text-start">{{ api_session.ip }}</td>
                           <td class="text-start">{{ api_session.date_added }}</td>
                           <td class="text-start">{{ api_session.date_modified }}</td>
-                          <td class="text-end"><button type="button" value="{{ api_session.api_session_id }}" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
+                          <td class="text-end"><button type="button" value="{{ api_session.api_session_id }}" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
                         </tr>
                       {% endfor %}
                     {% else %}
@@ -136,7 +136,7 @@ var ip_row = {{ ip_row }};
 $('#button-ip').on('click', function () {
     html = '<tr id="ip-row-' + ip_row + '">';
     html += '  <td class="text-end"><input type="text" name="api_ip[]" value="" placeholder="{{ entry_ip }}" class="form-control"/></td>';
-    html += '  <td class="text-end"><button type="button" onclick="$(\'#ip-row-' + ip_row + '\').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
+    html += '  <td class="text-end"><button type="button" onclick="$(\'#ip-row-' + ip_row + '\').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>';
     html += '</tr>';
 
     $('#ip tbody').append(html);
@@ -164,11 +164,11 @@ $('#session button').on('click', function (e) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
-                $('#tab-session').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#tab-session').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
 
             if (json['success']) {
-                $('#tab-session').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#tab-session').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                 $(element).parent().parent().remove();
             }

@@ -3,9 +3,9 @@
 	<div class="page-header">
 		<div class="container-fluid">
 			<div class="float-end">
-				<button type="button" data-bs-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-customer').toggleClass('d-none');" class="btn btn-light d-md-none d-lg-none"><i class="fas fa-filter"></i></button>
-				<button type="submit" form="form-customer-approval" formaction="{{ approve }}" data-bs-toggle="tooltip" title="{{ text_approve }}" class="btn btn-success"><i class="fas fa-check"></i></button>
-				<button type="submit" form="form-customer-approval" formaction="{{ deny }}" data-bs-toggle="tooltip" title="{{ text_deny }}" class="btn btn-warning"><i class="fas fa-times"></i></button>
+				<button type="button" data-bs-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-customer').toggleClass('d-none');" class="btn btn-light d-md-none d-lg-none"><i class="fa-solid fa-filter"></i></button>
+				<button type="submit" form="form-customer-approval" formaction="{{ approve }}" data-bs-toggle="tooltip" title="{{ text_approve }}" class="btn btn-success"><i class="fa-solid fa-check"></i></button>
+				<button type="submit" form="form-customer-approval" formaction="{{ deny }}" data-bs-toggle="tooltip" title="{{ text_deny }}" class="btn btn-warning"><i class="fa-solid fa-circle-xmark"></i></button>
 			</div>
 			<h1>{{ heading_title }}</h1>
 			<ol class="breadcrumb">
@@ -19,7 +19,7 @@
 		<div class="row">
 			<div id="filter-customer" class="col-lg-3 col-md-12 order-lg-last d-none d-lg-block mb-3">
 				<div class="card">
-					<div class="card-header"><i class="fas fa-filter"></i> {{ text_filter }}</div>
+					<div class="card-header"><i class="fa-solid fa-filter"></i> {{ text_filter }}</div>
 					<div class="card-body">
 						<div class="mb-3">
 							<label class="form-label">{{ entry_customer }}</label>
@@ -51,25 +51,25 @@
               <label for="input-date-from" class="form-label">{{ entry_date_from }}</label>
               <div class="input-group">
                 <input type="text" name="filter_date_from" value="{{ filter_date_from }}" placeholder="{{ entry_date_from }}" id="input-date-from" class="form-control date"/>
-                <div class="input-group-text"><i class="fas fa-calendar"></i></div>
+                <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
               </div>
             </div>
             <div class="mb-3">
               <label for="input-date-to" class="form-label">{{ entry_date_to }}</label>
               <div class="input-group">
                 <input type="text" name="filter_date_to" value="{{ filter_date_to }}" placeholder="{{ entry_date_to }}" id="input-date-to" class="form-control date"/>
-                <div class="input-group-text"><i class="fas fa-calendar"></i></div>
+                <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
               </div>
             </div>
 						<div class="text-end">
-							<button type="button" id="button-filter" class="btn btn-light"><i class="fas fa-filter"></i> {{ button_filter }}</button>
+							<button type="button" id="button-filter" class="btn btn-light"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button>
 						</div>
 					</div>
 				</div>
 			</div>
 			<div class="col-lg-9 col-md-12">
 				<div class="card">
-					<div class="card-header"><i class="fas fa-list"></i> {{ text_list }}</div>
+					<div class="card-header"><i class="fa-solid fa-list"></i> {{ text_list }}</div>
 					<div class="card-body">
 						<div id="customer-approval">{{ list }}</div>
 					</div>
@@ -101,11 +101,11 @@ $('#customer-approval').on('click', '.btn-success, .btn-danger', function (e) {
         },
         success: function (json) {
             if (json['error']) {
-                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
 
             if (json['success']) {
-                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                 $('#customer-approval').load($('#form-customer-approval').attr('data-oc-load'));
             }

@@ -65,8 +65,8 @@
           {% endif %}
           <form method="post" data-oc-toggle="ajax">
             <div class="btn-group">
-              <button type="submit" formaction="{{ add_to_wishlist }}" data-bs-toggle="tooltip" class="btn btn-light" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product_id }}');"><i class="fa-solid fa-heart"></i></button>
-              <button type="submit" formaction="{{ add_to_compare }}" data-bs-toggle="tooltip" class="btn btn-light" title="{{ button_compare }}" onclick="compare.add('{{ product_id }}');"><i class="fa-regular fa-calendar"></i></button>
+              <button type="submit" formaction="{{ add_to_wishlist }}" data-bs-toggle="tooltip" class="btn btn-light" title="{{ button_wishlist }}"><i class="fa-solid fa-heart"></i></button>
+              <button type="submit" formaction="{{ add_to_compare }}" data-bs-toggle="tooltip" class="btn btn-light" title="{{ button_compare }}"><i class="fa-solid fa-arrow-right-arrow-left"></i></button>
             </div>
             <input type="hidden" name="product_id" value="{{ product_id }}"/>
           </form>

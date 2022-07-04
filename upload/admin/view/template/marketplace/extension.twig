@@ -12,7 +12,7 @@
   </div>
   <div class="container-fluid">
     <div class="card">
-      <div class="card-header"><i class="fas fa-puzzle-piece"></i> {{ text_list }}</div>
+      <div class="card-header"><i class="fa-solid fa-puzzle-piece"></i> {{ text_list }}</div>
       <div class="card-body">
         <fieldset>
           <legend>{{ text_type }}</legend>
@@ -24,7 +24,7 @@
                     <option value="{{ category.href }}"{% if type == category.code %} selected{% endif %}>{{ category.text }}</option>
                   {% endfor %}
                 </select>
-                <div class="input-group-text"><i class="fas fa-filter"></i>&nbsp;{{ text_filter }}</div>
+                <div class="input-group-text"><i class="fa-solid fa-filter"></i>&nbsp;{{ text_filter }}</div>
               </div>
             </div>
           </div>
@@ -77,17 +77,17 @@ $('#extension').on('click', '#recommended .btn-primary', function (e) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
-                $('#extension').before('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div></div>');
+                $('#extension').before('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div></div>');
             }
 
             if (json['success']) {
-                $('#extension').before('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + '  <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#extension').before('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + '  <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                 $(element).prop('disabled', true);
 
                 // Manually build the url so no need to refresh extensions and can trigger install
                 // Once the extension is downloaded we trigger the install
-                $(element).parent().find('.dropdown-menu').html('<a href="index.php?route=marketplace/installer|install&user_token={{ user_token }}&extension_install_id=' + json['extension_install_id'] + '" class="dropdown-item"><i class="fas fa-plus-circle fa-fw"></i> {{ text_install }}</a> <a href="index.php?route=marketplace/installer|delete&user_token={{ user_token }}&extension_install_id=' + json['extension_install_id'] + '" class="dropdown-item"><i class="far fa-trash-alt fa-fw"></i> {{ text_delete }}</a>');
+                $(element).parent().find('.dropdown-menu').html('<a href="index.php?route=marketplace/installer|install&user_token={{ user_token }}&extension_install_id=' + json['extension_install_id'] + '" class="dropdown-item"><i class="fa-solid fa-plus-circle fa-fw"></i> {{ text_install }}</a> <a href="index.php?route=marketplace/installer|delete&user_token={{ user_token }}&extension_install_id=' + json['extension_install_id'] + '" class="dropdown-item"><i class="fa-regular fa-trash-can fa-fw"></i> {{ text_delete }}</a>');
 
                 $(element).parent().find('.dropdown-item:first').trigger('click');
             }
@@ -111,11 +111,11 @@ $('#extension').on('click', '.dropdown-item', function (e) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
-                $('#extension').before('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div></div>');
+                $('#extension').before('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div></div>');
             }
 
             if (json['success']) {
-                $('#extension').before('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + '  <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#extension').before('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + '  <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                 $('#extension').load($('#input-type').val());
             }
@@ -145,11 +145,11 @@ $('#extension').on('click', '.btn-success', function (e) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
-                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
 
             if (json['success']) {
-                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                 $('#input-type').trigger('change');
             }
@@ -180,11 +180,11 @@ $('#extension').on('click', '.btn-danger, .btn-outline-danger', function (e) {
                 $('.alert-dismissible').remove();
 
                 if (json['error']) {
-                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                 }
 
                 if (json['success']) {
-                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                     $('#input-type').trigger('change');
                 }

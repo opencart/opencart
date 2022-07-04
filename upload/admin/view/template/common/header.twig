@@ -39,10 +39,10 @@
     <div class="container-fluid">
       <a href="{{ home }}" class="navbar-brand d-none d-lg-block"><img src="view/image/logo.png" alt="{{ heading_title }}" title="{{ heading_title }}"/></a>
       {% if logged %}
-        <button type="button" id="button-menu" class="btn btn-link d-inline-block d-lg-none"><i class="fas fa-bars"></i></button>
+        <button type="button" id="button-menu" class="btn btn-link d-inline-block d-lg-none"><i class="fa-solid fa-bars"></i></button>
         <ul class="nav navbar-nav">
           <li id="header-notification" class="nav-item dropdown">
-            <a href="#" data-bs-toggle="dropdown" class="nav-link dropdown-toggle"><i class="far fa-bell"></i>{% if notification_total %} <span class="badge bg-danger">{{ notification_total }}</span>{% endif %}</a>
+            <a href="#" data-bs-toggle="dropdown" class="nav-link dropdown-toggle"><i class="fa-regular fa-bell"></i>{% if notification_total %} <span class="badge bg-danger">{{ notification_total }}</span>{% endif %}</a>
             <div class="dropdown-menu dropdown-menu-right">
               {% if notifications %}
                 {% for notification in notifications %}
@@ -55,9 +55,9 @@
             </div>
           </li>
           <li id="header-profile" class="nav-item dropdown">
-            <a href="#" data-bs-toggle="dropdown" class="nav-link dropdown-toggle"><img src="{{ image }}" alt="{{ firstname }} {{ lastname }}" title="{{ username }}" class="rounded-circle"/><span class="d-none d-md-inline d-lg-inline">&nbsp;&nbsp;&nbsp;{{ firstname }} {{ lastname }} <i class="fas fa-caret-down fa-fw"></i></span></a>
+            <a href="#" data-bs-toggle="dropdown" class="nav-link dropdown-toggle"><img src="{{ image }}" alt="{{ firstname }} {{ lastname }}" title="{{ username }}" class="rounded-circle"/><span class="d-none d-md-inline d-lg-inline">&nbsp;&nbsp;&nbsp;{{ firstname }} {{ lastname }} <i class="fa-solid fa-caret-down fa-fw"></i></span></a>
             <ul class="dropdown-menu dropdown-menu-right">
-              <li><a href="{{ profile }}" class="dropdown-item"><i class="fas fa-user-circle fa-fw"></i> {{ text_profile }}</a></li>
+              <li><a href="{{ profile }}" class="dropdown-item"><i class="fa-solid fa-user-circle fa-fw"></i> {{ text_profile }}</a></li>
               <li><hr class="dropdown-divider"></li>
               <li><h6 class="dropdown-header">{{ text_store }}</h6></li>
               {% for store in stores %}
@@ -65,12 +65,12 @@
               {% endfor %}
               <li><hr class="dropdown-divider"></li>
               <li><h6 class="dropdown-header">{{ text_help }}</h6></li>
-              <li><a href="https://www.opencart.com" target="_blank" class="dropdown-item"><i class="fab fa-opencart fa-fw"></i> {{ text_homepage }}</a></li>
-              <li><a href="http://docs.opencart.com" target="_blank" class="dropdown-item"><i class="fas fa-file-alt fa-fw"></i> {{ text_documentation }}</a></li>
-              <li><a href="http://forum.opencart.com" target="_blank" class="dropdown-item"><i class="fas fa-comments fa-fw"></i> {{ text_support }}</a></li>
+              <li><a href="https://www.opencart.com" target="_blank" class="dropdown-item"><i class="fa-brands fa-opencart fa-fw"></i> {{ text_homepage }}</a></li>
+              <li><a href="http://docs.opencart.com" target="_blank" class="dropdown-item"><i class="fa-solid fa-file fa-fw"></i> {{ text_documentation }}</a></li>
+              <li><a href="http://forum.opencart.com" target="_blank" class="dropdown-item"><i class="fa-solid fa-comments fa-fw"></i> {{ text_support }}</a></li>
             </ul>
           </li>
-          <li id="header-logout" class="nav-item"><a href="{{ logout }}" class="nav-link"><i class="fas fa-sign-out-alt"></i> <span class="d-none d-md-inline">{{ text_logout }}</span></a></li>
+          <li id="header-logout" class="nav-item"><a href="{{ logout }}" class="nav-link"><i class="fa-solid fa-sign-out"></i> <span class="d-none d-md-inline">{{ text_logout }}</span></a></li>
         </ul>
       {% endif %}
     </div>

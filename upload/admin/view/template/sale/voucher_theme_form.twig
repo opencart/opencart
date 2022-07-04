@@ -3,8 +3,8 @@
 	<div class="page-header">
 		<div class="container-fluid">
 			<div class="float-end">
-				<button type="submit" form="form-voucher-theme" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
-				<a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
+				<button type="submit" form="form-voucher-theme" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i></button>
+				<a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fa-solid fa-reply"></i></a></div>
 			<h1>{{ heading_title }}</h1>
 			<ol class="breadcrumb">
 				{% for breadcrumb in breadcrumbs %}
@@ -15,7 +15,7 @@
 	</div>
 	<div class="container-fluid">
 		<div class="card">
-			<div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_form }}</div>
+			<div class="card-header"><i class="fa-solid fa-pencil"></i> {{ text_form }}</div>
 			<div class="card-body">
 				<form id="form-voucher-theme" action="{{ save }}" method="post" data-oc-toggle="ajax">
 					<div class="row mb-3 required">
@@ -36,8 +36,8 @@
 							<div class="card image">
 								<img src="{{ thumb }}" alt="" title="" id="thumb-image" data-oc-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="image" value="{{ image }}" id="input-image"/>
 								<div class="card-body">
-									<button type="button" data-oc-toggle="image" data-oc-target="#input-image" data-oc-thumb="#thumb-image" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>
-									<button type="button" data-oc-toggle="clear" data-oc-target="#input-image" data-oc-thumb="#thumb-image" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>
+									<button type="button" data-oc-toggle="image" data-oc-target="#input-image" data-oc-thumb="#thumb-image" class="btn btn-primary btn-sm btn-block"><i class="fa-solid fa-pencil"></i> {{ button_edit }}</button>
+									<button type="button" data-oc-toggle="clear" data-oc-target="#input-image" data-oc-thumb="#thumb-image" class="btn btn-warning btn-sm btn-block"><i class="fa-regular fa-trash-can"></i> {{ button_clear }}</button>
 								</div>
 							</div>
 							<div id="error-image" class="invalid-feedback"></div>

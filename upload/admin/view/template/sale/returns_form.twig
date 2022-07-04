@@ -3,8 +3,8 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="float-end">
-        <button type="submit" form="form-return" formaction="{{ save }}" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
-        <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
+        <button type="submit" form="form-return" formaction="{{ save }}" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i></button>
+        <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fa-solid fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
       <ol class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -15,7 +15,7 @@
   </div>
   <div class="container-fluid">
     <div class="card">
-      <div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_form }}</div>
+      <div class="card-header"><i class="fa-solid fa-pencil"></i> {{ text_form }}</div>
       <div class="card-body">
         <form id="form-return" action="{{ save }}" method="post" data-oc-toggle="ajax">
           <ul class="nav nav-tabs">
@@ -38,7 +38,7 @@
                   <div class="col-sm-10 col-md-4">
                     <div class="input-group">
                       <input type="text" name="date_ordered" value="{{ date_ordered }}" placeholder="{{ entry_date_ordered }}" id="input-date-ordered" class="form-control date"/>
-                      <div class="input-group-text"><i class="fas fa-calendar"></i></div>
+                      <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
                     </div>
                   </div>
                 </div>
@@ -185,7 +185,7 @@
                   </div>
                 </div>
                 <div class="text-end">
-                  <button type="button" id="button-history" class="btn btn-primary"><i class="fas fa-plus-circle"></i> {{ button_history_add }}</button>
+                  <button type="button" id="button-history" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i> {{ button_history_add }}</button>
                 </div>
               </fieldset>
             </div>
@@ -274,13 +274,13 @@ $('#button-history').on('click', function (e) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
-                $('#tab-history').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#tab-history').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
 
             if (json['success']) {
                 $('#history').load('index.php?route=sale/returns|history&user_token={{ user_token }}&return_id=' + $('#input-return-id').val());
 
-                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                 $('#input-history-comment').val('');
             }

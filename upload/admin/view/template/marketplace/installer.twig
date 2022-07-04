@@ -2,7 +2,7 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="float-end"><button type="button" id="button-upload" data-bs-toggle="tooltip" title="{{ button_upload }}" class="btn btn-primary"><i class="fas fa-upload"></i></button></div>
+      <div class="float-end"><button type="button" id="button-upload" data-bs-toggle="tooltip" title="{{ button_upload }}" class="btn btn-primary"><i class="fa-solid fa-upload"></i></button></div>
       <h1>{{ heading_title }}</h1>
       <ol class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -13,7 +13,7 @@
   </div>
   <div class="container-fluid">
     <div class="card">
-      <div class="card-header"><i class="fas fa-puzzle-piece"></i> {{ heading_title }}</div>
+      <div class="card-header"><i class="fa-solid fa-puzzle-piece"></i> {{ heading_title }}</div>
       <div class="card-body">
         <fieldset>
           <legend>{{ text_progress }}</legend>
@@ -87,11 +87,11 @@ $('#button-upload').on('click', function () {
                     },
                     success: function (json) {
                         if (json['error']) {
-                            $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                            $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                         }
 
                         if (json['success']) {
-                            $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                            $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                             $('#extension').load('index.php?route=marketplace/installer|list&user_token={{ user_token }}');
                         }
@@ -176,11 +176,11 @@ $('#extension').on('click', '.btn-danger', function (e) {
                 $('.alert-dismissible').remove();
 
                 if (json['error']) {
-                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                 }
 
                 if (json['success']) {
-                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                     $('#extension').load('index.php?route=marketplace/installer|list&user_token={{ user_token }}');
                 }

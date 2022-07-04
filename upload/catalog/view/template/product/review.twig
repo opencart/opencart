@@ -85,6 +85,9 @@ $('#form-review').on('submit', function (e) {
 
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                $('#input-text').val('');
+                $('#input-rating input[type=\'radio\']').prop('checked', false);
             }
         },
         error: function (xhr, ajaxOptions, thrownError) {

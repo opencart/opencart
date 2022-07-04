@@ -16,7 +16,7 @@ class Image {
 	private int $width;
 	private int $height;
 	private string $file;
-	private string $image;	
+	private object $image;	
 	private string $bits;
 	private string $mime;
 

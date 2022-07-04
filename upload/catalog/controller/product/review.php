@@ -6,7 +6,7 @@ class Review extends \Opencart\System\Engine\Controller {
 
 		$data['list'] = $this->getList();
 
-		if ($this->config->get('config_review_guest') || $this->customer->isLogged()) {
+		if ($this->customer->isLogged() || $this->config->get('config_review_guest')) {
 			$data['review_guest'] = true;
 		} else {
 			$data['review_guest'] = false;
@@ -21,7 +21,7 @@ class Review extends \Opencart\System\Engine\Controller {
 		// Create a login token to prevent brute force attacks
 		$this->session->data['review_token'] = token(32);
 
-		$data['action'] = $this->url->link('product/review|write', 'language=' . $this->config->get('config_language') . '&review_token=' . $this->session->data['review_token'], true);
+		$data['action'] = $this->url->link('product/review|write', 'language=' . $this->config->get('config_language') . '&product_id=' . $this->request->get['product_id'] . '&review_token=' . $this->session->data['review_token'], true);
 
 		// Captcha
 		$this->load->model('setting/extension');

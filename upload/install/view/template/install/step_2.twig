@@ -8,13 +8,13 @@
 	</div>
 	<div class="container">
 		{% if error_warning %}
-			<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }}
+			<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> {{ error_warning }}
 				<button type="button" class="close" data-bs-dismiss="alert"></button>
 			</div>
 		{% endif %}
 		<form action="{{ action }}" method="post" enctype="multipart/form-data">
 			<div class="card">
-				<div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_step_2 }}</div>
+				<div class="card-header"><i class="fa-solid fa-pencil"></i> {{ text_step_2 }}</div>
 				<div class="card-body">
 					<fieldset>
 						<legend>{{ text_install_php }}</legend>
@@ -34,9 +34,9 @@
 									<td>8.0+</td>
 									<td class="text-center">
 										{% if version %}
-											<span class="text-success"><i class="fas fa-check"></i></span>
+											<span class="text-success"><i class="fa-solid fa-check"></i></span>
 										{% else %}
-											<span class="text-danger"><i class="fas fa-times"></i></span>
+											<span class="text-danger"><i class="fa-solid fa-circle-xmark"></i></span>
 										{% endif %}</td>
 								</tr>
 								<tr{% if register_globals %} class="table-danger"{% endif %}>
@@ -49,9 +49,9 @@
 									<td>{{ text_off }}</td>
 									<td class="text-center">
 										{% if not register_globals %}
-											<span class="text-success"><i class="fas fa-check"></i></span>
+											<span class="text-success"><i class="fa-solid fa-check"></i></span>
 										{% else %}
-											<span class="text-danger"><i class="fas fa-times"></i></span>
+											<span class="text-danger"><i class="fa-solid fa-circle-xmark"></i></span>
 										{% endif %}</td>
 								</tr>
 								<tr{% if magic_quotes_gpc %} class="table-danger"{% endif %}>
@@ -64,9 +64,9 @@
 									<td>{{ text_off }}</td>
 									<td class="text-center">
 										{% if not error_magic_quotes_gpc %}
-											<span class="text-success"><i class="fas fa-check"></i></span>
+											<span class="text-success"><i class="fa-solid fa-check"></i></span>
 										{% else %}
-											<span class="text-danger"><i class="fas fa-times"></i></span>
+											<span class="text-danger"><i class="fa-solid fa-circle-xmark"></i></span>
 										{% endif %}</td>
 								</tr>
 								<tr{% if not file_uploads %} class="table-danger"{% endif %}>
@@ -78,9 +78,9 @@
 										{% endif %}</td>
 									<td>{{ text_on }}</td>
 									<td class="text-center">{% if file_uploads %}
-											<span class="text-success"><i class="fas fa-check"></i></span>
+											<span class="text-success"><i class="fa-solid fa-check"></i></span>
 										{% else %}
-											<span class="text-danger"><i class="fas fa-times"></i></span>
+											<span class="text-danger"><i class="fa-solid fa-circle-xmark"></i></span>
 										{% endif %}</td>
 								</tr>
 								<tr{% if session_auto_start %} class="table-danger"{% endif %}>
@@ -92,9 +92,9 @@
 										{% endif %}</td>
 									<td>{{ text_off }}</td>
 									<td class="text-center">{% if not session_auto_start %}
-											<span class="text-success"><i class="fas fa-check"></i></span>
+											<span class="text-success"><i class="fa-solid fa-check"></i></span>
 										{% else %}
-											<span class="text-danger"><i class="fas fa-times"></i></span>
+											<span class="text-danger"><i class="fa-solid fa-circle-xmark"></i></span>
 										{% endif %}</td>
 								</tr>
 							</tbody>
@@ -121,9 +121,9 @@
 										{% endif %}</td>
 									<td>{{ text_on }}</td>
 									<td class="text-center">{% if db %}
-											<span class="text-success"><i class="fas fa-check"></i></span>
+											<span class="text-success"><i class="fa-solid fa-check"></i></span>
 										{% else %}
-											<span class="text-danger"><i class="fas fa-times"></i></span>
+											<span class="text-danger"><i class="fa-solid fa-circle-xmark"></i></span>
 										{% endif %}</td>
 								</tr>
 								<tr{% if not gd %} class="table-danger"{% endif %}>
@@ -135,9 +135,9 @@
 										{% endif %}</td>
 									<td>{{ text_on }}</td>
 									<td class="text-center">{% if gd %}
-											<span class="text-success"><i class="fas fa-check"></i></span>
+											<span class="text-success"><i class="fa-solid fa-check"></i></span>
 										{% else %}
-											<span class="text-danger"><i class="fas fa-times"></i></span>
+											<span class="text-danger"><i class="fa-solid fa-circle-xmark"></i></span>
 										{% endif %}</td>
 								</tr>
 								<tr{% if not curl %} class="table-danger"{% endif %}>
@@ -149,9 +149,9 @@
 										{% endif %}</td>
 									<td>{{ text_on }}</td>
 									<td class="text-center">{% if curl %}
-											<span class="text-success"><i class="fas fa-check"></i></span>
+											<span class="text-success"><i class="fa-solid fa-check"></i></span>
 										{% else %}
-											<span class="text-danger"><i class="fas fa-times"></i></span>
+											<span class="text-danger"><i class="fa-solid fa-circle-xmark"></i></span>
 										{% endif %}</td>
 								</tr>
 								<tr{% if not openssl %} class="table-danger"{% endif %}>
@@ -163,9 +163,9 @@
 										{% endif %}</td>
 									<td>{{ text_on }}</td>
 									<td class="text-center">{% if openssl %}
-											<span class="text-success"><i class="fas fa-check"></i></span>
+											<span class="text-success"><i class="fa-solid fa-check"></i></span>
 										{% else %}
-											<span class="text-danger"><i class="fas fa-times"></i></span>
+											<span class="text-danger"><i class="fa-solid fa-circle-xmark"></i></span>
 										{% endif %}</td>
 								</tr>
 								<tr{% if not zlib %} class="table-danger"{% endif %}>
@@ -177,9 +177,9 @@
 										{% endif %}</td>
 									<td>{{ text_on }}</td>
 									<td class="text-center">{% if zlib %}
-											<span class="text-success"><i class="fas fa-check"></i></span>
+											<span class="text-success"><i class="fa-solid fa-check"></i></span>
 										{% else %}
-											<span class="text-danger"><i class="fas fa-times"></i></span>
+											<span class="text-danger"><i class="fa-solid fa-circle-xmark"></i></span>
 										{% endif %}</td>
 								</tr>
 								<tr{% if not zip %} class="table-danger"{% endif %}>
@@ -191,9 +191,9 @@
 										{% endif %}</td>
 									<td>{{ text_on }}</td>
 									<td class="text-center">{% if zip %}
-											<span class="text-success"><i class="fas fa-check"></i></span>
+											<span class="text-success"><i class="fa-solid fa-check"></i></span>
 										{% else %}
-											<span class="text-danger"><i class="fas fa-times"></i></span>
+											<span class="text-danger"><i class="fa-solid fa-circle-xmark"></i></span>
 										{% endif %}</td>
 								</tr>
 								{% if not iconv %}
@@ -206,9 +206,9 @@
 											{% endif %}</td>
 										<td>{{ text_on }}</td>
 										<td class="text-center">{% if mbstring %}
-												<span class="text-success"><i class="fas fa-check"></i></span>
+												<span class="text-success"><i class="fa-solid fa-check"></i></span>
 											{% else %}
-												<span class="text-danger"><i class="fas fa-times"></i></span>
+												<span class="text-danger"><i class="fa-solid fa-circle-xmark"></i></span>
 											{% endif %}</td>
 									</tr>
 								{% endif %}

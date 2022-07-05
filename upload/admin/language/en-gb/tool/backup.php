@@ -30,3 +30,4 @@ $_['error_file']         = 'File could not be found!';
 $_['error_directory']    = 'Directory could not be found!';
 $_['error_not_found']    = 'Error: Could not find file %s !';
 $_['error_headers_sent'] = 'Error: Headers already sent out!';
+$_['error_upload_size']  = 'Upload file cannot be larger than %s!';

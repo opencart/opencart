@@ -23,20 +23,20 @@ function getURLVar(key) {
 }
 
 // Tooltip
-var tooltip = function () {
+var oc_tooltip = function () {
     // Apply to all on current page
     tooltip = bootstrap.Tooltip.getOrCreateInstance(this);
     tooltip.show();
 }
 
-$(document).on('mouseenter', '[data-bs-toggle=\'tooltip\']', tooltip);
+$(document).on('mouseenter', '[data-bs-toggle=\'tooltip\']', oc_tooltip);
 
 $(document).on('click', 'button', function () {
     $('.tooltip').remove();
 });
 
 // Date
-var datetimepicker = function () {
+var oc_datetimepicker = function () {
     $(this).daterangepicker({
         singleDatePicker: true,
         autoApply: true,
@@ -49,10 +49,10 @@ var datetimepicker = function () {
     });
 }
 
-$(document).on('focus', '.date', datetimepicker);
+$(document).on('focus', '.date', oc_datetimepicker);
 
 // Time
-var datetimepicker = function () {
+var oc_datetimepicker = function () {
     $(this).daterangepicker({
         singleDatePicker: true,
         datePicker: false,
@@ -70,10 +70,10 @@ var datetimepicker = function () {
     });
 }
 
-$(document).on('focus', '.time', datetimepicker);
+$(document).on('focus', '.time', oc_datetimepicker);
 
 // Date Time
-var datetimepicker = function () {
+var oc_datetimepicker = function () {
     $('.datetime').daterangepicker({
         singleDatePicker: true,
         autoApply: true,
@@ -88,10 +88,10 @@ var datetimepicker = function () {
     });
 }
 
-$(document).on('focus', '.datetime', datetimepicker);
+$(document).on('focus', '.datetime', oc_datetimepicker);
 
 // Alert Fade
-var alert = function () {
+var oc_alert = function () {
     window.setTimeout(function () {
         $('.alert-dismissible').fadeTo(1000, 0, function () {
             $(this).remove();
@@ -99,7 +99,7 @@ var alert = function () {
     }, 7000);
 }
 
-$(document).on('click', 'button', alert);
+$(document).on('click', 'button', oc_alert);
 
 $(document).ready(function () {
     // Currency

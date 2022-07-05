@@ -33,7 +33,7 @@
           <td class="text-start">{{ product.model }}</td>
           <td class="text-start">
 
-            <form method="post" data-oc-toggle="ajax" data-oc-load="{{ list }}" data-oc-target="#shopping-cart">
+            <form method="post" data-oc-target="#shopping-cart">
               <div class="input-group">
                 <input type="text" name="quantity" value="{{ product.quantity }}" size="1" class="form-control"> <input type="hidden" name="key" value="{{ product.cart_id }}">
                 <button type="submit" formaction="{{ product_edit }}" data-bs-toggle="tooltip" title="{{ button_update }}" class="btn btn-primary"><i class="fa-solid fa-rotate"></i></button>
@@ -55,7 +55,7 @@
 
             <form method="post" data-oc-toggle="ajax" data-oc-load="{{ list }}" data-oc-target="#shopping-cart">
               <div class="input-group">
-                <input type="text" name="quantity" value="1" size="1" disabled="disabled" class="form-control"/>
+                <input type="text" name="quantity" value="1" size="1" class="form-control" disabled/>
                 <button type="submit" formaction="{{ voucher_remove }}" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-circle-xmark"></i></button>
               </div>
               <input type="hidden" name="key" value="{{ voucher.key }}"/>

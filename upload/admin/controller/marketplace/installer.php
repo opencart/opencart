@@ -277,7 +277,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 				$json['error'] = $this->language->get('error_unzip');
 			}
 		}	
-		if(isset($json['error'])) {
+		if(isset($json['error']) && is_file($file)) {
 			unlink($file);
 		}	
 
@@ -350,7 +350,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 							
 							if (!empty($path_parts[1]) && $path_parts[1] == 'install.json') {
 								$extension_info = json_decode($zip->getFromName($path_parts[0] . '/install.json'), true);
-								if ($extension_info['codename'] == $extension_install_info['codename']) {
+								if (isset($extension_info['codename']) && $extension_info['codename'] == $extension_install_info['codename']) {
 									$extension_folder = $path_parts[0];
 									break;
 								}
@@ -893,17 +893,17 @@ class Installer extends \Opencart\System\Engine\Controller {
 				$base = DIR_EXTENSION;
 
 				// image > image
-				if (substr($destination, $name_folder_length, $name_folder_length + 6) == 'image/') {
-					$path = $extension_folder ? str_replace($extension_folder, $extension_install_info['codename'], $destination) : $destination;
+				if (substr($destination, $name_folder_length, 6) == 'image/') {
+					$path = $extension_folder ? str_replace($extension_folder . '/', '', $destination) : $destination;
 					$base = substr(DIR_IMAGE, 0, -6);
 				}
-
+				
 				// We need to store the path differently for vendor folders.
-				if (substr($destination, $name_folder_length, $name_folder_length + 22) == 'system/storage/vendor/') {
-					$path = $extension_folder ? 'vendor/' : substr($destination, 15);
+				if (substr($destination, $name_folder_length, 22) == 'system/storage/vendor/') {
+					$path = $extension_folder ? substr(str_replace($extension_folder . '/', '', $destination), 15) : substr($destination, 15);
 					$base = DIR_STORAGE;
 				}
-
+				
 				// Must not have a path before files and directories can be moved
 				$path_new = '';
 
@@ -954,7 +954,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 			if (substr($result['path'], 0, 7) == 'vendor/') {
 				$path = DIR_STORAGE . $result['path'];
 			}
-
+			
 			// Check if the location exists or not
 			$path_total = $this->model_setting_extension->getTotalPaths($result['path']);
 

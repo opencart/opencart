@@ -2168,7 +2168,12 @@ function db_schema() {
 				'not_null' => true
 			],
 			[
-				'name' => 'code',
+				'name' => 'package_name',
+				'type' => 'varchar(64)',
+				'not_null' => true
+			],
+			[
+				'name' => 'codename',
 				'type' => 'varchar(255)',
 				'not_null' => true
 			],

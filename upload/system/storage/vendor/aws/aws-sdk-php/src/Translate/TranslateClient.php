@@ -19,6 +19,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getTerminologyAsync(array $args = [])
  * @method \Aws\Result importTerminology(array $args = [])
  * @method \GuzzleHttp\Promise\Promise importTerminologyAsync(array $args = [])
+ * @method \Aws\Result listLanguages(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listLanguagesAsync(array $args = [])
  * @method \Aws\Result listParallelData(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listParallelDataAsync(array $args = [])
  * @method \Aws\Result listTerminologies(array $args = [])

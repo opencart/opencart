@@ -35,7 +35,13 @@ class Extension extends \Opencart\System\Engine\Model {
 	}
 
 	public function addInstall(array $data): int {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "extension_install` SET `extension_id` = '" . (int)$data['extension_id'] . "', `extension_download_id` = '" . (int)$data['extension_download_id'] . "', `name` = '" . $this->db->escape($data['name']) . "', `code` = '" . $this->db->escape($data['code']) . "', `version` = '" . $this->db->escape($data['version']) . "', `author` = '" . $this->db->escape($data['author']) . "', `link` = '" . $this->db->escape($data['link']) . "', `status` = '0', `date_added` = NOW()");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "extension_install` SET `extension_id` = '" . (int)$data['extension_id'] . "', `extension_download_id` = '" . (int)$data['extension_download_id'] . "', `name` = '" . $this->db->escape($data['name']) . "', `package_name` = '" . $this->db->escape($data['package_name']) . "', `codename` = '" . $this->db->escape($data['codename']) . "', `version` = '" . $this->db->escape($data['version']) . "', `author` = '" . $this->db->escape($data['author']) . "', `link` = '" . $this->db->escape($data['link']) . "', `status` = '0', `date_added` = NOW()");
+
+		return $this->db->getLastId();
+	}
+
+	public function editInstall(array $data): int {
+		$this->db->query("UPDATE `" . DB_PREFIX . "extension_install` SET `extension_download_id` = '" . (int)$data['extension_download_id'] . "', `name` = '" . $this->db->escape($data['name']) . "', `package_name` = '" . $this->db->escape($data['package_name']) . "', `codename` = '" . $this->db->escape($data['codename']) . "', `version` = '" . $this->db->escape($data['version']) . "', `author` = '" . $this->db->escape($data['author']) . "', `link` = '" . $this->db->escape($data['link']) . "' WHERE `extension_install_id` = '" . (int)$data['extension_install_id'] . "'");
 
 		return $this->db->getLastId();
 	}
@@ -60,8 +66,8 @@ class Extension extends \Opencart\System\Engine\Model {
 		return $query->row;
 	}
 
-	public function getInstallByCode(string $code): array {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension_install` WHERE `code` = '" . $this->db->escape($code) . "'");
+	public function getInstallByCodename(string $codename): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension_install` WHERE `codename` = '" . $this->db->escape($codename) . "'");
 
 		return $query->row;
 	}
@@ -120,6 +126,14 @@ class Extension extends \Opencart\System\Engine\Model {
 		return (int)$query->row['total'];
 	}
 
+	public function getTotalInstallsByPackageName(string $package_name): int {
+		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "extension_install` WHERE `package_name` = '" . $this->db->escape($package_name) . "'";
+
+		$query = $this->db->query($sql);
+
+		return (int)$query->row['total'];
+	}
+
 	public function addPath(int $extension_install_id, string $path): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "extension_path` SET `extension_install_id` = '" . (int)$extension_install_id . "', `path` = '" . $this->db->escape($path) . "'");
 	}
@@ -134,6 +148,12 @@ class Extension extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
+	public function getPath(int $extension_install_id, string $path) {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension_path` WHERE `path` = '" . $this->db->escape($path) . "' ORDER BY `path` ASC");
+
+		return $query->row;
+	}
+
 	public function getPaths(string $path): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension_path` WHERE `path` LIKE '" . $this->db->escape($path) . "' ORDER BY `path` ASC");
 
@@ -143,6 +163,6 @@ class Extension extends \Opencart\System\Engine\Model {
 	public function getTotalPaths(string $path): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "extension_path` WHERE `path` LIKE '" . $this->db->escape($path) . "'");
 
-		return (int)$query->row['total'];
+		return $query->row['total'];
 	}
 }

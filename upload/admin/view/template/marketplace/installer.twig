@@ -2,7 +2,7 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="float-end"><button type="button" id="button-upload" data-bs-toggle="tooltip" title="{{ button_upload }}" class="btn btn-primary"><i class="fa-solid fa-upload"></i></button></div>
+      <div class="float-end"><button type="button" id="button-upload" data-bs-toggle="tooltip" title="{{ button_upload }}" class="btn btn-primary"><i class="fas fa-upload"></i></button></div>
       <h1>{{ heading_title }}</h1>
       <ol class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -13,7 +13,7 @@
   </div>
   <div class="container-fluid">
     <div class="card">
-      <div class="card-header"><i class="fa-solid fa-puzzle-piece"></i> {{ heading_title }}</div>
+      <div class="card-header"><i class="fas fa-puzzle-piece"></i> {{ heading_title }}</div>
       <div class="card-body">
         <fieldset>
           <legend>{{ text_progress }}</legend>
@@ -42,13 +42,13 @@ $('#extension').on('click', 'thead a, .pagination a', function (e) {
     $('#extension').load(this.href);
 });
 
-$('#extension').load('index.php?route=marketplace/installer|list&user_token={{ user_token }}');
+$('#extension').load('index.php?route=marketplace/installer|extension&user_token={{ user_token }}');
 
 // Upload
 $('#button-upload').on('click', function () {
     var element = this;
 
-    if (!$('button-upload').prop('disabled')) {
+    if (!$('button-upload').hasClass('disabled')) {
         $('#form-upload').remove();
 
         $('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" accept=".ocmod.zip"/></form>');
@@ -68,7 +68,7 @@ $('#button-upload').on('click', function () {
         }
 
         timer = setInterval(function () {
-            if ($('#form-upload input[name=\'file\']').val() !== '') {
+            if ($('#form-upload input[name=\'file\']').val() != '') {
                 clearInterval(timer);
 
                 $.ajax({
@@ -80,23 +80,23 @@ $('#button-upload').on('click', function () {
                     contentType: false,
                     processData: false,
                     beforeSend: function () {
-                        $(element).prop('disabled', true).addClass('loading');
-                    },
-                    complete: function () {
-                        $(element).prop('disabled', false).removeClass('loading');
+                        $(element).addClass('loading disabled');
+                        $('.btn-primary, .btn-secondary, .btn-success, .btn-warning, a.btn-danger').addClass('disabled');
                     },
                     success: function (json) {
                         if (json['error']) {
-                            $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-                        }
-
-                        if (json['success']) {
-                            $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                            $('#extension').load('index.php?route=marketplace/installer|list&user_token={{ user_token }}');
+                            alert(json['error']);
+                            $(element).removeClass('loading disabled');
+                            $('#extension').load('index.php?route=marketplace/installer|extension&user_token={{ user_token }}');
+                        } else if (json['success']) {
+                            alert(json['success']);
+                            $(element).removeClass('loading disabled');
+                            $('#extension').load('index.php?route=marketplace/installer|extension&user_token={{ user_token }}');
                         }
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
+                        $('#extension').load('index.php?route=marketplace/installer|extension&user_token={{ user_token }}');
+                        
                         console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
                     }
                 });
@@ -105,13 +105,19 @@ $('#button-upload').on('click', function () {
     }
 });
 
-// Install
-$('#extension').on('click', '.btn-success, .btn-warning', function (e) {
+// Install, Uninstall, Upgrade, Downgrade, Delete
+$('#extension').on('click', 'a.btn-primary, a.btn-success, a.btn-warning, a.btn-danger', function (e) {
     e.preventDefault();
 
     var element = this;
 
     var next = $(element).attr('href');
+
+    if($(element).hasClass('btn-warning') || $(element).hasClass('btn-danger')) {
+        if(!confirm('{{ text_confirm }}')) {
+            return false;
+        }
+    }
 
     $('#progress-bar').removeClass('progress-bar-danger progress-bar-success').css('width', '0%');
     $('#progress-text').html('');
@@ -121,10 +127,8 @@ $('#extension').on('click', '.btn-success, .btn-warning', function (e) {
             url: next,
             dataType: 'json',
             beforeSend: function () {
-                $(element).prop('disabled', true).addClass('loading');
-            },
-            complete: function () {
-                $(element).prop('disabled', false).removeClass('loading');
+                $(element).addClass('loading disabled');
+                $('#button-upload, .btn-primary, .btn-success, .btn-warning, a.btn-danger').addClass('disabled');
             },
             success: function (json) {
                 $('.alert-dismissible').remove();
@@ -132,22 +136,27 @@ $('#extension').on('click', '.btn-success, .btn-warning', function (e) {
                 if (json['error']) {
                     $('#progress-bar').addClass('progress-bar-danger');
                     $('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
+                    $(element).removeClass('loading disabled');
+                    $('#button-upload, .btn-primary, .btn-success, .btn-warning, a.btn-danger').removeClass('disabled');
                 }
 
                 if (json['success']) {
                     $('#progress-bar').addClass('progress-bar-success').css('width', '100%');
                     $('#progress-text').html('<div class="text-success">' + json['success'] + '</div>');
-
-                    $('#extension').load('index.php?route=marketplace/installer|list&user_token={{ user_token }}');
+                    $('#button-upload').removeClass('disabled');
+                    $('#extension').load('index.php?route=marketplace/installer|extension&user_token={{ user_token }}');
                 }
 
                 if (json['next']) {
                     next = json['next'];
+                    $('#progress-bar').addClass('progress-bar-success').css('width', json['progress'] + '%');
 
                     chain.attach(installer);
                 }
             },
             error: function (xhr, ajaxOptions, thrownError) {
+                $(element).removeClass('loading disabled');
+                $('#button-upload, .btn-primary, .btn-success, .btn-warning, a.btn-danger').removeClass('disabled');
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });
@@ -156,40 +165,5 @@ $('#extension').on('click', '.btn-success, .btn-warning', function (e) {
     chain.attach(installer);
 });
 
-// Delete
-$('#extension').on('click', '.btn-danger', function (e) {
-    e.preventDefault();
-
-    var element = this;
-
-    if (confirm('{{ text_confirm }}')) {
-        $.ajax({
-            url: $(element).attr('href'),
-            dataType: 'json',
-            beforeSend: function () {
-                $(element).prop('disabled', true).addClass('loading');
-            },
-            complete: function () {
-                $(element).prop('disabled', false).removeClass('loading');
-            },
-            success: function (json) {
-                $('.alert-dismissible').remove();
-
-                if (json['error']) {
-                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-                }
-
-                if (json['success']) {
-                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                    $('#extension').load('index.php?route=marketplace/installer|list&user_token={{ user_token }}');
-                }
-            },
-            error: function (xhr, ajaxOptions, thrownError) {
-                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-            }
-        });
-    }
-});
 //--></script>
 {{ footer }}

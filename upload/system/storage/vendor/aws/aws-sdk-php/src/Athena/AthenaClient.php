@@ -7,6 +7,8 @@ use Aws\AwsClient;
  * This client is used to interact with the **Amazon Athena** service.
  * @method \Aws\Result batchGetNamedQuery(array $args = [])
  * @method \GuzzleHttp\Promise\Promise batchGetNamedQueryAsync(array $args = [])
+ * @method \Aws\Result batchGetPreparedStatement(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise batchGetPreparedStatementAsync(array $args = [])
  * @method \Aws\Result batchGetQueryExecution(array $args = [])
  * @method \GuzzleHttp\Promise\Promise batchGetQueryExecutionAsync(array $args = [])
  * @method \Aws\Result createDataCatalog(array $args = [])

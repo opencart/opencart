@@ -25,6 +25,7 @@
     "php": ">=8.0.0",
     "scssphp/scssphp": "^1.10.0",
     "twig/twig": "^3.3.7",
-    "aws/aws-sdk-php": "^3.142.1"
+    "aws/aws-sdk-php": "^3.142.1",
+    "composer/semver": "^3.3"
   }
 }

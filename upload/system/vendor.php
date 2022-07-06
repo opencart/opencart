@@ -10,6 +10,9 @@ $autoloader->register('AWS/CRT/Internal', DIR_STORAGE . 'vendor/aws/aws-crt-php/
 $autoloader->register('Aws', DIR_STORAGE . 'vendor/aws/aws-sdk-php/src/', true);
 require_once(DIR_STORAGE . 'vendor/aws/aws-sdk-php/src/functions.php');
 
+// composer/semver
+$autoloader->register('Composer\Semver', DIR_STORAGE . 'vendor/composer/semver/src/', true);
+
 // guzzlehttp/guzzle
 $autoloader->register('GuzzleHttp', DIR_STORAGE . 'vendor/guzzlehttp/guzzle/src/', true);
 require_once(DIR_STORAGE . 'vendor/guzzlehttp/guzzle/src/functions_include.php');

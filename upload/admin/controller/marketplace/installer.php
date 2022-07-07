@@ -338,8 +338,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 					$json['next'] .= '&install_folder=' . $install_folder;
 				}
 			} else {
-				$url .= '&action=install';
-				$json['next'] = $this->url->link('marketplace/installer|vendor', 'user_token=' . $this->session->data['user_token'] . $url, true);
+				$json['next'] = $this->url->link('marketplace/installer|vendor', 'user_token=' . $this->session->data['user_token'] . '&action=install' . $url, true);
 				$json['progress'] = 100;
 			}
 		}

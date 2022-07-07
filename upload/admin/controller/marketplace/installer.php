@@ -386,7 +386,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 
 				$this->removeExtensionFilesAndPaths($extension_install_info);
 
-                $this->addExtensionFilesAndPaths($extension_install_info, $file, $page, $zip, $json);
+                $this->addExtensionFilesAndPaths($extension_install_info, $file, $page, $zip, $install_folder, $json);
 
 				$zip->close();
 

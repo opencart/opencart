@@ -14,7 +14,7 @@
       {% for product in products %}
         <tr>
           <td class="text-center">{% if product.thumb %} <a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-thumbnail"/></a> {% endif %}</td>
-          <td class="text-start"><a href="{{ product.href }}">{{ product.name }}</a>{% if not product.stock %} <span class="text-danger">***</span>{% endif %}
+          <td class="text-start text-wrap"><a href="{{ product.href }}">{{ product.name }}</a>{% if not product.stock %} <span class="text-danger">***</span>{% endif %}
             {% if product.option %}
               {% for option in product.option %}
                 <br/>
@@ -32,7 +32,6 @@
           </td>
           <td class="text-start">{{ product.model }}</td>
           <td class="text-start">
-
             <form method="post" data-oc-target="#shopping-cart">
               <div class="input-group">
                 <input type="text" name="quantity" value="{{ product.quantity }}" size="1" class="form-control"> <input type="hidden" name="key" value="{{ product.cart_id }}">
@@ -40,7 +39,6 @@
                 <button type="submit" formaction="{{ product_remove }}" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-circle-xmark"></i></button>
               </div>
             </form>
-
           </td>
           <td class="text-end">{{ product.price }}</td>
           <td class="text-end">{{ product.total }}</td>
@@ -49,18 +47,16 @@
       {% for voucher in vouchers %}
         <tr>
           <td></td>
-          <td class="text-start">{{ voucher.description }}</td>
+          <td class="text-start text-wrap">{{ voucher.description }}</td>
           <td class="text-start"></td>
           <td class="text-start">
-
-            <form method="post" data-oc-toggle="ajax" data-oc-load="{{ list }}" data-oc-target="#shopping-cart">
+            <form method="post" data-oc-target="#shopping-cart">
               <div class="input-group">
                 <input type="text" name="quantity" value="1" size="1" class="form-control" disabled/>
                 <button type="submit" formaction="{{ voucher_remove }}" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-circle-xmark"></i></button>
               </div>
               <input type="hidden" name="key" value="{{ voucher.key }}"/>
             </form>
-
           </td>
           <td class="text-end">{{ voucher.amount }}</td>
           <td class="text-end">{{ voucher.amount }}</td>

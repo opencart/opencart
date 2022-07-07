@@ -301,7 +301,7 @@ $(document).on('click', '[data-oc-toggle=\'upload\']', function () {
                     contentType: false,
                     processData: false,
                     beforeSend: function () {
-                        $(element).button('loading');
+                        $(element).prop('disabled', true).addClass('loading');
                     },
                     complete: function () {
                         $(element).prop('disabled', false).removeClass('loading');

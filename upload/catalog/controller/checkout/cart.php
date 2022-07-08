@@ -266,12 +266,6 @@ class Cart extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-			//print_r($product_info);
-			//print_r($this->request->post);
-			//print_r($option);
-			//print_r($json);
-			//print_r($product_options);
-
 			// Validate subscription products
 			$subscriptions = $this->model_catalog_product->getSubscriptions($product_id);
 

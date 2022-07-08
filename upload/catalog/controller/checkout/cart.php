@@ -243,9 +243,18 @@ class Cart extends \Opencart\System\Engine\Controller {
 				$product_id = $product_info['master_id'];
 			}
 
+			// Only use values in the override
+			if (isset($product_info['override']['variant'])) {
+				$override = $product_info['override']['variant'];
+			} else {
+				$override = [];
+			}
+
 			// Merge variant code with options
 			foreach ($product_info['variant'] as $key => $value) {
-				$option[$key] = $value;
+				if (in_array($key, $override)) {
+					$option[$key] = $value;
+				}
 			}
 
 			// Validate options
@@ -256,6 +265,12 @@ class Cart extends \Opencart\System\Engine\Controller {
 					$json['error']['option_' . $product_option['product_option_id']] = sprintf($this->language->get('error_required'), $product_option['name']);
 				}
 			}
+
+			//print_r($product_info);
+			//print_r($this->request->post);
+			//print_r($option);
+			//print_r($json);
+			//print_r($product_options);
 
 			// Validate subscription products
 			$subscriptions = $this->model_catalog_product->getSubscriptions($product_id);

@@ -12,8 +12,7 @@
 */
 namespace Opencart\System\Library;
 class Log {
-	private string $file;
-	private string $message = '';
+	private $handle;
 
 	/**
 	 * Constructor
@@ -21,23 +20,23 @@ class Log {
 	 * @param	string	$filename
  	*/
 	public function __construct(string $filename) {
-		$this->file = DIR_LOGS . $filename;
+		$this->handle = fopen(DIR_LOGS . $filename, 'a');
 	}
-	
+
 	/**
-     * 
+     *
      *
      * @param	string	$message
      */
-	public function write(string|array $message): void {
-		$this->message .= date('Y-m-d H:i:s') . ' - ' . print_r($message, true) . "\n";
+	public function write(string $message): void {
+		fwrite($this->handle, date('Y-m-d G:i:s') . ' - ' . print_r($message, true) . "\n");
 	}
-	
+
 	/**
-     * 
+     *
      *
      */
 	public function __destruct() {
-		if (is_file($this->file)) file_put_contents($this->file, $this->message, FILE_APPEND);
+		fclose($this->handle);
 	}
 }

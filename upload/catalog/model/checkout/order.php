@@ -196,9 +196,9 @@ class Order extends \Opencart\System\Engine\Model {
 			}
 
 			return $order_data;
-		} else {
-			return [];
 		}
+
+		return [];
 	}
 
 	public function getProducts(int $order_id): array {
@@ -362,5 +362,7 @@ class Order extends \Opencart\System\Engine\Model {
 
 			return $order_history_id;
 		}
+
+		return 0;
 	}
 }

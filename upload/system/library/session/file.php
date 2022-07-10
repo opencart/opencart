@@ -9,44 +9,14 @@ class File {
 		$file = DIR_SESSION . 'sess_' . basename($session_id);
 
 		if (is_file($file)) {
-			$size = filesize($file);
-
-			if ($size) {
-				$handle = fopen($file, 'r');
-
-				flock($handle, LOCK_SH);
-
-				$data = fread($handle, $size);
-
-				flock($handle, LOCK_UN);
-
-				fclose($handle);
-
-				return json_decode($data, true);
-			} else {
-				return [];
-			}
+			return json_decode(file_get_contents($file));
+		} else {
+			return [];
 		}
-
-		return [];
 	}
 
 	public function write(string $session_id, array $data): bool {
-		$file = DIR_SESSION . 'sess_' . basename($session_id);
-
-		$handle = fopen($file, 'c');
-
-		flock($handle, LOCK_EX);
-
-		fwrite($handle, json_encode($data));
-
-		ftruncate($handle, ftell($handle));
-
-		fflush($handle);
-
-		flock($handle, LOCK_UN);
-
-		fclose($handle);
+		file_put_contents(DIR_SESSION . 'sess_' . basename($session_id), json_encode($data));
 
 		return true;
 	}

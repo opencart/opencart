@@ -31,6 +31,28 @@
           </div>
 
           <div class="row mb-3">
+            <label for="input-approved-status" class="col-sm-2 col-form-label">{{ entry_approved_status }}</label>
+            <div class="col-sm-10">
+              <select name="payment_credit_card_approved_status_id" id="input-approved-status" class="form-select">
+                {% for order_status in order_statuses %}
+                  <option value="{{ order_status.order_status_id }}"{% if order_status.order_status_id == payment_credit_card_approved_status_id %} selected="selected"{% endif %}>{{ order_status.name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <label for="input-failed-status" class="col-sm-2 col-form-label">{{ entry_failed_status }}</label>
+            <div class="col-sm-10">
+              <select name="payment_credit_card_failed_status_id" id="input-failed-status" class="form-select">
+                {% for order_status in order_statuses %}
+                  <option value="{{ order_status.order_status_id }}"{% if order_status.order_status_id == payment_credit_card_failed_status_id %} selected="selected"{% endif %}>{{ order_status.name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+
+          <div class="row mb-3">
             <label for="input-order-status" class="col-sm-2 col-form-label">{{ entry_order_status }}</label>
             <div class="col-sm-10">
               <select name="payment_credit_card_order_status_id" id="input-order-status" class="form-select">
@@ -40,6 +62,7 @@
               </select>
             </div>
           </div>
+
           <div class="row mb-3">
             <label for="input-geo-zone" class="col-sm-2 col-form-label">{{ entry_geo_zone }}</label>
             <div class="col-sm-10">

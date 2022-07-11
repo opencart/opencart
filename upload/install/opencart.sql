@@ -323,7 +323,7 @@ INSERT INTO `oc_category_to_store` (`category_id`, `store_id`) VALUES
 (51, 0),
 (52, 0),
 (53, 0),
-(54, 0),
+(54, 0),aff
 (55, 0),
 (56, 0),
 (57, 0),
@@ -1976,7 +1976,7 @@ INSERT INTO `oc_setting` (`store_id`, `code`, `key`, `value`, `serialized`) VALU
 (0, 'config', 'config_api_id', '1', 0),
 (0, 'config', 'config_cart_weight', '1', 0),
 (0, 'config', 'config_checkout_guest', '1', 0),
-(0, 'config', 'config_checkout_id', '5', 0),
+(0, 'config', 'config_checkout_id', '0', 0),
 (0, 'config', 'config_order_status_id', '1', 0),
 (0, 'config', 'config_processing_status', '["5","1","2","12","3"]', 1),
 (0, 'config', 'config_complete_status', '["5","3"]', 1),

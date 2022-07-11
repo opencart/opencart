@@ -8,12 +8,13 @@
           <option value="{{ payment_method.code }}"{% if payment_method.code == code %} selected{% endif %}>{{ payment_method.title }}</option>
         {% endfor %}
 
-        <optgroup label="{{ text_stored }}">
-          {% for store in stores %}
-            <option value="{{ store.code }}"{% if store.code == code %} selected{% endif %}>{{ store.name }}</option>
-          {% endfor %}
-        </optgroup>
-
+        {% if stores %}
+          <optgroup label="{{ text_stored }}">
+            {% for store in stores %}
+              <option value="{{ store.code }}"{% if store.code == code %} selected{% endif %}>{{ store.name }}</option>
+            {% endfor %}
+          </optgroup>
+        {% endif %}
       </select>
       <button type="button" id="button-payment-method" class="btn btn-light"><i class="fa-solid fa-rotate"></i></button>
     </div>

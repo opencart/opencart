@@ -19,6 +19,7 @@ class Confirm extends \Opencart\System\Engine\Controller {
 
 		$status = true;
 
+		// Validate customer data is set
 		if (!isset($this->session->data['customer'])) {
 			$status = false;
 		}
@@ -67,10 +68,12 @@ class Confirm extends \Opencart\System\Engine\Controller {
 			unset($this->session->data['shipping_methods']);
 		}
 
+		// Validate Payment methods
 		if (!isset($this->session->data['payment_method']) || !isset($this->session->data['payment_methods']) || !isset($this->session->data['payment_methods'][$this->session->data['payment_method']])) {
 			$status = false;
 		}
 
+		// Validate checkout terms
 		if ($this->config->get('config_checkout_id') && !isset($this->session->data['agree'])) {
 			$status = false;
 		}

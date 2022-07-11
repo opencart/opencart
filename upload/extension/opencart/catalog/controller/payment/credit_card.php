@@ -72,8 +72,6 @@ class CreditCard extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$this->load->model('checkout/order');
-
 			// Set Credit Card response
 			if ($this->config->get('payment_credit_card_response')) {
 				// Card storage
@@ -94,13 +92,17 @@ class CreditCard extends \Opencart\System\Engine\Controller {
 					$this->model_account_payment_method->addPaymentMethod($payment_method_data);
 				}
 
+				$this->load->model('checkout/order');
+
 				$this->model_checkout_order->addHistory($this->session->data['order_id'], $this->config->get('payment_credit_card_approved_status_id'), '', true);
 
 				$json['redirect'] = $this->url->link('checkout/success', 'language=' . $this->config->get('config_language'), true);
 			} else {
+				$this->load->model('checkout/order');
+
 				$this->model_checkout_order->addHistory($this->session->data['order_id'], $this->config->get('payment_credit_card_failed_status_id'), '', true);
 
-				$json['redirect'] = $this->url->link('checkout/failed', 'language=' . $this->config->get('config_language'), true);
+				$json['redirect'] = $this->url->link('checkout/failure', 'language=' . $this->config->get('config_language'), true);
 			}
 		}
 

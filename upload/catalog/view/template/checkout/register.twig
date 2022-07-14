@@ -557,6 +557,8 @@ $('#form-register').on('submit', function (e) {
                 $('#form-register').find('.is-invalid').removeClass('is-invalid');
                 $('#form-register').find('.invalid-feedback').removeClass('d-block');
 
+                console.log(json);
+
                 if (json['redirect']) {
                     location = json['redirect'];
                 }

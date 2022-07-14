@@ -574,10 +574,10 @@
                 <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order }}">
                   <label class="col-sm-2 control-label" for="input-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
                   <div class="col-sm-10">
-                    <select name="custom_field[{{ custom_field.custom_field_id }}]" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control">
+                    <select name="custom_field[affiliate][{{ custom_field.custom_field_id }}]" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control">
                       <option value="">{{ text_select }}</option>
                       {% for custom_field_value in custom_field.custom_field_value %}
-                      {% if account_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id == account_custom_field[custom_field.custom_field_id] %}
+                      {% if affiliate_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id == affiliate_custom_field[custom_field.custom_field_id] %}
                       <option value="{{ custom_field_value.custom_field_value_id }}" selected="selected">{{ custom_field_value.name }}</option>
                       {% else %}
                       <option value="{{ custom_field_value.custom_field_value_id }}">{{ custom_field_value.name }}</option>
@@ -594,13 +594,13 @@
                   <label class="col-sm-2 control-label">{{ custom_field.name }}</label>
                   <div class="col-sm-10">
                     <div> {% for custom_field_value in custom_field.custom_field_value %}
-                      <div class="radio">{% if account_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id == account_custom_field[custom_field.custom_field_id] %}
+                      <div class="radio">{% if affiliate_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id == affiliate_custom_field[custom_field.custom_field_id] %}
                         <label>
-                          <input type="radio" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ custom_field_value.custom_field_value_id }}" checked="checked" />
+                          <input type="radio" name="custom_field[affiliate][{{ custom_field.custom_field_id }}]" value="{{ custom_field_value.custom_field_value_id }}" checked="checked" />
                           {{ custom_field_value.name }}</label>
                         {% else %}
                         <label>
-                          <input type="radio" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ custom_field_value.custom_field_value_id }}" />
+                          <input type="radio" name="custom_field[affiliate][{{ custom_field.custom_field_id }}]" value="{{ custom_field_value.custom_field_value_id }}" />
                           {{ custom_field_value.name }}</label>
                         {% endif %}</div>
                       {% endfor %} </div>
@@ -614,13 +614,13 @@
                   <label class="col-sm-2 control-label">{{ custom_field.name }}</label>
                   <div class="col-sm-10">
                     <div> {% for custom_field_value in custom_field.custom_field_value %}
-                      <div class="checkbox">{% if account_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id in account_custom_field[custom_field.custom_field_id] %}
+                      <div class="checkbox">{% if affiliate_custom_field[custom_field.custom_field_id] and custom_field_value.custom_field_value_id in affiliate_custom_field[custom_field.custom_field_id] %}
                         <label>
-                          <input type="checkbox" name="custom_field[{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" checked="checked" />
+                          <input type="checkbox" name="custom_field[affiliate][{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" checked="checked" />
                           {{ custom_field_value.name }}</label>
                         {% else %}
                         <label>
-                          <input type="checkbox" name="custom_field[{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" />
+                          <input type="checkbox" name="custom_field[affiliate][{{ custom_field.custom_field_id }}][]" value="{{ custom_field_value.custom_field_value_id }}" />
                           {{ custom_field_value.name }}</label>
                         {% endif %}</div>
                       {% endfor %} </div>
@@ -633,7 +633,7 @@
                 <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order }}">
                   <label class="col-sm-2 control-label" for="input-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
                   <div class="col-sm-10">
-                    <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control" />
+                    <input type="text" name="custom_field[affiliate][{{ custom_field.custom_field_id }}]" value="{{ affiliate_custom_field[custom_field.custom_field_id] ? affiliate_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control" />
                     {% if error_custom_field[custom_field.custom_field_id] %}
                     <div class="text-danger">{{ error_custom_field[custom_field.custom_field_id] }}</div>
                     {% endif %}</div>
@@ -643,7 +643,7 @@
                 <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order }}">
                   <label class="col-sm-2 control-label" for="input-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
                   <div class="col-sm-10">
-                    <textarea name="custom_field[{{ custom_field.custom_field_id }}]" rows="5" placeholder="{{ custom_field.name }}" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control">{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}</textarea>
+                    <textarea name="custom_field[affiliate][{{ custom_field.custom_field_id }}]" rows="5" placeholder="{{ custom_field.name }}" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control">{{ affiliate_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}</textarea>
                     {% if error_custom_field[custom_field.custom_field_id] %}
                     <div class="text-danger">{{ error_custom_field[custom_field.custom_field_id] }}</div>
                     {% endif %}</div>
@@ -654,7 +654,7 @@
                   <label class="col-sm-2 control-label">{{ custom_field.name }}</label>
                   <div class="col-sm-10">
                     <button type="button" id="button-custom-field{{ custom_field.custom_field_id }}" data-loading-text="{{ text_loading }}" class="btn btn-default"><i class="fa fa-upload"></i> {{ button_upload }}</button>
-                    <input type="hidden" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] }}" id="input-custom-field{{ custom_field.custom_field_id }}" />
+                    <input type="hidden" name="custom_field[affiliate][{{ custom_field.custom_field_id }}]" value="{{ affiliate_custom_field[custom_field.custom_field_id] ? affiliate_custom_field[custom_field.custom_field_id] }}" id="input-custom-field{{ custom_field.custom_field_id }}" />
                     {% if error_custom_field[custom_field.custom_field_id] %}
                     <div class="text-danger">{{ error_custom_field[custom_field.custom_field_id] }}</div>
                     {% endif %}</div>
@@ -665,7 +665,7 @@
                   <label class="col-sm-2 control-label" for="input-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
                   <div class="col-sm-10">
                     <div class="input-group date">
-                      <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" data-date-format="YYYY-MM-DD" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control" />
+                      <input type="text" name="custom_field[affiliate][{{ custom_field.custom_field_id }}]" value="{{ affiliate_custom_field[custom_field.custom_field_id] ? affiliate_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" data-date-format="YYYY-MM-DD" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control" />
                       <span class="input-group-btn">
                       <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                       </span></div>
@@ -679,7 +679,7 @@
                   <label class="col-sm-2 control-label" for="input-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
                   <div class="col-sm-10">
                     <div class="input-group time">
-                      <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" data-date-format="HH:mm" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control" />
+                      <input type="text" name="custom_field[affiliate][{{ custom_field.custom_field_id }}]" value="{{ affiliate_custom_field[custom_field.custom_field_id] ? affiliate_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" data-date-format="HH:mm" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control" />
                       <span class="input-group-btn">
                       <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                       </span></div>
@@ -693,7 +693,7 @@
                   <label class="col-sm-2 control-label" for="input-custom-field{{ custom_field.custom_field_id }}">{{ custom_field.name }}</label>
                   <div class="col-sm-10">
                     <div class="input-group datetime">
-                      <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" data-date-format="YYYY-MM-DD HH:mm" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control" />
+                      <input type="text" name="custom_field[affiliate][{{ custom_field.custom_field_id }}]" value="{{ affiliate_custom_field[custom_field.custom_field_id] ? affiliate_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" data-date-format="YYYY-MM-DD HH:mm" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control" />
                       <span class="input-group-btn">
                       <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                       </span></div>

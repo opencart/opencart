@@ -13,7 +13,7 @@ class Language extends \Opencart\System\Engine\Controller {
 
 	// controller/*/before
 	// 1. Before controller load store all current loaded language data
-	public function before(string &$route, array &$output): void {
+	public function before(string &$route, array &$args): void {
 		$data = $this->language->all();
 
 		if ($data) {

@@ -1256,14 +1256,6 @@ class Product extends \Opencart\System\Engine\Controller {
 			$limit = 5;
 		}
 
-		$frequencies = [
-			'day'        => $this->language->get('text_day'),
-			'week'       => $this->language->get('text_week'),
-			'semi_month' => $this->language->get('text_semi_month'),
-			'month'      => $this->language->get('text_month'),
-			'year'       => $this->language->get('text_year'),
-		];
-
 		$filter_data = [
 			'filter_name'  => $filter_name,
 			'filter_model' => $filter_model,

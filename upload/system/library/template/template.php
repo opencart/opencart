@@ -43,7 +43,7 @@ class Template {
 				}
 
 				if (isset($this->path[$namespace])) {
-					$file = $this->path[$namespace] . substr($filename, strlen($namespace)) . '.tpl';
+					$file = $this->path[$namespace] . substr($filename, strlen($namespace) + 1) . '.tpl';
 				}
 			}
 

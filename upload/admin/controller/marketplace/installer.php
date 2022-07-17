@@ -183,7 +183,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_upload');
 		}
 
-		// 5. Validate if the file can be opened and there is a install.json that can be read.
+		// 5. Validate if the file can be opened and there is install.json that can be read.
 		if (!$json) {
 			move_uploaded_file($this->request->files['file']['tmp_name'], $file);
 

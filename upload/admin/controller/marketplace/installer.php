@@ -710,7 +710,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 						}
 					}
 				}
-				if(!$install_folders) {
+				if (!$install_folders) {
 					foreach ($extension_installs as $extension_install_info) {
 						if ($page > 1 && !is_dir(DIR_EXTENSION . $extension_install_info['codename'] . '/')) {
 							$json['error'] = sprintf($this->language->get('error_directory'), $extension_install_info['codename'] . '/');

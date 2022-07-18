@@ -85,6 +85,9 @@ $('#button-upload').on('click', function () {
                         if (json['upgrade']) {
                             var next = 'index.php?route=marketplace/installer|replace&user_token={{ user_token }}&action=upload';
 
+                            $('#progress-bar').removeClass('progress-bar-danger progress-bar-success').css('width', '0%');
+                            $('#progress-text').html('');
+                            
                             var data = {};
                             data['extension_install_ids'] = json['upgrade'];
 

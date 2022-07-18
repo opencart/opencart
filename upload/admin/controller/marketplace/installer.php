@@ -428,7 +428,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 			if (isset($this->request->get['extension_install_id'])) {
 				$url .= '&extension_install_id=' . $this->request->get['extension_install_id'];
 			} elseif(isset($this->request->post['extension_install_ids'])) {
-				$json['extension_install_ids'] = json_encode($this->request->post['extension_install_ids']);
+				$json['extension_install_ids'] = $this->request->post['extension_install_ids'];
 			}
 
 			if (($page * 200) <= $total) {

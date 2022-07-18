@@ -818,7 +818,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 			} elseif (is_dir($file)) {
 				$empty_directory = !glob(rtrim($file, '/') . '/{*,.[!.]*,..?*}', GLOB_BRACE);
 				if (!$empty_directory) {
-					$sting  = 'PHP Warning: : rmdir(' . $file . "): Directory not empty in\n";
+					$sting  = 'PHP Warning: rmdir(' . $file . "): Directory not empty in\n";
 					$sting .= 'File: ' . __FILE__ . "\n";
 					$sting .= 'Line: ' . __LINE__ . "\n";
 

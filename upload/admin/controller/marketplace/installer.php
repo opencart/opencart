@@ -93,8 +93,9 @@ class Installer extends \Opencart\System\Engine\Controller {
 
 			if($result['status']) {
 				$installed_extension_info = json_decode(file_get_contents(DIR_EXTENSION . $result['codename'] . '/install.json'), true);
-				$upgrade = Comparator::greaterThan($result['version'], $installed_extension_info['version']);
 				$downgrade  = Comparator::lessThan($result['version'], $installed_extension_info['version']);
+			} else {
+				$this->removeExtensionFilesAndPaths($result);
 			}
 
 			$data['extensions'][] = [
@@ -104,7 +105,6 @@ class Installer extends \Opencart\System\Engine\Controller {
 				'status'     => $result['status'],
 				'link'       => $link,
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'upgrade'    => $upgrade ? $this->url->link('marketplace/installer|replace&action=upgrade', 'user_token=' . $this->session->data['user_token'] . '&extension_install_id=' . $result['extension_install_id']) : false,
 				'downgrade'  => $downgrade ? $this->url->link('marketplace/installer|replace&action=downgrade', 'user_token=' . $this->session->data['user_token'] . '&extension_install_id=' . $result['extension_install_id']) : false,
 				'install'    => $this->url->link('marketplace/installer|install', 'user_token=' . $this->session->data['user_token'] . '&extension_install_id=' . $result['extension_install_id']),
 				'uninstall'  => ($result['codename'] != 'opencart') ? $this->url->link('marketplace/installer|uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension_install_id=' . $result['extension_install_id']) : false,
@@ -208,7 +208,11 @@ class Installer extends \Opencart\System\Engine\Controller {
 
 						$this->addInstall($install_info, $installed_info, $filename);
 
-						$json['success'] = $this->language->get('text_upload');
+						if ($installed_info && Comparator::greaterThan($install_info['version'], $installed_info['version'])) {
+							$json['upgrade'][] = $installed_info['extension_install_id'];
+						} else {
+							$json['success'] = $this->language->get('text_upload');
+						}
 					}
 				} else {
                     $file_paths = [];
@@ -250,7 +254,11 @@ class Installer extends \Opencart\System\Engine\Controller {
 							
 							$this->addInstall($install_info, $installed_info, $filename);
 
-							$json['success'] = $this->language->get('text_upload');
+							if($installed_info && Comparator::greaterThan($install_info['version'], $installed_info['version'])) {
+								$json['upgrade'][] = $installed_info['extension_install_id'];
+							} else {
+								$json['success'] = $this->language->get('text_upload');
+							}
                         }
 						if (!isset($json['success']) && isset($error)) {
 							$json['error'] = $error;
@@ -282,13 +290,15 @@ class Installer extends \Opencart\System\Engine\Controller {
 		
 		$page = (int)($this->request->get['page'] ?? 1);
 
-		$install_folder = '';	
+		$install_folders = [];	
 
 		if (!$this->user->hasPermission('modify', 'marketplace/installer')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
 		$this->load->model('setting/extension');
+
+		$extension_installs = [];
 
 		$extension_install_info = $this->model_setting_extension->getInstall($extension_install_id);
 
@@ -309,8 +319,10 @@ class Installer extends \Opencart\System\Engine\Controller {
 
 			if ($zip->open($file)) {
 				$total = $zip->numFiles;
+
+				$extension_installs[] = $extension_install_info;
 				
-                $this->addExtensionFilesAndPaths($extension_install_info, $file, $page, $zip, $install_folder, $json);
+                $this->addExtensionFilesAndPaths($extension_installs, $file, $page, $zip, $json, $install_folders);
 
 				$zip->close();
 			} else {
@@ -332,8 +344,8 @@ class Installer extends \Opencart\System\Engine\Controller {
 				$json['next'] = $this->url->link('marketplace/installer|install', 'user_token=' . $this->session->data['user_token'] . $url . '&page=' . ($page + 1), true);
 				$json['progress'] = (($page * 200)/$total) * 100;
 
-				if ($install_folder) {
-					$json['next'] .= '&install_folder=' . $install_folder;
+				if ($install_folders) {
+					$json['next'] .= '&install_folder=' . end($install_folders);
 				}
 			} else {
 				$this->model_setting_extension->editStatus($extension_install_id, 1);
@@ -351,11 +363,16 @@ class Installer extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		$extension_install_id = (int)($this->request->get['extension_install_id'] ?? 0);
+		$extension_install_ids = ($this->request->post['extension_install_ids'] ?? []);
+
+		if (!$extension_install_ids) {
+			$extension_install_id = (int)($this->request->get['extension_install_id'] ?? 0);
+			$extension_install_ids[] = $extension_install_id;
+		}
 
 		$page = (int)($this->request->get['page'] ?? 1);
 
-		$install_folder = '';
+		$install_folders = [];
 
 		$action = $this->request->get['action'];
 
@@ -365,15 +382,19 @@ class Installer extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('setting/extension');
 
-		$extension_install_info = $this->model_setting_extension->getInstall($extension_install_id);
+		$extension_installs = [];
 
-		if ($extension_install_info) {
-			$file = DIR_STORAGE . 'marketplace/' . $extension_install_info['package_name'] . '.ocmod.zip';
+		foreach ($extension_install_ids as $extension_install_id) {
+			$extension_installs[] = $this->model_setting_extension->getInstall($extension_install_id);
+		}
 
-			if (!is_file($file)) {
-				$json['error'] = sprintf($this->language->get('error_file'), $extension_install_info['package_name'] . '.ocmod.zip');
+		if ($extension_installs) {
+			foreach ($extension_installs as $extension_install_info) {
+				$file = DIR_STORAGE . 'marketplace/' . $extension_install_info['package_name'] . '.ocmod.zip';
+				if (!is_file($file)) {
+					$json['error'] = sprintf($this->language->get('error_file'), $extension_install_info['package_name'] . '.ocmod.zip');
+				}
 			}
-
 		} else {
 			$json['error'] = $this->language->get('error_install');
 		}
@@ -386,10 +407,12 @@ class Installer extends \Opencart\System\Engine\Controller {
                 $total = $zip->numFiles;
 
 				if ($page == 1) {
-					$this->removeExtensionFilesAndPaths($extension_install_info);
+					foreach ($extension_installs as $extension_install_info) {
+						$this->removeExtensionFilesAndPaths($extension_install_info);
+					}
 				}
 
-                $this->addExtensionFilesAndPaths($extension_install_info, $file, $page, $zip, $install_folder, $json);
+                $this->addExtensionFilesAndPaths($extension_installs, $file, $page, $zip, $json, $install_folders);
 
 				$zip->close();
 			} else {
@@ -404,14 +427,18 @@ class Installer extends \Opencart\System\Engine\Controller {
 
 			if (isset($this->request->get['extension_install_id'])) {
 				$url .= '&extension_install_id=' . $this->request->get['extension_install_id'];
+			} elseif(isset($this->request->post['extension_install_ids'])) {
+				$json['extension_install_ids'] = json_encode($this->request->post['extension_install_ids']);
 			}
 
 			if (($page * 200) <= $total) {
 				$json['next'] = $this->url->link('marketplace/installer|replace', 'user_token=' . $this->session->data['user_token'] . $url . '&page=' . ($page + 1), true);
 				$json['progress'] = (($page * 200)/$total) * 100;
 
-				if ($install_folder) {
-					$json['next'] .= '&install_folder=' . $install_folder;
+				if ($install_folders && isset($this->request->post['extension_install_ids'])) {
+					$json['install_folders'] = $install_folders;
+				} elseif ($install_folders && isset($this->request->get['extension_install_id'])) {
+					$url .= '&install_folder=' . end($install_folders);
 				}
 			} else {
 				$this->model_setting_extension->editStatus($extension_install_id, 1);
@@ -599,6 +626,9 @@ class Installer extends \Opencart\System\Engine\Controller {
 			
 			// Unzip the files
 			$zip = new \ZipArchive();
+
+			$this->removeExtensionFilesAndPaths($extension_install_info);
+
 			// Remove file
 			$this->deleteExtensionInArchieve($extension_install_info['package_name'], $extension_install_info['codename']);
 
@@ -644,20 +674,27 @@ class Installer extends \Opencart\System\Engine\Controller {
 		}
 	}
 
-	private function addExtensionFilesAndPaths(array $extension_install_info, string $file, int $page, object $zip, string &$install_folder, array &$json): void {
+	private function addExtensionFilesAndPaths(array $extension_installs, string $file, int $page, object $zip, array &$json, array &$install_folders = []): void {
 
 		$install_info = json_decode($zip->getFromName('install.json'), true);
 
 		if ($install_info) {
 			$total = $zip->numFiles;
+			$install_folders[$install_info['codename']] = '';
 
-			if ($page > 1 && !is_dir(DIR_EXTENSION . $extension_install_info['codename'] . '/')) {
-				$json['error'] = sprintf($this->language->get('error_directory'), $extension_install_info['codename'] . '/');
+			foreach ($extension_installs as $extension_install_info) {
+				if ($page > 1 && !is_dir(DIR_EXTENSION . $extension_install_info['codename'] . '/')) {
+					$json['error'] = sprintf($this->language->get('error_directory'), $extension_install_info['codename'] . '/');
+				}
 			}
 		} else {
 
 			if(isset($this->request->get['install_folder'])) {
-				$install_folder = $this->request->get['install_folder'];
+				foreach ($extension_installs as $extension_install_info) {
+					$install_folders[$extension_install_info['codename']] = $this->request->get['install_folder'];
+				}	
+			} elseif (isset($this->request->post['install_folders'])) {
+				$install_folders = $this->request->post['install_folders'];
 			} else {
 				for ($i = 0; $i < $zip->numFiles; $i++) {
 					$path = $zip->getNameIndex($i);
@@ -666,16 +703,20 @@ class Installer extends \Opencart\System\Engine\Controller {
 					
 					if (!empty($path_parts[1]) && $path_parts[1] == 'install.json') {
 						$install_info = json_decode($zip->getFromName($path_parts[0] . '/install.json'), true);
-						if (isset($install_info['codename']) && $install_info['codename'] == $extension_install_info['codename']) {
-							$install_folder = $path_parts[0];
-							break;
+						foreach ($extension_installs as $extension_install_info) {
+							if (isset($install_info['codename']) && $install_info['codename'] == $extension_install_info['codename']) {
+								$install_folders[$install_info['codename']] = $path_parts[0];
+							}
 						}
 					}
 				}
-			}
-			
-			if(!$install_folder) {
-				$json['error'] = sprintf($this->language->get('error_directory'), $extension_install_info['codename'] . '/');
+				if(!$install_folders) {
+					foreach ($extension_installs as $extension_install_info) {
+						if ($page > 1 && !is_dir(DIR_EXTENSION . $extension_install_info['codename'] . '/')) {
+							$json['error'] = sprintf($this->language->get('error_directory'), $extension_install_info['codename'] . '/');
+						}
+					}
+				}
 			}
 		}
 
@@ -685,52 +726,57 @@ class Installer extends \Opencart\System\Engine\Controller {
 
 			$total = $zip->numFiles;
 
-			$name_folder_length = $install_folder ? strlen($install_folder) + 1 : 0;
-
-			$extension_install_id = $extension_install_info['extension_install_id'];
-
 			for ($i = $start; $i < ($start + 200); $i++) {
 				$source = $zip->getNameIndex($i);
 
 				$destination = str_replace('\\', '/', $source);
+
+				foreach ($extension_installs as $extension_install_info) {
+					
+					$install_folder = $install_folders[$extension_install_info['codename']];
+
+					$extension_install_id = $extension_install_info['extension_install_id'];
+
+					$name_folder_length = $install_folder ? strlen($install_folder) + 1 : 0;
 				
-				if (!$install_folder || substr($destination, 0, $name_folder_length) == $install_folder . '/') {
-					$path = $install_folder ? str_replace($install_folder, $extension_install_info['codename'], $destination) : $extension_install_info['codename'] . '/' . $destination;
-					$base = DIR_EXTENSION;
+					if (!$install_folder || substr($destination, 0, $name_folder_length) == $install_folder . '/') {
+						$path = $install_folder ? str_replace($install_folder, $extension_install_info['codename'], $destination) : $extension_install_info['codename'] . '/' . $destination;
+						$base = DIR_EXTENSION;
 
-					// image > image
-					if (substr($destination, $name_folder_length, 6) == 'image/') {
-						$path = $install_folder ? str_replace($install_folder . '/', '', $destination) : $destination;
-						$base = substr(DIR_IMAGE, 0, -6);
-					}
-					
-					// We need to store the path differently for vendor folders.
-					if (substr($destination, $name_folder_length, 22) == 'system/storage/vendor/') {
-						$path = $install_folder ? substr(str_replace($install_folder . '/', '', $destination), 15) : substr($destination, 15);
-						$base = DIR_STORAGE;
-					}
-					
-					// Must not have a path before files and directories can be moved
-					$path_new = '';
+						// image > image
+						if (substr($destination, $name_folder_length, 6) == 'image/') {
+							$path = $install_folder ? str_replace($install_folder . '/', '', $destination) : $destination;
+							$base = substr(DIR_IMAGE, 0, -6);
+						}
+						
+						// We need to store the path differently for vendor folders.
+						if (substr($destination, $name_folder_length, 22) == 'system/storage/vendor/') {
+							$path = $install_folder ? substr(str_replace($install_folder . '/', '', $destination), 15) : substr($destination, 15);
+							$base = DIR_STORAGE;
+						}
+						
+						// Must not have a path before files and directories can be moved
+						$path_new = '';
 
-					$directories = explode('/', dirname($path));
+						$directories = explode('/', dirname($path));
 
-					foreach ($directories as $directory) {
-						if (!$path_new) {
-							$path_new = $directory;
-						} else {
-							$path_new = $path_new . '/' . $directory;
+						foreach ($directories as $directory) {
+							if (!$path_new) {
+								$path_new = $directory;
+							} else {
+								$path_new = $path_new . '/' . $directory;
+							}
+
+							if (!is_dir($base . $path_new) && mkdir($base . $path_new, 0777)) {
+								$this->model_setting_extension->addPath($extension_install_id, $path_new);
+							}
 						}
 
-						if (!is_dir($base . $path_new) && mkdir($base . $path_new, 0777)) {
-							$this->model_setting_extension->addPath($extension_install_id, $path_new);
-						}
-					}
-
-					// If check if the path is not directory and check there is no existing file
-					if (substr($path, -1) != '/') {
-						if (!is_file($base . $path) && copy('zip://' . $file . '#' . $source, $base . $path)) {
-							$this->model_setting_extension->addPath($extension_install_id, $path);
+						// If check if the path is not directory and check there is no existing file
+						if (substr($path, -1) != '/') {
+							if (!is_file($base . $path) && copy('zip://' . $file . '#' . $source, $base . $path)) {
+								$this->model_setting_extension->addPath($extension_install_id, $path);
+							}
 						}
 					}
 				}
@@ -740,39 +786,39 @@ class Installer extends \Opencart\System\Engine\Controller {
 
 	private function removeExtensionFilesAndPaths(array $extension_install_info): void {
 		$extension_install_id = $extension_install_info['extension_install_id'];
-		// $this->load->model('setting/extension');
-		// $files = $this->model_setting_extension->getPathsByExtensionInstallId($extension_install_id);
 
-		// // Make path into an array
-		// $directory = [DIR_EXTENSION . $extension_install_info['codename'] . '/'];
+		// Make path into an array
+		$directory = [DIR_EXTENSION . $extension_install_info['codename'] . '/'];
 
-		// // While the path array is still populated keep looping through
-		// while (count($directory) != 0) {
-		// 	$next = array_shift($directory);
+		$files = [];
 
-		// 	if (is_dir($next)) {
-		// 		foreach (glob(rtrim($next, '/') . '/{*,.[!.]*,..?*}', GLOB_BRACE) as $file) {
-		// 			// If directory add to path array
-		// 			$directory[] = $file;
-		// 		}
-		// 	}
+		// While the path array is still populated keep looping through
+		while (count($directory) != 0) {
+			$next = array_shift($directory);
 
-		// 	// Add the file to the files to be deleted array
-		// 	$files[] = $next;
-		// }
+			if (is_dir($next)) {
+				foreach (glob(rtrim($next, '/') . '/{*,.[!.]*,..?*}', GLOB_BRACE) as $file) {
+					// If directory add to path array
+					$directory[] = $file;
+				}
+			}
 
-		//rsort($files);
+			// Add the file to the files to be deleted array
+			$files[] = $next;
+		}
 
-		// foreach ($files as $file) {
-		// 	// If file just delete
-		// 	if (is_file($file)) {
-		// 		unlink($file);
+		rsort($files);
 
-		// 		// If directory use the remove directory function
-		// 	} elseif (is_dir($file)) {
-		// 		rmdir($file);
-		// 	}
-		// }
+		foreach ($files as $file) {
+			// If file just delete
+			if (is_file($file)) {
+				unlink($file);
+
+			// If directory use the remove directory function
+			} elseif (is_dir($file) && !glob(rtrim($file, '/') . '/{*,.[!.]*,..?*}', GLOB_BRACE)) {
+				rmdir($file);
+			}
+		}
 		
 		$results = $this->model_setting_extension->getPathsByExtensionInstallId($extension_install_id);
 
@@ -780,11 +826,6 @@ class Installer extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			$path = '';
-
-			// Remove extension directory and files
-			if (substr($result['path'], 0, strlen($extension_install_info['codename'])) == $extension_install_info['codename']) {
-				$path = DIR_EXTENSION . $result['path'];
-			}
 
 			// Remove images
 			if (substr($result['path'], 0, 6) == 'image/') {
@@ -795,11 +836,11 @@ class Installer extends \Opencart\System\Engine\Controller {
 			if (substr($result['path'], 0, 7) == 'vendor/') {
 				$path = DIR_STORAGE . $result['path'];
 			}
-			
+
 			// Check if the location exists or not
 			$path_total = $this->model_setting_extension->getTotalPaths($result['path']);
 
-			if ($path_total < 2) {
+			if ($path && $path_total < 2) {
 				if (is_file($path)) {
 					unlink($path);
 				} elseif (is_dir($path)) {

@@ -18,28 +18,26 @@
 							{% else %}
 								{{ extension.name }}
 							{% endif %}
-							{% if extension.upgrade %}
-								<span class="badge bg-success">{{ text_new_version_available }}</span>
+							{% if extension.downgrade %}
+								<span class="badge bg-danger">{{ text_old_version_available }}</span>
 							{% endif %}
 						</td>
 						<td class="text-start align-text-top">{{ extension.version }}</td>
 						<td class="text-start align-text-top">{{ extension.date_added }}</td>
 						<td class="text-end align-text-top text-nowrap">
-							{% if extension.upgrade %}
-								<a href="{{ extension.upgrade }}" data-bs-toggle="tooltip" title="{{ button_upgrade }}" class="btn btn-primary"><i class="fas fa-sync"></i></a>
-							{% elseif extension.downgrade %}
+							{% if extension.downgrade %}
 								<a href="{{ extension.downgrade }}" data-bs-toggle="tooltip" title="{{ button_downgrade }}" class="btn btn-danger"><i class="fas fa-arrow-down"></i></a>
 							{% endif %}
 							{% if not extension.status %}
 								<a href="{{ extension.install }}" data-bs-toggle="tooltip" title="{{ button_install }}" class="btn btn-success"><i class="fas fa-plus-circle"></i></a>
 								<a href="{{ extension.delete }}" data-bs-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger"><i class="far fa-trash-alt"></i></a>
 							{% else %}
-                {% if extension.uninstall %}
-								  <a href="{{ extension.uninstall }}" data-bs-toggle="tooltip" title="{{ button_uninstall }}" class="btn btn-warning"><i class="fas fa-minus-circle"></i></a>
+                				{% if extension.uninstall %}
+								  	<a href="{{ extension.uninstall }}" data-bs-toggle="tooltip" title="{{ button_uninstall }}" class="btn btn-warning"><i class="fas fa-minus-circle"></i></a>
 								{% else %}
-                  <button type="button" data-bs-toggle="tooltip" title="{{ button_uninstall }}" class="btn btn-warning disabled"><i class="fas fa-minus-circle"></i></button>
-                {% endif %}
-                <button type="button" data-bs-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger disabled"><i class="far fa-trash-alt"></i></button>
+									<button type="button" data-bs-toggle="tooltip" title="{{ button_uninstall }}" class="btn btn-warning disabled"><i class="fas fa-minus-circle"></i></button>
+								{% endif %}
+								<button type="button" data-bs-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger disabled"><i class="far fa-trash-alt"></i></button>
 							{% endif %}
 						</td>
 					</tr>

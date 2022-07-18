@@ -82,7 +82,58 @@ $('#button-upload').on('click', function () {
                         $('.btn-primary, .btn-secondary, .btn-success, .btn-warning, a.btn-danger').addClass('disabled');
                     },
                     success: function (json) {
-                        if (json['error']) {
+                        if (json['upgrade']) {
+                            var next = 'index.php?route=marketplace/installer|replace&user_token={{ user_token }}&action=upload';
+
+                            var data = {};
+                            data['extension_install_ids'] = json['upgrade'];
+
+                            var installer = function () {
+                              return $.ajax({
+                                  url: next,
+                                  type: 'post',
+                                  data: data,
+                                  dataType: 'json',
+                                  beforeSend: function () {
+                                      $(element).addClass('loading disabled');
+                                      $('#button-upload, .btn-primary, .btn-success, .btn-warning, a.btn-danger').addClass('disabled');
+                                  },
+                                  success: function (json) {
+                                      $('.alert-dismissible').remove();
+
+                                      if (json['error']) {
+                                          $('#progress-bar').addClass('progress-bar-danger');
+                                          $('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
+                                          $('#button-upload, .btn-primary, .btn-success, .btn-warning, a.btn-danger').removeClass('disabled');
+                                      }
+
+                                      if (json['success']) {
+                                          $('#progress-bar').addClass('progress-bar-success').css('width', '100%');
+                                          $('#progress-text').html('<div class="text-success">' + json['success'] + '</div>');
+                                          $('#button-upload').removeClass('loading disabled');
+                                          $('#extension').load('index.php?route=marketplace/installer|list&user_token={{ user_token }}');
+                                      }
+
+                                      if (json['next']) {
+                                          next = json['next'];
+                                          if (json['install_folders']) {
+                                            data['install_folders'] = json['install_folders'];
+                                          }
+                                          $('#progress-bar').addClass('progress-bar-success').css('width', json['progress'] + '%');
+
+                                          chain.attach(installer);
+                                      }
+                                  },
+                                  error: function (xhr, ajaxOptions, thrownError) {
+                                      $(element).removeClass('loading disabled');
+                                      $('#button-upload, .btn-primary, .btn-success, .btn-warning, a.btn-danger').removeClass('disabled');
+                                      console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                                  }
+                              });
+                          };
+
+                          chain.attach(installer);
+                        } else if (json['error']) {
                             $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                             $(element).removeClass('loading disabled');
                             $('#extension').load('index.php?route=marketplace/installer|list&user_token={{ user_token }}');

@@ -208,7 +208,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 
 						$this->addInstall($install_info, $installed_info, $filename);
 
-						if ($installed_info && Comparator::greaterThan($install_info['version'], $installed_info['version'])) {
+						if ($installed_info && $installed_info['status'] && Comparator::greaterThan($install_info['version'], $installed_info['version'])) {
 							$json['upgrade'][] = $installed_info['extension_install_id'];
 						} else {
 							$json['success'] = $this->language->get('text_upload');
@@ -254,7 +254,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 							
 							$this->addInstall($install_info, $installed_info, $filename);
 
-							if($installed_info && Comparator::greaterThan($install_info['version'], $installed_info['version'])) {
+							if($installed_info && $installed_info['status'] && Comparator::greaterThan($install_info['version'], $installed_info['version'])) {
 								$json['upgrade'][] = $installed_info['extension_install_id'];
 							} else {
 								$json['success'] = $this->language->get('text_upload');

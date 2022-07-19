@@ -87,7 +87,7 @@ $('#button-upload').on('click', function () {
 
                             $('#progress-bar').removeClass('progress-bar-danger progress-bar-success').css('width', '0%');
                             $('#progress-text').html('');
-                            
+
                             var data = {};
                             data['extension_install_ids'] = json['upgrade'];
 
@@ -180,6 +180,7 @@ $('#extension').on('click', 'a.btn-primary, a.btn-success, a.btn-warning, a.btn-
             dataType: 'json',
             beforeSend: function () {
                 $(element).addClass('loading disabled');
+                $(element).children('i').css('font-weight', '900');
                 $('#button-upload, .btn-primary, .btn-success, .btn-warning, a.btn-danger').addClass('disabled');
             },
             success: function (json) {
@@ -189,6 +190,7 @@ $('#extension').on('click', 'a.btn-primary, a.btn-success, a.btn-warning, a.btn-
                     $('#progress-bar').addClass('progress-bar-danger');
                     $('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
                     $(element).removeClass('loading disabled');
+                    $(element).children('i').removeAttr('style');
                     $('#button-upload, .btn-primary, .btn-success, .btn-warning, a.btn-danger').removeClass('disabled');
                 }
 

@@ -12,7 +12,7 @@ $_['text_delete']       = 'Success: The extension has been deleted!';
 $_['text_progress']     = 'Install Progress';
 $_['text_installed']    = 'Installed Extensions';
 $_['text_unknown']		= 'Unknown';
-$_['text_old_version_available']    = 'Old version available';
+$_['text_old_version']    = 'Outdated version';
 
 
 // Column

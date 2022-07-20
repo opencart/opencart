@@ -309,11 +309,19 @@ class Installer extends \Opencart\System\Engine\Controller {
 						$base = substr(DIR_IMAGE, 0, -6);
 					}
 
+					// If there are any connected extensions that also need to be installed.
+					if (substr($destination, 0, 27) == 'system/storage/marketplace/') {
+						$path = substr($destination, 15);
+						$base = DIR_STORAGE;
+					}
+
 					// We need to store the path differently for vendor folders.
 					if (substr($destination, 0, 22) == 'system/storage/vendor/') {
 						$path = substr($destination, 15);
 						$base = DIR_STORAGE;
 					}
+
+					echo $destination . "\n";
 
 					// Must not have a path before files and directories can be moved
 					$path_new = '';
@@ -327,15 +335,16 @@ class Installer extends \Opencart\System\Engine\Controller {
 							$path_new = $path_new . '/' . $directory;
 						}
 
-						if (!is_dir($base . $path_new) && mkdir($base . $path_new, 0777)) {
-							$this->model_setting_extension->addPath($extension_install_id, $path_new);
+						if (!is_dir($base . $path_new . '/') && mkdir($base . $path_new . '/', 0777)) {
+							echo $base . $path_new . '/' . "\n";
+							$this->model_setting_extension->addPath($extension_install_id, $source);
 						}
 					}
 
 					// If check if the path is not directory and check there is no existing file
 					if (substr($path, -1) != '/') {
 						if (!is_file($base . $path) && copy('zip://' . $file . '#' . $source, $base . $path)) {
-							$this->model_setting_extension->addPath($extension_install_id, $path);
+							$this->model_setting_extension->addPath($extension_install_id, $source);
 						}
 					}
 				}
@@ -443,9 +452,14 @@ class Installer extends \Opencart\System\Engine\Controller {
 					$path = DIR_IMAGE . substr($result['path'], 6);
 				}
 
+				// Remove any connected extensions that was also installed.
+				if (substr($result['path'], 0, 27) == 'system/storage/marketplace/') {
+					$path = DIR_STORAGE . substr($result['path'], 15);
+				}
+
 				// Remove vendor files
-				if (substr($result['path'], 0, 7) == 'vendor/') {
-					$path = DIR_STORAGE . $result['path'];
+				if (substr($result['path'], 0, 22) == 'system/storage/vendor/') {
+					$path = DIR_STORAGE . substr($result['path'], 15);
 				}
 
 				// Check if the location exists or not
@@ -584,6 +598,15 @@ class Installer extends \Opencart\System\Engine\Controller {
 
 			$json['success'] = $this->language->get('text_success');
 		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	public function refresh(): void {
+		$this->load->language('marketplace/installer');
+
+		$json = [];
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

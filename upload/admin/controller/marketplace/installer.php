@@ -126,15 +126,15 @@ class Installer extends \Opencart\System\Engine\Controller {
 			$url .= '&order=ASC';
 		}
 
-		$data['sort_name'] = $this->url->link('marketplace/installer|extension', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
-		$data['sort_version'] = $this->url->link('marketplace/installer|extension', 'user_token=' . $this->session->data['user_token'] . '&sort=version' . $url);
-		$data['sort_date_added'] = $this->url->link('marketplace/installer|extension', 'user_token=' . $this->session->data['user_token'] . '&sort=date_added' . $url);
+		$data['sort_name'] = $this->url->link('marketplace/installer|list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
+		$data['sort_version'] = $this->url->link('marketplace/installer|list', 'user_token=' . $this->session->data['user_token'] . '&sort=version' . $url);
+		$data['sort_date_added'] = $this->url->link('marketplace/installer|list', 'user_token=' . $this->session->data['user_token'] . '&sort=date_added' . $url);
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $extension_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination_admin'),
-			'url'   => $this->url->link('marketplace/installer|extension', 'user_token=' . $this->session->data['user_token'] . '&page={page}')
+			'url'   => $this->url->link('marketplace/installer|list', 'user_token=' . $this->session->data['user_token'] . '&page={page}')
 		]);
 
 		$data['sort'] = $sort;

@@ -858,8 +858,8 @@ class Installer extends \Opencart\System\Engine\Controller {
 			}
 
 			// Remove any connected extensions that was also installed.
-			if (substr($result['path'], 0, 27) == 'marketplace/') {
-				$path = DIR_STORAGE . substr($result['path'], 15);
+			if (substr($result['path'], 0, 12) == 'marketplace/') {
+				$path = DIR_STORAGE . $result['path'];
 			}
 
 			// Remove vendor files

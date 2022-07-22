@@ -455,6 +455,7 @@
                   <label for="input-override" class="col-sm-2 col-form-label">{{ entry_override }}</label>
                   <div class="col-sm-10">
                     <div class="form-check form-switch form-switch-lg">
+                      <input type="hidden" name="override" value="0"/>
                       <input type="checkbox" name="override" value="1" id="input-override" class="form-check-input">
                     </div>
                     <div class="form-text">{{ help_override }}</div>
@@ -464,6 +465,7 @@
                   <label for="input-notify" class="col-sm-2 col-form-label">{{ entry_notify }}</label>
                   <div class="col-sm-10">
                     <div class="form-check form-switch form-switch-lg">
+                      <input type="hidden" name="notify" value="0"/>
                       <input type="checkbox" name="notify" value="1" id="input-notify" class="form-check-input"/>
                     </div>
                   </div>

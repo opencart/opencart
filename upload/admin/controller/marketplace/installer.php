@@ -176,7 +176,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_upload');
 		}
 
-		// 5. Validate if the file can be opened and there is a install.json that can be read.
+		// 5. Validate if the file can be opened and there is install.json that can be read.
 		if (!$json) {
 			move_uploaded_file($this->request->files['file']['tmp_name'], $file);
 
@@ -476,10 +476,10 @@ class Installer extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-
 			$this->uninstallExtensions($extension_install_info['codename']);
 			
 			$this->removeExtensionFilesAndPaths($extension_install_info);
+
 
 			// Remove extension directory
 			$this->model_setting_extension->editStatus($extension_install_id, 0);
@@ -599,6 +599,15 @@ class Installer extends \Opencart\System\Engine\Controller {
 
 			$json['success'] = $this->language->get('text_' . $action);
 		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	public function refresh(): void {
+		$this->load->language('marketplace/installer');
+
+		$json = [];
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
@@ -750,6 +759,12 @@ class Installer extends \Opencart\System\Engine\Controller {
 							$path = $install_folder ? str_replace($install_folder . '/', '', $destination) : $destination;
 							$base = substr(DIR_IMAGE, 0, -6);
 						}
+
+						// If there are any connected extensions that also need to be installed.
+						if (substr($destination, $name_folder_length, 27) == 'system/storage/marketplace/') {
+							$path = $install_folder ? substr(str_replace($install_folder . '/', '', $destination), 15) : substr($destination, 15);
+							$base = DIR_STORAGE;
+						}
 						
 						// We need to store the path differently for vendor folders.
 						if (substr($destination, $name_folder_length, 22) == 'system/storage/vendor/') {
@@ -841,6 +856,11 @@ class Installer extends \Opencart\System\Engine\Controller {
 			// Remove images
 			if (substr($result['path'], 0, 6) == 'image/') {
 				$path = DIR_IMAGE . substr($result['path'], 6);
+			}
+
+			// Remove any connected extensions that was also installed.
+			if (substr($result['path'], 0, 27) == 'marketplace/') {
+				$path = DIR_STORAGE . substr($result['path'], 15);
 			}
 
 			// Remove vendor files

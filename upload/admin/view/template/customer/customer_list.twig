@@ -38,7 +38,7 @@
                     </li>
                     <li><h6 class="dropdown-header">{{ text_login }}</h6></li>
                     {% for store in customer.store %}
-                      <li><a href="{{ store.href }}" target="_blank" class="dropdown-item"><i class="fa-solid fa-lock"></i> {% if customer.store_id == store.store_id %}<span class="text-primary">{{ store.name }}</span>{% else %}{{ store.name }}{% endif %}</a></li>
+                      <li><a href="{{ store.href }}" target="_blank" class="dropdown-item"><i class="fa-solid fa-lock"></i> {{ store.name }}</a></li>
                     {% endfor %}
                   </ul>
                 </div>

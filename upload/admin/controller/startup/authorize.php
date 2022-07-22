@@ -25,7 +25,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 			'common/login',
 			'common/logout',
 			'common/forgotten',
-			'common/cron',
+			'cron/cron',
 			'common/authorize'
 		];
 

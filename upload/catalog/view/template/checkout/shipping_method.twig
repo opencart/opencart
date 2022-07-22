@@ -104,6 +104,8 @@ $('#input-shipping-method').on('change', function () {
                 $(element).prop('disabled', false);
             },
             success: function (json) {
+                console.log(json);
+
                 if (json['redirect']) {
                     location = json['redirect'];
                 }

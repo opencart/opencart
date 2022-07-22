@@ -102,39 +102,25 @@ function date_added(string $date): array {
 	return [$code, $date_added];
 }
 
-function format_size($file = '', $max = true) {
-	if ($max) {
-		$size = ini_get('upload_max_filesize');
-
-		$unit = substr($size, -1);
-		switch ($unit){
-			case 'K':
-			$size = (int)$size*1024;
-			break;
-			case 'M':
-			$size = (int)$size*1024*1024;
-			break;
-			case 'G':
-			$size = (int)$size*1024*1024*1024;
-			break;
-		}
-	} elseif (is_file($file) && !$max) {
-		$size = sprintf('%u', filesize($file));
-	}
-
-	if ($size) {
-		$suffix = [];
-
-		$suffix = [
-			'b',
-			'kb',
-			'mb',
-			'gb'
-		];
-		
-		$code = $suffix[intval(log($size, 1024))] ?? end($suffix);
-		$format_size = $size / (1024 ** array_search($code, $suffix));
-		
-		return [$code, $format_size, $size];	
-	}
+// see https://stackoverflow.com/questions/13076480/php-get-actual-maximum-upload-size
+function convertBytes( string $value ):int {
+    if ( is_numeric( $value ) ) {
+        return (int)$value;
+    } else {
+        $value_length = strlen($value);
+        $qty = substr( $value, 0, $value_length - 1 );
+        $unit = strtolower( substr( $value, $value_length - 1 ) );
+        switch ( $unit ) {
+            case 'k':
+                $qty *= 1024;
+                break;
+            case 'm':
+                $qty *= 1048576;
+                break;
+            case 'g':
+                $qty *= 1073741824;
+                break;
+        }
+        return (int)$qty;
+    }
 }

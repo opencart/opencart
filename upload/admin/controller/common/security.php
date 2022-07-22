@@ -79,7 +79,7 @@ class Security extends \Opencart\System\Engine\Controller {
 				$next = array_shift($directory);
 
 				if (is_dir($next)) {
-					foreach (glob(trim($next, '/') . '/{*,.[!.]*,..?*}', GLOB_BRACE) as $file) {
+					foreach (glob(rtrim($next, '/') . '/{*,.[!.]*,..?*}', GLOB_BRACE) as $file) {
 						// If directory add to path array
 						if (is_dir($file)) {
 							$directory[] = $file;
@@ -158,7 +158,7 @@ class Security extends \Opencart\System\Engine\Controller {
 			while (count($directory) != 0) {
 				$next = array_shift($directory);
 
-				foreach (glob(trim($next, '/') . '/{*,.[!.]*,..?*}', GLOB_BRACE) as $file) {
+				foreach (glob(rtrim($next, '/') . '/{*,.[!.]*,..?*}', GLOB_BRACE) as $file) {
 					// If directory add to path array
 					if (is_dir($file)) {
 						$directory[] = $file;
@@ -198,6 +198,7 @@ class Security extends \Opencart\System\Engine\Controller {
 					rmdir($file);
 				}
 			}
+			rmdir($path_old);
 
 			// Modify the config files
 			$files = [
@@ -273,7 +274,7 @@ class Security extends \Opencart\System\Engine\Controller {
 			while (count($directory) != 0) {
 				$next = array_shift($directory);
 
-				foreach (glob(trim($next, '/') . '/{*,.[!.]*,..?*}', GLOB_BRACE) as $file) {
+				foreach (glob(rtrim($next, '/') . '/{*,.[!.]*,..?*}', GLOB_BRACE) as $file) {
 					// If directory add to path array
 					if (is_dir($file)) {
 						$directory[] = $file;
@@ -334,7 +335,9 @@ class Security extends \Opencart\System\Engine\Controller {
 			fclose($file);
 
 			// 6. redirect to the new admin
-			$json['redirect'] = str_replace('&amp;', '&', substr(HTTP_SERVER, 0, strrpos(HTTP_SERVER, 'admin/') . '/' . $name . '/index.php?route=common/security|delete&user_token=' . $this->session->data['user_token']));
+			$url_without_admin_folder = substr(HTTP_SERVER, 0, strrpos(HTTP_SERVER, 'admin/'));
+			$url_with_new_admin_folder = $url_without_admin_folder . $name . '/index.php?route=common/security|delete&user_token=' . $this->session->data['user_token'];
+			$json['redirect'] = str_replace('&amp;', '&', $url_with_new_admin_folder);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -369,7 +372,7 @@ class Security extends \Opencart\System\Engine\Controller {
 			while (count($directory) != 0) {
 				$next = array_shift($directory);
 
-				foreach (glob(trim($next, '/') . '/{*,.[!.]*,..?*}', GLOB_BRACE) as $file) {
+				foreach (glob(rtrim($next, '/') . '/{*,.[!.]*,..?*}', GLOB_BRACE) as $file) {
 					// If directory add to path array
 					if (is_dir($file)) {
 						$directory[] = $file;

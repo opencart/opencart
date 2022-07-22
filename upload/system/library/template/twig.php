@@ -58,8 +58,6 @@ class Twig {
 		 * The fact that this system cache is just compiling php into more php code instead of html is a disgrace!
 		 */
 
-		$path = '';
-
 		$namespace = '';
 
 		$parts = explode('/', $filename);

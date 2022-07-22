@@ -92,8 +92,6 @@ class Installer extends \Opencart\System\Engine\Controller {
 			if($result['status']) {
 				$installed_extension_info = json_decode(file_get_contents(DIR_EXTENSION . $result['codename'] . '/install.json'), true);
 				$downgrade  = Comparator::lessThan($result['version'], $installed_extension_info['version']);
-			} else {
-				$this->removeExtensionFilesAndPaths($result);
 			}
 
 			$data['extensions'][] = [
@@ -408,6 +406,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 
 				if ($page == 1) {
 					foreach ($extension_installs as $extension_install_info) {
+						$this->model_setting_extension->editStatus($extension_install_info['extension_install_id'], 0);
 						$this->removeExtensionFilesAndPaths($extension_install_info);
 					}
 				}
@@ -441,7 +440,9 @@ class Installer extends \Opencart\System\Engine\Controller {
 					$url .= '&install_folder=' . end($install_folders);
 				}
 			} else {
-				$this->model_setting_extension->editStatus($extension_install_id, 1);
+				foreach ($extension_install_ids as $extension_install_id) {
+					$this->model_setting_extension->editStatus($extension_install_id, 1);
+				}
 				$json['next'] = $this->url->link('marketplace/installer|vendor', 'user_token=' . $this->session->data['user_token'] . $url, true);
 				$json['progress'] = 100;
 			}

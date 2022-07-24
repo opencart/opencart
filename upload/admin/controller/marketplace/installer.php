@@ -96,11 +96,13 @@ class Installer extends \Opencart\System\Engine\Controller {
 
 					if ($install_info) {
 						$extension_data = [
-							'name'    => $install_info['name'],
-							'code'    => $code,
-							'version' => $install_info['version'],
-							'author'  => $install_info['author'],
-							'link'    => $install_info['link']
+							'extension_id'          => 0,
+							'extension_download_id' => 0,
+							'name'                  => $install_info['name'],
+							'code'                  => $code,
+							'version'               => $install_info['version'],
+							'author'                => $install_info['author'],
+							'link'                  => $install_info['link']
 						];
 
 						$this->model_setting_extension->addInstall($extension_data);

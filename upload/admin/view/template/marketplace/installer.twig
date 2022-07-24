@@ -48,7 +48,7 @@ $('#extension').load('index.php?route=marketplace/installer|list&user_token={{ u
 $('#button-upload').on('click', function () {
     var element = this;
 
-    if (!$('button-upload').prop('disabled')) {
+    if (!$('#button-upload').prop('disabled')) {
         $('#form-upload').remove();
 
         $('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" accept=".ocmod.zip"/></form>');

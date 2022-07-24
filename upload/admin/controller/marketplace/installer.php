@@ -650,13 +650,21 @@ class Installer extends \Opencart\System\Engine\Controller {
 
 		$extension_install_info = $this->model_setting_extension->getInstall($extension_install_id);
 
-		if ($extension_install_info && $extension_install_info['code'] == 'opencart') {
-			$json['error'] = $this->language->get('error_default');
-		}
+		if ($extension_install_info) {
+			if ($extension_install_info['code'] == 'opencart') {
+				$json['error'] = $this->language->get('error_default');
+			}
 
-		if (!$extension_install_info) {
+			$extension_total = $this->model_setting_extension->getTotalExtensionsByExtension($extension_install_info['code']);
+
+			if ($extension_total) {
+				$json['error'] = sprintf($this->language->get('error_uninstall'), $extension_total);
+			}
+		} else {
 			$json['error'] = $this->language->get('error_extension');
 		}
+
+		$extension_install_info = $this->model_setting_extension->getInstall($extension_install_id);
 
 		if (!$json) {
 			$file = DIR_STORAGE . 'marketplace/' . $extension_install_info['code'] . '.ocmod.zip';

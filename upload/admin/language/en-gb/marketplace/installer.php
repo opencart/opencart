@@ -24,6 +24,7 @@ $_['error_install']          = 'Warning: Could not find install.json!';
 $_['error_default']          = 'Default extension could not be uninstalled or deleted!';
 $_['error_extension']        = 'Installed extension could not be found!';
 $_['error_installed']        = 'Extension already installed!';
+$_['error_uninstall']        = 'There are %s extensions that need to be uninstalled before this extension can be removed!';
 $_['error_name']             = 'Name must be between 3 and 128 characters!';
 $_['error_version']          = 'Version must be between 3 and 128 characters!';
 $_['error_author']           = 'Author must be between 3 and 128 characters!';

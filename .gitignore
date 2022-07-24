@@ -41,3 +41,5 @@
 # IDE Project files
 /upload/.idea/*
 /.idea/*
+
+/.DS_Store

@@ -348,13 +348,6 @@ class Installer extends \Opencart\System\Engine\Controller {
 						$base = substr(DIR_IMAGE, 0, -6);
 					}
 
-					// If there are any dependency extensions that also need to be installed.
-					//if (substr($destination, 0, 7) == 'system/') {
-					//	$path = substr($destination, 7);
-					//	$base = DIR_SYSTEM;
-					//	$prefix = 'system/';
-					//}
-
 					// We need to store the path differently for vendor folders.
 					if (substr($destination, 0, 15) == 'system/storage/') {
 						$path = substr($destination, 15);

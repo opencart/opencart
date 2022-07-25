@@ -15,6 +15,7 @@ class Extension extends \Opencart\System\Engine\Controller {
 			$this->autoloader->register('Opencart\Admin\Model\Extension\\' . $extension, DIR_EXTENSION . $result['codename'] . '/admin/model/');
 			$this->autoloader->register('Opencart\System\Extension\\' . $extension, DIR_EXTENSION . $result['codename'] . '/system/');
 
+
 			// Template directory
 			$this->template->addPath('extension/' . $result['codename'], DIR_EXTENSION . $result['codename'] . '/admin/view/template/');
 

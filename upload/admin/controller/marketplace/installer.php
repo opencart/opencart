@@ -38,7 +38,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
-		
+
 		$this->response->setOutput($this->load->view('marketplace/installer', $data));
 	}
 
@@ -126,7 +126,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 		$extension_total = $this->model_setting_extension->getTotalInstalls($filter_data);
 
 		$results = $this->model_setting_extension->getInstalls($filter_data);
-		
+
 		foreach ($results as $result) {
 			if ($result['extension_id']) {
 				$link = $this->url->link('marketplace/marketplace|info', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $result['extension_id']);
@@ -349,6 +349,12 @@ class Installer extends \Opencart\System\Engine\Controller {
 					}
 
 					// If there are any dependency extensions that also need to be installed.
+					if (substr($destination, 0, 7) == 'system/') {
+						$path = substr($destination, 7);
+						$base = DIR_SYSTEM;
+						$prefix = 'system/';
+					}
+
 					// We need to store the path differently for vendor folders.
 					if (substr($destination, 0, 15) == 'system/storage/') {
 						$path = substr($destination, 15);
@@ -368,8 +374,8 @@ class Installer extends \Opencart\System\Engine\Controller {
 							$path_new = $path_new . '/' . $directory;
 						}
 
+						// To fix storage location
 						if (!is_dir($base . $path_new . '/') && mkdir($base . $path_new . '/', 0777)) {
-							// To fix storage location
 							$this->model_setting_extension->addPath($extension_install_id, $prefix . $path_new);
 						}
 					}
@@ -429,11 +435,18 @@ class Installer extends \Opencart\System\Engine\Controller {
 
 		$extension_install_info = $this->model_setting_extension->getInstall($extension_install_id);
 
-		if ($extension_install_info && $extension_install_info['code'] == 'opencart') {
-			$json['error'] = $this->language->get('error_default');
-		}
+		if ($extension_install_info) {
+			if ($extension_install_info['code'] == 'opencart') {
+				$json['error'] = $this->language->get('error_default');
+			}
 
-		if (!$extension_install_info) {
+			// Validate if extension being uninstalled
+			$extension_total = $this->model_setting_extension->getTotalExtensionsByExtension($extension_install_info['code']);
+
+			if ($extension_total) {
+				$json['error'] = sprintf($this->language->get('error_uninstall'), $extension_total);
+			}
+		} else {
 			$json['error'] = $this->language->get('error_extension');
 		}
 
@@ -483,6 +496,11 @@ class Installer extends \Opencart\System\Engine\Controller {
 				// Remove images
 				if (substr($result['path'], 0, 6) == 'image/') {
 					$path = DIR_IMAGE . substr($result['path'], 6);
+				}
+
+				// Remove library files files or any connected extensions that was also installed.
+				if (substr($result['path'], 0, 7) == 'system/') {
+					$path = DIR_SYSTEM . substr($result['path'], 7);
 				}
 
 				// Remove vendor files or any connected extensions that was also installed.
@@ -650,17 +668,11 @@ class Installer extends \Opencart\System\Engine\Controller {
 
 		$extension_install_info = $this->model_setting_extension->getInstall($extension_install_id);
 
-		if ($extension_install_info) {
-			if ($extension_install_info['code'] == 'opencart') {
-				$json['error'] = $this->language->get('error_default');
-			}
+		if ($extension_install_info && $extension_install_info['code'] == 'opencart') {
+			$json['error'] = $this->language->get('error_default');
+		}
 
-			$extension_total = $this->model_setting_extension->getTotalExtensionsByExtension($extension_install_info['code']);
-
-			if ($extension_total) {
-				$json['error'] = sprintf($this->language->get('error_uninstall'), $extension_total);
-			}
-		} else {
+		if (!$extension_install_info) {
 			$json['error'] = $this->language->get('error_extension');
 		}
 

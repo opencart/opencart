@@ -8,14 +8,15 @@
           <option value="{{ payment_method.code }}"{% if payment_method.code == code %} selected{% endif %}>{{ payment_method.title }}</option>
         {% endfor %}
 
-        <optgroup label="{{ text_stored }}">
-          {% for store in stores %}
-            <option value="{{ store.code }}"{% if store.code == code %} selected{% endif %}>{{ store.name }}</option>
-          {% endfor %}
-        </optgroup>
-
+        {% if stores %}
+          <optgroup label="{{ text_stored }}">
+            {% for store in stores %}
+              <option value="{{ store.code }}"{% if store.code == code %} selected{% endif %}>{{ store.name }}</option>
+            {% endfor %}
+          </optgroup>
+        {% endif %}
       </select>
-      <button type="button" id="button-payment-method" class="btn btn-light"><i class="fas fa-sync"></i></button>
+      <button type="button" id="button-payment-method" class="btn btn-light"><i class="fa-solid fa-rotate"></i></button>
     </div>
   </fieldset>
 </form>
@@ -48,7 +49,7 @@ $('#button-payment-method').on('click', function () {
                 }
 
                 if (json['error']) {
-                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                     $('#input-shipping-method').prop('disabled', true);
                 }
@@ -96,16 +97,18 @@ $('#input-payment-method').on('change', function () {
                 $(element).prop('disabled', false);
             },
             success: function (json) {
+                console.log(json);
+
                 if (json['redirect']) {
                     location = json['redirect'];
                 }
 
                 if (json['error']) {
-                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                 }
 
                 if (json['success']) {
-                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                     $('#checkout-confirm').load('index.php?route=checkout/confirm|confirm&language={{ language }}');
                 }
@@ -140,11 +143,11 @@ $('#input-comment').on('focusout', function () {
                 }
 
                 if (json['error']) {
-                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                 }
 
                 if (json['success']) {
-                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                 }
             },
             error: function (xhr, ajaxOptions, thrownError) {

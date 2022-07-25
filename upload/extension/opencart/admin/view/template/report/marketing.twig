@@ -1,7 +1,7 @@
 <div class="row">
   <div id="filter-report" class="col-lg-3 col-md-12 order-lg-last d-none d-lg-block mb-3">
     <div class="card">
-      <div class="card-header"><i class="fas fa-filter"></i> {{ text_filter }}</div>
+      <div class="card-header"><i class="fa-solid fa-filter"></i> {{ text_filter }}</div>
       <div class="card-body">
         <div class="mb-3">
           <label for="input-order-status" class="col-form-label">{{ entry_order_status }}</label>
@@ -16,25 +16,25 @@
           <label for="input-date-start" class="col-form-label">{{ entry_date_start }}</label>
           <div class="input-group">
             <input type="text" name="filter_date_start" value="{{ filter_date_start }}" placeholder="{{ entry_date_start }}" id="input-date-start" class="form-control date"/>
-            <div class="input-group-text"><i class="fas fa-calendar"></i></div>
+            <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
           </div>
         </div>
         <div class="mb-3">
           <label for="input-date-end" class="col-form-label">{{ entry_date_end }}</label>
           <div class="input-group">
             <input type="text" name="filter_date_end" value="{{ filter_date_end }}" placeholder="{{ entry_date_end }}" id="input-date-end" class="form-control date"/>
-            <div class="input-group-text"><i class="fas fa-calendar"></i></div>
+            <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
           </div>
         </div>
         <div class="text-end">
-          <button type="button" id="button-filter" class="btn btn-light"><i class="fas fa-filter"></i> {{ button_filter }}</button>
+          <button type="button" id="button-filter" class="btn btn-light"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button>
         </div>
       </div>
     </div>
   </div>
   <div class="col col-lg-9 col-md-12">
     <div class="card">
-      <div class="card-header"><i class="fas fa-chart-bar"></i> {{ heading_title }}</div>
+      <div class="card-header"><i class="fa-solid fa-chart-bar"></i> {{ heading_title }}</div>
       <div id="marketing" class="card-body">{{ list }}</div>
     </div>
   </div>

@@ -13,12 +13,12 @@
 
 namespace Opencart\System\Library;
 class Image {
-	private $file;
-	private $image;
-	private $width;
-	private $height;
-	private $bits;
-	private $mime;
+	private int $width;
+	private int $height;
+	private string $file;
+	private object $image;	
+	private string $bits;
+	private string $mime;
 
 	/**
 	 * Constructor
@@ -69,7 +69,7 @@ class Image {
 	 *
 	 * @return    array
 	 */
-	public function getImage(): string {
+	public function getImage(): object {
 		return $this->image;
 	}
 

@@ -3,7 +3,7 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="float-end">
-        <button type="button" data-bs-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-report').toggleClass('d-none');" class="btn btn-light d-md-none d-lg-none"><i class="fas fa-filter"></i></button>
+        <button type="button" data-bs-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-report').toggleClass('d-none');" class="btn btn-light d-md-none d-lg-none"><i class="fa-solid fa-filter"></i></button>
       </div>
       <h1>{{ heading_title }}</h1>
       <ol class="breadcrumb">
@@ -15,7 +15,7 @@
   </div>
   <div class="container-fluid">
     <div class="card mb-3">
-      <div class="card-header"><i class="fas fa-chart-bar"></i> {{ text_type }}</div>
+      <div class="card-header"><i class="fa-solid fa-chart-bar"></i> {{ text_type }}</div>
       <div class="card-body">
         <div class="card">
           <div class="card-body bg-light">
@@ -25,7 +25,7 @@
                   <option value="{{ report.href }}"{% if code == report.code %} selected{% endif %}>{{ report.text }}</option>
                 {% endfor %}
               </select>
-              <div class="input-group-text"><i class="fas fa-filter"></i>&nbsp;{{ text_filter }}</div>
+              <div class="input-group-text"><i class="fa-solid fa-filter"></i>&nbsp;{{ text_filter }}</div>
             </div>
           </div>
         </div>

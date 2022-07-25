@@ -72,36 +72,41 @@ class CreditCard extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Card storage
-			if ($this->customer->isLogged() && $this->request->post['store']) {
-				$this->load->model('account/payment_method');
+			// Set Credit Card response
+			if ($this->config->get('payment_credit_card_response')) {
+				// Card storage
+				if ($this->customer->isLogged() && $this->request->post['store']) {
+					$this->load->model('account/payment_method');
 
-				$payment_method_data = [
-					'name'        => '**** **** **** ' . substr($this->request->post['card_number'], -4),
-					'image'       => 'visa.png',
-					'type'        => 'visa',
-					'extension'   => 'opencart',
-					'code'        => 'credit_card',
-					'token'       => md5(rand()),
-					'date_expire' => $this->request->post['card_expire_year'] . '-' . $this->request->post['card_expire_month'] . '-01',
-					'default'     => !$this->model_account_payment_method->getTotalPaymentMethods() ? true : false
-				];
+					$payment_method_data = [
+						'name'        => '**** **** **** ' . substr($this->request->post['card_number'], -4),
+						'image'       => 'visa.png',
+						'type'        => 'visa',
+						'extension'   => 'opencart',
+						'code'        => 'credit_card',
+						'token'       => md5(rand()),
+						'date_expire' => $this->request->post['card_expire_year'] . '-' . $this->request->post['card_expire_month'] . '-01',
+						'default'     => !$this->model_account_payment_method->getTotalPaymentMethods() ? true : false
+					];
 
-				$this->model_account_payment_method->addPaymentMethod($payment_method_data);
+					$this->model_account_payment_method->addPaymentMethod($payment_method_data);
+				}
+
+				$this->load->model('checkout/order');
+
+				$this->model_checkout_order->addHistory($this->session->data['order_id'], $this->config->get('payment_credit_card_approved_status_id'), '', true);
+
+				$json['redirect'] = $this->url->link('checkout/success', 'language=' . $this->config->get('config_language'), true);
+			} else {
+				$this->load->model('checkout/order');
+
+				$this->model_checkout_order->addHistory($this->session->data['order_id'], $this->config->get('payment_credit_card_failed_status_id'), '', true);
+
+				$json['redirect'] = $this->url->link('checkout/failure', 'language=' . $this->config->get('config_language'), true);
 			}
-
-			$this->load->model('checkout/order');
-
-			$this->model_checkout_order->addHistory($this->session->data['order_id'], $this->config->get('payment_credit_card_order_status_id'), '', true);
-
-			$json['redirect'] = $this->url->link('checkout/success', 'language=' . $this->config->get('config_language'), true);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
-	}
-
-	public function callback(): void {
-
 	}
 }

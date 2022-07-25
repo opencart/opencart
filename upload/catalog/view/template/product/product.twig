@@ -65,8 +65,8 @@
           {% endif %}
           <form method="post" data-oc-toggle="ajax">
             <div class="btn-group">
-              <button type="submit" formaction="{{ add_to_wishlist }}" data-bs-toggle="tooltip" class="btn btn-light" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product_id }}');"><i class="fas fa-heart"></i></button>
-              <button type="submit" formaction="{{ add_to_compare }}" data-bs-toggle="tooltip" class="btn btn-light" title="{{ button_compare }}" onclick="compare.add('{{ product_id }}');"><i class="fas fa-exchange-alt"></i></button>
+              <button type="submit" formaction="{{ add_to_wishlist }}" data-bs-toggle="tooltip" class="btn btn-light" title="{{ button_wishlist }}"><i class="fa-solid fa-heart"></i></button>
+              <button type="submit" formaction="{{ add_to_compare }}" data-bs-toggle="tooltip" class="btn btn-light" title="{{ button_compare }}"><i class="fa-solid fa-arrow-right-arrow-left"></i></button>
             </div>
             <input type="hidden" name="product_id" value="{{ product_id }}"/>
           </form>
@@ -146,7 +146,7 @@
                     <div class="mb-3{% if option.required %} required{% endif %}">
                       <label for="button-upload-{{ option.product_option_id }}" class="form-label">{{ option.name }}</label>
                       <div>
-                        <button type="button" id="button-upload-{{ option.product_option_id }}" data-oc-toggle="upload" data-oc-size-max="{{ config_file_max_size }}" data-oc-size-error="{{ error_upload_size }}" data-oc-url="{{ upload }}" data-oc-target="#input-option-{{ option.product_option_id }}" class="btn btn-light btn-block"><i class="fas fa-upload"></i> {{ button_upload }}</button>
+                        <button type="button" id="button-upload-{{ option.product_option_id }}" data-oc-toggle="upload" data-oc-size-max="{{ config_file_max_size }}" data-oc-size-error="{{ error_upload_size }}" data-oc-url="{{ upload }}" data-oc-target="#input-option-{{ option.product_option_id }}" class="btn btn-light btn-block"><i class="fa-solid fa-upload"></i> {{ button_upload }}</button>
                         <input type="hidden" name="option[{{ option.product_option_id }}]" value="" id="input-option-{{ option.product_option_id }}"/>
                       </div>
                       <div id="error-option-{{ option.product_option_id }}" class="invalid-feedback"></div>
@@ -157,7 +157,7 @@
                       <label for="input-option-{{ option.product_option_id }}" class="form-label">{{ option.name }}</label>
                       <div class="input-group">
                         <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" id="input-option-{{ option.product_option_id }}" class="form-control date"/>
-                        <div class="input-group-text"><i class="fas fa-calendar"></i></div>
+                        <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
                       </div>
                       <div id="error-option-{{ option.product_option_id }}" class="invalid-feedback"></div>
                     </div>
@@ -167,7 +167,7 @@
                       <label for="input-option-{{ option.product_option_id }}" class="form-label">{{ option.name }}</label>
                       <div class="input-group">
                         <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" id="input-option-{{ option.product_option_id }}" class="form-control datetime"/>
-                        <div class="input-group-text"><i class="fas fa-calendar"></i></div>
+                        <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
                       </div>
                       <div id="error-option-{{ option.product_option_id }}" class="invalid-feedback"></div>
                     </div>
@@ -177,7 +177,7 @@
                       <label for="input-option-{{ option.product_option_id }}" class="form-label">{{ option.name }}</label>
                       <div class="input-group">
                         <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" id="input-option-{{ option.product_option_id }}" class="form-control time"/>
-                        <div class="input-group-text"><i class="fas fa-calendar"></i></div>
+                        <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
                       </div>
                       <div id="error-option-{{ option.product_option_id }}" class="invalid-feedback"></div>
                     </div>
@@ -207,12 +207,19 @@
                   <button type="submit" id="button-cart" class="btn btn-primary btn-lg btn-block">{{ button_cart }}</button>
                 </div>
                 {% if minimum > 1 %}
-                  <div class="alert alert-info"><i class="fas fa-info-circle"></i> {{ text_minimum }}</div>
+                  <div class="alert alert-info"><i class="fa-solid fa-circle-info"></i> {{ text_minimum }}</div>
                 {% endif %}
               </div>
               {% if review_status %}
                 <div class="rating">
-                  <p>{% for i in 1..5 %}{% if rating < i %}<span class="fas fa-stack"><i class="far fa-star fa-stack-1x"></i></span>{% else %}<span class="fas fa-stack"><i class="fas fa-star fa-stack-1x"></i><i class="far fa-star fa-stack-1x"></i></span>{% endif %}{% endfor %} <a href="" onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;">{{ text_reviews }}</a> / <a href="" onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;">{{ text_write }}</a></p>
+                  <p>{% for i in 1..5 %}
+                      {% if rating < i %}
+                      <span class="fa-stack"><i class="fa-regular fa-star fa-stack-1x"></i></span>
+                    {% else %}
+                      <span class="fa-stack"><i class="fa-solid fa-star fa-stack-1x"></i><i class="fa-regular fa-star fa-stack-1x"></i></span>
+                    {% endif %}
+                    {% endfor %}
+                    <a href="" onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;">{{ text_reviews }}</a> / <a href="" onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;">{{ text_write }}</a></p>
                 </div>
               {% endif %}
             </form>
@@ -313,7 +320,7 @@ $('#form-product').on('submit', function (e) {
             }
 
             if (json['success']) {
-                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                 $('#header-cart').load('index.php?route=common/cart|info');
             }

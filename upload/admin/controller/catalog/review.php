@@ -190,15 +190,15 @@ class Review extends \Opencart\System\Engine\Controller {
 		$data['reviews'] = [];
 
 		$filter_data = [
-			'filter_product'    => $filter_product,
-			'filter_author'     => $filter_author,
-			'filter_status'     => $filter_status,
-			'filter_date_from'  => $filter_date_from,
-			'filter_date_to'    => $filter_date_to,
-			'sort'              => $sort,
-			'order'             => $order,
-			'start'             => ($page - 1) * $this->config->get('config_pagination_admin'),
-			'limit'             => $this->config->get('config_pagination_admin')
+			'filter_product'   => $filter_product,
+			'filter_author'    => $filter_author,
+			'filter_status'    => $filter_status,
+			'filter_date_from' => $filter_date_from,
+			'filter_date_to'   => $filter_date_to,
+			'sort'             => $sort,
+			'order'            => $order,
+			'start'            => ($page - 1) * $this->config->get('config_pagination_admin'),
+			'limit'            => $this->config->get('config_pagination_admin')
 		];
 
 		$this->load->model('catalog/review');

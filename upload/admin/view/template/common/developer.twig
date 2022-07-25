@@ -2,7 +2,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title"><i class="fas fa-cog"></i> {{ heading_title }}</h5>
+        <h5 class="modal-title"><i class="fa-solid fa-cog"></i> {{ heading_title }}</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
@@ -17,7 +17,7 @@
           <tr>
             <td>{{ entry_theme }}</td>
             <td></td>
-            <td class="text-end"><button type="button" value="theme" data-bs-toggle="tooltip" title="{{ button_refresh }}" class="btn btn-warning"><i class="fas fa-sync"></i></button></td>
+            <td class="text-end"><button type="button" value="theme" data-bs-toggle="tooltip" title="{{ button_refresh }}" class="btn btn-warning"><i class="fa-solid fa-rotate"></i></button></td>
           </tr>
           <tr>
             <td>{{ entry_sass }}</td>
@@ -26,7 +26,7 @@
                 <input type="checkbox" name="developer_sass" value="1" id="input-developer-sass" class="form-check-input"{% if developer_sass %} checked{% endif %}/>
               </div>
             </td>
-            <td class="text-end"><button type="button" value="sass" data-bs-toggle="tooltip" title="{{ button_refresh }}" class="btn btn-warning"><i class="fas fa-sync"></i></button></td>
+            <td class="text-end"><button type="button" value="sass" data-bs-toggle="tooltip" title="{{ button_refresh }}" class="btn btn-warning"><i class="fa-solid fa-rotate"></i></button></td>
           </tr>
         </table>
       </div>
@@ -50,11 +50,11 @@ $('input[name=\'developer_sass\']').on('change', function () {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
-                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
 
             if (json['success']) {
-                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
         },
         error: function (xhr, ajaxOptions, thrownError) {
@@ -79,11 +79,11 @@ $('#modal-developer table button').on('click', function () {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
-                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
 
             if (json['success']) {
-                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
         },
         error: function (xhr, ajaxOptions, thrownError) {

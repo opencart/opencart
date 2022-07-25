@@ -90,7 +90,7 @@ class Upgrade3 extends \Opencart\System\Engine\Controller {
 							// We need to remove the AUTO_INCREMENT
 							$field_query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . $table['name'] . "' AND COLUMN_NAME = '" . $result['Column_name'] . "'");
 
-							$this->db->query("ALTER TABLE " . DB_PREFIX . $table['name'] . " MODIFY " . $result['Column_name'] . " " . $field_query->row['COLUMN_TYPE'] . " NOT NULL");
+							$this->db->query("ALTER TABLE `" . DB_PREFIX . $table['name'] . "` MODIFY `" . $result['Column_name'] . "` " . $field_query->row['COLUMN_TYPE'] . " NOT NULL");
 						}
 
 						if (!in_array($result['Key_name'], $keys)) {

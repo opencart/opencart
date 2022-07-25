@@ -2,7 +2,7 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="float-end"><button type="button" id="button-upload" data-bs-toggle="tooltip" title="{{ button_upload }}" class="btn btn-primary"><i class="fas fa-upload"></i></button></div>
+      <div class="float-end"><button type="button" id="button-upload" data-bs-toggle="tooltip" title="{{ button_upload }}" class="btn btn-primary"><i class="fa-solid fa-upload"></i></button></div>
       <h1>{{ heading_title }}</h1>
       <ol class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -13,7 +13,7 @@
   </div>
   <div class="container-fluid">
     <div class="card">
-      <div class="card-header"><i class="fas fa-exchange-alt"></i> {{ heading_title }}</div>
+      <div class="card-header"><i class="fa-solid fa-exchange-alt"></i> {{ heading_title }}</div>
       <div class="card-body">
         <fieldset>
           <legend>{{ text_progress }}</legend>
@@ -49,13 +49,13 @@
           </div>
           <div class="row mb-3">
             <div class="offset-sm-2 col-sm-10 text-end">
-              <button type="button" id="button-backup" class="btn btn-success"><i class="fas fa-upload"></i> {{ button_backup }}</button>
+              <button type="button" id="button-backup" class="btn btn-success"><i class="fa-solid fa-download"></i> {{ button_backup }}</button>
             </div>
           </div>
         </fieldset>
         <fieldset>
           <legend>{{ text_history }}</legend>
-          <div class="alert alert-info"><i class="fas fa-exclamation-circle"></i> {{ text_import }}</div>
+          <div class="alert alert-info"><i class="fa-solid fa-circle-exclamation"></i> {{ text_import }}</div>
           <div id="history">{{ history }}</div>
         </fieldset>
       </div>
@@ -67,7 +67,7 @@ $('#button-backup').on('click', function () {
     var element = this;
 
     $('#progress-bar').css('width', '0%');
-    $('#progress-bar').removeClass('progress-bar-danger progress-bar-success');
+    $('#progress-bar').removeClass('bg-danger bg-success');
 
     var next = 'index.php?route=tool/backup|backup&user_token={{ user_token }}&table=' + $('input[name^=\'backup\']:checked').first().val();
 
@@ -85,7 +85,7 @@ $('#button-backup').on('click', function () {
                 $('.alert-dismissible').remove();
 
                 if (json['error']) {
-                    $('#progress-bar').addClass('progress-bar-danger');
+                    $('#progress-bar').addClass('bg-danger');
                     $('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
 
                     $('#history').load('index.php?route=tool/backup|history&user_token={{ user_token }}');
@@ -95,7 +95,7 @@ $('#button-backup').on('click', function () {
                 }
 
                 if (json['success']) {
-                    $('#progress-bar').css('width', '100%').addClass('progress-bar-success');
+                    $('#progress-bar').css('width', '100%').addClass('bg-success');
                     $('#progress-text').html('<div class="text-success">' + json['success'] + '</div>');
 
                     $('#history').load('index.php?route=tool/backup|history&user_token={{ user_token }}');
@@ -135,7 +135,7 @@ $('#history').on('click', '.btn-warning', function () {
     var element = this;
 
     $('#progress-bar').css('width', '0%');
-    $('#progress-bar').removeClass('progress-bar-danger progress-bar-success');
+    $('#progress-bar').removeClass('bg-danger bg-success');
 
     var next = 'index.php?route=tool/backup|restore&user_token={{ user_token }}&filename=' + encodeURIComponent($(this).val());
 
@@ -160,7 +160,7 @@ $('#history').on('click', '.btn-warning', function () {
                 }
 
                 if (json['error']) {
-                    $('#progress-bar').addClass('progress-bar-danger');
+                    $('#progress-bar').addClass('bg-danger');
                     $('#progress-text').html('<div class="invalid-feedback">' + json['error'] + '</div>');
 
                     $('#history').load('index.php?route=tool/backup|history&user_token={{ user_token }}');
@@ -171,7 +171,7 @@ $('#history').on('click', '.btn-warning', function () {
                 }
 
                 if (json['success']) {
-                    $('#progress-bar').css('width', '100%').addClass('progress-bar-success');
+                    $('#progress-bar').css('width', '100%').addClass('bg-success');
                     $('#progress-text').html('<div class="text-success">' + json['success'] + '</div>');
 
                     $('#history').load('index.php?route=tool/backup|history&user_token={{ user_token }}');
@@ -213,8 +213,8 @@ $('#button-upload').on('click', function () {
     $('#form-upload input[name=\'upload\']').trigger('click');
 
     $('#form-upload input[name=\'upload\']').on('change', function () {
-        if ((this.files[0].size / 1024) > {{ config_file_max_size }}) {
-          	alert('{{ error_upload_size }}');
+        if ((this.files[0].size) > {{ config_file_max_size }}) {
+            alert('{{ error_upload_size }}');
 
             $(this).val('');
         }
@@ -246,11 +246,11 @@ $('#button-upload').on('click', function () {
                     $('.alert-dismissible').remove();
 
                     if (json['error']) {
-                        $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                        $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                     }
 
                     if (json['success']) {
-                        $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                        $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                         $('#history').load('index.php?route=tool/backup|history&user_token={{ user_token }}');
                     }
@@ -281,11 +281,11 @@ $('#history').on('click', '.btn-danger', function () {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
-                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
 
             if (json['success']) {
-                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                 $('#history').load('index.php?route=tool/backup|history&user_token={{ user_token }}');
             }

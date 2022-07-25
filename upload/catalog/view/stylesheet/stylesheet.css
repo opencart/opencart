@@ -511,9 +511,9 @@ footer h5 {
   padding-bottom: 10px;
 }
 .rating .fa-stack {
-  font-size: 8px;
+  width: 20px;
 }
-.rating .far.fa-star {
+.rating.fa-star {
   color: #999;
   font-size: 15px;
 }

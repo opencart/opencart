@@ -6,14 +6,14 @@
     <div class="row justify-content-sm-center">
       <div class="col-sm-10 col-md-8 col-lg-5">
         <div class="card">
-          <div class="card-header"><i class="fas fa-lock"></i> {{ heading_title }}</div>
+          <div class="card-header"><i class="fa-solid fa-lock"></i> {{ heading_title }}</div>
           <div class="card-body">
             <form id="form-authorize" action="{{ action }}" method="post" data-oc-toggle="ajax">
               {% if error_warning %}
-                <div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> {{ error_warning }} <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>
+                <div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> {{ error_warning }} <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>
               {% endif %}
               {% if success %}
-                <div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> {{ success }} <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>
+                <div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> {{ success }} <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>
               {% endif %}
               <p>{{ text_security }}</p>
               <p>{{ text_code }}</p>
@@ -21,12 +21,12 @@
                 <label for="input-code" class="form-label">{{ entry_code }}</label>
                 <div class="input-group">
                   <input type="text" name="code" value="" placeholder="{{ entry_code }}" id="input-code" class="form-control"/>
-                  <button type="button" id="button-send" class="btn btn-danger"><i class="fas fa-mail-bulk"></i> {{ button_resend }}</button>
+                  <button type="button" id="button-send" class="btn btn-danger"><i class="fa-solid fa-mail-bulk"></i> {{ button_resend }}</button>
                 </div>
                 <div id="error-code" class="invalid-feedback"></div>
               </div>
               <div class="text-end">
-                <button type="submit" class="btn btn-primary"><i class="fas fa-key"></i> {{ button_submit }}</button>
+                <button type="submit" class="btn btn-primary"><i class="fa-solid fa-key"></i> {{ button_submit }}</button>
               </div>
               {% if redirect %}
                 <input type="hidden" name="redirect" value="{{ redirect }}"/>
@@ -59,11 +59,11 @@ $('#button-send').on('click', function (e) {
             }
 
             if (json['error']) {
-                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
 
             if (json['success']) {
-                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
         },
         error: function (xhr, ajaxOptions, thrownError) {

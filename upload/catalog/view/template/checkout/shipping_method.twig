@@ -16,7 +16,7 @@
           </optgroup>
         {% endfor %}
       </select>
-      <button type="button" id="button-shipping-method" class="btn btn-light"><i class="fas fa-sync"></i></button>
+      <button type="button" id="button-shipping-method" class="btn btn-light"><i class="fa-solid fa-rotate"></i></button>
     </div>
   </fieldset>
 </form>
@@ -40,7 +40,7 @@ $('#button-shipping-method').on('click', function () {
                 }
 
                 if (json['error']) {
-                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                 }
 
                 // Shipping Methods
@@ -104,16 +104,18 @@ $('#input-shipping-method').on('change', function () {
                 $(element).prop('disabled', false);
             },
             success: function (json) {
+                console.log(json);
+
                 if (json['redirect']) {
                     location = json['redirect'];
                 }
 
                 if (json['error']) {
-                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                 }
 
                 if (json['success']) {
-                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                     $('#button-payment-method').trigger('click');
                 }

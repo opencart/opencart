@@ -12,7 +12,7 @@
 	</div>
 	<div class="container-fluid">
 		<div class="card">
-			<div class="card-header"><i class="fas fa-list"></i> {{ text_list }}</div>
+			<div class="card-header"><i class="fa-solid fa-list"></i> {{ text_list }}</div>
 			<div id="statistics" class="card-body">{{ list }}</div>
 		</div>
 	</div>
@@ -34,11 +34,11 @@ $('#statistics').on('click', '.btn-warning', function (e) {
         },
         success: function (json) {
             if (json['error']) {
-                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
 
             if (json['success']) {
-                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                 $('#statistics').load('index.php?route=report/statistics|list&user_token={{ user_token }}');
             }

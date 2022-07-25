@@ -3,8 +3,8 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="float-end">
-        <button type="submit" form="form-option" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
-        <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
+        <button type="submit" form="form-option" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i></button>
+        <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fa-solid fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
       <ol class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -15,7 +15,7 @@
   </div>
   <div class="container-fluid">
     <div class="card">
-      <div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_form }}</div>
+      <div class="card-header"><i class="fa-solid fa-pencil"></i> {{ text_form }}</div>
       <div class="card-body">
         <form id="form-option" action="{{ save }}" method="post" data-oc-toggle="ajax">
           <fieldset>
@@ -90,13 +90,13 @@
                       <div class="card image">
                         <img src="{{ option_value.thumb }}" alt="" title="" id="thumb-image-{{ option_value_row }}" data-oc-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="option_value[{{ option_value_row }}][image]" value="{{ option_value.image }}" id="input-image-{{ option_value_row }}"/>
                         <div class="card-body">
-                          <button type="button" data-oc-toggle="image" data-oc-target="#input-image-{{ option_value_row }}" data-oc-thumb="#thumb-image-{{ option_value_row }}" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>
-                          <button type="button" data-oc-toggle="clear" data-oc-target="#input-image-{{ option_value_row }}" data-oc-thumb="#thumb-image-{{ option_value_row }}" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>
+                          <button type="button" data-oc-toggle="image" data-oc-target="#input-image-{{ option_value_row }}" data-oc-thumb="#thumb-image-{{ option_value_row }}" class="btn btn-primary btn-sm btn-block"><i class="fa-solid fa-pencil"></i> {{ button_edit }}</button>
+                          <button type="button" data-oc-toggle="clear" data-oc-target="#input-image-{{ option_value_row }}" data-oc-thumb="#thumb-image-{{ option_value_row }}" class="btn btn-warning btn-sm btn-block"><i class="fa-regular fa-trash-can"></i> {{ button_clear }}</button>
                         </div>
                       </div>
                     </td>
                     <td class="text-end"><input type="text" name="option_value[{{ option_value_row }}][sort_order]" value="{{ option_value.sort_order }}" placeholder="{{ entry_sort_order }}" class="form-control"/></td>
-                    <td class="text-end"><button type="button" onclick="$('#option-value-row-{{ option_value_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>
+                    <td class="text-end"><button type="button" onclick="$('#option-value-row-{{ option_value_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
                   </tr>
                   {% set option_value_row = option_value_row + 1 %}
                 {% endfor %}
@@ -104,7 +104,7 @@
               <tfoot>
                 <tr>
                   <td colspan="3"></td>
-                  <td class="text-end"><button type="button" onclick="addOptionValue();" data-bs-toggle="tooltip" title="{{ button_option_value_add }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i></button></td>
+                  <td class="text-end"><button type="button" onclick="addOptionValue();" data-bs-toggle="tooltip" title="{{ button_option_value_add }}" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i></button></td>
                 </tr>
               </tfoot>
             </table>
@@ -144,13 +144,13 @@ function addOptionValue() {
     html += '      <img src="{{ placeholder }}" alt="" title="" id="thumb-image-' + option_value_row + '" data-oc-placeholder="{{ placeholder }}" class="card-img-top"/>';
     html += '      <input type="hidden" name="option_value[' + option_value_row + '][image]" value="" id="input-image-' + option_value_row + '"/>';
     html += '      <div class="card-body">';
-    html += '        <button type="button" data-oc-toggle="image" data-oc-target="#input-image-' + option_value_row + '" data-oc-thumb="#thumb-image-' + option_value_row + '" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>';
-    html += '        <button type="button" data-oc-toggle="clear" data-oc-target="#input-image-' + option_value_row + '" data-oc-thumb="#thumb-image-' + option_value_row + '" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>';
+    html += '        <button type="button" data-oc-toggle="image" data-oc-target="#input-image-' + option_value_row + '" data-oc-thumb="#thumb-image-' + option_value_row + '" class="btn btn-primary btn-sm btn-block"><i class="fa-solid fa-pencil"></i> {{ button_edit }}</button>';
+    html += '        <button type="button" data-oc-toggle="clear" data-oc-target="#input-image-' + option_value_row + '" data-oc-thumb="#thumb-image-' + option_value_row + '" class="btn btn-warning btn-sm btn-block"><i class="fa-regular fa-trash-can"></i> {{ button_clear }}</button>';
     html += '      </div>';
     html += '    </div>';
     html += '  </td>';
     html += '  <td class="text-end"><input type="text" name="option_value[' + option_value_row + '][sort_order]" value="" placeholder="{{ entry_sort_order }}" class="form-control"/></td>';
-    html += '  <td class="text-end"><button type="button" onclick="$(\'#option-value-row-' + option_value_row + '\').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fas fa-minus-circle"></i></button></td>';
+    html += '  <td class="text-end"><button type="button" onclick="$(\'#option-value-row-' + option_value_row + '\').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>';
     html += '</tr>';
 
     $('#option-value tbody').append(html);

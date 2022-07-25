@@ -5,7 +5,7 @@ class Confirm extends \Opencart\System\Engine\Controller {
 		$this->load->language('checkout/confirm');
 
 		if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
-			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
+			$status = false;
 		}
 
 		// Order Totals
@@ -19,6 +19,7 @@ class Confirm extends \Opencart\System\Engine\Controller {
 
 		$status = true;
 
+		// Validate customer data is set
 		if (!isset($this->session->data['customer'])) {
 			$status = false;
 		}
@@ -33,7 +34,7 @@ class Confirm extends \Opencart\System\Engine\Controller {
 
 		foreach ($products as $product) {
 			if (!$product['minimum']) {
-				$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
+				$status = false;
 
 				break;
 			}
@@ -67,10 +68,12 @@ class Confirm extends \Opencart\System\Engine\Controller {
 			unset($this->session->data['shipping_methods']);
 		}
 
+		// Validate Payment methods
 		if (!isset($this->session->data['payment_method']) || !isset($this->session->data['payment_methods']) || !isset($this->session->data['payment_methods'][$this->session->data['payment_method']])) {
 			$status = false;
 		}
 
+		// Validate checkout terms
 		if ($this->config->get('config_checkout_id') && !isset($this->session->data['agree'])) {
 			$status = false;
 		}

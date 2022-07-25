@@ -3,8 +3,8 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="float-end">
-        <button type="submit" form="form-payment" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
-        <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a></div>
+        <button type="submit" form="form-payment" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa-solid fa-save"></i></button>
+        <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fa-solid fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
       <ol class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -14,9 +14,9 @@
     </div>
   </div>
   <div class="container-fluid">
-    <div class="alert alert-info"><i class="fas fa-exclamation-circle"></i> {{ text_description }}</div>
+    <div class="alert alert-info"><i class="fa-solid fa-circle-exclamation"></i> {{ text_description }}</div>
     <div class="card">
-      <div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_edit }}</div>
+      <div class="card-header"><i class="fa-solid fa-pencil"></i> {{ text_edit }}</div>
       <div class="card-body">
         <form id="form-payment" action="{{ save }}" method="post" data-oc-toggle="ajax">
 
@@ -31,11 +31,22 @@
           </div>
 
           <div class="row mb-3">
-            <label for="input-order-status" class="col-sm-2 col-form-label">{{ entry_order_status }}</label>
+            <label for="input-approved-status" class="col-sm-2 col-form-label">{{ entry_approved_status }}</label>
             <div class="col-sm-10">
-              <select name="payment_credit_card_order_status_id" id="input-order-status" class="form-select">
+              <select name="payment_credit_card_approved_status_id" id="input-approved-status" class="form-select">
                 {% for order_status in order_statuses %}
-                  <option value="{{ order_status.order_status_id }}"{% if order_status.order_status_id == payment_credit_card_order_status_id %} selected="selected"{% endif %}>{{ order_status.name }}</option>
+                  <option value="{{ order_status.order_status_id }}"{% if order_status.order_status_id == payment_credit_card_approved_status_id %} selected="selected"{% endif %}>{{ order_status.name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <label for="input-failed-status" class="col-sm-2 col-form-label">{{ entry_failed_status }}</label>
+            <div class="col-sm-10">
+              <select name="payment_credit_card_failed_status_id" id="input-failed-status" class="form-select">
+                {% for order_status in order_statuses %}
+                  <option value="{{ order_status.order_status_id }}"{% if order_status.order_status_id == payment_credit_card_failed_status_id %} selected="selected"{% endif %}>{{ order_status.name }}</option>
                 {% endfor %}
               </select>
             </div>

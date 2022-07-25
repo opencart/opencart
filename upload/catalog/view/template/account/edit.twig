@@ -117,7 +117,7 @@
                 <label class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
                 <div class="col-sm-10">
                   <div>
-                    <button type="button" data-oc-toggle="upload" data-oc-url="{{ upload }}" data-oc-size-max="{{ config_file_max_size }}" data-oc-size-error="{{ error_upload_size }}" data-oc-target="#input-custom-field-{{ custom_field.custom_field_id }}" class="btn btn-light"><i class="fas fa-upload"></i> {{ button_upload }}</button>
+                    <button type="button" data-oc-toggle="upload" data-oc-url="{{ upload }}" data-oc-size-max="{{ config_file_max_size }}" data-oc-size-error="{{ error_upload_size }}" data-oc-target="#input-custom-field-{{ custom_field.custom_field_id }}" class="btn btn-light"><i class="fa-solid fa-upload"></i> {{ button_upload }}</button>
                     <input type="hidden" name="custom_field[{{ custom_field.custom_field_id }}]" value="{% if account_custom_field[custom_field.custom_field_id] %}{{ account_custom_field[custom_field.custom_field_id] }}{% endif %}" id="input-custom-field-{{ custom_field.custom_field_id }}"/>
                   </div>
                   <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
@@ -131,7 +131,7 @@
                 <div class="col-sm-10">
                   <div class="input-group">
                     <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{% if account_custom_field[custom_field.custom_field_id] %}{{ account_custom_field[custom_field.custom_field_id] }}{% else %}{{ custom_field.value }}{% endif %}" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control date"/>
-                    <div class="input-group-text"><i class="fas fa-calendar"></i></div>
+                    <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
                   </div>
                   <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
@@ -144,7 +144,7 @@
                 <div class="col-sm-10">
                   <div class="input-group">
                     <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{% if account_custom_field[custom_field.custom_field_id] %}{{ account_custom_field[custom_field.custom_field_id] }}{% else %}{{ custom_field.value }}{% endif %}" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control time"/>
-                    <div class="input-group-text"><i class="fas fa-calendar"></i></div>
+                    <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
                   </div>
                   <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
@@ -157,7 +157,7 @@
                 <div class="col-sm-10">
                   <div class="input-group">
                     <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{% if account_custom_field[custom_field.custom_field_id] %}{{ account_custom_field[custom_field.custom_field_id] }}{% else %}{{ custom_field.value }}{% endif %}" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control datetime"/>
-                    <div class="input-group-text"><i class="fas fa-calendar"></i></div>
+                    <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
                   </div>
                   <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
@@ -177,38 +177,4 @@
       {{ content_bottom }}</div>
     {{ column_right }}</div>
 </div>
-<script type="text/javascript"><!--
-$(document).ready(function () {
-    $('.date').daterangepicker({
-        singleDatePicker: true,
-        autoApply: true,
-        locale: {
-            format: 'YYYY-MM-DD'
-        }
-    });
-
-    $('.time').daterangepicker({
-        singleDatePicker: true,
-        datePicker: false,
-        autoApply: true,
-        timePicker: true,
-        timePicker24Hour: true,
-        locale: {
-            format: 'HH:mm'
-        }
-    }).on('show.daterangepicker', function (ev, picker) {
-        picker.container.find('.calendar-table').hide();
-    });
-
-    $('.datetime').daterangepicker({
-        singleDatePicker: true,
-        autoApply: true,
-        timePicker: true,
-        timePicker24Hour: true,
-        locale: {
-            format: 'YYYY-MM-DD HH:mm'
-        }
-    });
-});
-//--></script>
 {{ footer }}

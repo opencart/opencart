@@ -165,7 +165,7 @@ footer a {
   .btn:hover {
     color: #FFF;
   }
-	
+
   &.open {
     > .btn {
       background-image: none;
@@ -194,11 +194,6 @@ footer a {
     li {
       min-width: 427px;
       padding: 0 10px;
-
-      > div {
-
-
-      }
 
       p {
         margin: 20px 0;
@@ -698,14 +693,12 @@ footer {
   padding-bottom: 10px;
 
   .fa-stack {
-    font-size: 8px;
+    width: 20px;
   }
 
-  .far {
-    &.fa-star {
-      color: #999;
-      font-size: 15px;
-    }
+  &.fa-star {
+    color: #999;
+    font-size: 15px;
   }
 
   .fa-star {

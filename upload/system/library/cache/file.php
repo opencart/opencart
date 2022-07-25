@@ -25,28 +25,10 @@ class File {
 		$files = glob(DIR_CACHE . 'cache.' . basename($key) . '.*');
 
 		if ($files) {
-			$handle = fopen($files[0], 'r');
-
-			if (is_resource($handle)) {
-				flock($handle, LOCK_SH);
-
-				$size = filesize($files[0]);
-
-				if ($size > 0) {
-					$data = fread($handle, $size);
-				} else {
-					$data = '';
-				}
-
-				flock($handle, LOCK_UN);
-
-				fclose($handle);
-
-				return json_decode($data, true);
-			}
+			return json_decode(file_get_contents($files[0]), true);
+		} else {
+			return [];
 		}
-
-		return [];
 	}
 
 	public function set(string $key, array|string|null $value, int $expire = 0): void {
@@ -56,19 +38,7 @@ class File {
 			$expire = $this->expire;
 		}
 
-		$file = DIR_CACHE . 'cache.' . basename($key) . '.' . (time() + $expire);
-
-		$handle = fopen($file, 'w');
-
-		flock($handle, LOCK_EX);
-
-		fwrite($handle, json_encode($value));
-
-		fflush($handle);
-
-		flock($handle, LOCK_UN);
-
-		fclose($handle);
+		file_put_contents(DIR_CACHE . 'cache.' . basename($key) . '.' . (time() + $expire), json_encode($value));
 	}
 
 	public function delete(string $key): void {

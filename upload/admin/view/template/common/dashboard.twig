@@ -4,7 +4,7 @@
     <div class="container-fluid">
       {% if developer_status %}
         <div class="float-end">
-          <button type="button" id="button-setting" data-bs-toggle="tooltip" title="{{ button_developer }}" class="btn btn-info"><i class="fas fa-cog"></i></button>
+          <button type="button" id="button-setting" data-bs-toggle="tooltip" title="{{ button_developer }}" class="btn btn-info"><i class="fa-solid fa-cog"></i></button>
         </div>
       {% endif %}
       <h1>{{ heading_title }}</h1>
@@ -72,10 +72,10 @@ $('input[name=\'developer_sass\']').on('change', function () {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
-                $('#modal-developer .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#modal-developer .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
             if (json['success']) {
-                $('#modal-developer .modal-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#modal-developer .modal-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
         },
         error: function (xhr, ajaxOptions, thrownError) {
@@ -100,11 +100,11 @@ $('#modal-developer table button').on('click', function () {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
-                $('#modal-developer .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#modal-developer .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
 
             if (json['success']) {
-                $('#modal-developer .modal-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#modal-developer .modal-body').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
         },
         error: function (xhr, ajaxOptions, thrownError) {

@@ -3,11 +3,11 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="float-end">
-        <button type="button" data-bs-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-order').toggleClass('d-none');" class="btn btn-light d-lg-none"><i class="fas fa-filter"></i></button>
-        <button type="submit" id="button-invoice" form="form-order" formaction="{{ invoice }}" formtarget="_blank" data-bs-toggle="tooltip" title="{{ button_invoice_print }}" class="btn btn-info"><i class="fas fa-print"></i></button>
-        <button type="submit" id="button-shipping" form="form-order" formaction="{{ shipping }}" formtarget="_blank" data-bs-toggle="tooltip" title="{{ button_shipping_print }}" class="btn btn-info"><i class="fas fa-truck"></i></button>
-        <a href="{{ add }}" data-bs-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
-        <button type="button" id="button-delete" data-bs-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+        <button type="button" data-bs-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-order').toggleClass('d-none');" class="btn btn-light d-lg-none"><i class="fa-solid fa-filter"></i></button>
+        <button type="submit" id="button-invoice" form="form-order" formaction="{{ invoice }}" formtarget="_blank" data-bs-toggle="tooltip" title="{{ button_invoice_print }}" class="btn btn-info"><i class="fa-solid fa-print"></i></button>
+        <button type="submit" id="button-shipping" form="form-order" formaction="{{ shipping }}" formtarget="_blank" data-bs-toggle="tooltip" title="{{ button_shipping_print }}" class="btn btn-info"><i class="fa-solid fa-truck"></i></button>
+        <a href="{{ add }}" data-bs-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fa-solid fa-plus"></i></a>
+        <button type="button" id="button-delete" data-bs-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger"><i class="fa-regular fa-trash-can"></i></button>
       </div>
       <h1>{{ heading_title }}</h1>
       <ol class="breadcrumb">
@@ -21,7 +21,7 @@
     <div class="row">
       <div id="filter-order" class="col-lg-3 col-md-12 order-lg-last d-none d-lg-block mb-3">
         <div class="card">
-          <div class="card-header"><i class="fas fa-filter"></i> {{ text_filter }}</div>
+          <div class="card-header"><i class="fa-solid fa-filter"></i> {{ text_filter }}</div>
           <div class="card-body">
             <div class="mb-3">
               <label for="input-order-id" class="form-label">{{ entry_order_id }}</label> <input type="text" name="filter_order_id" value="{{ filter_order_id }}" placeholder="{{ entry_order_id }}" id="input-order-id" class="form-control"/>
@@ -54,25 +54,25 @@
               <label for="input-date-from" class="form-label">{{ entry_date_from }}</label>
               <div class="input-group">
                 <input type="text" name="filter_date_from" value="{{ filter_date_from }}" placeholder="{{ entry_date_from }}" id="input-date-from" class="form-control date"/>
-                <div class="input-group-text"><i class="fas fa-calendar"></i></div>
+                <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
               </div>
             </div>
             <div class="mb-3">
               <label for="input-date-to" class="form-label">{{ entry_date_to }}</label>
               <div class="input-group">
                 <input type="text" name="filter_date_to" value="{{ filter_date_to }}" placeholder="{{ entry_date_to }}" id="input-date-to" class="form-control date"/>
-                <div class="input-group-text"><i class="fas fa-calendar"></i></div>
+                <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
               </div>
             </div>
             <div class="text-end">
-              <button type="button" id="button-filter" class="btn btn-light"><i class="fas fa-filter"></i> {{ button_filter }}</button>
+              <button type="button" id="button-filter" class="btn btn-light"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button>
             </div>
           </div>
         </div>
       </div>
       <div class="col-lg-9 col-md-12">
         <div class="card">
-          <div class="card-header"><i class="fas fa-list"></i> {{ text_list }}</div>
+          <div class="card-header"><i class="fa-solid fa-list"></i> {{ text_list }}</div>
           <div id="order" class="card-body">{{ list }}</div>
         </div>
       </div>
@@ -194,11 +194,11 @@ $('#button-delete').on('click', function (e) {
                 $('.alert-dismissible').remove();
 
                 if (json['error']) {
-                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fas fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                 }
 
                 if (json['success']) {
-                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fas fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                     $('#order').load($('#form-order').attr('data-load'));
                 }

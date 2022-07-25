@@ -54,7 +54,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 				} else {
 					$subscription_status_id = $this->config->get('config_subscription_failed_status_id');
 
-					$this->model_sale_subscription->addHistory($result['subscription_id'], $subscription_status_id, sprintf($this->language->get('error_payment'), ), true);
+					$this->model_sale_subscription->addHistory($result['subscription_id'], $subscription_status_id, sprintf($this->language->get('error_payment'), ''), true);
 				}
 
 				// History

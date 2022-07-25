@@ -12,7 +12,7 @@
   </div>
   <div class="container-fluid">
     <div class="card">
-      <div class="card-header"><i class="fas fa-sync"></i> {{ text_upgrade }}</div>
+      <div class="card-header"><i class="fa-solid fa-rotate"></i> {{ text_upgrade }}</div>
       <div class="card-body">
         <fieldset>
           <legend>{{ text_information }}</legend>
@@ -52,7 +52,7 @@
         <fieldset>
           <legend>{{ text_status }}</legend>
           <div class="input-group input-group-lg">
-            <button type="button" id="button-upgrade" class="btn btn-warning btn-lg"{% if not upgrade %} disabled{% endif %}><i class="fas fa-level-up-alt"></i> {{ button_upgrade }}</button>
+            <button type="button" id="button-upgrade" class="btn btn-warning btn-lg"{% if not upgrade %} disabled{% endif %}><i class="fa-solid fa-level-up-alt"></i> {{ button_upgrade }}</button>
             <input type="text" id="input-upgrade" value="{{ text_ready }}" class="form-control bg-white" readonly/>
           </div>
         </fieldset>

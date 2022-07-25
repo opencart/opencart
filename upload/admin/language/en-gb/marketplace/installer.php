@@ -30,7 +30,8 @@ $_['error_default']          = 'Default extension could not be uninstalled or de
 $_['error_permission']       = 'Warning: You do not have permission to modify extensions!';
 $_['error_install']          = 'Install could not be found!';
 $_['error_installed']        = 'Extension already installed!';
-$_['error_filename']         = 'Filename must be between 3 and 128 characters!';
+
+$_['error_uninstall']        = 'There are %s extensions that need to be uninstalled before this extension can be safely removed!';
 $_['error_file']             = 'Install file %s could not be found!';
 $_['error_file_exists']      = 'File already exist!';
 $_['error_file_type']         = 'Invalid file type!';

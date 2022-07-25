@@ -67,7 +67,7 @@ $('#button-backup').on('click', function () {
     var element = this;
 
     $('#progress-bar').css('width', '0%');
-    $('#progress-bar').removeClass('progress-bar-danger progress-bar-success');
+    $('#progress-bar').removeClass('bg-danger bg-success');
 
     var next = 'index.php?route=tool/backup|backup&user_token={{ user_token }}&table=' + $('input[name^=\'backup\']:checked').first().val();
 
@@ -85,7 +85,7 @@ $('#button-backup').on('click', function () {
                 $('.alert-dismissible').remove();
 
                 if (json['error']) {
-                    $('#progress-bar').addClass('progress-bar-danger');
+                    $('#progress-bar').addClass('bg-danger');
                     $('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
 
                     $('#history').load('index.php?route=tool/backup|history&user_token={{ user_token }}');
@@ -95,7 +95,7 @@ $('#button-backup').on('click', function () {
                 }
 
                 if (json['success']) {
-                    $('#progress-bar').css('width', '100%').addClass('progress-bar-success');
+                    $('#progress-bar').css('width', '100%').addClass('bg-success');
                     $('#progress-text').html('<div class="text-success">' + json['success'] + '</div>');
 
                     $('#history').load('index.php?route=tool/backup|history&user_token={{ user_token }}');
@@ -135,7 +135,7 @@ $('#history').on('click', '.btn-warning', function () {
     var element = this;
 
     $('#progress-bar').css('width', '0%');
-    $('#progress-bar').removeClass('progress-bar-danger progress-bar-success');
+    $('#progress-bar').removeClass('bg-danger bg-success');
 
     var next = 'index.php?route=tool/backup|restore&user_token={{ user_token }}&filename=' + encodeURIComponent($(this).val());
 
@@ -160,7 +160,7 @@ $('#history').on('click', '.btn-warning', function () {
                 }
 
                 if (json['error']) {
-                    $('#progress-bar').addClass('progress-bar-danger');
+                    $('#progress-bar').addClass('bg-danger');
                     $('#progress-text').html('<div class="invalid-feedback">' + json['error'] + '</div>');
 
                     $('#history').load('index.php?route=tool/backup|history&user_token={{ user_token }}');
@@ -171,7 +171,7 @@ $('#history').on('click', '.btn-warning', function () {
                 }
 
                 if (json['success']) {
-                    $('#progress-bar').css('width', '100%').addClass('progress-bar-success');
+                    $('#progress-bar').css('width', '100%').addClass('bg-success');
                     $('#progress-text').html('<div class="text-success">' + json['success'] + '</div>');
 
                     $('#history').load('index.php?route=tool/backup|history&user_token={{ user_token }}');

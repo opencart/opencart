@@ -46,7 +46,9 @@ $('#extension').on('click', 'thead a, .pagination a', function (e) {
 $('#button-upload').on('click', function () {
     var element = this;
 
-    if (!$('button-upload').hasClass('disabled')) {
+
+    if (!$('#button-upload').hasClass('disabled')) {
+        
         $('#form-upload').remove();
 
         $('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" accept=".ocmod.zip"/></form>');
@@ -83,19 +85,17 @@ $('#button-upload').on('click', function () {
                     },
                     success: function (json) {
                         if (json['upgrade']) {
-                            var next = 'index.php?route=marketplace/installer|replace&user_token={{ user_token }}&action=upload';
 
-                            $('#progress-bar').removeClass('progress-bar-danger progress-bar-success').css('width', '0%');
+                            $('#progress-bar').removeClass('bg-danger bg-success').css('width', '0%');
                             $('#progress-text').html('');
 
-                            var data = {};
-                            data['extension_install_ids'] = json['upgrade'];
+                            var extension_install_id = json['upgrade']['extension_install_id'];
+
+                            var next = 'index.php?route=marketplace/installer|replace&user_token={{ user_token }}&action=upload&extension_install_id=' + extension_install_id;
 
                             var installer = function () {
                               return $.ajax({
                                   url: next,
-                                  type: 'post',
-                                  data: data,
                                   dataType: 'json',
                                   beforeSend: function () {
                                       $(element).addClass('loading disabled');
@@ -105,13 +105,13 @@ $('#button-upload').on('click', function () {
                                       $('.alert-dismissible').remove();
 
                                       if (json['error']) {
-                                          $('#progress-bar').addClass('progress-bar-danger');
+                                          $('#progress-bar').addClass('bg-danger');
                                           $('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
                                           $('#button-upload, .btn-primary, .btn-success, .btn-warning, a.btn-danger').removeClass('disabled');
                                       }
 
                                       if (json['success']) {
-                                          $('#progress-bar').addClass('progress-bar-success').css('width', '100%');
+                                          $('#progress-bar').addClass('bg-success').css('width', '100%');
                                           $('#progress-text').html('<div class="text-success">' + json['success'] + '</div>');
                                           $('#button-upload').removeClass('loading disabled');
                                           $('#extension').load('index.php?route=marketplace/installer|list&user_token={{ user_token }}');
@@ -119,10 +119,7 @@ $('#button-upload').on('click', function () {
 
                                       if (json['next']) {
                                           next = json['next'];
-                                          if (json['install_folders']) {
-                                            data['install_folders'] = json['install_folders'];
-                                          }
-                                          $('#progress-bar').addClass('progress-bar-success').css('width', json['progress'] + '%');
+                                          $('#progress-bar').css('width', json['progress'] + '%');
 
                                           chain.attach(installer);
                                       }
@@ -171,7 +168,8 @@ $('#extension').on('click', 'a.btn-primary, a.btn-success, a.btn-warning, a.btn-
         }
     }
 
-    $('#progress-bar').removeClass('progress-bar-danger progress-bar-success').css('width', '0%');
+    $('#progress-bar').removeClass('bg-danger bg-success').css('width', '0%');
+    
     $('#progress-text').html('');
 
     var installer = function () {
@@ -187,7 +185,7 @@ $('#extension').on('click', 'a.btn-primary, a.btn-success, a.btn-warning, a.btn-
                 $('.alert-dismissible').remove();
 
                 if (json['error']) {
-                    $('#progress-bar').addClass('progress-bar-danger');
+                    $('#progress-bar').addClass('bg-danger');
                     $('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
                     $(element).removeClass('loading disabled');
                     $(element).children('i').removeAttr('style');
@@ -195,7 +193,7 @@ $('#extension').on('click', 'a.btn-primary, a.btn-success, a.btn-warning, a.btn-
                 }
 
                 if (json['success']) {
-                    $('#progress-bar').addClass('progress-bar-success').css('width', '100%');
+                    $('#progress-bar').addClass('bg-success').css('width', '100%');
                     $('#progress-text').html('<div class="text-success">' + json['success'] + '</div>');
                     $('#button-upload').removeClass('disabled');
                     $('#extension').load('index.php?route=marketplace/installer|list&user_token={{ user_token }}');
@@ -203,7 +201,7 @@ $('#extension').on('click', 'a.btn-primary, a.btn-success, a.btn-warning, a.btn-
 
                 if (json['next']) {
                     next = json['next'];
-                    $('#progress-bar').addClass('progress-bar-success').css('width', json['progress'] + '%');
+                    $('#progress-bar').css('width', json['progress'] + '%');
 
                     chain.attach(installer);
                 }

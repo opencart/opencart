@@ -19,6 +19,12 @@ class Extension extends \Opencart\System\Engine\Model {
 		return $query->row;
 	}
 
+	public function getTotalExtensionsByExtension(string $extension): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "extension` WHERE `extension` = '" . $this->db->escape($extension) . "'");
+
+		return (int)$query->row['total'];
+	}
+
 	public function install(string $type, string $extension, string $code): void {
 		$extensions = $this->getExtensionsByType($type);
 

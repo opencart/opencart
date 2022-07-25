@@ -888,8 +888,6 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 
 					fclose($handle);
 
-					$this->load->model('setting/extension');
-
 					$extension_data = [
 						'extension_id'          => $extension_id,
 						'extension_download_id' => $extension_download_id,
@@ -899,6 +897,8 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 						'version'               => $response_info['version'],
 						'link' 					=> OPENCART_SERVER . 'index.php?route=marketplace/extension|info&extension_id=' . $extension_id
 					];
+
+					$this->load->model('setting/extension');
 
 					$json['extension_install_id'] = $this->model_setting_extension->addInstall($extension_data);
 

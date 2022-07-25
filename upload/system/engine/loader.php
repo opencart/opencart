@@ -182,7 +182,7 @@ class Loader {
 
 		$this->event->trigger('library/' . $trigger . '/before', [&$route, &$args]);
 
-		$class = 'Opencart\System\Library\\' . str_replace('/', '\\', $route);
+		$class = 'Opencart\System\Library\\' . str_replace(['_', '/'], ['', '\\'], ucwords($route, '_/'));
 
 		if (class_exists($class)) {
 			$library = new $class(...$args);
@@ -207,8 +207,6 @@ class Loader {
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', $route);
 
 		$file = DIR_SYSTEM . 'helper/' . $route . '.php';
-
-		//$file = 'Opencart\System\Helper\\' . str_replace('/', '\\', $route);
 
 		if (is_file($file)) {
 			include_once($file);

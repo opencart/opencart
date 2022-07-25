@@ -78,6 +78,12 @@ class Extension extends \Opencart\System\Engine\Model {
 		return $query->row;
 	}
 
+	public function getInstallByPackageName(string $package_name): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "extension_install` WHERE `package_name` = '" . $this->db->escape($package_name) . "'");
+
+		return $query->row;
+	}
+
 	public function getInstalls(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "extension_install`";
 

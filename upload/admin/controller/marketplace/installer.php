@@ -349,11 +349,11 @@ class Installer extends \Opencart\System\Engine\Controller {
 					}
 
 					// If there are any dependency extensions that also need to be installed.
-					if (substr($destination, 0, 7) == 'system/') {
-						$path = substr($destination, 7);
-						$base = DIR_SYSTEM;
-						$prefix = 'system/';
-					}
+					//if (substr($destination, 0, 7) == 'system/') {
+					//	$path = substr($destination, 7);
+					//	$base = DIR_SYSTEM;
+					//	$prefix = 'system/';
+					//}
 
 					// We need to store the path differently for vendor folders.
 					if (substr($destination, 0, 15) == 'system/storage/') {
@@ -496,11 +496,6 @@ class Installer extends \Opencart\System\Engine\Controller {
 				// Remove images
 				if (substr($result['path'], 0, 6) == 'image/') {
 					$path = DIR_IMAGE . substr($result['path'], 6);
-				}
-
-				// Remove library files files or any connected extensions that was also installed.
-				if (substr($result['path'], 0, 7) == 'system/') {
-					$path = DIR_SYSTEM . substr($result['path'], 7);
 				}
 
 				// Remove vendor files or any connected extensions that was also installed.

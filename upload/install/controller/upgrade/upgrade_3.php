@@ -1,5 +1,6 @@
 <?php
 namespace Opencart\Install\Controller\Upgrade;
+use \Opencart\System\Helper AS Helper;
 class Upgrade3 extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('upgrade/upgrade');
@@ -8,10 +9,8 @@ class Upgrade3 extends \Opencart\System\Engine\Controller {
 
 		// It makes mass changes to the DB by creating tables that are not in the current db, changes the charset and DB engine to the SQL schema.
 		// Structure
-		$this->load->helper('db_schema');
-
 		try {
-			$tables = db_schema();
+			$tables = Helper\DBSchema\db_schema();
 
 			foreach ($tables as $table) {
 				$table_query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . $table['name'] . "'");

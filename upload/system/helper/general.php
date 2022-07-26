@@ -103,7 +103,7 @@ function date_added(string $date): array {
 }
 
 // see https://stackoverflow.com/questions/13076480/php-get-actual-maximum-upload-size
-function convertBytes( string $value ):int {
+function convert_bytes(string $value): int {
     if ( is_numeric( $value ) ) {
         return (int)$value;
     } else {

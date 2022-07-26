@@ -1,5 +1,6 @@
 <?php
 namespace Install;
+use \Opencart\System\Helper AS Helper;
 //
 // Command line tool for installing opencart
 // Original Author: Vineet Naik <vineet.naik@kodeplay.com> <naikvin@gmail.com>
@@ -253,9 +254,7 @@ class CliInstall extends \Opencart\System\Engine\Controller {
 		}
 
 		// Set up Database structure
-		$this->load->helper('db_schema');
-
-		$tables = db_schema();
+		$tables = Helper\DBSchema\db_schema();
 
 		foreach ($tables as $table) {
 			$table_query = $db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . $db_database . "' AND TABLE_NAME = '" . $db_prefix . $table['name'] . "'");

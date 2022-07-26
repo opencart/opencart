@@ -1,5 +1,6 @@
 <?php
 namespace Opencart\Admin\Controller\Sale;
+use \Opencart\System\Helper AS Helper;
 class VoucherTheme extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('sale/voucher_theme');
@@ -242,7 +243,7 @@ class VoucherTheme extends \Opencart\System\Engine\Controller {
 		}
 
 		foreach ($this->request->post['voucher_theme_description'] as $language_id => $value) {
-			if ((utf8_strlen($value['name']) < 3) || (utf8_strlen($value['name']) > 32)) {
+			if ((Helper\Utf8\strlen($value['name']) < 3) || (Helper\Utf8\strlen($value['name']) > 32)) {
 				$json['error']['name_' . $language_id] = $this->language->get('error_name');
 			}
 		}

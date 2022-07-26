@@ -1,5 +1,6 @@
 <?php
 namespace Opencart\Admin\Controller\Localisation;
+use \Opencart\System\Helper AS Helper;
 class ReturnAction extends \Opencart\System\Engine\Controller {
 
 	public function index(): void {
@@ -221,7 +222,7 @@ class ReturnAction extends \Opencart\System\Engine\Controller {
 		}
 
 		foreach ($this->request->post['return_action'] as $language_id => $value) {
-			if ((utf8_strlen($value['name']) < 3) || (utf8_strlen($value['name']) > 64)) {
+			if ((Helper\Utf8\strlen($value['name']) < 3) || (Helper\Utf8\strlen($value['name']) > 64)) {
 				$json['error']['name_' . $language_id] = $this->language->get('error_name');
 			}
 		}

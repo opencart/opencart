@@ -1,5 +1,6 @@
 <?php
 namespace Opencart\Admin\Controller\User;
+use \Opencart\System\Helper AS Helper;
 class Api extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('user/api');
@@ -266,11 +267,11 @@ class Api extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		if ((utf8_strlen($this->request->post['username']) < 3) || (utf8_strlen($this->request->post['username']) > 64)) {
+		if ((Helper\Utf8\strlen($this->request->post['username']) < 3) || (Helper\Utf8\strlen($this->request->post['username']) > 64)) {
 			$json['error']['username'] = $this->language->get('error_username');
 		}
 
-		if ((utf8_strlen($this->request->post['key']) < 64) || (utf8_strlen($this->request->post['key']) > 256)) {
+		if ((Helper\Utf8\strlen($this->request->post['key']) < 64) || (Helper\Utf8\strlen($this->request->post['key']) > 256)) {
 			$json['error']['key'] = $this->language->get('error_key');
 		}
 

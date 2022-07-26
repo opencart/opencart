@@ -1,5 +1,6 @@
 <?php
 namespace Opencart\Catalog\Controller\Mail;
+use \Opencart\System\Helper AS Helper;
 class Order extends \Opencart\System\Engine\Controller {
 	public function index(string &$route, array &$args): void {
 		if (isset($args[0])) {
@@ -235,7 +236,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 				$option_data[] = [
 					'name'  => $order_option['name'],
-					'value' => (utf8_strlen($value) > 20 ? utf8_substr($value, 0, 20) . '..' : $value)
+					'value' => (Helper\Utf8\strlen($value) > 20 ? Helper\Utf8\substr($value, 0, 20) . '..' : $value)
 				];
 			}
 
@@ -449,7 +450,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 					$option_data[] = [
 						'name'  => $order_option['name'],
-						'value' => (utf8_strlen($value) > 20 ? utf8_substr($value, 0, 20) . '..' : $value)
+						'value' => (Helper\Utf8\strlen($value) > 20 ? Helper\Utf8\substr($value, 0, 20) . '..' : $value)
 					];
 				}
 

@@ -1,5 +1,6 @@
 <?php
 namespace Opencart\Catalog\Controller\Extension\Opencart\Total;
+use \Opencart\System\Helper AS Helper;
 class Shipping extends \Opencart\System\Engine\Controller {
 	public function index(): string {
 		if ($this->config->get('total_shipping_status') && $this->config->get('total_shipping_estimator') && $this->cart->hasShipping()) {
@@ -68,7 +69,7 @@ class Shipping extends \Opencart\System\Engine\Controller {
 
 		$country_info = $this->model_localisation_country->getCountry((int)$this->request->post['country_id']);
 
-		if ($country_info && $country_info['postcode_required'] && (utf8_strlen($this->request->post['postcode']) < 2 || utf8_strlen($this->request->post['postcode']) > 10)) {
+		if ($country_info && $country_info['postcode_required'] && (Helper\Utf8\strlen($this->request->post['postcode']) < 2 || Helper\Utf8\strlen($this->request->post['postcode']) > 10)) {
 			$json['error']['postcode'] = $this->language->get('error_postcode');
 		}
 

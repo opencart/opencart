@@ -1,5 +1,6 @@
 <?php
 namespace Opencart\Admin\Controller\Localisation;
+use \Opencart\System\Helper AS Helper;
 class TaxClass extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('localisation/tax_class');
@@ -235,11 +236,11 @@ class TaxClass extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		if ((utf8_strlen($this->request->post['title']) < 3) || (utf8_strlen($this->request->post['title']) > 32)) {
+		if ((Helper\Utf8\strlen($this->request->post['title']) < 3) || (Helper\Utf8\strlen($this->request->post['title']) > 32)) {
 			$json['error']['title'] = $this->language->get('error_title');
 		}
 
-		if ((utf8_strlen($this->request->post['description']) < 3) || (utf8_strlen($this->request->post['description']) > 255)) {
+		if ((Helper\Utf8\strlen($this->request->post['description']) < 3) || (Helper\Utf8\strlen($this->request->post['description']) > 255)) {
 			$json['error']['description'] = $this->language->get('error_description');
 		}
 

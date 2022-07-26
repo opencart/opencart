@@ -1,5 +1,6 @@
 <?php
 namespace Opencart\Admin\Controller\Catalog;
+use \Opencart\System\Helper AS Helper;
 class Information extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('catalog/information');
@@ -289,11 +290,11 @@ class Information extends \Opencart\System\Engine\Controller {
 		}
 
 		foreach ($this->request->post['information_description'] as $language_id => $value) {
-			if ((utf8_strlen(trim($value['title'])) < 1) || (utf8_strlen($value['title']) > 64)) {
+			if ((Helper\Utf8\strlen(trim($value['title'])) < 1) || (Helper\Utf8\strlen($value['title']) > 64)) {
 				$json['error']['title_' . $language_id] = $this->language->get('error_title');
 			}
 
-			if ((utf8_strlen(trim($value['meta_title'])) < 1) || (utf8_strlen($value['meta_title']) > 255)) {
+			if ((Helper\Utf8\strlen(trim($value['meta_title'])) < 1) || (Helper\Utf8\strlen($value['meta_title']) > 255)) {
 				$json['error']['meta_title_' . $language_id] = $this->language->get('error_meta_title');
 			}
 		}

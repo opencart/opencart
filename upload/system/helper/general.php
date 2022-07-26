@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\System\Helper;
+namespace Opencart\System\Helper\General;
 function token(int $length = 32): string {
 	return substr(bin2hex(random_bytes($length)), 0, $length);
 }

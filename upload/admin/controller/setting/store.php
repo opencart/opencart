@@ -1,5 +1,6 @@
 <?php
 namespace Opencart\Admin\Controller\Setting;
+use \Opencart\System\Helper AS Helper;
 class Store extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('setting/store');
@@ -593,19 +594,19 @@ class Store extends \Opencart\System\Engine\Controller {
 			$json['error']['name'] = $this->language->get('error_name');
 		}
 
-		if ((utf8_strlen($this->request->post['config_owner']) < 3) || (utf8_strlen($this->request->post['config_owner']) > 64)) {
+		if ((Helper\Utf8\strlen($this->request->post['config_owner']) < 3) || (Helper\Utf8\strlen($this->request->post['config_owner']) > 64)) {
 			$json['error']['owner'] = $this->language->get('error_owner');
 		}
 
-		if ((utf8_strlen($this->request->post['config_address']) < 3) || (utf8_strlen($this->request->post['config_address']) > 256)) {
+		if ((Helper\Utf8\strlen($this->request->post['config_address']) < 3) || (Helper\Utf8\strlen($this->request->post['config_address']) > 256)) {
 			$json['error']['address'] = $this->language->get('error_address');
 		}
 
-		if ((utf8_strlen($this->request->post['config_email']) > 96) || !filter_var($this->request->post['config_email'], FILTER_VALIDATE_EMAIL)) {
+		if ((Helper\Utf8\strlen($this->request->post['config_email']) > 96) || !filter_var($this->request->post['config_email'], FILTER_VALIDATE_EMAIL)) {
 			$json['error']['email'] = $this->language->get('error_email');
 		}
 
-		if ((utf8_strlen($this->request->post['config_telephone']) < 3) || (utf8_strlen($this->request->post['config_telephone']) > 32)) {
+		if ((Helper\Utf8\strlen($this->request->post['config_telephone']) < 3) || (Helper\Utf8\strlen($this->request->post['config_telephone']) > 32)) {
 			$json['error']['telephone'] = $this->language->get('error_telephone');
 		}
 

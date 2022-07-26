@@ -1,5 +1,6 @@
 <?php
 namespace Opencart\Admin\Controller\Marketplace;
+use \Opencart\System\Helper AS Helper;
 class Installer extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('marketplace/installer');
@@ -190,7 +191,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 			$filename = basename($this->request->files['file']['name']);
 
 			// 2. Validate the filename.
-			if ((utf8_strlen($filename) < 1) || (utf8_strlen($filename) > 128)) {
+			if ((Helper\Utf8\strlen($filename) < 1) || (Helper\Utf8\strlen($filename) > 128)) {
 				$json['error'] = $this->language->get('error_filename');
 			}
 

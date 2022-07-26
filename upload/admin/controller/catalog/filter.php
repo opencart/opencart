@@ -1,5 +1,6 @@
 <?php
 namespace Opencart\Admin\Controller\Catalog;
+use \Opencart\System\Helper AS Helper;
 class Filter extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('catalog/filter');
@@ -238,7 +239,7 @@ class Filter extends \Opencart\System\Engine\Controller {
 		}
 
 		foreach ($this->request->post['filter_group_description'] as $language_id => $value) {
-			if ((utf8_strlen(trim($value['name'])) < 1) || (utf8_strlen($value['name']) > 64)) {
+			if ((Helper\Utf8\strlen(trim($value['name'])) < 1) || (Helper\Utf8\strlen($value['name']) > 64)) {
 				$json['error']['group_' . $language_id] = $this->language->get('error_group');
 			}
 		}
@@ -246,7 +247,7 @@ class Filter extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->post['filter'])) {
 			foreach ($this->request->post['filter'] as $key => $filter) {
 				foreach ($filter['filter_description'] as $language_id => $filter_description) {
-					if ((utf8_strlen(trim($filter_description['name'])) < 1) || (utf8_strlen($filter_description['name']) > 64)) {
+					if ((Helper\Utf8\strlen(trim($filter_description['name'])) < 1) || (Helper\Utf8\strlen($filter_description['name']) > 64)) {
 						$json['error']['filter_' . $key . '_' . $language_id] = $this->language->get('error_name');
 					}
 				}

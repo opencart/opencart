@@ -1,5 +1,6 @@
 <?php
 namespace Opencart\Admin\Controller\Common;
+use \Opencart\System\Helper AS Helper;
 class FileManager extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('common/filemanager');
@@ -86,9 +87,9 @@ class FileManager extends \Opencart\System\Engine\Controller {
 
 					$data['directories'][] = [
 						'name' => $name,
-						'path' => utf8_substr($image, utf8_strlen($base)),
+						'path' => Helper\Utf8\substr($image, Helper\Utf8\strlen($base)),
 						'type' => 'directory',
-						'href' => $this->url->link('common/filemanager|list', 'user_token=' . $this->session->data['user_token'] . '&directory=' . urlencode(utf8_substr($image, utf8_strlen($base))) . $url)
+						'href' => $this->url->link('common/filemanager|list', 'user_token=' . $this->session->data['user_token'] . '&directory=' . urlencode(Helper\Utf8\substr($image, Helper\Utf8\strlen($base))) . $url)
 					];
 				}
 			}
@@ -147,10 +148,10 @@ class FileManager extends \Opencart\System\Engine\Controller {
 					$name = basename($image);
 
 					$data['images'][] = [
-						'thumb' => $this->model_tool_image->resize(utf8_substr($image, utf8_strlen(DIR_IMAGE)), 136, 136),
+						'thumb' => $this->model_tool_image->resize(Helper\Utf8\substr($image, Helper\Utf8\strlen(DIR_IMAGE)), 136, 136),
 						'name'  => $name,
-						'path'  => utf8_substr($image, utf8_strlen($base)),
-						'href'  => HTTP_CATALOG . 'image/catalog/' . utf8_substr($image, utf8_strlen($base))
+						'path'  => Helper\Utf8\substr($image, Helper\Utf8\strlen($base)),
+						'href'  => HTTP_CATALOG . 'image/catalog/' . Helper\Utf8\substr($image, Helper\Utf8\strlen($base))
 					];
 				}
 			}
@@ -301,7 +302,7 @@ class FileManager extends \Opencart\System\Engine\Controller {
 					$filename = preg_replace('[/\\?%*:|"<>]', '', basename(html_entity_decode($file['name'], ENT_QUOTES, 'UTF-8')));
 
 					// Validate the filename length
-					if ((utf8_strlen($filename) < 4) || (utf8_strlen($filename) > 255)) {
+					if ((Helper\Utf8\strlen($filename) < 4) || (Helper\Utf8\strlen($filename) > 255)) {
 						$json['error'] = $this->language->get('error_filename');
 					}
 
@@ -389,7 +390,7 @@ class FileManager extends \Opencart\System\Engine\Controller {
 			$folder = preg_replace('[/\\?%*&:|"<>]', '', basename(html_entity_decode($this->request->post['folder'], ENT_QUOTES, 'UTF-8')));
 
 			// Validate the filename length
-			if ((utf8_strlen($folder) < 3) || (utf8_strlen($folder) > 128)) {
+			if ((Helper\Utf8\strlen($folder) < 3) || (Helper\Utf8\strlen($folder) > 128)) {
 				$json['error'] = $this->language->get('error_folder');
 			}
 

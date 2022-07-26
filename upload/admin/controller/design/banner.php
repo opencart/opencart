@@ -1,5 +1,6 @@
 <?php
 namespace Opencart\Admin\Controller\Design;
+use \Opencart\System\Helper AS Helper;
 class Banner extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('design/banner');
@@ -265,14 +266,14 @@ class Banner extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		if ((utf8_strlen($this->request->post['name']) < 3) || (utf8_strlen($this->request->post['name']) > 64)) {
+		if ((Helper\Utf8\strlen($this->request->post['name']) < 3) || (Helper\Utf8\strlen($this->request->post['name']) > 64)) {
 			$json['error']['name'] = $this->language->get('error_name');
 		}
 
 		if (isset($this->request->post['banner_image'])) {
 			foreach ($this->request->post['banner_image'] as $language_id => $banner_image) {
 				foreach ($banner_image as $key => $value) {
-					if ((utf8_strlen(trim($value['title'])) < 2) || (utf8_strlen($value['title']) > 64)) {
+					if ((Helper\Utf8\strlen(trim($value['title'])) < 2) || (Helper\Utf8\strlen($value['title']) > 64)) {
 						$json['error']['image_' . $language_id . '_' . $key . '_title'] = $this->language->get('error_title');
 					}
 				}

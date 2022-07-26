@@ -1,5 +1,6 @@
 <?php
 namespace Opencart\Catalog\Controller\Startup;
+use \Opencart\System\Helper AS Helper;
 class SeoUrl extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		// Add rewrite to URL class
@@ -14,7 +15,7 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 			$parts = explode('/', $this->request->get['_route_']);
 
 			// remove any empty arrays from trailing
-			if (utf8_strlen(end($parts)) == 0) {
+			if (Helper\Utf8\strlen(end($parts)) == 0) {
 				array_pop($parts);
 			}
 

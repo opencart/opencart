@@ -824,7 +824,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 		if ($customer_info) {
 			// Create token to login with
-			$token = token(64);
+			$token = Helper\General\token(64);
 
 			$this->model_customer_customer->editToken($customer_id, $token);
 

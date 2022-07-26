@@ -26,7 +26,7 @@ class Review extends \Opencart\System\Engine\Controller {
 		}
 
 		// Create a login token to prevent brute force attacks
-		$this->session->data['review_token'] = token(32);
+		$this->session->data['review_token'] = Helper\General\token(32);
 
 		$data['review_token'] = $this->session->data['review_token'];
 

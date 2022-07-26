@@ -84,7 +84,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$code = token();
+			$code = Helper\General\token();
 
 			$this->session->data['vouchers'][] = [
 				'code'             => $code,

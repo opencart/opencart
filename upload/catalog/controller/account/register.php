@@ -232,7 +232,7 @@ class Register extends \Opencart\System\Engine\Controller {
 				$this->model_account_customer->addLogin($this->customer->getId(), $this->request->server['REMOTE_ADDR']);
 
 				// Create customer token
-				$this->session->data['customer_token'] = token(26);
+				$this->session->data['customer_token'] = Helper\General\token(26);
 			}
 
 			// Clear any previous login attempts for unregistered accounts.

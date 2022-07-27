@@ -19,25 +19,25 @@ class Log {
 	 * Constructor
 	 *
 	 * @param	string	$filename
- 	*/
+	*/
 	public function __construct(string $filename) {
 		$this->file = DIR_LOGS . $filename;
 	}
-	
+
 	/**
-     * 
-     *
-     * @param	string	$message
-     */
+	 *
+	 *
+	 * @param	string	$message
+	 */
 	public function write(string|array $message): void {
 		$this->message .= date('Y-m-d H:i:s') . ' - ' . print_r($message, true) . "\n";
 	}
-	
+
 	/**
-     * 
-     *
-     */
+	 *
+	 *
+	 */
 	public function __destruct() {
-		if (is_file($this->file)) file_put_contents($this->file, $this->message, FILE_APPEND);
+		file_put_contents($this->file, $this->message, FILE_APPEND);
 	}
 }

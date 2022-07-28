@@ -77,6 +77,7 @@
                 <label class="col-sm-2 col-form-label">{{ entry_logged }}</label>
                 <div class="col-sm-10">
                   <div class="form-check form-switch form-switch-lg">
+                    <input type="hidden" name="logged" value="0"/>
                     <input type="checkbox" name="logged" value="1" id="input-logged" class="form-check-input"{% if logged %} checked{% endif %}/>
                   </div>
                   <div class="form-text">{{ help_logged }}</div>
@@ -86,6 +87,7 @@
                 <label class="col-sm-2 col-form-label">{{ entry_shipping }}</label>
                 <div class="col-sm-10">
                   <div class="form-check form-switch form-switch-lg">
+                    <input type="hidden" name="shipping" value="0"/>
                     <input type="checkbox" name="shipping" value="1" id="input-shipping" class="form-check-input"{% if shipping %} checked{% endif %}/>
                   </div>
                 </div>
@@ -166,6 +168,7 @@
                 <label for="input-status" class="col-sm-2 col-form-label">{{ entry_status }}</label>
                 <div class="col-sm-10">
                   <div class="form-check form-switch form-switch-lg">
+                    <input type="hidden" name="status" value="0"/>
                     <input type="checkbox" name="status" value="1" id="input-status" class="form-check-input"{% if status %} checked{% endif %}/>
                   </div>
                 </div>

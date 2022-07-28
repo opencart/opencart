@@ -87,8 +87,6 @@ class Installer extends \Opencart\System\Engine\Controller {
 			$install_info = $this->model_setting_extension->getInstallByCode($code);
 
 			if (!$install_info) {
-				echo $code . "\n";
-
 				// Unzip the files
 				$zip = new \ZipArchive();
 

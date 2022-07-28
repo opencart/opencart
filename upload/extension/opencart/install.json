@@ -2,5 +2,6 @@
   "name": "OpenCart Default Extensions",
   "version": "1.0",
   "author": "OpenCart Ltd",
-  "link": "https://www.opencart.com"
+  "link": "https://www.opencart.com",
+  "instruction": "",
 }

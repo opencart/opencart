@@ -113,7 +113,7 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 
 		$url  = '&username=' . urlencode($this->config->get('opencart_username'));
 		$url .= '&domain=' . $this->request->server['HTTP_HOST'];
-		$url .= '&version=' . urlencode(VERSION);
+		$url .= '&version=' . VERSION;
 		$url .= '&time=' . $time;
 		$url .= '&signature=' . rawurlencode($signature);
 
@@ -537,7 +537,7 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 
 		$url  = '&username=' . urlencode($this->config->get('opencart_username'));
 		$url .= '&domain=' . $this->request->server['HTTP_HOST'];
-		$url .= '&version=' . urlencode(VERSION);
+		$url .= '&version=' . VERSION;
 		$url .= '&extension_id=' . $extension_id;
 		$url .= '&time=' . $time;
 		$url .= '&signature=' . rawurlencode($signature);
@@ -696,32 +696,34 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 
 			foreach ($results as $result) {
 				if (substr($result['filename'], -10) == '.ocmod.zip') {
-					$extension_install_info = $this->model_setting_extension->getInstallByExtensionDownloadId($result['extension_download_id']);
+					$code = basename($result['filename'], '.ocmod.zip');
+
+					$install_info = $this->model_setting_extension->getInstallByCode($code);
 
 					// Download
-					if (!$extension_install_info) {
+					if (!$install_info) {
 						$download = $this->url->link('marketplace/marketplace|download', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $extension_id . '&extension_download_id=' . $result['extension_download_id']);
 					} else {
 						$download = '';
 					}
 
 			 		// Install
-					if ($extension_install_info && !$extension_install_info['status']) {
-						$install = $this->url->link('marketplace/installer|install', 'user_token=' . $this->session->data['user_token'] . '&extension_install_id=' . $extension_install_info['extension_install_id']);
+					if ($install_info && !$install_info['status']) {
+						$install = $this->url->link('marketplace/installer|install', 'user_token=' . $this->session->data['user_token'] . '&extension_install_id=' . $install_info['extension_install_id']);
 					} else {
 						$install = '';
 					}
 
 					// Uninstall
-					if ($extension_install_info && $extension_install_info['status']) {
-						$uninstall = $this->url->link('marketplace/installer|uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension_install_id=' . $extension_install_info['extension_install_id']);
+					if ($install_info && $install_info['status']) {
+						$uninstall = $this->url->link('marketplace/installer|uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension_install_id=' . $install_info['extension_install_id']);
 					} else {
 						$uninstall = '';
 					}
 
 					// Delete
-					if ($extension_install_info && !$extension_install_info['status']) {
-						$delete = $this->url->link('marketplace/installer|delete', 'user_token=' . $this->session->data['user_token'] . '&extension_install_id=' . $extension_install_info['extension_install_id']);
+					if ($install_info && !$install_info['status']) {
+						$delete = $this->url->link('marketplace/installer|delete', 'user_token=' . $this->session->data['user_token'] . '&extension_install_id=' . $install_info['extension_install_id']);
 					} else {
 						$delete = '';
 					}

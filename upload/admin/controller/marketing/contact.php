@@ -192,7 +192,7 @@ class Contact extends \Opencart\System\Engine\Controller {
 				$start = ($page - 1) * 10;
 				$end = $start + 10;
 
-				$json['success'] = sprintf($this->language->get('text_sent'), $start, $email_total);
+				$json['success'] = sprintf($this->language->get('text_sent'), $start ? $start : 1, $email_total);
 
 				if ($end < $email_total) {
 					$json['next'] = $this->url->link('marketing/contact|send', 'user_token=' . $this->session->data['user_token'] . '&page=' . ($page + 1), true);

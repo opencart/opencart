@@ -349,6 +349,7 @@
                     <div class="input-group">
 
                       <div id="input-subtract" class="form-check form-switch form-switch-lg">
+                        <input type="hidden" name="subtract" value="0"/>
                         <input type="checkbox" name="subtract" value="1" class="form-check-input"{% if subtract %} checked{% endif %}/>
                       </div>
 
@@ -410,6 +411,7 @@
                     <div class="input-group">
 
                       <div id="input-shipping" class="form-check form-switch form-switch-lg">
+                        <input type="hidden" name="shipping" value="0"/>
                         <input type="checkbox" name="shipping" value="1" class="form-check-input"{% if shipping %} checked{% endif %}/>
                       </div>
 
@@ -512,6 +514,7 @@
                   <div class="col-sm-10">
                     <div class="input-group">
                       <div class="form-check form-switch form-switch-lg">
+                        <input type="hidden" name="status" value="0"/>
                         <input type="checkbox" name="status" value="1" id="input-status" class="form-check-input"{% if status %} checked{% endif %}/>
                       </div>
                       {% if master_id %}

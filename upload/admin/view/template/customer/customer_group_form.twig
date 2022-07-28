@@ -47,6 +47,7 @@
             <label class="col-sm-2 col-form-label">{{ entry_approval }}</label>
             <div class="col-sm-10">
               <div class="form-check form-switch form-switch-lg">
+                <input type="hidden" name="approval" value="0"/>
                 <input type="checkbox" name="approval" value="1" id="input-approval" class="form-check-input"{% if approval %} checked{% endif %}/>
               </div>
               <div class="form-text">{{ help_approval }}</div>

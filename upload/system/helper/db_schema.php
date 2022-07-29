@@ -1,5 +1,5 @@
 <?php
-namespace Opencart\System\Helper\DBSchema;
+namespace Opencart\System\Helper\DbSchema;
 function db_schema() {
 	$tables = [];
 

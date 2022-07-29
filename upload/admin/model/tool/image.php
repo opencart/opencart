@@ -1,6 +1,6 @@
 <?php
 namespace Opencart\Admin\Model\Tool;
-use \Opencart\System\Helper AS Helper;
+use \Opencart\System\Helper as Helper;
 class Image extends \Opencart\System\Engine\Model {
 	public function resize(string $filename, int $width, int $height): string {
 		if (!is_file(DIR_IMAGE . $filename) || substr(str_replace('\\', '/', realpath(DIR_IMAGE . $filename)), 0, strlen(DIR_IMAGE)) != DIR_IMAGE) {

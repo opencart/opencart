@@ -206,7 +206,17 @@ class Loader {
 	public function helper(string $route): void {
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', $route);
 
-		$file = DIR_SYSTEM . 'helper/' . $route . '.php';
+		if (!str_starts_with($route, 'extension/')) {
+			$file = DIR_SYSTEM . 'helper/' . $route . '.php';
+		} else {
+			$parts = explode('/', substr($route, 10));
+
+			$code = array_shift($parts);
+
+			$file = DIR_EXTENSION . $code . '/system/helper/' . implode('/', $parts) . '.php';
+		}
+
+		echo $file . "\n";
 
 		if (is_file($file)) {
 			include_once($file);

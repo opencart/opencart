@@ -216,8 +216,6 @@ class Loader {
 			$file = DIR_EXTENSION . $code . '/system/helper/' . implode('/', $parts) . '.php';
 		}
 
-		echo $file . "\n";
-
 		if (is_file($file)) {
 			include_once($file);
 		} else {

@@ -1,6 +1,6 @@
 <?php
 namespace Opencart\Catalog\Controller\Product;
-use \Opencart\System\Helper AS Helper;
+use \Opencart\System\Helper as Helper;
 class Search extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('product/search');

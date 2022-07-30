@@ -1,6 +1,6 @@
 <?php
 namespace Opencart\Admin\Model\Catalog;
-use \Opencart\System\Helper AS Helper;
+use \Opencart\System\Helper as Helper;
 class Category extends \Opencart\System\Engine\Model {
 	public function addCategory(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "category` SET `parent_id` = '" . (int)$data['parent_id'] . "', `top` = '" . (isset($data['top']) ? (int)$data['top'] : 0) . "', `column` = '" . (int)$data['column'] . "', `sort_order` = '" . (int)$data['sort_order'] . "', `status` = '" . (bool)(isset($data['status']) ? $data['status'] : 0) . "', `date_modified` = NOW(), `date_added` = NOW()");

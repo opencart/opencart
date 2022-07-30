@@ -1,6 +1,6 @@
 <?php
 namespace Opencart\Catalog\Controller\Mail;
-use \Opencart\System\Helper AS Helper;
+use \Opencart\System\Helper as Helper;
 class Order extends \Opencart\System\Engine\Controller {
 	public function index(string &$route, array &$args): void {
 		if (isset($args[0])) {

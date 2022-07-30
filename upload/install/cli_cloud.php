@@ -1,6 +1,6 @@
 <?php
 namespace Install;
-use \Opencart\System\Helper AS Helper;
+use \Opencart\System\Helper as Helper;
 //
 // Command line tool for installing cloud version of opencart
 //

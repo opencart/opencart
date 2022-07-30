@@ -1,6 +1,6 @@
 <?php
 namespace Opencart\Catalog\Model\Checkout;
-use \Opencart\System\Helper AS Helper;
+use \Opencart\System\Helper as Helper;
 class Cart extends \Opencart\System\Engine\Model {
 	public function getProducts(): array {
 		$this->load->model('tool/image');

@@ -1,6 +1,6 @@
 <?php
 namespace Opencart\System\Library\Cart;
-use \Opencart\System\Helper AS Helper;
+use \Opencart\System\Helper as Helper;
 class Customer {
 	private int $customer_id = 0;
 	private string $firstname = '';

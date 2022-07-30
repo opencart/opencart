@@ -1,6 +1,6 @@
 <?php
 namespace Install;
-use \Opencart\System\Helper AS Helper;
+use \Opencart\System\Helper as Helper;
 //
 // Command line tool for installing opencart
 // Original Author: Vineet Naik <vineet.naik@kodeplay.com> <naikvin@gmail.com>

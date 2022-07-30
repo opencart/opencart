@@ -1,6 +1,6 @@
 <?php
 namespace Opencart\Install\Controller\Install;
-use \Opencart\System\Helper AS Helper;
+use \Opencart\System\Helper as Helper;
 class Step3 extends \Opencart\System\Engine\Controller {
 	private array $error = [];
 

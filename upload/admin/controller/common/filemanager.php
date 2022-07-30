@@ -1,6 +1,6 @@
 <?php
 namespace Opencart\Admin\Controller\Common;
-use \Opencart\System\Helper AS Helper;
+use \Opencart\System\Helper as Helper;
 class FileManager extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('common/filemanager');

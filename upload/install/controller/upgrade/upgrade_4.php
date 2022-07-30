@@ -1,6 +1,6 @@
 <?php
 namespace Opencart\Install\Controller\Upgrade;
-use \Opencart\System\Helper AS Helper;
+use \Opencart\System\Helper as Helper;
 class Upgrade4 extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('upgrade/upgrade');

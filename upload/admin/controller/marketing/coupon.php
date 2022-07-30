@@ -1,6 +1,6 @@
 <?php
 namespace Opencart\Admin\Controller\Marketing;
-use \Opencart\System\Helper AS Helper;
+use \Opencart\System\Helper as Helper;
 class Coupon extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('marketing/coupon');

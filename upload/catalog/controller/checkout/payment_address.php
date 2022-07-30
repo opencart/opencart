@@ -1,6 +1,6 @@
 <?php
 namespace Opencart\Catalog\Controller\Checkout;
-use \Opencart\System\Helper AS Helper;
+use \Opencart\System\Helper as Helper;
 class PaymentAddress extends \Opencart\System\Engine\Controller {
 	public function index(): string {
 		$this->load->language('checkout/payment_address');

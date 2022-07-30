@@ -1,6 +1,6 @@
 <?php
 namespace Opencart\Catalog\Controller\Information;
-use \Opencart\System\Helper AS Helper;
+use \Opencart\System\Helper as Helper;
 class Contact extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('information/contact');

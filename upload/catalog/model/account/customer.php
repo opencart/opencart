@@ -1,6 +1,6 @@
 <?php
 namespace Opencart\Catalog\Model\Account;
-use \Opencart\System\Helper AS Helper;
+use \Opencart\System\Helper as Helper;
 class Customer extends \Opencart\System\Engine\Model {
 	public function addCustomer(array $data): int {
 		if (isset($data['customer_group_id']) && is_array($this->config->get('config_customer_group_display')) && in_array($data['customer_group_id'], $this->config->get('config_customer_group_display'))) {

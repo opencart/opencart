@@ -72,7 +72,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 
 			$data['redirect'] = $this->url->link($route, $url);
 		} else {
-			$json['redirect'] = $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true);
+			$data['redirect'] = $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true);
 		}
 
 		$data['user_token'] = $this->session->data['user_token'];

@@ -1,12 +1,13 @@
 <?php
 namespace Opencart\Catalog\Controller\Extension\Opencart\Captcha;
+use \Opencart\System\Helper as Helper;
 class Basic extends \Opencart\System\Engine\Controller {
 	public function index(): string {
 		$this->load->language('extension/opencart/captcha/basic');
 
 		$data['route'] = (string)$this->request->get['route'];
 
-		$this->session->data['captcha'] = substr(token(100), rand(0, 94), 6);
+		$this->session->data['captcha'] = substr(strlen(100), rand(0, 94), 6);
 
 		return $this->load->view('extension/opencart/captcha/basic', $data);
 	}

@@ -39,32 +39,11 @@
     <div class="container-fluid">
       <a href="{{ home }}" class="navbar-brand d-none d-lg-block"><img src="view/image/logo.png" alt="{{ heading_title }}" title="{{ heading_title }}"/></a>
       {% if logged %}
-
-        {% if languages|length > 1 %}
-          <div class="dropdown">
-
-            <div class="dropdown-toggle" data-bs-toggle="dropdown">
-
-              {% for language in languages %}
-                {% if language.code == code %}
-                  <img src="{{ language.image }}" alt="{{ language.name }}" title="{{ language.name }}">
-                {% endif %}
-              {% endfor %}
-            <i class="fa-solid fa-caret-down"></i>
-            </div>
-
-            <ul class="dropdown-menu">
-              {% for language in languages %}
-                <li><a href="{{ language.href }}" class="dropdown-item"><img src="{{ language.image }}" alt="{{ language.name }}" title="{{ language.name }}"/> {{ language.name }}</a></li>
-              {% endfor %}
-            </ul>
-
-          </div>
-        {% endif %}
-
-
         <button type="button" id="button-menu" class="btn btn-link d-inline-block d-lg-none"><i class="fa-solid fa-bars"></i></button>
         <ul class="nav navbar-nav">
+
+          <li class="nav-item">{{ language }}</li>
+
           <li id="header-notification" class="nav-item dropdown">
             <a href="#" data-bs-toggle="dropdown" class="nav-link dropdown-toggle"><i class="fa-regular fa-bell"></i>{% if notification_total %} <span class="badge bg-danger">{{ notification_total }}</span>{% endif %}</a>
             <div class="dropdown-menu dropdown-menu-right">
@@ -78,6 +57,7 @@
               {% endif %}
             </div>
           </li>
+
           <li id="header-profile" class="nav-item dropdown">
             <a href="#" data-bs-toggle="dropdown" class="nav-link dropdown-toggle"><img src="{{ image }}" alt="{{ firstname }} {{ lastname }}" title="{{ username }}" class="rounded-circle"/><span class="d-none d-md-inline d-lg-inline">&nbsp;&nbsp;&nbsp;{{ firstname }} {{ lastname }} <i class="fa-solid fa-caret-down fa-fw"></i></span></a>
             <ul class="dropdown-menu dropdown-menu-right">
@@ -94,6 +74,7 @@
               <li><a href="http://forum.opencart.com" target="_blank" class="dropdown-item"><i class="fa-solid fa-comments fa-fw"></i> {{ text_support }}</a></li>
             </ul>
           </li>
+
           <li id="header-logout" class="nav-item"><a href="{{ logout }}" class="nav-link"><i class="fa-solid fa-sign-out"></i> <span class="d-none d-md-inline">{{ text_logout }}</span></a></li>
         </ul>
       {% endif %}

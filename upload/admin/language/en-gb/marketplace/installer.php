@@ -13,6 +13,7 @@ $_['text_progress']     = 'Install Progress';
 $_['text_installed']    = 'Installed Extensions';
 $_['text_unknown']		= 'Unknown';
 $_['text_old_version']    = 'Outdated version';
+$_['text_new_version']    = 'New version available';
 
 
 // Column

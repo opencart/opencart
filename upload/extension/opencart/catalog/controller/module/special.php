@@ -1,5 +1,6 @@
 <?php
 namespace Opencart\Catalog\Controller\Extension\Opencart\Module;
+use \Opencart\System\Helper AS Helper;
 class Special extends \Opencart\System\Engine\Controller {
 	public function index(array $setting): string {
 		$this->load->language('extension/opencart/module/special');
@@ -48,7 +49,7 @@ class Special extends \Opencart\System\Engine\Controller {
 					'product_id'  => $result['product_id'],
 					'thumb'       => $image,
 					'name'        => $result['name'],
-					'description' => utf8_substr(trim(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8'))), 0, $this->config->get('config_product_description_length')) . '..',
+					'description' => Helper\Utf8\substr(trim(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8'))), 0, $this->config->get('config_product_description_length')) . '..',
 					'price'       => $price,
 					'special'     => $special,
 					'tax'         => $tax,

@@ -1,5 +1,6 @@
 <?php
 namespace Opencart\Admin\Controller\Customer;
+use \Opencart\System\Helper as Helper;
 class CustomField extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('customer/custom_field');
@@ -347,7 +348,7 @@ class CustomField extends \Opencart\System\Engine\Controller {
 		}
 
 		foreach ($this->request->post['custom_field_description'] as $language_id => $value) {
-			if ((utf8_strlen($value['name']) < 1) || (utf8_strlen($value['name']) > 128)) {
+			if ((Helper\Utf8\strlen($value['name']) < 1) || (Helper\Utf8\strlen($value['name']) > 128)) {
 				$json['error']['name_' . $language_id] = $this->language->get('error_name');
 			}
 		}
@@ -360,7 +361,7 @@ class CustomField extends \Opencart\System\Engine\Controller {
 			if (isset($this->request->post['custom_field_value'])) {
 				foreach ($this->request->post['custom_field_value'] as $custom_field_value_id => $custom_field_value) {
 					foreach ($custom_field_value['custom_field_value_description'] as $language_id => $custom_field_value_description) {
-						if ((utf8_strlen($custom_field_value_description['name']) < 1) || (utf8_strlen($custom_field_value_description['name']) > 128)) {
+						if ((Helper\Utf8\strlen($custom_field_value_description['name']) < 1) || (Helper\Utf8\strlen($custom_field_value_description['name']) > 128)) {
 							$json['error']['custom_field_value_' . $custom_field_value_id . '_' . $language_id] = $this->language->get('error_custom_value');
 						}
 					}

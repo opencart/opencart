@@ -1,5 +1,6 @@
 <?php
 namespace Opencart\Admin\Controller\Localisation;
+use \Opencart\System\Helper as Helper;
 class GeoZone extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('localisation/geo_zone');
@@ -239,11 +240,11 @@ class GeoZone extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		if ((utf8_strlen($this->request->post['name']) < 3) || (utf8_strlen($this->request->post['name']) > 32)) {
+		if ((Helper\Utf8\strlen($this->request->post['name']) < 3) || (Helper\Utf8\strlen($this->request->post['name']) > 32)) {
 			$json['error']['name'] = $this->language->get('error_name');
 		}
 
-		if ((utf8_strlen($this->request->post['description']) < 3) || (utf8_strlen($this->request->post['description']) > 255)) {
+		if ((Helper\Utf8\strlen($this->request->post['description']) < 3) || (Helper\Utf8\strlen($this->request->post['description']) > 255)) {
 			$json['error']['description'] = $this->language->get('error_description');
 		}
 

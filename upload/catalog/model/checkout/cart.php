@@ -1,5 +1,6 @@
 <?php
 namespace Opencart\Catalog\Model\Checkout;
+use \Opencart\System\Helper as Helper;
 class Cart extends \Opencart\System\Engine\Model {
 	public function getProducts(): array {
 		$this->load->model('tool/image');
@@ -34,7 +35,7 @@ class Cart extends \Opencart\System\Engine\Model {
 
 				$option_data[] = [
 					'name'  => $option['name'],
-					'value' => (utf8_strlen($value) > 20 ? utf8_substr($value, 0, 20) . '..' : $value),
+					'value' => (Helper\Utf8\strlen($value) > 20 ? Helper\Utf8\substr($value, 0, 20) . '..' : $value),
 					'type'  => $option['type']
 				];
 			}

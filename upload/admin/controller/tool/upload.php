@@ -1,5 +1,6 @@
 <?php
 namespace Opencart\Admin\Controller\Tool;
+use \Opencart\System\Helper as Helper;
 class Upload extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('tool/upload');
@@ -330,7 +331,7 @@ class Upload extends \Opencart\System\Engine\Controller {
 			$filename = basename(html_entity_decode($this->request->files['file']['name'], ENT_QUOTES, 'UTF-8'));
 
 			// Validate the filename length
-			if ((utf8_strlen($filename) < 3) || (utf8_strlen($filename) > 128)) {
+			if ((Helper\Utf8\strlen($filename) < 3) || (Helper\Utf8\strlen($filename) > 128)) {
 				$json['error'] = $this->language->get('error_filename');
 			}
 
@@ -371,7 +372,7 @@ class Upload extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$file = $filename . '.' . token(32);
+			$file = $filename . '.' . Helper\General\token(32);
 
 			move_uploaded_file($this->request->files['file']['tmp_name'], DIR_UPLOAD . $file);
 

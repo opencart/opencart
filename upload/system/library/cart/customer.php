@@ -1,5 +1,6 @@
 <?php
 namespace Opencart\System\Library\Cart;
+use \Opencart\System\Helper as Helper;
 class Customer {
 	private int $customer_id = 0;
 	private string $firstname = '';
@@ -35,7 +36,7 @@ class Customer {
 	}
 
 	public function login(string $email, string $password, bool $override = false): bool {
-		$customer_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer` WHERE LOWER(`email`) = '" . $this->db->escape(utf8_strtolower($email)) . "' AND `status` = '1'");
+		$customer_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer` WHERE LOWER(`email`) = '" . $this->db->escape(Helper\Utf8\strtolower($email)) . "' AND `status` = '1'");
 
 		if ($customer_query->row) {
 			if (!$override) {

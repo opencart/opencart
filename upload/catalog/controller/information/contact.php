@@ -1,6 +1,6 @@
 <?php
-
 namespace Opencart\Catalog\Controller\Information;
+use \Opencart\System\Helper as Helper;
 class Contact extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('information/contact');
@@ -105,7 +105,7 @@ class Contact extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		if ((utf8_strlen($this->request->post['name']) < 3) || (utf8_strlen($this->request->post['name']) > 32)) {
+		if ((Helper\Utf8\strlen($this->request->post['name']) < 3) || (Helper\Utf8\strlen($this->request->post['name']) > 32)) {
 			$json['error']['name'] = $this->language->get('error_name');
 		}
 
@@ -113,7 +113,7 @@ class Contact extends \Opencart\System\Engine\Controller {
 			$json['error']['email'] = $this->language->get('error_email');
 		}
 
-		if ((utf8_strlen($this->request->post['enquiry']) < 10) || (utf8_strlen($this->request->post['enquiry']) > 3000)) {
+		if ((Helper\Utf8\strlen($this->request->post['enquiry']) < 10) || (Helper\Utf8\strlen($this->request->post['enquiry']) > 3000)) {
 			$json['error']['enquiry'] = $this->language->get('error_enquiry');
 		}
 

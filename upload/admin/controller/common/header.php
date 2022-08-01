@@ -25,27 +25,25 @@ class Header extends \Opencart\System\Engine\Controller {
 		$this->load->language('common/header');
 		
 		if (!isset($this->request->get['user_token']) || !isset($this->session->data['user_token']) || ($this->request->get['user_token'] != $this->session->data['user_token'])) {
-			$data['logged'] = '';
+			$data['logged'] = false;
 
 			$data['home'] = $this->url->link('common/login');
 		} else {
 			$data['logged'] = true;
 
 			$data['home'] = $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token']);
-			$data['profile'] = $this->url->link('user/profile', 'user_token=' . $this->session->data['user_token']);
-			$data['logout'] = $this->url->link('common/logout', 'user_token=' . $this->session->data['user_token']);
+
+			$data['language'] = $this->load->controller('common/language');
 
 			// Notifications
-			$data['notifications'] = [];
-
-			$this->load->model('tool/notification');
-
-			$data['notification_total'] = $this->model_tool_notification->getTotalNotifications(['filter_status' => 0]);
-
 			$filter_data = [
 				'start' => 0,
 				'limit' => 5
 			];
+
+			$data['notifications'] = [];
+
+			$this->load->model('tool/notification');
 
 			$results = $this->model_tool_notification->getNotifications($filter_data);
 
@@ -57,6 +55,9 @@ class Header extends \Opencart\System\Engine\Controller {
 			}
 
 			$data['notification_all'] = $this->url->link('tool/notification', 'user_token=' . $this->session->data['user_token']);
+			$data['notification_total'] = $this->model_tool_notification->getTotalNotifications(['filter_status' => 0]);
+
+			$data['profile'] = $this->url->link('user/profile', 'user_token=' . $this->session->data['user_token']);
 
 			$this->load->model('tool/image');
 
@@ -99,6 +100,8 @@ class Header extends \Opencart\System\Engine\Controller {
 					'href' => $result['url']
 				];
 			}
+
+			$data['logout'] = $this->url->link('common/logout', 'user_token=' . $this->session->data['user_token']);
 		}
 
 		return $this->load->view('common/header', $data);

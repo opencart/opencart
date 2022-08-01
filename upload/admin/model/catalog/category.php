@@ -1,5 +1,6 @@
 <?php
 namespace Opencart\Admin\Model\Catalog;
+use \Opencart\System\Helper as Helper;
 class Category extends \Opencart\System\Engine\Model {
 	public function addCategory(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "category` SET `parent_id` = '" . (int)$data['parent_id'] . "', `top` = '" . (isset($data['top']) ? (int)$data['top'] : 0) . "', `column` = '" . (int)$data['column'] . "', `sort_order` = '" . (int)$data['sort_order'] . "', `status` = '" . (bool)(isset($data['status']) ? $data['status'] : 0) . "', `date_modified` = NOW(), `date_added` = NOW()");
@@ -184,7 +185,7 @@ class Category extends \Opencart\System\Engine\Model {
 
 				// Update sub category seo urls
 				if (isset($seo_url_data[$store_id][$language_id])) {
-					$this->db->query("UPDATE `" . DB_PREFIX . "seo_url` SET `value` = CONCAT('" . $this->db->escape($path_new . '_') . "', SUBSTRING(`value`, " . (strlen($path_old . '_') + 1) . ")), `keyword` = CONCAT('" . $this->db->escape($keyword) . "', SUBSTRING(`keyword`, " . (utf8_strlen($seo_url_data[$store_id][$language_id]) + 1) . ")) WHERE `store_id` = '" . (int)$store_id . "' AND `language_id` = '" . (int)$language_id . "' AND `key` = 'path' AND `value` LIKE '" . $this->db->escape($path_old . '_%') . "'");
+					$this->db->query("UPDATE `" . DB_PREFIX . "seo_url` SET `value` = CONCAT('" . $this->db->escape($path_new . '_') . "', SUBSTRING(`value`, " . (strlen($path_old . '_') + 1) . ")), `keyword` = CONCAT('" . $this->db->escape($keyword) . "', SUBSTRING(`keyword`, " . (Helper\Utf8\strlen($seo_url_data[$store_id][$language_id]) + 1) . ")) WHERE `store_id` = '" . (int)$store_id . "' AND `language_id` = '" . (int)$language_id . "' AND `key` = 'path' AND `value` LIKE '" . $this->db->escape($path_old . '_%') . "'");
 				}
 			}
 		}

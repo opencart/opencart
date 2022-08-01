@@ -3,6 +3,8 @@ namespace Opencart\Admin\Controller\Marketplace;
 
 use \Composer\Semver\Comparator;
 
+use \Opencart\System\Helper as Helper;
+
 class Installer extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('marketplace/installer');
@@ -24,7 +26,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 		// Use the ini_get('upload_max_filesize') for the max file size
 		$data['error_upload_size'] = sprintf($this->language->get('error_upload_size'), ini_get('upload_max_filesize'));
 
-		$data['config_file_max_size'] = convertBytes(ini_get('upload_max_filesize'));
+		$data['config_file_max_size'] = \Opencart\System\Helper\General\convert_bytes(ini_get('upload_max_filesize'));
 
 		$data['upload'] = $this->url->link('tool/installer|upload', 'user_token=' . $this->session->data['user_token']);
 
@@ -37,7 +39,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
-		
+
 		$this->response->setOutput($this->load->view('marketplace/installer', $data));
 	}
 
@@ -71,7 +73,6 @@ class Installer extends \Opencart\System\Engine\Controller {
 			$install_info = $this->model_setting_extension->getInstallByPackageName($package_name);
 
 			if (!$install_info) {
-				//echo $code . "\n";
 
 				// Unzip the files
 				$zip = new \ZipArchive();
@@ -112,7 +113,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 		$extension_total = $this->model_setting_extension->getTotalInstalls($filter_data);
 
 		$results = $this->model_setting_extension->getInstalls($filter_data);
-		
+
 		foreach ($results as $result) {
 			if ($result['extension_id']) {
 				$link = $this->url->link('marketplace/marketplace|info', 'user_token=' . $this->session->data['user_token'] . '&extension_id=' . $result['extension_id']);
@@ -185,7 +186,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 			$filename = basename($this->request->files['file']['name']);
 
 			// 2. Validate the filename.
-			if ((utf8_strlen($filename) < 1) || (utf8_strlen($filename) > 128)) {
+			if ((Helper\Utf8\strlen($filename) < 1) || (Helper\Utf8\strlen($filename) > 128)) {
 				$json['error'] = $this->language->get('error_filename');
 			}
 

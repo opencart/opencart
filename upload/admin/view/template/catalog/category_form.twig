@@ -128,6 +128,7 @@
                 <label for="input-top" class="col-sm-2 col-form-label">{{ entry_top }}</label>
                 <div class="col-sm-10">
                   <div class="form-check form-switch form-switch-lg">
+                    <input type="hidden" name="top" value="0"/>
                     <input type="checkbox" name="top" value="1" id="input-top" class="form-check-input"{% if top %} checked{% endif %}/>
                   </div>
                   <div class="form-text">{{ help_top }}</div>
@@ -150,6 +151,7 @@
                 <label for="input-status" class="col-sm-2 col-form-label">{{ entry_status }}</label>
                 <div class="col-sm-10">
                   <div class="form-check form-switch form-switch-lg">
+                    <input type="hidden" name="status" value="0"/>
                     <input type="checkbox" name="status" value="1" id="input-status" class="form-check-input"{% if status %} checked{% endif %}/>
                   </div>
                 </div>

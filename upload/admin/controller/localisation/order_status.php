@@ -1,5 +1,6 @@
 <?php
 namespace Opencart\Admin\Controller\Localisation;
+use \Opencart\System\Helper as Helper;
 class OrderStatus extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('localisation/order_status');
@@ -222,7 +223,7 @@ class OrderStatus extends \Opencart\System\Engine\Controller {
 		}
 
 		foreach ($this->request->post['order_status'] as $language_id => $value) {
-			if ((utf8_strlen($value['name']) < 3) || (utf8_strlen($value['name']) > 32)) {
+			if ((Helper\Utf8\strlen($value['name']) < 3) || (Helper\Utf8\strlen($value['name']) > 32)) {
 				$json['error']['name_' . $language_id] = $this->language->get('error_name');
 			}
 		}

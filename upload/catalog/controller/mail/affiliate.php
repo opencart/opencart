@@ -1,5 +1,6 @@
 <?php
 namespace Opencart\Catalog\Controller\Mail;
+use \Opencart\System\Helper as Helper;
 class Affiliate extends \Opencart\System\Engine\Controller {
 	public function index(string &$route, array &$args, mixed &$output): void {
 		$this->load->language('mail/affiliate');
@@ -112,7 +113,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			$emails = explode(',', $this->config->get('config_mail_alert_email'));
 
 			foreach ($emails as $email) {
-				if (utf8_strlen($email) > 0 && filter_var($email, FILTER_VALIDATE_EMAIL)) {
+				if (Helper\Utf8\strlen($email) > 0 && filter_var($email, FILTER_VALIDATE_EMAIL)) {
 					$mail->setTo(trim($email));
 					$mail->send();
 				}

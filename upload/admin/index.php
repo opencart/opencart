@@ -25,12 +25,6 @@
  *
  * https://www.youtube.com/watch?v=F5SoQTBrFbI&ab_channel=GladiusNews
  *
- * More information:
- *
- * https://www.youtube.com/watch?v=OX0u1JNR6as&ab_channel=janekelly
- * https://www.youtube.com/watch?v=BvvozmP4SmU&ab_channel=janekelly
- * https://www.youtube.com/watch?v=svZv4JOJi_s&ab_channel=janekelly
- *
  * Details of the abusers
  *
  * Alex Taylor Kubeyinje

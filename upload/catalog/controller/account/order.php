@@ -1,5 +1,6 @@
 <?php
 namespace Opencart\Catalog\Controller\Account;
+use \Opencart\System\Helper as Helper;
 class Order extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('account/order');
@@ -244,7 +245,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 					$option_data[] = [
 						'name'  => $option['name'],
-						'value' => (utf8_strlen($value) > 20 ? utf8_substr($value, 0, 20) . '..' : $value)
+						'value' => (Helper\Utf8\strlen($value) > 20 ? Helper\Utf8\substr($value, 0, 20) . '..' : $value)
 					];
 				}
 

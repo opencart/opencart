@@ -1,5 +1,6 @@
 <?php
 namespace Install;
+use \Opencart\System\Helper as Helper;
 //
 // Command line tool for installing opencart
 // Original Author: Vineet Naik <vineet.naik@kodeplay.com> <naikvin@gmail.com>
@@ -208,18 +209,18 @@ class CliInstall extends \Opencart\System\Engine\Controller {
 		// Pre-installation check
 		$error = '';
 
-		if ((utf8_strlen($option['username']) < 3) || (utf8_strlen($option['username']) > 20)) {
+		if ((Helper\Utf8\strlen($option['username']) < 3) || (Helper\Utf8\strlen($option['username']) > 20)) {
 			$error .= 'ERROR: Username must be between 3 and 20 characters!' . "\n";
 		}
 
-		if ((utf8_strlen($option['email']) > 96) || !filter_var($option['email'], FILTER_VALIDATE_EMAIL)) {
+		if ((Helper\Utf8\strlen($option['email']) > 96) || !filter_var($option['email'], FILTER_VALIDATE_EMAIL)) {
 			$error .= 'ERROR: E-Mail Address does not appear to be valid!' . "\n";
 		}
 
 		// If not cloud then we validate the password
 		$password = html_entity_decode($option['password'], ENT_QUOTES, 'UTF-8');
 
-		if ((utf8_strlen($password) < 5) || (utf8_strlen($password) > 20)) {
+		if ((Helper\Utf8\strlen($password) < 5) || (Helper\Utf8\strlen($password) > 20)) {
 			$error .= 'ERROR: Password must be between 5 and 20 characters!' . "\n";
 		}
 
@@ -253,9 +254,7 @@ class CliInstall extends \Opencart\System\Engine\Controller {
 		}
 
 		// Set up Database structure
-		$this->load->helper('db_schema');
-
-		$tables = db_schema();
+		$tables = Helper\DbSchema\db_schema();
 
 		foreach ($tables as $table) {
 			$table_query = $db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . $db_database . "' AND TABLE_NAME = '" . $db_prefix . $table['name'] . "'");
@@ -335,11 +334,11 @@ class CliInstall extends \Opencart\System\Engine\Controller {
 			$db->query("INSERT INTO `" . $db_prefix . "setting` SET `code` = 'config', `key` = 'config_email', `value` = '" . $db->escape($option['email']) . "'");
 
 			$db->query("DELETE FROM `" . $db_prefix . "setting` WHERE `key` = 'config_encryption'");
-			$db->query("INSERT INTO `" . $db_prefix . "setting` SET `code` = 'config', `key` = 'config_encryption', `value` = '" . $db->escape(token(1024)) . "'");
+			$db->query("INSERT INTO `" . $db_prefix . "setting` SET `code` = 'config', `key` = 'config_encryption', `value` = '" . $db->escape(Helper\General\token(1024)) . "'");
 
 			$db->query("UPDATE `" . $db_prefix . "product` SET `viewed` = '0'");
 
-			$db->query("INSERT INTO `" . $db_prefix . "api` SET `username` = 'Default', `key` = '" . $db->escape(token(256)) . "', `status` = 1, `date_added` = NOW(), `date_modified` = NOW()");
+			$db->query("INSERT INTO `" . $db_prefix . "api` SET `username` = 'Default', `key` = '" . $db->escape(Helper\General\token(256)) . "', `status` = 1, `date_added` = NOW(), `date_modified` = NOW()");
 
 			$last_id = $db->getLastId();
 

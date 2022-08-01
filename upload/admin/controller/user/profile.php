@@ -1,5 +1,6 @@
 <?php
 namespace Opencart\Admin\Controller\User;
+use \Opencart\System\Helper as Helper;
 class Profile extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('user/profile');
@@ -81,7 +82,7 @@ class Profile extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		if ((utf8_strlen($this->request->post['username']) < 3) || (utf8_strlen($this->request->post['username']) > 20)) {
+		if ((Helper\Utf8\strlen($this->request->post['username']) < 3) || (Helper\Utf8\strlen($this->request->post['username']) > 20)) {
 			$json['error']['username'] = $this->language->get('error_username');
 		}
 
@@ -93,15 +94,15 @@ class Profile extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_username_exists');
 		}
 
-		if ((utf8_strlen($this->request->post['firstname']) < 1) || (utf8_strlen($this->request->post['firstname']) > 32)) {
+		if ((Helper\Utf8\strlen($this->request->post['firstname']) < 1) || (Helper\Utf8\strlen($this->request->post['firstname']) > 32)) {
 			$json['error']['firstname'] = $this->language->get('error_firstname');
 		}
 
-		if ((utf8_strlen($this->request->post['lastname']) < 1) || (utf8_strlen($this->request->post['lastname']) > 32)) {
+		if ((Helper\Utf8\strlen($this->request->post['lastname']) < 1) || (Helper\Utf8\strlen($this->request->post['lastname']) > 32)) {
 			$json['error']['lastname'] = $this->language->get('error_lastname');
 		}
 
-		if ((utf8_strlen($this->request->post['email']) > 96) || !filter_var($this->request->post['email'], FILTER_VALIDATE_EMAIL)) {
+		if ((Helper\Utf8\strlen($this->request->post['email']) > 96) || !filter_var($this->request->post['email'], FILTER_VALIDATE_EMAIL)) {
 			$json['error']['email'] = $this->language->get('error_email');
 		}
 
@@ -112,7 +113,7 @@ class Profile extends \Opencart\System\Engine\Controller {
 		}
 
 		if ($this->request->post['password']) {
-			if ((utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) < 4) || (utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) > 40)) {
+			if ((Helper\Utf8\strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) < 4) || (Helper\Utf8\strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) > 40)) {
 				$json['error']['password'] = $this->language->get('error_password');
 			}
 

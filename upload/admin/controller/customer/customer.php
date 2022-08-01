@@ -1,5 +1,6 @@
 <?php
 namespace Opencart\Admin\Controller\Customer;
+use \Opencart\System\Helper AS Helper;
 class Customer extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('customer/customer');
@@ -636,15 +637,15 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		if ((utf8_strlen($this->request->post['firstname']) < 1) || (utf8_strlen($this->request->post['firstname']) > 32)) {
+		if ((Helper\Utf8\strlen($this->request->post['firstname']) < 1) || (Helper\Utf8\strlen($this->request->post['firstname']) > 32)) {
 			$json['error']['firstname'] = $this->language->get('error_firstname');
 		}
 
-		if ((utf8_strlen($this->request->post['lastname']) < 1) || (utf8_strlen($this->request->post['lastname']) > 32)) {
+		if ((Helper\Utf8\strlen($this->request->post['lastname']) < 1) || (Helper\Utf8\strlen($this->request->post['lastname']) > 32)) {
 			$json['error']['lastname'] = $this->language->get('error_lastname');
 		}
 
-		if ((utf8_strlen($this->request->post['email']) > 96) || !filter_var($this->request->post['email'], FILTER_VALIDATE_EMAIL)) {
+		if ((Helper\Utf8\strlen($this->request->post['email']) > 96) || !filter_var($this->request->post['email'], FILTER_VALIDATE_EMAIL)) {
 			$json['error']['email'] = $this->language->get('error_email');
 		}
 
@@ -662,7 +663,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		if ($this->config->get('config_telephone_required') && (utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
+		if ($this->config->get('config_telephone_required') && (Helper\Utf8\strlen($this->request->post['telephone']) < 3) || (Helper\Utf8\strlen($this->request->post['telephone']) > 32)) {
 			$json['error']['telephone'] = $this->language->get('error_telephone');
 		}
 
@@ -682,7 +683,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 		}
 
 		if ($this->request->post['password'] || (!isset($this->request->post['customer_id']))) {
-			if ((utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) < 4) || (utf8_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) > 40)) {
+			if ((Helper\Utf8\strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) < 4) || (Helper\Utf8\strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) > 40)) {
 				$json['error']['password'] = $this->language->get('error_password');
 			}
 
@@ -693,19 +694,19 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 		if (isset($this->request->post['address'])) {
 			foreach ($this->request->post['address'] as $key => $value) {
-				if ((utf8_strlen($value['firstname']) < 1) || (utf8_strlen($value['firstname']) > 32)) {
+				if ((Helper\Utf8\strlen($value['firstname']) < 1) || (Helper\Utf8\strlen($value['firstname']) > 32)) {
 					$json['error']['address_' . $key . '_firstname'] = $this->language->get('error_firstname');
 				}
 
-				if ((utf8_strlen($value['lastname']) < 1) || (utf8_strlen($value['lastname']) > 32)) {
+				if ((\Opencart\System\Helper\Utf8\strlen($value['lastname']) < 1) || (\Opencart\System\Helper\Utf8\strlen($value['lastname']) > 32)) {
 					$json['error']['address_' . $key . '_lastname'] = $this->language->get('error_lastname');
 				}
 
-				if ((utf8_strlen($value['address_1']) < 3) || (utf8_strlen($value['address_1']) > 128)) {
+				if ((\Opencart\System\Helper\Utf8\strlen($value['address_1']) < 3) || (\Opencart\System\Helper\Utf8\strlen($value['address_1']) > 128)) {
 					$json['error']['address_' . $key . '_address_1'] = $this->language->get('error_address_1');
 				}
 
-				if ((utf8_strlen($value['city']) < 2) || (utf8_strlen($value['city']) > 128)) {
+				if ((\Opencart\System\Helper\Utf8\strlen($value['city']) < 2) || (\Opencart\System\Helper\Utf8\strlen($value['city']) > 128)) {
 					$json['error']['address_' . $key . '_city'] = $this->language->get('error_city');
 				}
 
@@ -717,7 +718,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 					$country_info = $this->model_localisation_country->getCountry($value['country_id']);
 
-					if ($country_info && $country_info['postcode_required'] && (utf8_strlen($value['postcode']) < 2 || utf8_strlen($value['postcode']) > 10)) {
+					if ($country_info && $country_info['postcode_required'] && (Helper\Utf8\strlen($value['postcode']) < 2 || Helper\Utf8\strlen($value['postcode']) > 10)) {
 						$json['error']['address_' . $key . '_postcode'] = $this->language->get('error_postcode');
 					}
 				}
@@ -823,7 +824,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 		if ($customer_info) {
 			// Create token to login with
-			$token = token(64);
+			$token = Helper\General\token(64);
 
 			$this->model_customer_customer->editToken($customer_id, $token);
 

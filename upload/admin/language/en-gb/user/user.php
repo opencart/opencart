@@ -17,7 +17,6 @@ $_['text_login']            = 'Login History';
 $_['column_username']       = 'Username';
 $_['column_status']         = 'Status';
 $_['column_ip']             = 'IP';
-$_['column_user_agent']     = 'User Agent';
 $_['column_date_added']     = 'Date Added';
 $_['column_action']         = 'Action';
 

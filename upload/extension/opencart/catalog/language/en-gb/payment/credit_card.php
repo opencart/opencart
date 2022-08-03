@@ -22,5 +22,5 @@ $_['help_name']          = 'Cardholder Name';
 $_['error_card_name']    = 'Error: Cardholder name required!';
 $_['error_card_number']  = 'Error: Credit card number required!';
 $_['error_card_expire']  = 'Error: Expiration date required!';
-$_['error_card_expired'] = 'Error: Credit card has expired required!';
+$_['error_card_expired'] = 'Error: Credit card has expired!';
 $_['error_card_cvv']     = 'Error: CVV must have 3 digits!';

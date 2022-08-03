@@ -1,24 +1,40 @@
+{% for language in languages %}
+  {% if language.code == code %}
+    <a href="{{ language.code }}" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><img src="{{ language.image }}" alt="{{ language.name }}" title="{{ language.name }}"/></a>
+  {% endif %}
+{% endfor %}
+<ul class="dropdown-menu">
+  {% for language in languages %}
+    <li><a href="{{ language.code }}" class="dropdown-item"><img src="{{ language.image }}" alt="{{ language.name }}" title="{{ language.name }}"/> {{ language.name }}</a></li>
+  {% endfor %}
+</ul>
+<input type="hidden" name="redirect" value="{{ redirect }}" id="input-redirect"/>
+<script type="text/javascript"><!--
+$('#language .dropdown-item').on('click', function (e) {
+    e.preventDefault();
 
-  <div class="dropdown">
+    var element = this;
 
-    <div class="dropdown-toggle" data-bs-toggle="dropdown">
+    $.ajax({
+        url: 'index.php?route=common/language|save&user_token={{ user_token }}',
+        type: 'post',
+        data: 'code=' + $(element).attr('href') + '&redirect=' + encodeURIComponent($('#input-redirect').val()),
+        dataType: 'json',
+        success: function (json) {
+            console.log($(element).attr('href'));
+            console.log($('input-redirect').val());
 
-      {% for language in languages %}
+            if (json['redirect']) {
+                location = json['redirect'];
+            }
 
-        {% if language.code == code %}
-          <img src="{{ language.image }}" alt="{{ language.name }}" title="{{ language.name }}">
-        {% endif %}
-
-      {% endfor %}
-
-      <i class="fa-solid fa-caret-down"></i>
-
-    </div>
-
-    <ul class="dropdown-menu">
-      {% for language in languages %}
-        <li><a href="{{ language.href }}" class="dropdown-item"><img src="{{ language.image }}" alt="{{ language.name }}" title="{{ language.name }}"/> {{ language.name }}</a></li>
-      {% endfor %}
-    </ul>
-
-  </div>
+            if (json['error']) {
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+//--></script>

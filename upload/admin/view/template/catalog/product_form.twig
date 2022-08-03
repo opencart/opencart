@@ -2082,14 +2082,10 @@ $('input[data-oc-toggle=\'switch\']').on('change', function (e) {
                 $(this).addClass('.disabled');
 
                 $(this).prop('readonly', true);
-
-                //  $(this).attr('readonly', 'readonly');
             } else {
                 $(this).removeClass('disabled');
 
                 $(this).prop('readonly', false);
-
-                // $(this).removeAttr('readonly');
             }
 
             $(this).find('option').not(':selected').prop('disabled', !$(element).prop('checked'));

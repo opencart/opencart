@@ -23,12 +23,12 @@ class NotFound extends \Opencart\System\Engine\Controller {
 			$url = '';
 
 			if ($url_data) {
-				$url = '&' . urldecode(http_build_query($url_data, '', '&'));
+				$url .= '&' . urldecode(http_build_query($url_data, '', '&'));
 			}
 
 			$data['breadcrumbs'][] = [
 				'text' => $this->language->get('heading_title'),
-				'href' => $this->url->link($route, $url, $this->request->server['HTTPS'])
+				'href' => $this->url->link($route, $url)
 			];
 		}
 

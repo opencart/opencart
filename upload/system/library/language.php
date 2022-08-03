@@ -16,6 +16,7 @@ class Language {
 	protected string $directory;
 	protected array $path = [];
 	protected array $data = [];
+	protected array $cache = [];
 
 	/**
 	 * Constructor

@@ -39,7 +39,7 @@ class Currency extends \Opencart\System\Engine\Controller {
 		$url = '';
 
 		if ($url_data) {
-			$url = '&' . urldecode(http_build_query($url_data, '', '&'));
+			$url .= '&' . urldecode(http_build_query($url_data, '', '&'));
 		}
 
 		$data['redirect'] = $this->url->link($route, $url);

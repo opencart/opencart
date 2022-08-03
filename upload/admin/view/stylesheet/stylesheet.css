@@ -21,6 +21,7 @@ legend {
     border-bottom: 1px solid #e5e5e5;
     margin-bottom: 15px;
 }
+
 a {
     text-decoration: none;
 }
@@ -41,13 +42,14 @@ a {
     background: #f6f6f6;
     overflow: hidden;
 }
+
 .container-fluid {
     padding: 0 20px;
 }
 
 #header {
     border-bottom: 1px solid #d8d8d8;
-    box-shadow: 0px 0px 3px #ccc;
+    box-shadow: 0px 0px 3px #CCCCCC;
     z-index: 1000;
     margin: 0;
     padding: 0;
@@ -57,13 +59,13 @@ a {
     transition: 0.3s all;
     width: 235px;
     text-align: center;
-    padding: 0px 0px;
+    /*padding: 0px 0px;*/
 }
 
 /* Desktop */
 @media (min-width: 992px) {
     #header .navbar-brand {
-        padding: 11px 0px;
+    /*padding: 11px 0px;*/
     }
 }
 
@@ -80,12 +82,13 @@ a {
 }
 
 /* Header Notification */
-#header #header-notification .nav-link {
-    padding: 12px 15px 0px 15px;
+#notification .nav-link {
+    padding-left: 15px;
+    padding-left: 15px;
     line-height: 33px;
 }
 
-#header #header-notification > .nav-link .badge {
+#notification > .nav-link .badge {
     position: absolute;
     top: 7px;
     right: 12px;
@@ -96,61 +99,65 @@ a {
 
 /* Desktop */
 @media (min-width: 992px) {
-    #header #header-notification .nav-link {
-        padding: 10px 15px 0px 15px;
+    #notification .nav-link {
         line-height: 50px;
     }
 
-    #header #header-notification > .nav-link .badge {
+    #notification > .nav-link .badge {
         top: 14px;
         right: 11px;
     }
 }
 
-#header #header-notification > .nav-link > i.fa-bell {
+#notification > .nav-link > i.fa-bell {
     font-size: 24px;
 }
 
+#language .nav-link {
+    line-height: 44px;
+}
+
+
 /* Header Profile */
-#header #header-profile .nav-link {
+#profile .nav-link {
     padding: 0px 15px;
     line-height: 45px;
 }
 
-#header #header-profile img {
+#profile img {
     max-width: 30px;
 }
 
 /* Desktop */
 @media (min-width: 992px) {
-    #header #header-profile .nav-link {
+    #profile .nav-link {
         padding: 0px 10px;
         line-height: 60px;
     }
 
-    #header #header-profile img {
+    #profile img {
         max-width: 35px;
     }
 }
 
 /* Header Logout */
-#header #header-logout > .nav-link {
+#logout > .nav-link {
     padding: 6px 20px 0px 20px;
     line-height: 39px;
 }
 
-#header #header-logout > .nav-link > i.fa-sign-out-alt {
+#logout > .nav-link > i.fa-sign-out-alt {
     font-size: 20px;
 }
 
 /* Desktop */
 @media (min-width: 992px) {
-    #header #header-logout > .nav-link {
+    #logout > .nav-link {
         padding: 0px 20px 0px 15px;
         line-height: 60px;
     }
 
-    #header #header-logout > .nav-link > i.fa-sign-out-alt {
+    #logout > .nav-link > i.fa-sign-out-alt {
         font-size: 15px;
     }
 }
@@ -395,6 +402,7 @@ a {
     padding-bottom: 5px;
     border-bottom: 1px solid #e9e9e9;
 }
+
 .page-header h1 {
     font-family: 'Open Sans', sans-serif;
     font-weight: 300;
@@ -613,6 +621,7 @@ div.required .col-form-label:not(span):before, td.required:before {
 .card-body .jqvmap-zoomin, .jqvmap-zoomout {
     padding: 0px;
 }
+
 /* Filemanager Folder Size */
 #filemanager .fa-folder.fa-5x {
     font-size: 10.5em;

@@ -561,7 +561,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 		}
 	}
 
-	private function addInstallInfo(string $file, array &$json = []) {
+	private function addInstallInfo(string $file, array &$json = []): void {
 
 		$zip = new \ZipArchive();
 			
@@ -614,6 +614,8 @@ class Installer extends \Opencart\System\Engine\Controller {
 
 					$json['success'] = $this->language->get('text_upload');
 				}
+			} else {
+				$json['error'] = $this->language->get('error_install');
 			}
 
 			$zip->close();

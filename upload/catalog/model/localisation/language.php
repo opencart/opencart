@@ -22,10 +22,17 @@ class Language extends \Opencart\System\Engine\Model {
 			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "language` WHERE `status` = '1' ORDER BY `sort_order`, `name`");
 
 			foreach ($query->rows as $result) {
+				$image = HTTP_SERVER;
+
+				if ($result['extension']) {
+					$image .= 'extension/' . $result['extension'] . '/catalog/';
+				}
+
 				$language_data[] = [
 					'language_id' => $result['language_id'],
 					'name'        => $result['name'],
 					'code'        => $result['code'],
+					'image'       => $image . 'language/' . $result['code'] . '/' . $result['code'] . '.png',
 					'locale'      => $result['locale'],
 					'extension'   => $result['extension'],
 					'sort_order'  => $result['sort_order'],

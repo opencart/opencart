@@ -28,7 +28,7 @@
                   <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown">{{ text_category }} ({{ category.text }}) <i class="fa-solid fa-caret-down"></i></button>
                 {% endif %}
               {% endfor %}
-              <div class="dropdown-menu dropdown-menu-right">
+              <div class="dropdown-menu dropdown-menu-end">
                 {% for category in categories %}
                   <a href="{{ category.href }}" class="dropdown-item">{{ category.text }}</a>
                 {% endfor %}

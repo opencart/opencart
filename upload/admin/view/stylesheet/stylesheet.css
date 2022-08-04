@@ -55,24 +55,6 @@ a {
     padding: 0;
 }
 
-#header .navbar-brand {
-    transition: 0.3s all;
-    width: 235px;
-    text-align: center;
-    /*padding: 0px 0px;*/
-}
-
-/* Desktop */
-@media (min-width: 992px) {
-    #header .navbar-brand {
-    /*padding: 11px 0px;*/
-    }
-}
-
-#header .navbar-brand img {
-    padding: 1px 0px;
-}
-
 #header .navbar-nav > li > .nav-link {
     color: #6D6D6D;
 }
@@ -82,13 +64,14 @@ a {
 }
 
 /* Header Notification */
-#notification .nav-link {
+#nav-notification .nav-link {
     padding-left: 15px;
-    padding-left: 15px;
-    line-height: 33px;
+    padding-right: 15px;
+    line-height: 30px;
+    font-size: 24px;
 }
 
-#notification > .nav-link .badge {
+#nav-notification > .nav-link .badge {
     position: absolute;
     top: 7px;
     right: 12px;
@@ -99,66 +82,65 @@ a {
 
 /* Desktop */
 @media (min-width: 992px) {
-    #notification .nav-link {
+    #nav-notification .nav-link {
         line-height: 50px;
     }
 
-    #notification > .nav-link .badge {
+    #nav-notification > .nav-link .badge {
         top: 14px;
         right: 11px;
     }
 }
 
-#notification > .nav-link > i.fa-bell {
-    font-size: 24px;
+#nav-language .nav-link {
+    padding-left: 15px;
+    padding-right: 15px;
+    line-height: 30px;
 }
 
-#language .nav-link {
-    line-height: 44px;
+@media (min-width: 992px) {
+    #nav-language .nav-link {
+        line-height: 50px;
+    }
 }
-
 
 /* Header Profile */
-#profile .nav-link {
-    padding: 0px 15px;
-    line-height: 45px;
+#nav-profile .nav-link {
+    padding-left: 15px;
+    padding-right: 15px;
+    line-height: 30px;
 }
 
-#profile img {
+#nav-profile img {
     max-width: 30px;
 }
 
 /* Desktop */
 @media (min-width: 992px) {
-    #profile .nav-link {
-        padding: 0px 10px;
-        line-height: 60px;
+    #nav-profile .nav-link {
+        padding-left: 10px;
+        padding-right: 10px;
+        line-height: 50px;
     }
 
-    #profile img {
+    #nav-profile img {
         max-width: 35px;
     }
 }
 
 /* Header Logout */
-#logout > .nav-link {
-    padding: 6px 20px 0px 20px;
-    line-height: 39px;
-}
-
-#logout > .nav-link > i.fa-sign-out-alt {
-    font-size: 20px;
+#nav-logout > .nav-link {
+    padding-left: 15px;
+    padding-right: 15px;
+    line-height: 30px;
 }
 
 /* Desktop */
 @media (min-width: 992px) {
-    #logout > .nav-link {
-        padding: 0px 20px 0px 15px;
-        line-height: 60px;
-    }
-
-    #logout > .nav-link > i.fa-sign-out-alt {
-        font-size: 15px;
+    #nav-logout > .nav-link {
+        padding-left: 10px;
+        padding-right: 10px;
+        line-height: 50px;
     }
 }
 

@@ -25,7 +25,7 @@
             <div class="col-sm-10">
               {% for language in languages %}
                 <div class="input-group">
-                  <div class="input-group-text"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/></div>
+                  <div class="input-group-text"><img src="{{ language.image }}" title="{{ language.name }}"/></div>
                   <input type="text" name="customer_group_description[{{ language.language_id }}][name]" value="{{ customer_group_description[language.language_id] ? customer_group_description[language.language_id].name }}" placeholder="{{ entry_name }}" id="input-name-{{ language.language_id }}" class="form-control"/>
                   <div id="error-name-{{ language.language_id }}" class="invalid-feedback"></div>
                 </div>
@@ -37,7 +37,7 @@
               <label for="input-description-{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_description }}</label>
               <div class="col-sm-10">
                 <div class="input-group">
-                  <div class="input-group-text"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/></div>
+                  <div class="input-group-text"><img src="{{ language.image }}" title="{{ language.name }}"/></div>
                   <textarea name="customer_group_description[{{ language.language_id }}][description]" rows="5" placeholder="{{ entry_description }}" id="input-description-{{ language.language_id }}" class="form-control">{{ customer_group_description[language.language_id] ? customer_group_description[language.language_id].description }}</textarea>
                 </div>
               </div>

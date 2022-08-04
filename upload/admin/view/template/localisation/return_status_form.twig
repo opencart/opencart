@@ -23,7 +23,7 @@
             <div class="col-sm-10">
               {% for language in languages %}
                 <div class="input-group">
-                  <div class="input-group-text"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/></div>
+                  <div class="input-group-text"><img src="{{ language.image }}" title="{{ language.name }}"/></div>
                   <input type="text" name="return_status[{{ language.language_id }}][name]" value="{{ return_status[language.language_id] ? return_status[language.language_id].name }}" placeholder="{{ entry_name }}" id="input-name-{{ language.language_id }}" class="form-control"/>
                 </div>
                 <div id="error-name-{{ language.language_id }}" class="invalid-feedback"></div>

@@ -286,10 +286,17 @@ class Language extends \Opencart\System\Engine\Model {
 				$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "language` ORDER BY `sort_order`, `name`");
 
 				foreach ($query->rows as $result) {
+					if (!$result['extension']) {
+						$image = HTTP_SERVER;
+					} else {
+						$image = HTTP_CATALOG . 'extension/' . $result['extension'] . '/admin/';
+					}
+
 					$language_data[$result['code']] = [
 						'language_id' => $result['language_id'],
 						'name'        => $result['name'],
 						'code'        => $result['code'],
+						'image'       => $image . 'language/' . $result['code'] . '/' . $result['code'] . '.png',
 						'locale'      => $result['locale'],
 						'extension'   => $result['extension'],
 						'sort_order'  => $result['sort_order'],

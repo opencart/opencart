@@ -25,7 +25,7 @@
               <div class="col-sm-10">
                 {% for language in languages %}
                   <div class="input-group">
-                    <div class="input-group-text"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/></div>
+                    <div class="input-group-text"><img src="{{ language.image }}" title="{{ language.name }}"/></div>
                     <input type="text" name="filter_group_description[{{ language.language_id }}][name]" value="{{ filter_group_description[language.language_id] ? filter_group_description[language.language_id].name }}" placeholder="{{ entry_group }}" id="input-group-{{ language.language_id }}" class="form-control"/>
                   </div>
                   <div id="error-group-{{ language.language_id }}" class="invalid-feedback"></div>
@@ -56,7 +56,7 @@
                     <td class="text-start" style="width: 70%;"><input type="hidden" name="filter[{{ filter_row }}][filter_id]" value="{{ filter.filter_id }}"/>
                       {% for language in languages %}
                         <div class="input-group">
-                          <div class="input-group-text"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/></div>
+                          <div class="input-group-text"><img src="{{ language.image }}" title="{{ language.name }}"/></div>
                           <input type="text" name="filter[{{ filter_row }}][filter_description][{{ language.language_id }}][name]" value="{{ filter.filter_description[language.language_id] ? filter.filter_description[language.language_id].name }}" placeholder="{{ entry_name }}" id="input-filter-{{ filter_row }}-{{ language.language_id }}" class="form-control"/>
                         </div>
                         <div id="error-filter-{{ filter_row }}-{{ language.language_id }}" class="invalid-feedback"></div>
@@ -89,7 +89,7 @@ $('#button-filter').on('click', function () {
     html += '  <td class="text-start" style="width: 70%;"><input type="hidden" name="filter[' + filter_row + '][filter_id]" value=""/>';
   {% for language in languages %}
     html += '  <div class="input-group">';
-    html += '    <div class="input-group-text"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></div>';
+    html += '    <div class="input-group-text"><img src="{{ language.image }}" title="{{ language.name }}" /></div>';
     html += '    <input type="text" name="filter[' + filter_row + '][filter_description][{{ language.language_id }}][name]" value="" placeholder="{{ entry_name }}" id="input-filter-' + filter_row + '-{{ language.language_id }}" class="form-control"/>';
     html += '  </div>';
     html += '  <div id="error-filter-' + filter_row + '-{{ language.language_id }}" class="invalid-feedback"></div>';

@@ -15,7 +15,7 @@
               <div class="btn-group">
                 <button type="button" value="{{ download.download }}" class="btn btn-primary"{% if not download.download %} disabled{% endif %}><i class="fa-solid fa-download"></i> {{ button_download }}</button>
                 <button type="button" data-bs-toggle="dropdown" class="btn btn-outline-dark dropdown-toggle dropdown-toggle-split"><i class="fa-solid fa-caret-down"></i></button>
-                <div class="dropdown-menu dropdown-menu-right">
+                <div class="dropdown-menu dropdown-menu-end">
                   <a href="{{ download.install }}" class="dropdown-item{% if not download.install %} disabled{% endif %}"><i class="fa-solid fa-plus-circle fa-fw"></i> {{ text_install }}</a> <a href="{{ download.uninstall }}" class="dropdown-item{% if not download.uninstall %} disabled{% endif %}"><i class="fa-solid fa-minus-circle fa-fw"></i> {{ text_uninstall }}</a> <a href="{{ download.delete }}" class="dropdown-item{% if not download.delete %} disabled{% endif %}"><i class="fa-regular fa-trash-can fa-fw"></i> {{ text_delete }}</a>
                 </div>
               </div>

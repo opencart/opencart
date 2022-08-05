@@ -162,7 +162,7 @@ class Review extends \Opencart\System\Engine\Controller {
 			'total' => $review_total,
 			'page'  => $page,
 			'limit' => 5,
-			'url'   => $this->url->link('product/product|review', 'language=' . $this->config->get('config_language') . '&product_id=' . $product_id . '&page={page}')
+			'url'   => $this->url->link('product/review|list', 'language=' . $this->config->get('config_language') . '&product_id=' . $product_id . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($review_total) ? (($page - 1) * 5) + 1 : 0, ((($page - 1) * 5) > ($review_total - 5)) ? $review_total : ((($page - 1) * 5) + 5), $review_total, ceil($review_total / 5));

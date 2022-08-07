@@ -89,9 +89,9 @@
                               html += '<div class="form-check">';
 
                               if (json['shipping_method'][i]['quote'][j]['code'] == '{{ shipping_method }}') {
-                                  html += '<input type="radio" name="shipping_method" value="' + json['shipping_method'][i]['quote'][j]['code'] + '" id="input-shipping-method-' + i + '" checked/>';
+                                  html += '<input type="radio" name="shipping_method" value="' + json['shipping_method'][i]['quote'][j]['code'] + '" id="input-shipping-method-' + i + '-' + j.replaceAll('_', '-') + '" checked/>';
                               } else {
-                                  html += '<input type="radio" name="shipping_method" value="' + json['shipping_method'][i]['quote'][j]['code'] + '" id="input-shipping-method-' + i + '"/>';
+                                  html += '<input type="radio" name="shipping_method" value="' + json['shipping_method'][i]['quote'][j]['code'] + '" id="input-shipping-method-' + i + '-' + j.replaceAll('_', '-') + '"/>';
                               }
 
                               html += '  <label for="input-shipping-method-' + i + '">' + json['shipping_method'][i]['quote'][j]['title'] + ' - ' + json['shipping_method'][i]['quote'][j]['text'] + '</label>';

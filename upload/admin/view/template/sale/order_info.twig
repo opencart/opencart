@@ -180,7 +180,8 @@
             <div class="col">
               <form id="form-coupon" class="mb-3">
                 <div class="input-group form-floating">
-                  <input type="text" name="coupon" value="{{ coupon }}" placeholder="{{ entry_coupon }}" id="input-coupon" class="form-control"/> <label for="input-coupon">{{ entry_coupon }}</label>
+                  <input type="text" name="coupon" value="{{ total_coupon }}" placeholder="{{ entry_coupon }}" id="input-coupon" class="form-control"/>
+                  <label for="input-coupon">{{ entry_coupon }}</label>
                   <button type="submit" id="button-coupon" data-bs-toogle="tooltip" title="{{ button_apply }}" class="btn btn-outline-primary"><i class="fa-solid fa-check"></i></button>
                 </div>
               </form>
@@ -189,7 +190,7 @@
             <div class="col">
               <form id="form-voucher">
                 <div class="input-group form-floating">
-                  <input type="text" name="voucher" value="{{ voucher }}" placeholder="{{ entry_voucher }}" id="input-voucher" class="form-control"/> <label for="input-voucher">{{ entry_voucher }}</label>
+                  <input type="text" name="voucher" value="{{ total_voucher }}" placeholder="{{ entry_voucher }}" id="input-voucher" class="form-control"/> <label for="input-voucher">{{ entry_voucher }}</label>
                   <button type="submit" id="button-voucher" data-bs-toogle="tooltip" title="{{ button_apply }}" class="btn btn-outline-primary"><i class="fa-solid fa-check"></i></button>
                 </div>
               </form>
@@ -198,7 +199,7 @@
             <div class="col">
               <form id="form-reward" class="mb-3">
                 <div class="input-group form-floating">
-                  <input type="text" name="reward" value="{{ reward }}" placeholder="{{ entry_reward }}" id="input-reward" class="form-control"/> <label for="input-reward">{{ entry_reward }}</label>
+                  <input type="text" name="reward" value="{{ total_reward }}" placeholder="{{ entry_reward }}" id="input-reward" class="form-control"/> <label for="input-reward">{{ entry_reward }}</label>
                   <button type="submit" id="button-reward" class="btn btn-outline-primary"><i class="fa-solid fa-check"></i></button>
                 </div>
               </form>
@@ -759,7 +760,8 @@
       <div class="modal-body">
         <form id="form-affiliate">
           <div class="mb-3">
-            <input type="text" name="affiliate" value="{{ affiliate }}" placeholder="{{ entry_affiliate }}" id="input-affiliate" list="list-affiliate" class="form-control"/> <input type="hidden" name="affiliate_id" value="{{ affiliate_id }}" id="input-affiliate-id"/>
+            <input type="text" name="affiliate" value="{{ affiliate }}" placeholder="{{ entry_affiliate }}" id="input-affiliate" list="list-affiliate" class="form-control"/>
+            <input type="hidden" name="affiliate_id" value="{{ affiliate_id }}" id="input-affiliate-id"/>
             <datalist id="list-affiliate"></datalist>
           </div>
           <div class="text-end">
@@ -946,7 +948,8 @@
         <form id="form-shipping-address">
 
           <div class="mb-3">
-            <label for="input-shipping-address" class="form-label">{{ entry_address }}</label> <select name="shipping_address" id="input-shipping-address" class="form-select">
+            <label for="input-shipping-address" class="form-label">{{ entry_address }}</label>
+            <select name="shipping_address" id="input-shipping-address" class="form-select">
               <option value="0" selected="selected">{{ text_none }}</option>
               {% for address in addresses %}
                 <option value="{{ address.address_id }}">{{ address.firstname }} {{ address.lastname }}, {{ address.address_1 }}, {{ address.city }}, {{ address.country }}</option>
@@ -955,26 +958,31 @@
           </div>
 
           <div class="mb-3 required">
-            <label for="input-shipping-firstname" class="form-label">{{ entry_firstname }}</label> <input type="text" name="firstname" value="{{ shipping_firstname }}" placeholder="{{ entry_firstname }}" id="input-shipping-firstname" class="form-control"/>
+            <label for="input-shipping-firstname" class="form-label">{{ entry_firstname }}</label>
+            <input type="text" name="firstname" value="{{ shipping_firstname }}" placeholder="{{ entry_firstname }}" id="input-shipping-firstname" class="form-control"/>
             <div id="error-shipping-firstname" class="invalid-feedback"></div>
           </div>
 
           <div class="mb-3 required">
-            <label for="input-shipping-lastname" class="form-label">{{ entry_lastname }}</label> <input type="text" name="lastname" value="{{ shipping_lastname }}" placeholder="{{ entry_lastname }}" id="input-shipping-lastname" class="form-control"/>
+            <label for="input-shipping-lastname" class="form-label">{{ entry_lastname }}</label>
+            <input type="text" name="lastname" value="{{ shipping_lastname }}" placeholder="{{ entry_lastname }}" id="input-shipping-lastname" class="form-control"/>
             <div id="error-shipping-lastname" class="invalid-feedback"></div>
           </div>
 
           <div class="mb-3">
-            <label for="input-shipping-company" class="form-label">{{ entry_company }}</label> <input type="text" name="company" value="{{ shipping_company }}" placeholder="{{ entry_company }}" id="input-shipping-company" class="form-control"/>
+            <label for="input-shipping-company" class="form-label">{{ entry_company }}</label>
+            <input type="text" name="company" value="{{ shipping_company }}" placeholder="{{ entry_company }}" id="input-shipping-company" class="form-control"/>
           </div>
 
           <div class="mb-3 required">
-            <label for="input-shipping-address-1" class="form-label">{{ entry_address_1 }}</label> <input type="text" name="address_1" value="{{ shipping_address_1 }}" placeholder="{{ entry_address_1 }}" id="input-shipping-address-1" class="form-control"/>
+            <label for="input-shipping-address-1" class="form-label">{{ entry_address_1 }}</label>
+            <input type="text" name="address_1" value="{{ shipping_address_1 }}" placeholder="{{ entry_address_1 }}" id="input-shipping-address-1" class="form-control"/>
             <div id="error-shipping-address-1" class="invalid-feedback"></div>
           </div>
 
           <div class="mb-3">
-            <label for="input-shipping-address-2" class="form-label">{{ entry_address_2 }}</label> <input type="text" name="address_2" value="{{ shipping_address_2 }}" placeholder="{{ entry_address_2 }}" id="input-shipping-address-2" class="form-control"/>
+            <label for="input-shipping-address-2" class="form-label">{{ entry_address_2 }}</label>
+            <input type="text" name="address_2" value="{{ shipping_address_2 }}" placeholder="{{ entry_address_2 }}" id="input-shipping-address-2" class="form-control"/>
           </div>
           <div class="mb-3 required">
             <label for="input-shipping-city" class="form-label">{{ entry_city }}</label> <input type="text" name="city" value="{{ shipping_city }}" placeholder="{{ entry_city }}" id="input-shipping-city" class="form-control"/>
@@ -1108,22 +1116,16 @@
                   <div id="error-shipping-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               {% endif %}
-
             {% endif %}
-
           {% endfor %}
-
           <div class="text-end">
             <button type="submit" id="button-shipping-address" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> {{ button_save }}</button>
           </div>
-
         </form>
       </div>
-
     </div>
   </div>
 </div>
-
 <div id="modal-comment" class="modal">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -1146,7 +1148,6 @@
     </div>
   </div>
 </div>
-
 <script type="text/javascript"><!--
 $('#button-collapse').on('click', function () {
     var element = this;
@@ -1985,7 +1986,7 @@ $(document).on('click', '#button-reward-add, #button-reward-remove', function (e
 $('#input-affiliate').autocomplete({
     'source': function (request, response) {
         $.ajax({
-            url: 'index.php?route=customer/customer|autocomplete&user_token={{ user_token }}&filter_affiliate=1&filter_name=' + encodeURIComponent(request),
+            url: 'index.php?route=marketing/affiliate|autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
             success: function (json) {
                 json.unshift({

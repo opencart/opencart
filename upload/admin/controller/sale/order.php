@@ -736,9 +736,9 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		// Coupon, Voucher, Reward
-		$data['coupon'] = '';
-		$data['voucher'] = '';
-		$data['reward'] = 0;
+		$data['total_coupon'] = '';
+		$data['total_voucher'] = '';
+		$data['total_reward'] = 0;
 
 		if ($order_id) {
 			$order_totals = $this->model_sale_order->getTotals($order_id);
@@ -749,7 +749,7 @@ class Order extends \Opencart\System\Engine\Controller {
 				$end = strrpos($order_total['title'], ')');
 
 				if ($start && $end) {
-					$data[$order_total['code']] = substr($order_total['title'], $start, $end - $start);
+					$data['total_' . $order_total['code']] = substr($order_total['title'], $start, $end - $start);
 				}
 			}
 		}

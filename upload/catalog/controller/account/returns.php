@@ -57,7 +57,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 				'name'       => $result['firstname'] . ' ' . $result['lastname'],
 				'status'     => $result['status'],
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'href'       => $this->url->link('account/returns|info', 'language=' . $this->config->get('config_language') . '&return_id=' . $result['return_id'] . $url)
+				'href'       => $this->url->link('account/returns|info', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&return_id=' . $result['return_id'] . $url)
 			];
 		}
 
@@ -86,7 +86,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 		$this->load->language('account/returns');
 
 		if (!$this->customer->isLogged() || (!isset($this->request->get['customer_token']) || !isset($this->session->data['customer_token']) || ($this->request->get['customer_token'] != $this->session->data['customer_token']))) {
-			$this->session->data['redirect'] = $this->url->link('account/returns|info', 'language=' . $this->config->get('config_language'));
+			$this->session->data['redirect'] = $this->url->link('account/returns|info', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']);
 
 			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language')));
 		}

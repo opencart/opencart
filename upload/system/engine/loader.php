@@ -69,16 +69,28 @@ class Loader {
 		$trigger = $route;
 
 		// Trigger the pre events
-		$this->event->trigger('controller/' . $trigger . '/before', [&$route, &$args]);
+		$result = $this->event->trigger('controller/' . $trigger . '/before', [&$route, &$args]);
 
 		// Make sure its only the last event that returns an output if required.
-		$action = new \Opencart\System\Engine\Action($route);
-		$output = $action->execute($this->registry, $args);
+		if ($result != null && !$result instanceof \Exception) {
+			$output = $result;
+		} else {
+			$action = new \Opencart\System\Engine\Action($route);
+			$output = $action->execute($this->registry, $args);
+		}
 
 		// Trigger the post events
-		$this->event->trigger('controller/' . $trigger . '/after', [&$route, &$args, &$output]);
+		$result = $this->event->trigger('controller/' . $trigger . '/after', [&$route, &$args, &$output]);
 
-		return $output;
+		if ($result && !$result instanceof \Exception) {
+			$output = $result;
+		}
+
+		if (!$output instanceof \Exception) {
+			return $output;
+		}
+
+		return '';
 	}
 	
 	/**

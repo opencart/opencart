@@ -1210,6 +1210,14 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$language_info = $this->model_localisation_language->getLanguageByCode($language_code);
 
+		if ($language_info) {
+			$config->set('config_language_id', $language_info['language_id']);
+			$config->set('config_language', $language_info['code']);
+		} else {
+			$config->set('config_language_id', $this->config->get('config_language_id'));
+			$config->set('config_language', $language_code);
+		}
+
 		$language = new \Opencart\System\Library\Language($language_code);
 
 		if (!$language_info['extension']) {
@@ -1221,14 +1229,6 @@ class Order extends \Opencart\System\Engine\Controller {
 		$language->load($language_code);
 		$registry->set('language', $language);
 
-		if ($language_info) {
-			$config->set('config_language_id', $language_info['language_id']);
-			$config->set('config_language', $language_info['code']);
-		} else {
-			$config->set('config_language_id', $this->config->get('config_language_id'));
-			$config->set('config_language', $language_code);
-		}
-		
 		// Currency
 		if (!isset($session->data['currency'])) {
 			$session->data['currency'] = $this->config->get('config_currency');

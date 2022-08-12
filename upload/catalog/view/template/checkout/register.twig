@@ -14,7 +14,8 @@
         </div>
       {% endif %}
       <div class="col mb-3{% if customer_groups|length <= 1 %} d-none{% endif %}">
-        <label class="form-label">{{ entry_customer_group }}</label> <select name="customer_group_id" id="input-customer-group" class="form-select">
+        <label class="form-label">{{ entry_customer_group }}</label>
+        <select name="customer_group_id" id="input-customer-group" class="form-select">
           {% for customer_group in customer_groups %}
             <option value="{{ customer_group.customer_group_id }}"{% if customer_group.customer_group_id == customer_group_id %} selected{% endif %}>{{ customer_group.name }}</option>
           {% endfor %}

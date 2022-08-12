@@ -18,8 +18,8 @@ $_['session_engine']     = 'db'; // db or file
 // Actions
 $_['action_pre_action']  = [
 	'startup/setting',
-	'startup/session',
 	'startup/language',
+	'startup/session',
 	'startup/seo_url',
 	'startup/customer',
 	'startup/currency',

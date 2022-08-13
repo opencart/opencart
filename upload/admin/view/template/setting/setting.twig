@@ -1109,6 +1109,7 @@
                   <label for="input-mail-engine" class="col-sm-2 col-form-label">{{ entry_mail_engine }}</label>
                   <div class="col-sm-10">
                     <select name="config_mail_engine" id="input-mail-engine" class="form-select">
+                      <option value="">{{ text_none }}</option>
                       <option value="mail"{% if config_mail_engine == 'mail' %} selected="selected"{% endif %}>{{ text_mail }}</option>
                       <option value="smtp"{% if config_mail_engine == 'smtp' %} selected="selected"{% endif %}>{{ text_smtp }}</option>
                     </select>

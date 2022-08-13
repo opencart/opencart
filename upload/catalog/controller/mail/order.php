@@ -282,20 +282,22 @@ class Order extends \Opencart\System\Engine\Controller {
 			$from = $this->config->get('config_email');
 		}
 
-		$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'));
-		$mail->parameter = $this->config->get('config_mail_parameter');
-		$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
-		$mail->smtp_username = $this->config->get('config_mail_smtp_username');
-		$mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
-		$mail->smtp_port = $this->config->get('config_mail_smtp_port');
-		$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
+		if ($this->config->get('config_mail_engine')) {
+			$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'));
+			$mail->parameter = $this->config->get('config_mail_parameter');
+			$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
+			$mail->smtp_username = $this->config->get('config_mail_smtp_username');
+			$mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
+			$mail->smtp_port = $this->config->get('config_mail_smtp_port');
+			$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
 
-		$mail->setTo($order_info['email']);
-		$mail->setFrom($from);
-		$mail->setSender($store_name);
-		$mail->setSubject($subject);
-		$mail->setHtml($this->load->view('mail/order_invoice', $data));
-		$mail->send();
+			$mail->setTo($order_info['email']);
+			$mail->setFrom($from);
+			$mail->setSender($store_name);
+			$mail->setSubject($subject);
+			$mail->setHtml($this->load->view('mail/order_invoice', $data));
+			$mail->send();
+		}
 	}
 
 	public function edit(array $order_info, int $order_status_id, string $comment, bool $notify): void {
@@ -364,20 +366,22 @@ class Order extends \Opencart\System\Engine\Controller {
 			$from = $this->config->get('config_email');
 		}
 
-		$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'));
-		$mail->parameter = $this->config->get('config_mail_parameter');
-		$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
-		$mail->smtp_username = $this->config->get('config_mail_smtp_username');
-		$mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
-		$mail->smtp_port = $this->config->get('config_mail_smtp_port');
-		$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
+		if ($this->config->get('config_mail_engine')) {
+			$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'));
+			$mail->parameter = $this->config->get('config_mail_parameter');
+			$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
+			$mail->smtp_username = $this->config->get('config_mail_smtp_username');
+			$mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
+			$mail->smtp_port = $this->config->get('config_mail_smtp_port');
+			$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
 
-		$mail->setTo($order_info['email']);
-		$mail->setFrom($from);
-		$mail->setSender($store_name);
-		$mail->setSubject($subject);
-		$mail->setHtml($this->load->view('mail/order_history', $data));
-		$mail->send();
+			$mail->setTo($order_info['email']);
+			$mail->setFrom($from);
+			$mail->setSender($store_name);
+			$mail->setSubject($subject);
+			$mail->setHtml($this->load->view('mail/order_history', $data));
+			$mail->send();
+		}
 	}
 
 	// catalog/model/checkout/order/addHistory/before
@@ -490,28 +494,30 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['store'] = html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8');
 			$data['store_url'] = $order_info['store_url'];
 
-			$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'));
-			$mail->parameter = $this->config->get('config_mail_parameter');
-			$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
-			$mail->smtp_username = $this->config->get('config_mail_smtp_username');
-			$mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
-			$mail->smtp_port = $this->config->get('config_mail_smtp_port');
-			$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
+			if ($this->config->get('config_mail_engine')) {
+				$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'));
+				$mail->parameter = $this->config->get('config_mail_parameter');
+				$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
+				$mail->smtp_username = $this->config->get('config_mail_smtp_username');
+				$mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
+				$mail->smtp_port = $this->config->get('config_mail_smtp_port');
+				$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
 
-			$mail->setTo($this->config->get('config_email'));
-			$mail->setFrom($this->config->get('config_email'));
-			$mail->setSender(html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'));
-			$mail->setSubject($subject);
-			$mail->setHtml($this->load->view('mail/order_alert', $data));
-			$mail->send();
+				$mail->setTo($this->config->get('config_email'));
+				$mail->setFrom($this->config->get('config_email'));
+				$mail->setSender(html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'));
+				$mail->setSubject($subject);
+				$mail->setHtml($this->load->view('mail/order_alert', $data));
+				$mail->send();
 
-			// Send to additional alert emails
-			$emails = explode(',', $this->config->get('config_mail_alert_email'));
+				// Send to additional alert emails
+				$emails = explode(',', $this->config->get('config_mail_alert_email'));
 
-			foreach ($emails as $email) {
-				if ($email && filter_var($email, FILTER_VALIDATE_EMAIL)) {
-					$mail->setTo(trim($email));
-					$mail->send();
+				foreach ($emails as $email) {
+					if ($email && filter_var($email, FILTER_VALIDATE_EMAIL)) {
+						$mail->setTo(trim($email));
+						$mail->send();
+					}
 				}
 			}
 		}

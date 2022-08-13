@@ -208,22 +208,24 @@ class Contact extends \Opencart\System\Engine\Controller {
 				$message .= '  <body>' . html_entity_decode($this->request->post['message'], ENT_QUOTES, 'UTF-8') . '</body>' . "\n";
 				$message .= '</html>' . "\n";
 
-				$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'));
-				$mail->parameter = $this->config->get('config_mail_parameter');
-				$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
-				$mail->smtp_username = $this->config->get('config_mail_smtp_username');
-				$mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
-				$mail->smtp_port = $this->config->get('config_mail_smtp_port');
-				$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
+				if ($this->config->get('config_mail_engine')) {
+					$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'));
+					$mail->parameter = $this->config->get('config_mail_parameter');
+					$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
+					$mail->smtp_username = $this->config->get('config_mail_smtp_username');
+					$mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
+					$mail->smtp_port = $this->config->get('config_mail_smtp_port');
+					$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
 
-				foreach ($emails as $email) {
-					if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-						$mail->setTo(trim($email));
-						$mail->setFrom($store_email);
-						$mail->setSender(html_entity_decode($store_name, ENT_QUOTES, 'UTF-8'));
-						$mail->setSubject(html_entity_decode($this->request->post['subject'], ENT_QUOTES, 'UTF-8'));
-						$mail->setHtml($message);
-						$mail->send();
+					foreach ($emails as $email) {
+						if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+							$mail->setTo(trim($email));
+							$mail->setFrom($store_email);
+							$mail->setSender(html_entity_decode($store_name, ENT_QUOTES, 'UTF-8'));
+							$mail->setSubject(html_entity_decode($this->request->post['subject'], ENT_QUOTES, 'UTF-8'));
+							$mail->setHtml($message);
+							$mail->send();
+						}
 					}
 				}
 			} else {

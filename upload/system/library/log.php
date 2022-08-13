@@ -24,7 +24,7 @@ class Log {
 	}
 	
 	/**
-     * 
+     * Write
      *
      * @param	string	$message
      */

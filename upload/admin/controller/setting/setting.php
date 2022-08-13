@@ -737,6 +737,10 @@ class Setting extends \Opencart\System\Engine\Controller {
 			$json['error']['image_location'] = $this->language->get('error_image_location');
 		}
 
+		if ($this->request->post['config_security'] && !$this->request->post['config_mail_engine']) {
+			$json['error']['warning'] = $this->language->get('error_security');
+		}
+
 		if ((Helper\Utf8\strlen($this->request->post['config_encryption']) < 32) || (Helper\Utf8\strlen($this->request->post['config_encryption']) > 1024)) {
 			$json['error']['encryption'] = $this->language->get('error_encryption');
 		}

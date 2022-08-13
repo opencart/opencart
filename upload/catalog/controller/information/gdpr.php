@@ -123,7 +123,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 			}
 
 			if ($status) {
-				$this->model_account_gdpr->addGdpr(token(), $email, $action);
+				$this->model_account_gdpr->addGdpr(Helper\General\token(), $email, $action);
 			}
 
 			$json['success'] = $this->language->get('text_success');

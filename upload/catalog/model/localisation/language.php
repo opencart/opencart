@@ -24,7 +24,9 @@ class Language extends \Opencart\System\Engine\Model {
 			foreach ($query->rows as $result) {
 				$image = HTTP_SERVER;
 
-				if ($result['extension']) {
+				if (!$result['extension']) {
+					$image .= 'catalog/';
+				} else {
 					$image .= 'extension/' . $result['extension'] . '/catalog/';
 				}
 

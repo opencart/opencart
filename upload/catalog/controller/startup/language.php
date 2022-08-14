@@ -6,19 +6,15 @@ class Language extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('localisation/language');
 
-		$languages = $this->model_localisation_language->getLanguages();
+		$results = $this->model_localisation_language->getLanguages();
 
-		foreach ($languages as $language) $language_data[$language['code']] = $language;
-
-		$code = '';
-
-		if (isset($this->request->get['language'])) {
-			$code = $this->request->get['language'];
-		}
+		foreach ($results as $result) $language_data[$result['code']] = $result;
 
 		// Language not available then use default
-		if (!array_key_exists($code, $language_data)) {
-			$code = $this->config->get('config_language');
+		$code = $this->config->get('config_language');
+
+		if (isset($this->request->get['language']) && array_key_exists($this->request->get['language'], $language_data)) {
+			$code = $this->request->get['language'];
 		}
 
 		// Set the config language_id

@@ -2,11 +2,13 @@
 namespace Opencart\Catalog\Controller\Startup;
 class Language extends \Opencart\System\Engine\Controller {
 	public function index(): void {
+		$language_data = [];
+
 		$this->load->model('localisation/language');
 
 		$languages = $this->model_localisation_language->getLanguages();
 
-		$language_codes = array_column($languages, 'language_id', 'code');
+		foreach ($languages as $language) $language_data[$language['code']] = $language;
 
 		$code = '';
 
@@ -15,17 +17,23 @@ class Language extends \Opencart\System\Engine\Controller {
 		}
 
 		// Language not available then use default
-		if (!array_key_exists($code, $language_codes)) {
+		if (!array_key_exists($code, $language_data)) {
 			$code = $this->config->get('config_language');
 		}
 
 		// Set the config language_id
-		$this->config->set('config_language_id', $language_codes[$code]);
+		$this->config->set('config_language_id', $language_data[$code]['language_id']);
 		$this->config->set('config_language', $code);
 
 		// Language
 		$language = new \Opencart\System\Library\Language($code);
-		$language->addPath(DIR_LANGUAGE);
+
+		if (!$language_data[$code]['extension']) {
+			$language->addPath(DIR_LANGUAGE);
+		} else {
+			$language->addPath(DIR_EXTENSION . $language_data[$code]['extension'] . '/catalog/language/');
+		}
+
 		$language->load($code);
 
 		$this->registry->set('language', $language);

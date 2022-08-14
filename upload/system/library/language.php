@@ -75,11 +75,11 @@ class Language {
 
 		$_ = [];
 
-		$len = strlen($prefix);
+		$length = strlen($prefix);
 
 		foreach ($this->data as $key => $value) {
-			if (substr($key, 0, $len) == $prefix) {
-				$_[substr($key, $len + 1)] = $value;
+			if (substr($key, 0, $length) == $prefix) {
+				$_[substr($key, $length + 1)] = $value;
 			}
 		}
 

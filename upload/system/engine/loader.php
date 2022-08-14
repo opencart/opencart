@@ -71,7 +71,7 @@ class Loader {
 		// Trigger the pre events
 		$result = $this->event->trigger('controller/' . $trigger . '/before', [&$route, &$args]);
 
-		// Make sure its only the last event that returns an output if required.
+		// Make sure it's only the last event that returns an output if required.
 		if ($result != null && !$result instanceof \Exception) {
 			$output = $result;
 		} else {

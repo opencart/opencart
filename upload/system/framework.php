@@ -220,8 +220,8 @@ if (!$action) {
 while ($action) {
 	// Get the route path of the object to be executed.
 	$route = $action->getId();
-
 	$args = [];
+	$output = '';
 
 	// Keep the original trigger.
 	$trigger = $action->getId();
@@ -245,7 +245,7 @@ while ($action) {
 		$error = '';
 	}
 
-	$event->trigger('controller/' . $trigger . '/after', [&$route, &$args]);
+	$event->trigger('controller/' . $trigger . '/after', [&$route, &$args, &$output]);
 }
 
 // Output

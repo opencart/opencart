@@ -65,15 +65,19 @@ class Ip extends \Opencart\System\Engine\Controller {
 	}
 
 	public function install(): void {
-		$this->load->model('extension/opencart/fraud/ip');
+		if ($this->user->hasPermission('modify', 'extension/fraud')) {
+			$this->load->model('extension/opencart/fraud/ip');
 
-		$this->model_extension_opencart_fraud_ip->install();
+			$this->model_extension_opencart_fraud_ip->install();
+		}
 	}
 
 	public function uninstall(): void {
-		$this->load->model('extension/opencart/fraud/ip');
+		if ($this->user->hasPermission('modify', 'extension/fraud')) {
+			$this->load->model('extension/opencart/fraud/ip');
 
-		$this->model_extension_opencart_fraud_ip->uninstall();
+			$this->model_extension_opencart_fraud_ip->uninstall();
+		}
 	}
 
 	public function ip(): void {

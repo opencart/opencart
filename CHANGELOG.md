@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [v4.0.1.2] (Release date: 07.07.2017)
+
 ## [v3.0.1.2] (Release date: 07.07.2017)
 
 ## [v3.0.1.1] (Release date: 04.07.2017)

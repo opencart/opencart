@@ -10,31 +10,31 @@ https://github.com/opencart/opencart/releases/tag/4.0.0.0
 
 ## [3.0.3.8] (Release date: 25.09.2021)
 
-https://github.com/opencart/opencart/releases/tag/3.0.3.0
+https://github.com/opencart/opencart/releases/tag/3.0.3.8
 
 ## [3.0.3.7] (Release date: 04.02.2021)
 
-https://github.com/opencart/opencart/releases/tag/3.0.3.0
+https://github.com/opencart/opencart/releases/tag/3.0.3.7
 
 ## [3.0.3.6] (Release date: 20.07.2020)
 
-https://github.com/opencart/opencart/releases/tag/3.0.3.0
+https://github.com/opencart/opencart/releases/tag/3.0.3.6
 
 ## [3.0.3.5] (Release date: 17.07.2020)
 
-https://github.com/opencart/opencart/releases/tag/3.0.3.0
+https://github.com/opencart/opencart/releases/tag/3.0.3.5
 
 ## [3.0.3.3] (Release date: 01.05.2020)
 
-https://github.com/opencart/opencart/releases/tag/3.0.3.0
+https://github.com/opencart/opencart/releases/tag/3.0.3.3
 
 ## [3.0.3.2] (Release date: 09.04.2019)
 
-https://github.com/opencart/opencart/releases/tag/3.0.3.0
+https://github.com/opencart/opencart/releases/tag/3.0.3.3
 
 ## [3.0.3.1] (Release date: 07.01.2019)
 
-https://github.com/opencart/opencart/releases/tag/3.0.3.0
+https://github.com/opencart/opencart/releases/tag/3.0.3.1
 
 ## [3.0.3.0] (Release date: 02.01.2019)
 

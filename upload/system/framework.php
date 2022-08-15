@@ -245,7 +245,7 @@ while ($action) {
 		$error = '';
 	}
 
-	$event->trigger('controller/' . $trigger . '/after', [&$route, &$args, &$output]);
+	$event->trigger('controller/' . $trigger . '/after', [&$route, &$args]);
 }
 
 // Output

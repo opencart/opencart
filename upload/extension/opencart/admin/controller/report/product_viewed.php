@@ -58,7 +58,7 @@ class ProductViewed extends \Opencart\System\Engine\Controller {
 	}
 
 	public function install(): void {
-		if ($this->request->get['route'] == 'extension/report|install') {
+		if ($this->user->hasPermission('modify', 'extension/report')) {
 			$this->load->model('extension/opencart/report/product_viewed');
 
 			$this->model_extension_opencart_report_product_viewed->install();
@@ -66,7 +66,7 @@ class ProductViewed extends \Opencart\System\Engine\Controller {
 	}
 
 	public function uninstall(): void {
-		if ($this->request->get['route'] == 'extension/report|uninstall') {
+		if ($this->user->hasPermission('modify', 'extension/report')) {
 			$this->load->model('extension/opencart/report/product_viewed');
 
 			$this->model_extension_opencart_report_product_viewed->uninstall();

@@ -61,6 +61,9 @@ class Search extends \Opencart\System\Engine\Controller {
 
 		if (isset($this->request->get['limit'])) {
 			$limit = (int)$this->request->get['limit'];
+			if($limit == 0) {
+				$limit = $this->config->get('config_pagination');	
+			}
 		} else {
 			$limit = $this->config->get('config_pagination');
 		}

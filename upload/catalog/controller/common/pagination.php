@@ -16,10 +16,14 @@ class Pagination extends \Opencart\System\Engine\Controller {
 
 		if (isset($setting['limit'])) {
 			$limit = (int)$setting['limit'];
+			if($limit == 0) {
+				$limit = 10;
+			}
 		} else {
 			$limit = 10;
 		}
 
+		
 		if (isset($setting['url'])) {
 			$url = str_replace('%7Bpage%7D', '{page}', (string)$setting['url']);
 		} else {

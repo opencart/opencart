@@ -112,7 +112,6 @@ class User {
 		return $this->user_group_id;
 	}
 
-
 	public function getEmail(): string {
 		return $this->email;
 	}

@@ -58,15 +58,19 @@ class ProductViewed extends \Opencart\System\Engine\Controller {
 	}
 
 	public function install(): void {
-		$this->load->model('extension/opencart/report/product_viewed');
+		if ($this->request->get['route'] == 'extension/report|install') {
+			$this->load->model('extension/opencart/report/product_viewed');
 
-		$this->model_extension_opencart_report_product_viewed->install();
+			$this->model_extension_opencart_report_product_viewed->install();
+		}
 	}
 
 	public function uninstall(): void {
-		$this->load->model('extension/opencart/report/product_viewed');
+		if ($this->request->get['route'] == 'extension/report|uninstall') {
+			$this->load->model('extension/opencart/report/product_viewed');
 
-		$this->model_extension_opencart_report_product_viewed->uninstall();
+			$this->model_extension_opencart_report_product_viewed->uninstall();
+		}
 	}
 
 	public function report(): void {

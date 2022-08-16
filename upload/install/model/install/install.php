@@ -46,7 +46,7 @@ class Install extends \Opencart\System\Engine\Model {
 			}
 
 			$sql = rtrim($sql, ",\n") . "\n";
-			$sql .= ") ENGINE=" . $table['engine'] . " CHARSET=" . $table['charset'] . " COLLATE=" . $table['collate'] . ";\n";
+			$sql .= ") ENGINE=" . $table['engine'] . " CHARSET=" . $table['charset'] . " ROW_FORMAT=DYNAMIC COLLATE=" . $table['collate'] . ";\n";
 
 			$db->query($sql);
 		}

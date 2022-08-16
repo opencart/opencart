@@ -28,11 +28,11 @@ define('DIR_STORAGE', DIR_SYSTEM . 'storage/');
 define('DIR_LANGUAGE', DIR_APPLICATION . 'language/');
 define('DIR_TEMPLATE', DIR_APPLICATION . 'view/template/');
 define('DIR_CONFIG', DIR_SYSTEM . 'config/');
-define('DIR_CACHE', DIR_SYSTEM . 'storage/cache/');
-define('DIR_DOWNLOAD', DIR_SYSTEM . 'storage/download/');
-define('DIR_LOGS', DIR_SYSTEM . 'storage/logs/');
-define('DIR_SESSION', DIR_SYSTEM . 'storage/session/');
-define('DIR_UPLOAD', DIR_SYSTEM . 'storage/upload/');
+define('DIR_CACHE', DIR_STORAGE . 'cache/');
+define('DIR_DOWNLOAD', DIR_STORAGE . 'download/');
+define('DIR_LOGS', DIR_STORAGE . 'logs/');
+define('DIR_SESSION', DIR_STORAGE . 'session/');
+define('DIR_UPLOAD', DIR_STORAGE . 'upload/');
 
 // Startup
 require_once(DIR_SYSTEM . 'startup.php');

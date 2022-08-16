@@ -12,7 +12,7 @@ If you have __1.5.x__ and want to upgrade __to 3.0.x__, You may try to [contact 
 
 1. BACKUP YOUR EXISTING STORE FILES AND DATABASE!!
     * Backup your __database__ via your store
-    `Admin -> System -> Backup`
+    `Admin -> System -> tools -> Backup`
     * Backup your __files__ using FTP file copy or use cPanel filemanager to create a zip of all the existing opencart files and folders
 2. Download the __latest version__ of OpenCart and __upload all__ new files on top of your current install __except__ your `config.php` and `admin/config.php`.
     1. Backup and Remove all of 2.x.x views files. Because OpenCart 3 is start to use TWIG to replace the TPL format.
@@ -48,11 +48,6 @@ If you have __1.5.x__ and want to upgrade __to 3.0.x__, You may try to [contact 
 13. If you use vQmod (by now everyone should be) you should first check for a new version at http://vQmod.com. Be sure to download the version that is marked for "opencart".
     You will also need to re-run the vQmod installer, even if you have the latest version. You should already have the installer on your site as it isn't meant to be deleted from the first time you run it. Simply browse to:
 http://yoursite.com/vqmod/install and you should see a success message. If you do not see a success message, follow the full install guide from the http://vQmod.com site.
-
-Note that some of your vQmod scripts may need to be updated for the new core changes.
-So run through your site catalog and admin areas and check in FTP for the vqmod/vqmod.log file.
-If you see errors, then you will need to address them.
-
 
 ## Troubleshooting:
 

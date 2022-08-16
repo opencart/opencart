@@ -69,14 +69,3 @@ When your site is ready to go live open file system/config/default.php
 **Replace with:**
 
 `$_['error_display'] = false;`
-
-## COMPOSER OR NOT TO COMPOSER
-
-From __version 2.2 composer has been added__ to aid developers who want to use composer libraries. 2 versions of OpenCart
-will become available, one compiled and one non-compiled (composer.json only - no files in vendor folder).
-
-We STRONGLY __advise leaving the vendor folder outside of the webroot__ - so files cannot be accessed directly.
-
-### How to install Composer
-
-Installing is extremely simple, follow the instructions [HERE](https://getcomposer.org/download/)

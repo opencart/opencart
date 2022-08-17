@@ -1,6 +1,5 @@
 <?php
 namespace Install;
-use \Opencart\System\Helper as Helper;
 //
 // Command line tool for installing opencart
 // Original Author: Vineet Naik <vineet.naik@kodeplay.com> <naikvin@gmail.com>
@@ -26,6 +25,9 @@ ini_set('display_errors', 1);
 
 error_reporting(E_ALL);
 
+// APPLICATION
+define('APPLICATION', 'Install');
+
 // DIR
 define('DIR_OPENCART', str_replace('\\', '/', realpath(dirname(__FILE__) . '/../')) . '/');
 define('DIR_APPLICATION', DIR_OPENCART . 'install/');
@@ -45,12 +47,21 @@ define('DIR_UPLOAD', DIR_SYSTEM . 'storage/upload/');
 // Startup
 require_once(DIR_SYSTEM . 'startup.php');
 
+// Startup
+require_once(DIR_SYSTEM . 'engine/controller.php');
+require_once(DIR_SYSTEM . 'engine/registry.php');
+
+// Library
+require_once(DIR_SYSTEM . 'library/request.php');
+require_once(DIR_SYSTEM . 'library/response.php');
+require_once(DIR_SYSTEM . 'library/db.php');
+require_once(DIR_SYSTEM . 'library/db/mysqli.php');
+
+// Helper
+require_once(DIR_SYSTEM . 'helper/db_schema.php');
+
 // Registry
 $registry = new \Opencart\System\Engine\Registry();
-
-// Loader
-$loader = new \Opencart\System\Engine\Loader($registry);
-$registry->set('load', $loader);
 
 // Request
 $registry->set('request', new \Opencart\System\Library\Request());

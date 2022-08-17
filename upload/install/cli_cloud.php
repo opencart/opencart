@@ -1,6 +1,5 @@
 <?php
 namespace Install;
-use \Opencart\System\Helper as Helper;
 //
 // Command line tool for installing cloud version of opencart
 //
@@ -17,6 +16,10 @@ ini_set('display_errors', 1);
 
 error_reporting(E_ALL);
 
+// APPLICATION
+define('APPLICATION', 'Install');
+
+// DIR
 define('DIR_OPENCART', str_replace('\\', '/', realpath(dirname(__FILE__) . '/../')) . '/');
 define('DIR_SYSTEM', DIR_OPENCART . 'system/');
 
@@ -24,14 +27,14 @@ define('DIR_SYSTEM', DIR_OPENCART . 'system/');
 require_once(DIR_SYSTEM . 'engine/controller.php');
 require_once(DIR_SYSTEM . 'engine/registry.php');
 
+// Library
 require_once(DIR_SYSTEM . 'library/request.php');
 require_once(DIR_SYSTEM . 'library/response.php');
 require_once(DIR_SYSTEM . 'library/db.php');
 require_once(DIR_SYSTEM . 'library/db/mysqli.php');
 
-require_once(DIR_SYSTEM . 'helper/general.php');
+// Helper
 require_once(DIR_SYSTEM . 'helper/db_schema.php');
-require_once(DIR_SYSTEM . 'helper/utf8.php');
 
 // Registry
 $registry = new \Opencart\System\Engine\Registry();

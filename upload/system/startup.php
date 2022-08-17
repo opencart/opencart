@@ -52,15 +52,12 @@ if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
 	$_SERVER['REMOTE_ADDR'] = $_SERVER['HTTP_CLIENT_IP'];
 }
 
-// Helper
-require_once(DIR_SYSTEM . 'helper/general.php');
-require_once(DIR_SYSTEM . 'helper/utf8.php');
-
 // OpenCart Autoloader
 require_once(DIR_SYSTEM . 'engine/autoloader.php');
 
-// Need Config to store application values
+// Need config to store application values
 require_once(DIR_SYSTEM . 'engine/config.php');
 
-// Framework
-require_once(DIR_SYSTEM . 'framework.php');
+// Helper
+require_once(DIR_SYSTEM . 'helper/general.php');
+require_once(DIR_SYSTEM . 'helper/utf8.php');

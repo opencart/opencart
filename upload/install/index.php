@@ -1,5 +1,6 @@
 <?php
-// Error Reporting
+ini_set('display_errors', 1);
+
 error_reporting(E_ALL);
 
 // Check if SSL
@@ -36,3 +37,6 @@ define('DIR_UPLOAD', DIR_SYSTEM . 'storage/upload/');
 
 // Startup
 require_once(DIR_SYSTEM . 'startup.php');
+
+// Framework
+require_once(DIR_SYSTEM . 'framework.php');

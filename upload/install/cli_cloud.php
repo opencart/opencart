@@ -53,8 +53,7 @@ set_error_handler(function($code, $message, $file, $line, array $errcontext) {
 		return false;
 	}
 
-	echo 'ERROR: ' . $code . ' ' . $message . ' in ' . $file . ' on line ' . $line . "\n";
-	exit();
+	throw new \ErrorException($message, 0, $code, $file, $line);
 });
 
 class CliCloud extends \Opencart\System\Engine\Controller {

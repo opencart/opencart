@@ -1,6 +1,4 @@
 <?php
-namespace Install;
-use \Opencart\System\Helper as Helper;
 // Command line tool for installing opencart
 // Original Author: Vineet Naik <vineet.naik@kodeplay.com> <naikvin@gmail.com>
 // Updated and maintained by OpenCart
@@ -20,6 +18,9 @@ use \Opencart\System\Helper as Helper;
 //								 --db_port     3306
 //                               --db_prefix   oc_
 //
+
+namespace Install;
+use \Opencart\System\Helper as Helper;
 
 ini_set('display_errors', 1);
 
@@ -249,13 +250,13 @@ class CliInstall extends \Opencart\System\Engine\Controller {
 			return 'ERROR: Could not load SQL file: ' . $file;
 		}
 
-		$db_driver   = html_entity_decode($option['db_driver'], ENT_QUOTES, 'UTF-8');
+		$db_driver = html_entity_decode($option['db_driver'], ENT_QUOTES, 'UTF-8');
 		$db_hostname = html_entity_decode($option['db_hostname'], ENT_QUOTES, 'UTF-8');
 		$db_username = html_entity_decode($option['db_username'], ENT_QUOTES, 'UTF-8');
 		$db_password = html_entity_decode($option['db_password'], ENT_QUOTES, 'UTF-8');
 		$db_database = html_entity_decode($option['db_database'], ENT_QUOTES, 'UTF-8');
-		$db_port     = $option['db_port'];
-		$db_prefix   = $option['db_prefix'];
+		$db_port = $option['db_port'];
+		$db_prefix = $option['db_prefix'];
 
 		try {
 			// Database

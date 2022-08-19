@@ -36,6 +36,7 @@ class Order extends \Opencart\System\Engine\Model {
 						'cycle'             	=> $product['subscription']['cycle'],
 						'duration'          	=> $product['subscription']['duration'],
 						'remaining'         	=> $product['subscription']['duration'],
+						'date_next'				=> $product['subscription']['date_next'],
 						'status'				=> $product['subscription']['status']
 						];
 					];

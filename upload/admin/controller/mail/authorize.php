@@ -47,7 +47,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 	// admin/model/user/user/editCode/after
 	public function reset(&$route, &$args, &$output) {
 		if (isset($this->request->get['route'])) {
-			$route =  $this->request->get['route'];
+			$route = $this->request->get['route'];
 		} else {
 			$route = '';
 		}

@@ -27,7 +27,7 @@ class Special extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
-		if (isset($this->request->get['limit']) && (int)$this->request->get['limit'] > 0) {
+		if (isset($this->request->get['limit']) && (int)$this->request->get['limit']) {
 			$limit = (int)$this->request->get['limit'];
 		} else {
 			$limit = $this->config->get('config_pagination');

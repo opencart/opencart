@@ -38,7 +38,6 @@ class Order extends \Opencart\System\Engine\Model {
 						'remaining'         	=> $product['subscription']['duration'],
 						'date_next'				=> $product['subscription']['date_next'],
 						'status'				=> $product['subscription']['status']
-						];
 					];
 
 					$this->model_checkout_subscription->addSubscription($order_id, $subscription_data);

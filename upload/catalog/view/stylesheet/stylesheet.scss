@@ -89,6 +89,7 @@ div.required .col-form-label:before, div.required .form-label:before {
   padding: 10px 0;
   margin: 0 0 20px 0;
   min-height: 44px;
+  position: relative;
 
   .nav {
     > .list-inline {
@@ -115,6 +116,49 @@ div.required .col-form-label:before, div.required .form-label:before {
   text-decoration: none;
 }
 
+#alert {
+  position: fixed;
+  z-index: 100;
+  left: 30%;
+  right: 30%;
+  border: 1px solid #000000;
+}
+
+#alert .alert {
+  width: 500px;
+  float: right;
+}
+/*
+@media (min-width: 1400px) {
+  #alert {
+    width: 1320px;
+  }
+}
+
+@media (min-width: 1200px) {
+  #alert {
+    width: 1140px;
+  }
+}
+
+@media (min-width: 992px) {
+  #alert {
+    width: 960px;
+  }
+}
+
+@media (min-width: 768px) {
+  #alert, .container-sm, .container-md {
+    width: 720px;
+  }
+}
+
+@media (min-width: 576px) {
+  #alert, .container-sm {
+    width: 540px;
+  }
+}
+*/
 footer a {
   font-size: 1.1em;
   text-decoration: none;

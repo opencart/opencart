@@ -22,7 +22,7 @@
               </td>
               <td class="text-end">x {{ product.quantity }}</td>
               <td class="text-end">{{ product.total }}</td>
-              <td class="text-center">
+              <td class="text-end">
                 <form action="{{ product_remove }}" method="post" data-oc-toggle="ajax" data-oc-load="{{ list }}" data-oc-target="#header-cart">
                   <input type="hidden" name="key" value="{{ product.cart_id }}">
                   <button type="submit" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-circle-xmark"></i></button>
@@ -36,7 +36,7 @@
               <td class="text-start">{{ voucher.description }}</td>
               <td class="text-end">x&nbsp;1</td>
               <td class="text-end">{{ voucher.amount }}</td>
-              <td class="text-center">
+              <td class="text-end">
                 <form action="{{ voucher_remove }}" method="post" data-oc-toggle="ajax" data-oc-load="{{ list }}" data-oc-target="#header-cart">
                   <input type="hidden" name="key" value="{{ voucher.key }}"/>
                   <button type="submit" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-circle-xmark"></i></button>

@@ -74,6 +74,9 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 					$this->db->query("UPDATE `" . DB_PREFIX . "order` SET `affiliate_id` = '" . (int)$customer_id . "' WHERE `affiliate_id` = '" . (int)$affiliate['affiliate_id'] . "'");
 				}
 			}
+			
+			// Event - Remove admin promotion from OC 3.x, since it is no longer required to have in OC v4.x releases.
+			$this->db->query("DELETE FROM `" . DB_PREFIX . "event` WHERE `action` = 'extension/extension/promotion/getList'");
 
 			// Config Session Expire
 			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE `key` = 'config_session_expire'");

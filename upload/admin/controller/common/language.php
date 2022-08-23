@@ -58,7 +58,7 @@ class Language extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->post['redirect'])) {
-			$redirect =  htmlspecialchars_decode($this->request->post['redirect'], ENT_COMPAT);
+			$redirect = htmlspecialchars_decode($this->request->post['redirect'], ENT_COMPAT);
 		} else {
 			$redirect = '';
 		}

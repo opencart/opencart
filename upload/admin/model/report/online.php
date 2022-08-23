@@ -11,7 +11,7 @@ class Online extends \Opencart\System\Engine\Model {
 		}
 
 		if (!empty($data['filter_customer'])) {
-			$implode[] = "co.`customer_id` > 0 AND CONCAT(c.`firstname`, ' ', c.`lastname`) LIKE '" . $this->db->escape((string)$data['filter_customer']) . "'";
+			$implode[] = "co.`customer_id` > '0' AND CONCAT(c.`firstname`, ' ', c.`lastname`) LIKE '" . $this->db->escape((string)$data['filter_customer']) . "'";
 		}
 
 		if ($implode) {

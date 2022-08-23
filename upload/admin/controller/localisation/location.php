@@ -205,7 +205,7 @@ class Location extends \Opencart\System\Engine\Controller {
 		if (!empty($location_info)) {
 			$data['name'] = $location_info['name'];
 		} else {
-			$data['name'] =   '';
+			$data['name'] = '';
 		}
 
 		if (!empty($location_info)) {

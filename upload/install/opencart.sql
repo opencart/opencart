@@ -856,9 +856,7 @@ INSERT INTO `oc_event` (`code`, `trigger`, `action`, `status`) VALUES
 ('statistics_return_add', 'catalog/model/account/returns/addReturn/after', 'event/statistics|addReturn', 1),
 ('statistics_return_delete', 'admin/model/sale/returns/deleteReturn/after', 'event/statistics|deleteReturn', 1),
 ('statistics_order_history', 'catalog/model/checkout/order/addHistory/before', 'event/statistics|addHistory', 1),
-
-('subscription', 'catalog/model/checkout/subscription/addSubscription/after', 'event/subscription|addSubscription', 1),
-
+('subscription', 'catalog/model/checkout/subscription/addSubscription/after', 'mail/subscription', 1),
 ('admin_currency_add', 'admin/model/localisation/currency/addCurrency/after', 'event/currency', 1),
 ('admin_currency_edit', 'admin/model/localisation/currency/editCurrency/after', 'event/currency', 1),
 ('admin_currency_setting', 'admin/model/setting/setting/editSetting/after', 'event/currency', 1),

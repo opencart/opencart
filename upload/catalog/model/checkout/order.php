@@ -23,6 +23,7 @@ class Order extends \Opencart\System\Engine\Model {
 					$subscription_data = [
 						'order_product_id' 		=> $order_product_id,
 						'customer_id'			=> $data['customer_id'],
+						'order_id'              => $order_id,
 						'subscription_plan_id' 	=> $product['subscription']['subscription_plan_id'],
 						'name'              	=> $product['subscription']['name'],
 						'description'       	=> $product['subscription']['description'],

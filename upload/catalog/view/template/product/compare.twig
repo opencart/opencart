@@ -14,6 +14,7 @@
     <div id="content" class="col">{{ content_top }}
       <h1>{{ heading_title }}</h1>
       {% if products %}
+      <div class="table-responsive">
         <table class="table table-bordered">
           <thead>
             <tr>
@@ -127,6 +128,7 @@
             {% endfor %}
           </tr>
         </table>
+      </div>
       {% else %}
         <p>{{ text_no_results }}</p>
         <div class="d-inline-block pt-2 pd-2 w-100">

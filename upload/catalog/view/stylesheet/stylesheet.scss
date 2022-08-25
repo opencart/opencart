@@ -82,6 +82,92 @@ div.required .col-form-label:before, div.required .form-label:before {
   }
 }
 
+#alert {
+  z-index: 9999;
+}
+
+#alert .alert {
+  min-width: 400px;
+  position: relative;
+}
+
+@media (min-width: 1300px) {
+  #alert .alert {
+    right: 50px;
+  }
+}
+
+@media (min-width: 1400px) {
+  #alert .alert {
+    right: 0px;
+  }
+}
+@media (min-width: 1600px) {
+  #alert .alert {
+    right: 100px;
+  }
+}
+@media (min-width: 1800px) {
+  #alert .alert {
+    right: 200px;
+  }
+}
+@media (min-width: 2000px) {
+  #alert .alert {
+     right: 300px;
+  }
+}
+@media (min-width: 2200px) {
+  #alert .alert {
+    right: 400px;
+  }
+}
+@media (min-width: 2400px) {
+  #alert .alert {
+    right: 500px;
+  }
+}
+@media (min-width: 2600px) {
+  #alert .alert {
+    right: 600px;
+  }
+}
+@media (min-width: 2800px) {
+  #alert .alert {
+    right: 700px;
+  }
+}
+@media (min-width: 3000px) {
+  #alert .alert {
+    right: 800px;
+  }
+}
+@media (min-width: 3200px) {
+  #alert .alert {
+    right: 900px;
+  }
+}
+@media (min-width: 3400px) {
+  #alert .alert {
+    right: 1000px;
+  }
+}
+@media (min-width: 3600px) {
+  #alert .alert {
+    right: 1100px;
+  }
+}
+@media (min-width: 3800px) {
+  #alert .alert {
+    right: 1200px;
+  }
+}
+@media (min-width: 4000px) {
+  #alert .alert {
+    right: 1300px;
+  }
+}
+
 /* top */
 #top {
   background-color: #EEEEEE;
@@ -116,49 +202,6 @@ div.required .col-form-label:before, div.required .form-label:before {
   text-decoration: none;
 }
 
-#alert {
-  position: fixed;
-  z-index: 100;
-  left: 30%;
-  right: 30%;
-  border: 1px solid #000000;
-}
-
-#alert .alert {
-  width: 500px;
-  float: right;
-}
-/*
-@media (min-width: 1400px) {
-  #alert {
-    width: 1320px;
-  }
-}
-
-@media (min-width: 1200px) {
-  #alert {
-    width: 1140px;
-  }
-}
-
-@media (min-width: 992px) {
-  #alert {
-    width: 960px;
-  }
-}
-
-@media (min-width: 768px) {
-  #alert, .container-sm, .container-md {
-    width: 720px;
-  }
-}
-
-@media (min-width: 576px) {
-  #alert, .container-sm {
-    width: 540px;
-  }
-}
-*/
 footer a {
   font-size: 1.1em;
   text-decoration: none;

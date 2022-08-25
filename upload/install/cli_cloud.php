@@ -26,6 +26,9 @@ define('DIR_OPENCART', str_replace('\\', '/', realpath(dirname(__FILE__) . '/../
 define('DIR_SYSTEM', DIR_OPENCART . 'system/');
 
 // Startup
+require_once(DIR_SYSTEM . 'startup.php');
+
+// Engine
 require_once(DIR_SYSTEM . 'engine/controller.php');
 require_once(DIR_SYSTEM . 'engine/registry.php');
 
@@ -294,5 +297,5 @@ class CliCloud extends \Opencart\System\Engine\Controller {
 $controller = new \Install\CliCloud($registry);
 $controller->index();
 
-// Output
+// Outputc
 $response->output();

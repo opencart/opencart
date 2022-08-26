@@ -219,25 +219,26 @@
                       <span class="fa-stack"><i class="fa-solid fa-star fa-stack-1x"></i><i class="fa-regular fa-star fa-stack-1x"></i></span>
                     {% endif %}
                     {% endfor %}
-                    <a href="" onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;">{{ text_reviews }}</a> / <a href="" onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;">{{ text_write }}</a></p>
+                    <a href="" onclick="$('a[href=\'#tab-review\']').tab('show'); return false;">{{ text_reviews }}</a> / <a href="" onclick="$('a[href=\'#tab-review\']').tab('show'); return false;">{{ text_write }}</a></p>
                 </div>
               {% endif %}
             </form>
           </div>
         </div>
         <ul class="nav nav-tabs">
-          <li class="nav-item"><a href="#tab-description" id="description-tab" class="nav-link active" data-bs-toggle="tab">{{ tab_description }}</a></li>
+          <li class="nav-item"><a href="#tab-description" data-bs-toggle="tab" class="nav-link active">{{ tab_description }}</a></li>
           {% if attribute_groups %}
-            <li class="nav-item"><a href="#tab-specification" id="specification-tab" class="nav-link" data-bs-toggle="tab">{{ tab_attribute }}</a></li>
+            <li class="nav-item"><a href="#tab-specification" data-bs-toggle="tab" class="nav-link">{{ tab_attribute }}</a></li>
           {% endif %}
           {% if review_status %}
-            <li class="nav-item"><a href="#tab-review" id="review-tab" class="nav-link" data-bs-toggle="tab">{{ tab_review }}</a></li>
+            <li class="nav-item"><a href="#tab-review" data-bs-toggle="tab" class="nav-link">{{ tab_review }}</a></li>
           {% endif %}
         </ul>
         <div class="tab-content">
-          <div id="tab-description" class="tab-pane fade show active mb-4" role="tabpanel" aria-labelledby="description-tab">{{ description }}</div>
+
+          <div id="tab-description" class="tab-pane fade show active mb-4">{{ description }}</div>
           {% if attribute_groups %}
-            <div id="tab-specification" class="tab-pane fade" role="tabpanel" aria-labelledby="specification-tab">
+            <div id="tab-specification" class="tab-pane fade">
               <div class="table-responsive">
                 <table class="table table-bordered">
                   {% for attribute_group in attribute_groups %}
@@ -260,7 +261,7 @@
             </div>
           {% endif %}
           {% if review_status %}
-            <div id="tab-review" class="tab-pane fade">{{ review }}</div>
+            <div id="tab-review" class="tab-pane fade mb-4">{{ review }}</div>
           {% endif %}
         </div>
       </div>

@@ -297,5 +297,5 @@ class CliCloud extends \Opencart\System\Engine\Controller {
 $controller = new \Install\CliCloud($registry);
 $controller->index();
 
-// Outputc
+// Output
 $response->output();

@@ -2,7 +2,8 @@
 namespace Opencart\Catalog\Controller\Mail;
 use \Opencart\System\Helper as Helper;
 class Subscription extends \Opencart\System\Engine\Controller {
-	public function index(string &$route, array &$args): void {
+	public function index(string &$route, array &$args, &$output): void {
+		/*
 		if (isset($args[0])) {
 			$subscription_id = $args[0];
 		} else {
@@ -14,7 +15,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		} else {
 			$subscription = [];
 		}
-
+/
 		$subscription['order_product_id']
 		$subscription['customer_id']
 		$subscription['order_id']
@@ -310,5 +311,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 				$mail->send();
 			}
 		}
+		*/
 	}
 }

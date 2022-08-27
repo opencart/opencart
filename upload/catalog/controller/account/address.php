@@ -314,6 +314,10 @@ class Address extends \Opencart\System\Engine\Controller {
 					}
 				}
 			}
+
+			if (isset($this->request->get['address_id']) && ($this->customer->getAddressId() == $this->request->get['address_id']) && !$this->request->post['default']) {
+				$json['error'] = $this->language->get('error_default');
+			}
 		}
 
 		if (!$json) {

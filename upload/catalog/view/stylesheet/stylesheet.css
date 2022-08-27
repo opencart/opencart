@@ -67,6 +67,7 @@ div.required .col-form-label:before, div.required .form-label:before {
 }
 #alert {
   z-index: 9999;
+  pointer-events: all;
 }
 #alert .alert {
   min-width: 400px;

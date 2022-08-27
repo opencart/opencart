@@ -49,6 +49,7 @@ a {
 
 #alert {
     z-index: 9999;
+    pointer-events: all;
 }
 
 #header {

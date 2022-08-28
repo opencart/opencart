@@ -47,7 +47,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 		$subscription_total = $this->model_account_Subscription->getTotalSubscriptions();
 
-		$results = $this->model_account_Subscription->getSubscriptions(($page - 1) * 10, 10);
+		$results = $this->model_account_subscription->getSubscriptions(($page - 1) * 10, 10);
 
 		foreach ($results as $result) {
 			if ($result['status']) {
@@ -58,7 +58,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 			$data['subscriptions'][] = [
 				'subscription_id' => $result['subscription_id'],
-				'product'         => $result['product_name'],
+				'product'         => $result['product'],
 				'status'          => $status,
 				'date_added'      => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'view'            => $this->url->link('account/subscription|info', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&subscription_id=' . $result['subscription_id']),

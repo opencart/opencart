@@ -35,9 +35,9 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 			$data['success'] = '';
 		}
 
-		$data['back'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']);
-
 		$data['list'] = $this->getList();
+
+		$data['continue'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']);
 
 		$data['customer_token'] = $this->session->data['customer_token'];
 

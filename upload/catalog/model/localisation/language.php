@@ -4,13 +4,41 @@ class Language extends \Opencart\System\Engine\Model {
 	public function getLanguage(int $language_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "language` WHERE `language_id` = '" . (int)$language_id . "'");
 
-		return $query->row;
+		$language = $query->row;
+
+		if ($language) {
+			$language['image'] = HTTP_SERVER;
+
+			if (!$language['extension']) {
+				$language['image'] .= 'catalog/';
+			} else {
+				$language['image'] .= 'extension/' . $language['extension'] . '/catalog/';
+			}
+
+			$language['image'] .= 'language/' . $language['code'] . '/' . $language['code'] . '.png';
+		}
+
+		return $language;
 	}
 
 	public function getLanguageByCode(string $code): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "language` WHERE `code` = '" . $this->db->escape($code) . "'");
 
-		return $query->row;
+		$language = $query->row;
+
+		if ($language) {
+			$language['image'] = HTTP_SERVER;
+
+			if (!$language['extension']) {
+				$language['image'] .= 'catalog/';
+			} else {
+				$language['image'] .= 'extension/' . $language['extension'] . '/catalog/';
+			}
+
+			$language['image'] .= 'language/' . $language['code'] . '/' . $language['code'] . '.png';
+		}
+
+		return $language;
 	}
 
 	public function getLanguages(): array {

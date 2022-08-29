@@ -110,14 +110,17 @@ class Translation extends \Opencart\System\Engine\Controller {
 
 			if ($language_info) {
 				$code = $language_info['code'];
+				$image = $language_info['image'];
 			} else {
 				$code = '';
+				$image = '';
 			}
 
 			$data['translations'][] = [
 				'translation_id' => $result['translation_id'],
 				'store'          => ($result['store_id'] ? $result['store'] : $this->language->get('text_default')),
 				'route'          => $result['route'],
+				'image'          => $image,
 				'language'       => $code,
 				'key'            => $result['key'],
 				'value'          => $result['value'],

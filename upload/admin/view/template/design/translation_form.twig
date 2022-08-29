@@ -48,7 +48,8 @@
           <div class="row mb-3">
             <label for="input-key" class="col-sm-2 col-form-label">{{ entry_key }}</label>
             <div class="col-sm-10">
-              <select id="input-key" class="form-select"></select> <input type="text" name="key" value="{{ key }}" placeholder="{{ entry_key }}" id="input-key" class="form-control"/>
+              <select id="input-keys" class="form-select"></select>
+              <input type="text" name="key" value="{{ key }}" placeholder="{{ entry_key }}" id="input-key" class="form-control"/>
               <div id="error-key" class="invalid-feedback"></div>
             </div>
           </div>
@@ -139,9 +140,9 @@ $('#input-route').on('change', function () {
                 }
             }
 
-            $('#input-key').html(html);
+            $('#input-keys').html(html);
 
-            $('#input-key').trigger('change');
+            $('#input-keys').trigger('change');
         },
         error: function (xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -149,11 +150,11 @@ $('#input-route').on('change', function () {
     });
 });
 
-$('#input-key').on('change', function () {
-    if (translation[$('#input-key').val()]) {
-        $('#input-default').val(translation[$('#input-key').val()]);
+$('#input-keys').on('change', function () {
+    if (translation[$('#input-keys').val()]) {
+        $('#input-default').val(translation[$('#input-keys').val()]);
 
-        $('#input-key').val($('#input-key').val());
+        $('#input-key').val($('#input-keys').val());
     } else {
         $('#input-default').val('');
     }

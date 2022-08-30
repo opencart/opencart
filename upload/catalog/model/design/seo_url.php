@@ -12,4 +12,20 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 
 		return $query->row;
 	}
+	
+	public function listUniqueKeys(): array
+	{
+		$unique_keys = $this->config->get('seouniquekeys');
+
+		if (!$unique_keys) {
+			$query = $this->db->query("SELECT DISTINCT (`key`) FROM `" . DB_PREFIX . "seo_url`");
+			$unique_keys = array();
+			foreach ($query->rows as $value) {
+				$unique_keys[] = $value['key'];
+			}
+			$this->config->set('seouniquekeys', $unique_keys);
+		
+		}
+		return $unique_keys;
+	}
 }

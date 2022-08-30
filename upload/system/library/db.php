@@ -8,7 +8,7 @@
 */
 
 /**
-* DB
+* DB Adapter
 */
 namespace Opencart\System\Library;
 class DB {
@@ -38,7 +38,7 @@ class DB {
 	/**
      * Query
      *
-     * @param	string	$sql
+     * @param	string	$sql	SQl statement to be executed
 	 * 
 	 * @return	array
      */
@@ -49,9 +49,9 @@ class DB {
 	/**
      * Escape
      *
-     * @param	string	$value
+     * @param	string	$value	Value to be protected against SQL injections
 	 * 
-	 * @return	string
+	 * @return	string	returns escaped value
      */
 	public function escape(string $value): string {
 		return $this->adaptor->escape($value);

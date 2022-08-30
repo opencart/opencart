@@ -484,7 +484,7 @@ function db_schema() {
 				'references' => [
 					'table' => 'banner',
 					'field' => 'banner_id'
-				],
+				]
 			],
 			[
 				'field'      => 'language_id',
@@ -558,7 +558,7 @@ function db_schema() {
 				'references' => [
 					'table' => 'api',
 					'field' => 'api_id'
-				],
+				]
 			],
 			[
 				'field'      => 'customer_id',
@@ -717,6 +717,15 @@ function db_schema() {
 			'category_id',
 			'language_id'
 		],
+		'foreign' => [
+			[
+				'field'      => 'language_id',
+				'references' => [
+					'table' => 'language',
+					'field' => 'language_id'
+				]
+			]
+		],
 		'index' => [
 			[
 				'name' => 'name',
@@ -748,6 +757,22 @@ function db_schema() {
 			'category_id',
 			'filter_id'
 		],
+		'foreign' => [
+			[
+				'field'      => 'category_id',
+				'references' => [
+					'table' => 'category',
+					'field' => 'category_id'
+				]
+			],
+			[
+				'field'      => 'filter_id',
+				'references' => [
+					'table' => 'filter',
+					'field' => 'filter_id'
+				]
+			]
+		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
 		'collate' => 'utf8mb4_general_ci'
@@ -775,6 +800,15 @@ function db_schema() {
 		'primary' => [
 			'category_id',
 			'path_id'
+		],
+		'foreign' => [
+			[
+				'field'      => 'category_id',
+				'references' => [
+					'table' => 'category',
+					'field' => 'category_id'
+				]
+			]
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
@@ -804,6 +838,29 @@ function db_schema() {
 			'category_id',
 			'store_id'
 		],
+		'foreign' => [
+			[
+				'field'      => 'category_id',
+				'references' => [
+					'table' => 'category',
+					'field' => 'category_id'
+				]
+			],
+			[
+				'field'      => 'store_id',
+				'references' => [
+					'table' => 'store',
+					'field' => 'store_id'
+				]
+			],
+			[
+				'field'      => 'layout_id',
+				'references' => [
+					'table' => 'layout',
+					'field' => 'layout_id'
+				]
+			]
+		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
 		'collate' => 'utf8mb4_general_ci'
@@ -826,6 +883,22 @@ function db_schema() {
 		'primary' => [
 			'category_id',
 			'store_id'
+		],
+		'foreign' => [
+			[
+				'field'      => 'category_id',
+				'references' => [
+					'table' => 'category',
+					'field' => 'category_id'
+				]
+			],
+			[
+				'field'      => 'store_id',
+				'references' => [
+					'table' => 'store',
+					'field' => 'store_id'
+				]
+			]
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
@@ -982,6 +1055,22 @@ function db_schema() {
 			'coupon_id',
 			'category_id'
 		],
+		'foreign' => [
+			[
+				'field'      => 'coupon_id',
+				'references' => [
+					'table' => 'coupon',
+					'field' => 'coupon_id'
+				]
+			],
+			[
+				'field'      => 'category_id',
+				'references' => [
+					'table' => 'category',
+					'field' => 'category_id'
+				]
+			]
+		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
 		'collate' => 'utf8mb4_general_ci'
@@ -1025,6 +1114,29 @@ function db_schema() {
 		'primary' => [
 			'coupon_history_id'
 		],
+		'foreign' => [
+			[
+				'field'      => 'coupon_id',
+				'references' => [
+					'table' => 'coupon',
+					'field' => 'coupon_id'
+				]
+			],
+			[
+				'field'      => 'order_id',
+				'references' => [
+					'table' => 'order',
+					'field' => 'order_id'
+				]
+			],
+			[
+				'field'      => 'customer_id',
+				'references' => [
+					'table' => 'customer',
+					'field' => 'customer_id'
+				]
+			]
+		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
 		'collate' => 'utf8mb4_general_ci'
@@ -1054,10 +1166,19 @@ function db_schema() {
 			'coupon_product_id'
 		],
 		'foreign' => [
-			'field'      => 'product_id',
-			'references' => [
-				'table' => 'product',
-				'field' => 'product_id'
+			[
+				'field'      => 'coupon_id',
+				'references' => [
+					'table' => 'coupon',
+					'field' => 'coupon_id'
+				]
+			],
+			[
+				'field'      => 'product_id',
+				'references' => [
+					'table' => 'product',
+					'field' => 'product_id'
+				]
 			]
 		],
 		'engine' => 'InnoDB',
@@ -1271,6 +1392,29 @@ function db_schema() {
 		'primary' => [
 			'customer_id'
 		],
+		'foreign' => [
+			[
+				'field'      => 'customer_group_id',
+				'references' => [
+					'table' => 'customer_group',
+					'field' => 'customer_group_id'
+				]
+			],
+			[
+				'field'      => 'store_id',
+				'references' => [
+					'table' => 'store',
+					'field' => 'store_id'
+				]
+			],
+			[
+				'field'      => 'language_id',
+				'references' => [
+					'table' => 'language',
+					'field' => 'language_id'
+				]
+			]
+		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
 		'collate' => 'utf8mb4_general_ci'
@@ -1313,6 +1457,15 @@ function db_schema() {
 		],
 		'primary' => [
 			'customer_activity_id'
+		],
+		'foreign' => [
+			[
+				'field'      => 'customer_id',
+				'references' => [
+					'table' => 'customer',
+					'field' => 'customer_id'
+				],
+			]
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
@@ -1412,6 +1565,15 @@ function db_schema() {
 		'primary' => [
 			'customer_id'
 		],
+		'foreign' => [
+			[
+				'field'      => 'customer_id',
+				'references' => [
+					'table' => 'customer',
+					'field' => 'customer_id'
+				],
+			]
+		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
 		'collate' => 'utf8mb4_general_ci'
@@ -1455,6 +1617,22 @@ function db_schema() {
 		'primary' => [
 			'customer_affiliate_report_id'
 		],
+		'foreign' => [
+			[
+				'field'      => 'customer_id',
+				'references' => [
+					'table' => 'customer',
+					'field' => 'customer_id'
+				]
+			],
+			[
+				'field'      => 'store_id',
+				'references' => [
+					'table' => 'store',
+					'field' => 'store_id'
+				]
+			]
+		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
 		'collate' => 'utf8mb4_general_ci'
@@ -1487,6 +1665,15 @@ function db_schema() {
 		],
 		'primary' => [
 			'customer_approval_id'
+		],
+		'foreign' => [
+			[
+				'field'      => 'customer_id',
+				'references' => [
+					'table' => 'customer',
+					'field' => 'customer_id'
+				],
+			]
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
@@ -1548,6 +1735,22 @@ function db_schema() {
 		'primary' => [
 			'customer_group_id',
 			'language_id'
+		],
+		'foreign' => [
+			[
+				'field'      => 'customer_group_id',
+				'references' => [
+					'table' => 'customer_group',
+					'field' => 'customer_group_id'
+				]
+			],
+			[
+				'field'      => 'language_id',
+				'references' => [
+					'table' => 'language',
+					'field' => 'language_id'
+				]
+			]
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
@@ -1682,6 +1885,22 @@ function db_schema() {
 		'primary' => [
 			'customer_ip_id'
 		],
+		'foreign' => [
+			[
+				'field'      => 'customer_id',
+				'references' => [
+					'table' => 'customer',
+					'field' => 'customer_id'
+				]
+			],
+			[
+				'field'      => 'store_id',
+				'references' => [
+					'table' => 'store',
+					'field' => 'store_id'
+				]
+			]
+		],
 		'index' => [
 			[
 				'name' => 'ip',
@@ -1773,6 +1992,22 @@ function db_schema() {
 		'primary' => [
 			'customer_reward_id'
 		],
+		'foreign' => [
+			[
+				'field'      => 'customer_id',
+				'references' => [
+					'table' => 'customer',
+					'field' => 'customer_id'
+				]
+			],
+			[
+				'field'      => 'order_id',
+				'references' => [
+					'table' => 'order',
+					'field' => 'order_id'
+				]
+			]
+		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
 		'collate' => 'utf8mb4_general_ci'
@@ -1815,6 +2050,22 @@ function db_schema() {
 		],
 		'primary' => [
 			'customer_transaction_id'
+		],
+		'foreign' => [
+			[
+				'field'      => 'customer_id',
+				'references' => [
+					'table' => 'customer',
+					'field' => 'customer_id'
+				]
+			],
+			[
+				'field'      => 'order_id',
+				'references' => [
+					'table' => 'order',
+					'field' => 'order_id'
+				]
+			]
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
@@ -1884,6 +2135,36 @@ function db_schema() {
 		'primary' => [
 			'customer_search_id'
 		],
+		'foreign' => [
+			[
+				'field'      => 'store_id',
+				'references' => [
+					'table' => 'store',
+					'field' => 'store_id'
+				]
+			],
+			[
+				'field'      => 'language_id',
+				'references' => [
+					'table' => 'language',
+					'field' => 'language_id'
+				]
+			],
+			[
+				'field'      => 'customer_id',
+				'references' => [
+					'table' => 'customer',
+					'field' => 'customer_id'
+				]
+			],
+			[
+				'field'      => 'category_id',
+				'references' => [
+					'table' => 'category',
+					'field' => 'category_id'
+				]
+			]
+		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
 		'collate' => 'utf8mb4_general_ci'
@@ -1911,6 +2192,22 @@ function db_schema() {
 		'primary' => [
 			'customer_id',
 			'product_id'
+		],
+		'foreign' => [
+			[
+				'field'      => 'customer_id',
+				'references' => [
+					'table' => 'customer',
+					'field' => 'customer_id'
+				]
+			],
+			[
+				'field'      => 'product_id',
+				'references' => [
+					'table' => 'product',
+					'field' => 'product_id'
+				]
+			]
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
@@ -1988,6 +2285,22 @@ function db_schema() {
 			'custom_field_id',
 			'customer_group_id'
 		],
+		'foreign' => [
+			[
+				'field'      => 'custom_field_id',
+				'references' => [
+					'table' => 'custom_field',
+					'field' => 'custom_field_id'
+				]
+			],
+			[
+				'field'      => 'customer_group_id',
+				'references' => [
+					'table' => 'customer_group',
+					'field' => 'customer_group_id'
+				]
+			]
+		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
 		'collate' => 'utf8mb4_general_ci'
@@ -2016,6 +2329,22 @@ function db_schema() {
 			'custom_field_id',
 			'language_id'
 		],
+		'foreign' => [
+			[
+				'field'      => 'custom_field_id',
+				'references' => [
+					'table' => 'custom_field',
+					'field' => 'custom_field_id'
+				]
+			],
+			[
+				'field'      => 'language_id',
+				'references' => [
+					'table' => 'language',
+					'field' => 'language_id'
+				]
+			]
+		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
 		'collate' => 'utf8mb4_general_ci'
@@ -2043,6 +2372,15 @@ function db_schema() {
 		],
 		'primary' => [
 			'custom_field_value_id'
+		],
+		'foreign' => [
+			[
+				'field'      => 'custom_field_id',
+				'references' => [
+					'table' => 'custom_field',
+					'field' => 'custom_field_id'
+				],
+			]
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
@@ -2076,6 +2414,22 @@ function db_schema() {
 		'primary' => [
 			'custom_field_value_id',
 			'language_id'
+		],
+		'foreign' => [
+			[
+				'field'      => 'language_id',
+				'references' => [
+					'table' => 'language',
+					'field' => 'language_id'
+				]
+			],
+			[
+				'field'      => 'custom_field_id',
+				'references' => [
+					'table' => 'custom_field',
+					'field' => 'custom_field_id'
+				],
+			]
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
@@ -2138,6 +2492,15 @@ function db_schema() {
 			'download_id',
 			'language_id'
 		],
+		'foreign' => [
+			[
+				'field'      => 'language_id',
+				'references' => [
+					'table' => 'language',
+					'field' => 'language_id'
+				]
+			]
+		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
 		'collate' => 'utf8mb4_general_ci'
@@ -2180,6 +2543,22 @@ function db_schema() {
 		],
 		'primary' => [
 			'download_report_id'
+		],
+		'foreign' => [
+			[
+				'field'      => 'download_id',
+				'references' => [
+					'table' => 'download',
+					'field' => 'download_id'
+				]
+			],
+			[
+				'field'      => 'store_id',
+				'references' => [
+					'table' => 'store',
+					'field' => 'store_id'
+				],
+			]
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
@@ -2327,6 +2706,22 @@ function db_schema() {
 		'primary' => [
 			'extension_install_id'
 		],
+		'foreign' => [
+			[
+				'field'      => 'extension_id',
+				'references' => [
+					'table' => 'extension',
+					'field' => 'extension_id'
+				]
+			],
+			[
+				'field'      => 'extension_download_id',
+				'references' => [
+					'table' => 'extension_download',
+					'field' => 'extension_download_id'
+				]
+			]
+		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
 		'collate' => 'utf8mb4_general_ci'
@@ -2354,6 +2749,15 @@ function db_schema() {
 		],
 		'primary' => [
 			'extension_path_id'
+		],
+		'foreign' => [
+			[
+				'field'      => 'extension_install_id',
+				'references' => [
+					'table' => 'extension_install',
+					'field' => 'extension_install_id'
+				]
+			]
 		],
 		'index' => [
 			[
@@ -2391,6 +2795,15 @@ function db_schema() {
 		'primary' => [
 			'filter_id'
 		],
+		'foreign' => [
+			[
+				'field'      => 'filter_group_id',
+				'references' => [
+					'table' => 'filter_group',
+					'field' => 'filter_group_id'
+				]
+			]
+		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
 		'collate' => 'utf8mb4_general_ci'
@@ -2423,6 +2836,22 @@ function db_schema() {
 		'primary' => [
 			'filter_id',
 			'language_id'
+		],
+		'foreign' => [
+			[
+				'field'      => 'language_id',
+				'references' => [
+					'table' => 'language',
+					'field' => 'language_id'
+				]
+			],
+			[
+				'field'      => 'filter_group_id',
+				'references' => [
+					'table' => 'filter_group',
+					'field' => 'filter_group_id'
+				],
+			]
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
@@ -2474,6 +2903,22 @@ function db_schema() {
 		'primary' => [
 			'filter_group_id',
 			'language_id'
+		],
+		'foreign' => [
+			[
+				'field'      => 'filter_group_id',
+				'references' => [
+					'table' => 'filter_group',
+					'field' => 'filter_group_id'
+				]
+			],
+			[
+				'field'      => 'language_id',
+				'references' => [
+					'table' => 'language',
+					'field' => 'language_id'
+				]
+			]
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
@@ -2527,6 +2972,22 @@ function db_schema() {
 		],
 		'primary' => [
 			'gdpr_id'
+		],
+		'foreign' => [
+			[
+				'field'      => 'store_id',
+				'references' => [
+					'table' => 'store',
+					'field' => 'store_id'
+				]
+			],
+			[
+				'field'      => 'language_id',
+				'references' => [
+					'table' => 'language',
+					'field' => 'language_id'
+				]
+			]
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
@@ -2650,6 +3111,15 @@ function db_schema() {
 			'information_id',
 			'language_id'
 		],
+		'foreign' => [
+			[
+				'field'      => 'language_id',
+				'references' => [
+					'table' => 'language',
+					'field' => 'language_id'
+				]
+			]
+		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
 		'collate' => 'utf8mb4_general_ci'
@@ -2678,6 +3148,29 @@ function db_schema() {
 			'information_id',
 			'store_id'
 		],
+		'foreign' => [
+			[
+				'field'      => 'information_id',
+				'references' => [
+					'table' => 'information',
+					'field' => 'information_id'
+				]
+			],
+			[
+				'field'      => 'store_id',
+				'references' => [
+					'table' => 'store',
+					'field' => 'store_id'
+				]
+			],
+			[
+				'field'      => 'layout_id',
+				'references' => [
+					'table' => 'layout',
+					'field' => 'layout_id'
+				]
+			]
+		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
 		'collate' => 'utf8mb4_general_ci'
@@ -2700,6 +3193,22 @@ function db_schema() {
 		'primary' => [
 			'information_id',
 			'store_id'
+		],
+		'foreign' => [
+			[
+				'field'      => 'information_id',
+				'references' => [
+					'table' => 'information',
+					'field' => 'information_id'
+				]
+			],
+			[
+				'field'      => 'store_id',
+				'references' => [
+					'table' => 'store',
+					'field' => 'store_id'
+				]
+			]
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
@@ -2819,6 +3328,15 @@ function db_schema() {
 		'primary' => [
 			'layout_module_id'
 		],
+		'foreign' => [
+			[
+				'field'      => 'layout_id',
+				'references' => [
+					'table' => 'layout',
+					'field' => 'layout_id'
+				]
+			]
+		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
 		'collate' => 'utf8mb4_general_ci'
@@ -2851,6 +3369,22 @@ function db_schema() {
 		],
 		'primary' => [
 			'layout_route_id'
+		],
+		'foreign' => [
+			[
+				'field'      => 'layout_id',
+				'references' => [
+					'table' => 'layout',
+					'field' => 'layout_id'
+				]
+			],
+			[
+				'field'      => 'store_id',
+				'references' => [
+					'table' => 'store',
+					'field' => 'store_id'
+				]
+			]
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
@@ -2907,6 +3441,22 @@ function db_schema() {
 		'primary' => [
 			'length_class_id',
 			'language_id'
+		],
+		'foreign' => [
+			[
+				'field'      => 'length_class_id',
+				'references' => [
+					'table' => 'length_class',
+					'field' => 'length_class_id'
+				]
+			],
+			[
+				'field'      => 'language_id',
+				'references' => [
+					'table' => 'language',
+					'field' => 'language_id'
+				]
+			]
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
@@ -3030,6 +3580,29 @@ function db_schema() {
 			'manufacturer_id',
 			'store_id'
 		],
+		'foreign' => [
+			[
+				'field'      => 'manufacturer_id',
+				'references' => [
+					'table' => 'manufacturer',
+					'field' => 'manufacturer_id'
+				]
+			],
+			[
+				'field'      => 'store_id',
+				'references' => [
+					'table' => 'store',
+					'field' => 'store_id'
+				]
+			],
+			[
+				'field'      => 'layout_id',
+				'references' => [
+					'table' => 'layout',
+					'field' => 'layout_id'
+				]
+			]
+		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
 		'collate' => 'utf8mb4_general_ci'
@@ -3052,6 +3625,22 @@ function db_schema() {
 		'primary' => [
 			'manufacturer_id',
 			'store_id'
+		],
+		'foreign' => [
+			[
+				'field'      => 'manufacturer_id',
+				'references' => [
+					'table' => 'manufacturer',
+					'field' => 'manufacturer_id'
+				]
+			],
+			[
+				'field'      => 'store_id',
+				'references' => [
+					'table' => 'store',
+					'field' => 'store_id'
+				]
+			]
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
@@ -3139,6 +3728,22 @@ function db_schema() {
 		],
 		'primary' => [
 			'marketing_report_id'
+		],
+		'foreign' => [
+			[
+				'field'      => 'marketing_id',
+				'references' => [
+					'table' => 'marketing',
+					'field' => 'marketing_id'
+				]
+			],
+			[
+				'field'      => 'store_id',
+				'references' => [
+					'table' => 'store',
+					'field' => 'store_id'
+				]
+			]
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
@@ -3267,6 +3872,15 @@ function db_schema() {
 			'option_id',
 			'language_id'
 		],
+		'foreign' => [
+			[
+				'field'      => 'language_id',
+				'references' => [
+					'table' => 'language',
+					'field' => 'language_id'
+				]
+			]
+		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
 		'collate' => 'utf8mb4_general_ci'
@@ -3300,6 +3914,15 @@ function db_schema() {
 		'primary' => [
 			'option_value_id'
 		],
+		'foreign' => [
+			[
+				'field'      => 'option_id',
+				'references' => [
+					'table' => 'option',
+					'field' => 'option_id'
+				]
+			]
+		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
 		'collate' => 'utf8mb4_general_ci'
@@ -3332,6 +3955,22 @@ function db_schema() {
 		'primary' => [
 			'option_value_id',
 			'language_id'
+		],
+		'foreign' => [
+			[
+				'field'      => 'language_id',
+				'references' => [
+					'table' => 'language',
+					'field' => 'language_id'
+				]
+			],
+			[
+				'field'      => 'option_id',
+				'references' => [
+					'table' => 'option',
+					'field' => 'option_id'
+				]
+			]
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
@@ -3663,6 +4302,92 @@ function db_schema() {
 		'primary' => [
 			'order_id'
 		],
+		'foreign' => [
+			[
+				'field'      => 'store_id',
+				'references' => [
+					'table' => 'store',
+					'field' => 'store_id'
+				]
+			],
+			[
+				'field'      => 'customer_id',
+				'references' => [
+					'table' => 'customer',
+					'field' => 'customer_id'
+				]
+			],
+			[
+				'field'      => 'customer_group_id',
+				'references' => [
+					'table' => 'customer_group',
+					'field' => 'customer_group_id'
+				]
+			],
+			[
+				'field'      => 'payment_country_id',
+				'references' => [
+					'table' => 'country',
+					'field' => 'country_id'
+				]
+			],
+			[
+				'field'      => 'payment_zone_id',
+				'references' => [
+					'table' => 'zone',
+					'field' => 'zone_id'
+				]
+			],
+			[
+				'field'      => 'shipping_country_id',
+				'references' => [
+					'table' => 'country',
+					'field' => 'country_id'
+				]
+			],
+			[
+				'field'      => 'shipping_zone_id',
+				'references' => [
+					'table' => 'zone',
+					'field' => 'zone_id'
+				]
+			],
+			[
+				'field'      => 'order_status_id',
+				'references' => [
+					'table' => 'order_status',
+					'field' => 'order_status_id'
+				]
+			],
+			[
+				'field'      => 'affiliate_id',
+				'references' => [
+					'table' => 'affiliate',
+					'field' => 'affiliate_id'
+				]
+			],
+			[
+				'field'      => 'marketing_id',
+				'references' => [
+					'table' => 'marketing',
+					'field' => 'marketing_id'
+				]
+			],
+			[
+				'field'      => 'language_id',
+				'references' => [
+					'table' => 'language',
+					'field' => 'language_id'
+				]
+			],
+			[
+				'field'      => 'currency_id',
+				'references' => [
+					'table' => 'currency',
+					'field' => 'currency_id'
+				]
+			]
+		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
 		'collate' => 'utf8mb4_general_ci'
@@ -3706,6 +4431,22 @@ function db_schema() {
 		],
 		'primary' => [
 			'order_history_id'
+		],
+		'foreign' => [
+			[
+				'field'      => 'order_id',
+				'references' => [
+					'table' => 'order',
+					'field' => 'order_id'
+				]
+			],
+			[
+				'field'      => 'order_status_id',
+				'references' => [
+					'table' => 'order_status',
+					'field' => 'order_status_id'
+				]
+			]
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
@@ -3760,6 +4501,36 @@ function db_schema() {
 		],
 		'primary' => [
 			'order_option_id'
+		],
+		'foreign' => [
+			[
+				'field'      => 'order_id',
+				'references' => [
+					'table' => 'order',
+					'field' => 'order_id'
+				]
+			],
+			[
+				'field'      => 'order_product_id',
+				'references' => [
+					'table' => 'order_product',
+					'field' => 'order_product_id'
+				]
+			],
+			[
+				'field'      => 'product_option_id',
+				'references' => [
+					'table' => 'product_option',
+					'field' => 'product_option_id'
+				]
+			],
+			[
+				'field'      => 'product_option_value_id',
+				'references' => [
+					'table' => 'product_option_value',
+					'field' => 'product_option_value_id'
+				]
+			]
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
@@ -3832,6 +4603,29 @@ function db_schema() {
 		'primary' => [
 			'order_product_id'
 		],
+		'foreign' => [
+			[
+				'field'      => 'order_id',
+				'references' => [
+					'table' => 'order',
+					'field' => 'order_id'
+				]
+			],
+			[
+				'field'      => 'product_id',
+				'references' => [
+					'table' => 'product',
+					'field' => 'product_id'
+				]
+			],
+			[
+				'field'      => 'master_id',
+				'references' => [
+					'table' => 'product',
+					'field' => 'master_id'
+				]
+			]
+		],
 		'index' => [
 			[
 				'name' => 'order_id',
@@ -3868,6 +4662,15 @@ function db_schema() {
 		'primary' => [
 			'order_status_id',
 			'language_id'
+		],
+		'foreign' => [
+			[
+				'field'      => 'language_id',
+				'references' => [
+					'table' => 'language',
+					'field' => 'language_id'
+				]
+			]
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
@@ -3917,6 +4720,15 @@ function db_schema() {
 		],
 		'primary' => [
 			'order_total_id'
+		],
+		'foreign' => [
+			[
+				'field'      => 'order_id',
+				'references' => [
+					'table' => 'order',
+					'field' => 'order_id'
+				]
+			]
 		],
 		'index' => [
 			[
@@ -3999,6 +4811,22 @@ function db_schema() {
 		'primary' => [
 			'order_voucher_id'
 		],
+		'foreign' => [
+			[
+				'field'      => 'order_id',
+				'references' => [
+					'table' => 'order',
+					'field' => 'order_id'
+				]
+			],
+			[
+				'field'      => 'voucher_id',
+				'references' => [
+					'table' => 'voucher',
+					'field' => 'voucher_id'
+				]
+			]
+		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
 		'collate' => 'utf8mb4_general_ci'
@@ -4071,6 +4899,15 @@ function db_schema() {
 		],
 		'primary' => [
 			'customer_payment_id'
+		],
+		'foreign' => [
+			[
+				'field'      => 'customer_id',
+				'references' => [
+					'table' => 'customer',
+					'field' => 'customer_id'
+				]
+			]
 		],
 		'index' => [
 			[
@@ -4275,6 +5112,50 @@ function db_schema() {
 		'primary' => [
 			'product_id'
 		],
+		'foreign' => [
+			[
+				'field'      => 'master_id',
+				'references' => [
+					'table' => 'product',
+					'field' => 'product_id'
+				]
+			],
+			[
+				'field'      => 'stock_status_id',
+				'references' => [
+					'table' => 'stock_status',
+					'field' => 'stock_status_id'
+				]
+			],
+			[
+				'field'      => 'manufacturer_id',
+				'references' => [
+					'table' => 'manufacturer',
+					'field' => 'manufacturer_id'
+				]
+			],
+			[
+				'field'      => 'tax_class_id',
+				'references' => [
+					'table' => 'tax_class',
+					'field' => 'tax_class_id'
+				]
+			],
+			[
+				'field'      => 'weight_class_id',
+				'references' => [
+					'table' => 'weight_class',
+					'field' => 'weight_class_id'
+				]
+			],
+			[
+				'field'      => 'length_class_id',
+				'references' => [
+					'table' => 'length_class',
+					'field' => 'length_class_id'
+				]
+			]
+		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
 		'collate' => 'utf8mb4_general_ci'
@@ -4308,6 +5189,29 @@ function db_schema() {
 			'product_id',
 			'attribute_id',
 			'language_id'
+		],
+		'foreign' => [
+			[
+				'field'      => 'product_id',
+				'references' => [
+					'table' => 'product',
+					'field' => 'product_id'
+				]
+			],
+			[
+				'field'      => 'attribute_id',
+				'references' => [
+					'table' => 'attribute',
+					'field' => 'attribute_id'
+				]
+			],
+			[
+				'field'      => 'language_id',
+				'references' => [
+					'table' => 'language',
+					'field' => 'language_id'
+				]
+			]
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
@@ -4361,6 +5265,22 @@ function db_schema() {
 		'primary' => [
 			'product_id',
 			'language_id'
+		],
+		'foreign' => [
+			[
+				'field'      => 'product_id',
+				'references' => [
+					'table' => 'product',
+					'field' => 'product_id'
+				]
+			],
+			[
+				'field'      => 'language_id',
+				'references' => [
+					'table' => 'language',
+					'field' => 'language_id'
+				]
+			]
 		],
 		'index' => [
 			[
@@ -4426,6 +5346,22 @@ function db_schema() {
 		'primary' => [
 			'product_discount_id'
 		],
+		'foreign' => [
+			[
+				'field'      => 'product_id',
+				'references' => [
+					'table' => 'product',
+					'field' => 'product_id'
+				]
+			],
+			[
+				'field'      => 'customer_group_id',
+				'references' => [
+					'table' => 'customer_group',
+					'field' => 'customer_group_id'
+				]
+			]
+		],
 		'index' => [
 			[
 				'name' => 'product_id',
@@ -4456,6 +5392,22 @@ function db_schema() {
 		'primary' => [
 			'product_id',
 			'filter_id'
+		],
+		'foreign' => [
+			[
+				'field'      => 'product_id',
+				'references' => [
+					'table' => 'product',
+					'field' => 'product_id'
+				]
+			],
+			[
+				'field'      => 'filter_id',
+				'references' => [
+					'table' => 'filter',
+					'field' => 'filter_id'
+				]
+			]
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
@@ -4490,6 +5442,15 @@ function db_schema() {
 		],
 		'primary' => [
 			'product_image_id'
+		],
+		'foreign' => [
+			[
+				'field'      => 'product_id',
+				'references' => [
+					'table' => 'product',
+					'field' => 'product_id'
+				]
+			]
 		],
 		'index' => [
 			[
@@ -4536,6 +5497,22 @@ function db_schema() {
 		],
 		'primary' => [
 			'product_option_id'
+		],
+		'foreign' => [
+			[
+				'field'      => 'product_id',
+				'references' => [
+					'table' => 'product',
+					'field' => 'product_id'
+				]
+			],
+			[
+				'field'      => 'option_id',
+				'references' => [
+					'table' => 'option',
+					'field' => 'option_id'
+				]
+			]
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
@@ -4615,6 +5592,36 @@ function db_schema() {
 		'primary' => [
 			'product_option_value_id'
 		],
+		'foreign' => [
+			[
+				'field'      => 'product_option_id',
+				'references' => [
+					'table' => 'product_option',
+					'field' => 'product_option_id'
+				]
+			],
+			[
+				'field'      => 'product_id',
+				'references' => [
+					'table' => 'product',
+					'field' => 'product_id'
+				]
+			],
+			[
+				'field'      => 'option_id',
+				'references' => [
+					'table' => 'option',
+					'field' => 'option_id'
+				]
+			],
+			[
+				'field'      => 'option_value_id',
+				'references' => [
+					'table' => 'option_value',
+					'field' => 'option_value_id'
+				]
+			]
+		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
 		'collate' => 'utf8mb4_general_ci'
@@ -4644,6 +5651,29 @@ function db_schema() {
 			'subscription_plan_id',
 			'customer_group_id'
 		],
+		'foreign' => [
+			[
+				'field'      => 'product_id',
+				'references' => [
+					'table' => 'product',
+					'field' => 'product_id'
+				]
+			],
+			[
+				'field'      => 'subscription_plan_id',
+				'references' => [
+					'table' => 'subscription_plan',
+					'field' => 'subscription_plan_id'
+				]
+			],
+			[
+				'field'      => 'customer_group_id',
+				'references' => [
+					'table' => 'customer_group',
+					'field' => 'customer_group_id'
+				]
+			]
+		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
 		'collate' => 'utf8mb4_general_ci'
@@ -4666,6 +5696,21 @@ function db_schema() {
 		'primary' => [
 			'product_id',
 			'related_id'
+		],
+		'foreign' => [
+		[
+			'field'      => 'product_id',
+			'references' => [
+				'table' => 'product',
+				'field' => 'product_id'
+			]
+		],
+		[
+			'field'      => 'related_id',
+			'references' => [
+				'table' => 'product',
+				'field' => 'product_id'
+			]
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
@@ -4707,10 +5752,25 @@ function db_schema() {
 				'type' => 'datetime',
 				'not_null' => true
 			]
-
 		],
 		'primary' => [
 			'product_report_id'
+		],
+		'foreign' => [
+			[
+				'field'      => 'product_id',
+				'references' => [
+					'table' => 'product',
+					'field' => 'product_id'
+				]
+			],
+			[
+				'field'      => 'store_id',
+				'references' => [
+					'table' => 'store',
+					'field' => 'store_id'
+				]
+			]
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
@@ -4747,6 +5807,22 @@ function db_schema() {
 		],
 		'primary' => [
 			'product_reward_id'
+		],
+		'foreign' => [
+			[
+				'field'      => 'product_id',
+				'references' => [
+					'table' => 'product',
+					'field' => 'product_id'
+				]
+			],
+			[
+				'field'      => 'customer_group_id',
+				'references' => [
+					'table' => 'customer_group',
+					'field' => 'customer_group_id'
+				]
+			]
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
@@ -4798,6 +5874,22 @@ function db_schema() {
 		'primary' => [
 			'product_special_id'
 		],
+		'foreign' => [
+			[
+				'field'      => 'product_id',
+				'references' => [
+					'table' => 'product',
+					'field' => 'product_id'
+				]
+			],
+			[
+				'field'      => 'customer_group_id',
+				'references' => [
+					'table' => 'customer_group',
+					'field' => 'customer_group_id'
+				]
+			]
+		],
 		'index' => [
 			[
 				'name' => 'product_id',
@@ -4828,6 +5920,22 @@ function db_schema() {
 		'primary' => [
 			'product_id',
 			'category_id'
+		],
+		'foreign' => [
+			[
+				'field'      => 'product_id',
+				'references' => [
+					'table' => 'product',
+					'field' => 'product_id'
+				]
+			],
+			[
+				'field'      => 'category_id',
+				'references' => [
+					'table' => 'category',
+					'field' => 'category_id'
+				]
+			]
 		],
 		'index' => [
 			[
@@ -4860,6 +5968,22 @@ function db_schema() {
 			'product_id',
 			'download_id'
 		],
+		'foreign' => [
+			[
+				'field'      => 'product_id',
+				'references' => [
+					'table' => 'product',
+					'field' => 'product_id'
+				]
+			],
+			[
+				'field'      => 'download_id',
+				'references' => [
+					'table' => 'download',
+					'field' => 'download_id'
+				]
+			]
+		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
 		'collate' => 'utf8mb4_general_ci'
@@ -4888,6 +6012,29 @@ function db_schema() {
 			'product_id',
 			'store_id'
 		],
+		'foreign' => [
+			[
+				'field'      => 'product_id',
+				'references' => [
+					'table' => 'product',
+					'field' => 'product_id'
+				]
+			],
+			[
+				'field'      => 'store_id',
+				'references' => [
+					'table' => 'store',
+					'field' => 'store_id'
+				]
+			],
+			[
+				'field'      => 'layout_id',
+				'references' => [
+					'table' => 'layout',
+					'field' => 'layout_id'
+				]
+			]
+		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
 		'collate' => 'utf8mb4_general_ci'
@@ -4912,6 +6059,22 @@ function db_schema() {
 			'product_id',
 			'store_id'
 		],
+		'foreign' => [
+			[
+				'field'      => 'product_id',
+				'references' => [
+					'table' => 'product',
+					'field' => 'product_id'
+				]
+			],
+			[
+				'field'      => 'store_id',
+				'references' => [
+					'table' => 'store',
+					'field' => 'store_id'
+				]
+			]
+		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
 		'collate' => 'utf8mb4_general_ci'
@@ -4933,6 +6096,15 @@ function db_schema() {
 		],
 		'primary' => [
 			'product_id'
+		],
+		'foreign' => [
+			[
+				'field'      => 'product_id',
+				'references' => [
+					'table' => 'product',
+					'field' => 'product_id'
+				]
+			]
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
@@ -5042,6 +6214,50 @@ function db_schema() {
 		'primary' => [
 			'return_id'
 		],
+		'foreign' => [
+			[
+				'field'      => 'order_id',
+				'references' => [
+					'table' => 'order',
+					'field' => 'order_id'
+				]
+			],
+			[
+				'field'      => 'product_id',
+				'references' => [
+					'table' => 'product',
+					'field' => 'product_id'
+				]
+			],
+			[
+				'field'      => 'customer_id',
+				'references' => [
+					'table' => 'customer',
+					'field' => 'customer_id'
+				]
+			],
+			[
+				'field'      => 'return_reason_id',
+				'references' => [
+					'table' => 'return_reason',
+					'field' => 'return_reason_id'
+				]
+			],
+			[
+				'field'      => 'return_action_id',
+				'references' => [
+					'table' => 'return_action',
+					'field' => 'return_action_id'
+				]
+			],
+			[
+				'field'      => 'return_status_id',
+				'references' => [
+					'table' => 'return_status',
+					'field' => 'return_status_id'
+				]
+			]
+		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
 		'collate' => 'utf8mb4_general_ci'
@@ -5071,6 +6287,15 @@ function db_schema() {
 		'primary' => [
 			'return_action_id',
 			'language_id'
+		],
+		'foreign' => [
+			[
+				'field'      => 'language_id',
+				'references' => [
+					'table' => 'language',
+					'field' => 'language_id'
+				]
+			]
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
@@ -5115,6 +6340,22 @@ function db_schema() {
 		'primary' => [
 			'return_history_id'
 		],
+		'foreign' => [
+			[
+				'field'      => 'return_id',
+				'references' => [
+					'table' => 'return',
+					'field' => 'return_id'
+				]
+			],
+			[
+				'field'      => 'return_status_id',
+				'references' => [
+					'table' => 'return_status',
+					'field' => 'return_status_id'
+				]
+			]
+		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
 		'collate' => 'utf8mb4_general_ci'
@@ -5145,6 +6386,15 @@ function db_schema() {
 			'return_reason_id',
 			'language_id'
 		],
+		'foreign' => [
+			[
+				'field'      => 'language_id',
+				'references' => [
+					'table' => 'language',
+					'field' => 'language_id'
+				]
+			]
+		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
 		'collate' => 'utf8mb4_general_ci'
@@ -5174,6 +6424,15 @@ function db_schema() {
 		'primary' => [
 			'return_status_id',
 			'language_id'
+		],
+		'foreign' => [
+			[
+				'field'      => 'language_id',
+				'references' => [
+					'table' => 'language',
+					'field' => 'language_id'
+				]
+			]
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
@@ -5233,6 +6492,22 @@ function db_schema() {
 		],
 		'primary' => [
 			'review_id'
+		],
+		'foreign' => [
+			[
+				'field'      => 'product_id',
+				'references' => [
+					'table' => 'product',
+					'field' => 'product_id'
+				]
+			],
+			[
+				'field'      => 'customer_id',
+				'references' => [
+					'table' => 'customer',
+					'field' => 'customer_id'
+				]
+			]
 		],
 		'index' => [
 			[
@@ -5388,6 +6663,15 @@ function db_schema() {
 		'primary' => [
 			'setting_id'
 		],
+		'foreign' => [
+			[
+				'field'      => 'store_id',
+				'references' => [
+					'table' => 'store',
+					'field' => 'store_id'
+				]
+			]
+		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
 		'collate' => 'utf8mb4_general_ci'
@@ -5416,6 +6700,15 @@ function db_schema() {
 		'primary' => [
 			'stock_status_id',
 			'language_id'
+		],
+		'foreign' => [
+			[
+				'field'      => 'language_id',
+				'references' => [
+					'table' => 'language',
+					'field' => 'language_id'
+				]
+			]
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
@@ -5583,6 +6876,57 @@ function db_schema() {
 		'primary' => [
 			'subscription_id'
 		],
+		'foreign' => [
+			[
+				'field'      => 'product_id',
+				'references' => [
+					'table' => 'product',
+					'field' => 'product_id'
+				]
+			],
+			[
+				'field'      => 'customer_id',
+				'references' => [
+					'table' => 'customer',
+					'field' => 'customer_id'
+				]
+			],
+			[
+				'field'      => 'order_id',
+				'references' => [
+					'table' => 'order',
+					'field' => 'order_id'
+				]
+			],
+			[
+				'field'      => 'order_product_id',
+				'references' => [
+					'table' => 'order_product',
+					'field' => 'order_product_id'
+				]
+			],
+			[
+				'field'      => 'subscription_plan_id',
+				'references' => [
+					'table' => 'subscription_plan',
+					'field' => 'subscription_plan_id'
+				]
+			],
+			[
+				'field'      => 'customer_payment_id',
+				'references' => [
+					'table' => 'customer_payment',
+					'field' => 'customer_payment_id'
+				]
+			],
+			[
+				'field'      => 'subscription_status_id',
+				'references' => [
+					'table' => 'subscription_status',
+					'field' => 'subscription_status_id'
+				]
+			]
+		],
 		'index' => [
 			[
 				'name' => 'order_id',
@@ -5634,6 +6978,22 @@ function db_schema() {
 		],
 		'primary' => [
 			'subscription_history_id'
+		],
+		'foreign' => [
+			[
+				'field'      => 'subscription_id',
+				'references' => [
+					'table' => 'subscription',
+					'field' => 'subscription_id'
+				]
+			],
+			[
+				'field'      => 'subscription_status_id',
+				'references' => [
+					'table' => 'subscription_status',
+					'field' => 'subscription_status_id'
+				]
+			]
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
@@ -5742,6 +7102,15 @@ function db_schema() {
 			'subscription_plan_id',
 			'language_id'
 		],
+		'foreign' => [
+			[
+				'field'      => 'language_id',
+				'references' => [
+					'table' => 'language',
+					'field' => 'language_id'
+				]
+			]
+		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
 		'collate' => 'utf8mb4_general_ci'
@@ -5770,6 +7139,22 @@ function db_schema() {
 		'primary' => [
 			'subscription_status_id',
 			'language_id'
+		],
+		'foreign' => [
+			[
+				'field'      => 'subscription_id',
+				'references' => [
+					'table' => 'subscription',
+					'field' => 'subscription_id'
+				]
+			],
+			[
+				'field'      => 'language_id',
+				'references' => [
+					'table' => 'language',
+					'field' => 'language_id'
+				]
+			]
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
@@ -5833,6 +7218,22 @@ function db_schema() {
 		],
 		'primary' => [
 			'subscription_transaction_id'
+		],
+		'foreign' => [
+			[
+				'field'      => 'subscription_id',
+				'references' => [
+					'table' => 'subscription',
+					'field' => 'subscription_id'
+				]
+			],
+			[
+				'field'      => 'order_id',
+				'references' => [
+					'table' => 'order',
+					'field' => 'order_id'
+				]
+			]
 		],
 		'index' => [
 			[
@@ -5936,6 +7337,15 @@ function db_schema() {
 		'primary' => [
 			'tax_rate_id'
 		],
+		'foreign' => [
+			[
+				'field'      => 'geo_zone_id',
+				'references' => [
+					'table' => 'geo_zone',
+					'field' => 'geo_zone_id'
+				]
+			]
+		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
 		'collate' => 'utf8mb4_general_ci'
@@ -5958,6 +7368,22 @@ function db_schema() {
 		'primary' => [
 			'tax_rate_id',
 			'customer_group_id'
+		],
+		'foreign' => [
+			[
+				'field'      => 'tax_rate_id',
+				'references' => [
+					'table' => 'tax_rate',
+					'field' => 'tax_rate_id'
+				]
+			],
+			[
+				'field'      => 'customer_group_id',
+				'references' => [
+					'table' => 'customer_group',
+					'field' => 'customer_group_id'
+				]
+			]
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
@@ -5998,6 +7424,22 @@ function db_schema() {
 		'primary' => [
 			'tax_rule_id'
 		],
+		'foreign' => [
+			[
+				'field'      => 'tax_class_id',
+				'references' => [
+					'table' => 'tax_class',
+					'field' => 'tax_class_id'
+				]
+			],
+			[
+				'field'      => 'tax_rate_id',
+				'references' => [
+					'table' => 'tax_rate',
+					'field' => 'tax_rate_id'
+				]
+			]
+		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
 		'collate' => 'utf8mb4_general_ci'
@@ -6035,6 +7477,15 @@ function db_schema() {
 		],
 		'primary' => [
 			'theme_id'
+		],
+		'foreign' => [
+			[
+				'field'      => 'store_id',
+				'references' => [
+					'table' => 'store',
+					'field' => 'store_id'
+				]
+			]
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
@@ -6083,6 +7534,22 @@ function db_schema() {
 		],
 		'primary' => [
 			'translation_id'
+		],
+		'foreign' => [
+			[
+				'field'      => 'store_id',
+				'references' => [
+					'table' => 'store',
+					'field' => 'store_id'
+				]
+			],
+			[
+				'field'      => 'language_id',
+				'references' => [
+					'table' => 'language',
+					'field' => 'language_id'
+				]
+			]
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
@@ -6169,6 +7636,22 @@ function db_schema() {
 		],
 		'primary' => [
 			'seo_url_id'
+		],
+		'foreign' => [
+			[
+				'field'      => 'store_id',
+				'references' => [
+					'table' => 'store',
+					'field' => 'store_id'
+				]
+			],
+			[
+				'field'      => 'language_id',
+				'references' => [
+					'table' => 'language',
+					'field' => 'language_id'
+				]
+			]
 		],
 		'index' => [
 			[
@@ -6261,6 +7744,15 @@ function db_schema() {
 		'primary' => [
 			'user_id'
 		],
+		'foreign' => [
+			[
+				'field'      => 'user_group_id',
+				'references' => [
+					'table' => 'user_group',
+					'field' => 'user_group_id'
+				]
+			]
+		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
 		'collate' => 'utf8mb4_general_ci'
@@ -6313,6 +7805,15 @@ function db_schema() {
 		],
 		'primary' => [
 			'user_login_id'
+		],
+		'foreign' => [
+			[
+				'field'      => 'user_id',
+				'references' => [
+					'table' => 'user',
+					'field' => 'user_id'
+				]
+			]
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
@@ -6453,6 +7954,15 @@ function db_schema() {
 		'primary' => [
 			'voucher_id'
 		],
+		'foreign' => [
+			[
+				'field'      => 'order_id',
+				'references' => [
+					'table' => 'order',
+					'field' => 'order_id'
+				]
+			]
+		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
 		'collate' => 'utf8mb4_general_ci'
@@ -6490,6 +8000,22 @@ function db_schema() {
 		],
 		'primary' => [
 			'voucher_history_id'
+		],
+		'foreign' => [
+			[
+				'field'      => 'voucher_id',
+				'references' => [
+					'table' => 'voucher',
+					'field' => 'voucher_id'
+				]
+			],
+			[
+				'field'      => 'order_id',
+				'references' => [
+					'table' => 'order',
+					'field' => 'order_id'
+				]
+			]
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
@@ -6541,6 +8067,15 @@ function db_schema() {
 		'primary' => [
 			'voucher_theme_id',
 			'language_id'
+		],
+		'foreign' => [
+			[
+				'field'      => 'language_id',
+				'references' => [
+					'table' => 'language',
+					'field' => 'language_id'
+				]
+			]
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
@@ -6599,6 +8134,15 @@ function db_schema() {
 			'weight_class_id',
 			'language_id'
 		],
+		'foreign' => [
+			[
+				'field'      => 'language_id',
+				'references' => [
+					'table' => 'language',
+					'field' => 'language_id'
+				]
+			]
+		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
 		'collate' => 'utf8mb4_general_ci'
@@ -6637,6 +8181,15 @@ function db_schema() {
 		],
 		'primary' => [
 			'zone_id'
+		],
+		'foreign' => [
+			[
+				'field'      => 'country_id',
+				'references' => [
+					'table' => 'country',
+					'field' => 'country_id'
+				]
+			]
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',
@@ -6681,6 +8234,29 @@ function db_schema() {
 		],
 		'primary' => [
 			'zone_to_geo_zone_id'
+		],
+		'foreign' => [
+			[
+				'field'      => 'country_id',
+				'references' => [
+					'table' => 'country',
+					'field' => 'country_id'
+				]
+			],
+			[
+				'field'      => 'zone_id',
+				'references' => [
+					'table' => 'zone',
+					'field' => 'zone_id'
+				]
+			],
+			[
+				'field'      => 'geo_zone_id',
+				'references' => [
+					'table' => 'geo_zone',
+					'field' => 'geo_zone_id'
+				]
+			]
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',

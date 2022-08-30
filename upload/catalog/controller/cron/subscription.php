@@ -4,19 +4,22 @@ class Subscription extends \Opencart\System\Engine\Controller {
 	public function index(int $cron_id, string $code, string $cycle, string $date_added, string $date_modified): void {
 		$this->load->language('cron/subscription');
 
+		$this->load->model('customer/customer');
+		$this->load->model('setting/extension');
+
 		$filter_data = [
 			'filter_subscription_status_id' => $this->config->get('config_subscription_active_status_id'),
 			'filter_date_next'              => date('Y-m-d H:i:s')
 		];
 
 		$this->load->model('sale/subscription');
-		$this->load->model('customer/customer');
-		$this->load->model('setting/extension');
 
 		$results = $this->model_sale_subscription->getSubscriptions($filter_data);
 
 		foreach ($results as $result) {
 			if ($this->config->get('config_subscription_active_status_id') == $result['subscription_status_id']) {
+
+
 				if ($result['trial_status'] && (!$result['trial_duration'] || $result['trial_remaining'])) {
 					$amount = $result['trial_price'];
 				} elseif (!$result['duration'] || $result['remaining']) {

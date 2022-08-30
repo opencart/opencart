@@ -33,6 +33,22 @@ class Install extends \Opencart\System\Engine\Model {
 				$sql .= "  PRIMARY KEY (" . implode(",", $primary_data) . "),\n";
 			}
 
+			if (isset($table['foreign'])) {
+				$foreign_data = [];
+
+				foreach ($table['foreign'] as $foreign) {
+					//$foreign['references']
+
+					//$sql .= "  FOREIGN KEY (`" . $foreign['field'] . "`) REFERENCES " . $data['db_prefix'] . $foreign['table'] . ",\n";
+
+				}
+
+
+				//FOREIGN KEY (`customer_id`) REFERENCES oc_customer (`customer_id`)
+
+
+			}
+
 			if (isset($table['index'])) {
 				foreach ($table['index'] as $index) {
 					$index_data = [];

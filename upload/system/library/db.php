@@ -38,7 +38,7 @@ class DB {
 	/**
      * Query
      *
-     * @param	string	$sql	SQl statement to be executed
+     * @param	string	$sql  SQL statement to be executed
 	 * 
 	 * @return	array
      */

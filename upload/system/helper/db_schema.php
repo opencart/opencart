@@ -244,7 +244,7 @@ function db_schema() {
 		],
 		'foreign' => [
 			[
-				'key'      => 'api_id',
+				'key'   => 'api_id',
 				'table' => 'api',
 				'field' => 'api_id'
 			]
@@ -2587,11 +2587,6 @@ function db_schema() {
 				'key'   => 'extension_id',
 				'table' => 'extension',
 				'field' => 'extension_id'
-			],
-			[
-				'key'   => 'extension_download_id',
-				'table' => 'extension_download',
-				'field' => 'extension_download_id'
 			]
 		],
 		'engine' => 'InnoDB',
@@ -4157,8 +4152,8 @@ function db_schema() {
 			],
 			[
 				'key'   => 'affiliate_id',
-				'table' => 'affiliate',
-				'field' => 'affiliate_id'
+				'table' => 'customer_affiliate',
+				'field' => 'customer_id'
 			],
 			[
 				'key'   => 'marketing_id',
@@ -4393,7 +4388,7 @@ function db_schema() {
 			[
 				'key'   => 'master_id',
 				'table' => 'product',
-				'field' => 'master_id'
+				'field' => 'product_id'
 			]
 		],
 		'index' => [
@@ -6523,11 +6518,6 @@ function db_schema() {
 		],
 		'foreign' => [
 			[
-				'key'   => 'product_id',
-				'table' => 'product',
-				'field' => 'product_id'
-			],
-			[
 				'key'   => 'customer_id',
 				'table' => 'customer',
 				'field' => 'customer_id'
@@ -6767,9 +6757,9 @@ function db_schema() {
 		],
 		'foreign' => [
 			[
-				'key'   => 'subscription_id',
-				'table' => 'subscription',
-				'field' => 'subscription_id'
+				'key'   => 'subscription_status_id',
+				'table' => 'subscription_status',
+				'field' => 'subscription_status_id'
 			],
 			[
 				'key'   => 'language_id',

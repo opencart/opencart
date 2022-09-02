@@ -6757,11 +6757,6 @@ function db_schema() {
 		],
 		'foreign' => [
 			[
-				'key'   => 'subscription_status_id',
-				'table' => 'subscription_status',
-				'field' => 'subscription_status_id'
-			],
-			[
 				'key'   => 'language_id',
 				'table' => 'language',
 				'field' => 'language_id'

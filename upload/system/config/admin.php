@@ -45,7 +45,7 @@ $_['action_event']       = [
 	'controller/*/after' => [
 		0 => 'event/language|after'
 	],
-	//'model/*/after' => [
+	//'model/*/before' => [
 	//	0 => 'event/debug|before'
 	//],
 	//'model/*/after' => [

@@ -10,13 +10,24 @@ class Install extends \Opencart\System\Engine\Model {
 
 		$tables = Helper\DbSchema\db_schema();
 
+		// CLear any old db foreign key constraints
 		foreach ($tables as $table) {
-			$table_query = $db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . $data['db_database'] . "' AND TABLE_NAME = '" . $data['db_prefix'] . $table['name'] . "'");
 
-			if ($table_query->num_rows) {
-				$db->query("DROP TABLE `" . $data['db_prefix'] . $table['name'] . "`");
+			$foreign_query = $db->query("SELECT * FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS WHERE CONSTRAINT_SCHEMA = '" . html_entity_decode($data['db_database'], ENT_QUOTES, 'UTF-8') . "' AND TABLE_NAME = '" . $data['db_prefix'] . $table['name'] . "' AND CONSTRAINT_TYPE = 'FOREIGN KEY'");
+
+			foreach ($foreign_query->rows as $foreign) {
+				$db->query("ALTER TABLE `" . $data['db_prefix'] . $table['name'] . "` DROP FOREIGN KEY `" . $foreign['CONSTRAINT_NAME'] . "`");
 			}
 
+		}
+
+		// CLear old DB
+		foreach ($tables as $table) {
+			$db->query("DROP TABLE IF EXISTS `" . $data['db_prefix'] . $table['name'] . "`");
+		}
+
+		// Need to sort the creation of tables on foreign keys
+		foreach ($tables as $table) {
 			$sql = "CREATE TABLE `" . $data['db_prefix'] . $table['name'] . "` (" . "\n";
 
 			foreach ($table['field'] as $field) {
@@ -31,22 +42,6 @@ class Install extends \Opencart\System\Engine\Model {
 				}
 
 				$sql .= "  PRIMARY KEY (" . implode(",", $primary_data) . "),\n";
-			}
-
-			if (isset($table['foreign'])) {
-				$foreign_data = [];
-
-				foreach ($table['foreign'] as $foreign) {
-					//$foreign['references']
-
-					//$sql .= "  FOREIGN KEY (`" . $foreign['field'] . "`) REFERENCES " . $data['db_prefix'] . $foreign['table'] . ",\n";
-
-				}
-
-
-				//FOREIGN KEY (`customer_id`) REFERENCES oc_customer (`customer_id`)
-
-
 			}
 
 			if (isset($table['index'])) {
@@ -64,7 +59,19 @@ class Install extends \Opencart\System\Engine\Model {
 			$sql = rtrim($sql, ",\n") . "\n";
 			$sql .= ") ENGINE=" . $table['engine'] . " CHARSET=" . $table['charset'] . " ROW_FORMAT=DYNAMIC COLLATE=" . $table['collate'] . ";\n";
 
+			// Add table into another array so that it can be sorted to avoid foreign keys from being incorrectly formed.
 			$db->query($sql);
+		}
+
+		// Setup foreign keys
+		foreach ($tables as $table) {
+			if (isset($table['foreign'])) {
+				$i = 0;
+
+				foreach ($table['foreign'] as $foreign) {
+					$db->query("ALTER TABLE `" . $data['db_prefix'] . $table['name'] . "` ADD FOREIGN KEY (`" . $foreign['key'] . "`) REFERENCES `" . $data['db_prefix'] . $foreign['table'] . "` (`" . $foreign['field'] . "`)");
+				}
+			}
 		}
 
 		// Data
@@ -98,9 +105,9 @@ class Install extends \Opencart\System\Engine\Model {
 
 		$db->query("DELETE FROM `" . $data['db_prefix'] . "user` WHERE `user_id` = '1'");
 		$db->query("INSERT INTO `" . $data['db_prefix'] . "user` SET `user_id` = '1', `user_group_id` = '1', `username` = '" . $db->escape($data['username']) . "', `password` = '" . $db->escape(password_hash(html_entity_decode($data['password'], ENT_QUOTES, 'UTF-8'), PASSWORD_DEFAULT)) . "', `firstname` = 'John', `lastname` = 'Doe', `email` = '" . $db->escape($data['email']) . "', `status` = '1', `date_added` = NOW()");
-		
-		$db->query("DELETE FROM `" . $data['db_prefix'] . "setting` WHERE `key` = 'config_email'");
-		$db->query("INSERT INTO `" . $data['db_prefix'] . "setting` SET `code` = 'config', `key` = 'config_email', `value` = '" . $db->escape($data['email']) . "'");
+
+		$db->query("UPDATE `" . $data['db_prefix'] . "setting` SET `code` = 'config', `key` = 'config_email', `value` = '" . $db->escape($data['email']) . "' WHERE `key` = 'config_email'");
+
 		$db->query("DELETE FROM `" . $data['db_prefix'] . "setting` WHERE `key` = 'config_encryption'");
 		$db->query("INSERT INTO `" . $data['db_prefix'] . "setting` SET `code` = 'config', `key` = 'config_encryption', `value` = '" . $db->escape(Helper\General\token(512)) . "'");
 

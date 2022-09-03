@@ -47,9 +47,9 @@ class Extension extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->get['type'])) {
-			$data['extension'] = $this->load->controller('extension/' . basename($this->request->get['type']) . '|getList');
+			$data['extension'] = $this->load->controller('extension/' . basename($this->request->get['type']) . '.getList');
 		} elseif ($data['categories']) {
-			$data['extension'] = $this->load->controller('extension/' . $data['categories'][0]['code'] . '|getList');
+			$data['extension'] = $this->load->controller('extension/' . $data['categories'][0]['code'] . '.getList');
 		} else {
 			$data['extension'] = '';
 		}

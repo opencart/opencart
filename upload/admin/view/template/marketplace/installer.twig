@@ -42,8 +42,6 @@ $('#extension').on('click', 'thead a, .pagination a', function (e) {
     $('#extension').load(this.href);
 });
 
-$('#extension').load('index.php?route=marketplace/installer.list&user_token={{ user_token }}');
-
 // Upload
 $('#button-upload').on('click', function () {
     var element = this;

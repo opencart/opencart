@@ -40,16 +40,16 @@ $_['action_default']     = 'common/dashboard';
 // Action Events
 $_['action_event']       = [
 	'controller/*/before' => [
-		0 => 'event/language|before'
+		0 => 'event/language.before'
 	],
 	'controller/*/after' => [
-		0 => 'event/language|after'
+		0 => 'event/language.after'
 	],
 	//'model/*/after' => [
-	//	0 => 'event/debug|before'
+	//	0 => 'event/debug.before'
 	//],
 	//'model/*/after' => [
-	//	0 => 'event/debug|after'
+	//	0 => 'event/debug.after'
 	//],
 	'view/*/before' => [
 		999 => 'event/language'

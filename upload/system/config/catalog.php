@@ -38,12 +38,12 @@ $_['action_pre_action']  = [
 // Action Events
 $_['action_event']      = [
 	'controller/*/before' => [
-		0 => 'event/language|before',
-		//1 => 'event/debug|before'
+		0 => 'event/language.before',
+		//1 => 'event/debug.before'
 	],
 	'controller/*/after' => [
-		0 => 'event/language|after',
-		//2 => 'event/debug|after'
+		0 => 'event/language.after',
+		//2 => 'event/debug.after'
 	],
 	'view/*/before' => [
 		500 => 'event/theme',

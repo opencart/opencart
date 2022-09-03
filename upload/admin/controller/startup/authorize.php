@@ -15,7 +15,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 		}
 
 		// Remove any method call for checking ignore pages.
-		$pos = strrpos($route, '|');
+		$pos = strrpos($route, '.');
 
 		if ($pos !== false) {
 			$route = substr($route, 0, $pos);

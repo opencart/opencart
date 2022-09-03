@@ -24,7 +24,7 @@ class Action {
 	public function __construct(string $route) {
 		$this->route = preg_replace('/[^a-zA-Z0-9_|\/]/', '', $route);
 
-		$pos = strrpos($this->route, '|');
+		$pos = strrpos($this->route, '.');
 
 		if ($pos === false) {
 			$this->class  = 'Controller\\' . str_replace(['_', '/'], ['', '\\'], ucwords($this->route, '_/'));

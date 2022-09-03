@@ -12,13 +12,11 @@ class Install extends \Opencart\System\Engine\Model {
 
 		// CLear any old db foreign key constraints
 		foreach ($tables as $table) {
-
 			$foreign_query = $db->query("SELECT * FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS WHERE CONSTRAINT_SCHEMA = '" . html_entity_decode($data['db_database'], ENT_QUOTES, 'UTF-8') . "' AND TABLE_NAME = '" . $data['db_prefix'] . $table['name'] . "' AND CONSTRAINT_TYPE = 'FOREIGN KEY'");
 
 			foreach ($foreign_query->rows as $foreign) {
 				$db->query("ALTER TABLE `" . $data['db_prefix'] . $table['name'] . "` DROP FOREIGN KEY `" . $foreign['CONSTRAINT_NAME'] . "`");
 			}
-
 		}
 
 		// CLear old DB
@@ -66,8 +64,6 @@ class Install extends \Opencart\System\Engine\Model {
 		// Setup foreign keys
 		foreach ($tables as $table) {
 			if (isset($table['foreign'])) {
-				$i = 0;
-
 				foreach ($table['foreign'] as $foreign) {
 					$db->query("ALTER TABLE `" . $data['db_prefix'] . $table['name'] . "` ADD FOREIGN KEY (`" . $foreign['key'] . "`) REFERENCES `" . $data['db_prefix'] . $foreign['table'] . "` (`" . $foreign['field'] . "`)");
 				}

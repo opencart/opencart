@@ -835,12 +835,12 @@ function db_schema() {
 			[
 				'name' => 'store_id',
 				'type' => 'int(11)',
-				'not_null' => true
+				'not_null' => true,
+				'default' => '0'
 			]
 		],
 		'primary' => [
-			'category_id',
-			'store_id'
+			'category_id'
 		],
 		'foreign' => [
 			[

@@ -58,7 +58,7 @@ class Activity extends \Opencart\System\Engine\Controller {
 	
 	// catalog/model/account/customer/deleteLoginAttempts/after
 	public function login(string &$route, array &$args, mixed &$output): void {
-		if (isset($this->request->get['route']) && ($this->request->get['route'] == 'account/login' || $this->request->get['route'] == 'checkout/login|save') && $this->config->get('config_customer_activity')) {
+		if (isset($this->request->get['route']) && ($this->request->get['route'] == 'account/login' || $this->request->get['route'] == 'checkout/login.save') && $this->config->get('config_customer_activity')) {
 			$customer_info = $this->model_account_customer->getCustomerByEmail($args[0]);
 
 			if ($customer_info) {

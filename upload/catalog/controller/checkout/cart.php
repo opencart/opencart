@@ -49,7 +49,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 				$data['weight'] = '';
 			}
 
-			$data['list'] = $this->load->controller('checkout/cart|getList');
+			$data['list'] = $this->load->controller('checkout/cart.getList');
 
 			$data['modules'] = [];
 

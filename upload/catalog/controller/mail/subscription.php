@@ -125,7 +125,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$data['store_url'] = $order_info['store_url'];
 
 			$data['customer_id'] = $order_info['customer_id'];
-			$data['link'] = $order_info['store_url'] . 'index.php?route=account/order|info&order_id=' . $order_info['order_id'];
+			$data['link'] = $order_info['store_url'] . 'index.php?route=account/order.info&order_id=' . $order_info['order_id'];
 
 			if ($download_status) {
 				$data['download'] = $order_info['store_url'] . 'index.php?route=account/download';

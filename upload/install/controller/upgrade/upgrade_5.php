@@ -44,7 +44,7 @@ class Upgrade5 extends \Opencart\System\Engine\Controller {
 			$events[] = [
 				'code'    => 'activity_customer_login',
 				'trigger' => 'catalog/model/account/customer/deleteLoginAttempts/after',
-				'action'  => 'event/activity|login'
+				'action'  => 'event/activity.login'
 			];
 
 			$events[] = [
@@ -164,7 +164,7 @@ class Upgrade5 extends \Opencart\System\Engine\Controller {
 			$events[] = [
 				'code'    => 'admin_mail_affiliate_approve',
 				'trigger' => 'admin/model/customer/customer_approval/approveAffiliate/after',
-				'action'  => 'mail/affiliate|approve'
+				'action'  => 'mail/affiliate.approve'
 			];
 
 			$events[] = [
@@ -176,7 +176,7 @@ class Upgrade5 extends \Opencart\System\Engine\Controller {
 			$events[] = [
 				'code'    => 'admin_mail_customer_approve',
 				'trigger' => 'admin/model/customer/customer_approval/approveCustomer/after',
-				'action'  => 'mail/customer|approve'
+				'action'  => 'mail/customer.approve'
 			];
 
 			$events[] = [

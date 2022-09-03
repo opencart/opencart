@@ -345,7 +345,7 @@
 $('#input-customer').autocomplete({
     'source': function (request, response) {
         $.ajax({
-            url: 'index.php?route=customer/customer|autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
+            url: 'index.php?route=customer/customer.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
             success: function (json) {
                 response($.map(json, function (item) {
@@ -370,7 +370,7 @@ $('#input-customer').autocomplete({
 
 $('#input-customer-group').on('change', function () {
     $.ajax({
-        url: 'index.php?route=customer/customer|customfield&user_token={{ user_token }}&customer_group_id=' + this.value,
+        url: 'index.php?route=customer/customer.customfield&user_token={{ user_token }}&customer_group_id=' + this.value,
         dataType: 'json',
         success: function (json) {
             $('.custom-field').hide();
@@ -404,7 +404,7 @@ $('#button-history').on('click', function (e) {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=customer/customer|addHistory&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val(),
+        url: 'index.php?route=customer/customer.addHistory&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val(),
         type: 'post',
         dataType: 'json',
         data: 'comment=' + encodeURIComponent($('#input-comment').val()),
@@ -445,7 +445,7 @@ $('#button-transaction').on('click', function (e) {
     e.preventDefault();
 
     $.ajax({
-        url: 'index.php?route=customer/customer|addTransaction&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val(),
+        url: 'index.php?route=customer/customer.addTransaction&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val(),
         type: 'post',
         dataType: 'json',
         data: 'description=' + encodeURIComponent($('#input-transaction-description').val()) + '&amount=' + encodeURIComponent($('#input-transaction-amount').val()),

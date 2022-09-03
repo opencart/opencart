@@ -245,7 +245,7 @@ $('#input-subscription-plan, #input-payment-method').on('change', function (e) {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=sale/subscription|save&user_token={{ user_token }}&subscription_id=' + $('#input-subscription-id').val(),
+        url: 'index.php?route=sale/subscription.save&user_token={{ user_token }}&subscription_id=' + $('#input-subscription-id').val(),
         type: 'post',
         dataType: 'json',
         data: $('#form-subscription').serialize(),
@@ -283,7 +283,7 @@ $('#form-history').on('submit', function (e) {
     e.preventDefault();
 
     $.ajax({
-        url: 'index.php?route=sale/subscription|addHistory&user_token={{ user_token }}&subscription_id=' + $('#input-subscription-id').val(),
+        url: 'index.php?route=sale/subscription.addHistory&user_token={{ user_token }}&subscription_id=' + $('#input-subscription-id').val(),
         type: 'post',
         dataType: 'json',
         data: $('#form-history').serialize(),
@@ -325,7 +325,7 @@ $('#form-transaction').on('submit', function (e) {
     e.preventDefault();
 
     $.ajax({
-        url: 'index.php?route=sale/subscription|addTransaction&user_token={{ user_token }}&subscription_id=' + $('#input-subscription-id').val(),
+        url: 'index.php?route=sale/subscription.addTransaction&user_token={{ user_token }}&subscription_id=' + $('#input-subscription-id').val(),
         type: 'post',
         dataType: 'json',
         data: $('#form-transaction').serialize(),

@@ -543,7 +543,7 @@ $('#form-register').on('submit', function (e) {
 
     chain.attach(function () {
         return $.ajax({
-            url: 'index.php?route=checkout/register|save&language={{ language }}',
+            url: 'index.php?route=checkout/register.save&language={{ language }}',
             type: 'post',
             dataType: 'json',
             data: $('#form-register').serialize(),

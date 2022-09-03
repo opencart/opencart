@@ -72,7 +72,7 @@ $('#button-upload').on('click', function () {
                 clearInterval(timer);
 
                 $.ajax({
-                    url: 'index.php?route=marketplace/installer|upload&user_token={{ user_token }}',
+                    url: 'index.php?route=marketplace/installer.upload&user_token={{ user_token }}',
                     type: 'post',
                     data: new FormData($('#form-upload')[0]),
                     dataType: 'json',

@@ -94,9 +94,9 @@ class Cart extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		$data['list'] = $this->url->link('common/cart|info', 'language=' . $this->config->get('config_language'));
-		$data['product_remove'] = $this->url->link('checkout/cart|remove', 'language=' . $this->config->get('config_language'));
-		$data['voucher_remove'] = $this->url->link('checkout/voucher|remove', 'language=' . $this->config->get('config_language'));
+		$data['list'] = $this->url->link('common/cart.info', 'language=' . $this->config->get('config_language'));
+		$data['product_remove'] = $this->url->link('checkout/cart.remove', 'language=' . $this->config->get('config_language'));
+		$data['voucher_remove'] = $this->url->link('checkout/voucher.remove', 'language=' . $this->config->get('config_language'));
 
 		$data['cart'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'));
 		$data['checkout'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'));

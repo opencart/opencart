@@ -61,7 +61,7 @@ class Order extends \Opencart\System\Engine\Controller {
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'products'   => ($product_total + $voucher_total),
 				'total'      => $this->currency->format($result['total'], $result['currency_code'], $result['currency_value']),
-				'view'       => $this->url->link('account/order|info', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&order_id=' . $result['order_id']),
+				'view'       => $this->url->link('account/order.info', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&order_id=' . $result['order_id']),
 			];
 		}
 
@@ -133,7 +133,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 			$data['breadcrumbs'][] = [
 				'text' => $this->language->get('text_order'),
-				'href' => $this->url->link('account/order|info', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&order_id=' . $order_id . $url)
+				'href' => $this->url->link('account/order.info', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&order_id=' . $order_id . $url)
 			];
 
 			if ($order_info['invoice_no']) {
@@ -252,7 +252,7 @@ class Order extends \Opencart\System\Engine\Controller {
 				$product_info = $this->model_catalog_product->getProduct($product['product_id']);
 
 				if ($product_info) {
-					$reorder = $this->url->link('account/order|reorder', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&order_id=' . $order_id . '&order_product_id=' . $product['order_product_id']);
+					$reorder = $this->url->link('account/order.reorder', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&order_id=' . $order_id . '&order_product_id=' . $product['order_product_id']);
 				} else {
 					$reorder = '';
 				}
@@ -265,7 +265,7 @@ class Order extends \Opencart\System\Engine\Controller {
 					'price'    => $this->currency->format($product['price'] + ($this->config->get('config_tax') ? $product['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']),
 					'total'    => $this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value']),
 					'reorder'  => $reorder,
-					'return'   => $this->url->link('account/returns|add', 'language=' . $this->config->get('config_language') . '&order_id=' . $order_info['order_id'] . '&product_id=' . $product['product_id'])
+					'return'   => $this->url->link('account/returns.add', 'language=' . $this->config->get('config_language') . '&order_id=' . $order_info['order_id'] . '&product_id=' . $product['product_id'])
 				];
 			}
 
@@ -389,6 +389,6 @@ class Order extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$this->response->redirect($this->url->link('account/order|info', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&order_id=' . $order_id));
+		$this->response->redirect($this->url->link('account/order.info', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&order_id=' . $order_id));
 	}
 }

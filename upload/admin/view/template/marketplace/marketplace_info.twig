@@ -204,7 +204,7 @@ $('body').on('click', '#modal-purchase #button-purchase', function (e) {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=marketplace/marketplace|purchase&user_token={{ user_token }}&extension_id={{ extension_id }}',
+        url: 'index.php?route=marketplace/marketplace.purchase&user_token={{ user_token }}&extension_id={{ extension_id }}',
         type: 'post',
         data: $('#input-pin'),
         dataType: 'json',
@@ -316,7 +316,7 @@ $('#comment').load('index.php?route=marketplace/marketplace|comment&user_token={
 // Add comment
 $('#button-comment').on('click', function () {
     $.ajax({
-        url: 'index.php?route=marketplace/marketplace|addComment&user_token={{ user_token }}&extension_id={{ extension_id }}',
+        url: 'index.php?route=marketplace/marketplace.addComment&user_token={{ user_token }}&extension_id={{ extension_id }}',
         type: 'post',
         dataType: 'json',
         data: 'comment=' + encodeURIComponent($('#input-history-comment').val()),

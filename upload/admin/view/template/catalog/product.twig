@@ -106,7 +106,7 @@ $('#button-filter').on('click', function () {
 $('#input-name').autocomplete({
     'source': function (request, response) {
         $.ajax({
-            url: 'index.php?route=catalog/product|autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
+            url: 'index.php?route=catalog/product.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
             success: function (json) {
                 response($.map(json, function (item) {
@@ -126,7 +126,7 @@ $('#input-name').autocomplete({
 $('#input-model').autocomplete({
     'source': function (request, response) {
         $.ajax({
-            url: 'index.php?route=catalog/product|autocomplete&user_token={{ user_token }}&filter_model=' + encodeURIComponent(request),
+            url: 'index.php?route=catalog/product.autocomplete&user_token={{ user_token }}&filter_model=' + encodeURIComponent(request),
             dataType: 'json',
             success: function (json) {
                 response($.map(json, function (item) {

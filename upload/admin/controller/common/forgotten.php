@@ -117,7 +117,7 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 
 		$this->session->data['reset_token'] = substr(bin2hex(openssl_random_pseudo_bytes(26)), 0, 26);
 
-		$data['reset'] = $this->url->link('common/forgotten|password', 'email=' . urlencode($email) . '&code=' . $code . '&reset_token=' . $this->session->data['reset_token']);
+		$data['reset'] = $this->url->link('common/forgotten.password', 'email=' . urlencode($email) . '&code=' . $code . '&reset_token=' . $this->session->data['reset_token']);
 		$data['back'] = $this->url->link('common/login');
 
 		$data['header'] = $this->load->controller('common/header');

@@ -87,7 +87,7 @@ $('#extension').on('click', '#recommended .btn-primary', function (e) {
 
                 // Manually build the url so no need to refresh extensions and can trigger install
                 // Once the extension is downloaded we trigger the install
-                $(element).parent().find('.dropdown-menu').html('<a href="index.php?route=marketplace/installer|install&user_token={{ user_token }}&extension_install_id=' + json['extension_install_id'] + '" class="dropdown-item"><i class="fa-solid fa-plus-circle fa-fw"></i> {{ text_install }}</a> <a href="index.php?route=marketplace/installer|delete&user_token={{ user_token }}&extension_install_id=' + json['extension_install_id'] + '" class="dropdown-item"><i class="fa-regular fa-trash-can fa-fw"></i> {{ text_delete }}</a>');
+                $(element).parent().find('.dropdown-menu').html('<a href="index.php?route=marketplace/installer.install&user_token={{ user_token }}&extension_install_id=' + json['extension_install_id'] + '" class="dropdown-item"><i class="fa-solid fa-plus-circle fa-fw"></i> {{ text_install }}</a> <a href="index.php?route=marketplace/installer|delete&user_token={{ user_token }}&extension_install_id=' + json['extension_install_id'] + '" class="dropdown-item"><i class="fa-regular fa-trash-can fa-fw"></i> {{ text_delete }}</a>');
 
                 $(element).parent().find('.dropdown-item:first').trigger('click');
             }

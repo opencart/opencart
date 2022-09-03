@@ -31,7 +31,7 @@ $('#voucher').on('click', 'thead a, .pagination a', function (e) {
 
 $('#button-send').on('click', function () {
     $.ajax({
-        url: 'index.php?route=sale/voucher|send&user_token={{ user_token }}',
+        url: 'index.php?route=sale/voucher.send&user_token={{ user_token }}',
         type: 'post',
         dataType: 'json',
         data: $('input[name^=\'selected\']:checked'),

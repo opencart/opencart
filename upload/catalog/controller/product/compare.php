@@ -39,8 +39,8 @@ class Compare extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('product/compare', 'language=' . $this->config->get('config_language'))
 		];
 
-		$data['add_to_cart'] = $this->url->link('checkout/cart|add', 'language=' . $this->config->get('config_language'));
-		$data['cart'] = $this->url->link('common/cart|info', 'language=' . $this->config->get('config_language'));
+		$data['add_to_cart'] = $this->url->link('checkout/cart.add', 'language=' . $this->config->get('config_language'));
+		$data['cart'] = $this->url->link('common/cart.info', 'language=' . $this->config->get('config_language'));
 
 		if (isset($this->session->data['success'])) {
 			$data['success'] = $this->session->data['success'];

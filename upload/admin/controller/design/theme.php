@@ -72,8 +72,8 @@ class Theme extends \Opencart\System\Engine\Controller {
 				'store'      => ($result['store_id'] ? $store : $this->language->get('text_default')),
 				'route'      => $result['route'],
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'edit'       => $this->url->link('design/theme|template', 'user_token=' . $this->session->data['user_token']),
-				'delete'     => $this->url->link('design/theme|delete', 'user_token=' . $this->session->data['user_token'] . '&theme_id=' . $result['theme_id'])
+				'edit'       => $this->url->link('design/theme.template', 'user_token=' . $this->session->data['user_token']),
+				'delete'     => $this->url->link('design/theme.delete', 'user_token=' . $this->session->data['user_token'] . '&theme_id=' . $result['theme_id'])
 			];
 		}
 
@@ -81,7 +81,7 @@ class Theme extends \Opencart\System\Engine\Controller {
 			'total' => $history_total,
 			'page'  => $page,
 			'limit' => 10,
-			'url'   => $this->url->link('design/theme|history', 'user_token=' . $this->session->data['user_token'] . '&page={page}')
+			'url'   => $this->url->link('design/theme.history', 'user_token=' . $this->session->data['user_token'] . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($history_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($history_total - 10)) ? $history_total : ((($page - 1) * 10) + 10), $history_total, ceil($history_total / 10));

@@ -7178,7 +7178,7 @@ jQuery.each({
 var r20 = /%20/g,
 	rbracket = /\[\]$/,
 	rCRLF = /\r?\n/g,
-	rinput = /^(?:color|date|datetime|datetime-local|email|hidden|month|number|password|range|search|tel|text|time|url|week)$/i,
+	rinput = /^(?:color|date|datetime|datetime-local|email|hidden|month|number.password|range|search|tel|text|time|url|week)$/i,
 	rselectTextarea = /^(?:select|textarea)/i;
 
 jQuery.fn.extend({

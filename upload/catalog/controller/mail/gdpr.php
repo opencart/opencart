@@ -21,7 +21,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 
 		$data['button_confirm'] = $this->language->get('button_' . $args[2]);
 
-		$data['confirm'] = $this->url->link('information/gdpr|success', 'language=' . $this->config->get('config_language') . '&code=' . $args[0], true);
+		$data['confirm'] = $this->url->link('information/gdpr.success', 'language=' . $this->config->get('config_language') . '&code=' . $args[0], true);
 
 		$data['ip'] = $this->request->server['REMOTE_ADDR'];
 

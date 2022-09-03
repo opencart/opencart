@@ -19,7 +19,7 @@ class Contact extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('information/contact', 'language=' . $this->config->get('config_language'))
 		];
 
-		$data['send'] = $this->url->link('information/contact|send', 'language=' . $this->config->get('config_language'));
+		$data['send'] = $this->url->link('information/contact.send', 'language=' . $this->config->get('config_language'));
 
 		$this->load->model('tool/image');
 
@@ -123,7 +123,7 @@ class Contact extends \Opencart\System\Engine\Controller {
 		$extension_info = $this->model_setting_extension->getExtensionByCode('captcha', $this->config->get('config_captcha'));
 
 		if ($extension_info && $this->config->get('captcha_' . $this->config->get('config_captcha') . '_status') && in_array('contact', (array)$this->config->get('config_captcha_page'))) {
-			$captcha = $this->load->controller('extension/' . $extension_info['extension'] . '/captcha/' . $extension_info['code'] . '|validate');
+			$captcha = $this->load->controller('extension/' . $extension_info['extension'] . '/captcha/' . $extension_info['code'] . '.validate');
 
 			if ($captcha) {
 				$json['error']['captcha'] = $captcha;
@@ -150,7 +150,7 @@ class Contact extends \Opencart\System\Engine\Controller {
 				$mail->send();
 			}
 
-			$json['redirect'] = $this->url->link('information/contact|success', 'language=' . $this->config->get('config_language'), true);
+			$json['redirect'] = $this->url->link('information/contact.success', 'language=' . $this->config->get('config_language'), true);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

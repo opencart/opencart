@@ -92,7 +92,7 @@ $('#button-delete').on('click', function (e) {
 
     if (confirm('{{ text_confirm }}')) {
         $.ajax({
-            url: 'index.php?route=tool/notification|delete&user_token={{ user_token }}',
+            url: 'index.php?route=tool/notification.delete&user_token={{ user_token }}',
             type: 'post',
             data: $('#notification input[name^=\'selected\']:checked').serialize(),
             dataType: 'json',

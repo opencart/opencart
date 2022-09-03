@@ -20,8 +20,8 @@ class Reward extends \Opencart\System\Engine\Controller {
 
 				$data['entry_reward'] = sprintf($this->language->get('entry_reward'), $points_total);
 
-				$data['save'] = $this->url->link('extension/opencart/total/reward|save', 'language=' . $this->config->get('config_language'), true);
-				$data['list'] = $this->url->link('checkout/cart|list', 'language=' . $this->config->get('config_language'), true);
+				$data['save'] = $this->url->link('extension/opencart/total/reward.save', 'language=' . $this->config->get('config_language'), true);
+				$data['list'] = $this->url->link('checkout/cart.list', 'language=' . $this->config->get('config_language'), true);
 
 				if (isset($this->session->data['reward'])) {
 					$data['reward'] = $this->session->data['reward'];

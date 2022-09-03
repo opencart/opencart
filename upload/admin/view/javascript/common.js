@@ -295,7 +295,7 @@ $(document).on('click', '[data-oc-toggle=\'upload\']', function () {
                 clearInterval(timer);
 
                 $.ajax({
-                    url: 'index.php?route=tool/upload|upload&user_token=' + getURLVar('user_token'),
+                    url: 'index.php?route=tool/upload.upload&user_token=' + getURLVar('user_token'),
                     type: 'post',
                     data: new FormData($('#form-upload')[0]),
                     dataType: 'json',
@@ -340,7 +340,7 @@ $(document).on('click', '[data-oc-toggle=\'download\']', function (e) {
     var value = $($(element).attr('data-oc-target')).val();
 
     if (value != '') {
-        location = 'index.php?route=tool/upload|download&user_token=' + getURLVar('user_token') + '&code=' + value;
+        location = 'index.php?route=tool/upload.download&user_token=' + getURLVar('user_token') + '&code=' + value;
     }
 });
 

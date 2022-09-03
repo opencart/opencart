@@ -95,7 +95,7 @@ $('#button-install').on('click', function () {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=common/security|install&user_token={{ user_token }}',
+        url: 'index.php?route=common/security.install&user_token={{ user_token }}',
         dataType: 'json',
         beforeSend: function () {
             $(element).prop('disabled', true).addClass('loading');
@@ -136,7 +136,7 @@ $('#button-storage').on('click', function () {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=common/security|storage&user_token={{ user_token }}',
+        url: 'index.php?route=common/security.storage&user_token={{ user_token }}',
         type: 'post',
         data: $('#form-storage').serialize(),
         dataType: 'json',
@@ -172,7 +172,7 @@ $('#button-admin').on('click', function () {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=common/security|admin&user_token={{ user_token }}',
+        url: 'index.php?route=common/security.admin&user_token={{ user_token }}',
         type: 'post',
         data: $('#form-admin').serialize(),
         dataType: 'json',

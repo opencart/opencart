@@ -23,7 +23,7 @@ class CustomerSubscription extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('extension/opencart/report/customer_subscription', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		$data['save'] = $this->url->link('extension/opencart/report/customer_subscription|save', 'user_token=' . $this->session->data['user_token']);
+		$data['save'] = $this->url->link('extension/opencart/report/customer_subscription.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=report');
 
 		$data['report_customer_subscription_status'] = $this->config->get('report_customer_subscription_status');
@@ -121,7 +121,7 @@ class CustomerSubscription extends \Opencart\System\Engine\Controller {
 				'customer_group' => $result['customer_group'],
 				'status'         => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
 				'total'          => $this->currency->format($result['total'], $this->config->get('config_currency')),
-				'edit'           => $this->url->link('customer/customer|form', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id'])
+				'edit'           => $this->url->link('customer/customer.form', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id'])
 			];
 		}
 
@@ -143,7 +143,7 @@ class CustomerSubscription extends \Opencart\System\Engine\Controller {
 			'total' => $subscription_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination'),
-			'url'   => $this->url->link('extension/opencart/report/customer_subscription|report', 'user_token=' . $this->session->data['user_token'] . '&code=customer_subscription' . $url . '&page={page}')
+			'url'   => $this->url->link('extension/opencart/report/customer_subscription.report', 'user_token=' . $this->session->data['user_token'] . '&code=customer_subscription' . $url . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($subscription_total) ? (($page - 1) * $this->config->get('config_pagination')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination')) > ($subscription_total - $this->config->get('config_pagination'))) ? $subscription_total : ((($page - 1) * $this->config->get('config_pagination')) + $this->config->get('config_pagination')), $subscription_total, ceil($subscription_total / $this->config->get('config_pagination')));

@@ -23,7 +23,7 @@ class Category extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('extension/opencart/module/category', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		$data['save'] = $this->url->link('extension/opencart/module/category|save', 'user_token=' . $this->session->data['user_token']);
+		$data['save'] = $this->url->link('extension/opencart/module/category.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module');
 
 		$data['module_category_status'] = $this->config->get('module_category_status');

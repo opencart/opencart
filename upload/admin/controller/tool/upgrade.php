@@ -120,7 +120,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$json['text'] = $this->language->get('text_install');
 
-			$json['next'] = $this->url->link('tool/upgrade|install', 'user_token=' . $this->session->data['user_token'] . '&version=' . $version, true);
+			$json['next'] = $this->url->link('tool/upgrade.install', 'user_token=' . $this->session->data['user_token'] . '&version=' . $version, true);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

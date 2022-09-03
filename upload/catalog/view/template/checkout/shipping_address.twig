@@ -201,7 +201,7 @@ $('#input-shipping-address').on('change', function () {
 
     chain.attach(function () {
         return $.ajax({
-            url: 'index.php?route=checkout/shipping_address|address&language={{ language }}&address_id=' + $(element).val(),
+            url: 'index.php?route=checkout/shipping_address.address&language={{ language }}&address_id=' + $(element).val(),
             dataType: 'json',
             beforeSend: function () {
                 $(element).prop('disabled', true);
@@ -237,7 +237,7 @@ $('#form-shipping-address').on('submit', function (e) {
 
     chain.attach(function () {
         return $.ajax({
-            url: 'index.php?route=checkout/shipping_address|save&language={{ language }}',
+            url: 'index.php?route=checkout/shipping_address.save&language={{ language }}',
             type: 'post',
             data: $('#form-shipping-address').serialize(),
             dataType: 'json',

@@ -119,7 +119,7 @@ $('#input-to').trigger('change');
 $('#input-customer').autocomplete({
     'source': function (request, response) {
         $.ajax({
-            url: 'index.php?route=customer/customer|autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
+            url: 'index.php?route=customer/customer.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
             success: function (json) {
                 response($.map(json, function (item) {
@@ -156,7 +156,7 @@ $('#mail-customer').on('click', '.btn', function () {
 $('#input-affiliate').autocomplete({
     'source': function (request, response) {
         $.ajax({
-            url: 'index.php?route=customer/customer|autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request) + '&filter_affiliate=1',
+            url: 'index.php?route=customer/customer.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request) + '&filter_affiliate=1',
             dataType: 'json',
             success: function (json) {
                 response($.map(json, function (item) {
@@ -193,7 +193,7 @@ $('#input-affiliate').on('click', '.btn', function () {
 $('#input-product').autocomplete({
     'source': function (request, response) {
         $.ajax({
-            url: 'index.php?route=catalog/product|autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
+            url: 'index.php?route=catalog/product.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
             success: function (json) {
                 response($.map(json, function (item) {

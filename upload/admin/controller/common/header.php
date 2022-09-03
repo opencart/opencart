@@ -50,7 +50,7 @@ class Header extends \Opencart\System\Engine\Controller {
 			foreach ($results as $result) {
 				$data['notifications'][] = [
 					'title' => $result['title'],
-					'href'  => $this->url->link('tool/notification|info', 'user_token=' . $this->session->data['user_token'] . '&notification_id=' . $result['notification_id'])
+					'href'  => $this->url->link('tool/notification.info', 'user_token=' . $this->session->data['user_token'] . '&notification_id=' . $result['notification_id'])
 				];
 			}
 

@@ -156,7 +156,7 @@ $('#login').on('click', '.btn', function (e) {
                 if (json['success']) {
                     $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                    $('#login').load('index.php?route=user/user|login&user_token={{ user_token }}&user_id={{ user_id }}');
+                    $('#login').load('index.php?route=user/user.login&user_token={{ user_token }}&user_id={{ user_id }}');
                 }
             },
             error: function (xhr, ajaxOptions, thrownError) {

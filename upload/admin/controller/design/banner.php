@@ -33,8 +33,8 @@ class Banner extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('design/banner', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		$data['add'] = $this->url->link('design/banner|form', 'user_token=' . $this->session->data['user_token'] . $url);
-		$data['delete'] = $this->url->link('design/banner|delete', 'user_token=' . $this->session->data['user_token']);
+		$data['add'] = $this->url->link('design/banner.form', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['delete'] = $this->url->link('design/banner.delete', 'user_token=' . $this->session->data['user_token']);
 
 		$data['list'] = $this->getList();
 
@@ -86,7 +86,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['action'] = $this->url->link('design/banner|list', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['action'] = $this->url->link('design/banner.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$data['banners'] = [];
 
@@ -108,7 +108,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 				'banner_id' => $result['banner_id'],
 				'name'      => $result['name'],
 				'status'    => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
-				'edit'      => $this->url->link('design/banner|form', 'user_token=' . $this->session->data['user_token'] . '&banner_id=' . $result['banner_id'] . $url)
+				'edit'      => $this->url->link('design/banner.form', 'user_token=' . $this->session->data['user_token'] . '&banner_id=' . $result['banner_id'] . $url)
 			];
 		}
 
@@ -124,8 +124,8 @@ class Banner extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['sort_name'] = $this->url->link('design/banner|list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
-		$data['sort_status'] = $this->url->link('design/banner|list', 'user_token=' . $this->session->data['user_token'] . '&sort=status' . $url);
+		$data['sort_name'] = $this->url->link('design/banner.list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
+		$data['sort_status'] = $this->url->link('design/banner.list', 'user_token=' . $this->session->data['user_token'] . '&sort=status' . $url);
 
 		$url = '';
 
@@ -141,7 +141,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 			'total' => $banner_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination_admin'),
-			'url'   => $this->url->link('design/banner|list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+			'url'   => $this->url->link('design/banner.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($banner_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($banner_total - $this->config->get('config_pagination_admin'))) ? $banner_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $banner_total, ceil($banner_total / $this->config->get('config_pagination_admin')));
@@ -185,7 +185,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('design/banner', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		$data['save'] = $this->url->link('design/banner|save', 'user_token=' . $this->session->data['user_token']);
+		$data['save'] = $this->url->link('design/banner.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('design/banner', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['banner_id'])) {

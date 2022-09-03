@@ -33,8 +33,8 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('user/user_permission', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		$data['add'] = $this->url->link('user/user_permission|form', 'user_token=' . $this->session->data['user_token'] . $url);
-		$data['delete'] = $this->url->link('user/user_permission|delete', 'user_token=' . $this->session->data['user_token']);
+		$data['add'] = $this->url->link('user/user_permission.form', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['delete'] = $this->url->link('user/user_permission.delete', 'user_token=' . $this->session->data['user_token']);
 
 		$data['list'] = $this->getList();
 
@@ -86,7 +86,7 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['action'] = $this->url->link('user/user_permission|list', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['action'] = $this->url->link('user/user_permission.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$data['user_groups'] = [];
 
@@ -107,7 +107,7 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 			$data['user_groups'][] = [
 				'user_group_id' => $result['user_group_id'],
 				'name'          => $result['name'],
-				'edit'          => $this->url->link('user/user_permission|form', 'user_token=' . $this->session->data['user_token'] . '&user_group_id=' . $result['user_group_id'] . $url)
+				'edit'          => $this->url->link('user/user_permission.form', 'user_token=' . $this->session->data['user_token'] . '&user_group_id=' . $result['user_group_id'] . $url)
 			];
 		}
 
@@ -123,7 +123,7 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['sort_name'] = $this->url->link('user/user_permission|list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
+		$data['sort_name'] = $this->url->link('user/user_permission.list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
 
 		$url = '';
 
@@ -139,7 +139,7 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 			'total' => $user_group_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination_admin'),
-			'url'   => $this->url->link('user/user_permission|list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+			'url'   => $this->url->link('user/user_permission.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($user_group_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($user_group_total - $this->config->get('config_pagination_admin'))) ? $user_group_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $user_group_total, ceil($user_group_total / $this->config->get('config_pagination_admin')));
@@ -183,7 +183,7 @@ class UserPermission extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('user/user_permission', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		$data['save'] = $this->url->link('user/user_permission|save', 'user_token=' . $this->session->data['user_token']);
+		$data['save'] = $this->url->link('user/user_permission.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('user/user_permission', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['user_group_id'])) {

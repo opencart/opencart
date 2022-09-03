@@ -23,7 +23,7 @@ class Pickup extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('extension/opencart/shipping/pickup', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		$data['save'] = $this->url->link('extension/opencart/shipping/pickup|save', 'user_token=' . $this->session->data['user_token']);
+		$data['save'] = $this->url->link('extension/opencart/shipping/pickup.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=shipping');
 
 		$data['shipping_pickup_geo_zone_id'] = $this->config->get('shipping_pickup_geo_zone_id');

@@ -24,7 +24,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 				'href' => $this->url->link('information/gdpr', 'language=' . $this->config->get('config_language'))
 			];
 
-			$data['action'] = $this->url->link('information/gdpr|action', 'language=' . $this->config->get('config_language'));
+			$data['action'] = $this->url->link('information/gdpr.action', 'language=' . $this->config->get('config_language'));
 
 			$data['title'] = $information_info['title'];
 
@@ -163,7 +163,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 
 			$data['breadcrumbs'][] = [
 				'text' => $this->language->get('heading_title'),
-				'href' => $this->url->link('information/gdpr|success', 'language=' . $this->config->get('config_language'))
+				'href' => $this->url->link('information/gdpr.success', 'language=' . $this->config->get('config_language'))
 			];
 
 			if ($gdpr_info['status'] == 0) {

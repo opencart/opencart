@@ -23,7 +23,7 @@ class ECB extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('extension/opencart/currency/ecb', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		$data['save'] = $this->url->link('extension/opencart/currency/ecb|save', 'user_token=' . $this->session->data['user_token']);
+		$data['save'] = $this->url->link('extension/opencart/currency/ecb.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=currency');
 
 		$data['currency_ecb_status'] = $this->config->get('currency_ecb_status');

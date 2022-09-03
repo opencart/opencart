@@ -32,7 +32,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 
 		$this->session->data['voucher_token'] = substr(bin2hex(openssl_random_pseudo_bytes(26)), 0, 26);
 
-		$data['save'] = $this->url->link('checkout/voucher|add', 'language=' . $this->config->get('config_language') . '&voucher_token=' . $this->session->data['voucher_token']);
+		$data['save'] = $this->url->link('checkout/voucher.add', 'language=' . $this->config->get('config_language') . '&voucher_token=' . $this->session->data['voucher_token']);
 
 		if ($this->customer->isLogged()) {
 			$data['from_name'] = $this->customer->getFirstName() . ' '  . $this->customer->getLastName();
@@ -130,7 +130,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 				'amount'           => $this->currency->convert($this->request->post['amount'], $this->session->data['currency'], $this->config->get('config_currency'))
 			];
 
-			$json['redirect'] = $this->url->link('checkout/voucher|success', 'language=' . $this->config->get('config_language'), true);
+			$json['redirect'] = $this->url->link('checkout/voucher.success', 'language=' . $this->config->get('config_language'), true);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

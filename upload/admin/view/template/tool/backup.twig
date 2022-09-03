@@ -69,7 +69,7 @@ $('#button-backup').on('click', function () {
     $('#progress-bar').css('width', '0%');
     $('#progress-bar').removeClass('bg-danger bg-success');
 
-    var next = 'index.php?route=tool/backup|backup&user_token={{ user_token }}&table=' + $('input[name^=\'backup\']:checked').first().val();
+    var next = 'index.php?route=tool/backup.backup&user_token={{ user_token }}&table=' + $('input[name^=\'backup\']:checked').first().val();
 
     var backup = function () {
         return $.ajax({
@@ -229,7 +229,7 @@ $('#button-upload').on('click', function () {
             clearInterval(timer);
 
             $.ajax({
-                url: 'index.php?route=tool/backup|upload&user_token={{ user_token }}',
+                url: 'index.php?route=tool/backup.upload&user_token={{ user_token }}',
                 type: 'post',
                 dataType: 'json',
                 data: new FormData($('#form-upload')[0]),
@@ -268,7 +268,7 @@ $('#history').on('click', '.btn-danger', function () {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=tool/backup|delete&user_token={{ user_token }}&filename=' + encodeURIComponent($(element).val()),
+        url: 'index.php?route=tool/backup.delete&user_token={{ user_token }}&filename=' + encodeURIComponent($(element).val()),
         type: 'post',
         dataType: 'json',
         beforeSend: function () {

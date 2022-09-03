@@ -35,7 +35,7 @@ $('#button-repair').on('click', function (e) {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=catalog/category|repair&user_token={{ user_token }}',
+        url: 'index.php?route=catalog/category.repair&user_token={{ user_token }}',
         dataType: 'json',
         beforeSend: function () {
             $(element).prop('disabled', true).addClass('loading');

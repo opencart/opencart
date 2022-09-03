@@ -23,7 +23,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('extension/opencart/dashboard/customer', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		$data['save'] = $this->url->link('extension/opencart/dashboard/customer|save', 'user_token=' . $this->session->data['user_token']);
+		$data['save'] = $this->url->link('extension/opencart/dashboard/customer.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=dashboard');
 
 		$data['dashboard_customer_width'] = $this->config->get('dashboard_customer_width');

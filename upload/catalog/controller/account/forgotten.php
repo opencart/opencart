@@ -28,7 +28,7 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('account/forgotten', 'language=' . $this->config->get('config_language'))
 		];
 
-		$data['confirm'] = $this->url->link('account/forgotten|confirm', 'language=' . $this->config->get('config_language'));
+		$data['confirm'] = $this->url->link('account/forgotten.confirm', 'language=' . $this->config->get('config_language'));
 
 		$data['back'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'));
 
@@ -128,12 +128,12 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('account/forgotten|reset', 'language=' . $this->config->get('config_language'))
+			'href' => $this->url->link('account/forgotten.reset', 'language=' . $this->config->get('config_language'))
 		];
 
 		$this->session->data['reset_token'] = substr(bin2hex(openssl_random_pseudo_bytes(26)), 0, 26);
 
-		$data['save'] = $this->url->link('account/forgotten|password', 'language=' . $this->config->get('config_language') . '&email=' . urlencode($email) . '&code=' . $code . '&reset_token=' . $this->session->data['reset_token']);
+		$data['save'] = $this->url->link('account/forgotten.password', 'language=' . $this->config->get('config_language') . '&email=' . urlencode($email) . '&code=' . $code . '&reset_token=' . $this->session->data['reset_token']);
 		$data['back'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'));
 
 		$data['column_left'] = $this->load->controller('common/column_left');

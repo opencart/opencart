@@ -56,7 +56,7 @@ class Reward extends \Opencart\System\Engine\Controller {
 				'points'      => $result['points'],
 				'description' => $result['description'],
 				'date_added'  => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'href'        => $this->url->link('account/order|info', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&order_id=' . $result['order_id'])
+				'href'        => $this->url->link('account/order.info', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&order_id=' . $result['order_id'])
 			];
 		}
 

@@ -63,7 +63,7 @@ class Module extends \Opencart\System\Engine\Controller {
 						'name'   => $module['name'],
 						'status' => $setting_info['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 						'edit'   => $this->url->link('extension/' . $extension . '/module/' . $code, 'user_token=' . $this->session->data['user_token'] . '&module_id=' . $module['module_id']),
-						'delete' => $this->url->link('extension/module|delete', 'user_token=' . $this->session->data['user_token'] . '&module_id=' . $module['module_id'])
+						'delete' => $this->url->link('extension/module.delete', 'user_token=' . $this->session->data['user_token'] . '&module_id=' . $module['module_id'])
 					];
 				}
 
@@ -77,8 +77,8 @@ class Module extends \Opencart\System\Engine\Controller {
 					'name'      => $this->language->get($code . '_heading_title'),
 					'status'    => $status,
 					'module'    => $module_data,
-					'install'   => $this->url->link('extension/module|install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
-					'uninstall' => $this->url->link('extension/module|uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
+					'install'   => $this->url->link('extension/module.install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
+					'uninstall' => $this->url->link('extension/module.uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
 					'installed' => in_array($code, $installed),
 					'edit'      => $this->url->link('extension/' . $extension . '/module/' . $code, 'user_token=' . $this->session->data['user_token'])
 				];
@@ -150,7 +150,7 @@ class Module extends \Opencart\System\Engine\Controller {
 			$this->config->addPath('extension/' . $extension, DIR_EXTENSION . $extension . '/system/config/');
 
 			// Call install method if it exists
-			$this->load->controller('extension/' . $extension . '/module/' . $code . '|install');
+			$this->load->controller('extension/' . $extension . '/module/' . $code . '.install');
 
 			$json['success'] = $this->language->get('text_success');
 		}
@@ -178,7 +178,7 @@ class Module extends \Opencart\System\Engine\Controller {
 			$this->model_setting_module->deleteModulesByCode($this->request->get['extension'] . '.' . $this->request->get['code']);
 
 			// Call uninstall method if it exists
-			$this->load->controller('extension/' . $this->request->get['extension'] . '/module/' . $this->request->get['code'] . '|uninstall');
+			$this->load->controller('extension/' . $this->request->get['extension'] . '/module/' . $this->request->get['code'] . '.uninstall');
 
 			$json['success'] = $this->language->get('text_success');
 		}

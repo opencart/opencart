@@ -43,8 +43,8 @@ class Language extends \Opencart\System\Engine\Controller {
 				$data['extensions'][] = [
 					'name'      => $this->language->get($code . '_heading_title'),
 					'status'    => $this->config->get('language_' . $code . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
-					'install'   => $this->url->link('extension/language|install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
-					'uninstall' => $this->url->link('extension/language|uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
+					'install'   => $this->url->link('extension/language.install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
+					'uninstall' => $this->url->link('extension/language.uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
 					'installed' => in_array($code, $installed),
 					'edit'      => $this->url->link('extension/' . $extension . '/language/' . $code, 'user_token=' . $this->session->data['user_token'])
 				];
@@ -108,7 +108,7 @@ class Language extends \Opencart\System\Engine\Controller {
 			$this->config->addPath('extension/' . $extension, DIR_EXTENSION . $extension . '/system/config/');
 
 			// Call install method if it exists
-			$this->load->controller('extension/' . $extension . '/language/' . $code . '|install');
+			$this->load->controller('extension/' . $extension . '/language/' . $code . '.install');
 
 			$json['success'] = $this->language->get('text_success');
 		}
@@ -132,7 +132,7 @@ class Language extends \Opencart\System\Engine\Controller {
 			$this->model_setting_extension->uninstall('language', $this->request->get['code']);
 
 			// Call uninstall method if it exists
-			$this->load->controller('extension/' . $this->request->get['extension'] . '/language/' . $this->request->get['code'] . '|uninstall');
+			$this->load->controller('extension/' . $this->request->get['extension'] . '/language/' . $this->request->get['code'] . '.uninstall');
 
 			$json['success'] = $this->language->get('text_success');
 		}

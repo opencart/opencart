@@ -33,8 +33,8 @@ class Translation extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('design/translation', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		$data['add'] = $this->url->link('design/translation|form', 'user_token=' . $this->session->data['user_token'] . $url);
-		$data['delete'] = $this->url->link('design/translation|delete', 'user_token=' . $this->session->data['user_token']);
+		$data['add'] = $this->url->link('design/translation.form', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['delete'] = $this->url->link('design/translation.delete', 'user_token=' . $this->session->data['user_token']);
 
 		$data['list'] = $this->getList();
 
@@ -86,7 +86,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['action'] = $this->url->link('design/translation|list', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['action'] = $this->url->link('design/translation.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$this->load->model('localisation/language');
 
@@ -124,7 +124,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 				'language'       => $code,
 				'key'            => $result['key'],
 				'value'          => $result['value'],
-				'edit'           => $this->url->link('design/translation|form', 'user_token=' . $this->session->data['user_token'] . '&translation_id=' . $result['translation_id'])
+				'edit'           => $this->url->link('design/translation.form', 'user_token=' . $this->session->data['user_token'] . '&translation_id=' . $result['translation_id'])
 			];
 		}
 
@@ -140,17 +140,17 @@ class Translation extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['sort_store'] = $this->url->link('design/translation|list', 'user_token=' . $this->session->data['user_token'] . '&sort=store' . $url);
-		$data['sort_language'] = $this->url->link('design/translation|list', 'user_token=' . $this->session->data['user_token'] . '&sort=language' . $url);
-		$data['sort_route'] = $this->url->link('design/translation|list', 'user_token=' . $this->session->data['user_token'] . '&sort=route' . $url);
-		$data['sort_key'] = $this->url->link('design/translation|list', 'user_token=' . $this->session->data['user_token'] . '&sort=key' . $url);
-		$data['sort_value'] = $this->url->link('design/translation|list', 'user_token=' . $this->session->data['user_token'] . '&sort=value' . $url);
+		$data['sort_store'] = $this->url->link('design/translation.list', 'user_token=' . $this->session->data['user_token'] . '&sort=store' . $url);
+		$data['sort_language'] = $this->url->link('design/translation.list', 'user_token=' . $this->session->data['user_token'] . '&sort=language' . $url);
+		$data['sort_route'] = $this->url->link('design/translation.list', 'user_token=' . $this->session->data['user_token'] . '&sort=route' . $url);
+		$data['sort_key'] = $this->url->link('design/translation.list', 'user_token=' . $this->session->data['user_token'] . '&sort=key' . $url);
+		$data['sort_value'] = $this->url->link('design/translation.list', 'user_token=' . $this->session->data['user_token'] . '&sort=value' . $url);
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $translation_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination_admin'),
-			'url'   => $this->url->link('design/translation|list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+			'url'   => $this->url->link('design/translation.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($translation_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($translation_total - $this->config->get('config_pagination_admin'))) ? $translation_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $translation_total, ceil($translation_total / $this->config->get('config_pagination_admin')));
@@ -194,7 +194,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('design/translation', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		$data['save'] = $this->url->link('design/translation|save', 'user_token=' . $this->session->data['user_token']);
+		$data['save'] = $this->url->link('design/translation.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('design/translation', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['translation_id'])) {

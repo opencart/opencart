@@ -23,7 +23,7 @@ class ProductViewed extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('extension/opencart/report/product_viewed', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		$data['save'] = $this->url->link('extension/opencart/report/product_viewed|save', 'user_token=' . $this->session->data['user_token']);
+		$data['save'] = $this->url->link('extension/opencart/report/product_viewed.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=report');
 
 		$data['report_product_viewed_status'] = $this->config->get('report_product_viewed_status');
@@ -136,7 +136,7 @@ class ProductViewed extends \Opencart\System\Engine\Controller {
 			'total' => $viewed_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination'),
-			'url'   => $this->url->link('extension/opencart/report/product_viewed|list', 'user_token=' . $this->session->data['user_token'] . '&code=product_viewed&page={page}')
+			'url'   => $this->url->link('extension/opencart/report/product_viewed.list', 'user_token=' . $this->session->data['user_token'] . '&code=product_viewed&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($viewed_total) ? (($page - 1) * $this->config->get('config_pagination')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination')) > ($viewed_total - $this->config->get('config_pagination'))) ? $viewed_total : ((($page - 1) * $this->config->get('config_pagination')) + $this->config->get('config_pagination')), $viewed_total, ceil($viewed_total / $this->config->get('config_pagination')));
@@ -184,7 +184,7 @@ class ProductViewed extends \Opencart\System\Engine\Controller {
 			if (($page * 10) <= $product_total) {
 				$json['text'] = sprintf($this->language->get('text_progress'), ($page - 1) * 10, $product_total);
 
-				$json['next'] = $this->url->link('extension/opencart/report/product_viewed|generate', 'user_token=' . $this->session->data['user_token'] . '&page=' . ($page + 1), true);
+				$json['next'] = $this->url->link('extension/opencart/report/product_viewed.generate', 'user_token=' . $this->session->data['user_token'] . '&page=' . ($page + 1), true);
 			} else {
 				$json['success'] = $this->language->get('text_success');
 			}

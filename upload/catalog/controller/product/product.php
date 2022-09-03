@@ -98,7 +98,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			if ($manufacturer_info) {
 				$data['breadcrumbs'][] = [
 					'text' => $manufacturer_info['name'],
-					'href' => $this->url->link('product/manufacturer|info', 'language=' . $this->config->get('config_language') . '&manufacturer_id=' . $this->request->get['manufacturer_id'] . $url)
+					'href' => $this->url->link('product/manufacturer.info', 'language=' . $this->config->get('config_language') . '&manufacturer_id=' . $this->request->get['manufacturer_id'] . $url)
 				];
 			}
 		}
@@ -236,7 +236,7 @@ class Product extends \Opencart\System\Engine\Controller {
 
 			$data['product_id'] = (int)$this->request->get['product_id'];
 			$data['manufacturer'] = $product_info['manufacturer'];
-			$data['manufacturers'] = $this->url->link('product/manufacturer|info', 'language=' . $this->config->get('config_language') . '&manufacturer_id=' . $product_info['manufacturer_id']);
+			$data['manufacturers'] = $this->url->link('product/manufacturer.info', 'language=' . $this->config->get('config_language') . '&manufacturer_id=' . $product_info['manufacturer_id']);
 			$data['model'] = $product_info['model'];
 			$data['reward'] = $product_info['reward'];
 			$data['points'] = $product_info['points'];
@@ -255,8 +255,8 @@ class Product extends \Opencart\System\Engine\Controller {
 
 			$data['review'] = $this->load->controller('product/review');
 
-			$data['add_to_wishlist'] = $this->url->link('account/wishlist|add', 'language=' . $this->config->get('config_language'));
-			$data['add_to_compare'] = $this->url->link('product/compare|add', 'language=' . $this->config->get('config_language'));
+			$data['add_to_wishlist'] = $this->url->link('account/wishlist.add', 'language=' . $this->config->get('config_language'));
+			$data['add_to_compare'] = $this->url->link('product/compare.add', 'language=' . $this->config->get('config_language'));
 			$data['upload'] = $this->url->link('tool/upload', 'language=' . $this->config->get('config_language'));
 
 			$data['language'] = $this->config->get('config_language');

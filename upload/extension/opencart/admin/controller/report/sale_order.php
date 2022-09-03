@@ -23,7 +23,7 @@ class SaleOrder extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('extension/opencart/report/sale_order', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		$data['save'] = $this->url->link('extension/opencart/report/sale_order|save', 'user_token=' . $this->session->data['user_token']);
+		$data['save'] = $this->url->link('extension/opencart/report/sale_order.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=report');
 
 		$data['report_sale_order_status'] = $this->config->get('report_sale_order_status');

@@ -36,7 +36,7 @@ $('#button-payment-method').on('click', function () {
 
     chain.attach(function () {
         return $.ajax({
-            url: 'index.php?route=checkout/payment_method|getMethods&language={{ language }}',
+            url: 'index.php?route=checkout/payment_method.getMethods&language={{ language }}',
             dataType: 'json',
             beforeSend: function () {
                 $('#input-payment-method').prop('disabled', true);
@@ -85,7 +85,7 @@ $('#input-payment-method').on('change', function () {
 
     chain.attach(function () {
         return $.ajax({
-            url: 'index.php?route=checkout/payment_method|save&language={{ language }}',
+            url: 'index.php?route=checkout/payment_method.save&language={{ language }}',
             type: 'post',
             data: $('#form-payment-method').serialize(),
             dataType: 'json',
@@ -126,7 +126,7 @@ $('#input-comment').on('focusout', function () {
 
     chain.attach(function () {
         return $.ajax({
-            url: 'index.php?route=checkout/payment_method|comment&language={{ language }}',
+            url: 'index.php?route=checkout/payment_method.comment&language={{ language }}',
             type: 'post',
             data: $('#input-comment').serialize(),
             dataType: 'json',
@@ -163,7 +163,7 @@ $('#input-agree').on('change', function () {
 
     chain.attach(function () {
         return $.ajax({
-            url: 'index.php?route=checkout/payment_method|agree&language={{ language }}',
+            url: 'index.php?route=checkout/payment_method.agree&language={{ language }}',
             type: 'post',
             data: $('#input-agree').serialize(),
             dataType: 'json',

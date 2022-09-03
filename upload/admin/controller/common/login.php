@@ -34,7 +34,7 @@ class Login extends \Opencart\System\Engine\Controller {
 		// Create a login token to prevent brute force attacks
 		$this->session->data['login_token'] = Helper\General\token(32);
 
-		$data['login'] = $this->url->link('common/login|login', 'login_token=' . $this->session->data['login_token'], true);
+		$data['login'] = $this->url->link('common/login.login', 'login_token=' . $this->session->data['login_token'], true);
 
 		$data['forgotten'] = $this->url->link('common/forgotten');
 

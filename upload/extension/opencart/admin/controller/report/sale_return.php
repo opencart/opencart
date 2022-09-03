@@ -23,7 +23,7 @@ class SaleReturn extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('extension/opencart/report/sale_return', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		$data['save'] = $this->url->link('extension/opencart/report/sale_return|save', 'user_token=' . $this->session->data['user_token']);
+		$data['save'] = $this->url->link('extension/opencart/report/sale_return.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=report');
 
 		$data['report_sale_return_status'] = $this->config->get('report_sale_return_status');
@@ -177,7 +177,7 @@ class SaleReturn extends \Opencart\System\Engine\Controller {
 			'total' => $return_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination'),
-			'url'   => $this->url->link('extension/opencart/report/sale_return|report', 'user_token=' . $this->session->data['user_token'] . '&code=sale_return' . $url . '&page={page}')
+			'url'   => $this->url->link('extension/opencart/report/sale_return.report', 'user_token=' . $this->session->data['user_token'] . '&code=sale_return' . $url . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($return_total) ? (($page - 1) * $this->config->get('config_pagination')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination')) > ($return_total - $this->config->get('config_pagination'))) ? $return_total : ((($page - 1) * $this->config->get('config_pagination')) + $this->config->get('config_pagination')), $return_total, ceil($return_total / $this->config->get('config_pagination')));

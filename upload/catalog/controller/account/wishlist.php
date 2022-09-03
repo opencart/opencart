@@ -58,9 +58,9 @@ class WishList extends \Opencart\System\Engine\Controller {
 	}
 
 	public function getList(): string {
-		$data['wishlist'] = $this->url->link('account/wishlist|list', 'language=' . $this->config->get('config_language') . (isset($this->session->data['customer_token']) ? '&customer_token=' . $this->session->data['customer_token'] : ''));
-		$data['add_to_cart'] = $this->url->link('checkout/cart|add', 'language=' . $this->config->get('config_language'));
-		$data['remove'] = $this->url->link('account/wishlist|remove', 'language=' . $this->config->get('config_language') . (isset($this->session->data['customer_token']) ? '&customer_token=' . $this->session->data['customer_token'] : ''));
+		$data['wishlist'] = $this->url->link('account/wishlist.list', 'language=' . $this->config->get('config_language') . (isset($this->session->data['customer_token']) ? '&customer_token=' . $this->session->data['customer_token'] : ''));
+		$data['add_to_cart'] = $this->url->link('checkout/cart.add', 'language=' . $this->config->get('config_language'));
+		$data['remove'] = $this->url->link('account/wishlist.remove', 'language=' . $this->config->get('config_language') . (isset($this->session->data['customer_token']) ? '&customer_token=' . $this->session->data['customer_token'] : ''));
 
 		$data['products'] = [];
 

@@ -33,8 +33,8 @@ class Filter extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('catalog/filter', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		$data['add'] = $this->url->link('catalog/filter|form', 'user_token=' . $this->session->data['user_token'] . $url);
-		$data['delete'] = $this->url->link('catalog/filter|delete', 'user_token=' . $this->session->data['user_token']);
+		$data['add'] = $this->url->link('catalog/filter.form', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['delete'] = $this->url->link('catalog/filter.delete', 'user_token=' . $this->session->data['user_token']);
 
 		$data['user_token'] = $this->session->data['user_token'];
 
@@ -86,7 +86,7 @@ class Filter extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['action'] = $this->url->link('catalog/filter|list', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['action'] = $this->url->link('catalog/filter.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$data['filters'] = [];
 
@@ -108,7 +108,7 @@ class Filter extends \Opencart\System\Engine\Controller {
 				'filter_group_id' => $result['filter_group_id'],
 				'name'            => $result['name'],
 				'sort_order'      => $result['sort_order'],
-				'edit'            => $this->url->link('catalog/filter|form', 'user_token=' . $this->session->data['user_token'] . '&filter_group_id=' . $result['filter_group_id'] . $url)
+				'edit'            => $this->url->link('catalog/filter.form', 'user_token=' . $this->session->data['user_token'] . '&filter_group_id=' . $result['filter_group_id'] . $url)
 			];
 		}
 
@@ -124,8 +124,8 @@ class Filter extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['sort_name'] = $this->url->link('catalog/filter|list', 'user_token=' . $this->session->data['user_token'] . '&sort=fgd.name' . $url);
-		$data['sort_sort_order'] = $this->url->link('catalog/filter|list', 'user_token=' . $this->session->data['user_token'] . '&sort=fg.sort_order' . $url);
+		$data['sort_name'] = $this->url->link('catalog/filter.list', 'user_token=' . $this->session->data['user_token'] . '&sort=fgd.name' . $url);
+		$data['sort_sort_order'] = $this->url->link('catalog/filter.list', 'user_token=' . $this->session->data['user_token'] . '&sort=fg.sort_order' . $url);
 
 		$url = '';
 
@@ -141,7 +141,7 @@ class Filter extends \Opencart\System\Engine\Controller {
 			'total' => $filter_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination_admin'),
-			'url'   => $this->url->link('catalog/filter|list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+			'url'   => $this->url->link('catalog/filter.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($filter_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($filter_total - $this->config->get('config_pagination_admin'))) ? $filter_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $filter_total, ceil($filter_total / $this->config->get('config_pagination_admin')));
@@ -185,7 +185,7 @@ class Filter extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('catalog/filter', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		$data['save'] = $this->url->link('catalog/filter|save', 'user_token=' . $this->session->data['user_token']);
+		$data['save'] = $this->url->link('catalog/filter.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('catalog/filter', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['filter_group_id'])) {

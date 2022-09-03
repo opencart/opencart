@@ -74,7 +74,7 @@
 <script type="text/javascript"><!--
 $('#input-language').on('change', function () {
     $.ajax({
-        url: 'index.php?route=design/translation|path&user_token={{ user_token }}&language_id=' + $('#input-language').val(),
+        url: 'index.php?route=design/translation.path&user_token={{ user_token }}&language_id=' + $('#input-language').val(),
         dataType: 'json',
         beforeSend: function () {
             $('#input-language').prop('disabled', true);
@@ -111,7 +111,7 @@ $('#input-language').on('change', function () {
 
 $('#input-route').on('change', function () {
     $.ajax({
-        url: 'index.php?route=design/translation|translation&user_token={{ user_token }}&language_id=' + $('#input-language').val() + '&path=' + $('#input-route').val(),
+        url: 'index.php?route=design/translation.translation&user_token={{ user_token }}&language_id=' + $('#input-language').val() + '&path=' + $('#input-route').val(),
         dataType: 'json',
         beforeSend: function () {
             $('#input-language').prop('disabled', true);

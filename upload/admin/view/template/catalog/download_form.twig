@@ -104,7 +104,7 @@ $('#button-upload').on('click', function () {
             clearInterval(timer);
 
             $.ajax({
-                url: 'index.php?route=catalog/download|upload&user_token={{ user_token }}',
+                url: 'index.php?route=catalog/download.upload&user_token={{ user_token }}',
                 type: 'post',
                 dataType: 'json',
                 data: new FormData($('#form-upload')[0]),
@@ -152,7 +152,7 @@ $('#input-filename').on('change', function (e) {
 $('#button-download').on('click', function (e) {
     e.preventDefault();
     
-    location = 'index.php?route=catalog/download|download&user_token=' + getURLVar('user_token') + '&filename=' + $('#input-filename').val();
+    location = 'index.php?route=catalog/download.download&user_token=' + getURLVar('user_token') + '&filename=' + $('#input-filename').val();
 });
 //--></script>
 {{ footer }}

@@ -27,7 +27,7 @@ $('#button-shipping-method').on('click', function () {
 
     chain.attach(function () {
         return $.ajax({
-            url: 'index.php?route=checkout/shipping_method|getMethods&language={{ language }}',
+            url: 'index.php?route=checkout/shipping_method.getMethods&language={{ language }}',
             dataType: 'json',
             beforeSend: function () {
                 $('#input-shipping-method').prop('disabled', true);
@@ -92,7 +92,7 @@ $('#input-shipping-method').on('change', function () {
 
     chain.attach(function () {
         return $.ajax({
-            url: 'index.php?route=checkout/shipping_method|save&language={{ language }}',
+            url: 'index.php?route=checkout/shipping_method.save&language={{ language }}',
             type: 'post',
             data: $('#form-shipping-method').serialize(),
             dataType: 'json',

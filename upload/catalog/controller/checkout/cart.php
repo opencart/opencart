@@ -100,9 +100,9 @@ class Cart extends \Opencart\System\Engine\Controller {
 
 	public function getList(): string {
 		$data['list'] = $this->url->link(' ', 'language=' . $this->config->get('config_language'));
-		$data['product_edit'] = $this->url->link('checkout/cart|edit', 'language=' . $this->config->get('config_language'));
-		$data['product_remove'] = $this->url->link('checkout/cart|remove', 'language=' . $this->config->get('config_language'));
-		$data['voucher_remove'] = $this->url->link('checkout/voucher|remove', 'language=' . $this->config->get('config_language'));
+		$data['product_edit'] = $this->url->link('checkout/cart.edit', 'language=' . $this->config->get('config_language'));
+		$data['product_remove'] = $this->url->link('checkout/cart.remove', 'language=' . $this->config->get('config_language'));
+		$data['voucher_remove'] = $this->url->link('checkout/voucher.remove', 'language=' . $this->config->get('config_language'));
 
 		$this->load->model('tool/image');
 		$this->load->model('tool/upload');

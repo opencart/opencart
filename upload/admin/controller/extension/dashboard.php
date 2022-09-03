@@ -45,8 +45,8 @@ class Dashboard extends \Opencart\System\Engine\Controller {
 					'width'      => $this->config->get('dashboard_' . $code . '_width'),
 					'status'     => $this->config->get('dashboard_' . $code . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 					'sort_order' => $this->config->get('dashboard_' . $code . '_sort_order'),
-					'install'    => $this->url->link('extension/dashboard|install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
-					'uninstall'  => $this->url->link('extension/dashboard|uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
+					'install'    => $this->url->link('extension/dashboard.install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
+					'uninstall'  => $this->url->link('extension/dashboard.uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
 					'installed'  => in_array($code, $installed),
 					'edit'       => $this->url->link('extension/' . $extension . '/dashboard/' . $code, 'user_token=' . $this->session->data['user_token'])
 				];
@@ -118,7 +118,7 @@ class Dashboard extends \Opencart\System\Engine\Controller {
 			$this->config->addPath('extension/' . $extension, DIR_EXTENSION . $extension . '/system/config/');
 
 			// Call install method if it exists
-			$this->load->controller('extension/' . $extension . '/dashboard/' . $code . '|install');
+			$this->load->controller('extension/' . $extension . '/dashboard/' . $code . '.install');
 
 			$json['success'] = $this->language->get('text_success');
 		}
@@ -142,7 +142,7 @@ class Dashboard extends \Opencart\System\Engine\Controller {
 			$this->model_setting_extension->uninstall('dashboard', $this->request->get['code']);
 
 			// Call uninstall method if it exists
-			$this->load->controller('extension/' . $this->request->get['extension'] . '/dashboard/' . $this->request->get['code'] . '|uninstall');
+			$this->load->controller('extension/' . $this->request->get['extension'] . '/dashboard/' . $this->request->get['code'] . '.uninstall');
 
 			$json['success'] = $this->language->get('text_success');
 		}

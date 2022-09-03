@@ -23,7 +23,7 @@ class BankTransfer extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('extension/opencart/payment/bank_transfer', 'user_token=' . $this->session->data['user_token'])
 		];
 
-		$data['save'] = $this->url->link('extension/opencart/payment/bank_transfer|save', 'user_token=' . $this->session->data['user_token']);
+		$data['save'] = $this->url->link('extension/opencart/payment/bank_transfer.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment');
 
 		$this->load->model('localisation/language');

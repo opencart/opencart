@@ -46,7 +46,7 @@ class Statistics extends \Opencart\System\Engine\Controller {
 			$data['statistics'][] = [
 				'name'  => $this->language->get('text_' . $result['code']),
 				'value' => $result['value'],
-				'href'  => $this->url->link('report/statistics|' . str_replace('_', '', $result['code']), 'user_token=' . $this->session->data['user_token'])
+				'href'  => $this->url->link('report/statistics.' . str_replace('_', '', $result['code']), 'user_token=' . $this->session->data['user_token'])
 			];
 		}
 

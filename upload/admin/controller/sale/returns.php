@@ -113,8 +113,8 @@ class Returns extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('sale/returns', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		$data['add'] = $this->url->link('sale/returns|form', 'user_token=' . $this->session->data['user_token'] . $url);
-		$data['delete'] = $this->url->link('sale/returns|delete', 'user_token=' . $this->session->data['user_token']);
+		$data['add'] = $this->url->link('sale/returns.form', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['delete'] = $this->url->link('sale/returns.delete', 'user_token=' . $this->session->data['user_token']);
 
 		$data['list'] = $this->getList();
 
@@ -259,7 +259,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['action'] = $this->url->link('sale/returns|list', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['action'] = $this->url->link('sale/returns.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$data['returns'] = [];
 
@@ -294,7 +294,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 				'return_status' => $result['return_status'],
 				'date_added'    => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'date_modified' => date($this->language->get('date_format_short'), strtotime($result['date_modified'])),
-				'edit'          => $this->url->link('sale/returns|form', 'user_token=' . $this->session->data['user_token'] . '&return_id=' . $result['return_id'] . $url)
+				'edit'          => $this->url->link('sale/returns.form', 'user_token=' . $this->session->data['user_token'] . '&return_id=' . $result['return_id'] . $url)
 			];
 		}
 
@@ -342,14 +342,14 @@ class Returns extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['sort_return_id'] = $this->url->link('sale/returns|list', 'user_token=' . $this->session->data['user_token'] . '&sort=r.return_id' . $url);
-		$data['sort_order_id'] = $this->url->link('sale/returns|list', 'user_token=' . $this->session->data['user_token'] . '&sort=r.order_id' . $url);
-		$data['sort_customer'] = $this->url->link('sale/returns|list', 'user_token=' . $this->session->data['user_token'] . '&sort=customer' . $url);
-		$data['sort_product'] = $this->url->link('sale/returns|list', 'user_token=' . $this->session->data['user_token'] . '&sort=r.product' . $url);
-		$data['sort_model'] = $this->url->link('sale/returns|list', 'user_token=' . $this->session->data['user_token'] . '&sort=r.model' . $url);
-		$data['sort_status'] = $this->url->link('sale/returns|list', 'user_token=' . $this->session->data['user_token'] . '&sort=return_status' . $url);
-		$data['sort_date_added'] = $this->url->link('sale/returns|list', 'user_token=' . $this->session->data['user_token'] . '&sort=r.date_added' . $url);
-		$data['sort_date_modified'] = $this->url->link('sale/returns|list', 'user_token=' . $this->session->data['user_token'] . '&sort=r.date_modified' . $url);
+		$data['sort_return_id'] = $this->url->link('sale/returns.list', 'user_token=' . $this->session->data['user_token'] . '&sort=r.return_id' . $url);
+		$data['sort_order_id'] = $this->url->link('sale/returns.list', 'user_token=' . $this->session->data['user_token'] . '&sort=r.order_id' . $url);
+		$data['sort_customer'] = $this->url->link('sale/returns.list', 'user_token=' . $this->session->data['user_token'] . '&sort=customer' . $url);
+		$data['sort_product'] = $this->url->link('sale/returns.list', 'user_token=' . $this->session->data['user_token'] . '&sort=r.product' . $url);
+		$data['sort_model'] = $this->url->link('sale/returns.list', 'user_token=' . $this->session->data['user_token'] . '&sort=r.model' . $url);
+		$data['sort_status'] = $this->url->link('sale/returns.list', 'user_token=' . $this->session->data['user_token'] . '&sort=return_status' . $url);
+		$data['sort_date_added'] = $this->url->link('sale/returns.list', 'user_token=' . $this->session->data['user_token'] . '&sort=r.date_added' . $url);
+		$data['sort_date_modified'] = $this->url->link('sale/returns.list', 'user_token=' . $this->session->data['user_token'] . '&sort=r.date_modified' . $url);
 
 		$url = '';
 
@@ -397,7 +397,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 			'total' => $return_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination_admin'),
-			'url'   => $this->url->link('sale/returns|list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+			'url'   => $this->url->link('sale/returns.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($return_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($return_total - $this->config->get('config_pagination_admin'))) ? $return_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $return_total, ceil($return_total / $this->config->get('config_pagination_admin')));
@@ -473,7 +473,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('sale/returns', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		$data['save'] = $this->url->link('sale/returns|save', 'user_token=' . $this->session->data['user_token']);
+		$data['save'] = $this->url->link('sale/returns.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('sale/returns', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['return_id'])) {
@@ -743,7 +743,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 			'total' => $history_total,
 			'page'  => $page,
 			'limit' => 10,
-			'url'   => $this->url->link('sale/returns|history', 'user_token=' . $this->session->data['user_token'] . '&return_id=' . $return_id . '&page={page}')
+			'url'   => $this->url->link('sale/returns.history', 'user_token=' . $this->session->data['user_token'] . '&return_id=' . $return_id . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($history_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($history_total - 10)) ? $history_total : ((($page - 1) * 10) + 10), $history_total, ceil($history_total / 10));

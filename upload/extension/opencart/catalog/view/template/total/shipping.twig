@@ -41,7 +41,7 @@
       e.preventDefault();
 
       $.ajax({
-          url: 'index.php?route=extension/opencart/total/shipping|quote&language={{ language }}',
+          url: 'index.php?route=extension/opencart/total/shipping.quote&language={{ language }}',
           type: 'post',
           data: $('#form-quote').serialize(),
           dataType: 'json',
@@ -126,7 +126,7 @@
       e.preventDefault();
 
       $.ajax({
-          url: 'index.php?route=extension/opencart/total/shipping|save&language={{ language }}',
+          url: 'index.php?route=extension/opencart/total/shipping.save&language={{ language }}',
           type: 'post',
           data: $('#form-shipping').serialize(),
           dataType: 'json',
@@ -147,7 +147,7 @@
               if (json['success']) {
                   $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                  $('#shopping-cart').load('index.php?route=checkout/cart|list&language={{ language }}');
+                  $('#shopping-cart').load('index.php?route=checkout/cart.list&language={{ language }}');
 
                   var modal = bootstrap.Modal.getInstance(document.querySelector('#modal-shipping'));
 

@@ -576,7 +576,7 @@
 <script type="text/javascript"><!--
 $('#input-customer-group').on('change', function () {
     $.ajax({
-        url: 'index.php?route=customer/customer|customfield&user_token={{ user_token }}&customer_group_id=' + this.value,
+        url: 'index.php?route=customer/customer.customfield&user_token={{ user_token }}&customer_group_id=' + this.value,
         dataType: 'json',
         success: function (json) {
             $('.custom-field').hide();
@@ -842,7 +842,7 @@ $('#tab-address').on('change', 'select[name$=\'[country_id]\']', function () {
 
     if (!zone[$(element).val()]) {
         $.ajax({
-            url: 'index.php?route=localisation/country|country&user_token={{ user_token }}&country_id=' + $(element).val(),
+            url: 'index.php?route=localisation/country.country&user_token={{ user_token }}&country_id=' + $(element).val(),
             dataType: 'json',
             beforeSend: function () {
                 $(element).prop('disabled', true);
@@ -962,7 +962,7 @@ $('#payment-method').on('change', 'input[name=\'status\']', function (e) {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=customer/customer|disablePayment&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val(),
+        url: 'index.php?route=customer/customer.disablePayment&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val(),
         dataType: 'json',
         contentType: 'application/x-www-form-urlencoded',
         beforeSend: function () {
@@ -1000,7 +1000,7 @@ $('#form-history').on('submit', function (e) {
     e.preventDefault();
 
     $.ajax({
-        url: 'index.php?route=customer/customer|addHistory&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val(),
+        url: 'index.php?route=customer/customer.addHistory&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val(),
         type: 'post',
         data: $('#form-history').serialize(),
         dataType: 'json',
@@ -1042,7 +1042,7 @@ $('#form-transaction').on('submit', function (e) {
     e.preventDefault();
 
     $.ajax({
-        url: 'index.php?route=customer/customer|addTransaction&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val(),
+        url: 'index.php?route=customer/customer.addTransaction&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val(),
         type: 'post',
         data: $('#form-transaction').serialize(),
         dataType: 'json',
@@ -1085,7 +1085,7 @@ $('#form-reward').on('submit', function (e) {
     e.preventDefault();
 
     $.ajax({
-        url: 'index.php?route=customer/customer|addReward&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val(),
+        url: 'index.php?route=customer/customer.addReward&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val(),
         type: 'post',
         data: $('#form-reward').serialize(),
         dataType: 'json',

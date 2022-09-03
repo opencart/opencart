@@ -33,8 +33,8 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('localisation/return_reason', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		$data['add'] = $this->url->link('localisation/return_reason|form', 'user_token=' . $this->session->data['user_token'] . $url);
-		$data['delete'] = $this->url->link('localisation/return_reason|delete', 'user_token=' . $this->session->data['user_token']);
+		$data['add'] = $this->url->link('localisation/return_reason.form', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['delete'] = $this->url->link('localisation/return_reason.delete', 'user_token=' . $this->session->data['user_token']);
 
 		$data['list'] = $this->getList();
 
@@ -86,7 +86,7 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['action'] = $this->url->link('localisation/return_reason|list', 'user_token=' . $this->session->data['user_token'] . $url);
+		$data['action'] = $this->url->link('localisation/return_reason.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$data['return_reasons'] = [];
 
@@ -107,7 +107,7 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 			$data['return_reasons'][] = [
 				'return_reason_id' => $result['return_reason_id'],
 				'name'             => $result['name'],
-				'edit'             => $this->url->link('localisation/return_reason|form', 'user_token=' . $this->session->data['user_token'] . '&return_reason_id=' . $result['return_reason_id'] . $url)
+				'edit'             => $this->url->link('localisation/return_reason.form', 'user_token=' . $this->session->data['user_token'] . '&return_reason_id=' . $result['return_reason_id'] . $url)
 			];
 		}
 
@@ -123,7 +123,7 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['sort_name'] = $this->url->link('localisation/return_reason|list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
+		$data['sort_name'] = $this->url->link('localisation/return_reason.list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
 
 		$url = '';
 
@@ -139,7 +139,7 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 			'total' => $return_reason_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination_admin'),
-			'url'   => $this->url->link('localisation/return_reason|list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
+			'url'   => $this->url->link('localisation/return_reason.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($return_reason_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($return_reason_total - $this->config->get('config_pagination_admin'))) ? $return_reason_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $return_reason_total, ceil($return_reason_total / $this->config->get('config_pagination_admin')));
@@ -183,7 +183,7 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('localisation/return_reason', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
-		$data['save'] = $this->url->link('localisation/return_reason|save', 'user_token=' . $this->session->data['user_token']);
+		$data['save'] = $this->url->link('localisation/return_reason.save', 'user_token=' . $this->session->data['user_token']);
 		$data['back'] = $this->url->link('localisation/return_reason', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		if (isset($this->request->get['return_reason_id'])) {

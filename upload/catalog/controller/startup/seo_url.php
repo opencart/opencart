@@ -86,7 +86,7 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 
 		// Rebuild the URL query
 		if ($query) {
-			$url .= '?' . str_replace(['%2F', '%7C'], ['/', '|'], http_build_query($query));
+			$url .= '?' . str_replace(['%2F'], ['/'], http_build_query($query));
 		}
 
 		return $url;

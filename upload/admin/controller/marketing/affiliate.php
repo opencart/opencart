@@ -549,8 +549,8 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			$data['affiliate_custom_field'] = [];
 		}
 
-		$data['history'] = $this->load->controller('customer/customer|getHistory');
-		$data['transaction'] = $this->load->controller('customer/customer|getTransaction');
+		$data['history'] = $this->load->controller('customer/customer.getHistory');
+		$data['transaction'] = $this->load->controller('customer/customer.getTransaction');
 		$data['report'] = $this->getReport();
 
 		$data['user_token'] = $this->session->data['user_token'];

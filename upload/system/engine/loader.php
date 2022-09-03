@@ -63,7 +63,7 @@ class Loader {
 	 */
 	public function controller(string $route, mixed ...$args): mixed {
 		// Sanitize the call
-		$route = preg_replace('/[^a-zA-Z0-9_|\/.]/', '', $route);
+		$route = preg_replace('/[^a-zA-Z0-9_|\/\.]/', '', $route);
 
 		// Keep the original trigger
 		$trigger = $route;

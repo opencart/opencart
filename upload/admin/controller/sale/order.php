@@ -668,9 +668,9 @@ class Order extends \Opencart\System\Engine\Controller {
 			unset($store->request->get['user_token']);
 
 			// Load the store data
-			$store->request->get['route'] = 'api/sale/order|load';
+			$store->request->get['route'] = 'api/sale/order.load';
 
-			$store->load->controller('api/sale/order|load');
+			$store->load->controller('api/sale/order.load');
 
 			// Get the cart data
 			$store->request->get['route'] = 'api/sale/cart';
@@ -1021,7 +1021,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			$extension_info = $this->model_setting_extension->getExtensionByCode('payment', $order_info['payment_code']);
 
 			if ($extension_info && $this->user->hasPermission('access', 'extension/' . $extension_info['extension'] . '/payment/' . $extension_info['code'])) {
-				$output = $this->load->controller('extension/' . $extension_info['extension'] . '/payment/' . $extension_info['code'] . '|order');
+				$output = $this->load->controller('extension/' . $extension_info['extension'] . '/payment/' . $extension_info['code'] . '.order');
 
 				if (!$output instanceof \Exception) {
 					$this->load->language('extension/' . $extension_info['extension'] . '/payment/' . $extension_info['code'], 'extension');
@@ -1044,7 +1044,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			if ($this->config->get('fraud_' . $extension['code'] . '_status')) {
 				$this->load->language('extension/' . $extension['extension'] . '/fraud/' . $extension['code'], 'extension');
 
-				$output = $this->load->controller('extension/' . $extension['extension'] . '/fraud/' . $extension['code'] . '|order');
+				$output = $this->load->controller('extension/' . $extension['extension'] . '/fraud/' . $extension['code'] . '.order');
 
 				if (!$output instanceof \Exception) {
 					$data['tabs'][] = [

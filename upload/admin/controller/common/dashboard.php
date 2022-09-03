@@ -29,7 +29,7 @@ class Dashboard extends \Opencart\System\Engine\Controller {
 		// Add all the modules which have multiple settings for each module
 		foreach ($extensions as $extension) {
 			if ($this->config->get('dashboard_' . $extension['code'] . '_status') && $this->user->hasPermission('access', 'extension/' . $extension['extension'] . '/dashboard/' . $extension['code'])) {
-				$output = $this->load->controller('extension/' . $extension['extension'] . '/dashboard/' . $extension['code'] . '|dashboard');
+				$output = $this->load->controller('extension/' . $extension['extension'] . '/dashboard/' . $extension['code'] . '.dashboard');
 
 				//if (!$output instanceof \Exception) {
 				if ($output) {

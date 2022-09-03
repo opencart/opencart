@@ -23,7 +23,7 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('common/forgotten')
 		];
 
-		$data['confirm'] = $this->url->link('common/forgotten|confirm');
+		$data['confirm'] = $this->url->link('common/forgotten.confirm');
 		$data['back'] = $this->url->link('common/login');
 
 		$data['header'] = $this->load->controller('common/header');
@@ -112,7 +112,7 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('common/forgotten|reset')
+			'href' => $this->url->link('common/forgotten.reset')
 		];
 
 		$this->session->data['reset_token'] = substr(bin2hex(openssl_random_pseudo_bytes(26)), 0, 26);

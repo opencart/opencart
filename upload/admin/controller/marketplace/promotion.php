@@ -8,7 +8,7 @@ class Promotion extends \Opencart\System\Engine\Controller {
 			$type = $this->request->get['type'];
 		} else {
 			// Just in case there are any direct calls to methods we need to remove them to get the extension type
-			$pos = strrpos($this->request->get['route'], '|');
+			$pos = strrpos($this->request->get['route'], '.');
 
 			if ($pos !== false) {
 				$route = substr($this->request->get['route'], 0, $pos);

@@ -839,9 +839,9 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$store_info = $this->model_setting_store->getStore($store_id);
 
 			if ($store_info) {
-				$this->response->redirect($store_info['url'] . 'index.php?route=account/login|token&email=' . urlencode($customer_info['email']). '&login_token=' . $token);
+				$this->response->redirect($store_info['url'] . 'index.php?route=account/login.token&email=' . urlencode($customer_info['email']). '&login_token=' . $token);
 			} else {
-				$this->response->redirect(HTTP_CATALOG . 'index.php?route=account/login|token&email=' . urlencode($customer_info['email']) . '&login_token=' . $token);
+				$this->response->redirect(HTTP_CATALOG . 'index.php?route=account/login.token&email=' . urlencode($customer_info['email']) . '&login_token=' . $token);
 			}
 
 			return null;

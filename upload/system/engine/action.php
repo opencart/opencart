@@ -22,7 +22,7 @@ class Action {
 	 * @param    string $route
 	 */
 	public function __construct(string $route) {
-		$this->route = preg_replace('/[^a-zA-Z0-9_|\/]/', '', $route);
+		$this->route = preg_replace('/[^a-zA-Z0-9_|\/\.]/', '', $route);
 
 		$pos = strrpos($this->route, '.');
 

@@ -65,7 +65,7 @@ $('#button-filter, #button-refresh').on('click', function () {
         url += '&filter_ip=' + encodeURIComponent(filter_ip);
     }
 
-    $('#online').load('index.php?route=report/online|list&user_token={{ user_token }}' + url);
+    $('#online').load('index.php?route=report/online.list&user_token={{ user_token }}' + url);
 });
 
 $('#input-customer').autocomplete({

@@ -33,7 +33,7 @@
                 <div class="form-control border rounded-start">
                   <div class="lead"><strong>{{ text_order_id }}</strong>
                     <br/>
-                    <div id="order-value"><a href="index.php?route=sale/order|info&user_token={{ user_token }}&order_id={{ order_id }}" target="_blank">{{ order_id }}</a></div>
+                    <div id="order-value"><a href="index.php?route=sale/order.info&user_token={{ user_token }}&order_id={{ order_id }}" target="_blank">{{ order_id }}</a></div>
                   </div>
                 </div>
               </div>
@@ -43,7 +43,7 @@
               <div class="input-group mb-3">
                 <div class="form-control border rounded-start">
                   <div class="lead"><strong>{{ text_customer }}</strong>
-                    <div id="customer-value"><a href="index.php?route=customer/customer|form&user_token={{ user_token }}&customer_id={{ customer_id }}" target="_blank">{{ customer }}</a></div>
+                    <div id="customer-value"><a href="index.php?route=customer/customer.form&user_token={{ user_token }}&customer_id={{ customer_id }}" target="_blank">{{ customer }}</a></div>
                   </div>
                 </div>
               </div>
@@ -304,7 +304,7 @@ $('#form-history').on('submit', function (e) {
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#history').load('index.php?route=sale/subscription|history&user_token={{ user_token }}&subscription_id=' + $('#input-subscription-id').val());
+                $('#history').load('index.php?route=sale/subscription.history&user_token={{ user_token }}&subscription_id=' + $('#input-subscription-id').val());
 
                 $('#input-history').val('');
             }
@@ -346,7 +346,7 @@ $('#form-transaction').on('submit', function (e) {
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#transaction').load('index.php?route=sale/subscription|transaction&user_token={{ user_token }}&subscription_id=' + $('#input-subscription-id').val());
+                $('#transaction').load('index.php?route=sale/subscription.transaction&user_token={{ user_token }}&subscription_id=' + $('#input-subscription-id').val());
 
                 $('#input-transaction-amount').val('');
                 $('#input-transaction-description').val('');

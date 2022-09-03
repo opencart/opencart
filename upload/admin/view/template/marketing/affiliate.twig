@@ -121,7 +121,7 @@ $('#button-filter').on('click', function () {
         url += '&filter_date_to=' + encodeURIComponent(filter_date_to);
     }
 
-    $('#affiliate').load('index.php?route=marketing/affiliate|list&user_token={{ user_token }}' + url);
+    $('#affiliate').load('index.php?route=marketing/affiliate.list&user_token={{ user_token }}' + url);
 });
 
 $('#input-customer').autocomplete({

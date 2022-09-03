@@ -39,7 +39,7 @@
                 <div class="lead"><strong>{{ text_customer }}</strong>
                   <br/>
                   {% if customer_id %}
-                    <div id="customer-value"><a href="index.php?route=customer/customer|form&user_token={{ user_token }}&customer_id={{ customer_id }}" target="_blank">{{ customer }}</a></div>
+                    <div id="customer-value"><a href="index.php?route=customer/customer.form&user_token={{ user_token }}&customer_id={{ customer_id }}" target="_blank">{{ customer }}</a></div>
                   {% else %}
                     <div id="customer-value">{{ customer }}</div>
                   {% endif %}
@@ -73,7 +73,7 @@
           <tbody id="order-products">
             {% for order_product in order_products %}
               <tr>
-                <td class="text-start"><a href="index.php?route=catalog/product|form&user_token={{ user_token }}&product_id={{ order_product.product_id }}" target="_blank">{{ order_product.name }}</a>
+                <td class="text-start"><a href="index.php?route=catalog/product.form&user_token={{ user_token }}&product_id={{ order_product.product_id }}" target="_blank">{{ order_product.name }}</a>
 
                   {% if order_product.option %}
                     {% for option in order_product.option %}
@@ -227,7 +227,7 @@
                   <div class="lead"><strong>{{ text_affiliate }}</strong>
                     <br/>
                     {% if affiliate_id %}
-                      <div id="affiliate-value"><a href="index.php?route=marketing/affiliate|form&user_token={{ user_token }}&customer_id={{ affiliate_id }}" target="_blank">{{ affiliate }}</a></div>
+                      <div id="affiliate-value"><a href="index.php?route=marketing/affiliate.form&user_token={{ user_token }}&customer_id={{ affiliate_id }}" target="_blank">{{ affiliate }}</a></div>
                     {% else %}
                       <div id="affiliate-value">&nbsp;</div>
                     {% endif %}
@@ -1332,7 +1332,7 @@ $('#form-customer').on('submit', function (e) {
             if (json['success']) {
                 $('#form-customer').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#customer-value').html('<a href="index.php?route=customer/customer|form&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val() + '">' + $('#input-firstname').val() + ' ' + $('#input-lastname').val() + '</a>');
+                $('#customer-value').html('<a href="index.php?route=customer/customer.form&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val() + '">' + $('#input-firstname').val() + ' ' + $('#input-lastname').val() + '</a>');
 
                 $('#button-refresh').trigger('click');
             }
@@ -2034,7 +2034,7 @@ $('#form-affiliate').on('submit', function (e) {
                 $('#form-affiliate').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                 if ($('#input-affiliate-id').val()) {
-                    $('#affiliate-value').html('<a href="index.php?route=marketing/affiliate|form&user_token={{ user_token }}&customer_id=' + $('#input-affiliate-id').val() + '" target="_blank">' + $('#input-affiliate').val() + '</a>');
+                    $('#affiliate-value').html('<a href="index.php?route=marketing/affiliate.form&user_token={{ user_token }}&customer_id=' + $('#input-affiliate-id').val() + '" target="_blank">' + $('#input-affiliate').val() + '</a>');
                 } else {
                     $('#affiliate-value').html('&nbsp;');
                 }
@@ -2659,7 +2659,7 @@ $('#button-refresh').on('click', function () {
                     product = json['products'][i];
 
                     html += '<tr>';
-                    html += '  <td class="text-start"><a href="index.php?route=catalog/product|form&user_token={{ user_token }}&product_id=' + product['product_id'] + '" target="_blank">' + product['name'] + '</a>' + (!product['stock'] ? ' <span class="text-danger">***</span>' : '');
+                    html += '  <td class="text-start"><a href="index.php?route=catalog/product.form&user_token={{ user_token }}&product_id=' + product['product_id'] + '" target="_blank">' + product['name'] + '</a>' + (!product['stock'] ? ' <span class="text-danger">***</span>' : '');
 
                     if (product['option']) {
                         for (j = 0; j < product['option'].length; j++) {
@@ -2825,7 +2825,7 @@ $('#form-history').on('submit', function (e) {
     e.preventDefault();
 
     $.ajax({
-        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&action=sale/order|addHistory&order_id=' + $('#input-order-id').val(),
+        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&action=sale/order.addHistory&order_id=' + $('#input-order-id').val(),
         type: 'post',
         dataType: 'json',
         data: $('#form-history').serialize(),
@@ -2846,7 +2846,7 @@ $('#form-history').on('submit', function (e) {
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#history').load('index.php?route=sale/order|history&user_token={{ user_token }}&order_id=' + $('#input-order-id').val());
+                $('#history').load('index.php?route=sale/order.history&user_token={{ user_token }}&order_id=' + $('#input-order-id').val());
 
                 $('#input-history').val('');
             }

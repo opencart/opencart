@@ -70,7 +70,7 @@ $('#button-payment-method').on('click', function () {
 
                 $('#input-payment-method').html(html);
 
-                $('#checkout-confirm').load('index.php?route=checkout/confirm|confirm&language={{ language }}');
+                $('#checkout-confirm').load('index.php?route=checkout/confirm.confirm&language={{ language }}');
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -110,7 +110,7 @@ $('#input-payment-method').on('change', function () {
                 if (json['success']) {
                     $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                    $('#checkout-confirm').load('index.php?route=checkout/confirm|confirm&language={{ language }}');
+                    $('#checkout-confirm').load('index.php?route=checkout/confirm.confirm&language={{ language }}');
                 }
             },
             error: function (xhr, ajaxOptions, thrownError) {
@@ -175,7 +175,7 @@ $('#input-agree').on('change', function () {
                 $(element).prop('disabled', false);
             },
             success: function (json) {
-                $('#checkout-confirm').load('index.php?route=checkout/confirm|confirm&language={{ language }}');
+                $('#checkout-confirm').load('index.php?route=checkout/confirm.confirm&language={{ language }}');
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);

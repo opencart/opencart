@@ -88,7 +88,7 @@ $('#button-backup').on('click', function () {
                     $('#progress-bar').addClass('bg-danger');
                     $('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
 
-                    $('#history').load('index.php?route=tool/backup|history&user_token={{ user_token }}');
+                    $('#history').load('index.php?route=tool/backup.history&user_token={{ user_token }}');
 
                     $('#button-backup').prop('disabled', false).removeClass('loading');
                     $('#button-upload, #history .btn').prop('disabled', false);
@@ -98,7 +98,7 @@ $('#button-backup').on('click', function () {
                     $('#progress-bar').css('width', '100%').addClass('bg-success');
                     $('#progress-text').html('<div class="text-success">' + json['success'] + '</div>');
 
-                    $('#history').load('index.php?route=tool/backup|history&user_token={{ user_token }}');
+                    $('#history').load('index.php?route=tool/backup.history&user_token={{ user_token }}');
 
                     $('#button-backup').prop('disabled', false).removeClass('loading');
                     $('#button-upload, #history .btn').prop('disabled', false);
@@ -137,7 +137,7 @@ $('#history').on('click', '.btn-warning', function () {
     $('#progress-bar').css('width', '0%');
     $('#progress-bar').removeClass('bg-danger bg-success');
 
-    var next = 'index.php?route=tool/backup|restore&user_token={{ user_token }}&filename=' + encodeURIComponent($(this).val());
+    var next = 'index.php?route=tool/backup.restore&user_token={{ user_token }}&filename=' + encodeURIComponent($(this).val());
 
     var restore = function () {
         return $.ajax({
@@ -163,7 +163,7 @@ $('#history').on('click', '.btn-warning', function () {
                     $('#progress-bar').addClass('bg-danger');
                     $('#progress-text').html('<div class="invalid-feedback">' + json['error'] + '</div>');
 
-                    $('#history').load('index.php?route=tool/backup|history&user_token={{ user_token }}');
+                    $('#history').load('index.php?route=tool/backup.history&user_token={{ user_token }}');
 
                     $(element).prop('disabled', false).removeClass('loading');
 
@@ -174,7 +174,7 @@ $('#history').on('click', '.btn-warning', function () {
                     $('#progress-bar').css('width', '100%').addClass('bg-success');
                     $('#progress-text').html('<div class="text-success">' + json['success'] + '</div>');
 
-                    $('#history').load('index.php?route=tool/backup|history&user_token={{ user_token }}');
+                    $('#history').load('index.php?route=tool/backup.history&user_token={{ user_token }}');
 
                     $(element).prop('disabled', false).removeClass('loading');
 
@@ -252,7 +252,7 @@ $('#button-upload').on('click', function () {
                     if (json['success']) {
                         $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                        $('#history').load('index.php?route=tool/backup|history&user_token={{ user_token }}');
+                        $('#history').load('index.php?route=tool/backup.history&user_token={{ user_token }}');
                     }
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
@@ -287,7 +287,7 @@ $('#history').on('click', '.btn-danger', function () {
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#history').load('index.php?route=tool/backup|history&user_token={{ user_token }}');
+                $('#history').load('index.php?route=tool/backup.history&user_token={{ user_token }}');
             }
         },
         error: function (xhr, ajaxOptions, thrownError) {

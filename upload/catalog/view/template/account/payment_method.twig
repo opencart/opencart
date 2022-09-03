@@ -38,7 +38,7 @@ $('#payment-method').on('click', '.btn-danger', function (e) {
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#payment-method').load('index.php?route=account/payment_method|list&customer_token={{ customer_token }}');
+                $('#payment-method').load('index.php?route=account/payment_method.list&customer_token={{ customer_token }}');
             }
         },
         error: function (xhr, ajaxOptions, thrownError) {

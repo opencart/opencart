@@ -226,7 +226,7 @@ $('body').on('click', '#modal-purchase #button-purchase', function (e) {
 
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#download').load('index.php?route=marketplace/marketplace|extension&user_token={{ user_token }}&extension_id={{ extension_id }}');
+                $('#download').load('index.php?route=marketplace/marketplace.extension&user_token={{ user_token }}&extension_id={{ extension_id }}');
             }
         },
         error: function (xhr, ajaxOptions, thrownError) {
@@ -236,7 +236,7 @@ $('body').on('click', '#modal-purchase #button-purchase', function (e) {
 });
 
 // Download
-$('#download').load('index.php?route=marketplace/marketplace|extension&user_token={{ user_token }}&extension_id={{ extension_id }}');
+$('#download').load('index.php?route=marketplace/marketplace.extension&user_token={{ user_token }}&extension_id={{ extension_id }}');
 
 $('#tab-download').on('click', '.btn-primary', function (e) {
     e.preventDefault();
@@ -295,7 +295,7 @@ $('#tab-download').on('click', '.dropdown-item', function (e) {
             if (json['success']) {
                 $('#download').before('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + '  <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#download').load('index.php?route=marketplace/marketplace|extension&user_token={{ user_token }}&extension_id={{ extension_id }}');
+                $('#download').load('index.php?route=marketplace/marketplace.extension&user_token={{ user_token }}&extension_id={{ extension_id }}');
             }
         },
         error: function (xhr, ajaxOptions, thrownError) {
@@ -311,7 +311,7 @@ $('#comment').on('click', '.pagination a', function (e) {
     $('#comment').load(this.href);
 });
 
-$('#comment').load('index.php?route=marketplace/marketplace|comment&user_token={{ user_token }}&extension_id={{ extension_id }}');
+$('#comment').load('index.php?route=marketplace/marketplace.comment&user_token={{ user_token }}&extension_id={{ extension_id }}');
 
 // Add comment
 $('#button-comment').on('click', function () {
@@ -336,7 +336,7 @@ $('#button-comment').on('click', function () {
             if (json['success']) {
                 $('#tab-comment').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#comment').load('index.php?route=marketplace/marketplace|comment&user_token={{ user_token }}&extension_id={{ extension_id }}');
+                $('#comment').load('index.php?route=marketplace/marketplace.comment&user_token={{ user_token }}&extension_id={{ extension_id }}');
 
                 $('#input-history-comment').val('');
             }

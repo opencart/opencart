@@ -105,7 +105,7 @@ $('#button-filter').on('click', function () {
         url += '&filter_date_to=' + encodeURIComponent(filter_date_to);
     }
 
-    $('#review').load('index.php?route=catalog/review|list&user_token={{ user_token }}' + url);
+    $('#review').load('index.php?route=catalog/review.list&user_token={{ user_token }}' + url);
 });
 
 $('#input-product').autocomplete({

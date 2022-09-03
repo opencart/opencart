@@ -92,7 +92,7 @@ $('#button-filter').on('click', function () {
         url += '&filter_date_to=' + encodeURIComponent(filter_date_to);
     }
 
-    $('#marketing').load('index.php?route=marketing/marketing|list&user_token={{ user_token }}' + url);
+    $('#marketing').load('index.php?route=marketing/marketing.list&user_token={{ user_token }}' + url);
 });
 //--></script>
 {{ footer }}

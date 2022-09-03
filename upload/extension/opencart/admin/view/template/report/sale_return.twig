@@ -81,6 +81,6 @@ $('#button-filter').on('click', function() {
         url += '&filter_date_end=' + encodeURIComponent(filter_date_end);
     }
 
-    $('#sale-return').load('index.php?route=extension/opencart/report/sale_return|list&user_token={{ user_token }}' + url);
+    $('#sale-return').load('index.php?route=extension/opencart/report/sale_return.list&user_token={{ user_token }}' + url);
 });
 //--></script>

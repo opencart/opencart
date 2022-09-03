@@ -66,6 +66,6 @@ $('#button-filter').on('click', function() {
         url += '&filter_date_end=' + encodeURIComponent(filter_date_end);
     }
 
-    $('#product-purchased').load('index.php?route=extension/opencart/report/product_purchased|list&user_token={{ user_token }}' + url);
+    $('#product-purchased').load('index.php?route=extension/opencart/report/product_purchased.list&user_token={{ user_token }}' + url);
 });
 //--></script>

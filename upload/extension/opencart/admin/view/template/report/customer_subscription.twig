@@ -62,13 +62,13 @@ $('#button-filter').on('click', function () {
         url += '&filter_date_end=' + encodeURIComponent(filter_date_end);
     }
 
-    $('#customer-subscription').load('index.php?route=extension/opencart/report/customer_search|list&user_token={{ user_token }}' + url);
+    $('#customer-subscription').load('index.php?route=extension/opencart/report/customer_search.list&user_token={{ user_token }}' + url);
 });
 
 $('#input-customer').autocomplete({
     'source': function (request, response) {
         $.ajax({
-            url: 'index.php?route=customer/customer|autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
+            url: 'index.php?route=customer/customer.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
             success: function (json) {
                 response($.map(json, function (item) {

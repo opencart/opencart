@@ -947,7 +947,7 @@ $('#payment-method').on('click', 'button', function (e) {
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#payment-method').load('index.php?route=customer/customer|getPayment&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val());
+                $('#payment-method').load('index.php?route=customer/customer.getPayment&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val());
             }
         },
         error: function (xhr, ajaxOptions, thrownError) {
@@ -981,7 +981,7 @@ $('#payment-method').on('change', 'input[name=\'status\']', function (e) {
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#payment-method').load('index.php?route=customer/customer|getPayment&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val());
+                $('#payment-method').load('index.php?route=customer/customer.getPayment&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val());
             }
         },
         error: function (xhr, ajaxOptions, thrownError) {
@@ -1021,7 +1021,7 @@ $('#form-history').on('submit', function (e) {
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#history').load('index.php?route=customer/customer|history&user_token={{ user_token }}&customer_id={{ customer_id }}');
+                $('#history').load('index.php?route=customer/customer.history&user_token={{ user_token }}&customer_id={{ customer_id }}');
 
                 $('#input-comment').val('');
             }
@@ -1063,7 +1063,7 @@ $('#form-transaction').on('submit', function (e) {
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#transaction').load('index.php?route=customer/customer|transaction&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val());
+                $('#transaction').load('index.php?route=customer/customer.transaction&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val());
 
                 $('#input-transaction-amount').val('');
                 $('#input-transaction-description').val('');
@@ -1106,7 +1106,7 @@ $('#form-reward').on('submit', function (e) {
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#reward').load('index.php?route=customer/customer|reward&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val());
+                $('#reward').load('index.php?route=customer/customer.reward&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val());
 
                 $('#input-reward-points').val('');
                 $('#input-reward-description').val('');

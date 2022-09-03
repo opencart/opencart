@@ -9,7 +9,7 @@
     </div>
   </div>
   <script type="text/javascript"><!--
-  $('#modal-image .modal-body').load('index.php?route=common/filemanager|list&user_token={{ user_token }}');
+  $('#modal-image .modal-body').load('index.php?route=common/filemanager.list&user_token={{ user_token }}');
 
   $('#modal-image').on('click', '#button-parent', function (e) {
       e.preventDefault();
@@ -30,7 +30,7 @@
   });
 
   $('#modal-image').on('click', '#button-search', function (e) {
-      var url = 'index.php?route=common/filemanager|list&user_token={{ user_token }}';
+      var url = 'index.php?route=common/filemanager.list&user_token={{ user_token }}';
 
       var directory = $('#input-directory').val();
 
@@ -130,7 +130,7 @@
   });
 
   $('#modal-image').on('click', '#button-create', function () {
-      var url = 'index.php?route=common/filemanager|folder&user_token={{ user_token }}';
+      var url = 'index.php?route=common/filemanager.folder&user_token={{ user_token }}';
 
       var directory = $('#input-directory').val();
 

@@ -43,7 +43,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 		$data['subscriptions'] = [];
 
-		$this->load->model('account/Subscription');
+		$this->load->model('account/subscription');
 
 		$subscription_total = $this->model_account_Subscription->getTotalSubscriptions();
 

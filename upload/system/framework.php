@@ -104,6 +104,10 @@ $registry->set('load', $loader);
 $request = new \Opencart\System\Library\Request();
 $registry->set('request', $request);
 
+if (isset($request->get['route'])) {
+	$request->get['route'] = str_replace('|', '.', $request->get['route']);
+}
+
 // Response
 $response = new \Opencart\System\Library\Response();
 

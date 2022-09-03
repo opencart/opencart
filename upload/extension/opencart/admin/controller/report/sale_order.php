@@ -153,8 +153,8 @@ class SaleOrder extends \Opencart\System\Engine\Controller {
 				'date_end'   => date($this->language->get('date_format_short'), strtotime($result['date_end'])),
 				'orders'     => $result['orders'],
 				'products'   => $result['products'],
-				'tax'        => $this->currency->format($result['tax'], $this->config->get('config_currency')),
-				'total'      => $this->currency->format($result['total'], $this->config->get('config_currency'))
+				'tax'        => $this->currency->format((float)$result['tax'], $this->config->get('config_currency')),
+				'total'      => $this->currency->format((float)$result['total'], $this->config->get('config_currency'))
 			];
 		}
 

@@ -168,7 +168,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 							$path = '';
 
 							// Must not have a path before files and directories can be moved
-							$directories = explode('/', dirname($destination, '/'));
+							$directories = explode('/', dirname($destination));
 
 							foreach ($directories as $directory) {
 								if (!$path) {

@@ -11,7 +11,7 @@ $_['text_shipping_address']   = 'Shipping Address';
 $_['text_your_password']      = 'Your Password';
 $_['text_agree']              = 'I have read and agree to the <a href="%s" class="modal-link"><b>%s</b></a>';
 $_['text_success_add']        = 'Success: Your account has been created!';
-$_['text_success_guest']        = 'Success: Your guest account info saved!';
+$_['text_success_guest']      = 'Success: Your guest account information has been saved!';
 $_['text_success_edit']       = 'Success: Your account has been successfully updated.';
 
 // Entry

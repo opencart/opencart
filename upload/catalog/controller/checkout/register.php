@@ -577,7 +577,7 @@ class Register extends \Opencart\System\Engine\Controller {
 				} elseif ($this->customer->isLogged()) {
 					$json['success'] = $this->language->get('text_success_edit');
 				} else {
-					$json['success'] = $this->language->get('text_success_add');
+					$json['success'] = $this->language->get('text_success_guest');
 				}
 
 				unset($this->session->data['payment_methods']);

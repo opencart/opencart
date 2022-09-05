@@ -50,7 +50,7 @@
 */
 
 // Version
-define('VERSION', '4.0.1.1');
+define('VERSION', '4.0.1.2');
 
 // Configuration
 if (is_file('config.php')) {

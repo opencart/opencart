@@ -316,7 +316,7 @@ class Upgrade4 extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$json['text'] = sprintf($this->language->get('text_progress'), 4, 4, 8);
+			$json['text'] = sprintf($this->language->get('text_progress'), 4, 4, 9);
 
 			$url = '';
 

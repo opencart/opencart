@@ -10,7 +10,7 @@ class Install extends \Opencart\System\Engine\Model {
 
 		$tables = Helper\DbSchema\db_schema();
 
-		// CLear any old db foreign key constraints
+		// Clear any old db foreign key constraints
 		foreach ($tables as $table) {
 			$foreign_query = $db->query("SELECT * FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS WHERE CONSTRAINT_SCHEMA = '" . html_entity_decode($data['db_database'], ENT_QUOTES, 'UTF-8') . "' AND TABLE_NAME = '" . $data['db_prefix'] . $table['name'] . "' AND CONSTRAINT_TYPE = 'FOREIGN KEY'");
 

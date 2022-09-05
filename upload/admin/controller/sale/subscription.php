@@ -736,7 +736,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		//$data['balance'] = $this->currency->format($this->model_sale_subscription->getTransactionTotal($subscription_id), $this->config->get('config_currency'));
+		$data['balance'] = $this->currency->format($this->model_sale_subscription->getTransactionTotal($subscription_id), $this->config->get('config_currency'));
 
 		$transaction_total = $this->model_sale_subscription->getTotalTransactions($subscription_id);
 

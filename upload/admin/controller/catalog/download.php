@@ -342,7 +342,7 @@ class Download extends \Opencart\System\Engine\Controller {
 			$download_id = 0;
 		}
 
-		if (isset($this->request->get['page'])) {
+		if (isset($this->request->get['page']) && $this->request->get['route'] == 'catalog/download.report') {
 			$page = (int)$this->request->get['page'];
 		} else {
 			$page = 1;

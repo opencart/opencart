@@ -1189,7 +1189,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			$product_id = 0;
 		}
 
-		if (isset($this->request->get['page'])) {
+		if (isset($this->request->get['page']) && $this->request->get['route'] == 'catalog/product.report') {
 			$page = (int)$this->request->get['page'];
 		} else {
 			$page = 1;

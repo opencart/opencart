@@ -691,7 +691,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			$customer_id = 0;
 		}
 
-		if (isset($this->request->get['page'])) {
+		if (isset($this->request->get['page']) && $this->request->get['route'] == 'marketing/affiliate.report') {
 			$page = (int)$this->request->get['page'];
 		} else {
 			$page = 1;

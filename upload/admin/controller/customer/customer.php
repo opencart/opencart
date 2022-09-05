@@ -863,7 +863,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$customer_id = 0;
 		}
 
-		if (isset($this->request->get['page'])) {
+		if (isset($this->request->get['page']) && $this->request->get['route'] == 'customer/customer.payment') {
 			$page = (int)$this->request->get['page'];
 		} else {
 			$page = 1;
@@ -947,7 +947,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$customer_id = 0;
 		}
 
-		if (isset($this->request->get['page'])) {
+		if (isset($this->request->get['page']) && $this->request->get['route'] == 'customer/customer.history') {
 			$page = (int)$this->request->get['page'];
 		} else {
 			$page = 1;
@@ -1020,7 +1020,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$customer_id = 0;
 		}
 
-		if (isset($this->request->get['page'])) {
+		if (isset($this->request->get['page']) && $this->request->get['route'] == 'customer/customer.transaction') {
 			$page = (int)$this->request->get['page'];
 		} else {
 			$page = 1;
@@ -1104,7 +1104,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$customer_id = 0;
 		}
 
-		if (isset($this->request->get['page'])) {
+		if (isset($this->request->get['page']) && $this->request->get['route'] == 'customer/customer.reward') {
 			$page = (int)$this->request->get['page'];
 		} else {
 			$page = 1;
@@ -1188,7 +1188,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$customer_id = 0;
 		}
 
-		if (isset($this->request->get['page'])) {
+		if (isset($this->request->get['page']) && $this->request->get['route'] == 'customer/customer.ip') {
 			$page = (int)$this->request->get['page'];
 		} else {
 			$page = 1;

@@ -418,7 +418,7 @@ class Coupon extends \Opencart\System\Engine\Controller {
 			$coupon_id = 0;
 		}
 
-		if (isset($this->request->get['page'])) {
+		if (isset($this->request->get['page']) && $this->request->get['route'] == 'marketing/coupon.history') {
 			$page = (int)$this->request->get['page'];
 		} else {
 			$page = 1;

@@ -641,7 +641,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$subscription_id = 0;
 		}
 
-		if (isset($this->request->get['page'])) {
+		if (isset($this->request->get['page']) && $this->request->get['route'] == 'sale/subscription.history') {
 			$page = (int)$this->request->get['page'];
 		} else {
 			$page = 1;
@@ -716,7 +716,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$subscription_id = 0;
 		}
 
-		if (isset($this->request->get['page'])) {
+		if (isset($this->request->get['page']) && $this->request->get['route'] == 'sale/subscription.transaction') {
 			$page = (int)$this->request->get['page'];
 		} else {
 			$page = 1;

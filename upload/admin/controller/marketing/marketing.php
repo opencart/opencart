@@ -452,7 +452,7 @@ class Marketing extends \Opencart\System\Engine\Controller {
 			$marketing_id = 0;
 		}
 
-		if (isset($this->request->get['page'])) {
+		if (isset($this->request->get['page']) && $this->request->get['route'] == 'marketing/marketing.report') {
 			$page = (int)$this->request->get['page'];
 		} else {
 			$page = 1;

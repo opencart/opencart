@@ -14,6 +14,15 @@ class Upgrade3 extends \Opencart\System\Engine\Controller {
 
 			$tables = Helper\DbSchema\db_schema();
 
+			// Clear any old db foreign key constraints
+			foreach ($tables as $table) {
+				$foreign_query = $this->db->query("SELECT * FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS WHERE CONSTRAINT_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . $table['name'] . "' AND CONSTRAINT_TYPE = 'FOREIGN KEY'");
+
+				foreach ($foreign_query->rows as $foreign) {
+					$this->db->query("ALTER TABLE `" . DB_PREFIX . $table['name'] . "` DROP FOREIGN KEY `" . $foreign['CONSTRAINT_NAME'] . "`");
+				}
+			}
+
 			foreach ($tables as $table) {
 				$table_query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . $table['name'] . "'");
 
@@ -152,6 +161,15 @@ class Upgrade3 extends \Opencart\System\Engine\Controller {
 						}
 
 						$this->db->query($sql);
+					}
+				}
+			}
+
+			// Setup foreign keys
+			foreach ($tables as $table) {
+				if (isset($table['foreign'])) {
+					foreach ($table['foreign'] as $foreign) {
+						$this->db->query("ALTER TABLE `" . DB_PREFIX . $table['name'] . "` ADD FOREIGN KEY (`" . $foreign['key'] . "`) REFERENCES `" . DB_PREFIX . $foreign['table'] . "` (`" . $foreign['field'] . "`)");
 					}
 				}
 			}

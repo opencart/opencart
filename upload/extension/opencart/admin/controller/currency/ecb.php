@@ -69,9 +69,11 @@ class ECB extends \Opencart\System\Engine\Controller {
 
 			$response = curl_exec($curl);
 
+			$status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+
 			curl_close($curl);
 
-			if ($response) {
+			if ($status == 200) {
 				$dom = new \DOMDocument('1.0', 'UTF-8');
 				$dom->loadXml($response);
 

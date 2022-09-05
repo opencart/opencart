@@ -5,7 +5,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		$this->load->language('account/subscription');
 
 		if (!$this->customer->isLogged() || (!isset($this->request->get['customer_token']) || !isset($this->session->data['customer_token']) || ($this->request->get['customer_token'] != $this->session->data['customer_token']))) {
-			$this->session->data['redirect'] = $this->url->link('account/Subscription', 'language=' . $this->config->get('config_language'));
+			$this->session->data['redirect'] = $this->url->link('account/subscription', 'language=' . $this->config->get('config_language'));
 
 			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language')));
 		}
@@ -32,7 +32,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('account/Subscription', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . $url)
+			'href' => $this->url->link('account/subscription', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . $url)
 		];
 
 		if (isset($this->request->get['page'])) {
@@ -43,7 +43,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 		$data['subscriptions'] = [];
 
-		$this->load->model('account/Subscription');
+		$this->load->model('account/subscription');
 
 		$subscription_total = $this->model_account_Subscription->getTotalSubscriptions();
 

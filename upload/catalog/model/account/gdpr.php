@@ -20,4 +20,10 @@ class Gdpr extends \Opencart\System\Engine\Model {
 
 		return $query->rows;
 	}
+
+	public function getExpires(): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "gdpr` WHERE `status` = '2' AND DATE(`date_added`) <= DATE('" . $this->db->escape(date('Y-m-d', strtotime('+' . (int)$this->config->get('config_gdpr_limit') . ' days'))) . "') ORDER BY `date_added` DESC");
+
+		return $query->rows;
+	}
 }

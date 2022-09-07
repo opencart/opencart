@@ -1,6 +1,12 @@
 <?php
 namespace Opencart\Catalog\Model\Localisation;
 class Currency extends \Opencart\System\Engine\Model {
+	public function editValueByCode(string $code, float $value): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "currency` SET `value` = '" . (float)$value . "', `date_modified` = NOW() WHERE `code` = '" . $this->db->escape($code) . "'");
+
+		$this->cache->delete('currency');
+	}
+
 	public function getCurrencyByCode(string $currency): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "currency` WHERE `code` = '" . $this->db->escape($currency) . "' AND `status` = '1'");
 

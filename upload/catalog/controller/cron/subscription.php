@@ -1,12 +1,15 @@
 <?php
-namespace Opencart\Admin\Controller\Cron;
+namespace Opencart\Catalog\Controller\Cron;
 class Subscription extends \Opencart\System\Engine\Controller {
 	public function index(int $cron_id, string $code, string $cycle, string $date_added, string $date_modified): void {
 		$this->load->language('cron/subscription');
 
-		$this->load->model('customer/customer');
+		echo 'subscription' . "\n";
+
+		$this->load->model('account/customer');
 		$this->load->model('setting/extension');
 
+		/*
 		$filter_data = [
 			'filter_subscription_status_id' => $this->config->get('config_subscription_active_status_id'),
 			'filter_date_next'              => date('Y-m-d H:i:s')
@@ -86,5 +89,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 				}
 			}
 		}
+		*/
 	}
 }

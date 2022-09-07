@@ -15,7 +15,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		} else {
 			$subscription = [];
 		}
-
+		/*
 		$subscription['order_product_id']
 		$subscription['customer_id']
 		$subscription['order_id']
@@ -34,7 +34,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		$subscription['remaining' ]
 		$subscription['date_next']
 		$subscription['status'	]
-
+		*/
 		// We need to grab the old order status ID
 		$order_info = $this->model_checkout_order->getOrder($order_id);
 

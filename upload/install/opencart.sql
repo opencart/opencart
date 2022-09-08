@@ -850,6 +850,7 @@ INSERT INTO `oc_event` (`code`, `trigger`, `action`, `status`) VALUES
 ('mail_order_alert', 'catalog/model/checkout/order/addHistory/before', 'mail/order.alert', 1),
 ('mail_order_add', 'catalog/model/checkout/order/addHistory/before', 'mail/order', 1),
 ('mail_gdpr', 'catalog/model/account/gdpr/addGdpr/after', 'mail/gdpr', 1),
+('mail_gdpr_delete', 'catalog/model/account/gdpr/editStatus/after', 'mail/gdpr.remove', 1),
 ('mail_voucher', 'catalog/model/checkout/order/addHistory/after', 'mail/voucher', 1),
 ('mail_review', 'catalog/model/catalog/review/addReview/after', 'mail/review', 1),
 ('statistics_review_add', 'catalog/model/catalog/review/addReview/after', 'event/statistics.addReview', 1),

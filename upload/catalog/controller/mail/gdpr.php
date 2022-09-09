@@ -54,8 +54,8 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 			$gdpr_id = 0;
 		}
 
-		if (isset($args[0])) {
-			$status = $args[0];
+		if (isset($args[1])) {
+			$status = $args[1];
 		} else {
 			$status = 0;
 		}

@@ -7,6 +7,8 @@ use Aws\AwsClient;
  * This client is used to interact with the **Amazon Athena** service.
  * @method \Aws\Result batchGetNamedQuery(array $args = [])
  * @method \GuzzleHttp\Promise\Promise batchGetNamedQueryAsync(array $args = [])
+ * @method \Aws\Result batchGetPreparedStatement(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise batchGetPreparedStatementAsync(array $args = [])
  * @method \Aws\Result batchGetQueryExecution(array $args = [])
  * @method \GuzzleHttp\Promise\Promise batchGetQueryExecutionAsync(array $args = [])
  * @method \Aws\Result createDataCatalog(array $args = [])
@@ -37,6 +39,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getQueryExecutionAsync(array $args = [])
  * @method \Aws\Result getQueryResults(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getQueryResultsAsync(array $args = [])
+ * @method \Aws\Result getQueryRuntimeStatistics(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getQueryRuntimeStatisticsAsync(array $args = [])
  * @method \Aws\Result getTableMetadata(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getTableMetadataAsync(array $args = [])
  * @method \Aws\Result getWorkGroup(array $args = [])

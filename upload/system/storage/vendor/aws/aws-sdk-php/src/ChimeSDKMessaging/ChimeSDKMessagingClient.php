@@ -75,6 +75,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listChannelsAssociatedWithChannelFlowAsync(array $args = [])
  * @method \Aws\Result listChannelsModeratedByAppInstanceUser(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listChannelsModeratedByAppInstanceUserAsync(array $args = [])
+ * @method \Aws\Result listSubChannels(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listSubChannelsAsync(array $args = [])
  * @method \Aws\Result listTagsForResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array $args = [])
  * @method \Aws\Result putChannelMembershipPreferences(array $args = [])

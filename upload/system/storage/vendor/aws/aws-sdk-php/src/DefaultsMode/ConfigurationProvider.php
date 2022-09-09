@@ -82,7 +82,7 @@ class ConfigurationProvider extends AbstractConfigurationProvider
         $configProviders[] = self::fallback();
 
         $memo = self::memoize(
-            call_user_func_array('self::chain', $configProviders)
+            call_user_func_array([ConfigurationProvider::class, 'chain'], $configProviders)
         );
 
         if (isset($config['defaultsMode'])

@@ -385,5 +385,7 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise updateVoiceConnectorAsync(array $args = [])
  * @method \Aws\Result updateVoiceConnectorGroup(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateVoiceConnectorGroupAsync(array $args = [])
+ * @method \Aws\Result validateE911Address(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise validateE911AddressAsync(array $args = [])
  */
 class ChimeClient extends AwsClient {}

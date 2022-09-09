@@ -7,6 +7,8 @@ use Aws\AwsClient;
  * This client is used to interact with the **AWS Lake Formation** service.
  * @method \Aws\Result addLFTagsToResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise addLFTagsToResourceAsync(array $args = [])
+ * @method \Aws\Result assumeDecoratedRoleWithSAML(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise assumeDecoratedRoleWithSAMLAsync(array $args = [])
  * @method \Aws\Result batchGrantPermissions(array $args = [])
  * @method \GuzzleHttp\Promise\Promise batchGrantPermissionsAsync(array $args = [])
  * @method \Aws\Result batchRevokePermissions(array $args = [])

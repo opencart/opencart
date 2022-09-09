@@ -83,7 +83,7 @@ class ConfigurationProvider extends AbstractConfigurationProvider
         $configProviders[] = self::fallback($config);
 
         $memo = self::memoize(
-            call_user_func_array('self::chain', $configProviders)
+            call_user_func_array([ConfigurationProvider::class, 'chain'], $configProviders)
         );
 
         if (isset($config['endpoint_discovery'])
@@ -190,7 +190,7 @@ class ConfigurationProvider extends AbstractConfigurationProvider
                 return self::reject("'$profile' not found in config file");
             }
             if (!isset($data[$profile]['endpoint_discovery_enabled'])) {
-                return self::reject("Required endpoint discovery config values 
+                return self::reject("Required endpoint discovery config values
                     not present in INI profile '{$profile}' ({$filename})");
             }
 

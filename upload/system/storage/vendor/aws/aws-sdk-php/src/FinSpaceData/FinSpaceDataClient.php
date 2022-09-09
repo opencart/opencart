@@ -35,6 +35,8 @@ use Psr\Http\Message\RequestInterface;
  * @method \GuzzleHttp\Promise\Promise getDataViewAsync(array $args = [])
  * @method \Aws\Result getDataset(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getDatasetAsync(array $args = [])
+ * @method \Aws\Result getExternalDataViewAccessDetails(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getExternalDataViewAccessDetailsAsync(array $args = [])
  * @method \Aws\Result getPermissionGroup(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getPermissionGroupAsync(array $args = [])
  * @method \Aws\Result getProgrammaticAccessCredentials(array $args = [])

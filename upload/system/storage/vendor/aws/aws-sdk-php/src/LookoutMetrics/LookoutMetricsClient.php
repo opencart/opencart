@@ -35,6 +35,8 @@ use Psr\Http\Message\RequestInterface;
  * @method \GuzzleHttp\Promise\Promise detectMetricSetConfigAsync(array $args = [])
  * @method \Aws\Result getAnomalyGroup(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getAnomalyGroupAsync(array $args = [])
+ * @method \Aws\Result getDataQualityMetrics(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getDataQualityMetricsAsync(array $args = [])
  * @method \Aws\Result getFeedback(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getFeedbackAsync(array $args = [])
  * @method \Aws\Result getSampleData(array $args = [])

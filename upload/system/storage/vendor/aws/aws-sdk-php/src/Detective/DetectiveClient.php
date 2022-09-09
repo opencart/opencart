@@ -7,6 +7,10 @@ use Aws\AwsClient;
  * This client is used to interact with the **Amazon Detective** service.
  * @method \Aws\Result acceptInvitation(array $args = [])
  * @method \GuzzleHttp\Promise\Promise acceptInvitationAsync(array $args = [])
+ * @method \Aws\Result batchGetGraphMemberDatasources(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise batchGetGraphMemberDatasourcesAsync(array $args = [])
+ * @method \Aws\Result batchGetMembershipDatasources(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise batchGetMembershipDatasourcesAsync(array $args = [])
  * @method \Aws\Result createGraph(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createGraphAsync(array $args = [])
  * @method \Aws\Result createMembers(array $args = [])
@@ -25,6 +29,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise enableOrganizationAdminAccountAsync(array $args = [])
  * @method \Aws\Result getMembers(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getMembersAsync(array $args = [])
+ * @method \Aws\Result listDatasourcePackages(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listDatasourcePackagesAsync(array $args = [])
  * @method \Aws\Result listGraphs(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listGraphsAsync(array $args = [])
  * @method \Aws\Result listInvitations(array $args = [])
@@ -43,6 +49,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise tagResourceAsync(array $args = [])
  * @method \Aws\Result untagResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise untagResourceAsync(array $args = [])
+ * @method \Aws\Result updateDatasourcePackages(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateDatasourcePackagesAsync(array $args = [])
  * @method \Aws\Result updateOrganizationConfiguration(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateOrganizationConfigurationAsync(array $args = [])
  */

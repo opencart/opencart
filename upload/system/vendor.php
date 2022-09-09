@@ -1,10 +1,10 @@
 <?php
 // aws/aws-crt-php
-$autoloader->register('AWS/CRT', DIR_STORAGE . 'vendor/aws/aws-crt-php/src/AWS/CRT', true);
-$autoloader->register('AWS/CRT/Auth', DIR_STORAGE . 'vendor/aws/aws-crt-php/src/AWS/CRT/Auth', true);
-$autoloader->register('AWS/CRT/HTTP', DIR_STORAGE . 'vendor/aws/aws-crt-php/src/AWS/CRT/HTTP', true);
-$autoloader->register('AWS/CRT/IO', DIR_STORAGE . 'vendor/aws/aws-crt-php/src/AWS/CRT/IO', true);
-$autoloader->register('AWS/CRT/Internal', DIR_STORAGE . 'vendor/aws/aws-crt-php/src/AWS/CRT/Internal', true);
+$autoloader->register('AWS/CRT', DIR_STORAGE . 'vendor/aws/aws-crt-php/src/AWS/CRT/', true);
+$autoloader->register('AWS/CRT/Auth', DIR_STORAGE . 'vendor/aws/aws-crt-php/src/AWS/CRT/Auth/', true);
+$autoloader->register('AWS/CRT/HTTP', DIR_STORAGE . 'vendor/aws/aws-crt-php/src/AWS/CRT/HTTP/', true);
+$autoloader->register('AWS/CRT/IO', DIR_STORAGE . 'vendor/aws/aws-crt-php/src/AWS/CRT/IO/', true);
+$autoloader->register('AWS/CRT/Internal', DIR_STORAGE . 'vendor/aws/aws-crt-php/src/AWS/CRT/Internal/', true);
 
 // aws/aws-sdk-php
 $autoloader->register('Aws', DIR_STORAGE . 'vendor/aws/aws-sdk-php/src/', true);
@@ -34,6 +34,9 @@ $autoloader->register('Psr\Http\Message', DIR_STORAGE . 'vendor/psr/http-factory
 // psr/http-message
 $autoloader->register('Psr\Http\Message', DIR_STORAGE . 'vendor/psr/http-message/src/', true);
 
+// psr/log
+$autoloader->register('Psr\Log', DIR_STORAGE . 'vendor/psr/log/src/', true);
+
 // ralouphie/getallheaders
 require_once(DIR_STORAGE . 'vendor/ralouphie/getallheaders/src/getallheaders.php');
 
@@ -44,11 +47,11 @@ $autoloader->register('ScssPhp\ScssPhp', DIR_STORAGE . 'vendor/scssphp/scssphp/s
 require_once(DIR_STORAGE . 'vendor/symfony/deprecation-contracts/function.php');
 
 // symfony/polyfill-ctype
-$autoloader->register('Symfony\Polyfill\Ctype', DIR_STORAGE . 'vendor/symfony/polyfill-ctype/', true);
+$autoloader->register('Symfony\Polyfill\Ctype', DIR_STORAGE . 'vendor/symfony/polyfill-ctype//', true);
 require_once(DIR_STORAGE . 'vendor/symfony/polyfill-ctype/bootstrap.php');
 
 // symfony/polyfill-mbstring
-$autoloader->register('Symfony\Polyfill\Mbstring', DIR_STORAGE . 'vendor/symfony/polyfill-mbstring/', true);
+$autoloader->register('Symfony\Polyfill\Mbstring', DIR_STORAGE . 'vendor/symfony/polyfill-mbstring//', true);
 require_once(DIR_STORAGE . 'vendor/symfony/polyfill-mbstring/bootstrap.php');
 
 // twig/twig

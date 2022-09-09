@@ -117,6 +117,8 @@ use Psr\Http\Message\RequestInterface;
  * @method \GuzzleHttp\Promise\Promise startBotRecommendationAsync(array $args = [])
  * @method \Aws\Result startImport(array $args = [])
  * @method \GuzzleHttp\Promise\Promise startImportAsync(array $args = [])
+ * @method \Aws\Result stopBotRecommendation(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise stopBotRecommendationAsync(array $args = [])
  * @method \Aws\Result tagResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise tagResourceAsync(array $args = [])
  * @method \Aws\Result untagResource(array $args = [])

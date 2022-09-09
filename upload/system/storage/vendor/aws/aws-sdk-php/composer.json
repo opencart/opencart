@@ -27,6 +27,7 @@
         "aws/aws-crt-php": "^1.0.2"
     },
     "require-dev": {
+        "composer/composer" : "^1.10.22",
         "ext-openssl": "*",
         "ext-dom": "*",
         "ext-pcntl": "*",

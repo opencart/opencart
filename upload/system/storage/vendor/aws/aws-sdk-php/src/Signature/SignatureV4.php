@@ -44,7 +44,7 @@ class SignatureV4 implements SignatureInterface
      *
      * @return array
      */
-    private function getHeaderBlacklist()
+    protected function getHeaderBlacklist()
     {
         return [
             'cache-control'         => true,

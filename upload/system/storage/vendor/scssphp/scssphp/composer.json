@@ -50,16 +50,16 @@
             "type": "package",
             "package": {
                 "name": "sass/sass-spec",
-                "version": "2022.02.24",
+                "version": "2022.08.19",
                 "source": {
                     "type": "git",
                     "url": "https://github.com/sass/sass-spec.git",
-                    "reference": "f41b9bfb9a3013392f2136c79f7f3356f15fb8ba"
+                    "reference": "2bdc199723a3445d5badac3ac774105698f08861"
                 },
                 "dist": {
                     "type": "zip",
-                    "url": "https://api.github.com/repos/sass/sass-spec/zipball/f41b9bfb9a3013392f2136c79f7f3356f15fb8ba",
-                    "reference": "f41b9bfb9a3013392f2136c79f7f3356f15fb8ba",
+                    "url": "https://api.github.com/repos/sass/sass-spec/zipball/2bdc199723a3445d5badac3ac774105698f08861",
+                    "reference": "2bdc199723a3445d5badac3ac774105698f08861",
                     "shasum": ""
                 }
             }
@@ -106,6 +106,12 @@
         "sort-packages": true,
         "allow-plugins": {
             "bamarni/composer-bin-plugin": true
+        }
+    },
+    "extra": {
+        "bamarni-bin": {
+            "forward-command": false,
+            "bin-links": false
         }
     }
 }

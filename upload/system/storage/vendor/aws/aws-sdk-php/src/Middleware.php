@@ -256,13 +256,21 @@ final class Middleware
                 RequestInterface $request
             ) use ($handler){
                 $isLambda = getenv('AWS_LAMBDA_FUNCTION_NAME');
-                $traceId = str_replace('\e', '\x1b', getenv('_X_AMZ_TRACE_ID'));
+                $traceId = str_replace('\e', '\x1b', getenv('_X_AMZN_TRACE_ID'));
 
                 if ($isLambda && $traceId) {
                     if (!$request->hasHeader('X-Amzn-Trace-Id')) {
+                        $ignoreChars = ['=', ';', ':', '+', '&', '[', ']', '{', '}', '"', '\'', ','];
+                        $traceIdEncoded = rawurlencode(stripcslashes($traceId));
+
+                        foreach($ignoreChars as $char) {
+                            $encodedChar = rawurlencode($char);
+                            $traceIdEncoded = str_replace($encodedChar, $char,  $traceIdEncoded);
+                        }
+
                         return $handler($command, $request->withHeader(
                             'X-Amzn-Trace-Id',
-                            rawurlencode(stripcslashes($traceId))
+                            $traceIdEncoded
                         ));
                     }
                 }

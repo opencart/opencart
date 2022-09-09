@@ -73,6 +73,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise untagResourceAsync(array $args = [])
  * @method \Aws\Result updateAnswer(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateAnswerAsync(array $args = [])
+ * @method \Aws\Result updateGlobalSettings(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateGlobalSettingsAsync(array $args = [])
  * @method \Aws\Result updateLensReview(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateLensReviewAsync(array $args = [])
  * @method \Aws\Result updateShareInvitation(array $args = [])

@@ -130,6 +130,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getStoredQueryAsync(array $args = [])
  * @method \Aws\Result listAggregateDiscoveredResources(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listAggregateDiscoveredResourcesAsync(array $args = [])
+ * @method \Aws\Result listConformancePackComplianceScores(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listConformancePackComplianceScoresAsync(array $args = [])
  * @method \Aws\Result listDiscoveredResources(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listDiscoveredResourcesAsync(array $args = [])
  * @method \Aws\Result listStoredQueries(array $args = [])

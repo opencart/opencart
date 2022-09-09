@@ -41,6 +41,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise deleteTypeAsync(array $args = [])
  * @method \Aws\Result disassociateApi(array $args = [])
  * @method \GuzzleHttp\Promise\Promise disassociateApiAsync(array $args = [])
+ * @method \Aws\Result evaluateMappingTemplate(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise evaluateMappingTemplateAsync(array $args = [])
  * @method \Aws\Result flushApiCache(array $args = [])
  * @method \GuzzleHttp\Promise\Promise flushApiCacheAsync(array $args = [])
  * @method \Aws\Result getApiAssociation(array $args = [])

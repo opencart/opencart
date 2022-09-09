@@ -49,6 +49,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array $args = [])
  * @method \Aws\Result notifyRecommendationsReceived(array $args = [])
  * @method \GuzzleHttp\Promise\Promise notifyRecommendationsReceivedAsync(array $args = [])
+ * @method \Aws\Result putFeedback(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise putFeedbackAsync(array $args = [])
  * @method \Aws\Result queryAssistant(array $args = [])
  * @method \GuzzleHttp\Promise\Promise queryAssistantAsync(array $args = [])
  * @method \Aws\Result removeKnowledgeBaseTemplateUri(array $args = [])

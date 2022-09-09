@@ -9,6 +9,12 @@ class Gdpr extends \Opencart\System\Engine\Model {
 		$this->db->query("UPDATE `" . DB_PREFIX . "gdpr` SET `status` = '" . (int)$status . "' WHERE `code` = '" . $this->db->escape($code) . "'");
 	}
 
+	public function getGdpr(int $gdpr_id): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "gdpr` WHERE `gdpr_id` = '" . (int)$gdpr_id . "'");
+
+		return $query->row;
+	}
+
 	public function getGdprByCode(string $code): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "gdpr` WHERE `code` = '" . $this->db->escape($code) . "'");
 

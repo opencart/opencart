@@ -7,6 +7,24 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 		// $args[1] $email
 		// $args[2] $action
 
+		if (isset($args[0])) {
+			$code = $args[0];
+		} else {
+			$code = '';
+		}
+
+		if (isset($args[1])) {
+			$email = $args[1];
+		} else {
+			$email = '';
+		}
+
+		if (isset($args[2])) {
+			$action = $args[2];
+		} else {
+			$action = '';
+		}
+
 		$this->load->language('mail/gdpr');
 
 		$store_name = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
@@ -17,18 +35,18 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 			$data['logo'] = '';
 		}
 
-		$data['text_request'] = $this->language->get('text_' . $args[2]);
+		$data['text_request'] = $this->language->get('text_' . $action);
 
-		$data['button_confirm'] = $this->language->get('button_' . $args[2]);
+		$data['button_confirm'] = $this->language->get('button_' . $action);
 
-		$data['confirm'] = $this->url->link('information/gdpr.success', 'language=' . $this->config->get('config_language') . '&code=' . $args[0], true);
+		$data['confirm'] = $this->url->link('information/gdpr.success', 'language=' . $this->config->get('config_language') . '&code=' . $code, true);
 
 		$data['ip'] = $this->request->server['REMOTE_ADDR'];
 
 		$data['store_name'] = $store_name;
 		$data['store_url'] = $this->config->get('config_url');
 
-		if ($this->config->get('config_mail_engine')) {
+		if ($this->config->get('config_mail_engine') && $email) {
 			$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'));
 			$mail->parameter = $this->config->get('config_mail_parameter');
 			$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
@@ -37,7 +55,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 			$mail->smtp_port = $this->config->get('config_mail_smtp_port');
 			$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
 
-			$mail->setTo($args[1]);
+			$mail->setTo($email);
 			$mail->setFrom($this->config->get('config_email'));
 			$mail->setSender($store_name);
 			$mail->setSubject(sprintf($this->language->get('text_subject'), $store_name));
@@ -78,7 +96,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 			} else {
 				$store_logo = html_entity_decode($this->config->get('config_logo'), ENT_QUOTES, 'UTF-8');
 				$store_name = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
-				$store_url = HTTP_CATALOG;
+				$store_url = HTTP_SERVER;
 			}
 
 			// Send the email in the correct language
@@ -92,7 +110,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 				$language_code = $this->config->get('config_language');
 			}
 
-			// Load the language for any mails using a different country code and prefixing it so it does not pollute the main data pool.
+			// Load the language for any mails using a different country code and prefixing it so that it does not pollute the main data pool.
 			$this->language->load($language_code, 'mail', $language_code);
 			$this->language->load('mail/gdpr_delete', 'mail', $language_code);
 
@@ -113,9 +131,9 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 				$data['logo'] = '';
 			}
 
-			$this->load->model('customer/customer');
+			$this->load->model('account/customer');
 
-			$customer_info = $this->model_customer_customer->getCustomerByEmail($gdpr_info['email']);
+			$customer_info = $this->model_account_customer->getCustomerByEmail($gdpr_info['email']);
 
 			if ($customer_info) {
 				$data['text_hello'] = sprintf($this->language->get('mail_text_hello'), html_entity_decode($customer_info['firstname'], ENT_QUOTES, 'UTF-8'));

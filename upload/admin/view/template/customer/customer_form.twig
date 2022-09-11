@@ -509,15 +509,15 @@
               <fieldset>
                 <legend>{{ text_transaction_add }}</legend>
                 <div class="row mb-3">
-                  <label for="input-transaction-description" class="col-sm-2 col-form-label">{{ entry_description }}</label>
+                  <label for="input-transaction" class="col-sm-2 col-form-label">{{ entry_description }}</label>
                   <div class="col-sm-10">
-                    <input type="text" name="description" value="" placeholder="{{ entry_description }}" id="input-transaction-description" class="form-control"/>
+                    <input type="text" name="description" value="" placeholder="{{ entry_description }}" id="input-transaction" class="form-control"/>
                   </div>
                 </div>
                 <div class="row mb-3">
-                  <label for="input-transaction-amount" class="col-sm-2 col-form-label">{{ entry_amount }}</label>
+                  <label for="input-amount" class="col-sm-2 col-form-label">{{ entry_amount }}</label>
                   <div class="col-sm-10">
-                    <input type="text" name="amount" value="" placeholder="{{ entry_amount }}" id="input-transaction-amount" class="form-control"/>
+                    <input type="text" name="amount" value="" placeholder="{{ entry_amount }}" id="input-amount" class="form-control"/>
                   </div>
                 </div>
                 <div class="text-end">
@@ -533,15 +533,15 @@
               <fieldset>
                 <legend>{{ text_reward_add }}</legend>
                 <div class="row mb-3">
-                  <label for="input-reward-description" class="col-sm-2 col-form-label">{{ entry_description }}</label>
+                  <label for="input-reward" class="col-sm-2 col-form-label">{{ entry_description }}</label>
                   <div class="col-sm-10">
-                    <input type="text" name="description" value="" placeholder="{{ entry_description }}" id="input-reward-description" class="form-control"/>
+                    <input type="text" name="description" value="" placeholder="{{ entry_description }}" id="input-reward" class="form-control"/>
                   </div>
                 </div>
                 <div class="row mb-3">
-                  <label for="input-reward-points" class="col-sm-2 col-form-label">{{ entry_points }}</label>
+                  <label for="input-points" class="col-sm-2 col-form-label">{{ entry_points }}</label>
                   <div class="col-sm-10">
-                    <input type="text" name="points" value="" placeholder="{{ entry_points }}" id="input-reward-points" class="form-control"/>
+                    <input type="text" name="points" value="" placeholder="{{ entry_points }}" id="input-points" class="form-control"/>
                     <div class="form-text">{{ help_points }}</div>
                   </div>
                 </div>
@@ -991,7 +991,7 @@ $('#button-history').on('click', function (e) {
     $.ajax({
         url: 'index.php?route=customer/customer.addHistory&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val(),
         type: 'post',
-        data: $('#tab-history #input-history').serialize(),
+        data: 'comment=' + encodeURIComponent($('#input-history').val()),
         dataType: 'json',
         contentType: 'application/x-www-form-urlencoded',
         beforeSend: function () {
@@ -1033,7 +1033,7 @@ $('#button-transaction').on('click', function (e) {
     $.ajax({
         url: 'index.php?route=customer/customer.addTransaction&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val(),
         type: 'post',
-        data: $('#tab-transaction #input-transaction-description, #tab-transaction #input-transaction-amount').serialize(),
+        data: 'description=' + encodeURIComponent($('#input-transaction').val()) + '&amount=' + $('#input-amount').val(),
         dataType: 'json',
         contentType: 'application/x-www-form-urlencoded',
         beforeSend: function () {
@@ -1054,8 +1054,8 @@ $('#button-transaction').on('click', function (e) {
 
                 $('#transaction').load('index.php?route=customer/customer.transaction&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val());
 
-                $('#input-transaction-amount').val('');
-                $('#input-transaction-description').val('');
+                $('#input-transaction').val('');
+                $('#input-amount').val('');
             }
         },
         error: function (xhr, ajaxOptions, thrownError) {
@@ -1076,7 +1076,7 @@ $('#button-reward').on('click', function (e) {
     $.ajax({
         url: 'index.php?route=customer/customer.addReward&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val(),
         type: 'post',
-        data: $('#tab-reward #input-reward-description, #tab-reward #input-reward-points').serialize(),
+        data: 'description=' + encodeURIComponent($('#input-reward').val()) + '&points=' + $('#input-points').val(),
         dataType: 'json',
         contentType: 'application/x-www-form-urlencoded',
         beforeSend: function () {
@@ -1097,8 +1097,8 @@ $('#button-reward').on('click', function (e) {
 
                 $('#reward').load('index.php?route=customer/customer.reward&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val());
 
-                $('#input-reward-points').val('');
-                $('#input-reward-description').val('');
+                $('#input-reward').val('');
+                $('#input-points').val('');
             }
         },
         error: function (xhr, ajaxOptions, thrownError) {

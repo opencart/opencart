@@ -208,13 +208,16 @@
                   <label class="col-sm-2 col-form-label">{{ entry_payment }}</label>
                   <div class="col-sm-10">
                     <div class="form-check">
-                      <input type="radio" name="payment" value="cheque" id="input-payment-cheque" class="form-check-input"{% if payment == 'cheque' %} checked{% endif %}/> <label for="input-payment-cheque" class="form-check-label">{{ text_cheque }}</label>
+                      <input type="radio" name="payment" value="cheque" id="input-payment-cheque" class="form-check-input"{% if payment == 'cheque' %} checked{% endif %}/>
+                      <label for="input-payment-cheque" class="form-check-label">{{ text_cheque }}</label>
                     </div>
                     <div class="form-check">
-                      <input type="radio" name="payment" value="paypal" id="input-payment-paypal" class="form-check-input"{% if payment == 'paypal' %} checked{% endif %}/> <label for="input-payment-paypal" class="form-check-label">{{ text_paypal }}</label>
+                      <input type="radio" name="payment" value="paypal" id="input-payment-paypal" class="form-check-input"{% if payment == 'paypal' %} checked{% endif %}/>
+                      <label for="input-payment-paypal" class="form-check-label">{{ text_paypal }}</label>
                     </div>
                     <div class="form-check">
-                      <input type="radio" name="payment" value="bank" id="input-payment-bank" class="form-check-input"{% if payment == 'bank' %} checked{% endif %}/> <label for="input-payment-bank" class="form-check-label">{{ text_bank }}</label>
+                      <input type="radio" name="payment" value="bank" id="input-payment-bank" class="form-check-input"{% if payment == 'bank' %} checked{% endif %}/>
+                      <label for="input-payment-bank" class="form-check-label">{{ text_bank }}</label>
                     </div>
                   </div>
                 </div>
@@ -293,9 +296,9 @@
               <fieldset>
                 <legend>{{ text_history_add }}</legend>
                 <div class="row mb-3">
-                  <label for="input-comment" class="col-sm-2 col-form-label">{{ entry_comment }}</label>
+                  <label for="input-history" class="col-sm-2 col-form-label">{{ entry_comment }}</label>
                   <div class="col-sm-10">
-                    <textarea name="comment" rows="8" placeholder="{{ entry_comment }}" id="input-comment" class="form-control"></textarea>
+                    <textarea name="comment" rows="8" placeholder="{{ entry_comment }}" id="input-history" class="form-control"></textarea>
                   </div>
                 </div>
               </fieldset>
@@ -312,9 +315,9 @@
               <fieldset>
                 <legend>{{ text_transaction_add }}</legend>
                 <div class="row mb-3">
-                  <label for="input-description" class="col-sm-2 col-form-label">{{ entry_description }}</label>
+                  <label for="input-transaction" class="col-sm-2 col-form-label">{{ entry_description }}</label>
                   <div class="col-sm-10">
-                    <input type="text" name="description" value="" placeholder="{{ entry_description }}" id="input-description" class="form-control"/>
+                    <input type="text" name="description" value="" placeholder="{{ entry_description }}" id="input-transaction" class="form-control"/>
                   </div>
                 </div>
                 <div class="row mb-3">
@@ -426,7 +429,7 @@ $('#button-history').on('click', function (e) {
 
                 $('#history').load('index.php?route=customer/customer.history&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val());
 
-                $('#input-comment').val('');
+                $('#input-history').val('');
             }
         },
         error: function (xhr, ajaxOptions, thrownError) {
@@ -448,7 +451,7 @@ $('#button-transaction').on('click', function (e) {
         url: 'index.php?route=customer/customer.addTransaction&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val(),
         type: 'post',
         dataType: 'json',
-        data: 'description=' + encodeURIComponent($('#input-transaction-description').val()) + '&amount=' + encodeURIComponent($('#input-transaction-amount').val()),
+        data: 'description=' + encodeURIComponent($('#input-transaction').val()) + '&amount=' + encodeURIComponent($('#input-amount').val()),
         beforeSend: function () {
             $('#button-transaction').prop('disabled', true).addClass('loading');
         },
@@ -467,8 +470,8 @@ $('#button-transaction').on('click', function (e) {
 
                 $('#transaction').load('index.php?route=customer/customer.transaction&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val());
 
-                $('#input-transaction-amount').val('');
-                $('#input-transaction-description').val('');
+                $('#input-transaction').val('');
+                $('#input-amount').val('');
             }
         },
         error: function (xhr, ajaxOptions, thrownError) {

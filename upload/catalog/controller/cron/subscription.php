@@ -9,7 +9,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		$this->load->model('account/customer');
 		$this->load->model('setting/extension');
 
-		/*
+
 		$filter_data = [
 			'filter_subscription_status_id' => $this->config->get('config_subscription_active_status_id'),
 			'filter_date_next'              => date('Y-m-d H:i:s')
@@ -20,6 +20,8 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		$results = $this->model_sale_subscription->getSubscriptions($filter_data);
 
 		foreach ($results as $result) {
+
+
 			if ($this->config->get('config_subscription_active_status_id') == $result['subscription_status_id']) {
 
 
@@ -87,8 +89,11 @@ class Subscription extends \Opencart\System\Engine\Controller {
 						//$this->model_sale_subscription->editDateNext($result['subscription_id'], date('Y-m-d', strtotime('+' . $result['cycle'] . ' ' . $result['frequency'])));
 					}
 				}
+
+
 			}
+
+
 		}
-		*/
 	}
 }

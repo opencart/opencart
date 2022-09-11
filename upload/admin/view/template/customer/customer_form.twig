@@ -235,8 +235,7 @@
                   <label class="col-sm-2 col-form-label">{{ entry_newsletter }}</label>
                   <div class="col-sm-10">
                     <div class="form-check form-switch form-switch-lg">
-                      <input type="hidden" name="newsletter" value="0"/>
-                      <input type="checkbox" name="newsletter" value="1" id="input-newsletter" class="form-check-input"{% if newsletter %} checked{% endif %}/>
+                      <input type="hidden" name="newsletter" value="0"/> <input type="checkbox" name="newsletter" value="1" id="input-newsletter" class="form-check-input"{% if newsletter %} checked{% endif %}/>
                     </div>
                   </div>
                 </div>
@@ -244,8 +243,7 @@
                   <label class="col-sm-2 col-form-label">{{ entry_status }}</label>
                   <div class="col-sm-10">
                     <div class="form-check form-switch form-switch-lg">
-                      <input type="hidden" name="status" value="0"/>
-                      <input type="checkbox" name="status" value="1" id="input-status" class="form-check-input"{% if status %} checked{% endif %}/>
+                      <input type="hidden" name="status" value="0"/> <input type="checkbox" name="status" value="1" id="input-status" class="form-check-input"{% if status %} checked{% endif %}/>
                     </div>
                   </div>
                 </div>
@@ -253,8 +251,7 @@
                   <label class="col-sm-2 col-form-label">{{ entry_safe }}</label>
                   <div class="col-sm-10">
                     <div class="form-check form-switch form-switch-lg">
-                      <input type="hidden" name="safe" value="0"/>
-                      <input type="checkbox" name="safe" value="1" id="input-safe" class="form-check-input"{% if safe %} checked{% endif %}/>
+                      <input type="hidden" name="safe" value="0"/> <input type="checkbox" name="safe" value="1" id="input-safe" class="form-check-input"{% if safe %} checked{% endif %}/>
                     </div>
                     <div class="form-text">{{ help_safe }}</div>
                   </div>
@@ -266,8 +263,6 @@
               {% for address in addresses %}
                 <fieldset id="address-row-{{ address_row }}">
                   <legend>{{ text_address }} {{ address_row + 1 }} <button type="button" onclick="$('#address-row-{{ address_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-sm float-end"><i class="fa-solid fa-minus-circle"></i></button></legend>
-
-
                   <div class="row mb-3 required">
                     <label for="input-address-{{ address_row }}-firstname" class="col-sm-2 col-form-label">{{ entry_firstname }}</label>
                     <div class="col-sm-10">
@@ -275,7 +270,6 @@
                       <div id="error-address-{{ address_row }}-firstname" class="invalid-feedback"></div>
                     </div>
                   </div>
-
                   <div class="row mb-3 required">
                     <label for="input-address-{{ address_row }}-lastname" class="col-sm-2 col-form-label">{{ entry_lastname }}</label>
                     <div class="col-sm-10">
@@ -493,73 +487,68 @@
                 <legend>{{ text_history }}</legend>
                 <div id="history">{{ history }}</div>
               </fieldset>
-              <form id="form-history">
-                <fieldset>
-                  <legend>{{ text_history_add }}</legend>
-                  <div class="row mb-3">
-                    <label for="input-history" class="col-sm-2 col-form-label">{{ entry_comment }}</label>
-                    <div class="col-sm-10">
-                      <textarea name="comment" rows="8" placeholder="{{ entry_comment }}" id="input-history" class="form-control"></textarea>
-                    </div>
+              <fieldset>
+                <legend>{{ text_history_add }}</legend>
+                <div class="row mb-3">
+                  <label for="input-history" class="col-sm-2 col-form-label">{{ entry_comment }}</label>
+                  <div class="col-sm-10">
+                    <textarea name="comment" rows="8" placeholder="{{ entry_comment }}" id="input-history" class="form-control"></textarea>
                   </div>
-                  <div class="text-end">
-                    <button type="submit" id="button-history" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i> {{ button_history_add }}</button>
-                  </div>
-                </fieldset>
-              </form>
+                </div>
+                <div class="text-end">
+                  <button type="button" id="button-history" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i> {{ button_history_add }}</button>
+                </div>
+              </fieldset>
             </div>
+
             <div id="tab-transaction" class="tab-pane">
               <fieldset>
                 <legend>{{ text_transaction }}</legend>
                 <div id="transaction">{{ transaction }}</div>
               </fieldset>
-              <form id="form-transaction">
-                <fieldset>
-                  <legend>{{ text_transaction_add }}</legend>
-                  <div class="row mb-3">
-                    <label for="input-transaction-description" class="col-sm-2 col-form-label">{{ entry_description }}</label>
-                    <div class="col-sm-10">
-                      <input type="text" name="description" value="" placeholder="{{ entry_description }}" id="input-transaction-description" class="form-control"/>
-                    </div>
+              <fieldset>
+                <legend>{{ text_transaction_add }}</legend>
+                <div class="row mb-3">
+                  <label for="input-transaction-description" class="col-sm-2 col-form-label">{{ entry_description }}</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="description" value="" placeholder="{{ entry_description }}" id="input-transaction-description" class="form-control"/>
                   </div>
-                  <div class="row mb-3">
-                    <label for="input-transaction-amount" class="col-sm-2 col-form-label">{{ entry_amount }}</label>
-                    <div class="col-sm-10">
-                      <input type="text" name="amount" value="" placeholder="{{ entry_amount }}" id="input-transaction-amount" class="form-control"/>
-                    </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="input-transaction-amount" class="col-sm-2 col-form-label">{{ entry_amount }}</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="amount" value="" placeholder="{{ entry_amount }}" id="input-transaction-amount" class="form-control"/>
                   </div>
-                  <div class="text-end">
-                    <button type="submit" id="button-transaction" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i> {{ button_transaction_add }}</button>
-                  </div>
-                </fieldset>
-              </form>
+                </div>
+                <div class="text-end">
+                  <button type="button" id="button-transaction" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i> {{ button_transaction_add }}</button>
+                </div>
+              </fieldset>
             </div>
             <div id="tab-reward" class="tab-pane">
               <fieldset>
                 <legend>{{ text_reward }}</legend>
                 <div id="reward">{{ reward }}</div>
               </fieldset>
-              <form id="form-reward">
-                <fieldset>
-                  <legend>{{ text_reward_add }}</legend>
-                  <div class="row mb-3">
-                    <label for="input-reward-description" class="col-sm-2 col-form-label">{{ entry_description }}</label>
-                    <div class="col-sm-10">
-                      <input type="text" name="description" value="" placeholder="{{ entry_description }}" id="input-reward-description" class="form-control"/>
-                    </div>
+              <fieldset>
+                <legend>{{ text_reward_add }}</legend>
+                <div class="row mb-3">
+                  <label for="input-reward-description" class="col-sm-2 col-form-label">{{ entry_description }}</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="description" value="" placeholder="{{ entry_description }}" id="input-reward-description" class="form-control"/>
                   </div>
-                  <div class="row mb-3">
-                    <label for="input-reward-points" class="col-sm-2 col-form-label">{{ entry_points }}</label>
-                    <div class="col-sm-10">
-                      <input type="text" name="points" value="" placeholder="{{ entry_points }}" id="input-reward-points" class="form-control"/>
-                      <div class="form-text">{{ help_points }}</div>
-                    </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="input-reward-points" class="col-sm-2 col-form-label">{{ entry_points }}</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="points" value="" placeholder="{{ entry_points }}" id="input-reward-points" class="form-control"/>
+                    <div class="form-text">{{ help_points }}</div>
                   </div>
-                  <div class="text-end">
-                    <button type="submit" id="button-reward" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i> {{ button_reward_add }}</button>
-                  </div>
-                </fieldset>
-              </form>
+                </div>
+                <div class="text-end">
+                  <button type="button" id="button-reward" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i> {{ button_reward_add }}</button>
+                </div>
+              </fieldset>
             </div>
             <div id="tab-ip" class="tab-pane">
               <fieldset>
@@ -996,13 +985,13 @@ $('#history').on('click', '.pagination a', function (e) {
     $('#history').load(this.href);
 });
 
-$('#form-history').on('submit', function (e) {
+$('#button-history').on('click', function (e) {
     e.preventDefault();
 
     $.ajax({
         url: 'index.php?route=customer/customer.addHistory&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val(),
         type: 'post',
-        data: $('#form-history').serialize(),
+        data: $('#tab-history #input-history').serialize(),
         dataType: 'json',
         contentType: 'application/x-www-form-urlencoded',
         beforeSend: function () {
@@ -1021,7 +1010,7 @@ $('#form-history').on('submit', function (e) {
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#history').load('index.php?route=customer/customer.history&user_token={{ user_token }}&customer_id={{ customer_id }}');
+                $('#history').load('index.php?route=customer/customer.history&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val());
 
                 $('#input-comment').val('');
             }
@@ -1038,13 +1027,13 @@ $('#transaction').on('click', '.pagination a', function (e) {
     $('#transaction').load(this.href);
 });
 
-$('#form-transaction').on('submit', function (e) {
+$('#button-transaction').on('click', function (e) {
     e.preventDefault();
 
     $.ajax({
         url: 'index.php?route=customer/customer.addTransaction&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val(),
         type: 'post',
-        data: $('#form-transaction').serialize(),
+        data: $('#tab-transaction #input-transaction-description, #tab-transaction #input-transaction-amount').serialize(),
         dataType: 'json',
         contentType: 'application/x-www-form-urlencoded',
         beforeSend: function () {
@@ -1081,13 +1070,13 @@ $('#reward').on('click', '.pagination a', function (e) {
     $('#reward').load(this.href);
 });
 
-$('#form-reward').on('submit', function (e) {
+$('#button-reward').on('click', function (e) {
     e.preventDefault();
 
     $.ajax({
         url: 'index.php?route=customer/customer.addReward&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val(),
         type: 'post',
-        data: $('#form-reward').serialize(),
+        data: $('#tab-reward #input-reward-description, #tab-reward #input-reward-points').serialize(),
         dataType: 'json',
         contentType: 'application/x-www-form-urlencoded',
         beforeSend: function () {

@@ -62,7 +62,7 @@ $('#button-filter').on('click', function () {
         url += '&filter_date_end=' + encodeURIComponent(filter_date_end);
     }
 
-    $('#customer-subscription').load('index.php?route=extension/opencart/report/customer_search.list&user_token={{ user_token }}' + url);
+    $('#customer-subscription').load('index.php?route=extension/opencart/report/customer_subscription.list&user_token={{ user_token }}' + url);
 });
 
 $('#input-customer').autocomplete({

@@ -58,6 +58,6 @@ class CustomerSubscription extends \Opencart\System\Engine\Model {
 
 		$query = $this->db->query($sql);
 
-		return (int) $query->row['total'];
+		return (int)$query->row['total'];
 	}
 }

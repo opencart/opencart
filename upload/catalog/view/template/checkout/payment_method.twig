@@ -22,7 +22,8 @@
 </form>
 <br/>
 <div class="mb-2">
-  <label for="input-comment" class="form-label"><strong>{{ text_comments }}</strong></label> <textarea name="comment" rows="3" id="input-comment" class="form-control">{{ comment }}</textarea>
+  <label for="input-comment" class="form-label"><strong>{{ text_comments }}</strong></label>
+    <textarea name="comment" rows="3" id="input-comment" class="form-control">{{ comment }}</textarea>
 </div>
 {% if text_agree %}
   <div class="mb-2">
@@ -121,40 +122,56 @@ $('#input-payment-method').on('change', function () {
 });
 
 // Comment
-$('#input-comment').on('focusout', function () {
-    var element = this;
+var timer = '';
 
-    chain.attach(function () {
-        return $.ajax({
-            url: 'index.php?route=checkout/payment_method.comment&language={{ language }}',
-            type: 'post',
-            data: $('#input-comment').serialize(),
-            dataType: 'json',
-            contentType: 'application/x-www-form-urlencoded',
-            beforeSend: function () {
-                $(element).prop('disabled', true);
-            },
-            complete: function () {
-                $(element).prop('disabled', false);
-            },
-            success: function (json) {
-                if (json['redirect']) {
-                    location = json['redirect'];
-                }
+$('#input-comment').on('keydown', function () {
+    var button = $('#button-confirm').prop('disabled');
 
-                if (json['error']) {
-                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-                }
+    // Request
+    clearTimeout(timer);
 
-                if (json['success']) {
-                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+    timer = setTimeout(function (object) {
+        chain.attach(function () {
+            return $.ajax({
+                url: 'index.php?route=checkout/payment_method.comment&language={{ language }}',
+                type: 'post',
+                data: $('#input-comment').serialize(),
+                dataType: 'json',
+                contentType: 'application/x-www-form-urlencoded',
+                beforeSend: function () {
+                    $('#button-confirm').prop('disabled', true);
+                },
+                complete: function () {
+                    $('#button-confirm').prop('disabled', button);
+                },
+                success: function (json) {
+                    $('.alert-dismissible').remove();
+
+                    if (json['redirect']) {
+                        location = json['redirect'];
+                    }
+
+                    if (json['error']) {
+                        $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    }
+
+                    if (json['success']) {
+                        $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    }
+
+                    window.setTimeout(function () {
+                        $('.alert-dismissible').fadeTo(1000, 0, function () {
+                            $(this).remove();
+                        });
+                    }, 3000);
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
                 }
-            },
-            error: function (xhr, ajaxOptions, thrownError) {
-                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-            }
+            });
         });
-    });
+
+    }, 500, this);
 });
 
 /* Agree to Terms */

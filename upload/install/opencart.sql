@@ -919,7 +919,7 @@ INSERT INTO `oc_extension` (`extension_id`, `extension`, `type`, `code`) VALUES
 (40, 'opencart', 'report', 'customer_order'),
 (41, 'opencart', 'report', 'customer_reward'),
 (42, 'opencart', 'currency', 'ecb'),
-(43, 'opencart', 'report', 'marketing');
+(43, 'opencart', 'report', 'marketing'),
 (44, 'opencart', 'report', 'customer_subscription');
 
 -----------------------------------------------------------

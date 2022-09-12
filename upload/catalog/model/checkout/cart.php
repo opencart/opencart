@@ -115,7 +115,7 @@ class Cart extends \Opencart\System\Engine\Model {
 		return $voucher_data;
 	}
 
-	public function getTotals(array &$totals, array &$taxes, int &$total): void {
+	public function getTotals(array &$totals, array &$taxes, float &$total): void {
 		$sort_order = [];
 
 		$this->load->model('setting/extension');

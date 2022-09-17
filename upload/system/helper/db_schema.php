@@ -3588,11 +3588,6 @@ function db_schema() {
 				'name' => 'setting',
 				'type' => 'text',
 				'not_null' => true
-			],
-			[
-				'name' => 'status',
-				'type' => 'tinyint(1)',
-				'not_null' => true
 			]
 		],
 		'primary' => [

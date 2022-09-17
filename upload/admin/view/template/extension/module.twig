@@ -33,15 +33,17 @@
                   <a href="{{ extension.uninstall }}" data-bs-toggle="tooltip" title="{{ button_uninstall }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></a>
                 {% endif %}</td>
             </tr>
-            {% for module in extension.module %}
-              <tr>
-                <td class="text-start">&nbsp;&nbsp;&nbsp;<i class="fa-solid fa-folder-open"></i>&nbsp;&nbsp;&nbsp;{{ module.name }}</td>
-                <td class="text-start">{{ module.status }}</td>
-                <td class="text-end">
-                  <a href="{{ module.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-outline-primary"><i class="fa-solid fa-pencil"></i></a> <a href="{{ module.delete }}" data-bs-toggle="tooltip" title="{{ button_delete }}" class="btn btn-outline-danger"><i class="fa-regular fa-trash-can"></i></a>
-                </td>
-              </tr>
-            {% endfor %}
+            {% if extension.module %}
+              {% for module in extension.module %}
+                <tr>
+                  <td class="text-start">&nbsp;&nbsp;&nbsp;<i class="fa-solid fa-folder-open"></i>&nbsp;&nbsp;&nbsp;{{ module.name }}</td>
+                  <td class="text-start">{{ module.status }}</td>
+                  <td class="text-end">
+                    <a href="{{ module.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-outline-primary"><i class="fa-solid fa-pencil"></i></a> <a href="{{ module.delete }}" data-bs-toggle="tooltip" title="{{ button_delete }}" class="btn btn-outline-danger"><i class="fa-regular fa-trash-can"></i></a>
+                  </td>
+                </tr>
+              {% endfor %}
+            {% endif %}
           {% endfor %}
         {% else %}
           <tr>

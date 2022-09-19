@@ -476,8 +476,6 @@ class Register extends \Opencart\System\Engine\Controller {
 				if (!$customer_group_info['approval']) {
 					$this->session->data['payment_address'] = $payment_address_data;
 				}
-
-				unset($this->session->data['payment_methods']);
 			}
 
 			// Shipping Address
@@ -566,8 +564,6 @@ class Register extends \Opencart\System\Engine\Controller {
 
 					// Remove the address id so if the customer changes their mind and requires changing a different shipping address it will create a new address.
 					$this->session->data['shipping_address']['address_id'] = 0;
-
-					unset($this->session->data['shipping_methods']);
 				}
 			}
 
@@ -589,6 +585,9 @@ class Register extends \Opencart\System\Engine\Controller {
 				// If account needs approval we redirect to the account success / requires approval page.
 				$json['redirect'] = $this->url->link('account/success', 'language=' . $this->config->get('config_language'), true);
 			}
+
+			unset($this->session->data['shipping_methods']);
+			unset($this->session->data['payment_methods']);
 
 			// Clear any previous login attempts for unregistered accounts.
 			$this->model_account_customer->deleteLoginAttempts($this->request->post['email']);

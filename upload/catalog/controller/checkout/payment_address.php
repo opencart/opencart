@@ -212,6 +212,7 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 
 			$json['success'] = $this->language->get('text_success');
 
+			unset($this->session->data['shipping_methods']);
 			unset($this->session->data['payment_methods']);
 		}
 
@@ -275,6 +276,7 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 
 			$json['success'] = $this->language->get('text_success');
 
+			unset($this->session->data['shipping_methods']);
 			unset($this->session->data['payment_methods']);
 		}
 

@@ -18,6 +18,8 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			if (isset($this->session->data['payment_address'])) {
 				$payment_address = $this->session->data['payment_address'];
+			} elseif ($this->config->get('config_checkout_shipping_address') && isset($this->session->data['shipping_address'])) {
+				$payment_address = $this->session->data['shipping_address'];
 			} else {
 				$payment_address = [
 					'address_id'     => 0,

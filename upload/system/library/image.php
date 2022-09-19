@@ -45,6 +45,8 @@ class Image {
 				$this->image = imagecreatefromgif($file);
 			} elseif ($this->mime == 'image/png') {
 				$this->image = imagecreatefrompng($file);
+
+				imageinterlace($this->image, false);
 			} elseif ($this->mime == 'image/jpeg') {
 				$this->image = imagecreatefromjpeg($file);
 			} elseif ($this->mime == 'image/webp') {

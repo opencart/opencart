@@ -24,6 +24,7 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		// Validate if customer session data is set
 		if (!isset($this->session->data['customer'])) {
 			$status = false;
 		}

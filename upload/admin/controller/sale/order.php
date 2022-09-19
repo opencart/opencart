@@ -1289,7 +1289,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$data['stylesheet'] = 'view/stylesheet/stylesheet.css';
 
 		// Hard coding scripts so they can be replaced via the events system.
-		$data['jquery'] = 'view/javascript/jquery/jquery-3.6.0.min.js';
+		$data['jquery'] = 'view/javascript/jquery/jquery-3.6.1.min.js';
 		$data['bootstrap_js'] = 'view/javascript/bootstrap/js/bootstrap.bundle.min.js';
 
 		$this->load->model('sale/order');
@@ -1398,12 +1398,12 @@ class Order extends \Opencart\System\Engine\Controller {
 				];
 
 				$shipping_address = str_replace(["\r\n", "\r", "\n"], '<br/>', preg_replace(["/\s\s+/", "/\r\r+/", "/\n\n+/"], '<br/>', trim(str_replace($find, $replace, $format))));
-				
+
 				// Subscription
 				$filter_data = [
 					'order_id'	=> $order_id
 				];
-					
+
 				$subscriptions = $this->model_sale_subscription->getSubscriptions($filter_data);
 
 				$product_data = [];
@@ -1433,10 +1433,10 @@ class Order extends \Opencart\System\Engine\Controller {
 							'value' => $value
 						];
 					}
-					
+
 					// Subscription
 					$subscription_data = '';
-						
+
 					foreach ($subscriptions as $subscription) {
 						$filter_data = array(
 							'filter_subscription_id'	=> $subscription['subscription_id'],
@@ -1601,12 +1601,12 @@ class Order extends \Opencart\System\Engine\Controller {
 				];
 
 				$shipping_address = str_replace(["\r\n", "\r", "\n"], '<br/>', preg_replace(["/\s\s+/", "/\r\r+/", "/\n\n+/"], '<br/>', trim(str_replace($find, $replace, $format))));
-				
+
 				// Subscription
 				$filter_data = [
 					'order_id'	=> $order_id
 				];
-					
+
 				$subscriptions = $this->model_sale_subscription->getSubscriptions($filter_data);
 
 				$product_data = [];
@@ -1651,10 +1651,10 @@ class Order extends \Opencart\System\Engine\Controller {
 								}
 							}
 						}
-						
+
 						// Subscription
 						$subscription_data = '';
-							
+
 						foreach ($subscriptions as $subscription) {
 							$filter_data = array(
 								'filter_subscription_id'	=> $subscription['subscription_id'],

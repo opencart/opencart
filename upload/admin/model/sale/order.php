@@ -468,7 +468,7 @@ class Order extends \Opencart\System\Engine\Model {
 	}
 
 	public function getRewardTotal(int $order_id): int {
-		$query = $this->db->query("SELECT SUM(reward * quantity) AS `total` FROM `" . DB_PREFIX . "order_product` WHERE `order_id` = '" . (int)$order_id . "'");
+		$query = $this->db->query("SELECT SUM(reward) AS `total` FROM `" . DB_PREFIX . "order_product` WHERE `order_id` = '" . (int)$order_id . "'");
 
 		return (int)$query->row['total'];
 	}

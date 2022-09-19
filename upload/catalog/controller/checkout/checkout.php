@@ -45,7 +45,7 @@ class Checkout extends \Opencart\System\Engine\Controller {
 			$data['register'] = '';
 		}
 
-		if ($this->customer->isLogged() && $this->config->get('config_checkout_address')) {
+		if ($this->customer->isLogged() && $this->config->get('config_checkout_payment_address')) {
 			$data['payment_address'] = $this->load->controller('checkout/payment_address');
 		} else {
 			$data['payment_address'] = '';

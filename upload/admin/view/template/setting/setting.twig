@@ -618,16 +618,29 @@
                           <div class="form-text">{{ help_checkout_guest }}</div>
                         </div>
                       </div>
+
                       <div class="row mb-3">
-                        <label class="col-sm-2 col-form-label">{{ entry_checkout_address }}</label>
+                        <label class="col-sm-2 col-form-label">{{ entry_checkout_payment_address }}</label>
                         <div class="col-sm-10">
                           <div class="form-check form-switch form-switch-lg">
-                            <input type="hidden" name="config_checkout_address" value="0"/>
-                            <input type="checkbox" name="config_checkout_address" value="1" id="input-checkout-address" class="form-check-input"{% if config_checkout_address %} checked{% endif %}/>
+                            <input type="hidden" name="config_checkout_payment_address" value="0"/>
+                            <input type="checkbox" name="config_checkout_payment_address" value="1" id="input-checkout-payment-address" class="form-check-input"{% if config_checkout_payment_address %} checked{% endif %}/>
                           </div>
-                          <div class="form-text">{{ help_checkout_address }}</div>
+                          <div class="form-text">{{ help_checkout_payment_address }}</div>
                         </div>
                       </div>
+
+                      <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label">{{ entry_checkout_shipping_address }}</label>
+                        <div class="col-sm-10">
+                          <div class="form-check form-switch form-switch-lg">
+                            <input type="hidden" name="config_checkout_shipping_address" value="0"/>
+                            <input type="checkbox" name="config_checkout_shipping_address" value="1" id="input-checkout-shipping-address" class="form-check-input"{% if config_checkout_shipping_address %} checked{% endif %}/>
+                          </div>
+                          <div class="form-text">{{ help_checkout_shipping_address }}</div>
+                        </div>
+                      </div>
+
                       <div class="row mb-3">
                         <label for="input-checkout" class="col-sm-2 col-form-label">{{ entry_checkout }}</label>
                         <div class="col-sm-10">

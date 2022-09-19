@@ -30,7 +30,7 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 		}
 
 		// Validate if payment address is set if required in settings
-		if ($this->config->get('config_checkout_address') && !isset($this->session->data['payment_address'])) {
+		if ($this->config->get('config_checkout_payment_address') && !isset($this->session->data['payment_address'])) {
 			$status = false;
 		}
 
@@ -84,7 +84,7 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 
 		foreach ($products as $product) {
 			if (!$product['minimum']) {
-				$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
+				$status = false;
 
 				break;
 			}
@@ -96,7 +96,7 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 		}
 
 		// Validate if payment address is set if required in settings
-		if ($this->config->get('config_checkout_address') && !isset($this->session->data['payment_address'])) {
+		if ($this->config->get('config_checkout_payment_address') && !isset($this->session->data['payment_address'])) {
 			$status = false;
 		}
 
@@ -152,7 +152,7 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 		}
 
 		// Validate if payment address is set if required in settings
-		if ($this->config->get('config_checkout_address') && !isset($this->session->data['payment_address'])) {
+		if ($this->config->get('config_checkout_payment_address') && !isset($this->session->data['payment_address'])) {
 			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
 		}
 

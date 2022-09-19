@@ -41,7 +41,7 @@ class Confirm extends \Opencart\System\Engine\Controller {
 		}
 
 		// Validate if payment address has been set.
-		if ($this->config->get('config_checkout_address') && !isset($this->session->data['payment_address'])) {
+		if ($this->config->get('config_checkout_payment_address') && !isset($this->session->data['payment_address'])) {
 			$status = false;
 		}
 
@@ -98,7 +98,7 @@ class Confirm extends \Opencart\System\Engine\Controller {
 			$order_data['custom_field'] = $this->session->data['customer']['custom_field'];
 
 			// Payment Details
-			if ($this->config->get('config_checkout_address')) {
+			if ($this->config->get('config_checkout_payment_address')) {
 				$order_data['payment_firstname'] = $this->session->data['payment_address']['firstname'];
 				$order_data['payment_lastname'] = $this->session->data['payment_address']['lastname'];
 				$order_data['payment_company'] = $this->session->data['payment_address']['company'];

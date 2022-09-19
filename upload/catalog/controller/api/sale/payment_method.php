@@ -11,7 +11,7 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 		}
 
 		// Payment Address
-		if ($this->config->get('config_checkout_address') && !isset($this->session->data['payment_address'])) {
+		if ($this->config->get('config_checkout_payment_address') && !isset($this->session->data['payment_address'])) {
 			$json['error'] = $this->language->get('error_payment_address');
 		}
 
@@ -64,7 +64,7 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		// Payment Address
-		if ($this->config->get('config_checkout_address') && !isset($this->session->data['payment_address'])) {
+		if ($this->config->get('config_checkout_payment_address') && !isset($this->session->data['payment_address'])) {
 			$json['error'] = $this->language->get('error_payment_address');
 		}
 

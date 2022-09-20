@@ -4,8 +4,6 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 	public function index(): string {
 		$this->load->language('checkout/payment_method');
 
-		$data['language'] = $this->config->get('config_language');
-
 		$status = true;
 
 		// Validate cart has products and has stock.
@@ -90,6 +88,8 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['agree'] = '';
 		}
+
+		$data['language'] = $this->config->get('config_language');
 
 		return $this->load->view('checkout/payment_method', $data);
 	}

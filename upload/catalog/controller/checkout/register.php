@@ -17,10 +17,9 @@ class Register extends \Opencart\System\Engine\Controller {
 		$data['config_telephone_display'] = $this->config->get('config_telephone_display');
 		$data['config_telephone_required'] = $this->config->get('config_telephone_required');
 
-		$data['upload'] = $this->url->link('tool/upload', 'language=' . $this->config->get('config_language'));
-
-		$data['language'] = $this->config->get('config_language');
 		$data['shipping_required'] = $this->cart->hasShipping();
+
+		$data['upload'] = $this->url->link('tool/upload.upload', 'language=' . $this->config->get('config_language'));
 
 		$data['customer_groups'] = [];
 
@@ -135,6 +134,8 @@ class Register extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['text_agree'] = '';
 		}
+
+		$data['language'] = $this->config->get('config_language');
 
 		return $this->load->view('checkout/register', $data);
 	}

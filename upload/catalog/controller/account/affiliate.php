@@ -35,7 +35,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		];
 
 		$data['save'] = $this->url->link('account/affiliate.save', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']);
-		$data['upload'] = $this->url->link('tool/upload', 'language=' . $this->config->get('config_language'));
+		$data['upload'] = $this->url->link('tool/upload.upload', 'language=' . $this->config->get('config_language'));
 
 		$this->load->model('account/affiliate');
 
@@ -141,6 +141,8 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		}
 
 		$data['back'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']);
+
+		$data['language'] = $this->config->get('config_language');
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');

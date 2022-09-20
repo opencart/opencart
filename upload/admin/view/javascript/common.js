@@ -295,7 +295,7 @@ $(document).on('click', '[data-oc-toggle=\'upload\']', function () {
                 clearInterval(timer);
 
                 $.ajax({
-                    url: 'index.php?route=tool/upload.upload&user_token=' + getURLVar('user_token'),
+                    url: $(element).attr('data-oc-url'),
                     type: 'post',
                     data: new FormData($('#form-upload')[0]),
                     dataType: 'json',

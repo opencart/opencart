@@ -4,8 +4,6 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 	public function index(): string {
 		$this->load->language('checkout/shipping_method');
 
-		$data['language'] = $this->config->get('config_language');
-
 		$status = true;
 
 		// Validate cart has products and has stock.
@@ -55,6 +53,8 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['code'] = '';
 		}
+
+		$data['language'] = $this->config->get('config_language');
 
 		return $this->load->view('checkout/shipping_method', $data);
 	}

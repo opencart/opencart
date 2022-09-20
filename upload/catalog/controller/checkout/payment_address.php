@@ -9,9 +9,8 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 
 		$data['config_file_max_size'] = ((int)$this->config->get('config_file_max_size') * 1024 * 1024);
 
-		$data['upload'] = $this->url->link('tool/upload', 'language=' . $this->config->get('config_language'));
+		$data['upload'] = $this->url->link('tool/upload.upload', 'language=' . $this->config->get('config_language'));
 
-		$data['language'] = $this->config->get('config_language');
 		$data['shipping_required'] = $this->cart->hasShipping();
 
 		// Set payment address
@@ -49,6 +48,8 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 				$data['custom_fields'][] = $custom_field;
 			}
 		}
+
+		$data['language'] = $this->config->get('config_language');
 
 		return $this->load->view('checkout/payment_address', $data);
 	}

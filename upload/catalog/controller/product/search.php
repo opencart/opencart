@@ -431,7 +431,6 @@ class Search extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$data['language'] = $this->config->get('config_language');
 		$data['search'] = $search;
 		$data['description'] = $description;
 		$data['category_id'] = $category_id;
@@ -440,6 +439,8 @@ class Search extends \Opencart\System\Engine\Controller {
 		$data['sort'] = $sort;
 		$data['order'] = $order;
 		$data['limit'] = $limit;
+
+		$data['language'] = $this->config->get('config_language');
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');

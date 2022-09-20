@@ -22,8 +22,6 @@ class Tracking extends \Opencart\System\Engine\Controller {
 
 		$this->load->language('account/tracking');
 
-		$data['language'] = $this->config->get('config_language');
-
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$data['breadcrumbs'] = [];
@@ -50,6 +48,8 @@ class Tracking extends \Opencart\System\Engine\Controller {
 		$data['continue'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']);
 
 		$data['customer_token'] = $this->session->data['customer_token'];
+
+		$data['language'] = $this->config->get('config_language');
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');

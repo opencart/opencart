@@ -37,7 +37,7 @@ class Edit extends \Opencart\System\Engine\Controller {
 		$data['config_telephone_required'] = $this->config->get('config_telephone_required');
 
 		$data['save'] = $this->url->link('account/edit.save', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']);
-		$data['upload'] = $this->url->link('tool/upload', 'language=' . $this->config->get('config_language'));
+		$data['upload'] = $this->url->link('tool/upload.upload', 'language=' . $this->config->get('config_language'));
 
 		$this->load->model('account/customer');
 
@@ -68,6 +68,8 @@ class Edit extends \Opencart\System\Engine\Controller {
 		}
 
 		$data['back'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']);
+
+		$data['language'] = $this->config->get('config_language');
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');

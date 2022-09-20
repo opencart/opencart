@@ -234,6 +234,8 @@ class Product extends \Opencart\System\Engine\Controller {
 
 			$data['config_file_max_size'] = ((int)$this->config->get('config_file_max_size') * 1024 * 1024);
 
+			$data['upload'] = $this->url->link('tool/upload.upload', 'language=' . $this->config->get('config_language'));
+
 			$data['product_id'] = (int)$this->request->get['product_id'];
 			$data['manufacturer'] = $product_info['manufacturer'];
 			$data['manufacturers'] = $this->url->link('product/manufacturer.info', 'language=' . $this->config->get('config_language') . '&manufacturer_id=' . $product_info['manufacturer_id']);
@@ -257,9 +259,6 @@ class Product extends \Opencart\System\Engine\Controller {
 
 			$data['add_to_wishlist'] = $this->url->link('account/wishlist.add', 'language=' . $this->config->get('config_language'));
 			$data['add_to_compare'] = $this->url->link('product/compare.add', 'language=' . $this->config->get('config_language'));
-			$data['upload'] = $this->url->link('tool/upload', 'language=' . $this->config->get('config_language'));
-
-			$data['language'] = $this->config->get('config_language');
 
 			$this->load->model('tool/image');
 
@@ -477,6 +476,8 @@ class Product extends \Opencart\System\Engine\Controller {
 			if ($this->config->get('config_product_report_status')) {
 				$this->model_catalog_product->addReport($this->request->get['product_id'], $this->request->server['REMOTE_ADDR']);
 			}
+
+			$data['language'] = $this->config->get('config_language');
 
 			$data['column_left'] = $this->load->controller('common/column_left');
 			$data['column_right'] = $this->load->controller('common/column_right');

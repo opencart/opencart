@@ -45,13 +45,18 @@ class ControllerMarketplaceExtension extends Controller {
 					'text' => $this->language->get('extension')->get('heading_title') . ' (' . count($files) .')',
 					'href' => $this->url->link('extension/extension/' . $extension, 'user_token=' . $this->session->data['user_token'], true)
 				);
-			}			
+			}
 		}
-		
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('marketplace/extension', $data));
+	}
+
+	public function refreshMenu() {
+		$output = $this->load->controller('common/column_left');
+		$this->response->setOutput($output);
 	}
 }

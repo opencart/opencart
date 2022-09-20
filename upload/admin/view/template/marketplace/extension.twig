@@ -103,7 +103,22 @@ $('#extension').on('click', '.btn-danger, .btn-warning', function(e) {
 				$(element).button('reset');
 			},
 			success: function(html) {
-				$('#extension').html(html);
+				// refresh menu and extension list
+				$.ajax({
+					url: 'index.php?route=marketplace/extension/refreshMenu&user_token={{ user_token }}',
+					dataType: 'html',
+					success: function(html) {
+						if (html) {
+							$('#column-left').replaceWith(html);
+						}
+					},
+					complete: function() {
+						$('select[name="type"]').trigger('change');
+					},
+					error: function(xhr, ajaxOptions, thrownError) {
+						alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+					}
+				});
 			},
 			error: function(xhr, ajaxOptions, thrownError) {
 				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);

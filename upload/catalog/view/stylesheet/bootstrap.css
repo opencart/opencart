@@ -55,7 +55,7 @@
   --bs-body-font-family: var(--bs-font-sans-serif);
   --bs-body-font-size: 0.8125rem;
   --bs-body-font-weight: 400;
-  --bs-body-line-height: 1.4;
+  --bs-body-line-height: 1.8;
   --bs-body-color: #212529;
   --bs-body-bg: #fff;
   --bs-border-width: 1px;
@@ -1696,7 +1696,7 @@ progress {
   padding-bottom: calc(0.35rem + 1px);
   margin-bottom: 0;
   font-size: inherit;
-  line-height: 1.4;
+  line-height: 1.8;
 }
 .col-form-label-lg {
   padding-top: calc(0.5rem + 1px);
@@ -1719,7 +1719,7 @@ progress {
   padding: 0.35rem 0.75rem;
   font-size: 0.8125rem;
   font-weight: 400;
-  line-height: 1.4;
+  line-height: 1.8;
   color: #212529;
   background-color: #fff;
   background-clip: padding-box;
@@ -1747,7 +1747,7 @@ progress {
   box-shadow: 0 0 0 0.25rem rgba(34, 154, 200, 0.25);
 }
 .form-control::-webkit-date-and-time-value {
-  height: 1.4em;
+  height: 1.8em;
 }
 .form-control::placeholder {
   color: #6c757d;
@@ -1784,7 +1784,7 @@ progress {
   width: 100%;
   padding: 0.35rem 0;
   margin-bottom: 0;
-  line-height: 1.4;
+  line-height: 1.8;
   color: #212529;
   background-color: transparent;
   border: solid transparent;
@@ -1798,7 +1798,7 @@ progress {
   padding-left: 0;
 }
 .form-control-sm {
-  min-height: calc(1.4em + 0.5rem + 2px);
+  min-height: calc(1.8em + 0.5rem + 2px);
   padding: 0.25rem 0.5rem;
   font-size: 0.7109375rem;
   border-radius: 0.2rem;
@@ -1809,7 +1809,7 @@ progress {
   margin-inline-end: 0.5rem;
 }
 .form-control-lg {
-  min-height: calc(1.4em + 1rem + 2px);
+  min-height: calc(1.8em + 1rem + 2px);
   padding: 0.5rem 1rem;
   font-size: 1.015625rem;
   border-radius: 0.3rem;
@@ -1820,17 +1820,17 @@ progress {
   margin-inline-end: 1rem;
 }
 textarea.form-control {
-  min-height: calc(1.4em + 0.7rem + 2px);
+  min-height: calc(1.8em + 0.7rem + 2px);
 }
 textarea.form-control-sm {
-  min-height: calc(1.4em + 0.5rem + 2px);
+  min-height: calc(1.8em + 0.5rem + 2px);
 }
 textarea.form-control-lg {
-  min-height: calc(1.4em + 1rem + 2px);
+  min-height: calc(1.8em + 1rem + 2px);
 }
 .form-control-color {
   width: 3rem;
-  height: calc(1.4em + 0.7rem + 2px);
+  height: calc(1.8em + 0.7rem + 2px);
   padding: 0.35rem;
 }
 .form-control-color:not(:disabled):not([readonly]) {
@@ -1844,10 +1844,10 @@ textarea.form-control-lg {
   border-radius: 0.25rem;
 }
 .form-control-color.form-control-sm {
-  height: calc(1.4em + 0.5rem + 2px);
+  height: calc(1.8em + 0.5rem + 2px);
 }
 .form-control-color.form-control-lg {
-  height: calc(1.4em + 1rem + 2px);
+  height: calc(1.8em + 1rem + 2px);
 }
 .form-select {
   display: block;
@@ -1856,7 +1856,7 @@ textarea.form-control-lg {
   -moz-padding-start: calc(0.75rem - 3px);
   font-size: 0.8125rem;
   font-weight: 400;
-  line-height: 1.4;
+  line-height: 1.8;
   color: #212529;
   background-color: #fff;
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
@@ -1905,7 +1905,7 @@ textarea.form-control-lg {
 }
 .form-check {
   display: block;
-  min-height: 1.1375rem;
+  min-height: 1.4625rem;
   padding-left: 1.5em;
   margin-bottom: 0.125rem;
 }
@@ -1926,7 +1926,7 @@ textarea.form-control-lg {
 .form-check-input {
   width: 1em;
   height: 1em;
-  margin-top: 0.2em;
+  margin-top: 0.4em;
   vertical-align: top;
   background-color: #fff;
   background-repeat: no-repeat;
@@ -2192,7 +2192,7 @@ textarea.form-control-lg {
   padding: 0.35rem 0.75rem;
   font-size: 0.8125rem;
   font-weight: 400;
-  line-height: 1.4;
+  line-height: 1.8;
   color: #212529;
   text-align: center;
   white-space: nowrap;
@@ -2255,19 +2255,19 @@ textarea.form-control-lg {
 }
 .was-validated .form-control:valid, .form-control.is-valid {
   border-color: #198754;
-  padding-right: calc(1.4em + 0.7rem);
+  padding-right: calc(1.8em + 0.7rem);
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23198754' d='M2.3 6.73.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/%3e%3c/svg%3e");
   background-repeat: no-repeat;
-  background-position: right calc(0.35em + 0.175rem) center;
-  background-size: calc(0.7em + 0.35rem) calc(0.7em + 0.35rem);
+  background-position: right calc(0.45em + 0.175rem) center;
+  background-size: calc(0.9em + 0.35rem) calc(0.9em + 0.35rem);
 }
 .was-validated .form-control:valid:focus, .form-control.is-valid:focus {
   border-color: #198754;
   box-shadow: 0 0 0 0.25rem rgba(25, 135, 84, 0.25);
 }
 .was-validated textarea.form-control:valid, textarea.form-control.is-valid {
-  padding-right: calc(1.4em + 0.7rem);
-  background-position: top calc(0.35em + 0.175rem) right calc(0.35em + 0.175rem);
+  padding-right: calc(1.8em + 0.7rem);
+  background-position: top calc(0.45em + 0.175rem) right calc(0.45em + 0.175rem);
 }
 .was-validated .form-select:valid, .form-select.is-valid {
   border-color: #198754;
@@ -2276,14 +2276,14 @@ textarea.form-control-lg {
   padding-right: 4.125rem;
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e"), url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23198754' d='M2.3 6.73.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/%3e%3c/svg%3e");
   background-position: right 0.75rem center, center right 2.25rem;
-  background-size: 16px 12px, calc(0.7em + 0.35rem) calc(0.7em + 0.35rem);
+  background-size: 16px 12px, calc(0.9em + 0.35rem) calc(0.9em + 0.35rem);
 }
 .was-validated .form-select:valid:focus, .form-select.is-valid:focus {
   border-color: #198754;
   box-shadow: 0 0 0 0.25rem rgba(25, 135, 84, 0.25);
 }
 .was-validated .form-control-color:valid, .form-control-color.is-valid {
-  width: calc(3rem + calc(1.4em + 0.7rem));
+  width: calc(3rem + calc(1.8em + 0.7rem));
 }
 .was-validated .form-check-input:valid, .form-check-input.is-valid {
   border-color: #198754;
@@ -2328,19 +2328,19 @@ textarea.form-control-lg {
 }
 .was-validated .form-control:invalid, .form-control.is-invalid {
   border-color: #da4f49;
-  padding-right: calc(1.4em + 0.7rem);
+  padding-right: calc(1.8em + 0.7rem);
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23da4f49'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23da4f49' stroke='none'/%3e%3c/svg%3e");
   background-repeat: no-repeat;
-  background-position: right calc(0.35em + 0.175rem) center;
-  background-size: calc(0.7em + 0.35rem) calc(0.7em + 0.35rem);
+  background-position: right calc(0.45em + 0.175rem) center;
+  background-size: calc(0.9em + 0.35rem) calc(0.9em + 0.35rem);
 }
 .was-validated .form-control:invalid:focus, .form-control.is-invalid:focus {
   border-color: #da4f49;
   box-shadow: 0 0 0 0.25rem rgba(218, 79, 73, 0.25);
 }
 .was-validated textarea.form-control:invalid, textarea.form-control.is-invalid {
-  padding-right: calc(1.4em + 0.7rem);
-  background-position: top calc(0.35em + 0.175rem) right calc(0.35em + 0.175rem);
+  padding-right: calc(1.8em + 0.7rem);
+  background-position: top calc(0.45em + 0.175rem) right calc(0.45em + 0.175rem);
 }
 .was-validated .form-select:invalid, .form-select.is-invalid {
   border-color: #da4f49;
@@ -2349,14 +2349,14 @@ textarea.form-control-lg {
   padding-right: 4.125rem;
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e"), url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23da4f49'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23da4f49' stroke='none'/%3e%3c/svg%3e");
   background-position: right 0.75rem center, center right 2.25rem;
-  background-size: 16px 12px, calc(0.7em + 0.35rem) calc(0.7em + 0.35rem);
+  background-size: 16px 12px, calc(0.9em + 0.35rem) calc(0.9em + 0.35rem);
 }
 .was-validated .form-select:invalid:focus, .form-select.is-invalid:focus {
   border-color: #da4f49;
   box-shadow: 0 0 0 0.25rem rgba(218, 79, 73, 0.25);
 }
 .was-validated .form-control-color:invalid, .form-control-color.is-invalid {
-  width: calc(3rem + calc(1.4em + 0.7rem));
+  width: calc(3rem + calc(1.8em + 0.7rem));
 }
 .was-validated .form-check-input:invalid, .form-check-input.is-invalid {
   border-color: #da4f49;
@@ -2382,7 +2382,7 @@ textarea.form-control-lg {
   --bs-btn-font-family: ;
   --bs-btn-font-size: 0.8125rem;
   --bs-btn-font-weight: 400;
-  --bs-btn-line-height: 1.4;
+  --bs-btn-line-height: 1.8;
   --bs-btn-color: #212529;
   --bs-btn-bg: transparent;
   --bs-btn-border-width: 1px;
@@ -3192,7 +3192,7 @@ textarea.form-control-lg {
   --bs-navbar-hover-color: rgba(0, 0, 0, 0.7);
   --bs-navbar-disabled-color: rgba(0, 0, 0, 0.3);
   --bs-navbar-active-color: rgba(0, 0, 0, 0.9);
-  --bs-navbar-brand-padding-y: 0.3578125rem;
+  --bs-navbar-brand-padding-y: 0.3171875rem;
   --bs-navbar-brand-margin-end: 1rem;
   --bs-navbar-brand-font-size: 1.015625rem;
   --bs-navbar-brand-color: rgba(0, 0, 0, 0.9);
@@ -4612,7 +4612,7 @@ textarea.form-control-lg {
   --bs-modal-header-padding: 1rem 1rem;
   --bs-modal-header-border-color: var(--bs-border-color);
   --bs-modal-header-border-width: 1px;
-  --bs-modal-title-line-height: 1.4;
+  --bs-modal-title-line-height: 1.8;
   --bs-modal-footer-gap: 0.5rem;
   --bs-modal-footer-bg: ;
   --bs-modal-footer-border-color: var(--bs-border-color);
@@ -4889,7 +4889,7 @@ textarea.form-control-lg {
   font-family: var(--bs-font-sans-serif);
   font-style: normal;
   font-weight: 400;
-  line-height: 1.4;
+  line-height: 1.8;
   text-align: left;
   text-align: start;
   text-decoration: none;
@@ -4993,7 +4993,7 @@ textarea.form-control-lg {
   font-family: var(--bs-font-sans-serif);
   font-style: normal;
   font-weight: 400;
-  line-height: 1.4;
+  line-height: 1.8;
   text-align: left;
   text-align: start;
   text-decoration: none;
@@ -5817,7 +5817,7 @@ textarea.form-control-lg {
 }
 .offcanvas-title {
   margin-bottom: 0;
-  line-height: 1.4;
+  line-height: 1.8;
 }
 .offcanvas-body {
   flex-grow: 1;
@@ -6903,7 +6903,7 @@ textarea.form-control-lg {
   line-height: 1.25 !important;
 }
 .lh-base {
-  line-height: 1.4 !important;
+  line-height: 1.8 !important;
 }
 .lh-lg {
   line-height: 2 !important;
@@ -9673,10 +9673,10 @@ textarea.form-control-lg {
   }
 }
 .input-group-lg > .form-control, .input-group-lg > .form-select, .input-group-lg > .input-group-text, .input-group-lg > .btn {
-  height: calc(1.4em + 1rem + 2px);
+  height: calc(1.8em + 1rem + 2px);
 }
 .input-group-sm > .form-control, .input-group-sm > .form-select, .input-group-sm > .input-group-text, .input-group-sm > .btn {
-  height: calc(1.4em + 0.5rem + 2px);
+  height: calc(1.8em + 0.5rem + 2px);
 }
 .carousel {
   border: 4px solid #fff;

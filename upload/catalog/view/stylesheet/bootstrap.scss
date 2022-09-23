@@ -1,5 +1,4 @@
 // Custom OpenCart variables
-$gray-100:   #e7e7e7;
 $blue:       #229ac8;
 $indigo:     #6610f2;
 $purple:     #6f42c1;
@@ -30,6 +29,8 @@ $border-radius-sm:                   .2rem;
 $border-radius-lg:                   .3rem;
 $border-radius-xl:                   .3rem;
 $border-radius-2xl:                  .3rem;
+$font-size-base:                     .8125rem;
+// $line-height-base:                   1.4;
 $carousel-control-color:             rgba(0, 0, 0, 0.8);
 $carousel-control-width:             30px;
 $carousel-indicator-width:           9px;
@@ -43,6 +44,7 @@ $carousel-indicator-active-opacity:  .9;
 
 
 @import "scss/bootstrap";
+
 
 
 // Custom OpenCart styles
@@ -86,7 +88,6 @@ $carousel-indicator-active-opacity:  .9;
   opacity: 0;
   right: -20px;
 }
-
 .carousel:hover .carousel-control-prev {
   opacity: 0.7;
   left: 0px;

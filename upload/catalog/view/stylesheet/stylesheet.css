@@ -204,13 +204,10 @@ footer a {
 #header-cart {
   margin-bottom: 10px;
 }
-#header-cart > .btn {
-  font-size: 12px;
-  line-height: 18px;
-  color: #FFF;
-}
 #header-cart .btn-lg {
-  padding: 0.65rem 1rem;
+  color: #FFF;
+  height: 40px;
+  padding: 0 1rem;
 }
 #header-cart .btn:hover {
   color: #FFF;

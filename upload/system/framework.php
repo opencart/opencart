@@ -104,6 +104,7 @@ $registry->set('load', $loader);
 $request = new \Opencart\System\Library\Request();
 $registry->set('request', $request);
 
+// Compatibility
 if (isset($request->get['route'])) {
 	$request->get['route'] = str_replace('|', '.', $request->get['route']);
 	$request->get['route'] = str_replace('%7C', '|', (string)$request->get['route']);
@@ -132,7 +133,7 @@ if ($config->get('db_autostart')) {
 	$registry->set('db', $db);
 
 	// Sync PHP and DB time zones
-	$db->query("SET time_zone = '" . $db->escape(date('P')) . "'");
+	$db->query("SET `time_zone` = '" . $db->escape(date('P')) . "'");
 }
 
 // Session
@@ -217,17 +218,22 @@ if (!$action) {
 	}
 }
 
+$args = [];
+$output = '';
+
 // Dispatch
 while ($action) {
 	// Get the route path of the object to be executed.
 	$route = $action->getId();
-	$args = [];
-	$output = '';
 
 	// Keep the original trigger.
-	$trigger = $action->getId();
+	$trigger = $route;
 
-	$event->trigger('controller/' . $trigger . '/before', [&$route, &$args]);
+	$result = $event->trigger('controller/' . $trigger . '/before', [&$route, &$args]);
+
+	if ($result instanceof \Opencart\System\Engine\Action) {
+		$action = $result;
+	}
 
 	// Execute the action.
 	$result = $action->execute($registry, $args);
@@ -246,14 +252,17 @@ while ($action) {
 		$error = '';
 	}
 
-	$event->trigger('controller/' . $trigger . '/after', [&$route, &$args, &$output]);
+	// If not an object then it's the output
+	if (!$action) {
+		$output = $result;
+	}
+
+	$result = $event->trigger('controller/' . $trigger . '/after', [&$route, &$args, &$output]);
+
+	if ($result instanceof \Opencart\System\Engine\Action) {
+		$action = $result;
+	}
 }
 
 // Output
 $response->output();
-
-// Post Actions
-foreach ($config->get('action_post_action') as $post_action) {
-	$post_action = new \Opencart\System\Engine\Action($post_action);
-	$post_action->execute($registry);
-}

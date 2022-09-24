@@ -185,7 +185,12 @@ $registry->set('document', new \Opencart\System\Library\Document());
 // Action error object to execute if any other actions can not be executed.
 $error = new \Opencart\System\Engine\Action($config->get('action_error'));
 
-$action = '';
+// Route
+if (!empty($request->get['route'])) {
+	$action = new \Opencart\System\Engine\Action((string)$request->get['route']);
+} else {
+	$action = new \Opencart\System\Engine\Action($config->get('action_default'));
+}
 
 // Pre Actions
 foreach ($config->get('action_pre_action') as $pre_action) {
@@ -204,17 +209,8 @@ foreach ($config->get('action_pre_action') as $pre_action) {
 		$action = $error;
 
 		$error = '';
-		
-		break;
-	}
-}
 
-// Route
-if (!$action) {
-	if (!empty($request->get['route'])) {
-		$action = new \Opencart\System\Engine\Action((string)$request->get['route']);
-	} else {
-		$action = new \Opencart\System\Engine\Action($config->get('action_default'));
+		break;
 	}
 }
 
@@ -223,7 +219,7 @@ $output = '';
 
 // Dispatch
 while ($action) {
-	// Get the route path of the object to be executed.
+	// Route needs to be updated each time so it can trigger events
 	$route = $action->getId();
 
 	// Keep the original trigger.

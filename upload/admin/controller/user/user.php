@@ -450,7 +450,7 @@ class User extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->model_user_user->deleteLogin($user_login_id);
 
-			// If current token in use then log user out.
+			// If the token is still present, then we enforce the user to log out automatically.
 			if ($login_info['token'] == $token) {
 				$this->session->data['success'] = $this->language->get('text_success');
 

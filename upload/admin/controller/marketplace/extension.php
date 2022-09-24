@@ -33,7 +33,11 @@ class ControllerMarketplaceExtension extends Controller {
 		
 		foreach ($files as $file) {
 			$extension = basename($file, '.php');
-			
+
+			if ($extension=='promotion') {
+				continue;
+			}
+
 			// Compatibility code for old extension folders
 			$this->load->language('extension/extension/' . $extension, 'extension');
 		

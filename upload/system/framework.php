@@ -182,7 +182,7 @@ $registry->set('url', new \Opencart\System\Library\Url($config->get('site_url'))
 // Document
 $registry->set('document', new \Opencart\System\Library\Document());
 
-// Action error object to execute if any other actions can not be executed.
+// Action error object to execute if any other actions cannot be executed.
 $error = new \Opencart\System\Engine\Action($config->get('action_error'));
 
 // Route
@@ -204,7 +204,7 @@ foreach ($config->get('action_pre_action') as $pre_action) {
 		break;
 	}
 
-	// If action can not be executed then we return an action error object.
+	// If action cannot be executed, we return an action error object.
 	if ($result instanceof \Exception) {
 		$action = $error;
 
@@ -240,7 +240,7 @@ while ($action) {
 		$action = $result;
 	}
 
-	// If action can not be executed then we return the action error object.
+	// If action cannot be executed, we return the action error object.
 	if ($result instanceof \Exception) {
 		$action = $error;
 
@@ -248,7 +248,7 @@ while ($action) {
 		$error = '';
 	}
 
-	// If not an object then it's the output
+	// If not an object, then it's the output
 	if (!$action) {
 		$output = $result;
 	}

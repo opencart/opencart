@@ -16,9 +16,9 @@ class Twig {
 		// Unfortunately we have to set the web root directory as the base since Twig confuses which template cache to use.
 		$this->root = substr(DIR_OPENCART, 0, -1);
 
-		// We have to add the C directory as the base directory because twig can only accept the fist namespace/
-		// rather than a multiple namespace system which took me less than a minute to write. If symphony is like
-		// this then I have nopt idea why people use the framework.
+		// We have to add the C directory as the base directory because twig can only accept the first namespace/,
+		// rather than a multiple namespace system, which took me less than a minute to write. If symphony is like
+		// this, then I have no idea why people use the framework.
 		$this->loader = new \Twig\Loader\FilesystemLoader('/', $this->root);
 	}
 

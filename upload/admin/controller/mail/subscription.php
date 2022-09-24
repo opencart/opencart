@@ -30,12 +30,12 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		$subscription_info = $this->model_checkout_subscription->getSubscription($subscription_id);
 
 		if ($subscription_info) {
-			// If order status is 0 then becomes greater than 0 send main html email
+			// If the order status returns 0, then it becomes greater than 0. Therefore, we send the default html email
 			if (!$subscription_info['subscription_status_id'] && $subscription_status_id) {
 				$this->add($subscription_info, $subscription_status_id, $comment, $notify);
 			}
 
-			// If order status is not 0 then send update text email
+			// If the order status does not return 0, we send the update text email
 			if ($subscription_info['subscription_status_id'] && $subscription_status_id && $notify) {
 				$this->edit($subscription_info, $subscription_status_id, $comment, $notify);
 			}

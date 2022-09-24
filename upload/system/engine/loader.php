@@ -65,32 +65,50 @@ class Loader {
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_|\/\.]/', '', $route);
 
+		$output = '';
+
 		// Keep the original trigger
-		$trigger = $route;
+		$action = new \Opencart\System\Engine\Action($route);
 
-		// Trigger the pre events
-		$result = $this->event->trigger('controller/' . $trigger . '/before', [&$route, &$args]);
+		while ($action) {
+			$route = $action->getId();
 
-		// Make sure it's only the last event that returns an output if required.
-		if ($result != null && !$result instanceof \Exception) {
-			$output = $result;
-		} else {
-			$action = new \Opencart\System\Engine\Action($route);
-			$output = $action->execute($this->registry, $args);
+			$trigger = $route;
+
+			// Trigger the pre events
+			$result = $this->event->trigger('controller/' . $trigger . '/before', [&$route, &$args]);
+
+			if ($result instanceof \Opencart\System\Engine\Action) {
+				$action = $result;
+			}
+
+			// Execute which ever action is still
+			if ($action) {
+				$result = $action->execute($this->registry, $args);
+
+				// Make action a non-object so it's not infinitely looping
+				$action = '';
+
+				// Action object returned then we keep the loop going
+				if ($result instanceof \Opencart\System\Engine\Action) {
+					$action = $result;
+				}
+
+				// If not an object then it's the output
+				if (!$action) {
+					$output = $result;
+				}
+			}
+
+			// Trigger the post events
+			$result = $this->event->trigger('controller/' . $trigger . '/after', [&$route, &$args, &$output]);
+
+			if ($result instanceof \Opencart\System\Engine\Action) {
+				$action = $result;
+			}
 		}
 
-		// Trigger the post events
-		$result = $this->event->trigger('controller/' . $trigger . '/after', [&$route, &$args, &$output]);
-
-		if ($result && !$result instanceof \Exception) {
-			$output = $result;
-		}
-
-		if (!$output instanceof \Exception) {
-			return $output;
-		}
-
-		return '';
+		return $output;
 	}
 	
 	/**

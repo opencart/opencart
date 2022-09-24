@@ -82,22 +82,20 @@ class Loader {
 				$action = $result;
 			}
 
-			// Execute which ever action is still
-			if ($action) {
-				$result = $action->execute($this->registry, $args);
+			// Execute action
+			$result = $action->execute($this->registry, $args);
 
-				// Make action a non-object so it's not infinitely looping
-				$action = '';
+			// Make action a non-object so it's not infinitely looping
+			$action = '';
 
-				// Action object returned then we keep the loop going
-				if ($result instanceof \Opencart\System\Engine\Action) {
-					$action = $result;
-				}
+			// Action object returned then we keep the loop going
+			if ($result instanceof \Opencart\System\Engine\Action) {
+				$action = $result;
+			}
 
-				// If not an object then it's the output
-				if (!$action) {
-					$output = $result;
-				}
+			// If not an object then it's the output
+			if (!$action) {
+				$output = $result;
 			}
 
 			// Trigger the post events

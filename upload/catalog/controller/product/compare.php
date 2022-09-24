@@ -171,7 +171,7 @@ class Compare extends \Opencart\System\Engine\Controller {
 				unset($this->session->data['compare'][$key]);
 			}
 
-			// If greater than 4 products then remove the first one
+			// If we count a numeric value that is greater than 4 products, we remove the first one
 			if (count($this->session->data['compare']) >= 4) {
 				array_shift($this->session->data['compare']);
 			}

@@ -13,7 +13,7 @@ class Twig {
 	 *
 	 */
 	public function __construct() {
-		// Unfortunately we have to set the web root directory as the base since Twig confuses which template cache to use.
+		// Unfortunately, we have to set the web root directory as the base since Twig confuses which template cache to use.
 		$this->root = substr(DIR_OPENCART, 0, -1);
 
 		// We have to add the C directory as the base directory because twig can only accept the first namespace/,

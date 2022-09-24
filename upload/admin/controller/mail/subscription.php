@@ -35,7 +35,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 				$this->add($subscription_info, $subscription_status_id, $comment, $notify);
 			}
 
-			// If the order status does not return 0, we send the update text email
+			// If the order status does not return 0, we send the update as a text email
 			if ($subscription_info['subscription_status_id'] && $subscription_status_id && $notify) {
 				$this->edit($subscription_info, $subscription_status_id, $comment, $notify);
 			}

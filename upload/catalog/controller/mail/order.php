@@ -31,12 +31,12 @@ class Order extends \Opencart\System\Engine\Controller {
 		$order_info = $this->model_checkout_order->getOrder($order_id);
 
 		if ($order_info) {
-			// If order status is 0 then becomes greater than 0 send main html email
+			// If the order status returns 0, then it becomes greater than 0. Therefore, we send the default html email
 			if (!$order_info['order_status_id'] && $order_status_id) {
 				$this->add($order_info, $order_status_id, $comment, $notify);
 			}
 
-			// If order status is not 0 then send update text email
+			// If the order status does not return 0, we send the update as a text email
 			if ($order_info['order_status_id'] && $order_status_id && $notify) {
 				$this->edit($order_info, $order_status_id, $comment, $notify);
 			}

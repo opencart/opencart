@@ -3,6 +3,15 @@ namespace Opencart\System\Library\DB;
 class MySQLi {
 	private object $connection;
 
+	/**
+	 * __construct
+	 *
+	 * @param    string  $hostname
+	 * @param    string  $username
+	 * @param    string  $password
+	 * @param    string  $database
+	 * @param    string  $port
+	 */
 	public function __construct(string $hostname, string $username, string $password, string $database, string $port = '') {
 		if (!$port) {
 			$port = '3306';
@@ -21,6 +30,13 @@ class MySQLi {
 		}
 	}
 
+	/**
+	 * Query
+	 *
+	 * @param    string  $sql
+	 *
+	 * @return   bool|object
+	 */
 	public function query(string $sql): bool|object {
 		try {
 			$query = $this->connection->query($sql);
@@ -50,18 +66,40 @@ class MySQLi {
 		}
 	}
 
+	/**
+	 * Escape
+	 *
+	 * @param    string  value
+	 *
+	 * @return   string
+	 */
 	public function escape(string $value): string {
 		return $this->connection->real_escape_string($value);
 	}
 	
+	/**
+	 * countAffected
+	 *
+	 * @return   int
+	 */
 	public function countAffected(): int {
 		return $this->connection->affected_rows;
 	}
 
+	/**
+	 * getLastId
+	 *
+	 * @return   int
+	 */
 	public function getLastId(): int {
 		return $this->connection->insert_id;
 	}
 	
+	/**
+	 * isConnected
+	 *
+	 * @return   bool
+	 */
 	public function isConnected(): bool {
 		if ($this->connection) {
 			return $this->connection->ping();

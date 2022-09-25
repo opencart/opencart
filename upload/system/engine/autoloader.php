@@ -4,7 +4,7 @@ class Autoloader {
 	private array $path = [];
 
 	/**
-	 * __construct
+	 * Constructor
 	 */
 	public function __construct() {
 		spl_autoload_register([$this, 'load']);

@@ -4,7 +4,7 @@ class PgSQL {
 	private object $connection;
 
 	/**
-	 * __construct
+	 * Constructor
 	 *
 	 * @param    string  $hostname
 	 * @param    string  $username
@@ -114,7 +114,7 @@ class PgSQL {
 	}
 
 	/**
-	 * __destruct
+	 * Destructor
 	 *
 	 * Closes the DB connection when this object is destroyed.
 	 *

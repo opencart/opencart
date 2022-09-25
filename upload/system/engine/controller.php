@@ -15,7 +15,7 @@ class Controller {
 	protected $registry;
 
 	/**
-	 * __construct
+	 * Constructor
 	 *
 	 * @param    object  $registry
 	 */

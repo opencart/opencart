@@ -4,7 +4,7 @@ class File {
 	private int $expire;
 	
 	/**
-	 * __construct
+	 * Constructor
 	 *
 	 * @param    int  $expire
 	 */

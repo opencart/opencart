@@ -34,7 +34,13 @@ class Proxy {
 	public function __set(string $key, object $value): void {
 		$this->{$key} = $value;
 	}
-
+	
+	/**
+	 * Magic Method Call
+	 *
+	 * @param	string	$method
+	 * @param	array	$args
+	 */
 	public function __call(string $method, array $args): mixed {
 		// Hack for pass-by-reference
 		foreach ($args as $key => &$value);

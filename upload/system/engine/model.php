@@ -18,6 +18,13 @@ class Model {
 		$this->registry = $registry;
 	}
 
+	/**
+     * __get
+     *
+     * @param	string	$key
+	 *
+	 * @return	object
+     */
 	public function __get(string $key): object {
 		if ($this->registry->has($key)) {
 			return $this->registry->get($key);

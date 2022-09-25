@@ -18,6 +18,13 @@ class Controller {
 		$this->registry = $registry;
 	}
 
+	/**
+	 * __get
+	 *
+	 * @param	string	$key
+	 *
+	 * @return object
+	 */	
 	public function __get(string $key): object {
 		if ($this->registry->has($key)) {
 			return $this->registry->get($key);
@@ -26,6 +33,14 @@ class Controller {
 		}
 	}
 
+	/**
+	 * __set
+	 *
+	 * @param	string	$key
+	 * @param	object	$value
+	 *
+	 * @return void
+	 */
 	public function __set(string $key, object $value): void {
 		$this->registry->set($key, $value);
 	}

@@ -33,6 +33,14 @@ class Model {
 		}
 	}
 
+	/**
+     * __set
+     *
+     * @param	string	$key
+	 * @param	string	$value
+	 *
+	 * @return	void
+     */
 	public function __set(string $key, object $value): void {
 		$this->registry->set($key, $value);
 	}

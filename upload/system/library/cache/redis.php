@@ -5,7 +5,7 @@ class Redis {
 	private object $cache;
 
 	/**
-	 * __construct
+	 * Constructor
 	 *
 	 * @param    int  $expire
 	 */

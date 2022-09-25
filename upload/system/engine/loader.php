@@ -16,9 +16,9 @@ class Loader {
 	protected $registry;
 
 	/**
-	 * __construct
+	 * Constructor
 	 *
-	 * @param    object $registry
+	 * @param    object  $registry
 	 */
 	public function __construct(\Opencart\System\Engine\Registry $registry) {
 		$this->registry = $registry;
@@ -45,7 +45,7 @@ class Loader {
 	 * @param    string $key
 	 * @param    object $value
 	 *
-	 * @return    object
+	 * @return    void
 	 */
 	public function __set(string $key, object $value): void {
 		$this->registry->set($key, $value);
@@ -113,6 +113,8 @@ class Loader {
 	 * Model
 	 *
 	 * @param    string $route
+	 *
+	 * @return	 void
 	 */
 	public function model(string $route): void {
 		// Sanitize the call
@@ -145,8 +147,9 @@ class Loader {
 	 *
 	 * Loads the template file and generates the html code.
 	 *
-	 * @param    string $route
-	 * @param    array $data
+	 * @param    string  $route
+	 * @param    array   $data
+	 * @param	 string  $code
 	 *
 	 * @return   string
 	 */
@@ -173,7 +176,8 @@ class Loader {
 	 * Language
 	 *
 	 * @param    string $route
-	 * @param    string $key
+	 * @param    string $prefix
+	 * @param	 string $code
 	 *
 	 * @return    array
 	 */
@@ -199,7 +203,9 @@ class Loader {
 	 * Loads library classes
 	 *
 	 * @param    string $route	The path to the library file.
-	 * @param    string $args	A list of arguments to pass into the library object being created.
+	 * @param    array  $args	A list of arguments to pass into the library object being created.
+	 *
+	 * @return	 object
 	 */
 	public function library(string $route, array &...$args): object {
 		// Sanitize the call
@@ -229,7 +235,9 @@ class Loader {
 	/**
 	 * Helper
 	 *
-	 * @param    string $route
+	 * @param    string  $route
+	 *
+	 * @return	 void
 	 */
 	public function helper(string $route): void {
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', $route);
@@ -254,7 +262,9 @@ class Loader {
 	/**
 	 * Config
 	 *
-	 * @param    string $route
+	 * @param    string  $route
+	 *
+	 * @return	 array
 	 */
 	public function config(string $route): array {
 		// Sanitize the call

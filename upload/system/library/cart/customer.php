@@ -11,7 +11,7 @@ class Customer {
 	private bool $newsletter = false;
 
 	/**
-	 * __construct
+	 * Constructor
 	 *
 	 * @param    object  $registry
 	 */

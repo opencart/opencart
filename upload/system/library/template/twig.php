@@ -27,6 +27,8 @@ class Twig {
 	 *
 	 * @param    string $namespace
 	 * @param    string $directory
+	 *
+	 * @return	 void
 	 */
 	public function addPath(string $namespace, string $directory = ''): void {
 		if (!$directory) {
@@ -43,7 +45,7 @@ class Twig {
 	 * @param	array	$data
 	 * @param	string	$code
 	 *
-	 * @return	array
+	 * @return	string
 	 */
 	public function render(string $filename, array $data = [], string $code = ''): string {
 		$file = $this->directory . $filename . '.twig';

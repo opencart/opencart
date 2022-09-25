@@ -4,7 +4,7 @@ class Weight {
 	private array $weights = [];
 
 	/**
-	 * __construct
+	 * Constructor
 	 *
 	 * @param    object  $registry
 	 */
@@ -71,6 +71,13 @@ class Weight {
 		}
 	}
 
+	/**
+	 * getUnit
+	 *
+	 * @param    int  $weight_class_id
+	 *
+	 * @return   string
+	 */
 	public function getUnit(int $weight_class_id): string {
 		if (isset($this->weights[$weight_class_id])) {
 			return $this->weights[$weight_class_id]['unit'];

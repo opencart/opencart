@@ -7,7 +7,7 @@ class Memcached {
 	const CACHEDUMP_LIMIT = 9999;
 
 	/**
-	 * __construct
+	 * Constructor
 	 *
 	 * @param    int  $expire
 	 */

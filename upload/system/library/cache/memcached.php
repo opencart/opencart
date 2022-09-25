@@ -34,8 +34,7 @@ class Memcached {
 	 *
 	 * @param    string  $key
 	 * @param    array|string|null  $value
-	 *
-	 * @return	 array|string|null
+	 * @param	 int  $expire
 	 */
 	public function set(string $key, array|string|null $value, int $expire = 0) {
 		if (!$expire) {

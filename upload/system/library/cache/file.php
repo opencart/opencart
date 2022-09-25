@@ -2,7 +2,12 @@
 namespace Opencart\System\Library\Cache;
 class File {
 	private int $expire;
-
+	
+	/**
+	 * __construct
+	 *
+	 * @param    int  $expire
+	 */
 	public function __construct(int $expire = 3600) {
 		$this->expire = $expire;
 
@@ -20,7 +25,14 @@ class File {
 			}
 		}
 	}
-
+	
+	/**
+	 * Get
+	 *
+	 * @param    string  $key
+	 *
+	 * @return array|string|null
+	 */
 	public function get(string $key): array|string|null {
 		$files = glob(DIR_CACHE . 'cache.' . basename($key) . '.*');
 
@@ -31,6 +43,14 @@ class File {
 		}
 	}
 
+	/**
+	 * Set
+	 *
+	 * @param    string  $key
+	 * @param    array|string|null  $value
+	 *
+	 * @return void
+	 */
 	public function set(string $key, array|string|null $value, int $expire = 0): void {
 		$this->delete($key);
 
@@ -41,6 +61,13 @@ class File {
 		file_put_contents(DIR_CACHE . 'cache.' . basename($key) . '.' . (time() + $expire), json_encode($value));
 	}
 
+	/**
+	 * Delete
+	 *
+	 * @param    string  $key
+	 *
+	 * @return void
+	 */
 	public function delete(string $key): void {
 		$files = glob(DIR_CACHE . 'cache.' . basename($key) . '.*');
 

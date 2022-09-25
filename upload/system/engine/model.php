@@ -17,7 +17,7 @@ class Model {
 	/**
 	 * __construct
 	 *
-	 * @param    object $registry
+	 * @param    object  $registry
 	 */
 	public function __construct(\Opencart\System\Engine\Registry $registry) {
 		$this->registry = $registry;

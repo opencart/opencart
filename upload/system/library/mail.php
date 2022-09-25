@@ -39,80 +39,97 @@ class Mail {
 	}
 
 	/**
+     * setTo
      *
-     *
-     * @param	mixed	$to
+     * @param	string	$to
+	 *
+	 * @return  void
      */
 	public function setTo(string $to): void {
 		$this->to = $to;
 	}
 
 	/**
-     *
+     * setFrom
      *
      * @param	string	$from
+	 *
+	 * @return  void
      */
-	public function setFrom($from): void {
+	public function setFrom(string $from): void {
 		$this->from = $from;
 	}
 
 	/**
-     *
+     * setSender
      *
      * @param	string	$sender
+	 *
+	 * @return  void
      */
-	public function setSender($sender): void {
+	public function setSender(string $sender): void {
 		$this->sender = $sender;
 	}
 
 	/**
-     *
+     * setReplyTo
      *
      * @param	string	$reply_to
+	 *
+	 * @return  void
      */
-	public function setReplyTo($reply_to): void {
+	public function setReplyTo(string $reply_to): void {
 		$this->reply_to = $reply_to;
 	}
 
 	/**
-     *
+     * setSubject
      *
      * @param	string	$subject
+	 *
+	 * @return  void
      */
-	public function setSubject($subject): void {
+	public function setSubject(string $subject): void {
 		$this->subject = $subject;
 	}
 
 	/**
-     *
+     * setText
      *
      * @param	string	$text
+	 *
+	 * @return  void
      */
-	public function setText($text): void {
+	public function setText(string $text): void {
 		$this->text = $text;
 	}
 
 	/**
-     *
+     * setHtml
      *
      * @param	string	$html
+	 *
+	 * @return  void
      */
-	public function setHtml($html): void {
+	public function setHtml(string $html): void {
 		$this->html = $html;
 	}
 
 	/**
-     *
+     * addAttachment
      *
      * @param	string	$filename
+	 *
+	 * @return  void
      */
-	public function addAttachment($filename): void {
+	public function addAttachment(string $filename): void {
 		$this->attachments[] = $filename;
 	}
 
 	/**
+     * Send
      *
-     *
+	 * @return  bool
      */
 	public function send(): bool {
 		if (!$this->to) {

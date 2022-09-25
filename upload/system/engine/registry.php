@@ -40,6 +40,7 @@ class Registry {
 	public function __set(string $key, object $value): void {
 		$this->set($key, $value);
 	}
+	
 	/**
      * Get
      *

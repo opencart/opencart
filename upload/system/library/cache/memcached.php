@@ -33,7 +33,7 @@ class Memcached {
 	 * Set
 	 *
 	 * @param    string  $key
-	 * @param    array|string|null  value
+	 * @param    array|string|null  $value
 	 *
 	 * @return	 array|string|null
 	 */

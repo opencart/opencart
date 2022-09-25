@@ -19,7 +19,7 @@ class Registry {
 	 *
 	 * https://www.php.net/manual/en/language.oop5.overloading.php#object.get
 	 *
-	 * @param    string $key
+	 * @param    string  $key
 	 *
 	 * @return   object
 	 */
@@ -32,8 +32,8 @@ class Registry {
 	 *
 	 * https://www.php.net/manual/en/language.oop5.overloading.php#object.set
 	 *
-	 * @param    string $key
-	 * @param    object $value
+	 * @param    string  $key
+	 * @param    object  $value
 	 *
 	 * @return    object
 	 */

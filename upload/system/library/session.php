@@ -81,6 +81,8 @@ class Session {
 	 * Close
 	 *
 	 * Writes the session data to storage
+	 *
+	 * @return	void
  	*/
 	public function close(): void {
 		$this->adaptor->write($this->session_id, $this->data);
@@ -90,6 +92,8 @@ class Session {
 	 * Destroy
 	 *
 	 * Deletes the current session from storage
+	 *
+	 * @return	void
  	*/
 	public function destroy(): void {
 		$this->data = [];
@@ -101,6 +105,8 @@ class Session {
 	 * GC
 	 *
 	 * Garbage Collection
+	 *
+	 * @return	void
 	 */
 	public function gc(): void {
 		$this->adaptor->gc($this->session_id);

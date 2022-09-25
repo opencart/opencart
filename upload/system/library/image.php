@@ -69,7 +69,7 @@ class Image {
 	/**
 	 * getImage
 	 *
-	 * @return    array
+	 * @return    object
 	 */
 	public function getImage(): object {
 		return $this->image;
@@ -332,10 +332,10 @@ class Image {
 	/**
 	 * Merge
 	 *
-	 * @param    object $merge
-	 * @param 	 int $x
-	 * @param 	 int $y
-	 * @param 	 int $opacity
+	 * @param    object  $merge
+	 * @param 	 int  $x
+	 * @param 	 int  $y
+	 * @param 	 int  $opacity
 	 *
 	 * @return 	 void
 	 */
@@ -346,7 +346,7 @@ class Image {
 	/**
 	 * HTML2RGB
 	 *
-	 * @param    string $color
+	 * @param    string  $color
 	 *
 	 * @return 	 array
 	 */

@@ -5,7 +5,7 @@ class APC {
 	private bool $active;
 
 	/**
-	 * __construct
+	 * Constructor
 	 *
 	 * @param    int  $expire
 	 */

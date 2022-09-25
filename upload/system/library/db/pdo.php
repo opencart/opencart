@@ -6,7 +6,7 @@ class PDO {
 	private int $affected;
 	
 	/**
-	 * __construct
+	 * Constructor
 	 *
 	 * @param    string  $hostname
 	 * @param    string  $username
@@ -121,7 +121,7 @@ class PDO {
 	}
 
 	/**
-	 * __destruct
+	 * Destructor
 	 *
 	 * Closes the DB connection when this object is destroyed.
 	 *

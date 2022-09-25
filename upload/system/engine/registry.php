@@ -56,6 +56,8 @@ class Registry {
      *
      * @param	string	$key
 	 * @param	string	$value
+	 *
+	 * @return void
      */	
 	public function set(string $key, object $value): void {
 		$this->data[$key] = $value;

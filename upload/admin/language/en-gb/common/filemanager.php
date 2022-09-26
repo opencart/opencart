@@ -20,4 +20,4 @@ $_['error_directory']  = 'Warning: Directory does not exist!';
 $_['error_filesize']   = 'Warning: Incorrect file size!';
 $_['error_file_type']  = 'Warning: Incorrect file type!';
 $_['error_upload']     = 'Warning: File could not be uploaded for an unknown reason!';
-$_['error_delete']     = 'Warning: You can not delete this directory!';
+$_['error_delete']     = 'Warning: You cannot delete this directory!';

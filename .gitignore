@@ -35,11 +35,10 @@
 /upload/system/storage/upload/*
 !/upload/system/storage/upload/index.html
 
-# If you want to ignore install file use following lines [on development mode]
-# /upload/install/*
+# CSS Files
+/upload/catalog/view/stylesheet/stylesheet.css
 
 # IDE Project files
 /upload/.idea/*
 /.idea/*
-
 /.DS_Store

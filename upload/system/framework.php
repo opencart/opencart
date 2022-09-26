@@ -183,14 +183,9 @@ $registry->set('url', new \Opencart\System\Library\Url($config->get('site_url'))
 $registry->set('document', new \Opencart\System\Library\Document());
 
 // Action error object to execute if any other actions cannot be executed.
-$error = new \Opencart\System\Engine\Action($config->get('action_error'));
+$action = '';
 
-// Route
-if (!empty($request->get['route'])) {
-	$action = new \Opencart\System\Engine\Action((string)$request->get['route']);
-} else {
-	$action = new \Opencart\System\Engine\Action($config->get('action_default'));
-}
+$error = new \Opencart\System\Engine\Action($config->get('action_error'));
 
 // Pre Actions
 foreach ($config->get('action_pre_action') as $pre_action) {
@@ -211,6 +206,15 @@ foreach ($config->get('action_pre_action') as $pre_action) {
 		$error = '';
 
 		break;
+	}
+}
+
+// Route
+if (!$action) {
+	if (!empty($request->get['route'])) {
+		$action = new \Opencart\System\Engine\Action((string)$request->get['route']);
+	} else {
+		$action = new \Opencart\System\Engine\Action($config->get('action_default'));
 	}
 }
 

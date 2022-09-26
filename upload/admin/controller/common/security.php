@@ -264,7 +264,7 @@ class Security extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// 1.  We need to copy the files as rename can not be used on any directory the executing script is running under
+			// 1.  // 1. We need to copy the files, as rename cannot be used on any directory, the executing script is running under
 			$files = [];
 
 			// Make path into an array
@@ -362,7 +362,7 @@ class Security extends \Opencart\System\Engine\Controller {
 		}
 
 		if ($status) {
-			// 1.  We need to copy the files as rename can not be used on any directory the executing script is running under
+			// 1. We need to copy the files, as rename cannot be used on any directory, the executing script is running under
 			$files = [];
 
 			// Make path into an array

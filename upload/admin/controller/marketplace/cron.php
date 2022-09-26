@@ -114,7 +114,7 @@ class Cron extends \Opencart\System\Engine\Controller {
 				'status'        => $result['status'],
 				'date_added'    => date($this->language->get('datetime_format'), strtotime($result['date_added'])),
 				'date_modified' => date($this->language->get('datetime_format'), strtotime($result['date_modified'])),
-				'run'           => $this->url->link('cron/cron.run', 'user_token=' . $this->session->data['user_token'] . '&cron_id=' . $result['cron_id']),
+				'run'           => $this->url->link('marketplace/cron.run', 'user_token=' . $this->session->data['user_token'] . '&cron_id=' . $result['cron_id']),
 				'enable'        => $this->url->link('marketplace/cron.enable', 'user_token=' . $this->session->data['user_token'] . '&cron_id=' . $result['cron_id']),
 				'disable'       => $this->url->link('marketplace/cron.disable', 'user_token=' . $this->session->data['user_token'] . '&cron_id=' . $result['cron_id'])
 			];
@@ -187,9 +187,7 @@ class Cron extends \Opencart\System\Engine\Controller {
 				// Create a store instance using loader class to call controllers, models, views, libraries
 				$store = $this->load->controller('tool/store.createStoreInstance', 0, $this->config->get('config_language'));
 
-				$store->config->set('application', 'catalog');
-
-				$store->controller($cron_info['action'], $cron_id, $cron_info['code'], $cron_info['cycle'], $cron_info['date_added'], $cron_info['date_modified']);
+				$store->load->controller($cron_info['action'], $cron_id, $cron_info['code'], $cron_info['cycle'], $cron_info['date_added'], $cron_info['date_modified']);
 
 				$this->model_setting_cron->editCron($cron_info['cron_id']);
 			}

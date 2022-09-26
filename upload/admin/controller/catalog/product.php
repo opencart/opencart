@@ -440,7 +440,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			$data['product_id'] = 0;
 		}
 
-		// If master_id then we need to get the variant info
+		// If the product_id is the master_id, we need to get the variant info
 		if (isset($this->request->get['product_id'])) {
 			$product_id = (int)$this->request->get['product_id'];
 		} elseif (isset($this->request->get['master_id'])) {

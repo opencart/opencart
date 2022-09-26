@@ -222,7 +222,7 @@ class Language extends \Opencart\System\Engine\Model {
 		/*
 		Do not put any delete code for related tables for languages!
 
-		It is not required as whenever you save to a multi language table then the entries for the deleted language will also be deleted!
+		It is not required since, whenever you save the value to a multi-language table, the entries for the deleted language will also be removed!
 
 		Wasting my time with people adding code here!
 		*/

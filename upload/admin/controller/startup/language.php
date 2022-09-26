@@ -10,14 +10,14 @@ class Language extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) $language_data[$result['code']] = $result;
 
-		// Language not available then use default
+		// If no language can be found, we use the default one
 		$code = $this->config->get('config_language_admin');
 
 		if (isset($this->request->cookie['language']) && array_key_exists($this->request->cookie['language'], $language_data)) {
 			$code = $this->request->cookie['language'];
 		}
 
-		// Set the config language_id
+		// Set the config language_id key
 		$this->config->set('config_language_id', $language_data[$code]['language_id']);
 		$this->config->set('config_language_admin', $code);
 

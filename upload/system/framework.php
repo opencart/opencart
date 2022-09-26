@@ -183,6 +183,7 @@ $registry->set('url', new \Opencart\System\Library\Url($config->get('site_url'))
 $registry->set('document', new \Opencart\System\Library\Document());
 
 // Action error object to execute if any other actions can not be executed.
+$action = '';
 $error = new \Opencart\System\Engine\Action($config->get('action_error'));
 
 // Pre Actions

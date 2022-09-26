@@ -7,6 +7,11 @@ class User {
 	private string $email = '';
 	private array $permission = [];
 
+	/**
+	 * Constructor
+	 *
+	 * @param    object  $registry
+	 */
 	public function __construct(\Opencart\System\Engine\Registry $registry) {
 		$this->db = $registry->get('db');
 		$this->request = $registry->get('request');
@@ -37,7 +42,15 @@ class User {
 			}
 		}
 	}
-
+	
+	/**
+	 * Login
+	 *
+	 * @param    string  $username
+	 * @param    string  $password
+	 *
+	 * @return   bool
+	 */
 	public function login(string $username, string $password): bool {
 		$user_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "user` WHERE `username` = '" . $this->db->escape($username) . "' AND `status` = '1'");
 
@@ -78,7 +91,12 @@ class User {
 			return false;
 		}
 	}
-
+	
+	/**
+	 * Logout
+	 *
+	  * @return   void
+	 */
 	public function logout(): void {
 		unset($this->session->data['user_id']);
 
@@ -87,7 +105,15 @@ class User {
 		$this->user_group_id = 0;
 		$this->email = '';
 	}
-
+	
+	/**
+	 * hasPermission
+	 *
+	 * @param    string  $key
+	 * @param    mixed  $value
+	 *
+	 * @return   bool
+	 */
 	public function hasPermission(string $key, mixed $value): bool {
 		if (isset($this->permission[$key])) {
 			return in_array($value, $this->permission[$key]);
@@ -95,23 +121,48 @@ class User {
 			return false;
 		}
 	}
-
+	
+	/**
+	 * isLogged
+	 *
+	 * @return   bool
+	 */
 	public function isLogged(): bool {
 		return $this->user_id ? true : false;
 	}
-
+	
+	/**
+	 * getId
+	 *
+	 * @return   int
+	 */
 	public function getId(): int {
 		return $this->user_id;
 	}
 
+	/**
+	 * getUserName
+	 *
+	 * @return   string
+	 */
 	public function getUserName(): string {
 		return $this->username;
 	}
-
+	
+	/**
+	 * getGroupId
+	 *
+	 * @return   int
+	 */
 	public function getGroupId(): int {
 		return $this->user_group_id;
 	}
-
+	
+	/**
+	 * getEmail
+	 *
+	 * @return   string
+	 */
 	public function getEmail(): string {
 		return $this->email;
 	}

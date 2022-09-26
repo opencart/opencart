@@ -16,9 +16,9 @@ class Loader {
 	protected $registry;
 
 	/**
-	 * __construct
+	 * Constructor
 	 *
-	 * @param    object $registry
+	 * @param    object  $registry
 	 */
 	public function __construct(\Opencart\System\Engine\Registry $registry) {
 		$this->registry = $registry;

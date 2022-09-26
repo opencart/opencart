@@ -212,7 +212,7 @@ class Activity extends \Opencart\System\Engine\Controller {
 	// catalog/model/checkout/order/addHistory/before
 	public function addHistory(string &$route, array &$args): void {
 		if ($this->config->get('config_customer_activity')) {
-			// If last order status id is 0 and new order status is not then record as new order
+			// If the last order status id returns 0, and the new order status is not, then we record it as new order
 			$this->load->model('checkout/order');
 			
 			$order_info = $this->model_checkout_order->getOrder($args[0]);

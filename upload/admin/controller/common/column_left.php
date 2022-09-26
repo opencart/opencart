@@ -6,7 +6,7 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 			$this->load->language('common/column_left');
 
 			// Create a 3 level menu array
-			// Level 2 can not have children
+			// Level 2 cannot have children
 
 			// Menu
 			$data['menus'][] = [

@@ -132,7 +132,7 @@ class Cart extends \Opencart\System\Engine\Model {
 			if ($this->config->get('total_' . $result['code'] . '_status')) {
 				$this->load->model('extension/' . $result['extension'] . '/total/' . $result['code']);
 
-				// __call can not pass-by-reference so we get PHP to call it as an anonymous function.
+				// __call magic method cannot pass-by-reference so we get PHP to call it as an anonymous function.
 				($this->{'model_extension_' . $result['extension'] . '_total_' . $result['code']}->getTotal)($totals, $taxes, $total);
 			}
 		}

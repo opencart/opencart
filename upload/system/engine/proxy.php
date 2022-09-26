@@ -13,9 +13,11 @@
 namespace Opencart\System\Engine;
 class Proxy {
 	/**
-	 * Magic Method Get
+	 * __get
 	 *
 	 * @param	string	$key
+	 *
+	 * @return	object|null
 	 */
 	public function &__get(string $key): object|null {
 		if (property_exists($this, $key)) {
@@ -26,15 +28,25 @@ class Proxy {
 	}
 
 	/**
-	 * Magic Method Set
+	 * __set
 	 *
 	 * @param	string	$key
 	 * @param	string	$value
+	 *
+	 * @return void
 	 */
 	public function __set(string $key, object $value): void {
 		$this->{$key} = $value;
 	}
-
+	
+	/**
+	 * __call
+	 *
+	 * @param	string	$method
+	 * @param	array	$args
+	 *
+	 * @return mixed
+	 */
 	public function __call(string $method, array $args): mixed {
 		// Hack for pass-by-reference
 		foreach ($args as $key => &$value);

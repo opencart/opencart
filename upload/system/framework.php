@@ -184,6 +184,8 @@ $registry->set('document', new \Opencart\System\Library\Document());
 
 // Action error object to execute if any other actions cannot be executed.
 $action = '';
+$args = [];
+$output = '';
 
 $error = new \Opencart\System\Engine\Action($config->get('action_error'));
 
@@ -217,9 +219,6 @@ if (!$action) {
 		$action = new \Opencart\System\Engine\Action($config->get('action_default'));
 	}
 }
-
-$args = [];
-$output = '';
 
 // Dispatch
 while ($action) {

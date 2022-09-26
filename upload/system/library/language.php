@@ -21,7 +21,7 @@ class Language {
 	/**
 	 * Constructor
 	 *
-	 * @param    string $code
+	 * @param    string  $code
 	 *
 	 */
 	public function __construct(string $code) {
@@ -31,8 +31,10 @@ class Language {
 	/**
 	 * addPath
 	 *
-	 * @param    string $namespace
-	 * @param    string $directory
+	 * @param    string  $namespace
+	 * @param    string  $directory
+	 *
+	 * @return   void
 	 */
 	public function addPath(string $namespace, string $directory = ''): void {
 		if (!$directory) {
@@ -43,7 +45,7 @@ class Language {
 	}
 
 	/**
-     * Get language tex string
+     * Get language text string
      *
      * @param	string	$key
 	 * 
@@ -89,7 +91,7 @@ class Language {
 	/**
 	 * Clear
 	 *
-	 * @return	array
+	 * @return	void
 	 */
 	public function clear(): void {
 		$this->data = [];

@@ -415,7 +415,7 @@ class Product extends \Opencart\System\Engine\Model {
 
 			foreach ($product_descriptions as $language_id => $product_description) {
 				foreach ($product_description as $key => $value) {
-					// If override set then use the POST data values
+					// If an override has been found, we use the POST data values
 					if (!isset($override['product_description'][$language_id][$key])) {
 						$product_data['product_description'][$language_id][$key] = $value;
 					}

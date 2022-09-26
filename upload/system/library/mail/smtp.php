@@ -17,6 +17,11 @@ class Smtp {
 	protected int $max_attempts = 3;
 	protected bool $verp = false;
 
+	/**
+	 * Constructor
+	 *
+	 * @param    array  $args
+	 */
 	public function __construct(array $args) {
 		foreach ($args as $key => $value) {
 			if (property_exists($this, $key)) {
@@ -25,6 +30,11 @@ class Smtp {
 		}
 	}
 
+	/**
+	 * Send
+	 *
+	 * @return    bool
+	 */
 	public function send(): bool {
 		if (is_array($this->to)) {
 			$to = implode(',', $this->to);
@@ -228,6 +238,15 @@ class Smtp {
 		return true;
 	}
 
+	/**
+	 * handleReply
+	 *
+	 * @param	array	$handle
+	 * @param	bool	$status_code
+	 * @param	bool	$error_text
+	 * @param	int		$counter
+	 *
+	 */
 	private function handleReply($handle, $status_code = false, $error_text = false, $counter = 0) {
 		$reply = '';
 

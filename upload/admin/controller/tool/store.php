@@ -16,7 +16,6 @@ class Store extends \Opencart\System\Engine\Controller {
 		// Load the default config
 		$config->addPath(DIR_CONFIG);
 		$config->load('default');
-		//$config->load('catalog');
 		$config->set('application', 'Catalog');
 
 		// Store

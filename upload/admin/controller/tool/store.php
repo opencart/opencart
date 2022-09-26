@@ -3,14 +3,11 @@ namespace Opencart\Admin\Controller\Tool;
 class Store extends \Opencart\System\Engine\Controller {
 	public function createStoreInstance(int $store_id = 0, string $language = '', string $session_id = ''): object {
 		// Autoloader
-		$autoloader = new \Opencart\System\Engine\Autoloader();
-		$autoloader->register('Opencart\\Catalog', DIR_CATALOG);
-		$autoloader->register('Opencart\Extension', DIR_EXTENSION);
-		$autoloader->register('Opencart\System', DIR_SYSTEM);
+		$this->autoloader->register('Opencart\Catalog', DIR_CATALOG);
 
 		// Registry
 		$registry = new \Opencart\System\Engine\Registry();
-		$registry->set('autoloader', $autoloader);
+		$registry->set('autoloader', $this->autoloader);
 
 		// Config
 		$config = new \Opencart\System\Engine\Config();
@@ -19,7 +16,7 @@ class Store extends \Opencart\System\Engine\Controller {
 		// Load the default config
 		$config->addPath(DIR_CONFIG);
 		$config->load('default');
-		$config->load('catalog');
+		//$config->load('catalog');
 		$config->set('application', 'Catalog');
 
 		// Store

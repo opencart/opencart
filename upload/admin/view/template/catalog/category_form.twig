@@ -74,7 +74,8 @@
               <div class="row mb-3">
                 <label for="input-parent" class="col-sm-2 col-form-label">{{ entry_parent }}</label>
                 <div class="col-sm-10">
-                  <input type="text" name="path" value="{{ path }}" placeholder="{{ entry_parent }}" id="input-parent" list="list-parent" class="form-control"/> <input type="hidden" name="parent_id" value="{{ parent_id }}" id="input-parent-id"/>
+                  <input type="text" name="path" value="{{ path }}" placeholder="{{ entry_parent }}" id="input-parent" list="list-parent" class="form-control" autocomplete="new-password"/>
+                  <input type="hidden" name="parent_id" value="{{ parent_id }}" id="input-parent-id"/>
                   <datalist id="list-parent"></datalist>
                   <div class="form-text">{{ help_parent }}</div>
                   <div id="error-parent" class="invalid-feedback"></div>
@@ -230,13 +231,15 @@ $('#input-parent').autocomplete({
             success: function (json) {
                 json.unshift({
                     name: '{{ text_none }}',
-                    category_id: 0
+                    category_id: '0'
                 });
 
                 response($.map(json, function (item) {
+                    console.log(json);
+
                     return {
-                        label: item['name'],
-                        value: item['category_id']
+                        value: item['category_id'],
+                        label: item['name']
                     }
                 }));
             }

@@ -185,13 +185,6 @@ $registry->set('document', new \Opencart\System\Library\Document());
 // Action error object to execute if any other actions can not be executed.
 $error = new \Opencart\System\Engine\Action($config->get('action_error'));
 
-// Route
-if (!empty($request->get['route'])) {
-	$action = new \Opencart\System\Engine\Action((string)$request->get['route']);
-} else {
-	$action = new \Opencart\System\Engine\Action($config->get('action_default'));
-}
-
 // Pre Actions
 foreach ($config->get('action_pre_action') as $pre_action) {
 	$pre_action = new \Opencart\System\Engine\Action($pre_action);
@@ -211,6 +204,15 @@ foreach ($config->get('action_pre_action') as $pre_action) {
 		$error = '';
 
 		break;
+	}
+}
+
+// Route
+if (!$action) {
+	if (!empty($request->get['route'])) {
+		$action = new \Opencart\System\Engine\Action((string)$request->get['route']);
+	} else {
+		$action = new \Opencart\System\Engine\Action($config->get('action_default'));
 	}
 }
 

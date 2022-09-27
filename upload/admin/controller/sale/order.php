@@ -1095,15 +1095,33 @@ class Order extends \Opencart\System\Engine\Controller {
 
 	// Method to call the store front API and return a response.
 	public function call(): void {
+		if (isset($this->request->get['store_id'])) {
+			$store_id = $this->request->get['store_id'];
+		} else {
+			$store_id = 0;
+		}
+
+		if (isset($this->request->get['language'])) {
+			$language = $this->request->get['language'];
+		} else {
+			$language = $this->config->get('config_language');
+		}
+
 		if (isset($this->request->get['action'])) {
 			$action = $this->request->get['action'];
 		} else {
 			$action = '';
 		}
 
+		if (isset($this->session->data['api_session'])) {
+			$session_id = $this->session->data['api_session'];
+		} else {
+			$session_id = '';
+		}
+
 		if ($action) {
 			// 1. Create a store instance using loader class to call controllers, models, views, libraries
-			$store = $this->load->controller('tool/store.createStoreInstance', $order_info['store_id'], $order_info['language_code'], $session_id);
+			$store = $this->load->controller('tool/store.createStoreInstance', $store_id, $language, $session_id);
 
 			// 2. Add the request vars and remove the unneeded ones
 			$store->request->get = $this->request->get;
@@ -1111,6 +1129,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 			$store->request->get['route'] = 'api/' . $action;
 
+			// 3. Remove the unneeded keys
 			unset($store->request->get['action']);
 			unset($store->request->get['user_token']);
 

@@ -13,6 +13,7 @@ $registry->set('autoloader', $autoloader);
 
 // Config
 $config = new \Opencart\System\Engine\Config();
+$registry->set('config', $config);
 $config->addPath(DIR_CONFIG);
 
 // Load the default config
@@ -21,7 +22,6 @@ $config->load(strtolower(APPLICATION));
 
 // Set the default application
 $config->set('application', APPLICATION);
-$registry->set('config', $config);
 
 // Set the default time zone
 date_default_timezone_set($config->get('date_timezone'));
@@ -112,6 +112,7 @@ if (isset($request->get['route'])) {
 
 // Response
 $response = new \Opencart\System\Library\Response();
+$registry->set('response', $response);
 
 foreach ($config->get('response_header') as $header) {
 	$response->addHeader($header);
@@ -125,7 +126,6 @@ $response->addHeader('Access-Control-Allow-Methods: PUT, POST, GET, OPTIONS, DEL
 $response->addHeader('Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
 $response->addHeader('Pragma: no-cache');
 $response->setCompression($config->get('response_compression'));
-$registry->set('response', $response);
 
 // Database
 if ($config->get('db_autostart')) {
@@ -167,14 +167,14 @@ $registry->set('cache', new \Opencart\System\Library\Cache($config->get('cache_e
 
 // Template
 $template = new \Opencart\System\Library\Template($config->get('template_engine'));
-$template->addPath(DIR_TEMPLATE);
 $registry->set('template', $template);
+$template->addPath(DIR_TEMPLATE);
 
 // Language
 $language = new \Opencart\System\Library\Language($config->get('language_code'));
+$registry->set('language', $language);
 $language->addPath(DIR_LANGUAGE);
 $language->load($config->get('language_code'));
-$registry->set('language', $language);
 
 // Url
 $registry->set('url', new \Opencart\System\Library\Url($config->get('site_url')));

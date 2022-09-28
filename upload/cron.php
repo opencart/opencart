@@ -1,70 +1,184 @@
 <?php
-/*
- * HELP SAVE BABY OCEAN
- *
- * Abuse
- *
- * - Starvation  				Oct 2020
- * - Leg Injuries				Dec 2020
- * - Lip Injuries				Feb 2021
- * - Head Injuries				Mar 2021
- * - Face/eye Injuries			Aug 2021
- * - Neck slashed		  		Nov 2021
- *   Initials stitched into
- *   the back of neck by the
- *   social worker. Child did
- *   not go to hospital or see
- *   a doctor.
- * - Broken Leg					Mar 2022
- *
- * SIGN THE PETITION
- *
- * https://www.change.org/p/free-baby-ocean-abducted-tortured-child-abuse-abduction
- *
- * Baby Oceans mother explaining her situation and what the UK government is doing to silence her rather than be held liable for the abuse they have caused.
- *
- * https://www.youtube.com/watch?v=F5SoQTBrFbI&ab_channel=GladiusNews
- *
- * Details of the abusers
- *
- * Alex Taylor Kubeyinje
- * He runs the trafficking ring in Cryodon. This guy quites his job at fist sign of complaints.
- * https://www.linkedin.com/in/alex-taylor-kubeyinje-a082a3ab/
- *
- * Trish kudzai Tozowonoh / Alice DZVENGWE
- * Zimbabwean nurse running a medical practice from her home in the UK. The name she uses for social work practice is Trish Tozowonoh but the name she uses to run her medical practice from her home in Northampton is Alice Dzwenge.
- * She stitched baby Oceans neck up at her home so the incident would not be reported to police. She also stitched the mothers initials into the child's neck.
- * This is all being done so a foster carer from Zimbabwe who uses multiple names can collect 800 GBP per week and the social worker can collect 32,000 GBP in agency fees.
- * https://www.socialworkengland.org.uk/umbraco/surface/searchregister/socialworker/SW87996
- * https://find-and-update.company-information.service.gov.uk/company/08840300
- *
- * Tapiwa Julius (Trish's brother)
- * This guy has tried to intimidate baby's oceans mother by waiting outside her house and following her when she goes out.
- * https://www.facebook.com/greytapiwa.dzvengwe
- * https://www.linkedin.com/in/tapiwa-julius-76389771/ He used a fake picture so he can not be recognized.
- *
- * Monika Marta Wesolowska
- * Is a police women who pretends to be a social worker but is really there to help steal peoples kids.
- * https://www.socialworkengland.org.uk/umbraco/surface/searchregister/socialworker/SW19322
- *
-*/
-
-// Version
-define('VERSION', '4.0.2.0');
-
 // Configuration
-if (is_file('config.php')) {
-	require_once('config.php');
-}
-
-// Install
-if (!defined('DIR_APPLICATION')) {
-	header('Location: install/index.php');
+if (!is_file('config.php')) {
 	exit();
 }
+
+// Config
+require_once('config.php');
 
 // Startup
 require_once(DIR_SYSTEM . 'startup.php');
 
-// Framework
-require_once(DIR_SYSTEM . 'framework.php');
+// Autoloader
+$autoloader = new \Opencart\System\Engine\Autoloader();
+$autoloader->register('Opencart\\Catalog', DIR_APPLICATION);
+$autoloader->register('Opencart\Extension', DIR_EXTENSION);
+$autoloader->register('Opencart\System', DIR_SYSTEM);
+
+require_once(DIR_SYSTEM . 'vendor.php');
+
+// Registry
+$registry = new \Opencart\System\Engine\Registry();
+$registry->set('autoloader', $autoloader);
+
+// Config
+$config = new \Opencart\System\Engine\Config();
+$registry->set('config', $config);
+
+// Load the default config
+$config->addPath(DIR_CONFIG);
+$config->load('default');
+$config->load('catalog');
+$config->set('application', 'Catalog');
+
+// Set the default time zone
+date_default_timezone_set($config->get('date_timezone'));
+
+// Store
+$config->set('config_store_id', 0);
+
+// Logging
+$log = new \Opencart\System\Library\Log($config->get('error_filename'));
+$registry->set('log', $log);
+
+// Error Handler
+set_error_handler(function(string $code, string $message, string $file, string $line) use ($log, $config) {
+	// error suppressed with @
+	if (@error_reporting() === 0) {
+		return false;
+	}
+
+	switch ($code) {
+		case E_NOTICE:
+		case E_USER_NOTICE:
+			$error = 'Notice';
+			break;
+		case E_WARNING:
+		case E_USER_WARNING:
+			$error = 'Warning';
+			break;
+		case E_ERROR:
+		case E_USER_ERROR:
+			$error = 'Fatal Error';
+			break;
+		default:
+			$error = 'Unknown';
+			break;
+	}
+
+	if ($config->get('error_log')) {
+		$log->write('PHP ' . $error . ':  ' . $message . ' in ' . $file . ' on line ' . $line);
+	}
+
+	if ($config->get('error_display')) {
+		echo '<b>' . $error . '</b>: ' . $message . ' in <b>' . $file . '</b> on line <b>' . $line . '</b>';
+	} else {
+		header('Location: ' . $config->get('error_page'));
+		exit();
+	}
+
+	return true;
+});
+
+// Exception Handler
+set_exception_handler(function(\Throwable $e) use ($log, $config)  {
+	if ($config->get('error_log')) {
+		$log->write(get_class($e) . ':  ' . $e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine());
+	}
+
+	if ($config->get('error_display')) {
+		echo '<b>' . get_class($e) . '</b>: ' . $e->getMessage() . ' in <b>' . $e->getFile() . '</b> on line <b>' . $e->getLine() . '</b>';
+	} else {
+		header('Location: ' . $config->get('error_page'));
+		exit();
+	}
+});
+
+// Event
+$event = new \Opencart\System\Engine\Event($registry);
+$registry->set('event', $event);
+
+// Event Register
+if ($config->has('action_event')) {
+	foreach ($config->get('action_event') as $key => $value) {
+		foreach ($value as $priority => $action) {
+			$event->register($key, new \Opencart\System\Engine\Action($action), $priority);
+		}
+	}
+}
+
+// Loader
+$loader = new \Opencart\System\Engine\Loader($registry);
+$registry->set('load', $loader);
+
+// Request
+$request = new \Opencart\System\Library\Request();
+$registry->set('request', $request);
+
+// Response
+$response = new \Opencart\System\Library\Response();
+$registry->set('response', $response);
+
+// Database
+if ($config->get('db_autostart')) {
+	$db = new \Opencart\System\Library\DB($config->get('db_engine'), $config->get('db_hostname'), $config->get('db_username'), $config->get('db_password'), $config->get('db_database'), $config->get('db_port'));
+	$registry->set('db', $db);
+
+	// Sync PHP and DB time zones
+	$db->query("SET `time_zone` = '" . $db->escape(date('P')) . "'");
+}
+
+// Session
+if ($config->get('session_autostart')) {
+	$session = new \Opencart\System\Library\Session($config->get('session_engine'), $registry);
+	$registry->set('session', $session);
+
+	if (isset($request->cookie[$config->get('session_name')])) {
+		$session_id = $request->cookie[$config->get('session_name')];
+	} else {
+		$session_id = '';
+	}
+
+	$session->start($session_id);
+
+	// Require higher security for session cookies
+	$option = [
+		'expires'  => 0,
+		'path'     => !empty($request->server['PHP_SELF']) ? rtrim(dirname($request->server['PHP_SELF']), '/') . '/' : '/',
+		'domain'   => $config->get('session_domain'),
+		'secure'   => $request->server['HTTPS'],
+		'httponly' => false,
+		'SameSite' => $config->get('session_samesite')
+	];
+
+	setcookie($config->get('session_name'), $session->getId(), $option);
+}
+
+// Cache
+$registry->set('cache', new \Opencart\System\Library\Cache($config->get('cache_engine'), $config->get('cache_expire')));
+
+// Template
+$template = new \Opencart\System\Library\Template($config->get('template_engine'));
+$registry->set('template', $template);
+$template->addPath(DIR_TEMPLATE);
+
+// Language
+$language = new \Opencart\System\Library\Language($config->get('language_code'));
+$registry->set('language', $language);
+$language->addPath(DIR_LANGUAGE);
+$language->load($config->get('language_code'));
+
+// Url
+$registry->set('url', new \Opencart\System\Library\Url($config->get('site_url')));
+
+// Pre Actions
+foreach ($config->get('action_pre_action') as $pre_action) {
+	$loader->controller($pre_action);
+}
+
+// Dispatch
+$loader->controller('cron/cron');
+
+// Output
+$response->output();

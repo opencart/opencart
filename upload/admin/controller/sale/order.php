@@ -1096,7 +1096,7 @@ class Order extends \Opencart\System\Engine\Controller {
 	// Method to call the store front API and return a response.
 	public function call(): void {
 		if (isset($this->request->get['store_id'])) {
-			$store_id = $this->request->get['store_id'];
+			$store_id = (int)$this->request->get['store_id'];
 		} else {
 			$store_id = 0;
 		}

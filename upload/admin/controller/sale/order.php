@@ -649,9 +649,6 @@ class Order extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		// Reset the session
-		//unset($this->session->data['api_session']);
-
 		// Products
 		$data['order_products'] = [];
 		$data['order_vouchers'] = [];
@@ -679,12 +676,12 @@ class Order extends \Opencart\System\Engine\Controller {
 			unset($store->request->get['action']);
 			unset($store->request->get['user_token']);
 
-			// Load the store data
+			// 5. Load the store data
 			$store->request->get['route'] = 'api/sale/order.load';
 
 			$store->load->controller('api/sale/order.load');
 
-			// Get the cart data
+			// 6. Get the cart data
 			$store->request->get['route'] = 'api/sale/cart';
 
 			$store->load->controller('api/sale/cart');

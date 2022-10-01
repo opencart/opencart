@@ -39,7 +39,7 @@ class Register extends \Opencart\System\Engine\Controller {
 		$this->session->data['register_token'] = substr(bin2hex(openssl_random_pseudo_bytes(26)), 0, 26);
 
 		$data['register'] = $this->url->link('account/register.register', 'language=' . $this->config->get('config_language') . '&register_token=' . $this->session->data['register_token']);
-		$data['upload'] = $this->url->link('tool/upload.upload', 'language=' . $this->config->get('config_language'));
+		$data['upload'] = $this->url->link('tool/upload', 'language=' . $this->config->get('config_language'));
 
 		$data['customer_groups'] = [];
 

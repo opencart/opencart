@@ -19,7 +19,7 @@ class Register extends \Opencart\System\Engine\Controller {
 
 		$data['shipping_required'] = $this->cart->hasShipping();
 
-		$data['upload'] = $this->url->link('tool/upload.upload', 'language=' . $this->config->get('config_language'));
+		$data['upload'] = $this->url->link('tool/upload', 'language=' . $this->config->get('config_language'));
 
 		$data['customer_groups'] = [];
 
@@ -587,7 +587,9 @@ class Register extends \Opencart\System\Engine\Controller {
 				$json['redirect'] = $this->url->link('account/success', 'language=' . $this->config->get('config_language'), true);
 			}
 
+			unset($this->session->data['shipping_method']);
 			unset($this->session->data['shipping_methods']);
+			unset($this->session->data['payment_method']);
 			unset($this->session->data['payment_methods']);
 
 			// Clear any previous login attempts for unregistered accounts.

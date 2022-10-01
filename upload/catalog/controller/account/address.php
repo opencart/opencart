@@ -134,7 +134,7 @@ class Address extends \Opencart\System\Engine\Controller {
 			$data['save'] = $this->url->link('account/address.save', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&address_id=' . $this->request->get['address_id']);
 		}
 
-		$data['upload'] = $this->url->link('tool/upload.upload', 'language=' . $this->config->get('config_language'));
+		$data['upload'] = $this->url->link('tool/upload', 'language=' . $this->config->get('config_language'));
 
 		if (isset($this->request->get['address_id'])) {
 			$this->load->model('account/address');

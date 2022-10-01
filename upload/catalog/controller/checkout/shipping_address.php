@@ -10,7 +10,7 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 		$data['config_checkout_payment_address'] = $this->config->get('config_checkout_payment_address');
 		$data['config_file_max_size'] = ((int)$this->config->get('config_file_max_size') * 1024 * 1024);
 
-		$data['upload'] = $this->url->link('tool/upload.upload', 'language=' . $this->config->get('config_language'));
+		$data['upload'] = $this->url->link('tool/upload', 'language=' . $this->config->get('config_language'));
 
 		// Set shipping address
 		$this->load->model('account/address');
@@ -212,7 +212,9 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 
 			$json['success'] = $this->language->get('text_success');
 
+			unset($this->session->data['shipping_method']);
 			unset($this->session->data['shipping_methods']);
+			unset($this->session->data['payment_method']);
 			unset($this->session->data['payment_methods']);
 		}
 
@@ -277,7 +279,9 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 
 			$json['success'] = $this->language->get('text_success');
 
+			unset($this->session->data['shipping_method']);
 			unset($this->session->data['shipping_methods']);
+			unset($this->session->data['payment_method']);
 			unset($this->session->data['payment_methods']);
 		}
 

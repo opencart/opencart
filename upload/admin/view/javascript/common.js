@@ -79,13 +79,6 @@ $(document).ready(function () {
 $(document).ready(function () {
     // Tooltip
     var oc_tooltip = function () {
-        // BS 5.2.1: Destroy tooltip, otherwise it has wrong position when displayed second time
-        // Get tooltip instance
-        tooltip = bootstrap.Tooltip.getInstance(this);
-        if (tooltip) {
-            // Destroy tooltip
-            tooltip.dispose();
-        }
         // Apply to current element
         tooltip = bootstrap.Tooltip.getOrCreateInstance(this);
         tooltip.show();

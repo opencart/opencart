@@ -63,7 +63,7 @@ class Notification extends \Opencart\System\Engine\Controller {
 		$results = $this->model_tool_notification->getNotifications($filter_data);
 
 		foreach ($results as $result) {
-			[$code, $date_added] = date_added($result['date_added']);
+			[$code, $date_added] = Helper\General\date_added($result['date_added']);
 
 			$data['notifications'][] = [
 				'notification_id' => $result['notification_id'],

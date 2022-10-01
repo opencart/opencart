@@ -28,6 +28,9 @@ $('#button-shipping-method').on('click', function () {
     $('#input-shipping-method').html('<option value="">{{ text_select }}</option>');
     $('#input-shipping-method').prop('disabled', true);
 
+    $('#input-payment-method').html('<option value="">{{ text_select }}</option>');
+    $('#input-payment-method').prop('disabled', true);
+
     chain.attach(function () {
         return $.ajax({
             url: 'index.php?route=checkout/shipping_method.getMethods&language={{ language }}',
@@ -77,8 +80,6 @@ $('#button-shipping-method').on('click', function () {
                 }
 
                 $('#input-shipping-method').html(html);
-
-                $('#checkout-confirm').load('index.php?route=checkout/confirm.confirm&language={{ language }}');
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -87,13 +88,13 @@ $('#button-shipping-method').on('click', function () {
     });
 });
 
-{% if not shipping_methods %}
-$('#button-shipping-method').trigger('click');
-{% endif %}
-
 // Shipping Method
 $('#input-shipping-method').on('change', function () {
     var element = this;
+
+    // Force the payment method to be re-selected with new shipping total
+    $('#input-payment-method').html('<option value="">{{ text_select }}</option>');
+    $('#input-payment-method').prop('disabled', true);
 
     chain.attach(function () {
         return $.ajax({
@@ -104,9 +105,11 @@ $('#input-shipping-method').on('change', function () {
             contentType: 'application/x-www-form-urlencoded',
             beforeSend: function () {
                 $(element).prop('disabled', true);
+                $('#button-shipping-method').prop('disabled', true);
             },
             complete: function () {
                 $(element).prop('disabled', false);
+                $('#button-shipping-method').prop('disabled', false);
             },
             success: function (json) {
                 console.log(json);

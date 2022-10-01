@@ -21,8 +21,7 @@
 </form>
 <br/>
 <div class="mb-2">
-  <label for="input-comment" class="form-label"><strong>{{ text_comments }}</strong></label>
-  <textarea name="comment" rows="3" id="input-comment" class="form-control">{{ comment }}</textarea>
+  <label for="input-comment" class="form-label"><strong>{{ text_comments }}</strong></label> <textarea name="comment" rows="3" id="input-comment" class="form-control">{{ comment }}</textarea>
 </div>
 {% if text_agree %}
   <div class="mb-2">
@@ -79,7 +78,9 @@ $('#button-payment-method').on('click', function () {
     });
 });
 
+{% if not payment_methods %}
 $('#button-payment-method').trigger('click');
+{% endif %}
 
 // Payment Method
 $('#input-payment-method').on('change', function () {

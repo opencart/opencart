@@ -76,7 +76,7 @@ $('#button-payment-method').on('click', function () {
     });
 });
 
-{% if not payment_methods and not shipping_required %}
+{% if not payment_methods and not payment_address_required and not shipping_required %}
 $('#button-payment-method').trigger('click');
 {% endif %}
 

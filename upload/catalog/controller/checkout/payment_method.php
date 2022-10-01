@@ -89,6 +89,7 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 			$data['agree'] = '';
 		}
 
+		$data['payment_address_required'] = $this->config->get('config_checkout_payment_address');
 		$data['shipping_required'] = $this->cart->hasShipping();
 
 		$data['language'] = $this->config->get('config_language');

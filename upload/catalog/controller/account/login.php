@@ -138,6 +138,11 @@ class Login extends \Opencart\System\Engine\Controller {
 				$this->session->data['shipping_address'] = $address_info;
 			}
 
+			unset($this->session->data['shipping_method']);
+			unset($this->session->data['shipping_methods']);
+			unset($this->session->data['payment_method']);
+			unset($this->session->data['payment_methods']);
+
 			// Wishlist
 			if (isset($this->session->data['wishlist']) && is_array($this->session->data['wishlist'])) {
 				$this->load->model('account/wishlist');

@@ -236,11 +236,9 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		if (!$json) {
-			// Validate payment method
-			if (!isset($this->request->post['payment_method']) || !isset($this->session->data['payment_methods']) || !isset($this->session->data['payment_methods'][$this->request->post['payment_method']])) {
-				$json['error'] = $this->language->get('error_payment_method');
-			}
+		// Validate payment method
+		if (!$json && (!isset($this->request->post['payment_method']) || !isset($this->session->data['payment_methods']) || !isset($this->session->data['payment_methods'][$this->request->post['payment_method']]))) {
+			$json['error'] = $this->language->get('error_payment_method');
 		}
 
 		if (!$json) {

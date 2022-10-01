@@ -89,6 +89,8 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 			$data['agree'] = '';
 		}
 
+		$data['shipping_required'] = $this->cart->hasShipping();
+
 		$data['language'] = $this->config->get('config_language');
 
 		return $this->load->view('checkout/payment_method', $data);

@@ -87,7 +87,9 @@ $('#button-shipping-method').on('click', function () {
     });
 });
 
+{% if not shipping_methods %}
 $('#button-shipping-method').trigger('click');
+{% endif %}
 
 // Shipping Method
 $('#input-shipping-method').on('change', function () {

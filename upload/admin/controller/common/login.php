@@ -101,6 +101,15 @@ class Login extends \Opencart\System\Engine\Controller {
 			// Remove login token so it cannot be used again.
 			unset($this->session->data['login_token']);
 
+			$login_data = [
+				'ip'         => $this->request->server['REMOTE_ADDR'],
+				'user_agent' => $this->request->server['HTTP_USER_AGENT']
+			];
+
+			$this->load->model('user/user');
+
+			$this->model_user_user->addLogin($this->user->getId(), $login_data);
+
 			if ($this->request->post['redirect'] && (strpos($this->request->post['redirect'], HTTP_SERVER) === 0)) {
 				$json['redirect'] = str_replace('&amp;', '&',  $this->request->post['redirect'] . '&user_token=' . $this->session->data['user_token']);
 			} else {

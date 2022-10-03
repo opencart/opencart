@@ -773,7 +773,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('customer/customer');
 
-			$this->model_customer_customer->deleteLoginAttempts($this->request->get['email']);
+			$this->model_customer_customer->deleteAuthorizeAttempts($this->request->get['email']);
 
 			$json['success'] = $this->language->get('text_success');
 		}

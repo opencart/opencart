@@ -290,7 +290,9 @@ class Cart extends \Opencart\System\Engine\Controller {
 			$json['success'] = sprintf($this->language->get('text_success'), $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product_id), $product_info['name'], $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language')));
 
 			// Unset all shipping and payment methods
+			unset($this->session->data['shipping_method']);
 			unset($this->session->data['shipping_methods']);
+			unset($this->session->data['payment_method']);
 			unset($this->session->data['payment_methods']);
 		} else {
 			$json['redirect'] = $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $this->request->post['product_id'], true);
@@ -354,7 +356,9 @@ class Cart extends \Opencart\System\Engine\Controller {
 			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
 		}
 
+		unset($this->session->data['shipping_method']);
 		unset($this->session->data['shipping_methods']);
+		unset($this->session->data['payment_method']);
 		unset($this->session->data['payment_methods']);
 		unset($this->session->data['reward']);
 

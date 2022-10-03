@@ -10,7 +10,6 @@
   </div>
   <div id="shipping-existing" style="display: {% if addresses %}block{% else %}none{% endif %};">
     <select name="address_id" id="input-shipping-address" class="form-select">
-     <option>{{ text_select }}</option>
       {% for address in addresses %}
         <option value="{{ address.address_id }}"{% if address.address_id == address_id %} selected{% endif %}>{{ address.firstname }} {{ address.lastname }}, {{ address.address_1 }}, {{ address.city }}, {{ address.zone }}, {{ address.country }}</option>
       {% endfor %}
@@ -197,6 +196,8 @@ $('input[name=\'shipping_existing\']').on('change', function () {
         $('#shipping-new').show();
     }
 });
+
+$('#button-shipping-method').trigger('click');
 
 // Existing Shipping Address
 $('#input-shipping-address').on('change', function () {

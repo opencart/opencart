@@ -2,16 +2,15 @@
   <fieldset>
     <legend>{{ heading_title }}</legend>
     <div class="input-group">
-      <select name="payment_method" id="input-payment-method" class="form-select"{% if not payment_methods %} disabled{% endif %}>
+      <select name="payment_method" id="input-payment-method" class="form-select"{% if not payment_methods or shipping_required %} disabled{% endif %}>
         <option value="">{{ text_select }}</option>
         {% for payment_method in payment_methods %}
-          <option value="{{ payment_method.code }}"{% if payment_method.code == code %} selected{% endif %}>{{ payment_method.title }}</option>
+          <option value="{{ payment_method.code }}">{{ payment_method.title }}</option>
         {% endfor %}
-
         {% if stores %}
           <optgroup label="{{ text_stored }}">
             {% for store in stores %}
-              <option value="{{ store.code }}"{% if store.code == code %} selected{% endif %}>{{ store.name }}</option>
+              <option value="{{ store.code }}">{{ store.name }}</option>
             {% endfor %}
           </optgroup>
         {% endif %}
@@ -22,8 +21,7 @@
 </form>
 <br/>
 <div class="mb-2">
-  <label for="input-comment" class="form-label"><strong>{{ text_comments }}</strong></label>
-    <textarea name="comment" rows="3" id="input-comment" class="form-control">{{ comment }}</textarea>
+  <label for="input-comment" class="form-label"><strong>{{ text_comments }}</strong></label> <textarea name="comment" rows="3" id="input-comment" class="form-control">{{ comment }}</textarea>
 </div>
 {% if text_agree %}
   <div class="mb-2">
@@ -35,12 +33,18 @@
 $('#button-payment-method').on('click', function () {
     var element = this;
 
+    $('#input-payment-method').html('<option value="">{{ text_select }}</option>');
+    $('#input-payment-method').prop('disabled', true);
+
     chain.attach(function () {
         return $.ajax({
             url: 'index.php?route=checkout/payment_method.getMethods&language={{ language }}',
             dataType: 'json',
             beforeSend: function () {
-                $('#input-payment-method').prop('disabled', true);
+                $('#button-payment-method').prop('disabled', true);
+            },
+            complete: function () {
+                $('#button-payment-method').prop('disabled', false);
             },
             success: function (json) {
                 console.log(json);
@@ -51,27 +55,19 @@ $('#button-payment-method').on('click', function () {
 
                 if (json['error']) {
                     $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                    $('#input-shipping-method').prop('disabled', true);
                 }
 
                 html = '<option value="">{{ text_select }}</option>';
 
                 if (json['payment_methods']) {
                     for (i in json['payment_methods']) {
-                        if (json['payment_methods'][i]['code'] == $('#input-payment-method').val()) {
-                            html += '<option value="' + json['payment_methods'][i]['code'] + '" selected>' + json['payment_methods'][i]['title'] + '</option>';
-                        } else {
-                            html += '<option value="' + json['payment_methods'][i]['code'] + '">' + json['payment_methods'][i]['title'] + '</option>';
-                        }
+                        html += '<option value="' + json['payment_methods'][i]['code'] + '">' + json['payment_methods'][i]['title'] + '</option>';
                     }
 
                     $('#input-payment-method').prop('disabled', false);
                 }
 
                 $('#input-payment-method').html(html);
-
-                $('#checkout-confirm').load('index.php?route=checkout/confirm.confirm&language={{ language }}');
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -79,6 +75,10 @@ $('#button-payment-method').on('click', function () {
         });
     });
 });
+
+{% if not payment_methods and not payment_address_required and not shipping_required %}
+$('#button-payment-method').trigger('click');
+{% endif %}
 
 // Payment Method
 $('#input-payment-method').on('change', function () {
@@ -93,9 +93,11 @@ $('#input-payment-method').on('change', function () {
             contentType: 'application/x-www-form-urlencoded',
             beforeSend: function () {
                 $(element).prop('disabled', true);
+                $('#button-payment-method').prop('disabled', true);
             },
             complete: function () {
                 $(element).prop('disabled', false);
+                $('#button-payment-method').prop('disabled', false);
             },
             success: function (json) {
                 console.log(json);
@@ -170,7 +172,6 @@ $('#input-comment').on('keydown', function () {
                 }
             });
         });
-
     }, 500, this);
 });
 

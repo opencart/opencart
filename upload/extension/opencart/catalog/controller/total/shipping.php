@@ -164,6 +164,9 @@ class Shipping extends \Opencart\System\Engine\Controller {
 			$this->session->data['shipping_method'] = $this->request->post['shipping_method'];
 
 			$json['success'] = $this->language->get('text_success');
+
+			unset($this->session->data['payment_method']);
+			unset($this->session->data['payment_methods']);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

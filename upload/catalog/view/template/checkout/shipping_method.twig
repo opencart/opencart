@@ -8,7 +8,7 @@
           <optgroup label="{{ shipping_method.title }}">
             {% if not shipping_method.error %}
               {% for quote in shipping_method.quote %}
-                <option value="{{ quote.code }}"{% if quote.code == code %} selected{% endif %}>{{ quote.title }}{% if quote.cost %} - {{ quote.text }}{% endif %}</option>
+                <option value="{{ quote.code }}">{{ quote.title }}{% if quote.cost %} - {{ quote.text }}{% endif %}</option>
               {% endfor %}
             {% else %}
               <option value="" class="text-danger" disabled>{{ shipping_method.error }}</option>
@@ -25,12 +25,21 @@
 $('#button-shipping-method').on('click', function () {
     var element = this;
 
+    $('#input-shipping-method').html('<option value="">{{ text_select }}</option>');
+    $('#input-shipping-method').prop('disabled', true);
+
+    $('#input-payment-method').html('<option value="">{{ text_select }}</option>');
+    $('#input-payment-method').prop('disabled', true);
+
     chain.attach(function () {
         return $.ajax({
             url: 'index.php?route=checkout/shipping_method.getMethods&language={{ language }}',
             dataType: 'json',
             beforeSend: function () {
-                $('#input-shipping-method').prop('disabled', true);
+                $('#button-shipping-method').prop('disabled', true);
+            },
+            complete: function () {
+                $('#button-shipping-method').prop('disabled', false);
             },
             success: function (json) {
                 console.log(json);
@@ -58,12 +67,7 @@ $('#button-shipping-method').on('click', function () {
                                     text = json['shipping_methods'][i]['quote'][j]['title'];
                                 }
 
-                                if (json['shipping_methods'][i]['quote'][j]['code'] == $('#input-shipping-method').val()) {
-                                    html += '<option value="' + json['shipping_methods'][i]['quote'][j]['code'] + '" selected>' + text + '</option>';
-                                } else {
-                                    html += '<option value="' + json['shipping_methods'][i]['quote'][j]['code'] + '">' + text + '</option>';
-                                }
-
+                                html += '<option value="' + json['shipping_methods'][i]['quote'][j]['code'] + '">' + text + '</option>';
                             }
                         } else {
                             html += '<option value="" style="color: #ff0000;" disabled>' + json['shipping_methods'][i]['error'] + '</option>';
@@ -76,8 +80,6 @@ $('#button-shipping-method').on('click', function () {
                 }
 
                 $('#input-shipping-method').html(html);
-
-                $('#checkout-confirm').load('index.php?route=checkout/confirm.confirm&language={{ language }}');
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -90,6 +92,10 @@ $('#button-shipping-method').on('click', function () {
 $('#input-shipping-method').on('change', function () {
     var element = this;
 
+    // Force the payment method to be re-selected with new shipping total
+    $('#input-payment-method').html('<option value="">{{ text_select }}</option>');
+    $('#input-payment-method').prop('disabled', true);
+
     chain.attach(function () {
         return $.ajax({
             url: 'index.php?route=checkout/shipping_method.save&language={{ language }}',
@@ -99,9 +105,11 @@ $('#input-shipping-method').on('change', function () {
             contentType: 'application/x-www-form-urlencoded',
             beforeSend: function () {
                 $(element).prop('disabled', true);
+                $('#button-shipping-method').prop('disabled', true);
             },
             complete: function () {
                 $(element).prop('disabled', false);
+                $('#button-shipping-method').prop('disabled', false);
             },
             success: function (json) {
                 console.log(json);

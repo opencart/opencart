@@ -2,7 +2,7 @@
 namespace Opencart\Admin\Model\Sale;
 class Order extends \Opencart\System\Engine\Model {
 	public function getOrder(int $order_id): array {
-		$order_query = $this->db->query("SELECT *, (SELECT CONCAT(c.`firstname`, ' ', c.`lastname`) FROM `" . DB_PREFIX . "customer` c WHERE c.`customer_id` = o.`customer_id`) AS customer, (SELECT os.`name` FROM `" . DB_PREFIX . "order_status` os WHERE os.`order_status_id` = o.`order_status_id` AND os.`language_id` = '" . (int)$this->config->get('config_language_id') . "') AS order_status FROM `" . DB_PREFIX . "order` o WHERE o.`order_id` = '" . (int)$order_id . "'");
+		$order_query = $this->db->query("SELECT *, (SELECT os.`name` FROM `" . DB_PREFIX . "order_status` os WHERE os.`order_status_id` = o.`order_status_id` AND os.`language_id` = '" . (int)$this->config->get('config_language_id') . "') AS order_status FROM `" . DB_PREFIX . "order` o WHERE o.`order_id` = '" . (int)$order_id . "'");
 
 		if ($order_query->num_rows) {
 			$country_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "country` WHERE `country_id` = '" . (int)$order_query->row['payment_country_id'] . "'");
@@ -77,7 +77,6 @@ class Order extends \Opencart\System\Engine\Model {
 				'store_name'              => $order_query->row['store_name'],
 				'store_url'               => $order_query->row['store_url'],
 				'customer_id'             => $order_query->row['customer_id'],
-				'customer'                => $order_query->row['customer'],
 				'customer_group_id'       => $order_query->row['customer_group_id'],
 				'firstname'               => $order_query->row['firstname'],
 				'lastname'                => $order_query->row['lastname'],

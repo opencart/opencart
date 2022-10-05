@@ -675,19 +675,18 @@ class Order extends \Opencart\System\Engine\Controller {
 			$store->request->get = $this->request->get;
 			$store->request->post = $this->request->post;
 
-			unset($store->request->get['route']);
-			unset($store->request->get['user_token']);
-			unset($store->request->get['action']);
-
 			// 5. Load the store data
 			$store->request->get['route'] = 'api/sale/order.load';
 
-			$store->load->controller('api/sale/order.load');
+			unset($store->request->get['user_token']);
+			unset($store->request->get['action']);
+
+			$store->load->controller($store->request->get['route']);
 
 			// 6. Get the cart data
 			$store->request->get['route'] = 'api/sale/cart';
 
-			$store->load->controller('api/sale/cart');
+			$store->load->controller($store->request->get['route']);
 
 			$cart_info = json_decode($store->response->getOutput(), true);
 

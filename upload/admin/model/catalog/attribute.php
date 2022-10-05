@@ -2,6 +2,9 @@
 /*
  *	Attribute Model Class
  *
+ *	@package Opencart\Admin\Model\Catalog\Attribute
+ *
+ *
  *	Can be called from $this->load->model('catalog/attribute');
  *
  * */
@@ -11,11 +14,11 @@ class Attribute extends \Opencart\System\Engine\Model {
 	/*
 	 *	Add Attribute
 	 *
-	 * Create a new attribute record in the database.
+	 *	Create a new attribute record in the database.
 	 *
-     * @param	array	$data
+     *	@param	array	$data
 	 *
-	 * @return	int		returns the primary key of the new attribute record.
+	 *	@return	int		returns the primary key of the new attribute record.
 	 */
 	public function addAttribute(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "attribute` SET `attribute_group_id` = '" . (int)$data['attribute_group_id'] . "', `sort_order` = '" . (int)$data['sort_order'] . "'");
@@ -87,7 +90,7 @@ class Attribute extends \Opencart\System\Engine\Model {
 	 *
 	 *	Get the record of the attribute record in the database.
 	 *
-	 *	@param	int		$attribute_id primary key of the attribute record to be fetched
+	 *	@param	array	$data array of filters
 	 *
 	 *	@return	array
 	 *
@@ -143,9 +146,9 @@ class Attribute extends \Opencart\System\Engine\Model {
 	 *
 	 *	Get the record of the attribute record in the database.
 	 *
-	 *	@param	int		$attribute_id primary key of the attribute record to be fetched
+	 *	@param	int		$attribute_id primary key of the attribute record to be fetched.
 	 *
-	 *	@return	array
+	 *	@return	array	returns array of descriptions sorted by language_id
 	 *
 	 */
 	public function getDescriptions(int $attribute_id): array {
@@ -163,11 +166,9 @@ class Attribute extends \Opencart\System\Engine\Model {
 	/*
 	 *	Get Total Attributes
 	 *
-	 *	Get the record of the attribute record in the database.
+	 *	Get the total number of attribute records in the database.
 	 *
-	 *	@param	int		$attribute_id primary key of the attribute record to be fetched
-	 *
-	 *	@return	array	Total number of attribute records.
+	 *	@return	int	Total number of attribute records.
 	 */
 	public function getTotalAttributes(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "attribute`");
@@ -182,11 +183,11 @@ class Attribute extends \Opencart\System\Engine\Model {
 	/*
 	 *	Get Total Attributes By Attribute Group ID
 	 *
-	 *	Get the record of the attribute record in the database.
+	 *	Get the total number of attribute records with group ID in the database.
 	 *
-	 *	@param	int		$attribute_id primary key of the attribute record to be fetched
+	 *	@param	int	$attribute_group_id foreign key of the attribute record to be fetched.
 	 *
-	 *	@return	array
+	 *	@return	int	Total number of attribute records that have attribute group ID.
 	 */
 	public function getTotalAttributesByAttributeGroupId(int $attribute_group_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "attribute` WHERE `attribute_group_id` = '" . (int)$attribute_group_id . "'");

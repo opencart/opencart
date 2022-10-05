@@ -95,6 +95,12 @@ class Featured extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['status'] = '';
 		}
+		
+		if (isset($this->request->get['module_id'])) {
+			$data['module_id'] = (int)$this->request->get['module_id'];
+		} else {
+			$data['module_id'] = 0;
+		}
 
 		$data['user_token'] = $this->session->data['user_token'];
 
@@ -129,10 +135,10 @@ class Featured extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('setting/module');
 
-			if (!isset($this->request->get['module_id'])) {
-				$this->model_setting_module->addModule('opencart.featured', $this->request->post);
+			if (!$this->request->post['module_id']) {
+				$json['module_id'] = $this->model_setting_module->addModule('opencart.featured', $this->request->post);
 			} else {
-				$this->model_setting_module->editModule($this->request->get['module_id'], $this->request->post);
+				$this->model_setting_module->editModule($this->request->post['module_id'], $this->request->post);
 			}
 
 			$json['success'] = $this->language->get('text_success');

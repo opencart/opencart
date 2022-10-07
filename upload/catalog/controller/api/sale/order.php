@@ -110,7 +110,7 @@ class Order extends \Opencart\System\Engine\Controller {
 					} elseif ($option['type'] == 'select' || $option['type'] == 'radio') {
 						$option_data[$option['product_option_id']] = $option['product_option_value_id'];
 					} elseif ($option['type'] == 'checkbox') {
-						$option_data[$option['product_option_id']][] = $option['value'];
+						$option_data[$option['product_option_id']][] = $option['product_option_value_id'];
 					}
 				}
 

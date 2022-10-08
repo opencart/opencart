@@ -1,11 +1,11 @@
 <?php
 namespace Opencart\Admin\Model\Sale;
 class Subscription extends \Opencart\System\Engine\Model {
-	public function editSubscription(int $subscription_id, int $data): void {
+	public function editSubscription(int $subscription_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "subscription` SET `subscription_plan_id` = '" . (int)$data['subscription_plan_id'] . "', `customer_payment_id` = '" . (int)$data['customer_payment_id'] . "' WHERE `subscription_id` = '" . (int)$subscription_id . "'");
 	}
 
-	public function editPaymentMethod(int $subscription_id, string $customer_payment_id): void {
+	public function editPaymentMethod(int $subscription_id, int $customer_payment_id): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "subscription` SET `customer_payment_id ` = '" . (int)$customer_payment_id . "' WHERE `subscription_id` = '" . (int)$subscription_id . "'");
 	}
 

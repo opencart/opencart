@@ -75,12 +75,10 @@ class Login extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
+		$this->customer->logout();
+
 		if (!isset($this->request->get['login_token']) || !isset($this->session->data['login_token']) || ($this->request->get['login_token'] != $this->session->data['login_token'])) {
 			$json['redirect'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'), true);
-		}
-
-		if ($this->customer->isLogged()) {
-			$json['redirect'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'], true);
 		}
 
 		if (!$json) {

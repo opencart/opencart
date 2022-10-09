@@ -347,13 +347,19 @@ $(document).on('click', '[data-oc-toggle=\'download\']', function (e) {
 $(document).on('click', '[data-oc-toggle=\'clear\']', function () {
     var element = this;
 
-    if ($(element).attr('data-oc-thumb')) {
-        var thumb = $(this).attr('data-oc-thumb');
+    // Images
+    var thumb = $(this).attr('data-oc-thumb');
 
+    if (thumb !== undefined) {
         $(thumb).attr('src', $(thumb).attr('data-oc-placeholder'));
     }
 
-    $(element).parent().find('[data-oc-toggle=\'download\'], [data-oc-toggle=\'clear\']').prop('disabled', true);
+    // Custom fields
+    var download = $(element).parent().find('[data-oc-toggle=\'download\']');
+
+    if (download.length) {
+        $(element).parent().find('[data-oc-toggle=\'download\'], [data-oc-toggle=\'clear\']').prop('disabled', true);
+    }
 
     $($(this).attr('data-oc-target')).val('');
 });

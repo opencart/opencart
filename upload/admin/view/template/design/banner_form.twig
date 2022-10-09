@@ -112,8 +112,10 @@ $('button[id^=\'button-banner\']').on('click', function () {
     var element = this;
 
     html = '<tr id="image-row-' + image_row + '">';
-    html += '  <td class="text-start"><input type="text" name="banner_image[' + $(element).attr('data-language') + '][' + image_row + '][title]" value="" placeholder="{{ entry_title }}" id="input-image-' + $(element).attr('data-language') + '-' + image_row + '-title" class="form-control"/>';
-    html += '    <div id="error-image-' + $(element).attr('data-language') + '-' + image_row + '-title" class="invalid-feedback"></div></td>';
+    html += '  <td class="text-start">';
+    html += '    <input type="text" name="banner_image[' + $(element).attr('data-language') + '][' + image_row + '][title]" value="" placeholder="{{ entry_title }}" id="input-image-' + $(element).attr('data-language') + '-' + image_row + '-title" class="form-control"/>';
+    html += '    <div id="error-image-' + $(element).attr('data-language') + '-' + image_row + '-title" class="invalid-feedback"></div>';
+    html += '  </td>';
     html += '  <td class="text-start"><input type="text" name="banner_image[' + $(element).attr('data-language') + '][' + image_row + '][link]" value="" placeholder="{{ entry_link }}" id="input-image-' + $(element).attr('data-language') + '-' + image_row + '-link" class="form-control"/></td>';
     html += '  <td class="text-center">';
     html += '    <div class="card">';

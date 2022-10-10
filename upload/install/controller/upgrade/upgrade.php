@@ -23,7 +23,13 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 
 		$data['button_continue'] = $this->language->get('button_continue');
 
-		$file = DIR_OPENCART . 'admin/config.php';
+		if (isset($this->request->get['admin'])) {
+			$admin = basename($this->request->get['admin']);
+		} else {
+			$admin = 'admin';
+		}
+
+		$file = DIR_OPENCART . $admin . '/config.php';
 
 		if (!is_file($file)) {
 			$data['error_warning'] = sprintf($this->language->get('error_admin'), $file);

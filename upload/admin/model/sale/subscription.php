@@ -177,10 +177,13 @@ class Subscription extends \Opencart\System\Engine\Model {
 
 		foreach ($query->rows as $result) {
 			$transaction_data[] = [
-				'date_added'  => $result['date_added'],
-				'description' => $result['description'],
-				'amount'      => $result['amount'],
-				'order_id'    => $result['order_id']
+				'order_id'       => $result['order_id'],
+				'description'    => $result['description'],
+				'amount'         => $result['amount'],
+				'type'           => $result['type'],
+				'payment_method' => $result['payment_method'],
+				'payment_code'   => $result['payment_code'],
+				'date_added'     => $result['date_added']
 			];
 		}
 

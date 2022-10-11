@@ -127,15 +127,6 @@ class Login extends \Opencart\System\Engine\Controller {
 				'custom_field'      => $customer_info['custom_field']
 			];
 
-			// Default address
-			$this->load->model('account/address');
-
-			$address_info = $this->model_account_address->getAddress($this->customer->getAddressId());
-
-			if ($address_info) {
-				$this->session->data['shipping_address'] = $address_info;
-			}
-
 			unset($this->session->data['shipping_method']);
 			unset($this->session->data['shipping_methods']);
 			unset($this->session->data['payment_method']);

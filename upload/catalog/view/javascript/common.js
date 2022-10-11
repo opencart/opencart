@@ -101,6 +101,7 @@ $(document).ready(function () {
     }
 
     $(document).on('click', 'button', oc_alert);
+    $(document).on('click', 'change', oc_alert);
 });
 
 $(document).ready(function () {

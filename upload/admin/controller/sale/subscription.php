@@ -776,8 +776,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$this->load->model('sale/subscription');
-
 			$this->model_sale_subscription->addTransaction($subscription_id, (string)$this->request->post['description'], (float)$this->request->post['amount']);
 
 			$json['success'] = $this->language->get('text_success');

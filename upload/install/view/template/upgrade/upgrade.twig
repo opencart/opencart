@@ -50,7 +50,7 @@ $('#button-continue').on('click', function () {
     $('#progress-bar').addClass('progress-bar-success').css('width', '0%').removeClass('progress-bar-danger');
     $('#progress-text').html('');
 
-    var next = 'index.php?route=upgrade/upgrade_1';
+    var next = 'index.php?route=upgrade/upgrade_1&admin=';
 
     var upgrade = function () {
         return $.ajax({

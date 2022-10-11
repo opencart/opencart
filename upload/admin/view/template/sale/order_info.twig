@@ -1282,6 +1282,8 @@ $('#input-customer').autocomplete({
 
         $('#input-payment-address').html(html);
         $('#input-shipping-address').html(html);
+        $('#input-payment-method').html('<option value="">{{ text_select }}</option>');
+        $('#input-shipping-method').html('<option value="">{{ text_select }}</option>');
     }
 });
 
@@ -1303,6 +1305,9 @@ $('#input-customer-group').on('change', function () {
                     $('.custom-field-' + custom_field['custom_field_id']).addClass('required');
                 }
             }
+
+            $('#input-payment-method').html('<option value="">{{ text_select }}</option>');
+            $('#input-shipping-method').html('<option value="">{{ text_select }}</option>');
         },
         error: function (xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -1351,6 +1356,9 @@ $('#form-customer').on('submit', function (e) {
                 $('#form-customer').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                 $('#customer-value').html('<a href="index.php?route=customer/customer.form&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val() + '">' + $('#input-firstname').val() + ' ' + $('#input-lastname').val() + '</a>');
+
+                $('#input-payment-method').html('<option value="">{{ text_select }}</option>');
+                $('#input-shipping-method').html('<option value="">{{ text_select }}</option>');
 
                 $('#button-refresh').trigger('click');
             }
@@ -1613,6 +1621,9 @@ $('#form-product-add').on('submit', function (e) {
             if (json['success']) {
                 $('#form-product-add').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
+                $('#input-payment-method').html('<option value="">{{ text_select }}</option>');
+                $('#input-shipping-method').html('<option value="">{{ text_select }}</option>');
+
                 // Refresh products, vouchers and totals
                 $('#button-refresh').trigger('click');
             }
@@ -1650,6 +1661,9 @@ $('#order-products').on('submit', 'form', function (e) {
 
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                $('#input-payment-method').html('<option value="">{{ text_select }}</option>');
+                $('#input-shipping-method').html('<option value="">{{ text_select }}</option>');
 
                 // Refresh products, vouchers and totals
                 $('#button-refresh').trigger('click');
@@ -1704,6 +1718,9 @@ $('#form-voucher-add').on('submit', function (e) {
                 $('#input-message').val('');
                 $('#input-amount').val('{{ voucher_min|escape('js') }}');
 
+                $('#input-payment-method').html('<option value="">{{ text_select }}</option>');
+                $('#input-shipping-method').html('<option value="">{{ text_select }}</option>');
+
                 // Refresh products, vouchers and totals
                 $('#button-refresh').trigger('click');
             }
@@ -1742,6 +1759,9 @@ $('#order-vouchers').on('submit', 'form', function (e) {
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
+                $('#input-payment-method').html('<option value="">{{ text_select }}</option>');
+                $('#input-shipping-method').html('<option value="">{{ text_select }}</option>');
+
                 // Refresh products, vouchers and totals
                 $('#button-refresh').trigger('click');
             }
@@ -1776,6 +1796,9 @@ $('#input-store').on('change', function (e) {
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
+                $('#input-payment-method').html('<option value="">{{ text_select }}</option>');
+                $('#input-shipping-method').html('<option value="">{{ text_select }}</option>');
+
                 $('#button-refresh').trigger('click');
             }
         },
@@ -1808,6 +1831,9 @@ $('#input-language').on('change', function (e) {
 
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                $('#input-payment-method').html('<option value="">{{ text_select }}</option>');
+                $('#input-shipping-method').html('<option value="">{{ text_select }}</option>');
 
                 $('#button-refresh').trigger('click');
             }
@@ -1842,6 +1868,9 @@ $('#input-currency').on('change', function (e) {
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
+                $('#input-payment-method').html('<option value="">{{ text_select }}</option>');
+                $('#input-shipping-method').html('<option value="">{{ text_select }}</option>');
+
                 $('#button-refresh').trigger('click');
             }
         },
@@ -1875,6 +1904,9 @@ $('#form-coupon').on('submit', function (e) {
 
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                $('#input-payment-method').html('<option value="">{{ text_select }}</option>');
+                $('#input-shipping-method').html('<option value="">{{ text_select }}</option>');
 
                 // Refresh products, vouchers and totals
                 $('#button-refresh').trigger('click');
@@ -1911,6 +1943,9 @@ $('#form-voucher').on('submit', function (e) {
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
+                $('#input-payment-method').html('<option value="">{{ text_select }}</option>');
+                $('#input-shipping-method').html('<option value="">{{ text_select }}</option>');
+
                 // Refresh products, vouchers and totals
                 $('#button-refresh').trigger('click');
             }
@@ -1945,6 +1980,9 @@ $('#form-reward').on('submit', function (e) {
 
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                $('#input-payment-method').html('<option value="">{{ text_select }}</option>');
+                $('#input-shipping-method').html('<option value="">{{ text_select }}</option>');
 
                 $('#button-refresh').trigger('click');
             }
@@ -1992,6 +2030,9 @@ $(document).on('click', '#button-reward-add, #button-reward-remove', function (e
                 if (action == 'remove') {
                     $(element).replaceWith('<button type="button" id="button-reward-add" data-bs-toggle="tooltip" title="{{ button_reward_add }}" class="btn btn-success"><i class="fa-solid fa-plus-circle"></i></button>');
                 }
+
+                $('#input-payment-method').html('<option value="">{{ text_select }}</option>');
+                $('#input-shipping-method').html('<option value="">{{ text_select }}</option>');
             }
         },
         error: function (xhr, ajaxOptions, thrownError) {
@@ -2226,6 +2267,9 @@ $('#form-payment-address').on('submit', function (e) {
 
                 $('#payment-address-value').html(address);
 
+                $('#input-payment-method').html('<option value="">{{ text_select }}</option>');
+                $('#input-shipping-method').html('<option value="">{{ text_select }}</option>');
+
                 $('#button-refresh').trigger('click');
             }
         },
@@ -2400,6 +2444,9 @@ $('#form-shipping-address').on('submit', function (e) {
 
                 $('#shipping-address-value').html(address);
 
+                $('#input-payment-method').html('<option value="">{{ text_select }}</option>');
+                $('#input-shipping-method').html('<option value="">{{ text_select }}</option>');
+
                 // Refresh products, vouchers and totals
                 $('#button-refresh').trigger('click');
             }
@@ -2481,11 +2528,7 @@ $('#button-payment-method').on('click', function () {
 
             if (json['payment_methods']) {
                 for (i in json['payment_methods']) {
-                    if (json['payment_methods'][i]['code'] == $('#input-payment-method').val()) {
-                        html += '<option value="' + json['payment_methods'][i]['code'] + '" selected>' + json['payment_methods'][i]['title'] + '</option>';
-                    } else {
-                        html += '<option value="' + json['payment_methods'][i]['code'] + '">' + json['payment_methods'][i]['title'] + '</option>';
-                    }
+                    html += '<option value="' + json['payment_methods'][i]['code'] + '">' + json['payment_methods'][i]['title'] + '</option>';
                 }
             }
 
@@ -2563,11 +2606,7 @@ $('#button-shipping-method').on('click', function () {
 
                     if (!json['shipping_methods'][i]['error']) {
                         for (j in json['shipping_methods'][i]['quote']) {
-                            if (json['shipping_methods'][i]['quote'][j]['code'] == $('#input-shipping-method').val()) {
-                                html += '<option value="' + json['shipping_methods'][i]['quote'][j]['code'] + '" selected>' + json['shipping_methods'][i]['quote'][j]['title'] + ' - ' + json['shipping_methods'][i]['quote'][j]['text'] + '</option>';
-                            } else {
-                                html += '<option value="' + json['shipping_methods'][i]['quote'][j]['code'] + '">' + json['shipping_methods'][i]['quote'][j]['title'] + ' - ' + json['shipping_methods'][i]['quote'][j]['text'] + '</option>';
-                            }
+                            html += '<option value="' + json['shipping_methods'][i]['quote'][j]['code'] + '">' + json['shipping_methods'][i]['quote'][j]['title'] + ' - ' + json['shipping_methods'][i]['quote'][j]['text'] + '</option>';
                         }
                     } else {
                         html += '<option value="" class="text-danger" disabled>' + json['shipping_methods'][i]['error'] + '</span></li>';

@@ -236,11 +236,21 @@ class Security extends \Opencart\System\Engine\Controller {
 	public function admin(): void {
 		$this->load->language('common/security');
 
+		if (isset($this->request->get['page'])) {
+			$page = (int)$this->request->get['page'];
+		} else {
+			$page = 1;
+		}
+
+		if (isset($this->request->get['name'])) {
+			$name = preg_replace('[^a-zA-z0-9]', '', basename(html_entity_decode(trim((string)$this->request->get['name']), ENT_QUOTES, 'UTF-8')));
+		} else {
+			$name = '';
+		}
+
 		$json = [];
 
 		if ($this->user->hasPermission('modify', 'common/security')) {
-			$name = preg_replace('[^a-zA-z0-9]', '', basename(html_entity_decode(trim($this->request->post['name']), ENT_QUOTES, 'UTF-8')));
-
 			$path_old = DIR_OPENCART . 'admin/';
 			$path_new = DIR_OPENCART . $name . '/';
 
@@ -288,56 +298,63 @@ class Security extends \Opencart\System\Engine\Controller {
 			// 2. Create the new admin folder name
 			mkdir($path_new, 0777);
 
-			// 3. Copy the files across
-			foreach ($files as $file) {
-				$destination = $path_new . substr($file, strlen($path_old));
+			// 3. split the file copies into chunks.
+			$total = count($files);
 
-				if (is_dir($file) && !is_dir($destination)) {
+			$start = ($page - 1) * 200;
+
+			// 4. Copy the files across
+			for ($i = $start; $i < ($start + 200); $i++) {
+				$destination = $path_new . substr($files[$i], strlen($path_old));
+
+				if (is_dir($files[$i]) && !is_dir($destination)) {
 					mkdir($destination, 0777);
 				}
 
-				if (is_file($file)) {
+				if (is_file($files[$i])) {
 					copy($file, $destination);
 				}
 			}
 
-			// Update the old config files
-			$file = $path_new . 'config.php';
+			if (($page * 200) <= $total) {
+				$json['next'] = $this->url->link('common/security.admin', 'name=' . $name . '&page=' . ($page + 1), true);
+			} else {
+				// Update the old config files
+				$file = $path_new . 'config.php';
 
-			$output = '';
+				$output = '';
 
-			$lines = file($file);
+				$lines = file($file);
 
-			foreach ($lines as $line_id => $line) {
-				$status = true;
+				foreach ($lines as $line_id => $line) {
+					$status = true;
 
-				if (strpos($line, 'define(\'HTTP_SERVER') !== false) {
-					$output .= 'define(\'HTTP_SERVER\', \'' . substr(HTTP_SERVER, 0, strrpos(HTTP_SERVER, '/admin/')) . '/' . $name . '/\');' . "\n";
+					if (strpos($line, 'define(\'HTTP_SERVER') !== false) {
+						$output .= 'define(\'HTTP_SERVER\', \'' . substr(HTTP_SERVER, 0, strrpos(HTTP_SERVER, '/admin/')) . '/' . $name . '/\');' . "\n";
 
-					$status = false;
+						$status = false;
+					}
+
+					if (strpos($line, 'define(\'DIR_APPLICATION') !== false) {
+						$output .= 'define(\'DIR_APPLICATION\', DIR_OPENCART . \'' . $name . '/\');' . "\n";
+
+						$status = false;
+					}
+
+					if ($status) {
+						$output .= $line;
+					}
 				}
 
-				if (strpos($line, 'define(\'DIR_APPLICATION') !== false) {
-					$output .= 'define(\'DIR_APPLICATION\', DIR_OPENCART . \'' . $name . '/\');' . "\n";
+				$file = fopen($file, 'w');
 
-					$status = false;
-				}
+				fwrite($file, $output);
 
-				if ($status) {
-					$output .= $line;
-				}
+				fclose($file);
+
+				// 6. redirect to the new admin
+				$json['redirect'] = str_replace('&amp;', '&', substr(HTTP_SERVER, 0, -6) . $name . '/index.php?route=common/security.delete&user_token=' . $this->session->data['user_token']);
 			}
-
-			$file = fopen($file, 'w');
-
-			fwrite($file, $output);
-
-			fclose($file);
-
-			// 6. redirect to the new admin
-			$url_without_admin_folder = substr(HTTP_SERVER, 0, strrpos(HTTP_SERVER, 'admin/'));
-			$url_with_new_admin_folder = $url_without_admin_folder . $name . '/index.php?route=common/security.delete&user_token=' . $this->session->data['user_token'];
-			$json['redirect'] = str_replace('&amp;', '&', $url_with_new_admin_folder);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

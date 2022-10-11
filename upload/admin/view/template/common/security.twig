@@ -66,7 +66,7 @@
                 <div class="mb-3">
                   <div class="input-group">
                     <div class="input-group-text">{{ text_path }}</div>
-                    <input type="text" name="name" value="admin" placeholder="{{ entry_name }}" class="form-control is-invalid"/>
+                    <input type="text" name="name" value="admin" placeholder="{{ entry_name }}" id="input-admin" class="form-control is-invalid"/>
                   </div>
                 </div>
                 <div class="text-end">
@@ -95,7 +95,7 @@ $('#button-install').on('click', function () {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=common/security.install&user_token={{ user_token }}&',
+        url: 'index.php?route=common/security.install&user_token={{ user_token }}',
         dataType: 'json',
         beforeSend: function () {
             $(element).prop('disabled', true).addClass('loading');
@@ -171,13 +171,11 @@ $('#button-storage').on('click', function () {
 $('#button-admin').on('click', function () {
     var element = this;
 
-    var next = 'index.php?route=common/security.admin&user_token={{ user_token }}';
+    var next = 'index.php?route=common/security.admin&user_token={{ user_token }}&name=' + $('#input-admin').val();
 
     var move = function () {
         return $.ajax({
             url: next,
-            type: 'post',
-            data: $('#form-admin').serialize(),
             dataType: 'json',
             contentType: 'application/x-www-form-urlencoded',
             beforeSend: function () {
@@ -187,6 +185,8 @@ $('#button-admin').on('click', function () {
                 $(element).prop('disabled', false).removeClass('loading');
             },
             success: function (json) {
+                console.log(json);
+
                 $('.alert-dismissible').remove();
 
                 if (json['redirect']) {

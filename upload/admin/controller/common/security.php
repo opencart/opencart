@@ -296,16 +296,23 @@ class Security extends \Opencart\System\Engine\Controller {
 			}
 
 			// 2. Create the new admin folder name
-			mkdir($path_new, 0777);
+			if (!is_dir($path_new)) {
+				mkdir($path_new, 0777);
+			}
 
 			// 3. split the file copies into chunks.
 			$total = count($files);
+			$limit = 200;
 
-			$start = ($page - 1) * 200;
+			$start = ($page - 1) * $limit;
+			$end = $start > ($total - $limit) ? $total : ($start + $limit);
 
 			// 4. Copy the files across
-			for ($i = $start; $i < ($start + 200); $i++) {
+			for ($i = $start; $i < $end; $i++) {
 				$destination = $path_new . substr($files[$i], strlen($path_old));
+
+
+				//$directories = explode('/', dirname($path));
 
 				if (is_dir($files[$i]) && !is_dir($destination)) {
 					mkdir($destination, 0777);
@@ -316,8 +323,8 @@ class Security extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-			if (($page * 200) <= $total) {
-				$json['next'] = $this->url->link('common/security.admin', 'name=' . $name . '&page=' . ($page + 1), true);
+			if (($page * $limit) <= $total) {
+				$json['next'] = $this->url->link('common/security.admin', '&user_token=' . $this->session->data['user_token'] . '&name=' . $name . '&page=' . ($page + 1), true);
 			} else {
 				// Update the old config files
 				$file = $path_new . 'config.php';

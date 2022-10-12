@@ -29,6 +29,12 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 			$admin = 'admin';
 		}
 
+		if (isset($this->request->get['version'])) {
+			$version = basename($this->request->get['version']);
+		} else {
+			$version = '';
+		}
+
 		$file = DIR_OPENCART . $admin . '/config.php';
 
 		if (!is_file($file)) {
@@ -40,6 +46,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 		$data['total'] = count(glob(DIR_APPLICATION . 'controller/upgrade/upgrade_*.php'));
 
 		$data['admin'] = $admin;
+		$data['version'] = $version;
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['footer'] = $this->load->controller('common/footer');

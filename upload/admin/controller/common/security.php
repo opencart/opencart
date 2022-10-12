@@ -258,8 +258,8 @@ class Security extends \Opencart\System\Engine\Controller {
 				$json['error'] = $this->language->get('error_admin');
 			}
 
-			if (is_dir($path_new)) {
-				//$json['error'] = $this->language->get('error_admin_exists');
+			if (is_dir($path_new) && $page < 2) {
+				$json['error'] = $this->language->get('error_admin_exists');
 			}
 
 			if ($name == 'admin') {

@@ -253,14 +253,14 @@ class Security extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if ($this->user->hasPermission('modify', 'common/security')) {
-			$path_old = DIR_OPENCART . 'admin/';
-			$path_new = DIR_OPENCART . $name . '/';
+			$base_old = DIR_OPENCART . 'admin/';
+			$base_new = DIR_OPENCART . $name . '/';
 
-			if (!is_dir($path_old)) {
+			if (!is_dir($base_old)) {
 				$json['error'] = $this->language->get('error_admin');
 			}
 
-			if (is_dir($path_new) && $page < 2) {
+			if (is_dir($base_new) && $page < 2) {
 				$json['error'] = $this->language->get('error_admin_exists');
 			}
 
@@ -280,7 +280,7 @@ class Security extends \Opencart\System\Engine\Controller {
 			$files = [];
 
 			// Make path into an array
-			$directory = [$path_old];
+			$directory = [$base_old];
 
 			// While the path array is still populated keep looping through
 			while (count($directory) != 0) {
@@ -298,8 +298,8 @@ class Security extends \Opencart\System\Engine\Controller {
 			}
 
 			// 2. Create the new admin folder name
-			if (!is_dir($path_new)) {
-				mkdir($path_new, 0777);
+			if (!is_dir($base_new)) {
+				mkdir($base_new, 0777);
 			}
 
 			// 3. split the file copies into chunks.
@@ -311,18 +311,26 @@ class Security extends \Opencart\System\Engine\Controller {
 
 			// 4. Copy the files across
 			for ($i = $start; $i < $end; $i++) {
-				$destination = substr($files[$i], strlen($path_old));
+				$destination = substr($files[$i], strlen($base_old));
 
-				$directories = explode('/', substr($files[$i], strlen($path_old)));
+				$path_new = '';
+
+				$directories = explode('/', $destination);
 
 				foreach ($directories as $directory) {
-					if (is_dir($path_old . $directory) && !is_dir($path_new . $directory)) {
-						mkdir($path_new . $destination, 0777);
+					if (!$path_new) {
+						$path_new = $directory;
+					} else {
+						$path_new = $path_new . '/' . $directory;
+					}
+
+					if (is_dir($base_old . $path_new) && !is_dir($base_new . $path_new)) {
+						mkdir($base_new . $path_new, 0777);
 					}
 				}
 
-				if (is_file($files[$i])) {
-					copy($files[$i], $path_new . $destination);
+				if (is_file($base_old . $destination) && !is_file($base_new . $destination)) {
+					copy($base_old . $destination, $base_new . $destination);
 				}
 			}
 
@@ -330,7 +338,7 @@ class Security extends \Opencart\System\Engine\Controller {
 				$json['next'] = $this->url->link('common/security.admin', '&user_token=' . $this->session->data['user_token'] . '&name=' . $name . '&page=' . ($page + 1), true);
 			} else {
 				// Update the old config files
-				$file = $path_new . 'config.php';
+				$file = $base_new . 'config.php';
 
 				$output = '';
 

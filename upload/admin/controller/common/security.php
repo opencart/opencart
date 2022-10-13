@@ -170,7 +170,9 @@ class Security extends \Opencart\System\Engine\Controller {
 			}
 
 			// Create the new storage folder
-			mkdir($path_new, 0777);
+			if (!is_dir($path_new)) {
+				mkdir($path_new, 0777);
+			}
 
 			// Copy the
 			foreach ($files as $file) {
@@ -309,17 +311,18 @@ class Security extends \Opencart\System\Engine\Controller {
 
 			// 4. Copy the files across
 			for ($i = $start; $i < $end; $i++) {
-				$destination = $path_new . substr($files[$i], strlen($path_old));
+				$destination = substr($files[$i], strlen($path_old));
 
+				$directories = explode('/', substr($files[$i], strlen($path_old)));
 
-				//$directories = explode('/', dirname($path));
-
-				if (is_dir($files[$i]) && !is_dir($destination)) {
-					mkdir($destination, 0777);
+				foreach ($directories as $directory) {
+					if (is_dir($path_old . $directory) && !is_dir($path_new . $directory)) {
+						mkdir($path_new . $destination, 0777);
+					}
 				}
 
 				if (is_file($files[$i])) {
-					copy($files[$i], $destination);
+					copy($files[$i], $path_new . $destination);
 				}
 			}
 
@@ -358,6 +361,17 @@ class Security extends \Opencart\System\Engine\Controller {
 				fwrite($file, $output);
 
 				fclose($file);
+
+				// Require higher security for session cookies
+				$option = [
+					'expires'  => $this->config->get('config_session_expire') ? time() + (int)$this->config->get('config_session_expire') : 0,
+					'path'     => $name . '/',
+					'secure'   => $this->request->server['HTTPS'],
+					'httponly' => false,
+					'SameSite' => $this->config->get('config_session_samesite')
+				];
+
+				setcookie($this->config->get('session_name'), $this->session->getId(), $option);
 
 				// 6. redirect to the new admin
 				$json['redirect'] = str_replace('&amp;', '&', substr(HTTP_SERVER, 0, -6) . $name . '/index.php?route=common/security.delete&user_token=' . $this->session->data['user_token']);

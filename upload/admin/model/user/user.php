@@ -26,6 +26,8 @@ class User extends \Opencart\System\Engine\Model {
 
 	public function deleteUser(int $user_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "user` WHERE `user_id` = '" . (int)$user_id . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "user_history` WHERE `user_id` = '" . (int)$user_id . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "user_history` WHERE `user_id` = '" . (int)$user_id . "'");
 	}
 
 	public function getUser(int $user_id): array {
@@ -131,7 +133,7 @@ class User extends \Opencart\System\Engine\Model {
 	}
 
 	public function getTotalLogins(int $user_id): int {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "user_login` WHERE `user_id` = '" . (int)$user_id . "'");
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "user_login` WHERE `user_id` = '" . (int)$user_id . "'");
 
 		if ($query->num_rows) {
 			return (int)$query->row['total'];
@@ -140,33 +142,33 @@ class User extends \Opencart\System\Engine\Model {
 		}
 	}
 
-	public function addToken(int $user_id, array $data): void {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "user_token` SET `user_id` = '" . (int)$user_id . "', `token` = '" . $this->db->escape($data['token']) . "', `ip` = '" . $this->db->escape($data['ip']) . "', `user_agent` = '" . $this->db->escape($data['user_agent']) . "', `date_added` = NOW()");
+	public function addAuthorize(int $user_id, array $data): void {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "user_authorize` SET `user_id` = '" . (int)$user_id . "', `token` = '" . $this->db->escape($data['token']) . "', `ip` = '" . $this->db->escape($data['ip']) . "', `user_agent` = '" . $this->db->escape($data['user_agent']) . "', `date_added` = NOW()");
 	}
 
-	public function editTokenStatus(int $user_login_id, bool $status): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "user_token` SET `status` = '" . (bool)$status . "' WHERE `user_login_id` = '" . (int)$user_login_id . "'");
+	public function editAuthorizeStatus(int $user_authorize_id, bool $status): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "user_authorize` SET `status` = '" . (bool)$status . "' WHERE `user_authorize_id` = '" . (int)$user_authorize_id . "'");
 	}
 
-	public function editTokenTotal(int $user_login_id, int $total): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "user_token` SET `total` = '" . (int)$total . "' WHERE `user_login_id` = '" . (int)$user_login_id . "'");
+	public function editAuthorizeTotal(int $user_authorize_id, int $total): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "user_authorize` SET `total` = '" . (int)$total . "' WHERE `user_authorize_id` = '" . (int)$user_authorize_id . "'");
 	}
 
-	public function deleteToken(int $user_login_id): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "user_login` WHERE `user_login_id` = '" . (int)$user_login_id . "'");
+	public function deleteAuthorize(int $user_authorize_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "user_authorize` WHERE `user_authorize_id` = '" . (int)$user_authorize_id . "'");
 	}
 
-	public function getTokenByToken(int $user_id, string $token): array {
-		$query = $this->db->query("SELECT *, (SELECT SUM(total) FROM `" . DB_PREFIX . "user_token` WHERE `user_id` = '" . (int)$user_id . "') AS `attempts` FROM `" . DB_PREFIX . "user_login` WHERE `user_id` = '" . (int)$user_id . "' AND `token` = '" . $this->db->escape($token) . "'");
+	public function getAuthorizeByToken(int $user_id, string $token): array {
+		$query = $this->db->query("SELECT *, (SELECT SUM(total) FROM `" . DB_PREFIX . "user_authorize` WHERE `user_id` = '" . (int)$user_id . "') AS `attempts` FROM `" . DB_PREFIX . "user_authorize` WHERE `user_id` = '" . (int)$user_id . "' AND `token` = '" . $this->db->escape($token) . "'");
 
 		return $query->row;
 	}
 
-	public function resetTokens(int $user_id): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "user_login` SET total = '0' WHERE `user_id` = '" . (int)$user_id . "'");
+	public function resetAuthorizes(int $user_id): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "user_authorize` SET `total` = '0' WHERE `user_id` = '" . (int)$user_id . "'");
 	}
 
-	public function getTokens(int $user_id, int $start = 0, int $limit = 10): array {
+	public function getAuthorizes(int $user_id, int $start = 0, int $limit = 10): array {
 		if ($start < 0) {
 			$start = 0;
 		}
@@ -175,7 +177,7 @@ class User extends \Opencart\System\Engine\Model {
 			$limit = 10;
 		}
 
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "user_login` WHERE `user_id` = '" . (int)$user_id . "' LIMIT " . (int)$start . "," . (int)$limit);
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "user_authorize` WHERE `user_id` = '" . (int)$user_id . "' LIMIT " . (int)$start . "," . (int)$limit);
 
 		if ($query->num_rows) {
 			return $query->rows;
@@ -184,8 +186,8 @@ class User extends \Opencart\System\Engine\Model {
 		}
 	}
 
-	public function getTotalTokens(int $user_id): int {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "user_login` WHERE `user_id` = '" . (int)$user_id . "'");
+	public function getTotalAuthorizes(int $user_id): int {
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "user_authorize` WHERE `user_id` = '" . (int)$user_id . "'");
 
 		if ($query->num_rows) {
 			return (int)$query->row['total'];

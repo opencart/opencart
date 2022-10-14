@@ -60,7 +60,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 		}
 
 		// For testing
-		//$data['latest_version'] = 'master';
+		$data['latest_version'] = 'master';
 
 		$data['user_token'] = $this->session->data['user_token'];
 

@@ -276,6 +276,21 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 				'field' => 'salt'
 			];
 
+			$remove[] = [
+				'table' => 'user_login',
+				'field' => 'token'
+			];
+
+			$remove[] = [
+				'table' => 'user_login',
+				'field' => 'total'
+			];
+
+			$remove[] = [
+				'table' => 'user_login',
+				'field' => 'status'
+			];
+
 			foreach ($remove as $result) {
 				$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . $result['table'] . "' AND COLUMN_NAME = '" . $result['field'] . "'");
 

@@ -105,6 +105,7 @@ $(document).ready(function () {
     }
 
     $(document).on('click', 'button', oc_alert);
+    $(document).on('click', 'change', oc_alert);
 });
 
 $(document).ready(function () {
@@ -312,7 +313,7 @@ $(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function (e) {
                     $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                 }
 
-                for (key in json['error']) {
+                for (var key in json['error']) {
                     $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
                     $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
                 }
@@ -331,7 +332,7 @@ $(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function (e) {
             }
 
             // Replace any form values that correspond to form names.
-            for (key in json) {
+            for (var key in json) {
                 $(form).find('[name=\'' + key + '\']').val(json[key]);
             }
         },

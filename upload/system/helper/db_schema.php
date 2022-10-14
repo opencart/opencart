@@ -7339,10 +7339,10 @@ function db_schema() {
 	];
 
 	$tables[] = [
-		'name' => 'user_login',
+		'name' => 'user_authorize',
 		'field' => [
 			[
-				'name' => 'user_login_id',
+				'name' => 'user_authorize_id',
 				'type' => 'int(11)',
 				'not_null' => true,
 				'auto_increment' => true
@@ -7384,7 +7384,7 @@ function db_schema() {
 			]
 		],
 		'primary' => [
-			'user_login_id'
+			'user_authorize_id'
 		],
 		'foreign' => [
 			[
@@ -7420,6 +7420,51 @@ function db_schema() {
 		],
 		'primary' => [
 			'user_group_id'
+		],
+		'engine' => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
+	];
+
+	$tables[] = [
+		'name' => 'user_login',
+		'field' => [
+			[
+				'name' => 'user_login_id',
+				'type' => 'int(11)',
+				'not_null' => true,
+				'auto_increment' => true
+			],
+			[
+				'name' => 'user_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'ip',
+				'type' => 'varchar(40)',
+				'not_null' => true
+			],
+			[
+				'name' => 'user_agent',
+				'type' => 'varchar(255)',
+				'not_null' => true
+			],
+			[
+				'name' => 'date_added',
+				'type' => 'datetime',
+				'not_null' => true
+			]
+		],
+		'primary' => [
+			'user_login_id'
+		],
+		'foreign' => [
+			[
+				'key'   => 'user_id',
+				'table' => 'user',
+				'field' => 'user_id'
+			]
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',

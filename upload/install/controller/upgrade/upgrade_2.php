@@ -125,9 +125,9 @@ class Upgrade2 extends \Opencart\System\Engine\Controller {
 			}
 
 			if (($page * 200) <= $total) {
-				$json['next'] = $this->url->link('upgrade/upgrade_2', 'version=' . $version . '&admin=' . $admin . '&page=' . ($page + 1), true);
+				$json['next'] = $this->url->link('upgrade/upgrade_2', $url . '&page=' . ($page + 1), true);
 			} else {
-				$json['next'] = $this->url->link('upgrade/upgrade_3', '', true);
+				$json['next'] = $this->url->link('upgrade/upgrade_3', $url, true);
 
 				if (is_file($file)) {
 					unlink($file);

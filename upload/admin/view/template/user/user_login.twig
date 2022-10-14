@@ -4,25 +4,21 @@
       <tr>
         <td class="text-start">{{ column_ip }}</td>
         <td class="text-start">{{ column_user_agent }}</td>
-        <td class="text-start">{{ column_status }}</td>
         <td class="text-start">{{ column_date_added }}</td>
-        <td class="text-end">{{ column_action }}</td>
       </tr>
     </thead>
     <tbody>
-      {% if user_logins %}
-        {% for user_login in user_logins %}
+      {% if logins %}
+        {% for login in logins %}
           <tr>
-            <td class="text-start"><a href="https://whatismyipaddress.com/ip/{{ user_login.ip }}" target="_blank">{{ user_login.ip }}</a></td>
-            <td class="text-start">{{ user_login.user_agent }}</td>
-            <td class="text-start">{{ user_login.status }}</td>
-            <td class="text-start">{{ user_login.date_added }}</td>
-            <td class="text-end"><a href="{{ user_login.delete }}" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></td>
+            <td class="text-start"><a href="https://whatismyipaddress.com/ip/{{ login.ip }}" target="_blank">{{ login.ip }}</a></td>
+            <td class="text-start">{{ login.user_agent }}</td>
+            <td class="text-start">{{ login.date_added }}</td>
           </tr>
         {% endfor %}
       {% else %}
         <tr>
-          <td class="text-center" colspan="5">{{ text_no_results }}</td>
+          <td class="text-center" colspan="3">{{ text_no_results }}</td>
         </tr>
       {% endif %}
     </tbody>

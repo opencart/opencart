@@ -564,12 +564,6 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		// Customer
-		if (!empty($order_info) && $order_info['customer_id']) {
-			$data['customer'] = $order_info['customer'];
-		} else {
-			$data['customer'] = '';
-		}
-
 		if (!empty($order_info)) {
 			$data['customer_id'] = $order_info['customer_id'];
 		} else {
@@ -649,44 +643,60 @@ class Order extends \Opencart\System\Engine\Controller {
 			];
 		}
 
-		// Products
-		$data['order_products'] = [];
-		$data['order_vouchers'] = [];
+		// Delete any old session
+		if (isset($this->session->data['api_session'])) {
+			$session = new \Opencart\System\Library\Session($this->config->get('session_engine'), $this->registry);
+			$session->start($this->session->data['api_session']);
+			$session->destroy();
+		}
 
 		if (!empty($order_info)) {
-			if (isset($this->session->data['api_session'])) {
-				$session_id = $this->session->data['api_session'];
-			} else {
-				$session_id = '';
-			}
+			$store_id = $order_info['store_id'];
+		} else {
+			$store_id = 0;
+		}
 
-			// 1. Create a store instance using loader class to call controllers, models, views, libraries
-			$store = $this->load->controller('tool/store.createStoreInstance', $order_info['store_id'], $order_info['language_code'], $session_id);
+		if (!empty($order_info)) {
+			$language = $order_info['language_code'];
+		} else {
+			$language = $this->config->get('config_language');
+		}
 
-			// 2. To use the order API it requires an API ID.
-			$store->session->data['api_id'] = (int)$this->config->get('config_api_id');
+		$store = $this->load->controller('tool/store.createStoreInstance', $store_id, $language);
 
-			// 3. Store the new session ID so we're not creating new session on every page load
-			$this->session->data['api_session'] = $store->session->getId();
+		// 2. Store the new session ID so we're not creating new session on every page load
+		$this->session->data['api_session'] = $store->session->getId();
 
+		// 3. To use the order API it requires an API ID.
+		$store->session->data['api_id'] = (int)$this->config->get('config_api_id');
+
+		if (!empty($order_info)) {
 			// 4. Add the request vars and remove the unneeded ones
 			$store->request->get = $this->request->get;
 			$store->request->post = $this->request->post;
 
-			unset($store->request->get['action']);
-			unset($store->request->get['user_token']);
-
 			// 5. Load the store data
 			$store->request->get['route'] = 'api/sale/order.load';
 
-			$store->load->controller('api/sale/order.load');
+			unset($store->request->get['user_token']);
+			unset($store->request->get['action']);
+
+			$store->load->controller($store->request->get['route']);
 
 			// 6. Get the cart data
 			$store->request->get['route'] = 'api/sale/cart';
 
-			$store->load->controller('api/sale/cart');
+			$store->load->controller($store->request->get['route']);
 
 			$cart_info = json_decode($store->response->getOutput(), true);
+
+			if (isset($cart_info['products'])) {
+				$data['order_products'] = $cart_info['products'];
+			}
+
+			if (isset($cart_info['vouchers'])) {
+				$data['order_vouchers'] = $cart_info['vouchers'];
+			}
 		}
 
 		// Store
@@ -1302,10 +1312,10 @@ class Order extends \Opencart\System\Engine\Controller {
 					$subscription_data = '';
 
 					foreach ($subscriptions as $subscription) {
-						$filter_data = array(
+						$filter_data = [
 							'filter_subscription_id'	=> $subscription['subscription_id'],
 							'filter_order_product_id'	=> $product['order_product_id']
-						);
+						];
 
 						$subscription_info = $this->model_sale_subscription->getSubscriptions($filter_data);
 
@@ -1520,10 +1530,10 @@ class Order extends \Opencart\System\Engine\Controller {
 						$subscription_data = '';
 
 						foreach ($subscriptions as $subscription) {
-							$filter_data = array(
+							$filter_data = [
 								'filter_subscription_id'	=> $subscription['subscription_id'],
 								'filter_order_product_id'	=> $product['order_product_id']
-							);
+							];
 
 							$subscription_info = $this->model_sale_subscription->getSubscriptions($filter_data);
 

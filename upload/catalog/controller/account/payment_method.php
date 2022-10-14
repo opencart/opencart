@@ -92,7 +92,7 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->get['customer_payment_id'])) {
-			$customer_payment_id = $this->request->get['customer_payment_id'];
+			$customer_payment_id = (int)$this->request->get['customer_payment_id'];
 		} else {
 			$customer_payment_id = 0;
 		}

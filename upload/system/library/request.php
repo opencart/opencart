@@ -14,6 +14,7 @@ namespace Opencart\System\Library;
 class Request {
 	public array $get = [];
 	public array $post = [];
+	public array $request = [];
 	public array $cookie = [];
 	public array $files = [];
 	public array $server = [];

@@ -16,20 +16,18 @@ class Security extends \Opencart\System\Engine\Controller {
 			// Check install directory exists
 			$data['storage'] = DIR_STORAGE;
 
-			$data['document_root'] = str_replace('\\', '/', realpath($this->request->server['DOCUMENT_ROOT'] . '/../') . '/');
+			$data['document_root'] = str_replace('\\', '/', realpath($this->request->server['DOCUMENT_ROOT'] . '/../')) . '/';
 
 			$path = '';
 
 			$data['paths'] = [];
 
-			$parts = explode('/', str_replace('\\', '/', rtrim(DIR_SYSTEM, '/')));
+			$parts = explode('/', rtrim($data['document_root'], '/'));
 
 			foreach ($parts as $part) {
 				$path .= $part . '/';
 
-				if (strlen($data['document_root']) >= strlen($path)) {
-					$data['paths'][] = $path;
-				}
+				$data['paths'][] = $path;
 			}
 
 			rsort($data['paths']);
@@ -120,13 +118,13 @@ class Security extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->get['name'])) {
-			$name = preg_replace('[^a-zA-z0-9_]', '', basename(html_entity_decode(trim($this->request->post['name']), ENT_QUOTES, 'UTF-8')));
+			$name = preg_replace('[^a-zA-z0-9_]', '', basename(html_entity_decode(trim($this->request->get['name']), ENT_QUOTES, 'UTF-8')));
 		} else {
 			$name = '';
 		}
 
 		if (isset($this->request->get['path'])) {
-			$path = preg_replace('[^a-zA-z0-9_]', '', basename(html_entity_decode(trim($this->request->post['path']), ENT_QUOTES, 'UTF-8'))) . '/';
+			$path = preg_replace('[^a-zA-z0-9_\:\/]', '', html_entity_decode(trim($this->request->get['path']), ENT_QUOTES, 'UTF-8'));
 		} else {
 			$path = '';
 		}
@@ -135,27 +133,15 @@ class Security extends \Opencart\System\Engine\Controller {
 
 		if ($this->user->hasPermission('modify', 'common/security')) {
 			$base_old = DIR_STORAGE;
-			$base_new = $path . $name;
+			$base_new = $path . $name . '/';
 
 			if (!is_dir($base_old)) {
 				$json['error'] = $this->language->get('error_storage');
 			}
 
-			$path = '';
+			$root = str_replace('\\', '/', realpath($this->request->server['DOCUMENT_ROOT'] . '/../'));
 
-			$path_data = [];
-
-			$parts = explode('/', str_replace('\\', '/', rtrim(DIR_SYSTEM, '/')));
-
-			foreach ($parts as $part) {
-				$path .= $part . '/';
-
-				if (strlen(str_replace('\\', '/', realpath($this->request->server['DOCUMENT_ROOT'] . '/../') . '/')) >= strlen($path)) {
-					$path_data[] = $path;
-				}
-			}
-
-			if (!in_array($this->request->post['path'], $path_data)) {
+			if ((substr($base_new, 0, strlen($root)) != $root) || ($root == $base_new)) {
 				$json['error'] = $this->language->get('error_storage');
 			}
 

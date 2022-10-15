@@ -6,6 +6,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div id="accordion" class="accordion">
+
         {% if install %}
           <div id="security-install" class="accordion-item">
             <h5 class="accordion-header"><button type="button" data-bs-toggle="collapse" data-bs-target="#accordion-install" class="accordion-button collapsed"><span class="fa-solid fa-folder"></span>&nbsp;&nbsp;{{ text_install }}</button></h5>
@@ -25,6 +26,7 @@
             </div>
           </div>
         {% endif %}
+
         {% if storage %}
           <div id="security-storage" class="accordion-item">
             <h2 class="accordion-header"><button type="button" data-bs-toggle="collapse" data-bs-target="#accordion-storage" class="accordion-button collapsed"><i class="fa-solid fa-circle-right"></i>&nbsp;&nbsp;{{ text_storage }}</button></h2>
@@ -56,6 +58,7 @@
             </div>
           </div>
         {% endif %}
+
         {% if admin %}
         <div id="security-admin" class="accordion-item">
           <h2 class="accordion-header"><button type="button" data-bs-toggle="collapse" data-bs-target="#accordion-admin" class="accordion-button collapsed"><span class="fa-solid fa-lock"></span>&nbsp;&nbsp;{{ text_admin }}</button></h2>
@@ -78,6 +81,7 @@
         </div>
       </div>
       {% endif %}
+
     </div>
   </div>
 </div>

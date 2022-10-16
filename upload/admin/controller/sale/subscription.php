@@ -776,17 +776,17 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		if (!$subscription_info) {
 			$json['error'] = $this->language->get('error_subscription');
 		} else {
-			$this->load->model('customer/customer');
+			$this->load->model('sale/order');
 
-			$payment_method_info = $this->model_customer_customer->getPaymentMethod($subscription_info['customer_id'], $subscription_info['customer_payment_id']);
+			$order_info = $this->model_sale_order->getOrder($subscription_info['order_id']);
 
-			if (!$payment_method_info || !$payment_method_info['status']) {
+			if (!$order_info) {
 				$json['error'] = $this->language->get('error_payment_method');
 			}
 		}
 
 		if (!$json) {
-			$this->model_sale_subscription->addTransaction($subscription_id, $subscription_info['order_id'], (string)$this->request->post['description'], (float)$this->request->post['amount'], $this->request->post['type'], $payment_method_info['name'], $payment_method_info['code']);
+			$this->model_sale_subscription->addTransaction($subscription_id, $subscription_info['order_id'], (string)$this->request->post['description'], (float)$this->request->post['amount'], $this->request->post['type'], $order_info['payment_method'], $order_info['payment_code']);
 
 			$json['success'] = $this->language->get('text_success');
 		}

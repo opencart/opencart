@@ -765,6 +765,8 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 		if (!$this->user->hasPermission('modify', 'sale/subscription')) {
 			$json['error'] = $this->language->get('error_permission');
+		} elseif (!isset($this->request->post['type']) || $this->request->post['type'] == '') {
+			$json['error'] = $this->language->get('error_service_type');
 		}
 
 		$this->load->model('sale/subscription');

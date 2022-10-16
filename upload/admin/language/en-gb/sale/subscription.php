@@ -65,3 +65,4 @@ $_['entry_date_to']              = 'Date To';
 $_['error_subscription']         = 'Warning: Subscription does not exist!';
 $_['error_subscription_plan']    = 'Warning: Subscription plan does not exist!';
 $_['error_payment_method']       = 'Warning: Payment method does not exist!';
+$_['error_service_type']		 = 'The service status has not been included with this transaction. If you see this error message, please contact your extension developer that handles the subscription services to resolve this issue!';

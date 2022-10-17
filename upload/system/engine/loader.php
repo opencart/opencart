@@ -385,11 +385,7 @@ class Loader {
 					// Create the class name from the key
 					$class = 'Opencart\\System\\Library\\' . str_replace(['_', '/'], ['', '\\'], ucwords($key, '_/'));
 
-					if (property_exists($class, 'registry')) {
-						$library = new $class($this->registry, ...$parameters);
-					} else {
-						$library = new $class(...$parameters);
-					}
+					$library = new $class(...$parameters);
 
 					$this->registry->set($registry_key, $library);
 				} else {

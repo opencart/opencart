@@ -117,7 +117,7 @@ class Mail {
 	}
 
 	/**
-     * setMailSettings
+     * setEmailSettings
      *
      * @param	array	$mail_settings
 	 *

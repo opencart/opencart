@@ -6,6 +6,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div id="accordion" class="accordion">
+
         {% if install %}
           <div id="security-install" class="accordion-item">
             <h5 class="accordion-header"><button type="button" data-bs-toggle="collapse" data-bs-target="#accordion-install" class="accordion-button collapsed"><span class="fa-solid fa-folder"></span>&nbsp;&nbsp;{{ text_install }}</button></h5>
@@ -25,6 +26,7 @@
             </div>
           </div>
         {% endif %}
+
         {% if storage %}
           <div id="security-storage" class="accordion-item">
             <h2 class="accordion-header"><button type="button" data-bs-toggle="collapse" data-bs-target="#accordion-storage" class="accordion-button collapsed"><i class="fa-solid fa-circle-right"></i>&nbsp;&nbsp;{{ text_storage }}</button></h2>
@@ -33,7 +35,8 @@
                 <form id="form-storage">
                   <p>{{ text_storage_description }}</p>
                   <div class="mb-3">
-                    <label class="form-label">{{ entry_path_current }}</label> <input type="text" value="{{ storage }}" class="form-control is-invalid bg-white" readonly/>
+                    <label class="form-label">{{ entry_path_current }}</label>
+                    <input type="text" value="{{ storage }}" class="form-control is-invalid bg-white" readonly/>
                   </div>
                   <div class="mb-3">
                     <label class="form-label">{{ entry_path_new }}</label>
@@ -44,7 +47,7 @@
                           <li><a href="{{ path }}" class="dropdown-item">{{ path }}</a></li>
                         {% endfor %}
                       </ul>
-                      <input type="text" name="name" value="storage" placeholder="{{ text_path }}" class="form-control"/>
+                      <input type="text" name="name" value="storage" placeholder="{{ text_path }}" id="input-storage" class="form-control"/>
                     </div>
                     <input type="hidden" name="path" value="{{ document_root }}" id="input-path"/>
                   </div>
@@ -56,6 +59,7 @@
             </div>
           </div>
         {% endif %}
+
         {% if admin %}
         <div id="security-admin" class="accordion-item">
           <h2 class="accordion-header"><button type="button" data-bs-toggle="collapse" data-bs-target="#accordion-admin" class="accordion-button collapsed"><span class="fa-solid fa-lock"></span>&nbsp;&nbsp;{{ text_admin }}</button></h2>
@@ -78,6 +82,7 @@
         </div>
       </div>
       {% endif %}
+
     </div>
   </div>
 </div>
@@ -135,55 +140,61 @@ $('#form-storage .dropdown-menu a').on('click', function (e) {
 $('#button-storage').on('click', function () {
     var element = this;
 
-    $.ajax({
-        url: 'index.php?route=common/security.storage&user_token={{ user_token }}',
-        type: 'post',
-        data: $('#form-storage').serialize(),
-        dataType: 'json',
-        contentType: 'application/x-www-form-urlencoded',
-        beforeSend: function () {
-            $(element).prop('disabled', true).addClass('loading');
-        },
-        complete: function () {
-            $(element).prop('disabled', false).removeClass('loading');
-        },
-        success: function (json) {
-            $('.alert-dismissible').remove();
+    var next = 'index.php?route=common/security.storage&user_token={{ user_token }}&name=' + encodeURIComponent($('#input-storage').val()) + '&path=' + encodeURIComponent($('#input-path').val());
 
-            if (json['error']) {
-                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+    var storage = function () {
+        $(element).prop('disabled', true).addClass('loading');
+
+        return $.ajax({
+            url: next,
+            dataType: 'json',
+            contentType: 'application/x-www-form-urlencoded',
+            success: function (json) {
+                console.log(json);
+
+                $('.alert-dismissible').remove();
+
+                if (json['error']) {
+                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                }
+
+                if (json['success']) {
+                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                    $('#security-storage').remove();
+
+                    $('#accordion .accordion-header:first button').trigger('click');
+                }
+
+                if (json['next']) {
+                    next = json['next'];
+
+                    chain.attach(storage);
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
+        });
 
-            if (json['success']) {
-                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+        $(element).prop('disabled', false).removeClass('loading');
+    };
 
-                $('#security-storage').remove();
-
-                $('#accordion .accordion-header:first button').trigger('click');
-            }
-        },
-        error: function (xhr, ajaxOptions, thrownError) {
-            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-        }
-    });
+    chain.attach(storage);
 });
 
 $('#button-admin').on('click', function () {
     var element = this;
 
-    var next = 'index.php?route=common/security.admin&user_token={{ user_token }}&name=' + $('#input-admin').val();
+    $(element).prop('disabled', true).addClass('loading');
 
-    var move = function () {
+    var next = 'index.php?route=common/security.admin&user_token={{ user_token }}&name=' + encodeURIComponent($('#input-admin').val());
+
+    var admin = function () {
         return $.ajax({
             url: next,
             dataType: 'json',
             contentType: 'application/x-www-form-urlencoded',
-            beforeSend: function () {
-                $(element).prop('disabled', true).addClass('loading');
-            },
-            complete: function () {
-                $(element).prop('disabled', false).removeClass('loading');
-            },
             success: function (json) {
                 console.log(json);
 
@@ -208,7 +219,7 @@ $('#button-admin').on('click', function () {
                 if (json['next']) {
                     next = json['next'];
 
-                    chain.attach(move);
+                    chain.attach(admin);
                 }
             },
             error: function (xhr, ajaxOptions, thrownError) {
@@ -217,6 +228,8 @@ $('#button-admin').on('click', function () {
         });
     };
 
-    chain.attach(move);
+    chain.attach(admin);
+
+    $(element).prop('disabled', false).removeClass('loading');
 });
 //--></script>

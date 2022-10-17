@@ -143,11 +143,12 @@ $('#button-storage').on('click', function () {
     var next = 'index.php?route=common/security.storage&user_token={{ user_token }}&name=' + encodeURIComponent($('#input-storage').val()) + '&path=' + encodeURIComponent($('#input-path').val());
 
     var storage = function () {
-        $(element).prop('disabled', true).addClass('loading');
-
         return $.ajax({
             url: next,
             dataType: 'json',
+            beforeSend: function () {
+                $(element).prop('disabled', true).addClass('loading');
+            },
             contentType: 'application/x-www-form-urlencoded',
             success: function (json) {
                 console.log(json);
@@ -171,13 +172,13 @@ $('#button-storage').on('click', function () {
 
                     chain.attach(storage);
                 }
+
+                $(element).prop('disabled', false).removeClass('loading');
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });
-
-        $(element).prop('disabled', false).removeClass('loading');
     };
 
     chain.attach(storage);
@@ -186,14 +187,15 @@ $('#button-storage').on('click', function () {
 $('#button-admin').on('click', function () {
     var element = this;
 
-    $(element).prop('disabled', true).addClass('loading');
-
     var next = 'index.php?route=common/security.admin&user_token={{ user_token }}&name=' + encodeURIComponent($('#input-admin').val());
 
     var admin = function () {
         return $.ajax({
             url: next,
             dataType: 'json',
+            beforeSend: function () {
+                $(element).prop('disabled', true).addClass('loading');
+            },
             contentType: 'application/x-www-form-urlencoded',
             success: function (json) {
                 console.log(json);
@@ -221,6 +223,8 @@ $('#button-admin').on('click', function () {
 
                     chain.attach(admin);
                 }
+
+                $(element).prop('disabled', false).removeClass('loading');
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -229,7 +233,5 @@ $('#button-admin').on('click', function () {
     };
 
     chain.attach(admin);
-
-    $(element).prop('disabled', false).removeClass('loading');
 });
 //--></script>

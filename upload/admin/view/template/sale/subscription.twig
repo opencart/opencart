@@ -35,7 +35,7 @@
                 {% for subscription_status in subscription_statuses %}
                   <option value="{{ subscription_status.subscription_status_id }}"{% if subscription_status.subscription_status_id == filter_subscription_status_id %} selected="selected"{% endif %}>{{ subscription_status.name }}</option>
                 {% endfor %}
-              </select></select>
+              </select>
             </div>
             <div class="mb-3">
               <label for="input-date-from" class="form-label">{{ entry_date_from }}</label>

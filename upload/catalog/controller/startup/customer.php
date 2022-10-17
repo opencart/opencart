@@ -2,7 +2,7 @@
 namespace Opencart\Catalog\Controller\Startup;
 class Customer extends \Opencart\System\Engine\Controller {
 	public function index(): void {
-		$this->registry->set('customer', new \Opencart\System\Library\Cart\Customer($this->registry));
+		$this->registry->set('customer', $this->load->library('cart/customer', [$this->registry]));
 
 		// Customer Group
 		if (isset($this->session->data['customer'])) {

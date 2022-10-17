@@ -111,7 +111,7 @@ if (isset($request->get['route'])) {
 }
 
 // Response
-$response = new \Opencart\System\Library\Response();
+$response = $loader->library('response');
 $registry->set('response', $response);
 
 foreach ($config->get('response_header') as $header) {
@@ -163,24 +163,27 @@ if ($config->get('session_autostart')) {
 }
 
 // Cache
-$registry->set('cache', new \Opencart\System\Library\Cache($config->get('cache_engine'), $config->get('cache_expire')));
+$cache = $loader->library('cache', [$config->get('cache_engine'), $config->get('cache_expire')]);
+$registry->set('cache', $cache);
 
 // Template
-$template = new \Opencart\System\Library\Template($config->get('template_engine'));
+$template = $loader->library('template', [$config->get('template_engine')]);
 $registry->set('template', $template);
 $template->addPath(DIR_TEMPLATE);
 
 // Language
-$language = new \Opencart\System\Library\Language($config->get('language_code'));
+$language = $loader->library('language', [$config->get('language_code')]);
 $registry->set('language', $language);
 $language->addPath(DIR_LANGUAGE);
 $language->load($config->get('language_code'));
 
 // Url
-$registry->set('url', new \Opencart\System\Library\Url($config->get('site_url')));
+$url = $loader->library('url', [$config->get('site_url')]);
+$registry->set('url', $url);
 
 // Document
-$registry->set('document', new \Opencart\System\Library\Document());
+$document = $loader->library('document');
+$registry->set('document', $document);
 
 // Action error object to execute if any other actions cannot be executed.
 $action = '';

@@ -47,13 +47,15 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 		$data['store_url'] = $this->config->get('config_url');
 
 		if ($this->config->get('config_mail_engine') && $email) {
-			$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'));
-			$mail->parameter = $this->config->get('config_mail_parameter');
-			$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
-			$mail->smtp_username = $this->config->get('config_mail_smtp_username');
-			$mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
-			$mail->smtp_port = $this->config->get('config_mail_smtp_port');
-			$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
+			$mail = $this->load->library('mail', [$this->config->get('config_mail_engine')]);
+			$mail->setEmailSettings([
+				'parameter' => $this->config->get('config_mail_parameter'),
+				'smtp_hostname' => $this->config->get('config_mail_smtp_hostname'),
+				'smtp_username' => $this->config->get('config_mail_smtp_username'),
+				'smtp_password' => html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8'),
+				'smtp_port' => $this->config->get('config_mail_smtp_port'),
+				'smtp_timeout' => $this->config->get('config_mail_smtp_timeout')
+			]);
 
 			$mail->setTo($email);
 			$mail->setFrom($this->config->get('config_email'));
@@ -61,6 +63,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 			$mail->setSubject(sprintf($this->language->get('text_subject'), $store_name));
 			$mail->setHtml($this->load->view('mail/gdpr', $data));
 			$mail->send();
+			$mail->clearEmailDetails();
 		}
 	}
 
@@ -146,13 +149,15 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 			$data['contact'] = $store_url . 'index.php?route=information/contact';
 
 			if ($this->config->get('config_mail_engine')) {
-				$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'));
-				$mail->parameter = $this->config->get('config_mail_parameter');
-				$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
-				$mail->smtp_username = $this->config->get('config_mail_smtp_username');
-				$mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
-				$mail->smtp_port = $this->config->get('config_mail_smtp_port');
-				$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
+				$mail = $this->load->library('mail', [$this->config->get('config_mail_engine')]);
+				$mail->setEmailSettings([
+					'parameter' => $this->config->get('config_mail_parameter'),
+					'smtp_hostname' => $this->config->get('config_mail_smtp_hostname'),
+					'smtp_username' => $this->config->get('config_mail_smtp_username'),
+					'smtp_password' => html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8'),
+					'smtp_port' => $this->config->get('config_mail_smtp_port'),
+					'smtp_timeout' => $this->config->get('config_mail_smtp_timeout')
+				]);
 
 				$mail->setTo($gdpr_info['email']);
 				$mail->setFrom($this->config->get('config_email'));
@@ -160,6 +165,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 				$mail->setSubject($subject);
 				$mail->setHtml($this->load->view('mail/gdpr_delete', $data));
 				$mail->send();
+				$mail->clearEmailDetails();
 			}
 		}
 	}

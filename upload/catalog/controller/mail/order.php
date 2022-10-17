@@ -288,13 +288,15 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		if ($this->config->get('config_mail_engine')) {
-			$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'));
-			$mail->parameter = $this->config->get('config_mail_parameter');
-			$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
-			$mail->smtp_username = $this->config->get('config_mail_smtp_username');
-			$mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
-			$mail->smtp_port = $this->config->get('config_mail_smtp_port');
-			$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
+			$mail = $this->load->library('mail', [$this->config->get('config_mail_engine')]);
+			$mail->setEmailSettings([
+				'parameter' => $this->config->get('config_mail_parameter'),
+				'smtp_hostname' => $this->config->get('config_mail_smtp_hostname'),
+				'smtp_username' => $this->config->get('config_mail_smtp_username'),
+				'smtp_password' => html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8'),
+				'smtp_port' => $this->config->get('config_mail_smtp_port'),
+				'smtp_timeout' => $this->config->get('config_mail_smtp_timeout')
+			]);
 
 			$mail->setTo($order_info['email']);
 			$mail->setFrom($from);
@@ -302,6 +304,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			$mail->setSubject($subject);
 			$mail->setHtml($this->load->view('mail/order_invoice', $data));
 			$mail->send();
+			$mail->clearEmailDetails();
 		}
 	}
 
@@ -372,13 +375,15 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		if ($this->config->get('config_mail_engine')) {
-			$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'));
-			$mail->parameter = $this->config->get('config_mail_parameter');
-			$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
-			$mail->smtp_username = $this->config->get('config_mail_smtp_username');
-			$mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
-			$mail->smtp_port = $this->config->get('config_mail_smtp_port');
-			$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
+			$mail = $this->load->library('mail', [$this->config->get('config_mail_engine')]);
+			$mail->setEmailSettings([
+				'parameter' => $this->config->get('config_mail_parameter'),
+				'smtp_hostname' => $this->config->get('config_mail_smtp_hostname'),
+				'smtp_username' => $this->config->get('config_mail_smtp_username'),
+				'smtp_password' => html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8'),
+				'smtp_port' => $this->config->get('config_mail_smtp_port'),
+				'smtp_timeout' => $this->config->get('config_mail_smtp_timeout')
+			]);
 
 			$mail->setTo($order_info['email']);
 			$mail->setFrom($from);
@@ -386,6 +391,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			$mail->setSubject($subject);
 			$mail->setHtml($this->load->view('mail/order_history', $data));
 			$mail->send();
+			$mail->clearEmailDetails();
 		}
 	}
 
@@ -500,13 +506,15 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['store_url'] = $order_info['store_url'];
 
 			if ($this->config->get('config_mail_engine')) {
-				$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'));
-				$mail->parameter = $this->config->get('config_mail_parameter');
-				$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
-				$mail->smtp_username = $this->config->get('config_mail_smtp_username');
-				$mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
-				$mail->smtp_port = $this->config->get('config_mail_smtp_port');
-				$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
+				$mail = $this->load->library('mail', [$this->config->get('config_mail_engine')]);
+				$mail->setEmailSettings([
+					'parameter' => $this->config->get('config_mail_parameter'),
+					'smtp_hostname' => $this->config->get('config_mail_smtp_hostname'),
+					'smtp_username' => $this->config->get('config_mail_smtp_username'),
+					'smtp_password' => html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8'),
+					'smtp_port' => $this->config->get('config_mail_smtp_port'),
+					'smtp_timeout' => $this->config->get('config_mail_smtp_timeout')
+				]);
 
 				$mail->setTo($this->config->get('config_email'));
 				$mail->setFrom($this->config->get('config_email'));
@@ -524,6 +532,7 @@ class Order extends \Opencart\System\Engine\Controller {
 						$mail->send();
 					}
 				}
+				$mail->clearEmailDetails();
 			}
 		}
 	}

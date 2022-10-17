@@ -21,6 +21,7 @@ class Mail {
 	protected string $text = '';
 	protected string $html = '';
 	protected array $attachments = [];
+	protected array $mail_settings = [];
 
 	/**
 	 * Constructor
@@ -116,6 +117,18 @@ class Mail {
 	}
 
 	/**
+     * setMailSettings
+     *
+     * @param	array	$mail_settings
+	 *
+	 * @return  void
+     */
+
+	public function setMailSettings(array $mail_settings): void {
+		$this->mail_settings = $mail_settings;
+	}
+
+	/**
      * addAttachment
      *
      * @param	string	$filename
@@ -156,8 +169,27 @@ class Mail {
 
 		foreach (get_object_vars($this) as $key => $value) $mail_data[$key] = $value;
 
+		$mail_data = array_merge($mail_data, $this->mail_settings);
+
 		$mail = new $this->adaptor($mail_data);
 
 		return $mail->send();
+	}
+
+	/**
+     * ClearEmailDetails
+     *
+	 * @return void
+     */
+
+	public function clearEmailDetails(): void {
+		$this->to = '';
+		$this->from = '';
+		$this->sender = '';
+		$this->reply_to = '';
+		$this->subject = '';
+		$this->text = '';
+		$this->html = '';
+		$this->attachments = [];
 	}
 }

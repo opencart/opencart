@@ -124,7 +124,7 @@ class Mail {
 	 * @return  void
      */
 
-	public function setMailSettings(array $mail_settings): void {
+	public function setEmailSettings(array $mail_settings): void {
 		$this->mail_settings = $mail_settings;
 	}
 

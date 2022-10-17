@@ -619,7 +619,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('sale/subscription');
 
-			$this->model_sale_subscription->editSubscriptionPlan($subscription_id, $this->request->post);
+			$this->model_sale_subscription->editSubscriptionPlan($subscription_id, $this->request->post['subscription_plan_id']);
 
 			$json['success'] = $this->language->get('text_success');
 		}
@@ -765,6 +765,8 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 		if (!$this->user->hasPermission('modify', 'sale/subscription')) {
 			$json['error'] = $this->language->get('error_permission');
+		} elseif ($this->request->post['type'] == '') {
+			$json['error'] = $this->language->get('error_service_type');
 		}
 
 		$this->load->model('sale/subscription');
@@ -773,10 +775,18 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 		if (!$subscription_info) {
 			$json['error'] = $this->language->get('error_subscription');
+		} else {
+			$this->load->model('sale/order');
+
+			$order_info = $this->model_sale_order->getOrder($subscription_info['order_id']);
+
+			if (!$order_info) {
+				$json['error'] = $this->language->get('error_payment_method');
+			}
 		}
 
 		if (!$json) {
-			$this->model_sale_subscription->addTransaction($subscription_id, (string)$this->request->post['description'], (float)$this->request->post['amount']);
+			$this->model_sale_subscription->addTransaction($subscription_id, $subscription_info['order_id'], (string)$this->request->post['description'], (float)$this->request->post['amount'], $this->request->post['type'], $order_info['payment_method'], $order_info['payment_code']);
 
 			$json['success'] = $this->language->get('text_success');
 		}

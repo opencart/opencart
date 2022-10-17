@@ -17,7 +17,7 @@ class Event extends \Opencart\System\Engine\Controller {
 					$this->event->register(implode('/', $part), new \Opencart\System\Engine\Action($result['action']), $result['sort_order']);
 				}
 
-				if ($part[0] == 'system') {
+				if ($part[0] == 'library') {
 					$this->event->register($result['trigger'], new \Opencart\System\Engine\Action($result['action']), $result['sort_order']);
 				}
 			}

@@ -619,7 +619,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('sale/subscription');
 
-			$this->model_sale_subscription->editSubscriptionPlan($subscription_id, $this->request->post);
+			$this->model_sale_subscription->editSubscriptionPlan($subscription_id, $this->request->post['subscription_plan_id']);
 
 			$json['success'] = $this->language->get('text_success');
 		}

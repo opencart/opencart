@@ -35,6 +35,6 @@ class Currency extends \Opencart\System\Engine\Controller {
 			setcookie('currency', $code, $option);
 		}
 
-		$this->registry->set('currency', new \Opencart\System\Library\Cart\Currency($this->registry));
+		$this->registry->set('currency', $this->load->library('cart/currency', [$this->registry]));
 	}
 }

@@ -36,7 +36,7 @@ class Image extends \Opencart\System\Engine\Model {
 			}
 
 			if ($width_orig != $width || $height_orig != $height) {
-				$image = new \Opencart\System\Library\Image(DIR_IMAGE . $image_old);
+				$image = $this->load->library('image', [DIR_IMAGE . $image_old]);
 				$image->resize($width, $height);
 				$image->save(DIR_IMAGE . $image_new);
 			} else {

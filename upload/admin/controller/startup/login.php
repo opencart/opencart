@@ -21,7 +21,7 @@ class Login extends \Opencart\System\Engine\Controller {
 		];
 
 		// User
-		$this->registry->set('user', new \Opencart\System\Library\Cart\User($this->registry));
+		$this->registry->set('user', $this->load->library('cart/user', [$this->registry]));
 
 		if (!$this->user->isLogged() && !in_array($route, $ignore)) {
 			return new \Opencart\System\Engine\Action('common/login');

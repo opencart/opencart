@@ -22,7 +22,7 @@ class Language extends \Opencart\System\Engine\Controller {
 		$this->config->set('config_language', $code);
 
 		// Language
-		$language = new \Opencart\System\Library\Language($code);
+		$language = $this->load->library('language', [$code]);
 
 		if (!$language_data[$code]['extension']) {
 			$language->addPath(DIR_LANGUAGE);

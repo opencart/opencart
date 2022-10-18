@@ -30,12 +30,12 @@
               <datalist id="list-customer"></datalist>
             </div>
             <div class="mb-3">
-              <label for="input-status" class="form-label">{{ entry_subscription_status }}</label> <select name="filter_subscription_status_id" id="input-subscription-status" class="form-select">
+              <label for="input-subscription-status" class="form-label">{{ entry_subscription_status }}</label> <select name="filter_subscription_status_id" id="input-subscription-status" class="form-select">
                 <option value=""></option>
                 {% for subscription_status in subscription_statuses %}
                   <option value="{{ subscription_status.subscription_status_id }}"{% if subscription_status.subscription_status_id == filter_subscription_status_id %} selected="selected"{% endif %}>{{ subscription_status.name }}</option>
                 {% endfor %}
-              </select></select>
+              </select>
             </div>
             <div class="mb-3">
               <label for="input-date-from" class="form-label">{{ entry_date_from }}</label>
@@ -82,7 +82,7 @@ $('#button-filter').on('click', function () {
         url += '&filter_subscription_id=' + filter_subscription_id;
     }
 
-    var filter_order_id = $('#input-order_id').val();
+    var filter_order_id = $('#input-order-id').val();
 
     if (filter_order_id) {
         url += '&filter_order_id=' + filter_order_id;

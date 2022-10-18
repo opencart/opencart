@@ -90,8 +90,11 @@ $(document).ready(function () {
 
     $(document).on('mouseenter', '[data-bs-toggle=\'tooltip\']', oc_tooltip);
 
-    $(document).on('click', 'button', function () {
-        $('.tooltip').remove();
+    $(document).on('click', '[data-bs-toggle=\'tooltip\']', function () {
+        tooltip = bootstrap.Tooltip.getInstance(this);
+        if (tooltip) {
+            tooltip.hide();
+        }
     });
 
     // Date

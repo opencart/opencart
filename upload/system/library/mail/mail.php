@@ -1,15 +1,15 @@
 <?php
 namespace Opencart\System\Library\Mail;
 class Mail {
-	protected string $to = '';
-	protected string $from = '';
-	protected string $sender = '';
-	protected string $reply_to = '';
-	protected string $subject = '';
-	protected string $text = '';
-	protected string $html = '';
-	protected array $attachments = [];
+	protected string $to;
+	protected string $from;
+	protected string $sender;
+	protected string $reply_to;
+	protected string $subject;
+	protected string $text;
+	protected string $html;
 	protected string $parameter;
+	protected array $attachments = [];	
 
 	public function __construct(array $args) {
 		foreach ($args as $key => $value) {

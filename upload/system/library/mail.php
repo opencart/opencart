@@ -13,13 +13,13 @@
 namespace Opencart\System\Library;
 class Mail {
 	private string $adaptor;
-	protected string $to = '';
-	protected string $from = '';
-	protected string $sender = '';
-	protected string $reply_to = '';
-	protected string $subject = '';
-	protected string $text = '';
-	protected string $html = '';
+	protected string $to;
+	protected string $from;
+	protected string $sender;
+	protected string $reply_to;
+	protected string $subject;
+	protected string $text;
+	protected string $html;
 	protected array $attachments = [];
 
 	/**

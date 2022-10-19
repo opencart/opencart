@@ -15,9 +15,9 @@
 */
 namespace Opencart\System\Library;
 class Response {
-	private array $headers = [];
 	private int $level = 0;
-	private string $output = '';
+	private string $output;
+	private array $headers = [];
 
 	/**
 	 * Constructor

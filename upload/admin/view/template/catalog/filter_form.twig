@@ -82,27 +82,27 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-var filter_row = {{ filter_row }};
+  var filter_row = {{ filter_row }};
 
-$('#button-filter').on('click', function () {
-    html = '<tr id="filter-row-' + filter_row + '">';
-    html += '  <td class="text-start" style="width: 70%;"><input type="hidden" name="filter[' + filter_row + '][filter_id]" value=""/>';
-  {% for language in languages %}
-    html += '  <div class="input-group">';
-    html += '    <div class="input-group-text"><img src="{{ language.image }}" title="{{ language.name }}" /></div>';
-    html += '    <input type="text" name="filter[' + filter_row + '][filter_description][{{ language.language_id }}][name]" value="" placeholder="{{ entry_name }}" id="input-filter-' + filter_row + '-{{ language.language_id }}" class="form-control"/>';
-    html += '  </div>';
-    html += '  <div id="error-filter-' + filter_row + '-{{ language.language_id }}" class="invalid-feedback"></div>';
+  $('#button-filter').on('click', function () {
+      html = '<tr id="filter-row-' + filter_row + '">';
+      html += '  <td class="text-start" style="width: 70%;"><input type="hidden" name="filter[' + filter_row + '][filter_id]" value=""/>';
+    {% for language in languages %}
+      html += '  <div class="input-group">';
+      html += '    <div class="input-group-text"><img src="{{ language.image }}" title="{{ language.name }}" /></div>';
+      html += '    <input type="text" name="filter[' + filter_row + '][filter_description][{{ language.language_id }}][name]" value="" placeholder="{{ entry_name }}" id="input-filter-' + filter_row + '-{{ language.language_id }}" class="form-control"/>';
+      html += '  </div>';
+      html += '  <div id="error-filter-' + filter_row + '-{{ language.language_id }}" class="invalid-feedback"></div>';
 
-  {% endfor %}
-    html += '  </td>';
-    html += '  <td class="text-end"><input type="text" name="filter[' + filter_row + '][sort_order]" value="" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/></td>';
-    html += '  <td class="text-end"><button type="button" onclick="$(\'#filter-row-' + filter_row + '\').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>';
-    html += '</tr>';
+    {% endfor %}
+      html += '  </td>';
+      html += '  <td class="text-end"><input type="text" name="filter[' + filter_row + '][sort_order]" value="" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/></td>';
+      html += '  <td class="text-end"><button type="button" onclick="$(\'#filter-row-' + filter_row + '\').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>';
+      html += '</tr>';
 
-    $('#filter tbody').append(html);
+      $('#filter tbody').append(html);
 
-    filter_row++;
-});
+      filter_row++;
+  });
 //--></script>
 {{ footer }}

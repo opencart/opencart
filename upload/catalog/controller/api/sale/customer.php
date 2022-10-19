@@ -37,7 +37,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 		if ($this->request->post['customer_group_id']) {
 			$customer_group_id = (int)$this->request->post['customer_group_id'];
 		} else {
-			$customer_group_id = $this->config->get('config_customer_group_id');
+			$customer_group_id = (int)$this->config->get('config_customer_group_id');
 		}
 
 		$this->load->model('account/customer_group');

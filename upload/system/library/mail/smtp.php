@@ -1,21 +1,21 @@
 <?php
 namespace Opencart\System\Library\Mail;
 class Smtp {
-	protected string $to = '';
-	protected string $from = '';
-	protected string $sender = '';
-	protected string $reply_to = '';
-	protected string $subject = '';
-	protected string $text = '';
-	protected string $html = '';
-	protected array $attachments = [];
-	protected string $smtp_hostname = '';
-	protected string $smtp_username = '';
-	protected string $smtp_password = '';
+	protected string $to;
+	protected string $from;
+	protected string $sender;
+	protected string $reply_to;
+	protected string $subject;
+	protected string $text;
+	protected string $html;	
+	protected string $smtp_hostname;
+	protected string $smtp_username;
+	protected string $smtp_password;
 	protected int $smtp_port = 25;
 	protected int $smtp_timeout = 5;
 	protected int $max_attempts = 3;
 	protected bool $verp = false;
+	protected array $attachments = [];
 
 	/**
 	 * Constructor

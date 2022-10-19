@@ -12,9 +12,9 @@
 */
 namespace Opencart\System\Library;
 class Document {
-	private string $title = '';
-	private string $description = '';
-	private string $keywords = '';
+	private string $title;
+	private string $description;
+	private string $keywords;
 	private array $links = [];
 	private array $styles = [];
 	private array $scripts = [];

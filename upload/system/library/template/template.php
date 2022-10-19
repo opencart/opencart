@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\System\Library\Template;
 class Template {
-	protected string $directory = '';
+	protected string $directory;
 	protected array $path = [];
 
 	/**

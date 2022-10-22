@@ -18,7 +18,7 @@ class Maintenance extends \Opencart\System\Engine\Controller {
 			// Show site if logged in as admin
 			$user = new \Opencart\System\Library\Cart\User($this->registry);
 
-			if (substr($route, 0, 3) != 'api' && !in_array($route, $ignore) && !$user->isLogged()) {
+			if (substr($route, 0, 3) != 'api' && !in_array($route, $ignore) && $user->isLogged() !== true) {
 				return new \Opencart\System\Engine\Action('common/maintenance');
 			}
 		}

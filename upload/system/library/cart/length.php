@@ -1,6 +1,6 @@
 <?php
 namespace Opencart\System\Library\Cart;
-class Length {
+class Length extends \stdClass  {
 	private array $lengths = [];
 
 	/**

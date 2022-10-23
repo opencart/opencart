@@ -1,6 +1,6 @@
 <?php
 namespace Opencart\System\Library\Cart;
-class Tax {
+class Tax extends \stdClass  {
 	private array $tax_rates = [];
 
 	/**

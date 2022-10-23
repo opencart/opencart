@@ -1,6 +1,6 @@
 <?php
 namespace Opencart\System\Library\Cart;
-class Currency {
+class Currency extends \stdClass  {
 	private array $currencies = [];
 
 	/**

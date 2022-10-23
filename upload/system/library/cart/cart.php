@@ -1,6 +1,6 @@
 <?php
 namespace Opencart\System\Library\Cart;
-class Cart {
+class Cart extends \stdClass {
 	private array $data = [];
 
 	/**

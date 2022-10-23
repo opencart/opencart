@@ -11,7 +11,8 @@
  * Proxy class
  */
 namespace Opencart\System\Engine;
-class Proxy {
+
+class Proxy extends \stdClass {
 	/**
 	 * __get
 	 *

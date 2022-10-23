@@ -1,6 +1,6 @@
 <?php
 namespace Opencart\System\Library\Cart;
-class Weight {
+class Weight extends \stdClass  {
 	private array $weights = [];
 
 	/**

@@ -1,6 +1,6 @@
 <?php
 namespace Opencart\System\Library\Cart;
-class User {
+class User extends \stdClass {
 	private int $user_id = 0;
 	private string $username = '';
 	private int $user_group_id = 0;

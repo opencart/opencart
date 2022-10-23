@@ -2,6 +2,8 @@
 namespace Cart;
 final class Tax {
 	private $tax_rates = array();
+	private $config;
+	private $db;
 
 	public function __construct($registry) {
 		$this->config = $registry->get('config');

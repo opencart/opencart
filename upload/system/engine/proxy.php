@@ -10,7 +10,7 @@
 /**
 * Proxy class
 */
-class Proxy {
+class Proxy extends \stdClass {
     /**
      * 
      *

@@ -13,6 +13,7 @@
 class Request {
 	public $get = array();
 	public $post = array();
+	public $request = array();
 	public $cookie = array();
 	public $files = array();
 	public $server = array();

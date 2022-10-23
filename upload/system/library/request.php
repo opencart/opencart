@@ -17,7 +17,7 @@ class Request {
 	public array $cookie = [];
 	public array $files = [];
 	public array $server = [];
-	
+	public array $request = [];
 	/**
 	 * Constructor
  	*/

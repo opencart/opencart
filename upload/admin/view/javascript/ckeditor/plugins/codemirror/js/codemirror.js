@@ -1841,7 +1841,7 @@ function buildLineContent(cm, lineView) {
       lineView.measure.map = builder.map
       lineView.measure.cache = {}
     } else {
-      ;(lineView.measure.maps || (lineView.measure.maps = [])).push(builder.map)
+      (lineView.measure.maps || (lineView.measure.maps = [])).push(builder.map)
       ;(lineView.measure.caches || (lineView.measure.caches = [])).push({})
     }
   }
@@ -1932,7 +1932,7 @@ function buildToken(builder, text, style, startStyle, endStyle, title, css) {
 }
 
 function splitSpaces(text, trailingBefore) {
-  if (text.length > 1 && !/  /.test(text)) { return text }
+  if (text.length > 1 && !/ {2}/.test(text)) { return text }
   var spaceBefore = trailingBefore, result = ""
   for (var i = 0; i < text.length; i++) {
     var ch = text.charAt(i)
@@ -2320,7 +2320,7 @@ function insertLineWidgetsFor(cm, line, lineView, dims, allowAbove) {
 
 function positionLineWidget(widget, node, lineView, dims) {
   if (widget.noHScroll) {
-    ;(lineView.alignable || (lineView.alignable = [])).push(node)
+    (lineView.alignable || (lineView.alignable = [])).push(node)
     var width = dims.wrapperWidth
     node.style.left = dims.fixedPos + "px"
     if (!widget.coverGutter) {
@@ -4714,7 +4714,7 @@ function attachDoc(cm, doc) {
 }
 
 function setDirectionClass(cm) {
-  ;(cm.doc.direction == "rtl" ? addClass : rmClass)(cm.display.lineDiv, "CodeMirror-rtl")
+  (cm.doc.direction == "rtl" ? addClass : rmClass)(cm.display.lineDiv, "CodeMirror-rtl")
 }
 
 function directionChanged(cm) {

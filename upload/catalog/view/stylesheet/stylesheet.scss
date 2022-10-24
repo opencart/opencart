@@ -174,7 +174,7 @@ div.required .col-form-label:before, div.required .form-label:before {
   background-color: #EEEEEE;
   border-bottom: 1px solid #e2e2e2;
   padding: 10px 0;
-  margin: 0 0 20px 0;
+  margin: 0 0 20px;
   min-height: 44px;
   position: relative;
 
@@ -210,7 +210,7 @@ footer a {
 
 /* logo */
 #logo {
-  margin: 0 0 10px 0;
+  margin: 0 0 10px;
 
   img {
     max-width: 200px;
@@ -402,7 +402,7 @@ footer a {
       > a {
         color: #fff;
         text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-        padding: 10px 15px 10px 15px;
+        padding: 10px 15px;
         min-height: 15px;
         background-color: transparent;
 
@@ -512,7 +512,7 @@ footer {
 
 /* breadcrumb */
 .breadcrumb {
-  margin: 0 0 20px 0;
+  margin: 0 0 20px;
   padding: 8px 0;
   border: 1px solid #ddd;
   background-color: #f5f5f5;

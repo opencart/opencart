@@ -20,8 +20,8 @@ class MySQLi {
 		try {
 			$mysqli = @new \MySQLi($hostname, $username, $password, $database, $port);
 
+			mysqli_report(MYSQLI_REPORT_ERROR);
 			$this->connection = $mysqli;
-			$this->connection->report_mode = MYSQLI_REPORT_ERROR;
 			$this->connection->set_charset('utf8mb4');
 			$this->connection->query("SET SESSION sql_mode = 'NO_ZERO_IN_DATE,NO_ENGINE_SUBSTITUTION'");
 			$this->connection->query("SET FOREIGN_KEY_CHECKS = 0");
@@ -76,7 +76,7 @@ class MySQLi {
 	public function escape(string $value): string {
 		return $this->connection->real_escape_string($value);
 	}
-	
+
 	/**
 	 * countAffected
 	 *
@@ -94,7 +94,7 @@ class MySQLi {
 	public function getLastId(): int {
 		return $this->connection->insert_id;
 	}
-	
+
 	/**
 	 * isConnected
 	 *

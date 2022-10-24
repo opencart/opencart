@@ -11,7 +11,7 @@
  * Proxy class
  */
 namespace Opencart\System\Engine;
-class Proxy {
+class Proxy extends \stdClass {
 	/**
 	 * __get
 	 *
@@ -38,7 +38,7 @@ class Proxy {
 	public function __set(string $key, object $value): void {
 		$this->{$key} = $value;
 	}
-	
+
 	/**
 	 * __call
 	 *

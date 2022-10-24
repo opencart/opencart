@@ -2,6 +2,12 @@
 namespace Opencart\System\Library\Cart;
 class Cart {
 	private array $data = [];
+	private \Opencart\System\Engine\Config $config;
+	private \Opencart\System\Library\Cart\Customer $customer;
+	private \Opencart\System\Library\Session $session;
+	private \Opencart\System\Library\DB $db;
+	private \Opencart\System\Library\Cart\Tax $tax;
+	private \Opencart\System\Library\Cart\Weight $weight;
 
 	/**
 	 * Constructor
@@ -335,7 +341,7 @@ class Cart {
 
 		$this->data = [];
 	}
-	
+
 	/**
 	 * Update
 	 *
@@ -349,7 +355,7 @@ class Cart {
 
 		$this->data = [];
 	}
-	
+
 	/**
 	 * Remove
 	 *
@@ -362,7 +368,7 @@ class Cart {
 
 		$this->data = [];
 	}
-	
+
 	/**
 	 * Clear
 	 *
@@ -373,7 +379,7 @@ class Cart {
 
 		$this->data = [];
 	}
-	
+
 	/**
 	 * getSubscription
 	 *
@@ -390,7 +396,7 @@ class Cart {
 
 		return $product_data;
 	}
-	
+
 	/**
 	 * getWeight
 	 *
@@ -422,7 +428,7 @@ class Cart {
 
 		return $total;
 	}
-	
+
 	/**
 	 * getTaxes
 	 *
@@ -447,7 +453,7 @@ class Cart {
 
 		return $tax_data;
 	}
-	
+
 	/**
 	 * getTotal
 	 *
@@ -479,7 +485,7 @@ class Cart {
 
 		return $product_total;
 	}
-	
+
 	/**
 	 * hadProducts
 	 *
@@ -488,7 +494,7 @@ class Cart {
 	public function hasProducts(): bool {
 		return count($this->getProducts());
 	}
-	
+
 	/**
 	 * hasSubscription
 	 *
@@ -497,7 +503,7 @@ class Cart {
 	public function hasSubscription(): bool {
 		return count($this->getSubscription());
 	}
-	
+
 	/**
 	 * hasStock
 	 *

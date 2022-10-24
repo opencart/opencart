@@ -6,6 +6,9 @@ class User {
 	private int $user_group_id = 0;
 	private string $email = '';
 	private array $permission = [];
+	private \Opencart\System\Library\DB $db;
+	private \Opencart\System\Library\Request $request;
+	private \Opencart\System\Library\Session $session;
 
 	/**
 	 * Constructor
@@ -42,7 +45,7 @@ class User {
 			}
 		}
 	}
-	
+
 	/**
 	 * Login
 	 *
@@ -91,7 +94,7 @@ class User {
 			return false;
 		}
 	}
-	
+
 	/**
 	 * Logout
 	 *
@@ -105,7 +108,7 @@ class User {
 		$this->user_group_id = 0;
 		$this->email = '';
 	}
-	
+
 	/**
 	 * hasPermission
 	 *
@@ -121,7 +124,7 @@ class User {
 			return false;
 		}
 	}
-	
+
 	/**
 	 * isLogged
 	 *
@@ -130,7 +133,7 @@ class User {
 	public function isLogged(): bool {
 		return $this->user_id ? true : false;
 	}
-	
+
 	/**
 	 * getId
 	 *
@@ -148,7 +151,7 @@ class User {
 	public function getUserName(): string {
 		return $this->username;
 	}
-	
+
 	/**
 	 * getGroupId
 	 *
@@ -157,7 +160,7 @@ class User {
 	public function getGroupId(): int {
 		return $this->user_group_id;
 	}
-	
+
 	/**
 	 * getEmail
 	 *

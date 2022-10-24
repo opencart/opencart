@@ -2,6 +2,8 @@
 namespace Opencart\System\Library\Cart;
 class Length {
 	private array $lengths = [];
+	private \Opencart\System\Engine\Config $config;
+	private \Opencart\System\Library\DB $db;
 
 	/**
 	 * Constructor

@@ -14,10 +14,11 @@ namespace Opencart\System\Library;
 class Request {
 	public array $get = [];
 	public array $post = [];
+	public array $request = [];
 	public array $cookie = [];
 	public array $files = [];
 	public array $server = [];
-	
+
 	/**
 	 * Constructor
  	*/
@@ -29,9 +30,9 @@ class Request {
 		$this->files = $this->clean($_FILES);
 		$this->server = $this->clean($_SERVER);
 	}
-	
+
 	/**
-     * 
+     *
 	 * @param	array	$data
 	 *
      * @return	array

@@ -2,6 +2,8 @@
 namespace Opencart\System\Library\Cart;
 class Currency {
 	private array $currencies = [];
+	private \Opencart\System\Library\DB $db;
+	private \Opencart\System\Library\Language $language;
 
 	/**
 	 * Constructor
@@ -50,9 +52,9 @@ class Currency {
 		}
 
 		$amount = $value ? (float)$number * $value : (float)$number;
-		
+
 		$amount = round($amount, $decimal_place);
-		
+
 		if (!$format) {
 			return $amount;
 		}
@@ -71,7 +73,7 @@ class Currency {
 
 		return $string;
 	}
-	
+
 	/**
 	 * Convert
 	 *
@@ -96,14 +98,14 @@ class Currency {
 
 		return $value * ($to / $from);
 	}
-	
+
 	/**
 	 * getId
 	 *
 	 * @param    string  $currency
 	 *
 	 * @return   int
-	 */	
+	 */
 	public function getId(string $currency): int {
 		if (isset($this->currencies[$currency])) {
 			return $this->currencies[$currency]['currency_id'];
@@ -118,7 +120,7 @@ class Currency {
 	 * @param    string  $currency
 	 *
 	 * @return   string
-	 */	
+	 */
 	public function getSymbolLeft(string $currency): string {
 		if (isset($this->currencies[$currency])) {
 			return $this->currencies[$currency]['symbol_left'];
@@ -126,7 +128,7 @@ class Currency {
 			return '';
 		}
 	}
-	
+
 	/**
 	 * getSymbolRight
 	 *
@@ -141,7 +143,7 @@ class Currency {
 			return '';
 		}
 	}
-	
+
 	/**
 	 * getDecimalPlace
 	 *
@@ -156,7 +158,7 @@ class Currency {
 			return 0;
 		}
 	}
-	
+
 	/**
 	 * getValue
 	 *
@@ -172,7 +174,7 @@ class Currency {
 			return 0;
 		}
 	}
-	
+
 	/**
 	 * Has
 	 *

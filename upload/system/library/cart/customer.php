@@ -9,6 +9,10 @@ class Customer {
 	private string $email = '';
 	private string $telephone = '';
 	private bool $newsletter = false;
+	private \Opencart\System\Engine\Config $config;
+	private \Opencart\System\Library\DB $db;
+	private \Opencart\System\Library\Request $request;
+	private \Opencart\System\Library\Session $session;
 
 	/**
 	 * Constructor
@@ -86,7 +90,7 @@ class Customer {
 			return false;
 		}
 	}
-	
+
 	/**
 	 * Logout
 	 *
@@ -121,7 +125,7 @@ class Customer {
 	public function getId(): int {
 		return $this->customer_id;
 	}
-	
+
 	/**
 	 * getFirstName
 	 *
@@ -139,7 +143,7 @@ class Customer {
 	public function getLastName(): string {
 		return $this->lastname;
 	}
-	
+
 	/**
 	 * getGroupId
 	 *
@@ -148,7 +152,7 @@ class Customer {
 	public function getGroupId(): int {
 		return $this->customer_group_id;
 	}
-	
+
 	/**
 	 * getEmail
 	 *
@@ -190,7 +194,7 @@ class Customer {
 			return 0;
 		}
 	}
-	
+
 	/**
 	 * getBalance
 	 *

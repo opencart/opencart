@@ -25,9 +25,13 @@ function getURLVar(key) {
 $(document).ready(function () {
     // Tooltip
     var oc_tooltip = function () {
-        // Apply to current element
-        tooltip = bootstrap.Tooltip.getOrCreateInstance(this);
-        tooltip.show();
+        // Get tooltip instance
+        tooltip = bootstrap.Tooltip.getInstance(this);
+        if (!tooltip) {
+            // Apply to current element
+            tooltip = bootstrap.Tooltip.getOrCreateInstance(this);
+            tooltip.show();
+        }
     }
 
     $(document).on('mouseenter', '[data-bs-toggle=\'tooltip\']', oc_tooltip);

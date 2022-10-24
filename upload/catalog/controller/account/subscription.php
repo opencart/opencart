@@ -45,7 +45,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('account/subscription');
 
-		$subscription_total = $this->model_account_Subscription->getTotalSubscriptions();
+		$subscription_total = $this->model_account_subscription->getTotalSubscriptions();
 
 		$results = $this->model_account_subscription->getSubscriptions(($page - 1) * 10, 10);
 
@@ -170,7 +170,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 			$this->load->model('setting/extension');
 
-			$extension_info = $this->model_setting_extension->getByCode($subscription_info['payment_code']);
+			$extension_info = $this->model_setting_extension->getExtensionByCode($subscription_info['payment_code']);
 
 			if ($extension_info) {
 				$data['subscription'] = $this->load->controller('extension/' . $extension_info['extension'] . '/subscription/' . $subscription_info['payment_code']);

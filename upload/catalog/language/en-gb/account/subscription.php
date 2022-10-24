@@ -4,8 +4,9 @@ $_['heading_title']                        = 'Subscriptions';
 
 // Text
 $_['text_account']                         = 'Account';
-$_['text_recurring']                       = 'Recurring Payment Information';
-$_['text_recurring_detail']                = 'Recurring Payment Details';
+$_['text_subscription']                    = 'Subscription Payment Information';
+$_['text_subscription_id']                 = 'Subscription ID';
+$_['text_subscription_detail']             = 'Subscription Payment Details';
 $_['text_date_added']                      = 'Date Added:';
 $_['text_status']                          = 'Status:';
 $_['text_payment_method']                  = 'Payment Method:';
@@ -43,9 +44,9 @@ $_['column_date_added']                    = 'Date Added';
 $_['column_type']                          = 'Type';
 $_['column_amount']                        = 'Amount';
 
-// Error
-$_['error_not_cancelled']                  = 'Error: %s';
-$_['error_not_found']                      = 'Could not cancel recurring';
-
 // Button
 $_['button_return']                        = 'Return';
+
+// Error
+$_['error_not_cancelled']                  = 'Error: %s';
+$_['error_not_found']                      = 'Could not cancel subscription';

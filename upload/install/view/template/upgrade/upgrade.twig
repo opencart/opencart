@@ -11,8 +11,9 @@
       <div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> {{ error_warning }}</div>
     {% endif %}
     <div class="card">
-      <div class="card-header"><i class="fab fa-opencart"></i>&nbsp;&nbsp;&nbsp;{{ text_upgrade }}</div>
+      <div class="card-header"><i class="fab fa-opencart"></i>&nbsp;&nbsp;{{ text_upgrade }}</div>
       <div class="card-body">
+
         <fieldset>
           <legend>{{ text_server }}</legend>
           <ol>
@@ -24,21 +25,35 @@
             <li>{{ text_store }}</li>
           </ol>
         </fieldset>
+
         <fieldset>
-          <legend>{{ text_steps }}</legend>
-          <div class="form-group">
-            <label class="col-sm-2 control-label">{{ entry_progress }}</label>
-            <div class="col-sm-10">
-              <div class="progress">
-                <div id="progress-bar" class="progress-bar" style="width: 0%;"></div>
-              </div>
-              <div id="progress-text"></div>
+          <legend>{{ text_admin }}</legend>
+          <div class="mb-3">
+            <label class="form-label">{{ entry_admin }}</label>
+
+            <div class="input-group">
+              <div class="input-group-text">{{ server }}</div>
+              <input type="text" name="admin" value="{{ admin }}" class="form-control">
             </div>
+
           </div>
         </fieldset>
-        <div class="row mt-3">
-          <div class="col text-right"><button type="button" id="button-continue" data-loading="{{ text_loading }}" class="btn btn-primary">{{ button_continue }}</button></div>
+
+        <fieldset>
+          <legend>{{ text_steps }}</legend>
+          <div class="mb-3">
+            <label class="form-label">{{ entry_progress }}</label>
+            <div class="progress">
+              <div id="progress-bar" class="progress-bar" style="width: 0%;"></div>
+            </div>
+            <div id="progress-text"></div>
+          </div>
+        </fieldset>
+
+        <div class="row">
+          <div class="col text-end"><button type="button" id="button-continue" data-loading="{{ text_loading }}" class="btn btn-primary">{{ button_continue }}</button></div>
         </div>
+
       </div>
     </div>
   </div>
@@ -63,6 +78,8 @@ $('#button-continue').on('click', function () {
                 $('#button-continue').prop('disabled', false).removeClass('loading');
             },
             success: function (json) {
+                console.log(json);
+
                 if (json['redirect']) {
                     location = json['redirect'];
                 }

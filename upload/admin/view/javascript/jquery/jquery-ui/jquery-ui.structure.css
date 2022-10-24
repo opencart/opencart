@@ -182,7 +182,7 @@
 	display: block;
 	cursor: pointer;
 	position: relative;
-	margin: 2px 0 0 0;
+	margin: 2px 0 0;
 	padding: .5em .5em .5em .7em;
 	min-height: 0; /* support: IE7 */
 	font-size: 100%;
@@ -393,7 +393,7 @@ button.ui-button::-moz-focus-inner {
 }
 .ui-datepicker .ui-datepicker-buttonpane {
 	background-image: none;
-	margin: .7em 0 0 0;
+	margin: .7em 0 0;
 	padding: 0 .2em;
 	border-left: 0;
 	border-right: 0;
@@ -403,7 +403,7 @@ button.ui-button::-moz-focus-inner {
 	float: right;
 	margin: .5em .2em .4em;
 	cursor: pointer;
-	padding: .2em .6em .3em .6em;
+	padding: .2em .6em .3em;
 	width: auto;
 	overflow: visible;
 }
@@ -504,7 +504,7 @@ button.ui-button::-moz-focus-inner {
 	right: .3em;
 	top: 50%;
 	width: 20px;
-	margin: -10px 0 0 0;
+	margin: -10px 0 0;
 	padding: 1px;
 	height: 20px;
 }
@@ -517,7 +517,7 @@ button.ui-button::-moz-focus-inner {
 }
 .ui-dialog .ui-dialog-buttonpane {
 	text-align: left;
-	border-width: 1px 0 0 0;
+	border-width: 1px 0 0;
 	background-image: none;
 	margin-top: .5em;
 	padding: .3em 1em .5em .4em;
@@ -563,7 +563,7 @@ button.ui-button::-moz-focus-inner {
 	height: 0;
 	font-size: 0;
 	line-height: 0;
-	border-width: 1px 0 0 0;
+	border-width: 1px 0 0;
 }
 .ui-menu .ui-state-focus,
 .ui-menu .ui-state-active {
@@ -629,7 +629,7 @@ button.ui-button::-moz-focus-inner {
 	font-weight: bold;
 	line-height: 1.5;
 	padding: 2px 0.4em;
-	margin: 0.5em 0 0 0;
+	margin: 0.5em 0 0;
 	height: auto;
 	border: 0;
 }

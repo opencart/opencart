@@ -69,8 +69,8 @@ input[type=checkbox] {
 	box-sizing: border-box;
 	width: 850px;
 	height: 450px;
-	padding: 20px 15px 15px 15px;
-	margin: 15px auto 30px auto;
+	padding: 20px 15px 15px;
+	margin: 15px auto 30px;
 	border: 1px solid #ddd;
 	background: #fff;
 	background: linear-gradient(#f6f6f6 0, #fff 50px);

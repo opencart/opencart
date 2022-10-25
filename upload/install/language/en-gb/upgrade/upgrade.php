@@ -27,6 +27,7 @@ $_['error_file']        = 'Error: config file %s not found!';
 $_['error_writable']    = 'Error: config file %s is not writable!';
 $_['error_upgrade']     = 'Error: No upgrade files set!';
 $_['error_server']      = 'Error: HTTP_SERVER constant could not be found!';
+$_['error_catalog']     = 'Error: HTTP_CATALOG constant could not be found!';
 $_['error_db_driver']   = 'Error: DB_DRIVER constant could not be found!';
 $_['error_db_hostname'] = 'Error: DB_HOSTNAME constant could not be found!';
 $_['error_db_username'] = 'Error: DB_USERNAME constant could not be found!';

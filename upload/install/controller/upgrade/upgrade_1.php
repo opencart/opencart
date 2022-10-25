@@ -21,47 +21,7 @@ class Upgrade1 extends \Opencart\System\Engine\Controller {
 		// Config and file structure changes
 		$file = DIR_OPENCART . 'config.php';
 
-		if (!is_file($file)) {
-			$json['error'] = sprintf($this->language->get('error_file'), $file);
-		}
-
-		if (!is_writable($file)) {
-			$json['error'] =  sprintf($this->language->get('error_writable'), $file);
-		}
-
-		if (!$json) {
-			$capture = [
-				'APPLICATION',
-				'HOST_NAME',
-				'HTTP_SERVER',
-				'HTTPS_SERVER',
-				'HTTP_CATALOG',
-				'HTTPS_CATALOG',
-				'DIR_OPENCART',
-				'DIR_APPLICATION',
-				'DIR_EXTENSION',
-				'DIR_IMAGE',
-				'DIR_SYSTEM',
-				'DIR_CATALOG',
-				'DIR_STORAGE',
-				'DIR_LANGUAGE',
-				'DIR_TEMPLATE',
-				'DIR_CONFIG',
-				'DIR_CACHE',
-				'DIR_DOWNLOAD',
-				'DIR_LOGS',
-				'DIR_SESSION',
-				'DIR_UPLOAD',
-				'DB_DRIVER',
-				'DB_HOSTNAME',
-				'DB_USERNAME',
-				'DB_PASSWORD',
-				'DB_DATABASE',
-				'DB_PORT',
-				'DB_PREFIX',
-				'OPENCART_SERVER'
-			];
-
+		if (is_file($file)) {
 			$config = [];
 
 			// Catalog
@@ -101,6 +61,12 @@ class Upgrade1 extends \Opencart\System\Engine\Controller {
 			if (!defined('DB_PREFIX')) {
 				$json['error'] = $this->language->get('error_db_prefix');
 			}
+
+			if (!is_writable($file)) {
+				$json['error'] =  sprintf($this->language->get('error_writable'), $file);
+			}
+		} else {
+			$json['error'] = sprintf($this->language->get('error_file'), $file);
 		}
 
 		if (!$json) {
@@ -168,15 +134,7 @@ class Upgrade1 extends \Opencart\System\Engine\Controller {
 		// Admin
 		$file = DIR_OPENCART . $admin . '/config.php';
 
-		if (!is_file($file)) {
-			$json['error'] = sprintf($this->language->get('error_file'), $file);
-		}
-
-		if (!is_writable($file)) {
-			$json['error'] = sprintf($this->language->get('error_writable'), $file);
-		}
-
-		if (!$json) {
+		if (is_file($file)) {
 			$config = [];
 
 			$lines = file($file);
@@ -190,6 +148,10 @@ class Upgrade1 extends \Opencart\System\Engine\Controller {
 
 			if (!isset($config['HTTP_SERVER'])) {
 				$json['error'] = $this->language->get('error_server');
+			}
+
+			if (!isset($config['HTTP_CATALOG'])) {
+				$json['error'] = $this->language->get('error_catalog');
 			}
 
 			if (!defined('DB_DRIVER')) {
@@ -215,9 +177,30 @@ class Upgrade1 extends \Opencart\System\Engine\Controller {
 			if (!defined('DB_PREFIX')) {
 				$json['error'] = $this->language->get('error_db_prefix');
 			}
+
+			if (!is_writable($file)) {
+				$json['error'] = sprintf($this->language->get('error_writable'), $file);
+			}
+		} else {
+			$json['error'] = sprintf($this->language->get('error_file'), $file);
 		}
 
 		if (!$json) {
+			$path_old = DIR_OPENCART . 'admin/';
+			$path_new = dirname($file) . '/';
+
+			// 1. Check if default admin directory exists
+			if (is_dir($path_old) && $path_old != $path_new) {
+				// 2. Move current config file to default admin directory.
+				rename($file, $path_old . 'config.php');
+
+				// 3. Remove the current
+				rmdir($path_new);
+
+				// 4.
+				rename(DIR_OPENCART . 'admin/', $path_new);
+			}
+
 			// Admin config.php
 			$output  = '<?php' . "\n";
 			$output .= '// APPLICATION' . "\n";

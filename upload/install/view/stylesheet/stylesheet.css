@@ -91,18 +91,8 @@ legend {
     text-shadow: 0 1px #fff;
 }
 
-.col-form-label {
+.form-label {
     font-weight: bold;
-}
-
-.form-group.row {
-    margin-left: -20px;
-    margin-right: -20px;
-}
-
-.form-group.row + .form-group.row {
-    padding-top: 1rem;
-    border-top: 1px solid #ededed;
 }
 
 .form-control:hover {
@@ -112,14 +102,14 @@ legend {
     box-shadow: inset 0 1px 2px rgba(0, 0, 0, .1);
 }
 
-div.required .col-form-label:not(span):before, td.required:before {
+div.required .form-label:not(span):before, td.required:before {
     content: '* ';
     color: #F00;
     font-weight: bold;
 }
 
 
-.table thead td span[data-toggle="tooltip"]:after, label.col-form-label span:after {
+.table thead td span[data-toggle="tooltip"]:after, label.form-label span:after {
     font-family: 'Font Awesome 5 Free';
     font-weight: 600;
     content: "\f059";

@@ -190,6 +190,12 @@ class Subscription extends \Opencart\System\Engine\Model {
 
 		return $transaction_data;
 	}
+	
+	public function getTransactionTotal(int $subscription_id): float {
+        $query = $this->db->query("SELECT SUM(`amount`) AS `total` FROM `" . DB_PREFIX . "subscription_transaction` WHERE `subscription_id` = '" . (int)$subscription_id . "'");
+
+        return (float)$query->row['total'];
+    }
 
 	public function getTotalTransactions(int $subscription_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "subscription_transaction` WHERE `subscription_id` = '" . (int)$subscription_id . "'");

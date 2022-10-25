@@ -45,7 +45,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('account/subscription');
 
-		$subscription_total = $this->model_account_Subscription->getTotalSubscriptions();
+		$subscription_total = $this->model_account_subscription->getTotalSubscriptions();
 
 		$results = $this->model_account_subscription->getSubscriptions(($page - 1) * 10, 10);
 

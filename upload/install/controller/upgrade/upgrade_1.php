@@ -194,10 +194,42 @@ class Upgrade1 extends \Opencart\System\Engine\Controller {
 				// 2. Move current config file to default admin directory.
 				rename($file, $path_old . 'config.php');
 
-				// 3. Remove the current
-				rmdir($path_new);
+				// 3. Remove the current directory
+				$files = [];
 
-				// 4.
+				// Make path into an array
+				$directory = [$path_new];
+
+				// While the path array is still populated keep looping through
+				while (count($directory) != 0) {
+					$next = array_shift($directory);
+
+					if (is_dir($next)) {
+						foreach (glob(trim($next, '/') . '/{*,.[!.]*,..?*}', GLOB_BRACE) as $delete) {
+							// If directory add to path array
+							$directory[] = $delete;
+						}
+					}
+
+					// Add the file to the files to be deleted array
+					$files[] = $next;
+				}
+
+				// Reverse sort the file array
+				rsort($files);
+
+				foreach ($files as $delete) {
+					// If file just delete
+					if (is_file($delete)) {
+						unlink($delete);
+
+						// If directory use the remove directory function
+					} elseif (is_dir($delete)) {
+						rmdir($delete);
+					}
+				}
+
+				// 4. Rename folder to the old directory
 				rename(DIR_OPENCART . 'admin/', $path_new);
 			}
 

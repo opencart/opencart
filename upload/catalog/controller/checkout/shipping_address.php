@@ -104,19 +104,19 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-			if ((Helper\Utf8\strlen($this->request->post['firstname']) < 1) || (Helper\Utf8\strlen($this->request->post['firstname']) > 32)) {
+			if ((oc_strlen($this->request->post['firstname']) < 1) || (oc_strlen($this->request->post['firstname']) > 32)) {
 				$json['error']['shipping_firstname'] = $this->language->get('error_firstname');
 			}
 
-			if ((Helper\Utf8\strlen($this->request->post['lastname']) < 1) || (Helper\Utf8\strlen($this->request->post['lastname']) > 32)) {
+			if ((oc_strlen($this->request->post['lastname']) < 1) || (oc_strlen($this->request->post['lastname']) > 32)) {
 				$json['error']['shipping_lastname'] = $this->language->get('error_lastname');
 			}
 
-			if ((Helper\Utf8\strlen($this->request->post['address_1']) < 3) || (Helper\Utf8\strlen($this->request->post['address_1']) > 128)) {
+			if ((oc_strlen($this->request->post['address_1']) < 3) || (oc_strlen($this->request->post['address_1']) > 128)) {
 				$json['error']['shipping_address_1'] = $this->language->get('error_address_1');
 			}
 
-			if ((Helper\Utf8\strlen($this->request->post['city']) < 2) || (Helper\Utf8\strlen($this->request->post['city']) > 128)) {
+			if ((oc_strlen($this->request->post['city']) < 2) || (oc_strlen($this->request->post['city']) > 128)) {
 				$json['error']['shipping_city'] = $this->language->get('error_city');
 			}
 
@@ -124,7 +124,7 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 
 			$country_info = $this->model_localisation_country->getCountry((int)$this->request->post['country_id']);
 
-			if ($country_info && $country_info['postcode_required'] && (Helper\Utf8\strlen($this->request->post['postcode']) < 2 || Helper\Utf8\strlen($this->request->post['postcode']) > 10)) {
+			if ($country_info && $country_info['postcode_required'] && (oc_strlen($this->request->post['postcode']) < 2 || oc_strlen($this->request->post['postcode']) > 10)) {
 				$json['error']['shipping_postcode'] = $this->language->get('error_postcode');
 			}
 

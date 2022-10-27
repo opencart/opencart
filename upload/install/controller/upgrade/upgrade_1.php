@@ -308,11 +308,17 @@ class Upgrade1 extends \Opencart\System\Engine\Controller {
 			'upload'
 		];
 
-		foreach ($directories as $directory) {
-			if (!is_dir(DIR_STORAGE . $directory)) {
-				mkdir(DIR_STORAGE . $directory, '0644');
+		if (isset($config['DIR_STORAGE'])) {
+			$storage = $config['DIR_STORAGE'];
+		} else {
+			$storage = DIR_SYSTEM . 'storage/';
+		}
 
-				$handle = fopen(DIR_STORAGE . $directory . '/index.html', 'w');
+		foreach ($directories as $directory) {
+			if (!is_dir($storage . $directory)) {
+				mkdir($storage . $directory, '0644');
+
+				$handle = fopen($storage . $directory . '/index.html', 'w');
 
 				fclose($handle);
 			}
@@ -320,7 +326,7 @@ class Upgrade1 extends \Opencart\System\Engine\Controller {
 
 		// Merge system/upload to system/storage/upload
 		if (is_dir(DIR_SYSTEM . 'upload')) {
-			$this->recursive_move(DIR_SYSTEM . 'upload', DIR_STORAGE . 'upload');
+			$this->recursive_move(DIR_SYSTEM . 'upload', $storage . 'upload');
 		}
 
 		// Merge image/data to image/catalog
@@ -335,7 +341,7 @@ class Upgrade1 extends \Opencart\System\Engine\Controller {
 		}
 
 		if (is_dir(DIR_SYSTEM . 'download')) {
-			$this->recursive_move(DIR_SYSTEM . 'download', DIR_STORAGE . 'download');
+			$this->recursive_move(DIR_SYSTEM . 'download', $storage . 'download');
 		}
 
 		// Cleanup files in old directories

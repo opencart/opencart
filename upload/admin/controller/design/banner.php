@@ -266,14 +266,14 @@ class Banner extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		if ((Helper\Utf8\strlen($this->request->post['name']) < 3) || (Helper\Utf8\strlen($this->request->post['name']) > 64)) {
+		if ((oc_strlen($this->request->post['name']) < 3) || (oc_strlen($this->request->post['name']) > 64)) {
 			$json['error']['name'] = $this->language->get('error_name');
 		}
 
 		if (isset($this->request->post['banner_image'])) {
 			foreach ($this->request->post['banner_image'] as $language_id => $banner_image) {
 				foreach ($banner_image as $key => $value) {
-					if ((Helper\Utf8\strlen(trim($value['title'])) < 2) || (Helper\Utf8\strlen($value['title']) > 64)) {
+					if ((oc_strlen(trim($value['title'])) < 2) || (oc_strlen($value['title']) > 64)) {
 						$json['error']['image_' . $language_id . '_' . $key . '_title'] = $this->language->get('error_title');
 					}
 				}

@@ -290,11 +290,11 @@ class Information extends \Opencart\System\Engine\Controller {
 		}
 
 		foreach ($this->request->post['information_description'] as $language_id => $value) {
-			if ((Helper\Utf8\strlen(trim($value['title'])) < 1) || (Helper\Utf8\strlen($value['title']) > 64)) {
+			if ((oc_strlen(trim($value['title'])) < 1) || (oc_strlen($value['title']) > 64)) {
 				$json['error']['title_' . $language_id] = $this->language->get('error_title');
 			}
 
-			if ((Helper\Utf8\strlen(trim($value['meta_title'])) < 1) || (Helper\Utf8\strlen($value['meta_title']) > 255)) {
+			if ((oc_strlen(trim($value['meta_title'])) < 1) || (Helper\Utf8\strlen($value['meta_title']) > 255)) {
 				$json['error']['meta_title_' . $language_id] = $this->language->get('error_meta_title');
 			}
 		}

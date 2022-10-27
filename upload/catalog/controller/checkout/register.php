@@ -218,7 +218,7 @@ class Register extends \Opencart\System\Engine\Controller {
 				$json['error']['warning'] = $this->language->get('error_customer_group');
 			}
 
-			if ((Helper\Utf8\strlen($this->request->post['firstname']) < 1) || (Helper\Utf8\strlen($this->request->post['firstname']) > 32)) {
+			if ((oc_strlen($this->request->post['firstname']) < 1) || (oc_strlen($this->request->post['firstname']) > 32)) {
 				$json['error']['firstname'] = $this->language->get('error_firstname');
 			}
 

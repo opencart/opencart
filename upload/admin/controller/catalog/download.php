@@ -249,12 +249,12 @@ class Download extends \Opencart\System\Engine\Controller {
 		}
 
 		foreach ($this->request->post['download_description'] as $language_id => $value) {
-			if ((Helper\Utf8\strlen(trim($value['name'])) < 3) || (Helper\Utf8\strlen($value['name']) > 64)) {
+			if ((oc_strlen(trim($value['name'])) < 3) || (oc_strlen($value['name']) > 64)) {
 				$json['error']['name_' . $language_id] = $this->language->get('error_name');
 			}
 		}
 
-		if ((Helper\Utf8\strlen($this->request->post['filename']) < 3) || (Helper\Utf8\strlen($this->request->post['filename']) > 128)) {
+		if ((oc_strlen($this->request->post['filename']) < 3) || (oc_strlen($this->request->post['filename']) > 128)) {
 			$json['error']['filename'] = $this->language->get('error_filename');
 		}
 
@@ -266,7 +266,7 @@ class Download extends \Opencart\System\Engine\Controller {
 			$json['error']['filename'] = $this->language->get('error_exists');
 		}
 
-		if ((Helper\Utf8\strlen($this->request->post['mask']) < 3) || (Helper\Utf8\strlen($this->request->post['mask']) > 128)) {
+		if ((oc_strlen($this->request->post['mask']) < 3) || (oc_strlen($this->request->post['mask']) > 128)) {
 			$json['error']['mask'] = $this->language->get('error_mask');
 		}
 

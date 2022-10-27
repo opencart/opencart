@@ -12,7 +12,7 @@ class Upload extends \Opencart\System\Engine\Controller {
 			$filename = basename(preg_replace('/[^a-zA-Z0-9\.\-\s+]/', '', html_entity_decode($this->request->files['file']['name'], ENT_QUOTES, 'UTF-8')));
 
 			// Validate the filename length
-			if ((Helper\Utf8\strlen($filename) < 3) || (Helper\Utf8\strlen($filename) > 64)) {
+			if ((oc_strlen($filename) < 3) || (oc_strlen($filename) > 64)) {
 				$json['error'] = $this->language->get('error_filename');
 			}
 

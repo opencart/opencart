@@ -15,7 +15,7 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 			$parts = explode('/', $this->request->get['_route_']);
 
 			// remove any empty arrays from trailing
-			if (Helper\Utf8\strlen(end($parts)) == 0) {
+			if (oc_strlen(end($parts)) == 0) {
 				array_pop($parts);
 			}
 

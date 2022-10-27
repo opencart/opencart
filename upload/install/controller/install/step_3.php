@@ -316,7 +316,7 @@ class Step3 extends \Opencart\System\Engine\Controller {
 			$this->error['username'] = $this->language->get('error_username');
 		}
 
-		if ((Helper\Utf8\strlen($this->request->post['email']) > 96) || !filter_var($this->request->post['email'], FILTER_VALIDATE_EMAIL)) {
+		if ((oc_strlen($this->request->post['email']) > 96) || !filter_var($this->request->post['email'], FILTER_VALIDATE_EMAIL)) {
 			$this->error['email'] = $this->language->get('error_email');
 		}
 

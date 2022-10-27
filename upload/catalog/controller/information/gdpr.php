@@ -92,7 +92,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 		}
 
 		// Validate E-Mail
-		if ((Helper\Utf8\strlen($email) > 96) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+		if ((oc_strlen($email) > 96) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
 			$json['error']['email'] = $this->language->get('error_email');
 		}
 

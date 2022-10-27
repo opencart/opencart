@@ -467,11 +467,11 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		if ((Helper\Utf8\strlen($this->request->post['key']) < 1) || (Helper\Utf8\strlen($this->request->post['key']) > 64)) {
+		if ((oc_strlen($this->request->post['key']) < 1) || (oc_strlen($this->request->post['key']) > 64)) {
 			$json['error']['key'] = $this->language->get('error_key');
 		}
 
-		if ((Helper\Utf8\strlen($this->request->post['value']) < 1) || (Helper\Utf8\strlen($this->request->post['value']) > 255)) {
+		if ((oc_strlen($this->request->post['value']) < 1) || (oc_strlen($this->request->post['value']) > 255)) {
 			$json['error']['value'] = $this->language->get('error_value');
 		}
 

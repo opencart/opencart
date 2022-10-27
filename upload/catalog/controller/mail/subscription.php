@@ -248,7 +248,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 					$option_data[] = [
 						'name'  => $order_option['name'],
-						'value' => (Helper\Utf8\strlen($value) > 20 ? Helper\Utf8\substr($value, 0, 20) . '..' : $value)
+						'value' => (oc_strlen($value) > 20 ? oc_substr($value, 0, 20) . '..' : $value)
 					];
 				}
 

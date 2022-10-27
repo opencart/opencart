@@ -116,7 +116,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 				$emails = explode(',', $this->config->get('config_mail_alert_email'));
 
 				foreach ($emails as $email) {
-					if (Helper\Utf8\strlen($email) > 0 && filter_var($email, FILTER_VALIDATE_EMAIL)) {
+					if (oc_strlen($email) > 0 && filter_var($email, FILTER_VALIDATE_EMAIL)) {
 						$mail->setTo(trim($email));
 						$mail->send();
 					}

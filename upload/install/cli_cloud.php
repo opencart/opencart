@@ -132,11 +132,11 @@ class CliCloud extends \Opencart\System\Engine\Controller {
 		// Pre-installation check
 		$error = '';
 
-		if ((Helper\Utf8\strlen($option['username']) < 3) || (Helper\Utf8\strlen($option['username']) > 20)) {
+		if ((oc_strlen($option['username']) < 3) || (oc_strlen($option['username']) > 20)) {
 			$error .= 'ERROR: Username must be between 3 and 20 characters!' . "\n";
 		}
 
-		if ((Helper\Utf8\strlen($option['email']) > 96) || !filter_var($option['email'], FILTER_VALIDATE_EMAIL)) {
+		if ((oc_strlen($option['email']) > 96) || !filter_var($option['email'], FILTER_VALIDATE_EMAIL)) {
 			$error .= 'ERROR: E-Mail Address does not appear to be valid!' . "\n";
 		}
 

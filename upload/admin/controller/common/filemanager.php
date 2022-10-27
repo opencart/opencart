@@ -87,9 +87,9 @@ class FileManager extends \Opencart\System\Engine\Controller {
 
 					$data['directories'][] = [
 						'name' => $name,
-						'path' => Helper\Utf8\substr($image, Helper\Utf8\strlen($base)),
+						'path' => oc_substr($image, oc_strlen($base)),
 						'type' => 'directory',
-						'href' => $this->url->link('common/filemanager.list', 'user_token=' . $this->session->data['user_token'] . '&directory=' . urlencode(Helper\Utf8\substr($image, Helper\Utf8\strlen($base))) . $url)
+						'href' => $this->url->link('common/filemanager.list', 'user_token=' . $this->session->data['user_token'] . '&directory=' . urlencode(oc_substr($image, oc_strlen($base))) . $url)
 					];
 				}
 			}
@@ -148,10 +148,10 @@ class FileManager extends \Opencart\System\Engine\Controller {
 					$name = basename($image);
 
 					$data['images'][] = [
-						'thumb' => $this->model_tool_image->resize(Helper\Utf8\substr($image, Helper\Utf8\strlen(DIR_IMAGE)), 136, 136),
+						'thumb' => $this->model_tool_image->resize(oc_substr($image, oc_strlen(DIR_IMAGE)), 136, 136),
 						'name'  => $name,
-						'path'  => Helper\Utf8\substr($image, Helper\Utf8\strlen($base)),
-						'href'  => HTTP_CATALOG . 'image/catalog/' . Helper\Utf8\substr($image, Helper\Utf8\strlen($base))
+						'path'  => oc_substr($image, oc_strlen($base)),
+						'href'  => HTTP_CATALOG . 'image/catalog/' . oc_substr($image, oc_strlen($base))
 					];
 				}
 			}
@@ -275,7 +275,7 @@ class FileManager extends \Opencart\System\Engine\Controller {
 			$directory = $base;
 		}
 
-		// Check its a directory
+		// Check it's a directory
 		if (!is_dir($directory) || substr(str_replace('\\', '/', realpath($directory)) . '/', 0, strlen($base)) != $base) {
 			$json['error'] = $this->language->get('error_directory');
 		}
@@ -302,7 +302,7 @@ class FileManager extends \Opencart\System\Engine\Controller {
 					$filename = preg_replace('[/\\?%*:|"<>]', '', basename(html_entity_decode($file['name'], ENT_QUOTES, 'UTF-8')));
 
 					// Validate the filename length
-					if ((Helper\Utf8\strlen($filename) < 4) || (Helper\Utf8\strlen($filename) > 255)) {
+					if ((oc_strlen($filename) < 4) || (oc_strlen($filename) > 255)) {
 						$json['error'] = $this->language->get('error_filename');
 					}
 
@@ -390,7 +390,7 @@ class FileManager extends \Opencart\System\Engine\Controller {
 			$folder = preg_replace('[/\\?%*&:|"<>]', '', basename(html_entity_decode($this->request->post['folder'], ENT_QUOTES, 'UTF-8')));
 
 			// Validate the filename length
-			if ((Helper\Utf8\strlen($folder) < 3) || (Helper\Utf8\strlen($folder) > 128)) {
+			if ((oc_strlen($folder) < 3) || (oc_strlen($folder) > 128)) {
 				$json['error'] = $this->language->get('error_folder');
 			}
 
@@ -448,40 +448,16 @@ class FileManager extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			// Loop through each path
 			foreach ($paths as $path) {
-				$path = rtrim($base . html_entity_decode($path, ENT_QUOTES, 'UTF-8'), '/');
+				$path = $base . html_entity_decode($path, ENT_QUOTES, 'UTF-8');
 
-				$files = [];
-
-				// Make path into an array
-				$directory = [$path];
-
-				// While the path array is still populated keep looping through
-				while (count($directory) != 0) {
-					$next = array_shift($directory);
-
-					if (is_dir($next)) {
-						foreach (glob(trim($next, '/') . '/{*,.[!.]*,..?*}', GLOB_BRACE) as $file) {
-							// If directory add to path array
-							$directory[] = $file;
-						}
-					}
-
-					// Add the file to the files to be deleted array
-					$files[] = $next;
+				// If file just delete
+				if (is_file($path)) {
+					oc_file_delete($path);
 				}
 
-				// Reverse sort the file array
-				rsort($files);
-
-				foreach ($files as $file) {
-					// If file just delete
-					if (is_file($file)) {
-						unlink($file);
-
-						// If directory use the remove directory function
-					} elseif (is_dir($file)) {
-						rmdir($file);
-					}
+				// If directory use the remove directory function
+				if (is_dir($path)) {
+					oc_directory_delete($path);
 				}
 			}
 

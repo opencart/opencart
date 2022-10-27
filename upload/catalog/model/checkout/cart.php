@@ -35,7 +35,7 @@ class Cart extends \Opencart\System\Engine\Model {
 
 				$option_data[] = [
 					'name'  => $option['name'],
-					'value' => (Helper\Utf8\strlen($value) > 20 ? Helper\Utf8\substr($value, 0, 20) . '..' : $value),
+					'value' => (oc_strlen($value) > 20 ? oc_substr($value, 0, 20) . '..' : $value),
 					'type'  => $option['type']
 				];
 			}

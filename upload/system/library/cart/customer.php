@@ -50,7 +50,7 @@ class Customer {
 	 * @return   bool
 	 */
 	public function login(string $email, string $password, bool $override = false): bool {
-		$customer_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer` WHERE LOWER(`email`) = '" . $this->db->escape(Helper\Utf8\strtolower($email)) . "' AND `status` = '1'");
+		$customer_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer` WHERE LOWER(`email`) = '" . $this->db->escape(oc_strtolower($email)) . "' AND `status` = '1'");
 
 		if ($customer_query->row) {
 			if (!$override) {

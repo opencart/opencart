@@ -271,7 +271,7 @@ class Option extends \Opencart\System\Engine\Controller {
 		}
 
 		foreach ($this->request->post['option_description'] as $language_id => $value) {
-			if ((Helper\Utf8\strlen(trim($value['name'])) < 1) || (Helper\Utf8\strlen($value['name']) > 128)) {
+			if ((oc_strlen(trim($value['name'])) < 1) || (oc_strlen($value['name']) > 128)) {
 				$json['error']['name_' . $language_id] = $this->language->get('error_name');
 			}
 		}

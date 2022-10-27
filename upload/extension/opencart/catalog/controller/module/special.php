@@ -5,6 +5,8 @@ class Special extends \Opencart\System\Engine\Controller {
 	public function index(array $setting): string {
 		$this->load->language('extension/opencart/module/special');
 
+		$data['axis'] = $setting['axis'];
+
 		$this->load->model('catalog/product');
 		$this->load->model('tool/image');
 

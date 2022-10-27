@@ -5,11 +5,11 @@ class BestSeller extends \Opencart\System\Engine\Controller {
 	public function index(array $setting): string {
 		$this->load->language('extension/opencart/module/bestseller');
 
+		$data['axis'] = $setting['axis'];
+
 		$this->load->model('extension/opencart/module/bestseller');
 		$this->load->model('catalog/product');
 		$this->load->model('tool/image');
-
-		$data['axis'] = $setting['axis'];
 
 		$data['products'] = [];
 

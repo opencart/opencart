@@ -448,16 +448,40 @@ class FileManager extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			// Loop through each path
 			foreach ($paths as $path) {
-				$path = $base . html_entity_decode($path, ENT_QUOTES, 'UTF-8');
+				$path = rtrim($base . html_entity_decode($path, ENT_QUOTES, 'UTF-8'), '/');
 
-				// If file just delete
-				if (is_file($path)) {
-					oc_file_delete($path);
+				$files = [];
+
+				// Make path into an array
+				$directory = [$path];
+
+				// While the path array is still populated keep looping through
+				while (count($directory) != 0) {
+					$next = array_shift($directory);
+
+					if (is_dir($next)) {
+						foreach (glob(trim($next, '/') . '/{*,.[!.]*,..?*}', GLOB_BRACE) as $file) {
+							// If directory add to path array
+							$directory[] = $file;
+						}
+					}
+
+					// Add the file to the files to be deleted array
+					$files[] = $next;
 				}
 
-				// If directory use the remove directory function
-				if (is_dir($path)) {
-					oc_directory_delete($path);
+				// Reverse sort the file array
+				rsort($files);
+
+				foreach ($files as $file) {
+					// If file just delete
+					if (is_file($file)) {
+						unlink($file);
+
+						// If directory use the remove directory function
+					} elseif (is_dir($file)) {
+						rmdir($file);
+					}
 				}
 			}
 

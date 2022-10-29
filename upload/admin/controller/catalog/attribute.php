@@ -318,10 +318,10 @@ class Attribute extends \Opencart\System\Engine\Controller {
 			$this->load->model('catalog/attribute');
 
 			$filter_data = [
-				'filter_name' => $this->request->get['filter_name'],
-				'start' => 0,
-				'limit' => 5
-			];
+                'filter_name' => $this->request->get['filter_name'],
+                'start'       => 0,
+                'limit'       => 5
+            ];
 
 			$results = $this->model_catalog_attribute->getAttributes($filter_data);
 

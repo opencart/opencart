@@ -221,7 +221,7 @@ class ReturnReason extends \Opencart\System\Engine\Controller {
 		}
 
 		foreach ($this->request->post['return_reason'] as $language_id => $value) {
-			if ((Helper\Utf8\strlen($value['name']) < 3) || (Helper\Utf8\strlen($value['name']) > 128)) {
+			if ((oc_strlen($value['name']) < 3) || (oc_strlen($value['name']) > 128)) {
 				$json['error']['name_' . $language_id] = $this->language->get('error_name');
 			}
 		}

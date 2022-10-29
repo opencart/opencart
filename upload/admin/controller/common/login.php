@@ -32,7 +32,7 @@ class Login extends \Opencart\System\Engine\Controller {
 		}
 
 		// Create a login token to prevent brute force attacks
-		$this->session->data['login_token'] = Helper\General\token(32);
+		$this->session->data['login_token'] = oc_token(32);
 
 		$data['login'] = $this->url->link('common/login.login', 'login_token=' . $this->session->data['login_token'], true);
 
@@ -96,7 +96,7 @@ class Login extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$this->session->data['user_token'] = Helper\General\token(32);
+			$this->session->data['user_token'] = oc_token(32);
 
 			// Remove login token so it cannot be used again.
 			unset($this->session->data['login_token']);

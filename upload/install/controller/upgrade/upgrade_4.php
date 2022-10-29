@@ -95,7 +95,7 @@ class Upgrade4 extends \Opencart\System\Engine\Controller {
 
 			$missing[] = [
 				'key'        => 'config_encryption',
-				'value'      => hash('sha512', Helper\General\token(32)),
+				'value'      => hash('sha512', oc_token(32)),
 				'code'       => 'config',
 				'serialized' => 0
 			];

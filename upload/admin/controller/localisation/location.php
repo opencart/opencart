@@ -272,15 +272,15 @@ class Location extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		if ((Helper\Utf8\strlen($this->request->post['name']) < 3) || (Helper\Utf8\strlen($this->request->post['name']) > 32)) {
+		if ((oc_strlen($this->request->post['name']) < 3) || (oc_strlen($this->request->post['name']) > 32)) {
 			$json['error']['name'] = $this->language->get('error_name');
 		}
 
-		if ((Helper\Utf8\strlen($this->request->post['address']) < 3) || (Helper\Utf8\strlen($this->request->post['address']) > 128)) {
+		if ((oc_strlen($this->request->post['address']) < 3) || (oc_strlen($this->request->post['address']) > 128)) {
 			$json['error']['address'] = $this->language->get('error_address');
 		}
 
-		if ((Helper\Utf8\strlen($this->request->post['telephone']) < 3) || (Helper\Utf8\strlen($this->request->post['telephone']) > 32)) {
+		if ((oc_strlen($this->request->post['telephone']) < 3) || (Helper\Utf8\strlen($this->request->post['telephone']) > 32)) {
 			$json['error']['telephone'] = $this->language->get('error_telephone');
 		}
 

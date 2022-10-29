@@ -36,7 +36,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 
 		if (!$login_info) {
 			// Create a token that can be stored as a cookie and will be used to identify device is safe.
-			$token = Helper\General\token(32);
+			$token = oc_token(32);
 
 			$authorize_data = [
 				'token'      => $token,
@@ -54,7 +54,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 		$data['action'] = $this->url->link('common/authorize.validate', 'user_token=' . $this->session->data['user_token']);
 
 		// Set the code to be emailed
-		$this->session->data['code'] = Helper\General\token(4);
+		$this->session->data['code'] = oc_token(4);
 
 		if (isset($this->request->get['route']) && $this->request->get['route'] != 'common/login' && $this->request->get['route'] != 'common/authorize') {
 			$args = $this->request->get;
@@ -175,7 +175,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 		// Create reset code
 		$this->load->model('user/user');
 
-		$this->model_user_user->editCode($this->user->getEmail(), Helper\General\token(32));
+		$this->model_user_user->editCode($this->user->getEmail(), oc_token(32));
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

@@ -105,9 +105,9 @@ class Install extends \Opencart\System\Engine\Model {
 		$db->query("UPDATE `" . $data['db_prefix'] . "setting` SET `code` = 'config', `key` = 'config_email', `value` = '" . $db->escape($data['email']) . "' WHERE `key` = 'config_email'");
 
 		$db->query("DELETE FROM `" . $data['db_prefix'] . "setting` WHERE `key` = 'config_encryption'");
-		$db->query("INSERT INTO `" . $data['db_prefix'] . "setting` SET `code` = 'config', `key` = 'config_encryption', `value` = '" . $db->escape(Helper\General\token(512)) . "'");
+		$db->query("INSERT INTO `" . $data['db_prefix'] . "setting` SET `code` = 'config', `key` = 'config_encryption', `value` = '" . $db->escape(oc_token(512)) . "'");
 
-		$db->query("INSERT INTO `" . $data['db_prefix'] . "api` SET `username` = 'Default', `key` = '" . $db->escape(Helper\General\token(256)) . "', `status` = '1', `date_added` = NOW(), `date_modified` = NOW()");
+		$db->query("INSERT INTO `" . $data['db_prefix'] . "api` SET `username` = 'Default', `key` = '" . $db->escape(oc_token(256)) . "', `status` = '1', `date_added` = NOW(), `date_modified` = NOW()");
 
 		$api_id = $db->getLastId();
 

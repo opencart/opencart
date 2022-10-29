@@ -103,7 +103,7 @@ class Notification extends \Opencart\System\Engine\Controller {
 
 			$data['title'] = $notification_info['title'];
 
-			$data['text'] = Helper\General\bbcode_decode($notification_info['text']);
+			$data['text'] = oc_bbcode_decode($notification_info['text']);
 
 			$this->model_tool_notification->editStatus($notification_id, 1);
 

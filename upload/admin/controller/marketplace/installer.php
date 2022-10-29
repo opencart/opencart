@@ -189,7 +189,7 @@ class Installer extends \Opencart\System\Engine\Controller {
 			$filename = basename($this->request->files['file']['name']);
 
 			// 2. Validate the filename.
-			if ((Helper\Utf8\strlen($filename) < 1) || (Helper\Utf8\strlen($filename) > 128)) {
+			if ((oc_strlen($filename) < 1) || (oc_strlen($filename) > 128)) {
 				$json['error'] = $this->language->get('error_filename');
 			}
 

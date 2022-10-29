@@ -439,7 +439,7 @@ class Review extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		}
 
-		if ((Helper\Utf8\strlen($this->request->post['author']) < 3) || (Helper\Utf8\strlen($this->request->post['author']) > 64)) {
+		if ((oc_strlen($this->request->post['author']) < 3) || (oc_strlen($this->request->post['author']) > 64)) {
 			$json['error']['author'] = $this->language->get('error_author');
 		}
 
@@ -447,7 +447,7 @@ class Review extends \Opencart\System\Engine\Controller {
 			$json['error']['product'] = $this->language->get('error_product');
 		}
 
-		if (Helper\Utf8\strlen($this->request->post['text']) < 1) {
+		if (oc_strlen($this->request->post['text']) < 1) {
 			$json['error']['text'] = $this->language->get('error_text');
 		}
 

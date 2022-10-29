@@ -55,7 +55,7 @@ class Upload extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$file = $filename . '.' . Helper\General\token(32);
+			$file = $filename . '.' . oc_token(32);
 
 			move_uploaded_file($this->request->files['file']['tmp_name'], DIR_UPLOAD . $file);
 

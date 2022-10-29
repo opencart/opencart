@@ -448,7 +448,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		if (!empty($affiliate_info)) {
 			$data['tracking'] = $affiliate_info['tracking'];
 		} else {
-			$data['tracking'] = Helper\General\token(10);
+			$data['tracking'] = oc_token(10);
 		}
 
 		if (!empty($affiliate_info)) {
@@ -601,7 +601,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		// Payment validation
 		if ($this->request->post['payment'] == 'cheque' && $this->request->post['cheque'] == '') {
 			$json['error']['cheque'] = $this->language->get('error_cheque');
-		} elseif ($this->request->post['payment'] == 'paypal' && ((Helper\Utf8\strlen($this->request->post['paypal']) > 96) || !filter_var($this->request->post['paypal'], FILTER_VALIDATE_EMAIL))) {
+		} elseif ($this->request->post['payment'] == 'paypal' && ((oc_strlen($this->request->post['paypal']) > 96) || !filter_var($this->request->post['paypal'], FILTER_VALIDATE_EMAIL))) {
 			$json['error']['paypal'] = $this->language->get('error_paypal');
 		} elseif ($this->request->post['payment'] == 'bank') {
 			if ($this->request->post['bank_account_name'] == '') {

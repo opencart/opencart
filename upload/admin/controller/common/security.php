@@ -421,9 +421,10 @@ class Security extends \Opencart\System\Engine\Controller {
 				// If file just delete
 				if (is_file($file)) {
 					unlink($file);
+				}
 
-					// If directory use the remove directory function
-				} elseif (is_dir($file)) {
+				// If directory use the remove directory function
+				if (is_dir($file)) {
 					rmdir($file);
 				}
 			}

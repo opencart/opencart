@@ -222,11 +222,11 @@ class Register extends \Opencart\System\Engine\Controller {
 				$json['error']['firstname'] = $this->language->get('error_firstname');
 			}
 
-			if ((Helper\Utf8\strlen($this->request->post['lastname']) < 1) || (Helper\Utf8\strlen($this->request->post['lastname']) > 32)) {
+			if ((oc_strlen($this->request->post['lastname']) < 1) || (oc_strlen($this->request->post['lastname']) > 32)) {
 				$json['error']['lastname'] = $this->language->get('error_lastname');
 			}
 
-			if ((Helper\Utf8\strlen($this->request->post['email']) > 96) || !filter_var($this->request->post['email'], FILTER_VALIDATE_EMAIL)) {
+			if ((oc_strlen($this->request->post['email']) > 96) || !filter_var($this->request->post['email'], FILTER_VALIDATE_EMAIL)) {
 				$json['error']['email'] = $this->language->get('error_email');
 			}
 
@@ -245,7 +245,7 @@ class Register extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-			if ($this->config->get('config_telephone_required') && (Helper\Utf8\strlen($this->request->post['telephone']) < 3) || (Helper\Utf8\strlen($this->request->post['telephone']) > 32)) {
+			if ($this->config->get('config_telephone_required') && (oc_strlen($this->request->post['telephone']) < 3) || (oc_strlen($this->request->post['telephone']) > 32)) {
 				$json['error']['telephone'] = $this->language->get('error_telephone');
 			}
 
@@ -265,11 +265,11 @@ class Register extends \Opencart\System\Engine\Controller {
 			}
 
 			if ($this->config->get('config_checkout_payment_address')) {
-				if ((Helper\Utf8\strlen($this->request->post['payment_address_1']) < 3) || (Helper\Utf8\strlen($this->request->post['payment_address_1']) > 128)) {
+				if ((oc_strlen($this->request->post['payment_address_1']) < 3) || (oc_strlen($this->request->post['payment_address_1']) > 128)) {
 					$json['error']['payment_address_1'] = $this->language->get('error_address_1');
 				}
 
-				if ((Helper\Utf8\strlen($this->request->post['payment_city']) < 2) || (Helper\Utf8\strlen($this->request->post['payment_city']) > 32)) {
+				if ((oc_strlen($this->request->post['payment_city']) < 2) || (oc_strlen($this->request->post['payment_city']) > 32)) {
 					$json['error']['payment_city'] = $this->language->get('error_city');
 				}
 
@@ -277,7 +277,7 @@ class Register extends \Opencart\System\Engine\Controller {
 
 				$payment_country_info = $this->model_localisation_country->getCountry((int)$this->request->post['payment_country_id']);
 
-				if ($payment_country_info && $payment_country_info['postcode_required'] && (Helper\Utf8\strlen($this->request->post['payment_postcode']) < 2 || Helper\Utf8\strlen($this->request->post['payment_postcode']) > 10)) {
+				if ($payment_country_info && $payment_country_info['postcode_required'] && (oc_strlen($this->request->post['payment_postcode']) < 2 || oc_strlen($this->request->post['payment_postcode']) > 10)) {
 					$json['error']['payment_postcode'] = $this->language->get('error_postcode');
 				}
 
@@ -304,16 +304,16 @@ class Register extends \Opencart\System\Engine\Controller {
 			if ($this->cart->hasShipping() && !$this->request->post['address_match']) {
 				// If payment address not required we need to use the firstname and lastname from the account.
 				if ($this->config->get('config_checkout_payment_address')) {
-					if ((Helper\Utf8\strlen($this->request->post['shipping_firstname']) < 1) || (Helper\Utf8\strlen($this->request->post['shipping_firstname']) > 32)) {
+					if ((oc_strlen($this->request->post['shipping_firstname']) < 1) || (oc_strlen($this->request->post['shipping_firstname']) > 32)) {
 						$json['error']['shipping_firstname'] = $this->language->get('error_firstname');
 					}
 
-					if ((Helper\Utf8\strlen($this->request->post['shipping_lastname']) < 1) || (Helper\Utf8\strlen($this->request->post['shipping_lastname']) > 32)) {
+					if ((oc_strlen($this->request->post['shipping_lastname']) < 1) || (oc_strlen($this->request->post['shipping_lastname']) > 32)) {
 						$json['error']['shipping_lastname'] = $this->language->get('error_lastname');
 					}
 				}
 
-				if ((Helper\Utf8\strlen($this->request->post['shipping_address_1']) < 3) || (Helper\Utf8\strlen($this->request->post['shipping_address_1']) > 128)) {
+				if ((oc_strlen($this->request->post['shipping_address_1']) < 3) || (Helper\Utf8\strlen($this->request->post['shipping_address_1']) > 128)) {
 					$json['error']['shipping_address_1'] = $this->language->get('error_address_1');
 				}
 
@@ -574,7 +574,7 @@ class Register extends \Opencart\System\Engine\Controller {
 					$this->customer->login($this->request->post['email'], $this->request->post['password']);
 
 					// Create customer token
-					$this->session->data['customer_token'] = Helper\General\token(26);
+					$this->session->data['customer_token'] = oc_token(26);
 
 					$json['success'] = $this->language->get('text_success_add');
 				} elseif ($this->customer->isLogged()) {

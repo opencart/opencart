@@ -55,15 +55,15 @@ $('#button-upload').on('click', function () {
 
         $('#form-upload input[name=\'file\']').on('change', function () {
             if ((this.files[0].size / 1024) > {{ config_file_max_size }}) {
-                alert('{{ error_upload_size }}');
-
                 $(this).val('');
+
+                alert('{{ error_upload_size }}');
             }
 
             if (!this.files[0].name.endsWith('.ocmod.zip')) {
-                alert('{{ error_filetype }}');
-
                 $(this).val('');
+
+                alert('{{ error_filetype }}');
             }
         });
 

@@ -758,6 +758,10 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		$this->load->language('sale/subscription');
 
 		$json = [];
+		
+		if (!$this->user->hasPermission('modify', 'sale/subscription')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
 
 		if (isset($this->request->get['subscription_id'])) {
 			$subscription_id = (int)$this->request->get['subscription_id'];
@@ -765,9 +769,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$subscription_id = 0;
 		}
 
-		if (!$this->user->hasPermission('modify', 'sale/subscription')) {
-			$json['error'] = $this->language->get('error_permission');
-		} elseif ($this->request->post['type'] == '') {
+		if ($this->request->post['type'] == '') {
 			$json['error'] = $this->language->get('error_service_type');
 		}
 

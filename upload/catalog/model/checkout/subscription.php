@@ -24,6 +24,6 @@ class Subscription extends \Opencart\System\Engine\Model {
 	public function getSubscriptionByOrderProductId(int $order_product_id): int {
 		$this->db->query("SELECT * FROM  `" . DB_PREFIX . "subscription` WHERE `order_product_id` = '" . (int)$order_product_id . "'");
 
-		return $this->db->rows;
+		return $this->db->row;
 	}
 }

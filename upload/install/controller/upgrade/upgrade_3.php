@@ -12,7 +12,7 @@ class Upgrade3 extends \Opencart\System\Engine\Controller {
 			// Structure
 			$this->load->helper('db_schema');
 
-			$tables = Helper\DbSchema\db_schema();
+			$tables = oc_db_schema();
 
 			// Clear any old db foreign key constraints
 			/*

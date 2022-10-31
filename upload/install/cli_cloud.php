@@ -174,7 +174,7 @@ class CliCloud extends \Opencart\System\Engine\Controller {
 		}
 
 		// Set up Database structure
-		$tables = Helper\DbSchema\db_schema();
+		$tables = oc_db_schema();
 
 		foreach ($tables as $table) {
 			$table_query = $db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . $db_database . "' AND TABLE_NAME = '" . $db_prefix . $table['name'] . "'");

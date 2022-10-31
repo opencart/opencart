@@ -8,7 +8,7 @@ class Install extends \Opencart\System\Engine\Model {
 		// Structure
 		$this->load->helper('db_schema');
 
-		$tables = Helper\DbSchema\db_schema();
+		$tables = oc_db_schema();
 
 		// Clear any old db foreign key constraints
 		foreach ($tables as $table) {

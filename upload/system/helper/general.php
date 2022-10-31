@@ -29,7 +29,7 @@ function oc_token(int $length = 32): string {
 	return substr(bin2hex(random_bytes($length)), 0, $length);
 }
 
-function date_added(string $date): array {
+function oc_date_added(string $date): array {
 	$second = time() - strtotime($date);
 
 	if ($second < 10) {

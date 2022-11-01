@@ -1,6 +1,5 @@
 <?php
 namespace Opencart\Catalog\Controller\Account;
-use \Opencart\System\Helper as Helper;
 class Login extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		if ($this->customer->isLogged()) {

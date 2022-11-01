@@ -1,6 +1,5 @@
 <?php
 namespace Opencart\Catalog\Controller\Product;
-use \Opencart\System\Helper as Helper;
 class Compare extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('product/compare');

@@ -1,6 +1,5 @@
 <?php
 namespace Opencart\Admin\Controller\Tool;
-use \Opencart\System\Helper as Helper;
 class Upload extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('tool/upload');

@@ -1,6 +1,5 @@
 <?php
 namespace Opencart\Admin\Controller\Customer;
-use \Opencart\System\Helper as Helper;
 class CustomerGroup extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('customer/customer_group');

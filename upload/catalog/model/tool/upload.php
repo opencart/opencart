@@ -1,6 +1,5 @@
 <?php
 namespace Opencart\Catalog\Model\Tool;
-use \Opencart\System\Helper as Helper;
 class Upload extends \Opencart\System\Engine\Model {
 	public function addUpload(string $name, string $filename): string {
 		$code = oc_token(32);

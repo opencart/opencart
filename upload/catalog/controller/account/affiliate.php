@@ -1,6 +1,5 @@
 <?php
 namespace Opencart\Catalog\Controller\Account;
-use \Opencart\System\Helper as Helper;
 class Affiliate extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('account/affiliate');

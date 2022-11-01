@@ -1,6 +1,5 @@
 <?php
 namespace Opencart\Admin\Controller\Design;
-use \Opencart\System\Helper as Helper;
 class Translation extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('design/translation');

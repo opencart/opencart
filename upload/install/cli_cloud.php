@@ -12,7 +12,6 @@
 //
 
 namespace Install;
-use \Opencart\System\Helper as Helper;
 
 ini_set('display_errors', 1);
 

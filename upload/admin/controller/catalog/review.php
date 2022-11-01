@@ -1,6 +1,5 @@
 <?php
 namespace Opencart\Admin\Controller\Catalog;
-use \Opencart\System\Helper as Helper;
 class Review extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('catalog/review');

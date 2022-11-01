@@ -1,6 +1,5 @@
 <?php
 namespace Opencart\Admin\Controller\User;
-use \Opencart\System\Helper as Helper;
 class Profile extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('user/profile');

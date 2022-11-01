@@ -1,6 +1,5 @@
 <?php
 namespace Opencart\Catalog\Controller\Startup;
-use \Opencart\System\Helper as Helper;
 class SeoUrl extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		// Add rewrite to URL class

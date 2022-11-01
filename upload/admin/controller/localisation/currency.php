@@ -1,6 +1,5 @@
 <?php
 namespace Opencart\Admin\Controller\Localisation;
-use \Opencart\System\Helper as Helper;
 class Currency extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('localisation/currency');

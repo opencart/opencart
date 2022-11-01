@@ -1,6 +1,5 @@
 <?php
 namespace Opencart\Admin\Controller\Marketplace;
-use \Opencart\System\Helper as Helper;
 class Installer extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('marketplace/installer');

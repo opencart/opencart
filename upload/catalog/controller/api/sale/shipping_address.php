@@ -1,6 +1,5 @@
 <?php
 namespace Opencart\Catalog\Controller\Api\Sale;
-use \Opencart\System\Helper as Helper;
 class ShippingAddress extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('api/sale/shipping_address');

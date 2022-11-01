@@ -1,6 +1,5 @@
 <?php
 namespace Opencart\Catalog\Controller\Api\Sale;
-use \Opencart\System\Helper as Helper;
 class Order extends \Opencart\System\Engine\Controller {
 	/*
 	 * Loads order info

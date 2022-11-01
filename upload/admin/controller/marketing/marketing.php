@@ -1,6 +1,5 @@
 <?php
 namespace Opencart\Admin\Controller\Marketing;
-use \Opencart\System\Helper as Helper;
 class Marketing extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('marketing/marketing');

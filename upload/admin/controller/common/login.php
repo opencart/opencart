@@ -1,6 +1,5 @@
 <?php
 namespace Opencart\Admin\Controller\Common;
-use \Opencart\System\Helper as Helper;
 class Login extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('common/login');

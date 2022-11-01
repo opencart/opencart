@@ -1,6 +1,5 @@
 <?php
 namespace Opencart\Admin\Controller\Common;
-use \Opencart\System\Helper as Helper;
 class Forgotten extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('common/forgotten');

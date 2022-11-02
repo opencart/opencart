@@ -62,6 +62,7 @@ $_['entry_date_from']            = 'Date From';
 $_['entry_date_to']              = 'Date To';
 
 // Error
+$_['error_permission']           = 'Warning: You do not have permission to modify subscriptions!';
 $_['error_subscription']         = 'Warning: Subscription does not exist!';
 $_['error_subscription_plan']    = 'Warning: Subscription plan does not exist!';
 $_['error_subscription_status']  = 'Warning: Subscription status needs to be selected!';

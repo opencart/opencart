@@ -222,9 +222,10 @@ class Upgrade1 extends \Opencart\System\Engine\Controller {
 					// If file just delete
 					if (is_file($delete)) {
 						unlink($delete);
+					}
 
-						// If directory use the remove directory function
-					} elseif (is_dir($delete)) {
+					// If directory use the remove directory function
+					if (is_dir($delete)) {
 						rmdir($delete);
 					}
 				}

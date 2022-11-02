@@ -377,8 +377,6 @@ class Upgrade1 extends \Opencart\System\Engine\Controller {
 					rmdir($file);
 				}
 			}
-
-			rmdir($source);
 		}
 
 		// Remove files in old directories

@@ -24,7 +24,9 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 
 		$data['button_continue'] = $this->language->get('button_continue');
 
-		$data['server'] = HTTP_SERVER;
+		$server = trim(HTTP_SERVER, '/');
+
+		$data['server'] = substr($server, 0, strrpos($server, '/')). '/';
 		$data['total'] = count(glob(DIR_APPLICATION . 'controller/upgrade/upgrade_*.php'));
 
 		$data['header'] = $this->load->controller('common/header');

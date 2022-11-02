@@ -10,20 +10,6 @@ class File {
 	 */
 	public function __construct(int $expire = 3600) {
 		$this->expire = $expire;
-
-		$files = glob(DIR_CACHE . 'cache.*');
-
-		if ($files) {
-			foreach ($files as $file) {
-				$filename = basename($file);
-
-				$time = substr(strrchr($file, '.'), 1);
-
-				if ($time < time()) {
-					$this->delete(substr($filename, 6, strrpos($filename, '.') - 6));
-				}
-			}
-		}
 	}
 	
 	/**
@@ -75,6 +61,25 @@ class File {
 			foreach ($files as $file) {
 				if (!@unlink($file)) {
 					clearstatcache(false, $file);
+				}
+			}
+		}
+	}
+
+	/**
+	 * Destructor
+	 */
+	public function __destruct() {
+		$files = glob(DIR_CACHE . 'cache.*');
+
+		if ($files && rand(1, 100) == 1) {
+			foreach ($files as $file) {
+				$time = substr(strrchr($file, '.'), 1);
+
+				if ($time < time()) {
+					if (!@unlink($file)) {
+						clearstatcache(false, $file);
+					}
 				}
 			}
 		}

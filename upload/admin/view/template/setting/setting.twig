@@ -755,11 +755,11 @@
                         </div>
                       </div>
                       <div class="row mb-3">
-                        <label for="input-subscription-canceled-status" class="col-sm-2 col-form-label">{{ entry_subscription_canceled_status }}</label>
+                        <label for="input-subscription-cancelled-status" class="col-sm-2 col-form-label">{{ entry_subscription_cancelled_status }}</label>
                         <div class="col-sm-10">
-                          <select name="config_subscription_canceled_status_id" id="input-subscription-canceled-status" class="form-select">
+                          <select name="config_subscription_cancelled_status_id" id="input-subscription-cancelled-status" class="form-select">
                             {% for subscription_status in subscription_statuses %}
-                              <option value="{{ subscription_status.subscription_status_id }}"{% if subscription_status.subscription_status_id == config_subscription_canceled_status_id %} selected="selected"{% endif %}>{{ subscription_status.name }}</option>
+                              <option value="{{ subscription_status.subscription_status_id }}"{% if subscription_status.subscription_status_id == config_subscription_cancelled_status_id %} selected="selected"{% endif %}>{{ subscription_status.name }}</option>
                             {% endfor %}
                           </select>
                         </div>

@@ -794,6 +794,48 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			if ((!$order_info) || ($this->request->post['order_id'] == '') || (($this->request->post['order_id'] != $order_info['order_id']) || ($this->request->post['order_id'] != $subscription_info['order_id']))) {
 				$json['error'] = $this->language->get('error_payment_method');
 			}
+			
+			// Subscription Plans
+            $this->load->model('catalog/subscription_plan');
+
+            $filter_data = [
+                'filter_order_id' => $order_info['order_id']
+            ];
+
+            $subscription_total = $this->model_sale_subscription->getTotalSubscriptions($filter_data);
+
+            $subscription_plan_total = $this->model_catalog_subscription_plan->getTotalSubscriptionPlans();
+
+            // Only recurring or new orders are allowed to be migrated into the subscription system.
+            // Subscription plans must be created from the store prior to migrate recurring orders.
+            if ($subscription_total || !$subscription_plan_total) {
+                $json['error'] = $this->language->get('error_transaction');
+            } else {
+                // The subscription active status ID needs to match the recurring status ID
+                $this->load->model('setting/setting');
+
+                $store_info = $this->model_setting_setting->getSetting('config', $order_info['store_id']);
+
+                if (!$store_info) {
+                    $json['error'] = $this->language->get('error_status');
+                } else {
+                    $config_subscription_status_id = $store_info['config_subscription_canceled_status_id'];
+
+                    $subscription_status_id = $this->config->get('config_subscription_canceled_status_id');
+
+                    if ($config_subscription_status_id != $subscription_status_id) {
+                        $json['error'] = $this->language->get('error_status');
+                    } else {
+                        $config_subscription_status_total = $this->model_sale_subscription->getTotalSubscriptionsBySubscriptionStatusId($config_subscription_status_id);
+
+                        $subscription_status_total = $this->model_sale_subscription->getTotalSubscriptionsBySubscriptionStatusId($subscription_status_id);
+
+                        if ((!$config_subscription_status_total) || (!$subscription_total)) {
+                            $json['error'] = $this->language->get('error_status');
+                        }
+                    }
+                }
+            }
 		}
 
 		if (!$json) {

@@ -135,11 +135,19 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 				$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `store_id` = '0', `code` = 'config', `key` = 'config_subscription_expired_status_id', `value` = '6', `serialized` = '0'");
 			}
 
-			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE `key` = 'config_subscription_canceled_status_id'");
+			$canceled = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE `key` = 'config_subscription_cancelled_status_id'");
 
-			if (!$query->num_rows) {
-				$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `store_id` = '0', `code` = 'config', `key` = 'config_subscription_canceled_status_id', `value` = '4', `serialized` = '0'");
-			}
+            if (!$canceled->num_rows) {
+                $this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `store_id` = '0', `code` = 'config', `key` = 'config_subscription_cancelled_status_id', `value` = '4', `serialized` = '0'");
+            }
+
+            $cancelled = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE `key` = 'config_subscription_canceled_status_id'");
+
+            if ($cancelled->num_rows && $canceled->num_rows) {
+                $this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `key` = 'config_subscription_canceled_status_id'");
+
+                $this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `store_id` = '0', `code` = 'config', `key` = 'config_subscription_cancelled_status_id', `value` = '" . (int)$canceled->row['value'] . "', `serialized` = '0'");
+            }
 
 			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE `key` = 'config_subscription_failed_status_id'");
 

@@ -277,6 +277,7 @@ class Cart {
                             'remaining'            	=> $subscription_query->row['duration'],
                             'status'				=> $subscription_query->row['status']
                         ];
+					}
 
 					$this->data[] = [
 						'cart_id'         => $cart['cart_id'],
@@ -335,7 +336,7 @@ class Cart {
 
 		$this->data = [];
 	}
-	
+
 	/**
 	 * Update
 	 *
@@ -349,7 +350,7 @@ class Cart {
 
 		$this->data = [];
 	}
-	
+
 	/**
 	 * Remove
 	 *
@@ -362,7 +363,7 @@ class Cart {
 
 		$this->data = [];
 	}
-	
+
 	/**
 	 * Clear
 	 *
@@ -373,7 +374,7 @@ class Cart {
 
 		$this->data = [];
 	}
-	
+
 	/**
 	 * getSubscription
 	 *
@@ -390,7 +391,7 @@ class Cart {
 
 		return $product_data;
 	}
-	
+
 	/**
 	 * getWeight
 	 *
@@ -422,7 +423,7 @@ class Cart {
 
 		return $total;
 	}
-	
+
 	/**
 	 * getTaxes
 	 *
@@ -447,7 +448,7 @@ class Cart {
 
 		return $tax_data;
 	}
-	
+
 	/**
 	 * getTotal
 	 *
@@ -479,7 +480,7 @@ class Cart {
 
 		return $product_total;
 	}
-	
+
 	/**
 	 * hadProducts
 	 *
@@ -488,7 +489,7 @@ class Cart {
 	public function hasProducts(): bool {
 		return count($this->getProducts());
 	}
-	
+
 	/**
 	 * hasSubscription
 	 *
@@ -497,7 +498,7 @@ class Cart {
 	public function hasSubscription(): bool {
 		return count($this->getSubscription());
 	}
-	
+
 	/**
 	 * hasStock
 	 *

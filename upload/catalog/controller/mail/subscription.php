@@ -25,6 +25,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		$subscription['trial_frequency']
 		$subscription['trial_cycle']
 		$subscription['trial_duration' ]
+		$subscription['trial_remaining' ]
 		$subscription['trial_status' ]
 		$subscription['price' ]
 		$subscription['frequency' ]

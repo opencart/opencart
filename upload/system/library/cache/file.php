@@ -20,7 +20,7 @@ class File {
 	 * @return array|string|null
 	 */
 	public function get(string $key): array|string|null {
-		$files = glob(DIR_CACHE . 'cache.' . basename($key) . '.*');
+		$files = glob(DIR_CACHE . 'cache.' . preg_replace('/[^A-Z0-9\._-]/i', '', $key) . '.*');
 
 		if ($files) {
 			return json_decode(file_get_contents($files[0]), true);
@@ -44,7 +44,7 @@ class File {
 			$expire = $this->expire;
 		}
 
-		file_put_contents(DIR_CACHE . 'cache.' . basename($key) . '.' . (time() + $expire), json_encode($value));
+		file_put_contents(DIR_CACHE . 'cache.' . preg_replace('/[^A-Z0-9\._-]/i', '', $key) . '.' . (time() + $expire), json_encode($value));
 	}
 
 	/**
@@ -55,7 +55,7 @@ class File {
 	 * @return void
 	 */
 	public function delete(string $key): void {
-		$files = glob(DIR_CACHE . 'cache.' . basename($key) . '.*');
+		$files = glob(DIR_CACHE . 'cache.' . preg_replace('/[^A-Z0-9\._-]/i', '', $key) . '.*');
 
 		if ($files) {
 			foreach ($files as $file) {

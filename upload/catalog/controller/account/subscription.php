@@ -147,7 +147,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			// Orders
             $this->load->model('account/order');
 
-            $order_product = $this->model_account_order->getOrderProduct($this->request->get['subscription_id'], $subscription_info['order_product_id']);
+            $order_product = $this->model_account_order->getOrderProduct($subscription_info['order_id'], $subscription_info['order_product_id']);
 
             $data['order_id'] = $subscription_info['order_id'];
             $data['reference'] = $subscription_info['reference'];

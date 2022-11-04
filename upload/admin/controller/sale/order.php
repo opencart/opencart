@@ -862,6 +862,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['payment_postcode'] = '';
 		}
 
+		// Countries
 		$this->load->model('localisation/country');
 
 		$data['countries'] = $this->model_localisation_country->getCountries();
@@ -1089,6 +1090,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['date_modified'] = date($this->language->get('date_format_short'), time());
 		}
 
+		// Histories
 		$data['history'] = $this->getHistory();
 
 		$data['user_token'] = $this->session->data['user_token'];
@@ -1140,7 +1142,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			unset($store->request->get['action']);
 			unset($store->request->get['user_token']);
 
-			// Call the required api controller
+			// Call the required API controller
 			$store->load->controller($store->request->get['route']);
 
 			$this->response->addHeader('Content-Type: application/json');
@@ -1205,6 +1207,7 @@ class Order extends \Opencart\System\Engine\Controller {
 					$invoice_no = '';
 				}
 
+				// Payment Address
 				if ($order_info['payment_address_format']) {
 					$format = $order_info['payment_address_format'];
 				} else {
@@ -1239,6 +1242,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 				$payment_address = str_replace(["\r\n", "\r", "\n"], '<br/>', preg_replace(["/\s\s+/", "/\r\r+/", "/\n\n+/"], '<br/>', trim(str_replace($find, $replace, $format))));
 
+				// Shipping Address
 				if ($order_info['shipping_address_format']) {
 					$format = $order_info['shipping_address_format'];
 				} else {
@@ -1392,7 +1396,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$data['direction'] = $this->language->get('direction');
 		$data['lang'] = $this->language->get('code');
 
-		// Hard coding css so they can be replaced via the events system.
+		// Hard coding CSS so they can be replaced via the events system.
 		$data['bootstrap_css'] = 'view/stylesheet/bootstrap.css';
 		$data['icons'] = 'view/stylesheet/fonts/fontawesome/css/all.min.css';
 		$data['stylesheet'] = 'view/stylesheet/stylesheet.css';
@@ -1442,6 +1446,7 @@ class Order extends \Opencart\System\Engine\Controller {
 					$invoice_no = '';
 				}
 
+				// Shipping Address
 				if ($order_info['shipping_address_format']) {
 					$format = $order_info['shipping_address_format'];
 				} else {

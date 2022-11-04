@@ -312,11 +312,11 @@ class Register extends \Opencart\System\Engine\Controller {
 					}
 				}
 
-				if ((oc_strlen($this->request->post['shipping_address_1']) < 3) || (Helper\Utf8\strlen($this->request->post['shipping_address_1']) > 128)) {
+				if ((oc_strlen($this->request->post['shipping_address_1']) < 3) || (oc_strlen($this->request->post['shipping_address_1']) > 128)) {
 					$json['error']['shipping_address_1'] = $this->language->get('error_address_1');
 				}
 
-				if ((Helper\Utf8\strlen($this->request->post['shipping_city']) < 2) || (Helper\Utf8\strlen($this->request->post['shipping_city']) > 128)) {
+				if ((oc_strlen($this->request->post['shipping_city']) < 2) || (oc_strlen($this->request->post['shipping_city']) > 128)) {
 					$json['error']['shipping_city'] = $this->language->get('error_city');
 				}
 
@@ -324,7 +324,7 @@ class Register extends \Opencart\System\Engine\Controller {
 
 				$shipping_country_info = $this->model_localisation_country->getCountry((int)$this->request->post['shipping_country_id']);
 
-				if ($shipping_country_info && $shipping_country_info['postcode_required'] && (Helper\Utf8\strlen($this->request->post['shipping_postcode']) < 2 || Helper\Utf8\strlen($this->request->post['shipping_postcode']) > 10)) {
+				if ($shipping_country_info && $shipping_country_info['postcode_required'] && (oc_strlen($this->request->post['shipping_postcode']) < 2 || oc_strlen($this->request->post['shipping_postcode']) > 10)) {
 					$json['error']['shipping_postcode'] = $this->language->get('error_postcode');
 				}
 
@@ -349,7 +349,7 @@ class Register extends \Opencart\System\Engine\Controller {
 			}
 
 			// If account register password required
-			if ($this->request->post['account'] && (Helper\Utf8\strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) < 4) || (Helper\Utf8\strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) > 40)) {
+			if ($this->request->post['account'] && (oc_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) < 4) || (oc_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) > 40)) {
 				$json['error']['password'] = $this->language->get('error_password');
 			}
 

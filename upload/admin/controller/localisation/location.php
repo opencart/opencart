@@ -279,7 +279,7 @@ class Location extends \Opencart\System\Engine\Controller {
 			$json['error']['address'] = $this->language->get('error_address');
 		}
 
-		if ((oc_strlen($this->request->post['telephone']) < 3) || (Helper\Utf8\strlen($this->request->post['telephone']) > 32)) {
+		if ((oc_strlen($this->request->post['telephone']) < 3) || (oc_strlen($this->request->post['telephone']) > 32)) {
 			$json['error']['telephone'] = $this->language->get('error_telephone');
 		}
 

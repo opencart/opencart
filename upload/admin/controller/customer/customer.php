@@ -663,7 +663,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		if ($this->config->get('config_telephone_required') && (oc_strlen($this->request->post['telephone']) < 3) || (Helper\Utf8\strlen($this->request->post['telephone']) > 32)) {
+		if ($this->config->get('config_telephone_required') && (oc_strlen($this->request->post['telephone']) < 3) || (oc_strlen($this->request->post['telephone']) > 32)) {
 			$json['error']['telephone'] = $this->language->get('error_telephone');
 		}
 
@@ -683,7 +683,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 		}
 
 		if ($this->request->post['password'] || (!isset($this->request->post['customer_id']))) {
-			if ((Helper\Utf8\strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) < 4) || (Helper\Utf8\strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) > 40)) {
+			if ((oc_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) < 4) || (oc_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) > 40)) {
 				$json['error']['password'] = $this->language->get('error_password');
 			}
 
@@ -694,19 +694,19 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 		if (isset($this->request->post['address'])) {
 			foreach ($this->request->post['address'] as $key => $value) {
-				if ((Helper\Utf8\strlen($value['firstname']) < 1) || (Helper\Utf8\strlen($value['firstname']) > 32)) {
+				if ((oc_strlen($value['firstname']) < 1) || (oc_strlen($value['firstname']) > 32)) {
 					$json['error']['address_' . $key . '_firstname'] = $this->language->get('error_firstname');
 				}
 
-				if ((\Opencart\System\Helper\Utf8\strlen($value['lastname']) < 1) || (\Opencart\System\Helper\Utf8\strlen($value['lastname']) > 32)) {
+				if ((\Opencart\System\oc_strlen($value['lastname']) < 1) || (\Opencart\System\oc_strlen($value['lastname']) > 32)) {
 					$json['error']['address_' . $key . '_lastname'] = $this->language->get('error_lastname');
 				}
 
-				if ((\Opencart\System\Helper\Utf8\strlen($value['address_1']) < 3) || (\Opencart\System\Helper\Utf8\strlen($value['address_1']) > 128)) {
+				if ((\Opencart\System\oc_strlen($value['address_1']) < 3) || (\Opencart\System\oc_strlen($value['address_1']) > 128)) {
 					$json['error']['address_' . $key . '_address_1'] = $this->language->get('error_address_1');
 				}
 
-				if ((\Opencart\System\Helper\Utf8\strlen($value['city']) < 2) || (\Opencart\System\Helper\Utf8\strlen($value['city']) > 128)) {
+				if ((\Opencart\System\oc_strlen($value['city']) < 2) || (\Opencart\System\oc_strlen($value['city']) > 128)) {
 					$json['error']['address_' . $key . '_city'] = $this->language->get('error_city');
 				}
 
@@ -718,7 +718,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 
 					$country_info = $this->model_localisation_country->getCountry($value['country_id']);
 
-					if ($country_info && $country_info['postcode_required'] && (Helper\Utf8\strlen($value['postcode']) < 2 || Helper\Utf8\strlen($value['postcode']) > 10)) {
+					if ($country_info && $country_info['postcode_required'] && (oc_strlen($value['postcode']) < 2 || oc_strlen($value['postcode']) > 10)) {
 						$json['error']['address_' . $key . '_postcode'] = $this->language->get('error_postcode');
 					}
 				}

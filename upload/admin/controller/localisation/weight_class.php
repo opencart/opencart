@@ -232,11 +232,11 @@ class WeightClass extends \Opencart\System\Engine\Controller {
 		}
 
 		foreach ($this->request->post['weight_class_description'] as $language_id => $value) {
-			if ((Helper\Utf8\strlen($value['title']) < 3) || (Helper\Utf8\strlen($value['title']) > 32)) {
+			if ((oc_strlen($value['title']) < 3) || (oc_strlen($value['title']) > 32)) {
 				$json['error']['title_' . $language_id] = $this->language->get('error_title');
 			}
 
-			if (!$value['unit'] || (Helper\Utf8\strlen($value['unit']) > 4)) {
+			if (!$value['unit'] || (oc_strlen($value['unit']) > 4)) {
 				$json['error']['unit_' . $language_id] = $this->language->get('error_unit');
 			}
 		}

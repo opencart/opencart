@@ -135,6 +135,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			];
 
 			$data['subscription_id'] = (int)$this->request->get['subscription_id'];
+			
 			$data['date_added'] = date($this->language->get('date_format_short'), strtotime($subscription_info['date_added']));
 
 			if ($subscription_info['status']) {
@@ -143,14 +144,17 @@ class Subscription extends \Opencart\System\Engine\Controller {
 				$data['status'] = '';
 			}
 
-			$data['payment_method'] = $subscription_info['payment_method'];
+			// Orders
+            $this->load->model('account/order');
 
-			$data['order_id'] = $subscription_info['order_id'];
-			$data['reference'] = $subscription_info['reference'];
+            $order_product = $this->model_account_order->getOrderProduct($subscription_info['order_id'], $subscription_info['order_product_id']);
 
-			$data['product_name'] = $subscription_info['product_name'];
-			$data['product_quantity'] = $subscription_info['product_quantity'];
-			$data['recurring_description'] = $subscription_info['recurring_description'];
+            $data['order_id'] = $subscription_info['order_id'];
+            $data['reference'] = $subscription_info['reference'];
+            $data['product_name'] = $order_product['name'];
+            $data['payment_method'] = $subscription_info['payment_method'];
+            $data['product_quantity'] = $order_product['quantity'];
+            $data['description'] = $subscription_info['description'];
 
 			// Transactions
 			$data['transactions'] = [];
@@ -170,7 +174,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 			$this->load->model('setting/extension');
 
-			$extension_info = $this->model_setting_extension->getExtensionByCode($subscription_info['payment_code']);
+			$extension_info = $this->model_setting_extension->getExtensionByCode('payment', $subscription_info['payment_code']);
 
 			if ($extension_info) {
 				$data['subscription'] = $this->load->controller('extension/' . $extension_info['extension'] . '/subscription/' . $subscription_info['payment_code']);

@@ -260,23 +260,23 @@ class Cart {
 					$subscription_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_subscription` ps LEFT JOIN `" . DB_PREFIX . "subscription_plan` sp ON (ps.`subscription_plan_id` = sp.`subscription_plan_id`) LEFT JOIN `" . DB_PREFIX . "subscription_plan_description` spd ON (sp.`subscription_plan_id` = spd.`subscription_plan_id`) WHERE ps.`product_id` = '" . (int)$cart['product_id'] . "' AND ps.`subscription_plan_id` = '" . (int)$cart['subscription_plan_id'] . "' AND ps.`customer_group_id` = '" . (int)$this->config->get('config_customer_group_id') . "' AND spd.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND sp.`status` = '1'");
 
 					if ($subscription_query->num_rows) {
-						$subscription_data = [
-							'subscription_plan_id' 	=> $subscription_query->row['subscription_plan_id'],
-							'name'                 	=> $subscription_query->row['name'],
-							'description'          	=> $subscription_query->row['description'],
-							'trial_price'          	=> $subscription_query->row['trial_price'],
-							'trial_frequency'      	=> $subscription_query->row['trial_frequency'],
-							'trial_cycle'          	=> $subscription_query->row['trial_cycle'],
-							'trial_duration'       	=> $subscription_query->row['trial_duration'],
-							'trial_status'         	=> $subscription_query->row['trial_status'],
-							'price'                	=> $subscription_query->row['price'],
-							'frequency'            	=> $subscription_query->row['frequency'],
-							'cycle'                	=> $subscription_query->row['cycle'],
-							'duration'             	=> $subscription_query->row['duration'],
-							'remaining'            	=> $subscription_query->row['duration'],
-							'status'				=> $subscription_query->row['status']
-						];
-					}
+                        $subscription_data = [
+                            'subscription_plan_id' 	=> $subscription_query->row['subscription_plan_id'],
+                            'name'                 	=> $subscription_query->row['name'],
+                            'description'          	=> $subscription_query->row['description'],
+                            'trial_price'          	=> $subscription_query->row['trial_price'],
+                            'trial_frequency'      	=> $subscription_query->row['trial_frequency'],
+                            'trial_cycle'          	=> $subscription_query->row['trial_cycle'],
+                            'trial_duration'       	=> $subscription_query->row['trial_duration'],
+                            'trial_remaining'       => $subscription_query->row['trial_remaining'],
+                            'trial_status'         	=> $subscription_query->row['trial_status'],
+                            'price'                	=> $subscription_query->row['price'],
+                            'frequency'            	=> $subscription_query->row['frequency'],
+                            'cycle'                	=> $subscription_query->row['cycle'],
+                            'duration'             	=> $subscription_query->row['duration'],
+                            'remaining'            	=> $subscription_query->row['duration'],
+                            'status'				=> $subscription_query->row['status']
+                        ];
 
 					$this->data[] = [
 						'cart_id'         => $cart['cart_id'],

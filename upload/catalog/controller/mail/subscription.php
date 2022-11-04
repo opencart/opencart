@@ -25,6 +25,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		$subscription['trial_frequency']
 		$subscription['trial_cycle']
 		$subscription['trial_duration' ]
+		$subscription['trial_remaining' ]
 		$subscription['trial_status' ]
 		$subscription['price' ]
 		$subscription['frequency' ]
@@ -154,6 +155,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 				$data['comment'] = '';
 			}
 
+			// Payment Address
 			if ($order_info['payment_address_format']) {
 				$format = $order_info['payment_address_format'];
 			} else {
@@ -188,6 +190,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 			$data['payment_address'] = str_replace(["\r\n", "\r", "\n"], '<br/>', preg_replace(["/\s\s+/", "/\r\r+/", "/\n\n+/"], '<br/>', trim(str_replace($find, $replace, $format))));
 
+			// Shipping Format
 			if ($order_info['shipping_address_format']) {
 				$format = $order_info['shipping_address_format'];
 			} else {

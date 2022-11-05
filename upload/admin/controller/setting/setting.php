@@ -818,7 +818,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 			$extension_info = $this->model_setting_extension->getExtensionByCode('theme', $theme);
 
 			if ($extension_info) {
-				$image = DIR_EXTENSION . $extension_info['extension'] . '/catalog/view/image/' . $extension_info['code'] . '.png';
+				$image = HTTP_CATALOG . 'extension/' . $extension_info['extension'] . '/catalog/view/image/' . $extension_info['code'] . '.png';
 			}
 		}
 

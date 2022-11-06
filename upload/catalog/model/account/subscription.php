@@ -20,7 +20,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 	}
 
 	public function getSubscriptions(array $data): array {
-        $sql = "SELECT s.`subscription_id`, s.`trial_status`, s.`trial_duration`, s.`trial_remaining`, s.`duration`. s.`remaining`, s.`customer_id`, s.`customer_payment_id`, s.`trial_cycle`, s.`trial_frequency`, s.`cycle`, s.`frequency`, o.*, o.`payment_method`, o.`currency_id`, o.`currency_value` FROM `" . DB_PREFIX . "subscription` s LEFT JOIN `" . DB_PREFIX . "order` o ON (s.`order_id` = o.`order_id`)";
+        $sql = "SELECT s.`subscription_id`, s.`trial_status`, s.`trial_duration`, s.`trial_remaining`, s.`duration`. s.`remaining`, s.`customer_payment_id`, s.`trial_cycle`, s.`trial_frequency`, s.`cycle`, s.`frequency`, o.*, o.`payment_method`, o.`currency_id`, o.`currency_value` FROM `" . DB_PREFIX . "subscription` s LEFT JOIN `" . DB_PREFIX . "order` o ON (s.`order_id` = o.`order_id`)";
 
         $implode = [];
 

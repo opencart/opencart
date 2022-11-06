@@ -73,6 +73,10 @@ class Subscription extends \Opencart\System\Engine\Model {
         $implode = [];
 
         $implode[] = "o.`customer_id` = '" . (int)$this->customer->getId() . "'";
+		
+		if (!empty($data['filter_subscription_id'])) {
+            $implode[] = "s.`subscription_id` = '" . (int)$data['filter_subscription_id'] . "'";
+        }
 
         if (!empty($data['filter_date_next'])) {
             $implode[] = "DATE(s.`date_next`) = DATE('" . $this->db->escape($data['filter_date_next']) . "')";

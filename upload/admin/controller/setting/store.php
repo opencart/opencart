@@ -179,14 +179,12 @@ class Store extends \Opencart\System\Engine\Controller {
 		$extensions = $this->model_setting_extension->getExtensionsByType('theme');
 
 		foreach ($extensions as $extension) {
-			if ($this->config->get('theme_' . $extension['code'] . '_status')) {
-				$this->load->language('extension/' . $extension['extension'] . '/theme/' . $extension['code'], 'extension');
+			$this->load->language('extension/' . $extension['extension'] . '/theme/' . $extension['code'], 'extension');
 
-				$data['themes'][] = [
-					'text'  => $this->language->get('extension_heading_title'),
-					'value' => $extension['code']
-				];
-			}
+			$data['themes'][] = [
+				'text'  => $this->language->get('extension_heading_title'),
+				'value' => $extension['code']
+			];
 		}
 
 		if (isset($store_info['config_theme'])) {

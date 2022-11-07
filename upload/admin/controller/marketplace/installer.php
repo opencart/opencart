@@ -469,9 +469,10 @@ class Installer extends \Opencart\System\Engine\Controller {
 				// If file just delete
 				if (is_file($file)) {
 					unlink($file);
+				}
 
-					// If directory use the remove directory function
-				} elseif (is_dir($file)) {
+				// If directory use the remove directory function
+				if (is_dir($file)) {
 					rmdir($file);
 				}
 			}
@@ -500,7 +501,9 @@ class Installer extends \Opencart\System\Engine\Controller {
 				if ($path_total < 2) {
 					if (is_file($path)) {
 						unlink($path);
-					} elseif (is_dir($path)) {
+					}
+
+					if (is_dir($path)) {
 						rmdir($path);
 					}
 				}

@@ -213,7 +213,7 @@
     {% endif %}
 
     {% if ckeditor %}
-      CKEDITOR.instances['{{ ckeditor|escape('js') }}'].insertHtml('<img src="' + $(this).attr('href') + '" alt="" title="" />');
+      CKEDITOR.instances['{{ ckeditor|escape('js') }}'].insertHtml('<img src="' + $(this).attr('href') + '" alt="" title=""/>');
     {% endif %}
 
       $('#modal-image').modal('hide');

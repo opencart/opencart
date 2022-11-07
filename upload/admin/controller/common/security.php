@@ -330,8 +330,8 @@ class Security extends \Opencart\System\Engine\Controller {
 			$end = $start > ($total - $limit) ? $total : ($start + $limit);
 
 			// 4. Copy the files across
-			for ($i = $start; $i < $end; $i++) {
-				$destination = substr($files[$i], strlen($base_old));
+			foreach (array_slice($files, $start, $end) as $file) {
+				$destination = substr($file, strlen($base_old));
 
 				if (is_dir($base_old . $destination) && !is_dir($base_new . $destination)) {
 					mkdir($base_new . $destination, 0777);

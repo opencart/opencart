@@ -36,6 +36,7 @@ class Upgrade2 extends \Opencart\System\Engine\Controller {
 		}
 
 		$total = 0;
+		$limit = 200;
 
 		$file = DIR_DOWNLOAD . 'opencart-' . $version . '.zip';
 
@@ -46,12 +47,13 @@ class Upgrade2 extends \Opencart\System\Engine\Controller {
 			if ($zip->open($file, \ZipArchive::RDONLY)) {
 				$total = $zip->numFiles;
 
-				$start = ($page - 1) * 200;
+				$start = ($page - 1) * $limit;
+				$end = $start > ($total - $limit) ? $total : ($start + $limit);
 
 				$remove = 'opencart-' . $version . '/upload/';
 
 				// Check if any of the files already exist.
-				for ($i = $start; $i < ($start + 200); $i++) {
+				for ($i = $start; $i < $end; $i++) {
 					$source = $zip->getNameIndex($i);
 
 					if (substr($source, 0, strlen($remove)) == $remove) {
@@ -124,7 +126,7 @@ class Upgrade2 extends \Opencart\System\Engine\Controller {
 				$url .= '&admin=' . $this->request->get['admin'];
 			}
 
-			if (($page * 200) <= $total) {
+			if (($page * $limit) <= $total) {
 				$json['next'] = $this->url->link('upgrade/upgrade_2', $url . '&page=' . ($page + 1), true);
 			} else {
 				$json['next'] = $this->url->link('upgrade/upgrade_3', $url, true);

@@ -19,6 +19,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		$subscription['customer_id']
 		$subscription['order_id']
 		$subscription['subscription_plan_id']
+		$subscription['customer_plan_id'],
 		$subscription['name']
 		$subscription['description']
 		$subscription['trial_price']

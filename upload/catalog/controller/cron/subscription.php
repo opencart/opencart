@@ -48,7 +48,9 @@ class Subscription extends \Opencart\System\Engine\Controller {
                             if ($this->config->get('config_subscription_active_status_id') == $subscription_status_id) {
                                 $filter_data = [
                                     'filter_date_next'              => date('Y-m-d', strtotime('+' . $result['trial_cycle'] . ' ' . $result['trial_frequency'])),
-                                    'filter_subscription_status_id' => $subscription_status_id
+                                    'filter_subscription_status_id' => $subscription_status_id,
+                                    'start'                         => 0,
+                                    'limit'                         => 1
                                 ];
 
                                 $subscriptions = $this->model_account_subscription->getSubscriptions($filter_data);
@@ -63,7 +65,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
                                             if ($subscription_info) {
                                                 $this->model_account_subscription->addTransaction($subscription['subscription_id'], $subscription['order_id'], $this->language->get('text_success'), $amount, $subscription_info['type'], $subscription_info['payment_method'], $subscription_info['payment_code']);
-                                                break;
                                             }
                                         }
                                     }

@@ -74,8 +74,7 @@
               <div class="row mb-3">
                 <label for="input-parent" class="col-sm-2 col-form-label">{{ entry_parent }}</label>
                 <div class="col-sm-10">
-                  <input type="text" name="path" value="{{ path }}" placeholder="{{ entry_parent }}" id="input-parent" list="list-parent" class="form-control" autocomplete="new-password"/>
-                  <input type="hidden" name="parent_id" value="{{ parent_id }}" id="input-parent-id"/>
+                  <input type="text" name="path" value="{{ path }}" placeholder="{{ entry_parent }}" id="input-parent" list="list-parent" class="form-control" autocomplete="new-password"/> <input type="hidden" name="parent_id" value="{{ parent_id }}" id="input-parent-id"/>
                   <datalist id="list-parent"></datalist>
                   <div class="form-text">{{ help_parent }}</div>
                   <div id="error-parent" class="invalid-feedback"></div>
@@ -107,8 +106,7 @@
                   <div class="form-control" style="height: 150px; overflow: auto;">
                     {% for store in stores %}
                       <div class="form-check">
-                        <input type="checkbox" name="category_store[]" value="{{ store.store_id }}" id="input-store-{{ store.store_id }}" class="form-check-input"{% if store.store_id in category_store %} checked{% endif %}/>
-                        <label for="input-store-{{ store.store_id }}" class="form-check-label">{{ store.name }}</label>
+                        <input type="checkbox" name="category_store[]" value="{{ store.store_id }}" id="input-store-{{ store.store_id }}" class="form-check-input"{% if store.store_id in category_store %} checked{% endif %}/> <label for="input-store-{{ store.store_id }}" class="form-check-label">{{ store.name }}</label>
                       </div>
                     {% endfor %}
                   </div>
@@ -130,8 +128,7 @@
                 <label for="input-top" class="col-sm-2 col-form-label">{{ entry_top }}</label>
                 <div class="col-sm-10">
                   <div class="form-check form-switch form-switch-lg">
-                    <input type="hidden" name="top" value="0"/>
-                    <input type="checkbox" name="top" value="1" id="input-top" class="form-check-input"{% if top %} checked{% endif %}/>
+                    <input type="hidden" name="top" value="0"/> <input type="checkbox" name="top" value="1" id="input-top" class="form-check-input"{% if top %} checked{% endif %}/>
                   </div>
                   <div class="form-text">{{ help_top }}</div>
                 </div>
@@ -153,8 +150,7 @@
                 <label for="input-status" class="col-sm-2 col-form-label">{{ entry_status }}</label>
                 <div class="col-sm-10">
                   <div class="form-check form-switch form-switch-lg">
-                    <input type="hidden" name="status" value="0"/>
-                    <input type="checkbox" name="status" value="1" id="input-status" class="form-check-input"{% if status %} checked{% endif %}/>
+                    <input type="hidden" name="status" value="0"/> <input type="checkbox" name="status" value="1" id="input-status" class="form-check-input"{% if status %} checked{% endif %}/>
                   </div>
                 </div>
               </div>
@@ -221,7 +217,7 @@
 </div>
 <script type="text/javascript"><!--
 $('textarea[data-oc-toggle=\'ckeditor\']').ckeditor({
-    language:'{{ ckeditor }}'
+    language: '{{ ckeditor }}'
 });
 
 $('#input-parent').autocomplete({

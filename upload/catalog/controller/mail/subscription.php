@@ -91,7 +91,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
                             // Order Products
                             $order_product = $this->model_account_order->getProduct($value['order_id'], $value['order_product_id']);
 
-                            if ($order_product) {
+                            if ($order_product && $order_product['order_product_id'] == $subscription['order_product_id']) {
                                 $products = $this->cart->getProducts();
 
                                 $description = '';

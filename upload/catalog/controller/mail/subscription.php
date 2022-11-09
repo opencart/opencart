@@ -98,7 +98,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
                                 foreach ($products as $product) {
                                     if ($product['product_id'] == $order_product['product_id']) {
-                                        $trial_price = $this->currency->format($this->tax->calculate($value['trial_price'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
+                                        $trial_price = $this->currency->format($this->tax->calculate($value['trial_price'], $product['tax_class_id'], $this->config->get('config_tax')), $this->config->get('config_currency'));
                                         $trial_cycle = $value['trial_cycle'];
                                         $trial_frequency = $this->language->get('text_' . $value['trial_frequency']);
                                         $trial_duration = $value['trial_duration'];
@@ -107,7 +107,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
                                             $description .= sprintf($this->language->get('text_subscription_trial'), $trial_price, $trial_cycle, $trial_frequency, $trial_duration);
                                         }
 
-                                        $price = $this->currency->format($this->tax->calculate($value['price'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
+                                        $price = $this->currency->format($this->tax->calculate($value['price'], $product['tax_class_id'], $this->config->get('config_tax')), $this->config->get('config_currency'));
                                         $cycle = $value['cycle'];
                                         $frequency = $this->language->get('text_' . $value['frequency']);
                                         $duration = $value['duration'];

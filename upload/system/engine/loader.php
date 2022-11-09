@@ -62,6 +62,9 @@ class Loader {
 	 * @return    mixed
 	 */
 	public function controller(string $route, mixed ...$args): mixed {
+		// Compatibility
+		$route = str_replace('|', '.', $route);
+
 		// Sanitize the call
 		$route = preg_replace('/[^a-zA-Z0-9_|\/\.]/', '', $route);
 

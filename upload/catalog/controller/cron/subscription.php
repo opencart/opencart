@@ -46,8 +46,14 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 							// Transaction
                             if ($this->config->get('config_subscription_active_status_id') == $subscription_status_id) {
+                                if ($result['trial_duration'] && $result['trial_remaining']) {
+                                    $date_next = date('Y-m-d', strtotime('+' . $result['trial_cycle'] . ' ' . $result['trial_frequency']));
+                                } elseif ($result['duration'] && $result['remaining']) {
+                                    $date_next = date('Y-m-d', strtotime('+' . $result['cycle'] . ' ' . $result['frequency']));
+                                }
+
                                 $filter_data = [
-                                    'filter_date_next'              => date('Y-m-d', strtotime('+' . $result['trial_cycle'] . ' ' . $result['trial_frequency'])),
+                                    'filter_date_next'              => $date_next,
                                     'filter_subscription_status_id' => $subscription_status_id,
                                     'start'                         => 0,
                                     'limit'                         => 1

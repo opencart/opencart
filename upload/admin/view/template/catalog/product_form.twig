@@ -1270,13 +1270,16 @@
                       <div class="card-body">
                         <button type="button" data-oc-toggle="image" data-oc-target="#input-image" data-oc-thumb="#thumb-image" class="btn btn-primary btn-sm btn-block"><i class="fa-solid fa-pencil"></i> {{ button_edit }}</button>
                         <button type="button" data-oc-toggle="clear" data-oc-target="#input-image" data-oc-thumb="#thumb-image" class="btn btn-warning btn-sm btn-block"><i class="fa-regular fa-trash-can"></i> {{ button_clear }}</button>
+
                         {% if master_id %}
                           <div class="mx-auto w-25">
                             <div class="form-check form-switch">
-                              <input type="checkbox" name="override[image]" value="1" id="input-variant-image" data-oc-toggle="switch" data-oc-target="#image" class="form-check-input"{% if override.product_image %} checked{% endif %}/> <label for="input-variant-image" class="form-check-label"></label>
+                              <input type="checkbox" name="override[image]" value="1" id="input-variant-image" data-oc-toggle="switch" data-oc-target="#image" class="form-check-input"{% if override.image %} checked{% endif %}/>
+                              <label for="input-variant-image" class="form-check-label"></label>
                             </div>
                           </div>
                         {% endif %}
+
                       </div>
                     </div>
                   </div>

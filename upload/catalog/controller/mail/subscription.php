@@ -268,17 +268,34 @@ class Subscription extends \Opencart\System\Engine\Controller {
                                                     // Validate the latest subscription values with the ones edited
                                                     // by promotion extensions
                                                     if ($subscription_info && $subscription_info['customer_id'] == $value['customer_id'] && $subscription_info['order_id'] == $value['order_id'] && $subscription_info['order_product_id'] == $value['order_product_id']) {
-                                                        // Promotional features that differs from the previous
-                                                        // subscription's description
-                                                        if ($subscription_info['description'] != $description && $subscription_info['subscription_plan_id'] == $value['subscription_plan_id']) {
-                                                            // Products
-                                                            $this->load->model('catalog/product');
+                                                        $this->load->model('account/customer');
 
-                                                            $product_subscription_info = $this->model_catalog_product->getSubscription($order_product['product_id'], $subscription_info['subscription_plan_id']);
+                                                        $customer_info = $this->model_account_customer->getCustomer($subscription_info['customer_id']);
 
-                                                            if ($product_subscription_info) {
-                                                                // For the next billing cycle
-                                                                $this->model_account_subscription->addTransaction($value['subscription_id'], $value['order_id'], $this->language->get('text_promotion'), $subscription_info['amount'], $subscription_info['type'], $subscription_info['payment_method'], $subscription_info['payment_code']);
+                                                        if ($customer_info) {
+                                                            $remaining = 0;
+
+                                                            // New customer once the trial period has ended
+                                                            if (!$subscription_info['duration'] || $subscription_info['remaining']) {
+                                                                // Subscription
+                                                                if ($subscription_info['duration'] && $subscription_info['remaining']) {
+                                                                    $remaining = (time() - strtotime($customer_info['date_added']));
+                                                                    $remaining = ($subscription_info['remaining'] - $remaining);
+                                                                }
+                                                            }
+
+                                                            // Promotional features that differs from the previous
+                                                            // subscription's description
+                                                            if ($remaining > 0 && $subscription_info['description'] != $description && $subscription_info['subscription_plan_id'] == $value['subscription_plan_id']) {
+                                                                // Products
+                                                                $this->load->model('catalog/product');
+
+                                                                $product_subscription_info = $this->model_catalog_product->getSubscription($order_product['product_id'], $subscription_info['subscription_plan_id']);
+
+                                                                if ($product_subscription_info) {
+                                                                    // For the next billing cycle
+                                                                    $this->model_account_subscription->addTransaction($value['subscription_id'], $value['order_id'], $this->language->get('text_promotion'), $subscription_info['amount'], $subscription_info['type'], $subscription_info['payment_method'], $subscription_info['payment_code']);
+                                                                }
                                                             }
                                                         }
                                                     }

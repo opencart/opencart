@@ -286,7 +286,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
                                                             // Promotional features that differs from the previous
                                                             // subscription's description
-                                                            if ($remaining <= $subscription_info['duration'] && $subscription_info['description'] != $description && $subscription_info['subscription_plan_id'] == $value['subscription_plan_id']) {
+                                                            if ($remaining <= $subscription_info['remaining'] && $subscription_info['description'] != $description && $subscription_info['subscription_plan_id'] == $value['subscription_plan_id']) {
                                                                 // Products
                                                                 $this->load->model('catalog/product');
 

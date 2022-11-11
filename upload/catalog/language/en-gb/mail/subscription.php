@@ -3,6 +3,7 @@
 $_['text_subject']               = '%s - Subscription %s';
 $_['text_greeting']              = 'Thank you for your interest in %s product. Your subscription request has been received and will be processed once payment has been confirmed.';
 $_['text_link']                  = 'To view your subscription, click on the link below:';
+$_['text_promotion']             = 'Success: A promotional feature has been successfully added with this subscription!';
 $_['text_subscription_trial']    = '%s every %d %s(s) for %d payment(s) then ';
 $_['text_subscription_duration'] = '%s every %d %s(s) for %d payment(s)';
 $_['text_subscription_cancel']   = '%s every %d %s(s) until canceled';

@@ -248,6 +248,43 @@ class Subscription extends \Opencart\System\Engine\Controller {
                                         if (!$from) {
                                             $from = $this->config->get('config_email');
                                         }
+										
+										if ($this->config->get('payment_' . $payment_info['code'] . '_status')) {
+                                            $this->load->model('extension/payment/' . $payment_info['code']);
+
+                                            // Promotion
+                                            if (property_exists($this->{'model_extension_payment_' . $payment_info['code']}, 'promotion')) {
+                                                $subscription_status_id = $this->{'model_extension_payment_' . $payment_info['code']}->promotion($value['subscription_id']);
+
+                                                if ($store_info) {
+                                                    $config_subscription_active_status_id = $this->model_setting_setting->getSettingValue('config_subscription_active_status_id', $store_info['store_id']);
+                                                } else {
+                                                    $config_subscription_active_status_id = $this->config->get('config_subscription_active_status_id');
+                                                }
+
+                                                if ($config_subscription_active_status_id == $subscription_status_id) {
+                                                    $subscription_info = $this->model_account_subscription->getSubscription($value['subscription_id']);
+
+                                                    // Validate the latest subscription values with the ones edited
+                                                    // by promotion extensions
+                                                    if ($subscription_info && $subscription_info['customer_id'] == $value['customer_id'] && $subscription_info['order_id'] == $value['order_id'] && $subscription_info['order_product_id'] == $value['order_product_id']) {
+                                                        // Promotional features that differs from the previous
+                                                        // subscription's description
+                                                        if ($subscription_info['description'] != $description && $subscription_info['subscription_plan_id'] == $value['subscription_plan_id']) {
+                                                            // Products
+                                                            $this->load->model('catalog/product');
+
+                                                            $product_subscription_info = $this->model_catalog_product->getSubscription($order_product['product_id'], $subscription_info['subscription_plan_id']);
+
+                                                            if ($product_subscription_info) {
+                                                                // For the next billing cycle
+                                                                $this->model_account_subscription->addTransaction($value['subscription_id'], $value['order_id'], $this->language->get('text_promotion'), $subscription_info['amount'], $subscription_info['type'], $subscription_info['payment_method'], $subscription_info['payment_code']);
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
 
                                         // Mail
                                         if ($this->config->get('config_mail_engine')) {

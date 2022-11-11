@@ -279,14 +279,14 @@ class Subscription extends \Opencart\System\Engine\Controller {
                                                             if (!$subscription_info['duration'] || $subscription_info['remaining']) {
                                                                 // Subscription
                                                                 if ($subscription_info['duration'] && $subscription_info['remaining']) {
-                                                                    $remaining = (time() - strtotime($customer_info['date_added']));
-                                                                    $remaining = ($subscription_info['remaining'] - $remaining);
+                                                                    $remaining = time() - strtotime($customer_info['date_added']);
+                                                                    $remaining = ceil(abs($remaining / 86400));
                                                                 }
                                                             }
 
                                                             // Promotional features that differs from the previous
                                                             // subscription's description
-                                                            if ($remaining > 0 && $subscription_info['description'] != $description && $subscription_info['subscription_plan_id'] == $value['subscription_plan_id']) {
+                                                            if ($remaining <= $subscription_info['duration'] && $subscription_info['description'] != $description && $subscription_info['subscription_plan_id'] == $value['subscription_plan_id']) {
                                                                 // Products
                                                                 $this->load->model('catalog/product');
 

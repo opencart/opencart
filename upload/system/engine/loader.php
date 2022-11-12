@@ -208,7 +208,11 @@ class Loader {
 		}
 
 		// Trigger the post events
-		$this->event->trigger('view/' . $route . '/after', [&$route, &$data, &$output]);
+		$result = $this->event->trigger('view/' . $route . '/after', [&$route, &$data, &$output]);
+
+		if ($result) {
+			$output = $result;
+		}
 
 		return $output;
 	}

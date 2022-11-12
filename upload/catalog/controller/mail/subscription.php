@@ -266,26 +266,47 @@ class Subscription extends \Opencart\System\Engine\Controller {
                                                     $subscription_info = $this->model_account_subscription->getSubscription($value['subscription_id']);
 
                                                     // Validate the latest subscription values with the ones edited
-                                                    // by promotion extensions
-                                                    if ($subscription_info && $subscription_info['customer_id'] == $value['customer_id'] && $subscription_info['order_id'] == $value['order_id'] && $subscription_info['order_product_id'] == $value['order_product_id']) {
+                                                    // by promotional extensions
+                                                    if ($subscription_info && $subscription_info['status'] && $subscription_info['customer_id'] == $value['customer_id'] && $subscription_info['order_id'] == $value['order_id'] && $subscription_info['order_product_id'] == $value['order_product_id']) {
                                                         $this->load->model('account/customer');
 
                                                         $customer_info = $this->model_account_customer->getCustomer($subscription_info['customer_id']);
 
-                                                        if ($customer_info) {
+                                                        $frequencies = [
+                                                            'day',
+                                                            'week',
+                                                            'semi_month',
+                                                            'month',
+                                                            'year'
+                                                        ];
+
+                                                        // We need to validate frequencies in compliance of the admin subscription plans
+                                                        // as with the use of the APIs
+                                                        if ($customer_info && (int)$subscription_info['cycle'] >= 0 && in_array($subscription_info['frequency'], $frequencies)) {
                                                             // New customer once the trial period has ended
                                                             $customer_remaining = strtotime($customer_info['date_added']);
-                                                            $remaining = strtotime($subscription_info['cycle'] . ' ' . $subscription_info['frequency']);
+
+                                                            if ($subscription_info['frequency'] == 'semi_month') {
+                                                                $remaining = strtotime("2 weeks");
+                                                            } else {
+                                                                $remaining = strtotime($subscription_info['cycle'] . ' ' . $subscription_info['frequency']);
+                                                            }
+
+                                                            // Calculates the remaining days between the subscription
+                                                            // promotional period and the customer account's date added
+                                                            // period
                                                             $remaining = ($remaining - $customer_remaining);
                                                             $remaining = round($remaining / (60 * 60 * 24));
 
+                                                            // The value of 0 also implicits a current or a final period
+                                                            // of the promotional features for the customer
                                                             if (!$remaining) {
                                                                 $remaining = 0;
                                                             }
 
                                                             // Promotional features that differs from the previous
                                                             // subscription's description
-                                                            if ($subscription_info['status'] && (($subscription_info['cycle'] && $remaining >= $subscription_info['cycle']) || (!$subscription_info['cycle'])) && $subscription_info['description'] != $description && $subscription_info['subscription_plan_id'] == $value['subscription_plan_id']) {
+                                                            if ($remaining >= 0 && $subscription_info['description'] != $description && $subscription_info['subscription_plan_id'] == $value['subscription_plan_id']) {
                                                                 // Products
                                                                 $this->load->model('catalog/product');
 

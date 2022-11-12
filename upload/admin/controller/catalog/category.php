@@ -387,14 +387,14 @@ class Category extends \Opencart\System\Engine\Controller {
 
 			foreach ($this->request->post['category_seo_url'] as $store_id => $language) {
 				foreach ($language as $language_id => $keyword) {
-					if ($keyword) {
-						$seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyword($keyword, $store_id, $language_id);
+					if ((oc_strlen(trim($keyword)) < 1) || (oc_strlen($keyword) > 64)) {
+						$json['error']['keyword_' . $store_id . '_' . $language_id] = $this->language->get('error_keyword');
+					}
 
-						if ($seo_url_info && (!isset($this->request->post['category_id']) || $seo_url_info['key'] != 'path' || $seo_url_info['value'] != $this->model_catalog_category->getPath($this->request->post['category_id']))) {
-							$json['error']['keyword_' . $store_id . '_' . $language_id] = $this->language->get('error_keyword');
-						}
-					} else {
-						$json['error']['keyword_' . $store_id . '_' . $language_id] = $this->language->get('error_seo');
+					$seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyword($keyword, $store_id, $language_id);
+
+					if ($seo_url_info && (!isset($this->request->post['category_id']) || $seo_url_info['key'] != 'path' || $seo_url_info['value'] != $this->model_catalog_category->getPath($this->request->post['category_id']))) {
+						$json['error']['keyword_' . $store_id . '_' . $language_id] = $this->language->get('error_keyword_exists');
 					}
 				}
 			}

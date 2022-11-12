@@ -12,6 +12,8 @@
  */
 namespace Opencart\System\Engine;
 class Proxy {
+	protected $data = [];
+
 	/**
 	 * __get
 	 *
@@ -20,8 +22,8 @@ class Proxy {
 	 * @return	object|null
 	 */
 	public function &__get(string $key): object|null {
-		if (property_exists($this, $key)) {
-			return $this->registry->get($key);
+		if (isset($this->data[$key])) {
+			return $this->data[$key];
 		} else {
 			throw new \Exception('Error: Could not call proxy key ' . $key . '!');
 		}
@@ -36,9 +38,31 @@ class Proxy {
 	 * @return void
 	 */
 	public function __set(string $key, object $value): void {
-		$this->{$key} = $value;
+		$this->data[$key] = $value;
 	}
-	
+
+	/**
+	 * __isset
+	 *
+	 * @param	string	$key
+	 *
+	 * @return void
+	 */
+	public function __isset(string $key) {
+		return isset($this->data[$key]);
+	}
+
+	/**
+	 * __unset
+	 *
+	 * @param	string	$key
+	 *
+	 * @return void
+	 */
+	public function __unset(string $key) {
+		unset($this->data[$key]);
+	}
+
 	/**
 	 * __call
 	 *
@@ -51,8 +75,8 @@ class Proxy {
 		// Hack for pass-by-reference
 		foreach ($args as $key => &$value);
 
-		if (isset($this->{$method})) {
-			return call_user_func_array($this->{$method}, $args);
+		if (isset($this->data[$method])) {
+			return call_user_func_array($this->data[$method], $args);
 		} else {
 			$trace = debug_backtrace();
 

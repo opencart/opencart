@@ -380,12 +380,11 @@ class Address extends \Opencart\System\Engine\Controller {
 			$this->load->model('account/address');
 
 			if ($this->model_account_address->getTotalAddresses() == 1) {
-
 				$json['error'] = $this->language->get('error_delete');
 			}
 
 			if ($this->customer->getAddressId() == $address_id) {
-				$json['error'] = $this->language->get('error_default');
+				$json['error'] = $this->language->get('error_default_delete');
 			}
 		}
 

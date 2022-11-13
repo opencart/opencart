@@ -17,7 +17,8 @@ class Login extends \Opencart\System\Engine\Controller {
 
 		$ignore = [
 			'common/login',
-			'common/forgotten'
+			'common/forgotten',
+			'common/language'
 		];
 
 		// User
@@ -31,6 +32,7 @@ class Login extends \Opencart\System\Engine\Controller {
 			'common/login',
 			'common/logout',
 			'common/forgotten',
+			'common/language',
 			'error/not_found',
 			'error/permission'
 		];

@@ -12,6 +12,7 @@
 */
 namespace Opencart\System\Library;
 class Language {
+	protected string $default = 'en-gb';
 	protected string $code;
 	protected string $directory;
 	protected array $path = [];
@@ -111,6 +112,32 @@ class Language {
 		}
 
 		if (!isset($this->cache[$code][$filename])) {
+			$_ = [];
+
+			// Load default language file first
+			$file = $this->directory . '/' . $this->default . '/' . $filename . '.php';
+
+			$namespace = '';
+
+			$parts = explode('/', $filename);
+
+			foreach ($parts as $part) {
+				if (!$namespace) {
+					$namespace .= $part;
+				} else {
+					$namespace .= '/' . $part;
+				}
+
+				if (isset($this->path[$namespace])) {
+					$file = $this->path[$namespace] . $this->default . substr($filename, strlen($namespace)) . '.php';
+				}
+			}
+
+			if (is_file($file)) {
+				require($file);
+			}
+
+			// Load selected language file to overwrite the default language keys
 			$file = $this->directory . $code . '/' . $filename . '.php';
 
 			$namespace = '';
@@ -128,8 +155,6 @@ class Language {
 					$file = $this->path[$namespace] . $code . substr($filename, strlen($namespace)) . '.php';
 				}
 			}
-
-			$_ = [];
 
 			if (is_file($file)) {
 				require($file);

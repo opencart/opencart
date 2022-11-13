@@ -204,6 +204,13 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 			if (!$query->num_rows) {
 				$this->db->query("ALTER TABLE `" . DB_PREFIX . "customer_payment` ADD COLUMN `extension` varchar(255) NOT NULL AFTER `type`");
 			}
+			
+			// Addresses
+            $query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "address' AND COLUMN_NAME = 'default'");
+
+            if (!$query->num_rows) {
+                $this->db->query("ALTER TABLE `" . DB_PREFIX . "address` ADD COLUMN `default` tinyint(1) NOT NULL AFTER `custom_field`");
+            }
 
 			// Drop Fields
 			$remove = [];

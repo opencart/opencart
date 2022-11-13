@@ -6,6 +6,12 @@ class Basic extends \Opencart\System\Engine\Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
+		if (isset($this->request->get['store_id'])) {
+			$store_id = (int)$this->request->get['store_id'];
+		} else {
+			$store_id = 0;
+		}
+
 		$data['breadcrumbs'] = [];
 
 		$data['breadcrumbs'][] = [
@@ -20,10 +26,10 @@ class Basic extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/opencart/theme/basic', 'user_token=' . $this->session->data['user_token'] . '&store_id=' . $this->request->get['store_id'])
+			'href' => $this->url->link('extension/opencart/theme/basic', 'user_token=' . $this->session->data['user_token'] . '&store_id=' . $store_id)
 		];
 
-		$data['save'] = $this->url->link('extension/opencart/theme/basic.save', 'user_token=' . $this->session->data['user_token'] . '&store_id=' . $this->request->get['store_id']);
+		$data['save'] = $this->url->link('extension/opencart/theme/basic.save', 'user_token=' . $this->session->data['user_token'] . '&store_id=' . $store_id);
 		$data['back'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=theme');
 
 		if (isset($this->request->get['store_id'])) {
@@ -48,6 +54,12 @@ class Basic extends \Opencart\System\Engine\Controller {
 	public function save(): void {
 		$this->load->language('extension/opencart/theme/basic');
 
+		if (isset($this->request->get['store_id'])) {
+			$store_id = (int)$this->request->get['store_id'];
+		} else {
+			$store_id = 0;
+		}
+
 		$json = [];
 
 		if (!$this->user->hasPermission('modify', 'extension/opencart/theme/basic')) {
@@ -57,7 +69,7 @@ class Basic extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('setting/setting');
 
-			$this->model_setting_setting->editSetting('theme_basic', $this->request->post, $this->request->get['store_id']);
+			$this->model_setting_setting->editSetting('theme_basic', $this->request->post, $store_id);
 
 			$json['success'] = $this->language->get('text_success');
 		}

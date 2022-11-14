@@ -36,7 +36,7 @@ class Notification extends \Opencart\System\Engine\Controller {
 			// Only grab the
 			$option = [
 				'expires'  => time() + 3600 * 24 * 7,
-				'path'     => !empty($this->request->server['PHP_SELF']) ? rtrim(dirname($this->request->server['PHP_SELF']), '/') . '/' : '/',
+				'path'     => $this->config->get('session_path'),
 				'secure'   => $this->request->server['HTTPS'],
 				'httponly' => false,
 				'SameSite' => $this->config->get('config_session_samesite')

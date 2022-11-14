@@ -505,10 +505,10 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 			}
 
 			// Returns
-			$return = [];
+			$returns = [];
 
 			if ($this->user->hasPermission('access', 'localisation/return_status')) {
-				$return[] = [
+				$returns[] = [
 					'name'	   => $this->language->get('text_return_status'),
 					'href'     => $this->url->link('localisation/return_status', 'user_token=' . $this->session->data['user_token']),
 					'children' => []
@@ -516,7 +516,7 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 			}
 
 			if ($this->user->hasPermission('access', 'localisation/return_action')) {
-				$return[] = [
+				$returns[] = [
 					'name'	   => $this->language->get('text_return_action'),
 					'href'     => $this->url->link('localisation/return_action', 'user_token=' . $this->session->data['user_token']),
 					'children' => []
@@ -524,18 +524,18 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 			}
 
 			if ($this->user->hasPermission('access', 'localisation/return_reason')) {
-				$return[] = [
+				$returns[] = [
 					'name'	   => $this->language->get('text_return_reason'),
 					'href'     => $this->url->link('localisation/return_reason', 'user_token=' . $this->session->data['user_token']),
 					'children' => []
 				];
 			}
 
-			if ($return) {
+			if ($returns) {
 				$localisation[] = [
 					'name'	   => $this->language->get('text_return'),
 					'href'     => '',
-					'children' => $return
+					'children' => $returns
 				];
 			}
 

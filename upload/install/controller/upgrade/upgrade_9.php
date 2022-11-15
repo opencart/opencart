@@ -745,11 +745,7 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
                 ];
 
                 foreach ($seo_urls as $seo_url) {
-                    if (!filter_var($seo_url['value'], FILTER_VALIDATE_INT)) {
-                        $value = $this->db->escape($seo_url['value']);
-                    } else {
-                        $value = (int)$seo_url['value'];
-                    }
+                    $value = preg_replace('/[^a-zA-Z0-9_|\/\.]/', '', str_replace('|', '.', $seo_url['value']));
 
                     $this->db->query("INSERT INTO `" . DB_PREFIX . "seo_url` SET `store_id` = '" . (int)$seo_url['store_id'] . "', `language_id` = '" . (int)$seo_url['language_id'] . "', `key` = '" . $this->db->escape($seo_url['key']) . "', `value` = '" . $value . "', `keyword` = '" . $this->db->escape($seo_url['keyword']) . "', `sort_order` = '" . (int)$seo_url['sort_order'] . "'");
                 }

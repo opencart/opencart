@@ -1,25 +1,24 @@
-{{ text_subscription_id }} {{ subscription_id }}<br/>
-{{ text_order_id }} {{ order_id }}<br/>
-{{ text_date_added }} {{ date_added }}<br/>
+{{ text_date_added }} {{ date_added }}
 <br/>
-{{ text_order_status }}<br/>
 <br/>
-{{ order_status }}<br/>
+{{ text_subscription_status }}
 <br/>
-{% if link %}
-  {{ text_link }}<br/>
-  <br/>
-  {{ link }}<br/>
-{% endif %}
+<br/>
+{{ subscription_status }}
+<br/>
+<br/>
 {% if comment %}
   <br/>
-  {{ text_comment }}<br/>
   <br/>
-  {{ comment }}<br/>
-  {{ text_footer }}<br/>
-{% else %}
-  {{ text_footer }}<br/>
+  {{ text_comment }}
+  <br/>
+  <br/>
+  {{ comment }}
+  <br/>
 {% endif %}
 <br/>
-{{ store }}<br/>
-{{ store_url }}
+<br/>
+<a href="{{ store_url }}">{{ store_name }}</a>
+<br/>
+<br/>
+{{ text_footer }}

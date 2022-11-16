@@ -304,8 +304,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
                                                             $customer_period = strtotime($customer_info['date_added']);
 
                                                             // Calculates the remaining days between the subscription
-                                                            // promotional period and the date added
-                                                            // period
+                                                            // promotional period and the date added period
                                                             $period = ($trial_period + ($period - $customer_period));
 
                                                             if (!$period) {

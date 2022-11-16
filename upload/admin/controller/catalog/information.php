@@ -303,11 +303,11 @@ class Information extends \Opencart\System\Engine\Controller {
 
 			foreach ($this->request->post['information_seo_url'] as $store_id => $language) {
 				foreach ($language as $language_id => $keyword) {
-					if ((oc_strlen(trim($keyword)) < 1) || (oc_strlen($keyword) > 64)) {
+					if ((oc_strlen(trim($keyword)) < 1) || (oc_strlen($keyword) > 100)) {
 						$json['error']['keyword_' . $store_id . '_' . $language_id] = $this->language->get('error_keyword');
 					}
 
-					$seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyword($keyword, $store_id, $language_id);
+					$seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyword($keyword, $store_id);
 
 					if ($seo_url_info && (!isset($this->request->post['information_id']) || $seo_url_info['key'] != 'information_id' || $seo_url_info['value'] != (int)$this->request->post['information_id'])) {
 						$json['error']['keyword_' . $store_id . '_' . $language_id] = $this->language->get('error_keyword_exists');

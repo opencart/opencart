@@ -9,11 +9,11 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 			$this->url->addRewrite($this);
 		}
 
-		// Set language ID
+		// Language
 		if (isset($this->request->get['language'])) {
 			$code = $this->request->get['language'];
 		} else {
-			$code = '';
+			$code = $this->config->get('config_language');
 		}
 
 		$this->load->model('localisation/language');

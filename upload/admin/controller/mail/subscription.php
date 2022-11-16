@@ -249,7 +249,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
                                     $mail->setFrom($from);
                                     $mail->setSender(html_entity_decode($store_name, ENT_QUOTES, 'UTF-8'));
                                     $mail->setSubject(html_entity_decode(sprintf($this->language->get('text_subject'), $store_name), ENT_QUOTES, 'UTF-8'));
-                                    $mail->setText($this->load->view('mail/subscription_transaction', $data));
+                                    $mail->setText($this->load->view('mail/subscription_canceled', $data));
                                     $mail->send();
                                 }
                             }

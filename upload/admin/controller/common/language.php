@@ -62,7 +62,7 @@ class Language extends \Opencart\System\Engine\Controller {
 		} else {
 			$redirect = '';
 		}
-echo $code;
+
 		$this->load->model('localisation/language');
 
 		$language_info = $this->model_localisation_language->getLanguageByCode($code);

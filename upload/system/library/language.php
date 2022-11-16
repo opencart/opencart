@@ -12,9 +12,9 @@
 */
 namespace Opencart\System\Library;
 class Language {
-	protected string $default = 'en-gb';
 	protected string $code;
 	protected string $directory;
+	protected string $default = 'en-gb';
 	protected array $path = [];
 	protected array $data = [];
 	protected array $cache = [];
@@ -111,31 +111,39 @@ class Language {
 			$code = $this->code;
 		}
 
-		if (!isset($this->cache[$code][$filename])) {
+		//if (!isset($this->cache[$code][$filename])) {
 			$_ = [];
 
-			// Load default language file first
-			$file = $this->directory . '/' . $this->default . '/' . $filename . '.php';
-
+			// Load default language file default language keys
+			$file = $this->directory . $this->default . '/' . $filename . '.php';
+		
 			$namespace = '';
 
 			$parts = explode('/', $filename);
-
+	
 			foreach ($parts as $part) {
 				if (!$namespace) {
 					$namespace .= $part;
 				} else {
 					$namespace .= '/' . $part;
 				}
-
+	
 				if (isset($this->path[$namespace])) {
-					$file = $this->path[$namespace] . $this->default . substr($filename, strlen($namespace)) . '.php';
+					$file = $this->path[$namespace] . $code . substr($filename, strlen($namespace)) . '.php';
 				}
 			}
 
+			//echo $filename . "\n";
+
 			if (is_file($file)) {
+				//echo 'default found ' . "\n";
+
 				require($file);
+			} else {
+				echo 'default not found ' . "\n";
 			}
+
+			//echo $file . "\n";
 
 			// Load selected language file to overwrite the default language keys
 			$file = $this->directory . $code . '/' . $filename . '.php';
@@ -157,13 +165,20 @@ class Language {
 			}
 
 			if (is_file($file)) {
+				//echo 'selected found ' . "\n";
+
 				require($file);
+			} else {
+				//echo 'selected not found ' . "\n";
 			}
 
-			$this->cache[$code][$filename] = $_;
-		} else {
-			$_ = $this->cache[$code][$filename];
-		}
+			//echo $file . "\n\n";
+			//print_r($this->path);
+
+		//	$this->cache[$code][$filename] = $_;
+		//} else {
+		//	$_ = $this->cache[$code][$filename];
+		//}
 
 		if ($prefix) {
 			foreach ($_ as $key => $value) {

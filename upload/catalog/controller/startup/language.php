@@ -23,14 +23,13 @@ class Language extends \Opencart\System\Engine\Controller {
 
 		// Language
 		$language = new \Opencart\System\Library\Language($code);
+		$language->addPath(DIR_LANGUAGE);
 
-		if (!$language_data[$code]['extension']) {
-			$language->addPath(DIR_LANGUAGE);
-		} else {
-			$language->addPath(DIR_EXTENSION . $language_data[$code]['extension'] . '/catalog/language/');
+		if ($language_data[$code]['extension']) {
+			$language->addPath('extension/' . $language_data[$code]['extension'], DIR_EXTENSION . $language_data[$code]['extension'] . '/catalog/language/');
 		}
 
-		$language->load($code);
+		$language->load('default');
 
 		$this->registry->set('language', $language);
 	}

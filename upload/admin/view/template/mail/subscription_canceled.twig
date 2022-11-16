@@ -1,0 +1,33 @@
+{{ text_subscription_id }} {{ subscription_id }}
+<br/>
+<br/>
+{{ text_date_added }} {{ date_added }}
+<br/>
+<br/>
+{{ text_payment_method }}
+<br/>
+<br/>
+{{ payment_method }}
+<br/>
+<br/>
+{{ text_payment_code }}
+<br/>
+<br/>
+{{ payment_code }}
+<br/>
+<br/>
+{% if comment %}
+  <br/>
+  <br/>
+  {{ text_comment }}
+  <br/>
+  <br/>
+  {{ comment }}
+  <br/>
+{% endif %}
+<br/>
+<br/>
+<a href="{{ store_url }}">{{ store_name }}</a>
+<br/>
+<br/>
+{{ text_footer }}

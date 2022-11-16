@@ -9,6 +9,24 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 			$this->url->addRewrite($this);
 		}
 
+		// Decode URL
+		if (isset($this->request->get['_route_'])) {
+			$parts = explode('/', $this->request->get['_route_']);
+
+			// remove any empty arrays from trailing
+			if (oc_strlen(end($parts)) == 0) {
+				array_pop($parts);
+			}
+
+			foreach ($parts as $part) {
+				$seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyword($part);
+
+				if ($seo_url_info) {
+					$this->request->get[$seo_url_info['key']] = html_entity_decode($seo_url_info['value'], ENT_QUOTES, 'UTF-8');
+				}
+			}
+		}
+
 		// Language
 		if (isset($this->request->get['language'])) {
 			$code = $this->request->get['language'];
@@ -25,24 +43,6 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 		}
 
 		$this->load->model('design/seo_url');
-
-		// Decode URL
-		if (isset($this->request->get['_route_'])) {
-			$parts = explode('/', $this->request->get['_route_']);
-
-			// remove any empty arrays from trailing
-			if (oc_strlen(end($parts)) == 0) {
-				array_pop($parts);
-			}
-
-			foreach ($parts as $part) {
-				$seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyword($part, $this->language_id);
-
-				if ($seo_url_info) {
-					$this->request->get[$seo_url_info['key']] = html_entity_decode($seo_url_info['value'], ENT_QUOTES, 'UTF-8');
-				}
-			}
-		}
 	}
 
 	public function rewrite(string $link): string {

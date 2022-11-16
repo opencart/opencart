@@ -289,7 +289,11 @@ class Subscription extends \Opencart\System\Engine\Controller {
                                                                 $period = strtotime($subscription_info['cycle'] . ' ' . $subscription_info['frequency']);
                                                             }
 
+                                                            // New customer once the trial period has ended
+                                                            $customer_period = strtotime($customer_info['date_added']);
+
                                                             $trial_period = 0;
+                                                            $validate_trial = 0;
 
                                                             // Trial
                                                             if ($subscription_info['trial_cycle'] && $subscription_info['trial_frequency'] && $subscription_info['trial_cycle'] == $value['trial_cycle'] && $subscription_info['trial_frequency'] == $value['trial_frequency']) {
@@ -298,27 +302,22 @@ class Subscription extends \Opencart\System\Engine\Controller {
                                                                 } else {
                                                                     $trial_period = strtotime($subscription_info['trial_cycle'] . ' ' . $subscription_info['trial_frequency']);
                                                                 }
-                                                            }
 
-                                                            // New customer once the trial period has ended
-                                                            $customer_period = strtotime($customer_info['date_added']);
+                                                                $trial_period = ($trial_period - $customer_period);
+                                                                $validate_trial = round($trial_period / (60 * 60 * 24));
+                                                            }
 
                                                             // Calculates the remaining days between the subscription
                                                             // promotional period and the date added period
-                                                            $period = ($trial_period + ($period - $customer_period));
-
-                                                            if (!$period) {
-                                                                $period = 0;
-                                                            }
+                                                            $period = ($period - $customer_period);
 
                                                             // Calculate remaining period of each features
                                                             $period = round($period / (60 * 60 * 24));
 
                                                             // Promotional features description must be identical
-                                                            // until the time period has exceeded. If there are no orders,
-                                                            // the promotional cycle period will take place on the next billing
-                                                            // cycle until the last cycle period ends
-                                                            if ($period <= 0 && $value['description'] == $description && $subscription_info['subscription_plan_id'] == $value['subscription_plan_id']) {
+                                                            // until the time period has exceeded. Therefore, the current
+                                                            // period must be matched as well
+                                                            if (($period == 0 && ($validate_trial > 0 || !$validate_trial)) && $value['description'] == $description && $subscription_info['subscription_plan_id'] == $value['subscription_plan_id']) {
                                                                 // Products
                                                                 $this->load->model('catalog/product');
 

@@ -324,8 +324,29 @@ class Subscription extends \Opencart\System\Engine\Controller {
                                                                 $product_subscription_info = $this->model_catalog_product->getSubscription($order_product['product_id'], $subscription_info['subscription_plan_id']);
 
                                                                 if ($product_subscription_info) {
-                                                                    // For the next billing cycle
-                                                                    $this->model_account_subscription->addTransaction($value['subscription_id'], $value['order_id'], $this->language->get('mail_text_promotion'), $subscription_info['amount'], $subscription_info['type'], $subscription_info['payment_method'], $subscription_info['payment_code']);
+                                                                    // Adds the current amount in order for promotional subscription extensions
+                                                                    // to balance the new transaction amount in order to reflect on the next billing cycle
+                                                                    $transactions = $this->model_account_subscription->getTransactions($subscription_info['subscription_id']);
+
+                                                                    if ($transactions) {
+                                                                        if ($subscription_info['trial_duration'] && $subscription_info['trial_remaining']) {
+                                                                            $date_next = strtotime('+' . $subscription_info['trial_cycle'] . ' ' . $subscription_info['trial_frequency']);
+                                                                        } elseif ($subscription_info['duration'] && $subscription_info['remaining']) {
+                                                                            $date_next = strtotime('+' . $subscription_info['cycle'] . ' ' . $subscription_info['frequency']);
+                                                                        }
+
+                                                                        $amounts = array_column($transactions, 'amount');
+                                                                        $dates = array_column($transactions, 'date_added');
+
+                                                                        $date_added = max($dates);
+                                                                        $date_added = strtotime($date_added);
+
+                                                                        foreach ($transactions as $transaction) {
+                                                                            if (strtotime($transaction['date_added']) ==  $date_added && $date_added == $date_next && $transaction['payment_method'] == $order_info['payment_method'] && $transaction['payment_code'] == $order_info['payment_code']) {
+                                                                                $this->model_account_subscription->addTransaction($value['subscription_id'], $value['order_id'], $language->get('text_promotion'), (float)$transaction['amount'], $transaction['type'], $transaction['payment_method'], $transaction['payment_code']);
+                                                                            }
+                                                                        }
+                                                                    }
                                                                 }
                                                             }
                                                         }

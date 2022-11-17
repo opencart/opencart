@@ -175,7 +175,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
                                         // Load the language for any mails using a different country code and prefixing it so it does not pollute the main data pool.
                                         $this->language->load($language_code, 'mail', $language_code);
-                                        $this->language->load('mail/order_add', 'mail', $language_code);
+                                        $this->language->load('mail/subscription', 'mail', $language_code);
 
                                         // Add language vars to the template folder
                                         $results = $this->language->all('mail');
@@ -293,7 +293,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
                                                             $customer_period = strtotime($customer_info['date_added']);
 
                                                             $trial_period = 0;
-                                                            $validate_trial = 0;
+                                                            $trial = 0;
 
                                                             // Trial
                                                             if ($subscription_info['trial_cycle'] && $subscription_info['trial_frequency'] && $subscription_info['trial_cycle'] == $value['trial_cycle'] && $subscription_info['trial_frequency'] == $value['trial_frequency']) {
@@ -304,7 +304,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
                                                                 }
 
                                                                 $trial_period = ($trial_period - $customer_period);
-                                                                $validate_trial = round($trial_period / (60 * 60 * 24));
+                                                                $trial = round($trial_period / (60 * 60 * 24));
                                                             }
 
                                                             // Calculates the remaining days between the subscription
@@ -317,7 +317,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
                                                             // Promotional features description must be identical
                                                             // until the time period has exceeded. Therefore, the current
                                                             // period must be matched as well
-                                                            if (($period == 0 && ($validate_trial > 0 || !$validate_trial)) && $value['description'] == $description && $subscription_info['subscription_plan_id'] == $value['subscription_plan_id']) {
+                                                            if (($period == 0 && ($trial > 0 || !$trial)) && $value['description'] == $description && $subscription_info['subscription_plan_id'] == $value['subscription_plan_id']) {
                                                                 // Products
                                                                 $this->load->model('catalog/product');
 
@@ -325,7 +325,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
                                                                 if ($product_subscription_info) {
                                                                     // For the next billing cycle
-                                                                    $this->model_account_subscription->addTransaction($value['subscription_id'], $value['order_id'], $this->language->get('text_promotion'), $subscription_info['amount'], $subscription_info['type'], $subscription_info['payment_method'], $subscription_info['payment_code']);
+                                                                    $this->model_account_subscription->addTransaction($value['subscription_id'], $value['order_id'], $this->language->get('mail_text_promotion'), $subscription_info['amount'], $subscription_info['type'], $subscription_info['payment_method'], $subscription_info['payment_code']);
                                                                 }
                                                             }
                                                         }

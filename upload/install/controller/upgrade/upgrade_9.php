@@ -68,7 +68,7 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
                     'store_id'    => 0,
                     'language_id' => 1,
                     'key'         => 'product_id',
-                    'value'       => 47,
+                    'value'       => '47',
                     'keyword'     => 'hp-lp3065',
                     'sort_order'  => 1
                 ];
@@ -77,7 +77,7 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
                     'store_id'    => 0,
                     'language_id' => 1,
                     'key'         => 'product_id',
-                    'value'       => 48,
+                    'value'       => '48',
                     'keyword'     => 'ipod-classic',
                     'sort_order'  => 1
                 ];
@@ -86,7 +86,7 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
                     'store_id'    => 0,
                     'language_id' => 1,
                     'key'         => 'product_id',
-                    'value'       => 28,
+                    'value'       => '28',
                     'keyword'     => 'htc-touch-hd',
                     'sort_order'  => 1
                 ];
@@ -95,7 +95,7 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
                     'store_id'    => 0,
                     'language_id' => 1,
                     'key'         => 'product_id',
-                    'value'       => 43,
+                    'value'       => '43',
                     'keyword'     => 'macbook',
                     'sort_order'  => 1
                 ];
@@ -104,7 +104,7 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
                     'store_id'    => 0,
                     'language_id' => 1,
                     'key'         => 'product_id',
-                    'value'       => 44,
+                    'value'       => '44',
                     'keyword'     => 'macbook-air',
                     'sort_order'  => 1
                 ];
@@ -113,7 +113,7 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
                     'store_id'    => 0,
                     'language_id' => 1,
                     'key'         => 'product_id',
-                    'value'       => 45,
+                    'value'       => '45',
                     'keyword'     => 'macbook-pro',
                     'sort_order'  => 1
                 ];
@@ -122,7 +122,7 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
                     'store_id'    => 0,
                     'language_id' => 1,
                     'key'         => 'product_id',
-                    'value'       => 30,
+                    'value'       => '30',
                     'keyword'     => 'canon-eos-5d',
                     'sort_order'  => 1
                 ];
@@ -131,7 +131,7 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
                     'store_id'    => 0,
                     'language_id' => 1,
                     'key'         => 'product_id',
-                    'value'       => 31,
+                    'value'       => '31',
                     'keyword'     => 'nikon-d300',
                     'sort_order'  => 1
                 ];
@@ -140,7 +140,7 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
                     'store_id'    => 0,
                     'language_id' => 1,
                     'key'         => 'product_id',
-                    'value'       => 29,
+                    'value'       => '29',
                     'keyword'     => 'palm-treo-pro',
                     'sort_order'  => 1
                 ];
@@ -149,7 +149,7 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
                     'store_id'    => 0,
                     'language_id' => 1,
                     'key'         => 'product_id',
-                    'value'       => 35,
+                    'value'       => '35',
                     'keyword'     => 'product-8',
                     'sort_order'  => 1
                 ];
@@ -158,7 +158,7 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
                     'store_id'    => 0,
                     'language_id' => 1,
                     'key'         => 'product_id',
-                    'value'       => 49,
+                    'value'       => '49',
                     'keyword'     => 'samsung-galaxy-tab-10-1',
                     'sort_order'  => 1
                 ];
@@ -167,7 +167,7 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
                     'store_id'    => 0,
                     'language_id' => 1,
                     'key'         => 'product_id',
-                    'value'       => 33,
+                    'value'       => '33',
                     'keyword'     => 'samsung-syncmaster-941bw',
                     'sort_order'  => 1
                 ];
@@ -176,7 +176,7 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
                     'store_id'    => 0,
                     'language_id' => 1,
                     'key'         => 'product_id',
-                    'value'       => 46,
+                    'value'       => '46',
                     'keyword'     => 'sony-vaio',
                     'sort_order'  => 1
                 ];
@@ -185,7 +185,7 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
                     'store_id'    => 0,
                     'language_id' => 1,
                     'key'         => 'product_id',
-                    'value'       => 41,
+                    'value'       => '41',
                     'keyword'     => 'imac',
                     'sort_order'  => 1
                 ];
@@ -194,7 +194,7 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
                     'store_id'    => 0,
                     'language_id' => 1,
                     'key'         => 'product_id',
-                    'value'       => 40,
+                    'value'       => '40',
                     'keyword'     => 'iphone',
                     'sort_order'  => 1
                 ];
@@ -203,7 +203,7 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
                     'store_id'    => 0,
                     'language_id' => 1,
                     'key'         => 'product_id',
-                    'value'       => 36,
+                    'value'       => '36',
                     'keyword'     => 'ipod-nano',
                     'sort_order'  => 1
                 ];
@@ -212,7 +212,7 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
                     'store_id'    => 0,
                     'language_id' => 1,
                     'key'         => 'product_id',
-                    'value'       => 34,
+                    'value'       => '34',
                     'keyword'     => 'ipod-shuffle',
                     'sort_order'  => 1
                 ];
@@ -221,7 +221,7 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
                     'store_id'    => 0,
                     'language_id' => 1,
                     'key'         => 'product_id',
-                    'value'       => 32,
+                    'value'       => '32',
                     'keyword'     => 'ipod-touch',
                     'sort_order'  => 1
                 ];
@@ -230,7 +230,7 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
                     'store_id'    => 0,
                     'language_id' => 1,
                     'key'         => 'product_id',
-                    'value'       => 50,
+                    'value'       => '50',
                     'keyword'     => 'apple-4',
                     'sort_order'  => 1
                 ];
@@ -239,7 +239,7 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
                     'store_id'    => 0,
                     'language_id' => 1,
                     'key'         => 'product_id',
-                    'value'       => 42,
+                    'value'       => '42',
                     'keyword'     => 'apple-cinema',
                     'sort_order'  => 1
                 ];
@@ -249,7 +249,7 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
                     'store_id'    => 0,
                     'language_id' => 1,
                     'key'         => 'manufacturer_id',
-                    'value'       => 5,
+                    'value'       => '5',
                     'keyword'     => 'htc',
                     'sort_order'  => 0
                 ];
@@ -258,7 +258,7 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
                     'store_id'    => 0,
                     'language_id' => 1,
                     'key'         => 'manufacturer_id',
-                    'value'       => 7,
+                    'value'       => '7',
                     'keyword'     => 'hewlett-packard',
                     'sort_order'  => 0
                 ];
@@ -267,7 +267,7 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
                     'store_id'    => 0,
                     'language_id' => 1,
                     'key'         => 'manufacturer_id',
-                    'value'       => 6,
+                    'value'       => '6',
                     'keyword'     => 'palm',
                     'sort_order'  => 0
                 ];
@@ -276,7 +276,7 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
                     'store_id'    => 0,
                     'language_id' => 1,
                     'key'         => 'manufacturer_id',
-                    'value'       => 10,
+                    'value'       => '10',
                     'keyword'     => 'sony',
                     'sort_order'  => 0
                 ];
@@ -285,7 +285,7 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
                     'store_id'    => 0,
                     'language_id' => 1,
                     'key'         => 'manufacturer_id',
-                    'value'       => 9,
+                    'value'       => '9',
                     'keyword'     => 'canon',
                     'sort_order'  => 0
                 ];
@@ -294,7 +294,7 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
                     'store_id'    => 0,
                     'language_id' => 1,
                     'key'         => 'manufacturer_id',
-                    'value'       => 8,
+                    'value'       => '8',
                     'keyword'     => 'apple',
                     'sort_order'  => 0
                 ];
@@ -304,7 +304,7 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
                     'store_id'    => 0,
                     'language_id' => 1,
                     'key'         => 'path',
-                    'value'       => 30,
+                    'value'       => '30',
                     'keyword'     => 'printer',
                     'sort_order'  => 0
                 ];
@@ -331,7 +331,7 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
                     'store_id'    => 0,
                     'language_id' => 1,
                     'key'         => 'path',
-                    'value'       => 25,
+                    'value'       => '25',
                     'keyword'     => 'component',
                     'sort_order'  => 0
                 ];
@@ -349,7 +349,7 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
                     'store_id'    => 0,
                     'language_id' => 1,
                     'key'         => 'path',
-                    'value'       => 33,
+                    'value'       => '33',
                     'keyword'     => 'cameras',
                     'sort_order'  => 0
                 ];
@@ -412,7 +412,7 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
                     'store_id'    => 0,
                     'language_id' => 1,
                     'key'         => 'path',
-                    'value'       => 20,
+                    'value'       => '20',
                     'keyword'     => 'desktops',
                     'sort_order'  => 0
                 ];
@@ -421,7 +421,7 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
                     'store_id'    => 0,
                     'language_id' => 1,
                     'key'         => 'path',
-                    'value'       => 18,
+                    'value'       => '18',
                     'keyword'     => 'laptop-notebook',
                     'sort_order'  => 0
                 ];
@@ -448,7 +448,7 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
                     'store_id'    => 0,
                     'language_id' => 1,
                     'key'         => 'path',
-                    'value'       => 34,
+                    'value'       => '34',
                     'keyword'     => 'mp3-players',
                     'sort_order'  => 0
                 ];
@@ -628,7 +628,7 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
                     'store_id'    => 0,
                     'language_id' => 1,
                     'key'         => 'path',
-                    'value'       => 24,
+                    'value'       => '24',
                     'keyword'     => 'smartphone',
                     'sort_order'  => 0
                 ];
@@ -637,7 +637,7 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
                     'store_id'    => 0,
                     'language_id' => 1,
                     'key'         => 'path',
-                    'value'       => 17,
+                    'value'       => '17',
                     'keyword'     => 'software',
                     'sort_order'  => 0
                 ];
@@ -646,7 +646,7 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
                     'store_id'    => 0,
                     'language_id' => 1,
                     'key'         => 'path',
-                    'value'       => 57,
+                    'value'       => '57',
                     'keyword'     => 'tablet',
                     'sort_order'  => 0
                 ];
@@ -656,7 +656,7 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
                     'store_id'    => 0,
                     'language_id' => 1,
                     'key'         => 'information_id',
-                    'value'       => 1,
+                    'value'       => '1',
                     'keyword'     => 'about-us',
                     'sort_order'  => 0
                 ];
@@ -665,7 +665,7 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
                     'store_id'    => 0,
                     'language_id' => 1,
                     'key'         => 'information_id',
-                    'value'       => 2,
+                    'value'       => '2',
                     'keyword'     => 'terms',
                     'sort_order'  => 0
                 ];
@@ -674,7 +674,7 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
                     'store_id'    => 0,
                     'language_id' => 1,
                     'key'         => 'information_id',
-                    'value'       => 4,
+                    'value'       => '4',
                     'keyword'     => 'delivery',
                     'sort_order'  => 0
                 ];
@@ -683,7 +683,7 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
                     'store_id'    => 0,
                     'language_id' => 1,
                     'key'         => 'information_id',
-                    'value'       => 3,
+                    'value'       => '3',
                     'keyword'     => 'privacy',
                     'sort_order'  => 0
                 ];
@@ -748,7 +748,7 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
                     $value = preg_replace('/[^a-zA-Z0-9_|\/\.]/', '', str_replace('|', '.', $seo_url['value']));
 
                     if ($value) {
-                        $this->db->query("INSERT INTO `" . DB_PREFIX . "seo_url` SET `store_id` = '" . (int)$seo_url['store_id'] . "', `language_id` = '" . (int)$seo_url['language_id'] . "', `key` = '" . $this->db->escape($seo_url['key']) . "', `value` = '" . (!filter_var($value, FILTER_VALIDATE_INT) ? $this->db->escape($value) : (int)$value) . "', `keyword` = '" . $this->db->escape($seo_url['keyword']) . "', `sort_order` = '" . (int)$seo_url['sort_order'] . "'");
+                        $this->db->query("INSERT INTO `" . DB_PREFIX . "seo_url` SET `store_id` = '" . (int)$seo_url['store_id'] . "', `language_id` = '" . (int)$seo_url['language_id'] . "', `key` = '" . $this->db->escape($seo_url['key']) . "', `value` = '" . $this->db->escape($value) . "', `keyword` = '" . $this->db->escape($seo_url['keyword']) . "', `sort_order` = '" . (int)$seo_url['sort_order'] . "'");
                     }
                 }
             } catch (\ErrorException $exception) {

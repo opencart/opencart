@@ -342,8 +342,8 @@ class Subscription extends \Opencart\System\Engine\Controller {
                                                                         $date_added = strtotime($date_added);
 
                                                                         foreach ($transactions as $transaction) {
-                                                                            if (strtotime($transaction['date_added']) == $date_added && $date_added == $date_next && $transaction['payment_method'] == $order_info['payment_method'] && $transaction['payment_code'] == $order_info['payment_code']) {
-                                                                                $this->model_account_subscription->addTransaction($value['subscription_id'], $value['order_id'], $this->language->get('mail_text_promotion'), (float)$transaction['amount'], $transaction['type'], $transaction['payment_method'], $transaction['payment_code']);
+                                                                            if (strtotime($transaction['date_added']) == $date_added && $date_added != $date_next && $transaction['payment_method'] == $order_info['payment_method'] && $transaction['payment_code'] == $order_info['payment_code']) {
+                                                                                $this->model_account_subscription->addTransaction($value['subscription_id'], $value['order_id'], $this->language->get('mail_text_promotion'), 0, $transaction['type'], $transaction['payment_method'], $transaction['payment_code']);
                                                                             }
                                                                         }
                                                                     }

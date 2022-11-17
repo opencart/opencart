@@ -78,9 +78,9 @@ class Subscription extends \Opencart\System\Engine\Controller {
                     // Payment Methods
                     $this->load->model('account/payment_method');
 
-                    $payment_info = $this->model_account_payment_method->getPaymentMethod($value['customer_id'], $value['customer_payment_id']);
+                    $payment_method = $this->model_account_payment_method->getPaymentMethod($value['customer_id'], $value['customer_payment_id']);
 
-                    if ($payment_info) {
+                    if ($payment_method) {
                         // Subscription
                         $this->load->model('checkout/subscription');
 
@@ -91,7 +91,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
                             $this->load->model('account/order');
 
                             // Order Products
-                            $order_product = $this->model_account_order->getOrderProduct($value['order_id'], $value['order_product_id']);
+                            $order_product = $this->model_account_order->getProduct($value['order_id'], $value['order_product_id']);
 
                             if ($order_product && $order_product['order_product_id'] == $subscription['order_product_id']) {
                                 $products = $this->cart->getProducts();
@@ -249,11 +249,11 @@ class Subscription extends \Opencart\System\Engine\Controller {
                                             $from = $this->config->get('config_email');
                                         }
 
-                                        if ($this->config->get('payment_' . $payment_info['code'] . '_status')) {
-                                            $this->load->model('extension/payment/' . $payment_info['code']);
+                                        if ($this->config->get('payment_' . $payment_method['code'] . '_status')) {
+                                            $this->load->model('extension/payment/' . $payment_method['code']);
 
                                             // Promotion
-                                            if (property_exists($this->{'model_extension_payment_' . $payment_info['code']}, 'promotion')) {
+                                            if (property_exists($this->{'model_extension_payment_' . $payment_method['code']}, 'promotion')) {
                                                 /*
                                                   * The extension must create a new order
                                                   * The trial status and the status must
@@ -261,7 +261,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
                                                   * this transaction. It must not be charged
                                                   * to the customer until the next billing cycle
                                                 */
-                                                $subscription_status_id = $this->{'model_extension_payment_' . $payment_info['code']}->promotion($value['subscription_id']);
+                                                $subscription_status_id = $this->{'model_extension_payment_' . $payment_method['code']}->promotion($value['subscription_id']);
 
                                                 if ($store_info) {
                                                     $config_subscription_active_status_id = $this->model_setting_setting->getValue('config_subscription_active_status_id', $store_info['store_id']);

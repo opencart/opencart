@@ -335,7 +335,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
                                                                             $date_next = strtotime('+' . $subscription_info['cycle'] . ' ' . $subscription_info['frequency']);
                                                                         }
 
-                                                                        $amounts = array_column($transactions, 'amount');
                                                                         $dates = array_column($transactions, 'date_added');
 
                                                                         $date_added = max($dates);

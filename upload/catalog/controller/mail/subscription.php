@@ -334,7 +334,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
                                                                         $subscription_id = $next_subscription['subscription_id'];
 
                                                                         // Order Products
-                                                                        $order_product = $this->model_account_order->getOrderProduct($next_subscription['order_id'], $next_subscription['order_product_id']);
+                                                                        $order_product = $this->model_account_order->getProduct($next_subscription['order_id'], $next_subscription['order_product_id']);
 
                                                                         if ($order_product) {
                                                                             $order_info = $this->model_account_order->getOrder($next_subscription['order_id']);

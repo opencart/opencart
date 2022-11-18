@@ -815,7 +815,7 @@ class Product extends \Opencart\System\Engine\Controller {
 							'name'                    => $option_value_info['name'],
 							'quantity'                => $product_option_value['quantity'],
 							'subtract'                => $product_option_value['subtract'],
-							'price'                   => round($product_option_value['price']),
+							'price'                   => $product_option_value['price'],
 							'price_prefix'            => $product_option_value['price_prefix'],
 							'points'                  => round($product_option_value['points']),
 							'points_prefix'           => $product_option_value['points_prefix'],
@@ -877,7 +877,7 @@ class Product extends \Opencart\System\Engine\Controller {
 							'product_option_value_id' => $product_option_value['product_option_value_id'],
 							'option_value_id'         => $product_option_value['option_value_id'],
 							'name'                    => $option_value_info['name'],
-							'price'                   => (float)$product_option_value['price'] ? $this->currency->format($product_option_value['price'], $this->config->get('config_currency')) : false,
+							'price'                   => (float)$product_option_value['price'] ? $product_option_value['price'] : false,
 							'price_prefix'            => $product_option_value['price_prefix']
 						];
 					}

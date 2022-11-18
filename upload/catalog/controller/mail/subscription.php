@@ -282,31 +282,42 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
                                                         // We need to validate frequencies in compliance of the admin subscription plans
                                                         // as with the use of the APIs
-                                                        if ($customer_info && (int)$subscription_info['cycle'] >= 0 && in_array($subscription_info['frequency'], $frequencies)) {
-                                                            // New customer once the trial period has ended
-                                                            $customer_remaining = strtotime($customer_info['date_added']);
-
+                                                        if ($customer_info && (int)$subscription_info['cycle'] >= 0 && $subscription_info['cycle'] == $value['cycle'] && in_array($subscription_info['frequency'], $frequencies)) {
                                                             if ($subscription_info['frequency'] == 'semi_month') {
-                                                                $remaining = strtotime("2 weeks");
+                                                                $period = strtotime("2 weeks");
                                                             } else {
-                                                                $remaining = strtotime($subscription_info['cycle'] . ' ' . $subscription_info['frequency']);
+                                                                $period = strtotime($subscription_info['cycle'] . ' ' . $subscription_info['frequency']);
+                                                            }
+
+                                                            // New customer once the trial period has ended
+                                                            $customer_period = strtotime($customer_info['date_added']);
+
+                                                            $trial_period = 0;
+                                                            $validate_trial = 0;
+
+                                                            // Trial
+                                                            if ($subscription_info['trial_cycle'] && $subscription_info['trial_frequency'] && $subscription_info['trial_cycle'] == $value['trial_cycle'] && $subscription_info['trial_frequency'] == $value['trial_frequency']) {
+                                                                if ($subscription_info['trial_frequency'] == 'semi_month') {
+                                                                    $trial_period = strtotime("2 weeks");
+                                                                } else {
+                                                                    $trial_period = strtotime($subscription_info['trial_cycle'] . ' ' . $subscription_info['trial_frequency']);
+                                                                }
+
+                                                                $trial_period = ($trial_period - $customer_period);
+                                                                $validate_trial = round($trial_period / (60 * 60 * 24));
                                                             }
 
                                                             // Calculates the remaining days between the subscription
-                                                            // promotional period and the customer account's date added
-                                                            // period
-                                                            $remaining = ($remaining - $customer_remaining);
-                                                            $remaining = round($remaining / (60 * 60 * 24));
+                                                            // promotional period and the date added period
+                                                            $period = ($period - $customer_period);
 
-                                                            // The value of 0 also implicits a current or a final period
-                                                            // of the promotional features for the customer
-                                                            if (!$remaining) {
-                                                                $remaining = 0;
-                                                            }
+                                                            // Calculate remaining period of each features
+                                                            $period = round($period / (60 * 60 * 24));
 
                                                             // Promotional features description must be identical
-															// until the time period has exceeded
-                                                            if ($remaining >= 0 && $value['description'] == $description && $subscription_info['subscription_plan_id'] == $value['subscription_plan_id']) {
+                                                            // until the time period has exceeded. Therefore, the current
+                                                            // period must be matched as well
+                                                            if (($period == 0 && ($validate_trial > 0 || !$validate_trial)) && $value['description'] == $description && $subscription_info['subscription_plan_id'] == $value['subscription_plan_id']) {
                                                                 // Products
                                                                 $this->load->model('catalog/product');
 

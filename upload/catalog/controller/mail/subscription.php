@@ -91,7 +91,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
                             $this->load->model('account/order');
 
                             // Order Products
-                            $order_product = $this->model_account_order->getOrderProduct($value['order_id'], $value['order_product_id']);
+                            $order_product = $this->model_account_order->getProduct($value['order_id'], $value['order_product_id']);
 
                             if ($order_product && $order_product['order_product_id'] == $subscription['order_product_id']) {
                                 $products = $this->cart->getProducts();
@@ -100,7 +100,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
                                 foreach ($products as $product) {
                                     if ($product['product_id'] == $order_product['product_id']) {
-                                        $trial_price = $this->currency->format($this->tax->calculate($value['trial_price'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
+                                        $trial_price = $this->currency->format($this->tax->calculate($value['trial_price'], $product['tax_class_id'], $this->config->get('config_tax')), $this->config->get('currency'));
                                         $trial_cycle = $value['trial_cycle'];
                                         $trial_frequency = $this->language->get('text_' . $value['trial_frequency']);
                                         $trial_duration = $value['trial_duration'];
@@ -109,7 +109,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
                                             $description .= sprintf($this->language->get('text_subscription_trial'), $trial_price, $trial_cycle, $trial_frequency, $trial_duration);
                                         }
 
-                                        $price = $this->currency->format($this->tax->calculate($value['price'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
+                                        $price = $this->currency->format($this->tax->calculate($value['price'], $product['tax_class_id'], $this->config->get('config_tax')), $this->config->get('currency'));
                                         $cycle = $value['cycle'];
                                         $frequency = $this->language->get('text_' . $value['frequency']);
                                         $duration = $value['duration'];
@@ -228,7 +228,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
                                         // Order Totals
                                         $data['totals'] = [];
 
-                                        $order_totals = $this->model_checkout_order->getOrderTotals($order_info['order_id']);
+                                        $order_totals = $this->model_checkout_order->getTotals($order_info['order_id']);
 
                                         foreach ($order_totals as $order_total) {
                                             $data['totals'][] = [

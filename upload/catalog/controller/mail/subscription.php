@@ -283,7 +283,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
                                                         foreach ($next_subscriptions as $next_subscription) {
                                                             // Validate the latest subscription values with the ones edited
                                                             // by promotional extensions
-                                                            if ($next_subscription['subscription_id'] != $value['subscription_id'] && $next_subscription['order_id'] != $value['order_id'] && $value['order_id'] != $subscription['order_id'] && $next_subscription['order_product_id'] != $value['order_product_id'] && $subscription['customer_id'] == $value['customer_id'] && $value['customer_id'] == $next_subscription['customer_id']) {
+                                                            if ($next_subscription['subscription_id'] != $value['subscription_id'] && $next_subscription['order_id'] != $value['order_id'] && $value['order_id'] != $subscription['order_id'] && $next_subscription['order_product_id'] != $value['order_product_id'] && $next_subscription['customer_id'] == $value['customer_id']) {
                                                                 $this->load->model('account/customer');
 
                                                                 $customer_info = $this->model_account_customer->getCustomer($next_subscription['customer_id']);

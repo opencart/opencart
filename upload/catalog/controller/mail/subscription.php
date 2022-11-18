@@ -283,7 +283,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
                                                         foreach ($next_subscriptions as $next_subscription) {
                                                             // Validate the latest subscription values with the ones edited
                                                             // by promotional extensions
-                                                            if ($next_subscription['subscription_id'] != $value['subscription_id'] && $next_subscription['order_id'] != $value['order_id'] && $subscription['customer_id'] == $value['customer_id'] && $value['customer_id'] == $next_subscription['customer_id']) {
+                                                            if ($next_subscription['subscription_id'] != $value['subscription_id'] && $next_subscription['order_id'] != $value['order_id'] && $value['order_id'] != $subscription['order_id'] && $subscription['customer_id'] == $value['customer_id'] && $value['customer_id'] == $next_subscription['customer_id']) {
                                                                 $this->load->model('account/customer');
 
                                                                 $customer_info = $this->model_account_customer->getCustomer($next_subscription['customer_id']);
@@ -309,7 +309,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
                                                                     $customer_period = strtotime($customer_info['date_added']);
 
                                                                     $trial_period = 0;
-                                                                    $trial = 0;
+                                                                    $trial_cycle = 0;
 
                                                                     // Trial
                                                                     if ($next_subscription['trial_status'] && (int)$next_subscription['trial_cycle'] >= 0 && in_array($next_subscription['trial_frequency'], $frequencies)) {
@@ -320,7 +320,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
                                                                         }
 
                                                                         $trial_period = ($trial_period - $customer_period);
-                                                                        $trial = round($trial_period / (60 * 60 * 24));
+                                                                        $trial_cycle = round($trial_period / (60 * 60 * 24));
                                                                     }
 
                                                                     // Calculates the remaining days between the subscription
@@ -328,12 +328,12 @@ class Subscription extends \Opencart\System\Engine\Controller {
                                                                     $period = ($period - $customer_period);
 
                                                                     // Calculate remaining period of each features
-                                                                    $period = round($period / (60 * 60 * 24));
+                                                                    $cycle = round($period / (60 * 60 * 24));
 
                                                                     // Promotional subscription plans for full membership must be identical
                                                                     // until the time period has exceeded. Therefore, we need to match the
                                                                     // cycle period with the current time period
-                                                                    if ($next_subscription['status'] && ($period >= 0 && $period <= $next_subscription['cycle']) && ($trial == 0 && !$next_subscription['trial_status']) && $subscription['subscription_plan_id'] == $value['subscription_plan_id'] && $value['subscription_plan_id'] == $next_subscription['subscription_plan_id']) {
+                                                                    if ($next_subscription['status'] && ($cycle >= 0 && $cycle <= $next_subscription['cycle']) && ($trial_cycle == 0 && !$next_subscription['trial_status']) && $subscription['subscription_plan_id'] == $value['subscription_plan_id'] && $value['subscription_plan_id'] == $next_subscription['subscription_plan_id']) {
                                                                         // Products
                                                                         $this->load->model('catalog/product');
 
@@ -356,8 +356,11 @@ class Subscription extends \Opencart\System\Engine\Controller {
                                                                                 $date_added = strtotime($date_added);
 
                                                                                 foreach ($transactions as $transaction) {
+                                                                                    // If the date next don't match with the latest date added of the subscription,
+                                                                                    // we add an amount value of 0. Store owners then need to review the order
+                                                                                    // that is related with this transaction
                                                                                     if (strtotime($transaction['date_added']) == $date_added && $date_added != $date_next && $transaction['payment_method'] == $order_info['payment_method'] && $transaction['payment_code'] == $order_info['payment_code']) {
-                                                                                        $this->model_account_subscription->addTransaction($next_subscription['subscription_id'], $next_subscription['order_id'], $this->language->get('mail_text_promotion'), 0, $transaction['type'], $transaction['payment_method'], $transaction['payment_code']);
+                                                                                        $this->model_account_subscription->addTransaction($next_subscription['subscription_id'], $next_subscription['order_id'], $language->get('text_promotion'), 0, $transaction['type'], $transaction['payment_method'], $transaction['payment_code']);
                                                                                     }
                                                                                 }
                                                                             }

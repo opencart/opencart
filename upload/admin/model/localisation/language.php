@@ -234,10 +234,12 @@ class Language extends \Opencart\System\Engine\Model {
 		$language = $query->row;
 
 		if ($language) {
-			$language['image'] = HTTP_SERVER;
+			$language['image'] = HTTP_CATALOG;
 
-			if ($language['extension']) {
-				$language['image'] .= 'extension/' . $language['extension'] . '/admin/';
+			if (!$language['extension']) {
+				$language['image'] .= 'catalog/';
+			} else {
+				$language['image'] .= 'extension/' . $language['extension'] . '/catalog/';
 			}
 
 			$language['image'] .= 'language/' . $language['code'] . '/' . $language['code'] . '.png';
@@ -252,10 +254,12 @@ class Language extends \Opencart\System\Engine\Model {
 		$language = $query->row;
 
 		if ($language) {
-			$language['image'] = HTTP_SERVER;
+			$language['image'] = HTTP_CATALOG;
 
-			if ($language['extension']) {
-				$language['image'] .= 'extension/' . $language['extension'] . '/admin/';
+			if (!$language['extension']) {
+				$language['image'] .= 'catalog/';
+			} else {
+				$language['image'] .= 'extension/' . $language['extension'] . '/catalog/';
 			}
 
 			$language['image'] .= 'language/' . $language['code'] . '/' . $language['code'] . '.png';
@@ -310,10 +314,12 @@ class Language extends \Opencart\System\Engine\Model {
 				$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "language` ORDER BY `sort_order`, `name`");
 
 				foreach ($query->rows as $result) {
+					$image = HTTP_CATALOG;
+
 					if (!$result['extension']) {
-						$image = HTTP_SERVER;
+						$image .= 'catalog/';
 					} else {
-						$image = HTTP_CATALOG . 'extension/' . $result['extension'] . '/admin/';
+						$image .= 'extension/' . $result['extension'] . '/catalog/';
 					}
 
 					$language_data[$result['code']] = [

@@ -344,35 +344,22 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
                                                                                 $product_subscription_info = $this->model_catalog_product->getSubscription($order_product['product_id'], $next_subscription['subscription_plan_id']);
 
-                                                                                if ($product_subscription_info && $product_subscription_info['cycle'] >= 0 && $cycle <= $product_subscription_info['cycle'] && $product_subscription_info['subscription_plan_id'] == $next_subscription['subscription_plan_id']) {
-                                                                                    // Adds the current amount in order for promotional subscription extensions
-                                                                                    // to balance the new transaction amount to reflect the change on the next
-                                                                                    // billing cycle
-                                                                                    $transactions = $this->model_account_subscription->getTransactions($next_subscription['subscription_id']);
+                                                                                if ($next_subscription['status'] && ($cycle >= 0 && $cycle <= $next_subscription['cycle']) && ($trial_cycle == 0 && !$next_subscription['trial_status']) && $next_subscription['subscription_plan_id'] == $value['subscription_plan_id'] && $value['subscription_plan_id'] == $subscription['subscription_plan_id']) {
+                                                                                    // Order Products
+                                                                                    $order_product = $this->model_account_order->getProduct($next_subscription['order_id'], $next_subscription['order_product_id']);
 
-                                                                                    if ($transactions) {
-                                                                                        if ($next_subscription['duration'] && $next_subscription['remaining']) {
-                                                                                            $date_next = strtotime('+' . $next_subscription['cycle'] . ' ' . $next_subscription['frequency']);
-                                                                                        }
+                                                                                    if ($order_product) {
+                                                                                        $order_info = $this->model_account_order->getOrder($next_subscription['order_id']);
 
-                                                                                        $dates = array_column($transactions, 'date_added');
+                                                                                        if ($order_info) {
+                                                                                            // Products
+                                                                                            $this->load->model('catalog/product');
 
-                                                                                        $date_added = max($dates);
-                                                                                        $date_added = strtotime($date_added);
+                                                                                            $product_subscription_info = $this->model_catalog_product->getSubscription($order_product['product_id'], $next_subscription['subscription_plan_id']);
 
-                                                                                        foreach ($transactions as $transaction) {
-                                                                                            // If the date next don't match with the latest date added of the subscription,
-                                                                                            // we add an amount value of 0. Store owners then need to review the orders
-                                                                                            // that are related with these transactions
-                                                                                            if (strtotime($transaction['date_added']) == $date_added && $transaction['payment_method'] == $order_info['payment_method'] && $transaction['payment_code'] == $order_info['payment_code']) {
-                                                                                                if ($date_added != $date_next) {
-                                                                                                    $this->model_account_subscription->addTransaction($next_subscription['subscription_id'], $next_subscription['order_id'], $this->language->get('mail_text_promotion'), 0, $transaction['type'], $transaction['payment_method'], $transaction['payment_code']);
-                                                                                                } else {
-                                                                                                    if (property_exists($this->{'model_extension_payment_' . $payment_method['code']}, 'addSubscriptionTransaction')) {
-                                                                                                        // Add Transaction from extension
-                                                                                                        $subscription_status_id = $this->{'model_extension_payment_' . $payment_method['code']}->addSubscriptionTransaction($next_subscription['subscription_id'], $next_subscription['order_id'], $this->language->get('mail_text_promotion'), $transaction['amount'], $transaction['type'], $transaction['payment_method'], $transaction['payment_code']);
-                                                                                                    }
-                                                                                                }
+                                                                                            if ($product_subscription_info && $product_subscription_info['cycle'] >= 0 && $cycle <= $product_subscription_info['cycle'] && $product_subscription_info['subscription_plan_id'] == $next_subscription['subscription_plan_id']) {
+                                                                                                // Add Transaction from extension
+                                                                                                $this->{'model_extension_payment_' . $payment_method['code']}->addSubscriptionTransaction($next_subscription['subscription_id'], $next_subscription['order_id']);
                                                                                             }
                                                                                         }
                                                                                     }

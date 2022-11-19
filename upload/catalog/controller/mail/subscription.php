@@ -261,13 +261,13 @@ class Subscription extends \Opencart\System\Engine\Controller {
                                                 $subscription_status_id = $this->{'model_extension_payment_' . $payment_method['code']}->promotion($value['subscription_id']);
 
                                                 if ($store_info) {
-                                                    $config_subscription_active_status_id = $this->model_setting_setting->getValue('config_subscription_active_status_id', $store_info['store_id']);
+                                                    $subscription_active_status_id = $this->model_setting_setting->getValue('config_subscription_active_status_id', $store_info['store_id']);
                                                 } else {
-                                                    $config_subscription_active_status_id = $this->config->get('config_subscription_active_status_id');
+                                                    $subscription_active_status_id = $this->config->get('config_subscription_active_status_id');
                                                 }
 
                                                 // Transaction
-                                                if ($config_subscription_active_status_id == $subscription_status_id) {
+                                                if ($subscription_active_status_id == $subscription_status_id) {
                                                     $filter_data = [
                                                         'filter_subscription_status_id' => $subscription_status_id,
                                                         'start'                         => 0,

@@ -333,7 +333,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
                                                                                 // If the order date cycle is in the future compared to the current
                                                                                 // cycle time period
-                                                                                if ($date_cycle < 0) {
+                                                                                if ($date_cycle >= 0) {
                                                                                     // Products
                                                                                     $this->load->model('catalog/product');
 

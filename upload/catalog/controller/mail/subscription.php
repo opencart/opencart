@@ -319,7 +319,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
                                                                     // Promotional subscription plans for full membership must be identical
                                                                     // until the time period has exceeded. Therefore, we need to match the
                                                                     // cycle period with the current time period; including pro rata
-                                                                    if ($next_subscription['status'] && !$next_subscription['trial_status'] && $cycle >= 0 && $next_subscription['subscription_plan_id'] == $value['subscription_plan_id'] && $value['subscription_plan_id'] == $subscription['subscription_plan_id']) {
+                                                                    if ($next_subscription['status'] && $subscription['status'] && !$next_subscription['trial_status'] && $cycle >= 0 && $next_subscription['subscription_plan_id'] == $value['subscription_plan_id'] && $value['subscription_plan_id'] == $subscription['subscription_plan_id']) {
                                                                         // Order Products
                                                                         $order_product = $this->model_account_order->getProduct($next_subscription['order_id'], $next_subscription['order_product_id']);
 
@@ -359,22 +359,28 @@ class Subscription extends \Opencart\System\Engine\Controller {
                                             }
                                         }
 
-                                        // Mail
-                                        if ($this->config->get('config_mail_engine')) {
-                                            $mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'));
-                                            $mail->parameter = $this->config->get('config_mail_parameter');
-                                            $mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
-                                            $mail->smtp_username = $this->config->get('config_mail_smtp_username');
-                                            $mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
-                                            $mail->smtp_port = $this->config->get('config_mail_smtp_port');
-                                            $mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
+                                        // Since we send an email based on subscription statuses
+                                        // and not based on promotional products, only subscribed
+                                        // customers can receive the emails; either by automation
+                                        // or on-demand.
+                                        if ($value['status'] && $subscription['status']) {
+                                            // Mail
+                                            if ($this->config->get('config_mail_engine')) {
+                                                $mail = new \Mail($this->config->get('config_mail_engine'));
+                                                $mail->parameter = $this->config->get('config_mail_parameter');
+                                                $mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
+                                                $mail->smtp_username = $this->config->get('config_mail_smtp_username');
+                                                $mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
+                                                $mail->smtp_port = $this->config->get('config_mail_smtp_port');
+                                                $mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
 
-                                            $mail->setTo($order_info['email']);
-                                            $mail->setFrom($from);
-                                            $mail->setSender($store_name);
-                                            $mail->setSubject($subject);
-                                            $mail->setHtml($this->load->view('mail/subscription', $data));
-                                            $mail->send();
+                                                $mail->setTo($order_info['email']);
+                                                $mail->setFrom($from);
+                                                $mail->setSender($store_name);
+                                                $mail->setSubject($subject);
+                                                $mail->setHtml($this->load->view('mail/subscription', $data));
+                                                $mail->send();
+                                            }
                                         }
                                     }
                                 }

@@ -282,8 +282,8 @@ class Subscription extends \Opencart\System\Engine\Controller {
                                                     if ($next_subscriptions) {
                                                         foreach ($next_subscriptions as $next_subscription) {
                                                             $next_subscription_period = strtotime($next_subscription['date_next']);
-                                                            $next_subscription_period = ($next_subscription_period - $subscription_period);
-                                                            $next_subscription_cycle = round($next_subscription_period / (60 * 60 * 24));
+                                                            $calc_subscription_period = ($next_subscription_period - $subscription_period);
+                                                            $next_subscription_cycle = round($calc_subscription_period / (60 * 60 * 24));
 
                                                             // Validate the latest subscription values with the ones edited
                                                             // by promotional extensions

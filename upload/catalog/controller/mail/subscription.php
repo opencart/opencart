@@ -125,9 +125,9 @@ class Subscription extends \Opencart\System\Engine\Controller {
                                 // Both descriptions need to match to maintain the
                                 // mutual agreement of the subscription in accordance
                                 // with the service providers
-                                if ($description && $description == $subscription['description']) {
+                                if ($description && $description == $subscription['description'] && strtotime($value['date_next']) == strtotime($subscription['date_next'])) {
                                     // Subscription date
-                                    $subscription_period = strtotime($value['date_added']);
+                                    $subscription_period = strtotime($value['date_next']);
 
                                     // Orders
                                     $this->load->model('checkout/order');
@@ -281,13 +281,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
                                                     if ($next_subscriptions) {
                                                         foreach ($next_subscriptions as $next_subscription) {
-                                                            if ($next_subscription['trial_status'] && $next_subscription['trial_duration'] && $subscription['trial_remaining']) {
-                                                                $date_next = strtotime('+' . $next_subscription['trial_cycle'] . ' ' . $next_subscription['trial_frequency']);
-                                                            } elseif ($next_subscription['duration'] && $subscription['remaining']) {
-                                                                $date_next = strtotime('+' . $next_subscription['cycle'] . ' ' . $next_subscription['frequency']);
-                                                            }
-
-                                                            $next_subscription_period = $date_next;
+                                                            $next_subscription_period = strtotime($next_subscription['date_next']);
                                                             $next_subscription_period = ($next_subscription_period - $subscription_period);
                                                             $next_subscription_cycle = round($next_subscription_period / (60 * 60 * 24));
 
@@ -315,34 +309,17 @@ class Subscription extends \Opencart\System\Engine\Controller {
                                                                         $period = strtotime($next_subscription['cycle'] . ' ' . $next_subscription['frequency']);
                                                                     }
 
-                                                                    $trial_period = 0;
-                                                                    $trial_cycle = 0;
-
-                                                                    // Trial
-                                                                    if ($next_subscription['trial_status'] && (int)$next_subscription['trial_cycle'] >= 0 && in_array($next_subscription['trial_frequency'], $frequencies)) {
-                                                                        if ($next_subscription['trial_frequency'] == 'semi_month') {
-                                                                            $trial_period = strtotime("2 weeks");
-                                                                        } else {
-                                                                            $trial_period = strtotime($next_subscription['trial_cycle'] . ' ' . $next_subscription['trial_frequency']);
-                                                                        }
-
-                                                                        $trial_period = ($subscription_period - $trial_period);
-                                                                        $trial_cycle = round($trial_period / (60 * 60 * 24));
-                                                                    }
-
                                                                     // Calculates the remaining days between the subscription
                                                                     // promotional period and the date added period
                                                                     $period = ($subscription_period - $period);
-                                                                    $next_subscription_period = ($next_subscription_period - $subscription_period);
 
                                                                     // Calculate remaining period of each features
                                                                     $cycle = round($period / (60 * 60 * 24));
-                                                                    $next_cycle = round($next_subscription_period / (60 * 60 * 24));
 
                                                                     // Promotional subscription plans for full membership must be identical
                                                                     // until the time period has exceeded. Therefore, we need to match the
                                                                     // cycle period with the current time period; including pro rata
-                                                                    if ($next_subscription['status'] && ($next_cycle >= 0 && $cycle <= $next_cycle) && ($trial_cycle <= $cycle && !$next_subscription['trial_status']) && $next_subscription['subscription_plan_id'] == $value['subscription_plan_id'] && $value['subscription_plan_id'] == $subscription['subscription_plan_id']) {
+                                                                    if ($next_subscription['status'] && !$next_subscription['trial_status'] && $cycle >= 0 && $next_subscription['subscription_plan_id'] == $value['subscription_plan_id'] && $value['subscription_plan_id'] == $subscription['subscription_plan_id']) {
                                                                         // Order Products
                                                                         $order_product = $this->model_account_order->getProduct($next_subscription['order_id'], $next_subscription['order_product_id']);
 

@@ -37,7 +37,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
                             // Transaction
                             if ($this->config->get('config_subscription_active_status_id') == $subscription_status_id) {
-                                if ($result['trial_duration'] > 0) {
+                                if ($result['trial_status'] && $result['trial_duration'] > 0) {
                                     $date_next = date('Y-m-d', strtotime('+' . $result['trial_cycle'] . ' ' . $result['trial_frequency']));
                                 } elseif ($result['duration'] > 0) {
                                     $date_next = date('Y-m-d', strtotime('+' . $result['cycle'] . ' ' . $result['frequency']));

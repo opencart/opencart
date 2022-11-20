@@ -1,69 +1,80 @@
 {{ header }}
-<div id="account-subscription" class="container">
+<div id="account-recurring" class="container">
   <ul class="breadcrumb">
     {% for breadcrumb in breadcrumbs %}
-      <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+      <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
     {% endfor %}
   </ul>
   <div class="row">{{ column_left }}
-    <div id="content" class="col">{{ content_top }}
+    {% if column_left and column_right %}
+      {% set class = 'col-sm-6' %}
+    {% elseif column_left or column_right %}
+      {% set class = 'col-sm-9' %}
+    {% else %}
+      {% set class = 'col-sm-12' %}
+    {% endif %}
+    <div id="content" class="{{ class }}">{{ content_top }}
       <h2>{{ heading_title }}</h2>
       <div class="table-responsive">
-        <table class="table table-bordered table-hover">
-          <thead>
-            <tr>
-              <td class="text-start" colspan="2">{{ text_subscription_detail }}</td>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="text-start" style="width: 50%;"><b>{{ text_subscription_id }}</b> #{{ subscription_id }}
-                <br/>
-                <b>{{ text_date_added }}</b> {{ date_added }}
-                <br/>
-                <b>{{ text_status }}</b> {{ status }}
-                <br/>
-                <b>{{ text_payment_method }}</b> {{ payment_method }}</td>
-              <td class="text-start" style="width: 50%;"><b>{{ text_order_id }}</b> <a href="{{ order }}">#{{ order_id }}</a>
-                <br/>
-                <b>{{ text_product }}</b> <a href="{{ product }}">{{ product_name }}</a>
-                <br/>
-                <b>{{ text_quantity }}</b> {{ product_quantity }}</td>
-            </tr>
-          </tbody>
-        </table>
-        <table class="table table-bordered table-hover">
-          <thead>
-            <tr>
-              <td class="text-start">{{ text_description }}</td>
-              <td class="text-start">{{ text_reference }}</td>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="text-start" style="width: 50%;">{{ description }}</td>
-              <td class="text-start" style="width: 50%;">{{ reference }}</td>
-            </tr>
-          </tbody>
-        </table>
+        {% if is_subscription %}
+          <table class="table table-bordered table-hover">
+            <thead>
+              <tr>
+                <td class="text-start" colspan="2">{{ text_subscription_detail }}</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="text-start" style="width: 50%;"><b>{{ text_subscription_id }}</b> #{{ subscription_id }}
+                  <br/>
+                  <b>{{ text_date_added }}</b> {{ date_added }}
+                  <br/>
+                  <b>{{ text_status }}</b> {{ status }}
+                  <br/>
+                  <b>{{ text_payment_method }}</b> {{ payment_method }}
+                </td>
+                <td class="text-start" style="width: 50%;"><b>{{ text_orders_id }}</b> <a href="{{ order }}">#{{ order_id }}</a>
+                  <br/>
+                  <b>{{ text_product }}</b> <a href="{{ product }}">{{ product_name }}</a>
+                  <br/>
+                  <b>{{ text_quantity }}</b> {{ product_quantity }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <table class="table table-bordered table-hover">
+            <thead>
+              <tr>
+                <td class="text-start">{{ text_description }}</td>
+                <td class="text-start">{{ text_reference }}</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="text-start" style="width: 50%;">{{ description }}</td>
+                <td class="text-start" style="width: 50%;">{{ reference }}</td>
+              </tr>
+            </tbody>
+          </table>
+        {% endif %}
       </div>
       <h3>{{ text_transaction }}</h3>
       <div class="table-responsive">
         <table class="table table-bordered table-hover">
           <thead>
             <tr>
-              <td class="text-start">{{ column_date_added }}</td>
-              <td class="text-start">{{ column_type }}</td>
-              <td class="text-end">{{ column_amount }}</td>
+              <td class="text-right">{{ column_date_added }}</td>
+              <td class="text-center">{{ column_type }}</td>
+              <td class="text-left">{{ column_amount }}</td>
             </tr>
           </thead>
           <tbody>
-            {% if transactions %}
+            {% if transactions and is_subscription %}
               {% for transaction in transactions %}
                 <tr>
-                  <td class="text-start">{{ transaction.date_added }}</td>
-                  <td class="text-start">{{ transaction.type }}</td>
-                  <td class="text-end">{{ transaction.amount }}</td>
+                  <td class="text-right">{{ transaction.date_added }}</td>
+                  <td class="text-center">{{ transaction.type }}</td>
+                  <td class="text-left">{{ transaction.amount }}</td>
                 </tr>
               {% endfor %}
             {% else %}
@@ -74,10 +85,10 @@
           </tbody>
         </table>
       </div>
-
       {{ subscription }}
-
-      {{ content_bottom }}</div>
-    {{ column_right }}</div>
+      {{ content_bottom }}
+    </div>
+    {{ column_right }}
+  </div>
 </div>
 {{ footer }}

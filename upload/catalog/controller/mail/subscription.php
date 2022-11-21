@@ -342,9 +342,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
                                                                                     if ($product_subscription_info && (int)$product_subscription_info['cycle'] >= 0 && $product_subscription_info['subscription_plan_id'] == $next_subscription['subscription_plan_id'] && $product_subscription_info['duration'] == $next_subscription['duration']) {
                                                                                         // Add Transaction from extension
                                                                                         if (property_exists($this->{'model_extension_payment_' . $payment_method['code']}, 'addSubscriptionTransaction')) {
-                                                                                            $remaining = 0;
-
-                                                                                            $this->{'model_extension_payment_' . $payment_method['code']}->addSubscriptionTransaction($next_subscription['subscription_id'], $next_subscription['order_id'], $remaining);
+                                                                                            $this->{'model_extension_payment_' . $payment_method['code']}->addSubscriptionTransaction($next_subscription['subscription_id'], $next_subscription['order_id']);
                                                                                         }
                                                                                     }
                                                                                 }

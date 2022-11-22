@@ -279,6 +279,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
                                                     if ($subscription_active_status_id == $subscription_status_id) {
                                                         $filter_data = [
                                                             'filter_subscription_status_id' => $subscription_status_id,
+															'filter_date_next'              => date('Y-m-d', strtotime($result['date_next'])),
                                                             'start'                         => 0,
                                                             'limit'                         => 1
                                                         ];

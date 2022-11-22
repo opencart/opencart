@@ -26,6 +26,8 @@ class PgSQL {
 		if ($pg) {
 			$this->connection = $pg;
 			pg_query($this->connection, "SET CLIENT_ENCODING TO 'UTF8'");
+			pg_query("SET SESSION sql_mode = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION'");
+			pg_query($this->connection, "SET FOREIGN_KEY_CHECKS = 0");
 		}
 	}
 

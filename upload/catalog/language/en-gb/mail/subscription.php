@@ -32,3 +32,6 @@ $_['text_semi_month']            = 'half-month';
 $_['text_month']                 = 'month';
 $_['text_year']                  = 'year';
 $_['text_footer']                = 'Please reply to this e-mail if you have any questions.';
+
+// Error
+$_['error_transaction']          = 'The latest transaction with this order does not match or it could not be found!';

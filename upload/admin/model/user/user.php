@@ -20,7 +20,7 @@ class User extends \Opencart\System\Engine\Model {
 	}
 
 	public function editCode(string $email, string $code): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "user` SET `code` = '" . $this->db->escape($code) . "' WHERE LCASE(`email`) = '" . $this->db->escape(oc_strtolower($email)) . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "user` SET `code` = '" . $this->db->escape($code) . "' WHERE LOWER(`email`) = '" . $this->db->escape(oc_strtolower($email)) . "'");
 	}
 
 	public function deleteUser(int $user_id): void {
@@ -42,7 +42,7 @@ class User extends \Opencart\System\Engine\Model {
 	}
 
 	public function getUserByEmail(string $email): array {
-		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "user` WHERE LCASE(`email`) = '" . $this->db->escape(oc_strtolower($email)) . "'");
+		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "user` WHERE LOWER(`email`) = '" . $this->db->escape(oc_strtolower($email)) . "'");
 
 		return $query->row;
 	}
@@ -104,7 +104,7 @@ class User extends \Opencart\System\Engine\Model {
 	}
 
 	public function getTotalUsersByEmail(string $email): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "user` WHERE LCASE(`email`) = '" . $this->db->escape(oc_strtolower($email)) . "'");
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "user` WHERE LOWER(`email`) = '" . $this->db->escape(oc_strtolower($email)) . "'");
 
 		return (int)$query->row['total'];
 	}

@@ -58,7 +58,7 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	public function getCustomerByEmail(string $email): array {
-		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "customer` WHERE LCASE(`email`) = '" . $this->db->escape(oc_strtolower($email)) . "'");
+		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "customer` WHERE LOWER(`email`) = '" . $this->db->escape(oc_strtolower($email)) . "'");
 
 		return $query->row;
 	}

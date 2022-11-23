@@ -100,13 +100,13 @@ class Product extends \Opencart\System\Engine\Model {
 			}
 
 			if (!empty($data['filter_name'])) {
-				$sql .= " OR LCASE(p.`model`) = '" . $this->db->escape(oc_strtolower($data['filter_name'])) . "'";
-				$sql .= " OR LCASE(p.`sku`) = '" . $this->db->escape(oc_strtolower($data['filter_name'])) . "'";
-				$sql .= " OR LCASE(p.`upc`) = '" . $this->db->escape(oc_strtolower($data['filter_name'])) . "'";
-				$sql .= " OR LCASE(p.`ean`) = '" . $this->db->escape(oc_strtolower($data['filter_name'])) . "'";
-				$sql .= " OR LCASE(p.`jan`) = '" . $this->db->escape(oc_strtolower($data['filter_name'])) . "'";
-				$sql .= " OR LCASE(p.`isbn`) = '" . $this->db->escape(oc_strtolower($data['filter_name'])) . "'";
-				$sql .= " OR LCASE(p.`mpn`) = '" . $this->db->escape(oc_strtolower($data['filter_name'])) . "'";
+				$sql .= " OR LOWER(p.`model`) = '" . $this->db->escape(oc_strtolower($data['filter_name'])) . "'";
+				$sql .= " OR LOWER(p.`sku`) = '" . $this->db->escape(oc_strtolower($data['filter_name'])) . "'";
+				$sql .= " OR LOWER(p.`upc`) = '" . $this->db->escape(oc_strtolower($data['filter_name'])) . "'";
+				$sql .= " OR LOWER(p.`ean`) = '" . $this->db->escape(oc_strtolower($data['filter_name'])) . "'";
+				$sql .= " OR LOWER(p.`jan`) = '" . $this->db->escape(oc_strtolower($data['filter_name'])) . "'";
+				$sql .= " OR LOWER(p.`isbn`) = '" . $this->db->escape(oc_strtolower($data['filter_name'])) . "'";
+				$sql .= " OR LOWER(p.`mpn`) = '" . $this->db->escape(oc_strtolower($data['filter_name'])) . "'";
 			}
 
 			$sql .= ")";
@@ -130,7 +130,7 @@ class Product extends \Opencart\System\Engine\Model {
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 			if ($data['sort'] == 'pd.name' || $data['sort'] == 'p.model') {
-				$sql .= " ORDER BY LCASE(" . $data['sort'] . ")";
+				$sql .= " ORDER BY LOWER(" . $data['sort'] . ")";
 			} elseif ($data['sort'] == 'p.price') {
 				$sql .= " ORDER BY (CASE WHEN special IS NOT NULL THEN special WHEN discount IS NOT NULL THEN discount ELSE p.`price` END)";
 			} else {
@@ -141,9 +141,9 @@ class Product extends \Opencart\System\Engine\Model {
 		}
 
 		if (isset($data['order']) && ($data['order'] == 'DESC')) {
-			$sql .= " DESC, LCASE(pd.`name`) DESC";
+			$sql .= " DESC, LOWER(pd.`name`) DESC";
 		} else {
-			$sql .= " ASC, LCASE(pd.`name`) ASC";
+			$sql .= " ASC, LOWER(pd.`name`) ASC";
 		}
 
 		if (isset($data['start']) || isset($data['limit'])) {
@@ -185,7 +185,7 @@ class Product extends \Opencart\System\Engine\Model {
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 			if ($data['sort'] == 'pd.name' || $data['sort'] == 'p.model') {
-				$sql .= " ORDER BY LCASE(" . $data['sort'] . ")";
+				$sql .= " ORDER BY LOWER(" . $data['sort'] . ")";
 			} else {
 				$sql .= " ORDER BY " . $data['sort'];
 			}
@@ -194,9 +194,9 @@ class Product extends \Opencart\System\Engine\Model {
 		}
 
 		if (isset($data['order']) && ($data['order'] == 'DESC')) {
-			$sql .= " DESC, LCASE(pd.`name`) DESC";
+			$sql .= " DESC, LOWER(pd.`name`) DESC";
 		} else {
-			$sql .= " ASC, LCASE(pd.`name`) ASC";
+			$sql .= " ASC, LOWER(pd.`name`) ASC";
 		}
 
 		if (isset($data['start']) || isset($data['limit'])) {
@@ -436,13 +436,13 @@ class Product extends \Opencart\System\Engine\Model {
 			}
 
 			if (!empty($data['filter_name'])) {
-				$sql .= " OR LCASE(p.`model`) = '" . $this->db->escape(oc_strtolower($data['filter_name'])) . "'";
-				$sql .= " OR LCASE(p.`sku`) = '" . $this->db->escape(oc_strtolower($data['filter_name'])) . "'";
-				$sql .= " OR LCASE(p.`upc`) = '" . $this->db->escape(oc_strtolower($data['filter_name'])) . "'";
-				$sql .= " OR LCASE(p.`ean`) = '" . $this->db->escape(oc_strtolower($data['filter_name'])) . "'";
-				$sql .= " OR LCASE(p.`jan`) = '" . $this->db->escape(oc_strtolower($data['filter_name'])) . "'";
-				$sql .= " OR LCASE(p.`isbn`) = '" . $this->db->escape(oc_strtolower($data['filter_name'])) . "'";
-				$sql .= " OR LCASE(p.`mpn`) = '" . $this->db->escape(oc_strtolower($data['filter_name'])) . "'";
+				$sql .= " OR LOWER(p.`model`) = '" . $this->db->escape(oc_strtolower($data['filter_name'])) . "'";
+				$sql .= " OR LOWER(p.`sku`) = '" . $this->db->escape(oc_strtolower($data['filter_name'])) . "'";
+				$sql .= " OR LOWER(p.`upc`) = '" . $this->db->escape(oc_strtolower($data['filter_name'])) . "'";
+				$sql .= " OR LOWER(p.`ean`) = '" . $this->db->escape(oc_strtolower($data['filter_name'])) . "'";
+				$sql .= " OR LOWER(p.`jan`) = '" . $this->db->escape(oc_strtolower($data['filter_name'])) . "'";
+				$sql .= " OR LOWER(p.`isbn`) = '" . $this->db->escape(oc_strtolower($data['filter_name'])) . "'";
+				$sql .= " OR LOWER(p.`mpn`) = '" . $this->db->escape(oc_strtolower($data['filter_name'])) . "'";
 			}
 
 			$sql .= ")";

@@ -32,11 +32,11 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 	
 	public function editCode(string $email, string $code): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "customer` SET `code` = '" . $this->db->escape($code) . "' WHERE LCASE(`email`) = '" . $this->db->escape(oc_strtolower($email)) . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "customer` SET `code` = '" . $this->db->escape($code) . "' WHERE LOWER(`email`) = '" . $this->db->escape(oc_strtolower($email)) . "'");
 	}
 
 	public function editToken(string $email, string $token): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "customer` SET `token` = '" . $this->db->escape($token) . "' WHERE LCASE(`email`) = '" . $this->db->escape(oc_strtolower($email)) . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "customer` SET `token` = '" . $this->db->escape($token) . "' WHERE LOWER(`email`) = '" . $this->db->escape(oc_strtolower($email)) . "'");
 	}
 
 	public function editNewsletter(bool $newsletter): void {

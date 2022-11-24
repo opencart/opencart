@@ -292,7 +292,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
                                                         if ($next_subscriptions) {
                                                             foreach ($next_subscriptions as $next_subscription) {
-                                                                if (strtotime($next_subscription['date_next']) != strtotime($result['date_next'])) {
+                                                                if ($next_subscription['customer_id'] == $customer_info['customer_id'] && (int)$next_subscription['cycle'] >= 0 && strtotime($next_subscription['date_next']) != strtotime($result['date_next'])) {
                                                                     // Transactions
                                                                     $transactions = $this->model_account_subscription->getTransactions($next_subscription['customer_id']);
 
@@ -303,62 +303,60 @@ class Subscription extends \Opencart\System\Engine\Controller {
                                                                     $calc_subscription_period = ($next_subscription_period - $subscription_period);
                                                                     $next_subscription_cycle = round($calc_subscription_period / (60 * 60 * 24));
 
+                                                                    $frequencies = [
+                                                                        'day',
+                                                                        'week',
+                                                                        'semi_month',
+                                                                        'month',
+                                                                        'year'
+                                                                    ];
+
                                                                     // Validate the latest subscription values with the ones edited
                                                                     // by promotional extensions
-                                                                    if ($transactions && strtotime($next_subscription['date_next']) == $next_date_max && $next_subscription_cycle >= 0 && $next_subscription['subscription_id'] != $result['subscription_id'] && $next_subscription['order_id'] != $result['order_id'] && $next_subscription['description'] != $description && $next_subscription['order_product_id'] != $result['order_product_id'] && $next_subscription['customer_id'] == $result['customer_id'] && $next_subscription['duration'] == $result['duration'] && $result['duration'] == $subscription['duration'] && $subscription['duration'] == 1) {
-                                                                        $frequencies = [
-                                                                            'day',
-                                                                            'week',
-                                                                            'semi_month',
-                                                                            'month',
-                                                                            'year'
-                                                                        ];
-
+                                                                    if ($transactions && strtotime($next_subscription['date_next']) == $next_date_max && $next_subscription_cycle >= 0 && $next_subscription['subscription_id'] != $result['subscription_id'] && $next_subscription['order_id'] != $result['order_id'] && $next_subscription['description'] != $description && $next_subscription['order_product_id'] != $result['order_product_id'] && $next_subscription['customer_id'] == $result['customer_id'] && $next_subscription['duration'] == $result['duration'] && $result['duration'] == $subscription['duration'] && $subscription['duration'] == 1 && in_array($next_subscription['frequency'], $frequencies)) {
                                                                         // We need to validate frequencies in compliance of the admin subscription plans
                                                                         // as with the use of the APIs
-                                                                        if ($next_subscription['customer_id'] == $customer_info['customer_id'] && (int)$next_subscription['cycle'] >= 0 && in_array($next_subscription['frequency'], $frequencies)) {
-                                                                            if ($next_subscription['frequency'] == 'semi_month') {
-                                                                                $period = strtotime("2 weeks");
-                                                                            } else {
-                                                                                $period = strtotime($next_subscription['cycle'] . ' ' . $next_subscription['frequency']);
-                                                                            }
+                                                                        if ($next_subscription['frequency'] == 'semi_month') {
+                                                                            $period = strtotime("2 weeks");
+                                                                        } else {
+                                                                            $period = strtotime($next_subscription['cycle'] . ' ' . $next_subscription['frequency']);
+                                                                        }
 
-                                                                            // Calculates the remaining days between the subscription
-                                                                            // promotional period and the date added period
-                                                                            $period = ($subscription_period - $period);
+                                                                        // Calculates the remaining days between the subscription
+                                                                        // promotional period and the date added period
+                                                                        $period = ($subscription_period - $period);
 
-                                                                            // Calculate remaining period of each features
-                                                                            $cycle = round($period / (60 * 60 * 24));
+                                                                        // Calculate remaining period of each features
+                                                                        $cycle = round($period / (60 * 60 * 24));
 
-                                                                            // Promotional subscription plans for full membership must be identical
-                                                                            // until the time period has exceeded. Therefore, we need to match the
-                                                                            // cycle period with the current time period; including pro rata
-                                                                            if ($next_subscription['status'] && $subscription['status'] && !$next_subscription['trial_status'] && $cycle >= 0 && $next_subscription['subscription_plan_id'] == $result['subscription_plan_id'] && $result['subscription_plan_id'] == $subscription['subscription_plan_id']) {
-                                                                                // Order Products
-                                                                                $order_product = $this->model_account_order->getProduct($next_subscription['order_id'], $next_subscription['order_product_id']);
+                                                                        // Promotional subscription plans for full membership must be identical
+                                                                        // until the time period has exceeded. Therefore, we need to match the
+                                                                        // cycle period with the current time period; including pro rata
+                                                                        if ($next_subscription['status'] && $subscription['status'] && !$next_subscription['trial_status'] && $cycle >= 0 && $next_subscription['subscription_plan_id'] == $result['subscription_plan_id'] && $result['subscription_plan_id'] == $subscription['subscription_plan_id']) {
+                                                                            // Order Products
+                                                                            $order_product = $this->model_account_order->getProduct($next_subscription['order_id'], $next_subscription['order_product_id']);
 
-                                                                                if ($order_product) {
-                                                                                    $order_info = $this->model_account_order->getOrder($next_subscription['order_id']);
+                                                                            if ($order_product) {
+                                                                                $order_info = $this->model_account_order->getOrder($next_subscription['order_id']);
 
-                                                                                    if ($order_info) {
-                                                                                        $date_added = strtotime($order_info['date_added']);
-                                                                                        $date_added = ($next_subscription_period - $date_added);
-                                                                                        $next_date_cycle = round($date_added / (60 * 60 * 24));
+                                                                                if ($order_info) {
+                                                                                    $date_added = strtotime($order_info['date_added']);
+                                                                                    $date_added = ($next_subscription_period - $date_added);
+                                                                                    $next_date_cycle = round($date_added / (60 * 60 * 24));
 
-                                                                                        // If the order date cycle is greater than the next
-                                                                                        // cycle time period. Therefore, the order status ID
-                                                                                        // must be set to pending from the extension since the
-                                                                                        // promotion will occur on the next billing cycle
-                                                                                        if ($next_date_cycle >= 0 && $order_info['order_status_id'] == $this->config->get('config_subscription_pending_status_id')) {
-                                                                                            // Products
-                                                                                            $this->load->model('catalog/product');
+                                                                                    // If the order date cycle is greater than the next
+                                                                                    // cycle time period. Therefore, the order status ID
+                                                                                    // must be set to pending from the extension since the
+                                                                                    // promotion will occur on the next billing cycle
+                                                                                    if ($next_date_cycle >= 0 && $order_info['order_status_id'] == $this->config->get('config_subscription_pending_status_id')) {
+                                                                                        // Products
+                                                                                        $this->load->model('catalog/product');
 
-                                                                                            $product_subscription_info = $this->model_catalog_product->getSubscription($order_product['product_id'], $next_subscription['subscription_plan_id']);
+                                                                                        $product_subscription_info = $this->model_catalog_product->getSubscription($order_product['product_id'], $next_subscription['subscription_plan_id']);
 
-                                                                                            if ($product_subscription_info && (int)$product_subscription_info['cycle'] >= 0 && $product_subscription_info['subscription_plan_id'] == $next_subscription['subscription_plan_id'] && $product_subscription_info['duration'] == $next_subscription['duration']) {
-                                                                                                // Add Transaction
-                                                                                                $this->model_account_subscription->addTransaction($subscription_id, $subscription['order_id'], $this->language->get('text_promotion'), $next_subscription['amount'], 0, $order_info['payment_method'], $order_info['payment_code']);
-                                                                                            }
+                                                                                        if ($product_subscription_info && (int)$product_subscription_info['cycle'] >= 0 && $product_subscription_info['subscription_plan_id'] == $next_subscription['subscription_plan_id'] && $product_subscription_info['duration'] == $next_subscription['duration']) {
+                                                                                            // Add Transaction
+                                                                                            $this->model_account_subscription->addTransaction($subscription_id, $subscription['order_id'], $this->language->get('text_promotion'), $next_subscription['amount'], 0, $order_info['payment_method'], $order_info['payment_code']);
                                                                                         }
                                                                                     }
                                                                                 }

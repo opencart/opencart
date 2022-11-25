@@ -334,9 +334,9 @@ class Subscription extends \Opencart\System\Engine\Controller {
                                                                         // cycle period with the current time period; including pro rata
                                                                         if ($next_subscription['status'] && $subscription['status'] && !$next_subscription['trial_status'] && $cycle >= 0 && $next_subscription['subscription_plan_id'] != $result['subscription_plan_id']) {
                                                                             // Order Products
-                                                                            $order_product = $this->model_account_order->getProduct($next_subscription['order_id'], $next_subscription['order_product_id']);
+                                                                            $next_order_product = $this->model_account_order->getProduct($next_subscription['order_id'], $next_subscription['order_product_id']);
 
-                                                                            if ($order_product) {
+                                                                            if ($next_order_product) {
                                                                                 $next_order_info = $this->model_account_order->getOrder($next_subscription['order_id']);
 
                                                                                 if ($next_order_info) {
@@ -352,7 +352,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
                                                                                         // Products
                                                                                         $this->load->model('catalog/product');
 
-                                                                                        $product_subscription_info = $this->model_catalog_product->getSubscription($order_product['product_id'], $next_subscription['subscription_plan_id']);
+                                                                                        $product_subscription_info = $this->model_catalog_product->getSubscription($next_order_product['product_id'], $next_subscription['subscription_plan_id']);
 
                                                                                         if ($product_subscription_info && (int)$product_subscription_info['cycle'] >= 0 && $product_subscription_info['subscription_plan_id'] == $next_subscription['subscription_plan_id'] && $product_subscription_info['duration'] == $next_subscription['duration']) {
                                                                                             // Add Transaction

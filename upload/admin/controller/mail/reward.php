@@ -55,8 +55,8 @@ class Reward extends \Opencart\System\Engine\Controller {
 				$language_code = $this->config->get('config_language');
 			}
 
-			$this->language->load($language_code, 'mail', $language_code);
-			$this->language->load('mail/reward', 'mail', $language_code);
+			$this->load->language($language_code, 'mail', $language_code);
+			$this->load->language('mail/reward', 'mail', $language_code);
 
 			$subject = sprintf($this->language->get('mail_text_subject'), $store_name);
 

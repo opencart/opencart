@@ -139,6 +139,8 @@ $('#extension').on('click', '.btn-success, .btn-warning', function (e) {
                     $('#progress-bar').addClass('bg-success').css('width', '100%');
                     $('#progress-text').html('<div class="text-success">' + json['success'] + '</div>');
 
+                    $(element).prop('disabled', false).removeClass('loading');
+
                     $('#extension').load('index.php?route=marketplace/installer.list&user_token={{ user_token }}');
                 }
 
@@ -146,12 +148,12 @@ $('#extension').on('click', '.btn-success, .btn-warning', function (e) {
                     next = json['next'];
 
                     chain.attach(installer);
-                } else {
-                  $(element).prop('disabled', false).removeClass('loading');
                 }
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+
+                $(element).prop('disabled', false).removeClass('loading');
             }
         });
     };

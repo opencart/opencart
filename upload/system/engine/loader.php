@@ -137,7 +137,7 @@ class Loader {
 						// https://www.php.net/manual/en/functions.arguments.php#functions.variable-arg-list
 						// https://wiki.php.net/rfc/variadics
 						$proxy->{$method} = function (mixed &...$args) use ($route, $model, $method): mixed {
-							$route = $route .'/' . $method;
+							$route = $route . '/' . $method;
 
 							$output = '';
 
@@ -244,7 +244,7 @@ class Loader {
 		}
 
 		// Trigger the post events
-		$result = $this->event->trigger('language/' . $route . '/after', [&$route, &$prefix, &$code, &$data]);
+		$result = $this->event->trigger('language/' . $route . '/after', [&$route, &$prefix, &$code, &$output]);
 
 		if ($result) {
 			$output = $result;

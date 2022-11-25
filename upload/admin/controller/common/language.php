@@ -47,7 +47,7 @@ class Language extends \Opencart\System\Engine\Controller {
 	}
 
 	public function save(): void {
-		$this->language->load('common/language');
+		$this->load->language('common/language');
 
 		$json = [];
 

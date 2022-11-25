@@ -8,7 +8,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 
 		if ($voucher_info) {
 			// If voucher does not belong to an order
-			$this->language->load('mail/voucher');
+			$this->load->language('mail/voucher');
 
 			if ($voucher_info['order_id']) {
 				$order_id = $voucher_info['order_id'];
@@ -30,8 +30,8 @@ class Voucher extends \Opencart\System\Engine\Controller {
 					$language_code = $this->config->get('config_language');
 				}
 
-				$this->language->load($language_code, 'mail', $language_code);
-				$this->language->load('mail/voucher', 'mail', $language_code);
+				$this->load->language($language_code, 'mail', $language_code);
+				$this->load->language('mail/voucher', 'mail', $language_code);
 
 				$store_name = html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8');
 

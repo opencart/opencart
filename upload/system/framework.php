@@ -174,7 +174,7 @@ $template->addPath(DIR_TEMPLATE);
 $language = new \Opencart\System\Library\Language($config->get('language_code'));
 $registry->set('language', $language);
 $language->addPath(DIR_LANGUAGE);
-$language->load('default');
+$loader->language('default');
 
 // Url
 $registry->set('url', new \Opencart\System\Library\Url($config->get('site_url')));

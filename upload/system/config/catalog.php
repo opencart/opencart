@@ -19,8 +19,8 @@ $_['session_engine']     = 'db'; // db or file
 $_['action_pre_action']  = [
 	'startup/setting',
 	'startup/seo_url',
-	'startup/language',
 	'startup/session',
+	'startup/language',
 	'startup/customer',
 	'startup/currency',
 	'startup/tax',
@@ -50,6 +50,7 @@ $_['action_event']      = [
 		998 => 'event/language'
 	],
 	'language/*/after' => [
-		0 => 'event/translation'
+		0 => 'startup/language.after',
+		1 => 'event/translation'
 	]
 ];

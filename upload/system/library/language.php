@@ -14,7 +14,6 @@ namespace Opencart\System\Library;
 class Language {
 	protected string $code;
 	protected string $directory;
-	protected string $default = 'en-gb';
 	protected array $path = [];
 	protected array $data = [];
 	protected array $cache = [];

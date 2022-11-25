@@ -348,7 +348,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
                                                                                     // cycle time period. Therefore, the order status ID
                                                                                     // must be set to pending from the extension since the
                                                                                     // promotion will occur on the next billing cycle
-																					if ($next_date_cycle >= 0 && $next_order_info['order_status_id'] == $this->config->get('config_subscription_pending_status_id')) {
+                                                                                    if ($next_date_cycle >= 0 && $next_order_info['order_status_id'] == $this->config->get('config_subscription_pending_status_id')) {
                                                                                         // Products
                                                                                         $this->load->model('catalog/product');
 

@@ -127,6 +127,9 @@ $('#extension').on('click', '.btn-success, .btn-warning', function (e) {
             beforeSend: function () {
                 $(element).prop('disabled', true).addClass('loading');
             },
+            complete: function () {
+                $ $(element).prop('disabled', false).removeClass('loading');
+            },
             success: function (json) {
                 $('.alert-dismissible').remove();
 
@@ -138,8 +141,6 @@ $('#extension').on('click', '.btn-success, .btn-warning', function (e) {
                 if (json['success']) {
                     $('#progress-bar').addClass('bg-success').css('width', '100%');
                     $('#progress-text').html('<div class="text-success">' + json['success'] + '</div>');
-
-                    $(element).prop('disabled', false).removeClass('loading');
 
                     $('#extension').load('index.php?route=marketplace/installer.list&user_token={{ user_token }}');
                 }

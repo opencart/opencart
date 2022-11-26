@@ -1,6 +1,7 @@
 <?php
 namespace Opencart\Catalog\Controller\Mail;
 class Subscription extends \Opencart\System\Engine\Controller {
+    // catalog/model/checkout/subscription/addSubscription/after
     public function index(string &$route, array &$args, mixed &$output): void {
         if (isset($args[0])) {
             $subscription_id = $args[0];
@@ -402,6 +403,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
         }
     }
 
+    // catalog/model/checkout/order/editOrder/after
     public function cancel(string &$route, array &$args, mixed &$output): void {
         if (isset($args[0])) {
             $subscription_id = $args[0];
@@ -552,6 +554,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
                                             // Cancel Status
                                             $this->model_account_subscription->editStatus($subscription_id, 0);
+                                            $this->model_account_subscription->addTransaction($subscription_id, $subscription['order_id'], $subscription_info['transaction_id'], $this->language->get('text_canceled'), $subscription_info['amount'], $subscription_info['type'], $order_info['payment_method'], $order_info['payment_code']);
 
                                             // Mail
                                             if ($this->config->get('config_mail_engine')) {

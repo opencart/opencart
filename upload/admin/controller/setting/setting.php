@@ -389,7 +389,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 
 		$data['captcha_pages'][] = [
 			'text'  => $this->language->get('text_return'),
-			'value' => 'returns'
+			'value' => 'return'
 		];
 
 		$data['captcha_pages'][] = [

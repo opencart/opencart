@@ -62,7 +62,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
         if ($subscriptions) {
             if (isset($this->session->data['customer'])) {
                 $customer_id = $this->session->data['customer']['customer_id'];
-            } elseif ($this->customer->getId()) {
+            } elseif ($this->customer->isLogged()) {
                 $customer_id = $this->customer->getId();
             }
 

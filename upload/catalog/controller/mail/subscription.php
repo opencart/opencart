@@ -54,9 +54,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
         $filter_data = [
             'filter_subscription_id'        => $subscription_id,
             'filter_date_next'              => date('Y-m-d H:i:s'),
-            'filter_subscription_status_id' => $this->config->get('config_subscription_active_status_id'),
-            'start'                         => 0,
-            'limit'                         => 1
+            'filter_subscription_status_id' => $this->config->get('config_subscription_active_status_id')
         ];
 
         $subscriptions = $this->model_account_subscription->getSubscriptions($filter_data);

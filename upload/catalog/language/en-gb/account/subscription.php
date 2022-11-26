@@ -27,7 +27,7 @@ $_['text_transaction_payment']             = 'Payment';
 $_['text_transaction_outstanding_payment'] = 'Outstanding payment';
 $_['text_transaction_skipped']             = 'Payment skipped';
 $_['text_transaction_failed']              = 'Payment failed';
-$_['text_transaction_cancelled']           = 'Cancelled';
+$_['text_transaction_canceled']            = 'Canceled';
 $_['text_transaction_suspended']           = 'Suspended';
 $_['text_transaction_suspended_failed']    = 'Suspended from failed payment';
 $_['text_transaction_outstanding_failed']  = 'Outstanding payment failed';
@@ -47,5 +47,5 @@ $_['column_amount']                        = 'Amount';
 $_['button_return']                        = 'Return';
 
 // Error
-$_['error_not_cancelled']                  = 'Error: %s';
+$_['error_not_canceled']                   = 'Error: %s';
 $_['error_not_found']                      = 'Could not cancel subscription';

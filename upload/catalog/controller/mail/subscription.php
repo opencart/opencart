@@ -67,7 +67,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
             foreach ($subscriptions as $result) {
                 $customer_info = $this->model_account_customer->getCustomer($result['customer_id']);
 
-                if ($customer_info && $customer_info['status'] && strtotime($result['date_added']) == strtotime($subscription['date_added']) && strtotime($result['date_next']) == strtotime($subscription['date_next']) && $customer_info['customer_id'] == $subscription['customer_id'] && $subscription['customer_id'] == $this->customer->getId() && $result['order_id'] == $subscription['order_id'] && $result['subscription_plan_id'] == $subscription['subscription_plan_id']) {
+                if ($customer_info && $customer_info['status'] && strtotime($result['date_added']) == strtotime($subscription['date_added']) && strtotime($result['date_next']) == strtotime($subscription['date_next']) && $customer_info['customer_id'] == $subscription['customer_id'] && $result['order_id'] == $subscription['order_id'] && $result['subscription_plan_id'] == $subscription['subscription_plan_id']) {
                     // Only match the latest order ID of the same customer ID
                     // since new subscriptions cannot be re-added with the same
                     // order ID; only as a new order ID added by an extension

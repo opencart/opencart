@@ -854,6 +854,7 @@ INSERT INTO `oc_event` (`code`, `trigger`, `action`, `status`) VALUES
 ('mail_voucher', 'catalog/model/checkout/order/addHistory/after', 'mail/voucher', 1),
 ('mail_review', 'catalog/model/catalog/review/addReview/after', 'mail/review', 1),
 ('mail_subscription', 'catalog/model/checkout/subscription/addSubscription/after', 'mail/subscription', 1),
+('mail_subscription_cancel', 'catalog/model/checkout/order/editOrder/after', 'mail/subscription/cancel', 1),
 ('statistics_review_add', 'catalog/model/catalog/review/addReview/after', 'event/statistics.addReview', 1),
 ('statistics_return_add', 'catalog/model/account/returns/addReturn/after', 'event/statistics.addReturn', 1),
 ('statistics_return_delete', 'admin/model/sale/returns/deleteReturn/after', 'event/statistics.deleteReturn', 1),

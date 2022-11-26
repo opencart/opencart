@@ -173,9 +173,9 @@ class Subscription extends \Opencart\System\Engine\Controller {
                                             $subscription_status_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "subscription_status` WHERE `subscription_status_id` = '" . (int)$result['subscription_status_id'] . "' AND `language_id` = '" . (int)$order_info['language_id'] . "'");
 
                                             if ($subscription_status_query->num_rows) {
-                                                $data['order_status'] = $subscription_status_query->row['name'];
+                                                $data['subscription_status'] = $subscription_status_query->row['name'];
                                             } else {
-                                                $data['order_status'] = '';
+                                                $data['subscription_status'] = '';
                                             }
 
                                             // Languages
@@ -403,8 +403,8 @@ class Subscription extends \Opencart\System\Engine\Controller {
             }
         }
     }
-	
-	public function cancel(string &$route, array &$args, mixed &$output): void {
+
+    public function cancel(string &$route, array &$args, mixed &$output): void {
         if (isset($args[0])) {
             $subscription_id = $args[0];
         } else {
@@ -510,53 +510,78 @@ class Subscription extends \Opencart\System\Engine\Controller {
                                     $subscription_status_id = $this->{'model_extension_payment_' . $payment_method['code']}->cancel($subscription_info['subscription_id']);
 
                                     if ($subscription_status_id == $this->config->get('config_subscription_canceled_status_id')) {
-                                        // Since we send an email based on subscription statuses
-                                        // and not based on promotional products, only subscribed
-                                        // customers can receive the emails; either by automation
-                                        // or on-demand.
-                                        $this->load->language('mail/subscription_alert');
+                                        $subscription_info = $this->model_account_subscription->getSubscription($subscription_id);
 
-                                        // HTML Mail
-                                        $data['text_received'] = $this->language->get('text_received');
-                                        $data['text_orders_id'] = $this->language->get('text_orders_id');
-                                        $data['text_subscription_id'] = $this->language->get('text_subscription_id');
-                                        $data['text_date_added'] = $this->language->get('text_date_added');
-                                        $data['text_subscription_status'] = $this->language->get('text_subscription_status');
-                                        $data['text_comment'] = $this->language->get('text_comment');
+                                        if ($subscription_info) {
+                                            // Since we send an email based on subscription statuses
+                                            // and not based on promotional products, only subscribed
+                                            // customers can receive the emails; either by automation
+                                            // or on-demand.
+                                            $this->load->language('mail/subscription_alert');
 
-                                        $data['order_id'] = $order_info['order_id'];
-                                        $data['subscription_id'] = $subscription_id;
-                                        $data['date_added'] = date($this->language->get('date_format_short'), strtotime($subscription_info['date_added']));
+                                            // HTML Mail
+                                            $data['text_received'] = $this->language->get('text_received');
+                                            $data['text_orders_id'] = $this->language->get('text_orders_id');
+                                            $data['text_subscription_id'] = $this->language->get('text_subscription_id');
+                                            $data['text_date_added'] = $this->language->get('text_date_added');
+                                            $data['text_subscription_status'] = $this->language->get('text_subscription_status');
+                                            $data['text_comment'] = $this->language->get('text_comment');
 
-                                        // Cancel Status
-                                        $this->model_account_subscription->editStatus($subscription_id, 0);
+                                            $data['order_id'] = $order_info['order_id'];
+                                            $data['subscription_id'] = $subscription_id;
 
-                                        // Mail
-                                        if ($this->config->get('config_mail_engine')) {
-                                            $mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'));
-                                            $mail->parameter = $this->config->get('config_mail_parameter');
-                                            $mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
-                                            $mail->smtp_username = $this->config->get('config_mail_smtp_username');
-                                            $mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
-                                            $mail->smtp_port = $this->config->get('config_mail_smtp_port');
-                                            $mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
+                                            // Languages
+                                            $this->load->model('localisation/language');
 
-                                            $mail->setTo($this->config->get('config_email'));
-                                            $mail->setFrom($this->config->get('config_email'));
-                                            $mail->setSender(html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'));
-                                            $mail->setSubject(html_entity_decode(sprintf($this->language->get('text_subject'), $this->config->get('config_name'), $order_info['order_id']), ENT_QUOTES, 'UTF-8'));
-                                            $mail->setText($this->load->view('mail/subscription_alert', $data));
-                                            $mail->send();
+                                            $language_info = $this->model_localisation_language->getLanguageByCode($this->config->get('config_language'));
 
-                                            // Send to additional alert emails
-                                            $emails = explode(',', $this->config->get('config_mail_alert_email'));
+                                            // Subscription Status
+                                            $subscription_status_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "subscription_status` WHERE `subscription_status_id` = '" . (int)$subscription_info['subscription_status_id'] . "' AND `language_id` = '" . (int)$language_info['language_id'] . "'");
 
-                                            foreach ($emails as $email) {
-                                                $email = trim($email);
+                                            if ($subscription_status_query->num_rows) {
+                                                $data['subscription_status'] = $subscription_status_query->row['name'];
+                                            } else {
+                                                $data['subscription_status'] = '';
+                                            }
 
-                                                if ($email && filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                                                    $mail->setTo($email);
-                                                    $mail->send();
+                                            if ($comment) {
+                                                $data['comment'] = $comment;
+                                            } else {
+                                                $data['comment'] = '';
+                                            }
+
+                                            $data['date_added'] = date($this->language->get('date_format_short'), strtotime($subscription_info['date_added']));
+
+                                            // Cancel Status
+                                            $this->model_account_subscription->editStatus($subscription_id, 0);
+
+                                            // Mail
+                                            if ($this->config->get('config_mail_engine')) {
+                                                $mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'));
+                                                $mail->parameter = $this->config->get('config_mail_parameter');
+                                                $mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
+                                                $mail->smtp_username = $this->config->get('config_mail_smtp_username');
+                                                $mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
+                                                $mail->smtp_port = $this->config->get('config_mail_smtp_port');
+                                                $mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
+
+                                                $mail->setTo($this->config->get('config_email'));
+                                                $mail->setFrom($this->config->get('config_email'));
+                                                $mail->setSender(html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'));
+                                                $mail->setSubject(html_entity_decode(sprintf($this->language->get('text_subject'), $this->config->get('config_name'), $order_info['order_id']), ENT_QUOTES, 'UTF-8'));
+                                                $mail->setText($this->load->view('mail/subscription_alert', $data));
+                                                $mail->send();
+
+                                                // Send to additional alert emails
+                                                $emails = explode(',', $this->config->get('config_mail_alert_email'));
+
+                                                foreach ($emails as $email) {
+                                                    $email = trim($email);
+
+                                                    if ($email && filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                                                        $mail->setTo($email);
+                                                        $mail->send();
+                                                    }
                                                 }
                                             }
                                         }

@@ -128,7 +128,7 @@ $('#extension').on('click', '.btn-success, .btn-warning', function (e) {
                 $(element).prop('disabled', true).addClass('loading');
             },
             complete: function () {
-                $ $(element).prop('disabled', false).removeClass('loading');
+                $(element).prop('disabled', false).removeClass('loading');
             },
             success: function (json) {
                 $('.alert-dismissible').remove();

@@ -47,5 +47,5 @@ $_['column_amount']                        = 'Amount';
 $_['button_return']                        = 'Return';
 
 // Error
-$_['error_not_canceled']                   = 'Error: %s';
+$_['error_not_cancelled']                  = 'Error: %s';
 $_['error_not_found']                      = 'Could not cancel subscription';

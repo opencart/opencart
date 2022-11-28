@@ -21,8 +21,6 @@ class Extension extends \Opencart\System\Engine\Controller {
 			// Language directory
 			$this->language->addPath('extension/' . $result['code'], DIR_EXTENSION . $result['code'] . '/admin/language/');
 
-			$this->load->language('default');
-
 			// Config directory
 			$this->config->addPath('extension/' . $result['code'], DIR_EXTENSION . $result['code'] . '/system/config/');
 		}

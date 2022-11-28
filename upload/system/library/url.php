@@ -20,7 +20,6 @@ class Url {
 	 * Constructor.
 	 *
 	 * @param 	string 	$url
-	 * @param 	string 	$ssl 	Deprecated
 	 */
 	public function __construct(string $url) {
 		$this->url = $url;

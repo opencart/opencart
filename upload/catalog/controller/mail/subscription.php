@@ -369,6 +369,8 @@ class Subscription extends \Opencart\System\Engine\Controller {
                                                                 }
                                                             }
                                                         }
+                                                    } else {
+                                                        $this->model_checkout_subscription->addHistory($order_info['order_id'], $subscription_status_id, $this->language->get('mail_error_subscription_status'));
                                                     }
                                                 }
                                             }

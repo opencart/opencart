@@ -355,11 +355,15 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
                                                                                         if ($product_subscription_info && (int)$product_subscription_info['cycle'] >= 0 && $product_subscription_info['subscription_plan_id'] == $next_subscription['subscription_plan_id'] && $product_subscription_info['duration'] == $next_subscription['duration']) {
                                                                                             // Add Transaction
-                                                                                            $this->model_account_subscription->addTransaction($subscription_id, $subscription['order_id'], $this->language->get('text_promotion'), $next_subscription['amount'], $next_subscription['type'], $next_order_info['payment_method'], $next_order_info['payment_code']);
+                                                                                            $this->model_account_subscription->addTransaction($subscription_id, $subscription['order_id'], $this->language->get('mail_text_promotion'), $next_subscription['amount'], $next_subscription['type'], $next_order_info['payment_method'], $next_order_info['payment_code']);
                                                                                         }
+                                                                                    } else {
+                                                                                        $this->model_checkout_subscription->addHistory($next_subscription['order_id'], $subscription_status_id, $this->language->get('mail_error_next_order'));
                                                                                     }
                                                                                 }
                                                                             }
+                                                                        } else {
+                                                                            $this->model_checkout_subscription->addHistory($next_subscription['order_id'], $subscription_status_id, $this->language->get('mail_error_next_subscription'));
                                                                         }
                                                                     }
                                                                 }

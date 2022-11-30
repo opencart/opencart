@@ -355,7 +355,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
                                                                                         if ($product_subscription_info && (int)$product_subscription_info['cycle'] >= 0 && $product_subscription_info['subscription_plan_id'] == $next_subscription['subscription_plan_id'] && $product_subscription_info['duration'] == $next_subscription['duration']) {
                                                                                             // Add Transaction
-                                                                                            $this->model_account_subscription->addTransaction($subscription_id, $subscription['order_id'], $this->language->get('text_promotion'), $next_subscription['amount'], 0, $next_order_info['payment_method'], $next_order_info['payment_code']);
+                                                                                            $this->model_account_subscription->addTransaction($subscription_id, $subscription['order_id'], $this->language->get('text_promotion'), $next_subscription['amount'], $next_subscription['type'], $next_order_info['payment_method'], $next_order_info['payment_code']);
                                                                                         }
                                                                                     }
                                                                                 }
@@ -554,7 +554,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
                                             // Cancel Status
                                             $this->model_account_subscription->editStatus($subscription_id, 0);
-                                            $this->model_account_subscription->addTransaction($subscription_id, $subscription['order_id'], $subscription_info['transaction_id'], $this->language->get('text_canceled'), $subscription_info['amount'], $subscription_info['type'], $order_info['payment_method'], $order_info['payment_code']);
+                                            $this->model_account_subscription->addTransaction($subscription_id, $subscription['order_id'], $subscription_info['transaction_id'], $this->language->get('text_cancelled'), $subscription_info['amount'], $subscription_info['type'], $order_info['payment_method'], $order_info['payment_code']);
 
                                             // Mail
                                             if ($this->config->get('config_mail_engine')) {

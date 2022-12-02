@@ -37,3 +37,4 @@ $_['text_footer']                = 'Please reply to this e-mail if you have any 
 $_['error_next_order']           = 'A promotional feature was found but the cycle and frequency settings could not be matched with the order date added period!';
 $_['error_next_subscription']    = 'A promotional feature was found but the subscription cycle period may have already expired!';
 $_['error_subscription_status']  = 'There was an error with the subscription status!';
+$_['error_subscription_plan']    = 'The product subscription plan does not match with the next subscription plan!';

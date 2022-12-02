@@ -1,6 +1,6 @@
 <?php
 namespace Mail;
-class Smtp {
+class Smtp extends \stdClass {
 	public $smtp_hostname;
 	public $smtp_username;
 	public $smtp_password;

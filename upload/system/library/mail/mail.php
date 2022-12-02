@@ -1,6 +1,6 @@
 <?php
 namespace Mail;
-class Mail {
+class Mail extends \stdClass {
 	public function send() {
 		if (is_array($this->to)) {
 			$to = implode(',', $this->to);

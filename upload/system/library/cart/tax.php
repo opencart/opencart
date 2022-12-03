@@ -2,6 +2,8 @@
 namespace Opencart\System\Library\Cart;
 class Tax {
 	private array $tax_rates = [];
+	private \Opencart\System\Engine\Config $config;
+	private \Opencart\System\Library\DB $db;
 
 	/**
 	 * Constructor
@@ -182,7 +184,7 @@ class Tax {
 
 		return $tax_rate_data;
 	}
-	
+
 	/**
 	 * Clear
 	 *

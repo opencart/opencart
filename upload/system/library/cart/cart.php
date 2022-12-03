@@ -2,6 +2,12 @@
 namespace Opencart\System\Library\Cart;
 class Cart {
 	private array $data = [];
+	private \Opencart\System\Engine\Config $config;
+	private \Opencart\System\Library\Cart\Customer $customer;
+	private \Opencart\System\Library\Session $session;
+	private \Opencart\System\Library\DB $db;
+	private \Opencart\System\Library\Cart\Tax $tax;
+	private \Opencart\System\Library\Cart\Weight $weight;
 
 	/**
 	 * Constructor

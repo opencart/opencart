@@ -9,6 +9,9 @@ CREATE TABLE IF NOT EXISTS `session` (
 */
 namespace Opencart\System\Library\Session;
 class DB {
+	protected \Opencart\System\Library\DB $db;
+	protected \Opencart\System\Engine\Config $config;
+
 	/**
 	 * Constructor
 	 *
@@ -35,7 +38,7 @@ class DB {
 			return [];
 		}
 	}
-	
+
 	/**
 	 * Write
 	 *

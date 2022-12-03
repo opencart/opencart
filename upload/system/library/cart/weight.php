@@ -2,6 +2,8 @@
 namespace Opencart\System\Library\Cart;
 class Weight {
 	private array $weights = [];
+	private \Opencart\System\Engine\Config $config;
+	private \Opencart\System\Library\DB $db;
 
 	/**
 	 * Constructor
@@ -52,7 +54,7 @@ class Weight {
 
 		return $value * ($to / $from);
 	}
-	
+
 	/**
 	 * Format
 	 *

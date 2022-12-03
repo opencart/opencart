@@ -1,6 +1,8 @@
 <?php
 namespace Opencart\System\Library\Session;
 class File {
+	private \Opencart\System\Engine\Config $config;
+
 	/**
 	 * Constructor
 	 *
@@ -55,7 +57,7 @@ class File {
 			unlink($file);
 		}
 	}
-	
+
 	/**
 	 * GC
 	 *

@@ -1,6 +1,10 @@
 <?php
 namespace Opencart\System\Library\Session;
 class Redis {
+	private \Opencart\System\Engine\Config $config;
+	private \Redis $redis;
+	private string $prefix;
+
 	/**
 	 * Construct
 	 *
@@ -47,7 +51,7 @@ class Redis {
 
 		return true;
 	}
-	
+
 	/**
 	 * Destroy
 	 *

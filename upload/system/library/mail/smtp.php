@@ -193,7 +193,9 @@ class Smtp extends \stdClass {
 			$lines = explode("\n", $message);
 
 			foreach ($lines as $line) {
-				$results = str_split($line, $length);
+				// $results = str_split($line, $length);
+				// see https://php.watch/versions/8.2/str_split-empty-string-empty-array
+				$results = ($line === '') ? [''] : str_split($line, $length);
 
 				foreach ($results as $result) {
 					if (substr(PHP_OS, 0, 3) != 'WIN') {

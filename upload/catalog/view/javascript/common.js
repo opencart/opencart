@@ -445,7 +445,7 @@ var chain = new Chain();
 (function ($) {
     $.fn.autocomplete = function (option) {
         return this.each(function () {
-            var $this = $(this);
+            var element = this;
             var $dropdown = $('#' + $this.attr('list'));
 
             this.timer = null;
@@ -454,20 +454,23 @@ var chain = new Chain();
             $.extend(this, option);
 
             // Focus
-            $this.on('focus', function () {
+            $(element).on('focus', function () {
                 this.request();
             });
 
-            // Keydown
-            $this.on('input', function (e) {
+            // Input
+            $(element).on('input', function (e) {
                 this.request();
+            });
 
-                var value = $this.val();
+            // Complete
+            this.complete = function () {
+                var value = $(element).val();
 
                 if (value && this.items[value]) {
                     this.select(this.items[value]);
                 }
-            });
+            }
 
             // Request
             this.request = function () {
@@ -475,6 +478,8 @@ var chain = new Chain();
 
                 this.timer = setTimeout(function (object) {
                     object.source($(object).val(), $.proxy(object.response, object));
+
+                    jqxhr.done($.proxy(object.complete, object));
                 }, 50, this);
             }
 

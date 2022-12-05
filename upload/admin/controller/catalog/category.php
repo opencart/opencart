@@ -487,7 +487,7 @@ class Category extends \Opencart\System\Engine\Controller {
 			foreach ($results as $result) {
 				$json[] = [
 					'category_id' => $result['category_id'],
-					'name'        => strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8'))
+					'name'        => $result['name']
 				];
 			}
 		}

@@ -74,7 +74,7 @@
               <div class="row mb-3">
                 <label for="input-parent" class="col-sm-2 col-form-label">{{ entry_parent }}</label>
                 <div class="col-sm-10">
-                  <input type="text" name="path" value="{{ path }}" placeholder="{{ entry_parent }}" id="input-parent" list="list-parent" class="form-control" autocomplete="new-password"/> <input type="hidden" name="parent_id" value="{{ parent_id }}" id="input-parent-id"/>
+                  <input type="text" name="path" value="{{ path }}" placeholder="{{ entry_parent }}" id="input-parent" list="list-parent" class="form-control" autocomplete="off"/> <input type="hidden" name="parent_id" value="{{ parent_id }}" id="input-parent-id"/>
                   <datalist id="list-parent"></datalist>
                   <div class="form-text">{{ help_parent }}</div>
                   <div id="error-parent" class="invalid-feedback"></div>
@@ -222,18 +222,16 @@ $('textarea[data-oc-toggle=\'ckeditor\']').ckeditor({
 
 $('#input-parent').autocomplete({
     'source': function (request, response) {
-        $.ajax({
+        return $.ajax({
             url: 'index.php?route=catalog/category.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
             success: function (json) {
                 json.unshift({
-                    name: '{{ text_none }}',
-                    category_id: '0'
+                    'name': '{{ text_none }}',
+                    'category_id': '0'
                 });
 
                 response($.map(json, function (item) {
-                    console.log(json);
-
                     return {
                         value: item['category_id'],
                         label: item['name']

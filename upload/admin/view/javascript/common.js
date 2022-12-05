@@ -433,8 +433,8 @@ var chain = new Chain();
 +function ($) {
     $.fn.autocomplete = function (option) {
         return this.each(function () {
-            var $this = $(this);
-            var $dropdown = $('#' + $this.attr('list'));
+            var element = this;
+            var $dropdown = $('#' + $(element).attr('list'));
 
             this.timer = null;
             this.items = [];
@@ -442,27 +442,32 @@ var chain = new Chain();
             $.extend(this, option);
 
             // Focus
-            $this.on('focus', function () {
+            $(element).on('focus', function () {
+               this.request();
+            });
+
+            // Input
+            $(element).on('input', function (e) {
                 this.request();
             });
 
-            // Keydown
-            $this.on('input', function (e) {
-                this.request();
-
-                var value = $this.val();
+            // Complete
+            this.complete = function () {
+                var value = $(element).val();
 
                 if (value && this.items[value]) {
                     this.select(this.items[value]);
                 }
-            });
+            }
 
             // Request
             this.request = function () {
                 clearTimeout(this.timer);
 
                 this.timer = setTimeout(function (object) {
-                    object.source($(object).val(), $.proxy(object.response, object));
+                    var jqxhr = object.source($(object).val(), $.proxy(object.response, object));
+
+                    jqxhr.done($.proxy(object.complete, object));
                 }, 50, this);
             }
 
@@ -475,12 +480,11 @@ var chain = new Chain();
 
                 if (json.length) {
                     for (i = 0; i < json.length; i++) {
-                        // update element items
                         this.items[json[i]['label']] = json[i];
 
                         if (!json[i]['category']) {
                             // ungrouped items
-                            html += '<option>' + json[i]['label'] + '</option>';
+                            html += '<option data-value="' + json[i]['value'] + '" value="' + json[i]['label'] + '"/>';
                         } else {
                             // grouped items
                             name = json[i]['category'];
@@ -495,7 +499,7 @@ var chain = new Chain();
 
                     for (name in category) {
                         for (j = 0; j < category[name].length; j++) {
-                            html += '<option value="' + category[name][j]['label'] + '">' + name + '</option>';
+                            html += '<option data-value="' + json[i]['value'] + '" value="' + category[name][j]['label'] + '">' + name + '</option>';
                         }
                     }
                 }

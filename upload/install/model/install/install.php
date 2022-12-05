@@ -100,6 +100,8 @@ class Install extends \Opencart\System\Engine\Model {
 		}
 
 		$db->query("SET CHARACTER SET utf8mb4");
+		
+		$db->query("SET @@session.sql_mode = ''");
 
 		$db->query("DELETE FROM `" . $data['db_prefix'] . "user` WHERE `user_id` = '1'");
 		$db->query("INSERT INTO `" . $data['db_prefix'] . "user` SET `user_id` = '1', `user_group_id` = '1', `username` = '" . $db->escape($data['username']) . "', `password` = '" . $db->escape(password_hash(html_entity_decode($data['password'], ENT_QUOTES, 'UTF-8'), PASSWORD_DEFAULT)) . "', `firstname` = 'John', `lastname` = 'Doe', `email` = '" . $db->escape($data['email']) . "', `status` = '1', `date_added` = NOW()");

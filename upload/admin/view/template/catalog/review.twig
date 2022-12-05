@@ -110,7 +110,7 @@ $('#button-filter').on('click', function () {
 
 $('#input-product').autocomplete({
     'source': function (request, response) {
-        $.ajax({
+        return $.ajax({
             url: 'index.php?route=catalog/product.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
             success: function (json) {

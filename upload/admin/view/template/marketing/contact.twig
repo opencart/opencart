@@ -118,7 +118,7 @@ $('#input-to').trigger('change');
 // Customers
 $('#input-customer').autocomplete({
     'source': function (request, response) {
-        $.ajax({
+        return $.ajax({
             url: 'index.php?route=customer/customer.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
             success: function (json) {
@@ -155,7 +155,7 @@ $('#mail-customer').on('click', '.btn', function () {
 // Affiliates
 $('#input-affiliate').autocomplete({
     'source': function (request, response) {
-        $.ajax({
+        return $.ajax({
             url: 'index.php?route=customer/customer.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request) + '&filter_affiliate=1',
             dataType: 'json',
             success: function (json) {
@@ -192,7 +192,7 @@ $('#input-affiliate').on('click', '.btn', function () {
 // Products
 $('#input-product').autocomplete({
     'source': function (request, response) {
-        $.ajax({
+        return $.ajax({
             url: 'index.php?route=catalog/product.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
             success: function (json) {

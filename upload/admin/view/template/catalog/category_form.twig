@@ -247,7 +247,7 @@ $('#input-parent').autocomplete({
 
 $('#input-filter').autocomplete({
     'source': function (request, response) {
-        $.ajax({
+        return $.ajax({
             url: 'index.php?route=catalog/filter.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
             success: function (json) {

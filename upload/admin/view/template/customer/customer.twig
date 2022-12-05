@@ -137,7 +137,7 @@ $('#button-filter').on('click', function () {
 
 $('#input-name').autocomplete({
     'source': function (request, response) {
-        $.ajax({
+        return $.ajax({
             url: 'index.php?route=customer/customer.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
             success: function (json) {
@@ -155,7 +155,7 @@ $('#input-name').autocomplete({
 
 $('#input-email').autocomplete({
     'source': function (request, response) {
-        $.ajax({
+        return $.ajax({
             url: 'index.php?route=customer/customer.autocomplete&user_token={{ user_token }}&filter_email=' + encodeURIComponent(request),
             dataType: 'json',
             success: function (json) {

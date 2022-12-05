@@ -347,7 +347,7 @@
 <script type="text/javascript"><!--
 $('#input-customer').autocomplete({
     'source': function (request, response) {
-        $.ajax({
+        return $.ajax({
             url: 'index.php?route=customer/customer.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
             success: function (json) {

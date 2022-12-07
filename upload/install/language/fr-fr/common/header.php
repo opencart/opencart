@@ -1,0 +1,2 @@
+<?php
+// Traduction Alain BROYE

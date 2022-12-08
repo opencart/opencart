@@ -24,11 +24,18 @@
           <div class="card-body">
             <div class="mb-3">
               <label for="input-name" class="form-label">{{ entry_name }}</label>
-              <input type="text" name="filter_name" value="{{ filter_name }}" placeholder="{{ entry_name }}" id="input-name" list="list-name" class="form-control"/>
+              <div class="input-group">
+                <span id="autocomplete-name" class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
+                <input type="text" name="filter_name" value="{{ filter_name }}" placeholder="{{ entry_name }}" id="input-name" list="list-name" class="form-control"/>
+              </div>
               <datalist id="list-name"></datalist>
             </div>
             <div class="mb-3">
-              <label for="input-model" class="form-label">{{ entry_model }}</label> <input type="text" name="filter_model" value="{{ filter_model }}" placeholder="{{ entry_model }}" id="input-model" list="list-model" class="form-control"/>
+              <label for="input-model" class="form-label">{{ entry_model }}</label>
+              <div class="input-group">
+                <span id="autocomplete-model" class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
+                <input type="text" name="filter_model" value="{{ filter_model }}" placeholder="{{ entry_model }}" id="input-model" list="list-model" class="form-control"/>
+              </div>
               <datalist id="list-model"></datalist>
             </div>
             <div class="mb-3">
@@ -38,8 +45,7 @@
               <label for="input-quantity" class="form-label">{{ entry_quantity }}</label> <input type="text" name="filter_quantity" value="{{ filter_quantity }}" placeholder="{{ entry_quantity }}" id="input-quantity" class="form-control"/>
             </div>
             <div class="mb-3">
-              <label for="input-status" class="form-label">{{ entry_status }}</label>
-              <select name="filter_status" id="input-status" class="form-select">
+              <label for="input-status" class="form-label">{{ entry_status }}</label> <select name="filter_status" id="input-status" class="form-select">
                 <option value=""></option>
                 <option value="1"{% if filter_status == '1' %} selected{% endif %}>{{ text_enabled }}</option>
                 <option value="0"{% if filter_status == '0' %} selected{% endif %}>{{ text_disabled }}</option>
@@ -108,6 +114,12 @@ $('#input-name').autocomplete({
         return $.ajax({
             url: 'index.php?route=catalog/product.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
+            beforeSend: function () {
+                $('#autocomplete-name').html('<i class="fa-solid fa-circle-notch fa-spin"></i>');
+            },
+            complete: function () {
+                $('#autocomplete-name').html('<i class="fa-solid fa-magnifying-glass"></i>');
+            },
             success: function (json) {
                 response($.map(json, function (item) {
                     return {
@@ -128,6 +140,12 @@ $('#input-model').autocomplete({
         return $.ajax({
             url: 'index.php?route=catalog/product.autocomplete&user_token={{ user_token }}&filter_model=' + encodeURIComponent(request),
             dataType: 'json',
+            beforeSend: function () {
+                $('#autocomplete-model').html('<i class="fa-solid fa-circle-notch fa-spin"></i>');
+            },
+            complete: function () {
+                $('#autocomplete-model').html('<i class="fa-solid fa-magnifying-glass"></i>');
+            },
             success: function (json) {
                 response($.map(json, function (item) {
                     return {

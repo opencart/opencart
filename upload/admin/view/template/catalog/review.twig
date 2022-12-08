@@ -23,14 +23,18 @@
           <div class="card-body">
             <div class="mb-3">
               <label for="input-product" class="form-label">{{ entry_product }}</label>
-							<input type="text" name="filter_product" value="{{ filter_product }}" placeholder="{{ entry_product }}" id="input-product" list="list-product" class="form-control"/>
-							<datalist id="list-product"></datalist>
+              <div class="input-group">
+                <span id="autocomplete-product" class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
+                <input type="text" name="filter_product" value="{{ filter_product }}" placeholder="{{ entry_product }}" id="input-product" list="list-product" class="form-control"/>
+              </div>
+              <datalist id="list-product"></datalist>
             </div>
             <div class="mb-3">
               <label for="input-author" class="form-label">{{ entry_author }}</label> <input type="text" name="filter_author" value="{{ filter_author }}" placeholder="{{ entry_author }}" id="input-author" class="form-control"/>
             </div>
             <div class="mb-3">
-              <label for="input-status" class="form-label">{{ entry_status }}</label> <select name="filter_status" id="input-status" class="form-select">
+              <label for="input-status" class="form-label">{{ entry_status }}</label>
+              <select name="filter_status" id="input-status" class="form-select">
                 <option value=""></option>
                 <option value="1"{% if filter_status == '1' %} selected{% endif %}>{{ text_enabled }}</option>
                 <option value="0"{% if filter_status == '0' %} selected{% endif %}>{{ text_disabled }}</option>
@@ -113,6 +117,12 @@ $('#input-product').autocomplete({
         return $.ajax({
             url: 'index.php?route=catalog/product.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
+            beforeSend: function () {
+                $('#autocomplete-product').html('<i class="fa-solid fa-circle-notch fa-spin"></i>');
+            },
+            complete: function () {
+                $('#autocomplete-product').html('<i class="fa-solid fa-magnifying-glass"></i>');
+            },
             success: function (json) {
                 response($.map(json, function (item) {
                     return {
@@ -123,7 +133,8 @@ $('#input-product').autocomplete({
             }
         });
     },
-    'select': function (item) {}
+    'select': function (item) {
+    }
 });
 //--></script>
 {{ footer }}

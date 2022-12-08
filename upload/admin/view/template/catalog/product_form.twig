@@ -55,8 +55,7 @@
                           {% if master_id %}
                             <div class="input-group-text">
                               <div class="form-check form-switch">
-                                <input type="checkbox" name="override[product_description][{{ language.language_id }}][name]" value="1" id="input-variant-name-{{ language.language_id }}" data-oc-toggle="switch" data-oc-target="#input-name-{{ language.language_id }}" class="form-check-input"/>
-                                <label for="input-variant-name-{{ language.language_id }}" class="form-check-label"></label>
+                                <input type="checkbox" name="override[product_description][{{ language.language_id }}][name]" value="1" id="input-variant-name-{{ language.language_id }}" data-oc-toggle="switch" data-oc-target="#input-name-{{ language.language_id }}" class="form-check-input"/> <label for="input-variant-name-{{ language.language_id }}" class="form-check-label"></label>
                               </div>
                             </div>
                           {% endif %}
@@ -74,8 +73,7 @@
                           {% if master_id %}
                             <div class="input-group-text">
                               <div class="form-check form-switch">
-                                <input type="checkbox" name="override[product_description][{{ language.language_id }}][description]" value="1" id="input-variant-description-{{ language.language_id }}" data-oc-toggle="switch" data-oc-target="#input-description-{{ language.language_id }}" class="form-check-input"{% if override.product_description[language.language_id].description %} checked{% endif %}/>
-                                <label for="input-variant-description-{{ language.language_id }}" class="form-check-label"></label>
+                                <input type="checkbox" name="override[product_description][{{ language.language_id }}][description]" value="1" id="input-variant-description-{{ language.language_id }}" data-oc-toggle="switch" data-oc-target="#input-description-{{ language.language_id }}" class="form-check-input"{% if override.product_description[language.language_id].description %} checked{% endif %}/> <label for="input-variant-description-{{ language.language_id }}" class="form-check-label"></label>
                               </div>
                             </div>
                           {% endif %}
@@ -349,15 +347,13 @@
                     <div class="input-group">
 
                       <div id="input-subtract" class="form-check form-switch form-switch-lg">
-                        <input type="hidden" name="subtract" value="0"/>
-                        <input type="checkbox" name="subtract" value="1" class="form-check-input"{% if subtract %} checked{% endif %}/>
+                        <input type="hidden" name="subtract" value="0"/> <input type="checkbox" name="subtract" value="1" class="form-check-input"{% if subtract %} checked{% endif %}/>
                       </div>
 
                       {% if master_id %}
                         <div class="input-group-text">
                           <div class="form-check form-switch">
-                            <input type="checkbox" name="override[subtract]" value="1" id="input-variant-subtract" data-oc-toggle="switch" data-oc-target="#input-subtract" class="form-check-input"{% if override.subtract %} checked{% endif %}/>
-                            <label for="input-variant-subtract" class="form-check-label"></label>
+                            <input type="checkbox" name="override[subtract]" value="1" id="input-variant-subtract" data-oc-toggle="switch" data-oc-target="#input-subtract" class="form-check-input"{% if override.subtract %} checked{% endif %}/> <label for="input-variant-subtract" class="form-check-label"></label>
                           </div>
                         </div>
                       {% endif %}
@@ -411,8 +407,7 @@
                     <div class="input-group">
 
                       <div id="input-shipping" class="form-check form-switch form-switch-lg">
-                        <input type="hidden" name="shipping" value="0"/>
-                        <input type="checkbox" name="shipping" value="1" class="form-check-input"{% if shipping %} checked{% endif %}/>
+                        <input type="hidden" name="shipping" value="0"/> <input type="checkbox" name="shipping" value="1" class="form-check-input"{% if shipping %} checked{% endif %}/>
                       </div>
 
                       {% if master_id %}
@@ -514,8 +509,7 @@
                   <div class="col-sm-10">
                     <div class="input-group">
                       <div class="form-check form-switch form-switch-lg">
-                        <input type="hidden" name="status" value="0"/>
-                        <input type="checkbox" name="status" value="1" id="input-status" class="form-check-input"{% if status %} checked{% endif %}/>
+                        <input type="hidden" name="status" value="0"/> <input type="checkbox" name="status" value="1" id="input-status" class="form-check-input"{% if status %} checked{% endif %}/>
                       </div>
                       {% if master_id %}
                         <div class="input-group-text">
@@ -549,11 +543,13 @@
                 <label class="col-sm-2 col-form-label">{{ entry_manufacturer }}</label>
                 <div class="col-sm-10">
                   <div class="input-group">
+                    <span id="autocomplete-manufacturer" class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
                     <input type="text" name="manufacturer" value="{{ manufacturer }}" placeholder="{{ entry_manufacturer }}" id="input-manufacturer" list="list-manufacturer" class="form-control"/>
                     {% if master_id %}
                       <div class="input-group-text">
                         <div class="form-check form-switch">
-                          <input type="checkbox" name="override[manufacturer]" value="1" id="input-variant-manufacturer" data-oc-toggle="switch" data-oc-target="#input-manufacturer" class="form-check-input"{% if override.manufacturer %} checked{% endif %}/> <label for="input-variant-manufacturer" class="form-check-label"></label>
+                          <input type="checkbox" name="override[manufacturer]" value="1" id="input-variant-manufacturer" data-oc-toggle="switch" data-oc-target="#input-manufacturer" class="form-check-input"{% if override.manufacturer %} checked{% endif %}/>
+                          <label for="input-variant-manufacturer" class="form-check-label"></label>
                         </div>
                       </div>
                     {% endif %}
@@ -566,7 +562,10 @@
               <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">{{ entry_category }}</label>
                 <div class="col-sm-10">
-                  <input type="text" name="category" value="" placeholder="{{ entry_category }}" id="input-category" list="list-category" class="form-control"/>
+                  <div class="input-group">
+                    <span id="autocomplete-category" class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
+                    <input type="text" name="category" value="" placeholder="{{ entry_category }}" id="input-category" list="list-category" class="form-control"/>
+                  </div>
                   <datalist id="list-category"></datalist>
                   <div class="input-group">
                     <div class="form-control p-0" style="height: 150px; overflow: auto;">
@@ -595,7 +594,10 @@
               <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">{{ entry_filter }}</label>
                 <div class="col-sm-10">
-                  <input type="text" name="filter" value="" placeholder="{{ entry_filter }}" id="input-filter" list="list-filter" class="form-control"/>
+                  <div class="input-group">
+                    <span id="autocomplete-filter" class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
+                    <input type="text" name="filter" value="" placeholder="{{ entry_filter }}" id="input-filter" list="list-filter" class="form-control"/>
+                  </div>
                   <datalist id="list-filter"></datalist>
                   <div class="input-group">
                     <div class="form-control p-0" style="height: 150px; overflow: auto;">
@@ -645,7 +647,10 @@
               <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">{{ entry_download }}</label>
                 <div class="col-sm-10">
-                  <input type="text" name="download" value="" placeholder="{{ entry_download }}" id="input-download" list="list-download" class="form-control"/>
+                  <div class="input-group">
+                    <span id="autocomplete-download" class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
+                    <input type="text" name="download" value="" placeholder="{{ entry_download }}" id="input-download" list="list-download" class="form-control"/>
+                  </div>
                   <datalist id="list-download"></datalist>
                   <div class="input-group">
                     <div class="form-control p-0" style="height: 150px; overflow: auto;">
@@ -674,7 +679,10 @@
               <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">{{ entry_related }}</label>
                 <div class="col-sm-10">
-                  <input type="text" name="related" value="" placeholder="{{ entry_related }}" id="input-related" list="list-related" class="form-control"/>
+                  <div class="input-group">
+                    <span id="autocomplete-related" class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
+                    <input type="text" name="related" value="" placeholder="{{ entry_related }}" id="input-related" list="list-related" class="form-control"/>
+                  </div>
                   <datalist id="list-related"></datalist>
                   <div class="input-group">
                     <div class="form-control p-0" style="height: 150px; overflow: auto;">
@@ -721,7 +729,12 @@
                     {% set attribute_row = 0 %}
                     {% for product_attribute in product_attributes %}
                       <tr id="attribute-row-{{ attribute_row }}">
-                        <td class="text-start"><input type="text" name="product_attribute[{{ attribute_row }}][name]" value="{{ product_attribute.name }}" placeholder="{{ entry_attribute }}" id="input-attribute-{{ attribute_row }}" list="list-attribute-{{ attribute_row }}" class="form-control"/> <input type="hidden" name="product_attribute[{{ attribute_row }}][attribute_id]" value="{{ product_attribute.attribute_id }}" id="input-attribute-id-{{ attribute_row }}"/>
+                        <td class="text-start">
+                          <div class="input-group">
+                            <span id="autocomplete-attribute-{{ attribute_row }}" class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
+                            <input type="text" name="product_attribute[{{ attribute_row }}][name]" value="{{ product_attribute.name }}" placeholder="{{ entry_attribute }}" id="input-attribute-{{ attribute_row }}" list="list-attribute-{{ attribute_row }}" class="form-control"/>
+                          </div>
+                          <input type="hidden" name="product_attribute[{{ attribute_row }}][attribute_id]" value="{{ product_attribute.attribute_id }}" id="input-attribute-id-{{ attribute_row }}"/>
                           <datalist id="list-attribute-{{ attribute_row }}"></datalist>
                         </td>
                         <td class="text-start">
@@ -892,7 +905,10 @@
                   <div class="row mb-3">
                     <label for="input-option" class="col-sm-2 col-form-label">{{ entry_option }}</label>
                     <div class="col-sm-10">
-                      <input type="text" name="option" value="" placeholder="{{ entry_option }}" id="input-option" list="list-option" class="form-control"/>
+                      <div class="input-group">
+                        <span id="autocomplete-option" class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
+                        <input type="text" name="option" value="" placeholder="{{ entry_option }}" id="input-option" list="list-option" class="form-control"/>
+                      </div>
                       <datalist id="list-option"></datalist>
                       <div class="form-text">{{ help_option }}</div>
                     </div>
@@ -1274,8 +1290,7 @@
                         {% if master_id %}
                           <div class="mx-auto w-25">
                             <div class="form-check form-switch">
-                              <input type="checkbox" name="override[image]" value="1" id="input-variant-image" data-oc-toggle="switch" data-oc-target="#image" class="form-check-input"{% if override.image %} checked{% endif %}/>
-                              <label for="input-variant-image" class="form-check-label"></label>
+                              <input type="checkbox" name="override[image]" value="1" id="input-variant-image" data-oc-toggle="switch" data-oc-target="#image" class="form-check-input"{% if override.image %} checked{% endif %}/> <label for="input-variant-image" class="form-check-label"></label>
                             </div>
                           </div>
                         {% endif %}
@@ -1298,8 +1313,7 @@
 
                           {% if master_id %}
                             <div class="form-check form-switch">
-                              <input type="checkbox" name="override[product_image]" value="1" id="input-variant-product-image" data-oc-toggle="switch" data-oc-target="#product-image" class="form-check-input"{% if override.product_image %} checked{% endif %}/>
-                              <label for="input-variant-product-image" class="form-check-label"></label>
+                              <input type="checkbox" name="override[product_image]" value="1" id="input-variant-product-image" data-oc-toggle="switch" data-oc-target="#product-image" class="form-check-input"{% if override.product_image %} checked{% endif %}/> <label for="input-variant-product-image" class="form-check-label"></label>
                             </div>
                           {% endif %}
 
@@ -1460,7 +1474,7 @@
 </div>
 <script type="text/javascript"><!--
 $('textarea[data-oc-toggle=\'ckeditor\']').ckeditor({
-    language:'{{ ckeditor }}'
+    language: '{{ ckeditor }}'
 });
 
 // Manufacturer
@@ -1469,6 +1483,12 @@ $('#input-manufacturer').autocomplete({
         return $.ajax({
             url: 'index.php?route=catalog/manufacturer.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
+            beforeSend: function () {
+                $('#autocomplete-manufacturer').html('<i class="fa-solid fa-circle-notch fa-spin"></i>');
+            },
+            complete: function () {
+                $('#autocomplete-manufacturer').html('<i class="fa-solid fa-magnifying-glass"></i>');
+            },
             success: function (json) {
                 json.unshift({
                     manufacturer_id: 0,
@@ -1496,6 +1516,12 @@ $('#input-category').autocomplete({
         return $.ajax({
             url: 'index.php?route=catalog/category.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
+            beforeSend: function () {
+                $('#autocomplete-category').html('<i class="fa-solid fa-circle-notch fa-spin"></i>');
+            },
+            complete: function () {
+                $('#autocomplete-category').html('<i class="fa-solid fa-magnifying-glass"></i>');
+            },
             success: function (json) {
                 response($.map(json, function (item) {
                     return {
@@ -1530,6 +1556,12 @@ $('#input-filter').autocomplete({
         return $.ajax({
             url: 'index.php?route=catalog/filter.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
+            beforeSend: function () {
+                $('#autocomplete-filter').html('<i class="fa-solid fa-circle-notch fa-spin"></i>');
+            },
+            complete: function () {
+                $('#autocomplete-filter').html('<i class="fa-solid fa-magnifying-glass"></i>');
+            },
             success: function (json) {
                 response($.map(json, function (item) {
                     return {
@@ -1564,6 +1596,12 @@ $('#input-download').autocomplete({
         return $.ajax({
             url: 'index.php?route=catalog/download.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
+            beforeSend: function () {
+                $('#autocomplete-download').html('<i class="fa-solid fa-circle-notch fa-spin"></i>');
+            },
+            complete: function () {
+                $('#autocomplete-download').html('<i class="fa-solid fa-magnifying-glass"></i>');
+            },
             success: function (json) {
                 response($.map(json, function (item) {
                     return {
@@ -1598,6 +1636,12 @@ $('#input-related').autocomplete({
         return $.ajax({
             url: 'index.php?route=catalog/product.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
+            beforeSend: function () {
+                $('#autocomplete-related').html('<i class="fa-solid fa-circle-notch fa-spin"></i>');
+            },
+            complete: function () {
+                $('#autocomplete-related').html('<i class="fa-solid fa-magnifying-glass"></i>');
+            },
             success: function (json) {
                 response($.map(json, function (item) {
                     return {
@@ -1627,11 +1671,17 @@ $('#product-related').on('click', '.btn', function () {
 });
 
 var attributeautocomplete = function (attribute_row) {
-    $('input[name=\'product_attribute[' + attribute_row + '][name]\']').autocomplete({
+    $('#input-attribute-' + attribute_row).autocomplete({
         'source': function (request, response) {
             return $.ajax({
                 url: 'index.php?route=catalog/attribute.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
                 dataType: 'json',
+                beforeSend: function () {
+                    $('#autocomplete-attribute-' + attribute_row).html('<i class="fa-solid fa-circle-notch fa-spin"></i>');
+                },
+                complete: function () {
+                    $('#autocomplete-attribute-' + attribute_row).html('<i class="fa-solid fa-magnifying-glass"></i>');
+                },
                 success: function (json) {
                     response($.map(json, function (item) {
                         return {
@@ -1644,7 +1694,7 @@ var attributeautocomplete = function (attribute_row) {
             });
         },
         'select': function (item) {
-            $('input[name=\'product_attribute[' + attribute_row + '][attribute_id]\']').val(item['value']);
+            $('#input-attribute-id-' + attribute_row).val(item['value']);
         }
     });
 }
@@ -1658,7 +1708,10 @@ $('#product-attribute tr').each(function (index) {
 $('#button-attribute').on('click', function () {
     html = '<tr id="attribute-row-' + attribute_row + '">';
     html += '  <td class="text-start">';
-    html += '    <input type="text" name="product_attribute[' + attribute_row + '][name]" value="" placeholder="{{ entry_attribute }}" id="input-attribute-' + attribute_row + '" list="list-attribute-{{ attribute_row }}" class="form-control"/>';
+    html += '    <div class="input-group">';
+    html += '      <span id="autocomplete-attribute-' + attribute_row + '" class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>';
+    html += '      <input type="text" name="product_attribute[' + attribute_row + '][name]" value="" placeholder="{{ entry_attribute }}" id="input-attribute-' + attribute_row + '" list="list-attribute-' + attribute_row + '" class="form-control"/>';
+    html += '    </div>';
     html += '    <input type="hidden" name="product_attribute[' + attribute_row + '][attribute_id]" value="" id="input-attribute-id-' + attribute_row + '"/>';
     html += '    <datalist id="list-attribute-{{ attribute_row }}"></datalist>';
     html += '  </td>';
@@ -1688,6 +1741,12 @@ $('#input-option').autocomplete({
         return $.ajax({
             url: 'index.php?route=catalog/option.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
+            beforeSend: function () {
+                $('#autocomplete-option').html('<i class="fa-solid fa-circle-notch fa-spin"></i>');
+            },
+            complete: function () {
+                $('#autocomplete-option').html('<i class="fa-solid fa-magnifying-glass"></i>');
+            },
             success: function (json) {
                 response($.map(json, function (item) {
                     return {

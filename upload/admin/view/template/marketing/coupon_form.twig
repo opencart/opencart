@@ -95,7 +95,10 @@
               <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">{{ entry_product }}</label>
                 <div class="col-sm-10">
-                  <input type="text" name="product" value="" placeholder="{{ entry_product }}" id="input-product" list="list-product" class="form-control"/>
+                  <div class="input-group">
+                    <span id="autocomplete-product" class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
+                    <input type="text" name="product" value="" placeholder="{{ entry_product }}" id="input-product" list="list-product" class="form-control"/>
+                  </div>
                   <datalist id="list-product"></datalist>
                   <div class="form-control p-0" style="height: 150px; overflow: auto;">
                     <table id="coupon-product" class="table table-sm m-0">
@@ -115,7 +118,10 @@
               <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">{{ entry_category }}</label>
                 <div class="col-sm-10">
-                  <input type="text" name="category" value="" placeholder="{{ entry_category }}" id="input-category" list="list-category" class="form-control"/>
+                  <div class="input-group">
+                    <span id="autocomplete-category" class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
+                    <input type="text" name="category" value="" placeholder="{{ entry_category }}" id="input-category" list="list-category" class="form-control"/>
+                  </div>
                   <datalist id="list-category"></datalist>
                   <div class="form-control p-0" style="height: 150px; overflow: auto;">
                     <table id="coupon-category" class="table table-sm m-0">
@@ -193,6 +199,12 @@ $('#input-product').autocomplete({
         return $.ajax({
             url: 'index.php?route=catalog/product.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
+            beforeSend: function () {
+                $('#autocomplete-product').html('<i class="fa-solid fa-circle-notch fa-spin"></i>');
+            },
+            complete: function () {
+                $('#autocomplete-product').html('<i class="fa-solid fa-magnifying-glass"></i>');
+            },
             success: function (json) {
                 response($.map(json, function (item) {
                     return {
@@ -227,6 +239,12 @@ $('#input-category').autocomplete({
         return $.ajax({
             url: 'index.php?route=catalog/category.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
+            beforeSend: function () {
+                $('#autocomplete-category').html('<i class="fa-solid fa-circle-notch fa-spin"></i>');
+            },
+            complete: function () {
+                $('#autocomplete-category').html('<i class="fa-solid fa-magnifying-glass"></i>');
+            },
             success: function (json) {
                 response($.map(json, function (item) {
                     return {

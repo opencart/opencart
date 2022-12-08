@@ -23,10 +23,15 @@
               <label for="input-subscription-id" class="form-label">{{ entry_subscription_id }}</label> <input type="text" name="filter_subscription_id" value="{{ filter_subscription_id }}" placeholder="{{ entry_subscription_id }}" id="input-subscription-id" class="form-control"/>
             </div>
             <div class="mb-3">
-              <label for="input-order-id" class="form-label">{{ entry_order_id }}</label> <input type="text" name="filter_order_id" value="{{ filter_order_id }}" placeholder="{{ entry_order_id }}" id="input-order-id" class="form-control"/>
+              <label for="input-order-id" class="form-label">{{ entry_order_id }}</label>
+              <input type="text" name="filter_order_id" value="{{ filter_order_id }}" placeholder="{{ entry_order_id }}" id="input-order-id" class="form-control"/>
             </div>
             <div class="mb-3">
-              <label for="input-customer" class="form-label">{{ entry_customer }}</label> <input type="text" name="filter_customer" value="{{ filter_customer }}" placeholder="{{ entry_customer }}" id="input-customer" list="list-customer" class="form-control"/>
+              <label for="input-customer" class="form-label">{{ entry_customer }}</label>
+              <div class="input-group">
+                <span id="autocomplete-customer" class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
+                <input type="text" name="filter_customer" value="{{ filter_customer }}" placeholder="{{ entry_customer }}" id="input-customer" list="list-customer" class="form-control"/>
+              </div>
               <datalist id="list-customer"></datalist>
             </div>
             <div class="mb-3">
@@ -120,6 +125,12 @@ $('#input-customer').autocomplete({
         return $.ajax({
             url: 'index.php?route=customer/customer.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
+            beforeSend: function () {
+                $('#autocomplete-customer').html('<i class="fa-solid fa-circle-notch fa-spin"></i>');
+            },
+            complete: function () {
+                $('#autocomplete-customer').html('<i class="fa-solid fa-magnifying-glass"></i>');
+            },
             success: function (json) {
                 response($.map(json, function (item) {
                     return {

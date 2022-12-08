@@ -253,7 +253,7 @@ a {
 }
 
 #menu li a.parent:after {
-    font-family: 'Font Awesome 5 Free';
+    font-family: 'Font Awesome 6 Free';
     font-weight: 600;
     float: right;
     margin-right: 8px;
@@ -307,7 +307,7 @@ a {
 }
 
 #menu li li a:before {
-    font-family: 'Font Awesome 5 Free';
+    font-family: 'Font Awesome 6 Free';
     content: "\f101";
     font-weight: 900;
     font-size: 13px;
@@ -471,7 +471,7 @@ div.required .col-form-label:not(span):before, td.required:before {
 }
 
 .table thead td span[data-toggle='tooltip']:after, label.form-label span:after {
-    font-family: 'Font Awesome 5 Free';
+    font-family: 'Font Awesome 6 Free';
     font-weight: 600;
     content: "\f059";
     color: #1E91CF;
@@ -487,13 +487,13 @@ div.required .col-form-label:not(span):before, td.required:before {
 }
 
 .table a.asc:after {
-    font-family: 'Font Awesome 5 Free';
+    font-family: 'Font Awesome 6 Free';
     font-weight: 600;
     content: " \f106";
 }
 
 .table a.desc:after {
-    font-family: 'Font Awesome 5 Free';
+    font-family: 'Font Awesome 6 Free';
     font-weight: 600;
     content: " \f107";
 }
@@ -839,7 +839,7 @@ div.required .col-form-label:not(span):before, td.required:before {
 }
 
 .list-check li::before {
-    font-family: 'Font Awesome 5 Solid';
+    font-family: 'Font Awesome 6 Solid';
     content: "\f00c";
     margin-left: -30px;
     width: 29px;

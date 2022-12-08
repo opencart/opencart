@@ -28,7 +28,10 @@
           <div class="row mb-3 required">
             <label class="col-sm-2 col-form-label">{{ entry_product }}</label>
             <div class="col-sm-10">
-              <input type="text" name="product" value="{{ product }}" placeholder="{{ entry_product }}" id="input-product" list="list-product" class="form-control"/>
+              <div class="input-group">
+                <span id="autocomplete-product" class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
+                <input type="text" name="product" value="{{ product }}" placeholder="{{ entry_product }}" id="input-product" list="list-product" class="form-control"/>
+              </div>
               <input type="hidden" name="product_id" value="{{ product_id }}" id="input-product-id"/>
               <datalist id="list-product"></datalist>
               <div class="form-text">{{ help_product }}</div>
@@ -78,8 +81,7 @@
             <label for="input-status" class="col-sm-2 col-form-label">{{ entry_status }}</label>
             <div class="col-sm-10">
               <div class="form-check form-switch form-switch-lg">
-                <input type="hidden" name="status" value="0"/>
-                <input type="checkbox" name="status" value="1" id="input-status" class="form-check-input"{% if status %} checked{% endif %}/>
+                <input type="hidden" name="status" value="0"/> <input type="checkbox" name="status" value="1" id="input-status" class="form-check-input"{% if status %} checked{% endif %}/>
               </div>
             </div>
           </div>
@@ -95,6 +97,12 @@ $('#input-product').autocomplete({
         return $.ajax({
             url: 'index.php?route=catalog/product.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
+            beforeSend: function () {
+                $('#autocomplete-product').html('<i class="fa-solid fa-circle-notch fa-spin"></i>');
+            },
+            complete: function () {
+                $('#autocomplete-product').html('<i class="fa-solid fa-magnifying-glass"></i>');
+            },
             success: function (json) {
                 response($.map(json, function (item) {
                     return {

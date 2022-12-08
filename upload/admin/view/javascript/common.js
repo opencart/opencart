@@ -443,17 +443,34 @@ var chain = new Chain();
 
             // Focus
             $(element).on('focus', function () {
-               this.request();
+                console.log('focus');
+
+                this.request();
             });
 
             // Input
             $(element).on('input', function (e) {
+                console.log('input');
+
                 this.request();
+            });
+
+            // Keyup
+            $(element).on('keyup', function (e) {
+                console.log('keyup');
+
+                this.complete();
             });
 
             // Complete
             this.complete = function () {
+                console.log('complete');
+
                 var value = $(element).val();
+
+                console.log(value);
+
+                console.log(this.items);
 
                 if (value && this.items[value]) {
                     this.select(this.items[value]);
@@ -465,9 +482,7 @@ var chain = new Chain();
                 clearTimeout(this.timer);
 
                 this.timer = setTimeout(function (object) {
-                    var jqxhr = object.source($(object).val(), $.proxy(object.response, object));
-
-                    jqxhr.done($.proxy(object.complete, object));
+                    object.source($(object).val(), $.proxy(object.response, object));
                 }, 50, this);
             }
 
@@ -480,11 +495,12 @@ var chain = new Chain();
 
                 if (json.length) {
                     for (i = 0; i < json.length; i++) {
+                        // update element items
                         this.items[json[i]['label']] = json[i];
 
                         if (!json[i]['category']) {
                             // ungrouped items
-                            html += '<option data-value="' + json[i]['value'] + '" value="' + json[i]['label'] + '"/>';
+                            html += '<option value="' + json[i]['label'] + '"/>';
                         } else {
                             // grouped items
                             name = json[i]['category'];
@@ -499,7 +515,7 @@ var chain = new Chain();
 
                     for (name in category) {
                         for (j = 0; j < category[name].length; j++) {
-                            html += '<option data-value="' + json[i]['value'] + '" value="' + category[name][j]['label'] + '">' + name + '</option>';
+                            html += '<option value="' + category[name][j]['label'] + '">' + name + '</option>';
                         }
                     }
                 }

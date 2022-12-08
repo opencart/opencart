@@ -534,7 +534,7 @@
             <label for="input-customer" class="form-label">{{ entry_customer }}</label>
             <div class="input-group">
               <span id="autocomplete-customer" class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
-              <input type="text" name="customer" value="{{ customer }}" placeholder="{{ entry_customer }}" id="input-customer" list="list-customer" class="form-control" autocomplete="new-password"/>
+              <input type="text" name="customer" value="{{ customer }}" placeholder="{{ entry_customer }}" id="input-customer" list="list-customer" class="form-control" autocomplete="off"/>
               <a href="{{ customer_add }}" target="_blank" data-bs-toggle="tooltip" title="{{ button_customer_add }}" class="btn btn-outline-secondary"><i class="fa-solid fa-user-plus"></i></a>
             </div>
             <input type="hidden" name="customer_id" value="{{ customer_id }}" id="input-customer-id"/>
@@ -765,7 +765,7 @@
           <div class="mb-3">
             <div class="input-group">
               <span id="autocomplete-affiliate" class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
-              <input type="text" name="affiliate" value="{{ affiliate }}" placeholder="{{ entry_affiliate }}" id="input-affiliate" list="list-affiliate" class="form-control"/>
+              <input type="text" name="affiliate" value="{{ affiliate }}" placeholder="{{ entry_affiliate }}" id="input-affiliate" list="list-affiliate" class="form-control" autocomplete="off"/>
             </div>
             <input type="hidden" name="affiliate_id" value="{{ affiliate_id }}" id="input-affiliate-id"/>
             <datalist id="list-affiliate"></datalist>
@@ -1360,10 +1360,10 @@ $('#input-product').autocomplete({
             url: 'index.php?route=catalog/product.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
             beforeSend: function () {
-                $('#input-product').html('<i class="fa-solid fa-circle-notch fa-spin"></i>');
+                $('#autocomplete-product').html('<i class="fa-solid fa-circle-notch fa-spin"></i>');
             },
             complete: function () {
-                $('#input-product').html('<i class="fa-solid fa-magnifying-glass"></i>');
+                $('#autocomplete-product').html('<i class="fa-solid fa-magnifying-glass"></i>');
             },
             success: function (json) {
                 response($.map(json, function (item) {

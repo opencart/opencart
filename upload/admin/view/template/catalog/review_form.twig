@@ -30,7 +30,7 @@
             <div class="col-sm-10">
               <div class="input-group">
                 <span id="autocomplete-product" class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
-                <input type="text" name="product" value="{{ product }}" placeholder="{{ entry_product }}" id="input-product" list="list-product" class="form-control"/>
+                <input type="text" name="product" value="{{ product }}" placeholder="{{ entry_product }}" id="input-product" list="list-product" class="form-control" autocomplete="off"/>
               </div>
               <input type="hidden" name="product_id" value="{{ product_id }}" id="input-product-id"/>
               <datalist id="list-product"></datalist>

@@ -26,7 +26,7 @@
               <label for="input-name" class="form-label">{{ entry_name }}</label>
               <div class="input-group">
                 <span id="autocomplete-name" class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
-                <input type="text" name="filter_name" value="{{ filter_name }}" placeholder="{{ entry_name }}" id="input-name" list="list-name" class="form-control"/>
+                <input type="text" name="filter_name" value="{{ filter_name }}" placeholder="{{ entry_name }}" id="input-name" list="list-name" class="form-control" autocomplete="off"/>
               </div>
               <datalist id="list-name"></datalist>
             </div>
@@ -34,7 +34,7 @@
               <label for="input-model" class="form-label">{{ entry_model }}</label>
               <div class="input-group">
                 <span id="autocomplete-model" class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
-                <input type="text" name="filter_model" value="{{ filter_model }}" placeholder="{{ entry_model }}" id="input-model" list="list-model" class="form-control"/>
+                <input type="text" name="filter_model" value="{{ filter_model }}" placeholder="{{ entry_model }}" id="input-model" list="list-model" class="form-control" autocomplete="off"/>
               </div>
               <datalist id="list-model"></datalist>
             </div>

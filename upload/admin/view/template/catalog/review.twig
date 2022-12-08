@@ -25,7 +25,7 @@
               <label for="input-product" class="form-label">{{ entry_product }}</label>
               <div class="input-group">
                 <span id="autocomplete-product" class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
-                <input type="text" name="filter_product" value="{{ filter_product }}" placeholder="{{ entry_product }}" id="input-product" list="list-product" class="form-control"/>
+                <input type="text" name="filter_product" value="{{ filter_product }}" placeholder="{{ entry_product }}" id="input-product" list="list-product" class="form-control" autocomplete="off"/>
               </div>
               <datalist id="list-product"></datalist>
             </div>

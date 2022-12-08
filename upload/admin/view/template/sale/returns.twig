@@ -31,7 +31,7 @@
               <label class="form-label">{{ entry_customer }}</label>
               <div class="input-group">
                 <span id="autocomplete-customer" class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
-                <input type="text" name="filter_customer" value="{{ filter_customer }}" placeholder="{{ entry_customer }}" id="input-customer" list="list-customer" class="form-control"/>
+                <input type="text" name="filter_customer" value="{{ filter_customer }}" placeholder="{{ entry_customer }}" id="input-customer" list="list-customer" class="form-control" autocomplete="off"/>
               </div>
               <datalist id="list-customer"></datalist>
             </div>
@@ -39,7 +39,7 @@
               <label class="form-label">{{ entry_product }}</label>
               <div class="input-group">
                 <span id="autocomplete-product" class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
-                <input type="text" name="filter_product" value="{{ filter_product }}" placeholder="{{ entry_product }}" id="input-product" list="list-product" class="form-control"/>
+                <input type="text" name="filter_product" value="{{ filter_product }}" placeholder="{{ entry_product }}" id="input-product" list="list-product" class="form-control" autocomplete="off"/>
               </div>
               <datalist id="list-product"></datalist>
             </div>
@@ -47,7 +47,7 @@
               <label class="form-label">{{ entry_model }}</label>
               <div class="input-group">
                 <span id="autocomplete-model" class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
-                <input type="text" name="filter_model" value="{{ filter_model }}" placeholder="{{ entry_model }}" id="input-model" list="list-model" class="form-control"/>
+                <input type="text" name="filter_model" value="{{ filter_model }}" placeholder="{{ entry_model }}" id="input-model" list="list-model" class="form-control" autocomplete="off"/>
               </div>
               <datalist id="list-model"></datalist>
             </div>
@@ -207,10 +207,10 @@ $('#input-model').autocomplete({
             url: 'index.php?route=catalog/product.autocomplete&user_token={{ user_token }}&filter_model=' + encodeURIComponent(request),
             dataType: 'json',
             beforeSend: function () {
-                $('#autocomplete-manufacturer').html('<i class="fa-solid fa-circle-notch fa-spin"></i>');
+                $('#autocomplete-model').html('<i class="fa-solid fa-circle-notch fa-spin"></i>');
             },
             complete: function () {
-                $('#autocomplete-manufacturer').html('<i class="fa-solid fa-magnifying-glass"></i>');
+                $('#autocomplete-model').html('<i class="fa-solid fa-magnifying-glass"></i>');
             },
             success: function (json) {
                 response($.map(json, function (item) {

@@ -30,7 +30,7 @@
               <label for="input-customer" class="form-label">{{ entry_customer }}</label>
               <div class="input-group">
                 <span id="autocomplete-customer" class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
-                <input type="text" name="filter_customer" value="{{ filter_customer }}" placeholder="{{ entry_customer }}" id="input-customer" list="list-customer" class="form-control"/>
+                <input type="text" name="filter_customer" value="{{ filter_customer }}" placeholder="{{ entry_customer }}" id="input-customer" list="list-customer" class="form-control" autocomplete="off"/>
               </div>
               <datalist id="list-customer"></datalist>
             </div>

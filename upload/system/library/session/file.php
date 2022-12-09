@@ -1,6 +1,7 @@
 <?php
 namespace Opencart\System\Library\Session;
 class File {
+	private object $config;
 	/**
 	 * Constructor
 	 *

@@ -13,10 +13,10 @@
 
 namespace Opencart\System\Library;
 class Image {
+	private string $file;
+	private object $image;
 	private int $width;
 	private int $height;
-	private string $file;
-	private object $image;	
 	private string $bits;
 	private string $mime;
 

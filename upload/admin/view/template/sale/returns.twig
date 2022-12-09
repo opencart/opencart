@@ -181,10 +181,10 @@ $('#input-product').autocomplete({
             url: 'index.php?route=catalog/product.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
             beforeSend: function () {
-                $('#autocomplete-manufacturer').html('<i class="fa-solid fa-circle-notch fa-spin"></i>');
+                $('#autocomplete-product').html('<i class="fa-solid fa-circle-notch fa-spin"></i>');
             },
             complete: function () {
-                $('#autocomplete-manufacturer').html('<i class="fa-solid fa-magnifying-glass"></i>');
+                $('#autocomplete-product').html('<i class="fa-solid fa-magnifying-glass"></i>');
             },
             success: function (json) {
                 response($.map(json, function (item) {

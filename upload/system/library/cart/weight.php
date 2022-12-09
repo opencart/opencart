@@ -1,6 +1,8 @@
 <?php
 namespace Opencart\System\Library\Cart;
 class Weight {
+	private object $db;
+	private object $config;
 	private array $weights = [];
 
 	/**

@@ -1,6 +1,10 @@
 <?php
 namespace Opencart\System\Library\Cart;
 class Customer {
+	private object $db;
+	private object $config;
+	private object $request;
+	private object $session;
 	private int $customer_id = 0;
 	private string $firstname = '';
 	private string $lastname = '';
@@ -15,8 +19,8 @@ class Customer {
 	 * @param    object  $registry
 	 */
 	public function __construct(\Opencart\System\Engine\Registry $registry) {
-		$this->config = $registry->get('config');
 		$this->db = $registry->get('db');
+		$this->config = $registry->get('config');
 		$this->request = $registry->get('request');
 		$this->session = $registry->get('session');
 

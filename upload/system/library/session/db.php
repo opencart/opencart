@@ -9,6 +9,9 @@ CREATE TABLE IF NOT EXISTS `session` (
 */
 namespace Opencart\System\Library\Session;
 class DB {
+	private object $db;
+	private object $config;
+
 	/**
 	 * Constructor
 	 *

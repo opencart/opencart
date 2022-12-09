@@ -1,6 +1,12 @@
 <?php
 namespace Opencart\System\Library\Cart;
 class Cart {
+	private object $db;
+	private object $config;
+	private object $customer;
+	private object $session;
+	private object $tax;
+	private object $weight;
 	private array $data = [];
 
 	/**
@@ -9,10 +15,10 @@ class Cart {
 	 * @param    object  $registry
 	 */
 	public function __construct(\Opencart\System\Engine\Registry $registry) {
+		$this->db = $registry->get('db');
 		$this->config = $registry->get('config');
 		$this->customer = $registry->get('customer');
 		$this->session = $registry->get('session');
-		$this->db = $registry->get('db');
 		$this->tax = $registry->get('tax');
 		$this->weight = $registry->get('weight');
 

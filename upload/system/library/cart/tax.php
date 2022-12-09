@@ -1,6 +1,8 @@
 <?php
 namespace Opencart\System\Library\Cart;
 class Tax {
+	private object $db;
+	private object $config;
 	private array $tax_rates = [];
 
 	/**
@@ -9,8 +11,8 @@ class Tax {
 	 * @param    object  $registry
 	 */
 	public function __construct(\Opencart\System\Engine\Registry $registry) {
-		$this->config = $registry->get('config');
 		$this->db = $registry->get('db');
+		$this->config = $registry->get('config');
 	}
 
 	/**

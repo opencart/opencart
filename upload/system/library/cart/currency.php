@@ -1,6 +1,8 @@
 <?php
 namespace Opencart\System\Library\Cart;
 class Currency {
+	private object $db;
+	private object $language;
 	private array $currencies = [];
 
 	/**

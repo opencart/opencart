@@ -1,6 +1,8 @@
 <?php
 namespace Opencart\System\Library\Cart;
 class Length {
+	private object $db;
+	private object $config;
 	private array $lengths = [];
 
 	/**

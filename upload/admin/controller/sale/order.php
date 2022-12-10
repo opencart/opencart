@@ -1279,7 +1279,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 				// Subscription
 				$filter_data = [
-					'order_id'	=> $order_id
+					'filter_order_id'	=> $order_id
 				];
 
 				$subscriptions = $this->model_sale_subscription->getSubscriptions($filter_data);
@@ -1483,7 +1483,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 				// Subscription
 				$filter_data = [
-					'order_id'	=> $order_id
+					'filter_order_id'	=> $order_id
 				];
 
 				$subscriptions = $this->model_sale_subscription->getSubscriptions($filter_data);

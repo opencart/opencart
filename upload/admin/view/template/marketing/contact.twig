@@ -273,7 +273,7 @@ $('#button-send').on('click', function () {
     var next = 'index.php?route=marketing/contact.send&user_token={{ user_token }}';
 
     var send = function () {
-        $.ajax({
+        return $.ajax({
             url: next,
             type: 'post',
             data: $('#content form').serialize(),

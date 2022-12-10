@@ -22,7 +22,7 @@ class Mail {
 	 */
 	public function send(): bool {
 		if (is_array($this->option['to'])) {
-			$to = implode(',',  $this->option['to']);
+			$to = implode(',', $this->option['to']);
 		} else {
 			$to = $this->option['to'];
 		}

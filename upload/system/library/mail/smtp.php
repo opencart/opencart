@@ -112,13 +112,13 @@ class Smtp {
 			$hostname = $this->option['smtp_hostname'];
 		}
 
-		$handle = fsockopen($hostname,  $this->option['smtp_port'], $errno, $errstr,  $this->option['smtp_timeout']);
+		$handle = fsockopen($hostname, $this->option['smtp_port'], $errno, $errstr, $this->option['smtp_timeout']);
 
 		if (!$handle) {
 			throw new \Exception('Error: ' . $errstr . ' (' . $errno . ')');
 		} else {
 			if (substr(PHP_OS, 0, 3) != 'WIN') {
-				socket_set_timeout($handle,  $this->option['smtp_timeout'], 0);
+				socket_set_timeout($handle, $this->option['smtp_timeout'], 0);
 			}
 
 			while ($line = fgets($handle, 515)) {

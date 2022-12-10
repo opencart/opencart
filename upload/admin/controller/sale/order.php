@@ -664,7 +664,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$store = $this->load->controller('tool/store.createStoreInstance', $store_id, $language);
 
-		// 2. Store the new session ID so we're not creating new session on every page load
+		// 2. Store the new session ID, so we're not creating new session on every page load
 		$this->session->data['api_session'] = $store->session->getId();
 
 		// 3. To use the order API it requires an API ID.
@@ -1159,12 +1159,12 @@ class Order extends \Opencart\System\Engine\Controller {
 		$data['direction'] = $this->language->get('direction');
 		$data['lang'] = $this->language->get('code');
 
-		// Hard coding css so they can be replaced via the events system.
+		// Hard coding css, so they can be replaced via the events' system.
 		$data['bootstrap_css'] = 'view/stylesheet/bootstrap.css';
 		$data['icons'] = 'view/stylesheet/fonts/fontawesome/css/all.min.css';
 		$data['stylesheet'] = 'view/stylesheet/stylesheet.css';
 
-		// Hard coding scripts so they can be replaced via the events system.
+		// Hard coding scripts, so they can be replaced via the events' system.
 		$data['jquery'] = 'view/javascript/jquery/jquery-3.6.1.min.js';
 		$data['bootstrap_js'] = 'view/javascript/bootstrap/js/bootstrap.bundle.min.js';
 
@@ -1396,12 +1396,12 @@ class Order extends \Opencart\System\Engine\Controller {
 		$data['direction'] = $this->language->get('direction');
 		$data['lang'] = $this->language->get('code');
 
-		// Hard coding CSS so they can be replaced via the events system.
+		// Hard coding CSS, so they can be replaced via the events' system.
 		$data['bootstrap_css'] = 'view/stylesheet/bootstrap.css';
 		$data['icons'] = 'view/stylesheet/fonts/fontawesome/css/all.min.css';
 		$data['stylesheet'] = 'view/stylesheet/stylesheet.css';
 
-		// Hard coding scripts so they can be replaced via the events system.
+		// Hard coding scripts, so they can be replaced via the events' system.
 		$data['jquery'] = 'view/javascript/jquery/jquery-3.5.1.min.js';
 		$data['bootstrap_js'] = 'view/javascript/bootstrap/js/bootstrap.bundle.min.js';
 

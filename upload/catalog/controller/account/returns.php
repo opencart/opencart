@@ -63,7 +63,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $return_total,
 			'page'  => $page,
-			'limit' => $this->config->get('config_pagination'),
+			'limit' => 10,
 			'url'   => $this->url->link('account/returns', 'language=' . $this->config->get('config_language') . '&page={page}')
 		]);
 

@@ -14,6 +14,7 @@ $_['entry_name']       = 'Module Name';
 $_['entry_banner']     = 'Banner';
 $_['entry_effect']     = 'Effect';
 $_['entry_items']      = 'Items per Slide';
+$_['entry_mobileitems']      = 'Items per Slide on Mobile';
 $_['entry_controls']   = 'Controls';
 $_['entry_indicators'] = 'Indicators';
 $_['entry_interval']   = 'Interval';
@@ -23,6 +24,7 @@ $_['entry_status']     = 'Status';
 
 // Help
 $_['help_items']       = 'The number of items to show per slide.';
+$_['help_mobileitems']       = 'The number of mobile items to show per slide.';
 
 // Error
 $_['error_permission'] = 'Warning: You do not have permission to modify banner module!';

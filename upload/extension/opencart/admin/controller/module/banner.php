@@ -72,6 +72,12 @@ class Banner extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['items'] = 4;
 		}
+		
+		if (isset($module_info['mobileitems'])) {
+			$data['mobileitems'] = $module_info['mobileitems'];
+		} else {
+			$data['mobileitems'] = 1;
+		}				
 
 		if (isset($module_info['controls'])) {
 			$data['controls'] = $module_info['controls'];

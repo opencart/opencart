@@ -1,8 +1,14 @@
+{% if userdevice ==  "mobile" %}
+{% set useritems = mobileitems %}
+{% else %}
+{% set useritems = items %}
+
+{% endif %}
 <div id="carousel-banner-{{ module }}" class="carousel slide{% if effect == 'fade' %} carousel-fade{% endif %}" data-bs-ride="carousel">
-  {% if indicators and banners|batch(items)|length > 1 %}
+  {% if indicators and banners|batch(useritems)|length > 1 %}
     <div class="carousel-indicators">
       {% set banner_row = 0 %}
-      {% for banner in banners|batch(items) %}
+      {% for banner in banners|batch(useritems) %}
         <button type="button" data-bs-target="#carousel-banner-{{ module }}" data-bs-slide-to="{{ banner_row }}"{% if banner_row == 0 %} class="active"{% endif %}></button>
         {% set banner_row = banner_row + 1 %}
       {% endfor %}
@@ -10,11 +16,11 @@
   {% endif %}
   <div class="carousel-inner">
     {% set banner_row = 0 %}
-    {% for carousel in banners|batch(items) %}
+    {% for carousel in banners|batch(useritems) %}
       <div class="carousel-item{% if banner_row == 0 %} active{% endif %}">
         <div class="row justify-content-center">
           {% for banner in carousel %}
-            <div class="col-{{ (12 / items)|round }} text-center">
+            <div class="col-{{ (12 / useritems)|round }} text-center">
               {% if banner.link %}
                 <a href="{{ banner.link }}"><img src="{{ banner.image }}" alt="{{ banner.title }}" class="img-fluid"/></a>
               {% else %}
@@ -27,7 +33,7 @@
       {% set banner_row = banner_row + 1 %}
     {% endfor %}
   </div>
-  {% if controls and banners|batch(items)|length > 1 %}
+  {% if controls and banners|batch(useritems)|length > 1 %}
     <button type="button" class="carousel-control-prev" data-bs-target="#carousel-banner-{{ module }}" data-bs-slide="prev"><span class="fa-solid fa-chevron-left"></span></button>
     <button type="button" class="carousel-control-next" data-bs-target="#carousel-banner-{{ module }}" data-bs-slide="next"><span class="fa-solid fa-chevron-right"></span></button>
   {% endif %}

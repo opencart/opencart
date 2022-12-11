@@ -52,6 +52,13 @@
             </div>
           </div>
           <div class="row mb-3">
+            <label for="input-mobileitems" class="col-sm-2 col-form-label">{{ entry_mobileitems }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="mobileitems" value="{{ mobileitems }}" placeholder="{{ entry_mobileitems }}" id="input-mobileitems" class="form-control"/>
+              <div class="form-text text-muted">{{ help_mobileitems }}</div>
+            </div>
+          </div>                    
+          <div class="row mb-3">
             <label for="input-controls" class="col-sm-2 col-form-label">{{ entry_controls }}</label>
             <div class="col-sm-10">
               <select name="controls" id="input-controls" class="form-select">

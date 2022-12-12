@@ -19,7 +19,13 @@ class Header extends \Opencart\System\Engine\Controller {
 
 		$data['lang'] = $this->language->get('code');
 		$data['direction'] = $this->language->get('direction');
-		$data['userdevice'] = $this->request->cookie['userdevice'];//get it from stratup/session
+		if(isset($this->request->cookie['userdevice'])){
+			$data['userdevice'] = $this->request->cookie['userdevice'];//get it from stratup/session
+		}else if(isset($this->session->data['userdevice'])){
+			$data['userdevice'] = $this->session->data['userdevice'];//get it from stratup/session
+		}else{
+			$data['userdevice'] = "None";
+		}
 		$data['title'] = $this->document->getTitle();
 		$data['base'] = $this->config->get('config_url');
 		$data['description'] = $this->document->getDescription();

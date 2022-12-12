@@ -23,7 +23,13 @@ class Banner extends \Opencart\System\Engine\Controller {
 
 		if ($data['banners']) {
 			$data['module'] = $module++;
-            $data['userdevice'] = $this->request->cookie['userdevice'];//get it from stratup/session
+			if(isset($this->request->cookie['userdevice'])){
+            	$data['userdevice'] = $this->request->cookie['userdevice'];//get it from stratup/session
+			}else if(isset($this->session->data['userdevice'])){
+            	$data['userdevice'] = $this->session->data['userdevice'];//get it from stratup/session
+			}else{
+				$data['userdevice'] = "None";
+			}
 			$data['effect'] = $setting['effect'];
 			$data['controls'] = $setting['controls'];
 			$data['indicators'] = $setting['indicators'];

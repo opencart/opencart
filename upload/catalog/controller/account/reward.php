@@ -37,13 +37,15 @@ class Reward extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
+		$limit = 10;
+
 		$data['rewards'] = [];
 
 		$filter_data = [
 			'sort'  => 'date_added',
 			'order' => 'DESC',
-			'start' => ($page - 1) * 10,
-			'limit' => 10
+			'start' => ($page - 1) * $limit,
+			'limit' => $limit
 		];
 
 		$reward_total = $this->model_account_reward->getTotalRewards();
@@ -63,11 +65,11 @@ class Reward extends \Opencart\System\Engine\Controller {
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $reward_total,
 			'page'  => $page,
-			'limit' => 10,
+			'limit' => $limit,
 			'url'   => $this->url->link('account/reward', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&page={page}')
 		]);
 
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($reward_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($reward_total - 10)) ? $reward_total : ((($page - 1) * 10) + 10), $reward_total, ceil($reward_total / 10));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($reward_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($reward_total - $limit)) ? $reward_total : ((($page - 1) * $limit) + $limit), $reward_total, ceil($reward_total / $limit));
 
 		$data['total'] = (int)$this->customer->getRewardPoints();
 

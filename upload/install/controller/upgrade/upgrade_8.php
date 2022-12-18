@@ -213,7 +213,7 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
             }
 
             // Coupon - uses_customer
-            $query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "coupon' AND COLUMN_NAME = 'uses_customer' AND DATA_TYPE = 'varchar'");
+            $query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "coupon' AND COLUMN_NAME = 'uses_customer' AND COLUMN_TYPE = 'varchar(11)'");
 
             if ($query->num_rows) {
                 $this->db->query("ALTER TABLE `" . DB_PREFIX . "coupon` DROP COLUMN `uses_customer`");

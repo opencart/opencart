@@ -212,6 +212,14 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
                 $this->db->query("ALTER TABLE `" . DB_PREFIX . "address` ADD COLUMN `default` tinyint(1) NOT NULL AFTER `custom_field`");
             }
 
+            // Coupon - uses_customer
+            $query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "coupon' AND COLUMN_NAME = 'uses_customer' AND DATA_TYPE = 'varchar'");
+
+            if ($query->num_rows) {
+                $this->db->query("ALTER TABLE `" . DB_PREFIX . "coupon` DROP COLUMN `uses_customer`");
+                $this->db->query("ALTER TABLE `" . DB_PREFIX . "coupon` ADD COLUMN `uses_customer` int(11) NOT NULL AFTER `uses_total`");
+            }
+
             // Customer IP
             $query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "customer_ip' AND COLUMN_NAME = 'store_id'");
 

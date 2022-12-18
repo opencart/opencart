@@ -41,13 +41,15 @@ class Order extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
+		$limit = 10;
+
 		$data['orders'] = [];
 
 		$this->load->model('account/order');
 
 		$order_total = $this->model_account_order->getTotalOrders();
 
-		$results = $this->model_account_order->getOrders(($page - 1) * 10, 10);
+		$results = $this->model_account_order->getOrders(($page - 1) * $limit, $limit);
 
 		foreach ($results as $result) {
 			$product_total = $this->model_account_order->getTotalProductsByOrderId($result['order_id']);
@@ -67,11 +69,11 @@ class Order extends \Opencart\System\Engine\Controller {
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $order_total,
 			'page'  => $page,
-			'limit' => 10,
+			'limit' => $limit,
 			'url'   => $this->url->link('account/order', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&page={page}')
 		]);
 
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($order_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($order_total - 10)) ? $order_total : ((($page - 1) * 10) + 10), $order_total, ceil($order_total / 10));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($order_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($order_total - $limit)) ? $order_total : ((($page - 1) * $limit) + $limit), $order_total, ceil($order_total / $limit));
 
 		$data['continue'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']);
 

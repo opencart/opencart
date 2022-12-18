@@ -386,11 +386,13 @@ class User extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
+		$limit = 10;
+
 		$data['authorizes'] = [];
 
 		$this->load->model('user/user');
 
-		$results = $this->model_user_user->getAuthorizes($user_id, ($page - 1) * 10, 10);
+		$results = $this->model_user_user->getAuthorizes($user_id, ($page - 1) * $limit, $limit);
 
 		foreach ($results as $result) {
 			$data['authorizes'][] = [
@@ -409,11 +411,11 @@ class User extends \Opencart\System\Engine\Controller {
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $authorize_total,
 			'page'  => $page,
-			'limit' => 10,
+			'limit' => $limit,
 			'url'   => $this->url->link('user/user.authorize', 'user_token=' . $this->session->data['user_token'] . '&user_id=' . $user_id . '&page={page}')
 		]);
 
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($authorize_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($authorize_total - 10)) ? $authorize_total : ((($page - 1) * 10) + 10), $authorize_total, ceil($authorize_total / 10));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($authorize_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($authorize_total - $limit)) ? $authorize_total : ((($page - 1) * $limit) + $limit), $authorize_total, ceil($authorize_total / $limit));
 
 		return $this->load->view('user/user_authorize', $data);
 	}
@@ -483,11 +485,13 @@ class User extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
+		$limit = 10;
+
 		$data['logins'] = [];
 
 		$this->load->model('user/user');
 
-		$results = $this->model_user_user->getLogins($user_id, ($page - 1) * 10, 10);
+		$results = $this->model_user_user->getLogins($user_id, ($page - 1) * $limit, $limit);
 
 		foreach ($results as $result) {
 			$data['logins'][] = [
@@ -502,11 +506,11 @@ class User extends \Opencart\System\Engine\Controller {
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $login_total,
 			'page'  => $page,
-			'limit' => 10,
+			'limit' => $limit,
 			'url'   => $this->url->link('user/user.login', 'user_token=' . $this->session->data['user_token'] . '&user_id=' . $user_id . '&page={page}')
 		]);
 
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($login_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($login_total - 10)) ? $login_total : ((($page - 1) * 10) + 10), $login_total, ceil($login_total / 10));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($login_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($login_total - $limit)) ? $login_total : ((($page - 1) * $limit) + $limit), $login_total, ceil($login_total / $limit));
 
 		return $this->load->view('user/user_login', $data);
 	}

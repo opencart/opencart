@@ -41,13 +41,15 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
+		$limit = 10;
+
 		$data['subscriptions'] = [];
 
 		$this->load->model('account/subscription');
 
 		$filter_data = [
-			'start'	=> ($page - 1) * 10,
-			'limit'	=> 10
+			'start'	=> ($page - 1) * $limit,
+			'limit'	=> $limit
 		];
 
 		$subscription_total = $this->model_account_subscription->getTotalSubscriptions($filter_data);
@@ -73,7 +75,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $subscription_total,
 			'page'  => $page,
-			'limit' => 10,
+			'limit' => $limit,
 			'url'   => $this->url->link('account/subscription', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&page={page}')
 		]);
 

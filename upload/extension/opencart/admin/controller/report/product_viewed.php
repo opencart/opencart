@@ -155,6 +155,8 @@ class ProductViewed extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
+		$limit = 10;
+
 		if (!$this->user->hasPermission('modify', 'extension/opencart/report/product_viewed')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
@@ -167,8 +169,8 @@ class ProductViewed extends \Opencart\System\Engine\Controller {
 			}
 
 			$filter_data = [
-				'start' => ($page - 1) * 10,
-				'limit' => 10
+				'start' => ($page - 1) * $limit,
+				'limit' => $limit
 			];
 
 			$this->load->model('catalog/product');
@@ -181,8 +183,8 @@ class ProductViewed extends \Opencart\System\Engine\Controller {
 				$this->model_extension_opencart_report_product_viewed->addReport($product['product_id'], $this->model_catalog_product->getTotalReports($product['product_id']));
 			}
 
-			if (($page * 10) <= $product_total) {
-				$json['text'] = sprintf($this->language->get('text_progress'), ($page - 1) * 10, $product_total);
+			if (($page * $limit) <= $product_total) {
+				$json['text'] = sprintf($this->language->get('text_progress'), ($page - 1) * $limit, $product_total);
 
 				$json['next'] = $this->url->link('extension/opencart/report/product_viewed.generate', 'user_token=' . $this->session->data['user_token'] . '&page=' . ($page + 1), true);
 			} else {

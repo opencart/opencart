@@ -347,13 +347,15 @@ class Download extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
+		$limit = 10;
+
 		$data['reports'] = [];
 
 		$this->load->model('catalog/download');
 		$this->load->model('customer/customer');
 		$this->load->model('setting/store');
 
-		$results = $this->model_catalog_download->getReports($download_id, ($page - 1) * 10, 10);
+		$results = $this->model_catalog_download->getReports($download_id, ($page - 1) * $limit, $limit);
 
 		foreach ($results as $result) {
 			$store_info = $this->model_setting_store->getStore($result['store_id']);
@@ -381,11 +383,11 @@ class Download extends \Opencart\System\Engine\Controller {
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $report_total,
 			'page'  => $page,
-			'limit' => $this->config->get('config_pagination_admin'),
+			'limit' => $limit,
 			'url'   => $this->url->link('catalog/download.report', 'user_token=' . $this->session->data['user_token'] . '&download_id=' . $download_id . '&page={page}')
 		]);
 
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($report_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($report_total - 10)) ? $report_total : ((($page - 1) * 10) + 10), $report_total, ceil($report_total / 10));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($report_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($report_total - $limit)) ? $report_total : ((($page - 1) * $limit) + $limit), $report_total, ceil($report_total / $limit));
 
 		return $this->load->view('catalog/download_report', $data);
 	}

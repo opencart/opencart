@@ -40,7 +40,7 @@ $_['text_comment']       = 'Comments';
 $_['text_download']      = 'Downloading';
 $_['text_install']       = 'Installing';
 $_['text_comment_add']   = 'Leave your comment';
-$_['text_write']         = 'Write your comment here..';
+$_['text_write']         = 'Write your comment here.';
 $_['text_purchase']      = 'Please confirm who you are!';
 $_['text_pin']           = 'Please enter your 4 digit PIN number. This PIN number is to protect your account.';
 $_['text_secure']        = 'Do not give your PIN to anyone (including developers). If you require assistance, please send an email to the extension seller in regards to the specific extension package.';
@@ -75,5 +75,5 @@ $_['button_forgot_pin']  = 'Forgot PIN?';
 // Error
 $_['error_permission']   = 'Warning: You do not have permission to modify extensions!';
 $_['error_opencart']     = 'Warning: You must enter your OpenCart API information before you can make any purchases!';
-$_['error_purchase']     = 'Extension could not be purchased!';
-$_['error_download']     = 'Extension could not be downloaded!';
+$_['error_purchase']     = 'The extension could not be purchased!';
+$_['error_download']     = 'The extension could not be downloaded!';

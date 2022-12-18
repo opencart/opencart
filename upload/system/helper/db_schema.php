@@ -968,7 +968,7 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'uses_customer',
-				'type' => 'varchar(11)',
+				'type' => 'int(11)',
 				'not_null' => true
 			],
 			[

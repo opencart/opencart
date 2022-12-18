@@ -11,7 +11,7 @@ class Smtp {
 	 *
 	 * @param    array  $option
 	 */
-	public function __construct(array $option = []) {
+	public function __construct(array &$option = []) {
 		$default = [
 			'smtp_hostname' => '',
 			'smtp_username' => '',
@@ -28,7 +28,7 @@ class Smtp {
 			}
 		}
 
-		$this->option = $option;
+		$this->option = &$option;
 	}
 
 	/**
@@ -37,6 +37,29 @@ class Smtp {
 	 * @return    bool
 	 */
 	public function send(): bool {
+		if (empty($this->option['to'])) {
+			throw new \Exception('Error: To email to required!');
+		}
+
+		if (empty($this->option['from'])) {
+			throw new \Exception('Error: From email from required!');
+		}
+
+		if (empty($this->option['sender'])) {
+			throw new \Exception('Error: E-Mail sender required!');
+		}
+
+		if (empty($this->option['subject'])) {
+			throw new \Exception('Error: E-Mail subject required!');
+		}
+
+		if (empty($this->option['text']) && empty($this->option['html'])) {
+			throw new \Exception('Error: E-Mail message required!');
+		}
+
+
+
+
 		if (is_array($this->option['to'])) {
 			$to = implode(',', $this->option['to']);
 		} else {
@@ -51,7 +74,7 @@ class Smtp {
 		$header .= 'Date: ' . date('D, d M Y H:i:s O') . PHP_EOL;
 		$header .= 'From: =?UTF-8?B?' . base64_encode($this->option['sender']) . '?= <' . $this->option['from'] . '>' . PHP_EOL;
 
-		if (!$this->option['reply_to']) {
+		if (empty($this->option['reply_to'])) {
 			$header .= 'Reply-To: =?UTF-8?B?' . base64_encode($this->option['sender']) . '?= <' . $this->option['from'] . '>' . PHP_EOL;
 		} else {
 			$header .= 'Reply-To: =?UTF-8?B?' . base64_encode($this->option['reply_to']) . '?= <' . $this->option['reply_to'] . '>' . PHP_EOL;
@@ -61,7 +84,7 @@ class Smtp {
 		$header .= 'X-Mailer: PHP/' . phpversion() . PHP_EOL;
 		$header .= 'Content-Type: multipart/mixed; boundary="' . $boundary . '"' . PHP_EOL . PHP_EOL;
 
-		if (!$this->option['html']) {
+		if (empty($this->option['html'])) {
 			$message = '--' . $boundary . PHP_EOL;
 			$message .= 'Content-Type: text/plain; charset="utf-8"' . PHP_EOL;
 			$message .= 'Content-Transfer-Encoding: base64' . PHP_EOL . PHP_EOL;
@@ -73,7 +96,7 @@ class Smtp {
 			$message .= 'Content-Type: text/plain; charset="utf-8"' . PHP_EOL;
 			$message .= 'Content-Transfer-Encoding: base64' . PHP_EOL . PHP_EOL;
 
-			if ($this->option['text']) {
+			if (!empty($this->option['text'])) {
 				$message .= base64_encode($this->option['text']) . PHP_EOL;
 			} else {
 				$message .= base64_encode('This is a HTML email and your email client software does not support HTML email!') . PHP_EOL;
@@ -86,21 +109,23 @@ class Smtp {
 			$message .= '--' . $boundary . '_alt--' . PHP_EOL;
 		}
 
-		foreach ($this->option['attachments'] as $attachment) {
-			if (is_file($attachment)) {
-				$handle = fopen($attachment, 'r');
+		if (!empty($this->option['attachments'])) {
+			foreach ($this->option['attachments'] as $attachment) {
+				if (is_file($attachment)) {
+					$handle = fopen($attachment, 'r');
 
-				$content = fread($handle, filesize($attachment));
+					$content = fread($handle, filesize($attachment));
 
-				fclose($handle);
+					fclose($handle);
 
-				$message .= '--' . $boundary . PHP_EOL;
-				$message .= 'Content-Type: application/octet-stream; name="' . basename($attachment) . '"' . PHP_EOL;
-				$message .= 'Content-Transfer-Encoding: base64' . PHP_EOL;
-				$message .= 'Content-Disposition: attachment; filename="' . basename($attachment) . '"' . PHP_EOL;
-				$message .= 'Content-ID: <' . urlencode(basename($attachment)) . '>' . PHP_EOL;
-				$message .= 'X-Attachment-Id: ' . urlencode(basename($attachment)) . PHP_EOL . PHP_EOL;
-				$message .= chunk_split(base64_encode($content));
+					$message .= '--' . $boundary . PHP_EOL;
+					$message .= 'Content-Type: application/octet-stream; name="' . basename($attachment) . '"' . PHP_EOL;
+					$message .= 'Content-Transfer-Encoding: base64' . PHP_EOL;
+					$message .= 'Content-Disposition: attachment; filename="' . basename($attachment) . '"' . PHP_EOL;
+					$message .= 'Content-ID: <' . urlencode(basename($attachment)) . '>' . PHP_EOL;
+					$message .= 'X-Attachment-Id: ' . urlencode(basename($attachment)) . PHP_EOL . PHP_EOL;
+					$message .= chunk_split(base64_encode($content));
+				}
 			}
 		}
 
@@ -114,9 +139,7 @@ class Smtp {
 
 		$handle = fsockopen($hostname,  $this->option['smtp_port'], $errno, $errstr,  $this->option['smtp_timeout']);
 
-		if (!$handle) {
-			throw new \Exception('Error: ' . $errstr . ' (' . $errno . ')');
-		} else {
+		if ($handle) {
 			if (substr(PHP_OS, 0, 3) != 'WIN') {
 				socket_set_timeout($handle,  $this->option['smtp_timeout'], 0);
 			}
@@ -234,6 +257,8 @@ class Smtp {
 			$this->handleReply($handle, 221, 'Error: QUIT not accepted from server!');
 
 			fclose($handle);
+		} else {
+			throw new \Exception('Error: ' . $errstr . ' (' . $errno . ')');
 		}
 
 		return true;
@@ -247,6 +272,7 @@ class Smtp {
 	 * @param	bool	$error_text
 	 * @param	int		$counter
 	 *
+	 * @return      string
 	 */
 	private function handleReply($handle, $status_code = false, $error_text = false, $counter = 0) {
 		$reply = '';

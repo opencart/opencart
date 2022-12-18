@@ -1994,6 +1994,7 @@ INSERT INTO `oc_setting` (`store_id`, `code`, `key`, `value`, `serialized`) VALU
 (0, 'config', 'config_affiliate_approval', '0', 0),
 (0, 'config', 'config_affiliate_auto', '0', 0),
 (0, 'config', 'config_affiliate_commission', '5', 0),
+(0, 'config', 'config_affiliate_expire', '3600000000', 0),
 (0, 'config', 'config_affiliate_id', '4', 0),
 (0, 'config', 'config_return_id', '0', 0),
 (0, 'config', 'config_return_status_id', '2', 0),

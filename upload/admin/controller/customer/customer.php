@@ -698,15 +698,15 @@ class Customer extends \Opencart\System\Engine\Controller {
 					$json['error']['address_' . $key . '_firstname'] = $this->language->get('error_firstname');
 				}
 
-				if ((\Opencart\System\oc_strlen($value['lastname']) < 1) || (\Opencart\System\oc_strlen($value['lastname']) > 32)) {
+				if ((oc_strlen($value['lastname']) < 1) || (oc_strlen($value['lastname']) > 32)) {
 					$json['error']['address_' . $key . '_lastname'] = $this->language->get('error_lastname');
 				}
 
-				if ((\Opencart\System\oc_strlen($value['address_1']) < 3) || (\Opencart\System\oc_strlen($value['address_1']) > 128)) {
+				if ((oc_strlen($value['address_1']) < 3) || (oc_strlen($value['address_1']) > 128)) {
 					$json['error']['address_' . $key . '_address_1'] = $this->language->get('error_address_1');
 				}
 
-				if ((\Opencart\System\oc_strlen($value['city']) < 2) || (\Opencart\System\oc_strlen($value['city']) > 128)) {
+				if ((oc_strlen($value['city']) < 2) || (oc_strlen($value['city']) > 128)) {
 					$json['error']['address_' . $key . '_city'] = $this->language->get('error_city');
 				}
 

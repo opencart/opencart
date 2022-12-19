@@ -257,11 +257,13 @@ class Smtp {
 			$this->handleReply($handle, 221, 'Error: QUIT not accepted from server!');
 
 			fclose($handle);
+
+			return true;
 		} else {
 			throw new \Exception('Error: ' . $errstr . ' (' . $errno . ')');
-		}
 
-		return true;
+			return false;
+		}
 	}
 
 	/**

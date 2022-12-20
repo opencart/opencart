@@ -1562,6 +1562,10 @@ $('#button-cart').on('click', function() {
 	$('a[href=\'#tab-payment\']').tab('show');
 });
 
+function htmlDecode(value) {
+  return $("<textarea/>").html(value).text();
+}
+
 // Payment Address
 $('select[name=\'payment_address\']').on('change', function() {
 	$.ajax({
@@ -1579,12 +1583,12 @@ $('select[name=\'payment_address\']').on('change', function() {
 			$('#tab-payment select option').not('#tab-payment select[name=\'payment_address\']').removeAttr('selected');
 			$('#tab-payment input[type=\'checkbox\'], #tab-payment input[type=\'radio\']').removeAttr('checked');
 
-			$('#tab-payment input[name=\'firstname\']').val(json['firstname']);
-			$('#tab-payment input[name=\'lastname\']').val(json['lastname']);
-			$('#tab-payment input[name=\'company\']').val(json['company']);
-			$('#tab-payment input[name=\'address_1\']').val(json['address_1']);
-			$('#tab-payment input[name=\'address_2\']').val(json['address_2']);
-			$('#tab-payment input[name=\'city\']').val(json['city']);
+			$('#tab-payment input[name=\'firstname\']').val(htmlDecode(json['firstname']));
+			$('#tab-payment input[name=\'lastname\']').val(htmlDecode(json['lastname']));
+			$('#tab-payment input[name=\'company\']').val(htmlDecode(json['company']));
+			$('#tab-payment input[name=\'address_1\']').val(htmlDecode(json['address_1']));
+			$('#tab-payment input[name=\'address_2\']').val(htmlDecode(json['address_2']));
+			$('#tab-payment input[name=\'city\']').val(htmlDecode(json['city']));
 			$('#tab-payment input[name=\'postcode\']').val(json['postcode']);
 			$('#tab-payment select[name=\'country_id\']').val(json['country_id']);
 
@@ -1763,12 +1767,12 @@ $('select[name=\'shipping_address\']').on('change', function() {
 			$('#tab-shipping select option').not('#tab-shipping select[name=\'shipping_address\']').removeAttr('selected');
 			$('#tab-shipping input[type=\'checkbox\'], #tab-shipping input[type=\'radio\']').removeAttr('checked');
 
-			$('#tab-shipping input[name=\'firstname\']').val(json['firstname']);
-			$('#tab-shipping input[name=\'lastname\']').val(json['lastname']);
-			$('#tab-shipping input[name=\'company\']').val(json['company']);
-			$('#tab-shipping input[name=\'address_1\']').val(json['address_1']);
-			$('#tab-shipping input[name=\'address_2\']').val(json['address_2']);
-			$('#tab-shipping input[name=\'city\']').val(json['city']);
+			$('#tab-shipping input[name=\'firstname\']').val(htmlDecode(json['firstname']));
+			$('#tab-shipping input[name=\'lastname\']').val(htmlDecode(json['lastname']));
+			$('#tab-shipping input[name=\'company\']').val(htmlDecode(json['company']));
+			$('#tab-shipping input[name=\'address_1\']').val(htmlDecode(json['address_1']));
+			$('#tab-shipping input[name=\'address_2\']').val(htmlDecode(json['address_2']));
+			$('#tab-shipping input[name=\'city\']').val(htmlDecode(json['city']));
 			$('#tab-shipping input[name=\'postcode\']').val(json['postcode']);
 			$('#tab-shipping select[name=\'country_id\']').val(json['country_id']);
 

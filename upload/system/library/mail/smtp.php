@@ -137,11 +137,11 @@ class Smtp {
 			$hostname = $this->option['smtp_hostname'];
 		}
 
-		$handle = fsockopen($hostname,  $this->option['smtp_port'], $errno, $errstr,  $this->option['smtp_timeout']);
+		$handle = fsockopen($hostname, $this->option['smtp_port'], $errno, $errstr, $this->option['smtp_timeout']);
 
 		if ($handle) {
 			if (substr(PHP_OS, 0, 3) != 'WIN') {
-				socket_set_timeout($handle,  $this->option['smtp_timeout'], 0);
+				socket_set_timeout($handle, $this->option['smtp_timeout'], 0);
 			}
 
 			while ($line = fgets($handle, 515)) {
@@ -257,11 +257,13 @@ class Smtp {
 			$this->handleReply($handle, 221, 'Error: QUIT not accepted from server!');
 
 			fclose($handle);
+
+			return true;
 		} else {
 			throw new \Exception('Error: ' . $errstr . ' (' . $errno . ')');
-		}
 
-		return true;
+			return false;
+		}
 	}
 
 	/**

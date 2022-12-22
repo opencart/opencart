@@ -5,6 +5,12 @@
 namespace Opencart\System\Library\Mail;
 class Smtp {
 	protected array $option = [];
+	protected array $default = [
+		'smtp_port'     => 25,
+		'smtp_timeout'  => 5,
+		'max_attempts'  => 3,
+		'verp'          => false
+	];
 
 	/**
 	 * Constructor
@@ -12,17 +18,7 @@ class Smtp {
 	 * @param    array  $option
 	 */
 	public function __construct(array &$option = []) {
-		$default = [
-			'smtp_hostname' => '',
-			'smtp_username' => '',
-			'smtp_password' => '',
-			'smtp_port'     => 25,
-			'smtp_timeout'  => 5,
-			'max_attempts'  => 3,
-			'verp'          => false
-		];
-
-		foreach ($default as $key => $value) {
+		foreach ($this->default as $key => $value) {
 			if (!isset($option[$key])) {
 				$option[$key] = $value;
 			}
@@ -37,28 +33,25 @@ class Smtp {
 	 * @return    bool
 	 */
 	public function send(): bool {
-		if (empty($this->option['to'])) {
-			throw new \Exception('Error: To email to required!');
+		if (empty($this->option['smtp_hostname'])) {
+			throw new \Exception('Error: SMTP hostname required!');
 		}
 
-		if (empty($this->option['from'])) {
-			throw new \Exception('Error: From email from required!');
+		if (empty($this->option['smtp_username'])) {
+			throw new \Exception('Error: SMTP username required!');
 		}
 
-		if (empty($this->option['sender'])) {
-			throw new \Exception('Error: E-Mail sender required!');
+		if (empty($this->option['smtp_password'])) {
+			throw new \Exception('Error: SMTP password required!');
 		}
 
-		if (empty($this->option['subject'])) {
-			throw new \Exception('Error: E-Mail subject required!');
+		if (empty($this->option['smtp_port'])) {
+			throw new \Exception('Error: SMTP port required!');
 		}
 
-		if (empty($this->option['text']) && empty($this->option['html'])) {
-			throw new \Exception('Error: E-Mail message required!');
+		if (empty($this->option['smtp_timeout'])) {
+			throw new \Exception('Error: SMTP timeout required!');
 		}
-
-
-
 
 		if (is_array($this->option['to'])) {
 			$to = implode(',', $this->option['to']);

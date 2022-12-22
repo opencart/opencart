@@ -464,6 +464,8 @@ class Order extends \Opencart\System\Engine\Model {
 
 			return $order_info['invoice_prefix'] . $invoice_no;
 		}
+
+		return '';
 	}
 
 	public function getRewardTotal(int $order_id): int {

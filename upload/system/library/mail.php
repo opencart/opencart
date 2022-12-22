@@ -19,7 +19,7 @@ class Mail {
 	 * Constructor
 	 *
 	 * @param	string	$adaptor
-	 * @param    array  $option
+	 * @param   array	$option
 	 *
  	*/
 	public function __construct(string $adaptor = 'mail', array $option = []) {

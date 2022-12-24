@@ -64,6 +64,8 @@ class Subscription extends \Opencart\System\Engine\Controller {
             $this->load->language('mail/subscription');
 
             $this->load->model('account/customer');
+			
+			$products = $this->cart->getProducts();
 
             foreach ($subscriptions as $result) {
                 $customer_info = $this->model_account_customer->getCustomer($result['customer_id']);
@@ -92,8 +94,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
                             $order_product = $this->model_account_order->getProduct($result['order_id'], $result['order_product_id']);
 
                             if ($order_product && $order_product['order_product_id'] == $subscription['order_product_id']) {
-                                $products = $this->cart->getProducts();
-
                                 $description = '';
 
                                 foreach ($products as $product) {

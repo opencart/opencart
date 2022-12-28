@@ -23,11 +23,8 @@
           <div class="card-body">
             <div class="mb-3">
               <label for="input-product" class="form-label">{{ entry_product }}</label>
-              <div class="input-group">
-                <span id="autocomplete-product" class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
-                <input type="text" name="filter_product" value="{{ filter_product }}" placeholder="{{ entry_product }}" id="input-product" list="list-product" class="form-control" autocomplete="off"/>
-              </div>
-              <datalist id="list-product"></datalist>
+              <input type="text" name="filter_product" value="{{ filter_product }}" placeholder="{{ entry_product }}" id="input-product" data-oc-target="autocomplete-product" class="form-control" autocomplete="off"/>
+              <ul id="autocomplete-product" class="dropdown-menu"></ul>
             </div>
             <div class="mb-3">
               <label for="input-author" class="form-label">{{ entry_author }}</label> <input type="text" name="filter_author" value="{{ filter_author }}" placeholder="{{ entry_author }}" id="input-author" class="form-control"/>
@@ -114,15 +111,9 @@ $('#button-filter').on('click', function () {
 
 $('#input-product').autocomplete({
     'source': function (request, response) {
-        return $.ajax({
+        $.ajax({
             url: 'index.php?route=catalog/product.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
-            beforeSend: function () {
-                $('#autocomplete-product').html('<i class="fa-solid fa-circle-notch fa-spin"></i>');
-            },
-            complete: function () {
-                $('#autocomplete-product').html('<i class="fa-solid fa-magnifying-glass"></i>');
-            },
             success: function (json) {
                 response($.map(json, function (item) {
                     return {
@@ -134,6 +125,7 @@ $('#input-product').autocomplete({
         });
     },
     'select': function (item) {
+        $('#input-product').val(item['label']);
     }
 });
 //--></script>

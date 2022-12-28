@@ -23,19 +23,13 @@
           <div class="card-body">
             <div class="mb-3">
               <label class="form-label">{{ entry_customer }}</label>
-              <div class="input-group">
-                <span id="autocomplete-customer" class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
-                <input type="text" name="filter_customer" value="" placeholder="{{ entry_customer }}" id="input-customer" list="list-customer" class="form-control" autocomplete="off"/>
-              </div>
-              <datalist id="list-customer"></datalist>
+              <input type="text" name="filter_customer" value="" placeholder="{{ entry_customer }}" id="input-customer" data-oc-target="autocomplete-customer" class="form-control" autocomplete="off"/>
+              <ul id="autocomplete-customer" class="dropdown-menu"></ul>
             </div>
             <div class="mb-3">
               <label class="form-label">{{ entry_email }}</label>
-              <div class="input-group">
-                <span id="autocomplete-email" class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
-                <input type="text" name="filter_email" value="" placeholder="{{ entry_email }}" id="input-email" list="list-email" class="form-control" autocomplete="off"/>
-              </div>
-              <datalist id="list-email"></datalist>
+              <input type="text" name="filter_email" value="" placeholder="{{ entry_email }}" id="input-email" data-oc-target="autocomplete-email" class="form-control" autocomplete="off"/>
+              <ul id="autocomplete-email" class="dropdown-menu"></ul>
             </div>
             <div class="mb-3">
               <label for="input-customer-group" class="form-label">{{ entry_customer_group }}</label> <select name="filter_customer_group_id" id="input-customer-group" class="form-select">
@@ -165,15 +159,9 @@ $('#button-filter').on('click', function () {
 
 $('#input-customer').autocomplete({
     'source': function (request, response) {
-        return $.ajax({
+        $.ajax({
             url: 'index.php?route=customer/customer.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
-            beforeSend: function () {
-                $('#autocomplete-customer').html('<i class="fa-solid fa-circle-notch fa-spin"></i>');
-            },
-            complete: function () {
-                $('#autocomplete-customer').html('<i class="fa-solid fa-magnifying-glass"></i>');
-            },
             success: function (json) {
                 response($.map(json, function (item) {
                     return {
@@ -185,20 +173,15 @@ $('#input-customer').autocomplete({
         });
     },
     'select': function (item) {
+        $('#input-name').val(item['label']);
     }
 });
 
 $('#input-email').autocomplete({
     'source': function (request, response) {
-        return $.ajax({
+        $.ajax({
             url: 'index.php?route=customer/customer.autocomplete&user_token={{ user_token }}&filter_email=' + encodeURIComponent(request),
             dataType: 'json',
-            beforeSend: function () {
-                $('#autocomplete-email').html('<i class="fa-solid fa-circle-notch fa-spin"></i>');
-            },
-            complete: function () {
-                $('#autocomplete-email').html('<i class="fa-solid fa-magnifying-glass"></i>');
-            },
             success: function (json) {
                 response($.map(json, function (item) {
                     return {
@@ -210,6 +193,7 @@ $('#input-email').autocomplete({
         });
     },
     'select': function (item) {
+        $('#input-email').val(item['label']);
     }
 });
 //--></script>

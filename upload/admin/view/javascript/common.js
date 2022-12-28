@@ -434,7 +434,7 @@ var chain = new Chain();
     $.fn.autocomplete = function (option) {
         return this.each(function () {
             var element = this;
-            var $dropdown = $('#' + $(element).attr('list'));
+            var $dropdown = $('#' + $(element).attr('data-oc-target'));
 
             this.timer = null;
             this.items = [];
@@ -442,44 +442,46 @@ var chain = new Chain();
             $.extend(this, option);
 
             // Focus
-            $(element).on('focus', function () {
-                console.log('focus');
+            $(element).on('focusin', function () {
+                console.log('focusin');
 
-                this.request();
+                element.request();
+            });
+
+            // Blur
+            $(element).on('focusout', function (e) {
+                console.log('focusout');
+
+                $dropdown.removeClass('show');
             });
 
             // Input
             $(element).on('input', function (e) {
                 console.log('input');
 
-                this.request();
+                element.request();
             });
 
-            // Keyup
-            $(element).on('keyup', function (e) {
-                console.log('keyup');
+            // Click
+            $dropdown.on('click', 'a', function (e) {
+                e.preventDefault();
 
-                this.complete();
-            });
+                console.log('click');
 
-            // Complete
-            this.complete = function () {
-                console.log('complete');
+                var value = $(this).attr('href');
 
-                var value = $(element).val();
+                if (element.items[value] !== undefined) {
+                    element.select(element.items[value]);
 
-                console.log(value);
-
-                console.log(this.items);
-
-                if (value && this.items[value]) {
-                    this.select(this.items[value]);
+                    $dropdown.removeClass('show');
                 }
-            }
+            });
 
             // Request
             this.request = function () {
                 clearTimeout(this.timer);
+
+                //$dropdown.html('<li><i class="fa-solid fa-circle-notch fa-spin"></i></li>');
 
                 this.timer = setTimeout(function (object) {
                     object.source($(object).val(), $.proxy(object.response, object));
@@ -496,11 +498,11 @@ var chain = new Chain();
                 if (json.length) {
                     for (i = 0; i < json.length; i++) {
                         // update element items
-                        this.items[json[i]['label']] = json[i];
+                        this.items[json[i]['value']] = json[i];
 
                         if (!json[i]['category']) {
                             // ungrouped items
-                            html += '<option value="' + json[i]['label'] + '"/>';
+                            html += '<li><a href="' + json[i]['value'] + '" class="dropdown-item">' + json[i]['label'] + '</a></li>';
                         } else {
                             // grouped items
                             name = json[i]['category'];
@@ -514,13 +516,16 @@ var chain = new Chain();
                     }
 
                     for (name in category) {
+                        html += '<li><h6 class="dropdown-header">' + name + '</h6></li>';
+
                         for (j = 0; j < category[name].length; j++) {
-                            html += '<option value="' + category[name][j]['label'] + '">' + name + '</option>';
+                            html += '<li><a href="' + category[name][j]['value'] + '" class="dropdown-item">' + category[name][j]['label'] + '</a></li>';
                         }
                     }
                 }
 
                 $dropdown.html(html);
+                $dropdown.addClass('show');
             }
         });
     }

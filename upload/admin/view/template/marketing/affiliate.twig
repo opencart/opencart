@@ -23,11 +23,8 @@
           <div class="card-body">
             <div class="mb-3">
               <label class="form-label">{{ entry_customer }}</label>
-              <div class="input-group">
-                <span id="autocomplete-customer" class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
-                <input type="text" name="filter_customer" value="{{ filter_name }}" placeholder="{{ entry_customer }}" id="input-customer" list="list-customer" class="form-control" autocomplete="off"/>
-              </div>
-              <datalist id="list-customer"></datalist>
+              <input type="text" name="filter_customer" value="{{ filter_name }}" placeholder="{{ entry_customer }}" id="input-customer" data-oc-target="autocomplete-customer" class="form-control" autocomplete="off"/>
+              <ul id="autocomplete-customer" class="dropdown-menu"></ul>
             </div>
             <div class="mb-3">
               <label for="input-tracking" class="form-label">{{ entry_tracking }}</label> <input type="text" name="filter_tracking" value="{{ filter_tracking }}" placeholder="{{ entry_tracking }}" id="input-tracking" class="form-control"/>
@@ -130,15 +127,9 @@ $('#button-filter').on('click', function () {
 
 $('#input-customer').autocomplete({
     'source': function (request, response) {
-        return $.ajax({
+        $.ajax({
             url: 'index.php?route=customer/customer.autocomplete&user_token={{ user_token }}&filter_affiliate=1&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
-            beforeSend: function () {
-                $('#autocomplete-customer').html('<i class="fa-solid fa-circle-notch fa-spin"></i>');
-            },
-            complete: function () {
-                $('#autocomplete-customer').html('<i class="fa-solid fa-magnifying-glass"></i>');
-            },
             success: function (json) {
                 response($.map(json, function (item) {
                     return {
@@ -150,6 +141,7 @@ $('#input-customer').autocomplete({
         });
     },
     'select': function (item) {
+        $('#input-customer').val(item['label']);
     }
 });
 //--></script>

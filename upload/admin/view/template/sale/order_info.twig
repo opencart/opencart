@@ -532,13 +532,10 @@
         <form id="form-customer">
           <div class="mb-3">
             <label for="input-customer" class="form-label">{{ entry_customer }}</label>
-            <div class="input-group">
-              <span id="autocomplete-customer" class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
-              <input type="text" name="customer" value="{{ customer }}" placeholder="{{ entry_customer }}" id="input-customer" list="list-customer" class="form-control" autocomplete="off"/>
-              <a href="{{ customer_add }}" target="_blank" data-bs-toggle="tooltip" title="{{ button_customer_add }}" class="btn btn-outline-secondary"><i class="fa-solid fa-user-plus"></i></a>
-            </div>
+            <input type="text" name="customer" value="{{ customer }}" placeholder="{{ entry_customer }}" id="input-customer" data-oc-target="autocomplete-customer" class="form-control" autocomplete="off"/>
+            <a href="{{ customer_add }}" target="_blank" data-bs-toggle="tooltip" title="{{ button_customer_add }}" class="btn btn-outline-secondary"><i class="fa-solid fa-user-plus"></i></a>
             <input type="hidden" name="customer_id" value="{{ customer_id }}" id="input-customer-id"/>
-            <datalist id="list-customer"></datalist>
+            <ul id="autocomplete-customer" class="dropdown-menu"></ul>
           </div>
           <div class="mb-3">
             <label for="input-customer-group" class="form-label">{{ entry_customer_group }}</label> <select name="customer_group_id" id="input-customer-group" class="form-select">
@@ -690,11 +687,8 @@
                 <legend>{{ text_product_add }}</legend>
                 <div class="mb-3">
                   <label for="input-product" class="form-label">{{ entry_product }}</label>
-                  <div class="input-group">
-                    <span id="autocomplete-product" class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
-                    <input type="text" name="product" value="" placeholder="{{ entry_product }}" id="input-product" list="list-product" class="form-control" autocomplete="off"/>
-                  </div>
-                  <datalist id="list-product"></datalist>
+                  <input type="text" name="product" value="" placeholder="{{ entry_product }}" id="input-product" data-oc-target="autocomplete-product" class="form-control" autocomplete="off"/>
+                  <ul id="autocomplete-product" class="dropdown-menu"></ul>
                   <input type="hidden" name="product_id" value="" id="input-product-id"/>
                 </div>
                 <div class="mb-3">
@@ -763,12 +757,9 @@
       <div class="modal-body">
         <form id="form-affiliate">
           <div class="mb-3">
-            <div class="input-group">
-              <span id="autocomplete-affiliate" class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
-              <input type="text" name="affiliate" value="{{ affiliate }}" placeholder="{{ entry_affiliate }}" id="input-affiliate" list="list-affiliate" class="form-control" autocomplete="off"/>
-            </div>
+            <input type="text" name="affiliate" value="{{ affiliate }}" placeholder="{{ entry_affiliate }}" id="input-affiliate" data-oc-target="autocomplete-affiliate" class="form-control" autocomplete="off"/>
             <input type="hidden" name="affiliate_id" value="{{ affiliate_id }}" id="input-affiliate-id"/>
-            <datalist id="list-affiliate"></datalist>
+            <ul id="autocomplete-affiliate" class="dropdown-menu"></ul>
           </div>
           <div class="text-end">
             <button type="submit" id="button-affiliate" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> {{ button_save }}</button>
@@ -1193,15 +1184,9 @@ $(document).on('click', '#button-invoice', function () {
 // Customer
 $('#input-customer').autocomplete({
     'source': function (request, response) {
-        return $.ajax({
+        $.ajax({
             url: 'index.php?route=customer/customer.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
-            beforeSend: function () {
-                $('#autocomplete-customer').html('<i class="fa-solid fa-circle-notch fa-spin"></i>');
-            },
-            complete: function () {
-                $('#autocomplete-customer').html('<i class="fa-solid fa-magnifying-glass"></i>');
-            },
             success: function (json) {
                 json.unshift({
                     customer_id: 0,
@@ -1261,7 +1246,7 @@ $('#input-customer').autocomplete({
         html = '<option value="0">{{ text_none }}</option>';
 
         for (i in item['address']) {
-            html += '<option value="' + item['address'][i]['address_id'] + '">' + item['address'][i]['firstname'] + ' ' + item['address'][i]['lastname'] + ', ' + item['address'][i]['address_1'] + ', ' + item['address'][i]['city'] + ', ' + item['address'][i]['country'] + '</option>';
+            html += '<option value="' + item['address'][i]['address_id'] + '">' + item['address'][i]['firstname'] + ' ' + item['address'][i]['lastname'] + ', ' + (item['address'][i]['company'] ? item['address'][i]['company'] + ', ' : '') + item['address'][i]['address_1'] + ', ' + item['address'][i]['city'] + ', ' + item['address'][i]['country'] + '</option>';
         }
 
         $('#input-payment-address').html(html);
@@ -1356,7 +1341,7 @@ $('#form-customer').on('submit', function (e) {
 // Product
 $('#input-product').autocomplete({
     'source': function (request, response) {
-        return $.ajax({
+        $.ajax({
             url: 'index.php?route=catalog/product.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
             beforeSend: function () {
@@ -2034,15 +2019,9 @@ $(document).on('click', '#button-reward-add, #button-reward-remove', function (e
 // Affiliate
 $('#input-affiliate').autocomplete({
     'source': function (request, response) {
-        return $.ajax({
+        $.ajax({
             url: 'index.php?route=marketing/affiliate.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
-            beforeSend: function () {
-                $('#autocomplete-affiliate').html('<i class="fa-solid fa-circle-notch fa-spin"></i>');
-            },
-            complete: function () {
-                $('#autocomplete-affiliate').html('<i class="fa-solid fa-magnifying-glass"></i>');
-            },
             success: function (json) {
                 json.unshift({
                     name: '{{ text_none }}',

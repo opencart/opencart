@@ -74,12 +74,9 @@
               <div class="row mb-3">
                 <label for="input-parent" class="col-sm-2 col-form-label">{{ entry_parent }}</label>
                 <div class="col-sm-10">
-                  <div class="input-group">
-                    <span id="autocomplete-parent" class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
-                    <input type="text" name="path" value="{{ path }}" placeholder="{{ entry_parent }}" id="input-parent" list="list-parent" class="form-control" autocomplete="off"/>
-                  </div>
+                  <input type="text" name="path" value="{{ path }}" placeholder="{{ entry_parent }}" id="input-parent" data-oc-target="autocomplete-parent" class="form-control" autocomplete="off"/>
+                  <ul id="autocomplete-parent" class="dropdown-menu show"></ul>
                   <input type="hidden" name="parent_id" value="{{ parent_id }}" id="input-parent-id"/>
-                  <datalist id="list-parent"></datalist>
                   <div class="form-text">{{ help_parent }}</div>
                   <div id="error-parent" class="invalid-feedback"></div>
                 </div>
@@ -87,11 +84,8 @@
               <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">{{ entry_filter }}</label>
                 <div class="col-sm-10">
-                  <div class="input-group">
-                    <span id="autocomplete-filter" class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
-                    <input type="text" name="filter" value="" placeholder="{{ entry_filter }}" id="input-filter" list="list-filter" class="form-control" autocomplete="off"/>
-                  </div>
-                  <datalist id="list-filter"></datalist>
+                  <input type="text" name="filter" value="" placeholder="{{ entry_filter }}" id="input-filter" data-oc-target="autocomplete-filter" class="form-control" autocomplete="off"/>
+                  <ul id="autocomplete-filter" class="dropdown-menu"></ul>
                   <div class="form-control p-0" style="height: 150px; overflow: auto;">
                     <table id="category-filter" class="table table-sm m-0">
                       <tbody>
@@ -229,15 +223,9 @@ $('textarea[data-oc-toggle=\'ckeditor\']').ckeditor({
 
 $('#input-parent').autocomplete({
     'source': function (request, response) {
-        return $.ajax({
+        $.ajax({
             url: 'index.php?route=catalog/category.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
-            beforeSend: function () {
-                $('#autocomplete-parent').html('<i class="fa-solid fa-circle-notch fa-spin"></i>');
-            },
-            complete: function () {
-                $('#autocomplete-parent').html('<i class="fa-solid fa-magnifying-glass"></i>');
-            },
             success: function (json) {
                 json.unshift({
                     'name': '{{ text_none }}',
@@ -254,21 +242,16 @@ $('#input-parent').autocomplete({
         });
     },
     'select': function (item) {
+        $('#input-parent').val(item['label']);
         $('#input-parent-id').val(item['value']);
     }
 });
 
 $('#input-filter').autocomplete({
     'source': function (request, response) {
-        return $.ajax({
+        $.ajax({
             url: 'index.php?route=catalog/filter.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
-            beforeSend: function () {
-                $('#autocomplete-filter').html('<i class="fa-solid fa-circle-notch fa-spin"></i>');
-            },
-            complete: function () {
-                $('#autocomplete-filter').html('<i class="fa-solid fa-magnifying-glass"></i>');
-            },
             success: function (json) {
                 response($.map(json, function (item) {
                     return {

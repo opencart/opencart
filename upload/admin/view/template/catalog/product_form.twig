@@ -543,8 +543,7 @@
                 <label class="col-sm-2 col-form-label">{{ entry_manufacturer }}</label>
                 <div class="col-sm-10">
                   <div class="input-group">
-                    <span id="autocomplete-manufacturer" class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
-                    <input type="text" name="manufacturer" value="{{ manufacturer }}" placeholder="{{ entry_manufacturer }}" id="input-manufacturer" list="list-manufacturer" class="form-control" autocomplete="off"/>
+                    <input type="text" name="manufacturer" value="{{ manufacturer }}" placeholder="{{ entry_manufacturer }}" id="input-manufacturer" data-oc-target="autocomplete-manufacturer" class="form-control" autocomplete="off"/>
                     {% if master_id %}
                       <div class="input-group-text">
                         <div class="form-check form-switch">
@@ -555,18 +554,14 @@
                     {% endif %}
                   </div>
                   <input type="hidden" name="manufacturer_id" value="{{ manufacturer_id }}" id="input-manufacturer-id"/>
-                  <datalist id="list-manufacturer"></datalist>
+                  <ul id="autocomplete-manufacturer" class="dropdown-menu"></ul>
                   <div class="form-text">{{ help_manufacturer }}</div>
                 </div>
               </div>
               <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">{{ entry_category }}</label>
                 <div class="col-sm-10">
-                  <div class="input-group">
-                    <span id="autocomplete-category" class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
-                    <input type="text" name="category" value="" placeholder="{{ entry_category }}" id="input-category" list="list-category" class="form-control" autocomplete="off"/>
-                  </div>
-                  <datalist id="list-category"></datalist>
+                  <input type="text" name="category" value="" placeholder="{{ entry_category }}" id="input-category" data-oc-target="autocomplete-category" class="form-control" autocomplete="off"/>
                   <div class="input-group">
                     <div class="form-control p-0" style="height: 150px; overflow: auto;">
                       <table id="product-category" class="table table-sm m-0">
@@ -594,11 +589,8 @@
               <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">{{ entry_filter }}</label>
                 <div class="col-sm-10">
-                  <div class="input-group">
-                    <span id="autocomplete-filter" class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
-                    <input type="text" name="filter" value="" placeholder="{{ entry_filter }}" id="input-filter" list="list-filter" class="form-control" autocomplete="off"/>
-                  </div>
-                  <datalist id="list-filter"></datalist>
+                  <input type="text" name="filter" value="" placeholder="{{ entry_filter }}" id="input-filter" data-oc-target="autocomplete-filter" class="form-control" autocomplete="off"/>
+                  <ul id="autocomplete-filter" class="dropdown-menu"></ul>
                   <div class="input-group">
                     <div class="form-control p-0" style="height: 150px; overflow: auto;">
                       <table id="product-filter" class="table table-sm m-0">
@@ -647,11 +639,8 @@
               <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">{{ entry_download }}</label>
                 <div class="col-sm-10">
-                  <div class="input-group">
-                    <span id="autocomplete-download" class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
-                    <input type="text" name="download" value="" placeholder="{{ entry_download }}" id="input-download" list="list-download" class="form-control" autocomplete="off"/>
-                  </div>
-                  <datalist id="list-download"></datalist>
+                  <input type="text" name="download" value="" placeholder="{{ entry_download }}" id="input-download" data-oc-target="autocomplete-download" class="form-control" autocomplete="off"/>
+                  <ul id="autocomplete-download" class="dropdown-menu"></ul>
                   <div class="input-group">
                     <div class="form-control p-0" style="height: 150px; overflow: auto;">
                       <table id="product-download" class="table table-sm m-0">
@@ -679,11 +668,8 @@
               <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">{{ entry_related }}</label>
                 <div class="col-sm-10">
-                  <div class="input-group">
-                    <span id="autocomplete-related" class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
-                    <input type="text" name="related" value="" placeholder="{{ entry_related }}" id="input-related" list="list-related" class="form-control" autocomplete="off"/>
-                  </div>
-                  <datalist id="list-related"></datalist>
+                  <input type="text" name="related" value="" placeholder="{{ entry_related }}" id="input-related" data-oc-target="autocomplete-related" class="form-control" autocomplete="off"/>
+                  <ul id="autocomplete-related" class="dropdown-menu"></ul>
                   <div class="input-group">
                     <div class="form-control p-0" style="height: 150px; overflow: auto;">
                       <table id="product-related" class="table table-sm m-0">
@@ -730,12 +716,9 @@
                     {% for product_attribute in product_attributes %}
                       <tr id="attribute-row-{{ attribute_row }}">
                         <td class="text-start">
-                          <div class="input-group">
-                            <span id="autocomplete-attribute-{{ attribute_row }}" class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
-                            <input type="text" name="product_attribute[{{ attribute_row }}][name]" value="{{ product_attribute.name }}" placeholder="{{ entry_attribute }}" id="input-attribute-{{ attribute_row }}" list="list-attribute-{{ attribute_row }}" class="form-control" autocomplete="off"/>
-                          </div>
+                          <input type="text" name="product_attribute[{{ attribute_row }}][name]" value="{{ product_attribute.name }}" placeholder="{{ entry_attribute }}" id="input-attribute-{{ attribute_row }}" data-oc-target="autocomplete-attribute-{{ attribute_row }}" class="form-control" autocomplete="new-password"/>
                           <input type="hidden" name="product_attribute[{{ attribute_row }}][attribute_id]" value="{{ product_attribute.attribute_id }}" id="input-attribute-id-{{ attribute_row }}"/>
-                          <datalist id="list-attribute-{{ attribute_row }}"></datalist>
+                          <ul id="autocomplete-attribute-{{ attribute_row }}" class="dropdown-menu show"></ul>
                         </td>
                         <td class="text-start">
                           {% for language in languages %}
@@ -905,11 +888,8 @@
                   <div class="row mb-3">
                     <label for="input-option" class="col-sm-2 col-form-label">{{ entry_option }}</label>
                     <div class="col-sm-10">
-                      <div class="input-group">
-                        <span id="autocomplete-option" class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
-                        <input type="text" name="option" value="" placeholder="{{ entry_option }}" id="input-option" list="list-option" class="form-control" autocomplete="off"/>
-                      </div>
-                      <datalist id="list-option"></datalist>
+                      <input type="text" name="option" value="" placeholder="{{ entry_option }}" id="input-option" data-oc-target="autocomplete-option" class="form-control" autocomplete="off"/>
+                      <ul id="autocomplete-option" class="dropdown-menu"></ul>
                       <div class="form-text">{{ help_option }}</div>
                     </div>
                   </div>
@@ -1480,15 +1460,9 @@ $('textarea[data-oc-toggle=\'ckeditor\']').ckeditor({
 // Manufacturer
 $('#input-manufacturer').autocomplete({
     'source': function (request, response) {
-        return $.ajax({
+        $.ajax({
             url: 'index.php?route=catalog/manufacturer.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
-            beforeSend: function () {
-                $('#autocomplete-manufacturer').html('<i class="fa-solid fa-circle-notch fa-spin"></i>');
-            },
-            complete: function () {
-                $('#autocomplete-manufacturer').html('<i class="fa-solid fa-magnifying-glass"></i>');
-            },
             success: function (json) {
                 json.unshift({
                     manufacturer_id: 0,
@@ -1505,7 +1479,7 @@ $('#input-manufacturer').autocomplete({
         });
     },
     'select': function (item) {
-        //$('#input-manufacturer').val(item['label']);
+        $('#input-manufacturer').val(item['label']);
         $('#input-manufacturer-id').val(item['value']);
     }
 });
@@ -1513,15 +1487,9 @@ $('#input-manufacturer').autocomplete({
 // Category
 $('#input-category').autocomplete({
     'source': function (request, response) {
-        return $.ajax({
+        $.ajax({
             url: 'index.php?route=catalog/category.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
-            beforeSend: function () {
-                $('#autocomplete-category').html('<i class="fa-solid fa-circle-notch fa-spin"></i>');
-            },
-            complete: function () {
-                $('#autocomplete-category').html('<i class="fa-solid fa-magnifying-glass"></i>');
-            },
             success: function (json) {
                 response($.map(json, function (item) {
                     return {
@@ -1553,15 +1521,9 @@ $('#product-category').on('click', '.btn', function () {
 // Filter
 $('#input-filter').autocomplete({
     'source': function (request, response) {
-        return $.ajax({
+        $.ajax({
             url: 'index.php?route=catalog/filter.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
-            beforeSend: function () {
-                $('#autocomplete-filter').html('<i class="fa-solid fa-circle-notch fa-spin"></i>');
-            },
-            complete: function () {
-                $('#autocomplete-filter').html('<i class="fa-solid fa-magnifying-glass"></i>');
-            },
             success: function (json) {
                 response($.map(json, function (item) {
                     return {
@@ -1593,15 +1555,9 @@ $('#product-filter').on('click', '.btn', function () {
 // Downloads
 $('#input-download').autocomplete({
     'source': function (request, response) {
-        return $.ajax({
+        $.ajax({
             url: 'index.php?route=catalog/download.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
-            beforeSend: function () {
-                $('#autocomplete-download').html('<i class="fa-solid fa-circle-notch fa-spin"></i>');
-            },
-            complete: function () {
-                $('#autocomplete-download').html('<i class="fa-solid fa-magnifying-glass"></i>');
-            },
             success: function (json) {
                 response($.map(json, function (item) {
                     return {
@@ -1633,15 +1589,9 @@ $('#product-download').on('click', '.btn', function () {
 // Related
 $('#input-related').autocomplete({
     'source': function (request, response) {
-        return $.ajax({
+        $.ajax({
             url: 'index.php?route=catalog/product.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
-            beforeSend: function () {
-                $('#autocomplete-related').html('<i class="fa-solid fa-circle-notch fa-spin"></i>');
-            },
-            complete: function () {
-                $('#autocomplete-related').html('<i class="fa-solid fa-magnifying-glass"></i>');
-            },
             success: function (json) {
                 response($.map(json, function (item) {
                     return {
@@ -1673,15 +1623,9 @@ $('#product-related').on('click', '.btn', function () {
 var attributeautocomplete = function (attribute_row) {
     $('#input-attribute-' + attribute_row).autocomplete({
         'source': function (request, response) {
-            return $.ajax({
+            $.ajax({
                 url: 'index.php?route=catalog/attribute.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
                 dataType: 'json',
-                beforeSend: function () {
-                    $('#autocomplete-attribute-' + attribute_row).html('<i class="fa-solid fa-circle-notch fa-spin"></i>');
-                },
-                complete: function () {
-                    $('#autocomplete-attribute-' + attribute_row).html('<i class="fa-solid fa-magnifying-glass"></i>');
-                },
                 success: function (json) {
                     response($.map(json, function (item) {
                         return {
@@ -1694,6 +1638,7 @@ var attributeautocomplete = function (attribute_row) {
             });
         },
         'select': function (item) {
+            $('#input-attribute-' + attribute_row).val(item['label']);
             $('#input-attribute-id-' + attribute_row).val(item['value']);
         }
     });
@@ -1708,12 +1653,9 @@ $('#product-attribute tr').each(function (index) {
 $('#button-attribute').on('click', function () {
     html = '<tr id="attribute-row-' + attribute_row + '">';
     html += '  <td class="text-start">';
-    html += '    <div class="input-group">';
-    html += '      <span id="autocomplete-attribute-' + attribute_row + '" class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>';
-    html += '      <input type="text" name="product_attribute[' + attribute_row + '][name]" value="" placeholder="{{ entry_attribute }}" id="input-attribute-' + attribute_row + '" list="list-attribute-' + attribute_row + '" class="form-control" autocomplete="off"/>';
-    html += '    </div>';
+    html += '    <input type="text" name="product_attribute[' + attribute_row + '][name]" value="" placeholder="{{ entry_attribute }}" id="input-attribute-' + attribute_row + '" data-oc-target="autocomplete-attribute-' + attribute_row + '" class="form-control" autocomplete="off"/>';
     html += '    <input type="hidden" name="product_attribute[' + attribute_row + '][attribute_id]" value="" id="input-attribute-id-' + attribute_row + '"/>';
-    html += '    <datalist id="list-attribute-{{ attribute_row }}"></datalist>';
+    html += '    <ul id="autocomplete-attribute-' + attribute_row + '" class="dropdown-menu"></ul>';
     html += '  </td>';
     html += '  <td class="text-start">';
   {% for language in languages %}
@@ -1738,15 +1680,9 @@ var option_row = {{ option_row }};
 
 $('#input-option').autocomplete({
     'source': function (request, response) {
-        return $.ajax({
+        $.ajax({
             url: 'index.php?route=catalog/option.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
-            beforeSend: function () {
-                $('#autocomplete-option').html('<i class="fa-solid fa-circle-notch fa-spin"></i>');
-            },
-            complete: function () {
-                $('#autocomplete-option').html('<i class="fa-solid fa-magnifying-glass"></i>');
-            },
             success: function (json) {
                 response($.map(json, function (item) {
                     return {

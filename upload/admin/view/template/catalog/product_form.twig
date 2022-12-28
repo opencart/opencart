@@ -719,7 +719,7 @@
                         <td class="text-start">
                           <input type="text" name="product_attribute[{{ attribute_row }}][name]" value="{{ product_attribute.name }}" placeholder="{{ entry_attribute }}" id="input-attribute-{{ attribute_row }}" data-oc-target="autocomplete-attribute-{{ attribute_row }}" class="form-control" autocomplete="new-password"/>
                           <input type="hidden" name="product_attribute[{{ attribute_row }}][attribute_id]" value="{{ product_attribute.attribute_id }}" id="input-attribute-id-{{ attribute_row }}"/>
-                          <ul id="autocomplete-attribute-{{ attribute_row }}" class="dropdown-menu show"></ul>
+                          <ul id="autocomplete-attribute-{{ attribute_row }}" class="dropdown-menu"></ul>
                         </td>
                         <td class="text-start">
                           {% for language in languages %}

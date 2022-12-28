@@ -5,8 +5,8 @@
       <div class="card-body">
         <div class="mb-3">
           <label for="input-customer" class="col-form-label">{{ entry_customer }}</label>
-          <input type="text" name="filter_customer" value="{{ filter_customer }}" placeholder="{{ entry_customer }}" id="input-customer" list="list-customer" class="form-control"/>
-          <datalist id="list-customer"></datalist>
+          <input type="text" name="filter_customer" value="{{ filter_customer }}" placeholder="{{ entry_customer }}" id="input-customer" data-oc-target="autocomplete-customer" class="form-control" autocomplete="off"/>
+          <ul id="autocomplete-customer" class="dropdown-menu"></ul>
         </div>
         <div class="mb-3">
           <label for="input-date-start" class="col-form-label">{{ entry_date_start }}</label>

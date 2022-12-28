@@ -531,9 +531,12 @@
       <div class="modal-body">
         <form id="form-customer">
           <div class="mb-3">
+
             <label for="input-customer" class="form-label">{{ entry_customer }}</label>
-            <input type="text" name="customer" value="{{ customer }}" placeholder="{{ entry_customer }}" id="input-customer" data-oc-target="autocomplete-customer" class="form-control" autocomplete="off"/>
-            <a href="{{ customer_add }}" target="_blank" data-bs-toggle="tooltip" title="{{ button_customer_add }}" class="btn btn-outline-secondary"><i class="fa-solid fa-user-plus"></i></a>
+            <div class="input-group">
+              <input type="text" name="customer" value="{{ customer }}" placeholder="{{ entry_customer }}" id="input-customer" data-oc-target="autocomplete-customer" class="form-control" autocomplete="off"/> <a href="{{ customer_add }}" target="_blank" data-bs-toggle="tooltip" title="{{ button_customer_add }}" class="btn btn-outline-secondary"><i class="fa-solid fa-user-plus"></i></a>
+            </div>
+
             <input type="hidden" name="customer_id" value="{{ customer_id }}" id="input-customer-id"/>
             <ul id="autocomplete-customer" class="dropdown-menu"></ul>
           </div>
@@ -686,8 +689,7 @@
               <fieldset class="mb-0">
                 <legend>{{ text_product_add }}</legend>
                 <div class="mb-3">
-                  <label for="input-product" class="form-label">{{ entry_product }}</label>
-                  <input type="text" name="product" value="" placeholder="{{ entry_product }}" id="input-product" data-oc-target="autocomplete-product" class="form-control" autocomplete="off"/>
+                  <label for="input-product" class="form-label">{{ entry_product }}</label> <input type="text" name="product" value="" placeholder="{{ entry_product }}" id="input-product" data-oc-target="autocomplete-product" class="form-control" autocomplete="off"/>
                   <ul id="autocomplete-product" class="dropdown-menu"></ul>
                   <input type="hidden" name="product_id" value="" id="input-product-id"/>
                 </div>
@@ -757,8 +759,7 @@
       <div class="modal-body">
         <form id="form-affiliate">
           <div class="mb-3">
-            <input type="text" name="affiliate" value="{{ affiliate }}" placeholder="{{ entry_affiliate }}" id="input-affiliate" data-oc-target="autocomplete-affiliate" class="form-control" autocomplete="off"/>
-            <input type="hidden" name="affiliate_id" value="{{ affiliate_id }}" id="input-affiliate-id"/>
+            <input type="text" name="affiliate" value="{{ affiliate }}" placeholder="{{ entry_affiliate }}" id="input-affiliate" data-oc-target="autocomplete-affiliate" class="form-control" autocomplete="off"/> <input type="hidden" name="affiliate_id" value="{{ affiliate_id }}" id="input-affiliate-id"/>
             <ul id="autocomplete-affiliate" class="dropdown-menu"></ul>
           </div>
           <div class="text-end">
@@ -779,10 +780,11 @@
       <div class="modal-body">
         <form id="form-payment-address">
           <div class="mb-3">
-            <label for="input-payment-address" class="form-label">{{ entry_address }}</label> <select name="payment_address" id="input-payment-address" class="form-select">
+            <label for="input-payment-address" class="form-label">{{ entry_address }}</label>
+            <select name="payment_address" id="input-payment-address" class="form-select">
               <option value="0" selected="selected">{{ text_none }}</option>
               {% for address in addresses %}
-                <option value="{{ address.address_id }}">{{ address.firstname }} {{ address.lastname }}, {{ address.address_1 }}, {{ address.city }}, {{ address.country }}</option>
+                <option value="{{ address.address_id }}">{{ address.firstname }} {{ address.lastname }},{% if address.company %} {{ address.company }},{% endif %} {{ address.address_1 }}, {{ address.city }}, {{ address.country }}</option>
               {% endfor %}
             </select>
           </div>
@@ -945,7 +947,7 @@
             <label for="input-shipping-address" class="form-label">{{ entry_address }}</label> <select name="shipping_address" id="input-shipping-address" class="form-select">
               <option value="0" selected="selected">{{ text_none }}</option>
               {% for address in addresses %}
-                <option value="{{ address.address_id }}">{{ address.firstname }} {{ address.lastname }}, {{ address.address_1 }}, {{ address.city }}, {{ address.country }}</option>
+                <option value="{{ address.address_id }}">{{ address.firstname }} {{ address.lastname }},{% if address.company %} {{ address.company }},{% endif %} {{ address.address_1 }}, {{ address.city }}, {{ address.country }}</option>
               {% endfor %}
             </select>
           </div>
@@ -1344,12 +1346,6 @@ $('#input-product').autocomplete({
         $.ajax({
             url: 'index.php?route=catalog/product.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
-            beforeSend: function () {
-                $('#autocomplete-product').html('<i class="fa-solid fa-circle-notch fa-spin"></i>');
-            },
-            complete: function () {
-                $('#autocomplete-product').html('<i class="fa-solid fa-magnifying-glass"></i>');
-            },
             success: function (json) {
                 response($.map(json, function (item) {
                     return {

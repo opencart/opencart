@@ -452,7 +452,11 @@ var chain = new Chain();
             $(element).on('focusout', function (e) {
                 console.log('focusout');
 
-                $dropdown.removeClass('show');
+                console.log(e);
+
+                //console.log(e.originalEvent.FocusEvent.relatedTarget);
+
+                //$dropdown.removeClass('show');
             });
 
             // Input

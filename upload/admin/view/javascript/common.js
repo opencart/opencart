@@ -441,36 +441,26 @@ var chain = new Chain();
 
             $.extend(this, option);
 
-            // Focus
+            // Focus in
             $(element).on('focusin', function () {
-                console.log('focusin');
-
                 element.request();
             });
 
-            // Blur
+            // Focus out
             $(element).on('focusout', function (e) {
-                console.log('focusout');
-
-                console.log(e);
-
-                //console.log(e.originalEvent.FocusEvent.relatedTarget);
-
-                //$dropdown.removeClass('show');
+                if (!e.relatedTarget || !$(e.relatedTarget).hasClass('dropdown-item')) {
+                    $dropdown.removeClass('show');
+                }
             });
 
             // Input
             $(element).on('input', function (e) {
-                console.log('input');
-
                 element.request();
             });
 
             // Click
             $dropdown.on('click', 'a', function (e) {
                 e.preventDefault();
-
-                console.log('click');
 
                 var value = $(this).attr('href');
 
@@ -485,7 +475,9 @@ var chain = new Chain();
             this.request = function () {
                 clearTimeout(this.timer);
 
-                //$dropdown.html('<li><i class="fa-solid fa-circle-notch fa-spin"></i></li>');
+                $('#autocomplete-loading').remove();
+                $dropdown.prepend('<li id="autocomplete-loading"><span class="dropdown-item text-center disabled"><i class="fa-solid fa-circle-notch fa-spin"></i></span></li>');
+                $dropdown.addClass('show');
 
                 this.timer = setTimeout(function (object) {
                     object.source($(object).val(), $.proxy(object.response, object));
@@ -529,7 +521,6 @@ var chain = new Chain();
                 }
 
                 $dropdown.html(html);
-                $dropdown.addClass('show');
             }
         });
     }

@@ -32,7 +32,8 @@ a {
 }
 
 .loading i:before {
-    content: "\f1ce";
+    font-family: 'Font Awesome 6 Free';
+    content: '\f1ce';
 }
 
 #container {

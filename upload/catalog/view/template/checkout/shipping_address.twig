@@ -2,17 +2,19 @@
   <legend>{{ heading_title }}</legend>
   <div id="shipping-addresses" style="display: {% if addresses %}block{% else %}none{% endif %};">
     <div class="form-check">
-      <input type="radio" name="shipping_existing" value="1" id="input-shipping-existing" class="form-check-input"{% if addresses %} checked{% endif %}/> <label for="input-shipping-existing" class="form-check-label">{{ text_address_existing }}</label>
+      <input type="radio" name="shipping_existing" value="1" id="input-shipping-existing" class="form-check-input"{% if addresses %} checked{% endif %}/>
+      <label for="input-shipping-existing" class="form-check-label">{{ text_address_existing }}</label>
     </div>
     <div class="form-check">
-      <input type="radio" name="shipping_existing" value="0" id="input-shipping-new" class="form-check-input"{% if not addresses %} checked{% endif %}/> <label for="input-shipping-new" class="form-check-label">{{ text_address_new }}</label>
+      <input type="radio" name="shipping_existing" value="0" id="input-shipping-new" class="form-check-input"{% if not addresses %} checked{% endif %}/>
+      <label for="input-shipping-new" class="form-check-label">{{ text_address_new }}</label>
     </div>
   </div>
   <div id="shipping-existing" style="display: {% if addresses %}block{% else %}none{% endif %};">
     <select name="address_id" id="input-shipping-address" class="form-select">
       <option value="">{{ text_select }}</option>
       {% for address in addresses %}
-        <option value="{{ address.address_id }}"{% if address.address_id == address_id %} selected{% endif %}>{{ address.firstname }} {{ address.lastname }},{% if address.company %} {{ address.company }},{% endif %} {{ address.address_1 }}, {{ address.city }}, {{ address.zone }}, {{ address.country }}</option>
+        <option value="{{ address.address_id }}">{{ address.firstname }} {{ address.lastname }},{% if address.company %} {{ address.company }},{% endif %} {{ address.address_1 }}, {{ address.city }}, {{ address.zone }}, {{ address.country }}</option>
       {% endfor %}
     </select>
   </div>

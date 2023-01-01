@@ -253,7 +253,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
                                             $this->load->model('extension/payment/' . $payment_info['code']);
 
                                             // Promotion
-                                            if (property_exists($this->{'model_extension_payment_' . $payment_info['code']}, 'promotion')) {
+                                            if (isset($this->{'model_extension_payment_' . $payment_info['code']}->promotion)) {
                                                 $subscription_status_id = $this->{'model_extension_payment_' . $payment_info['code']}->promotion($value['subscription_id']);
 
                                                 if ($store_info) {

@@ -250,7 +250,7 @@ class Order extends \Opencart\System\Engine\Model {
 					if ($this->config->get('fraud_' . $extension['code'] . '_status')) {
 						$this->load->model('extension/' . $extension['extension'] . '/fraud/' . $extension['code']);
 
-						if (property_exists($this->{'model_extension_' . $extension['extension'] . '_fraud_' . $extension['code']}, 'check')) {
+						if (isset($this->{'model_extension_' . $extension['extension'] . '_fraud_' . $extension['code']}->check)) {
 							$fraud_status_id = $this->{'model_extension_' . $extension['extension'] . '_fraud_' . $extension['code']}->check($order_info);
 
 							if ($fraud_status_id) {
@@ -269,7 +269,7 @@ class Order extends \Opencart\System\Engine\Model {
 				foreach ($order_totals as $order_total) {
 					$this->load->model('extension/' . $order_total['extension'] . '/total/' . $order_total['code']);
 
-					if (property_exists($this->{'model_extension_' . $order_total['extension'] . '_total_' . $order_total['code']}, 'confirm')) {
+					if (isset($this->{'model_extension_' . $order_total['extension'] . '_total_' . $order_total['code']}->confirm)) {
 						// Confirm coupon, vouchers and reward points
 						$fraud_status_id = $this->{'model_extension_' . $order_total['extension'] . '_total_' . $order_total['code']}->confirm($order_info, $order_total);
 
@@ -344,7 +344,7 @@ class Order extends \Opencart\System\Engine\Model {
 				foreach ($order_totals as $order_total) {
 					$this->load->model('extension/' . $order_total['extension'] . '/total/' . $order_total['code']);
 
-					if (property_exists($this->{'model_extension_' . $order_total['extension'] . '_total_' . $order_total['code']}, 'unconfirm')) {
+					if (isset($this->{'model_extension_' . $order_total['extension'] . '_total_' . $order_total['code']}->unconfirm)) {
 						$this->{'model_extension_' . $order_total['extension'] . '_total_' . $order_total['code']}->unconfirm($order_id);
 					}
 				}

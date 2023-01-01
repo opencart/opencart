@@ -476,6 +476,7 @@ var chain = new Chain();
                 clearTimeout(this.timer);
 
                 $('#autocomplete-loading').remove();
+
                 $dropdown.prepend('<li id="autocomplete-loading"><span class="dropdown-item text-center disabled"><i class="fa-solid fa-circle-notch fa-spin"></i></span></li>');
                 $dropdown.addClass('show');
 

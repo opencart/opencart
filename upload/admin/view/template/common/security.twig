@@ -143,7 +143,7 @@ $('#button-storage').on('click', function () {
     var next = 'index.php?route=common/security.storage&user_token={{ user_token }}&name=' + encodeURIComponent($('#input-storage').val()) + '&path=' + encodeURIComponent($('#input-path').val());
 
     var storage = function () {
-        $.ajax({
+        return $.ajax({
             url: next,
             dataType: 'json',
             beforeSend: function () {
@@ -190,7 +190,7 @@ $('#button-admin').on('click', function () {
     var next = 'index.php?route=common/security.admin&user_token={{ user_token }}&name=' + encodeURIComponent($('#input-admin').val());
 
     var admin = function () {
-        $.ajax({
+        return $.ajax({
             url: next,
             dataType: 'json',
             beforeSend: function () {

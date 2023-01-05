@@ -360,7 +360,7 @@ class Image {
 		} elseif (strlen($color) == 3) {
 			[$r, $g, $b] = [$color[0] . $color[0], $color[1] . $color[1], $color[2] . $color[2]];
 		} else {
-			return false;
+			return [];
 		}
 
 		$r = hexdec($r);

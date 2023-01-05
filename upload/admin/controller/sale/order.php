@@ -681,12 +681,12 @@ class Order extends \Opencart\System\Engine\Controller {
 			unset($store->request->get['user_token']);
 			unset($store->request->get['action']);
 
-			$store->load->controller($store->request->get['route']);
+			$store->load->controller($store->request->get['route'], );
 
 			// 6. Get the cart data
 			$store->request->get['route'] = 'api/sale/cart';
 
-			$store->load->controller($store->request->get['route']);
+			$store->load->controller($store->request->get['route'], $order_info['language_code']);
 
 			$cart_info = json_decode($store->response->getOutput(), true);
 

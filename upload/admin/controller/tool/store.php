@@ -96,7 +96,7 @@ class Store extends \Opencart\System\Engine\Controller {
 		}
 
 		// Load default language file
-		$language->load($this->config->get('config_language'));
+		$language->load('default');
 
 		// Url
 		$registry->set('url', new \Opencart\System\Library\Url($config->get('site_url')));

@@ -2676,10 +2676,12 @@ $('#button-refresh').on('click', function () {
         url: 'index.php?route=sale/order.call&user_token={{ user_token }}&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val() + '&action=sale/cart',
         dataType: 'json',
         beforeSend: function () {
-            $('#button-confirm').prop('disabled', true).addClass('loading');
+            $('#button-refresh').prop('disabled', true).addClass('loading');
+            $('#button-confirm').prop('disabled', true);
         },
         complete: function () {
-            $('#button-confirm').prop('disabled', false).removeClass('loading');
+            $('#button-refresh').prop('disabled', false).removeClass('loading');
+            $('#button-confirm').prop('disabled', false);
         },
         success: function (json) {
             html = '';

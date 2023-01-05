@@ -48,6 +48,8 @@ class Language extends \Opencart\System\Engine\Controller {
 			// If no language can be found, we use the default one
 			$this->response->redirect($this->url->link($route, 'language=' . $this->config->get('config_language') . $url, true));
 		}
+
+		echo $code;
 	}
 	
 	// Fill the language up with default values

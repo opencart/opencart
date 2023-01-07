@@ -670,7 +670,7 @@ class Order extends \Opencart\System\Engine\Controller {
 							'name'  => $option['name'],
 							'value' => $upload_info['name'],
 							'type'  => $option['type'],
-							'href'  => $this->url->link('tool/upload|download', 'user_token=' . $this->session->data['user_token'] . '&code=' . $upload_info['code'])
+							'href'  => $this->url->link('tool/upload.download', 'user_token=' . $this->session->data['user_token'] . '&code=' . $upload_info['code'])
 						];
 					}
 				}
@@ -686,7 +686,7 @@ class Order extends \Opencart\System\Engine\Controller {
 				'price'            => $this->currency->format($product['price'] + ($this->config->get('config_tax') ? $product['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']),
 				'total'            => $this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value']),
 				'reward'           => $product['reward'],
-				'href'             => $this->url->link('catalog/product|form', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $product['product_id'])
+				'href'             => $this->url->link('catalog/product.form', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $product['product_id'])
 			];
 		}
 
@@ -699,7 +699,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['order_vouchers'][] = [
 				'description' => $voucher['description'],
 				'amount'      => $this->currency->format($voucher['amount'], $order_info['currency_code'], $order_info['currency_value']),
-				'href'        => $this->url->link('sale/voucher|form', 'user_token=' . $this->session->data['user_token'] . '&voucher_id=' . $voucher['voucher_id'])
+				'href'        => $this->url->link('sale/voucher.form', 'user_token=' . $this->session->data['user_token'] . '&voucher_id=' . $voucher['voucher_id'])
 			];
 		}
 
@@ -1336,7 +1336,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 				// Subscription
 				$filter_data = [
-					'order_id'	=> $order_id
+					'filter_order_id'	=> $order_id
 				];
 
 				$subscriptions = $this->model_sale_subscription->getSubscriptions($filter_data);
@@ -1540,7 +1540,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 				// Subscription
 				$filter_data = [
-					'order_id'	=> $order_id
+					'filter_order_id'	=> $order_id
 				];
 
 				$subscriptions = $this->model_sale_subscription->getSubscriptions($filter_data);

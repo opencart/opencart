@@ -689,7 +689,8 @@
               <fieldset class="mb-0">
                 <legend>{{ text_product_add }}</legend>
                 <div class="mb-3">
-                  <label for="input-product" class="form-label">{{ entry_product }}</label> <input type="text" name="product" value="" placeholder="{{ entry_product }}" id="input-product" data-oc-target="autocomplete-product" class="form-control" autocomplete="off"/>
+                  <label for="input-product" class="form-label">{{ entry_product }}</label>
+                  <input type="text" name="product" value="" placeholder="{{ entry_product }}" id="input-product" data-oc-target="autocomplete-product" class="form-control" autocomplete="off"/>
                   <ul id="autocomplete-product" class="dropdown-menu"></ul>
                   <input type="hidden" name="product_id" value="" id="input-product-id"/>
                 </div>
@@ -1277,9 +1278,6 @@ $('#input-customer-group').on('change', function () {
                     $('.custom-field-' + custom_field['custom_field_id']).addClass('required');
                 }
             }
-
-            $('#input-payment-method').html('<option value="">{{ text_select }}</option>');
-            $('#input-shipping-method').html('<option value="">{{ text_select }}</option>');
         },
         error: function (xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -1366,6 +1364,7 @@ $('#input-product').autocomplete({
     },
     'select': function (item) {
         $('#input-product-id').val(item['value']);
+        $('#input-product').val(item['label']);
 
         if (item['option'] != '') {
             html = '<fieldset class="mb-0">';
@@ -2615,6 +2614,7 @@ $('#input-shipping-method').on('change', function (e) {
             $(element).prop('disabled', false);
         },
         success: function (json) {
+            console.log(json);
             $('.alert-dismissible').remove();
 
             if (json['error']) {

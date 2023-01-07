@@ -643,6 +643,78 @@ class Order extends \Opencart\System\Engine\Controller {
 			];
 		}
 
+		// Products
+		$data['order_products'] = [];
+
+		$this->load->model('sale/order');
+
+		$products = $this->model_sale_order->getProducts($order_id);
+
+		foreach ($products as $product) {
+			$option_data = [];
+
+			$options = $this->model_sale_order->getOptions($order_id, $product['order_product_id']);
+
+			foreach ($options as $option) {
+				if ($option['type'] != 'file') {
+					$option_data[] = [
+						'name'  => $option['name'],
+						'value' => $option['value'],
+						'type'  => $option['type']
+					];
+				} else {
+					$upload_info = $this->model_tool_upload->getUploadByCode($option['value']);
+
+					if ($upload_info) {
+						$option_data[] = [
+							'name'  => $option['name'],
+							'value' => $upload_info['name'],
+							'type'  => $option['type'],
+							'href'  => $this->url->link('tool/upload|download', 'user_token=' . $this->session->data['user_token'] . '&code=' . $upload_info['code'])
+						];
+					}
+				}
+			}
+
+			$data['order_products'][] = [
+				'order_product_id' => $product['order_product_id'],
+				'product_id'       => $product['product_id'],
+				'name'             => $product['name'],
+				'model'            => $product['model'],
+				'option'           => $option_data,
+				'quantity'         => $product['quantity'],
+				'price'            => $this->currency->format($product['price'] + ($this->config->get('config_tax') ? $product['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']),
+				'total'            => $this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value']),
+				'reward'           => $product['reward'],
+				'href'             => $this->url->link('catalog/product|form', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $product['product_id'])
+			];
+		}
+
+		// Vouchers
+		$data['order_vouchers'] = [];
+
+		$vouchers = $this->model_sale_order->getVouchers($order_id);
+
+		foreach ($vouchers as $voucher) {
+			$data['order_vouchers'][] = [
+				'description' => $voucher['description'],
+				'amount'      => $this->currency->format($voucher['amount'], $order_info['currency_code'], $order_info['currency_value']),
+				'href'        => $this->url->link('sale/voucher|form', 'user_token=' . $this->session->data['user_token'] . '&voucher_id=' . $voucher['voucher_id'])
+			];
+		}
+
+		// Totals
+		$data['order_totals'] = [];
+
+		$totals = $this->model_sale_order->getTotals($order_id);
+
+		foreach ($totals as $total) {
+			$data['order_totals'][] = [
+				'title' => $total['title'],
+				'text'  => $this->currency->format($total['value'], $order_info['currency_code'], $order_info['currency_value'])
+			];
+		}
+
 		// Delete any old session
 		if (isset($this->session->data['api_session'])) {
 			$session = new \Opencart\System\Library\Session($this->config->get('session_engine'), $this->registry);
@@ -681,22 +753,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			unset($store->request->get['user_token']);
 			unset($store->request->get['action']);
 
-			$store->load->controller($store->request->get['route'], );
-
-			// 6. Get the cart data
-			$store->request->get['route'] = 'api/sale/cart';
-
-			$store->load->controller($store->request->get['route'], $order_info['language_code']);
-
-			$cart_info = json_decode($store->response->getOutput(), true);
-
-			if (isset($cart_info['products'])) {
-				$data['order_products'] = $cart_info['products'];
-			}
-
-			if (isset($cart_info['vouchers'])) {
-				$data['order_vouchers'] = $cart_info['vouchers'];
-			}
+			$store->load->controller($store->request->get['route']);
 		}
 
 		// Store

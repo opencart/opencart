@@ -32,7 +32,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
                     if ($this->config->get('payment_' . $payment_info['code'] . '_status')) {
                         $this->load->model('extension/payment/' . $payment_info['code']);
 
-                        if (property_exists($this->{'model_extension_payment_' . $payment_info['code']}, 'charge')) {
+                        if (isset($this->{'model_extension_payment_' . $payment_info['code']}->charge)) {
                             $subscription_status_id = $this->{'model_extension_payment_' . $payment_info['code']}->charge($result['customer_id'], $result['customer_payment_id'], $amount);
 
                             // Transaction

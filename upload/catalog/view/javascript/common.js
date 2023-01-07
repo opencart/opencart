@@ -440,6 +440,7 @@ class Chain {
 }
 
 var chain = new Chain();
+
 // Autocomplete
 +function ($) {
     $.fn.autocomplete = function (option) {
@@ -454,8 +455,6 @@ var chain = new Chain();
 
             // Focus in
             $(element).on('focusin', function () {
-                console.log('focusin');
-
                 element.request();
             });
 
@@ -468,16 +467,12 @@ var chain = new Chain();
 
             // Input
             $(element).on('input', function (e) {
-                console.log('input');
-
                 element.request();
             });
 
             // Click
             $dropdown.on('click', 'a', function (e) {
                 e.preventDefault();
-
-                console.log('click');
 
                 var value = $(this).attr('href');
 
@@ -492,7 +487,10 @@ var chain = new Chain();
             this.request = function () {
                 clearTimeout(this.timer);
 
-                //$dropdown.html('<li><i class="fa-solid fa-circle-notch fa-spin"></i></li>');
+                $('#autocomplete-loading').remove();
+
+                $dropdown.prepend('<li id="autocomplete-loading"><span class="dropdown-item text-center disabled"><i class="fa-solid fa-circle-notch fa-spin"></i></span></li>');
+                $dropdown.addClass('show');
 
                 this.timer = setTimeout(function (object) {
                     object.source($(object).val(), $.proxy(object.response, object));
@@ -536,7 +534,6 @@ var chain = new Chain();
                 }
 
                 $dropdown.html(html);
-                $dropdown.addClass('show');
             }
         });
     }

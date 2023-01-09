@@ -12,6 +12,14 @@ class Subscription extends \Opencart\System\Engine\Model {
 	public function editSubscriptionPlan(int $subscription_id, int $subscription_plan_id): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "subscription` SET `subscription_plan_id` = '" . (int)$subscription_plan_id . "' WHERE `subscription_id` = '" . (int)$subscription_id . "'");
 	}
+	
+	public function editRemaining(int $subscription_id, int $remaining): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "subscription` SET `remaining` = '" .  (int)$remaining .  "' WHERE `subscription_id` = '" . (int)$subscription_id . "'");
+	}
+
+	public function editTrialRemaining(int $subscription_id, int $trial_remaining): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "subscription` SET `trial_remaining` = '" .  (int)$trial_remaining .  "' WHERE `subscription_id` = '" . (int)$subscription_id . "'");
+	}
 
 	public function editDateNext(int $subscription_id, string $date_next): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "subscription` SET `date_next` = '" . $this->db->escape($date_next) . "' WHERE `subscription_id` = '" . (int)$subscription_id . "'");

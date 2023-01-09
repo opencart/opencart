@@ -747,8 +747,9 @@ class Order extends \Opencart\System\Engine\Controller {
 			$store->request->get = $this->request->get;
 			$store->request->post = $this->request->post;
 
-			// 5. Load the store data
+			// 5. Load the order data
 			$store->request->get['route'] = 'api/sale/order.load';
+			$store->request->get['language'] = $language;
 
 			unset($store->request->get['user_token']);
 			unset($store->request->get['action']);

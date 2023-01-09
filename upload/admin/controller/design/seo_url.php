@@ -483,7 +483,7 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 			$json['error']['value'] = $this->language->get('error_value_exists');
 		}
 
-		if (preg_match('/[^a-zA-Z0-9_-]|[\p{Cyrillic}]+/u', $this->request->post['keyword'])) {
+		if (!$this->request->post['keyword'] || preg_match('/[^a-zA-Z0-9_-]|[\p{Cyrillic}]+/u', $this->request->post['keyword'])) {
 			$json['error']['keyword'] = $this->language->get('error_keyword');
 		}
 

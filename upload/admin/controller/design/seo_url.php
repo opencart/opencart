@@ -483,14 +483,14 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 			$json['error']['value'] = $this->language->get('error_value_exists');
 		}
 
-		if (preg_match('/[^a-zA-Z0-9_-]|[\p{Cyrillic}]+/u', $this->request->post['keyword'])) {
+		if (!$this->request->post['keyword'] || preg_match('/[^a-zA-Z0-9_-]|[\p{Cyrillic}]+/u', $this->request->post['keyword'])) {
 			$json['error']['keyword'] = $this->language->get('error_keyword');
 		}
 
 		// Check if keyword already exists and on the same store as long as the keyword matches the key / value pair
 		$seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyword($this->request->post['keyword'], $this->request->post['store_id']);
 
-		if ($seo_url_info && ($seo_url_info['key'] != $this->request->post['key']) || ($seo_url_info['value'] != $this->request->post['value'])) {
+		if ($seo_url_info && (($seo_url_info['key'] != $this->request->post['key']) || ($seo_url_info['value'] != $this->request->post['value']))) {
 			$json['error']['keyword'] = $this->language->get('error_keyword_exists');
 		}
 

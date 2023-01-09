@@ -2250,6 +2250,28 @@ INSERT INTO `oc_stock_status` (`stock_status_id`, `language_id`, `name`) VALUES
 -----------------------------------------------------------
 
 --
+-- Dumping data for table `oc_subscription_plan`
+--
+
+INSERT INTO `oc_subscription_plan` (`subscription_plan_id`, `trial_price`, `trial_frequency`, `trial_duration`, `trial_cycle`, `trial_status`, `price`, `frequency`, `duration`, `cycle`, `status`, `sort_order`) VALUES
+(1, '10.0000', 'day', 10, 1, 1, '10.0000', 'day', 0, 1, 1, 0),
+(2, '11.0000', 'week', 11, 2, 1, '100.0000', 'month', 10, 1, 1, 0),
+(3, '0.0000', 'day', 0, 1, 0, '20.0000', 'day', 0, 1, 1, 0);
+
+-----------------------------------------------------------
+
+--
+-- Dumping data for table `oc_subscription_plan_description`
+--
+
+INSERT INTO `oc_subscription_plan_description` (`subscription_plan_id`, `language_id`, `name`) VALUES
+(1, 1, 'Subscription Plan 1'),
+(2, 1, 'Subscription Plan 2'),
+(3, 1, 'Subscription Plan 3');
+
+-----------------------------------------------------------
+
+--
 -- Dumping data for table `oc_subscription_status`
 --
 

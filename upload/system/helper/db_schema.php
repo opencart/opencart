@@ -6707,11 +6707,6 @@ function oc_db_schema() {
 				'name' => 'name',
 				'type' => 'varchar(255)',
 				'not_null' => true
-			],
-			[
-				'name' => 'description',
-				'type' => 'text',
-				'not_null' => true
 			]
 		],
 		'primary' => [

@@ -76,7 +76,7 @@ class Upgrade4 extends \Opencart\System\Engine\Controller {
 
 			if (isset($settings['config_admin_language'])) {
 				$missing[] = [
-					'key'        => 'config_pagination_admin',
+					'key'        => 'config_admin_language',
 					'value'      => $settings['config_admin_language'],
 					'code'       => 'config',
 					'serialized' => 0

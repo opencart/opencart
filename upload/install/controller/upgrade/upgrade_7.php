@@ -99,6 +99,12 @@ class Upgrade7 extends \Opencart\System\Engine\Controller {
 				'field' => 'title'
 			];
 
+			// Drop date_added field from extension_path
+			$remove[] = [
+				'table' => 'extension_path',
+				'field' => 'date_added'
+			];
+
 			foreach ($remove as $result) {
 				$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . $result['table'] . "' AND COLUMN_NAME = '" . $result['field'] . "'");
 

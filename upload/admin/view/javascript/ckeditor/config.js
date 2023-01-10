@@ -21,6 +21,7 @@ CKEDITOR.editorConfig = function( config ) {
 	config.extraPlugins = 'opencart,codemirror'; //
 	config.codemirror_theme = 'monokai';
 	config.toolbar = 'Custom';
+	config.allowedContent = true;
 
 	config.toolbar_Custom = [
 		['Source'],

@@ -20,6 +20,12 @@ class Order extends \Opencart\System\Engine\Model {
 				}
 
 				if ($product['subscription']) {
+					if ($product['subscription']['trial_duration'] && $product['subscription']['trial_remaining']) {
+						$date_next = date('Y-m-d', strtotime('+' . $product['subscription']['trial_cycle'] . ' ' . $product['subscription']['trial_frequency']));
+					} elseif ($product['subscription']['duration'] && $product['subscription']['remaining']) {
+						$date_next = date('Y-m-d', strtotime('+' . $product['subscription']['cycle'] . ' ' . $product['subscription']['frequency']));
+					}
+
                     $subscription_data = [
                         'order_product_id' 	   => $order_product_id,
                         'customer_id'		   => $data['customer_id'],
@@ -38,7 +44,7 @@ class Order extends \Opencart\System\Engine\Model {
                         'cycle'                => $product['subscription']['cycle'],
                         'duration'             => $product['subscription']['duration'],
                         'remaining'            => $product['subscription']['duration'],
-                        'date_next'			   => $product['subscription']['date_next'],
+						'date_next'            => $date_next,
                         'status'			   => $product['subscription']['status']
                     ];
 
@@ -91,8 +97,6 @@ class Order extends \Opencart\System\Engine\Model {
 			$this->db->query("DELETE FROM `" . DB_PREFIX . "order_product` WHERE `order_id` = '" . (int)$order_id . "'");
 			$this->db->query("DELETE FROM `" . DB_PREFIX . "order_option` WHERE `order_id` = '" . (int)$order_id . "'");
 
-			$this->load->model('checkout/subscription');
-
 			// Products
 			if (isset($data['products'])) {
 				foreach ($data['products'] as $product) {
@@ -105,6 +109,9 @@ class Order extends \Opencart\System\Engine\Model {
 					}
 				}
 			}
+
+			$this->load->model('checkout/subscription');
+
 
 			// Gift Voucher
 			$this->load->model('checkout/voucher');

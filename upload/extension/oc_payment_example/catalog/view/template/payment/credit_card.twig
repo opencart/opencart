@@ -56,7 +56,7 @@ $('#form-credit-card').on('submit', function (e) {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=extension/opencart/payment/credit_card.confirm&language={{ language }}',
+        url: 'index.php?route=extension/oc_payment_example/payment/credit_card.confirm&language={{ language }}',
         type: 'post',
         data: $('#form-credit-card').serialize(),
         dataType: 'json',
@@ -70,6 +70,8 @@ $('#form-credit-card').on('submit', function (e) {
             $('#button-confirm').prop('disabled', false).removeClass('loading');
         },
         success: function (json) {
+            console.log(json);
+
             $('.alert-dismissible').remove();
             $('#form-credit-card').find('.is-invalid').removeClass('is-invalid');
             $('#form-credit-card').find('.invalid-feedback').removeClass('d-block');

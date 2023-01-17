@@ -613,9 +613,9 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!empty($order_info)) {
-			$data['account_custom_field'] = $order_info['custom_field'];
+			$data['account_custom_field'] = json_decode($order_info['custom_field'], true);
 		} else {
-			$data['account_custom_field'] = '';
+			$data['account_custom_field'] = [];
 		}
 
 		// Custom Fields
@@ -685,8 +685,7 @@ class Order extends \Opencart\System\Engine\Controller {
 				'quantity'         => $product['quantity'],
 				'price'            => $this->currency->format($product['price'] + ($this->config->get('config_tax') ? $product['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']),
 				'total'            => $this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value']),
-				'reward'           => $product['reward'],
-				'href'             => $this->url->link('catalog/product.form', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $product['product_id'])
+				'reward'           => $product['reward']
 			];
 		}
 

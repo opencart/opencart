@@ -19,19 +19,32 @@ class CreditCard extends \Opencart\System\Engine\Model {
 	}
 
 	public function charge(int $customer_id, int $customer_payment_id, float $amount): int {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "download` SET `filename` = '" . $this->db->escape((string)$data['filename']) . "', `mask` = '" . $this->db->escape((string)$data['mask']) . "',");
 
 		return $this->config->get('config_subscription_active_status_id');
 	}
 
-	public function getReports(): array {
+	public function getReports(int $download_id, int $start = 0, int $limit = 10): array {
+		if ($start < 0) {
+			$start = 0;
+		}
 
+		if ($limit < 1) {
+			$limit = 10;
+		}
 
-		return [];
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "credit_card_report` ORDER BY `date_added` ASC LIMIT " . (int)$start . "," . (int)$limit);
+
+		return $query->rows;
 	}
 
 	public function getTotalReports(): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "credit_card_report`");
 
-
-		return 0;
+		if ($query->num_rows) {
+			return $query->row['total'];
+		} else {
+			return 0;
+		}
 	}
 }

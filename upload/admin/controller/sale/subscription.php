@@ -413,7 +413,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$data['subscription_id'] = '';
 		}
 
-		// Order data
+		// Subscription
 		if (!empty($subscription_info)) {
 			$this->load->model('sale/order');
 
@@ -427,9 +427,21 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!empty($order_info)) {
-			$data['customer'] = $order_info['customer'];
+			$data['customer_id'] = $order_info['customer_id'];
 		} else {
-			$data['customer'] = '';
+			$data['customer_id'] = 0;
+		}
+
+		if (!empty($order_info)) {
+			$data['firstname'] = $order_info['firstname'];
+		} else {
+			$data['firstname'] = '';
+		}
+
+		if (!empty($order_info)) {
+			$data['lastname'] = $order_info['lastname'];
+		} else {
+			$data['lastname'] = '';
 		}
 
 		if (!empty($order_info)) {
@@ -488,6 +500,8 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 			$product_info = $this->model_sale_order->getProductByOrderProductId($subscription_info['order_id'], $subscription_info['order_product_id']);
 		}
+
+		print_r($product_info);
 
 		if (!empty($product_info['name'])) {
 			$data['product_name'] = $product_info['name'];
@@ -788,9 +802,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 		$subscription_info = $this->model_sale_subscription->getSubscription($subscription_id);
 
-		if (!$subscription_info) {
-			$json['error'] = $this->language->get('error_subscription');
-		} else {
+		if ($subscription_info) {
 			$this->load->model('sale/order');
 
 			$order_info = $this->model_sale_order->getOrder($subscription_info['order_id']);
@@ -840,6 +852,8 @@ class Subscription extends \Opencart\System\Engine\Controller {
                     }
                 }
             }
+		} else {
+			$json['error'] = $this->language->get('error_subscription');
 		}
 
 		if (!$json) {

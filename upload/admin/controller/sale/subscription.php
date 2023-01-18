@@ -501,8 +501,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$product_info = $this->model_sale_order->getProductByOrderProductId($subscription_info['order_id'], $subscription_info['order_product_id']);
 		}
 
-		print_r($product_info);
-
 		if (!empty($product_info['name'])) {
 			$data['product_name'] = $product_info['name'];
 		} else {

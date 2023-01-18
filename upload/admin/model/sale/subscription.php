@@ -31,6 +31,12 @@ class Subscription extends \Opencart\System\Engine\Model {
 		return $query->row;
 	}
 
+	public function getSubscriptionByOrderProductId(int $order_id, int $order_product_id): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "subscription` WHERE `order_id` = '" . (int)$order_id . "' AND `order_product_id` = '" . (int)$order_product_id . "'");
+
+		return $query->row;
+	}
+
 	public function getSubscriptions(array $data): array {
 		$sql = "SELECT `s`.`subscription_id`, `s`.*, CONCAT(o.`firstname`, ' ', o.`lastname`) AS customer, (SELECT ss.`name` FROM `" . DB_PREFIX . "subscription_status` ss WHERE ss.`subscription_status_id` = s.`subscription_status_id` AND ss.`language_id` = '" . (int)$this->config->get('config_language_id') . "') AS subscription_status FROM `" . DB_PREFIX . "subscription` `s` LEFT JOIN `" . DB_PREFIX . "order` `o` ON (`s`.`order_id` = `o`.`order_id`)";
 

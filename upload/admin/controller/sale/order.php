@@ -647,6 +647,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$data['order_products'] = [];
 
 		$this->load->model('sale/order');
+		$this->load->model('sale/subscription');
 
 		$products = $this->model_sale_order->getProducts($order_id);
 
@@ -676,12 +677,41 @@ class Order extends \Opencart\System\Engine\Controller {
 				}
 			}
 
+			$description = '';
+
+			$subscription_info = $this->model_sale_subscription->getSubscriptionByOrderProductId($order_id, $product['order_product_id']);
+
+			print_r($subscription_info);
+
+			if ($subscription_info) {
+				$trial_price = $this->currency->format($subscription_info['trial_price'], $this->config->get('config_currency'));
+				$trial_cycle = $subscription_info['trial_cycle'];
+				$trial_frequency = $this->language->get('text_' . $subscription_info['trial_frequency']);
+				$trial_duration = $subscription_info['trial_duration'];
+
+				if ($subscription_info['trial_status']) {
+					$description .= sprintf($this->language->get('text_subscription_trial'), $trial_price, $trial_cycle, $trial_frequency, $trial_duration);
+				}
+
+				$price = $this->currency->format($subscription_info['price'], $this->config->get('config_currency'));
+				$cycle = $subscription_info['cycle'];
+				$frequency = $this->language->get('text_' . $subscription_info['frequency']);
+				$duration = $subscription_info['duration'];
+
+				if ($subscription_info['duration']) {
+					$description .= sprintf($this->language->get('text_subscription_duration'), $price, $cycle, $frequency, $duration);
+				} else {
+					$description .= sprintf($this->language->get('text_subscription_cancel'), $price, $cycle, $frequency);
+				}
+			}
+
 			$data['order_products'][] = [
 				'order_product_id' => $product['order_product_id'],
 				'product_id'       => $product['product_id'],
 				'name'             => $product['name'],
 				'model'            => $product['model'],
 				'option'           => $option_data,
+				'subscription'     => $description,
 				'quantity'         => $product['quantity'],
 				'price'            => $this->currency->format($product['price'] + ($this->config->get('config_tax') ? $product['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']),
 				'total'            => $this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value']),

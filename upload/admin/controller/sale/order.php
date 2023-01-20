@@ -681,8 +681,6 @@ class Order extends \Opencart\System\Engine\Controller {
 
 			$subscription_info = $this->model_sale_subscription->getSubscriptionByOrderProductId($order_id, $product['order_product_id']);
 
-			print_r($subscription_info);
-
 			if ($subscription_info) {
 				$trial_price = $this->currency->format($subscription_info['trial_price'], $this->config->get('config_currency'));
 				$trial_cycle = $subscription_info['trial_cycle'];

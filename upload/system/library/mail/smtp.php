@@ -4,7 +4,7 @@
  */
 namespace Opencart\System\Library\Mail;
 class Smtp {
-	protected array $option = [];
+	public array $option = [];
 	protected array $default = [
 		'smtp_port'     => 25,
 		'smtp_timeout'  => 5,

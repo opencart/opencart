@@ -4,7 +4,7 @@
  */
 namespace Opencart\System\Library\Mail;
 class Mail {
-	protected array $option = [];
+	public array $option = [];
 
 	/**
 	 * Constructor
@@ -21,8 +21,6 @@ class Mail {
 	 * @return    bool
 	 */
 	public function send(): bool {
-		print_r($this->option);
-
 		if (is_array($this->option['to'])) {
 			$to = implode(',', $this->option['to']);
 		} else {

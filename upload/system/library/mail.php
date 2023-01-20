@@ -148,6 +148,8 @@ class Mail {
 			throw new \Exception('Error: E-Mail message required!');
 		}
 
+		$this->adaptor->option = $this->option;
+
 		return $this->adaptor->send();
 	}
 }

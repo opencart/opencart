@@ -1,8 +1,8 @@
 <?php
 namespace Opencart\Catalog\Model\Account;
 class Subscription extends \Opencart\System\Engine\Model {
-	public function editStatus(int $subscription_id, bool $status): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "subscription` SET `status` = '" . (bool)$status . "' WHERE `subscription_id` = '" . (int)$subscription_id . "'");
+	public function editSubscriptionStatus(int $subscription_id, bool $subscription_status_id): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "subscription` SET `subscription_status_id` = '" . (bool)$subscription_status_id . "' WHERE `subscription_id` = '" . (int)$subscription_id . "'");
 	}
 	
 	public function editTrialRemaining(int $subscription_id, int $trial_remaining): void {
@@ -20,7 +20,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 	}
 
 	public function getSubscriptions(array $data): array {
-        $sql = "SELECT s.`subscription_id`, s.`trial_status`, s.`trial_duration`, s.`trial_remaining`, s.`duration`, s.`remaining`, s.`customer_payment_id`, s.`trial_cycle`, s.`trial_frequency`, s.`cycle`, s.`frequency`, o.*, o.`payment_method`, o.`currency_id`, o.`currency_value` FROM `" . DB_PREFIX . "subscription` s LEFT JOIN `" . DB_PREFIX . "order` o ON (s.`order_id` = o.`order_id`)";
+        $sql = "SELECT s.`subscription_id`, s.`order_id`, s.`order_product_id`, s.`trial_status`, s.`trial_duration`, s.`trial_remaining`, s.`duration`, s.`remaining`, s.`customer_payment_id`, s.`trial_cycle`, s.`trial_frequency`, s.`cycle`, s.`frequency`, s.`subscription_status_id`, o.*, o.`payment_method`, o.`currency_id`, o.`currency_value` FROM `" . DB_PREFIX . "subscription` s LEFT JOIN `" . DB_PREFIX . "order` o ON (s.`order_id` = o.`order_id`)";
 
         $implode = [];
 

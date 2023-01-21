@@ -535,8 +535,7 @@
           <div class="mb-3">
             <label for="input-customer" class="form-label">{{ entry_customer }}</label>
             <div class="input-group">
-              <input type="text" name="customer" value="{{ firstname }} {{ lastname }}" placeholder="{{ entry_customer }}" id="input-customer" data-oc-target="autocomplete-customer" class="form-control" autocomplete="off"/>
-              <a href="{{ customer_add }}" target="_blank" data-bs-toggle="tooltip" title="{{ button_customer_add }}" class="btn btn-outline-secondary"><i class="fa-solid fa-user-plus"></i></a>
+              <input type="text" name="customer" value="{{ firstname }} {{ lastname }}" placeholder="{{ entry_customer }}" id="input-customer" data-oc-target="autocomplete-customer" class="form-control" autocomplete="off"/> <a href="{{ customer_add }}" target="_blank" data-bs-toggle="tooltip" title="{{ button_customer_add }}" class="btn btn-outline-secondary"><i class="fa-solid fa-user-plus"></i></a>
             </div>
             <input type="hidden" name="customer_id" value="{{ customer_id }}" id="input-customer-id"/>
             <ul id="autocomplete-customer" class="dropdown-menu"></ul>
@@ -619,8 +618,7 @@
 
               {% if custom_field.type == 'textarea' %}
                 <div class="mb-3 custom-field custom-field-{{ custom_field.custom_field_id }}">
-                  <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label>
-                  <textarea name="custom_field[{{ custom_field.custom_field_id }}]" rows="5" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control">{{ custom_field.value }}</textarea>
+                  <label for="input-custom-field-{{ custom_field.custom_field_id }}" class="form-label">{{ custom_field.name }}</label> <textarea name="custom_field[{{ custom_field.custom_field_id }}]" rows="5" placeholder="{{ custom_field.name }}" id="input-custom-field-{{ custom_field.custom_field_id }}" class="form-control">{{ custom_field.value }}</textarea>
                   <div id="error-custom-field-{{ custom_field.custom_field_id }}" class="invalid-feedback"></div>
                 </div>
               {% endif %}
@@ -699,8 +697,7 @@
               <fieldset class="mb-0">
                 <legend>{{ text_product_add }}</legend>
                 <div class="mb-3">
-                  <label for="input-product" class="form-label">{{ entry_product }}</label>
-                  <input type="text" name="product" value="" placeholder="{{ entry_product }}" id="input-product" data-oc-target="autocomplete-product" class="form-control" autocomplete="off"/>
+                  <label for="input-product" class="form-label">{{ entry_product }}</label> <input type="text" name="product" value="" placeholder="{{ entry_product }}" id="input-product" data-oc-target="autocomplete-product" class="form-control" autocomplete="off"/>
                   <ul id="autocomplete-product" class="dropdown-menu"></ul>
                   <input type="hidden" name="product_id" value="" id="input-product-id"/>
                 </div>
@@ -770,8 +767,7 @@
       <div class="modal-body">
         <form id="form-affiliate">
           <div class="mb-3">
-            <input type="text" name="affiliate" value="{{ affiliate }}" placeholder="{{ entry_affiliate }}" id="input-affiliate" data-oc-target="autocomplete-affiliate" class="form-control" autocomplete="off"/>
-            <input type="hidden" name="affiliate_id" value="{{ affiliate_id }}" id="input-affiliate-id"/>
+            <input type="text" name="affiliate" value="{{ affiliate }}" placeholder="{{ entry_affiliate }}" id="input-affiliate" data-oc-target="autocomplete-affiliate" class="form-control" autocomplete="off"/> <input type="hidden" name="affiliate_id" value="{{ affiliate_id }}" id="input-affiliate-id"/>
             <ul id="autocomplete-affiliate" class="dropdown-menu"></ul>
           </div>
           <div class="text-end">
@@ -792,8 +788,7 @@
       <div class="modal-body">
         <form id="form-payment-address">
           <div class="mb-3">
-            <label for="input-payment-address" class="form-label">{{ entry_address }}</label>
-            <select name="payment_address" id="input-payment-address" class="form-select">
+            <label for="input-payment-address" class="form-label">{{ entry_address }}</label> <select name="payment_address" id="input-payment-address" class="form-select">
               <option value="0" selected="selected">{{ text_none }}</option>
               {% for address in addresses %}
                 <option value="{{ address.address_id }}">{{ address.firstname }} {{ address.lastname }},{% if address.company %} {{ address.company }},{% endif %} {{ address.address_1 }}, {{ address.city }}, {{ address.country }}</option>
@@ -1148,33 +1143,33 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#button-collapse').on('click', function () {
+$('#button-collapse').on('click', function() {
     var element = this;
 
     var target = $('#collapse-order');
 
     if (!target.is(':hidden')) {
-        target.slideUp('400', function () {
+        target.slideUp('400', function() {
             $(element).html('{{ text_more }} <i class="fa-solid fa-angle-down"></i>');
         });
     } else {
-        target.slideDown('400', function () {
+        target.slideDown('400', function() {
             $(element).html('{{ text_less }} <i class="fa-solid fa-angle-up"></i>');
         });
     }
 });
 
-$(document).on('click', '#button-invoice', function () {
+$(document).on('click', '#button-invoice', function() {
     $.ajax({
         url: 'index.php?route=sale/order.createInvoiceNo&user_token={{ user_token }}&order_id={{ order_id }}',
         dataType: 'json',
-        beforeSend: function () {
+        beforeSend: function() {
             $('#button-invoice').prop('disabled', true).addClass('loading');
         },
-        complete: function () {
+        complete: function() {
             $('#button-invoice').prop('disabled', false).removeClass('loading');
         },
-        success: function (json) {
+        success: function(json) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
@@ -1189,7 +1184,7 @@ $(document).on('click', '#button-invoice', function () {
                 $('#button-invoice').replaceWith('<button disabled="disabled" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>');
             }
         },
-        error: function (xhr, ajaxOptions, thrownError) {
+        error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
@@ -1197,11 +1192,11 @@ $(document).on('click', '#button-invoice', function () {
 
 // Customer
 $('#input-customer').autocomplete({
-    'source': function (request, response) {
+    'source': function(request, response) {
         $.ajax({
             url: 'index.php?route=customer/customer.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
-            success: function (json) {
+            success: function(json) {
                 json.unshift({
                     customer_id: 0,
                     customer_group_id: {{ customer_group_id }},
@@ -1215,7 +1210,7 @@ $('#input-customer').autocomplete({
                     address: []
                 });
 
-                response($.map(json, function (item) {
+                response($.map(json, function(item) {
                     return {
                         category: item['customer_group'],
                         label: item['name'],
@@ -1232,7 +1227,7 @@ $('#input-customer').autocomplete({
             }
         });
     },
-    'select': function (item) {
+    'select': function(item) {
         // Reset all custom fields
         $('#form-customer input[type=\'text\'], #form-customer textarea').not('#input-customer, #input-customer-id').val('');
         $('#form-customer select option').removeAttr('selected');
@@ -1271,11 +1266,11 @@ $('#input-customer').autocomplete({
 });
 
 // Custom Fields
-$('#input-customer-group').on('change', function () {
+$('#input-customer-group').on('change', function() {
     $.ajax({
         url: 'index.php?route=customer/customer.customfield&user_token={{ user_token }}&customer_group_id=' + this.value,
         dataType: 'json',
-        success: function (json) {
+        success: function(json) {
             $('.custom-field').hide();
             $('.custom-field').removeClass('required');
 
@@ -1289,7 +1284,7 @@ $('#input-customer-group').on('change', function () {
                 }
             }
         },
-        error: function (xhr, ajaxOptions, thrownError) {
+        error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
@@ -1298,7 +1293,7 @@ $('#input-customer-group').on('change', function () {
 $('#input-customer-group').trigger('change');
 
 // Customer
-$('#form-customer').on('submit', function (e) {
+$('#form-customer').on('submit', function(e) {
     e.preventDefault();
 
     $.ajax({
@@ -1307,13 +1302,13 @@ $('#form-customer').on('submit', function (e) {
         data: $('#form-customer').serialize(),
         dataType: 'json',
         contentType: 'application/x-www-form-urlencoded',
-        beforeSend: function () {
+        beforeSend: function() {
             $('#button-customer').prop('disabled', true).addClass('loading');
         },
-        complete: function () {
+        complete: function() {
             $('#button-customer').prop('disabled', false).removeClass('loading');
         },
-        success: function (json) {
+        success: function(json) {
             console.log(json);
 
             $('.alert-dismissible').remove();
@@ -1343,7 +1338,7 @@ $('#form-customer').on('submit', function (e) {
                 $('#button-refresh').trigger('click');
             }
         },
-        error: function (xhr, ajaxOptions, thrownError) {
+        error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
@@ -1351,12 +1346,12 @@ $('#form-customer').on('submit', function (e) {
 
 // Product
 $('#input-product').autocomplete({
-    'source': function (request, response) {
+    'source': function(request, response) {
         $.ajax({
             url: 'index.php?route=catalog/product.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
-            success: function (json) {
-                response($.map(json, function (item) {
+            success: function(json) {
+                response($.map(json, function(item) {
                     return {
                         label: item['name'],
                         value: item['product_id'],
@@ -1367,12 +1362,12 @@ $('#input-product').autocomplete({
                     }
                 }));
             },
-            error: function (xhr, ajaxOptions, thrownError) {
+            error: function(xhr, ajaxOptions, thrownError) {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });
     },
-    'select': function (item) {
+    'select': function(item) {
         $('#input-product-id').val(item['value']);
         $('#input-product').val(item['label']);
 
@@ -1568,7 +1563,7 @@ $('#input-product').autocomplete({
     }
 });
 
-$('#form-product-add').on('submit', function (e) {
+$('#form-product-add').on('submit', function(e) {
     e.preventDefault();
 
     $.ajax({
@@ -1577,13 +1572,13 @@ $('#form-product-add').on('submit', function (e) {
         data: $('#form-product-add').serialize(),
         dataType: 'json',
         contentType: 'application/x-www-form-urlencoded',
-        beforeSend: function () {
+        beforeSend: function() {
             $('#button-product-add').prop('disabled', true).addClass('loading');
         },
-        complete: function () {
+        complete: function() {
             $('#button-product-add').prop('disabled', false).removeClass('loading');
         },
-        success: function (json) {
+        success: function(json) {
             $('.alert-dismissible').remove();
             $('.is-invalid').removeClass('is-invalid');
             $('.invalid-feedback').removeClass('d-block');
@@ -1609,14 +1604,14 @@ $('#form-product-add').on('submit', function (e) {
                 $('#button-refresh').trigger('click');
             }
         },
-        error: function (xhr, ajaxOptions, thrownError) {
+        error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 });
 
 // Remove product
-$('#order-products').on('submit', 'form', function (e) {
+$('#order-products').on('submit', 'form', function(e) {
     e.preventDefault();
 
     var element = this;
@@ -1626,13 +1621,13 @@ $('#order-products').on('submit', 'form', function (e) {
         type: 'post',
         data: $(element).serialize(),
         dataType: 'json',
-        beforeSend: function () {
+        beforeSend: function() {
             $(e.target).prop('disabled', true).addClass('loading');
         },
-        complete: function () {
+        complete: function() {
             $(e.target).prop('disabled', false).removeClass('loading');
         },
-        success: function (json) {
+        success: function(json) {
             $('.alert-dismissible').remove();
 
             // Check for errors
@@ -1650,14 +1645,14 @@ $('#order-products').on('submit', 'form', function (e) {
                 $('#button-refresh').trigger('click');
             }
         },
-        error: function (xhr, ajaxOptions, thrownError) {
+        error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 });
 
 // Voucher
-$('#form-voucher-add').on('submit', function (e) {
+$('#form-voucher-add').on('submit', function(e) {
     e.preventDefault();
 
     $.ajax({
@@ -1665,13 +1660,13 @@ $('#form-voucher-add').on('submit', function (e) {
         type: 'post',
         data: $('#form-voucher-add').serialize(),
         dataType: 'json',
-        beforeSend: function () {
+        beforeSend: function() {
             $('#button-voucher-add').prop('disabled', true).addClass('loading');
         },
-        complete: function () {
+        complete: function() {
             $('#button-voucher-add').prop('disabled', false).removeClass('loading');
         },
-        success: function (json) {
+        success: function(json) {
             $('.alert-dismissible').remove();
             $('.is-invalid').removeClass('is-invalid');
             $('.invalid-feedback').removeClass('d-block');
@@ -1706,14 +1701,14 @@ $('#form-voucher-add').on('submit', function (e) {
                 $('#button-refresh').trigger('click');
             }
         },
-        error: function (xhr, ajaxOptions, thrownError) {
+        error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 });
 
 // Remove voucher
-$('#order-vouchers').on('submit', 'form', function (e) {
+$('#order-vouchers').on('submit', 'form', function(e) {
     e.preventDefault();
 
     var element = this;
@@ -1723,13 +1718,13 @@ $('#order-vouchers').on('submit', 'form', function (e) {
         type: 'post',
         data: $(element).serialize(),
         dataType: 'json',
-        beforeSend: function () {
+        beforeSend: function() {
             $(e.target).prop('disabled', true).addClass('loading');
         },
-        complete: function () {
+        complete: function() {
             $(e.target).prop('disabled', false).removeClass('loading');
         },
-        success: function (json) {
+        success: function(json) {
             $('.alert-dismissible').remove();
 
             // Check for errors
@@ -1747,13 +1742,13 @@ $('#order-vouchers').on('submit', 'form', function (e) {
                 $('#button-refresh').trigger('click');
             }
         },
-        error: function (xhr, ajaxOptions, thrownError) {
+        error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 });
 
-$('#input-store').on('change', function (e) {
+$('#input-store').on('change', function(e) {
     e.preventDefault();
 
     $('#input-payment-method').html('<option value="">{{ text_select }}</option>');
@@ -1762,7 +1757,7 @@ $('#input-store').on('change', function (e) {
     $('#button-refresh').trigger('click');
 });
 
-$('#input-language').on('change', function (e) {
+$('#input-language').on('change', function(e) {
     e.preventDefault();
 
     $('#input-payment-method').html('<option value="">{{ text_select }}</option>');
@@ -1771,7 +1766,7 @@ $('#input-language').on('change', function (e) {
     $('#button-refresh').trigger('click');
 });
 
-$('#input-currency').on('change', function (e) {
+$('#input-currency').on('change', function(e) {
     e.preventDefault();
 
     $.ajax({
@@ -1779,13 +1774,13 @@ $('#input-currency').on('change', function (e) {
         type: 'post',
         data: $('#form-currency').serialize(),
         dataType: 'json',
-        beforeSend: function () {
+        beforeSend: function() {
             $('#input-currency').prop('disabled', true);
         },
-        complete: function () {
+        complete: function() {
             $('#input-currency').prop('disabled', false);
         },
-        success: function (json) {
+        success: function(json) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
@@ -1801,14 +1796,14 @@ $('#input-currency').on('change', function (e) {
                 $('#button-refresh').trigger('click');
             }
         },
-        error: function (xhr, ajaxOptions, thrownError) {
+        error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 });
 
 // Coupon
-$('#form-coupon').on('submit', function (e) {
+$('#form-coupon').on('submit', function(e) {
     e.preventDefault();
 
     $.ajax({
@@ -1816,13 +1811,13 @@ $('#form-coupon').on('submit', function (e) {
         type: 'post',
         data: $('#form-coupon').serialize(),
         dataType: 'json',
-        beforeSend: function () {
+        beforeSend: function() {
             $('#button-coupon').addClass('loading').prop('disabled', true);
         },
-        complete: function () {
+        complete: function() {
             $('#button-coupon').removeClass('loading').prop('disabled', false);
         },
-        success: function (json) {
+        success: function(json) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
@@ -1839,14 +1834,14 @@ $('#form-coupon').on('submit', function (e) {
                 $('#button-refresh').trigger('click');
             }
         },
-        error: function (xhr, ajaxOptions, thrownError) {
+        error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 });
 
 // Voucher
-$('#form-voucher').on('submit', function (e) {
+$('#form-voucher').on('submit', function(e) {
     e.preventDefault();
 
     $.ajax({
@@ -1854,13 +1849,13 @@ $('#form-voucher').on('submit', function (e) {
         type: 'post',
         data: $('#form-voucher').serialize(),
         dataType: 'json',
-        beforeSend: function () {
+        beforeSend: function() {
             $('#button-voucher').prop('disabled', true).addClass('loading');
         },
-        complete: function () {
+        complete: function() {
             $('#button-voucher').prop('disabled', false).removeClass('loading');
         },
-        success: function (json) {
+        success: function(json) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
@@ -1877,14 +1872,14 @@ $('#form-voucher').on('submit', function (e) {
                 $('#button-refresh').trigger('click');
             }
         },
-        error: function (xhr, ajaxOptions, thrownError) {
+        error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 });
 
 // Reward
-$('#form-reward').on('submit', function (e) {
+$('#form-reward').on('submit', function(e) {
     e.preventDefault();
 
     $.ajax({
@@ -1892,13 +1887,13 @@ $('#form-reward').on('submit', function (e) {
         type: 'post',
         data: $('#form-reward').serialize(),
         dataType: 'json',
-        beforeSend: function () {
+        beforeSend: function() {
             $('#button-reward').prop('disabled', true).addClass('loading');
         },
-        complete: function () {
+        complete: function() {
             $('#button-reward').prop('disabled', false).removeClass('loading');
         },
-        success: function (json) {
+        success: function(json) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
@@ -1914,14 +1909,14 @@ $('#form-reward').on('submit', function (e) {
                 $('#button-refresh').trigger('click');
             }
         },
-        error: function (xhr, ajaxOptions, thrownError) {
+        error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 });
 
 // Reward
-$(document).on('click', '#button-reward-add, #button-reward-remove', function (e) {
+$(document).on('click', '#button-reward-add, #button-reward-remove', function(e) {
     var element = this;
 
     if ($(element).hasClass('btn-success')) {
@@ -1934,13 +1929,13 @@ $(document).on('click', '#button-reward-add, #button-reward-remove', function (e
         url: 'index.php?route=sale/order.' + action + 'Reward&user_token={{ user_token }}&order_id=' + $('#input-order-id').val(),
         type: 'post',
         dataType: 'json',
-        beforeSend: function () {
+        beforeSend: function() {
             $(element).prop('disabled', true).addClass('loading');
         },
-        complete: function () {
+        complete: function() {
             $(element).prop('disabled', false).removeClass('loading');
         },
-        success: function (json) {
+        success: function(json) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
@@ -1962,7 +1957,7 @@ $(document).on('click', '#button-reward-add, #button-reward-remove', function (e
                 $('#input-shipping-method').html('<option value="">{{ text_select }}</option>');
             }
         },
-        error: function (xhr, ajaxOptions, thrownError) {
+        error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
@@ -1970,17 +1965,17 @@ $(document).on('click', '#button-reward-add, #button-reward-remove', function (e
 
 // Affiliate
 $('#input-affiliate').autocomplete({
-    'source': function (request, response) {
+    'source': function(request, response) {
         $.ajax({
             url: 'index.php?route=marketing/affiliate.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
-            success: function (json) {
+            success: function(json) {
                 json.unshift({
                     name: '{{ text_none }}',
                     customer_id: 0
                 });
 
-                response($.map(json, function (item) {
+                response($.map(json, function(item) {
                     return {
                         label: item['name'],
                         value: item['customer_id']
@@ -1989,14 +1984,14 @@ $('#input-affiliate').autocomplete({
             }
         });
     },
-    'select': function (item) {
+    'select': function(item) {
         $('#input-affiliate-id').val(item['value']);
         $('#input-affiliate').val(item['label']);
     }
 });
 
 // Affiliate
-$('#form-affiliate').on('submit', function (e) {
+$('#form-affiliate').on('submit', function(e) {
     e.preventDefault();
 
     $.ajax({
@@ -2004,13 +1999,13 @@ $('#form-affiliate').on('submit', function (e) {
         type: 'post',
         data: $('#form-affiliate').serialize(),
         dataType: 'json',
-        beforeSend: function () {
+        beforeSend: function() {
             $('#button-affiliate').prop('disabled', true).addClass('loading');
         },
-        complete: function () {
+        complete: function() {
             $('#button-affiliate').prop('disabled', false).removeClass('loading');
         },
-        success: function (json) {
+        success: function(json) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
@@ -2027,14 +2022,14 @@ $('#form-affiliate').on('submit', function (e) {
                 }
             }
         },
-        error: function (xhr, ajaxOptions, thrownError) {
+        error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 });
 
 // Commission
-$(document).on('click', '#button-commission-add, #button-commission-remove', function (e) {
+$(document).on('click', '#button-commission-add, #button-commission-remove', function(e) {
     var element = this;
 
     if ($(element).hasClass('btn-success')) {
@@ -2047,13 +2042,13 @@ $(document).on('click', '#button-commission-add, #button-commission-remove', fun
         url: 'index.php?route=sale/order.' + action + 'Commission&user_token={{ user_token }}&order_id=' + $('#input-order-id').val(),
         type: 'post',
         dataType: 'json',
-        beforeSend: function () {
+        beforeSend: function() {
             $(element).prop('disabled', true).addClass('loading');
         },
-        complete: function () {
+        complete: function() {
             $(element).prop('disabled', false).removeClass('loading');
         },
-        success: function (json) {
+        success: function(json) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
@@ -2072,26 +2067,26 @@ $(document).on('click', '#button-commission-add, #button-commission-remove', fun
                 }
             }
         },
-        error: function (xhr, ajaxOptions, thrownError) {
+        error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 });
 
 // Payment Address
-$('#input-payment-address').on('change', function () {
+$('#input-payment-address').on('change', function() {
     var element = this;
 
     $.ajax({
         url: 'index.php?route=customer/customer.address&user_token={{ user_token }}&address_id=' + this.value,
         dataType: 'json',
-        beforeSend: function () {
+        beforeSend: function() {
             $(element).prop('disabled', true);
         },
-        complete: function () {
+        complete: function() {
             $(element).prop('disabled', false);
         },
-        success: function (json) {
+        success: function(json) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
@@ -2126,13 +2121,13 @@ $('#input-payment-address').on('change', function () {
                 }
             }
         },
-        error: function (xhr, ajaxOptions, thrownError) {
+        error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 });
 
-$('#form-payment-address').on('submit', function (e) {
+$('#form-payment-address').on('submit', function(e) {
     e.preventDefault();
 
     $.ajax({
@@ -2140,13 +2135,13 @@ $('#form-payment-address').on('submit', function (e) {
         type: 'post',
         data: $('#form-payment-address').serialize(),
         dataType: 'json',
-        beforeSend: function () {
+        beforeSend: function() {
             $('#button-payment-address').prop('disabled', true).addClass('loading');
         },
-        complete: function () {
+        complete: function() {
             $('#button-payment-address').prop('disabled', false).removeClass('loading');
         },
-        success: function (json) {
+        success: function(json) {
             $('.alert-dismissible').remove();
             $('.is-invalid').removeClass('is-invalid');
             $('.invalid-feedback').removeClass('d-block');
@@ -2201,7 +2196,7 @@ $('#form-payment-address').on('submit', function (e) {
                 $('#button-refresh').trigger('click');
             }
         },
-        error: function (xhr, ajaxOptions, thrownError) {
+        error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
@@ -2209,19 +2204,19 @@ $('#form-payment-address').on('submit', function (e) {
 
 var payment_zone_id = '{{ payment_zone_id }}';
 
-$('#input-payment-country').on('change', function () {
+$('#input-payment-country').on('change', function() {
     var element = this;
 
     $.ajax({
         url: 'index.php?route=localisation/country.country&user_token={{ user_token }}&country_id=' + this.value,
         dataType: 'json',
-        beforeSend: function () {
+        beforeSend: function() {
             $(element).prop('disabled', true);
         },
-        complete: function () {
+        complete: function() {
             $(element).prop('disabled', false);
         },
-        success: function (json) {
+        success: function(json) {
             if (json['postcode_required'] == '1') {
                 $('#input-payment-postcode').parent().addClass('required');
             } else {
@@ -2246,7 +2241,7 @@ $('#input-payment-country').on('change', function () {
 
             $('#input-payment-zone').html(html);
         },
-        error: function (xhr, ajaxOptions, thrownError) {
+        error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
@@ -2255,19 +2250,19 @@ $('#input-payment-country').on('change', function () {
 $('#input-payment-country').trigger('change');
 
 // Shipping Address
-$('#input-shipping-address').on('change', function () {
+$('#input-shipping-address').on('change', function() {
     var element = this;
 
     $.ajax({
         url: 'index.php?route=customer/customer.address&user_token={{ user_token }}&address_id=' + this.value,
         dataType: 'json',
-        beforeSend: function () {
+        beforeSend: function() {
             $(element).prop('disabled', true);
         },
-        complete: function () {
+        complete: function() {
             $(element).prop('disabled', false);
         },
-        success: function (json) {
+        success: function(json) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
@@ -2302,13 +2297,13 @@ $('#input-shipping-address').on('change', function () {
                 }
             }
         },
-        error: function (xhr, ajaxOptions, thrownError) {
+        error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 });
 
-$('#form-shipping-address').on('submit', function (e) {
+$('#form-shipping-address').on('submit', function(e) {
     e.preventDefault();
 
     $.ajax({
@@ -2317,13 +2312,13 @@ $('#form-shipping-address').on('submit', function (e) {
         data: $('#form-shipping-address').serialize(),
         dataType: 'json',
         contentType: 'application/x-www-form-urlencoded',
-        beforeSend: function () {
+        beforeSend: function() {
             $('#button-shipping-address').prop('disabled', true).addClass('loading');
         },
-        complete: function () {
+        complete: function() {
             $('#button-shipping-address').prop('disabled', false).removeClass('loading');
         },
-        success: function (json) {
+        success: function(json) {
             $('#form-shipping-address .alert-dismissible').remove();
             $('#form-shipping-address .is-invalid').removeClass('is-invalid');
             $('#form-shipping-address .invalid-feedback').removeClass('d-block');
@@ -2379,7 +2374,7 @@ $('#form-shipping-address').on('submit', function (e) {
                 $('#button-refresh').trigger('click');
             }
         },
-        error: function (xhr, ajaxOptions, thrownError) {
+        error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
@@ -2387,19 +2382,19 @@ $('#form-shipping-address').on('submit', function (e) {
 
 var shipping_zone_id = '{{ shipping_zone_id }}';
 
-$('#input-shipping-country').on('change', function () {
+$('#input-shipping-country').on('change', function() {
     var element = this;
 
     $.ajax({
         url: 'index.php?route=localisation/country.country&user_token={{ user_token }}&country_id=' + this.value,
         dataType: 'json',
-        beforeSend: function () {
+        beforeSend: function() {
             $(element).prop('disabled', true);
         },
-        complete: function () {
+        complete: function() {
             $(element).prop('disabled', false);
         },
-        success: function (json) {
+        success: function(json) {
             if (json['postcode_required'] == '1') {
                 $('#input-shipping-postcode').parent().addClass('required');
             } else {
@@ -2424,7 +2419,7 @@ $('#input-shipping-country').on('change', function () {
 
             $('#input-shipping-zone').html(html);
         },
-        error: function (xhr, ajaxOptions, thrownError) {
+        error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
@@ -2433,19 +2428,19 @@ $('#input-shipping-country').on('change', function () {
 $('#input-shipping-country').trigger('change');
 
 // Payment Method
-$('#button-payment-method').on('click', function () {
+$('#button-payment-method').on('click', function() {
     var element = this;
 
     $.ajax({
         url: 'index.php?route=sale/order.call&user_token={{ user_token }}&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val() + '&action=sale/payment_method',
         dataType: 'json',
-        beforeSend: function () {
+        beforeSend: function() {
             $(element).prop('disabled', true).addClass('loading');
         },
-        complete: function () {
+        complete: function() {
             $(element).prop('disabled', false).removeClass('loading');
         },
-        success: function (json) {
+        success: function(json) {
             $('#alert .alert-dismissible').remove();
 
             if (json['error']) {
@@ -2464,13 +2459,13 @@ $('#button-payment-method').on('click', function () {
 
             $('#button-refresh').trigger('click');
         },
-        error: function (xhr, ajaxOptions, thrownError) {
+        error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 });
 
-$('#input-payment-method').on('change', function (e) {
+$('#input-payment-method').on('change', function(e) {
     e.preventDefault();
 
     var element = this;
@@ -2481,13 +2476,13 @@ $('#input-payment-method').on('change', function (e) {
         data: $('#form-payment-method').serialize(),
         dataType: 'json',
         contentType: 'application/x-www-form-urlencoded',
-        beforeSend: function () {
+        beforeSend: function() {
             $(element).prop('disabled', true);
         },
-        complete: function () {
+        complete: function() {
             $(element).prop('disabled', false);
         },
-        success: function (json) {
+        success: function(json) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
@@ -2500,26 +2495,26 @@ $('#input-payment-method').on('change', function (e) {
                 $('#button-refresh').trigger('click');
             }
         },
-        error: function (xhr, ajaxOptions, thrownError) {
+        error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 });
 
 // Shipping Method
-$('#button-shipping-method').on('click', function () {
+$('#button-shipping-method').on('click', function() {
     var element = this;
 
     $.ajax({
         url: 'index.php?route=sale/order.call&user_token={{ user_token }}&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val() + '&action=sale/shipping_method',
         dataType: 'json',
-        beforeSend: function () {
+        beforeSend: function() {
             $(element).prop('disabled', true).addClass('loading');
         },
-        complete: function () {
+        complete: function() {
             $(element).prop('disabled', false).removeClass('loading');
         },
-        success: function (json) {
+        success: function(json) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
@@ -2548,13 +2543,13 @@ $('#button-shipping-method').on('click', function () {
 
             $('#button-refresh').trigger('click');
         },
-        error: function (xhr, ajaxOptions, thrownError) {
+        error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 });
 
-$('#input-shipping-method').on('change', function (e) {
+$('#input-shipping-method').on('change', function(e) {
     var element = this;
 
     $.ajax({
@@ -2563,13 +2558,13 @@ $('#input-shipping-method').on('change', function (e) {
         data: $('#form-shipping-method').serialize(),
         dataType: 'json',
         contentType: 'application/x-www-form-urlencoded',
-        beforeSend: function () {
+        beforeSend: function() {
             $(element).prop('disabled', true);
         },
-        complete: function () {
+        complete: function() {
             $(element).prop('disabled', false);
         },
-        success: function (json) {
+        success: function(json) {
             console.log(json);
             $('.alert-dismissible').remove();
 
@@ -2583,13 +2578,13 @@ $('#input-shipping-method').on('change', function (e) {
                 $('#button-refresh').trigger('click');
             }
         },
-        error: function (xhr, ajaxOptions, thrownError) {
+        error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 });
 
-$('#form-comment').on('submit', function (e) {
+$('#form-comment').on('submit', function(e) {
     e.preventDefault();
 
     var element = this;
@@ -2600,13 +2595,13 @@ $('#form-comment').on('submit', function (e) {
         data: $('#form-comment').serialize(),
         dataType: 'json',
         contentType: 'application/x-www-form-urlencoded',
-        beforeSend: function () {
+        beforeSend: function() {
             $('#button-comment').prop('disabled', true).addClass('loading');
         },
-        complete: function () {
+        complete: function() {
             $('#button-comment').prop('disabled', false).removeClass('loading');
         },
-        success: function (json) {
+        success: function(json) {
             $('.alert-dismissible').remove();
 
             // Check for errors
@@ -2620,26 +2615,26 @@ $('#form-comment').on('submit', function (e) {
                 $('#comment-value').html($('#input-comment').val().replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1<br/>$2'));
             }
         },
-        error: function (xhr, ajaxOptions, thrownError) {
+        error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 });
 
 // Refresh all products, vouchers and totals
-$('#button-refresh').on('click', function () {
+$('#button-refresh').on('click', function() {
     $.ajax({
         url: 'index.php?route=sale/order.call&user_token={{ user_token }}&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val() + '&action=sale/cart',
         dataType: 'json',
-        beforeSend: function () {
+        beforeSend: function() {
             $('#button-refresh').prop('disabled', true).addClass('loading');
             $('#button-confirm').prop('disabled', true);
         },
-        complete: function () {
+        complete: function() {
             $('#button-refresh').prop('disabled', false).removeClass('loading');
             $('#button-confirm').prop('disabled', false);
         },
-        success: function (json) {
+        success: function(json) {
             html = '';
 
             if (json['products'].length) {
@@ -2741,26 +2736,26 @@ $('#button-refresh').on('click', function () {
                 $('#button-shipping').prop('disabled', true);
             }
         },
-        error: function (xhr, ajaxOptions, thrownError) {
+        error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 });
 
 // Checkout
-$('#button-confirm').on('click', function () {
+$('#button-confirm').on('click', function() {
     var element = this;
 
     $.ajax({
         url: 'index.php?route=sale/order.call&user_token={{ user_token }}&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val() + '&action=sale/order.confirm',
         dataType: 'json',
-        beforeSend: function () {
+        beforeSend: function() {
             $(element).prop('disabled', true).addClass('loading');
         },
-        complete: function () {
+        complete: function() {
             $(element).prop('disabled', false).removeClass('loading');
         },
-        success: function (json) {
+        success: function(json) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
@@ -2797,19 +2792,19 @@ $('#button-confirm').on('click', function () {
                 }
             }
         },
-        error: function (xhr, ajaxOptions, thrownError) {
+        error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 });
 
-$('#history').on('click', '.pagination a', function (e) {
+$('#history').on('click', '.pagination a', function(e) {
     e.preventDefault();
 
     $('#history').load(this.href);
 });
 
-$('#form-history').on('submit', function (e) {
+$('#form-history').on('submit', function(e) {
     e.preventDefault();
 
     $.ajax({
@@ -2818,13 +2813,13 @@ $('#form-history').on('submit', function (e) {
         dataType: 'json',
         data: $('#form-history').serialize(),
         contentType: 'application/x-www-form-urlencoded',
-        beforeSend: function () {
+        beforeSend: function() {
             $('#button-history').prop('disabled', true).addClass('loading');
         },
-        complete: function () {
+        complete: function() {
             $('#button-history').prop('disabled', false).removeClass('loading');
         },
-        success: function (json) {
+        success: function(json) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
@@ -2839,7 +2834,7 @@ $('#form-history').on('submit', function (e) {
                 $('#input-history').val('');
             }
         },
-        error: function (xhr, ajaxOptions, thrownError) {
+        error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });

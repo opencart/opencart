@@ -6620,7 +6620,6 @@ function oc_db_schema() {
 				'not_null' => true,
 				'auto_increment' => true
 			],
-
 			[
 				'name' => 'trial_price',
 				'type' => 'decimal(10,4)',

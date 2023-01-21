@@ -46,19 +46,28 @@ class Order extends \Opencart\System\Engine\Controller {
 		$data['orders'] = [];
 
 		$this->load->model('account/order');
+		$this->load->model('localisation/order_status');
 
 		$order_total = $this->model_account_order->getTotalOrders();
 
 		$results = $this->model_account_order->getOrders(($page - 1) * $limit, $limit);
 
 		foreach ($results as $result) {
+			$order_status_info = $this->model_localisation_order_status->getOrderStatus($result['order_status_id']);
+
+			if ($order_status_info) {
+				$order_status = $order_status_info['name'];
+			} else {
+				$order_status = '';
+			}
+
 			$product_total = $this->model_account_order->getTotalProductsByOrderId($result['order_id']);
 			$voucher_total = $this->model_account_order->getTotalVouchersByOrderId($result['order_id']);
 
 			$data['orders'][] = [
 				'order_id'   => $result['order_id'],
 				'name'       => $result['firstname'] . ' ' . $result['lastname'],
-				'status'     => $result['status'],
+				'status'     => $order_status,
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'products'   => ($product_total + $voucher_total),
 				'total'      => $this->currency->format($result['total'], $result['currency_code'], $result['currency_value']),
@@ -220,6 +229,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 			$data['shipping_method'] = $order_info['shipping_method'];
 
+			$this->load->model('account/subscription');
 			$this->load->model('catalog/product');
 			$this->load->model('tool/upload');
 
@@ -252,6 +262,35 @@ class Order extends \Opencart\System\Engine\Controller {
 					];
 				}
 
+				$subscription_id = 0;
+				$description = '';
+/*
+				$subscription_info = $this->model_account_subscription->getSubscriptionByOrderProductId($order_id, $product['order_product_id']);
+
+				if ($subscription_info) {
+					$subscription_id = $subscription_info['subscription_id'];
+
+					$trial_price = $this->currency->format($subscription_info['trial_price'], $this->config->get('config_currency'));
+					$trial_cycle = $subscription_info['trial_cycle'];
+					$trial_frequency = $this->language->get('text_' . $subscription_info['trial_frequency']);
+					$trial_duration = $subscription_info['trial_duration'];
+
+					if ($subscription_info['trial_status']) {
+						$description .= sprintf($this->language->get('text_subscription_trial'), $trial_price, $trial_cycle, $trial_frequency, $trial_duration);
+					}
+
+					$price = $this->currency->format($subscription_info['price'], $this->config->get('config_currency'));
+					$cycle = $subscription_info['cycle'];
+					$frequency = $this->language->get('text_' . $subscription_info['frequency']);
+					$duration = $subscription_info['duration'];
+
+					if ($subscription_info['duration']) {
+						$description .= sprintf($this->language->get('text_subscription_duration'), $price, $cycle, $frequency, $duration);
+					} else {
+						$description .= sprintf($this->language->get('text_subscription_cancel'), $price, $cycle, $frequency);
+					}
+				}
+*/
 				$product_info = $this->model_catalog_product->getProduct($product['product_id']);
 
 				if ($product_info) {
@@ -267,6 +306,7 @@ class Order extends \Opencart\System\Engine\Controller {
 					'quantity' => $product['quantity'],
 					'price'    => $this->currency->format($product['price'] + ($this->config->get('config_tax') ? $product['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']),
 					'total'    => $this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value']),
+					'href'     => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product['product_id']),
 					'reorder'  => $reorder,
 					'return'   => $this->url->link('account/returns.add', 'language=' . $this->config->get('config_language') . '&order_id=' . $order_info['order_id'] . '&product_id=' . $product['product_id'])
 				];

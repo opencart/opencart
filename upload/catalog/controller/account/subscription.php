@@ -46,6 +46,8 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		$data['subscriptions'] = [];
 
 		$this->load->model('account/subscription');
+		$this->load->model('account/order');
+		$this->load->model('localisation/subscription_status');
 
 		$filter_data = [
 			'start'	=> ($page - 1) * $limit,
@@ -57,18 +59,31 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		$results = $this->model_account_subscription->getSubscriptions($filter_data);
 
 		foreach ($results as $result) {
-			if ($result['status']) {
-				$status = $this->language->get('text_status_' . $result['status']);
+			$product_info = $this->model_account_order->getProduct($result['order_id'], $result['order_product_id']);
+
+			if ($product_info) {
+				$product_id = $product_info['product_id'];
+				$product_name = $product_info['name'];
 			} else {
-				$status = '';
+				$product_id = 0;
+				$product_name = '';
+			}
+
+			$subscription_status_info = $this->model_localisation_subscription_status->getSubscriptionStatus($result['subscription_status_id']);
+
+			if ($subscription_status_info) {
+				$subscription_status = $subscription_status_info['name'];
+			} else {
+				$subscription_status = '';
 			}
 
 			$data['subscriptions'][] = [
 				'subscription_id' => $result['subscription_id'],
-				'product'         => $result['product'],
-				'status'          => $status,
+				'product_name'    => $product_name,
+				'product'         => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $result['product_id']),
+				'status'          => $subscription_status,
 				'date_added'      => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'view'            => $this->url->link('account/subscription.info', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&subscription_id=' . $result['subscription_id']),
+				'view'            => $this->url->link('account/subscription.info', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&subscription_id=' . $result['subscription_id'])
 			];
 		}
 

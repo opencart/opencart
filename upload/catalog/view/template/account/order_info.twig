@@ -67,11 +67,22 @@
           <tbody>
             {% for product in products %}
               <tr>
-                <td class="text-start">{{ product.name }}
+                <td class="text-start"><a href="{{ product.href }}">{{ product.name }}</a>
                   {% for option in product.option %}
                     <br/>
-                    &nbsp;
-                    <small> - {{ option.name }}: {{ option.value }}</small> {% endfor %}</td>
+                    <small> - {{ option.name }}: {{ option.value }}</small>
+                  {% endfor %}
+
+                  {% if order_product.reward %}
+                    <br/>
+                    <small> - {{ text_points }}: {{ order_product.reward }}</small>
+                  {% endif %}
+
+                  {% if order_product.subscription %}
+                    <br/>
+                    <small> - {{ text_subscription }}: <a href="index.php?route=sale/subscription.info&user_token={{ user_token }}&subscription_id={{ order_product.subscription_id }}" target="_blank">{{ order_product.subscription }}</a></small>
+                  {% endif %}
+                </td>
                 <td class="text-start">{{ product.model }}</td>
                 <td class="text-end">{{ product.quantity }}</td>
                 <td class="text-end">{{ product.price }}</td>

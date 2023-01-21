@@ -351,6 +351,8 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
+		$data['text_form'] = !$subscription_id ? $this->language->get('text_add') : sprintf($this->language->get('text_edit'), $subscription_id);
+
 		$url = '';
 
 		if (isset($this->request->get['filter_subscription_id'])) {
@@ -462,7 +464,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('customer/customer');
 
-		$data['payment_methods'] = $this->model_customer_customer->getPaymentMethods($order_info['customer_id']);
+		$data['payment_methods'] = $this->model_customer_customer->getPaymentMethods($data['customer_id']);
 
 		if (!empty($subscription_info)) {
 			$data['customer_payment_id'] = $subscription_info['customer_payment_id'];

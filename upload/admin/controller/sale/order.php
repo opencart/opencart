@@ -677,13 +677,14 @@ class Order extends \Opencart\System\Engine\Controller {
 				}
 			}
 
+			$subscription_id = 0;
 			$description = '';
 
 			$subscription_info = $this->model_sale_subscription->getSubscriptionByOrderProductId($order_id, $product['order_product_id']);
 
-			print_r($subscription_info);
-
 			if ($subscription_info) {
+				$subscription_id = $subscription_info['subscription_id'];
+
 				$trial_price = $this->currency->format($subscription_info['trial_price'], $this->config->get('config_currency'));
 				$trial_cycle = $subscription_info['trial_cycle'];
 				$trial_frequency = $this->language->get('text_' . $subscription_info['trial_frequency']);
@@ -711,6 +712,7 @@ class Order extends \Opencart\System\Engine\Controller {
 				'name'             => $product['name'],
 				'model'            => $product['model'],
 				'option'           => $option_data,
+				'subscription_id'  => $subscription_id,
 				'subscription'     => $description,
 				'quantity'         => $product['quantity'],
 				'price'            => $this->currency->format($product['price'] + ($this->config->get('config_tax') ? $product['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']),

@@ -5,8 +5,9 @@ $_['heading_title']              = 'Subscriptions';
 // Text
 $_['text_success']               = 'Success: You have modified subscriptions!';
 $_['text_list']                  = 'Subscription List';
+$_['text_add']                   = 'Add Subscription';
+$_['text_edit']                  = 'Subscription (#%s)';
 $_['text_filter']                = 'Filter';
-$_['text_subscription']          = 'Subscription Details';
 $_['text_subscription_id']       = 'Subscription ID';
 $_['text_order_id']              = 'Order ID';
 $_['text_customer']              = 'Customer';

@@ -6497,11 +6497,6 @@ function oc_db_schema() {
 				'not_null' => true
 			],
 			[
-				'name' => 'status',
-				'type' => 'tinyint(1)',
-				'not_null' => true
-			],
-			[
 				'name' => 'date_added',
 				'type' => 'datetime',
 				'not_null' => true

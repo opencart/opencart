@@ -29,27 +29,27 @@
         </tbody>
       </table>
       {% if payment_address or shipping_address %}
-      <table class="table table-bordered table-hover">
-        <thead>
-          <tr>
-            {% if payment_address %}
-            <td class="text-start" style="width: 50%; vertical-align: top;">{{ text_payment_address }}</td>
-            {% endif %}
-            {% if shipping_address %}
-              <td class="text-start" style="width: 50%; vertical-align: top;">{{ text_shipping_address }}</td>
-            {% endif %}
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            {% if payment_address %}
-            <td class="text-start">{{ payment_address }}</td>
-            {% endif %}
-            {% if shipping_address %}
-              <td class="text-start">{{ shipping_address }}</td>
-            {% endif %} </tr>
-        </tbody>
-      </table>
+        <table class="table table-bordered table-hover">
+          <thead>
+            <tr>
+              {% if payment_address %}
+                <td class="text-start" style="width: 50%; vertical-align: top;">{{ text_payment_address }}</td>
+              {% endif %}
+              {% if shipping_address %}
+                <td class="text-start" style="width: 50%; vertical-align: top;">{{ text_shipping_address }}</td>
+              {% endif %}
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              {% if payment_address %}
+                <td class="text-start">{{ payment_address }}</td>
+              {% endif %}
+              {% if shipping_address %}
+                <td class="text-start">{{ shipping_address }}</td>
+              {% endif %} </tr>
+          </tbody>
+        </table>
       {% endif %}
       <div class="table-responsive">
         <table class="table table-bordered table-hover">
@@ -88,7 +88,8 @@
                 <td class="text-end">{{ voucher.amount }}</td>
                 {% if products %}
                   <td></td>
-                {% endif %} </tr>
+                {% endif %}
+              </tr>
             {% endfor %}
           </tbody>
           <tfoot>

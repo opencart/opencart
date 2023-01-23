@@ -1,6 +1,5 @@
 <?php
 namespace Opencart\Catalog\Controller\Extension\Opencart\Module;
-use \Opencart\System\Helper AS Helper;
 class Featured extends \Opencart\System\Engine\Controller {
 	public function index(array $setting): string {
 		$this->load->language('extension/opencart/module/featured');

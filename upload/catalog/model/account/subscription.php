@@ -24,7 +24,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 
         $implode = [];
 
-        $implode[] = "o.`customer_id` = '" . (int)$this->customer->getId() . "'";
+        $implode[] = "s.`customer_id` = '" . (int)$this->customer->getId() . "'";
 		
 		if (!empty($data['filter_subscription_id'])) {
             $implode[] = "s.`subscription_id` = '" . (int)$data['filter_subscription_id'] . "'";

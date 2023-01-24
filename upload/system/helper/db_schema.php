@@ -6407,15 +6407,30 @@ function oc_db_schema() {
 				'not_null' => true
 			],
 			[
-				'name' => 'subscription_plan_id',
+				'name' => 'product_id',
 				'type' => 'int(11)',
 				'not_null' => true
 			],
 			[
-				'name' => 'customer_payment_id',
+				'name' => 'product_name',
+				'type' => 'varchar(255)',
+				'not_null' => true
+			],
+			[
+				'name' => 'product_model',
+				'type' => 'varchar(64',
+				'not_null' => true
+			],
+			[
+				'name' => 'quantity',
+				'type' => 'int(4)',
+				'not_null' => true
+			],
+			[
+				'name' => 'subscription_plan_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			],			
+			],
 			[
 				'name' => 'name',
 				'type' => 'varchar(255)',
@@ -6492,8 +6507,28 @@ function oc_db_schema() {
 				'not_null' => true
 			],
 			[
+				'name' => 'customer_payment_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
 				'name' => 'subscription_status_id',
 				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'currency_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'currency_code',
+				'type' => 'varchar(3)',
+				'not_null' => true
+			],
+			[
+				'name' => 'currency_value',
+				'type' => 'decimal(15,8)',
 				'not_null' => true
 			],
 			[

@@ -59,16 +59,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		$results = $this->model_account_subscription->getSubscriptions($filter_data);
 
 		foreach ($results as $result) {
-			$product_info = $this->model_account_order->getProduct($result['order_id'], $result['order_product_id']);
-
-			if ($product_info) {
-				$product_id = $product_info['product_id'];
-				$product_name = $product_info['name'];
-			} else {
-				$product_id = 0;
-				$product_name = '';
-			}
-
 			$subscription_status_info = $this->model_localisation_subscription_status->getSubscriptionStatus($result['subscription_status_id']);
 
 			if ($subscription_status_info) {
@@ -79,7 +69,8 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 			$data['subscriptions'][] = [
 				'subscription_id' => $result['subscription_id'],
-				'product_name'    => $product_name,
+				'product_id'      => $result['product_id'],
+				'name'            => $result['name'],
 				'product'         => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $result['product_id']),
 				'status'          => $subscription_status,
 				'date_added'      => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
@@ -160,8 +151,12 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			
 			$data['date_added'] = date($this->language->get('date_format_short'), strtotime($subscription_info['date_added']));
 
-			if ($subscription_info['status']) {
-				$data['status'] = $this->language->get('text_status_' . $subscription_info['status']);
+			$this->load->model('localisation/subscription_status');
+
+			$subscription_status_info = $this->model_localisation_subscription_status->getSubscriptionStatus($subscription_info['subscription_status_id']);
+
+			if ($subscription_status_info) {
+				$data['status'] = $subscription_status_info['name'];
 			} else {
 				$data['status'] = '';
 			}
@@ -169,14 +164,16 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			// Orders
             $this->load->model('account/order');
 
-            $order_product = $this->model_account_order->getOrderProduct($subscription_info['order_id'], $subscription_info['order_product_id']);
+           // $order_product = $this->model_account_order->getOrderProduct($subscription_info['order_id'], $subscription_info['order_product_id']);
 
             $data['order_id'] = $subscription_info['order_id'];
             $data['reference'] = $subscription_info['reference'];
             $data['product_name'] = $order_product['name'];
-            $data['payment_method'] = $subscription_info['payment_method'];
+
+			$data['payment_method'] = $subscription_info['payment_method'];
             $data['product_quantity'] = $order_product['quantity'];
-            $data['description'] = $subscription_info['description'];
+
+			$data['description'] = $subscription_info['description'];
 
 			// Transactions
 			$data['transactions'] = [];

@@ -6418,7 +6418,7 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'product_model',
-				'type' => 'varchar(64',
+				'type' => 'varchar(64)',
 				'not_null' => true
 			],
 			[
@@ -6428,6 +6428,8 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'subscription_plan_id',
+				'type' => 'int(11)',
+				'type' => 'int(11)',
 				'type' => 'int(11)',
 				'not_null' => true
 			],

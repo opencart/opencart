@@ -3795,8 +3795,7 @@ function oc_db_schema() {
 			[
 				'name' => 'subscription_id',
 				'type' => 'int(11)',
-				'not_null' => true,
-				'auto_increment' => true
+				'not_null' => true
 			],
 			[
 				'name' => 'invoice_no',

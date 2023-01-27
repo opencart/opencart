@@ -612,7 +612,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['telephone'] = '';
 		}
 
-		if (!empty($order_info)) {
+		if (!empty($order_info) && $order_info['custom_field']) {
 			$data['account_custom_field'] = json_decode($order_info['custom_field'], true);
 		} else {
 			$data['account_custom_field'] = [];

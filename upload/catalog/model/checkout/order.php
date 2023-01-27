@@ -19,7 +19,7 @@ class Order extends \Opencart\System\Engine\Model {
 					$this->db->query("INSERT INTO `" . DB_PREFIX . "order_option` SET `order_id` = '" . (int)$order_id . "', `order_product_id` = '" . (int)$order_product_id . "', `product_option_id` = '" . (int)$option['product_option_id'] . "', `product_option_value_id` = '" . (int)$option['product_option_value_id'] . "', `name` = '" . $this->db->escape($option['name']) . "', `value` = '" . $this->db->escape($option['value']) . "', `type` = '" . $this->db->escape($option['type']) . "'");
 				}
 
-				if ($product['subscription']) {
+				if (!$product['subscription_id']) {
 					if ($product['subscription']['trial_duration'] && $product['subscription']['trial_remaining']) {
 						$date_next = date('Y-m-d', strtotime('+' . $product['subscription']['trial_cycle'] . ' ' . $product['subscription']['trial_frequency']));
 					} elseif ($product['subscription']['duration'] && $product['subscription']['remaining']) {
@@ -27,25 +27,44 @@ class Order extends \Opencart\System\Engine\Model {
 					}
 
                     $subscription_data = [
-                        'order_product_id' 	   => $order_product_id,
-                        'customer_id'		   => $data['customer_id'],
-                        'order_id'             => $order_id,
-                        'subscription_plan_id' => $product['subscription']['subscription_plan_id'],
-                        'name'                 => $product['subscription']['name'],
-                        'description'          => $product['subscription']['description'],
-                        'trial_price'          => $product['subscription']['trial_price'],
-                        'trial_frequency'      => $product['subscription']['trial_frequency'],
-                        'trial_cycle'          => $product['subscription']['trial_cycle'],
-                        'trial_duration'       => $product['subscription']['trial_duration'],
-                        'trial_remaining'      => $product['subscription']['trial_remaining'],
-                        'trial_status'         => $product['subscription']['trial_status'],
-                        'price'                => $product['subscription']['price'],
-                        'frequency'            => $product['subscription']['frequency'],
-                        'cycle'                => $product['subscription']['cycle'],
-                        'duration'             => $product['subscription']['duration'],
-                        'remaining'            => $product['subscription']['duration'],
-						'date_next'            => $date_next,
-                        'status'			   => $product['subscription']['status']
+						'order_id'               => $order_id,
+						'order_product_id'   	 => $order_product_id,
+						'store_id' 		         => $data['store_id'],
+                        'customer_id'	         => $data['customer_id'],
+						'customer_payment_id'    => $data['customer_payment_id'],
+						'payment_address_id'     => $data['payment_address_id'],
+						'shipping_address_id'    => $data['shipping_address_id'],
+						'shipping_method'        => $data['shipping_method'],
+						'shipping_code'          => $data['shipping_code'],
+						'product_id'             => $product['product_id'],
+						'quantity'               => $product['quantity'],
+						'subscription_plan_id'   => $product['subscription']['subscription_plan_id'],
+                        'name'                   => $product['subscription']['name'],
+                        'description'            => $product['subscription']['description'],
+                        'trial_price'            => $product['subscription']['trial_price'],
+                        'trial_frequency'        => $product['subscription']['trial_frequency'],
+                        'trial_cycle'            => $product['subscription']['trial_cycle'],
+                        'trial_duration'         => $product['subscription']['trial_duration'],
+                        'trial_remaining'        => $product['subscription']['trial_remaining'],
+                        'trial_status'           => $product['subscription']['trial_status'],
+                        'price'                  => $product['subscription']['price'],
+                        'frequency'              => $product['subscription']['frequency'],
+                        'cycle'                  => $product['subscription']['cycle'],
+                        'duration'               => $product['subscription']['duration'],
+                        'remaining'              => $product['subscription']['duration'],
+						'date_next'              => $date_next,
+						'comment'                => $data['comment'],
+                        'subscription_status_id' => 0,
+						'affiliate_id'           => $data['affiliate_id'],
+						'commission'             => $data['commission'],
+						'marketing_id'           => $data['marketing_id'],
+						'tracking'               => $data['tracking'],
+						'language_id'            => $data['language_id'],
+						'currency_id'            => $data['currency_id'],
+						'ip'                     => $data['ip'],
+						'forwarded_ip'           => $data['forwarded_ip'],
+						'user_agent'             => $data['user_agent'],
+						'accept_language'        => $data['accept_language']
                     ];
 
 					$this->model_checkout_subscription->addSubscription($order_id, $subscription_data);

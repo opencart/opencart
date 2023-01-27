@@ -28,7 +28,6 @@ $_['text_success']               = 'Success: You have added <a href="%s">%s</a> 
 $_['text_no_results']            = 'You have not made any previous orders!';
 $_['text_error']                 = 'The order you requested could not be found!';
 
-
 // Column
 $_['column_order_id']            = 'Order ID';
 $_['column_customer']            = 'Customer';

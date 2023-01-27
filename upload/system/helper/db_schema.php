@@ -6462,11 +6462,6 @@ function oc_db_schema() {
 				'not_null' => true
 			],
 			[
-				'name' => 'description',
-				'type' => 'text',
-				'not_null' => true
-			],
-			[
 				'name' => 'trial_price',
 				'type' => 'decimal(10,4)',
 				'not_null' => true

@@ -99,6 +99,7 @@ class Confirm extends \Opencart\System\Engine\Controller {
 
 			// Payment Details
 			if ($this->config->get('config_checkout_payment_address')) {
+				$order_data['payment_address_id'] = $this->session->data['payment_address']['payment_address_id'];
 				$order_data['payment_firstname'] = $this->session->data['payment_address']['firstname'];
 				$order_data['payment_lastname'] = $this->session->data['payment_address']['lastname'];
 				$order_data['payment_company'] = $this->session->data['payment_address']['company'];
@@ -113,6 +114,7 @@ class Confirm extends \Opencart\System\Engine\Controller {
 				$order_data['payment_address_format'] = $this->session->data['payment_address']['address_format'];
 				$order_data['payment_custom_field'] = isset($this->session->data['payment_address']['custom_field']) ? $this->session->data['payment_address']['custom_field'] : [];
 			} else {
+				$order_data['payment_address_id'] = 0;
 				$order_data['payment_firstname'] = '';
 				$order_data['payment_lastname'] = '';
 				$order_data['payment_company'] = '';
@@ -135,6 +137,7 @@ class Confirm extends \Opencart\System\Engine\Controller {
 
 			// Shipping Details
 			if ($this->cart->hasShipping()) {
+				$order_data['shipping_address_id'] = $this->session->data['shipping_address']['shipping_address_id'];
 				$order_data['shipping_firstname'] = $this->session->data['shipping_address']['firstname'];
 				$order_data['shipping_lastname'] = $this->session->data['shipping_address']['lastname'];
 				$order_data['shipping_company'] = $this->session->data['shipping_address']['company'];
@@ -149,6 +152,7 @@ class Confirm extends \Opencart\System\Engine\Controller {
 				$order_data['shipping_address_format'] = $this->session->data['shipping_address']['address_format'];
 				$order_data['shipping_custom_field'] = isset($this->session->data['shipping_address']['custom_field']) ? $this->session->data['shipping_address']['custom_field'] : [];
 			} else {
+				$order_data['shipping_address_id'] = 0;
 				$order_data['shipping_firstname'] = '';
 				$order_data['shipping_lastname'] = '';
 				$order_data['shipping_company'] = '';
@@ -237,18 +241,28 @@ class Confirm extends \Opencart\System\Engine\Controller {
 			$order_data['marketing_id'] = 0;
 			$order_data['tracking'] = '';
 
-			if ($this->config->get('config_affiliate_status') && isset($this->session->data['tracking'])) {
+			if (isset($this->session->data['tracking'])) {
 				$subtotal = $this->cart->getSubTotal();
 
 				// Affiliate
-				$this->load->model('account/affiliate');
+				if ($this->config->get('config_affiliate_status')) {
+					$this->load->model('account/affiliate');
 
-				$affiliate_info = $this->model_account_affiliate->getAffiliateByTracking($this->session->data['tracking']);
+					$affiliate_info = $this->model_account_affiliate->getAffiliateByTracking($this->session->data['tracking']);
 
-				if ($affiliate_info) {
-					$order_data['affiliate_id'] = $affiliate_info['customer_id'];
-					$order_data['commission'] = ($subtotal / 100) * $affiliate_info['commission'];
-					$order_data['tracking'] = $this->session->data['tracking'];
+					if ($affiliate_info) {
+						$order_data['affiliate_id'] = $affiliate_info['customer_id'];
+						$order_data['commission'] = ($subtotal / 100) * $affiliate_info['commission'];
+						$order_data['tracking'] = $this->session->data['tracking'];
+					}
+				}
+
+				$this->load->model('marketing/marketing');
+
+				$marketing_info = $this->model_marketing_marketing->getMarketingByCode($this->session->data['tracking']);
+
+				if ($marketing_info) {
+					$order_data['marketing_id'] = $marketing_info['marketing_id'];
 				}
 			}
 

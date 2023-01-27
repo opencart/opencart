@@ -1491,7 +1491,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$data['stylesheet'] = 'view/stylesheet/stylesheet.css';
 
 		// Hard coding scripts so they can be replaced via the events system.
-		$data['jquery'] = 'view/javascript/jquery/jquery-3.5.1.min.js';
+		$data['jquery'] = 'view/javascript/jquery/jquery-3.6.1.min.js';
 		$data['bootstrap_js'] = 'view/javascript/bootstrap/js/bootstrap.bundle.min.js';
 
 		$this->load->model('sale/order');

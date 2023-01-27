@@ -81,7 +81,7 @@ class Map extends \Opencart\System\Engine\Controller {
 		$results = $this->model_extension_opencart_dashboard_map->getTotalOrdersByCountry();
 
 		foreach ($results as $result) {
-			$json[strtolower($result['iso_code_2'])] = [
+			$json[oc_strtolower($result['iso_code_2'])] = [
 				'total'  => $result['total'],
 				'amount' => $this->currency->format($result['amount'], $this->config->get('config_currency'))
 			];

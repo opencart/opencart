@@ -180,6 +180,11 @@ class Register extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		// Force account requires subscript or is a downloadable product.
+		if ($this->cart->hasDownload() || $this->cart->hasSubscription()) {
+			$this->request->post['account'] = 1;
+		}
+
 		// Validate cart has products and has stock.
 		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
 			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
@@ -198,7 +203,7 @@ class Register extends \Opencart\System\Engine\Controller {
 
 		if (!$json) {
 			// If not guest checkout disabled, login require price or cart has downloads
-			if (!$this->request->post['account'] && (!$this->config->get('config_checkout_guest') || $this->config->get('config_customer_price') || $this->cart->hasDownload() || $this->cart->hasSubscription())) {
+			if (!$this->request->post['account'] && (!$this->config->get('config_checkout_guest') || $this->config->get('config_customer_price'))) {
 				$json['error']['warning'] = $this->language->get('error_guest');
 			}
 

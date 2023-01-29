@@ -65,10 +65,6 @@ class Subscription extends \Opencart\System\Engine\Model {
 		return $this->db->getLastId();
 	}
 
-	public function editReference(int $subscription_id, string $reference): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "subscription` SET `reference` = '" . $this->db->escape($reference) . "' WHERE `subscription_id` = '" . (int)$subscription_id . "'");
-	}
-
 	public function deleteSubscriptionByOrderId(int $order_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "subscription` WHERE `order_id` = '" . (int)$order_id . "'");
 	}

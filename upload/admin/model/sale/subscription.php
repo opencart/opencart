@@ -54,10 +54,6 @@ class Subscription extends \Opencart\System\Engine\Model {
 			$implode[] = "`s`.`order_product_id` = '" . (int)$data['filter_order_product_id'] . "'";
 		}
 
-		if (!empty($data['filter_reference'])) {
-			$implode[] = "`s`.`reference` LIKE '" . $this->db->escape((string)$data['filter_reference'] . '%') . "'";
-		}
-
 		if (!empty($data['filter_customer'])) {
 			$implode[] = "CONCAT(o.`firstname`, ' ', o.`lastname`) LIKE '" . $this->db->escape((string)$data['filter_customer'] . '%') . "'";
 		}
@@ -131,10 +127,6 @@ class Subscription extends \Opencart\System\Engine\Model {
 
 		if (!empty($data['filter_order_id'])) {
 			$implode[] .= "`s`.`order_id` = '" . (int)$data['filter_order_id'] . "'";
-		}
-
-		if (!empty($data['filter_reference'])) {
-			$implode[] .= "`s`.`reference` LIKE '" . $this->db->escape((string)$data['filter_reference'] . '%') . "'";
 		}
 
 		if (!empty($data['filter_customer'])) {

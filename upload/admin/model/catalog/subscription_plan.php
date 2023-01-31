@@ -50,10 +50,7 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "subscription_plan_description` WHERE `subscription_plan_id` = '" . (int)$subscription_plan_id . "'");
 
 		foreach ($query->rows as $result) {
-			$subscription_plan_description_data[$result['language_id']] = [
-				'name'        => $result['name'],
-				'description' => $result['description']
-			];
+			$subscription_plan_description_data[$result['language_id']] = ['name' => $result['name']];
 		}
 
 		return $subscription_plan_description_data;

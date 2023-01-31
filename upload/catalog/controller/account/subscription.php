@@ -46,6 +46,8 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		$data['subscriptions'] = [];
 
 		$this->load->model('account/subscription');
+		$this->load->model('account/order');
+		$this->load->model('localisation/subscription_status');
 
 		$filter_data = [
 			'start'	=> ($page - 1) * $limit,
@@ -57,18 +59,22 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		$results = $this->model_account_subscription->getSubscriptions($filter_data);
 
 		foreach ($results as $result) {
-			if ($result['status']) {
-				$status = $this->language->get('text_status_' . $result['status']);
+			$subscription_status_info = $this->model_localisation_subscription_status->getSubscriptionStatus($result['subscription_status_id']);
+
+			if ($subscription_status_info) {
+				$subscription_status = $subscription_status_info['name'];
 			} else {
-				$status = '';
+				$subscription_status = '';
 			}
 
 			$data['subscriptions'][] = [
 				'subscription_id' => $result['subscription_id'],
-				'product'         => $result['product'],
-				'status'          => $status,
+				'product_id'      => $result['product_id'],
+				'name'            => $result['name'],
+				'product'         => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $result['product_id']),
+				'status'          => $subscription_status,
 				'date_added'      => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'view'            => $this->url->link('account/subscription.info', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&subscription_id=' . $result['subscription_id']),
+				'view'            => $this->url->link('account/subscription.info', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&subscription_id=' . $result['subscription_id'])
 			];
 		}
 
@@ -145,8 +151,12 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			
 			$data['date_added'] = date($this->language->get('date_format_short'), strtotime($subscription_info['date_added']));
 
-			if ($subscription_info['status']) {
-				$data['status'] = $this->language->get('text_status_' . $subscription_info['status']);
+			$this->load->model('localisation/subscription_status');
+
+			$subscription_status_info = $this->model_localisation_subscription_status->getSubscriptionStatus($subscription_info['subscription_status_id']);
+
+			if ($subscription_status_info) {
+				$data['status'] = $subscription_status_info['name'];
 			} else {
 				$data['status'] = '';
 			}
@@ -154,14 +164,16 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			// Orders
             $this->load->model('account/order');
 
-            $order_product = $this->model_account_order->getOrderProduct($subscription_info['order_id'], $subscription_info['order_product_id']);
+           // $order_product = $this->model_account_order->getOrderProduct($subscription_info['order_id'], $subscription_info['order_product_id']);
 
             $data['order_id'] = $subscription_info['order_id'];
             $data['reference'] = $subscription_info['reference'];
             $data['product_name'] = $order_product['name'];
-            $data['payment_method'] = $subscription_info['payment_method'];
+
+			$data['payment_method'] = $subscription_info['payment_method'];
             $data['product_quantity'] = $order_product['quantity'];
-            $data['description'] = $subscription_info['description'];
+
+			$data['description'] = $subscription_info['description'];
 
 			// Transactions
 			$data['transactions'] = [];

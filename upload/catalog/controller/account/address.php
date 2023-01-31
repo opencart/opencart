@@ -70,9 +70,35 @@ class Address extends \Opencart\System\Engine\Controller {
 		$results = $this->model_account_address->getAddresses();
 
 		foreach ($results as $result) {
+			$find = [
+				'{firstname}',
+				'{lastname}',
+				'{company}',
+				'{address_1}',
+				'{address_2}',
+				'{city}',
+				'{postcode}',
+				'{zone}',
+				'{zone_code}',
+				'{country}'
+			];
+
+			$replace = [
+				'firstname' => $result['firstname'],
+				'lastname'  => $result['lastname'],
+				'company'   => $result['company'],
+				'address_1' => $result['address_1'],
+				'address_2' => $result['address_2'],
+				'city'      => $result['city'],
+				'postcode'  => $result['postcode'],
+				'zone'      => $result['zone'],
+				'zone_code' => $result['zone_code'],
+				'country'   => $result['country']
+			];
+
 			$data['addresses'][] = [
 				'address_id' => $result['address_id'],
-				'address'    => $result['address_format'],
+				'address'    => str_replace(["\r\n", "\r", "\n"], '<br/>', preg_replace(["/\s\s+/", "/\r\r+/", "/\n\n+/"], '<br/>', trim(str_replace($find, $replace, $result['address_format'])))),
 				'edit'       => $this->url->link('account/address.form', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&address_id=' . $result['address_id']),
 				'delete'     => $this->url->link('account/address.delete', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&address_id=' . $result['address_id'])
 			];

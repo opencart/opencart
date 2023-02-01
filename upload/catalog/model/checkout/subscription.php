@@ -29,7 +29,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 		`quantity` = '" . (int)$data['quantity'] . "', 
 
 		`name` = '" . $this->db->escape($data['name']) . "', 
-		`trial_price` = '', `trial_price` = '" . (float)$data['trial_price'] . "', 
+		`trial_price` = '" . (float)$data['trial_price'] . "', 
 		`trial_frequency` = '" . $this->db->escape($data['trial_frequency']) . "', 
 		`trial_cycle` = '" . (int)$data['trial_cycle'] . "', 
 		`trial_duration` = '" . (int)$data['trial_duration'] . "', 

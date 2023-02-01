@@ -178,7 +178,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			// Transactions
 			$data['transactions'] = [];
 
-			$results = $this->model_account_subscription->getTransactions($this->request->get['subscription_id']);
+			$results = $this->model_account_order->getOrdersBySubscriptionId($this->request->get['subscription_id']);
 
 			foreach ($results as $result) {
 				$data['transactions'][] = [

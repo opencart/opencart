@@ -79,14 +79,18 @@ class CreditCard extends \Opencart\System\Engine\Controller {
 					$this->load->model('account/payment_method');
 
 					$payment_method_data = [
-						'name'        => '**** **** **** ' . substr($this->request->post['card_number'], -4),
-						'image'       => 'visa.png',
-						'type'        => 'visa',
-						'extension'   => 'opencart',
-						'code'        => 'credit_card',
-						'token'       => md5(rand()),
-						'date_expire' => $this->request->post['card_expire_year'] . '-' . $this->request->post['card_expire_month'] . '-01',
-						'default'     => !$this->model_account_payment_method->getTotalPaymentMethods() ? true : false
+						'card_name'         => $this->request->post['card_name'],
+						'card_number'       => '**** **** **** ' . substr($this->request->post['card_number'], -4),
+						'card_expire_month' => $this->request->post['card_expire_month'],
+						'card_expire_year'  => $this->request->post['card_expire_year'],
+						'card_cvv'          => $this->request->post['card_cvv'],
+						'image'             => 'visa.png',
+						'type'              => 'visa',
+						'extension'         => 'opencart',
+						'code'              => 'credit_card',
+						'token'             => md5(rand()),
+						'date_expire'       => $this->request->post['card_expire_year'] . '-' . $this->request->post['card_expire_month'] . '-01',
+						'default'           => !$this->model_account_payment_method->getTotalPaymentMethods() ? true : false
 					];
 
 					$this->model_account_payment_method->addPaymentMethod($payment_method_data);

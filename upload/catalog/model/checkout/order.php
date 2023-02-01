@@ -19,7 +19,7 @@ class Order extends \Opencart\System\Engine\Model {
 					$this->db->query("INSERT INTO `" . DB_PREFIX . "order_option` SET `order_id` = '" . (int)$order_id . "', `order_product_id` = '" . (int)$order_product_id . "', `product_option_id` = '" . (int)$option['product_option_id'] . "', `product_option_value_id` = '" . (int)$option['product_option_value_id'] . "', `name` = '" . $this->db->escape($option['name']) . "', `value` = '" . $this->db->escape($option['value']) . "', `type` = '" . $this->db->escape($option['type']) . "'");
 				}
 
-				if ($product['subscription_id']) {
+				if ($product['subscription']) {
 					if ($product['subscription']['trial_duration'] && $product['subscription']['trial_remaining']) {
 						$date_next = date('Y-m-d', strtotime('+' . $product['subscription']['trial_cycle'] . ' ' . $product['subscription']['trial_frequency']));
 					} elseif ($product['subscription']['duration'] && $product['subscription']['remaining']) {
@@ -40,7 +40,6 @@ class Order extends \Opencart\System\Engine\Model {
 						'quantity'               => $product['quantity'],
 						'subscription_plan_id'   => $product['subscription']['subscription_plan_id'],
                         'name'                   => $product['subscription']['name'],
-                        'description'            => $product['subscription']['description'],
                         'trial_price'            => $product['subscription']['trial_price'],
                         'trial_frequency'        => $product['subscription']['trial_frequency'],
                         'trial_cycle'            => $product['subscription']['trial_cycle'],

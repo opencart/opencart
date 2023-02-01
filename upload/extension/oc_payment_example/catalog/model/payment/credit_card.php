@@ -26,4 +26,6 @@ class CreditCard extends \Opencart\System\Engine\Model {
 
 		return $method_data;
 	}
+
+
 }

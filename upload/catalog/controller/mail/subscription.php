@@ -204,7 +204,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 									$data['link'] = $order_info['store_url'] . 'index.php?route=account/subscription.info&subscription_id=' . $subscription_id;
 
 									$data['order_id'] = $order_info['order_id'];
-									$data['date_added'] = date($this->language->get('mail_date_format_short'), strtotime($value['date_added']));
+									$data['date_added'] = date($this->language->get('date_format_short'), strtotime($value['date_added']));
 									$data['payment_method'] = $order_info['payment_method'];
 									$data['email'] = $order_info['email'];
 									$data['telephone'] = $order_info['telephone'];

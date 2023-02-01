@@ -5,11 +5,13 @@
     <div class="row">
       <div class="col">
         <div class="mb-3 required">
-          <label for="input-card-name" class="col-form-label">{{ entry_card_name }}</label> <input type="text" name="card_name" value="" placeholder="{{ entry_card_name }}" id="input-card-name" class="form-control"/>
+          <label for="input-card-name" class="col-form-label">{{ entry_card_name }}</label>
+          <input type="text" name="card_name" value="" placeholder="{{ entry_card_name }}" id="input-card-name" class="form-control"/>
           <div id="error-card-name" class="invalid-feedback"></div>
         </div>
         <div class="mb-3 required">
-          <label for="input-card-number" class="col-form-label">{{ entry_card_number }}</label> <input type="text" name="card_number" value="" placeholder="**** **** **** ****" id="input-card-number" maxlength="22" class="form-control"/>
+          <label for="input-card-number" class="col-form-label">{{ entry_card_number }}</label>
+          <input type="text" name="card_number" value="" placeholder="**** **** **** ****" id="input-card-number" maxlength="22" class="form-control"/>
           <div id="error-card-number" class="invalid-feedback"></div>
         </div>
       </div>
@@ -40,7 +42,8 @@
     </div>
     {% if logged %}
       <div class="form-check">
-        <input type="checkbox" name="store" value="1" id="input-store" class="form-check-input"/> <label for="input-store" class="form-check-label"><strong>{{ text_store }}</strong></label>
+        <input type="checkbox" name="store" value="1" id="input-store" class="form-check-input"/>
+        <label for="input-store" class="form-check-label"><strong>{{ text_store }}</strong></label>
       </div>
     {% endif %}
     <div class="d-inline-block pt-2 pd-2 w-100 text-end">

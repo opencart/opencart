@@ -264,7 +264,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 				$subscription_id = 0;
 				$description = '';
-/*
+				/*
 				$subscription_info = $this->model_account_subscription->getSubscriptionByOrderProductId($order_id, $product['order_product_id']);
 
 				if ($subscription_info) {
@@ -290,7 +290,7 @@ class Order extends \Opencart\System\Engine\Controller {
 						$description .= sprintf($this->language->get('text_subscription_cancel'), $price, $cycle, $frequency);
 					}
 				}
-*/
+				*/
 				$product_info = $this->model_catalog_product->getProduct($product['product_id']);
 
 				if ($product_info) {

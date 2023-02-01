@@ -3793,8 +3793,8 @@ function oc_db_schema() {
 				'auto_increment' => true
 			],
 			[
-				'name' => 'transaction_id',
-				'type' => 'varchar(100)',
+				'name' => 'subscription_id',
+				'type' => 'int(11)',
 				'not_null' => true
 			],
 			[
@@ -3806,6 +3806,11 @@ function oc_db_schema() {
 			[
 				'name' => 'invoice_prefix',
 				'type' => 'varchar(26)',
+				'not_null' => true
+			],
+			[
+				'name' => 'transaction_id',
+				'type' => 'varchar(100)',
 				'not_null' => true
 			],
 			[
@@ -6392,11 +6397,6 @@ function oc_db_schema() {
 				'auto_increment' => true
 			],
 			[
-				'name' => 'customer_id',
-				'type' => 'int(11)',
-				'not_null' => true
-			],
-			[
 				'name' => 'order_id',
 				'type' => 'int(11)',
 				'not_null' => true
@@ -6407,7 +6407,12 @@ function oc_db_schema() {
 				'not_null' => true
 			],
 			[
-				'name' => 'subscription_plan_id',
+				'name' => 'store_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'customer_id',
 				'type' => 'int(11)',
 				'not_null' => true
 			],
@@ -6415,19 +6420,44 @@ function oc_db_schema() {
 				'name' => 'customer_payment_id',
 				'type' => 'int(11)',
 				'not_null' => true
-			],			
+			],
+			[
+				'name' => 'payment_address_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'shipping_address_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'shipping_method',
+				'type' => 'varchar(128)',
+				'not_null' => true
+			],
+			[
+				'name' => 'shipping_code',
+				'type' => 'varchar(128)',
+				'not_null' => true
+			],
+			[
+				'name' => 'product_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'quantity',
+				'type' => 'int(4)',
+				'not_null' => true
+			],
+			[
+				'name' => 'subscription_plan_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
 			[
 				'name' => 'name',
-				'type' => 'varchar(255)',
-				'not_null' => true
-			],
-			[
-				'name' => 'description',
-				'type' => 'text',
-				'not_null' => true
-			],
-			[
-				'name' => 'reference',
 				'type' => 'varchar(255)',
 				'not_null' => true
 			],
@@ -6492,8 +6522,63 @@ function oc_db_schema() {
 				'not_null' => true
 			],
 			[
+				'name' => 'comment',
+				'type' => 'text',
+				'not_null' => true
+			],
+			[
 				'name' => 'subscription_status_id',
 				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'affiliate_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'commission',
+				'type' => 'decimal(10,4)',
+				'not_null' => true
+			],
+			[
+				'name' => 'marketing_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'tracking',
+				'type' => 'varchar(64)',
+				'not_null' => true
+			],
+			[
+				'name' => 'language_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'currency_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'ip',
+				'type' => 'varchar(40)',
+				'not_null' => true
+			],
+			[
+				'name' => 'forwarded_ip',
+				'type' => 'varchar(40)',
+				'not_null' => true
+			],
+			[
+				'name' => 'user_agent',
+				'type' => 'varchar(255)',
+				'not_null' => true
+			],
+			[
+				'name' => 'accept_language',
+				'type' => 'varchar(255)',
 				'not_null' => true
 			],
 			[
@@ -6748,95 +6833,6 @@ function oc_db_schema() {
 				'key'   => 'language_id',
 				'table' => 'language',
 				'field' => 'language_id'
-			]
-		],
-		'engine' => 'InnoDB',
-		'charset' => 'utf8mb4',
-		'collate' => 'utf8mb4_general_ci'
-	];
-
-	$tables[] = [
-		'name' => 'subscription_transaction',
-		'field' => [
-			[
-				'name' => 'subscription_transaction_id',
-				'type' => 'int(11)',
-				'not_null' => true,
-				'auto_increment' => true
-			],
-			[
-				'name' => 'subscription_id',
-				'type' => 'int(11)',
-				'not_null' => true
-			],
-			[
-				'name' => 'order_id',
-				'type' => 'int(11)',
-				'not_null' => true
-			],
-			[
-				'name' => 'transaction_id',
-				'type' => 'varchar(255)',
-				'not_null' => true
-			],
-			[
-				'name' => 'description',
-				'type' => 'text',
-				'not_null' => true
-			],
-			[
-				'name' => 'amount',
-				'type' => 'decimal(10,4)',
-				'not_null' => true
-			],
-			[
-				'name' => 'type',
-				'type' => 'tinyint(2)',
-				'not_null' => true
-			],
-			[
-				'name' => 'payment_method',
-				'type' => 'varchar(128)',
-				'not_null' => true
-			],
-			[
-				'name' => 'payment_code',
-				'type' => 'varchar(128)',
-				'not_null' => true
-			],
-			[
-				'name' => 'date_added',
-				'type' => 'datetime',
-				'not_null' => true
-			]
-		],
-		'primary' => [
-			'subscription_transaction_id'
-		],
-		'foreign' => [
-			[
-				'key'   => 'subscription_id',
-				'table' => 'subscription',
-				'field' => 'subscription_id'
-			],
-			[
-				'key'   => 'order_id',
-				'table' => 'order',
-				'field' => 'order_id'
-			]
-		],
-		'index' => [
-			[
-				'name' => 'subscription_id',
-				'key' => [
-					'subscription_id'
-				]
-			],
-			[
-				'name' => 'order_id',
-				'key' => [
-					'order_id'
-				]
 			]
 		],
 		'engine' => 'InnoDB',

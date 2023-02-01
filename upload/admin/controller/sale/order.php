@@ -613,7 +613,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!empty($order_info)) {
-			$data['account_custom_field'] = json_decode($order_info['custom_field'], true);
+			$data['account_custom_field'] = $order_info['custom_field'];
 		} else {
 			$data['account_custom_field'] = [];
 		}

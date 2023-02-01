@@ -27,25 +27,43 @@ class Order extends \Opencart\System\Engine\Model {
 					}
 
                     $subscription_data = [
-                        'order_product_id' 	   => $order_product_id,
-                        'customer_id'		   => $data['customer_id'],
-                        'order_id'             => $order_id,
-                        'subscription_plan_id' => $product['subscription']['subscription_plan_id'],
-                        'name'                 => $product['subscription']['name'],
-                        'description'          => $product['subscription']['description'],
-                        'trial_price'          => $product['subscription']['trial_price'],
-                        'trial_frequency'      => $product['subscription']['trial_frequency'],
-                        'trial_cycle'          => $product['subscription']['trial_cycle'],
-                        'trial_duration'       => $product['subscription']['trial_duration'],
-                        'trial_remaining'      => $product['subscription']['trial_remaining'],
-                        'trial_status'         => $product['subscription']['trial_status'],
-                        'price'                => $product['subscription']['price'],
-                        'frequency'            => $product['subscription']['frequency'],
-                        'cycle'                => $product['subscription']['cycle'],
-                        'duration'             => $product['subscription']['duration'],
-                        'remaining'            => $product['subscription']['duration'],
-						'date_next'            => $date_next,
-                        'status'			   => $product['subscription']['status']
+						'order_id'               => $order_id,
+						'order_product_id'   	 => $order_product_id,
+						'store_id' 		         => $data['store_id'],
+                        'customer_id'	         => $data['customer_id'],
+						'customer_payment_id'    => $data['customer_payment_id'],
+						'payment_address_id'     => $data['payment_address_id'],
+						'shipping_address_id'    => $data['shipping_address_id'],
+						'shipping_method'        => $data['shipping_method'],
+						'shipping_code'          => $data['shipping_code'],
+						'product_id'             => $product['product_id'],
+						'quantity'               => $product['quantity'],
+						'subscription_plan_id'   => $product['subscription']['subscription_plan_id'],
+                        'name'                   => $product['subscription']['name'],
+                        'trial_price'            => $product['subscription']['trial_price'],
+                        'trial_frequency'        => $product['subscription']['trial_frequency'],
+                        'trial_cycle'            => $product['subscription']['trial_cycle'],
+                        'trial_duration'         => $product['subscription']['trial_duration'],
+                        'trial_remaining'        => $product['subscription']['trial_remaining'],
+                        'trial_status'           => $product['subscription']['trial_status'],
+                        'price'                  => $product['subscription']['price'],
+                        'frequency'              => $product['subscription']['frequency'],
+                        'cycle'                  => $product['subscription']['cycle'],
+                        'duration'               => $product['subscription']['duration'],
+                        'remaining'              => $product['subscription']['duration'],
+						'date_next'              => $date_next,
+						'comment'                => $data['comment'],
+                        'subscription_status_id' => 0,
+						'affiliate_id'           => $data['affiliate_id'],
+						'commission'             => $data['commission'],
+						'marketing_id'           => $data['marketing_id'],
+						'tracking'               => $data['tracking'],
+						'language_id'            => $data['language_id'],
+						'currency_id'            => $data['currency_id'],
+						'ip'                     => $data['ip'],
+						'forwarded_ip'           => $data['forwarded_ip'],
+						'user_agent'             => $data['user_agent'],
+						'accept_language'        => $data['accept_language']
                     ];
 
 					$this->model_checkout_subscription->addSubscription($order_id, $subscription_data);
@@ -343,6 +361,9 @@ class Order extends \Opencart\System\Engine\Model {
 					foreach ($order_options as $order_option) {
 						$this->db->query("UPDATE `" . DB_PREFIX . "product_option_value` SET `quantity` = (`quantity` + " . (int)$order_product['quantity'] . ") WHERE `product_option_value_id` = '" . (int)$order_option['product_option_value_id'] . "' AND `subtract` = '1'");
 					}
+
+
+
 				}
 
 				// Remove coupon, vouchers and reward points history

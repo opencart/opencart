@@ -269,7 +269,6 @@ class Cart {
                         $subscription_data = [
                             'subscription_plan_id' 	=> $subscription_query->row['subscription_plan_id'],
                             'name'                 	=> $subscription_query->row['name'],
-                            'description'          	=> $subscription_query->row['description'],
                             'trial_price'          	=> $subscription_query->row['trial_price'],
                             'trial_frequency'      	=> $subscription_query->row['trial_frequency'],
                             'trial_cycle'          	=> $subscription_query->row['trial_cycle'],
@@ -280,8 +279,7 @@ class Cart {
                             'frequency'            	=> $subscription_query->row['frequency'],
                             'cycle'                	=> $subscription_query->row['cycle'],
                             'duration'             	=> $subscription_query->row['duration'],
-                            'remaining'            	=> $subscription_query->row['duration'],
-                            'status'				=> $subscription_query->row['status']
+                            'remaining'            	=> $subscription_query->row['duration']
                         ];
 					}
 

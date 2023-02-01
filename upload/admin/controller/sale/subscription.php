@@ -556,7 +556,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		}
 
 		$data['history'] = $this->getHistory();
-		$data['transaction'] = $this->getTransaction();
 
 		// Additional tabs that are payment gateway specific
 		$data['tabs'] = [];

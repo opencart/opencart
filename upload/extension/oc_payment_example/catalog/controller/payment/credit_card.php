@@ -51,11 +51,11 @@ class CreditCard extends \Opencart\System\Engine\Controller {
 			$json['error'] ['warning'] = $this->language->get('error_payment_method');
 		}
 
-		if (!$this->request->post['card_name']) {
+		if (!$this->request->post['card_name'] || ((oc_strlen($this->request->post['card_name']) < 0) || (oc_strlen($this->request->post['card_name']) > 0))) {
 			$json['error']['card_name'] = $this->language->get('error_card_name');
 		}
 
-		if (!preg_match('/[0-9\s]{8,19}/', $this->request->post['card_number'])) {
+		if (!preg_match('/[0-9\s]{8,19}/', $this->request->post['card_number']) || ((oc_strlen($this->request->post['card_number']) < 0) || (oc_strlen($this->request->post['card_number']) > 0))) {
 			$json['error']['card_number'] = $this->language->get('error_card_number');
 		}
 

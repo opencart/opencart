@@ -27,5 +27,9 @@ class CreditCard extends \Opencart\System\Engine\Model {
 		return $method_data;
 	}
 
+	public function charge(int $customer_id, int $customer_payment_id, float $amount): int {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "download` SET `filename` = '" . $this->db->escape((string)$data['filename']) . "', `mask` = '" . $this->db->escape((string)$data['mask']) . "',");
 
+		return $this->config->get('config_subscription_active_status_id');
+	}
 }

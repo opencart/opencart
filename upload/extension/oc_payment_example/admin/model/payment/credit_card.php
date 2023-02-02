@@ -33,10 +33,26 @@ class CreditCard extends \Opencart\System\Engine\Model {
 		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "credit_card_report`");
 	}
 
-	public function charge(int $customer_id, int $customer_payment_id, float $amount): int {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "download` SET `filename` = '" . $this->db->escape((string)$data['filename']) . "', `mask` = '" . $this->db->escape((string)$data['mask']) . "',");
 
-		return $this->config->get('config_subscription_active_status_id');
+	public function addCreditCard(array $data): void {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "customer_payment` SET 
+		`customer_id` = '" . (int)$this->customer->getId() . "', 
+		`name` = '" . (int)$this->customer->getId() . "', 
+		`image` = '" . $this->db->escape($data['image']) . "', 
+		`type` = '" . $this->db->escape($data['type']) . "', 
+		`extension` = '" . $this->db->escape($data['extension']) . "', 
+		`code` = '" . $this->db->escape($data['code']) . "', 
+		`token` = '" . $this->db->escape($data['token']) . "', 
+		`date_expire` = '" . $this->db->escape($data['date_expire']) . "', 
+		`default` = '" . (bool)$data['default'] . "', 
+		`status` = '1', 
+		`date_added` = NOW()");
+
+
+	}
+
+	public function deleteCreditCard(int $customer_payment_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_payment` WHERE `customer_id` = '" . (int)$this->customer->getId() . "' AND `customer_payment_id` = '" . (int)$customer_payment_id . "'");
 	}
 
 	public function getReports(int $download_id, int $start = 0, int $limit = 10): array {

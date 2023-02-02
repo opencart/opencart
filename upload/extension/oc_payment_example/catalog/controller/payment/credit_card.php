@@ -51,7 +51,7 @@ class CreditCard extends \Opencart\System\Engine\Controller {
 			$json['error'] ['warning'] = $this->language->get('error_payment_method');
 		}
 
-		if (!$this->request->post['card_name'] || ((oc_strlen($this->request->post['card_name']) < 0) || (oc_strlen($this->request->post['card_name']) > 0))) {
+		if (!$this->request->post['card_name'] || ((oc_strlen($this->request->post['card_name']) < 0) || (oc_strlen($this->request->post['card_name']) > 24))) {
 			$json['error']['card_name'] = $this->language->get('error_card_name');
 		}
 

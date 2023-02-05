@@ -12,7 +12,7 @@ class Mail {
 	 * @param    array  $option
 	 */
 	public function __construct(array &$option = []) {
-		$this->option = $option;
+		$this->option = &$option;
 	}
 
 	/**
@@ -21,8 +21,6 @@ class Mail {
 	 * @return    bool
 	 */
 	public function send(): bool {
-		print_r($this->option);
-
 		if (is_array($this->option['to'])) {
 			$to = implode(',', $this->option['to']);
 		} else {
@@ -51,13 +49,13 @@ class Mail {
 		$header .= 'X-Mailer: PHP/' . phpversion() . $eol;
 		$header .= 'Content-Type: multipart/mixed; boundary="' . $boundary . '"' . $eol . $eol;
 
+		$message = '--' . $boundary . $eol;
+
 		if (empty($this->option['html'])) {
-			$message  = '--' . $boundary . $eol;
 			$message .= 'Content-Type: text/plain; charset="utf-8"' . $eol;
 			$message .= 'Content-Transfer-Encoding: base64' . $eol . $eol;
 			$message .= base64_encode($this->option['text']) . $eol;
 		} else {
-			$message  = '--' . $boundary . $eol;
 			$message .= 'Content-Type: multipart/alternative; boundary="' . $boundary . '_alt"' . $eol . $eol;
 			$message .= '--' . $boundary . '_alt' . $eol;
 			$message .= 'Content-Type: text/plain; charset="utf-8"' . $eol;

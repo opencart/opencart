@@ -15,11 +15,14 @@ class Language extends \Opencart\System\Engine\Controller {
 		$language_info = $this->model_localisation_language->getLanguageByCode($code);
 
 		if ($language_info) {
+			$this->language = new \Opencart\System\Library\Language($code);
+			
 			// If extension switch add language directory
 			if ($language_info['extension']) {
 				self::$extension = $language_info['extension'];
-
-				$this->language->addPath('extension/' . $language_info['extension'], DIR_EXTENSION . $language_info['extension'] . '/catalog/language/');
+				$this->language->addPath(DIR_EXTENSION . $language_info['extension'] . '/catalog/language/');
+			} else {
+				$this->language->addPath(DIR_LANGUAGE);
 			}
 
 			// Set the config language_id key

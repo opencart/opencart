@@ -10,10 +10,7 @@ class PaymentMethod extends \Opencart\System\Engine\Model {
 		`extension` = '" . $this->db->escape($data['extension']) . "', 
 		`code` = '" . $this->db->escape($data['code']) . "', 
 		`token` = '" . $this->db->escape($data['token']) . "', 
-		`date_expire` = '" . $this->db->escape($data['date_expire']) . "', 
-		`default` = '" . (bool)$data['default'] . "', 
-		`status` = '1', 
-		`date_added` = NOW()");
+		`date_expire` = '" . $this->db->escape($data['date_expire']) . "', `default` = '" . (bool)$data['default'] . "', `status` = '1', `date_added` = NOW()");
 	}
 
 	public function deletePaymentMethod(int $customer_payment_id): void {

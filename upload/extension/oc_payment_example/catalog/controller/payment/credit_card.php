@@ -51,20 +51,16 @@ class CreditCard extends \Opencart\System\Engine\Controller {
 			$json['error'] ['warning'] = $this->language->get('error_payment_method');
 		}
 
-		if (!$this->request->post['card_name'] || ((oc_strlen($this->request->post['card_name']) < 0) || (oc_strlen($this->request->post['card_name']) > 24))) {
+		if (!$this->request->post['card_name']) {
 			$json['error']['card_name'] = $this->language->get('error_card_name');
 		}
 
-		if (!preg_match('/[0-9\s]{8,19}/', $this->request->post['card_number']) || ((oc_strlen($this->request->post['card_number']) < 0) || (oc_strlen($this->request->post['card_number']) > 0))) {
+		if (!preg_match('/[0-9\s]{8,19}/', $this->request->post['card_number'])) {
 			$json['error']['card_number'] = $this->language->get('error_card_number');
 		}
 
-		if ($this->request->post['card_expire_year'] && $this->request->post['card_expire_month']) {
-			if (strtotime((int)$this->request->post['card_expire_year'] . '-' . $this->request->post['card_expire_month'] . '-01') < time()) {
-				$json['error']['card_expire'] = $this->language->get('error_card_expired');
-			}
-		} else {
-			$json['error']['card_expire'] = $this->language->get('error_card_expire');
+		if (strtotime((int)$this->request->post['card_expire_year'] . '-' . $this->request->post['card_expire_month'] . '-01') < time()) {
+			$json['error']['card_expire'] = $this->language->get('error_card_expired');
 		}
 
 		if (strlen($this->request->post['card_cvv']) != 3) {
@@ -76,8 +72,6 @@ class CreditCard extends \Opencart\System\Engine\Controller {
 			if ($this->config->get('payment_credit_card_response')) {
 				// Card storage
 				if ($this->customer->isLogged() && $this->request->post['store']) {
-					$this->load->model('account/payment_method');
-
 					$payment_method_data = [
 						'card_name'         => $this->request->post['card_name'],
 						'card_number'       => '**** **** **** ' . substr($this->request->post['card_number'], -4),
@@ -93,7 +87,9 @@ class CreditCard extends \Opencart\System\Engine\Controller {
 						'default'           => !$this->model_account_payment_method->getTotalPaymentMethods() ? true : false
 					];
 
-					$this->model_account_payment_method->addPaymentMethod($payment_method_data);
+					$this->load->model('extension/oc_payment_example/payment/credit_card');
+
+					$this->model_extension_oc_payment_example_payment_credit_card->addCreditCard($payment_method_data);
 				}
 
 				$this->load->model('checkout/order');

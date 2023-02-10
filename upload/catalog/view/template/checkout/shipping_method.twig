@@ -2,7 +2,7 @@
   <fieldset>
     <legend>{{ heading_title }}</legend>
     <div class="input-group">
-      <select name="shipping_method" id="input-shipping-method" class="form-select"{% if not shipping_methods %} disabled{% endif %}>
+      <select name="shipping_method" id="input-shipping-method" class="form-select" disabled>
         <option value="">{{ text_select }}</option>
         {% for shipping_method in shipping_methods %}
           <optgroup label="{{ shipping_method.title }}">

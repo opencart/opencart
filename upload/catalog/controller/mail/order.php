@@ -246,13 +246,43 @@ class Order extends \Opencart\System\Engine\Controller {
 				];
 			}
 
+			$description = '';
+
+			$this->load->model('checkout/subscription');
+
+			$subscription_info = $this->model_checkout_subscription->getSubscriptionByOrderProductId($order_info['order_id'], $order_product['order_product_id']);
+
+			if ($subscription_info) {
+				$trial_price = $this->currency->format($this->tax->calculate($subscription_info['trial_price'], $order_product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
+				$trial_cycle = $subscription_info['trial_cycle'];
+				$trial_frequency = $this->language->get('text_' . $subscription_info['trial_frequency']);
+				$trial_duration = $subscription_info['trial_duration'];
+
+				if ($subscription_info['trial_status']) {
+					$description .= sprintf($this->language->get('text_subscription_trial'), $trial_price, $trial_cycle, $trial_frequency, $trial_duration);
+				}
+
+				$price = $this->currency->format($this->tax->calculate($subscription_info['price'], $order_product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
+				$cycle = $subscription_info['cycle'];
+				$frequency = $this->language->get('text_' . $subscription_info['frequency']);
+				$duration = $subscription_info['duration'];
+
+				if ($duration) {
+					$description .= sprintf($this->language->get('text_subscription_duration'), $price, $cycle, $frequency, $duration);
+				} else {
+					$description .= sprintf($this->language->get('text_subscription_cancel'), $price, $cycle, $frequency);
+				}
+			}
+
+
 			$data['products'][] = [
-				'name'     => $order_product['name'],
-				'model'    => $order_product['model'],
-				'option'   => $option_data,
-				'quantity' => $order_product['quantity'],
-				'price'    => $this->currency->format($order_product['price'] + ($this->config->get('config_tax') ? $order_product['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']),
-				'total'    => $this->currency->format($order_product['total'] + ($this->config->get('config_tax') ? ($order_product['tax'] * $order_product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value'])
+				'name'         => $order_product['name'],
+				'model'        => $order_product['model'],
+				'option'       => $option_data,
+				'subscription' => $description,
+				'quantity'     => $order_product['quantity'],
+				'price'        => $this->currency->format($order_product['price'] + ($this->config->get('config_tax') ? $order_product['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']),
+				'total'        => $this->currency->format($order_product['total'] + ($this->config->get('config_tax') ? ($order_product['tax'] * $order_product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value'])
 			];
 		}
 
@@ -345,7 +375,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$subject = sprintf($this->language->get('mail_text_subject'), $store_name, $order_info['order_id']);
 
 		$data['order_id'] = $order_info['order_id'];
-		$data['date_added'] = date($this->language->get('mail_date_format_short'), strtotime($order_info['date_added']));
+		$data['date_added'] = date($this->language->get('date_format_short'), strtotime($order_info['date_added']));
 
 		$order_status_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_status` WHERE `order_status_id` = '" . (int)$order_status_id . "' AND `language_id` = '" . (int)$order_info['language_id'] . "'");
 

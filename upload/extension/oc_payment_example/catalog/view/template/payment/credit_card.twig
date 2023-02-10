@@ -5,11 +5,13 @@
     <div class="row">
       <div class="col">
         <div class="mb-3 required">
-          <label for="input-card-name" class="col-form-label">{{ entry_card_name }}</label> <input type="text" name="card_name" value="" placeholder="{{ entry_card_name }}" id="input-card-name" class="form-control"/>
+          <label for="input-card-name" class="col-form-label">{{ entry_card_name }}</label>
+          <input type="text" name="card_name" value="" placeholder="{{ entry_card_name }}" id="input-card-name" class="form-control"/>
           <div id="error-card-name" class="invalid-feedback"></div>
         </div>
         <div class="mb-3 required">
-          <label for="input-card-number" class="col-form-label">{{ entry_card_number }}</label> <input type="text" name="card_number" value="" placeholder="**** **** **** ****" id="input-card-number" maxlength="22" class="form-control"/>
+          <label for="input-card-number" class="col-form-label">{{ entry_card_number }}</label>
+          <input type="text" name="card_number" value="" placeholder="**** **** **** ****" id="input-card-number" maxlength="22" class="form-control"/>
           <div id="error-card-number" class="invalid-feedback"></div>
         </div>
       </div>
@@ -50,7 +52,7 @@
   </form>
 </fieldset>
 <script type="text/javascript"><!--
-$('#form-credit-card').on('submit', function (e) {
+$('#form-credit-card').on('submit', function(e) {
     e.preventDefault();
 
     var element = this;
@@ -63,13 +65,13 @@ $('#form-credit-card').on('submit', function (e) {
         contentType: 'application/x-www-form-urlencoded',
         cache: false,
         processData: false,
-        beforeSend: function () {
+        beforeSend: function() {
             $('#button-confirm').prop('disabled', true).addClass('loading');
         },
-        complete: function () {
+        complete: function() {
             $('#button-confirm').prop('disabled', false).removeClass('loading');
         },
-        success: function (json) {
+        success: function(json) {
             console.log(json);
 
             $('.alert-dismissible').remove();
@@ -91,7 +93,7 @@ $('#form-credit-card').on('submit', function (e) {
                 }
             }
         },
-        error: function (xhr, ajaxOptions, thrownError) {
+        error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });

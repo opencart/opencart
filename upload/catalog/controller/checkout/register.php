@@ -415,7 +415,7 @@ class Register extends \Opencart\System\Engine\Controller {
 
 			// Payment Address
 			if ($this->config->get('config_checkout_payment_address')) {
-				if (isset($this->session->data['payment_address'])) {
+				if (isset($this->session->data['payment_address']['address_id'])) {
 					$address_id = $this->session->data['payment_address']['address_id'];
 				} else {
 					$address_id = 0;
@@ -486,7 +486,7 @@ class Register extends \Opencart\System\Engine\Controller {
 			// Shipping Address
 			if ($this->cart->hasShipping()) {
 				if (!$this->request->post['address_match']) {
-					if (isset($this->session->data['shipping_address'])) {
+					if (isset($this->session->data['shipping_address']['address_id'])) {
 						$address_id = $this->session->data['shipping_address']['address_id'];
 					} else {
 						$address_id = 0;

@@ -239,8 +239,19 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		// Validate payment method
-		if (!$json && (!isset($this->request->post['payment_method']) || !isset($this->session->data['payment_methods']) || !isset($this->session->data['payment_methods'][$this->request->post['payment_method']]))) {
+		// Validate has payment address if required
+		if ($this->config->get('config_checkout_payment_address') && !isset($this->session->data['payment_address'])) {
+			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
+		}
+
+		// Validate payment methods
+		if (isset($this->request->post['payment_method']) && isset($this->session->data['payment_methods'])) {
+			$payment = explode('.', $this->request->post['payment_method']);
+
+			if (!isset($payment[0]) || !isset($payment[1]) || !isset($this->session->data['payment_methods'][$payment[0]]['option'][$payment[1]])) {
+				$json['error'] = $this->language->get('error_payment_method');
+			}
+		} else {
 			$json['error'] = $this->language->get('error_payment_method');
 		}
 

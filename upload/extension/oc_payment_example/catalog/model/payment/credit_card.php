@@ -18,7 +18,7 @@ class CreditCard extends \Opencart\System\Engine\Model {
 		$option_data = [];
 
 		if ($status) {
-			$option_data['credit_card.add'] = [
+			$option_data['add'] = [
 				'code' => 'credit_card.add',
 				'name' => $this->language->get('text_card_add')
 			];

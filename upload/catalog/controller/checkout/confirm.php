@@ -40,11 +40,6 @@ class Confirm extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		// Validate if payment address has been set.
-		if ($this->config->get('config_checkout_payment_address') && !isset($this->session->data['payment_address'])) {
-			$status = false;
-		}
-
 		// Shipping
 		if ($this->cart->hasShipping()) {
 			// Validate shipping address
@@ -68,8 +63,19 @@ class Confirm extends \Opencart\System\Engine\Controller {
 			unset($this->session->data['shipping_methods']);
 		}
 
-		// Validate Payment methods
-		if (!isset($this->session->data['payment_method']) || !isset($this->session->data['payment_methods']) || !isset($this->session->data['payment_methods'][$this->session->data['payment_method']])) {
+		// Validate has payment address if required
+		if ($this->config->get('config_checkout_payment_address') && !isset($this->session->data['payment_address'])) {
+			$status = false;
+		}
+
+		// Validate payment methods
+		if (isset($this->session->data['payment_method']) && isset($this->session->data['payment_methods'])) {
+			$payment = explode('.', $this->session->data['payment_method']);
+
+			if (!isset($payment[0]) || !isset($payment[1]) || !isset($this->session->data['payment_methods'][$payment[0]]['option'][$payment[1]])) {
+				$status = false;
+			}
+		} else {
 			$status = false;
 		}
 
@@ -130,10 +136,8 @@ class Confirm extends \Opencart\System\Engine\Controller {
 				$order_data['payment_custom_field'] = [];
 			}
 
-			$payment_method_info = $this->session->data['payment_methods'][$this->session->data['payment_method']];
-
-			$order_data['payment_method'] = $payment_method_info['title'];
-			$order_data['payment_code'] = $payment_method_info['code'];
+			$order_data['payment_method'] = $this->session->data['payment_methods'][$payment[0]]['title'];
+			$order_data['payment_code'] = $this->session->data['payment_methods'][$payment[0]]['option'][$payment[1]]['code'];
 
 			// Shipping Details
 			if ($this->cart->hasShipping()) {
@@ -374,7 +378,7 @@ class Confirm extends \Opencart\System\Engine\Controller {
 
 		// Validate if payment method has been set.
 		if (isset($this->session->data['payment_method'])) {
-			$code = $this->session->data['payment_method'];
+			$code = oc_substr($this->session->data['payment_method'], 0, strpos($this->session->data['payment_method'], '.'));
 		} else {
 			$code = '';
 		}

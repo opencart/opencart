@@ -184,48 +184,6 @@ class Confirm extends \Opencart\System\Engine\Controller {
 				$order_data['shipping_code'] = '';
 			}
 
-			// Products
-			$order_data['products'] = [];
-
-			foreach ($products as $product) {
-				$option_data = [];
-
-				foreach ($product['option'] as $option) {
-					$option_data[] = [
-						'product_option_id'       => $option['product_option_id'],
-						'product_option_value_id' => $option['product_option_value_id'],
-						'option_id'               => $option['option_id'],
-						'option_value_id'         => $option['option_value_id'],
-						'name'                    => $option['name'],
-						'value'                   => $option['value'],
-						'type'                    => $option['type']
-					];
-				}
-
-				$order_data['products'][] = [
-					'product_id'   => $product['product_id'],
-					'master_id'    => $product['master_id'],
-					'name'         => $product['name'],
-					'model'        => $product['model'],
-					'option'       => $option_data,
-					'subscription' => $product['subscription'],
-					'download'     => $product['download'],
-					'quantity'     => $product['quantity'],
-					'subtract'     => $product['subtract'],
-					'price'        => $product['price'],
-					'total'        => $product['total'],
-					'tax'          => $this->tax->getTax($product['price'], $product['tax_class_id']),
-					'reward'       => $product['reward']
-				];
-			}
-
-			// Gift Voucher
-			$order_data['vouchers'] = [];
-
-			if (!empty($this->session->data['vouchers'])) {
-				$order_data['vouchers'] = $this->session->data['vouchers'];
-			}
-
 			if (isset($this->session->data['comment'])) {
 				$order_data['comment'] = $this->session->data['comment'];
 			} else {
@@ -297,6 +255,97 @@ class Confirm extends \Opencart\System\Engine\Controller {
 				$order_data['accept_language'] = $this->request->server['HTTP_ACCEPT_LANGUAGE'];
 			} else {
 				$order_data['accept_language'] = '';
+			}
+
+			// Products
+			$order_data['products'] = [];
+
+			foreach ($products as $product) {
+				$option_data = [];
+
+				foreach ($product['option'] as $option) {
+					$option_data[] = [
+						'product_option_id'       => $option['product_option_id'],
+						'product_option_value_id' => $option['product_option_value_id'],
+						'option_id'               => $option['option_id'],
+						'option_value_id'         => $option['option_value_id'],
+						'name'                    => $option['name'],
+						'value'                   => $option['value'],
+						'type'                    => $option['type']
+					];
+				}
+
+				$subscription_data = [];
+
+				if ($product['subscription']) {
+					if ($product['subscription']['trial_duration'] && $product['subscription']['trial_remaining']) {
+						$date_next = date('Y-m-d', strtotime('+' . $product['subscription']['trial_cycle'] . ' ' . $product['subscription']['trial_frequency']));
+					} elseif ($product['subscription']['duration'] && $product['subscription']['remaining']) {
+						$date_next = date('Y-m-d', strtotime('+' . $product['subscription']['cycle'] . ' ' . $product['subscription']['frequency']));
+					}
+
+					$subscription_data = [
+						'store_id'             => $order_data['store_id'],
+						'customer_id'          => $order_data['customer_id'],
+						'customer_group_id'    => $order_data['customer_group_id'],
+						'payment_address_id'   => $order_data['payment_address_id'],
+						'payment_method'       => $order_data['payment_method'],
+						'payment_code'         => $order_data['payment_code'],
+						'shipping_address_id'  => $order_data['shipping_address_id'],
+						'shipping_method'      => $order_data['shipping_method'],
+						'shipping_code'        => $order_data['shipping_code'],
+						'product_id'           => $product['product_id'],
+						'quantity'             => $product['quantity'],
+						'subscription_plan_id' => $product['subscription']['subscription_plan_id'],
+						'name'                 => $product['subscription']['name'],
+						'trial_price'          => $product['subscription']['trial_price'],
+						'trial_frequency'      => $product['subscription']['trial_frequency'],
+						'trial_cycle'          => $product['subscription']['trial_cycle'],
+						'trial_duration'       => $product['subscription']['trial_duration'],
+						'trial_remaining'      => $product['subscription']['trial_remaining'],
+						'trial_status'         => $product['subscription']['trial_status'],
+						'price'                => $product['subscription']['price'],
+						'frequency'            => $product['subscription']['frequency'],
+						'cycle'                => $product['subscription']['cycle'],
+						'duration'             => $product['subscription']['duration'],
+						'remaining'            => $product['subscription']['duration'],
+						'date_next'            => $date_next,
+						'comment'              => $order_data['comment'],
+						'affiliate_id'         => $order_data['affiliate_id'],
+						'commission'           => $order_data['commission'],
+						'marketing_id'         => $order_data['marketing_id'],
+						'tracking'             => $order_data['tracking'],
+						'language_id'          => $order_data['language_id'],
+						'currency_id'          => $order_data['currency_id'],
+						'ip'                   => $order_data['ip'],
+						'forwarded_ip'         => $order_data['forwarded_ip'],
+						'user_agent'           => $order_data['user_agent'],
+						'accept_language'      => $order_data['accept_language']
+					];
+				}
+
+				$order_data['products'][] = [
+					'product_id'   => $product['product_id'],
+					'master_id'    => $product['master_id'],
+					'name'         => $product['name'],
+					'model'        => $product['model'],
+					'option'       => $option_data,
+					'subscription' => $subscription_data,
+					'download'     => $product['download'],
+					'quantity'     => $product['quantity'],
+					'subtract'     => $product['subtract'],
+					'price'        => $product['price'],
+					'total'        => $product['total'],
+					'tax'          => $this->tax->getTax($product['price'], $product['tax_class_id']),
+					'reward'       => $product['reward']
+				];
+			}
+
+			// Gift Voucher
+			$order_data['vouchers'] = [];
+
+			if (!empty($this->session->data['vouchers'])) {
+				$order_data['vouchers'] = $this->session->data['vouchers'];
 			}
 
 			$this->load->model('checkout/order');

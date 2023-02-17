@@ -61,7 +61,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
                                             $subscription_info = $this->model_account_subscription->getSubscription($subscription['subscription_id']);
 
                                             if ($subscription_info) {
-                                                $this->model_account_subscription->addTransaction($subscription['subscription_id'], $subscription['order_id'], $this->language->get('text_success'), $amount, $subscription_info['type'], $subscription_info['payment_method'], $subscription_info['payment_code']);
+                                               // $this->model_account_subscription->addTransaction($subscription['subscription_id'], $subscription['order_id'], $this->language->get('text_success'), $amount, $subscription_info['type'], $subscription_info['payment_method'], $subscription_info['payment_code']);
                                             }
                                         }
                                     }

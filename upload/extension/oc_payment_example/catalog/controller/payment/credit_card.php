@@ -4,6 +4,8 @@ class CreditCard extends \Opencart\System\Engine\Controller {
 	public function index(): string {
 		$this->load->language('extension/oc_payment_example/payment/credit_card');
 
+		$data['payment_method'] = $this->session->data['payment_method'];
+
 		$data['logged'] = $this->customer->isLogged();
 
 		$data['months'] = [];
@@ -20,6 +22,19 @@ class CreditCard extends \Opencart\System\Engine\Controller {
 
 		$data['language'] = $this->config->get('config_language');
 
+		$credit_card_id = substr($this->session->data['payment_method'], strpos($this->session->data['payment_method'], '.'));
+
+		$this->load->model('extension/oc_payment_example/payment/credit_card');
+
+		$credit_card_info = $this->model_extension_oc_payment_example_payment_credit_card->getCreditCard($this->customer->getId(), $credit_card_id);
+
+		// Card storage
+		if ($this->customer->isLogged() && $credit_card_info) {
+			$data['credit_card_id'] = $credit_card_info['credit_card_id'];
+		} else {
+			$data['credit_card_id'] = 0;
+		}
+
 		return $this->load->view('extension/oc_payment_example/payment/credit_card', $data);
 	}
 
@@ -29,6 +44,7 @@ class CreditCard extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		$keys = [
+			'credit_card_id',
 			'card_name',
 			'card_number',
 			'card_expire_month',
@@ -47,51 +63,69 @@ class CreditCard extends \Opencart\System\Engine\Controller {
 			$json['error']['warning'] = $this->language->get('error_order');
 		}
 
-		if (!isset($this->session->data['payment_method']) || $this->session->data['payment_method'] != 'credit_card') {
-			$json['error'] ['warning'] = $this->language->get('error_payment_method');
+		if ($this->config->get('payment_credit_card_status')) {
+			$json['error']['warning'] = $this->language->get('error_payment_method');
 		}
 
-		if (!$this->request->post['card_name']) {
-			$json['error']['card_name'] = $this->language->get('error_card_name');
+		if (!isset($this->session->data['payment_method'])) {
+			$json['error']['warning'] = $this->language->get('error_payment_method');
 		}
 
-		if (!preg_match('/[0-9\s]{8,19}/', $this->request->post['card_number'])) {
-			$json['error']['card_number'] = $this->language->get('error_card_number');
+		if ($this->session->data['payment_method'] == 'credit_card.add') {
+			if (!$this->request->post['card_name']) {
+				$json['error']['card_name'] = $this->language->get('error_card_name');
+			}
+
+			if (!preg_match('/[0-9\s]{8,19}/', $this->request->post['card_number'])) {
+				$json['error']['card_number'] = $this->language->get('error_card_number');
+			}
+
+			if (strtotime((int)$this->request->post['card_expire_year'] . '-' . $this->request->post['card_expire_month'] . '-01') < time()) {
+				$json['error']['card_expire'] = $this->language->get('error_card_expired');
+			}
+
+			if (strlen($this->request->post['card_cvv']) != 3) {
+				$json['error']['card_cvv'] = $this->language->get('error_card_cvv');
+			}
 		}
 
-		if (strtotime((int)$this->request->post['card_expire_year'] . '-' . $this->request->post['card_expire_month'] . '-01') < time()) {
-			$json['error']['card_expire'] = $this->language->get('error_card_expired');
-		}
+		if () {
+			$this->load->model('extension/oc_payment_example/payment/credit_card');
 
-		if (strlen($this->request->post['card_cvv']) != 3) {
-			$json['error']['card_cvv'] = $this->language->get('error_card_cvv');
+			$credit_card_info = $this->model_extension_oc_payment_example_payment_credit_card->getCreditCard($this->customer->getId(), $this->request->post['credit_card_id']);
+
+			if (!$credit_card_info) {
+				$json['error']['warning'] = $this->language->get('error_credit_card');
+			}
 		}
 
 		if (!$json) {
+
+			/*
+			 *
+			 * Credit Card validation code goes here
+			 *
+			 */
+			$response = $this->config->get('payment_credit_card_response');
+
+			$credit_card_data = [
+				'card_name'         => $this->request->post['card_name'],
+				'card_number'       => '**** **** **** ' . substr($this->request->post['card_number'], -4),
+				'card_expire_month' => $this->request->post['card_expire_month'],
+				'card_expire_year'  => $this->request->post['card_expire_year'],
+				'card_cvv'          => $this->request->post['card_cvv'],
+				'date_expire'       => $this->request->post['card_expire_year'] . '-' . $this->request->post['card_expire_month'] . '-01'
+			];
+
+			$this->load->model('extension/oc_payment_example/payment/credit_card');
+
+			// Card storage
+			if ($this->customer->isLogged() && $this->request->post['store']) {
+				$this->model_extension_oc_payment_example_payment_credit_card->addCreditCard($this->customer->getId(), $credit_card_data);
+			}
+
 			// Set Credit Card response
-			if ($this->config->get('payment_credit_card_response')) {
-				// Card storage
-				if ($this->customer->isLogged() && $this->request->post['store']) {
-					$payment_method_data = [
-						'card_name'         => $this->request->post['card_name'],
-						'card_number'       => '**** **** **** ' . substr($this->request->post['card_number'], -4),
-						'card_expire_month' => $this->request->post['card_expire_month'],
-						'card_expire_year'  => $this->request->post['card_expire_year'],
-						'card_cvv'          => $this->request->post['card_cvv'],
-						'image'             => 'visa.png',
-						'type'              => 'visa',
-						'extension'         => 'opencart',
-						'code'              => 'credit_card',
-						'token'             => md5(rand()),
-						'date_expire'       => $this->request->post['card_expire_year'] . '-' . $this->request->post['card_expire_month'] . '-01',
-						'default'           => !$this->model_account_payment_method->getTotalPaymentMethods() ? true : false
-					];
-
-					$this->load->model('extension/oc_payment_example/payment/credit_card');
-
-					$this->model_extension_oc_payment_example_payment_credit_card->addCreditCard($payment_method_data);
-				}
-
+			if ($response) {
 				$this->load->model('checkout/order');
 
 				$this->model_checkout_order->addHistory($this->session->data['order_id'], $this->config->get('payment_credit_card_approved_status_id'), '', true);

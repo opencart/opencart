@@ -173,8 +173,6 @@ class Confirm extends \Opencart\System\Engine\Controller {
 			}
 
 			if (isset($this->session->data['shipping_method'])) {
-				$shipping = explode('.', $this->session->data['shipping_method']);
-
 				$shipping_method_info = $this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]];
 
 				$order_data['shipping_method'] = $shipping_method_info['title'];

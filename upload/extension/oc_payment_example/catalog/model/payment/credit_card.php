@@ -15,12 +15,13 @@ class CreditCard extends \Opencart\System\Engine\Model {
 		}
 
 		$method_data = [];
-		$option_data = [];
 
 		if ($status) {
+			$option_data = [];
+
 			$option_data['add'] = [
 				'code' => 'credit_card.add',
-				'name' => $this->language->get('text_card_add')
+				'name' => $this->language->get('text_card_use')
 			];
 
 			$results = $this->getCreditCards($this->customer->getId());
@@ -28,7 +29,7 @@ class CreditCard extends \Opencart\System\Engine\Model {
 			foreach ($results as $result) {
 				$option_data['credit_card.' . $result['credit_card_id']] = [
 					'code' => 'credit_card.' . $result['credit_card_id'],
-					'name' => $result['card_number']
+					'name' => $this->language->get('text_card_use') . ' ' . $result['card_number']
 				];
 			}
 
@@ -39,6 +40,7 @@ class CreditCard extends \Opencart\System\Engine\Model {
 				'sort_order' => $this->config->get('payment_credit_card_sort_order')
 			];
 		}
+
 		return $method_data;
 	}
 

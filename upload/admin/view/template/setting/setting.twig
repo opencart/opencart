@@ -734,6 +734,7 @@
                           <div class="form-text">{{ help_subscription }}</div>
                         </div>
                       </div>
+
                       <div class="row mb-3">
                         <label for="input-subscription-active-status" class="col-sm-2 col-form-label">{{ entry_subscription_active_status }}</label>
                         <div class="col-sm-10">
@@ -744,6 +745,18 @@
                           </select>
                         </div>
                       </div>
+
+                      <div class="row mb-3">
+                        <label for="input-subscription-suspended-status" class="col-sm-2 col-form-label">{{ entry_subscription_suspended_status }}</label>
+                        <div class="col-sm-10">
+                          <select name="config_subscription_suspended_status_id" id="input-subscription-active-status" class="form-select">
+                            {% for subscription_status in subscription_statuses %}
+                              <option value="{{ subscription_status.subscription_status_id }}"{% if subscription_status.subscription_status_id == config_subscription_suspended_status_id %} selected="selected"{% endif %}>{{ subscription_status.name }}</option>
+                            {% endfor %}
+                          </select>
+                        </div>
+                      </div>
+
                       <div class="row mb-3">
                         <label for="input-subscription-expired-status" class="col-sm-2 col-form-label">{{ entry_subscription_expired_status }}</label>
                         <div class="col-sm-10">

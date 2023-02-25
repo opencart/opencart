@@ -280,6 +280,8 @@ class Order extends \Opencart\System\Engine\Model {
 					}
 				}
 
+				$this->load->model('checkout/subscription');
+
 				// Stock subtraction
 				$order_products = $this->getProducts($order_id);
 
@@ -296,12 +298,14 @@ class Order extends \Opencart\System\Engine\Model {
 					foreach ($order_options as $order_option) {
 						$this->db->query("UPDATE `" . DB_PREFIX . "product_option_value` SET `quantity` = (`quantity` - " . (int)$order_product['quantity'] . ") WHERE `product_option_value_id` = '" . (int)$order_option['product_option_value_id'] . "' AND `subtract` = '1'");
 					}
+
+					// Subscription status set to active
+					$subscription_info = $this->model_checkout_subscription->getSubscriptionByOrderProductId($order_id, $order_product['order_product_id']);
+
+					if ($subscription_info) {
+						$this->model_checkout_subscription->addHistory($subscription_info['subscription_id'], $this->config->get('config_subscription_active_id'), '', false);
+					}
 				}
-
-				// Subscription status set to active
-				$this->load->model('checkout/subscription');
-
-				$this->model_checkout_subscription->addHistory($order_id, $this->config->get('config_subscription_active_id'), '', false);
 			}
 
 			// Affiliate add commission if complete status
@@ -321,6 +325,8 @@ class Order extends \Opencart\System\Engine\Model {
 
 			// If old order status is the processing or complete status but new status is not then commence restock, and remove coupon, voucher and reward history
 			if (in_array($order_info['order_status_id'], array_merge((array)$this->config->get('config_processing_status'), (array)$this->config->get('config_complete_status'))) && !in_array($order_status_id, array_merge((array)$this->config->get('config_processing_status'), (array)$this->config->get('config_complete_status')))) {
+				$this->load->model('checkout/subscription');
+
 				// Restock
 				$order_products = $this->getProducts($order_id);
 
@@ -337,12 +343,14 @@ class Order extends \Opencart\System\Engine\Model {
 					foreach ($order_options as $order_option) {
 						$this->db->query("UPDATE `" . DB_PREFIX . "product_option_value` SET `quantity` = (`quantity` + " . (int)$order_product['quantity'] . ") WHERE `product_option_value_id` = '" . (int)$order_option['product_option_value_id'] . "' AND `subtract` = '1'");
 					}
+
+					// Subscription status set to suspend
+					$subscription_info = $this->model_checkout_subscription->getSubscriptionByOrderProductId($order_id, $order_product['order_product_id']);
+
+					if ($subscription_info) {
+						$this->model_checkout_subscription->addHistory($subscription_info['subscription_id'], $this->config->get('config_subscription_suspended_status_id'), '', false);
+					}
 				}
-
-				// Subscription status set to active
-				$this->load->model('checkout/subscription');
-
-				$this->model_checkout_subscription->addHistory($order_id, $this->config->get('config_subscription_active_id'), '', false);
 
 				// Remove coupon, vouchers and reward points history
 				$order_totals = $this->getTotals($order_id);

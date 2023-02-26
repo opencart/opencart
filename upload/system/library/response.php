@@ -107,6 +107,10 @@ class Response {
 			return $data;
 		}
 
+		if (ob_get_contents()) {
+			return $data;
+		}
+
 		if (connection_status()) {
 			return $data;
 		}

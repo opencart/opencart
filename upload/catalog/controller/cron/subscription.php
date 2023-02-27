@@ -10,9 +10,9 @@ class Subscription extends \Opencart\System\Engine\Controller {
         ];
 
         // Subscription
-        $this->load->model('account/subscription');
+        $this->load->model('checkout/order');
 
-        $results = $this->model_account_subscription->getSubscriptions($filter_data);
+        $results = $this->model_checkout_order->getSubscriptions($filter_data);
 
         if ($results) {
             foreach ($results as $result) {

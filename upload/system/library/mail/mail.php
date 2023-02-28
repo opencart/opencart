@@ -21,7 +21,6 @@ class Mail {
 	 * @return    bool
 	 */
 	public function send(): bool {
-		print_r($this->option);
 
 		if (is_array($this->option['to'])) {
 			$to = implode(',', $this->option['to']);

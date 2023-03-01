@@ -4508,11 +4508,6 @@ function oc_db_schema() {
 		],
 		'foreign' => [
 			[
-				'key'   => 'customer_id',
-				'table' => 'customer',
-				'field' => 'customer_id'
-			],
-			[
 				'key'   => 'order_id',
 				'table' => 'order',
 				'field' => 'order_id'

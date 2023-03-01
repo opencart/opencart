@@ -179,6 +179,12 @@ class Order extends \Opencart\System\Engine\Model {
 		return [];
 	}
 
+	public function getProduct(int $order_id, int $order_product_id): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_product` WHERE `order_id` = '" . (int)$order_id . "' AND `order_product_id` = '" . (int)$order_product_id . "'");
+
+		return $query->rows;
+	}
+
 	public function getProducts(int $order_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_product` WHERE `order_id` = '" . (int)$order_id . "'");
 
@@ -198,7 +204,7 @@ class Order extends \Opencart\System\Engine\Model {
 	}
 
 	public function getSubscriptionsByDateNext(string $date_next): array {
-		$this->db->query("SELECT * FROM `" . DB_PREFIX . "order_subscription` WHERE `date_next` = '" .$this->db->escape($date_next) . "'");
+		$this->db->query("SELECT * FROM `" . DB_PREFIX . "order_subscription` WHERE DATE(`date_next`) = DATE('" .$this->db->escape($date_next) . "')");
 
 		return $this->db->rows;
 	}

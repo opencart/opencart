@@ -4,8 +4,10 @@ class Subscription extends \Opencart\System\Engine\Controller {
 	public function index(int $cron_id, string $code, string $cycle, string $date_added, string $date_modified): void {
         $this->load->language('cron/subscription');
 
+
 		// Get all
         $this->load->model('checkout/order');
+		$this->load->model('setting/store');
 
         $results = $this->model_checkout_order->getSubscriptionsByDateNext(date('Y-m-d H:i:s'));
 
@@ -13,6 +15,12 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$order_info = $this->model_checkout_order->getOrder($result['order_id']);
 
 			if ($order_info && in_array($order_info['order_status_id'], (array)$this->config->get('config_complete_status'))) {
+				$this->load->model('setting/store');
+
+				$store = $this->model_setting_store->createStoreInstance($order_info['store_id'], $order_info['language_code']);
+
+
+
 
 				// Order Details
 				$order_data = $order_info;

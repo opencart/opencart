@@ -402,20 +402,6 @@ class Confirm extends \Opencart\System\Engine\Controller {
 		}
 
 		// Validate if payment method has been set.
-		if (isset($this->session->data['payment_method'])) {
-			$code = oc_substr($this->session->data['payment_method'], 0, strpos($this->session->data['payment_method'], '.'));
-		} else {
-			$code = '';
-		}
-
-		$extension_info = $this->model_setting_extension->getExtensionByCode('payment', $code);
-
-		if ($status && $extension_info) {
-			$data['payment'] = $this->load->controller('extension/' . $extension_info['extension'] . '/payment/' . $extension_info['code']);
-		} else {
-			$data['payment'] = '';
-		}
-
 		return $this->load->view('checkout/confirm', $data);
 	}
 

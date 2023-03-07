@@ -339,6 +339,14 @@ class Order extends \Opencart\System\Engine\Controller {
 	}
 
 	public function edit(array $order_info, int $order_status_id, string $comment, bool $notify): void {
+		$store_name = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
+
+		if (!defined('HTTP_CATALOG')) {
+			$store_url = HTTP_SERVER;
+		} else {
+			$store_url = HTTP_CATALOG;
+		}
+
 		$this->load->model('setting/store');
 
 		$store_info = $this->model_setting_store->getStore($order_info['store_id']);
@@ -346,9 +354,6 @@ class Order extends \Opencart\System\Engine\Controller {
 		if ($store_info) {
 			$store_name = html_entity_decode($store_info['name'], ENT_QUOTES, 'UTF-8');
 			$store_url = $store_info['url'];
-		} else {
-			$store_name = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
-			$store_url = HTTP_CATALOG;
 		}
 
 		$this->load->model('localisation/language');
@@ -376,6 +381,10 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$data['order_id'] = $order_info['order_id'];
 		$data['date_added'] = date($this->language->get('date_format_short'), strtotime($order_info['date_added']));
+
+		$this->load->model('localisation/order_status');
+
+		$language_info = $this->model_localisation_order_status->getOrderStatus($order_info['language_id']);
 
 		$order_status_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_status` WHERE `order_status_id` = '" . (int)$order_status_id . "' AND `language_id` = '" . (int)$order_info['language_id'] . "'");
 

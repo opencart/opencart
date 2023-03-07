@@ -21,7 +21,7 @@ class Cheque extends \Opencart\System\Engine\Model {
 		if ($status) {
 			$option_data['cheque'] = [
 				'code' => 'cheque.cheque',
-				'name' => $this->language->get('text_cheque')
+				'name' => $this->language->get('heading_title')
 			];
 
 			$method_data = [

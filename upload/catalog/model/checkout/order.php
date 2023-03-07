@@ -17,19 +17,9 @@ class Order extends \Opencart\System\Engine\Model {
 					$this->db->query("INSERT INTO `" . DB_PREFIX . "order_option` SET `order_id` = '" . (int)$order_id . "', `order_product_id` = '" . (int)$order_product_id . "', `product_option_id` = '" . (int)$option['product_option_id'] . "', `product_option_value_id` = '" . (int)$option['product_option_value_id'] . "', `name` = '" . $this->db->escape($option['name']) . "', `value` = '" . $this->db->escape($option['value']) . "', `type` = '" . $this->db->escape($option['type']) . "'");
 				}
 
-				// If subscription add detailsss
+				// If subscription add details
 				if ($product['subscription']) {
-                    $subscription_data = [
-						'order_id'         => $order_id,
-						'order_product_id' => $order_product_id,
-                    ];
-
-					$this->load->model('checkout/subscription');
-
-					$subscription_id = $this->model_checkout_subscription->addSubscription($order_id, array_merge($product['subscription'], $subscription_data));
-
-					// Add the subscription ID to the order
-					$this->editSubscriptionId($order_id, $subscription_id);
+					$this->db->query("INSERT INTO `" . DB_PREFIX . "order_subscription` SET `order_id` = '" . (int)$order_id . "', `order_product_id` = '" . (int)$order_product_id . "', `subscription_plan_id` = '" . (int)$data['subscription_plan_id'] . "', `name` = '" . $this->db->escape($data['name']) . "', `trial_price` = '" . (float)$data['trial_price'] . "', `trial_frequency` = '" . $this->db->escape($data['trial_frequency']) . "', `trial_cycle` = '" . (int)$data['trial_cycle'] . "', `trial_duration` = '" . (int)$data['trial_duration'] . "', `trial_remaining` = '" . (int)$data['trial_remaining'] . "', `trial_status` = '" . (int)$data['trial_status'] . "', `price` = '" . (float)$data['price'] . "', `frequency` = '" . $this->db->escape($data['frequency']) . "', `cycle` = '" . (int)$data['cycle'] . "', `duration` = '" . (int)$data['duration'] . "', `remaining` = '" . (int)$data['remaining'] . "', `subscription_status_id` = '" . (int)$data['subscription_status_id'] . "', `date_next` = '" . $this->db->escape($data['date_next']) . "'");
 				}
 			}
 		}
@@ -77,6 +67,7 @@ class Order extends \Opencart\System\Engine\Model {
 
 			$this->db->query("DELETE FROM `" . DB_PREFIX . "order_product` WHERE `order_id` = '" . (int)$order_id . "'");
 			$this->db->query("DELETE FROM `" . DB_PREFIX . "order_option` WHERE `order_id` = '" . (int)$order_id . "'");
+			$this->db->query("DELETE FROM `" . DB_PREFIX . "order_subscription` WHERE `order_id` = '" . (int)$order_id . "'");
 
 			// Products
 			if (isset($data['products'])) {
@@ -89,18 +80,11 @@ class Order extends \Opencart\System\Engine\Model {
 						$this->db->query("INSERT INTO `" . DB_PREFIX . "order_option` SET `order_id` = '" . (int)$order_id . "', `order_product_id` = '" . (int)$order_product_id . "', `product_option_id` = '" . (int)$option['product_option_id'] . "', `product_option_value_id` = '" . (int)$option['product_option_value_id'] . "', `name` = '" . $this->db->escape($option['name']) . "', `value` = '" . $this->db->escape($option['value']) . "', `type` = '" . $this->db->escape($option['type']) . "'");
 					}
 
-					if ($data['subscription']) {
-
-
-
-						$this->load->model('checkout/subscription');
-
-						$this->model_checkout_subscription->addSubscription($order_id, array_merge($product['subscription'], $subscription_data));
+					if ($product['subscription']) {
+						$this->db->query("INSERT INTO `" . DB_PREFIX . "order_subscription` SET `order_id` = '" . (int)$order_id . "', `order_product_id` = '" . (int)$order_product_id . "', `subscription_plan_id` = '" . (int)$data['subscription_plan_id'] . "', `name` = '" . $this->db->escape($data['name']) . "', `trial_price` = '" . (float)$data['trial_price'] . "', `trial_frequency` = '" . $this->db->escape($data['trial_frequency']) . "', `trial_cycle` = '" . (int)$data['trial_cycle'] . "', `trial_duration` = '" . (int)$data['trial_duration'] . "', `trial_remaining` = '" . (int)$data['trial_remaining'] . "', `trial_status` = '" . (int)$data['trial_status'] . "', `price` = '" . (float)$data['price'] . "', `frequency` = '" . $this->db->escape($data['frequency']) . "', `cycle` = '" . (int)$data['cycle'] . "', `duration` = '" . (int)$data['duration'] . "', `remaining` = '" . (int)$data['remaining'] . "', `subscription_status_id` = '" . (int)$data['subscription_status_id'] . "', `date_next` = '" . $this->db->escape($data['date_next']) . "'");
 					}
 				}
 			}
-
-
 
 			// Gift Voucher
 			$this->load->model('checkout/voucher');
@@ -137,10 +121,6 @@ class Order extends \Opencart\System\Engine\Model {
 		$this->db->query("UPDATE `" . DB_PREFIX . "order` SET `transaction_id` = '" . $this->db->escape($transaction_id) . "' WHERE `order_id` = '" . (int)$order_id . "'");
 	}
 
-	public function editSubscriptionId(int $order_id, int $subscription_id): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "order` SET `subscription_id` = '" . (int)$subscription_id . "' WHERE `order_id` = '" . (int)$order_id . "'");
-	}
-
 	public function deleteOrder(int $order_id): void {
 		// Void the order first
 		$this->addHistory($order_id, 0);
@@ -148,11 +128,10 @@ class Order extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "order` WHERE `order_id` = '" . (int)$order_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "order_product` WHERE `order_id` = '" . (int)$order_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "order_option` WHERE `order_id` = '" . (int)$order_id . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "order_subscription` WHERE `order_id` = '" . (int)$order_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "order_voucher` WHERE `order_id` = '" . (int)$order_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "order_total` WHERE `order_id` = '" . (int)$order_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "order_history` WHERE `order_id` = '" . (int)$order_id . "'");
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "subscription` WHERE `order_id` = '" . (int)$order_id . "'");
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "subscription_transaction` WHERE `order_id` = '" . (int)$order_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_transaction` WHERE `order_id` = '" . (int)$order_id . "'");
 
 		// Gift Voucher
@@ -162,7 +141,7 @@ class Order extends \Opencart\System\Engine\Model {
 	}
 
 	public function getOrder(int $order_id): array {
-		$order_query = $this->db->query("SELECT *, (SELECT os.`name` FROM `" . DB_PREFIX . "order_status` os WHERE os.`order_status_id` = o.`order_status_id` AND os.`language_id` = o.`language_id`) AS order_status FROM `" . DB_PREFIX . "order` o WHERE o.`order_id` = '" . (int)$order_id . "'");
+		$order_query = $this->db->query("SELECT *, (SELECT `os`.`name` FROM `" . DB_PREFIX . "order_status` `os` WHERE `os`.`order_status_id` = `o`.`order_status_id` AND `os`.`language_id` = `o`.`language_id`) AS order_status FROM `" . DB_PREFIX . "order` `o` WHERE `o`.`order_id` = '" . (int)$order_id . "'");
 
 		if ($order_query->num_rows) {
 			$order_data = $order_query->row;
@@ -200,6 +179,12 @@ class Order extends \Opencart\System\Engine\Model {
 		return [];
 	}
 
+	public function getProduct(int $order_id, int $order_product_id): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_product` WHERE `order_id` = '" . (int)$order_id . "' AND `order_product_id` = '" . (int)$order_product_id . "'");
+
+		return $query->rows;
+	}
+
 	public function getProducts(int $order_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_product` WHERE `order_id` = '" . (int)$order_id . "'");
 
@@ -210,6 +195,18 @@ class Order extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_option` WHERE `order_id` = '" . (int)$order_id . "' AND `order_product_id` = '" . (int)$order_product_id . "'");
 
 		return $query->rows;
+	}
+
+	public function getSubscription(int $order_id, int $order_product_id): array {
+		$this->db->query("SELECT * FROM `" . DB_PREFIX . "order_subscription` WHERE `order_id` = '" . (int)$order_id . "' AND `order_product_id` = '" . (int)$order_product_id . "'");
+
+		return $this->db->row;
+	}
+
+	public function getSubscriptionsByDateNext(string $date_next): array {
+		$this->db->query("SELECT * FROM `" . DB_PREFIX . "order_subscription` WHERE DATE(`date_next`) = DATE('" .$this->db->escape($date_next) . "')");
+
+		return $this->db->rows;
 	}
 
 	public function getVouchers(int $order_id): array {
@@ -224,7 +221,7 @@ class Order extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function addHistory(int $order_id, int $order_status_id, string $comment = '', bool $notify = false, bool $override = false): int {
+	public function addHistory(int $order_id, int $order_status_id, string $comment = '', bool $notify = false, bool $override = false): void {
 		$order_info = $this->getOrder($order_id);
 
 		if ($order_info) {
@@ -296,14 +293,19 @@ class Order extends \Opencart\System\Engine\Model {
 					foreach ($order_options as $order_option) {
 						$this->db->query("UPDATE `" . DB_PREFIX . "product_option_value` SET `quantity` = (`quantity` - " . (int)$order_product['quantity'] . ") WHERE `product_option_value_id` = '" . (int)$order_option['product_option_value_id'] . "' AND `subtract` = '1'");
 					}
+
+					// Subscription status set to active
+					$subscription_info = $this->getSubscription($order_id, $order_product['order_product_id']);
+
+					if ($subscription_info && $subscription_info['subscription_status_id'] == '') {
+						$this->db->query("UPDATE `" . DB_PREFIX . "order_subscription` SET `subscription_status_id` = '" . (int)$this->config->get('config_subscription_active_id') . "' WHERE `order_id` = '" . (int)$order_id . "' AND `order_product_id` = '" . (int)$order_product['order_product_id'] . "'");
+					}
 				}
 			}
 
 			// Affiliate add commission if complete status
 			if (!in_array($order_info['order_status_id'], (array)$this->config->get('config_complete_status')) && in_array($order_status_id, (array)$this->config->get('config_complete_status')) && $order_info['affiliate_id'] && $this->config->get('config_affiliate_auto')) {
 				// Add commission if sale is linked to affiliate referral.
-				$this->load->language('account/order');
-
 				$this->load->model('account/customer');
 
 				if (!$this->model_account_customer->getTotalTransactionsByOrderId($order_id)) {
@@ -315,8 +317,6 @@ class Order extends \Opencart\System\Engine\Model {
 			$this->db->query("UPDATE `" . DB_PREFIX . "order` SET `order_status_id` = '" . (int)$order_status_id . "', `date_modified` = NOW() WHERE `order_id` = '" . (int)$order_id . "'");
 
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "order_history` SET `order_id` = '" . (int)$order_id . "', `order_status_id` = '" . (int)$order_status_id . "', `notify` = '" . (int)$notify . "', `comment` = '" . $this->db->escape($comment) . "', `date_added` = NOW()");
-
-			$order_history_id = $this->db->getLastId();
 
 			// If old order status is the processing or complete status but new status is not then commence restock, and remove coupon, voucher and reward history
 			if (in_array($order_info['order_status_id'], array_merge((array)$this->config->get('config_processing_status'), (array)$this->config->get('config_complete_status'))) && !in_array($order_status_id, array_merge((array)$this->config->get('config_processing_status'), (array)$this->config->get('config_complete_status')))) {
@@ -335,6 +335,13 @@ class Order extends \Opencart\System\Engine\Model {
 
 					foreach ($order_options as $order_option) {
 						$this->db->query("UPDATE `" . DB_PREFIX . "product_option_value` SET `quantity` = (`quantity` + " . (int)$order_product['quantity'] . ") WHERE `product_option_value_id` = '" . (int)$order_option['product_option_value_id'] . "' AND `subtract` = '1'");
+					}
+
+					// Subscription status set to suspend
+					$subscription_info = $this->getSubscription($order_id, $order_product['order_product_id']);
+
+					if ($subscription_info && $subscription_info['subscription_status_id'] == '') {
+						$this->db->query("UPDATE `" . DB_PREFIX . "order_subscription` SET `subscription_status_id` = '" . (int)$this->config->get('config_subscription_suspended_status_id') . "' WHERE `order_id` = '" . (int)$order_id . "' AND `order_product_id` = '" . (int)$order_product['order_product_id'] . "'");
 					}
 				}
 
@@ -358,10 +365,6 @@ class Order extends \Opencart\System\Engine\Model {
 			}
 
 			$this->cache->delete('product');
-
-			return $order_history_id;
 		}
-
-		return 0;
 	}
 }

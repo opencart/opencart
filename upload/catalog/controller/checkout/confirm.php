@@ -88,8 +88,9 @@ class Confirm extends \Opencart\System\Engine\Controller {
 		if ($status) {
 			$order_data = [];
 
-			// Store Details
 			$order_data['invoice_prefix'] = $this->config->get('config_invoice_prefix');
+
+			// Store Details
 			$order_data['store_id'] = $this->config->get('config_store_id');
 			$order_data['store_name'] = $this->config->get('config_name');
 			$order_data['store_url'] = $this->config->get('config_url');
@@ -173,8 +174,6 @@ class Confirm extends \Opencart\System\Engine\Controller {
 			}
 
 			if (isset($this->session->data['shipping_method'])) {
-				$shipping = explode('.', $this->session->data['shipping_method']);
-
 				$shipping_method_info = $this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]];
 
 				$order_data['shipping_method'] = $shipping_method_info['title'];
@@ -285,17 +284,6 @@ class Confirm extends \Opencart\System\Engine\Controller {
 					}
 
 					$subscription_data = [
-						'store_id'             => $order_data['store_id'],
-						'customer_id'          => $order_data['customer_id'],
-						'customer_group_id'    => $order_data['customer_group_id'],
-						'payment_address_id'   => $order_data['payment_address_id'],
-						'payment_method'       => $order_data['payment_method'],
-						'payment_code'         => $order_data['payment_code'],
-						'shipping_address_id'  => $order_data['shipping_address_id'],
-						'shipping_method'      => $order_data['shipping_method'],
-						'shipping_code'        => $order_data['shipping_code'],
-						'product_id'           => $product['product_id'],
-						'quantity'             => $product['quantity'],
 						'subscription_plan_id' => $product['subscription']['subscription_plan_id'],
 						'name'                 => $product['subscription']['name'],
 						'trial_price'          => $product['subscription']['trial_price'],
@@ -309,18 +297,7 @@ class Confirm extends \Opencart\System\Engine\Controller {
 						'cycle'                => $product['subscription']['cycle'],
 						'duration'             => $product['subscription']['duration'],
 						'remaining'            => $product['subscription']['duration'],
-						'date_next'            => $date_next,
-						'comment'              => $order_data['comment'],
-						'affiliate_id'         => $order_data['affiliate_id'],
-						'commission'           => $order_data['commission'],
-						'marketing_id'         => $order_data['marketing_id'],
-						'tracking'             => $order_data['tracking'],
-						'language_id'          => $order_data['language_id'],
-						'currency_id'          => $order_data['currency_id'],
-						'ip'                   => $order_data['ip'],
-						'forwarded_ip'         => $order_data['forwarded_ip'],
-						'user_agent'           => $order_data['user_agent'],
-						'accept_language'      => $order_data['accept_language']
+						'date_next'            => $date_next
 					];
 				}
 
@@ -440,6 +417,7 @@ class Confirm extends \Opencart\System\Engine\Controller {
 			$data['payment'] = '';
 		}
 
+		// Validate if payment method has been set.
 		return $this->load->view('checkout/confirm', $data);
 	}
 

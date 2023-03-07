@@ -4,8 +4,6 @@ class CreditCard extends \Opencart\System\Engine\Controller {
 	public function index(): string {
 		$this->load->language('extension/oc_payment_example/payment/credit_card');
 
-		$data['payment_method'] = $this->session->data['payment_method'];
-
 		$data['logged'] = $this->customer->isLogged();
 
 		$data['months'] = [];
@@ -22,18 +20,18 @@ class CreditCard extends \Opencart\System\Engine\Controller {
 
 		$data['language'] = $this->config->get('config_language');
 
-		$credit_card_id = substr($this->session->data['payment_method'], strpos($this->session->data['payment_method'], '.'));
+		//if (isset($this->session->data['payment_method']) && ) {
+		//	$credit_card_id = substr($this->session->data['payment_method'], strpos($this->session->data['payment_method'], '.') + 1);
 
-		$this->load->model('extension/oc_payment_example/payment/credit_card');
-
-		$credit_card_info = $this->model_extension_oc_payment_example_payment_credit_card->getCreditCard($this->customer->getId(), $credit_card_id);
+		//	$data['payment_method'] = $this->session->data['payment_method'];
+		//}
 
 		// Card storage
-		if ($this->customer->isLogged() && $credit_card_info) {
-			$data['credit_card_id'] = $credit_card_info['credit_card_id'];
-		} else {
-			$data['credit_card_id'] = 0;
-		}
+		//if ($this->customer->isLogged() && $credit_card_info) {
+		//	$data['credit_card_id'] = $credit_card_info['credit_card_id'];
+		//} else {
+		//	$data['credit_card_id'] = 0;
+		//}
 
 		return $this->load->view('extension/oc_payment_example/payment/credit_card', $data);
 	}
@@ -69,6 +67,9 @@ class CreditCard extends \Opencart\System\Engine\Controller {
 
 		if (!isset($this->session->data['payment_method'])) {
 			$json['error']['warning'] = $this->language->get('error_payment_method');
+		} else {
+
+
 		}
 
 		if ($this->session->data['payment_method'] == 'credit_card.add') {
@@ -89,7 +90,7 @@ class CreditCard extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		if () {
+		if ($this->session->data['payment_method'] == '') {
 			$this->load->model('extension/oc_payment_example/payment/credit_card');
 
 			$credit_card_info = $this->model_extension_oc_payment_example_payment_credit_card->getCreditCard($this->customer->getId(), $this->request->post['credit_card_id']);

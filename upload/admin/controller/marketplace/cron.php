@@ -185,7 +185,9 @@ class Cron extends \Opencart\System\Engine\Controller {
 
 			if ($cron_info) {
 				// Create a store instance using loader class to call controllers, models, views, libraries
-				$store = $this->load->controller('tool/store.createStoreInstance', 0, $this->config->get('config_language'));
+				$this->load->model('setting/store');
+
+				$store = $this->model_setting_store->createStoreInstance(0, $this->config->get('config_language'));
 
 				$store->load->controller($cron_info['action'], $cron_id, $cron_info['code'], $cron_info['cycle'], $cron_info['date_added'], $cron_info['date_modified']);
 

@@ -40,5 +40,9 @@
   </table>
 </div>
 <div id="checkout-payment">
-  <div class="text-end"><button type="button" class="btn btn-primary" disabled>{{ button_confirm }}</button></div>
+  {% if payment %}
+    {{ payment }}
+  {% else %}
+    <div class="text-end"><button type="button" class="btn btn-primary" disabled>{{ button_confirm }}</button></div>
+  {% endif %}
 </div>

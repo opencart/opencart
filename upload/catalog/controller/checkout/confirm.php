@@ -88,8 +88,9 @@ class Confirm extends \Opencart\System\Engine\Controller {
 		if ($status) {
 			$order_data = [];
 
-			// Store Details
 			$order_data['invoice_prefix'] = $this->config->get('config_invoice_prefix');
+
+			// Store Details
 			$order_data['store_id'] = $this->config->get('config_store_id');
 			$order_data['store_name'] = $this->config->get('config_name');
 			$order_data['store_url'] = $this->config->get('config_url');
@@ -399,6 +400,21 @@ class Confirm extends \Opencart\System\Engine\Controller {
 				'title' => $total['title'],
 				'text'  => $this->currency->format($total['value'], $this->session->data['currency'])
 			];
+		}
+
+		// Validate if payment method has been set.
+		if (isset($this->session->data['payment_method'])) {
+			$code = oc_substr($this->session->data['payment_method'], 0, strpos($this->session->data['payment_method'], '.'));
+		} else {
+			$code = '';
+		}
+
+		$extension_info = $this->model_setting_extension->getExtensionByCode('payment', $code);
+
+		if ($status && $extension_info) {
+			$data['payment'] = $this->load->controller('extension/' . $extension_info['extension'] . '/payment/' . $extension_info['code']);
+		} else {
+			$data['payment'] = '';
 		}
 
 		// Validate if payment method has been set.

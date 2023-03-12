@@ -147,7 +147,7 @@
       <div class="card-body">
         <ul class="nav nav-tabs">
           <li class="nav-item"><a href="#tab-history" data-bs-toggle="tab" class="nav-link active">{{ tab_history }}</a></li>
-          <li class="nav-item"><a href="#tab-transaction" data-bs-toggle="tab" class="nav-link">{{ tab_transaction }}</a></li>
+          <li class="nav-item"><a href="#tab-log" data-bs-toggle="tab" class="nav-link">{{ tab_log }}</a></li>
           {% for tab in tabs %}
             <li class="nav-item"><a href="#tab-{{ tab.code }}" data-bs-toggle="tab" class="nav-link">{{ tab.title }}</a></li>
           {% endfor %}
@@ -204,12 +204,12 @@
             </form>
           </div>
 
-          <div id="tab-transaction" class="tab-pane">
+          <div id="tab-log" class="tab-pane">
             <fieldset>
-              <legend>{{ text_transaction }}</legend>
-              <div id="transaction">{{ transaction }}</div>
+              <legend>{{ text_log }}</legend>
+              <div id="log">{{ log }}</div>
             </fieldset>
-            <form id="form-transaction">
+            <form id="form-log">
               <fieldset>
                 <legend>{{ text_transaction_add }}</legend>
                 <div class="row mb-3">

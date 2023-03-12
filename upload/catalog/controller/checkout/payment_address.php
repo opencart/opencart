@@ -16,7 +16,7 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 		$this->load->model('account/address');
 
 		if ($this->customer->isLogged() && !isset($this->session->data['payment_address'])) {
-			$address_info = $this->model_account_address->getAddress($this->customer->getAddressId());
+			$address_info = $this->model_account_address->getAddress($this->customer->getId(), $this->customer->getAddressId());
 
 			if ($address_info) {
 				$this->session->data['payment_address'] = $address_info;
@@ -29,7 +29,7 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 			$data['address_id'] = $this->config->get('config_country_id');
 		}
 
-		$data['addresses'] = $this->model_account_address->getAddresses();
+		$data['addresses'] = $this->model_account_address->getAddresses($this->customer->getId());
 
 		$this->load->model('localisation/country');
 
@@ -164,7 +164,7 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 
 			$json['address_id'] = $this->model_account_address->addAddress($this->customer->getId(), $this->request->post);
 
-			$json['addresses'] = $this->model_account_address->getAddresses();
+			$json['addresses'] = $this->model_account_address->getAddresses($this->customer->getId());
 
 			if ($country_info) {
 				$country = $country_info['name'];
@@ -266,7 +266,7 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('account/address');
 
-			$address_info = $this->model_account_address->getAddress($address_id);
+			$address_info = $this->model_account_address->getAddress($this->customer->getId(), $address_id);
 
 			if (!$address_info) {
 				$json['error'] = $this->language->get('error_address');

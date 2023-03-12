@@ -19,7 +19,9 @@ class Order extends \Opencart\System\Engine\Model {
 
 				// If subscription add details
 				if ($product['subscription']) {
-					$this->db->query("INSERT INTO `" . DB_PREFIX . "order_subscription` SET `order_id` = '" . (int)$order_id . "', `order_product_id` = '" . (int)$order_product_id . "', `subscription_plan_id` = '" . (int)$data['subscription_plan_id'] . "', `name` = '" . $this->db->escape($data['name']) . "', `trial_price` = '" . (float)$data['trial_price'] . "', `trial_frequency` = '" . $this->db->escape($data['trial_frequency']) . "', `trial_cycle` = '" . (int)$data['trial_cycle'] . "', `trial_duration` = '" . (int)$data['trial_duration'] . "', `trial_remaining` = '" . (int)$data['trial_remaining'] . "', `trial_status` = '" . (int)$data['trial_status'] . "', `price` = '" . (float)$data['price'] . "', `frequency` = '" . $this->db->escape($data['frequency']) . "', `cycle` = '" . (int)$data['cycle'] . "', `duration` = '" . (int)$data['duration'] . "', `remaining` = '" . (int)$data['remaining'] . "', `subscription_status_id` = '" . (int)$data['subscription_status_id'] . "', `date_next` = '" . $this->db->escape($data['date_next']) . "'");
+					$subscription = $product['subscription'];
+
+					$this->db->query("INSERT INTO `" . DB_PREFIX . "order_subscription` SET `order_id` = '" . (int)$order_id . "', `order_product_id` = '" . (int)$order_product_id . "', `subscription_plan_id` = '" . (int)$subscription['subscription_plan_id'] . "', `name` = '" . $this->db->escape($subscription['name']) . "', `trial_price` = '" . (float)$subscription['trial_price'] . "', `trial_frequency` = '" . $this->db->escape($subscription['trial_frequency']) . "', `trial_cycle` = '" . (int)$subscription['trial_cycle'] . "', `trial_duration` = '" . (int)$subscription['trial_duration'] . "', `trial_remaining` = '" . (int)$subscription['trial_remaining'] . "', `trial_status` = '" . (int)$subscription['trial_status'] . "', `price` = '" . (float)$subscription['price'] . "', `frequency` = '" . $this->db->escape($subscription['frequency']) . "', `cycle` = '" . (int)$data['cycle'] . "', `duration` = '" . (int)$subscription['duration'] . "', `remaining` = '" . (int)$subscription['remaining'] . "', `date_next` = '" . $this->db->escape($subscription['date_next']) . "'");
 				}
 			}
 		}
@@ -81,7 +83,9 @@ class Order extends \Opencart\System\Engine\Model {
 					}
 
 					if ($product['subscription']) {
-						$this->db->query("INSERT INTO `" . DB_PREFIX . "order_subscription` SET `order_id` = '" . (int)$order_id . "', `order_product_id` = '" . (int)$order_product_id . "', `subscription_plan_id` = '" . (int)$data['subscription_plan_id'] . "', `name` = '" . $this->db->escape($data['name']) . "', `trial_price` = '" . (float)$data['trial_price'] . "', `trial_frequency` = '" . $this->db->escape($data['trial_frequency']) . "', `trial_cycle` = '" . (int)$data['trial_cycle'] . "', `trial_duration` = '" . (int)$data['trial_duration'] . "', `trial_remaining` = '" . (int)$data['trial_remaining'] . "', `trial_status` = '" . (int)$data['trial_status'] . "', `price` = '" . (float)$data['price'] . "', `frequency` = '" . $this->db->escape($data['frequency']) . "', `cycle` = '" . (int)$data['cycle'] . "', `duration` = '" . (int)$data['duration'] . "', `remaining` = '" . (int)$data['remaining'] . "', `subscription_status_id` = '" . (int)$data['subscription_status_id'] . "', `date_next` = '" . $this->db->escape($data['date_next']) . "'");
+						$subscription = $product['subscription'];
+
+						$this->db->query("INSERT INTO `" . DB_PREFIX . "order_subscription` SET `order_id` = '" . (int)$order_id . "', `order_product_id` = '" . (int)$order_product_id . "', `subscription_plan_id` = '" . (int)$subscription['subscription_plan_id'] . "', `name` = '" . $this->db->escape($subscription['name']) . "', `trial_price` = '" . (float)$subscription['trial_price'] . "', `trial_frequency` = '" . $this->db->escape($subscription['trial_frequency']) . "', `trial_cycle` = '" . (int)$subscription['trial_cycle'] . "', `trial_duration` = '" . (int)$subscription['trial_duration'] . "', `trial_remaining` = '" . (int)$subscription['trial_remaining'] . "', `trial_status` = '" . (int)$subscription['trial_status'] . "', `price` = '" . (float)$subscription['price'] . "', `frequency` = '" . $this->db->escape($subscription['frequency']) . "', `cycle` = '" . (int)$subscription['cycle'] . "', `duration` = '" . (int)$subscription['duration'] . "', `remaining` = '" . (int)$subscription['remaining'] . "', `date_next` = '" . $this->db->escape($subscription['date_next']) . "'");
 					}
 				}
 			}
@@ -203,10 +207,59 @@ class Order extends \Opencart\System\Engine\Model {
 		return $this->db->row;
 	}
 
-	public function getSubscriptionsByDateNext(string $date_next): array {
-		$this->db->query("SELECT * FROM `" . DB_PREFIX . "order_subscription` WHERE DATE(`date_next`) = DATE('" .$this->db->escape($date_next) . "')");
+	public function getSubscriptions(array $data): array {
+		$sql = "SELECT * FROM `" . DB_PREFIX . "subscription`";
 
-		return $this->db->rows;
+		$implode = [];
+
+		if (!empty($data['filter_date_next'])) {
+			$implode[] = "DATE(`date_next`) <= DATE('" . $this->db->escape($data['filter_date_next']) . "')";
+		}
+
+		if (!empty($data['filter_subscription_status_id'])) {
+			$implode[] = "`subscription_status_id` = '" . (int)$data['filter_subscription_status_id'] . "'";
+		}
+
+		if ($implode) {
+			$sql .= " WHERE " . implode(" AND ", $implode);
+		}
+
+		$sort_data = [
+			'pd.name',
+			'p.model',
+			'p.price',
+			'p.quantity',
+			'p.status',
+			'p.sort_order'
+		];
+
+		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
+			$sql .= " ORDER BY " . $data['sort'];
+		} else {
+			$sql .= " ORDER BY o.`order_id`";
+		}
+
+		if (isset($data['order']) && ($data['order'] == 'DESC')) {
+			$sql .= " DESC";
+		} else {
+			$sql .= " ASC";
+		}
+
+		if (isset($data['start']) || isset($data['limit'])) {
+			if ($data['start'] < 0) {
+				$data['start'] = 0;
+			}
+
+			if ($data['limit'] < 1) {
+				$data['limit'] = 20;
+			}
+
+			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
+		}
+
+		$query = $this->db->query($sql);
+
+		return $query->rows;
 	}
 
 	public function getVouchers(int $order_id): array {

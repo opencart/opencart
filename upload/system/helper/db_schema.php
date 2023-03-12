@@ -4486,21 +4486,6 @@ function oc_db_schema() {
 				'name' => 'duration',
 				'type' => 'smallint(6)',
 				'not_null' => true
-			],
-			[
-				'name' => 'remaining',
-				'type' => 'smallint(6)',
-				'not_null' => true
-			],
-			[
-				'name' => 'subscription_status_id',
-				'type' => 'int(11)',
-				'not_null' => true
-			],
-			[
-				'name' => 'date_next',
-				'type' => 'datetime',
-				'not_null' => true
 			]
 		],
 		'primary' => [
@@ -6426,6 +6411,320 @@ function oc_db_schema() {
 		],
 		'primary' => [
 			'store_id'
+		],
+		'engine' => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
+	];
+
+	$tables[] = [
+		'name' => 'subscription',
+		'field' => [
+			[
+				'name' => 'subscription_id',
+				'type' => 'int(11)',
+				'not_null' => true,
+				'auto_increment' => true
+			],
+			[
+				'name' => 'order_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'order_product_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'store_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'customer_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'customer_group_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'payment_address_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'payment_method',
+				'type' => 'varchar(128)',
+				'not_null' => true
+			],
+			[
+				'name' => 'payment_code',
+				'type' => 'varchar(128)',
+				'not_null' => true
+			],
+			[
+				'name' => 'shipping_address_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'shipping_method',
+				'type' => 'varchar(128)',
+				'not_null' => true
+			],
+			[
+				'name' => 'shipping_code',
+				'type' => 'varchar(128)',
+				'not_null' => true
+			],
+			[
+				'name' => 'product_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'quantity',
+				'type' => 'int(4)',
+				'not_null' => true
+			],
+			[
+				'name' => 'subscription_plan_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'name',
+				'type' => 'varchar(255)',
+				'not_null' => true
+			],
+			[
+				'name' => 'trial_price',
+				'type' => 'decimal(10,4)',
+				'not_null' => true
+			],
+			[
+				'name' => 'trial_frequency',
+				'type' => 'enum(\'day\',\'week\',\'semi_month\',\'month\',\'year\')',
+				'not_null' => true
+			],
+			[
+				'name' => 'trial_cycle',
+				'type' => 'smallint(6)',
+				'not_null' => true
+			],
+			[
+				'name' => 'trial_duration',
+				'type' => 'smallint(6)',
+				'not_null' => true
+			],
+			[
+				'name' => 'trial_remaining',
+				'type' => 'smallint(6)',
+				'not_null' => true
+			],
+			[
+				'name' => 'trial_status',
+				'type' => 'tinyint(1)',
+				'not_null' => true
+			],
+			[
+				'name' => 'price',
+				'type' => 'decimal(10,4)',
+				'not_null' => true
+			],
+			[
+				'name' => 'frequency',
+				'type' => 'enum(\'day\',\'week\',\'semi_month\',\'month\',\'year\')',
+				'not_null' => true
+			],
+			[
+				'name' => 'cycle',
+				'type' => 'smallint(6)',
+				'not_null' => true
+			],
+			[
+				'name' => 'duration',
+				'type' => 'smallint(6)',
+				'not_null' => true
+			],
+			[
+				'name' => 'remaining',
+				'type' => 'smallint(6)',
+				'not_null' => true
+			],
+			[
+				'name' => 'date_next',
+				'type' => 'datetime',
+				'not_null' => true
+			],
+			[
+				'name' => 'comment',
+				'type' => 'text',
+				'not_null' => true
+			],
+			[
+				'name' => 'subscription_status_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'affiliate_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'commission',
+				'type' => 'decimal(10,4)',
+				'not_null' => true
+			],
+			[
+				'name' => 'marketing_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'tracking',
+				'type' => 'varchar(64)',
+				'not_null' => true
+			],
+			[
+				'name' => 'language_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'currency_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'ip',
+				'type' => 'varchar(40)',
+				'not_null' => true
+			],
+			[
+				'name' => 'forwarded_ip',
+				'type' => 'varchar(40)',
+				'not_null' => true
+			],
+			[
+				'name' => 'user_agent',
+				'type' => 'varchar(255)',
+				'not_null' => true
+			],
+			[
+				'name' => 'accept_language',
+				'type' => 'varchar(255)',
+				'not_null' => true
+			],
+			[
+				'name' => 'date_added',
+				'type' => 'datetime',
+				'not_null' => true
+			],
+			[
+				'name' => 'date_modified',
+				'type' => 'datetime',
+				'not_null' => true
+			]
+		],
+		'primary' => [
+			'subscription_id'
+		],
+		'foreign' => [
+			[
+				'key'   => 'customer_id',
+				'table' => 'customer',
+				'field' => 'customer_id'
+			],
+			[
+				'key'   => 'order_id',
+				'table' => 'order',
+				'field' => 'order_id'
+			],
+			[
+				'key'   => 'order_product_id',
+				'table' => 'order_product',
+				'field' => 'order_product_id'
+			],
+			[
+				'key'   => 'subscription_plan_id',
+				'table' => 'subscription_plan',
+				'field' => 'subscription_plan_id'
+			],
+			[
+				'key'   => 'subscription_status_id',
+				'table' => 'subscription_status',
+				'field' => 'subscription_status_id'
+			]
+		],
+		'index' => [
+			[
+				'name' => 'order_id',
+				'key' => [
+					'order_id'
+				]
+			]
+		],
+		'engine' => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
+	];
+
+	$tables[] = [
+		'name' => 'subscription_history',
+		'field' => [
+			[
+				'name' => 'subscription_history_id',
+				'type' => 'int(11)',
+				'not_null' => true,
+				'auto_increment' => true
+			],
+			[
+				'name' => 'subscription_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'subscription_status_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'notify',
+				'type' => 'tinyint(1)',
+				'not_null' => true,
+				'default' => '0'
+			],
+			[
+				'name' => 'comment',
+				'type' => 'text',
+				'not_null' => true
+			],
+			[
+				'name' => 'date_added',
+				'type' => 'datetime',
+				'not_null' => true
+			]
+		],
+		'primary' => [
+			'subscription_history_id'
+		],
+		'foreign' => [
+			[
+				'key'   => 'subscription_id',
+				'table' => 'subscription',
+				'field' => 'subscription_id'
+			],
+			[
+				'key'   => 'subscription_status_id',
+				'table' => 'subscription_status',
+				'field' => 'subscription_status_id'
+			]
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',

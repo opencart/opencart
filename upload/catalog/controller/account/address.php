@@ -67,7 +67,7 @@ class Address extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('account/address');
 
-		$results = $this->model_account_address->getAddresses();
+		$results = $this->model_account_address->getAddresses($this->customer->getId());
 
 		foreach ($results as $result) {
 			$find = [
@@ -164,7 +164,7 @@ class Address extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['address_id'])) {
 			$this->load->model('account/address');
 
-			$address_info = $this->model_account_address->getAddress($this->request->get['address_id']);
+			$address_info = $this->model_account_address->getAddress($this->customer->getId(), $this->request->get['address_id']);
 		}
 
 		if (!empty($address_info)) {
@@ -361,7 +361,7 @@ class Address extends \Opencart\System\Engine\Controller {
 
 				// If address is in session update it.
 				if (isset($this->session->data['shipping_address']) && ($this->session->data['shipping_address']['address_id'] == $this->request->get['address_id'])) {
-					$this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->request->get['address_id']);
+					$this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->customer->getId(), $this->request->get['address_id']);
 
 					unset($this->session->data['shipping_method']);
 					unset($this->session->data['shipping_methods']);
@@ -369,7 +369,7 @@ class Address extends \Opencart\System\Engine\Controller {
 
 				// If address is in session update it.
 				if (isset($this->session->data['payment_address']) && ($this->session->data['payment_address']['address_id'] == $this->request->get['address_id'])) {
-					$this->session->data['payment_address'] = $this->model_account_address->getAddress($this->request->get['address_id']);
+					$this->session->data['payment_address'] = $this->model_account_address->getAddress($this->customer->getId(), $this->request->get['address_id']);
 
 					unset($this->session->data['payment_method']);
 					unset($this->session->data['payment_methods']);

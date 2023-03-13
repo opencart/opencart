@@ -21,7 +21,7 @@ $(document).ready(function() {
 			fontSizes: ['8', '9', '10', '11', '12', '14', '16', '18', '20', '24', '30', '36', '48' , '64'],
 			toolbar: [
 				['style', ['style']],
-				['font', ['bold', 'underline', 'clear']],
+				['font', ['bold', 'underline', 'italic', 'clear']],
 				['fontname', ['fontname']],
 				['fontsize', ['fontsize']],
 				['color', ['color']],

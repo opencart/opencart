@@ -201,11 +201,11 @@ class Order extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function getSubscription(int $order_id, int $order_product_id): array {
-		$this->db->query("SELECT * FROM `" . DB_PREFIX . "order_subscription` WHERE `order_id` = '" . (int)$order_id . "' AND `order_product_id` = '" . (int)$order_product_id . "'");
-
-		return $this->db->row;
-	}
+//	public function getSubscription(int $order_id, int $order_product_id): array {
+//		$this->db->query("SELECT * FROM `" . DB_PREFIX . "order_subscription` WHERE `order_id` = '" . (int)$order_id . "' AND `order_product_id` = '" . (int)$order_product_id . "'");
+//
+//		return $this->db->row;
+//	}
 
 	public function getSubscriptions(array $data): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "subscription`";
@@ -390,12 +390,14 @@ class Order extends \Opencart\System\Engine\Model {
 						$this->db->query("UPDATE `" . DB_PREFIX . "product_option_value` SET `quantity` = (`quantity` + " . (int)$order_product['quantity'] . ") WHERE `product_option_value_id` = '" . (int)$order_option['product_option_value_id'] . "' AND `subtract` = '1'");
 					}
 
-					// Subscription status set to suspend
-					$subscription_info = $this->getSubscription($order_id, $order_product['order_product_id']);
-
-					if ($subscription_info && $subscription_info['subscription_status_id'] == '') {
-						$this->db->query("UPDATE `" . DB_PREFIX . "order_subscription` SET `subscription_status_id` = '" . (int)$this->config->get('config_subscription_suspended_status_id') . "' WHERE `order_id` = '" . (int)$order_id . "' AND `order_product_id` = '" . (int)$order_product['order_product_id'] . "'");
-					}
+				// Subscription status set to suspend
+				//	$subscription_info = $this->getSubscription($order_id, $order_product['order_product_id']);
+                //
+				//	if ($subscription_info && $subscription_info['subscription_status_id'] == '') {
+				//		$this->db->query("UPDATE `" . DB_PREFIX . "order_subscription` SET `subscription_status_id` = '" . (int)$this->config->get('config_subscription_suspended_status_id') . "' WHERE `order_id` = '" . (int)$order_id . "' AND `order_product_id` = '" . (int)$order_product['order_product_id'] . "'");
+				//	}
+					
+					
 				}
 
 				// Remove coupon, vouchers and reward points history

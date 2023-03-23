@@ -93,9 +93,9 @@ class Subscription extends \Opencart\System\Engine\Model {
 	}
 
 	public function getSubscriptionByOrderProductId(int $order_id, int $order_product_id): array {
-		$this->db->query("SELECT * FROM  `" . DB_PREFIX . "subscription` WHERE `order_product_id` = '" . (int)$order_product_id . "'");
+		$query = $this->db->query("SELECT * FROM  `" . DB_PREFIX . "subscription` WHERE order_id = '" . (int)$order_id . "' AND `order_product_id` = '" . (int)$order_product_id . "'");
 
-		return $this->db->row;
+		return $query->row;
 	}
 
 	public function addHistory(int $subscription_id, int $subscription_status_id, string $comment = '', bool $notify = false): void {

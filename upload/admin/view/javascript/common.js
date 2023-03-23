@@ -210,9 +210,6 @@ $(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function (e) {
         }
     }
 
-    var html = $(button).html();
-    var width = $(button).width();
-
     $.ajax({
         url: action.replaceAll('&amp;', '&'),
         type: method,
@@ -223,7 +220,7 @@ $(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function (e) {
             $(button).button('loading');
         },
         complete: function () {
-            $(button).prop('disabled', false).width('').html(html);
+            $(button).button('reset');
         },
         success: function (json) {
             console.log(json);

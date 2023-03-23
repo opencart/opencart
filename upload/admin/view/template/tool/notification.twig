@@ -63,10 +63,10 @@ $('#notification').on('click', '.btn', function (e) {
         url: $(element).attr('value'),
         dataType: 'html',
         beforeSend: function () {
-            $(element).prop('disabled', true).addClass('loading');
+            $(element).button('loading');
         },
         complete: function () {
-            $(element).prop('disabled', false).removeClass('loading');
+            $(element).button('reset');
         },
         success: function (html) {
             $('body').append(html);
@@ -97,10 +97,10 @@ $('#button-delete').on('click', function (e) {
             data: $('#notification input[name^=\'selected\']:checked').serialize(),
             dataType: 'json',
             beforeSend: function () {
-                $(element).prop('disabled', true).addClass('loading');
+                $(element).button('loading');
             },
             complete: function () {
-                $(element).prop('disabled', false).removeClass('loading');
+                $(element).button('reset');
             },
             success: function (json) {
                 $('.alert-dismissible').remove();

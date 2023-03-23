@@ -101,10 +101,10 @@
                   contentType: false,
                   processData: false,
                   beforeSend: function () {
-                      $('#button-upload').prop('disabled', true).addClass('loading');
+                      $('#button-upload').button('loading');
                   },
                   complete: function () {
-                      $('#button-upload').prop('disabled', false).removeClass('loading');
+                      $('#button-upload').button('reset');
                   },
                   success: function (json) {
                       if (json['error']) {
@@ -144,10 +144,10 @@
           dataType: 'json',
           data: 'folder=' + encodeURIComponent($('#input-folder').val()),
           beforeSend: function () {
-              $('#button-create').prop('disabled', true).addClass('loading');
+              $('#button-create').button('loading');
           },
           complete: function () {
-              $('#button-create').prop('disabled', false).removeClass('loading');
+              $('#button-create').button('reset');
           },
           success: function (json) {
               if (json['error']) {
@@ -174,10 +174,10 @@
               dataType: 'json',
               data: $('input[name^=\'path\']:checked'),
               beforeSend: function () {
-                  $('#button-delete').prop('disabled', true).addClass('loading');
+                  $('#button-delete').button('loading');
               },
               complete: function () {
-                  $('#button-delete').prop('disabled', false).removeClass('loading');
+                  $('#button-delete').button('reset');
               },
               success: function (json) {
                   if (json['error']) {

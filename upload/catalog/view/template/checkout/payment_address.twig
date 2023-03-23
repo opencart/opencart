@@ -233,10 +233,10 @@ $('#form-payment-address').on('submit', function (e) {
             dataType: 'json',
             contentType: 'application/x-www-form-urlencoded',
             beforeSend: function () {
-                $('#button-payment-address').prop('disabled', true).addClass('loading');
+                $('#button-payment-address').button('loading');
             },
             complete: function () {
-                $('#button-payment-address').prop('disabled', false).removeClass('loading');
+                $('#button-payment-address').button('reset');
             },
             success: function (json) {
                 console.log(json);

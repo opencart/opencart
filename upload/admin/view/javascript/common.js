@@ -210,6 +210,9 @@ $(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function (e) {
         }
     }
 
+    var html = $(button).html();
+    var width = $(button).width();
+
     $.ajax({
         url: action.replaceAll('&amp;', '&'),
         type: method,
@@ -217,10 +220,10 @@ $(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function (e) {
         dataType: 'json',
         contentType: 'application/x-www-form-urlencoded',
         beforeSend: function () {
-            $(button).prop('disabled', true).addClass('loading');
+            $(button).button('loading');
         },
         complete: function () {
-            $(button).prop('disabled', false).removeClass('loading');
+            $(button).prop('disabled', false).width('').html(html);
         },
         success: function (json) {
             console.log(json);
@@ -307,10 +310,10 @@ $(document).on('click', '[data-oc-toggle=\'upload\']', function () {
                     contentType: false,
                     processData: false,
                     beforeSend: function () {
-                        $(element).prop('disabled', true).addClass('loading');
+                        $(element).button('loading');
                     },
                     complete: function () {
-                        $(element).prop('disabled', false).removeClass('loading');
+                        $(element).button('reset');
                     },
                     success: function (json) {
                         console.log(json);
@@ -378,10 +381,10 @@ $(document).on('click', '[data-oc-toggle=\'image\']', function (e) {
         url: 'index.php?route=common/filemanager&user_token=' + getURLVar('user_token') + '&target=' + encodeURIComponent($(element).attr('data-oc-target')) + '&thumb=' + encodeURIComponent($(element).attr('data-oc-thumb')),
         dataType: 'html',
         beforeSend: function () {
-            $(element).prop('disabled', true).addClass('loading');
+            $(element).button('loading');
         },
         complete: function () {
-            $(element).prop('disabled', false).removeClass('loading');
+            $(element).button('reset');
         },
         success: function (html) {
             $('body').append(html);
@@ -526,3 +529,30 @@ var chain = new Chain();
         });
     }
 }(jQuery);
+
+// Button
+$(document).ready(function() {
+    +function($) {
+        $.fn.button = function(state) {
+            return this.each(function() {
+                var element = this;
+
+                $.extend(this, state);
+
+                console.log(state);
+
+                if (state == 'loading') {
+                    this.html = $(element).html();
+
+                    $(element).prop('disabled', true).width($(element).width()).html('<i class="fa-solid fa-circle-notch fa-spin text-light"></i>');
+                }
+
+                if (state == 'reset') {
+                    $(element).prop('disabled', false).width('').html(this.html);
+
+                    this.html = '';
+                }
+            });
+        }
+    }(jQuery);
+});

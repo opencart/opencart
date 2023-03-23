@@ -53,10 +53,10 @@ $('#shopping-cart').on('submit', 'form', function (e) {
         data: $(element).serialize(),
         dataType: 'json',
         beforeSend: function () {
-            $(button).prop('disabled', true).addClass('loading');
+            $(button).button('loading');
         },
         complete: function () {
-            $(button).prop('disabled', false).removeClass('loading');
+            $(button).button('reset');
         },
         success: function (json) {
             console.log(json);

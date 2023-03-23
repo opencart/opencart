@@ -532,10 +532,10 @@ $('#form-register').on('submit', function (e) {
             data: $('#form-register').serialize(),
             contentType: 'application/x-www-form-urlencoded',
             beforeSend: function () {
-                $(element).prop('disabled', true).addClass('loading');
+                $(element).button('loading');
             },
             complete: function () {
-                $(element).prop('disabled', false).removeClass('loading');
+                $(element).button('reset');
             },
             success: function (json) {
                 console.log(json);

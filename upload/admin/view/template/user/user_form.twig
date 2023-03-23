@@ -144,10 +144,10 @@ $('#authorize').on('click', '.btn', function (e) {
             url: $(element).attr('href'),
             dataType: 'json',
             beforeSend: function () {
-                $(element).prop('disabled', true).addClass('loading');
+                $(element).button('loading');
             },
             complete: function () {
-                $(element).prop('disabled', false).removeClass('loading');
+                $(element).button('reset');
             },
             success: function (json) {
                 $('.alert-dismissible').remove();

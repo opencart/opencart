@@ -24,10 +24,10 @@ $('#button-generate').on('click', function () {
             url: next,
             dataType: 'json',
             beforeSend: function () {
-                $('#button-generate').prop('disabled', true).addClass('loading');
+                $('#button-generate').button('loading');
             },
             complete: function () {
-                $('#button-generate').prop('disabled', false).removeClass('loading');
+                $('#button-generate').button('reset');
             },
             success: function (json) {
                 console.log(json);

@@ -70,12 +70,27 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('account/payment_method');
 
-		$results = $this->model_account_payment_method->getPaymentMethods($this->customer->getId());
+		$this->load->model('setting/extension');
+
+		$results = $this->model_setting_extension->getExtensionsByType('payment');
+
+		foreach ($results as $result) {
+			if ($this->config->get('payment_' . $result['code'] . '_status')) {
+				$this->load->model('extension/' . $result['extension'] . '/payment/' . $result['code']);
+
+				//$payment_method = $this->{'model_extension_' . $result['extension'] . '_payment_' . $result['code']}->getMethods($payment_address);
+
+				if ($payment_method) {
+					$method_data[$result['code']] = $payment_method;
+				}
+			}
+		}
+
 
 		foreach ($results as $result) {
 			$data['payment_methods'][] = [
-				'customer_payment_id' => $result['customer_payment_id'],
-				'name'                => $result['name'],
+				'code' => $result['code'],
+				'name'   => $result['name'],
 				'image'               => $result['image'],
 				'type'                => $result['type'],
 				'date_expire'         => date('m-Y', strtotime($result['date_expire'])),

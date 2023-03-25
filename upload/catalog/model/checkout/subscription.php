@@ -93,7 +93,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 	}
 
 	public function getSubscriptionByOrderProductId(int $order_id, int $order_product_id): array {
-		$query = $this->db->query("SELECT * FROM  `" . DB_PREFIX . "subscription` WHERE order_id = '" . (int)$order_id . "' AND `order_product_id` = '" . (int)$order_product_id . "'");
+		$query = $this->db->query("SELECT * FROM  `" . DB_PREFIX . "subscription` WHERE `order_id` = '" . (int)$order_id . "' AND `order_product_id` = '" . (int)$order_product_id . "'");
 
 		return $query->row;
 	}
@@ -105,7 +105,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 	}
 
 	public function editSubscriptionStatus(int $subscription_id, bool $subscription_status_id): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "subscription` SET `subscription_status_id` = '" . (bool)$subscription_status_id . "' WHERE `subscription_id` = '" . (int)$subscription_id . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "subscription` SET `subscription_status_id` = '" . (int)$subscription_status_id . "' WHERE `subscription_id` = '" . (int)$subscription_id . "'");
 	}
 
 	public function editTrialRemaining(int $subscription_id, int $trial_remaining): void {

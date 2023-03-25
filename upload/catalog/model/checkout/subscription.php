@@ -47,7 +47,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 		return $this->db->getLastId();
 	}
 
-	public function editSubscription(int $subscription_id, array $data): int {
+	public function editSubscription(int $subscription_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "subscription` SET 
 		`order_id` = '" . (int)$data['order_id'] . "', 
 		`order_product_id` = '" . (int)$data['order_product_id'] . "', 

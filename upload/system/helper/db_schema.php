@@ -3867,6 +3867,11 @@ function oc_db_schema() {
 				'not_null' => true
 			],
 			[
+				'name' => 'payment_address_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
 				'name' => 'payment_firstname',
 				'type' => 'varchar(32)',
 				'not_null' => true
@@ -3939,6 +3944,11 @@ function oc_db_schema() {
 			[
 				'name' => 'payment_code',
 				'type' => 'varchar(128)',
+				'not_null' => true
+			],
+			[
+				'name' => 'shipping_address_id',
+				'type' => 'int(11)',
 				'not_null' => true
 			],
 			[

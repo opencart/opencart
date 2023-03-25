@@ -36,7 +36,7 @@ $('#startup').on('click', '.btn-success, .btn-danger', function (e) {
         url: $(element).val(),
         dataType: 'json',
         beforeSend: function () {
-            $(element).button('loading');;
+            $(element).button('loading');
         },
         complete: function () {
             $(element).button('reset');

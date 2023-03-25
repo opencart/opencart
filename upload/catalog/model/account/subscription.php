@@ -82,4 +82,16 @@ class Subscription extends \Opencart\System\Engine\Model {
 
         return (int)$query->row['total'];
     }
+
+	public function getTotalSubscriptionByShippingAddressId(int $address_id): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "subscription` WHERE `customer_id` = '" . (int)$this->customer->getId() . "' AND `shipping_address_id` = '" . (int)$address_id . "'");
+
+		return (int)$query->row['total'];
+	}
+
+	public function getTotalSubscriptionByPaymentAddressId(int $address_id): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "subscription` WHERE `customer_id` = '" . (int)$this->customer->getId() . "' AND `payment_address_id` = '" . (int)$address_id . "'");
+
+		return (int)$query->row['total'];
+	}
 }

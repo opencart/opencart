@@ -551,8 +551,6 @@ $(document).ready(function() {
 
                 $.extend(this, state);
 
-                console.log(state);
-
                 if (state == 'loading') {
                     this.html = $(element).html();
 

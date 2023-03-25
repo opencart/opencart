@@ -403,15 +403,28 @@ class Address extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			if ($this->customer->getAddressId() == $address_id) {
+				$json['error'] = $this->language->get('error_default');
+			}
+
 			$this->load->model('account/address');
 
 			if ($this->model_account_address->getTotalAddresses() == 1) {
-
 				$json['error'] = $this->language->get('error_delete');
 			}
 
-			if ($this->customer->getAddressId() == $address_id) {
-				$json['error'] = $this->language->get('error_default');
+			$this->load->model('account/subscription');
+
+			$subscription_total = $this->model_account_subscription->getTotalSubscriptionByShippingAddressId();
+
+			if ($subscription_total) {
+				$json['error'] = sprintf($this->language->get('error_subscription'), $subscription_total);
+			}
+
+			$subscription_total = $this->model_account_subscription->getTotalSubscriptionByPaymentAddressId();
+
+			if ($subscription_total) {
+				$json['error'] = sprintf($this->language->get('error_subscription'), $subscription_total);
 			}
 		}
 

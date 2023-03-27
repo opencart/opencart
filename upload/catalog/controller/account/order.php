@@ -432,6 +432,6 @@ class Order extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$this->response->redirect($this->url->link('account/order.info', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&order_id=' . $order_id));
+		$this->response->redirect($this->url->link('checkout/cart', 'language=' . $this->config->get('config_language')));
 	}
 }

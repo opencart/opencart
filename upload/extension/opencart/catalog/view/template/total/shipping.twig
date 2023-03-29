@@ -46,10 +46,10 @@
           data: $('#form-quote').serialize(),
           dataType: 'json',
           beforeSend: function () {
-              $('#button-quote').prop('disabled', true).addClass('loading');
+              $('#button-quote').button('loading');
           },
           complete: function () {
-              $('#button-quote').prop('disabled', false).removeClass('loading');
+              $('#button-quote').button('reset');
           },
           success: function (json) {
               $('.alert-dismissible').remove();
@@ -132,10 +132,10 @@
           dataType: 'json',
           contentType: 'application/x-www-form-urlencoded',
           beforeSend: function () {
-              $('#button-shipping').prop('disabled', true).addClass('loading');
+              $('#button-shipping').button('loading');
           },
           complete: function () {
-              $('#button-shipping').prop('disabled', false).removeClass('loading');
+              $('#button-shipping').button('reset');
           },
           success: function (json) {
               $('.alert-dismissible').remove();

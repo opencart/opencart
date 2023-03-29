@@ -769,7 +769,6 @@ class Product extends \Opencart\System\Engine\Model {
 						}
 					}
 				}
-
 			}
 
 			$this->model_catalog_product->editProduct($product['product_id'], $product_data);

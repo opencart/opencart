@@ -39,10 +39,10 @@ $('#event').on('click', '.btn-success, .btn-danger', function (e) {
         data: $('#event input[name=\'selected[]\']:checked'),
         dataType: 'json',
         beforeSend: function () {
-            $(element).prop('disabled', true).addClass('loading');
+            $(element).button('loading');
         },
         complete: function () {
-            $(element).prop('disabled', false).removeClass('loading');
+            $(element).button('reset');
         },
         success: function (json) {
             if (json['error']) {

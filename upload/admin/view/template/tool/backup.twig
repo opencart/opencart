@@ -78,7 +78,7 @@ $('#button-backup').on('click', function () {
             data: $('input[name^=\'backup\']:checked'),
             dataType: 'json',
             beforeSend: function () {
-                $('#button-backup').prop('disabled', true).addClass('loading');
+                $('#button-backup').button('loading');
                 $('#button-upload, #history .btn').prop('disabled', true);
             },
             success: function (json) {
@@ -90,7 +90,7 @@ $('#button-backup').on('click', function () {
 
                     $('#history').load('index.php?route=tool/backup.history&user_token={{ user_token }}');
 
-                    $('#button-backup').prop('disabled', false).removeClass('loading');
+                    $('#button-backup').button('reset');
                     $('#button-upload, #history .btn').prop('disabled', false);
                 }
 
@@ -100,7 +100,7 @@ $('#button-backup').on('click', function () {
 
                     $('#history').load('index.php?route=tool/backup.history&user_token={{ user_token }}');
 
-                    $('#button-backup').prop('disabled', false).removeClass('loading');
+                    $('#button-backup').button('reset');
                     $('#button-upload, #history .btn').prop('disabled', false);
                 }
 
@@ -121,7 +121,7 @@ $('#button-backup').on('click', function () {
             error: function (xhr, ajaxOptions, thrownError) {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 
-                $('#button-backup').prop('disabled', false).removeClass('loading');
+                $('#button-backup').button('reset');
                 $('#button-upload, #history .btn').prop('disabled', false);
             }
         });
@@ -145,12 +145,12 @@ $('#history').on('click', '.btn-warning', function () {
             type: 'post',
             dataType: 'json',
             beforeSend: function () {
-                $(element).prop('disabled', true).addClass('loading');
+                $(element).button('loading');
 
                 $('#button-upload, #button-backup, #history .btn').not(element).prop('disabled', true);
             },
             complete: function () {
-                $(element).prop('disabled', false).removeClass('loading');
+                $(element).button('reset');
             },
             success: function (json) {
                 $('.alert-dismissible').remove();
@@ -165,7 +165,7 @@ $('#history').on('click', '.btn-warning', function () {
 
                     $('#history').load('index.php?route=tool/backup.history&user_token={{ user_token }}');
 
-                    $(element).prop('disabled', false).removeClass('loading');
+                    $(element).button('reset');
 
                     $('#button-upload, #button-backup, #history .btn').not(element).prop('disabled', false);
                 }
@@ -176,7 +176,7 @@ $('#history').on('click', '.btn-warning', function () {
 
                     $('#history').load('index.php?route=tool/backup.history&user_token={{ user_token }}');
 
-                    $(element).prop('disabled', false).removeClass('loading');
+                    $(element).button('reset');
 
                     $('#button-upload, #button-backup, #history .btn').not(element).prop('disabled', false);
                 }
@@ -194,7 +194,7 @@ $('#history').on('click', '.btn-warning', function () {
             error: function (xhr, ajaxOptions, thrownError) {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 
-                $(element).prop('disabled', false).removeClass('loading');
+                $(element).button('reset');
 
                 $('#button-upload, #button-backup, #history .btn').not(element).prop('disabled', false);
             }
@@ -237,10 +237,10 @@ $('#button-upload').on('click', function () {
                 contentType: false,
                 processData: false,
                 beforeSend: function () {
-                    $('#button-upload').prop('disabled', true).addClass('loading');
+                    $('#button-upload').button('loading');
                 },
                 complete: function () {
-                    $('#button-upload').prop('disabled', false).removeClass('loading');
+                    $('#button-upload').button('reset');
                 },
                 success: function (json) {
                     $('.alert-dismissible').remove();
@@ -272,10 +272,10 @@ $('#history').on('click', '.btn-danger', function () {
         type: 'post',
         dataType: 'json',
         beforeSend: function () {
-            $(element).prop('disabled', true).addClass('loading');
+            $(element).button('loading');
         },
         complete: function () {
-            $(element).prop('disabled', false).removeClass('loading');
+            $(element).button('reset');
         },
         success: function (json) {
             $('.alert-dismissible').remove();

@@ -4,17 +4,6 @@
     <div class="input-group">
       <select name="shipping_method" id="input-shipping-method" class="form-select" disabled>
         <option value="">{{ text_select }}</option>
-        {% for shipping_method in shipping_methods %}
-          <optgroup label="{{ shipping_method.title }}">
-            {% if not shipping_method.error %}
-              {% for quote in shipping_method.quote %}
-                <option value="{{ quote.code }}">{{ quote.title }}{% if quote.cost %} - {{ quote.text }}{% endif %}</option>
-              {% endfor %}
-            {% else %}
-              <option value="" class="text-danger" disabled>{{ shipping_method.error }}</option>
-            {% endif %}
-          </optgroup>
-        {% endfor %}
       </select>
       <button type="button" id="button-shipping-method" class="btn btn-light"><i class="fa-solid fa-rotate"></i></button>
     </div>

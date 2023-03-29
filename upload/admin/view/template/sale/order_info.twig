@@ -1163,10 +1163,10 @@ $(document).on('click', '#button-invoice', function() {
         url: 'index.php?route=sale/order.createInvoiceNo&user_token={{ user_token }}&order_id={{ order_id }}',
         dataType: 'json',
         beforeSend: function() {
-            $('#button-invoice').prop('disabled', true).addClass('loading');
+            $('#button-invoice').button('loading');
         },
         complete: function() {
-            $('#button-invoice').prop('disabled', false).removeClass('loading');
+            $('#button-invoice').button('reset');
         },
         success: function(json) {
             $('.alert-dismissible').remove();
@@ -1302,10 +1302,10 @@ $('#form-customer').on('submit', function(e) {
         dataType: 'json',
         contentType: 'application/x-www-form-urlencoded',
         beforeSend: function() {
-            $('#button-customer').prop('disabled', true).addClass('loading');
+            $('#button-customer').button('loading');
         },
         complete: function() {
-            $('#button-customer').prop('disabled', false).removeClass('loading');
+            $('#button-customer').button('reset');
         },
         success: function(json) {
             console.log(json);
@@ -1572,10 +1572,10 @@ $('#form-product-add').on('submit', function(e) {
         dataType: 'json',
         contentType: 'application/x-www-form-urlencoded',
         beforeSend: function() {
-            $('#button-product-add').prop('disabled', true).addClass('loading');
+            $('#button-product-add').button('loading');
         },
         complete: function() {
-            $('#button-product-add').prop('disabled', false).removeClass('loading');
+            $('#button-product-add').button('reset');
         },
         success: function(json) {
             $('.alert-dismissible').remove();
@@ -1621,10 +1621,10 @@ $('#order-products').on('submit', 'form', function(e) {
         data: $(element).serialize(),
         dataType: 'json',
         beforeSend: function() {
-            $(e.target).prop('disabled', true).addClass('loading');
+            $(e.target).button('loading');
         },
         complete: function() {
-            $(e.target).prop('disabled', false).removeClass('loading');
+            $(e.target).button('reset');
         },
         success: function(json) {
             $('.alert-dismissible').remove();
@@ -1660,10 +1660,10 @@ $('#form-voucher-add').on('submit', function(e) {
         data: $('#form-voucher-add').serialize(),
         dataType: 'json',
         beforeSend: function() {
-            $('#button-voucher-add').prop('disabled', true).addClass('loading');
+            $('#button-voucher-add').button('loading');
         },
         complete: function() {
-            $('#button-voucher-add').prop('disabled', false).removeClass('loading');
+            $('#button-voucher-add').button('reset');
         },
         success: function(json) {
             $('.alert-dismissible').remove();
@@ -1718,10 +1718,10 @@ $('#order-vouchers').on('submit', 'form', function(e) {
         data: $(element).serialize(),
         dataType: 'json',
         beforeSend: function() {
-            $(e.target).prop('disabled', true).addClass('loading');
+            $(e.target).button('loading');
         },
         complete: function() {
-            $(e.target).prop('disabled', false).removeClass('loading');
+            $(e.target).button('reset');
         },
         success: function(json) {
             $('.alert-dismissible').remove();
@@ -1811,10 +1811,10 @@ $('#form-coupon').on('submit', function(e) {
         data: $('#form-coupon').serialize(),
         dataType: 'json',
         beforeSend: function() {
-            $('#button-coupon').addClass('loading').prop('disabled', true);
+            $('#button-coupon').button('loading');
         },
         complete: function() {
-            $('#button-coupon').removeClass('loading').prop('disabled', false);
+            $('#button-coupon').button('reset');
         },
         success: function(json) {
             $('.alert-dismissible').remove();
@@ -1849,10 +1849,10 @@ $('#form-voucher').on('submit', function(e) {
         data: $('#form-voucher').serialize(),
         dataType: 'json',
         beforeSend: function() {
-            $('#button-voucher').prop('disabled', true).addClass('loading');
+            $('#button-voucher').button('loading');
         },
         complete: function() {
-            $('#button-voucher').prop('disabled', false).removeClass('loading');
+            $('#button-voucher').button('reset');
         },
         success: function(json) {
             $('.alert-dismissible').remove();
@@ -1887,10 +1887,10 @@ $('#form-reward').on('submit', function(e) {
         data: $('#form-reward').serialize(),
         dataType: 'json',
         beforeSend: function() {
-            $('#button-reward').prop('disabled', true).addClass('loading');
+            $('#button-reward').button('loading');
         },
         complete: function() {
-            $('#button-reward').prop('disabled', false).removeClass('loading');
+            $('#button-reward').button('reset');
         },
         success: function(json) {
             $('.alert-dismissible').remove();
@@ -1929,10 +1929,10 @@ $(document).on('click', '#button-reward-add, #button-reward-remove', function(e)
         type: 'post',
         dataType: 'json',
         beforeSend: function() {
-            $(element).prop('disabled', true).addClass('loading');
+            $(element).button('loading');
         },
         complete: function() {
-            $(element).prop('disabled', false).removeClass('loading');
+            $(element).button('reset');
         },
         success: function(json) {
             $('.alert-dismissible').remove();
@@ -1999,10 +1999,10 @@ $('#form-affiliate').on('submit', function(e) {
         data: $('#form-affiliate').serialize(),
         dataType: 'json',
         beforeSend: function() {
-            $('#button-affiliate').prop('disabled', true).addClass('loading');
+            $('#button-affiliate').button('loading');
         },
         complete: function() {
-            $('#button-affiliate').prop('disabled', false).removeClass('loading');
+            $('#button-affiliate').button('reset');
         },
         success: function(json) {
             $('.alert-dismissible').remove();
@@ -2042,10 +2042,10 @@ $(document).on('click', '#button-commission-add, #button-commission-remove', fun
         type: 'post',
         dataType: 'json',
         beforeSend: function() {
-            $(element).prop('disabled', true).addClass('loading');
+            $(element).button('loading');
         },
         complete: function() {
-            $(element).prop('disabled', false).removeClass('loading');
+            $(element).button('reset');
         },
         success: function(json) {
             $('.alert-dismissible').remove();
@@ -2135,10 +2135,10 @@ $('#form-payment-address').on('submit', function(e) {
         data: $('#form-payment-address').serialize(),
         dataType: 'json',
         beforeSend: function() {
-            $('#button-payment-address').prop('disabled', true).addClass('loading');
+            $('#button-payment-address').button('loading');
         },
         complete: function() {
-            $('#button-payment-address').prop('disabled', false).removeClass('loading');
+            $('#button-payment-address').button('reset');
         },
         success: function(json) {
             $('.alert-dismissible').remove();
@@ -2312,10 +2312,10 @@ $('#form-shipping-address').on('submit', function(e) {
         dataType: 'json',
         contentType: 'application/x-www-form-urlencoded',
         beforeSend: function() {
-            $('#button-shipping-address').prop('disabled', true).addClass('loading');
+            $('#button-shipping-address').button('loading');
         },
         complete: function() {
-            $('#button-shipping-address').prop('disabled', false).removeClass('loading');
+            $('#button-shipping-address').button('reset');
         },
         success: function(json) {
             $('#form-shipping-address .alert-dismissible').remove();
@@ -2434,10 +2434,10 @@ $('#button-payment-method').on('click', function() {
         url: 'index.php?route=sale/order.call&user_token={{ user_token }}&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val() + '&action=sale/payment_method',
         dataType: 'json',
         beforeSend: function() {
-            $(element).prop('disabled', true).addClass('loading');
+            $(element).button('loading');
         },
         complete: function() {
-            $(element).prop('disabled', false).removeClass('loading');
+            $(element).button('reset');
         },
         success: function(json) {
             $('#alert .alert-dismissible').remove();
@@ -2508,10 +2508,10 @@ $('#button-shipping-method').on('click', function() {
         url: 'index.php?route=sale/order.call&user_token={{ user_token }}&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val() + '&action=sale/shipping_method',
         dataType: 'json',
         beforeSend: function() {
-            $(element).prop('disabled', true).addClass('loading');
+            $(element).button('loading');
         },
         complete: function() {
-            $(element).prop('disabled', false).removeClass('loading');
+            $(element).button('reset');
         },
         success: function(json) {
             $('.alert-dismissible').remove();
@@ -2595,10 +2595,10 @@ $('#form-comment').on('submit', function(e) {
         dataType: 'json',
         contentType: 'application/x-www-form-urlencoded',
         beforeSend: function() {
-            $('#button-comment').prop('disabled', true).addClass('loading');
+            $('#button-comment').button('loading');
         },
         complete: function() {
-            $('#button-comment').prop('disabled', false).removeClass('loading');
+            $('#button-comment').button('reset');
         },
         success: function(json) {
             $('.alert-dismissible').remove();
@@ -2626,11 +2626,11 @@ $('#button-refresh').on('click', function() {
         url: 'index.php?route=sale/order.call&user_token={{ user_token }}&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val() + '&action=sale/cart',
         dataType: 'json',
         beforeSend: function() {
-            $('#button-refresh').prop('disabled', true).addClass('loading');
+            $('#button-refresh').button('loading');
             $('#button-confirm').prop('disabled', true);
         },
         complete: function() {
-            $('#button-refresh').prop('disabled', false).removeClass('loading');
+            $('#button-refresh').button('reset');
             $('#button-confirm').prop('disabled', false);
         },
         success: function(json) {
@@ -2749,10 +2749,10 @@ $('#button-confirm').on('click', function() {
         url: 'index.php?route=sale/order.call&user_token={{ user_token }}&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val() + '&action=sale/order.confirm',
         dataType: 'json',
         beforeSend: function() {
-            $(element).prop('disabled', true).addClass('loading');
+            $(element).button('loading');
         },
         complete: function() {
-            $(element).prop('disabled', false).removeClass('loading');
+            $(element).button('reset');
         },
         success: function(json) {
             $('.alert-dismissible').remove();
@@ -2813,10 +2813,10 @@ $('#form-history').on('submit', function(e) {
         data: $('#form-history').serialize(),
         contentType: 'application/x-www-form-urlencoded',
         beforeSend: function() {
-            $('#button-history').prop('disabled', true).addClass('loading');
+            $('#button-history').button('loading');
         },
         complete: function() {
-            $('#button-history').prop('disabled', false).removeClass('loading');
+            $('#button-history').button('reset');
         },
         success: function(json) {
             $('.alert-dismissible').remove();

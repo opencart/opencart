@@ -136,10 +136,10 @@ $('#button-opencart').on('click', function (e) {
         url: 'index.php?route=marketplace/api&user_token={{ user_token }}',
         dataType: 'html',
         beforeSend: function () {
-            $('#button-opencart').prop('disabled', true).addClass('loading');
+            $('#button-opencart').button('loading');
         },
         complete: function () {
-            $('#button-opencart').prop('disabled', false).removeClass('loading');
+            $('#button-opencart').button('reset');
         },
         success: function (html) {
             $('body').append(html);

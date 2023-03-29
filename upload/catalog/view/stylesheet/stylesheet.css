@@ -72,6 +72,7 @@ div.required .col-form-label:before, div.required .form-label:before {
 #alert .alert {
   min-width: 400px;
   position: relative;
+  margin-bottom: 15px;
 }
 @media (min-width: 1300px) {
   #alert .alert {

@@ -62,10 +62,10 @@ $('#button-continue').on('click', function () {
             url: next,
             dataType: 'json',
             beforeSend: function () {
-                $('#button-continue').prop('disabled', true).addClass('loading');
+                $('#button-continue').button('loading');
             },
             complete: function () {
-                $('#button-continue').prop('disabled', false).removeClass('loading');
+                $('#button-continue').button('reset');
             },
             success: function (json) {
                 console.log(json);

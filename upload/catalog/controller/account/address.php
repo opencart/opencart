@@ -67,7 +67,7 @@ class Address extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('account/address');
 
-		$results = $this->model_account_address->getAddresses();
+		$results = $this->model_account_address->getAddresses($this->customer->getId());
 
 		foreach ($results as $result) {
 			$find = [
@@ -164,7 +164,7 @@ class Address extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['address_id'])) {
 			$this->load->model('account/address');
 
-			$address_info = $this->model_account_address->getAddress($this->request->get['address_id']);
+			$address_info = $this->model_account_address->getAddress($this->customer->getId(), $this->request->get['address_id']);
 		}
 
 		if (!empty($address_info)) {
@@ -361,7 +361,7 @@ class Address extends \Opencart\System\Engine\Controller {
 
 				// If address is in session update it.
 				if (isset($this->session->data['shipping_address']) && ($this->session->data['shipping_address']['address_id'] == $this->request->get['address_id'])) {
-					$this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->request->get['address_id']);
+					$this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->customer->getId(), $this->request->get['address_id']);
 
 					unset($this->session->data['shipping_method']);
 					unset($this->session->data['shipping_methods']);
@@ -369,7 +369,7 @@ class Address extends \Opencart\System\Engine\Controller {
 
 				// If address is in session update it.
 				if (isset($this->session->data['payment_address']) && ($this->session->data['payment_address']['address_id'] == $this->request->get['address_id'])) {
-					$this->session->data['payment_address'] = $this->model_account_address->getAddress($this->request->get['address_id']);
+					$this->session->data['payment_address'] = $this->model_account_address->getAddress($this->customer->getId(), $this->request->get['address_id']);
 
 					unset($this->session->data['payment_method']);
 					unset($this->session->data['payment_methods']);
@@ -403,15 +403,28 @@ class Address extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			if ($this->customer->getAddressId() == $address_id) {
+				$json['error'] = $this->language->get('error_default');
+			}
+
 			$this->load->model('account/address');
 
 			if ($this->model_account_address->getTotalAddresses() == 1) {
-
 				$json['error'] = $this->language->get('error_delete');
 			}
 
-			if ($this->customer->getAddressId() == $address_id) {
-				$json['error'] = $this->language->get('error_default');
+			$this->load->model('account/subscription');
+
+			$subscription_total = $this->model_account_subscription->getTotalSubscriptionByShippingAddressId();
+
+			if ($subscription_total) {
+				$json['error'] = sprintf($this->language->get('error_subscription'), $subscription_total);
+			}
+
+			$subscription_total = $this->model_account_subscription->getTotalSubscriptionByPaymentAddressId();
+
+			if ($subscription_total) {
+				$json['error'] = sprintf($this->language->get('error_subscription'), $subscription_total);
 			}
 		}
 

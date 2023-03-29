@@ -252,10 +252,10 @@ $('#form-shipping-address').on('submit', function (e) {
             dataType: 'json',
             contentType: 'application/x-www-form-urlencoded',
             beforeSend: function () {
-                $('#button-shipping-address').prop('disabled', true).addClass('loading');
+                $('#button-shipping-address').button('loading');
             },
             complete: function () {
-                $('#button-shipping-address').prop('disabled', false).removeClass('loading');
+                $('#button-shipping-address').button('reset');
             },
             success: function (json) {
                 console.log(json);

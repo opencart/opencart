@@ -21,25 +21,7 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 			} elseif ($this->config->get('config_checkout_shipping_address') && isset($this->session->data['shipping_address'])) {
 				$payment_address = $this->session->data['shipping_address'];
 			} else {
-				$payment_address = [
-					'address_id'     => 0,
-					'firstname'      => '',
-					'lastname'       => '',
-					'company'        => '',
-					'address_1'      => '',
-					'address_2'      => '',
-					'city'           => '',
-					'postcode'       => '',
-					'zone_id'        => 0,
-					'zone'           => '',
-					'zone_code'      => '',
-					'country_id'     => 0,
-					'country'        => '',
-					'iso_code_2'     => '',
-					'iso_code_3'     => '',
-					'address_format' => '',
-					'custom_field'   => []
-				];
+				$payment_address = [];
 			}
 
 			// Payment Methods

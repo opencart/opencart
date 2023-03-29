@@ -1,17 +1,21 @@
 <?php
 namespace Opencart\Catalog\Model\Extension\OcPaymentExample\Payment;
 class CreditCard extends \Opencart\System\Engine\Model {
-	public function getMethod(array $address): array {
+	public function getMethods(array $address): array {
 		$this->load->language('extension/oc_payment_example/payment/credit_card');
 
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone_to_geo_zone` WHERE `geo_zone_id` = '" . (int)$this->config->get('payment_credit_card_geo_zone_id') . "' AND `country_id` = '" . (int)$address['country_id'] . "' AND (`zone_id` = '" . (int)$address['zone_id'] . "' OR `zone_id` = '0')");
-
-		if (!$this->config->get('payment_credit_card_geo_zone_id')) {
+		if (!$this->config->get('config_checkout_payment_address')) {
 			$status = true;
-		} elseif ($query->num_rows) {
+		} elseif (!$this->config->get('payment_credit_card_geo_zone_id')) {
 			$status = true;
 		} else {
-			$status = false;
+			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone_to_geo_zone` WHERE `geo_zone_id` = '" . (int)$this->config->get('payment_credit_card_geo_zone_id') . "' AND `country_id` = '" . (int)$address['country_id'] . "' AND (`zone_id` = '" . (int)$address['zone_id'] . "' OR `zone_id` = '0')");
+
+			if ($query->num_rows) {
+				$status = true;
+			} else {
+				$status = false;
+			}
 		}
 
 		$method_data = [];
@@ -19,15 +23,15 @@ class CreditCard extends \Opencart\System\Engine\Model {
 		if ($status) {
 			$option_data = [];
 
-			$option_data['add'] = [
-				'code' => 'credit_card.add',
+			$option_data['credit_card'] = [
+				'code' => 'credit_card.credit_card',
 				'name' => $this->language->get('text_card_use')
 			];
 
 			$results = $this->getCreditCards($this->customer->getId());
 
 			foreach ($results as $result) {
-				$option_data['credit_card.' . $result['credit_card_id']] = [
+				$option_data[$result['credit_card_id']] = [
 					'code' => 'credit_card.' . $result['credit_card_id'],
 					'name' => $this->language->get('text_card_use') . ' ' . $result['card_number']
 				];
@@ -62,5 +66,12 @@ class CreditCard extends \Opencart\System\Engine\Model {
 
 	public function deleteCreditCard(int $customer_id, int $credit_card_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "credit_card` WHERE `customer_id` = '" . (int)$customer_id . "' AND `credit_card_id` = '" . (int)$credit_card_id . "'");
+	}
+
+	public function charge(int $customer_id, array $amount): string {
+		//$this->db->query("INSERT INTO `" . DB_PREFIX . "credit_card` SET `customer_id` = '" . (int)$customer_id . "', `card_name` = '" . $this->db->escape($data['card_name']) . "', `card_number` = '" . $this->db->escape($data['card_number']) . "', `card_expire_month` = '" . $this->db->escape($data['card_expire_month']) . "', `card_expire_year` = '" . $this->db->escape($data['card_expire_year']) . "', `card_cvv` = '" . $this->db->escape($data['card_cvv']) . "', `date_added` = NOW()");
+
+
+		return $this->config->get('config_bvvb');
 	}
 }

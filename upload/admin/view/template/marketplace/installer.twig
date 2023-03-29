@@ -84,10 +84,10 @@ $('#button-upload').on('click', function () {
                     contentType: false,
                     processData: false,
                     beforeSend: function () {
-                        $(element).prop('disabled', true).addClass('loading');
+                        $(element).button('loading');
                     },
                     complete: function () {
-                        $(element).prop('disabled', false).removeClass('loading');
+                        $(element).button('reset');
                     },
                     success: function (json) {
                         if (json['error']) {
@@ -117,6 +117,8 @@ $('#extension').on('click', '.btn-success, .btn-warning', function (e) {
 
     var next = $(element).attr('href');
 
+    $(element).button('loading');
+
     $('#progress-bar').removeClass('bg-danger bg-success').css('width', '0%');
     $('#progress-text').html('');
 
@@ -125,10 +127,7 @@ $('#extension').on('click', '.btn-success, .btn-warning', function (e) {
             url: next,
             dataType: 'json',
             beforeSend: function () {
-                $(element).prop('disabled', true).addClass('loading');
-            },
-            complete: function () {
-                $(element).prop('disabled', false).removeClass('loading');
+
             },
             success: function (json) {
                 $('.alert-dismissible').remove();
@@ -150,11 +149,13 @@ $('#extension').on('click', '.btn-success, .btn-warning', function (e) {
 
                     chain.attach(installer);
                 }
+
+                $(element).button('reset');
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 
-                $(element).prop('disabled', false).removeClass('loading');
+                $(element).button('reset');
             }
         });
     };
@@ -173,10 +174,10 @@ $('#extension').on('click', '.btn-danger', function (e) {
             url: $(element).attr('href'),
             dataType: 'json',
             beforeSend: function () {
-                $(element).prop('disabled', true).addClass('loading');
+                $(element).button('loading');
             },
             complete: function () {
-                $(element).prop('disabled', false).removeClass('loading');
+                $(element).button('reset');
             },
             success: function (json) {
                 $('.alert-dismissible').remove();

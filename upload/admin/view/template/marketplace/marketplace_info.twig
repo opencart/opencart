@@ -148,10 +148,10 @@ $('#button-opencart').on('click', function (e) {
         url: 'index.php?route=marketplace/api&user_token={{ user_token }}',
         dataType: 'html',
         beforeSend: function () {
-            $('#button-opencart').prop('disabled', true).addClass('loading');
+            $('#button-opencart').button('loading');
         },
         complete: function () {
-            $('#button-opencart').prop('disabled', false).removeClass('loading');
+            $('#button-opencart').button('reset');
         },
         success: function (html) {
             $('body').append(html);
@@ -209,10 +209,10 @@ $('body').on('click', '#modal-purchase #button-purchase', function (e) {
         data: $('#input-pin'),
         dataType: 'json',
         beforeSend: function () {
-            $(element).prop('disabled', true).addClass('loading');
+            $(element).button('loading');
         },
         complete: function () {
-            $(element).prop('disabled', false).removeClass('loading');
+            $(element).button('reset');
         },
         success: function (json) {
             $('.alert-dismissible').remove();
@@ -247,10 +247,10 @@ $('#tab-download').on('click', '.btn-primary', function (e) {
         url: $(element).val(),
         dataType: 'json',
         beforeSend: function () {
-            $(element).prop('disabled', true).addClass('loading');
+            $(element).button('loading');
         },
         complete: function () {
-            $(element).prop('disabled', false).removeClass('loading');
+            $(element).button('reset');
         },
         success: function (json) {
             $('.alert-dismissible').remove();
@@ -280,10 +280,10 @@ $('#tab-download').on('click', '.dropdown-item', function (e) {
         url: $(element).attr('href'),
         dataType: 'json',
         beforeSend: function () {
-            $(element).prop('disabled', true).addClass('loading');
+            $(element).button('loading');
         },
         complete: function () {
-            $(element).prop('disabled', false).removeClass('loading');
+            $(element).button('reset');
         },
         success: function (json) {
             $('.alert-dismissible').remove();
@@ -321,10 +321,10 @@ $('#button-comment').on('click', function () {
         dataType: 'json',
         data: 'comment=' + encodeURIComponent($('#input-history-comment').val()),
         beforeSend: function () {
-            $('#button-comment').prop('disabled', true).addClass('loading');
+            $('#button-comment').button('loading');
         },
         complete: function () {
-            $('#button-comment').prop('disabled', false).removeClass('loading');
+            $('#button-comment').button('reset');
         },
         success: function (json) {
             $('.alert-dismissible').remove();
@@ -357,10 +357,10 @@ $('#comment').on('click', '.btn-block', function (e) {
         url: $(element).attr('href'),
         dataType: 'html',
         beforeSend: function () {
-            $(element).prop('disabled', true).addClass('loading');
+            $(element).button('loading');
         },
         complete: function () {
-            $(element).prop('disabled', false).removeClass('loading');
+            $(element).button('reset');
         },
         success: function (html) {
             $(element).parent().parent().parent().append(html);
@@ -392,10 +392,10 @@ $('#comment').on('click', '.btn-primary', function (e) {
         dataType: 'json',
         data: 'comment=' + encodeURIComponent($(element).parents('.reply-input-box').find('textarea[name=\'comment\']').val()),
         beforeSend: function () {
-            $(element).prop('disabled', true).addClass('loading');
+            $(element).button('loading');
         },
         complete: function () {
-            $(element).prop('disabled', false).removeClass('loading');
+            $(element).button('reset');
         },
         success: function (json) {
             $('.alert-dismissible').remove();
@@ -428,10 +428,10 @@ $('#comment').on('click', '.reply-refresh', function (e) {
         url: $(element).attr('href'),
         dataType: 'html',
         beforeSend: function () {
-            $(element).prop('disabled', true).addClass('loading');
+            $(element).button('loading');
         },
         complete: function () {
-            $(element).prop('disabled', false).removeClass('loading');
+            $(element).button('reset');
         },
         success: function (html) {
             $(element).parent().replaceWith(html);

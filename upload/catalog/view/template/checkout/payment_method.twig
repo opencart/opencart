@@ -4,13 +4,6 @@
     <div class="input-group">
       <select name="payment_method" id="input-payment-method" class="form-select" disabled>
         <option value="">{{ text_select }}</option>
-        {% for payment_method in payment_methods %}
-          <optgroup label="{{ payment_method.title }}">
-            {% for option in payment_method.option %}
-              <option value="{{ option.code }}">{{ option.name }}</option>
-            {% endfor %}
-          </optgroup>
-        {% endfor %}
       </select>
       <button type="button" id="button-payment-method" class="btn btn-light"><i class="fa-solid fa-rotate"></i></button>
     </div>

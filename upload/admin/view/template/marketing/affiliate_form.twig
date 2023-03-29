@@ -413,10 +413,10 @@ $('#button-history').on('click', function (e) {
         dataType: 'json',
         data: 'comment=' + encodeURIComponent($('#input-comment').val()),
         beforeSend: function () {
-            $(element).prop('disabled', true).addClass('loading');
+            $(element).button('loading');
         },
         complete: function () {
-            $(element).prop('disabled', false).removeClass('loading');
+            $(element).button('reset');
         },
         success: function (json) {
             $('.alert-dismissible').remove();
@@ -454,10 +454,10 @@ $('#button-transaction').on('click', function (e) {
         dataType: 'json',
         data: 'description=' + encodeURIComponent($('#input-transaction').val()) + '&amount=' + encodeURIComponent($('#input-amount').val()),
         beforeSend: function () {
-            $('#button-transaction').prop('disabled', true).addClass('loading');
+            $('#button-transaction').button('loading');
         },
         complete: function () {
-            $('#button-transaction').prop('disabled', false).removeClass('loading');
+            $('#button-transaction').button('reset');
         },
         success: function (json) {
             $('.alert-dismissible').remove();

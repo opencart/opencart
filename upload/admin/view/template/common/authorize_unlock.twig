@@ -26,10 +26,10 @@ $('#button-reset').on('click', function (e) {
         url: 'index.php?route=common/authorize.confirm&user_token={{ user_token }}',
         dataType: 'json',
         beforeSend: function () {
-            $('#button-reset').prop('disabled', true).addClass('loading');
+            $('#button-reset').button('loading');
         },
         complete: function () {
-            $('#button-reset').prop('disabled', false).removeClass('loading');
+            $('#button-reset').button('reset');
         },
         success: function (json) {
             console.log(json);

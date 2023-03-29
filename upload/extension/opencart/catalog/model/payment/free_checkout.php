@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Catalog\Model\Extension\Opencart\Payment;
 class FreeCheckout extends \Opencart\System\Engine\Model {
-	public function getMethod(array $address): array {
+	public function getMethods(array $address = []): array {
 		$this->load->language('extension/opencart/payment/free_checkout');
 
 		$total = $this->cart->getTotal();

@@ -307,10 +307,10 @@ $('#form-product').on('submit', function (e) {
         cache: false,
         processData: false,
         beforeSend: function () {
-            $('#button-cart').prop('disabled', true).addClass('loading');
+            $('#button-cart').button('loading');
         },
         complete: function () {
-            $('#button-cart').prop('disabled', false).removeClass('loading');
+            $('#button-cart').button('reset');
         },
         success: function (json) {
             console.log(json);

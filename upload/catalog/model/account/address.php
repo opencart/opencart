@@ -25,8 +25,8 @@ class Address extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "address` WHERE `address_id` = '" . (int)$address_id . "' AND `customer_id` = '" . (int)$this->customer->getId() . "'");
 	}
 
-	public function getAddress(int $address_id): array {
-		$address_query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "address` WHERE `address_id` = '" . (int)$address_id . "' AND `customer_id` = '" . (int)$this->customer->getId() . "'");
+	public function getAddress(int $customer_id, int $address_id): array {
+		$address_query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "address` WHERE `address_id` = '" . (int)$address_id . "' AND `customer_id` = '" . (int)$customer_id . "'");
 
 		if ($address_query->num_rows) {
 			$this->load->model('localisation/country');
@@ -64,8 +64,8 @@ class Address extends \Opencart\System\Engine\Model {
 				'company'        => $address_query->row['company'],
 				'address_1'      => $address_query->row['address_1'],
 				'address_2'      => $address_query->row['address_2'],
-				'postcode'       => $address_query->row['postcode'],
 				'city'           => $address_query->row['city'],
+				'postcode'       => $address_query->row['postcode'],
 				'zone_id'        => $address_query->row['zone_id'],
 				'zone'           => $zone,
 				'zone_code'      => $zone_code,
@@ -82,13 +82,13 @@ class Address extends \Opencart\System\Engine\Model {
 		}
 	}
 
-	public function getAddresses(): array {
+	public function getAddresses(int $customer_id): array {
 		$address_data = [];
 
-		$query = $this->db->query("SELECT `address_id` FROM `" . DB_PREFIX . "address` WHERE `customer_id` = '" . (int)$this->customer->getId() . "'");
+		$query = $this->db->query("SELECT `address_id` FROM `" . DB_PREFIX . "address` WHERE `customer_id` = '" . (int)$customer_id . "'");
 
 		foreach ($query->rows as $result) {
-			$address_info = $this->getAddress($result['address_id']);
+			$address_info = $this->getAddress($customer_id, $result['address_id']);
 
 			if ($address_info) {
 				$address_data[$result['address_id']] = $address_info;
@@ -98,8 +98,8 @@ class Address extends \Opencart\System\Engine\Model {
 		return $address_data;
 	}
 
-	public function getTotalAddresses(): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "address` WHERE `customer_id` = '" . (int)$this->customer->getId() . "'");
+	public function getTotalAddresses(int $customer_id): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "address` WHERE `customer_id` = '" . (int)$customer_id . "'");
 
 		return (int)$query->row['total'];
 	}

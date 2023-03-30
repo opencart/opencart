@@ -135,8 +135,6 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 			}
 
 
-			print_r($this->request->post);
-
 			// Custom field validation
 			$this->load->model('account/custom_field');
 

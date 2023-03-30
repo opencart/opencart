@@ -5,9 +5,8 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 		$this->load->language('checkout/shipping_address');
 
 		$data['error_upload_size'] = sprintf($this->language->get('error_upload_size'), $this->config->get('config_file_max_size'));
-
-		$data['config_checkout_payment_address'] = $this->config->get('config_checkout_payment_address');
 		$data['config_file_max_size'] = ((int)$this->config->get('config_file_max_size') * 1024 * 1024);
+		$data['payment_address_required'] = $this->config->get('config_checkout_payment_address');
 
 		$data['upload'] = $this->url->link('tool/upload', 'language=' . $this->config->get('config_language'));
 
@@ -23,6 +22,12 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 		}
 
 		$data['addresses'] = $this->model_account_address->getAddresses($this->customer->getId());
+
+		if (isset($this->session->data['shipping_address'])) {
+			$data['address_id'] = $this->session->data['shipping_address']['address_id'];
+		} else {
+			$data['address_id'] = 0;
+		}
 
 		$this->load->model('localisation/country');
 

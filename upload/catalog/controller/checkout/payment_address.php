@@ -5,12 +5,10 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 		$this->load->language('checkout/payment_address');
 
 		$data['error_upload_size'] = sprintf($this->language->get('error_upload_size'), $this->config->get('config_file_max_size'));
-
 		$data['config_file_max_size'] = ((int)$this->config->get('config_file_max_size') * 1024 * 1024);
+		$data['shipping_required'] = $this->cart->hasShipping();
 
 		$data['upload'] = $this->url->link('tool/upload', 'language=' . $this->config->get('config_language'));
-
-		$data['shipping_required'] = $this->cart->hasShipping();
 
 		// Set payment address
 		$this->load->model('account/address');
@@ -24,6 +22,12 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 		}
 
 		$data['addresses'] = $this->model_account_address->getAddresses($this->customer->getId());
+
+		if (isset($this->session->data['payment_address'])) {
+			$data['address_id'] = $this->session->data['payment_address']['address_id'];
+		} else {
+			$data['address_id'] = 0;
+		}
 
 		$this->load->model('localisation/country');
 
@@ -129,6 +133,9 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 			if ($this->request->post['zone_id'] == '') {
 				$json['error']['payment_zone'] = $this->language->get('error_zone');
 			}
+
+
+			print_r($this->request->post);
 
 			// Custom field validation
 			$this->load->model('account/custom_field');

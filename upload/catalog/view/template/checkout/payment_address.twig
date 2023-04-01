@@ -1,13 +1,17 @@
 <fieldset>
   <legend>{{ heading_title }}</legend>
+
   <div id="payment-addresses" style="display: {% if addresses %}block{% else %}none{% endif %};">
     <div class="form-check">
-      <input type="radio" name="payment_existing" value="1" id="input-payment-existing" class="form-check-input"{% if addresses %} checked{% endif %}/> <label for="input-payment-existing" class="form-check-label">{{ text_address_existing }}</label>
+      <input type="radio" name="payment_existing" value="1" id="input-payment-existing" class="form-check-input"{% if addresses %} checked{% endif %}/>
+      <label for="input-payment-existing" class="form-check-label">{{ text_address_existing }}</label>
     </div>
     <div class="form-check">
-      <input type="radio" name="payment_existing" value="0" id="input-payment-new" class="form-check-input"{% if not addresses %} checked{% endif %}> <label for="input-payment-new" class="form-check-label">{{ text_address_new }}</label>
+      <input type="radio" name="payment_existing" value="0" id="input-payment-new" class="form-check-input"{% if not addresses %} checked{% endif %}>
+      <label for="input-payment-new" class="form-check-label">{{ text_address_new }}</label>
     </div>
   </div>
+
   <div id="payment-existing" style="display: {% if addresses %}block{% else %}none{% endif %};">
     <select name="address_id" id="input-payment-address" class="form-select">
       <option value="">{{ text_select }}</option>
@@ -16,6 +20,7 @@
       {% endfor %}
     </select>
   </div>
+
   <br/>
   <div id="payment-new" style="display: {% if not addresses %}block{% else %}none{% endif %};">
     <form id="form-payment-address">
@@ -64,7 +69,8 @@
           <div id="error-payment-country" class="invalid-feedback"></div>
         </div>
         <div class="col mb-3 required">
-          <label for="input-payment-zone" class="form-label">{{ entry_zone }}</label> <select name="zone_id" id="input-payment-zone" class="form-select"></select>
+          <label for="input-payment-zone" class="form-label">{{ entry_zone }}</label>
+          <select name="zone_id" id="input-payment-zone" class="form-select"></select>
           <div id="error-payment-zone" class="invalid-feedback"></div>
         </div>
         {% for custom_field in custom_fields %}
@@ -195,11 +201,6 @@ $('input[name=\'payment_existing\']').on('change', function() {
 $('#input-payment-address').on('change', function() {
     var element = this;
 
-    $('#input-shipping-method').html('<option value="">{{ text_select }}</option>');
-    $('#input-shipping-method').prop('disabled', true);
-    $('#input-payment-method').html('<option value="">{{ text_select }}</option>');
-    $('#input-payment-method').prop('disabled', true);
-
     chain.attach(function() {
         return $.ajax({
             url: 'index.php?route=checkout/payment_address.address&language={{ language }}&address_id=' + $(element).val(),
@@ -224,11 +225,21 @@ $('#input-payment-address').on('change', function() {
                 if (json['success']) {
                     $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
+                    $('#input-shipping-method').html('<option value="">{{ text_select }}</option>');
+                    $('#input-shipping-method').prop('disabled', true);
+                    $('#input-payment-method').html('<option value="">{{ text_select }}</option>');
+                    $('#input-payment-method').prop('disabled', true);
+
                   {% if shipping_required %}
                     $('#input-shipping-address').prop('disabled', false);
+
+
+
+
                   {% else %}
                     $('#button-payment-method').trigger('click');
                   {% endif %}
+
                 }
             },
             error: function(xhr, ajaxOptions, thrownError) {
@@ -288,55 +299,40 @@ $('#form-payment-address').on('submit', function(e) {
 
                     $('#form-payment-address')[0].reset();
 
-                    var addresses = [];
+                    var html = '<option value="">{{ text_select }}</option>';
 
-                    // Payment addresses
                     if (json['addresses']) {
                         for (i in json['addresses']) {
-                            addresses[i] = {
-                                text: json['addresses'][i]['firstname'] + ' ' + json['addresses'][i]['lastname'] + ', ' + json['addresses'][i]['address_1'] + ', ' + json['addresses'][i]['city'] + ', ' + json['addresses'][i]['zone'] + ', ' + json['addresses'][i]['country'],
-                                value: json['addresses'][i]['address_id']
-                            };
-                        }
-                    }
-
-                    html = '';
-
-                    for (i in addresses) {
-                        if (addresses[i]['value'] == json['address_id']) {
-                            html += '<option value="' + addresses[i]['value'] + '" selected>' + addresses[i]['text'] + '</option>';
-                        } else {
                             html += '<option value="' + addresses[i]['value'] + '">' + addresses[i]['text'] + '</option>';
                         }
                     }
 
+                    // Payment Address
                     $('#input-payment-address').html(html);
+
+                    $('#input-payment-address').val(json['address_id']);
 
                     $('#payment-addresses').css({display: 'block'});
 
                     $('#input-payment-existing').trigger('click');
 
-                    html = '';
-
-                    for (i in addresses) {
-                        if (addresses[i]['value'] == $('#input-shipping-address').val()) {
-                            html += '<option value="' + addresses[i]['value'] + '" selected>' + addresses[i]['text'] + '</option>';
-                        } else {
-                            html += '<option value="' + addresses[i]['value'] + '">' + addresses[i]['text'] + '</option>';
-                        }
-                    }
+                    // Shipping Address
+                    var shipping_address_id = $('#input-shipping-address').val();
 
                     $('#input-shipping-address').html(html);
 
+                    if (shipping_address_id) {
+                        $('#input-shipping-address').val(shipping_address_id);
+                    }
+
+                    $('#shipping-address').css({display: 'block'});
                     $('#shipping-addresses').css({display: 'block'});
 
                     $('#input-shipping-existing').trigger('click');
 
                     $('#input-shipping-address').prop('disabled', false);
 
-                  {% if shipping_required %}
-
-                  {% else %}
+                  {% if not shipping_required %}
                     $('#button-payment-method').trigger('click');
                   {% endif %}
                 }

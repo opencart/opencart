@@ -134,9 +134,6 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 				$json['error']['payment_zone'] = $this->language->get('error_zone');
 			}
 
-
-			print_r($this->request->post);
-
 			// Custom field validation
 			$this->load->model('account/custom_field');
 
@@ -154,6 +151,8 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+
+
 			// If no default address add it
 			$address_id = $this->customer->getAddressId();
 
@@ -175,6 +174,22 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 			unset($this->session->data['shipping_methods']);
 			unset($this->session->data['payment_method']);
 			unset($this->session->data['payment_methods']);
+
+			// If no shipping required then get payment methods
+			if (!$this->cart->hasShipping()) {
+				$this->load->model('checkout/payment_method');
+
+				$payment_methods = $this->model_checkout_payment_method->getMethods($this->session->data['payment_address']);
+
+				if ($payment_methods) {
+					// Store payment methods in session
+					$this->session->data['payment_methods'] = $payment_methods;
+
+					$json['payment_methods'] = $payment_methods;
+				} else {
+					$json['error'] = sprintf($this->language->get('error_no_payment'), $this->url->link('information/contact', 'language=' . $this->config->get('config_language')));
+				}
+			}
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -241,6 +256,22 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 			unset($this->session->data['shipping_methods']);
 			unset($this->session->data['payment_method']);
 			unset($this->session->data['payment_methods']);
+
+			// If no shipping required then get payment methods
+			if (!$this->cart->hasShipping()) {
+				$this->load->model('checkout/payment_method');
+
+				$payment_methods = $this->model_checkout_payment_method->getMethods($this->session->data['payment_address']);
+
+				if ($payment_methods) {
+					// Store payment methods in session
+					$this->session->data['payment_methods'] = $payment_methods;
+
+					$json['payment_methods'] = $payment_methods;
+				} else {
+					$json['error'] = sprintf($this->language->get('error_no_payment'), $this->url->link('information/contact', 'language=' . $this->config->get('config_language')));
+				}
+			}
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

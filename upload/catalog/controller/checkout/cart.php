@@ -328,7 +328,9 @@ class Cart extends \Opencart\System\Engine\Controller {
 			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
 		}
 
+		unset($this->session->data['shipping_method']);
 		unset($this->session->data['shipping_methods']);
+		unset($this->session->data['payment_method']);
 		unset($this->session->data['payment_methods']);
 		unset($this->session->data['reward']);
 

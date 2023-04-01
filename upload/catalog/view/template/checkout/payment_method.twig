@@ -2,8 +2,15 @@
   <fieldset>
     <legend>{{ heading_title }}</legend>
     <div class="input-group">
-      <select name="payment_method" id="input-payment-method" class="form-select" disabled>
+      <select name="payment_method" id="input-payment-method" class="form-select"{% if not payment_methods %} disabled{% endif %}>
         <option value="">{{ text_select }}</option>
+        {% for payment_method in payment_methods %}
+          <optgroup label="{{ payment_method.title }}">
+            {% for option in payment_method.option %}
+              <option value="{{ option.code }}"{% if option.code == code %} selected{% endif %}>{{ option.name }}</option>
+            {% endfor %}
+          </optgroup>
+        {% endfor %}
       </select>
       <button type="button" id="button-payment-method" class="btn btn-light"><i class="fa-solid fa-rotate"></i></button>
     </div>
@@ -11,8 +18,7 @@
 </form>
 <br/>
 <div class="mb-2">
-  <label for="input-comment" class="form-label"><strong>{{ text_comments }}</strong></label>
-  <textarea name="comment" rows="3" id="input-comment" class="form-control">{{ comment }}</textarea>
+  <label for="input-comment" class="form-label"><strong>{{ text_comments }}</strong></label> <textarea name="comment" rows="3" id="input-comment" class="form-control">{{ comment }}</textarea>
 </div>
 {% if text_agree %}
   <div class="mb-2">
@@ -32,10 +38,10 @@ $('#button-payment-method').on('click', function() {
             url: 'index.php?route=checkout/payment_method.getMethods&language={{ language }}',
             dataType: 'json',
             beforeSend: function() {
-                $('#button-payment-method').prop('disabled', true);
+                $('#button-payment-method').button('loading');
             },
             complete: function() {
-                $('#button-payment-method').prop('disabled', false);
+                $('#button-payment-method').button('reset');
             },
             success: function(json) {
                 console.log(json);

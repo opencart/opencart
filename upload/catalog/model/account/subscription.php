@@ -7,7 +7,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 		return $query->row;
 	}
 
-	public function getSubscriptions(array $data): array {
+	public function getSubscriptions(array $data = []): array {
         $sql = "SELECT * FROM `" . DB_PREFIX . "subscription`";
 
         $implode = [];

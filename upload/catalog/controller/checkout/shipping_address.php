@@ -168,9 +168,21 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 
 			$json['success'] = $this->language->get('text_success');
 
-			unset($this->session->data['shipping_method']);
-			unset($this->session->data['shipping_methods']);
-			unset($this->session->data['payment_method']);
+			// Get the shipping methods
+			$this->load->model('checkout/shipping_method');
+
+			$shipping_methods = $this->model_checkout_shipping_method->getMethods($this->session->data['shipping_address']);
+
+			if ($shipping_methods) {
+				// Store shipping methods in session
+				$this->session->data['shipping_methods'] = $shipping_methods;
+
+				$json['shipping_methods'] = $shipping_methods;
+			} else {
+				$json['error']['warning'] = sprintf($this->language->get('error_no_shipping'), $this->url->link('information/contact', 'language=' . $this->config->get('config_language')));
+			}
+
+			// Remove the payment methods as shipping price might update
 			unset($this->session->data['payment_methods']);
 		}
 
@@ -235,10 +247,19 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 
 			$json['success'] = $this->language->get('text_success');
 
-			unset($this->session->data['shipping_method']);
-			unset($this->session->data['shipping_methods']);
-			unset($this->session->data['payment_method']);
-			unset($this->session->data['payment_methods']);
+			// Get the shipping methods
+			$this->load->model('checkout/shipping_method');
+
+			$shipping_methods = $this->model_checkout_shipping_method->getMethods($this->session->data['shipping_address']);
+
+			if ($shipping_methods) {
+				// Store shipping methods in session
+				$this->session->data['shipping_methods'] = $shipping_methods;
+
+				$json['shipping_methods'] = $shipping_methods;
+			} else {
+				$json['error'] = sprintf($this->language->get('error_no_shipping'), $this->url->link('information/contact', 'language=' . $this->config->get('config_language')));
+			}
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

@@ -7,7 +7,7 @@
         {% for shipping_method in shipping_methods %}
           <optgroup label="{{ shipping_method.title }}">
             {% for quote in shipping_method.quote %}
-              <option value="{{ quote.code }}"{% if quote.code == code %} selected{% endif %}>{{ quote.name }}</option>
+              <option value="{{ quote.code }}"{% if quote.code == code %} selected{% endif %}>{{ quote.title }}</option>
             {% endfor %}
           </optgroup>
         {% endfor %}

@@ -62,8 +62,10 @@ class ControllerCheckoutGuestShipping extends Controller {
 		$data['countries'] = $this->model_localisation_country->getCountries();
 
 		// Custom Fields
+		$data['custom_fields'] = array();
+
 		$this->load->model('account/custom_field');
-		
+
 		$custom_fields = $this->model_account_custom_field->getCustomFields($this->session->data['guest']['customer_group_id']);
 
 		foreach ($custom_fields as $custom_field) {
@@ -71,13 +73,13 @@ class ControllerCheckoutGuestShipping extends Controller {
 				$data['custom_fields'][] = $custom_field;
 			}
 		}
-		
+
 		if (isset($this->session->data['shipping_address']['custom_field'])) {
 			$data['address_custom_field'] = $this->session->data['shipping_address']['custom_field'];
 		} else {
 			$data['address_custom_field'] = array();
 		}
-		
+
 		$this->response->setOutput($this->load->view('checkout/guest_shipping', $data));
 	}
 

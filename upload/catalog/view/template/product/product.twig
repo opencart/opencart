@@ -80,7 +80,8 @@
                 {% for option in options %}
                   {% if option.type == 'select' %}
                     <div class="mb-3{% if option.required %} required{% endif %}">
-                      <label for="input-option-{{ option.product_option_id }}" class="form-label">{{ option.name }}</label> <select name="option[{{ option.product_option_id }}]" id="input-option-{{ option.product_option_id }}" class="form-select">
+                      <label for="input-option-{{ option.product_option_id }}" class="form-label">{{ option.name }}</label>
+                      <select name="option[{{ option.product_option_id }}]" id="input-option-{{ option.product_option_id }}" class="form-select">
                         <option value="">{{ text_select }}</option>
                         {% for option_value in option.product_option_value %}
                           <option value="{{ option_value.product_option_value_id }}">{{ option_value.name }}
@@ -98,7 +99,8 @@
                       <div id="input-option-{{ option.product_option_id }}">
                         {% for option_value in option.product_option_value %}
                           <div class="form-check">
-                            <input type="radio" name="option[{{ option.product_option_id }}]" value="{{ option_value.product_option_value_id }}" id="input-option-value-{{ option_value.product_option_value_id }}" class="form-check-input"/> <label for="input-option-value-{{ option_value.product_option_value_id }}" class="form-check-label">{% if option_value.image %}<img src="{{ option_value.image }}" alt="{{ option_value.name }} {% if option_value.price %}{{ option_value.price_prefix }} {{ option_value.price }}{% endif %}" class="img-thumbnail"/>{% endif %}
+                            <input type="radio" name="option[{{ option.product_option_id }}]" value="{{ option_value.product_option_value_id }}" id="input-option-value-{{ option_value.product_option_value_id }}" class="form-check-input"/>
+                            <label for="input-option-value-{{ option_value.product_option_value_id }}" class="form-check-label">{% if option_value.image %}<img src="{{ option_value.image }}" alt="{{ option_value.name }} {% if option_value.price %}{{ option_value.price_prefix }} {{ option_value.price }}{% endif %}" class="img-thumbnail"/>{% endif %}
                               {{ option_value.name }}
                               {% if option_value.price %}
                                 ({{ option_value.price_prefix }}{{ option_value.price }})
@@ -118,7 +120,6 @@
                         {% for option_value in option.product_option_value %}
                           <div class="form-check">
                             <input type="checkbox" name="option[{{ option.product_option_id }}][]" value="{{ option_value.product_option_value_id }}" id="input-option-value-{{ option_value.product_option_value_id }}" class="form-check-input"/>
-
                             <label for="input-option-value-{{ option_value.product_option_value_id }}" class="form-check-label">
                               {% if option_value.image %}
                                 <img src="{{ option_value.image }}" alt="{{ option_value.name }} {% if option_value.price %}{{ option_value.price_prefix }} {{ option_value.price }}{% endif %}" class="img-thumbnail"/>{% endif %}
@@ -134,13 +135,15 @@
                   {% endif %}
                   {% if option.type == 'text' %}
                     <div class="mb-3{% if option.required %} required{% endif %}">
-                      <label for="input-option-{{ option.product_option_id }}" class="form-label">{{ option.name }}</label> <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" placeholder="{{ option.name }}" id="input-option-{{ option.product_option_id }}" class="form-control"/>
+                      <label for="input-option-{{ option.product_option_id }}" class="form-label">{{ option.name }}</label>
+                      <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" placeholder="{{ option.name }}" id="input-option-{{ option.product_option_id }}" class="form-control"/>
                       <div id="error-option-{{ option.product_option_id }}" class="invalid-feedback"></div>
                     </div>
                   {% endif %}
                   {% if option.type == 'textarea' %}
                     <div class="mb-3{% if option.required %} required{% endif %}">
-                      <label for="input-option-{{ option.product_option_id }}" class="form-label">{{ option.name }}</label> <textarea name="option[{{ option.product_option_id }}]" rows="5" placeholder="{{ option.name }}" id="input-option-{{ option.product_option_id }}" class="form-control">{{ option.value }}</textarea>
+                      <label for="input-option-{{ option.product_option_id }}" class="form-label">{{ option.name }}</label>
+                      <textarea name="option[{{ option.product_option_id }}]" rows="5" placeholder="{{ option.name }}" id="input-option-{{ option.product_option_id }}" class="form-control">{{ option.value }}</textarea>
                       <div id="error-option-{{ option.product_option_id }}" class="invalid-feedback"></div>
                     </div>
                   {% endif %}

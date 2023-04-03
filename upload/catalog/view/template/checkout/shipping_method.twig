@@ -2,8 +2,15 @@
   <fieldset>
     <legend>{{ heading_title }}</legend>
     <div class="input-group">
-      <select name="shipping_method" id="input-shipping-method" class="form-select" disabled>
+      <select name="shipping_method" id="input-shipping-method" class="form-select"{% if not shipping_methods %} disabled{% endif %}>
         <option value="">{{ text_select }}</option>
+        {% for shipping_method in shipping_methods %}
+          <optgroup label="{{ shipping_method.title }}">
+            {% for quote in shipping_method.quote %}
+              <option value="{{ quote.code }}"{% if quote.code == code %} selected{% endif %}>{{ quote.title }}</option>
+            {% endfor %}
+          </optgroup>
+        {% endfor %}
       </select>
       <button type="button" id="button-shipping-method" class="btn btn-light"><i class="fa-solid fa-rotate"></i></button>
     </div>
@@ -16,7 +23,6 @@ $('#button-shipping-method').on('click', function () {
 
     $('#input-shipping-method').html('<option value="">{{ text_select }}</option>');
     $('#input-shipping-method').prop('disabled', true);
-
     $('#input-payment-method').html('<option value="">{{ text_select }}</option>');
     $('#input-payment-method').prop('disabled', true);
 
@@ -25,10 +31,10 @@ $('#button-shipping-method').on('click', function () {
             url: 'index.php?route=checkout/shipping_method.getMethods&language={{ language }}',
             dataType: 'json',
             beforeSend: function () {
-                $('#button-shipping-method').prop('disabled', true);
+                $('#button-shipping-method').button('loading');
             },
             complete: function () {
-                $('#button-shipping-method').prop('disabled', false);
+                $('#button-shipping-method').button('reset');
             },
             success: function (json) {
                 console.log(json);

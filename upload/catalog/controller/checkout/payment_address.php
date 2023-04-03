@@ -5,12 +5,10 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 		$this->load->language('checkout/payment_address');
 
 		$data['error_upload_size'] = sprintf($this->language->get('error_upload_size'), $this->config->get('config_file_max_size'));
-
 		$data['config_file_max_size'] = ((int)$this->config->get('config_file_max_size') * 1024 * 1024);
+		$data['shipping_required'] = $this->cart->hasShipping();
 
 		$data['upload'] = $this->url->link('tool/upload', 'language=' . $this->config->get('config_language'));
-
-		$data['shipping_required'] = $this->cart->hasShipping();
 
 		// Set payment address
 		$this->load->model('account/address');
@@ -24,6 +22,12 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 		}
 
 		$data['addresses'] = $this->model_account_address->getAddresses($this->customer->getId());
+
+		if (isset($this->session->data['payment_address'])) {
+			$data['address_id'] = $this->session->data['payment_address']['address_id'];
+		} else {
+			$data['address_id'] = 0;
+		}
 
 		$this->load->model('localisation/country');
 
@@ -147,6 +151,8 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+
+
 			// If no default address add it
 			$address_id = $this->customer->getAddressId();
 
@@ -168,6 +174,22 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 			unset($this->session->data['shipping_methods']);
 			unset($this->session->data['payment_method']);
 			unset($this->session->data['payment_methods']);
+
+			// If no shipping required then get payment methods
+			if (!$this->cart->hasShipping()) {
+				$this->load->model('checkout/payment_method');
+
+				$payment_methods = $this->model_checkout_payment_method->getMethods($this->session->data['payment_address']);
+
+				if ($payment_methods) {
+					// Store payment methods in session
+					$this->session->data['payment_methods'] = $payment_methods;
+
+					$json['payment_methods'] = $payment_methods;
+				} else {
+					$json['error'] = sprintf($this->language->get('error_no_payment'), $this->url->link('information/contact', 'language=' . $this->config->get('config_language')));
+				}
+			}
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -234,6 +256,22 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 			unset($this->session->data['shipping_methods']);
 			unset($this->session->data['payment_method']);
 			unset($this->session->data['payment_methods']);
+
+			// If no shipping required then get payment methods
+			if (!$this->cart->hasShipping()) {
+				$this->load->model('checkout/payment_method');
+
+				$payment_methods = $this->model_checkout_payment_method->getMethods($this->session->data['payment_address']);
+
+				if ($payment_methods) {
+					// Store payment methods in session
+					$this->session->data['payment_methods'] = $payment_methods;
+
+					$json['payment_methods'] = $payment_methods;
+				} else {
+					$json['error'] = sprintf($this->language->get('error_no_payment'), $this->url->link('information/contact', 'language=' . $this->config->get('config_language')));
+				}
+			}
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

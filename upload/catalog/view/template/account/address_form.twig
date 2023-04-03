@@ -233,9 +233,11 @@ $('#input-country').on('change', function () {
         dataType: 'json',
         beforeSend: function () {
             $(element).prop('disabled', true);
+            $('#input-zone').prop('disabled', true);
         },
         complete: function () {
             $(element).prop('disabled', false);
+            $('#input-zone').prop('disabled', false);
         },
         success: function (json) {
             if (json['postcode_required'] == '1') {

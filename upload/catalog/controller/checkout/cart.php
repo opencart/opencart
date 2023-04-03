@@ -295,7 +295,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 			unset($this->session->data['payment_method']);
 			unset($this->session->data['payment_methods']);
 		} else {
-			$json['redirect'] = $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $this->request->post['product_id'], true);
+			$json['redirect'] = $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product_id, true);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

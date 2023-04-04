@@ -26,8 +26,9 @@ $_['entry_default']      = 'Default Address';
 
 // Error
 $_['error_token']        = 'Warning: Address token invalid!';
-$_['error_delete']       = 'Warning: You must have at least one address!';
+$_['error_subscription'] = 'Warning: Address is still being used by %s active subscriptions!';
 $_['error_default']      = 'Warning: Default address required!';
+$_['error_delete']       = 'Warning: You must have at least one address!';
 $_['error_firstname']    = 'First Name must be between 1 and 32 characters!';
 $_['error_lastname']     = 'Last Name must be between 1 and 32 characters!';
 $_['error_address_1']    = 'Address must be between 3 and 128 characters!';

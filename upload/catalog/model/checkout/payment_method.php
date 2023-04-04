@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Catalog\Model\Checkout;
 class PaymentMethod extends \Opencart\System\Engine\Controller {
-	public function getMethods(array $payment_address): array {
+	public function getMethods(array $payment_address = []): array {
 		$method_data = [];
 
 		$this->load->model('setting/extension');
@@ -12,10 +12,10 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 			if ($this->config->get('payment_' . $result['code'] . '_status')) {
 				$this->load->model('extension/' . $result['extension'] . '/payment/' . $result['code']);
 
-				$payment_method = $this->{'model_extension_' . $result['extension'] . '_payment_' . $result['code']}->getMethod($payment_address);
+				$payment_methods = $this->{'model_extension_' . $result['extension'] . '_payment_' . $result['code']}->getMethods($payment_address);
 
-				if ($payment_method) {
-					$method_data[$result['code']] = $payment_method;
+				if ($payment_methods) {
+					$method_data[$result['code']] = $payment_methods;
 				}
 			}
 		}

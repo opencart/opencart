@@ -62,10 +62,10 @@ $('#form-review').on('submit', function (e) {
         contentType: 'application/x-www-form-urlencoded',
         processData: false,
         beforeSend: function () {
-            $('#button-review').prop('disabled', true).addClass('loading');
+            $('#button-review').button('loading');
         },
         complete: function () {
-            $('#button-review').prop('disabled', false).removeClass('loading');
+            $('#button-review').button('reset');
         },
         success: function (json) {
             $('.alert-dismissible').remove();

@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Controller\Api\Sale;
 class Order extends \Opencart\System\Engine\Controller {
 	/*
 	 * Loads order info
-	 * */
+	 */
 	public function load(): void {
 		$this->load->language('api/sale/order');
 
@@ -238,8 +238,14 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		// Payment Method
-		if (!isset($this->session->data['payment_method']) || !isset($this->session->data['payment_methods']) || !isset($this->session->data['payment_methods'][$this->session->data['payment_method']])) {
-			$json['error']['payment_method'] = $this->language->get('error_payment_method');
+		if (isset($this->session->data['payment_method']) && isset($this->session->data['payment_methods'])) {
+			$payment = explode('.', $this->session->data['payment_method']);
+
+			if (!isset($payment[0]) || !isset($payment[1]) || !isset($this->session->data['payment_methods'][$payment[0]]['option'][$payment[1]])) {
+				$json['error'] = $this->language->get('error_payment_method');
+			}
+		} else {
+			$json['error'] = $this->language->get('error_payment_method');
 		}
 
 		if (!$json) {

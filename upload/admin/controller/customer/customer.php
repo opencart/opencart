@@ -613,7 +613,6 @@ class Customer extends \Opencart\System\Engine\Controller {
 			$data['addresses'] = [];
 		}
 
-		$data['payment_method'] = $this->getPayment();
 		$data['history'] = $this->getHistory();
 		$data['transaction'] = $this->getTransaction();
 		$data['reward'] = $this->getReward();
@@ -853,7 +852,7 @@ class Customer extends \Opencart\System\Engine\Controller {
 	public function payment(): void {
 		$this->load->language('customer/customer');
 
-		$this->response->setOutput($this->getPayment());
+		//$this->response->setOutput($this->getPayment());
 	}
 
 	private function getPayment(): string {

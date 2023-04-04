@@ -5,7 +5,7 @@ $_['heading_title']      = 'Credit Card Payment';
 // Text
 $_['text_title']         = 'Please enter your card details below';
 $_['text_description']   = 'This payment method is a dummy one and will not store credit card information nor should it be used on a live site.';
-$_['text_card_add']      = 'Add Credit Card';
+$_['text_card_use']      = 'Use credit card';
 $_['text_month']         = 'Months';
 $_['text_year']          = 'Years';
 $_['text_store']         = 'Remember My Card';
@@ -20,6 +20,7 @@ $_['entry_card_cvv']     = 'CVV';
 $_['help_name']          = 'Cardholder Name';
 
 // Error
+$_['error_credit_card']  = 'Error: Credit Card required!';
 $_['error_card_name']    = 'Error: Cardholder name required!';
 $_['error_card_number']  = 'Error: Credit card number required!';
 $_['error_card_expire']  = 'Error: Expiration date required!';

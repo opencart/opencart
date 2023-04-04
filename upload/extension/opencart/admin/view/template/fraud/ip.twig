@@ -76,10 +76,10 @@ $('#button-ip-add').on('click', function () {
         dataType: 'json',
         data: 'ip=' + encodeURIComponent($('#input-ip').val()),
         beforeSend: function () {
-            $('#button-ip-add').prop('disabled', true).addClass('loading');
+            $('#button-ip-add').button('loading');
         },
         complete: function () {
-            $('#button-ip-add').prop('disabled', false).removeClass('loading');
+            $('#button-ip-add').button('reset');
         },
         success: function (json) {
             $('.alert-dismissible').remove();
@@ -111,10 +111,10 @@ $('#ip').on('click', 'button', function () {
         dataType: 'json',
         data: 'ip=' + encodeURIComponent($(element).val()),
         beforeSend: function () {
-            $(element).prop('disabled', true).addClass('loading');
+            $(element).button('loading');
         },
         complete: function () {
-            $(element).prop('disabled', false).removeClass('loading');
+            $(element).button('reset');
         },
         success: function (json) {
             $('.alert-dismissible').remove();

@@ -3867,6 +3867,11 @@ function oc_db_schema() {
 				'not_null' => true
 			],
 			[
+				'name' => 'payment_address_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
 				'name' => 'payment_firstname',
 				'type' => 'varchar(32)',
 				'not_null' => true
@@ -3939,6 +3944,11 @@ function oc_db_schema() {
 			[
 				'name' => 'payment_code',
 				'type' => 'varchar(128)',
+				'not_null' => true
+			],
+			[
+				'name' => 'shipping_address_id',
+				'type' => 'int(11)',
 				'not_null' => true
 			],
 			[
@@ -4409,6 +4419,124 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
+		'name' => 'order_subscription',
+		'field' => [
+			[
+				'name' => 'order_subscription_id',
+				'type' => 'int(11)',
+				'not_null' => true,
+				'auto_increment' => true
+			],
+			[
+				'name' => 'order_product_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'order_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'subscription_plan_id',
+				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'name',
+				'type' => 'varchar(255)',
+				'not_null' => true
+			],
+			[
+				'name' => 'trial_price',
+				'type' => 'decimal(10,4)',
+				'not_null' => true
+			],
+			[
+				'name' => 'trial_frequency',
+				'type' => 'enum(\'day\',\'week\',\'semi_month\',\'month\',\'year\')',
+				'not_null' => true
+			],
+			[
+				'name' => 'trial_cycle',
+				'type' => 'smallint(6)',
+				'not_null' => true
+			],
+			[
+				'name' => 'trial_duration',
+				'type' => 'smallint(6)',
+				'not_null' => true
+			],
+			[
+				'name' => 'trial_remaining',
+				'type' => 'smallint(6)',
+				'not_null' => true
+			],
+			[
+				'name' => 'trial_status',
+				'type' => 'tinyint(1)',
+				'not_null' => true
+			],
+			[
+				'name' => 'price',
+				'type' => 'decimal(10,4)',
+				'not_null' => true
+			],
+			[
+				'name' => 'frequency',
+				'type' => 'enum(\'day\',\'week\',\'semi_month\',\'month\',\'year\')',
+				'not_null' => true
+			],
+			[
+				'name' => 'cycle',
+				'type' => 'smallint(6)',
+				'not_null' => true
+			],
+			[
+				'name' => 'duration',
+				'type' => 'smallint(6)',
+				'not_null' => true
+			]
+		],
+		'primary' => [
+			'order_subscription_id'
+		],
+		'foreign' => [
+			[
+				'key'   => 'order_id',
+				'table' => 'order',
+				'field' => 'order_id'
+			],
+			[
+				'key'   => 'order_product_id',
+				'table' => 'order_product',
+				'field' => 'order_product_id'
+			],
+			[
+				'key'   => 'subscription_plan_id',
+				'table' => 'subscription_plan',
+				'field' => 'subscription_plan_id'
+			],
+			[
+				'key'   => 'subscription_status_id',
+				'table' => 'subscription_status',
+				'field' => 'subscription_status_id'
+			]
+		],
+		'index' => [
+			[
+				'name' => 'order_id',
+				'key' => [
+					'order_id'
+				]
+			]
+		],
+		'engine' => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_general_ci'
+	];
+
+	$tables[] = [
 		'name' => 'order_status',
 		'field' => [
 			[
@@ -4586,94 +4714,6 @@ function oc_db_schema() {
 				'key'   => 'voucher_id',
 				'table' => 'voucher',
 				'field' => 'voucher_id'
-			]
-		],
-		'engine' => 'InnoDB',
-		'charset' => 'utf8mb4',
-		'collate' => 'utf8mb4_general_ci'
-	];
-
-	$tables[] = [
-		'name' => 'customer_payment',
-		'field' => [
-			[
-				'name' => 'customer_payment_id',
-				'type' => 'int(11)',
-				'not_null' => true,
-				'auto_increment' => true
-			],
-			[
-				'name' => 'customer_id',
-				'type' => 'int(11)',
-				'not_null' => true
-			],
-			[
-				'name' => 'name',
-				'type' => 'varchar(32)',
-				'not_null' => true
-			],
-			[
-				'name' => 'image',
-				'type' => 'varchar(255)',
-				'not_null' => true
-			],
-			[
-				'name' => 'type',
-				'type' => 'varchar(64)',
-				'not_null' => true
-			],
-			[
-				'name' => 'extension',
-				'type' => 'varchar(255)',
-				'not_null' => true
-			],
-			[
-				'name' => 'code',
-				'type' => 'varchar(32)',
-				'not_null' => true
-			],
-			[
-				'name' => 'token',
-				'type' => 'varchar(96)',
-				'not_null' => true
-			],
-			[
-				'name' => 'date_expire',
-				'type' => 'date',
-				'not_null' => true
-			],
-			[
-				'name' => 'default',
-				'type' => 'tinyint(1)',
-				'not_null' => true
-			],
-			[
-				'name' => 'status',
-				'type' => 'tinyint(1)',
-				'not_null' => true
-			],
-			[
-				'name' => 'date_added',
-				'type' => 'datetime',
-				'not_null' => true
-			]
-		],
-		'primary' => [
-			'customer_payment_id'
-		],
-		'foreign' => [
-			[
-				'key'   => 'customer_id',
-				'table' => 'customer',
-				'field' => 'customer_id'
-			]
-		],
-		'index' => [
-			[
-				'name' => 'customer_id',
-				'key' => [
-					'customer_id'
-				]
 			]
 		],
 		'engine' => 'InnoDB',
@@ -6417,13 +6457,23 @@ function oc_db_schema() {
 				'not_null' => true
 			],
 			[
-				'name' => 'customer_payment_id',
+				'name' => 'customer_group_id',
 				'type' => 'int(11)',
 				'not_null' => true
 			],
 			[
 				'name' => 'payment_address_id',
 				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'payment_method',
+				'type' => 'varchar(128)',
+				'not_null' => true
+			],
+			[
+				'name' => 'payment_code',
+				'type' => 'varchar(128)',
 				'not_null' => true
 			],
 			[
@@ -6615,11 +6665,6 @@ function oc_db_schema() {
 				'key'   => 'subscription_plan_id',
 				'table' => 'subscription_plan',
 				'field' => 'subscription_plan_id'
-			],
-			[
-				'key'   => 'customer_payment_id',
-				'table' => 'customer_payment',
-				'field' => 'customer_payment_id'
 			],
 			[
 				'key'   => 'subscription_status_id',

@@ -71,7 +71,7 @@ $('#button-upgrade').on('click', function () {
             url: next,
             dataType: 'json',
             beforeSend: function () {
-                $('#button-upgrade').prop('disabled', true).addClass('loading');
+                $('#button-upgrade').button('loading');
             },
             success: function (json) {
                 $('#input-upgrade').removeClass('is-valid is-invalid');
@@ -80,7 +80,7 @@ $('#button-upgrade').on('click', function () {
                     $('#input-upgrade').val(json['error']);
                     $('#input-upgrade').addClass('is-invalid');
 
-                    $('#button-upgrade').prop('disabled', false).removeClass('loading');
+                    $('#button-upgrade').button('reset');
                 }
 
                 if (json['text']) {
@@ -91,7 +91,7 @@ $('#button-upgrade').on('click', function () {
                     $('#input-upgrade').val(json['success']);
                     $('#input-upgrade').addClass('is-valid');
 
-                    $('#button-upgrade').prop('disabled', false).removeClass('loading');
+                    $('#button-upgrade').button('reset');
                 }
 
                 if (json['next']) {
@@ -103,7 +103,7 @@ $('#button-upgrade').on('click', function () {
             error: function (xhr, ajaxOptions, thrownError) {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 
-                $('#button-upgrade').prop('disabled', false).removeClass('loading');
+                $('#button-upgrade').button('reset');
             }
         });
     };

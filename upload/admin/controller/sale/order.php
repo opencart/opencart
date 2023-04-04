@@ -765,7 +765,10 @@ class Order extends \Opencart\System\Engine\Controller {
 			$language = $this->config->get('config_language');
 		}
 
-		$store = $this->load->controller('tool/store.createStoreInstance', $store_id, $language);
+		// Create a store instance using loader class to call controllers, models, views, libraries
+		$this->load->model('setting/store');
+
+		$store = $this->model_setting_store->createStoreInstance($store_id, $language);
 
 		// 2. Store the new session ID so we're not creating new session on every page load
 		$this->session->data['api_session'] = $store->session->getId();
@@ -1219,7 +1222,9 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		if ($action) {
 			// 1. Create a store instance using loader class to call controllers, models, views, libraries
-			$store = $this->load->controller('tool/store.createStoreInstance', $store_id, $language, $session_id);
+			$this->load->model('setting/store');
+
+			$store = $this->model_setting_store->createStoreInstance($store_id, $language, $session_id);
 
 			// 2. Add the request vars and remove the unneeded ones
 			$store->request->get = $this->request->get;

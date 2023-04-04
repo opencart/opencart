@@ -38,10 +38,10 @@ $('#button-repair').on('click', function (e) {
         url: 'index.php?route=catalog/category.repair&user_token={{ user_token }}',
         dataType: 'json',
         beforeSend: function () {
-            $(element).prop('disabled', true).addClass('loading');
+            $(element).button('loading');
         },
         complete: function () {
-            $(element).prop('disabled', false).removeClass('loading');
+            $(element).button('reset');
         },
         success: function (json) {
             if (json['error']) {

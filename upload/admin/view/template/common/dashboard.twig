@@ -38,10 +38,10 @@ $('#button-setting').on('click', function () {
         url: 'index.php?route=common/developer&user_token={{ user_token }}',
         dataType: 'html',
         beforeSend: function () {
-            $('#button-setting').prop('disabled', true).addClass('loading');
+            $('#button-setting').button('loading');
         },
         complete: function () {
-            $('#button-setting').prop('disabled', false).removeClass('loading');
+            $('#button-setting').button('reset');
         },
         success: function (html) {
             $('#modal-developer').remove();
@@ -91,10 +91,10 @@ $('#modal-developer table button').on('click', function () {
         url: 'index.php?route=common/developer.' + $(element).attr('value') + '&user_token={{ user_token }}',
         dataType: 'json',
         beforeSend: function () {
-            $(element).prop('disabled', true).addClass('loading');
+            $(element).button('loading');
         },
         complete: function () {
-            $(element).prop('disabled', false).removeClass('loading');
+            $(element).button('reset');
         },
         success: function (json) {
             $('.alert-dismissible').remove();

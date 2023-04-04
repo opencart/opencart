@@ -88,8 +88,9 @@ class Confirm extends \Opencart\System\Engine\Controller {
 		if ($status) {
 			$order_data = [];
 
-			// Store Details
 			$order_data['invoice_prefix'] = $this->config->get('config_invoice_prefix');
+
+			// Store Details
 			$order_data['store_id'] = $this->config->get('config_store_id');
 			$order_data['store_name'] = $this->config->get('config_name');
 			$order_data['store_url'] = $this->config->get('config_url');
@@ -173,8 +174,6 @@ class Confirm extends \Opencart\System\Engine\Controller {
 			}
 
 			if (isset($this->session->data['shipping_method'])) {
-				$shipping = explode('.', $this->session->data['shipping_method']);
-
 				$shipping_method_info = $this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]];
 
 				$order_data['shipping_method'] = $shipping_method_info['title'];
@@ -182,48 +181,6 @@ class Confirm extends \Opencart\System\Engine\Controller {
 			} else {
 				$order_data['shipping_method'] = '';
 				$order_data['shipping_code'] = '';
-			}
-
-			// Products
-			$order_data['products'] = [];
-
-			foreach ($products as $product) {
-				$option_data = [];
-
-				foreach ($product['option'] as $option) {
-					$option_data[] = [
-						'product_option_id'       => $option['product_option_id'],
-						'product_option_value_id' => $option['product_option_value_id'],
-						'option_id'               => $option['option_id'],
-						'option_value_id'         => $option['option_value_id'],
-						'name'                    => $option['name'],
-						'value'                   => $option['value'],
-						'type'                    => $option['type']
-					];
-				}
-
-				$order_data['products'][] = [
-					'product_id'   => $product['product_id'],
-					'master_id'    => $product['master_id'],
-					'name'         => $product['name'],
-					'model'        => $product['model'],
-					'option'       => $option_data,
-					'subscription' => $product['subscription'],
-					'download'     => $product['download'],
-					'quantity'     => $product['quantity'],
-					'subtract'     => $product['subtract'],
-					'price'        => $product['price'],
-					'total'        => $product['total'],
-					'tax'          => $this->tax->getTax($product['price'], $product['tax_class_id']),
-					'reward'       => $product['reward']
-				];
-			}
-
-			// Gift Voucher
-			$order_data['vouchers'] = [];
-
-			if (!empty($this->session->data['vouchers'])) {
-				$order_data['vouchers'] = $this->session->data['vouchers'];
 			}
 
 			if (isset($this->session->data['comment'])) {
@@ -297,6 +254,75 @@ class Confirm extends \Opencart\System\Engine\Controller {
 				$order_data['accept_language'] = $this->request->server['HTTP_ACCEPT_LANGUAGE'];
 			} else {
 				$order_data['accept_language'] = '';
+			}
+
+			// Products
+			$order_data['products'] = [];
+
+			foreach ($products as $product) {
+				$option_data = [];
+
+				foreach ($product['option'] as $option) {
+					$option_data[] = [
+						'product_option_id'       => $option['product_option_id'],
+						'product_option_value_id' => $option['product_option_value_id'],
+						'option_id'               => $option['option_id'],
+						'option_value_id'         => $option['option_value_id'],
+						'name'                    => $option['name'],
+						'value'                   => $option['value'],
+						'type'                    => $option['type']
+					];
+				}
+
+				$subscription_data = [];
+
+				if ($product['subscription']) {
+					if ($product['subscription']['trial_duration'] && $product['subscription']['trial_remaining']) {
+						$date_next = date('Y-m-d', strtotime('+' . $product['subscription']['trial_cycle'] . ' ' . $product['subscription']['trial_frequency']));
+					} elseif ($product['subscription']['duration'] && $product['subscription']['remaining']) {
+						$date_next = date('Y-m-d', strtotime('+' . $product['subscription']['cycle'] . ' ' . $product['subscription']['frequency']));
+					}
+
+					$subscription_data = [
+						'subscription_plan_id' => $product['subscription']['subscription_plan_id'],
+						'name'                 => $product['subscription']['name'],
+						'trial_price'          => $product['subscription']['trial_price'],
+						'trial_frequency'      => $product['subscription']['trial_frequency'],
+						'trial_cycle'          => $product['subscription']['trial_cycle'],
+						'trial_duration'       => $product['subscription']['trial_duration'],
+						'trial_remaining'      => $product['subscription']['trial_remaining'],
+						'trial_status'         => $product['subscription']['trial_status'],
+						'price'                => $product['subscription']['price'],
+						'frequency'            => $product['subscription']['frequency'],
+						'cycle'                => $product['subscription']['cycle'],
+						'duration'             => $product['subscription']['duration'],
+						'remaining'            => $product['subscription']['duration'],
+						'date_next'            => $date_next
+					];
+				}
+
+				$order_data['products'][] = [
+					'product_id'   => $product['product_id'],
+					'master_id'    => $product['master_id'],
+					'name'         => $product['name'],
+					'model'        => $product['model'],
+					'option'       => $option_data,
+					'subscription' => $subscription_data,
+					'download'     => $product['download'],
+					'quantity'     => $product['quantity'],
+					'subtract'     => $product['subtract'],
+					'price'        => $product['price'],
+					'total'        => $product['total'],
+					'tax'          => $this->tax->getTax($product['price'], $product['tax_class_id']),
+					'reward'       => $product['reward']
+				];
+			}
+
+			// Gift Voucher
+			$order_data['vouchers'] = [];
+
+			if (!empty($this->session->data['vouchers'])) {
+				$order_data['vouchers'] = $this->session->data['vouchers'];
 			}
 
 			$this->load->model('checkout/order');
@@ -391,6 +417,7 @@ class Confirm extends \Opencart\System\Engine\Controller {
 			$data['payment'] = '';
 		}
 
+		// Validate if payment method has been set.
 		return $this->load->view('checkout/confirm', $data);
 	}
 

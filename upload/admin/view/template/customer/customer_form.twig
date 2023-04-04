@@ -921,10 +921,10 @@ $('#payment-method').on('click', 'button', function (e) {
         dataType: 'json',
         contentType: 'application/x-www-form-urlencoded',
         beforeSend: function () {
-            $(element).prop('disabled', true).addClass('loading');
+            $(element).button('loading');
         },
         complete: function () {
-            $(element).prop('disabled', false).removeClass('loading');
+            $(element).button('reset');
         },
         success: function (json) {
             $('.alert-dismissible').remove();
@@ -995,10 +995,10 @@ $('#button-history').on('click', function (e) {
         dataType: 'json',
         contentType: 'application/x-www-form-urlencoded',
         beforeSend: function () {
-            $('#button-history').prop('disabled', true).addClass('loading');
+            $('#button-history').button('loading');
         },
         complete: function () {
-            $('#button-history').prop('disabled', false).removeClass('loading');
+            $('#button-history').button('reset');
         },
         success: function (json) {
             $('.alert-dismissible').remove();
@@ -1037,10 +1037,10 @@ $('#button-transaction').on('click', function (e) {
         dataType: 'json',
         contentType: 'application/x-www-form-urlencoded',
         beforeSend: function () {
-            $('#button-transaction').prop('disabled', true).addClass('loading');
+            $('#button-transaction').button('loading');
         },
         complete: function () {
-            $('#button-transaction').prop('disabled', false).removeClass('loading');
+            $('#button-transaction').button('reset');
         },
         success: function (json) {
             $('.alert-dismissible').remove();
@@ -1080,10 +1080,10 @@ $('#button-reward').on('click', function (e) {
         dataType: 'json',
         contentType: 'application/x-www-form-urlencoded',
         beforeSend: function () {
-            $('#button-reward').prop('disabled', true).addClass('loading');
+            $('#button-reward').button('loading');
         },
         complete: function () {
-            $('#button-reward').prop('disabled', false).removeClass('loading');
+            $('#button-reward').button('reset');
         },
         success: function (json) {
             $('.alert-dismissible').remove();

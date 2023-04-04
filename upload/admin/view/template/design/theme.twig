@@ -266,10 +266,10 @@ $('.tab-content').on('click', '.btn-primary', function (e) {
         data: 'code=' + encodeURIComponent(editor.getValue()),
         dataType: 'json',
         beforeSend: function () {
-            $(element).prop('disabled', true).addClass('loading');
+            $(element).button('loading');
         },
         complete: function () {
-            $(element).prop('disabled', false).removeClass('loading');
+            $(element).button('reset');
         },
         success: function (json) {
             $('.alert-dismissible').remove();
@@ -298,10 +298,10 @@ $('.tab-content').on('click', '.btn-danger', function (e) {
             url: 'index.php?route=design/theme.reset&user_token={{ user_token }}&store_id=' + $('.tab-content .active #input-store').val() + '&path=' + $('.tab-content .active input[name=\'path\']').val(),
             dataType: 'json',
             beforeSend: function () {
-                $(element).prop('disabled', true).addClass('loading');
+                $(element).button('loading');
             },
             complete: function () {
-                $(element).prop('disabled', false).removeClass('loading');
+                $(element).button('reset');
             },
             success: function (json) {
                 $('.alert-dismissible').remove();
@@ -347,10 +347,10 @@ $('#history').on('click', '.btn-primary', function (e) {
             url: 'index.php?route=design/theme.template&user_token={{ user_token }}&store_id=' + $(element).parent().parent().find('input[name=\'store_id\']').val() + '&path=' + $(element).parent().parent().find('input[name=\'path\']').val(),
             dataType: 'json',
             beforeSend: function () {
-                $(element).prop('disabled', true).addClass('loading');
+                $(element).button('loading');
             },
             complete: function () {
-                $(element).prop('disabled', false).removeClass('loading');
+                $(element).button('reset');
             },
             success: function (json) {
                 if (json['code']) {
@@ -406,10 +406,10 @@ $('#history').on('click', '.btn-danger', function (e) {
             url: $(element).attr('href'),
             dataType: 'json',
             beforeSend: function () {
-                $(element).prop('disabled', true).addClass('loading');
+                $(element).button('loading');
             },
             complete: function () {
-                $(element).prop('disabled', false).removeClass('loading');
+                $(element).button('reset');
             },
             success: function (json) {
                 $('.alert-dismissible').remove();

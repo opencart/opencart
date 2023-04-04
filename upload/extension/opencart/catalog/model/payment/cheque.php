@@ -1,27 +1,37 @@
 <?php
 namespace Opencart\Catalog\Model\Extension\Opencart\Payment;
 class Cheque extends \Opencart\System\Engine\Model {
-	public function getMethod(array $address): array {
+	public function getMethods(array $address = []): array {
 		$this->load->language('extension/opencart/payment/cheque');
-
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone_to_geo_zone` WHERE `geo_zone_id` = '" . (int)$this->config->get('payment_cheque_geo_zone_id') . "' AND `country_id` = '" . (int)$address['country_id'] . "' AND (`zone_id` = '" . (int)$address['zone_id'] . "' OR `zone_id` = '0')");
 
 		if ($this->cart->hasSubscription()) {
 			$status = false;
+		} elseif (!$this->config->get('config_checkout_payment_address')) {
+			$status = true;
 		} elseif (!$this->config->get('payment_cheque_geo_zone_id')) {
 			$status = true;
-		} elseif ($query->num_rows) {
-			$status = true;
 		} else {
-			$status = false;
+			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone_to_geo_zone` WHERE `geo_zone_id` = '" . (int)$this->config->get('payment_cheque_geo_zone_id') . "' AND `country_id` = '" . (int)$address['country_id'] . "' AND (`zone_id` = '" . (int)$address['zone_id'] . "' OR `zone_id` = '0')");
+
+			if ($query->num_rows) {
+				$status = true;
+			} else {
+				$status = false;
+			}
 		}
 
 		$method_data = [];
 
 		if ($status) {
+			$option_data['cheque'] = [
+				'code' => 'cheque.cheque',
+				'name' => $this->language->get('heading_title')
+			];
+
 			$method_data = [
 				'code'       => 'cheque',
 				'title'      => $this->language->get('heading_title'),
+				'option'     => $option_data,
 				'sort_order' => $this->config->get('payment_cheque_sort_order')
 			];
 		}

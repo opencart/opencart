@@ -164,10 +164,7 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 			$payment_methods = $this->model_checkout_payment_method->getMethods($payment_address);
 
 			if ($payment_methods) {
-				// Store payment methods in session
-				$this->session->data['payment_methods'] = $payment_methods;
-
-				$json['payment_methods'] = $payment_methods;
+				$json['payment_methods'] = $this->session->data['payment_methods'] = $payment_methods;
 			} else {
 				$json['error'] = sprintf($this->language->get('error_no_payment'), $this->url->link('information/contact', 'language=' . $this->config->get('config_language')));
 			}

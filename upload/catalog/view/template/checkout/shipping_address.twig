@@ -2,18 +2,21 @@
   <legend>{{ heading_title }}</legend>
 
   <div id="shipping-addresses" style="display: {% if addresses %}block{% else %}none{% endif %};">
+
     <div class="form-check">
       <input type="radio" name="shipping_existing" value="1" id="input-shipping-existing" class="form-check-input"{% if addresses %} checked{% endif %}/>
       <label for="input-shipping-existing" class="form-check-label">{{ text_address_existing }}</label>
     </div>
+
     <div class="form-check">
       <input type="radio" name="shipping_existing" value="0" id="input-shipping-new" class="form-check-input"{% if not addresses %} checked{% endif %}/>
       <label for="input-shipping-new" class="form-check-label">{{ text_address_new }}</label>
     </div>
+
   </div>
 
   <div id="shipping-existing" style="display: {% if addresses %}block{% else %}none{% endif %};">
-    <select name="address_id" id="input-shipping-address" class="form-select"{% if payment_address_required %} disabled{% endif %}>
+    <select name="address_id" id="input-shipping-address" class="form-select"{% if not addresses %} disabled{% endif %}>
       <option value="">{{ text_select }}</option>
       {% for address in addresses %}
         <option value="{{ address.address_id }}"{% if address.address_id == address_id %} selected{% endif %}>{{ address.firstname }} {{ address.lastname }},{% if address.company %} {{ address.company }},{% endif %} {{ address.address_1 }}, {{ address.city }}, {{ address.zone }}, {{ address.country }}</option>
@@ -213,11 +216,6 @@ $('input[name=\'shipping_existing\']').on('change', function () {
 $('#input-shipping-address').on('change', function () {
     var element = this;
 
-    $('#input-shipping-method').html('<option value="">{{ text_select }}</option>');
-    $('#input-shipping-method').prop('disabled', true);
-    $('#input-payment-method').html('<option value="">{{ text_select }}</option>');
-    $('#input-payment-method').prop('disabled', true);
-
     chain.attach(function () {
         return $.ajax({
             url: 'index.php?route=checkout/shipping_address.address&language={{ language }}&address_id=' + $(element).val(),
@@ -242,7 +240,9 @@ $('#input-shipping-address').on('change', function () {
                 if (json['success']) {
                     $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                    $('#button-shipping-method').trigger('click');
+                    $('#button-shipping-quote').prop('disabled', false);
+                    $('#input-payment-method').html('<option value="">{{ text_select }}</option>');
+                    $('#input-payment-method').prop('disabled', true);
                 }
             },
             error: function (xhr, ajaxOptions, thrownError) {
@@ -301,7 +301,7 @@ $('#form-shipping-address').on('submit', function (e) {
 
                     if (json['addresses']) {
                         for (i in json['addresses']) {
-                            html += '<option value="' + addresses[i]['value'] + '">' + addresses[i]['text'] + '</option>';
+                            html += '<option value="' + json['addresses'][i]['value'] + '">' + json['addresses'][i]['text'] + '</option>';
                         }
                     }
 
@@ -327,7 +327,9 @@ $('#form-shipping-address').on('submit', function (e) {
 
                     $('#input-payment-existing').trigger('click');
 
-                    $('#button-shipping-method').trigger('click');
+                    $('#button-shipping-quote').prop('disabled', false);
+                    $('#input-payment-method').html('<option value="">{{ text_select }}</option>');
+                    $('#input-payment-method').prop('disabled', true);
                 }
             },
             error: function (xhr, ajaxOptions, thrownError) {
@@ -377,6 +379,4 @@ $('#input-shipping-country').on('change', function () {
         });
     });
 });
-
-$('#input-shipping-country').trigger('change');
 //--></script>

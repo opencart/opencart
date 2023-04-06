@@ -151,8 +151,6 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-
-
 			// If no default address add it
 			$address_id = $this->customer->getAddressId();
 
@@ -170,6 +168,7 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 
 			$json['success'] = $this->language->get('text_success');
 
+			// Clear payment and shipping methods
 			unset($this->session->data['shipping_method']);
 			unset($this->session->data['shipping_methods']);
 			unset($this->session->data['payment_method']);
@@ -252,6 +251,7 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 
 			$json['success'] = $this->language->get('text_success');
 
+			// Clear payment and shipping methods
 			unset($this->session->data['shipping_method']);
 			unset($this->session->data['shipping_methods']);
 			unset($this->session->data['payment_method']);
@@ -265,9 +265,7 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 
 				if ($payment_methods) {
 					// Store payment methods in session
-					$this->session->data['payment_methods'] = $payment_methods;
-
-					$json['payment_methods'] = $payment_methods;
+					$json['payment_methods'] = $this->session->data['payment_methods'] = $payment_methods;
 				} else {
 					$json['error'] = sprintf($this->language->get('error_no_payment'), $this->url->link('information/contact', 'language=' . $this->config->get('config_language')));
 				}

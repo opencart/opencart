@@ -18,7 +18,8 @@
 </form>
 <br/>
 <div class="mb-2">
-  <label for="input-comment" class="form-label"><strong>{{ text_comments }}</strong></label> <textarea name="comment" rows="3" id="input-comment" class="form-control">{{ comment }}</textarea>
+  <label for="input-comment" class="form-label"><strong>{{ text_comments }}</strong></label>
+  <textarea name="comment" rows="3" id="input-comment" class="form-control">{{ comment }}</textarea>
 </div>
 {% if text_agree %}
   <div class="mb-2">
@@ -79,7 +80,7 @@ $('#button-payment-method').on('click', function() {
     });
 });
 
-{% if not payment_methods and not payment_address_required and not shipping_required %}
+{% if status %}
 $('#button-payment-method').trigger('click');
 {% endif %}
 
@@ -96,11 +97,11 @@ $('#input-payment-method').on('change', function() {
             contentType: 'application/x-www-form-urlencoded',
             beforeSend: function() {
                 $(element).prop('disabled', true);
-                $('#button-payment-method').prop('disabled', true);
+                $('#button-payment-method').button('loading');
             },
             complete: function() {
                 $(element).prop('disabled', false);
-                $('#button-payment-method').prop('disabled', false);
+                $('#button-payment-method').button('reset');
             },
             success: function(json) {
                 console.log(json);
@@ -130,8 +131,6 @@ $('#input-payment-method').on('change', function() {
 var timer = '';
 
 $('#input-comment').on('keydown', function() {
-    var button = $('#button-confirm').prop('disabled');
-
     // Request
     clearTimeout(timer);
 
@@ -144,10 +143,10 @@ $('#input-comment').on('keydown', function() {
                 dataType: 'json',
                 contentType: 'application/x-www-form-urlencoded',
                 beforeSend: function() {
-                    $('#button-confirm').prop('disabled', true);
+                    $('#button-confirm').button('loading');
                 },
                 complete: function() {
-                    $('#button-confirm').prop('disabled', button);
+                    $('#button-confirm').button('reset');
                 },
                 success: function(json) {
                     $('.alert-dismissible').remove();
@@ -190,10 +189,10 @@ $('#input-agree').on('change', function() {
             dataType: 'json',
             contentType: 'application/x-www-form-urlencoded',
             beforeSend: function() {
-                $(element).prop('disabled', true);
+                $('#button-confirm').button('loading');
             },
             complete: function() {
-                $(element).prop('disabled', false);
+                $('#button-confirm').button('reset');
             },
             success: function(json) {
                 $('#checkout-confirm').load('index.php?route=checkout/confirm.confirm&language={{ language }}');

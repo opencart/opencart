@@ -67,6 +67,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 				'quantity'     => $product['quantity'],
 				'price'        => $price,
 				'total'        => $total,
+				'reward'       => $product['reward'],
 				'href'         => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product['product_id'])
 			];
 		}

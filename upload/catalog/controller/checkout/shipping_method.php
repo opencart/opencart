@@ -33,7 +33,7 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 		}
 
 		// Validate if shipping not required. If not the customer should not have reached this page.
-		if (!$this->cart->hasShipping() || !isset($this->session->data['shipping_address'])) {
+		if (!isset($this->session->data['shipping_address'])) {
 			$status = false;
 		}
 
@@ -59,7 +59,7 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 		return $this->load->view('checkout/shipping_method', $data);
 	}
 
-	public function getMethods(): void {
+	public function quote(): void {
 		$this->load->language('checkout/shipping_method');
 
 		$json = [];
@@ -104,10 +104,7 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 			$shipping_methods = $this->model_checkout_shipping_method->getMethods($this->session->data['shipping_address']);
 
 			if ($shipping_methods) {
-				// Store shipping methods in session
-				$this->session->data['shipping_methods'] = $shipping_methods;
-
-				$json['shipping_methods'] = $shipping_methods;
+				$json['shipping_methods'] = $this->session->data['shipping_methods'] = $shipping_methods;
 			} else {
 				$json['error'] = sprintf($this->language->get('error_no_shipping'), $this->url->link('information/contact', 'language=' . $this->config->get('config_language')));
 			}
@@ -170,6 +167,8 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 
 			$json['success'] = $this->language->get('text_success');
 
+			// Clear payment methods
+			unset($this->session->data['payment_method']);
 			unset($this->session->data['payment_methods']);
 		}
 

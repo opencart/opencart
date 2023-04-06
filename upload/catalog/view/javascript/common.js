@@ -548,8 +548,12 @@ $(document).ready(function() {
         $.fn.button = function(state) {
             return this.each(function() {
                 var element = this;
+                var disabled = $(element).prop('disabled');
 
                 $.extend(this, state);
+
+                console.log(state);
+                console.log(disabled);
 
                 if (state == 'loading') {
                     this.html = $(element).html();

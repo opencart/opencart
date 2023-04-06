@@ -10,16 +10,7 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 
 		$data['upload'] = $this->url->link('tool/upload', 'language=' . $this->config->get('config_language'));
 
-		// Set shipping address
 		$this->load->model('account/address');
-
-		if ($this->customer->isLogged() && !isset($this->session->data['shipping_address'])) {
-			$address_info = $this->model_account_address->getAddress($this->customer->getId(), $this->customer->getAddressId());
-
-			if ($address_info) {
-				$this->session->data['shipping_address'] = $address_info;
-			}
-		}
 
 		$data['addresses'] = $this->model_account_address->getAddresses($this->customer->getId());
 
@@ -211,11 +202,6 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 			$json['redirect'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'), true);
 		}
 
-		// Validate if payment address is set if required in settings
-		if ($this->config->get('config_checkout_payment_address') && !isset($this->session->data['payment_address'])) {
-			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
-		}
-
 		// Validate if shipping is not required
 		if (!$this->cart->hasShipping()) {
 			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
@@ -228,6 +214,8 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 
 			if (!$address_info) {
 				$json['error'] = $this->language->get('error_address');
+
+				unset($this->session->data['shipping_address']);
 			}
 		}
 

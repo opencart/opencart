@@ -4,53 +4,19 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 	public function index(): string {
 		$this->load->language('checkout/shipping_method');
 
-		$status = true;
-
-		// Validate cart has products and has stock.
-		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
-			$status = false;
-		}
-
-		// Validate minimum quantity requirements.
-		$products = $this->cart->getProducts();
-
-		foreach ($products as $product) {
-			if (!$product['minimum']) {
-				$status = false;
-
-				break;
-			}
-		}
-
-		// Validate if customer session data is set
-		if (!isset($this->session->data['customer'])) {
-			$status = false;
-		}
-
-		// Validate if payment address is set if required in settings
-		if ($this->config->get('config_checkout_payment_address') && !isset($this->session->data['payment_address'])) {
-			$status = false;
-		}
-
-		// Validate if shipping not required. If not the customer should not have reached this page.
-		if (!isset($this->session->data['shipping_address'])) {
-			$status = false;
-		}
-
-		if (!$status) {
-			// Remove any shipping methods that does not meet checkout validation requirements
-			unset($this->session->data['shipping_methods']);
-		}
-
-		if (isset($this->session->data['shipping_methods'])) {
-			$data['shipping_methods'] = $this->session->data['shipping_methods'];
-		} else {
-			$data['shipping_methods'] = [];
-		}
-
 		if (isset($this->session->data['shipping_method'])) {
-			$data['code'] = $this->session->data['shipping_method'];
+			$shipping_method = $this->session->data['shipping_method'];
 		} else {
+			$shipping_method = '';
+		}
+
+		$shipping = explode('.', $shipping_method);
+
+		if (isset($shipping[0]) && isset($shipping[1]) && isset($this->session->data['shipping_methods']) && isset($this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]])) {
+			$data['shipping_method'] = $this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]]['title'];
+			$data['code'] = $shipping_method;
+		} else {
+			$data['shipping_method'] = '';
 			$data['code'] = '';
 		}
 
@@ -64,11 +30,9 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		$status = true;
-
 		// Validate cart has products and has stock.
 		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
-			$status = false;
+			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
 		}
 
 		// Validate minimum quantity requirements.
@@ -76,28 +40,30 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 
 		foreach ($products as $product) {
 			if (!$product['minimum']) {
-				$status = false;
+				$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
 
 				break;
 			}
 		}
 
-		// Validate if customer is logged in or customer session data is not set
-		if (!isset($this->session->data['customer'])) {
-			$status = false;
+		if (!$json) {
+			// Validate if customer data is set
+			if (!isset($this->session->data['customer'])) {
+				$json['error'] = $this->language->get('error_customer');
+			}
+
+			// Validate if payment address is set if required in settings
+			if ($this->config->get('config_checkout_payment_address') && !isset($this->session->data['payment_address'])) {
+				$json['error'] = $this->language->get('error_payment_address');
+			}
+
+			// Validate if shipping not required. If not the customer should not have reached this page.
+			if (!isset($this->session->data['shipping_address'])) {
+				$json['error'] = $this->language->get('error_shipping_address');
+			}
 		}
 
-		// Validate if payment address is set if required in settings
-		if ($this->config->get('config_checkout_payment_address') && !isset($this->session->data['payment_address'])) {
-			$status = false;
-		}
-
-		// Validate if shipping not required. If not the customer should not have reached this page.
-		if (!$this->cart->hasShipping() || !isset($this->session->data['shipping_address'])) {
-			$status = false;
-		}
-
-		if ($status) {
+		if (!$json) {
 			// Shipping methods
 			$this->load->model('checkout/shipping_method');
 

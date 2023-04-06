@@ -24,8 +24,8 @@ class BankTransfer extends \Opencart\System\Engine\Model {
 
 		if ($status) {
 			$option_data['bank_transfer'] = [
-				'code' => 'bank_transfer.bank_transfer',
-				'name' => $this->language->get('heading_title')
+				'code'  => 'bank_transfer.bank_transfer',
+				'title' => $this->language->get('heading_title')
 			];
 
 			$method_data = [

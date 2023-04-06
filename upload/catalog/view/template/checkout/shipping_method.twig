@@ -1,12 +1,16 @@
 <fieldset>
   <legend>{{ heading_title }}</legend>
-  <input type="text" name="shipping_method" value="" placeholder="{{ entry_shipping_method }}" id="input-shipping-method" class="form-control mb-2"/>
-  <div class="text-end">
-    <button type="button" id="button-shipping-quote" class="btn btn-primary">{{ button_quote }}</button>
+  <div class="input-group">
+    <span class="input-group-text"><i class="fa fa-truck"></i></span><input type="text" name="shipping_method" value="{{ shipping_method }}" placeholder="{{ entry_shipping_method }}" id="input-shipping-method" class="form-control" readonly/>
+  </div>
+  <div id="error-shipping-method" class="invalid-feedback"></div>
+  <input type="hidden" name="code" value="{{ code }}" id="input-shipping-code"/>
+  <div class="text-end mt-2">
+    <button type="button" id="button-shipping-methods" class="btn btn-primary">{{ button_select }}</button>
   </div>
 </fieldset>
 <script type="text/javascript"><!--
-$('#button-shipping-quote').on('click', function() {
+$('#button-shipping-methods').on('click', function() {
     var element = this;
 
     chain.attach(function() {
@@ -14,31 +18,35 @@ $('#button-shipping-quote').on('click', function() {
             url: 'index.php?route=checkout/shipping_method.quote&language={{ language }}',
             dataType: 'json',
             beforeSend: function() {
-                $('#button-shipping-quote').button('loading');
+                $(element).button('loading');
             },
             complete: function() {
-                $('#button-shipping-quote').button('reset');
+                $(element).button('reset');
             },
             success: function(json) {
                 console.log(json);
 
+                $('#input-shipping-method').parent().removeClass('is-invalid');
+                $('#error-shipping-method').removeClass('d-block');
+
                 if (json['error']) {
-                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    $('#input-shipping-method').parent().addClass('is-invalid');
+                    $('#error-shipping-method').html(json['error']);
                 }
 
                 if (json['shipping_methods']) {
                     $('#modal-shipping').remove();
 
                     html = '<div id="modal-shipping" class="modal">';
-                    html += '  <div class="modal-dialog">';
+                    html += '  <div class="modal-dialog modal-dialog-centered">';
                     html += '    <div class="modal-content">';
                     html += '      <div class="modal-header">';
-                    html += '        <h4 class="modal-title">{{ text_shipping_method }}</h4>';
+                    html += '        <h5 class="modal-title"><i class="fa fa-truck"></i> {{ text_shipping_method }}</h5>';
                     html += '        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>';
                     html += '      </div>';
                     html += '      <div class="modal-body">';
                     html += '        <form id="form-shipping-method">';
-                    html += '          <p>{{ text_estimate }}</p>';
+                    html += '          <p>{{ text_shipping }}</p>';
 
                     for (i in json['shipping_methods']) {
                         html += '<p><strong>' + json['shipping_methods'][i]['title'] + '</strong></p>';
@@ -51,7 +59,7 @@ $('#button-shipping-quote').on('click', function() {
 
                                 html += '<input type="radio" name="shipping_method" value="' + json['shipping_methods'][i]['quote'][j]['code'] + '" id="input-shipping-method-' + code + '"';
 
-                                if (json['shipping_methods'][i]['quote'][j]['code'] == '{{ code }}') {
+                                if (json['shipping_methods'][i]['quote'][j]['code'] == $('#input-shipping-code').val()) {
                                     html += ' checked';
                                 }
 
@@ -65,7 +73,7 @@ $('#button-shipping-quote').on('click', function() {
                     }
 
                     html += '          <div class="text-end">';
-                    html += '            <button type="submit" id="button-shipping-method" class="btn btn-primary">{{ button_shipping }}</button>';
+                    html += '            <button type="submit" id="button-shipping-method" class="btn btn-primary">{{ button_continue }}</button>';
                     html += '          </div>';
                     html += '        </form>';
                     html += '      </div>';
@@ -76,10 +84,6 @@ $('#button-shipping-quote').on('click', function() {
                     $('body').append(html);
 
                     $('#modal-shipping').modal('show');
-
-                    // Reset payment methods
-                    $('#input-payment-method').html('<option value="">{{ text_select }}</option>');
-                    $('#input-payment-method').prop('disabled', true);
                 }
             },
             error: function(xhr, ajaxOptions, thrownError) {
@@ -89,7 +93,6 @@ $('#button-shipping-quote').on('click', function() {
     });
 });
 
-// Shipping Method
 $(document).on('submit', '#form-shipping-method', function(e) {
     e.preventDefault();
 
@@ -125,12 +128,10 @@ $(document).on('submit', '#form-shipping-method', function(e) {
                     $('#modal-shipping').modal('hide');
 
                     // Force the payment method to be re-selected with new shipping total
-                    $('#input-payment-method').html('<option value="">{{ text_select }}</option>');
-                    $('#input-payment-method').prop('disabled', true);
+                    $('#input-payment-method').val('');
+                    $('#input-shipping-method').val('');
 
                     $('#checkout-confirm').load('index.php?route=checkout/confirm.confirm&language={{ language }}');
-
-                    $('#button-payment-method').trigger('click');
                 }
             },
             error: function(xhr, ajaxOptions, thrownError) {

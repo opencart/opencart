@@ -26,8 +26,8 @@ class COD extends \Opencart\System\Engine\Model {
 
 		if ($status) {
 			$option_data['cod'] = [
-				'code' => 'cod.cod',
-				'name' => $this->language->get('heading_title')
+				'code'  => 'cod.cod',
+				'title' => $this->language->get('heading_title')
 			];
 
 			$method_data = [

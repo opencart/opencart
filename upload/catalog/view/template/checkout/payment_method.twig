@@ -1,25 +1,17 @@
-<form id="form-payment-method">
-  <fieldset>
-    <legend>{{ heading_title }}</legend>
-    <div class="input-group">
-      <select name="payment_method" id="input-payment-method" class="form-select"{% if not payment_methods %} disabled{% endif %}>
-        <option value="">{{ text_select }}</option>
-        {% for payment_method in payment_methods %}
-          <optgroup label="{{ payment_method.title }}">
-            {% for option in payment_method.option %}
-              <option value="{{ option.code }}"{% if option.code == code %} selected{% endif %}>{{ option.name }}</option>
-            {% endfor %}
-          </optgroup>
-        {% endfor %}
-      </select>
-      <button type="button" id="button-payment-method" class="btn btn-light"><i class="fa-solid fa-rotate"></i></button>
-    </div>
-  </fieldset>
-</form>
+<fieldset>
+  <legend>{{ heading_title }}</legend>
+  <div class="input-group">
+    <span class="input-group-text"><i class="fa fa-credit-card"></i></span><input type="text" name="payment_method" value="{{ payment_method }}" placeholder="{{ entry_payment_method }}" id="input-payment-method" class="form-control" readonly/>
+  </div>
+  <div id="error-shipping-method" class="invalid-feedback"></div>
+  <input type="hidden" name="code" value="{{ code }}" id="input-payment-code"/>
+  <div class="text-end mt-2">
+    <button type="button" id="button-payment-methods" class="btn btn-primary">{{ button_select }}</button>
+  </div>
+</fieldset>
 <br/>
 <div class="mb-2">
-  <label for="input-comment" class="form-label"><strong>{{ text_comments }}</strong></label>
-  <textarea name="comment" rows="3" id="input-comment" class="form-control">{{ comment }}</textarea>
+  <label for="input-comment" class="form-label"><strong>{{ text_comments }}</strong></label> <textarea name="comment" rows="3" id="input-comment" class="form-control">{{ comment }}</textarea>
 </div>
 {% if text_agree %}
   <div class="mb-2">
@@ -27,51 +19,81 @@
   </div>
 {% endif %}
 <script type="text/javascript"><!--
-// Payment Methods
-$('#button-payment-method').on('click', function() {
+$('#button-payment-methods').on('click', function() {
     var element = this;
-
-    $('#input-payment-method').html('<option value="">{{ text_select }}</option>');
-    $('#input-payment-method').prop('disabled', true);
 
     chain.attach(function() {
         return $.ajax({
             url: 'index.php?route=checkout/payment_method.getMethods&language={{ language }}',
             dataType: 'json',
             beforeSend: function() {
-                $('#button-payment-method').button('loading');
+                $(element).button('loading');
             },
             complete: function() {
-                $('#button-payment-method').button('reset');
+                $(element).button('reset');
             },
             success: function(json) {
                 console.log(json);
 
-                if (json['redirect']) {
-                    location = json['redirect'];
-                }
+                $('#input-payment-method').parent().removeClass('is-invalid');
+                $('#error-payment-method').removeClass('d-block');
 
                 if (json['error']) {
-                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    $('#input-payment-method').parent().addClass('is-invalid');
+                    $('#error-payment-method').html(json['error']);
                 }
-
-                html = '<option value="">{{ text_select }}</option>';
 
                 if (json['payment_methods']) {
+                    $('#modal-payment').remove();
+
+                    html = '<div id="modal-payment" class="modal modal-dialog-centered">';
+                    html += '  <div class="modal-dialog">';
+                    html += '    <div class="modal-content">';
+                    html += '      <div class="modal-header">';
+                    html += '        <h5 class="modal-title"><i class="fa fa-credit-card"></i> {{ text_payment_method }}</h5>';
+                    html += '        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>';
+                    html += '      </div>';
+                    html += '      <div class="modal-body">';
+                    html += '        <form id="form-payment-method">';
+                    html += '          <p>{{ text_payment }}</p>';
+
                     for (i in json['payment_methods']) {
-                        html += '<optgroup label="' + json['payment_methods'][i]['title'] + '">';
+                        html += '<p><strong>' + json['payment_methods'][i]['title'] + '</strong></p>';
 
-                        for (j in json['payment_methods'][i]['option']) {
-                            html += '<option value="' + json['payment_methods'][i]['option'][j]['code'] + '">' + json['payment_methods'][i]['option'][j]['name'] + '</option>';
+                        if (!json['payment_methods'][i]['error']) {
+                            for (j in json['payment_methods'][i]['option']) {
+                                html += '<div class="form-check">';
+
+                                var code = i + '-' + j.replaceAll('_', '-');
+
+                                html += '<input type="radio" name="payment_method" value="' + json['payment_methods'][i]['option'][j]['code'] + '" id="input-payment-method-' + code + '"';
+
+                                if (json['payment_methods'][i]['option'][j]['code'] == $('#input-payment-code').val()) {
+                                    html += ' checked';
+                                }
+
+                                html += '/>';
+                                html += '  <label for="input-payment-method-' + code + '">' + json['payment_methods'][i]['option'][j]['title'] + '</label>';
+                                html += '</div>';
+                            }
+                        } else {
+                            html += '<div class="alert alert-danger alert-dismissible">' + json['payment_methods'][i]['error'] + '</div>';
                         }
-
-                        html += '</optgroup>';
                     }
 
-                    $('#input-payment-method').prop('disabled', false);
-                }
+                    html += '          <div class="text-end">';
+                    html += '            <button type="submit" id="button-payment-method" class="btn btn-primary">{{ button_continue }}</button>';
+                    html += '          </div>';
+                    html += '        </form>';
+                    html += '      </div>';
+                    html += '    </div>';
+                    html += '  </div>';
+                    html += '</div>';
 
-                $('#input-payment-method').html(html);
+                    $('body').append(html);
+
+                    $('#modal-payment').modal('show');
+                }
             },
             error: function(xhr, ajaxOptions, thrownError) {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -80,12 +102,7 @@ $('#button-payment-method').on('click', function() {
     });
 });
 
-{% if status %}
-$('#button-payment-method').trigger('click');
-{% endif %}
-
-// Payment Method
-$('#input-payment-method').on('change', function() {
+$(document).on('submit', '#form-payment-method', function(e) {
     var element = this;
 
     chain.attach(function() {
@@ -96,11 +113,9 @@ $('#input-payment-method').on('change', function() {
             dataType: 'json',
             contentType: 'application/x-www-form-urlencoded',
             beforeSend: function() {
-                $(element).prop('disabled', true);
                 $('#button-payment-method').button('loading');
             },
             complete: function() {
-                $(element).prop('disabled', false);
                 $('#button-payment-method').button('reset');
             },
             success: function(json) {

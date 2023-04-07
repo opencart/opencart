@@ -13,6 +13,7 @@ class Success extends \Opencart\System\Engine\Controller {
 			unset($this->session->data['shipping_method']);
 			unset($this->session->data['shipping_methods']);
 			unset($this->session->data['comment']);
+			unset($this->session->data['agree']);
 			unset($this->session->data['coupon']);
 			unset($this->session->data['reward']);
 			unset($this->session->data['voucher']);

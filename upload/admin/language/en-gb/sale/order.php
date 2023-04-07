@@ -35,10 +35,14 @@ $_['text_month']                 = 'month';
 $_['text_year']                  = 'year';
 $_['text_more']                  = 'More..';
 $_['text_less']                  = 'Less..';
+
+
 $_['text_payment_address']       = 'Payment Address';
 $_['text_payment_method']        = 'Payment Method';
 $_['text_shipping_address']      = 'Shipping Address';
 $_['text_shipping_method']       = 'Shipping Method';
+
+
 $_['text_comment']               = 'Comment';
 $_['text_history']               = 'History';
 $_['text_history_add']           = 'Add History';
@@ -113,6 +117,7 @@ $_['entry_override']             = 'Override';
 $_['entry_comment']              = 'Comment';
 $_['entry_language']             = 'Language';
 $_['entry_currency']             = 'Currency';
+$_['entry_affiliate']            = 'Affiliate';
 $_['entry_coupon']               = 'Coupon';
 $_['entry_voucher']              = 'Voucher';
 $_['entry_reward']               = 'Use Reward Points';

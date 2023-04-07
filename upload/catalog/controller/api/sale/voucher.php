@@ -33,6 +33,11 @@ class Voucher extends \Opencart\System\Engine\Controller {
 
 				$json['success'] = $this->language->get('text_remove');
 			}
+
+			unset($this->session->data['shipping_method']);
+			unset($this->session->data['shipping_methods']);
+			unset($this->session->data['payment_method']);
+			unset($this->session->data['payment_methods']);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -99,7 +104,9 @@ class Voucher extends \Opencart\System\Engine\Controller {
 
 			$json['success'] = $this->language->get('text_cart');
 
+			unset($this->session->data['shipping_method']);
 			unset($this->session->data['shipping_methods']);
+			unset($this->session->data['payment_method']);
 			unset($this->session->data['payment_methods']);
 		}
 
@@ -124,11 +131,12 @@ class Voucher extends \Opencart\System\Engine\Controller {
 
 		// Remove
 		if (!$json) {
-			unset($this->session->data['vouchers'][$key]);
-
 			$json['success'] = $this->language->get('text_success');
 
+			unset($this->session->data['vouchers'][$key]);
+			unset($this->session->data['shipping_method']);
 			unset($this->session->data['shipping_methods']);
+			unset($this->session->data['payment_method']);
 			unset($this->session->data['payment_methods']);
 			unset($this->session->data['reward']);
 		}

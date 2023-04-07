@@ -34,14 +34,19 @@ class Reward extends \Opencart\System\Engine\Controller {
 
 		if (!$json) {
 			if ($reward) {
-				$this->session->data['reward'] = $reward;
-
 				$json['success'] = $this->language->get('text_success');
-			} else {
-				unset($this->session->data['reward']);
 
+				$this->session->data['reward'] = $reward;
+			} else {
 				$json['success'] = $this->language->get('text_remove');
+
+				unset($this->session->data['reward']);
 			}
+
+			unset($this->session->data['shipping_method']);
+			unset($this->session->data['shipping_methods']);
+			unset($this->session->data['payment_method']);
+			unset($this->session->data['payment_methods']);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

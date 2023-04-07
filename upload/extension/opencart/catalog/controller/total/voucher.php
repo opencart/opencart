@@ -47,13 +47,13 @@ class Voucher extends \Opencart\System\Engine\Controller {
 
 		if (!$json) {
 			if ($voucher) {
-				$this->session->data['voucher'] = $voucher;
-
 				$json['success'] = $this->language->get('text_success');
-			} else {
-				unset($this->session->data['voucher']);
 
+				$this->session->data['voucher'] = $voucher;
+			} else {
 				$json['success'] = $this->language->get('text_remove');
+
+				unset($this->session->data['voucher']);
 			}
 
 			unset($this->session->data['shipping_method']);

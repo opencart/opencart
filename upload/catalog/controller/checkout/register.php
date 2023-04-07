@@ -562,8 +562,6 @@ class Register extends \Opencart\System\Engine\Controller {
 					if (!$customer_group_info['approval']) {
 						$this->session->data['shipping_address'] = $shipping_address_data;
 					}
-
-					unset($this->session->data['shipping_methods']);
 				} elseif (!$customer_group_info['approval'] && $this->config->get('config_checkout_payment_address')) {
 					$this->session->data['shipping_address'] = $this->session->data['payment_address'];
 

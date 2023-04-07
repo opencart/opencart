@@ -80,6 +80,7 @@ class Proxy {
 		} else {
 			$trace = debug_backtrace();
 
+			print_r($trace);
 			throw new \Exception('<b>Notice</b>:  Undefined property: Proxy::' . $method . ' in <b>' . $trace[0]['file'] . '</b> on line <b>' . $trace[0]['line'] . '</b>');
 		}
 	}

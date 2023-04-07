@@ -365,12 +365,16 @@ class Address extends \Opencart\System\Engine\Controller {
 
 					unset($this->session->data['shipping_method']);
 					unset($this->session->data['shipping_methods']);
+					unset($this->session->data['payment_method']);
+					unset($this->session->data['payment_methods']);
 				}
 
 				// If address is in session update it.
 				if (isset($this->session->data['payment_address']) && ($this->session->data['payment_address']['address_id'] == $this->request->get['address_id'])) {
 					$this->session->data['payment_address'] = $this->model_account_address->getAddress($this->customer->getId(), $this->request->get['address_id']);
 
+					unset($this->session->data['shipping_method']);
+					unset($this->session->data['shipping_methods']);
 					unset($this->session->data['payment_method']);
 					unset($this->session->data['payment_methods']);
 				}
@@ -437,11 +441,15 @@ class Address extends \Opencart\System\Engine\Controller {
 				unset($this->session->data['shipping_address']);
 				unset($this->session->data['shipping_method']);
 				unset($this->session->data['shipping_methods']);
+				unset($this->session->data['payment_method']);
+				unset($this->session->data['payment_methods']);
 			}
 
 			// Delete address from session.
 			if (isset($this->session->data['payment_address']['address_id']) && ($this->session->data['payment_address']['address_id'] == $address_id)) {
 				unset($this->session->data['payment_address']);
+				unset($this->session->data['shipping_method']);
+				unset($this->session->data['shipping_methods']);
 				unset($this->session->data['payment_method']);
 				unset($this->session->data['payment_methods']);
 			}

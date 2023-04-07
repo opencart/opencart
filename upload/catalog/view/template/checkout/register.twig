@@ -563,6 +563,9 @@ $('#form-register').on('submit', function(e) {
                         $('#input-captcha').prop('disabled', true);
                         $('#input-register-agree').prop('disabled', true);
                     }
+
+                    $('#input-shipping-method').val('');
+                    $('#input-payment-method').val('');
                 }
             },
             error: function(xhr, ajaxOptions, thrownError) {

@@ -1,6 +1,5 @@
 <fieldset>
   <legend>{{ heading_title }}</legend>
-
   <div id="payment-addresses" style="display: {% if addresses %}block{% else %}none{% endif %};">
     <div class="form-check">
       <input type="radio" name="payment_existing" value="1" id="input-payment-existing" class="form-check-input"{% if addresses %} checked{% endif %}/>
@@ -11,7 +10,6 @@
       <label for="input-payment-new" class="form-check-label">{{ text_address_new }}</label>
     </div>
   </div>
-
   <div id="payment-existing" style="display: {% if addresses %}block{% else %}none{% endif %};">
     <select name="address_id" id="input-payment-address" class="form-select">
       <option value="">{{ text_select }}</option>
@@ -19,8 +17,8 @@
         <option value="{{ address.address_id }}"{% if address.address_id == address_id %} selected{% endif %}>{{ address.firstname }} {{ address.lastname }},{% if address.company %} {{ address.company }},{% endif %} {{ address.address_1 }}, {{ address.city }}, {{ address.zone }}, {{ address.country }}</option>
       {% endfor %}
     </select>
+    <div id="error-payment-address" class="invalid-feedback"></div>
   </div>
-
   <br/>
   <div id="payment-new" style="display: {% if not addresses %}block{% else %}none{% endif %};">
     <form id="form-payment-address">
@@ -214,32 +212,25 @@ $('#input-payment-address').on('change', function() {
             success: function(json) {
                 console.log(json);
 
+                $('#input-payment-address').removeClass('is-invalid');
+                $('#error-payment-address').removeClass('d-block');
+
                 if (json['redirect']) {
                     location = json['redirect'];
                 }
 
                 if (json['error']) {
-                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    $('#input-payment-address').addClass('is-invalid');
+                    $('#error-payment-address').html(json['error']).addClass('d-block');
                 }
 
                 if (json['success']) {
                     $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                    $('#input-shipping-method').html('<option value="">{{ text_select }}</option>');
-                    $('#input-shipping-method').prop('disabled', true);
-                    $('#input-payment-method').html('<option value="">{{ text_select }}</option>');
-                    $('#input-payment-method').prop('disabled', true);
+                    $('#input-shipping-method').val('');
+                    $('#input-payment-method').val('');
 
-                  {% if shipping_required %}
-                    $('#input-shipping-address').prop('disabled', false);
-
-
-
-
-                  {% else %}
-                    $('#button-payment-method').trigger('click');
-                  {% endif %}
-
+                    $('#checkout-confirm').load('index.php?route=checkout/confirm.confirm&language={{ language }}');
                 }
             },
             error: function(xhr, ajaxOptions, thrownError) {
@@ -252,11 +243,6 @@ $('#input-payment-address').on('change', function() {
 // New Payment Address
 $('#form-payment-address').on('submit', function(e) {
     e.preventDefault();
-
-    $('#input-shipping-method').html('<option value="">{{ text_select }}</option>');
-    $('#input-shipping-method').prop('disabled', true);
-    $('#input-payment-method').html('<option value="">{{ text_select }}</option>');
-    $('#input-payment-method').prop('disabled', true);
 
     chain.attach(function() {
         return $.ajax({
@@ -303,7 +289,7 @@ $('#form-payment-address').on('submit', function(e) {
 
                     if (json['addresses']) {
                         for (i in json['addresses']) {
-                            html += '<option value="' + addresses[i]['value'] + '">' + addresses[i]['text'] + '</option>';
+                            html += '<option value="' + json['addresses'][i]['value'] + '">' + json['addresses'][i]['text'] + '</option>';
                         }
                     }
 
@@ -330,11 +316,10 @@ $('#form-payment-address').on('submit', function(e) {
 
                     $('#input-shipping-existing').trigger('click');
 
-                    $('#input-shipping-address').prop('disabled', false);
+                    $('#input-shipping-method').val('');
+                    $('#input-payment-method').val('');
 
-                  {% if not shipping_required %}
-                    $('#button-payment-method').trigger('click');
-                  {% endif %}
+                    $('#checkout-confirm').load('index.php?route=checkout/confirm.confirm&language={{ language }}');
                 }
             },
             error: function(xhr, ajaxOptions, thrownError) {
@@ -384,6 +369,4 @@ $('#input-payment-country').on('change', function() {
         });
     });
 });
-
-$('#input-payment-country').trigger('change');
 //--></script>

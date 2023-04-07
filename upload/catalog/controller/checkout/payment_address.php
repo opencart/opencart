@@ -219,6 +219,9 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 				$json['error'] = $this->language->get('error_address');
 
 				unset($this->session->data['payment_address']);
+				unset($this->session->data['shipping_methods']);
+				unset($this->session->data['payment_method']);
+				unset($this->session->data['payment_methods']);
 			}
 		}
 

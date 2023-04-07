@@ -101,22 +101,22 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		// Validate if customer is logged in or customer session data is not set
-		if (!isset($this->session->data['customer'])) {
-			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
-		}
-
-		// Validate if payment address is set if required in settings
-		if ($this->config->get('config_checkout_payment_address') && !isset($this->session->data['payment_address'])) {
-			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
-		}
-
-		// Validate if shipping not required. If not the customer should not have reached this page.
-		if (!$this->cart->hasShipping() || !isset($this->session->data['shipping_address'])) {
-			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
-		}
-
 		if (!$json) {
+			// Validate if customer is logged in or customer session data is not set
+			if (!isset($this->session->data['customer'])) {
+				$json['error'] = $this->language->get('error_customer');
+			}
+
+			// Validate if payment address is set if required in settings
+			if ($this->config->get('config_checkout_payment_address') && !isset($this->session->data['payment_address'])) {
+				$json['error'] = $this->language->get('error_payment_address');
+			}
+
+			// Validate if shipping not required. If not the customer should not have reached this page.
+			if (!isset($this->session->data['shipping_address'])) {
+				$json['error'] = $this->language->get('error_shipping_address');
+			}
+
 			if (isset($this->request->post['shipping_method'])) {
 				$shipping = explode('.', $this->request->post['shipping_method']);
 

@@ -26,12 +26,12 @@ $('#button-shipping-methods').on('click', function() {
             success: function(json) {
                 console.log(json);
 
-                $('#input-shipping-method').parent().removeClass('is-invalid');
+                $('#input-shipping-method').removeClass('is-invalid');
                 $('#error-shipping-method').removeClass('d-block');
 
                 if (json['error']) {
-                    $('#input-shipping-method').parent().addClass('is-invalid');
-                    $('#error-shipping-method').html(json['error']);
+                    $('#input-shipping-method').addClass('is-invalid');
+                    $('#error-shipping-method').html(json['error']).addClass('d-block');
                 }
 
                 if (json['shipping_methods']) {
@@ -128,8 +128,10 @@ $(document).on('submit', '#form-shipping-method', function(e) {
                     $('#modal-shipping').modal('hide');
 
                     // Force the payment method to be re-selected with new shipping total
-                    $('#input-payment-method').val('');
                     $('#input-shipping-method').val('');
+                    $('#input-shipping-code').val();
+
+                    $('#input-payment-method').val('');
 
                     $('#checkout-confirm').load('index.php?route=checkout/confirm.confirm&language={{ language }}');
                 }

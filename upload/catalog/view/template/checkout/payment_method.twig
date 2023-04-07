@@ -3,7 +3,7 @@
   <div class="input-group">
     <span class="input-group-text"><i class="fa fa-credit-card"></i></span><input type="text" name="payment_method" value="{{ payment_method }}" placeholder="{{ entry_payment_method }}" id="input-payment-method" class="form-control" readonly/>
   </div>
-  <div id="error-shipping-method" class="invalid-feedback"></div>
+  <div id="error-payment-method" class="invalid-feedback"></div>
   <input type="hidden" name="code" value="{{ code }}" id="input-payment-code"/>
   <div class="text-end mt-2">
     <button type="button" id="button-payment-methods" class="btn btn-primary">{{ button_select }}</button>
@@ -35,12 +35,12 @@ $('#button-payment-methods').on('click', function() {
             success: function(json) {
                 console.log(json);
 
-                $('#input-payment-method').parent().removeClass('is-invalid');
+                $('#input-payment-method').removeClass('is-invalid');
                 $('#error-payment-method').removeClass('d-block');
 
                 if (json['error']) {
-                    $('#input-payment-method').parent().addClass('is-invalid');
-                    $('#error-payment-method').html(json['error']);
+                    $('#input-payment-method').addClass('is-invalid');
+                    $('#error-payment-method').html(json['error']).addClass('d-block');
                 }
 
                 if (json['payment_methods']) {
@@ -103,6 +103,8 @@ $('#button-payment-methods').on('click', function() {
 });
 
 $(document).on('submit', '#form-payment-method', function(e) {
+    e.preventDefault();
+
     var element = this;
 
     chain.attach(function() {
@@ -131,6 +133,8 @@ $(document).on('submit', '#form-payment-method', function(e) {
 
                 if (json['success']) {
                     $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                    $('#modal-payment').modal('hide');
 
                     $('#checkout-confirm').load('index.php?route=checkout/confirm.confirm&language={{ language }}');
                 }

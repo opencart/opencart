@@ -224,7 +224,7 @@ $('#input-shipping-address').on('change', function () {
 
                 if (json['error']) {
                     $('#input-shipping-address').addClass('is-invalid');
-                    $('#error-shipping-address').html(json['error']);
+                    $('#error-shipping-address').html(json['error']).addClass('d-block');
                 }
 
                 if (json['success']) {

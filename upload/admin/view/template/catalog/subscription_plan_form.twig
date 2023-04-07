@@ -58,7 +58,7 @@
               <div class="col-sm-10">
                 <select name="trial_frequency" id="input-trial-frequency" class="form-select">
                   {% for frequency_option in frequencies %}
-                    <option value="{{ frequency_option.value }}"{% if trial_frequency == frequency_option.value %} selected="selected"{% endif %}>{{ frequency_option.text }}</option>
+                    <option value="{{ frequency_option.value }}"{% if trial_frequency == frequency_option.value %} selected{% endif %}>{{ frequency_option.text }}</option>
                   {% endfor %}
                 </select>
                 <div class="form-text">{{ help_trial_frequency }}</div>
@@ -68,8 +68,8 @@
               <label for="input-trial-status" class="col-sm-2 col-form-label">{{ entry_trial_status }}</label>
               <div class="col-sm-10">
                 <select name="trial_status" id="input-trial-status" class="form-select">
-                  <option value="1"{% if trial_status %} selected="selected"{% endif %}>{{ text_enabled }}</option>
-                  <option value="0"{% if not trial_status %} selected="selected"{% endif %}>{{ text_disabled }}</option>
+                  <option value="1"{% if trial_status %} selected{% endif %}>{{ text_enabled }}</option>
+                  <option value="0"{% if not trial_status %} selected{% endif %}>{{ text_disabled }}</option>
                 </select>
               </div>
             </div>
@@ -101,7 +101,7 @@
               <div class="col-sm-10">
                 <select name="frequency" id="input-frequency" class="form-select">
                   {% for frequency_option in frequencies %}
-                    <option value="{{ frequency_option.value }}"{% if frequency == frequency_option.value %} selected="selected"{% endif %}>{{ frequency_option.text }}</option>
+                    <option value="{{ frequency_option.value }}"{% if frequency == frequency_option.value %} selected{% endif %}>{{ frequency_option.text }}</option>
                   {% endfor %}
                 </select>
                 <div class="form-text">{{ help_frequency }}</div>

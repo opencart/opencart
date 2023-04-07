@@ -19,7 +19,7 @@ class Shipping extends \Opencart\System\Engine\Controller {
 			}
 
 			if (isset($this->session->data['shipping_method'])) {
-				$data['code'] = $this->session->data['shipping_method'];
+				$data['code'] = $this->session->data['shipping_method']['code'];
 			} else {
 				$data['code'] = '';
 			}
@@ -153,7 +153,7 @@ class Shipping extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$this->session->data['shipping_method'] = $this->request->post['shipping_method'];
+			$this->session->data['shipping_method'] = $this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]];
 
 			$json['success'] = $this->language->get('text_success');
 

@@ -201,7 +201,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 						$order_data['payment_custom_field'] = [];
 					}
 
-					$order_data['payment_method'] = $this->session->data['payment_methods'][$payment[0]]['title'];
+					$order_data['payment_method'] = $this->session->data['payment_methods'][$payment[0]]['name'];
 					$order_data['payment_code'] = $this->session->data['payment_methods'][$payment[0]]['option'][$payment[1]]['code'];
 
 					// Shipping Details
@@ -240,7 +240,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 					if (isset($this->session->data['shipping_method'])) {
 						$shipping_method_info = $this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]];
 
-						$order_data['shipping_method'] = $shipping_method_info['title'];
+						$order_data['shipping_method'] = $shipping_method_info['name'];
 						$order_data['shipping_code'] = $shipping_method_info['code'];
 					} else {
 						$order_data['shipping_method'] = '';

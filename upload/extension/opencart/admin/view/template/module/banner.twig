@@ -30,7 +30,7 @@
             <div class="col-sm-10">
               <select name="banner_id" id="input-banner" class="form-select">
                 {% for banner in banners %}
-                  <option value="{{ banner.banner_id }}"{% if banner.banner_id == banner_id %} selected="selected"{% endif %}>{{ banner.name }}</option>
+                  <option value="{{ banner.banner_id }}"{% if banner.banner_id == banner_id %} selected{% endif %}>{{ banner.name }}</option>
                 {% endfor %}
               </select>
             </div>
@@ -39,8 +39,8 @@
             <label for="input-effect" class="col-sm-2 col-form-label">{{ entry_effect }}</label>
             <div class="col-sm-10">
               <select name="effect" id="input-effect" class="form-select">
-                <option value="slide"{% if effect == 'slide' %} selected="selected"{% endif %}>{{ text_slide }}</option>
-                <option value="fade"{% if effect == 'fade' %} selected="selected"{% endif %}>{{ text_fade }}</option>
+                <option value="slide"{% if effect == 'slide' %} selected{% endif %}>{{ text_slide }}</option>
+                <option value="fade"{% if effect == 'fade' %} selected{% endif %}>{{ text_fade }}</option>
               </select>
             </div>
           </div>
@@ -55,8 +55,8 @@
             <label for="input-controls" class="col-sm-2 col-form-label">{{ entry_controls }}</label>
             <div class="col-sm-10">
               <select name="controls" id="input-controls" class="form-select">
-                <option value="1"{% if controls == 1 %} selected="selected"{% endif %}>{{ text_yes }}</option>
-                <option value="0"{% if controls == 0 %} selected="selected"{% endif %}>{{ text_no }}</option>
+                <option value="1"{% if controls == 1 %} selected{% endif %}>{{ text_yes }}</option>
+                <option value="0"{% if controls == 0 %} selected{% endif %}>{{ text_no }}</option>
               </select>
             </div>
           </div>
@@ -64,8 +64,8 @@
             <label for="input-indicators" class="col-sm-2 col-form-label">{{ entry_indicators }}</label>
             <div class="col-sm-10">
               <select name="indicators" id="input-indicators" class="form-select">
-                <option value="1"{% if indicators == 1 %} selected="selected"{% endif %}>{{ text_yes }}</option>
-                <option value="0"{% if indicators == 0 %} selected="selected"{% endif %}>{{ text_no }}</option>
+                <option value="1"{% if indicators == 1 %} selected{% endif %}>{{ text_yes }}</option>
+                <option value="0"{% if indicators == 0 %} selected{% endif %}>{{ text_no }}</option>
               </select>
             </div>
           </div>

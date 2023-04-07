@@ -92,7 +92,7 @@ $('#input-language').on('change', function () {
             if (json) {
                 for (i = 0; i < json.length; i++) {
                     if (json[i] == '{{ route }}') {
-                        html += '<option value="' + json[i] + '" selected="selected">' + json[i] + '</option>';
+                        html += '<option value="' + json[i] + '" selected>' + json[i] + '</option>';
                     } else {
                         html += '<option value="' + json[i] + '">' + json[i] + '</option>';
                     }
@@ -131,7 +131,7 @@ $('#input-route').on('change', function () {
             if (json) {
                 for (i = 0; i < json.length; i++) {
                     if (json[i]['key'] == $('#input-key').val()) {
-                        html += '<option value="' + json[i]['key'] + '" selected="selected">' + json[i]['key'] + '</option>';
+                        html += '<option value="' + json[i]['key'] + '" selected>' + json[i]['key'] + '</option>';
                     } else {
                         html += '<option value="' + json[i]['key'] + '">' + json[i]['key'] + '</option>';
                     }

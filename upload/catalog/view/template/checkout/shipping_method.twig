@@ -2,12 +2,10 @@
   <legend>{{ heading_title }}</legend>
   <div class="input-group">
     <span class="input-group-text"><i class="fa fa-truck"></i></span><input type="text" name="shipping_method" value="{{ shipping_method }}" placeholder="{{ entry_shipping_method }}" id="input-shipping-method" class="form-control" readonly/>
+    <button type="button" id="button-shipping-methods" class="btn btn-primary">{{ button_choose }}</button>
   </div>
-  <div id="error-shipping-method" class="invalid-feedback"></div>
   <input type="hidden" name="code" value="{{ code }}" id="input-shipping-code"/>
-  <div class="text-end mt-2">
-    <button type="button" id="button-shipping-methods" class="btn btn-primary">{{ button_select }}</button>
-  </div>
+  <div id="error-shipping-method" class="invalid-feedback"></div>
 </fieldset>
 <script type="text/javascript"><!--
 $('#button-shipping-methods').on('click', function() {
@@ -49,7 +47,7 @@ $('#button-shipping-methods').on('click', function() {
                     html += '          <p>{{ text_shipping }}</p>';
 
                     for (i in json['shipping_methods']) {
-                        html += '<p><strong>' + json['shipping_methods'][i]['title'] + '</strong></p>';
+                        html += '<p><strong>' + json['shipping_methods'][i]['name'] + '</strong></p>';
 
                         if (!json['shipping_methods'][i]['error']) {
                             for (j in json['shipping_methods'][i]['quote']) {
@@ -64,11 +62,11 @@ $('#button-shipping-methods').on('click', function() {
                                 }
 
                                 html += '/>';
-                                html += '  <label for="input-shipping-method-' + code + '">' + json['shipping_methods'][i]['quote'][j]['title'] + ' - ' + json['shipping_methods'][i]['quote'][j]['text'] + '</label>';
+                                html += '  <label for="input-shipping-method-' + code + '">' + json['shipping_methods'][i]['quote'][j]['name'] + ' - ' + json['shipping_methods'][i]['quote'][j]['text'] + '</label>';
                                 html += '</div>';
                             }
                         } else {
-                            html += '<div class="alert alert-danger alert-dismissible">' + json['shipping_methods'][i]['error'] + '</div>';
+                            html += '<div class="alert alert-danger">' + json['shipping_methods'][i]['error'] + '</div>';
                         }
                     }
 
@@ -127,9 +125,8 @@ $(document).on('submit', '#form-shipping-method', function(e) {
 
                     $('#modal-shipping').modal('hide');
 
-                    // Force the payment method to be re-selected with new shipping total
-                    $('#input-shipping-method').val('');
-                    $('#input-shipping-code').val();
+                    $('#input-shipping-method').val($('input[name=\'shipping_method\']:checked').parent().find('label').text());
+                    $('#input-shipping-code').val($('input[name=\'shipping_method\']:checked').val());
 
                     $('#input-payment-method').val('');
 

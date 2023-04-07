@@ -29,8 +29,8 @@
             <label for="input-axis" class="col-sm-2 col-form-label">{{ entry_axis }}</label>
             <div class="col-sm-10">
               <select name="axis" id="input-axis" class="form-select">
-                <option value="horizontal"{% if axis == 'horizontal' %} selected="selected"{% endif %}>{{ text_horizontal }}</option>
-                <option value="vertical"{% if axis == 'vertical' %} selected="selected"{% endif %}>{{ text_vertical }}</option>
+                <option value="horizontal"{% if axis == 'horizontal' %} selected{% endif %}>{{ text_horizontal }}</option>
+                <option value="vertical"{% if axis == 'vertical' %} selected{% endif %}>{{ text_vertical }}</option>
               </select>
             </div>
           </div>

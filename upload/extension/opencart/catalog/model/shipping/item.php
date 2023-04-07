@@ -32,7 +32,7 @@ class Item extends \Opencart\System\Engine\Model {
 
 			$quote_data['item'] = [
 				'code'         => 'item.item',
-				'title'        => $this->language->get('text_description'),
+				'name'         => $this->language->get('text_description'),
 				'cost'         => $cost * $items,
 				'tax_class_id' => $tax_class_id,
 				'text'         => $this->currency->format($this->tax->calculate($cost * $items, $tax_class_id, $this->config->get('config_tax')), $this->session->data['currency'])
@@ -40,7 +40,7 @@ class Item extends \Opencart\System\Engine\Model {
 
 			$method_data = [
 				'code'       => 'item',
-				'title'      => $this->language->get('heading_title'),
+				'name'       => $this->language->get('heading_title'),
 				'quote'      => $quote_data,
 				'sort_order' => $this->config->get('shipping_item_sort_order'),
 				'error'      => false

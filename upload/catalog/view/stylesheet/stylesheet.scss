@@ -76,6 +76,12 @@ div.required .col-form-label:before, div.required .form-label:before {
   font-weight: bold;
 }
 
+.form-switch-lg {
+  font-size: 26px;
+  min-height: 36px;
+  line-height: 36px;
+}
+
 @media (min-width: 768px) {
   .col-form-label {
     text-align: right;

@@ -26,13 +26,13 @@ class COD extends \Opencart\System\Engine\Model {
 
 		if ($status) {
 			$option_data['cod'] = [
-				'code'  => 'cod.cod',
-				'title' => $this->language->get('heading_title')
+				'code' => 'cod.cod',
+				'name' => $this->language->get('heading_title')
 			];
 
 			$method_data = [
 				'code'       => 'cod',
-				'title'      => $this->language->get('heading_title'),
+				'name'       => $this->language->get('heading_title'),
 				'option'     => $option_data,
 				'sort_order' => $this->config->get('payment_cod_sort_order')
 			];

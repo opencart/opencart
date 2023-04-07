@@ -57,17 +57,17 @@
                       </select></td>
                     <td class="text-start"><select name="tax_rule[{{ tax_rule_row }}][based]" class="form-select">
                         {% if tax_rule.based == 'shipping' %}
-                          <option value="shipping" selected="selected">{{ text_shipping }}</option>
+                          <option value="shipping" selected>{{ text_shipping }}</option>
                         {% else %}
                           <option value="shipping">{{ text_shipping }}</option>
                         {% endif %}
                         {% if tax_rule.based == 'payment' %}
-                          <option value="payment" selected="selected">{{ text_payment }}</option>
+                          <option value="payment" selected>{{ text_payment }}</option>
                         {% else %}
                           <option value="payment">{{ text_payment }}</option>
                         {% endif %}
                         {% if tax_rule.based == 'store' %}
-                          <option value="store" selected="selected">{{ text_store }}</option>
+                          <option value="store" selected>{{ text_store }}</option>
                         {% else %}
                           <option value="store">{{ text_store }}</option>
                         {% endif %}

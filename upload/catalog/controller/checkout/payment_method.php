@@ -5,16 +5,8 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 		$this->load->language('checkout/payment_method');
 
 		if (isset($this->session->data['payment_method'])) {
-			$payment_method = $this->session->data['payment_method'];
-		} else {
-			$payment_method = '';
-		}
-
-		$payment = explode('.', $payment_method);
-
-		if (isset($payment[0]) && isset($payment[1]) && isset($this->session->data['payment_methods'][$payment[0]]['option'][$payment[1]])) {
-			$data['payment_method'] = $this->session->data['payment_methods'][$payment[0]]['option'][$payment[1]]['title'];
-			$data['code'] = $payment_method;
+			$data['payment_method'] = $this->session->data['payment_method']['name'];
+			$data['code'] = $this->session->data['payment_method']['code'];
 		} else {
 			$data['payment_method'] = '';
 			$data['code'] = '';
@@ -86,13 +78,7 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 				}
 
 				// Validate shipping method
-				if (isset($this->session->data['shipping_method']) && isset($this->session->data['shipping_methods'])) {
-					$shipping = explode('.', $this->session->data['shipping_method']);
-
-					if (!isset($shipping[0]) || !isset($shipping[1]) || !isset($this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]])) {
-						$json['error'] = $this->language->get('error_shipping_method');
-					}
-				} else {
+				if (!isset($this->session->data['shipping_method'])) {
 					$json['error'] = $this->language->get('error_shipping_method');
 				}
 			}
@@ -158,13 +144,7 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 				}
 
 				// Validate shipping method
-				if (isset($this->session->data['shipping_method']) && isset($this->session->data['shipping_methods'])) {
-					$shipping = explode('.', $this->session->data['shipping_method']);
-
-					if (!isset($shipping[0]) || !isset($shipping[1]) || !isset($this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]])) {
-						$json['error'] = $this->language->get('error_payment_method');
-					}
-				} else {
+				if (!isset($this->session->data['shipping_method'])) {
 					$json['error'] = $this->language->get('error_payment_method');
 				}
 			}
@@ -182,7 +162,7 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$this->session->data['payment_method'] = $this->request->post['payment_method'];
+			$this->session->data['payment_method'] = $this->session->data['payment_methods'][$payment[0]]['option'][$payment[1]];
 
 			$json['success'] = $this->language->get('text_success');
 		}

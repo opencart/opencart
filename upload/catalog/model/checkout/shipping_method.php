@@ -15,12 +15,7 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 				$quote = $this->{'model_extension_' . $result['extension'] . '_shipping_' . $result['code']}->getQuote($shipping_address);
 
 				if ($quote) {
-					$method_data[$result['code']] = [
-						'title'      => $quote['title'],
-						'quote'      => $quote['quote'],
-						'sort_order' => $quote['sort_order'],
-						'error'      => $quote['error']
-					];
+					$method_data[$result['code']] = $quote;
 				}
 			}
 		}

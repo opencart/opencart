@@ -25,7 +25,7 @@ class Free extends \Opencart\System\Engine\Model {
 
 			$quote_data['free'] = [
 				'code'         => 'free.free',
-				'title'        => $this->language->get('text_description'),
+				'name'         => $this->language->get('text_description'),
 				'cost'         => 0.00,
 				'tax_class_id' => 0,
 				'text'         => $this->currency->format(0.00, $this->session->data['currency'])
@@ -33,7 +33,7 @@ class Free extends \Opencart\System\Engine\Model {
 
 			$method_data = [
 				'code'       => 'free',
-				'title'      => $this->language->get('heading_title'),
+				'name'       => $this->language->get('heading_title'),
 				'quote'      => $quote_data,
 				'sort_order' => $this->config->get('shipping_free_sort_order'),
 				'error'      => false

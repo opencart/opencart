@@ -855,13 +855,13 @@ $('#tab-address').on('change', 'select[name$=\'[country_id]\']', function () {
                         html += '<option value="' + json['zone'][i]['zone_id'] + '"';
 
                         if (json['zone'][i]['zone_id'] == $(element).attr('data-zone-id')) {
-                            html += ' selected="selected"';
+                            html += ' selected';
                         }
 
                         html += '>' + json['zone'][i]['name'] + '</option>';
                     }
                 } else {
-                    html += '<option value="0">{{ text_none }}</option>';
+                    html += '<option value="0" selected>{{ text_none }}</option>';
                 }
 
                 $('#tab-address select[name=\'address[' + $(element).attr('data-address-row') + '][zone_id]\']').html(html);
@@ -884,7 +884,7 @@ $('#tab-address').on('change', 'select[name$=\'[country_id]\']', function () {
                 html += '<option value="' + zone[$(element).val()]['zone'][i]['zone_id'] + '"';
 
                 if (zone[$(element).val()]['zone'][i]['zone_id'] == $(element).attr('data-zone-id')) {
-                    html += ' selected="selected"';
+                    html += ' selected';
                 }
 
                 html += '>' + zone[$(element).val()]['zone'][i]['name'] + '</option>';

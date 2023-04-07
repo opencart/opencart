@@ -5,16 +5,8 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 		$this->load->language('checkout/shipping_method');
 
 		if (isset($this->session->data['shipping_method'])) {
-			$shipping_method = $this->session->data['shipping_method'];
-		} else {
-			$shipping_method = '';
-		}
-
-		$shipping = explode('.', $shipping_method);
-
-		if (isset($shipping[0]) && isset($shipping[1]) && isset($this->session->data['shipping_methods']) && isset($this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]])) {
-			$data['shipping_method'] = $this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]]['title'];
-			$data['code'] = $shipping_method;
+			$data['shipping_method'] = $this->session->data['shipping_method']['name'];
+			$data['code'] = $this->session->data['shipping_method']['code'];
 		} else {
 			$data['shipping_method'] = '';
 			$data['code'] = '';
@@ -58,7 +50,7 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 			}
 
 			// Validate if shipping not required. If not the customer should not have reached this page.
-			if (!isset($this->session->data['shipping_address'])) {
+			if ($this->cart->hasShipping() && !isset($this->session->data['shipping_address'])) {
 				$json['error'] = $this->language->get('error_shipping_address');
 			}
 		}
@@ -113,7 +105,7 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 			}
 
 			// Validate if shipping not required. If not the customer should not have reached this page.
-			if (!isset($this->session->data['shipping_address'])) {
+			if ($this->cart->hasShipping() && !isset($this->session->data['shipping_address'])) {
 				$json['error'] = $this->language->get('error_shipping_address');
 			}
 
@@ -129,7 +121,7 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$this->session->data['shipping_method'] = $this->request->post['shipping_method'];
+			$this->session->data['shipping_method'] = $this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]];
 
 			$json['success'] = $this->language->get('text_success');
 

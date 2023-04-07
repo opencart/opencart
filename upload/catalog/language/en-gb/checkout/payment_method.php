@@ -14,8 +14,8 @@ $_['text_comment']           = 'Success: Comment added!';
 $_['entry_payment_method']   = 'Choose payment method...';
 
 // Error
-$_['error_payment_address']  = 'Warning: Payment address required!';
-$_['error_shipping_address'] = 'Warning: Shipping address required!';
-$_['error_shipping_method']  = 'Warning: Shipping method required!';
-$_['error_payment_method']   = 'Warning: Payment method required!';
-$_['error_no_payment']       = 'Warning: No Payment options are available. Please <a href="%s">contact us</a> for assistance!';
+$_['error_payment_address']  = 'Payment address required!';
+$_['error_shipping_address'] = 'Shipping address required!';
+$_['error_shipping_method']  = 'Shipping method required!';
+$_['error_payment_method']   = 'Payment method required!';
+$_['error_no_payment']       = 'No Payment options are available. Please <a href="%s">contact us</a> for assistance!';

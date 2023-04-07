@@ -179,7 +179,7 @@
                 <div class="col-sm-10">
                   <select name="config_country_id" id="input-country" class="form-select">
                     {% for country in countries %}
-                      <option value="{{ country.country_id }}"{% if country.country_id == config_country_id %} selected="selected"{% endif %}>{{ country.name }}</option>
+                      <option value="{{ country.country_id }}"{% if country.country_id == config_country_id %} selected{% endif %}>{{ country.name }}</option>
                     {% endfor %}
                   </select>
                 </div>
@@ -195,7 +195,7 @@
                 <div class="col-sm-10">
                   <select name="config_language" id="input-language" class="form-select">
                     {% for language in languages %}
-                      <option value="{{ language.code }}"{% if language.code == config_language %} selected="selected"{% endif %}>{{ language.name }}</option>
+                      <option value="{{ language.code }}"{% if language.code == config_language %} selected{% endif %}>{{ language.name }}</option>
                     {% endfor %}
                   </select>
                 </div>
@@ -205,7 +205,7 @@
                 <div class="col-sm-10">
                   <select name="config_currency" id="input-currency" class="form-select">
                     {% for currency in currencies %}
-                      <option value="{{ currency.code }}"{% if currency.code == config_currency %} selected="selected"{% endif %}>{{ currency.title }}</option>
+                      <option value="{{ currency.code }}"{% if currency.code == config_currency %} selected{% endif %}>{{ currency.title }}</option>
                     {% endfor %}
                   </select>
                   <div class="form-text">{{ help_currency }}</div>
@@ -257,7 +257,7 @@
                           <select name="config_gdpr_id" id="input-gdpr" class="form-select">
                             <option value="0">{{ text_none }}</option>
                             {% for information in informations %}
-                              <option value="{{ information.information_id }}"{% if information.information_id == config_gdpr_id %} selected="selected"{% endif %}>{{ information.title }}</option>
+                              <option value="{{ information.information_id }}"{% if information.information_id == config_gdpr_id %} selected{% endif %}>{{ information.title }}</option>
                             {% endfor %}
                           </select>
                           <div class="form-text">{{ help_gdpr }}</div>
@@ -284,8 +284,8 @@
                         <div class="col-sm-10">
                           <select name="config_tax_default" id="input-tax-default" class="form-select">
                             <option value="">{{ text_none }}</option>
-                            <option value="shipping"{% if config_tax_default == 'shipping' %} selected="selected"{% endif %}>{{ text_shipping }}</option>
-                            <option value="payment"{% if config_tax_default == 'payment' %} selected="selected"{% endif %}>{{ text_payment }}</option>
+                            <option value="shipping"{% if config_tax_default == 'shipping' %} selected{% endif %}>{{ text_shipping }}</option>
+                            <option value="payment"{% if config_tax_default == 'payment' %} selected{% endif %}>{{ text_payment }}</option>
                           </select>
                           <div class="form-text">{{ help_tax_default }}</div>
                         </div>
@@ -295,8 +295,8 @@
                         <div class="col-sm-10">
                           <select name="config_tax_customer" id="input-tax-customer" class="form-select">
                             <option value="">{{ text_none }}</option>
-                            <option value="shipping"{% if config_tax_customer == 'shipping' %} selected="selected"{% endif %}>{{ text_shipping }}</option>
-                            <option value="payment"{% if config_tax_customer == 'payment' %} selected="selected"{% endif %}>{{ text_payment }}</option>
+                            <option value="shipping"{% if config_tax_customer == 'shipping' %} selected{% endif %}>{{ text_shipping }}</option>
+                            <option value="payment"{% if config_tax_customer == 'payment' %} selected{% endif %}>{{ text_payment }}</option>
                           </select>
                           <div class="form-text">{{ help_tax_customer }}</div>
                         </div>
@@ -313,7 +313,7 @@
                         <div class="col-sm-10">
                           <select name="config_customer_group_id" id="input-customer-group" class="form-select">
                             {% for customer_group in customer_groups %}
-                              <option value="{{ customer_group.customer_group_id }}"{% if customer_group.customer_group_id == config_customer_group_id %} selected="selected"{% endif %}>{{ customer_group.name }}</option>
+                              <option value="{{ customer_group.customer_group_id }}"{% if customer_group.customer_group_id == config_customer_group_id %} selected{% endif %}>{{ customer_group.name }}</option>
                             {% endfor %}
                           </select>
                           <div class="form-text">{{ help_customer_group }}</div>
@@ -349,7 +349,7 @@
                           <select name="config_account_id" id="input-account" class="form-select">
                             <option value="0">{{ text_none }}</option>
                             {% for information in informations %}
-                              <option value="{{ information.information_id }}"{% if information.information_id == config_account_id %} selected="selected"{% endif %}>{{ information.title }}</option>
+                              <option value="{{ information.information_id }}"{% if information.information_id == config_account_id %} selected{% endif %}>{{ information.title }}</option>
                             {% endfor %}
                           </select>
                           <div class="form-text">{{ help_account }}</div>
@@ -387,7 +387,7 @@
                           <select name="config_checkout_id" id="input-checkout" class="form-select">
                             <option value="0">{{ text_none }}</option>
                             {% for information in informations %}
-                              <option value="{{ information.information_id }}"{% if information.information_id == config_checkout_id %} selected="selected"{% endif %}>{{ information.title }}</option>
+                              <option value="{{ information.information_id }}"{% if information.information_id == config_checkout_id %} selected{% endif %}>{{ information.title }}</option>
                             {% endfor %}
                           </select>
                           <div class="form-text">{{ help_checkout }}</div>
@@ -621,13 +621,13 @@ $('#input-country').on('change', function () {
                     html += '<option value="' + json['zone'][i]['zone_id'] + '"';
 
                     if (json['zone'][i]['zone_id'] == '{{ config_zone_id }}') {
-                        html += ' selected="selected"';
+                        html += ' selected';
                     }
 
                     html += '>' + json['zone'][i]['name'] + '</option>';
                 }
             } else {
-                html += '<option value="0" selected="selected">{{ text_none }}</option>';
+                html += '<option value="0" selected>{{ text_none }}</option>';
             }
 
             $('#input-zone').html(html);

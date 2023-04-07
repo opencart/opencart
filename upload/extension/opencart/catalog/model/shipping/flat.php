@@ -21,7 +21,7 @@ class Flat extends \Opencart\System\Engine\Model {
 
 			$quote_data['flat'] = [
 				'code'         => 'flat.flat',
-				'title'        => $this->language->get('text_description'),
+				'name'         => $this->language->get('text_description'),
 				'cost'         => $this->config->get('shipping_flat_cost'),
 				'tax_class_id' => $this->config->get('shipping_flat_tax_class_id'),
 				'text'         => $this->currency->format($this->tax->calculate($this->config->get('shipping_flat_cost'), $this->config->get('shipping_flat_tax_class_id'), $this->config->get('config_tax')), $this->session->data['currency'])
@@ -29,7 +29,7 @@ class Flat extends \Opencart\System\Engine\Model {
 
 			$method_data = [
 				'code'       => 'flat',
-				'title'      => $this->language->get('heading_title'),
+				'name'       => $this->language->get('heading_title'),
 				'quote'      => $quote_data,
 				'sort_order' => $this->config->get('shipping_flat_sort_order'),
 				'error'      => false

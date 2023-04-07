@@ -37,12 +37,12 @@
             <div class="col-sm-10">
               <select name="type" id="input-type" class="form-select">
                 {% if type == 'P' %}
-                  <option value="P" selected="selected">{{ text_percent }}</option>
+                  <option value="P" selected>{{ text_percent }}</option>
                 {% else %}
                   <option value="P">{{ text_percent }}</option>
                 {% endif %}
                 {% if type == 'F' %}
-                  <option value="F" selected="selected">{{ text_amount }}</option>
+                  <option value="F" selected>{{ text_amount }}</option>
                 {% else %}
                   <option value="F">{{ text_amount }}</option>
                 {% endif %}
@@ -66,7 +66,7 @@
             <div class="col-sm-10">
               <select name="geo_zone_id" id="input-geo-zone" class="form-select">
                 {% for geo_zone in geo_zones %}
-                  <option value="{{ geo_zone.geo_zone_id }}"{% if geo_zone.geo_zone_id == geo_zone_id %} selected="selected"{% endif %}>{{ geo_zone.name }}</option>
+                  <option value="{{ geo_zone.geo_zone_id }}"{% if geo_zone.geo_zone_id == geo_zone_id %} selected{% endif %}>{{ geo_zone.name }}</option>
                 {% endfor %}
               </select>
             </div>

@@ -35,7 +35,7 @@
               <label for="input-subscription-status" class="form-label">{{ entry_subscription_status }}</label> <select name="filter_subscription_status_id" id="input-subscription-status" class="form-select">
                 <option value=""></option>
                 {% for subscription_status in subscription_statuses %}
-                  <option value="{{ subscription_status.subscription_status_id }}"{% if subscription_status.subscription_status_id == filter_subscription_status_id %} selected="selected"{% endif %}>{{ subscription_status.name }}</option>
+                  <option value="{{ subscription_status.subscription_status_id }}"{% if subscription_status.subscription_status_id == filter_subscription_status_id %} selected{% endif %}>{{ subscription_status.name }}</option>
                 {% endfor %}
               </select>
             </div>

@@ -758,8 +758,8 @@
                         <label for="input-required-{{ option_row }}" class="col-sm-2 col-form-label">{{ entry_required }}</label>
                         <div class="col-sm-10">
                           <select name="product_option[{{ option_row }}][required]" id="input-required-{{ option_row }}" class="form-select">
-                            <option value="1"{% if product_option.required %} selected="selected"{% endif %}>{{ text_enabled }}</option>
-                            <option value="0"{% if not product_option.required %} selected="selected"{% endif %}>{{ text_disabled }}</option>
+                            <option value="1"{% if product_option.required %} selected{% endif %}>{{ text_enabled }}</option>
+                            <option value="0"{% if not product_option.required %} selected{% endif %}>{{ text_disabled }}</option>
                           </select>
                         </div>
                       </div>
@@ -1121,12 +1121,12 @@
                       <tr id="subscription-row-{{ subscription_row }}">
                         <td class="text-start"><select name="product_subscription[{{ subscription_row }}][subscription_plan_id]" class="form-select">
                             {% for subscription_plan in subscription_plans %}
-                              <option value="{{ subscription_plan.subscription_plan_id }}"{% if subscription_plan.subscription_plan_id == product_subscription.subscription_plan_id %} selected="selected"{% endif %}>{{ subscription_plan.name }}</option>
+                              <option value="{{ subscription_plan.subscription_plan_id }}"{% if subscription_plan.subscription_plan_id == product_subscription.subscription_plan_id %} selected{% endif %}>{{ subscription_plan.name }}</option>
                             {% endfor %}
                           </select></td>
                         <td class="text-start"><select name="product_subscription[{{ subscription_row }}][customer_group_id]" class="form-select">
                             {% for customer_group in customer_groups %}
-                              <option value="{{ customer_group.customer_group_id }}"{% if customer_group.customer_group_id == product_subscription.customer_group_id %} selected="selected"{% endif %}>{{ customer_group.name }}</option>
+                              <option value="{{ customer_group.customer_group_id }}"{% if customer_group.customer_group_id == product_subscription.customer_group_id %} selected{% endif %}>{{ customer_group.name }}</option>
                             {% endfor %}
                           </select></td>
                         <td class="text-end"><button type="button" onclick="$('#subscription-row-{{ subscription_row }}').remove()" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
@@ -1168,7 +1168,7 @@
                       <tr id="discount-row-{{ discount_row }}">
                         <td class="text-start"><select name="product_discount[{{ discount_row }}][customer_group_id]" class="form-select">
                             {% for customer_group in customer_groups %}
-                              <option value="{{ customer_group.customer_group_id }}"{% if customer_group.customer_group_id == product_discount.customer_group_id %} selected="selected"{% endif %}>{{ customer_group.name }}</option>
+                              <option value="{{ customer_group.customer_group_id }}"{% if customer_group.customer_group_id == product_discount.customer_group_id %} selected{% endif %}>{{ customer_group.name }}</option>
                             {% endfor %}
                           </select></td>
                         <td class="text-end"><input type="text" name="product_discount[{{ discount_row }}][quantity]" value="{{ product_discount.quantity }}" placeholder="{{ entry_quantity }}" class="form-control"/></td>
@@ -1224,7 +1224,7 @@
                       <tr id="special-row-{{ special_row }}">
                         <td class="text-start"><select name="product_special[{{ special_row }}][customer_group_id]" class="form-select">
                             {% for customer_group in customer_groups %}
-                              <option value="{{ customer_group.customer_group_id }}"{% if customer_group.customer_group_id == product_special.customer_group_id %} selected="selected"{% endif %}>{{ customer_group.name }}</option>
+                              <option value="{{ customer_group.customer_group_id }}"{% if customer_group.customer_group_id == product_special.customer_group_id %} selected{% endif %}>{{ customer_group.name }}</option>
                             {% endfor %}
                           </select></td>
                         <td class="text-end"><input type="text" name="product_special[{{ special_row }}][priority]" value="{{ product_special.priority }}" placeholder="{{ entry_priority }}" class="form-control"/></td>
@@ -1430,7 +1430,7 @@
                         <td class="text-start"><select name="product_layout[{{ store.store_id }}]" class="form-select">
                             <option value=""></option>
                             {% for layout in layouts %}
-                              <option value="{{ layout.layout_id }}"{% if product_layout[store.store_id] and product_layout[store.store_id] == layout.layout_id %} selected="selected"{% endif %}>{{ layout.name }}</option>
+                              <option value="{{ layout.layout_id }}"{% if product_layout[store.store_id] and product_layout[store.store_id] == layout.layout_id %} selected{% endif %}>{{ layout.name }}</option>
                             {% endfor %}
                           </select></td>
                       </tr>
@@ -1823,7 +1823,7 @@ $('#option').on('click', '.btn-primary', function () {
 
     for (i = 0; i < option_value.length; i++) {
         if ($(element).attr('data-option-value-row') && $(option_value[i]).val() == $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][option_value_id]\']').val()) {
-            html += '<option value="' + $(option_value[i]).val() + '" selected="selected">' + $(option_value[i]).text() + '</option>';
+            html += '<option value="' + $(option_value[i]).val() + '" selected>' + $(option_value[i]).text() + '</option>';
         } else {
             html += '<option value="' + $(option_value[i]).val() + '">' + $(option_value[i]).text() + '</option>';
         }
@@ -1845,11 +1845,11 @@ $('#option').on('click', '.btn-primary', function () {
     html += '      	   <select name="subtract" id="input-modal-subtract" class="form-select">';
 
     if ($(element).attr('data-option-value-row') && $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][subtract]\']').val() == '1') {
-        html += '        <option value="1" selected="selected">{{ text_yes }}</option>';
+        html += '        <option value="1" selected>{{ text_yes }}</option>';
         html += '      	 <option value="0">{{ text_no }}</option>';
     } else {
         html += '      	 <option value="1">{{ text_yes }}</option>';
-        html += '      	 <option value="0" selected="selected">{{ text_no }}</option>';
+        html += '      	 <option value="0" selected>{{ text_no }}</option>';
     }
 
     html += '      	   </select>';
@@ -1861,13 +1861,13 @@ $('#option').on('click', '.btn-primary', function () {
     html += '            <select name="price_prefix" class="form-select">';
 
     if ($(element).attr('data-option-value-row') && $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][price_prefix]\']').val() == '+') {
-        html += '      	   <option value="+" selected="selected">+</option>';
+        html += '      	   <option value="+" selected>+</option>';
     } else {
         html += '      	   <option value="+">+</option>';
     }
 
     if ($(element).attr('data-option-value-row') && $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][price_prefix]\']').val() == '-') {
-        html += '      	       <option value="-" selected="selected">-</option>';
+        html += '      	       <option value="-" selected>-</option>';
     } else {
         html += '      	       <option value="-">-</option>';
     }

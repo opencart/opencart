@@ -39,7 +39,7 @@ class CreditCard extends \Opencart\System\Engine\Model {
 
 			$method_data = [
 				'code'       => 'credit_card',
-				'title'      => $this->language->get('heading_title'),
+				'name'       => $this->language->get('heading_title'),
 				'option'     => $option_data,
 				'sort_order' => $this->config->get('payment_credit_card_sort_order')
 			];
@@ -71,7 +71,6 @@ class CreditCard extends \Opencart\System\Engine\Model {
 	public function charge(int $customer_id, array $amount): string {
 		//$this->db->query("INSERT INTO `" . DB_PREFIX . "credit_card` SET `customer_id` = '" . (int)$customer_id . "', `card_name` = '" . $this->db->escape($data['card_name']) . "', `card_number` = '" . $this->db->escape($data['card_number']) . "', `card_expire_month` = '" . $this->db->escape($data['card_expire_month']) . "', `card_expire_year` = '" . $this->db->escape($data['card_expire_year']) . "', `card_cvv` = '" . $this->db->escape($data['card_cvv']) . "', `date_added` = NOW()");
 
-
-		return $this->config->get('config_bvvb');
+		return $this->config->get('payment_credit_card_response');
 	}
 }

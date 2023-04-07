@@ -515,7 +515,7 @@
                         <div class="col-sm-10">
                           <select name="config_customer_group_id" id="input-customer-group" class="form-select">
                             {% for customer_group in customer_groups %}
-                              <option value="{{ customer_group.customer_group_id }}"{% if customer_group.customer_group_id == config_customer_group_id %} selected="selected"{% endif %}>{{ customer_group.name }}</option>
+                              <option value="{{ customer_group.customer_group_id }}"{% if customer_group.customer_group_id == config_customer_group_id %} selected{% endif %}>{{ customer_group.name }}</option>
                             {% endfor %}
                           </select>
                           <div class="form-text">{{ help_customer_group }}</div>
@@ -577,7 +577,7 @@
                           <select name="config_account_id" id="input-account" class="form-select">
                             <option value="0">{{ text_none }}</option>
                             {% for information in informations %}
-                              <option value="{{ information.information_id }}"{% if information.information_id == config_account_id %} selected="selected"{% endif %}>{{ information.title }}</option>
+                              <option value="{{ information.information_id }}"{% if information.information_id == config_account_id %} selected{% endif %}>{{ information.title }}</option>
                             {% endfor %}
                           </select>
                           <div class="form-text">{{ help_account }}</div>
@@ -647,7 +647,7 @@
                           <select name="config_checkout_id" id="input-checkout" class="form-select">
                             <option value="0">{{ text_none }}</option>
                             {% for information in informations %}
-                              <option value="{{ information.information_id }}"{% if information.information_id == config_checkout_id %} selected="selected"{% endif %}>{{ information.title }}</option>
+                              <option value="{{ information.information_id }}"{% if information.information_id == config_checkout_id %} selected{% endif %}>{{ information.title }}</option>
                             {% endfor %}
                           </select>
                           <div class="form-text">{{ help_checkout }}</div>
@@ -658,7 +658,7 @@
                         <div class="col-sm-10">
                           <select name="config_order_status_id" id="input-order-status" class="form-select">
                             {% for order_status in order_statuses %}
-                              <option value="{{ order_status.order_status_id }}"{% if order_status.order_status_id == config_order_status_id %} selected="selected"{% endif %}>{{ order_status.name }}</option>
+                              <option value="{{ order_status.order_status_id }}"{% if order_status.order_status_id == config_order_status_id %} selected{% endif %}>{{ order_status.name }}</option>
                             {% endfor %}
                           </select>
                           <div class="form-text">{{ help_order_status }}</div>
@@ -697,7 +697,7 @@
                         <div class="col-sm-10">
                           <select name="config_fraud_status_id" id="input-fraud-status" class="form-select">
                             {% for order_status in order_statuses %}
-                              <option value="{{ order_status.order_status_id }}"{% if order_status.order_status_id == config_fraud_status_id %} selected="selected"{% endif %}>{{ order_status.name }}</option>
+                              <option value="{{ order_status.order_status_id }}"{% if order_status.order_status_id == config_fraud_status_id %} selected{% endif %}>{{ order_status.name }}</option>
                             {% endfor %}
                           </select>
                           <div class="form-text">{{ help_fraud_status }}</div>
@@ -709,7 +709,7 @@
                           <select name="config_api_id" id="input-api" class="form-select">
                             <option value="0">{{ text_none }}</option>
                             {% for api in apis %}
-                              <option value="{{ api.api_id }}"{% if api.api_id == config_api_id %} selected="selected"{% endif %}>{{ api.username }}</option>
+                              <option value="{{ api.api_id }}"{% if api.api_id == config_api_id %} selected{% endif %}>{{ api.username }}</option>
                             {% endfor %}
                           </select>
                           <div class="form-text">{{ help_api }}</div>
@@ -728,7 +728,7 @@
                         <div class="col-sm-10">
                           <select name="config_subscription_status_id" id="input-subscription-status" class="form-select">
                             {% for subscription_status in subscription_statuses %}
-                              <option value="{{ subscription_status.subscription_status_id }}"{% if subscription_status.subscription_status_id == config_subscription_status_id %} selected="selected"{% endif %}>{{ subscription_status.name }}</option>
+                              <option value="{{ subscription_status.subscription_status_id }}"{% if subscription_status.subscription_status_id == config_subscription_status_id %} selected{% endif %}>{{ subscription_status.name }}</option>
                             {% endfor %}
                           </select>
                           <div class="form-text">{{ help_subscription }}</div>
@@ -740,7 +740,7 @@
                         <div class="col-sm-10">
                           <select name="config_subscription_active_status_id" id="input-subscription-active-status" class="form-select">
                             {% for subscription_status in subscription_statuses %}
-                              <option value="{{ subscription_status.subscription_status_id }}"{% if subscription_status.subscription_status_id == config_subscription_active_status_id %} selected="selected"{% endif %}>{{ subscription_status.name }}</option>
+                              <option value="{{ subscription_status.subscription_status_id }}"{% if subscription_status.subscription_status_id == config_subscription_active_status_id %} selected{% endif %}>{{ subscription_status.name }}</option>
                             {% endfor %}
                           </select>
                         </div>
@@ -751,7 +751,7 @@
                         <div class="col-sm-10">
                           <select name="config_subscription_expired_status_id" id="input-subscription-expired-status" class="form-select">
                             {% for subscription_status in subscription_statuses %}
-                              <option value="{{ subscription_status.subscription_status_id }}"{% if subscription_status.subscription_status_id == config_subscription_expired_status_id %} selected="selected"{% endif %}>{{ subscription_status.name }}</option>
+                              <option value="{{ subscription_status.subscription_status_id }}"{% if subscription_status.subscription_status_id == config_subscription_expired_status_id %} selected{% endif %}>{{ subscription_status.name }}</option>
                             {% endfor %}
                           </select>
                         </div>
@@ -762,7 +762,7 @@
                         <div class="col-sm-10">
                           <select name="config_subscription_suspended_status_id" id="input-subscription-suspended-status" class="form-select">
                             {% for subscription_status in subscription_statuses %}
-                              <option value="{{ subscription_status.subscription_status_id }}"{% if subscription_status.subscription_status_id == config_subscription_suspended_status_id %} selected="selected"{% endif %}>{{ subscription_status.name }}</option>
+                              <option value="{{ subscription_status.subscription_status_id }}"{% if subscription_status.subscription_status_id == config_subscription_suspended_status_id %} selected{% endif %}>{{ subscription_status.name }}</option>
                             {% endfor %}
                           </select>
                         </div>
@@ -773,7 +773,7 @@
                         <div class="col-sm-10">
                           <select name="config_subscription_canceled_status_id" id="input-subscription-canceled-status" class="form-select">
                             {% for subscription_status in subscription_statuses %}
-                              <option value="{{ subscription_status.subscription_status_id }}"{% if subscription_status.subscription_status_id == config_subscription_canceled_status_id %} selected="selected"{% endif %}>{{ subscription_status.name }}</option>
+                              <option value="{{ subscription_status.subscription_status_id }}"{% if subscription_status.subscription_status_id == config_subscription_canceled_status_id %} selected{% endif %}>{{ subscription_status.name }}</option>
                             {% endfor %}
                           </select>
                         </div>
@@ -784,7 +784,7 @@
                         <div class="col-sm-10">
                           <select name="config_subscription_failed_status_id" id="input-subscription-failed-status" class="form-select">
                             {% for subscription_status in subscription_statuses %}
-                              <option value="{{ subscription_status.subscription_status_id }}"{% if subscription_status.subscription_status_id == config_subscription_failed_status_id %} selected="selected"{% endif %}>{{ subscription_status.name }}</option>
+                              <option value="{{ subscription_status.subscription_status_id }}"{% if subscription_status.subscription_status_id == config_subscription_failed_status_id %} selected{% endif %}>{{ subscription_status.name }}</option>
                             {% endfor %}
                           </select>
                         </div>
@@ -795,7 +795,7 @@
                         <div class="col-sm-10">
                           <select name="config_subscription_denied_status_id" id="input-subscription-denied-status" class="form-select">
                             {% for subscription_status in subscription_statuses %}
-                              <option value="{{ subscription_status.subscription_status_id }}"{% if subscription_status.subscription_status_id == config_subscription_denied_status_id %} selected="selected"{% endif %}>{{ subscription_status.name }}</option>
+                              <option value="{{ subscription_status.subscription_status_id }}"{% if subscription_status.subscription_status_id == config_subscription_denied_status_id %} selected{% endif %}>{{ subscription_status.name }}</option>
                             {% endfor %}
                           </select>
                         </div>
@@ -860,7 +860,7 @@
                         <div class="col-sm-10">
                           <select name="config_affiliate_group_id" id="input-affiliate-group" class="form-select">
                             {% for customer_group in customer_groups %}
-                              <option value="{{ customer_group.customer_group_id }}"{% if customer_group.customer_group_id == config_affiliate_group_id %} selected="selected"{% endif %}>{{ customer_group.name }}</option>
+                              <option value="{{ customer_group.customer_group_id }}"{% if customer_group.customer_group_id == config_affiliate_group_id %} selected{% endif %}>{{ customer_group.name }}</option>
                             {% endfor %}
                           </select>
                         </div>
@@ -907,7 +907,7 @@
                           <select name="config_affiliate_id" id="input-affiliate" class="form-select">
                             <option value="0">{{ text_none }}</option>
                             {% for information in informations %}
-                              <option value="{{ information.information_id }}"{% if information.information_id == config_affiliate_id %} selected="selected"{% endif %}>{{ information.title }}</option>
+                              <option value="{{ information.information_id }}"{% if information.information_id == config_affiliate_id %} selected{% endif %}>{{ information.title }}</option>
                             {% endfor %}
                           </select>
                           <div class="form-text">{{ help_affiliate }}</div>
@@ -927,7 +927,7 @@
                         <div class="col-sm-10">
                           <select name="config_return_status_id" id="input-return-status" class="form-select">
                             {% for return_status in return_statuses %}
-                              <option value="{{ return_status.return_status_id }}"{% if return_status.return_status_id == config_return_status_id %} selected="selected"{% endif %}>{{ return_status.name }}</option>
+                              <option value="{{ return_status.return_status_id }}"{% if return_status.return_status_id == config_return_status_id %} selected{% endif %}>{{ return_status.name }}</option>
                             {% endfor %}
                           </select>
                           <div class="form-text">{{ help_return_status }}</div>
@@ -940,7 +940,7 @@
                           <select name="config_return_id" id="input-return" class="form-select">
                             <option value="0">{{ text_none }}</option>
                             {% for information in informations %}
-                              <option value="{{ information.information_id }}"{% if information.information_id == config_return_id %} selected="selected"{% endif %}>{{ information.title }}</option>
+                              <option value="{{ information.information_id }}"{% if information.information_id == config_return_id %} selected{% endif %}>{{ information.title }}</option>
                             {% endfor %}
                           </select>
                           <div class="form-text">{{ help_return }}</div>
@@ -961,7 +961,7 @@
                           <select name="config_captcha" id="input-captcha" class="form-select">
                             <option value="">{{ text_none }}</option>
                             {% for captcha in captchas %}
-                              <option value="{{ captcha.value }}"{% if captcha.value == config_captcha %} selected="selected"{% endif %}>{{ captcha.text }}</option>
+                              <option value="{{ captcha.value }}"{% if captcha.value == config_captcha %} selected{% endif %}>{{ captcha.text }}</option>
                             {% endfor %}
                           </select>
                           <div class="form-text">{{ help_captcha }}</div>
@@ -1140,8 +1140,8 @@
                   <div class="col-sm-10">
                     <select name="config_mail_engine" id="input-mail-engine" class="form-select">
                       <option value="">{{ text_none }}</option>
-                      <option value="mail"{% if config_mail_engine == 'mail' %} selected="selected"{% endif %}>{{ text_mail }}</option>
-                      <option value="smtp"{% if config_mail_engine == 'smtp' %} selected="selected"{% endif %}>{{ text_smtp }}</option>
+                      <option value="mail"{% if config_mail_engine == 'mail' %} selected{% endif %}>{{ text_mail }}</option>
+                      <option value="smtp"{% if config_mail_engine == 'smtp' %} selected{% endif %}>{{ text_smtp }}</option>
                     </select>
                     <div class="form-text">{{ help_mail_engine }}</div>
                   </div>
@@ -1239,9 +1239,9 @@
                   <label for="input-session-samesite" class="col-sm-2 col-form-label">{{ entry_session_samesite }}</label>
                   <div class="col-sm-10">
                     <select name="config_session_samesite" id="input-session-samesite" class="form-select">
-                      <option value="None"{% if config_session_samesite == 'None' %} selected="selected"{% endif %}>{{ text_none }}</option>
-                      <option value="Lax"{% if config_session_samesite == 'Lax' %} selected="selected"{% endif %}>{{ text_lax }}</option>
-                      <option value="Strict"{% if config_session_samesite == 'Strict' %} selected="selected"{% endif %}>{{ text_strict }}</option>
+                      <option value="None"{% if config_session_samesite == 'None' %} selected{% endif %}>{{ text_none }}</option>
+                      <option value="Lax"{% if config_session_samesite == 'Lax' %} selected{% endif %}>{{ text_lax }}</option>
+                      <option value="Strict"{% if config_session_samesite == 'Strict' %} selected{% endif %}>{{ text_strict }}</option>
                     </select>
                     <div class="form-text">{{ help_session_samesite }}</div>
                   </div>
@@ -1410,13 +1410,13 @@ $('#input-country').on('change', function () {
                     html += '<option value="' + json['zone'][i]['zone_id'] + '"';
 
                     if (json['zone'][i]['zone_id'] == '{{ config_zone_id }}') {
-                        html += ' selected="selected"';
+                        html += ' selected';
                     }
 
                     html += '>' + json['zone'][i]['name'] + '</option>';
                 }
             } else {
-                html += '<option value="0" selected="selected">{{ text_none }}</option>';
+                html += '<option value="0" selected>{{ text_none }}</option>';
             }
 
             $('#input-zone').html(html);

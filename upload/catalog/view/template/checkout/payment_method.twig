@@ -206,7 +206,7 @@ $('#input-checkout-agree').on('change', function() {
         return $.ajax({
             url: 'index.php?route=checkout/payment_method.agree&language={{ language }}',
             type: 'post',
-            data: $('#input-agree').serialize(),
+            data: $('#input-checkout-agree').serialize(),
             dataType: 'json',
             contentType: 'application/x-www-form-urlencoded',
             beforeSend: function() {

@@ -106,7 +106,6 @@
               </tr>
             {% endfor %}
           </tbody>
-
           <tbody id="order-vouchers">
             {% for order_voucher in order_vouchers %}
               <tr>
@@ -310,6 +309,7 @@
               <button type="button" data-bs-toggle="modal" data-bs-target="#modal-payment-address" class="btn btn-outline-primary float-end"><i class="fa-solid fa-cog"></i></button>
             </div>
           </div>
+
           <div id="shipping-address" class="col{% if not shipping_method %} d-none{% endif %}">
             <div class="input-group mb-3">
               <div class="form-control border rounded-start">
@@ -353,6 +353,7 @@
               <button type="button" data-bs-toggle="modal" data-bs-target="#modal-shipping-address" class="btn btn-outline-primary float-end"><i class="fa-solid fa-cog"></i></button>
             </div>
           </div>
+
         </div>
         <div class="row mb-3">
 

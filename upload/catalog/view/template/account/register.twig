@@ -14,16 +14,16 @@
         <fieldset id="account">
           <legend>{{ text_your_details }}</legend>
           {% if customer_groups|length > 1 %}
-          <div class="row mb-3 required">
-            <label class="col-sm-2 col-form-label">{{ entry_customer_group }}</label>
-            <div class="col-sm-10">
-              <select name="customer_group_id" id="input-customer-group" class="form-select">
-                {% for customer_group in customer_groups %}
-                  <option value="{{ customer_group.customer_group_id }}"{% if customer_group.customer_group_id == customer_group_id %} selected{% endif %}>{{ customer_group.name }}</option>
-                {% endfor %}
-              </select>
+            <div class="row mb-3 required">
+              <label class="col-sm-2 col-form-label">{{ entry_customer_group }}</label>
+              <div class="col-sm-10">
+                <select name="customer_group_id" id="input-customer-group" class="form-select">
+                  {% for customer_group in customer_groups %}
+                    <option value="{{ customer_group.customer_group_id }}"{% if customer_group.customer_group_id == customer_group_id %} selected{% endif %}>{{ customer_group.name }}</option>
+                  {% endfor %}
+                </select>
+              </div>
             </div>
-          </div>
           {% endif %}
           <div class="row mb-3 required">
             <label for="input-firstname" class="col-sm-2 col-form-label">{{ entry_firstname }}</label>
@@ -197,31 +197,21 @@
           <div class="row mb-3">
             <label class="col-sm-2 col-form-label">{{ entry_newsletter }}</label>
             <div class="col-sm-10">
-              <div class="form-check form-check-inline">
-                <input type="radio" name="newsletter" value="1" id="input-newsletter-yes" class="form-check-input"/>
-                <label for="input-newsletter-yes" class="form-check-label">{{ text_yes }}</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input type="radio" name="newsletter" value="0" id="input-newsletter-no" class="form-check-input" checked/>
-                <label for="input-newsletter-no" class="form-check-label">{{ text_no }}</label>
+              <div class="form-check form-switch form-switch-lg">
+                <input type="hidden" name="newsletter" value="0"/> <input type="checkbox" name="newsletter" value="1" id="input-newsletter" class="form-check-input"/>
               </div>
             </div>
           </div>
         </fieldset>
-
         {{ captcha }}
-
-        <div class="d-inline-block pt-2 pd-2 w-100">
-          <div class="float-end text-right">
-            {% if text_agree %}
-              <div class="form-check form-check-inline">
-                <label class="form-check-label">{{ text_agree }}</label> <input type="checkbox" name="agree" value="1" class="form-check-input"/>
-              </div>
-            {% endif %}
-            <button type="submit" class="btn btn-primary">{{ button_continue }}</button>
-          </div>
+        <div class="text-end">
+          {% if text_agree %}
+            <div class="form-check form-switch form-switch-lg form-check-reverse form-check-inline">
+              <label class="form-check-label">{{ text_agree }}</label> <input type="checkbox" name="agree" value="1" class="form-check-input"/>
+            </div>
+          {% endif %}
+          <button type="submit" class="btn btn-primary">{{ button_continue }}</button>
         </div>
-
       </form>
       {{ content_bottom }}
     </div>
@@ -229,11 +219,11 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#input-customer-group').on('change', function () {
+$('#input-customer-group').on('change', function() {
     $.ajax({
         url: 'index.php?route=account/custom_field&customer_group_id=' + this.value + '&language={{ language }}',
         dataType: 'json',
-        success: function (json) {
+        success: function(json) {
             $('.custom-field').hide();
             $('.custom-field').removeClass('required');
 
@@ -247,7 +237,7 @@ $('#input-customer-group').on('change', function () {
                 }
             }
         },
-        error: function (xhr, ajaxOptions, thrownError) {
+        error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });

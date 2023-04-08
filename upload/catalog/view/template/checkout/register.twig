@@ -436,19 +436,24 @@
       </fieldset>
     </div>
     <div class="col mb-3 required">{{ captcha }}</div>
-    <div class="col mb-3">
-      <div class="form-check">
-        <label for="input-newsletter" class="form-check-label">{{ entry_newsletter }}</label> <input type="checkbox" name="newsletter" value="1" id="input-newsletter" class="form-check-input"/>
+  </div>
+  <div id class="row">
+    <div class="col">
+      <div class="form-check form-switch form-switch-lg">
+        <label for="input-newsletter" class="form-check-label">{{ entry_newsletter }}</label>
+        <input type="checkbox" name="newsletter" value="1" id="input-newsletter" class="form-check-input"/>
       </div>
       {% if text_agree %}
-        <div id="register-agree" class="form-check">
-          <label for="input-register-agree" class="form-check-label">{{ text_agree }}</label> <input type="checkbox" name="agree" value="1" id="input-register-agree" class="form-check-input"/>
+        <div class="form-check form-switch form-switch-lg">
+          <label class="form-check-label">{{ text_agree }}</label>
+          <input type="checkbox" name="agree" value="1" id="input-register-agree" class="form-check-input"{% if agree %} checked{% endif %}/>
         </div>
       {% endif %}
-      <button type="submit" id="button-register" class="btn btn-primary">{{ button_continue }}</button>
+      <button type="submit" id="button-register" class="btn btn-primary mt-2">{{ button_continue }}</button>
     </div>
   </div>
 </form>
+
 <script type="text/javascript"><!--
 // Account
 $('input[name=\'account\']').on('click', function() {

@@ -67,11 +67,6 @@ class Confirm extends \Opencart\System\Engine\Controller {
 			$status = false;
 		}
 
-		// Validate checkout terms
-		if ($this->config->get('config_checkout_id') && !isset($this->session->data['agree'])) {
-			$status = false;
-		}
-
 		// Generate order if payment method is set
 		if ($status) {
 			$order_data = [];

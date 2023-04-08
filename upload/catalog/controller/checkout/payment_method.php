@@ -179,4 +179,19 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
+
+	public function agree(): void {
+		$this->load->language('checkout/payment_method');
+
+		$json = [];
+
+		if (isset($this->request->post['agree'])) {
+			$this->session->data['agree'] = $this->request->post['agree'];
+		} else {
+			unset($this->session->data['agree']);
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
 }

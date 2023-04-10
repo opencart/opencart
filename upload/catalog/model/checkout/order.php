@@ -348,7 +348,7 @@ class Order extends \Opencart\System\Engine\Model {
 				}
 			}
 
-			$this->load->model('checkout/subscription');
+
 
 			// If order status becomes complete status
 			if (!in_array($order_info['order_status_id'], (array)$this->config->get('config_complete_status')) && in_array($order_status_id, (array)$this->config->get('config_complete_status'))) {
@@ -362,18 +362,21 @@ class Order extends \Opencart\System\Engine\Model {
 					}
 				}
 
+				// Add subscription
+				$this->load->model('checkout/subscription');
+
 				foreach ($order_products as $order_product) {
 					// Subscription
 					$order_subscription_info = $this->getSubscription($order_id, $order_product['order_product_id']);
 
 					if ($order_subscription_info) {
 						// Add subscription if one is not setup
-						$subscription_info = $this->model_checkout_subscription->getSubscription($order_id, $order_product['order_product_id']);
+						$subscription_info = $this->model_checkout_subscription->getSubscriptionByOrderProductId($order_id, $order_product['order_product_id']);
 
 						if ($subscription_info) {
 							$subscription_id = $subscription_info['subscription_id'];
 						} else {
-							$subscription_id = $this->model_checkout_subscription->addSubscription(array_merge($order_subscription_info, $order_info));
+							$subscription_id = $this->model_checkout_subscription->addSubscription(array_merge($order_subscription_info, $order_product, $order_info));
 						}
 
 						// Add history and set active subscription
@@ -412,13 +415,16 @@ class Order extends \Opencart\System\Engine\Model {
 
 			// If order status is no longer complete status
 			if (in_array($order_info['order_status_id'], (array)$this->config->get('config_complete_status')) && !in_array($order_status_id, (array)$this->config->get('config_complete_status'))) {
+				// Suspend subscription
+				$this->load->model('checkout/subscription');
+
 				foreach ($order_products as $order_product) {
 					// Subscription status set to suspend
 					$subscription_info = $this->model_checkout_subscription->getSubscription($order_id, $order_product['order_product_id']);
 
 					if ($subscription_info) {
 						// Add history and set suspended subscription
-						$this->model_checkout_subscription->addHistory($subscription_id, $this->config->get('config_subscription_suspended_status_id'));
+						$this->model_checkout_subscription->addHistory($subscription_info['subscription_id'], (int)$this->config->get('config_subscription_suspended_status_id'));
 					}
 				}
 

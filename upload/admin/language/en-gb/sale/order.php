@@ -35,14 +35,12 @@ $_['text_month']                 = 'month';
 $_['text_year']                  = 'year';
 $_['text_more']                  = 'More..';
 $_['text_less']                  = 'Less..';
-
-
 $_['text_payment_address']       = 'Payment Address';
 $_['text_payment_method']        = 'Payment Method';
+$_['text_payment']               = 'Please select the preferred payment method to use for this order.';
 $_['text_shipping_address']      = 'Shipping Address';
 $_['text_shipping_method']       = 'Shipping Method';
-
-
+$_['text_shipping']              = 'Please select the preferred shipping method to use for this order.';
 $_['text_comment']               = 'Comment';
 $_['text_history']               = 'History';
 $_['text_history_add']           = 'Add History';
@@ -55,7 +53,6 @@ $_['text_order_id']              = 'Order ID';
 $_['text_website']               = 'Web Site';
 $_['text_invoice']               = 'Invoice';
 $_['text_invoice_no']            = 'Invoice No.';
-$_['text_shipping']              = 'Dispatch Note';
 $_['text_store_address']         = 'Store Address';
 $_['text_store_telephone']       = 'Store Telephone';
 $_['text_store_email']           = 'Store E-Mail';

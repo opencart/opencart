@@ -22,7 +22,6 @@ $_['entry_trial_duration']  = 'Trial Duration';
 $_['entry_trial_cycle']     = 'Trial Cycle';
 $_['entry_trial_frequency'] = 'Trial Frequency';
 $_['entry_trial_status']    = 'Trial Status';
-$_['entry_price']           = 'Price';
 $_['entry_duration']        = 'Duration';
 $_['entry_cycle']           = 'Cycle';
 $_['entry_frequency']       = 'Frequency';

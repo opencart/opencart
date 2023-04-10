@@ -4478,11 +4478,6 @@ function oc_db_schema() {
 				'not_null' => true
 			],
 			[
-				'name' => 'price',
-				'type' => 'decimal(10,4)',
-				'not_null' => true
-			],
-			[
 				'name' => 'frequency',
 				'type' => 'enum(\'day\',\'week\',\'semi_month\',\'month\',\'year\')',
 				'not_null' => true
@@ -6502,6 +6497,11 @@ function oc_db_schema() {
 				'not_null' => true
 			],
 			[
+				'name' => 'price',
+				'type' => 'decimal(10,4)',
+				'not_null' => true
+			],
+			[
 				'name' => 'subscription_plan_id',
 				'type' => 'int(11)',
 				'not_null' => true
@@ -6539,11 +6539,6 @@ function oc_db_schema() {
 			[
 				'name' => 'trial_status',
 				'type' => 'tinyint(1)',
-				'not_null' => true
-			],
-			[
-				'name' => 'price',
-				'type' => 'decimal(10,4)',
 				'not_null' => true
 			],
 			[
@@ -6773,11 +6768,6 @@ function oc_db_schema() {
 			[
 				'name' => 'trial_status',
 				'type' => 'tinyint(4)',
-				'not_null' => true
-			],
-			[
-				'name' => 'price',
-				'type' => 'decimal(10,4)',
 				'not_null' => true
 			],
 			[

@@ -268,12 +268,6 @@ class SubscriptionPlan extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!empty($subscription_info)) {
-			$data['price'] = $subscription_info['price'];
-		} else {
-			$data['price'] = 0.00;
-		}
-
-		if (!empty($subscription_info)) {
 			$data['frequency'] = $subscription_info['frequency'];
 		} else {
 			$data['frequency'] = '';

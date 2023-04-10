@@ -571,6 +571,8 @@ $('#form-register').on('submit', function(e) {
 
                     $('#input-shipping-method').val('');
                     $('#input-payment-method').val('');
+
+                    $('#checkout-confirm').load('index.php?route=checkout/confirm.confirm&language={{ language }}');
                 }
             },
             error: function(xhr, ajaxOptions, thrownError) {

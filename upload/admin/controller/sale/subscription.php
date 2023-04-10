@@ -464,7 +464,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('customer/customer');
 
-		$data['payment_methods'] = $this->model_customer_customer->getPaymentMethods($data['customer_id']);
+		//$data['payment_methods'] = $this->model_customer_customer->getPaymentMethods($data['customer_id']);
 
 		if (!empty($subscription_info)) {
 			$data['customer_payment_id'] = $subscription_info['customer_payment_id'];

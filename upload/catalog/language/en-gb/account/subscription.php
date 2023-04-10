@@ -4,7 +4,7 @@ $_['heading_title']                        = 'Subscriptions';
 
 // Text
 $_['text_account']                         = 'Account';
-$_['text_subscription']                    = 'Subscription Payment Information';
+$_['text_subscription']                    = 'Subscription';
 $_['text_subscription_id']                 = 'Subscription ID';
 $_['text_subscription_detail']             = 'Subscription Payment Details';
 $_['text_date_added']                      = 'Date Added:';

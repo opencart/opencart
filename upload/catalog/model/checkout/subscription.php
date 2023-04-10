@@ -1,48 +1,67 @@
 <?php
 namespace Opencart\Catalog\Model\Checkout;
 class Subscription extends \Opencart\System\Engine\Model {
-	public function addSubscription(int $order_id, array $data): int {
+	public function addSubscription(array $data): int {
+		// Set the
+		if ($data['trial_status'] && $data['trial_duration']) {
+			$trial_remaining = $data['trial_duration'] - 1;
+			$remaining = $data['duration'];
+		} elseif ($data['duration']) {
+			$trial_remaining = $data['trial_duration'];
+			$remaining = $data['duration'] - 1;
+		} else {
+			$trial_remaining = $data['trial_duration'];
+			$remaining = $data['duration'];
+		}
+
+		if ($data['trial_status'] && $data['trial_duration']) {
+			$date_next = date('Y-m-d', strtotime('+' . $data['trial_cycle'] . ' ' . $data['trial_frequency']));
+		} else {
+			$date_next = date('Y-m-d', strtotime('+' . $data['cycle'] . ' ' . $data['frequency']));
+		}
+
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "subscription` SET 
-		`order_id` = '" . (int)$data['order_id'] . "', 
-		`order_product_id` = '" . (int)$data['order_product_id'] . "', 
-		`store_id` = '" . (int)$data['store_id'] . "', 
-		`customer_id` = '" . (int)$data['customer_id'] . "', 
-		`customer_group_id` = '" . (int)$data['customer_group_id'] . "', 
-		`payment_address_id` = '" . (int)$data['payment_address_id'] . "', 
-		`payment_method` = '" . $this->db->escape((string)$data['payment_method']) . "', 
-		`payment_code` = '" . $this->db->escape((string)$data['payment_code']) . "', 
-		`shipping_address_id` = '" . (int)$data['shipping_address_id'] . "', 
-		`shipping_method` = '" . $this->db->escape((string)$data['shipping_method']) . "', 
-		`shipping_code` = '" . $this->db->escape((string)$data['shipping_code']) . "', 
-		`subscription_plan_id` = '" . (int)$data['subscription_plan_id'] . "', 
-		`product_id` = '" . (int)$data['product_id'] . "', 
-		`quantity` = '" . (int)$data['quantity'] . "', 
-		`name` = '" . $this->db->escape($data['name']) . "', 
-		`trial_price` = '" . (float)$data['trial_price'] . "', 
-		`trial_frequency` = '" . $this->db->escape($data['trial_frequency']) . "', 
-		`trial_cycle` = '" . (int)$data['trial_cycle'] . "', 
-		`trial_duration` = '" . (int)$data['trial_duration'] . "', 
-		`trial_remaining` = '" . (int)$data['trial_remaining'] . "', 
-		`trial_status` = '" . (int)$data['trial_status'] . "', 
-		`price` = '" . (float)$data['price'] . "', 
-		`frequency` = '" . $this->db->escape($data['frequency']) . "', 
-		`cycle` = '" . (int)$data['cycle'] . "', 
-		`duration` = '" . (int)$data['duration'] . "', 
-		`remaining` = '" . (int)$data['remaining'] . "', 
-		`date_next` = '" . $this->db->escape($data['date_next']) . "', 
-		`comment` = '" . $this->db->escape($data['comment']) . "', 
-		`affiliate_id` = '" . (int)$data['affiliate_id'] . "', 
-		`commission` = '" . (float)$data['commission'] . "', 
-		`marketing_id` = '" . (int)$data['marketing_id'] . "', 
-		`tracking` = '" . $this->db->escape($data['tracking']) . "', 
-		`language_id` = '" . (int)$data['language_id'] . "', 
-		`currency_id` = '" . (int)$data['currency_id'] . "', 
-		`ip` = '" . $this->db->escape($data['ip']) . "', 
-		`forwarded_ip` = '" . $this->db->escape($data['forwarded_ip']) . "', 
-		`user_agent` = '" . $this->db->escape($data['user_agent']) . "', 
-		`accept_language` = '" . $this->db->escape($data['accept_language']) . "', 
-		`date_added` = NOW(), 
-		`date_modified` = NOW()");
+			`order_id` = '" . (int)$data['order_id'] . "', 
+			`order_product_id` = '" . (int)$data['order_product_id'] . "', 
+			`store_id` = '" . (int)$data['store_id'] . "', 
+			`customer_id` = '" . (int)$data['customer_id'] . "', 
+			`customer_group_id` = '" . (int)$data['customer_group_id'] . "', 
+			`payment_address_id` = '" . (int)$data['payment_address_id'] . "', 
+			`payment_method` = '" . $this->db->escape((string)$data['payment_method']) . "', 
+			`payment_code` = '" . $this->db->escape((string)$data['payment_code']) . "', 
+			`shipping_address_id` = '" . (int)$data['shipping_address_id'] . "', 
+			`shipping_method` = '" . $this->db->escape((string)$data['shipping_method']) . "', 
+			`shipping_code` = '" . $this->db->escape((string)$data['shipping_code']) . "', 
+			`subscription_plan_id` = '" . (int)$data['subscription_plan_id'] . "', 
+			`product_id` = '" . (int)$data['product_id'] . "', 
+			`quantity` = '" . (int)$data['quantity'] . "', 
+			`name` = '" . $this->db->escape($data['name']) . "', 
+			`trial_price` = '" . (float)$data['trial_price'] . "', 
+			`trial_frequency` = '" . $this->db->escape($data['trial_frequency']) . "', 
+			`trial_cycle` = '" . (int)$data['trial_cycle'] . "', 
+			`trial_duration` = '" . (int)$data['trial_duration'] . "', 
+			`trial_remaining` = '" . (int)$trial_remaining . "', 
+			`trial_status` = '" . (int)$data['trial_status'] . "', 
+			`price` = '" . (float)$data['price'] . "', 
+			`frequency` = '" . $this->db->escape($data['frequency']) . "', 
+			`cycle` = '" . (int)$data['cycle'] . "', 
+			`duration` = '" . (int)$data['duration'] . "', 
+			`remaining` = '" . (int)$trial_remaining . "', 
+			`date_next` = '" . $this->db->escape($date_next) . "', 
+			`comment` = '" . $this->db->escape($data['comment']) . "', 
+			`affiliate_id` = '" . (int)$data['affiliate_id'] . "', 
+			`commission` = '" . (float)$data['commission'] . "', 
+			`marketing_id` = '" . (int)$data['marketing_id'] . "', 
+			`tracking` = '" . $this->db->escape($data['tracking']) . "', 
+			`language_id` = '" . (int)$data['language_id'] . "', 
+			`currency_id` = '" . (int)$data['currency_id'] . "', 
+			`ip` = '" . $this->db->escape($data['ip']) . "', 
+			`forwarded_ip` = '" . $this->db->escape($data['forwarded_ip']) . "', 
+			`user_agent` = '" . $this->db->escape($data['user_agent']) . "', 
+			`accept_language` = '" . $this->db->escape($data['accept_language']) . "', 
+			`date_added` = NOW(), 
+			`date_modified` = NOW()
+		");
 
 		return $this->db->getLastId();
 	}
@@ -71,7 +90,7 @@ class Subscription extends \Opencart\System\Engine\Model {
 		`frequency` = '" . $this->db->escape($data['frequency']) . "', 
 		`cycle` = '" . (int)$data['cycle'] . "', 
 		`duration` = '" . (int)$data['duration'] . "', 
-		`remaining` = '" . (int)$data['remaining'] . "', 
+		`remaining` = '" . (int)$data['duration'] . "', 
 		`date_next` = '" . $this->db->escape($data['date_next']) . "', 
 		`comment` = '" . $this->db->escape($data['comment']) . "', 
 		`affiliate_id` = '" . (int)$data['affiliate_id'] . "', 

@@ -369,6 +369,7 @@
                   {% endif %}
                 </div>
               </div>
+              <input type="hidden" name="shipping_code" value="{{ shipping_code }}" id="input-shipping-code"/>
               <button type="button" id="button-shipping-methods" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
             </div>
           </div>
@@ -385,6 +386,7 @@
                   {% endif %}
                 </div>
               </div>
+              <input type="hidden" name="payment_code" value="{{ payment_code }}" id="input-payment-code"/>
               <button type="button" id="button-payment-methods" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
             </div>
           </div>
@@ -771,8 +773,7 @@
       <div class="modal-body">
         <form id="form-affiliate">
           <div class="mb-3">
-            <label for="input-affiliate" class="form-label">{{ entry_affiliate }}</label>
-            <input type="text" name="affiliate" value="{{ affiliate }}" placeholder="{{ entry_affiliate }}" id="input-affiliate" data-oc-target="autocomplete-affiliate" class="form-control" autocomplete="off"/> <input type="hidden" name="affiliate_id" value="{{ affiliate_id }}" id="input-affiliate-id"/>
+            <label for="input-affiliate" class="form-label">{{ entry_affiliate }}</label> <input type="text" name="affiliate" value="{{ affiliate }}" placeholder="{{ entry_affiliate }}" id="input-affiliate" data-oc-target="autocomplete-affiliate" class="form-control" autocomplete="off"/> <input type="hidden" name="affiliate_id" value="{{ affiliate_id }}" id="input-affiliate-id"/>
             <ul id="autocomplete-affiliate" class="dropdown-menu"></ul>
           </div>
           <div class="text-end">
@@ -942,7 +943,25 @@
     </div>
   </div>
 </div>
-
+<div id="modal-payment" class="modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"><i class="fa fa-credit-card"></i> {{ text_payment_method }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form id="form-payment-method">
+          <p>{{ text_payment }}</p>
+          <div id="payment-methods"></div>
+          <div class="text-end">
+            <button type="submit" id="button-payment-method" class="btn btn-primary">{{ button_continue }}</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 <div id="modal-shipping-address" class="modal">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -1114,6 +1133,25 @@
     </div>
   </div>
 </div>
+<div id="modal-shipping" class="modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"><i class="fa fa-truck"></i> {{ text_shipping_method }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form id="form-shipping-method">
+          <p>{{ text_shipping }}</p>
+          <div id="shipping-methods"></div>
+          <div class="text-end">
+            <button type="submit" id="button-shipping-method" class="btn btn-primary">{{ button_continue }}</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 <div id="modal-comment" class="modal">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -1253,8 +1291,8 @@ $('#input-customer').autocomplete({
         $('#input-payment-address').html(html);
         $('#input-shipping-address').html(html);
 
-        $('#input-payment-method').html('<option value="">{{ text_select }}</option>');
-        $('#input-shipping-method').html('<option value="">{{ text_select }}</option>');
+        $('#payment-method-value').html('');
+        $('#shipping-method-value').html('');
     }
 });
 
@@ -1290,7 +1328,7 @@ $('#form-customer').on('submit', function(e) {
     e.preventDefault();
 
     $.ajax({
-        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val() + '&action=sale/customer',
+        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&action=sale/customer&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val(),
         type: 'post',
         data: $('#form-customer').serialize(),
         dataType: 'json',
@@ -1325,8 +1363,8 @@ $('#form-customer').on('submit', function(e) {
 
                 $('#customer-value').html('<a href="index.php?route=customer/customer.form&user_token={{ user_token }}&customer_id=' + $('#input-customer-id').val() + '">' + $('#input-firstname').val() + ' ' + $('#input-lastname').val() + '</a>');
 
-                $('#input-payment-method').html('<option value="">{{ text_select }}</option>');
-                $('#input-shipping-method').html('<option value="">{{ text_select }}</option>');
+                $('#payment-method-value').html('');
+                $('#shipping-method-value').html('');
 
                 $('#button-refresh').trigger('click');
             }
@@ -1560,7 +1598,7 @@ $('#form-product-add').on('submit', function(e) {
     e.preventDefault();
 
     $.ajax({
-        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val() + '&action=sale/cart.add',
+        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&action=sale/cart.add&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val(),
         type: 'post',
         data: $('#form-product-add').serialize(),
         dataType: 'json',
@@ -1590,8 +1628,8 @@ $('#form-product-add').on('submit', function(e) {
             if (json['success']) {
                 $('#form-product-add').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#input-payment-method').html('<option value="">{{ text_select }}</option>');
-                $('#input-shipping-method').html('<option value="">{{ text_select }}</option>');
+                $('#payment-method-value').html('');
+                $('#shipping-method-value').html('');
 
                 // Refresh products, vouchers and totals
                 $('#button-refresh').trigger('click');
@@ -1631,8 +1669,8 @@ $('#order-products').on('submit', 'form', function(e) {
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#input-payment-method').html('<option value="">{{ text_select }}</option>');
-                $('#input-shipping-method').html('<option value="">{{ text_select }}</option>');
+                $('#payment-method-value').html('');
+                $('#shipping-method-value').html('');
 
                 // Refresh products, vouchers and totals
                 $('#button-refresh').trigger('click');
@@ -1687,8 +1725,8 @@ $('#form-voucher-add').on('submit', function(e) {
                 $('#input-message').val('');
                 $('#input-amount').val('{{ voucher_min|escape('js') }}');
 
-                $('#input-payment-method').html('<option value="">{{ text_select }}</option>');
-                $('#input-shipping-method').html('<option value="">{{ text_select }}</option>');
+                $('#payment-method-value').html('');
+                $('#shipping-method-value').html('');
 
                 // Refresh products, vouchers and totals
                 $('#button-refresh').trigger('click');
@@ -1728,8 +1766,8 @@ $('#order-vouchers').on('submit', 'form', function(e) {
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#input-payment-method').html('<option value="">{{ text_select }}</option>');
-                $('#input-shipping-method').html('<option value="">{{ text_select }}</option>');
+                $('#payment-method-value').html('');
+                $('#shipping-method-value').html('');
 
                 // Refresh products, vouchers and totals
                 $('#button-refresh').trigger('click');
@@ -1744,8 +1782,8 @@ $('#order-vouchers').on('submit', 'form', function(e) {
 $('#input-store').on('change', function(e) {
     e.preventDefault();
 
-    $('#input-payment-method').html('<option value="">{{ text_select }}</option>');
-    $('#input-shipping-method').html('<option value="">{{ text_select }}</option>');
+    $('#payment-method-value').html('');
+    $('#shipping-method-value').html('');
 
     $('#button-refresh').trigger('click');
 });
@@ -1753,8 +1791,8 @@ $('#input-store').on('change', function(e) {
 $('#input-language').on('change', function(e) {
     e.preventDefault();
 
-    $('#input-payment-method').html('<option value="">{{ text_select }}</option>');
-    $('#input-shipping-method').html('<option value="">{{ text_select }}</option>');
+    $('#payment-method-value').html('');
+    $('#shipping-method-value').html('');
 
     $('#button-refresh').trigger('click');
 });
@@ -1783,8 +1821,8 @@ $('#input-currency').on('change', function(e) {
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#input-payment-method').html('<option value="">{{ text_select }}</option>');
-                $('#input-shipping-method').html('<option value="">{{ text_select }}</option>');
+                $('#payment-method-value').html('');
+                $('#shipping-method-value').html('');
 
                 $('#button-refresh').trigger('click');
             }
@@ -1820,8 +1858,8 @@ $('#form-coupon').on('submit', function(e) {
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#input-payment-method').html('<option value="">{{ text_select }}</option>');
-                $('#input-shipping-method').html('<option value="">{{ text_select }}</option>');
+                $('#payment-method-value').html('');
+                $('#shipping-method-value').html('');
 
                 // Refresh products, vouchers and totals
                 $('#button-refresh').trigger('click');
@@ -1858,8 +1896,8 @@ $('#form-voucher').on('submit', function(e) {
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#input-payment-method').html('<option value="">{{ text_select }}</option>');
-                $('#input-shipping-method').html('<option value="">{{ text_select }}</option>');
+                $('#payment-method-value').html('');
+                $('#shipping-method-value').html('');
 
                 // Refresh products, vouchers and totals
                 $('#button-refresh').trigger('click');
@@ -1896,8 +1934,8 @@ $('#form-reward').on('submit', function(e) {
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#input-payment-method').html('<option value="">{{ text_select }}</option>');
-                $('#input-shipping-method').html('<option value="">{{ text_select }}</option>');
+                $('#payment-method-value').html('');
+                $('#shipping-method-value').html('');
 
                 $('#button-refresh').trigger('click');
             }
@@ -1946,8 +1984,10 @@ $(document).on('click', '#button-reward-add, #button-reward-remove', function(e)
                     $(element).replaceWith('<button type="button" id="button-reward-add" data-bs-toggle="tooltip" title="{{ button_reward_add }}" class="btn btn-success"><i class="fa-solid fa-plus-circle"></i></button>');
                 }
 
-                $('#input-payment-method').html('<option value="">{{ text_select }}</option>');
-                $('#input-shipping-method').html('<option value="">{{ text_select }}</option>');
+                $('#payment-method-value').html('');
+                $('#shipping-method-value').html('');
+
+                $('#button-refresh').trigger('click');
             }
         },
         error: function(xhr, ajaxOptions, thrownError) {
@@ -2183,8 +2223,8 @@ $('#form-payment-address').on('submit', function(e) {
 
                 $('#payment-address-value').html(address);
 
-                $('#input-payment-method').html('<option value="">{{ text_select }}</option>');
-                $('#input-shipping-method').html('<option value="">{{ text_select }}</option>');
+                $('#payment-method-value').html('');
+                $('#shipping-method-value').html('');
 
                 $('#button-refresh').trigger('click');
             }
@@ -2360,8 +2400,8 @@ $('#form-shipping-address').on('submit', function(e) {
 
                 $('#shipping-address-value').html(address);
 
-                $('#input-payment-method').html('<option value="">{{ text_select }}</option>');
-                $('#input-shipping-method').html('<option value="">{{ text_select }}</option>');
+                $('#payment-method-value').html('');
+                $('#shipping-method-value').html('');
 
                 // Refresh products, vouchers and totals
                 $('#button-refresh').trigger('click');
@@ -2425,7 +2465,7 @@ $('#button-payment-methods').on('click', function() {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val() + '&action=sale/payment_method',
+        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&action=sale/payment_method&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val(),
         dataType: 'json',
         beforeSend: function() {
             $(element).button('loading');
@@ -2441,18 +2481,7 @@ $('#button-payment-methods').on('click', function() {
             }
 
             if (json['payment_methods']) {
-                $('#modal-payment').remove();
-
-                html = '<div id="modal-payment" class="modal">';
-                html += '  <div class="modal-dialog modal-dialog-centered">';
-                html += '    <div class="modal-content">';
-                html += '      <div class="modal-header">';
-                html += '        <h5 class="modal-title"><i class="fa fa-credit-card"></i> {{ text_payment_method }}</h5>';
-                html += '        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>';
-                html += '      </div>';
-                html += '      <div class="modal-body">';
-                html += '        <form id="form-payment-method">';
-                html += '          <p>{{ text_payment }}</p>';
+                var html = '';
 
                 for (i in json['payment_methods']) {
                     html += '<p><strong>' + json['payment_methods'][i]['name'] + '</strong></p>';
@@ -2478,21 +2507,10 @@ $('#button-payment-methods').on('click', function() {
                     }
                 }
 
-                html += '          <div class="text-end">';
-                html += '            <button type="submit" id="button-payment-method" class="btn btn-primary">{{ button_continue }}</button>';
-                html += '          </div>';
-                html += '        </form>';
-                html += '      </div>';
-                html += '    </div>';
-                html += '  </div>';
-                html += '</div>';
-
-                $('body').append(html);
+                $('#payment-methods').html(html);
 
                 $('#modal-payment').modal('show');
             }
-
-            $('#button-refresh').trigger('click');
         },
         error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -2500,24 +2518,26 @@ $('#button-payment-methods').on('click', function() {
     });
 });
 
-$('#input-payment-method').on('change', function(e) {
+$('#form-payment-method').on('submit', function(e) {
     e.preventDefault();
 
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val() + '&action=sale/payment_method.save',
+        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&action=sale/payment_method.save&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val(),
         type: 'post',
         data: $('#form-payment-method').serialize(),
         dataType: 'json',
         contentType: 'application/x-www-form-urlencoded',
         beforeSend: function() {
-            $(element).prop('disabled', true);
+            $('#button-payment-method').button('loading');
         },
         complete: function() {
-            $(element).prop('disabled', false);
+            $('#button-payment-method').button('reset');
         },
         success: function(json) {
+            console.log(json);
+
             $('.alert-dismissible').remove();
 
             if (json['error']) {
@@ -2525,7 +2545,10 @@ $('#input-payment-method').on('change', function(e) {
             }
 
             if (json['success']) {
-                $('#form-payment-method').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#form-payment-method').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                $('#payment-method-value').val($('input[name=\'payment_method\']:checked').parent().find('label').text());
+                $('#input-payment-code').val($('input[name=\'payment_method\']:checked').val());
 
                 $('#button-refresh').trigger('click');
             }
@@ -2541,7 +2564,7 @@ $('#button-shipping-methods').on('click', function() {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val() + '&action=sale/shipping_method',
+        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&action=sale/shipping_method&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val(),
         dataType: 'json',
         beforeSend: function() {
             $(element).button('loading');
@@ -2557,18 +2580,7 @@ $('#button-shipping-methods').on('click', function() {
             }
 
             if (json['shipping_methods']) {
-                $('#modal-shipping').remove();
-
-                html = '<div id="modal-shipping" class="modal">';
-                html += '  <div class="modal-dialog modal-dialog-centered">';
-                html += '    <div class="modal-content">';
-                html += '      <div class="modal-header">';
-                html += '        <h5 class="modal-title"><i class="fa fa-truck"></i> {{ text_shipping_method }}</h5>';
-                html += '        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>';
-                html += '      </div>';
-                html += '      <div class="modal-body">';
-                html += '        <form id="form-shipping-method">';
-                html += '          <p>{{ text_shipping }}</p>';
+                html = '';
 
                 for (i in json['shipping_methods']) {
                     html += '<p><strong>' + json['shipping_methods'][i]['name'] + '</strong></p>';
@@ -2594,21 +2606,10 @@ $('#button-shipping-methods').on('click', function() {
                     }
                 }
 
-                html += '          <div class="text-end">';
-                html += '            <button type="submit" id="button-shipping-method" class="btn btn-primary">{{ button_continue }}</button>';
-                html += '          </div>';
-                html += '        </form>';
-                html += '      </div>';
-                html += '    </div>';
-                html += '  </div>';
-                html += '</div>';
-
-                $('body').append(html);
+                $('#shipping-methods').html(html);
 
                 $('#modal-shipping').modal('show');
             }
-
-            $('#button-refresh').trigger('click');
         },
         error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -2616,31 +2617,37 @@ $('#button-shipping-methods').on('click', function() {
     });
 });
 
-$('#input-shipping-method').on('change', function(e) {
+$('#form-shipping-method').on('submit', function(e) {
+    e.preventDefault();
+
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val() + '&action=sale/shipping_method.save',
+        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&action=sale/shipping_method.save&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val(),
         type: 'post',
         data: $('#form-shipping-method').serialize(),
-        dataType: 'json',
+        dataType: 'html',
         contentType: 'application/x-www-form-urlencoded',
         beforeSend: function() {
-            $(element).prop('disabled', true);
+            $('#button-shipping-method').button('loading');
         },
         complete: function() {
-            $(element).prop('disabled', false);
+            $('#button-shipping-method').button('reset');
         },
         success: function(json) {
             console.log(json);
-            $('.alert-dismissible').remove();
 
             if (json['error']) {
                 $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }
 
             if (json['success']) {
-                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                $('#shipping-method-value').val($('input[name=\'shipping_method\']:checked').parent().find('label').text());
+                $('#input-shipping-code').val($('input[name=\'shipping_method\']:checked').val());
+
+                $('#payment-method-value').html('');
 
                 $('#button-refresh').trigger('click');
             }
@@ -2657,7 +2664,7 @@ $('#form-comment').on('submit', function(e) {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val() + '&action=sale/order.comment',
+        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&action=sale/order.comment&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val(),
         type: 'post',
         data: $('#form-comment').serialize(),
         dataType: 'json',
@@ -2691,7 +2698,7 @@ $('#form-comment').on('submit', function(e) {
 // Refresh all products, vouchers and totals
 $('#button-refresh').on('click', function() {
     $.ajax({
-        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val() + '&action=sale/cart',
+        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&action=sale/cart&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val(),
         dataType: 'json',
         beforeSend: function() {
             $('#button-refresh').button('loading');
@@ -2814,7 +2821,7 @@ $('#button-confirm').on('click', function() {
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val() + '&action=sale/order.confirm',
+        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&action=sale/order.confirm&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val(),
         dataType: 'json',
         beforeSend: function() {
             $(element).button('loading');
@@ -2875,7 +2882,7 @@ $('#form-history').on('submit', function(e) {
     e.preventDefault();
 
     $.ajax({
-        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val() + '&action=sale/order.addHistory&order_id=' + $('#input-order-id').val(),
+        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&action=sale/order.addHistory&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val() + '&order_id=' + $('#input-order-id').val(),
         type: 'post',
         dataType: 'json',
         data: $('#form-history').serialize(),

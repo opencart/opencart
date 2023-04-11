@@ -62,10 +62,6 @@ class Order extends \Opencart\System\Engine\Controller {
 				unset($this->session->data['payment_address']);
 			}
 
-			if ($order_info['payment_code']) {
-				$this->session->data['payment_method'] = $order_info['payment_code'];
-			}
-
 			if ($order_info['shipping_code']) {
 				$this->session->data['shipping_address'] = [
 					'shipping_address_id' => $order_info['shipping_address_id'],
@@ -86,8 +82,6 @@ class Order extends \Opencart\System\Engine\Controller {
 					'address_format'      => $order_info['shipping_address_format'],
 					'custom_field'        => $order_info['shipping_custom_field']
 				];
-
-				$this->session->data['shipping_method'] = $order_info['shipping_code'];
 			}
 
 			if ($order_info['comment']) {

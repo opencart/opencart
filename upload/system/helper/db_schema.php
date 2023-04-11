@@ -6770,6 +6770,12 @@ function oc_db_schema() {
 				'type' => 'tinyint(4)',
 				'not_null' => true
 			],
+						[
+				'name' => 'price',
+				'type' => 'decimal(15,4)',
+				'not_null' => true,
+				'default' => '0.0000'
+			],
 			[
 				'name' => 'frequency',
 				'type' => 'enum(\'day\',\'week\',\'semi_month\',\'month\',\'year\')',

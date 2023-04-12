@@ -175,7 +175,7 @@ class Order extends \Opencart\System\Engine\Model {
 				$order_data[$column . '_custom_field'] = json_decode($order_query->row[$column . '_custom_field'], true);
 
 				// Payment and shipping method details
-				$order_data[$column . '_code'] = json_decode($order_query->row[$column . '_code'], true);
+				$order_data[$column . '_method'] = json_decode($order_query->row[$column . '_method'], true);
 			}
 
 			return $order_data;
@@ -423,7 +423,7 @@ class Order extends \Opencart\System\Engine\Model {
 
 				foreach ($order_products as $order_product) {
 					// Subscription status set to suspend
-					$subscription_info = $this->model_checkout_subscription->getSubscription($order_id, $order_product['order_product_id']);
+					$subscription_info = $this->model_checkout_subscription->getSubscriptionByOrderProductId($order_id, $order_product['order_product_id']);
 
 					if ($subscription_info) {
 						// Add history and set suspended subscription

@@ -6453,12 +6453,7 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'payment_method',
-				'type' => 'varchar(128)',
-				'not_null' => true
-			],
-			[
-				'name' => 'payment_code',
-				'type' => 'varchar(128)',
+				'type' => 'text',
 				'not_null' => true
 			],
 			[
@@ -6468,12 +6463,7 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'shipping_method',
-				'type' => 'varchar(128)',
-				'not_null' => true
-			],
-			[
-				'name' => 'shipping_code',
-				'type' => 'varchar(128)',
+				'type' => 'text',
 				'not_null' => true
 			],
 			[

@@ -466,11 +466,11 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 		//$data['payment_methods'] = $this->model_customer_customer->getPaymentMethods($data['customer_id']);
 
-		if (!empty($subscription_info)) {
-			$data['customer_payment_id'] = $subscription_info['customer_payment_id'];
-		} else {
-			$data['customer_payment_id'] = 0;
-		}
+		//if (!empty($subscription_info)) {
+		//	$data['customer_payment_id'] = $subscription_info['customer_payment_id'];
+		//} else {
+		//	$data['customer_payment_id'] = 0;
+		//}
 
 		if (!empty($subscription_info)) {
 			$data['remaining'] = $subscription_info['remaining'];
@@ -564,7 +564,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		$this->load->model('setting/extension');
 
 		if (!empty($order_info)) {
-			$extension_info = $this->model_setting_extension->getExtensionByCode('payment', $order_info['payment_code']);
+			$extension_info = $this->model_setting_extension->getExtensionByCode('payment', $order_info['payment_method']['code']);
 
 			if ($extension_info && $this->user->hasPermission('access', 'extension/' . $extension_info['extension'] . '/payment/' . $extension_info['code'])) {
 				$output = $this->load->controller('extension/payment/' . $order_info['payment_code'] . '.subscription');

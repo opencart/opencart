@@ -68,7 +68,7 @@ class Confirm extends \Opencart\System\Engine\Controller {
 		}
 
 		// Validate checkout terms
-		if ($this->config->get('config_checkout_id') && !isset($this->session->data['agree'])) {
+		if ($this->config->get('config_checkout_id') && empty($this->session->data['agree'])) {
 			$status = false;
 		}
 

@@ -160,7 +160,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			} else {
 				$data['status'] = '';
 			}
-/*
+			/*
 			// Orders
             $this->load->model('account/order');
 
@@ -193,14 +193,14 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 			$this->load->model('setting/extension');
 
-			$extension_info = $this->model_setting_extension->getExtensionByCode('payment', $subscription_info['payment_code']);
+			$extension_info = $this->model_setting_extension->getExtensionByCode('payment', $subscription_info['payment']['code']);
 
 			if ($extension_info) {
-				$data['subscription'] = $this->load->controller('extension/' . $extension_info['extension'] . '/subscription/' . $subscription_info['payment_code']);
+				$data['subscription'] = $this->load->controller('extension/' . $extension_info['extension'] . '/subscription/' . $subscription_info['payment']['code');
 			} else {
 				$data['subscription'] = '';
 			}
-*/
+			*/
 			$data['column_left'] = $this->load->controller('common/column_left');
 			$data['column_right'] = $this->load->controller('common/column_right');
 			$data['content_top'] = $this->load->controller('common/content_top');

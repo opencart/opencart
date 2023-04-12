@@ -64,7 +64,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 			$this->session->data['payment_method'] = $order_info['payment_method'];
 
-			if ($order_info['shipping_code']) {
+			if ($order_info['shipping_method']) {
 				$this->session->data['shipping_address'] = [
 					'shipping_address_id' => $order_info['shipping_address_id'],
 					'firstname'           => $order_info['shipping_firstname'],

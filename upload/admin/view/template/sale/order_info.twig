@@ -2460,105 +2460,6 @@ $('#input-shipping-country').on('change', function() {
 
 $('#input-shipping-country').trigger('change');
 
-// Payment Method
-$('#button-payment-methods').on('click', function() {
-    var element = this;
-
-    $.ajax({
-        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&action=sale/payment_method&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val(),
-        dataType: 'json',
-        beforeSend: function() {
-            $(element).button('loading');
-        },
-        complete: function() {
-            $(element).button('reset');
-        },
-        success: function(json) {
-            $('.alert-dismissible').remove();
-
-            if (json['error']) {
-                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-            }
-
-            if (json['payment_methods']) {
-                var html = '';
-
-                for (i in json['payment_methods']) {
-                    html += '<p><strong>' + json['payment_methods'][i]['name'] + '</strong></p>';
-
-                    if (!json['payment_methods'][i]['error']) {
-                        for (j in json['payment_methods'][i]['option']) {
-                            html += '<div class="form-check">';
-
-                            var code = i + '-' + j.replaceAll('_', '-');
-
-                            html += '<input type="radio" name="payment_method" value="' + json['payment_methods'][i]['option'][j]['code'] + '" id="input-payment-method-' + code + '"';
-
-                            if (json['payment_methods'][i]['option'][j]['code'] == $('#input-payment-code').val()) {
-                                html += ' checked';
-                            }
-
-                            html += '/>';
-                            html += '  <label for="input-payment-method-' + code + '">' + json['payment_methods'][i]['option'][j]['name'] + '</label>';
-                            html += '</div>';
-                        }
-                    } else {
-                        html += '<div class="alert alert-danger">' + json['payment_methods'][i]['error'] + '</div>';
-                    }
-                }
-
-                $('#payment-methods').html(html);
-
-                $('#modal-payment').modal('show');
-            }
-        },
-        error: function(xhr, ajaxOptions, thrownError) {
-            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-        }
-    });
-});
-
-$('#form-payment-method').on('submit', function(e) {
-    e.preventDefault();
-
-    var element = this;
-
-    $.ajax({
-        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&action=sale/payment_method.save&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val(),
-        type: 'post',
-        data: $('#form-payment-method').serialize(),
-        dataType: 'json',
-        contentType: 'application/x-www-form-urlencoded',
-        beforeSend: function() {
-            $('#button-payment-method').button('loading');
-        },
-        complete: function() {
-            $('#button-payment-method').button('reset');
-        },
-        success: function(json) {
-            console.log(json);
-
-            $('.alert-dismissible').remove();
-
-            if (json['error']) {
-                $('#form-payment-method').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-            }
-
-            if (json['success']) {
-                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                $('#payment-method-value').val($('input[name=\'payment_method\']:checked').parent().find('label').text());
-                $('#input-payment-code').val($('input[name=\'payment_method\']:checked').val());
-
-                $('#button-refresh').trigger('click');
-            }
-        },
-        error: function(xhr, ajaxOptions, thrownError) {
-            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-        }
-    });
-});
-
 // Shipping Method
 $('#button-shipping-methods').on('click', function() {
     var element = this;
@@ -2646,10 +2547,109 @@ $('#form-shipping-method').on('submit', function(e) {
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#shipping-method-value').val($('input[name=\'shipping_method\']:checked').parent().find('label').text());
+                $('#shipping-method-value').html($('input[name=\'shipping_method\']:checked').parent().find('label').text());
                 $('#input-shipping-code').val($('input[name=\'shipping_method\']:checked').val());
 
                 $('#payment-method-value').html('');
+
+                $('#button-refresh').trigger('click');
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+// Payment Method
+$('#button-payment-methods').on('click', function() {
+    var element = this;
+
+    $.ajax({
+        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&action=sale/payment_method&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val(),
+        dataType: 'json',
+        beforeSend: function() {
+            $(element).button('loading');
+        },
+        complete: function() {
+            $(element).button('reset');
+        },
+        success: function(json) {
+            $('.alert-dismissible').remove();
+
+            if (json['error']) {
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            if (json['payment_methods']) {
+                var html = '';
+
+                for (i in json['payment_methods']) {
+                    html += '<p><strong>' + json['payment_methods'][i]['name'] + '</strong></p>';
+
+                    if (!json['payment_methods'][i]['error']) {
+                        for (j in json['payment_methods'][i]['option']) {
+                            html += '<div class="form-check">';
+
+                            var code = i + '-' + j.replaceAll('_', '-');
+
+                            html += '<input type="radio" name="payment_method" value="' + json['payment_methods'][i]['option'][j]['code'] + '" id="input-payment-method-' + code + '"';
+
+                            if (json['payment_methods'][i]['option'][j]['code'] == $('#input-payment-code').val()) {
+                                html += ' checked';
+                            }
+
+                            html += '/>';
+                            html += '  <label for="input-payment-method-' + code + '">' + json['payment_methods'][i]['option'][j]['name'] + '</label>';
+                            html += '</div>';
+                        }
+                    } else {
+                        html += '<div class="alert alert-danger">' + json['payment_methods'][i]['error'] + '</div>';
+                    }
+                }
+
+                $('#payment-methods').html(html);
+
+                $('#modal-payment').modal('show');
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+$('#form-payment-method').on('submit', function(e) {
+    e.preventDefault();
+
+    var element = this;
+
+    $.ajax({
+        url: 'index.php?route=sale/order.call&user_token={{ user_token }}&action=sale/payment_method.save&store_id=' + $('#input-store').val() + '&language=' + $('#input-language').val(),
+        type: 'post',
+        data: $('#form-payment-method').serialize(),
+        dataType: 'json',
+        contentType: 'application/x-www-form-urlencoded',
+        beforeSend: function() {
+            $('#button-payment-method').button('loading');
+        },
+        complete: function() {
+            $('#button-payment-method').button('reset');
+        },
+        success: function(json) {
+            console.log(json);
+
+            $('.alert-dismissible').remove();
+
+            if (json['error']) {
+                $('#form-payment-method').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            if (json['success']) {
+                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                $('#payment-method-value').html($('input[name=\'payment_method\']:checked').parent().find('label').text());
+                $('#input-payment-code').val($('input[name=\'payment_method\']:checked').val());
 
                 $('#button-refresh').trigger('click');
             }

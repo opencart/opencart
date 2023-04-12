@@ -201,8 +201,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 						$order_data['payment_custom_field'] = [];
 					}
 
-					$order_data['payment_method'] = $this->session->data['payment_methods'][$payment[0]]['name'];
-					$order_data['payment_code'] = $this->session->data['payment_methods'][$payment[0]]['option'][$payment[1]]['code'];
+					$order_data['payment_method'] = $this->session->data['payment_method'];
 
 					// Shipping Details
 					if ($shipping_address) {
@@ -220,6 +219,8 @@ class Subscription extends \Opencart\System\Engine\Controller {
 						$order_data['shipping_country_id'] = $shipping_address_info['country_id'];
 						$order_data['shipping_address_format'] = $shipping_address_info['address_format'];
 						$order_data['shipping_custom_field'] = $shipping_address_info['custom_field'];
+
+						$order_data['shipping_method'] = $this->session->data['shipping_method'];
 					} else {
 						$order_data['shipping_address_id'] = 0;
 						$order_data['shipping_firstname'] = '';
@@ -235,18 +236,9 @@ class Subscription extends \Opencart\System\Engine\Controller {
 						$order_data['shipping_country_id'] = 0;
 						$order_data['shipping_address_format'] = '';
 						$order_data['shipping_custom_field'] = [];
+
+						$order_data['shipping_method'] = [];
 					}
-
-					if (isset($this->session->data['shipping_method'])) {
-						$shipping_method_info = $this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]];
-
-						$order_data['shipping_method'] = $shipping_method_info['name'];
-						$order_data['shipping_code'] = $shipping_method_info['code'];
-					} else {
-						$order_data['shipping_method'] = '';
-						$order_data['shipping_code'] = '';
-					}
-
 
 					// Products
 					$order_data['products'] = [];
@@ -311,21 +303,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 							'reward'       => $product['reward']
 						];
 					}
-
-
-
 				}
-
-
-
-
-
-
-
-
-
-
-
 
 
 				if ($result['trial_status'] && (!$result['trial_duration'] || $result['trial_remaining']) && ) {

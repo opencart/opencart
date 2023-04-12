@@ -247,7 +247,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			}
 
 			$description = '';
-
+			/*
 			$this->load->model('checkout/subscription');
 
 			$subscription_info = $this->model_checkout_subscription->getSubscriptionByOrderProductId($order_info['order_id'], $order_product['order_product_id']);
@@ -272,7 +272,7 @@ class Order extends \Opencart\System\Engine\Controller {
 					$description .= sprintf($this->language->get('text_subscription_cancel'), $price, $cycle, $frequency);
 				}
 			}
-
+			*/
 			$data['products'][] = [
 				'name'         => $order_product['name'],
 				'model'        => $order_product['model'],
@@ -281,7 +281,7 @@ class Order extends \Opencart\System\Engine\Controller {
 				'quantity'     => $order_product['quantity'],
 				'price'        => $this->currency->format($order_product['price'] + ($this->config->get('config_tax') ? $order_product['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']),
 				'total'        => $this->currency->format($order_product['total'] + ($this->config->get('config_tax') ? ($order_product['tax'] * $order_product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value']),
-				'reward'       => $product['reward']
+				'reward'       => $order_product['reward']
 			];
 		}
 
@@ -507,7 +507,7 @@ class Order extends \Opencart\System\Engine\Controller {
 				}
 
 				$description = '';
-
+				/*
 				$this->load->model('checkout/subscription');
 
 				$subscription_info = $this->model_checkout_subscription->getSubscriptionByOrderProductId($order_info['order_id'], $order_product['order_product_id']);
@@ -532,13 +532,13 @@ class Order extends \Opencart\System\Engine\Controller {
 						$description .= sprintf($this->language->get('text_subscription_cancel'), $price, $cycle, $frequency);
 					}
 				}
-
+				*/
 				$data['products'][] = [
 					'name'         => $order_product['name'],
 					'model'        => $order_product['model'],
 					'quantity'     => $order_product['quantity'],
 					'option'       => $option_data,
-					'subscription' => $subscription_data,
+					'subscription' => $description,
 					'total'        => html_entity_decode($this->currency->format($order_product['total'] + ($this->config->get('config_tax') ? ($order_product['tax'] * $order_product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value']), ENT_NOQUOTES, 'UTF-8')
 				];
 			}

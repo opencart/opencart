@@ -62,6 +62,8 @@ class Order extends \Opencart\System\Engine\Controller {
 				unset($this->session->data['payment_address']);
 			}
 
+			$this->session->data['payment_method'] = $order_info['payment_method'];
+
 			if ($order_info['shipping_code']) {
 				$this->session->data['shipping_address'] = [
 					'shipping_address_id' => $order_info['shipping_address_id'],
@@ -82,6 +84,8 @@ class Order extends \Opencart\System\Engine\Controller {
 					'address_format'      => $order_info['shipping_address_format'],
 					'custom_field'        => $order_info['shipping_custom_field']
 				];
+
+				$this->session->data['shipping_method'] = $order_info['shipping_method'];
 			}
 
 			if ($order_info['comment']) {
@@ -267,8 +271,7 @@ class Order extends \Opencart\System\Engine\Controller {
 				$order_data['payment_address_format'] = $this->session->data['payment_address']['address_format'];
 				$order_data['payment_custom_field'] = isset($this->session->data['payment_address']['custom_field']) ? $this->session->data['payment_address']['custom_field'] : [];
 
-				$order_data['payment_method'] = $this->session->data['payment_method']['name'];
-				$order_data['payment_code'] = $this->session->data['payment_method']['code'];
+				$order_data['payment_method'] = $this->session->data['payment_method'];
 			} else {
 				$order_data['payment_firstname'] = '';
 				$order_data['payment_lastname'] = '';
@@ -284,8 +287,7 @@ class Order extends \Opencart\System\Engine\Controller {
 				$order_data['payment_address_format'] = '';
 				$order_data['payment_custom_field'] = [];
 
-				$order_data['payment_method'] = '';
-				$order_data['payment_code'] = '';
+				$order_data['payment_method'] = [];
 			}
 
 			// Shipping Details
@@ -304,8 +306,7 @@ class Order extends \Opencart\System\Engine\Controller {
 				$order_data['shipping_address_format'] = $this->session->data['shipping_address']['address_format'];
 				$order_data['shipping_custom_field'] = isset($this->session->data['shipping_address']['custom_field']) ? $this->session->data['shipping_address']['custom_field'] : [];
 
-				$order_data['shipping_method'] = $this->session->data['shipping_method']['name'];
-				$order_data['shipping_code'] = $this->session->data['shipping_method']['code'];
+				$order_data['shipping_method'] = $this->session->data['shipping_method'];
 			} else {
 				$order_data['shipping_firstname'] = '';
 				$order_data['shipping_lastname'] = '';
@@ -321,8 +322,7 @@ class Order extends \Opencart\System\Engine\Controller {
 				$order_data['shipping_address_format'] = '';
 				$order_data['shipping_custom_field'] = [];
 
-				$order_data['shipping_method'] = '';
-				$order_data['shipping_code'] = '';
+				$order_data['shipping_method'] = [];
 			}
 
 			$points = 0;

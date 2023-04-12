@@ -125,8 +125,7 @@ class Confirm extends \Opencart\System\Engine\Controller {
 				$order_data['payment_custom_field'] = [];
 			}
 
-			$order_data['payment_method'] = $this->session->data['payment_method']['name'];
-			$order_data['payment_code'] = $this->session->data['payment_method']['code'];
+			$order_data['payment_method'] = $this->session->data['payment_method'];
 
 			// Shipping Details
 			if ($this->cart->hasShipping()) {
@@ -145,8 +144,7 @@ class Confirm extends \Opencart\System\Engine\Controller {
 				$order_data['shipping_address_format'] = $this->session->data['shipping_address']['address_format'];
 				$order_data['shipping_custom_field'] = isset($this->session->data['shipping_address']['custom_field']) ? $this->session->data['shipping_address']['custom_field'] : [];
 
-				$order_data['shipping_method'] = $this->session->data['shipping_method']['name'];
-				$order_data['shipping_code'] = $this->session->data['shipping_method']['code'];
+				$order_data['shipping_method'] = $this->session->data['shipping_method'];
 			} else {
 				$order_data['shipping_address_id'] = 0;
 				$order_data['shipping_firstname'] = '';
@@ -163,8 +161,7 @@ class Confirm extends \Opencart\System\Engine\Controller {
 				$order_data['shipping_address_format'] = '';
 				$order_data['shipping_custom_field'] = [];
 
-				$order_data['shipping_method'] = '';
-				$order_data['shipping_code'] = '';
+				$order_data['shipping_method'] = [];
 			}
 
 			if (isset($this->session->data['comment'])) {

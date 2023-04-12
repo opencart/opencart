@@ -991,13 +991,13 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		// Payment Method
 		if (!empty($order_info)) {
-			$data['payment_method'] = $order_info['payment_method'];
+			$data['payment_method'] = $order_info['payment_method']['name'];
 		} else {
 			$data['payment_method'] = '';
 		}
 
 		if (!empty($order_info)) {
-			$data['payment_code'] = $order_info['payment_code'];
+			$data['payment_code'] = $order_info['payment_method']['code'];
 		} else {
 			$data['payment_code'] = '';
 		}
@@ -1077,13 +1077,13 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		// Shipping method
 		if (!empty($order_info)) {
-			$data['shipping_method'] = $order_info['shipping_method'];
+			$data['shipping_method'] = $order_info['shipping_method']['name'];
 		} else {
 			$data['shipping_method'] = '';
 		}
 
 		if (!empty($order_info)) {
-			$data['shipping_code'] = $order_info['shipping_code'];
+			$data['shipping_code'] = $order_info['shipping_method']['code'];
 		} else {
 			$data['shipping_code'] = '';
 		}
@@ -1127,7 +1127,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->load->model('setting/extension');
 
 		if (!empty($order_info)) {
-			$extension_info = $this->model_setting_extension->getExtensionByCode('payment', $order_info['payment_code']);
+			$extension_info = $this->model_setting_extension->getExtensionByCode('payment', $order_info['payment_method']['code']);
 
 			if ($extension_info && $this->user->hasPermission('access', 'extension/' . $extension_info['extension'] . '/payment/' . $extension_info['code'])) {
 				$output = $this->load->controller('extension/' . $extension_info['extension'] . '/payment/' . $extension_info['code'] . '.order');

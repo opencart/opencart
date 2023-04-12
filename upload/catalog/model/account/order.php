@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Catalog\Model\Account;
 class Order extends \Opencart\System\Engine\Model {
-	public function getOrder(int $order_id) {
+	public function getOrder(int $order_id): array {
 		$order_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order` WHERE `order_id` = '" . (int)$order_id . "' AND `customer_id` = '" . (int)$this->customer->getId() . "' AND `customer_id` != '0' AND `order_status_id` > '0'");
 
 		if ($order_query->num_rows) {
@@ -68,7 +68,7 @@ class Order extends \Opencart\System\Engine\Model {
 				'payment_iso_code_2'      => $payment_iso_code_2,
 				'payment_iso_code_3'      => $payment_iso_code_3,
 				'payment_address_format'  => $order_query->row['payment_address_format'],
-				'payment_method'          => $order_query->row['payment_method'],
+				'payment_method'          => json_decode($order_query->row['payment_method'], true),
 				'shipping_firstname'      => $order_query->row['shipping_firstname'],
 				'shipping_lastname'       => $order_query->row['shipping_lastname'],
 				'shipping_company'        => $order_query->row['shipping_company'],
@@ -84,7 +84,7 @@ class Order extends \Opencart\System\Engine\Model {
 				'shipping_iso_code_2'     => $shipping_iso_code_2,
 				'shipping_iso_code_3'     => $shipping_iso_code_3,
 				'shipping_address_format' => $order_query->row['shipping_address_format'],
-				'shipping_method'         => $order_query->row['shipping_method'],
+				'shipping_method'         => json_decode($order_query->row['shipping_method'], true),
 				'comment'                 => $order_query->row['comment'],
 				'total'                   => $order_query->row['total'],
 				'order_status_id'         => $order_query->row['order_status_id'],
@@ -97,7 +97,7 @@ class Order extends \Opencart\System\Engine\Model {
 				'ip'                      => $order_query->row['ip']
 			];
 		} else {
-			return false;
+			return [];
 		}
 	}
 

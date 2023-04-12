@@ -113,7 +113,9 @@ class Order extends \Opencart\System\Engine\Controller {
 					}
 				}
 
-				$this->cart->add($product['product_id'], $product['quantity'], $option_data);
+
+
+				$this->cart->add($product['product_id'], $product['quantity'], $option_data, $subscription_plan_id);
 			}
 
 			$this->session->data['vouchers'] = [];
@@ -345,13 +347,40 @@ class Order extends \Opencart\System\Engine\Controller {
 					];
 				}
 
+				$subscription_data = [];
+
+				if ($product['subscription']) {
+					if ($product['subscription']['trial_duration'] && $product['subscription']['trial_remaining']) {
+						$date_next = date('Y-m-d', strtotime('+' . $product['subscription']['trial_cycle'] . ' ' . $product['subscription']['trial_frequency']));
+					} elseif ($product['subscription']['duration'] && $product['subscription']['remaining']) {
+						$date_next = date('Y-m-d', strtotime('+' . $product['subscription']['cycle'] . ' ' . $product['subscription']['frequency']));
+					}
+
+					$subscription_data = [
+						'subscription_plan_id' => $product['subscription']['subscription_plan_id'],
+						'name'                 => $product['subscription']['name'],
+						'trial_price'          => $product['subscription']['trial_price'],
+						'trial_frequency'      => $product['subscription']['trial_frequency'],
+						'trial_cycle'          => $product['subscription']['trial_cycle'],
+						'trial_duration'       => $product['subscription']['trial_duration'],
+						'trial_remaining'      => $product['subscription']['trial_remaining'],
+						'trial_status'         => $product['subscription']['trial_status'],
+						'price'                => $product['subscription']['price'],
+						'frequency'            => $product['subscription']['frequency'],
+						'cycle'                => $product['subscription']['cycle'],
+						'duration'             => $product['subscription']['duration'],
+						'remaining'            => $product['subscription']['duration'],
+						'date_next'            => $date_next
+					];
+				}
+
 				$order_data['products'][] = [
 					'product_id'   => $product['product_id'],
 					'master_id'    => $product['master_id'],
 					'name'         => $product['name'],
 					'model'        => $product['model'],
 					'option'       => $option_data,
-					'subscription' => $product['subscription'],
+					'subscription' => $subscription_data,
 					'download'     => $product['download'],
 					'quantity'     => $product['quantity'],
 					'subtract'     => $product['subtract'],

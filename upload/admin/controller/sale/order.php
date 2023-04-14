@@ -327,15 +327,15 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			$data['orders'][] = [
-				'order_id'      => $result['order_id'],
-				'store_name'    => $result['store_name'],
-				'customer'      => $result['customer'],
-				'order_status'  => $result['order_status'] ? $result['order_status'] : $this->language->get('text_missing'),
-				'total'         => $this->currency->format($result['total'], $result['currency_code'], $result['currency_value']),
-				'date_added'    => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'date_modified' => date($this->language->get('date_format_short'), strtotime($result['date_modified'])),
-				'shipping_code' => $result['shipping_code'],
-				'view'          => $this->url->link('sale/order.info', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $result['order_id'] . $url)
+				'order_id'        => $result['order_id'],
+				'store_name'      => $result['store_name'],
+				'customer'        => $result['customer'],
+				'order_status'    => $result['order_status'] ? $result['order_status'] : $this->language->get('text_missing'),
+				'total'           => $this->currency->format($result['total'], $result['currency_code'], $result['currency_value']),
+				'date_added'      => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
+				'date_modified'   => date($this->language->get('date_format_short'), strtotime($result['date_modified'])),
+				'shipping_method' => $result['shipping_method'],
+				'view'            => $this->url->link('sale/order.info', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $result['order_id'] . $url)
 			];
 		}
 
@@ -1521,7 +1521,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			$order_info = $this->model_sale_order->getOrder($order_id);
 
 			// Make sure there is a shipping method
-			if ($order_info && $order_info['shipping_code']) {
+			if ($order_info && $order_info['shipping_method']) {
 				$store_info = $this->model_setting_setting->getSetting('config', $order_info['store_id']);
 
 				if ($store_info) {

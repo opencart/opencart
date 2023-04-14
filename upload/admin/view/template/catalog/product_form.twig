@@ -1106,6 +1106,8 @@
                     <tr>
                       <td class="text-start">{{ entry_subscription }}</td>
                       <td class="text-start">{{ entry_customer_group }}</td>
+                      <td class="text-start">{{ entry_trial_price }}</td>
+                      <td class="text-start">{{ entry_price }}</td>
                       <td>
                         {% if master_id %}
                           <div class="form-check form-switch float-end">
@@ -1129,6 +1131,8 @@
                               <option value="{{ customer_group.customer_group_id }}"{% if customer_group.customer_group_id == product_subscription.customer_group_id %} selected{% endif %}>{{ customer_group.name }}</option>
                             {% endfor %}
                           </select></td>
+                        <td class="text-start"><input type="text" name="product_subscription[{{ subscription_row }}][trial_price]" value="{{ product_subscription.trial_price }}" placeholder="{{ entry_trial_price }}" class="form-control"/></td>
+                        <td class="text-start"><input type="text" name="product_subscription[{{ subscription_row }}][price]" value="{{ product_subscription.price }}" placeholder="{{ entry_price }}" class="form-control"/></td>
                         <td class="text-end"><button type="button" onclick="$('#subscription-row-{{ subscription_row }}').remove()" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
                       </tr>
                       {% set subscription_row = subscription_row + 1 %}
@@ -1136,7 +1140,7 @@
                   </tbody>
                   <tfoot>
                     <tr>
-                      <td colspan="2"></td>
+                      <td colspan="4"></td>
                       <td class="text-end"><button type="button" id="button-subscription" data-bs-toggle="tooltip" title="{{ button_subscription_add }}" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i></button></td>
                     </tr>
                   </tfoot>
@@ -2035,6 +2039,8 @@ $('#button-subscription').on('click', function () {
     html += '      <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name|escape('js') }}</option>';
   {% endfor %}
     html += '  <select></td>';
+    html += '  <td class="text-end"><input type="text" name="product_subscription[' + subscription_row + '][trial_price]" value="" placeholder="{{ entry_trial_price }}" class="form-control"/></td>';
+    html += '  <td class="text-end"><input type="text" name="product_subscription[' + subscription_row + '][price]" value="" placeholder="{{ entry_price }}" class="form-control"/></td>';
     html += '  <td class="text-end"><button type="button" onclick="$(\'#subscription-row-' + subscription_row + '\').remove()" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>';
     html += '</tr>';
 

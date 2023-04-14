@@ -258,12 +258,6 @@ class Confirm extends \Opencart\System\Engine\Controller {
 				$subscription_data = [];
 
 				if ($product['subscription']) {
-					if ($product['subscription']['trial_duration'] && $product['subscription']['trial_remaining']) {
-						$date_next = date('Y-m-d', strtotime('+' . $product['subscription']['trial_cycle'] . ' ' . $product['subscription']['trial_frequency']));
-					} elseif ($product['subscription']['duration'] && $product['subscription']['remaining']) {
-						$date_next = date('Y-m-d', strtotime('+' . $product['subscription']['cycle'] . ' ' . $product['subscription']['frequency']));
-					}
-
 					$subscription_data = [
 						'subscription_plan_id' => $product['subscription']['subscription_plan_id'],
 						'name'                 => $product['subscription']['name'],
@@ -276,9 +270,7 @@ class Confirm extends \Opencart\System\Engine\Controller {
 						'price'                => $product['subscription']['price'],
 						'frequency'            => $product['subscription']['frequency'],
 						'cycle'                => $product['subscription']['cycle'],
-						'duration'             => $product['subscription']['duration'],
-						'remaining'            => $product['subscription']['duration'],
-						'date_next'            => $date_next
+						'duration'             => $product['subscription']['duration']
 					];
 				}
 

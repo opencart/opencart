@@ -7,6 +7,21 @@ class Subscription extends \Opencart\System\Engine\Model {
 		return $query->row;
 	}
 
+	public function getSubscriptionByOrderProductId(int $order_id, int $order_product_id): array {
+		$subscription_data = [];
+
+		$query = $this->db->query("SELECT * FROM  `" . DB_PREFIX . "subscription` WHERE `order_id` = '" . (int)$order_id . "' AND `order_product_id` = '" . (int)$order_product_id . "' AND `customer_id` = '" . (int)$this->customer->getId() . "'");
+
+		if ($query->num_rows) {
+			$subscription_data = $query->row;
+
+			$subscription_data['payment_method'] = ($query->row['payment_method'] ? json_decode($query->row['payment_method'], true) : '');
+			$subscription_data['shipping_method'] = ($query->row['shipping_method'] ? json_decode($query->row['shipping_method'], true) : '');
+		}
+
+		return $subscription_data;
+	}
+
 	public function getSubscriptions(array $data = []): array {
         $sql = "SELECT * FROM `" . DB_PREFIX . "subscription`";
 
@@ -48,12 +63,6 @@ class Subscription extends \Opencart\System\Engine\Model {
 
         return $query->rows;
     }
-	
-	public function getSubscriptionByReference(string $reference): array {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "subscription` WHERE `reference` = '" . $this->db->escape($reference) . "'");
-
-		return $query->row;
-	}
 
 	public function getTotalSubscriptions(array $data = []): int {
         $sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "subscription`";

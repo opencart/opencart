@@ -21,10 +21,8 @@
               {% endif %} <b>{{ text_order_id }}</b> #{{ order_id }}
               <br/>
               <b>{{ text_date_added }}</b> {{ date_added }}</td>
-            <td class="text-start" style="width: 50%;">{% if payment_method %} <b>{{ text_payment_method }}</b> {{ payment_method }}
-                <br/>
-              {% endif %}
-              {% if shipping_method %} <b>{{ text_shipping_method }}</b> {{ shipping_method }}{% endif %}</td>
+            <td class="text-start" style="width: 50%;">{% if payment_method %} <b>{{ text_payment_method }}</b> {{ payment_method }}{% endif %}
+              {% if shipping_method %}<br/><b>{{ text_shipping_method }}</b> {{ shipping_method }}{% endif %}</td>
           </tr>
         </tbody>
       </table>
@@ -47,7 +45,7 @@
               {% endif %}
               {% if shipping_address %}
                 <td class="text-start">{{ shipping_address }}</td>
-              {% endif %} </tr>
+              {% endif %}</tr>
           </tbody>
         </table>
       {% endif %}
@@ -62,7 +60,8 @@
               <td class="text-end">{{ column_total }}</td>
               {% if products %}
                 <td style="width: 20px;"></td>
-              {% endif %} </tr>
+              {% endif %}
+            </tr>
           </thead>
           <tbody>
             {% for product in products %}
@@ -81,7 +80,7 @@
 
                   {% if product.subscription %}
                     <br/>
-                    <small> - {{ text_subscription }}: <a href="index.php?route=sale/subscription.info&user_token={{ user_token }}&subscription_id={{ product.subscription_id }}" target="_blank">{{ order_product.subscription }}</a></small>
+                    <small> - {{ text_subscription }}: <a href="index.php?route=sale/subscription.info&user_token={{ user_token }}&subscription_id={{ product.subscription_id }}" target="_blank">{{ product.subscription }}</a></small>
                   {% endif %}
 
                 </td>
@@ -89,7 +88,8 @@
                 <td class="text-end">{{ product.quantity }}</td>
                 <td class="text-end">{{ product.price }}</td>
                 <td class="text-end">{{ product.total }}</td>
-                <td class="text-end" style="white-space: nowrap;">{% if product.reorder %} <a href="{{ product.reorder }}" data-bs-toggle="tooltip" title="{{ button_reorder }}" class="btn btn-primary"><i class="fa-solid fa-cart-shopping"></i></a> {% endif %} <a href="{{ product.return }}" data-bs-toggle="tooltip" title="{{ button_return }}" class="btn btn-danger"><i class="fa-solid fa-reply"></i></a></td>
+                <td class="text-end" style="white-space: nowrap;">{% if product.reorder %}<a href="{{ product.reorder }}" data-bs-toggle="tooltip" title="{{ button_reorder }}" class="btn btn-primary"><i class="fa-solid fa-cart-shopping"></i></a>{% endif %}
+                  <a href="{{ product.return }}" data-bs-toggle="tooltip" title="{{ button_return }}" class="btn btn-danger"><i class="fa-solid fa-reply"></i></a></td>
               </tr>
             {% endfor %}
             {% for voucher in vouchers %}
@@ -113,7 +113,8 @@
                 <td class="text-end">{{ total.text }}</td>
                 {% if products %}
                   <td></td>
-                {% endif %} </tr>
+                {% endif %}
+              </tr>
             {% endfor %}
           </tfoot>
         </table>
@@ -159,9 +160,7 @@
           </tbody>
         </table>
       {% endif %}
-      <div class="d-inline-block pt-2 pd-2 w-100">
-        <div class="float-end"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
-      </div>
+      <div class="text-end"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
       {{ content_bottom }}</div>
     {{ column_right }}</div>
 </div>

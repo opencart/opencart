@@ -68,7 +68,7 @@ class Order extends \Opencart\System\Engine\Model {
 				'payment_iso_code_2'      => $payment_iso_code_2,
 				'payment_iso_code_3'      => $payment_iso_code_3,
 				'payment_address_format'  => $order_query->row['payment_address_format'],
-				'payment_method'          => json_decode($order_query->row['payment_method'], true),
+				'payment_method'          => $order_query->row['payment_method'] ? json_decode($order_query->row['payment_method'], true) : '',
 				'shipping_firstname'      => $order_query->row['shipping_firstname'],
 				'shipping_lastname'       => $order_query->row['shipping_lastname'],
 				'shipping_company'        => $order_query->row['shipping_company'],
@@ -84,7 +84,7 @@ class Order extends \Opencart\System\Engine\Model {
 				'shipping_iso_code_2'     => $shipping_iso_code_2,
 				'shipping_iso_code_3'     => $shipping_iso_code_3,
 				'shipping_address_format' => $order_query->row['shipping_address_format'],
-				'shipping_method'         => json_decode($order_query->row['shipping_method'], true),
+				'shipping_method'         => $order_query->row['shipping_method'] ? json_decode($order_query->row['shipping_method'], true) : '',
 				'comment'                 => $order_query->row['comment'],
 				'total'                   => $order_query->row['total'],
 				'order_status_id'         => $order_query->row['order_status_id'],
@@ -131,6 +131,12 @@ class Order extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_option` WHERE `order_id` = '" . (int)$order_id . "' AND `order_product_id` = '" . (int)$order_product_id . "'");
 
 		return $query->rows;
+	}
+
+	public function getSubscription(int $order_id, int $order_product_id): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_subscription` WHERE `order_id` = '" . (int)$order_id . "' AND `order_product_id` = '" . (int)$order_product_id . "'");
+
+		return $query->row;
 	}
 
 	public function getVouchers(int $order_id): array {

@@ -3,13 +3,11 @@
   <h2>{{ text_write }}</h2>
   {% if review_guest %}
     <div class="mb-3 required">
-      <label for="input-name" class="form-label">{{ entry_name }}</label>
-      <input type="text" name="name" value="{{ customer_name }}" id="input-name" class="form-control"/>
+      <label for="input-name" class="form-label">{{ entry_name }}</label> <input type="text" name="name" value="{{ customer_name }}" id="input-name" class="form-control"/>
       <div id="error-name" class="invalid-feedback"></div>
     </div>
     <div class="mb-3 required">
-      <label for="input-text" class="form-label">{{ entry_review }}</label>
-      <textarea name="text" rows="5" id="input-text" class="form-control"></textarea>
+      <label for="input-text" class="form-label">{{ entry_review }}</label> <textarea name="text" rows="5" id="input-text" class="form-control"></textarea>
       <div id="error-text" class="invalid-feedback"></div>
       <div class="invalid-feedback">{{ text_note }}</div>
     </div>
@@ -31,8 +29,11 @@
       <div id="error-rating" class="invalid-feedback"></div>
     </div>
     {{ captcha }}
-    <div class="d-inline-block pt-2 pd-2 w-100">
-      <div class="float-end">
+    <div class="row">
+      <div class="col">
+        <a href="{{ back }}" class="btn btn-light">{{ button_back }}</a>
+      </div>
+      <div class="col text-end">
         <button type="submit" id="button-review" class="btn btn-primary">{{ button_continue }}</button>
       </div>
     </div>
@@ -41,14 +42,14 @@
   {% endif %}
 </form>
 <script type="text/javascript"><!--
-$('#review').on('click', '.pagination a', function (e) {
+$('#review').on('click', '.pagination a', function(e) {
     e.preventDefault();
 
     $('#review').load(this.href);
 });
 
 // Forms
-$('#form-review').on('submit', function (e) {
+$('#form-review').on('submit', function(e) {
     e.preventDefault();
 
     var element = this;
@@ -61,26 +62,26 @@ $('#form-review').on('submit', function (e) {
         cache: false,
         contentType: 'application/x-www-form-urlencoded',
         processData: false,
-        beforeSend: function () {
+        beforeSend: function() {
             $('#button-review').button('loading');
         },
-        complete: function () {
+        complete: function() {
             $('#button-review').button('reset');
         },
-        success: function (json) {
+        success: function(json) {
             $('.alert-dismissible').remove();
             $('#form-review').find('.is-invalid').removeClass('is-invalid');
             $('#form-review').find('.invalid-feedback').removeClass('d-block');
 
             if (json['error']) {
-              if (json['error']['warning']) {
-                  $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-              }
+                if (json['error']['warning']) {
+                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                }
 
-              for (key in json['error']) {
-                  $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
-                  $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
-              }
+                for (key in json['error']) {
+                    $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
+                    $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
+                }
             }
 
             if (json['success']) {
@@ -90,7 +91,7 @@ $('#form-review').on('submit', function (e) {
                 $('#input-rating input[type=\'radio\']').prop('checked', false);
             }
         },
-        error: function (xhr, ajaxOptions, thrownError) {
+        error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });

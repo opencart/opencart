@@ -17,7 +17,6 @@ $_['text_year']              = 'Year';
 
 // Entry
 $_['entry_name']            = 'Subscription Plan Name';
-$_['entry_trial_price']     = 'Trial Price';
 $_['entry_trial_duration']  = 'Trial Duration';
 $_['entry_trial_cycle']     = 'Trial Cycle';
 $_['entry_trial_frequency'] = 'Trial Frequency';

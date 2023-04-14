@@ -172,80 +172,10 @@ class Product extends \Opencart\System\Engine\Model {
 		return $product_data;
 	}
 
-	public function getSpecials(array $data = []): array {
-		$sql = "SELECT DISTINCT ps.`product_id`, (SELECT AVG(`rating`) FROM `" . DB_PREFIX . "review` r1 WHERE r1.`product_id` = ps.`product_id` AND r1.`status` = '1' GROUP BY r1.`product_id`) AS rating FROM `" . DB_PREFIX . "product_special` ps LEFT JOIN `" . DB_PREFIX . "product` p ON (ps.`product_id` = p.`product_id`) LEFT JOIN `" . DB_PREFIX . "product_description` pd ON (p.`product_id` = pd.`product_id`) LEFT JOIN `" . DB_PREFIX . "product_to_store` p2s ON (p.`product_id` = p2s.`product_id`) WHERE p.`status` = '1' AND p.`date_available` <= NOW() AND p2s.`store_id` = '" . (int)$this->config->get('config_store_id') . "' AND ps.`customer_group_id` = '" . (int)$this->config->get('config_customer_group_id') . "' AND ((ps.`date_start` = '0000-00-00' OR ps.`date_start` < NOW()) AND (ps.`date_end` = '0000-00-00' OR ps.`date_end` > NOW())) GROUP BY ps.`product_id`";
+	public function getCategories(int $product_id): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_to_category` WHERE `product_id` = '" . (int)$product_id . "'");
 
-		$sort_data = [
-			'pd.name',
-			'p.model',
-			'ps.price',
-			'rating',
-			'p.sort_order'
-		];
-
-		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
-			if ($data['sort'] == 'pd.name' || $data['sort'] == 'p.model') {
-				$sql .= " ORDER BY LCASE(" . $data['sort'] . ")";
-			} else {
-				$sql .= " ORDER BY " . $data['sort'];
-			}
-		} else {
-			$sql .= " ORDER BY p.`sort_order`";
-		}
-
-		if (isset($data['order']) && ($data['order'] == 'DESC')) {
-			$sql .= " DESC, LCASE(pd.`name`) DESC";
-		} else {
-			$sql .= " ASC, LCASE(pd.`name`) ASC";
-		}
-
-		if (isset($data['start']) || isset($data['limit'])) {
-			if ($data['start'] < 0) {
-				$data['start'] = 0;
-			}
-
-			if ($data['limit'] < 1) {
-				$data['limit'] = 20;
-			}
-
-			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
-		}
-
-		$product_data = [];
-
-		$query = $this->db->query($sql);
-
-		foreach ($query->rows as $result) {
-			$product_data[$result['product_id']] = $this->model_catalog_product->getProduct($result['product_id']);
-		}
-
-		return $product_data;
-	}
-
-	public function getTotalSpecials(): int {
-		$query = $this->db->query("SELECT COUNT(DISTINCT ps.`product_id`) AS `total` FROM `" . DB_PREFIX . "product_special` ps LEFT JOIN `" . DB_PREFIX . "product` p ON (ps.`product_id` = p.`product_id`) LEFT JOIN `" . DB_PREFIX . "product_to_store` p2s ON (p.`product_id` = p2s.`product_id`) WHERE p.`status` = '1' AND p.`date_available` <= NOW() AND p2s.`store_id` = '" . (int)$this->config->get('config_store_id') . "' AND ps.`customer_group_id` = '" . (int)$this->config->get('config_customer_group_id') . "' AND ((ps.`date_start` = '0000-00-00' OR ps.`date_start` < NOW()) AND (ps.`date_end` = '0000-00-00' OR ps.`date_end` > NOW()))");
-
-		if (isset($query->row['total'])) {
-			return (int)$query->row['total'];
-		} else {
-			return 0;
-		}
-	}
-
-	public function getLatest(int $limit): array {
-		$product_data = $this->cache->get('product.latest.' . (int)$this->config->get('config_language_id') . '.' . (int)$this->config->get('config_store_id') . '.' . $this->config->get('config_customer_group_id') . '.' . (int)$limit);
-
-		if (!$product_data) {
-			$query = $this->db->query("SELECT p.`product_id` FROM `" . DB_PREFIX . "product` p LEFT JOIN `" . DB_PREFIX . "product_to_store` p2s ON (p.`product_id` = p2s.`product_id`) WHERE p.`status` = '1' AND p.`date_available` <= NOW() AND p2s.`store_id` = '" . (int)$this->config->get('config_store_id') . "' ORDER BY p.`product_id` DESC LIMIT " . (int)$limit);
-
-			foreach ($query->rows as $result) {
-				$product_data[$result['product_id']] = $this->model_catalog_product->getProduct($result['product_id']);
-			}
-
-			$this->cache->set('product.latest.' . (int)$this->config->get('config_language_id') . '.' . (int)$this->config->get('config_store_id') . '.' . $this->config->get('config_customer_group_id') . '.' . (int)$limit, $product_data);
-		}
-
-		return (array)$product_data;
+		return $query->rows;
 	}
 
 	public function getAttributes(int $product_id): array {
@@ -327,16 +257,16 @@ class Product extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function getRelated(int $product_id): array {
-		$product_data = [];
+	public function getSubscription(int $product_id, int $subscription_plan_id): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_subscription` ps LEFT JOIN `" . DB_PREFIX . "subscription_plan` sp ON (ps.`subscription_plan_id` = sp.`subscription_plan_id`) WHERE ps.`product_id` = '" . (int)$product_id . "' AND ps.`subscription_plan_id` = '" . (int)$subscription_plan_id . "' AND ps.`customer_group_id` = '" . (int)$this->config->get('config_customer_group_id') . "' AND sp.`status` = '1'");
 
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_related` pr LEFT JOIN `" . DB_PREFIX . "product` p ON (pr.`related_id` = p.`product_id`) LEFT JOIN `" . DB_PREFIX . "product_to_store` p2s ON (p.`product_id` = p2s.`product_id`) WHERE pr.`product_id` = '" . (int)$product_id . "' AND p.`status` = '1' AND p.`date_available` <= NOW() AND p2s.`store_id` = '" . (int)$this->config->get('config_store_id') . "'");
+		return $query->row;
+	}
 
-		foreach ($query->rows as $result) {
-			$product_data[$result['related_id']] = $this->model_catalog_product->getProduct($result['related_id']);
-		}
+	public function getSubscriptions(int $product_id): array {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_subscription` ps LEFT JOIN `" . DB_PREFIX . "subscription_plan` sp ON (ps.`subscription_plan_id` = sp.`subscription_plan_id`) LEFT JOIN `" . DB_PREFIX . "subscription_plan_description` spd ON (sp.`subscription_plan_id` = spd.`subscription_plan_id`) WHERE ps.`product_id` = '" . (int)$product_id . "' AND ps.`customer_group_id` = '" . (int)$this->config->get('config_customer_group_id') . "' AND spd.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND sp.`status` = '1' ORDER BY sp.`sort_order` ASC");
 
-		return $product_data;
+		return $query->rows;
 	}
 
 	public function getLayoutId(int $product_id): int {
@@ -349,10 +279,92 @@ class Product extends \Opencart\System\Engine\Model {
 		}
 	}
 
-	public function getCategories(int $product_id): array {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_to_category` WHERE `product_id` = '" . (int)$product_id . "'");
+	public function getRelated(int $product_id): array {
+		$product_data = [];
 
-		return $query->rows;
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_related` pr LEFT JOIN `" . DB_PREFIX . "product` p ON (pr.`related_id` = p.`product_id`) LEFT JOIN `" . DB_PREFIX . "product_to_store` p2s ON (p.`product_id` = p2s.`product_id`) WHERE pr.`product_id` = '" . (int)$product_id . "' AND p.`status` = '1' AND p.`date_available` <= NOW() AND p2s.`store_id` = '" . (int)$this->config->get('config_store_id') . "'");
+
+		foreach ($query->rows as $result) {
+			$product_data[$result['related_id']] = $this->model_catalog_product->getProduct($result['related_id']);
+		}
+
+		return $product_data;
+	}
+
+	public function getLatest(int $limit): array {
+		$product_data = $this->cache->get('product.latest.' . (int)$this->config->get('config_language_id') . '.' . (int)$this->config->get('config_store_id') . '.' . $this->config->get('config_customer_group_id') . '.' . (int)$limit);
+
+		if (!$product_data) {
+			$query = $this->db->query("SELECT p.`product_id` FROM `" . DB_PREFIX . "product` p LEFT JOIN `" . DB_PREFIX . "product_to_store` p2s ON (p.`product_id` = p2s.`product_id`) WHERE p.`status` = '1' AND p.`date_available` <= NOW() AND p2s.`store_id` = '" . (int)$this->config->get('config_store_id') . "' ORDER BY p.`product_id` DESC LIMIT " . (int)$limit);
+
+			foreach ($query->rows as $result) {
+				$product_data[$result['product_id']] = $this->model_catalog_product->getProduct($result['product_id']);
+			}
+
+			$this->cache->set('product.latest.' . (int)$this->config->get('config_language_id') . '.' . (int)$this->config->get('config_store_id') . '.' . $this->config->get('config_customer_group_id') . '.' . (int)$limit, $product_data);
+		}
+
+		return (array)$product_data;
+	}
+
+	public function getSpecials(array $data = []): array {
+		$sql = "SELECT DISTINCT ps.`product_id`, (SELECT AVG(`rating`) FROM `" . DB_PREFIX . "review` r1 WHERE r1.`product_id` = ps.`product_id` AND r1.`status` = '1' GROUP BY r1.`product_id`) AS rating FROM `" . DB_PREFIX . "product_special` ps LEFT JOIN `" . DB_PREFIX . "product` p ON (ps.`product_id` = p.`product_id`) LEFT JOIN `" . DB_PREFIX . "product_description` pd ON (p.`product_id` = pd.`product_id`) LEFT JOIN `" . DB_PREFIX . "product_to_store` p2s ON (p.`product_id` = p2s.`product_id`) WHERE p.`status` = '1' AND p.`date_available` <= NOW() AND p2s.`store_id` = '" . (int)$this->config->get('config_store_id') . "' AND ps.`customer_group_id` = '" . (int)$this->config->get('config_customer_group_id') . "' AND ((ps.`date_start` = '0000-00-00' OR ps.`date_start` < NOW()) AND (ps.`date_end` = '0000-00-00' OR ps.`date_end` > NOW())) GROUP BY ps.`product_id`";
+
+		$sort_data = [
+			'pd.name',
+			'p.model',
+			'ps.price',
+			'rating',
+			'p.sort_order'
+		];
+
+		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
+			if ($data['sort'] == 'pd.name' || $data['sort'] == 'p.model') {
+				$sql .= " ORDER BY LCASE(" . $data['sort'] . ")";
+			} else {
+				$sql .= " ORDER BY " . $data['sort'];
+			}
+		} else {
+			$sql .= " ORDER BY p.`sort_order`";
+		}
+
+		if (isset($data['order']) && ($data['order'] == 'DESC')) {
+			$sql .= " DESC, LCASE(pd.`name`) DESC";
+		} else {
+			$sql .= " ASC, LCASE(pd.`name`) ASC";
+		}
+
+		if (isset($data['start']) || isset($data['limit'])) {
+			if ($data['start'] < 0) {
+				$data['start'] = 0;
+			}
+
+			if ($data['limit'] < 1) {
+				$data['limit'] = 20;
+			}
+
+			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
+		}
+
+		$product_data = [];
+
+		$query = $this->db->query($sql);
+
+		foreach ($query->rows as $result) {
+			$product_data[$result['product_id']] = $this->model_catalog_product->getProduct($result['product_id']);
+		}
+
+		return $product_data;
+	}
+
+	public function getTotalSpecials(): int {
+		$query = $this->db->query("SELECT COUNT(DISTINCT ps.`product_id`) AS `total` FROM `" . DB_PREFIX . "product_special` ps LEFT JOIN `" . DB_PREFIX . "product` p ON (ps.`product_id` = p.`product_id`) LEFT JOIN `" . DB_PREFIX . "product_to_store` p2s ON (p.`product_id` = p2s.`product_id`) WHERE p.`status` = '1' AND p.`date_available` <= NOW() AND p2s.`store_id` = '" . (int)$this->config->get('config_store_id') . "' AND ps.`customer_group_id` = '" . (int)$this->config->get('config_customer_group_id') . "' AND ((ps.`date_start` = '0000-00-00' OR ps.`date_start` < NOW()) AND (ps.`date_end` = '0000-00-00' OR ps.`date_end` > NOW()))");
+
+		if (isset($query->row['total'])) {
+			return (int)$query->row['total'];
+		} else {
+			return 0;
+		}
 	}
 
 	public function getTotalProducts(array $data = []): int {
@@ -455,18 +467,6 @@ class Product extends \Opencart\System\Engine\Model {
 		$query = $this->db->query($sql);
 
 		return (int)$query->row['total'];
-	}
-
-	public function getSubscription(int $product_id, int $subscription_plan_id): array {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_subscription` ps LEFT JOIN `" . DB_PREFIX . "subscription_plan` sp ON (ps.`subscription_plan_id` = sp.`subscription_plan_id`) WHERE ps.`product_id` = '" . (int)$product_id . "' AND ps.`subscription_plan_id` = '" . (int)$subscription_plan_id . "' AND ps.`customer_group_id` = '" . (int)$this->config->get('config_customer_group_id') . "' AND sp.`status` = '1'");
-
-		return $query->row;
-	}
-
-	public function getSubscriptions(int $product_id): array {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_subscription` ps LEFT JOIN `" . DB_PREFIX . "subscription_plan` sp ON (ps.`subscription_plan_id` = sp.`subscription_plan_id`) LEFT JOIN `" . DB_PREFIX . "subscription_plan_description` spd ON (sp.`subscription_plan_id` = spd.`subscription_plan_id`) WHERE ps.`product_id` = '" . (int)$product_id . "' AND ps.`customer_group_id` = '" . (int)$this->config->get('config_customer_group_id') . "' AND spd.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND sp.`status` = '1' ORDER BY sp.`sort_order` ASC");
-
-		return $query->rows;
 	}
 
 	public function addReport(int $product_id, string $ip, string $country = ''): void {

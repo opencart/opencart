@@ -4468,6 +4468,11 @@ function oc_db_schema() {
 				'not_null' => true
 			],
 			[
+				'name' => 'price',
+				'type' => 'decimal(10,4)',
+				'not_null' => true
+			],
+			[
 				'name' => 'frequency',
 				'type' => 'enum(\'day\',\'week\',\'semi_month\',\'month\',\'year\')',
 				'not_null' => true
@@ -5383,6 +5388,16 @@ function oc_db_schema() {
 			[
 				'name' => 'customer_group_id',
 				'type' => 'int(11)',
+				'not_null' => true
+			],
+			[
+				'name' => 'trial_price',
+				'type' => 'decimal(10,4)',
+				'not_null' => true
+			],
+			[
+				'name' => 'price',
+				'type' => 'decimal(10,4)',
 				'not_null' => true
 			]
 		],
@@ -6477,11 +6492,6 @@ function oc_db_schema() {
 				'not_null' => true
 			],
 			[
-				'name' => 'price',
-				'type' => 'decimal(10,4)',
-				'not_null' => true
-			],
-			[
 				'name' => 'subscription_plan_id',
 				'type' => 'int(11)',
 				'not_null' => true
@@ -6519,6 +6529,11 @@ function oc_db_schema() {
 			[
 				'name' => 'trial_status',
 				'type' => 'tinyint(1)',
+				'not_null' => true
+			],
+			[
+				'name' => 'price',
+				'type' => 'decimal(10,4)',
 				'not_null' => true
 			],
 			[
@@ -7464,44 +7479,6 @@ function oc_db_schema() {
 				'table' => 'user',
 				'field' => 'user_id'
 			]
-		],
-		'engine' => 'InnoDB',
-		'charset' => 'utf8mb4',
-		'collate' => 'utf8mb4_general_ci'
-	];
-
-	$tables[] = [
-		'name' => 'vendor',
-		'field' => [
-			[
-				'name' => 'vendor_id',
-				'type' => 'int(11)',
-				'not_null' => true,
-				'auto_increment' => true
-			],
-			[
-				'name' => 'name',
-				'type' => 'varchar(64)',
-				'not_null' => true
-			],
-			[
-				'name' => 'code',
-				'type' => 'text',
-				'not_null' => true
-			],
-			[
-				'name' => 'version',
-				'type' => 'text',
-				'not_null' => true
-			],
-			[
-				'name' => 'date_added',
-				'type' => 'datetime',
-				'not_null' => true
-			]
-		],
-		'primary' => [
-			'vendor_id'
 		],
 		'engine' => 'InnoDB',
 		'charset' => 'utf8mb4',

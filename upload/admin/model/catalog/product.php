@@ -92,7 +92,7 @@ class Product extends \Opencart\System\Engine\Model {
 				$query = $this->db->query("SELECT `product_id` FROM `" . DB_PREFIX . "product_subscription` WHERE `product_id` = '" . (int)$product_id . "' AND `customer_group_id` = '" . (int)$product_subscription['customer_group_id'] . "' AND `subscription_plan_id` = '" . (int)$product_subscription['subscription_plan_id'] . "'");
 
 				if (!$query->num_rows) {
-					$this->db->query("INSERT INTO `" . DB_PREFIX . "product_subscription` SET `product_id` = '" . (int)$product_id . "', `customer_group_id` = '" . (int)$product_subscription['customer_group_id'] . "', `subscription_plan_id` = '" . (int)$product_subscription['subscription_plan_id'] . "'");
+					$this->db->query("INSERT INTO `" . DB_PREFIX . "product_subscription` SET `product_id` = '" . (int)$product_id . "', `customer_group_id` = '" . (int)$product_subscription['customer_group_id'] . "', `subscription_plan_id` = '" . (int)$product_subscription['subscription_plan_id'] . "', `trial_price` = '" . (float)$product_subscription['trial_price'] . "', `price` = '" . (float)$product_subscription['price'] . "'");
 				}
 			}
 		}
@@ -257,7 +257,7 @@ class Product extends \Opencart\System\Engine\Model {
 				$query = $this->db->query("SELECT `product_id` FROM `" . DB_PREFIX . "product_subscription` WHERE `product_id` = '" . (int)$product_id . "' AND `customer_group_id` = '" . (int)$product_subscription['customer_group_id'] . "' AND `subscription_plan_id` = '" . (int)$product_subscription['subscription_plan_id'] . "'");
 
 				if (!$query->num_rows) {
-					$this->db->query("INSERT INTO `" . DB_PREFIX . "product_subscription` SET `product_id` = '" . (int)$product_id . "', `customer_group_id` = '" . (int)$product_subscription['customer_group_id'] . "', `subscription_plan_id` = '" . (int)$product_subscription['subscription_plan_id'] . "'");
+					$this->db->query("INSERT INTO `" . DB_PREFIX . "product_subscription` SET `product_id` = '" . (int)$product_id . "', `customer_group_id` = '" . (int)$product_subscription['customer_group_id'] . "', `subscription_plan_id` = '" . (int)$product_subscription['subscription_plan_id'] . "', `trial_price` = '" . (float)$product_subscription['trial_price'] . "', `price` = '" . (float)$product_subscription['price'] . "'");
 				}
 			}
 		}

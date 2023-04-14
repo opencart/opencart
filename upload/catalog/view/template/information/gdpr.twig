@@ -44,11 +44,14 @@
               <li>{{ text_limit|format(limit) }}</li>
             </ul>
           </div>
-
         </fieldset>
-        <div class="d-inline-block pt-2 pd-2 w-100">
-          <div class="float-start"><a href="{{ cancel }}" class="btn btn-light">{{ text_cancel }}</a></div>
-          <div class="float-end"><button type="submit" id="button-continue" class="btn btn-primary">{{ button_continue }}</button></div>
+        <div class="row">
+          <div class="col">
+            <a href="{{ cancel }}" class="btn btn-light">{{ button_cancel }}</a>
+          </div>
+          <div class="col text-end">
+            <button type="submit" class="btn btn-primary">{{ button_continue }}</button>
+          </div>
         </div>
       </form>
       {{ content_bottom }}</div>

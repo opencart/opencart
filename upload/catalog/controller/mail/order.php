@@ -382,10 +382,6 @@ class Order extends \Opencart\System\Engine\Controller {
 		$data['order_id'] = $order_info['order_id'];
 		$data['date_added'] = date($this->language->get('date_format_short'), strtotime($order_info['date_added']));
 
-		$this->load->model('localisation/order_status');
-
-		$language_info = $this->model_localisation_order_status->getOrderStatus($order_info['language_id']);
-
 		$order_status_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_status` WHERE `order_status_id` = '" . (int)$order_status_id . "' AND `language_id` = '" . (int)$order_info['language_id'] . "'");
 
 		if ($order_status_query->num_rows) {
@@ -514,12 +510,12 @@ class Order extends \Opencart\System\Engine\Controller {
 				$subscription_info = $this->model_checkout_order->getSubscription($order_info['order_id'], $order_product['order_product_id']);
 
 				if ($subscription_info) {
-					$trial_price = $this->currency->format($this->tax->calculate($subscription_info['trial_price'], $order_product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
-					$trial_cycle = $subscription_info['trial_cycle'];
-					$trial_frequency = $this->language->get('text_' . $subscription_info['trial_frequency']);
-					$trial_duration = $subscription_info['trial_duration'];
-
 					if ($subscription_info['trial_status']) {
+						$trial_price = $this->currency->format($this->tax->calculate($subscription_info['trial_price'], $subscription_info['tax'], $this->config->get('config_tax')), $this->session->data['currency']);
+						$trial_cycle = $subscription_info['trial_cycle'];
+						$trial_frequency = $this->language->get('text_' . $subscription_info['trial_frequency']);
+						$trial_duration = $subscription_info['trial_duration'];
+
 						$description .= sprintf($this->language->get('text_subscription_trial'), $trial_price, $trial_cycle, $trial_frequency, $trial_duration);
 					}
 
@@ -541,6 +537,7 @@ class Order extends \Opencart\System\Engine\Controller {
 					'quantity'     => $order_product['quantity'],
 					'option'       => $option_data,
 					'subscription' => $description,
+
 					'total'        => html_entity_decode($this->currency->format($order_product['total'] + ($this->config->get('config_tax') ? ($order_product['tax'] * $order_product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value']), ENT_NOQUOTES, 'UTF-8')
 				];
 			}

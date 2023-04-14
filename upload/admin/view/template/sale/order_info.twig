@@ -89,7 +89,7 @@
 
                   {% if order_product.subscription %}
                     <br/>
-                    <small> - {{ text_subscription }}: <a href="index.php?route=sale/subscription.info&user_token={{ user_token }}&subscription_id={{ order_product.subscription_id }}" target="_blank">{{ order_product.subscription }}</a></small>
+                    <small> - {{ text_subscription }}: <a href="{{ order_product.subscription }}" target="_blank">{{ order_product.subscription_description }}</a></small>
                   {% endif %}
 
                 </td>

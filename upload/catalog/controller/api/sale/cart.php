@@ -27,12 +27,12 @@ class Cart extends \Opencart\System\Engine\Controller {
 			$description = '';
 
 			if ($product['subscription']) {
-				$trial_price = $this->currency->format($this->tax->calculate($product['subscription']['trial_price'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
-				$trial_cycle = $product['subscription']['trial_cycle'];
-				$trial_frequency = $this->language->get('text_' . $product['subscription']['trial_frequency']);
-				$trial_duration = $product['subscription']['trial_duration'];
-
 				if ($product['subscription']['trial_status']) {
+					$trial_price = $this->currency->format($this->tax->calculate($product['subscription']['trial_price'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
+					$trial_cycle = $product['subscription']['trial_cycle'];
+					$trial_frequency = $this->language->get('text_' . $product['subscription']['trial_frequency']);
+					$trial_duration = $product['subscription']['trial_duration'];
+
 					$description .= sprintf($this->language->get('text_subscription_trial'), $trial_price, $trial_cycle, $trial_frequency, $trial_duration);
 				}
 

@@ -215,15 +215,15 @@ class Order extends \Opencart\System\Engine\Controller {
 
 				$replace = [
 					'firstname' => $order_info['shipping_firstname'],
-					'lastname' => $order_info['shipping_lastname'],
-					'company' => $order_info['shipping_company'],
+					'lastname'  => $order_info['shipping_lastname'],
+					'company'   => $order_info['shipping_company'],
 					'address_1' => $order_info['shipping_address_1'],
 					'address_2' => $order_info['shipping_address_2'],
-					'city' => $order_info['shipping_city'],
-					'postcode' => $order_info['shipping_postcode'],
-					'zone' => $order_info['shipping_zone'],
+					'city'      => $order_info['shipping_city'],
+					'postcode'  => $order_info['shipping_postcode'],
+					'zone'      => $order_info['shipping_zone'],
 					'zone_code' => $order_info['shipping_zone_code'],
-					'country' => $order_info['shipping_country']
+					'country'   => $order_info['shipping_country']
 				];
 
 				$data['shipping_address'] = str_replace(["\r\n", "\r", "\n"], '<br/>', preg_replace(["/\s\s+/", "/\r\r+/", "/\n\n+/"], '<br/>', trim(str_replace($find, $replace, $format))));
@@ -272,12 +272,12 @@ class Order extends \Opencart\System\Engine\Controller {
 				$subscription_info = $this->model_account_order->getSubscription($order_id, $product['order_product_id']);
 
 				if ($subscription_info) {
-					$trial_price = $this->currency->format($subscription_info['trial_price'], $this->config->get('config_currency'));
-					$trial_cycle = $subscription_info['trial_cycle'];
-					$trial_frequency = $this->language->get('text_' . $subscription_info['trial_frequency']);
-					$trial_duration = $subscription_info['trial_duration'];
-
 					if ($subscription_info['trial_status']) {
+						$trial_price = $this->currency->format($subscription_info['trial_price'], $this->config->get('config_currency'));
+						$trial_cycle = $subscription_info['trial_cycle'];
+						$trial_frequency = $this->language->get('text_' . $subscription_info['trial_frequency']);
+						$trial_duration = $subscription_info['trial_duration'];
+
 						$description .= sprintf($this->language->get('text_subscription_trial'), $trial_price, $trial_cycle, $trial_frequency, $trial_duration);
 					}
 
@@ -310,16 +310,17 @@ class Order extends \Opencart\System\Engine\Controller {
 				}
 
 				$data['products'][] = [
-					'name'         => $product['name'],
-					'model'        => $product['model'],
-					'option'       => $option_data,
-					'subscription' => $description,
-					'quantity'     => $product['quantity'],
-					'price'        => $this->currency->format($product['price'] + ($this->config->get('config_tax') ? $product['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']),
-					'total'        => $this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value']),
-					'href'         => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product['product_id']),
-					'reorder'      => $reorder,
-					'return'       => $this->url->link('account/returns.add', 'language=' . $this->config->get('config_language') . '&order_id=' . $order_info['order_id'] . '&product_id=' . $product['product_id'])
+					'name'                     => $product['name'],
+					'model'                    => $product['model'],
+					'option'                   => $option_data,
+					'subscription'             => $subscription,
+					'subscription_description' => $description,
+					'quantity'                 => $product['quantity'],
+					'price'                    => $this->currency->format($product['price'] + ($this->config->get('config_tax') ? $product['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']),
+					'total'                    => $this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value']),
+					'href'                     => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product['product_id']),
+					'reorder'                  => $reorder,
+					'return'                   => $this->url->link('account/returns.add', 'language=' . $this->config->get('config_language') . '&order_id=' . $order_info['order_id'] . '&product_id=' . $product['product_id'])
 				];
 			}
 

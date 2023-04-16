@@ -1376,13 +1376,6 @@ class Order extends \Opencart\System\Engine\Controller {
 
 				$shipping_address = str_replace(["\r\n", "\r", "\n"], '<br/>', preg_replace(["/\s\s+/", "/\r\r+/", "/\n\n+/"], '<br/>', trim(str_replace($find, $replace, $format))));
 
-				// Subscription
-				$filter_data = [
-					'filter_order_id'	=> $order_id
-				];
-
-				$subscriptions = $this->model_sale_subscription->getSubscriptions($filter_data);
-
 				$product_data = [];
 
 				$products = $this->model_sale_order->getProducts($order_id);
@@ -1406,24 +1399,35 @@ class Order extends \Opencart\System\Engine\Controller {
 						}
 
 						$option_data[] = [
-							'name' => $option['name'],
+							'name'  => $option['name'],
 							'value' => $value
 						];
 					}
 
 					// Subscription
-					$subscription_data = '';
+					$description = '';
 
-					foreach ($subscriptions as $subscription) {
-						$filter_data = [
-							'filter_subscription_id'	=> $subscription['subscription_id'],
-							'filter_order_product_id'	=> $product['order_product_id']
-						];
+					$subscription_info = $this->model_sale_order->getSubscription($order_id, $product['order_product_id']);
 
-						$subscription_info = $this->model_sale_subscription->getSubscriptions($filter_data);
+					if ($subscription_info) {
+						if ($subscription_info['trial_status']) {
+							$trial_price = $this->currency->format($subscription_info['trial_price'], $this->config->get('config_currency'));
+							$trial_cycle = $subscription_info['trial_cycle'];
+							$trial_frequency = $this->language->get('text_' . $subscription_info['trial_frequency']);
+							$trial_duration = $subscription_info['trial_duration'];
 
-						if ($subscription_info) {
-							$subscription_data = $subscription['name'];
+							$description .= sprintf($this->language->get('text_subscription_trial'), $trial_price, $trial_cycle, $trial_frequency, $trial_duration);
+						}
+
+						$price = $this->currency->format($subscription_info['price'], $this->config->get('config_currency'));
+						$cycle = $subscription_info['cycle'];
+						$frequency = $this->language->get('text_' . $subscription_info['frequency']);
+						$duration = $subscription_info['duration'];
+
+						if ($subscription_info['duration']) {
+							$description .= sprintf($this->language->get('text_subscription_duration'), $price, $cycle, $frequency, $duration);
+						} else {
+							$description .= sprintf($this->language->get('text_subscription_cancel'), $price, $cycle, $frequency);
 						}
 					}
 
@@ -1431,7 +1435,7 @@ class Order extends \Opencart\System\Engine\Controller {
 						'name'     		=> $product['name'],
 						'model'    		=> $product['model'],
 						'option'   		=> $option_data,
-						'subscription'	=> $subscription_data,
+						'subscription'	=> $description,
 						'quantity' 		=> $product['quantity'],
 						'price'    		=> $this->currency->format($product['price'] + ($this->config->get('config_tax') ? $product['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']),
 						'total'    		=> $this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value'])
@@ -1585,8 +1589,6 @@ class Order extends \Opencart\System\Engine\Controller {
 					'filter_order_id'	=> $order_id
 				];
 
-				$subscriptions = $this->model_sale_subscription->getSubscriptions($filter_data);
-
 				$product_data = [];
 
 				$products = $this->model_sale_order->getProducts($order_id);
@@ -1630,27 +1632,10 @@ class Order extends \Opencart\System\Engine\Controller {
 							}
 						}
 
-						// Subscription
-						$subscription_data = '';
-
-						foreach ($subscriptions as $subscription) {
-							$filter_data = [
-								'filter_subscription_id'	=> $subscription['subscription_id'],
-								'filter_order_product_id'	=> $product['order_product_id']
-							];
-
-							$subscription_info = $this->model_sale_subscription->getSubscriptions($filter_data);
-
-							if ($subscription_info) {
-								$subscription_data = $subscription['name'];
-							}
-						}
-
 						$product_data[] = [
 							'name'     	   => $product_info['name'],
 							'model'    	   => $product_info['model'],
 							'option'   	   => $option_data,
-							'subscription' => $subscription_data,
 							'quantity'     => $product['quantity'],
 							'location'     => $product_info['location'],
 							'sku'          => $product_info['sku'],

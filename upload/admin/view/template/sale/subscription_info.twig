@@ -112,8 +112,14 @@
               <tbody>
                 <tr>
                   <td><a href="{{ product }}" target="_blank">{{ product_name }}</a>
+                    {% if options %}
+                      {% for option in options %}
+                        <br/>
+                        <small> - {{ option.name }}: {{ option.value }}</small>
+                      {% endfor %}
+                    {% endif %}
                     <br/>
-                    <small class="text-muted">{{ description }}</small>
+                    <small> - {{ text_subscription }}: {{ description }}</small>
                   </td>
                   <td>{{ quantity }}</td>
                 </tr>

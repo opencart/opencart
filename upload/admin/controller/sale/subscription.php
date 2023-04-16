@@ -517,6 +517,31 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$data['product'] = '';
 		}
 
+		$data['options'] = [];
+
+		$options = $this->model_sale_order->getOptions($subscription_info['order_id'], $subscription_info['order_product_id']);
+
+		foreach ($options as $option) {
+			if ($option['type'] != 'file') {
+				$data['options'][] = [
+					'name'  => $option['name'],
+					'value' => $option['value'],
+					'type'  => $option['type']
+				];
+			} else {
+				$upload_info = $this->model_tool_upload->getUploadByCode($option['value']);
+
+				if ($upload_info) {
+					$data['options'][] = [
+						'name'  => $option['name'],
+						'value' => $upload_info['name'],
+						'type'  => $option['type'],
+						'href'  => $this->url->link('tool/upload.download', 'user_token=' . $this->session->data['user_token'] . '&code=' . $upload_info['code'])
+					];
+				}
+			}
+		}
+
 		$data['description'] = '';
 
 		if (!empty($subscription_info)) {
@@ -762,7 +787,8 @@ class Subscription extends \Opencart\System\Engine\Controller {
 				'order_id'   => $result['order_id'],
 				'status'     => $result['status'],
 				'total'      => $this->currency->format($result['total'], $result['currency_code'], $result['currency_value']),
-				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added']))
+				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
+				'view'       => $this->url->link('sale/subscription.order', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $result['order_id'] . '&page={page}')
 			];
 		}
 

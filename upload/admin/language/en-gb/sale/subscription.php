@@ -13,7 +13,7 @@ $_['text_order_id']              = 'Order ID';
 $_['text_order']                 = 'Orders';
 $_['text_customer']              = 'Customer';
 $_['text_date_added']            = 'Date Added';
-$_['text_subscription_plan' ]    = 'Subscription Plan';
+$_['text_subscription_plan']     = 'Subscription Plan';
 $_['text_payment_method']        = 'Payment Method';
 $_['text_remaining']             = 'Remaining Payments';
 $_['text_date_next']             = 'Next Payment Date';
@@ -22,6 +22,8 @@ $_['text_cancel']                = 'Until Canceled';
 $_['text_product']               = 'Product Details';
 $_['text_quantity']              = 'Quantity';
 $_['text_amount']                = 'Amount';
+$_['text_amount']                = 'Amount';
+$_['text_subscription']          = 'Subscription';
 $_['text_subscription_trial']    = '%s every %d %s(s) for %d payment(s) then ';
 $_['text_subscription_duration'] = '%s every %d %s(s) for %d payment(s)';
 $_['text_subscription_cancel']   = '%s every %d %s(s) until canceled';
@@ -32,8 +34,6 @@ $_['text_month']                 = 'month';
 $_['text_year']                  = 'year';
 $_['text_history']               = 'History';
 $_['text_history_add']           = 'Add History';
-$_['text_transaction']           = 'Transactions';
-$_['text_transaction_add']       = 'Add Transaction';
 
 // Column
 $_['column_subscription_id']     = 'Subscription ID';

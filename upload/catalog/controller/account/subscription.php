@@ -70,7 +70,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$data['subscriptions'][] = [
 				'subscription_id' => $result['subscription_id'],
 				'product_id'      => $result['product_id'],
-				'name'            => $result['name'],
+				'product_name'    => $result['name'],
 				'product'         => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $result['product_id']),
 				'status'          => $subscription_status,
 				'date_added'      => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
@@ -156,9 +156,9 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$subscription_status_info = $this->model_localisation_subscription_status->getSubscriptionStatus($subscription_info['subscription_status_id']);
 
 			if ($subscription_status_info) {
-				$data['status'] = $subscription_status_info['name'];
+				$data['subscription_status'] = $subscription_status_info['name'];
 			} else {
-				$data['status'] = '';
+				$data['subscription_status'] = '';
 			}
 			/*
 			// Orders

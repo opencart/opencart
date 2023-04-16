@@ -435,15 +435,9 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!empty($order_info)) {
-			$data['customer'] = $this->url->link('sale/customer.edit', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $order_info['customer_id']);
+			$data['customer'] = $this->url->link('customer/customer.form', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $order_info['customer_id']);
 		} else {
 			$data['customer'] = '';
-		}
-
-		if (!empty($order_info)) {
-			$data['customer_id'] = $order_info['customer_id'];
-		} else {
-			$data['customer_id'] = 0;
 		}
 
 		if (!empty($order_info)) {
@@ -564,6 +558,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		}
 
 		$data['history'] = $this->getHistory();
+		$data['orders'] = $this->getOrder();
 
 		// Additional tabs that are payment gateway specific
 		$data['tabs'] = [];
@@ -733,5 +728,55 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
+	}
+
+	public function order(): void {
+		$this->load->language('sale/subscription');
+
+		$this->response->setOutput($this->getOrder());
+	}
+
+	public function getOrder(): string {
+		if (isset($this->request->get['subscription_id'])) {
+			$subscription_id = (int)$this->request->get['subscription_id'];
+		} else {
+			$subscription_id = 0;
+		}
+
+		if (isset($this->request->get['page']) && $this->request->get['route'] == 'sale/subscription.order') {
+			$page = (int)$this->request->get['page'];
+		} else {
+			$page = 1;
+		}
+
+		$limit = 10;
+
+		$data['orders'] = [];
+
+		$this->load->model('sale/order');
+
+		$results = $this->model_sale_order->getOrdersBySubscriptionId($subscription_id, ($page - 1) * $limit, $limit);
+
+		foreach ($results as $result) {
+			$data['orders'][] = [
+				'order_id'   => $result['order_id'],
+				'status'     => $result['status'],
+				'total'      => $this->currency->format($result['total'], $result['currency_code'], $result['currency_value']),
+				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added']))
+			];
+		}
+
+		$order_total = $this->model_sale_order->getTotalOrdersBySubscriptionId($subscription_id);
+
+		$data['pagination'] = $this->load->controller('common/pagination', [
+			'total' => $order_total,
+			'page'  => $page,
+			'limit' => $limit,
+			'url'   => $this->url->link('sale/subscription.order', 'user_token=' . $this->session->data['user_token'] . '&subscription_id=' . $subscription_id . '&page={page}')
+		]);
+
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($order_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($order_total - $limit)) ? $order_total : ((($page - 1) * $limit) + $limit), $order_total, ceil($order_total / $limit));
+
+		return $this->load->view('sale/subscription_order', $data);
 	}
 }

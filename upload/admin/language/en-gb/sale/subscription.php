@@ -10,6 +10,7 @@ $_['text_edit']                  = 'Subscription (#%s)';
 $_['text_filter']                = 'Filter';
 $_['text_subscription_id']       = 'Subscription ID';
 $_['text_order_id']              = 'Order ID';
+$_['text_order']                 = 'Orders';
 $_['text_customer']              = 'Customer';
 $_['text_date_added']            = 'Date Added';
 $_['text_subscription_plan' ]    = 'Subscription Plan';
@@ -47,14 +48,13 @@ $_['column_status']              = 'Status';
 $_['column_date_added']          = 'Date Added';
 $_['column_product']             = 'Product Details';
 $_['column_quantity']            = 'Quantity';
+$_['column_total']               = 'Total';
 $_['column_action']              = 'Action';
 
 // Entry
 $_['entry_order_id']             = 'Order ID';
 $_['entry_subscription_id']      = 'Subscription ID';
 $_['entry_customer']             = 'Customer';
-
-
 $_['entry_subscription_status']  = 'Subscription Status';
 $_['entry_comment']              = 'Comment';
 $_['entry_description']          = 'Description';
@@ -63,6 +63,9 @@ $_['entry_notify']               = 'Notify Customer';
 $_['entry_override']             = 'Override';
 $_['entry_date_from']            = 'Date From';
 $_['entry_date_to']              = 'Date To';
+
+// Tab
+$_['tab_order']                  = 'Orders';
 
 // Error
 $_['error_permission']           = 'Warning: You do not have permission to modify subscriptions!';

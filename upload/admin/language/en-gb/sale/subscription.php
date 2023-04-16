@@ -12,6 +12,8 @@ $_['text_subscription_id']       = 'Subscription ID';
 $_['text_order_id']              = 'Order ID';
 $_['text_customer']              = 'Customer';
 $_['text_date_added']            = 'Date Added';
+$_['text_subscription_plan' ]    = 'Subscription Plan';
+$_['text_payment_method']        = 'Payment Method';
 $_['text_remaining']             = 'Remaining Payments';
 $_['text_date_next']             = 'Next Payment Date';
 $_['text_order_status']          = 'Order Status';
@@ -51,8 +53,8 @@ $_['column_action']              = 'Action';
 $_['entry_order_id']             = 'Order ID';
 $_['entry_subscription_id']      = 'Subscription ID';
 $_['entry_customer']             = 'Customer';
-$_['entry_subscription_plan']    = 'Subscription Plan';
-$_['entry_payment_method']       = 'Payment Method';
+
+
 $_['entry_subscription_status']  = 'Subscription Status';
 $_['entry_comment']              = 'Comment';
 $_['entry_description']          = 'Description';

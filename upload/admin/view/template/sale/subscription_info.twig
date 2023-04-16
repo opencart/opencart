@@ -31,9 +31,6 @@
             </div>
 
 
-
-
-
             <div class="col">
               <div class="input-group mb-3">
                 <div class="form-control border rounded-start">
@@ -49,7 +46,7 @@
               <div class="input-group mb-3">
                 <div class="form-control border rounded-start">
                   <div class="lead"><strong>{{ text_customer }}</strong>
-                    <div id="customer-value"><a href="index.php?route=customer/customer.form&user_token={{ user_token }}&customer_id={{ customer_id }}" target="_blank">{{ firstname }} {{ lastname }}</a></div>
+                    <div id="customer-value"><a href="{{ customer }}" target="_blank">{{ firstname }} {{ lastname }}</a></div>
                   </div>
                 </div>
               </div>
@@ -96,25 +93,20 @@
             </div>
 
             <div class="col">
-              <div class="form-floating mb-3">
-                <select name="subscription_plan_id" id="input-subscription-plan" class="form-select">
-                  <option value="">{{ text_select }}</option>
-                  {% for subscription_plan in subscription_plans %}
-                    <option value="{{ subscription_plan.subscription_plan_id }}"{% if subscription_plan.subscription_plan_id == subscription_plan_id %} selected{% endif %}>{{ subscription_plan.name }}</option>
-                  {% endfor %}
-                </select> <label for="input-subscription-plan">{{ entry_subscription_plan }}</label>
+              <div class="form-control p-0 border rounded mb-3">
+                <div class="lead p-2"><strong>{{ text_subscription_plan }}</strong>
+                  <br/>
+                  {{ subscription_plan }}
+                </div>
               </div>
             </div>
 
             <div class="col">
-              <div class="form-floating mb-3">
-                <select name="customer_payment_id" id="input-payment-method" class="form-select">
-                  <option value="">{{ text_select }}</option>
-                  {% for payment_method in payment_methods %}
-                    <option value="{{ payment_method.customer_payment_id }}"{% if payment_method.customer_payment_id == customer_payment_id %} selected{% endif %}>{{ payment_method.name }}</option>
-                  {% endfor %}
-                </select>
-                <label for="input-payment-method">{{ entry_payment_method }}</label>
+              <div class="form-control p-0 border rounded mb-3">
+                <div class="lead p-2"><strong>{{ text_payment_method }}</strong>
+                  <br/>
+                  {{ payment_method }}
+                </div>
               </div>
             </div>
 

@@ -430,7 +430,15 @@ class Order extends \Opencart\System\Engine\Controller {
 						}
 					}
 
-					$this->cart->add($order_product_info['product_id'], $order_product_info['quantity'], $option_data);
+					$subscription_info = $this->model_account_order->getSubscription($order_product_info['order_id'], $order_product_id);
+
+					if ($subscription_info) {
+						$subscription_id = $subscription_info['subscription_id'];
+					} else {
+						$subscription_id = 0;
+					}
+
+					$this->cart->add($order_product_info['product_id'], $order_product_info['quantity'], $option_data, $subscription_id);
 
 					$this->session->data['success'] = sprintf($this->language->get('text_success'), $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product_info['product_id']), $product_info['name'], $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language')));
 

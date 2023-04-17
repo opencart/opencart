@@ -22,7 +22,6 @@ $_['text_cancel']                = 'Until Canceled';
 $_['text_product']               = 'Product Details';
 $_['text_quantity']              = 'Quantity';
 $_['text_amount']                = 'Amount';
-$_['text_amount']                = 'Amount';
 $_['text_subscription']          = 'Subscription';
 $_['text_subscription_trial']    = '%s every %d %s(s) for %d payment(s) then ';
 $_['text_subscription_duration'] = '%s every %d %s(s) for %d payment(s)';

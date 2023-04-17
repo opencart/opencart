@@ -7,7 +7,7 @@ https://github.com/opencart/opencart/releases/tag/4.0.2.0
 #### Changes
 
 * Works with PHP 8.2
-* Changed the route to use . instead of using |
+* Changed the route to use . instead of using | for compatibility with some payment gateways
 * Payment methods need to be updated:
 
 ```		

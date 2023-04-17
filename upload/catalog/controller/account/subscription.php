@@ -49,14 +49,9 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		$this->load->model('account/order');
 		$this->load->model('localisation/subscription_status');
 
-		$filter_data = [
-			'start'	=> ($page - 1) * $limit,
-			'limit'	=> $limit
-		];
+		$subscription_total = $this->model_account_subscription->getTotalSubscriptions();
 
-		$subscription_total = $this->model_account_subscription->getTotalSubscriptions($filter_data);
-
-		$results = $this->model_account_subscription->getSubscriptions($filter_data);
+		$results = $this->model_account_subscription->getSubscriptions(($page - 1) * $limit, $limit);
 
 		foreach ($results as $result) {
 			$subscription_status_info = $this->model_localisation_subscription_status->getSubscriptionStatus($result['subscription_status_id']);
@@ -84,6 +79,8 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			'limit' => $limit,
 			'url'   => $this->url->link('account/subscription', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&page={page}')
 		]);
+
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($subscription_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($subscription_total - $limit)) ? $subscription_total : ((($page - 1) * $limit) + $limit), $subscription_total, ceil($subscription_total / $limit));
 
 		$data['continue'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']);
 

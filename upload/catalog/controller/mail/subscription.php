@@ -358,6 +358,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 					}
 				}
 			}
-		}*/
+		}
+		*/
 	}
 }

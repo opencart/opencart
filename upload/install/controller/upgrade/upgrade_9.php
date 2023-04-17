@@ -6,11 +6,64 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		// Fix https://github.com/opencart/opencart/issues/11594
-		$this->db->query("UPDATE `" . DB_PREFIX . "layout_route` SET `route` = REPLACE(`route`, '|', '.')");
-		$this->db->query("UPDATE `" . DB_PREFIX . "seo_url` SET `value` = REPLACE(`value`, '|', '.') WHERE `key` = 'route'");
-		$this->db->query("UPDATE `" . DB_PREFIX . "event` SET `trigger` = REPLACE(`trigger`, '|', '.'), `action` = REPLACE(`action`, '|', '.')");
-		$this->db->query("UPDATE `" . DB_PREFIX . "banner_image` SET `link` = REPLACE(`link`, '|', '.')");
+		try {
+			// Fix https://github.com/opencart/opencart/issues/11594
+			$this->db->query("UPDATE `" . DB_PREFIX . "layout_route` SET `route` = REPLACE(`route`, '|', '.')");
+			$this->db->query("UPDATE `" . DB_PREFIX . "seo_url` SET `value` = REPLACE(`value`, '|', '.') WHERE `key` = 'route'");
+			$this->db->query("UPDATE `" . DB_PREFIX . "event` SET `trigger` = REPLACE(`trigger`, '|', '.'), `action` = REPLACE(`action`, '|', '.')");
+			$this->db->query("UPDATE `" . DB_PREFIX . "banner_image` SET `link` = REPLACE(`link`, '|', '.')");
+
+			// order
+			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "order' AND COLUMN_NAME = 'payment_code'");
+
+			if ($query->num_rows) {
+				$query = $this->db->query("SELECT `order_id`, `payment_code`, `payment_method`, `shipping_method`, `shipping_code` FROM `" . DB_PREFIX . "order`");
+
+				foreach ($query->rows as $result) {
+					if (isset($result['payment_code'])) {
+						$payment_method = [
+							'name' => $result['payment_method'],
+							'code' => $result['payment_code']
+						];
+
+						$this->db->query("UPDATE `" . DB_PREFIX . "order` SET `payment_custom_field` = '" . $this->db->escape(json_encode($payment_method)) . "' WHERE `order_id` = '" . (int)$result['order_id'] . "'");
+					}
+
+					if (isset($result['shipping_code'])) {
+						$shipping_method = [
+							'name' => $result['shipping_method'],
+							'code' => $result['shipping_code']
+						];
+
+						$this->db->query("UPDATE `" . DB_PREFIX . "order` SET `shipping_method` = '" . $this->db->escape(json_encode($shipping_method)) . "' WHERE `order_id` = '" . (int)$result['order_id'] . "'");
+					}
+				}
+
+				// Drop Fields
+				$remove = [];
+
+				$remove[] = [
+					'table' => 'order',
+					'field' => 'payment_code'
+				];
+
+				// custom_field
+				$remove[] = [
+					'table' => 'order',
+					'field' => 'shipping_code'
+				];
+
+				foreach ($remove as $result) {
+					$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . $result['table'] . "' AND COLUMN_NAME = '" . $result['field'] . "'");
+
+					if ($query->num_rows) {
+						$this->db->query("ALTER TABLE `" . DB_PREFIX . $result['table'] . "` DROP `" . $result['field'] . "`");
+					}
+				}
+			}
+		} catch (\ErrorException $exception) {
+			$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
+		}
 
 		if (!$json) {
 			$json['success'] = $this->language->get('text_success');

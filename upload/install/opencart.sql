@@ -2254,10 +2254,10 @@ INSERT INTO `oc_stock_status` (`stock_status_id`, `language_id`, `name`) VALUES
 -- Dumping data for table `oc_subscription_plan`
 --
 
-INSERT INTO `oc_subscription_plan` (`subscription_plan_id`, `trial_price`, `trial_frequency`, `trial_duration`, `trial_cycle`, `trial_status`, `price`, `frequency`, `duration`, `cycle`, `status`, `sort_order`) VALUES
-(1, '10.0000', 'day', 10, 1, 1, '10.0000', 'day', 0, 1, 1, 0),
-(2, '11.0000', 'week', 11, 2, 1, '100.0000', 'month', 10, 1, 1, 0),
-(3, '0.0000', 'day', 0, 1, 0, '20.0000', 'day', 0, 1, 1, 0);
+INSERT INTO `oc_subscription_plan` (`subscription_plan_id`, `trial_frequency`, `trial_duration`, `trial_cycle`, `trial_status`, `frequency`, `duration`, `cycle`, `status`, `sort_order`) VALUES
+(1, 'day', 10, 1, 1, 'day', 0, 1, 1, 0),
+(2, 'week', 11, 2, 1, 'month', 10, 1, 1, 0),
+(3, 'day', 0, 1, 0, 'day', 0, 1, 1, 0);
 
 -----------------------------------------------------------
 

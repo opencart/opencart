@@ -1476,7 +1476,7 @@ class Order extends \Opencart\System\Engine\Controller {
 					'email'            => $order_info['email'],
 					'telephone'        => $order_info['telephone'],
 					'shipping_address' => $shipping_address,
-					'shipping_method'  => $order_info['shipping_method']['name'],
+					'shipping_method'  => ($order_info['shipping_method'] ? $order_info['shipping_method']['name'] : ''),
 					'payment_address'  => $payment_address,
 					'payment_method'   => $order_info['payment_method']['name'],
 					'product'          => $product_data,

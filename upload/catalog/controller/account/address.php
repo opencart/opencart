@@ -413,19 +413,19 @@ class Address extends \Opencart\System\Engine\Controller {
 
 			$this->load->model('account/address');
 
-			if ($this->model_account_address->getTotalAddresses() == 1) {
+			if ($this->model_account_address->getTotalAddresses($this->customer->getId()) == 1) {
 				$json['error'] = $this->language->get('error_delete');
 			}
 
 			$this->load->model('account/subscription');
 
-			$subscription_total = $this->model_account_subscription->getTotalSubscriptionByShippingAddressId();
+			$subscription_total = $this->model_account_subscription->getTotalSubscriptionByShippingAddressId($address_id);
 
 			if ($subscription_total) {
 				$json['error'] = sprintf($this->language->get('error_subscription'), $subscription_total);
 			}
 
-			$subscription_total = $this->model_account_subscription->getTotalSubscriptionByPaymentAddressId();
+			$subscription_total = $this->model_account_subscription->getTotalSubscriptionByPaymentAddressId($address_id);
 
 			if ($subscription_total) {
 				$json['error'] = sprintf($this->language->get('error_subscription'), $subscription_total);

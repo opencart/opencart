@@ -289,7 +289,7 @@ $('#form-payment-address').on('submit', function(e) {
 
                     if (json['addresses']) {
                         for (i in json['addresses']) {
-                            html += '<option value="' + json['addresses'][i]['value'] + '">' + json['addresses'][i]['text'] + '</option>';
+                            html += '<option value="' + json['addresses'][i]['address_id'] + '">' + json['addresses'][i]['firstname'] + ' ' + json['addresses'][i]['lastname'] + ', ' + (json['addresses'][i]['company'] ? json['addresses'][i]['company'] + ', ' : '') + json['addresses'][i]['address_1'] + ', ' + json['addresses'][i]['city'] + ', ' + json['addresses'][i]['zone'] + ', ' + json['addresses'][i]['country'] + '</option>';
                         }
                     }
 

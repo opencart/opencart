@@ -43,7 +43,6 @@ if ($status) {
 }
 ```
 
-
 ## [v4.0.1.0] (Release date: 15.08.2022)
 
 https://github.com/opencart/opencart/releases/tag/4.0.1.0

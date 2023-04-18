@@ -30,12 +30,17 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
 					}
 
 					if (isset($result['shipping_code'])) {
-						$shipping_method = [
-							'name' => $result['shipping_method'],
-							'code' => $result['shipping_code']
-						];
+						$order_total_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_total` WHERE `order_id` = '" . (int)$result['order_id'] . "' AND `code` = 'shipping'");
 
-						$this->db->query("UPDATE `" . DB_PREFIX . "order` SET `shipping_method` = '" . $this->db->escape(json_encode($shipping_method)) . "' WHERE `order_id` = '" . (int)$result['order_id'] . "'");
+						if ($order_total_query->num_rows) {
+							$shipping_method = [
+								'name' => $result['shipping_method'],
+								'code' => $result['shipping_code'],
+								'cost' => $order_total_query->row['value']
+							];
+
+							$this->db->query("UPDATE `" . DB_PREFIX . "order` SET `shipping_method` = '" . $this->db->escape(json_encode($shipping_method)) . "' WHERE `order_id` = '" . (int)$result['order_id'] . "'");
+						}
 					}
 				}
 

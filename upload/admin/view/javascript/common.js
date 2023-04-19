@@ -534,18 +534,15 @@ $(document).ready(function() {
             return this.each(function() {
                 var element = this;
 
-                $.extend(this, state);
-
                 if (state == 'loading') {
                     this.html = $(element).html();
+                    this.state = $(element).prop('disabled');
 
                     $(element).prop('disabled', true).width($(element).width()).html('<i class="fa-solid fa-circle-notch fa-spin text-light"></i>');
                 }
 
                 if (state == 'reset') {
-                    $(element).prop('disabled', false).width('').html(this.html);
-
-                    this.html = '';
+                    $(element).prop('disabled', this.state).width('').html(this.html);
                 }
             });
         }

@@ -116,12 +116,12 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 				'custom_field'   => isset($this->request->post['custom_field']) ? $this->request->post['custom_field'] : []
 			];
 
-			if ($this->cart->hasShipping() && !isset($this->session->data['shipping_address'])) {
-				$this->session->data['shipping_address'] = $this->session->data['payment_address'];
-			}
-
 			$json['success'] = $this->language->get('text_success');
 
+			// Clear payment and shipping methods
+			unset($this->session->data['shipping_method']);
+			unset($this->session->data['shipping_methods']);
+			unset($this->session->data['payment_method']);
 			unset($this->session->data['payment_methods']);
 		}
 

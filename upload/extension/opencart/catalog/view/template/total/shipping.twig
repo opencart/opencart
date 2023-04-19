@@ -10,7 +10,7 @@
             <select name="country_id" id="input-country" class="form-select">
               <option value="">{{ text_select }}</option>
               {% for country in countries %}
-                <option value="{{ country.country_id }}"{% if country.country_id == country_id %} selected="selected"{% endif %}>{{ country.name }}</option>
+                <option value="{{ country.country_id }}"{% if country.country_id == country_id %} selected{% endif %}>{{ country.name }}</option>
               {% endfor %}
             </select>
             <div id="error-country" class="invalid-feedback"></div>
@@ -67,7 +67,7 @@
                   }
               }
 
-              if (json['shipping_method']) {
+              if (json['shipping_methods']) {
                   $('#modal-shipping').remove();
 
                   html = '<div id="modal-shipping" class="modal">';
@@ -81,29 +81,32 @@
                   html += '        <form id="form-shipping">';
                   html += '          <p>{{ text_estimate }}</p>';
 
-                  for (i in json['shipping_method']) {
-                      html += '<p><strong>' + json['shipping_method'][i]['title'] + '</strong></p>';
+                  for (i in json['shipping_methods']) {
+                      html += '<p><strong>' + json['shipping_methods'][i]['name'] + '</strong></p>';
 
-                      if (!json['shipping_method'][i]['error']) {
-                          for (j in json['shipping_method'][i]['quote']) {
+                      if (!json['shipping_methods'][i]['error']) {
+                          for (j in json['shipping_methods'][i]['quote']) {
                               html += '<div class="form-check">';
 
-                              if (json['shipping_method'][i]['quote'][j]['code'] == '{{ shipping_method }}') {
-                                  html += '<input type="radio" name="shipping_method" value="' + json['shipping_method'][i]['quote'][j]['code'] + '" id="input-shipping-method-' + i + '-' + j.replaceAll('_', '-') + '" checked/>';
-                              } else {
-                                  html += '<input type="radio" name="shipping_method" value="' + json['shipping_method'][i]['quote'][j]['code'] + '" id="input-shipping-method-' + i + '-' + j.replaceAll('_', '-') + '"/>';
+                              var code = i + '-' + j.replaceAll('_', '-');
+
+                              html += '<input type="radio" name="shipping_method" value="' + json['shipping_methods'][i]['quote'][j]['code'] + '" id="input-shipping-method-' + code + '"';
+
+                              if (json['shipping_methods'][i]['quote'][j]['code'] == '{{ code }}') {
+                                  html += ' checked';
                               }
 
-                              html += '  <label for="input-shipping-method-' + i + '">' + json['shipping_method'][i]['quote'][j]['title'] + ' - ' + json['shipping_method'][i]['quote'][j]['text'] + '</label>';
+                              html += '/>';
+                              html += '  <label for="input-shipping-method-' + code + '">' + json['shipping_methods'][i]['quote'][j]['name'] + ' - ' + json['shipping_methods'][i]['quote'][j]['text'] + '</label>';
                               html += '</div>';
                           }
                       } else {
-                          html += '<div class="alert alert-danger alert-dismissible">' + json['shipping_method'][i]['error'] + '</div>';
+                          html += '<div class="alert alert-danger alert-dismissible">' + json['shipping_methods'][i]['error'] + '</div>';
                       }
                   }
 
                   html += '          <div class="text-end">';
-                  html += '            <button type="submit" id="button-shipping" class="btn btn-primary">{{ button_shipping }}</button>';
+                  html += '            <button type="submit" id="button-shipping-method" class="btn btn-primary">{{ button_shipping }}</button>';
                   html += '          </div>';
                   html += '        </form>';
                   html += '      </div>';
@@ -132,10 +135,10 @@
           dataType: 'json',
           contentType: 'application/x-www-form-urlencoded',
           beforeSend: function () {
-              $('#button-shipping').button('loading');
+              $('#button-shipping-method').button('loading');
           },
           complete: function () {
-              $('#button-shipping').button('reset');
+              $('#button-shipping-method').button('reset');
           },
           success: function (json) {
               $('.alert-dismissible').remove();
@@ -149,9 +152,7 @@
 
                   $('#shopping-cart').load('index.php?route=checkout/cart.list&language={{ language }}');
 
-                  var modal = bootstrap.Modal.getInstance(document.querySelector('#modal-shipping'));
-
-                  modal.hide();
+                  $('#modal-shipping').modal('hide');
               }
           },
           error: function (xhr, ajaxOptions, thrownError) {
@@ -188,13 +189,13 @@
                       html += '<option value="' + json['zone'][i]['zone_id'] + '"';
 
                       if (json['zone'][i]['zone_id'] == '{{ zone_id }}') {
-                          html += ' selected="selected"';
+                          html += ' selected';
                       }
 
                       html += '>' + json['zone'][i]['name'] + '</option>';
                   }
               } else {
-                  html += '<option value="0" selected="selected">{{ text_none }}</option>';
+                  html += '<option value="0" selected>{{ text_none }}</option>';
               }
 
               $('#input-zone').html(html);

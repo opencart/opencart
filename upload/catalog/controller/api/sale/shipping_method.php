@@ -15,15 +15,12 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			// Shipping Methods
 			$this->load->model('checkout/shipping_method');
 
 			$shipping_methods = $this->model_checkout_shipping_method->getMethods($this->session->data['shipping_address']);
 
 			if ($shipping_methods) {
-				$this->session->data['shipping_methods'] = $shipping_methods;
-
-				$json['shipping_methods'] = $shipping_methods;
+				$json['shipping_methods'] = $this->session->data['shipping_methods'] = $shipping_methods;
 			} else {
 				$json['error'] = $this->language->get('error_no_shipping');
 			}
@@ -57,9 +54,12 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$this->session->data['shipping_method'] = $this->request->post['shipping_method'];
+			$this->session->data['shipping_method'] = $this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]];
 
 			$json['success'] = $this->language->get('text_success');
+
+			unset($this->session->data['payment_method']);
+			unset($this->session->data['payment_methods']);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

@@ -57,6 +57,19 @@ class FileManager extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
+		$allowed = [
+			'.ico',
+			'.jpg',
+			'.jpeg',
+			'.png',
+			'.gif',
+			'.webp',
+			'.JPG',
+			'.JPEG',
+			'.PNG',
+			'.GIF'
+		];
+
 		$data['directories'] = [];
 		$data['images'] = [];
 
@@ -101,7 +114,7 @@ class FileManager extends \Opencart\System\Engine\Controller {
 						];
 					}
 
-					if (is_file($path)) {
+					if (is_file($path) && in_array(substr($path, strrpos($path, '.')), $allowed)) {
 						$data['images'][] = [
 							'name'  => $name,
 							'path'  => oc_substr($path, oc_strlen($base)),

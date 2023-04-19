@@ -6,7 +6,7 @@
         <div class="mb-3">
           <label for="input-group" class="col-form-label">{{ entry_group }}</label> <select name="filter_group" id="input-group" class="form-select">
             {% for group in groups %}
-              <option value="{{ group.value }}"{% if group.value == filter_group %} selected="selected"{% endif %}>{{ group.text }}</option>
+              <option value="{{ group.value }}"{% if group.value == filter_group %} selected{% endif %}>{{ group.text }}</option>
             {% endfor %}
           </select>
         </div>
@@ -14,7 +14,7 @@
           <label for="input-order-status" class="col-form-label">{{ entry_order_status }}</label> <select name="filter_order_status_id" id="input-order-status" class="form-select">
             <option value="0">{{ text_all_status }}</option>
             {% for order_status in order_statuses %}
-              <option value="{{ order_status.order_status_id }}"{% if order_status.order_status_id == filter_order_status_id %} selected="selected"{% endif %}>{{ order_status.name }}</option>
+              <option value="{{ order_status.order_status_id }}"{% if order_status.order_status_id == filter_order_status_id %} selected{% endif %}>{{ order_status.name }}</option>
             {% endfor %}
           </select>
         </div>

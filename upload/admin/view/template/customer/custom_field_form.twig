@@ -37,8 +37,8 @@
               <div class="col-sm-10">
                 <select name="location" id="input-location" class="form-select">
                   <option value="account"{% if location == 'account' %} selected{% endif %}>{{ text_account }}</option>
-                  <option value="address"{% if location == 'address' %} selected="selected"{% endif %}>{{ text_address }}</option>
-                  <option value="affiliate"{% if location == 'affiliate' %} selected="selected"{% endif %}>{{ text_affiliate }}</option>
+                  <option value="address"{% if location == 'address' %} selected{% endif %}>{{ text_address }}</option>
+                  <option value="affiliate"{% if location == 'affiliate' %} selected{% endif %}>{{ text_affiliate }}</option>
                 </select>
               </div>
             </div>
@@ -47,21 +47,21 @@
               <div class="col-sm-10">
                 <select name="type" id="input-type" class="form-select">
                   <optgroup label="{{ text_choose }}">
-                    <option value="select"{% if type == 'select' %} selected="selected"{% endif %}>{{ text_select }}</option>
-                    <option value="radio"{% if type == 'radio' %} selected="selected"{% endif %}>{{ text_radio }}</option>
-                    <option value="checkbox"{% if type == 'checkbox' %} selected="selected"{% endif %}>{{ text_checkbox }}</option>
+                    <option value="select"{% if type == 'select' %} selected{% endif %}>{{ text_select }}</option>
+                    <option value="radio"{% if type == 'radio' %} selected{% endif %}>{{ text_radio }}</option>
+                    <option value="checkbox"{% if type == 'checkbox' %} selected{% endif %}>{{ text_checkbox }}</option>
                   </optgroup>
                   <optgroup label="{{ text_input }}">
-                    <option value="text"{% if type == 'text' %} selected="selected"{% endif %}>{{ text_text }}</option>
-                    <option value="textarea"{% if type == 'textarea' %} selected="selected"{% endif %}>{{ text_textarea }}</option>
+                    <option value="text"{% if type == 'text' %} selected{% endif %}>{{ text_text }}</option>
+                    <option value="textarea"{% if type == 'textarea' %} selected{% endif %}>{{ text_textarea }}</option>
                   </optgroup>
                   <optgroup label="{{ text_file }}">
-                    <option value="file"{% if type == 'file' %} selected="selected"{% endif %}>{{ text_file }}</option>
+                    <option value="file"{% if type == 'file' %} selected{% endif %}>{{ text_file }}</option>
                   </optgroup>
                   <optgroup label="{{ text_date }}">
-                    <option value="date"{% if type == 'date' %} selected="selected"{% endif %}>{{ text_date }}</option>
-                    <option value="time"{% if type == 'time' %} selected="selected"{% endif %}>{{ text_time }}</option>
-                    <option value="datetime"{% if type == 'datetime' %} selected="selected"{% endif %}>{{ text_datetime }}</option>
+                    <option value="date"{% if type == 'date' %} selected{% endif %}>{{ text_date }}</option>
+                    <option value="time"{% if type == 'time' %} selected{% endif %}>{{ text_time }}</option>
+                    <option value="datetime"{% if type == 'datetime' %} selected{% endif %}>{{ text_datetime }}</option>
                   </optgroup>
                 </select>
               </div>

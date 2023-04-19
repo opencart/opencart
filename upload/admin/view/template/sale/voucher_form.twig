@@ -70,7 +70,7 @@
                   <select name="voucher_theme_id" id="input-theme" class="form-select">
                     {% for voucher_theme in voucher_themes %}
                       {% if voucher_theme.voucher_theme_id == voucher_theme_id %}
-                        <option value="{{ voucher_theme.voucher_theme_id }}" selected="selected">{{ voucher_theme.name }}</option>
+                        <option value="{{ voucher_theme.voucher_theme_id }}" selected>{{ voucher_theme.name }}</option>
                       {% else %}
                         <option value="{{ voucher_theme.voucher_theme_id }}">{{ voucher_theme.name }}</option>
                       {% endif %}

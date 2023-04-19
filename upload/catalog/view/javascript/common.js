@@ -98,7 +98,7 @@ $(document).ready(function() {
     // Alert Fade
     var oc_alert = function() {
         window.setTimeout(function() {
-            $('.alert-dismissible').fadeTo(1000, 0, function() {
+            $('.alert-dismissible').fadeTo(3000, 0, function() {
                 $(this).remove();
             });
         }, 3000);
@@ -549,18 +549,15 @@ $(document).ready(function() {
             return this.each(function() {
                 var element = this;
 
-                $.extend(this, state);
-
                 if (state == 'loading') {
                     this.html = $(element).html();
+                    this.state = $(element).prop('disabled');
 
                     $(element).prop('disabled', true).width($(element).width()).html('<i class="fa-solid fa-circle-notch fa-spin text-light"></i>');
                 }
 
                 if (state == 'reset') {
-                    $(element).prop('disabled', false).width('').html(this.html);
-
-                    this.html = '';
+                    $(element).prop('disabled', this.state).width('').html(this.html);
                 }
             });
         }

@@ -35,7 +35,7 @@
                     <label for="input-db-driver" class="form-label">{{ entry_db_driver }}</label>
                     <select name="db_driver" id="input-db-driver" class="form-control">
                       {% for driver in drivers %}
-                        <option value="{{ driver.value }}"{% if db_driver == driver.value %} selected="selected"{% endif %}>{{ driver.text }}</option>
+                        <option value="{{ driver.value }}"{% if db_driver == driver.value %} selected{% endif %}>{{ driver.text }}</option>
                       {% endfor %}
                     </select>
                     {% if error_db_driver %}

@@ -423,15 +423,21 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!empty($order_info)) {
+			$data['order'] = $this->url->link('sale/order.info', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $order_info['order_id']);
+		} else {
+			$data['order'] = '';
+		}
+
+		if (!empty($order_info)) {
 			$data['order_id'] = $order_info['order_id'];
 		} else {
 			$data['order_id'] = 0;
 		}
 
 		if (!empty($order_info)) {
-			$data['customer_id'] = $order_info['customer_id'];
+			$data['customer'] = $this->url->link('customer/customer.form', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $order_info['customer_id']);
 		} else {
-			$data['customer_id'] = 0;
+			$data['customer'] = '';
 		}
 
 		if (!empty($order_info)) {
@@ -454,22 +460,18 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('catalog/subscription_plan');
 
-		$data['subscription_plans'] = $this->model_catalog_subscription_plan->getSubscriptionPlans();
+		$subscription_plan_info = $this->model_catalog_subscription_plan->getSubscriptionPlan($subscription_info['subscription_plan_id']);
 
-		if (!empty($subscription_info)) {
-			$data['subscription_plan_id'] = $subscription_info['subscription_plan_id'];
+		if (!empty($subscription_plan_info)) {
+			$data['subscription_plan'] = $subscription_plan_info['name'];
 		} else {
-			$data['subscription_plan_id'] = 0;
+			$data['subscription_plan'] = '';
 		}
 
-		$this->load->model('customer/customer');
-
-		$data['payment_methods'] = $this->model_customer_customer->getPaymentMethods($data['customer_id']);
-
 		if (!empty($subscription_info)) {
-			$data['customer_payment_id'] = $subscription_info['customer_payment_id'];
+			$data['payment_method'] = $subscription_info['payment_method']['name'];
 		} else {
-			$data['customer_payment_id'] = 0;
+			$data['payment_method'] = '';
 		}
 
 		if (!empty($subscription_info)) {
@@ -515,6 +517,31 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$data['product'] = '';
 		}
 
+		$data['options'] = [];
+
+		$options = $this->model_sale_order->getOptions($subscription_info['order_id'], $subscription_info['order_product_id']);
+
+		foreach ($options as $option) {
+			if ($option['type'] != 'file') {
+				$data['options'][] = [
+					'name'  => $option['name'],
+					'value' => $option['value'],
+					'type'  => $option['type']
+				];
+			} else {
+				$upload_info = $this->model_tool_upload->getUploadByCode($option['value']);
+
+				if ($upload_info) {
+					$data['options'][] = [
+						'name'  => $option['name'],
+						'value' => $upload_info['name'],
+						'type'  => $option['type'],
+						'href'  => $this->url->link('tool/upload.download', 'user_token=' . $this->session->data['user_token'] . '&code=' . $upload_info['code'])
+					];
+				}
+			}
+		}
+
 		$data['description'] = '';
 
 		if (!empty($subscription_info)) {
@@ -556,6 +583,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		}
 
 		$data['history'] = $this->getHistory();
+		$data['orders'] = $this->getOrder();
 
 		// Additional tabs that are payment gateway specific
 		$data['tabs'] = [];
@@ -564,7 +592,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		$this->load->model('setting/extension');
 
 		if (!empty($order_info)) {
-			$extension_info = $this->model_setting_extension->getExtensionByCode('payment', $order_info['payment_code']);
+			$extension_info = $this->model_setting_extension->getExtensionByCode('payment', $order_info['payment_method']['code']);
 
 			if ($extension_info && $this->user->hasPermission('access', 'extension/' . $extension_info['extension'] . '/payment/' . $extension_info['code'])) {
 				$output = $this->load->controller('extension/payment/' . $order_info['payment_code'] . '.subscription');
@@ -727,90 +755,54 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function addTransaction(): void {
+	public function order(): void {
 		$this->load->language('sale/subscription');
 
-		$json = [];
-		
-		if (!$this->user->hasPermission('modify', 'sale/subscription')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
+		$this->response->setOutput($this->getOrder());
+	}
 
+	public function getOrder(): string {
 		if (isset($this->request->get['subscription_id'])) {
 			$subscription_id = (int)$this->request->get['subscription_id'];
 		} else {
 			$subscription_id = 0;
 		}
 
-		if ($this->request->post['type'] == '') {
-			$json['error'] = $this->language->get('error_service_type');
-		}
-
-		$this->load->model('sale/subscription');
-
-		$subscription_info = $this->model_sale_subscription->getSubscription($subscription_id);
-
-		if ($subscription_info) {
-			$this->load->model('sale/order');
-
-			$order_info = $this->model_sale_order->getOrder($subscription_info['order_id']);
-
-			if ((!$order_info) || ($this->request->post['order_id'] == '') || (($this->request->post['order_id'] != $order_info['order_id']) || ($this->request->post['order_id'] != $subscription_info['order_id']))) {
-				$json['error'] = $this->language->get('error_payment_method');
-			}
-			
-			// Subscription Plans
-            $this->load->model('catalog/subscription_plan');
-
-            $filter_data = [
-                'filter_order_id' => $order_info['order_id']
-            ];
-
-            $subscription_total = $this->model_sale_subscription->getTotalSubscriptions($filter_data);
-
-            $subscription_plan_total = $this->model_catalog_subscription_plan->getTotalSubscriptionPlans();
-
-            // Only recurring or new orders are allowed to be migrated into the subscription system.
-            // Subscription plans must be created from the store prior to migrate recurring orders.
-            if ($subscription_total || !$subscription_plan_total) {
-                $json['error'] = $this->language->get('error_transaction');
-            } else {
-                // The canceled subscription status ID needs to match the store's canceled subscription status ID
-                $this->load->model('setting/setting');
-
-                $store_info = $this->model_setting_setting->getSetting('config', $order_info['store_id']);
-
-                if (!$store_info) {
-                    $json['error'] = $this->language->get('error_status');
-                } else {
-                    $config_subscription_status_id = $store_info['config_subscription_canceled_status_id'];
-
-                    $subscription_status_id = $this->config->get('config_subscription_canceled_status_id');
-
-                    if ($config_subscription_status_id != $subscription_status_id) {
-                        $json['error'] = $this->language->get('error_status');
-                    } else {
-                        $config_subscription_status_total = $this->model_sale_subscription->getTotalSubscriptionsBySubscriptionStatusId($config_subscription_status_id);
-
-                        $subscription_status_total = $this->model_sale_subscription->getTotalSubscriptionsBySubscriptionStatusId($subscription_status_id);
-
-                        if ((!$config_subscription_status_total) || (!$subscription_total)) {
-                            $json['error'] = $this->language->get('error_status');
-                        }
-                    }
-                }
-            }
+		if (isset($this->request->get['page']) && $this->request->get['route'] == 'sale/subscription.order') {
+			$page = (int)$this->request->get['page'];
 		} else {
-			$json['error'] = $this->language->get('error_subscription');
+			$page = 1;
 		}
 
-		if (!$json) {
-			$this->model_sale_subscription->addTransaction($subscription_id, $subscription_info['order_id'], (string)$this->request->post['description'], (float)$this->request->post['amount'], $this->request->post['type'], $order_info['payment_method'], $order_info['payment_code']);
+		$limit = 10;
 
-			$json['success'] = $this->language->get('text_success');
+		$data['orders'] = [];
+
+		$this->load->model('sale/order');
+
+		$results = $this->model_sale_order->getOrdersBySubscriptionId($subscription_id, ($page - 1) * $limit, $limit);
+
+		foreach ($results as $result) {
+			$data['orders'][] = [
+				'order_id'   => $result['order_id'],
+				'status'     => $result['status'],
+				'total'      => $this->currency->format($result['total'], $result['currency_code'], $result['currency_value']),
+				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
+				'view'       => $this->url->link('sale/subscription.order', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $result['order_id'] . '&page={page}')
+			];
 		}
 
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+		$order_total = $this->model_sale_order->getTotalOrdersBySubscriptionId($subscription_id);
+
+		$data['pagination'] = $this->load->controller('common/pagination', [
+			'total' => $order_total,
+			'page'  => $page,
+			'limit' => $limit,
+			'url'   => $this->url->link('sale/subscription.order', 'user_token=' . $this->session->data['user_token'] . '&subscription_id=' . $subscription_id . '&page={page}')
+		]);
+
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($order_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($order_total - $limit)) ? $order_total : ((($page - 1) * $limit) + $limit), $order_total, ceil($order_total / $limit));
+
+		return $this->load->view('sale/subscription_order', $data);
 	}
 }

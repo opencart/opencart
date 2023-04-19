@@ -36,12 +36,12 @@
               <label for="input-status" class="form-label">{{ entry_status }}</label> <select name="filter_status" id="input-status" class="form-select">
                 <option value=""></option>
                 {% if filter_status == '1' %}
-                  <option value="1" selected="selected">{{ text_enabled }}</option>
+                  <option value="1" selected>{{ text_enabled }}</option>
                 {% else %}
                   <option value="1">{{ text_enabled }}</option>
                 {% endif %}
                 {% if filter_status == '0' %}
-                  <option value="0" selected="selected">{{ text_disabled }}</option>
+                  <option value="0" selected>{{ text_disabled }}</option>
                 {% else %}
                   <option value="0">{{ text_disabled }}</option>
                 {% endif %}

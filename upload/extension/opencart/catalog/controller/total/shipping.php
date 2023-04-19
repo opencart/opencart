@@ -9,25 +9,19 @@ class Shipping extends \Opencart\System\Engine\Controller {
             $data['language'] = $this->config->get('config_language');
 
 			if (isset($this->session->data['shipping_address'])) {
-				$shipping_address = $this->session->data['shipping_address'];
-
-				$data['postcode'] = $shipping_address['postcode'];
-				$data['country_id'] = $shipping_address['country_id'];
-				$data['zone_id'] = $shipping_address['zone_id'];
+				$data['postcode'] = $this->session->data['shipping_address']['postcode'];
+				$data['country_id'] = $this->session->data['shipping_address']['country_id'];
+				$data['zone_id'] = $this->session->data['shipping_address']['zone_id'];
 			} else {
 				$data['postcode'] = '';
 				$data['country_id'] = (int)$this->config->get('config_country_id');
 				$data['zone_id'] = '';
 			}
 
-			$data['shipping_method'] = '';
-
 			if (isset($this->session->data['shipping_method'])) {
-				$shipping = explode('.', $this->session->data['shipping_method']);
-
-				if (isset($shipping[0]) && isset($shipping[1]) && isset($this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]])) {
-					$data['shipping_method'] = $this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]]['code'];
-				}
+				$data['code'] = $this->session->data['shipping_method']['code'];
+			} else {
+				$data['code'] = '';
 			}
 
 			$this->load->model('localisation/country');
@@ -132,10 +126,8 @@ class Shipping extends \Opencart\System\Engine\Controller {
 
 			$shipping_methods = $this->model_checkout_shipping_method->getMethods($this->session->data['shipping_address']);
 
-			$this->session->data['shipping_methods'] = $shipping_methods;
-
 			if ($shipping_methods) {
-				$json['shipping_method'] = $shipping_methods;
+				$json['shipping_methods'] = $this->session->data['shipping_methods'] = $shipping_methods;
 			} else {
 				$json['error']['warning'] = sprintf($this->language->get('error_no_shipping'), $this->url->link('information/contact', 'language=' . $this->config->get('config_language')));
 			}
@@ -161,7 +153,7 @@ class Shipping extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$this->session->data['shipping_method'] = $this->request->post['shipping_method'];
+			$this->session->data['shipping_method'] = $this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]];
 
 			$json['success'] = $this->language->get('text_success');
 

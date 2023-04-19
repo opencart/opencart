@@ -10,8 +10,11 @@ $_['text_edit']                  = 'Subscription (#%s)';
 $_['text_filter']                = 'Filter';
 $_['text_subscription_id']       = 'Subscription ID';
 $_['text_order_id']              = 'Order ID';
+$_['text_order']                 = 'Orders';
 $_['text_customer']              = 'Customer';
 $_['text_date_added']            = 'Date Added';
+$_['text_subscription_plan']     = 'Subscription Plan';
+$_['text_payment_method']        = 'Payment Method';
 $_['text_remaining']             = 'Remaining Payments';
 $_['text_date_next']             = 'Next Payment Date';
 $_['text_order_status']          = 'Order Status';
@@ -19,6 +22,8 @@ $_['text_cancel']                = 'Until Canceled';
 $_['text_product']               = 'Product Details';
 $_['text_quantity']              = 'Quantity';
 $_['text_amount']                = 'Amount';
+$_['text_amount']                = 'Amount';
+$_['text_subscription']          = 'Subscription';
 $_['text_subscription_trial']    = '%s every %d %s(s) for %d payment(s) then ';
 $_['text_subscription_duration'] = '%s every %d %s(s) for %d payment(s)';
 $_['text_subscription_cancel']   = '%s every %d %s(s) until canceled';
@@ -29,8 +34,6 @@ $_['text_month']                 = 'month';
 $_['text_year']                  = 'year';
 $_['text_history']               = 'History';
 $_['text_history_add']           = 'Add History';
-$_['text_transaction']           = 'Transactions';
-$_['text_transaction_add']       = 'Add Transaction';
 
 // Column
 $_['column_subscription_id']     = 'Subscription ID';
@@ -45,14 +48,13 @@ $_['column_status']              = 'Status';
 $_['column_date_added']          = 'Date Added';
 $_['column_product']             = 'Product Details';
 $_['column_quantity']            = 'Quantity';
+$_['column_total']               = 'Total';
 $_['column_action']              = 'Action';
 
 // Entry
 $_['entry_order_id']             = 'Order ID';
 $_['entry_subscription_id']      = 'Subscription ID';
 $_['entry_customer']             = 'Customer';
-$_['entry_subscription_plan']    = 'Subscription Plan';
-$_['entry_payment_method']       = 'Payment Method';
 $_['entry_subscription_status']  = 'Subscription Status';
 $_['entry_comment']              = 'Comment';
 $_['entry_description']          = 'Description';
@@ -61,6 +63,9 @@ $_['entry_notify']               = 'Notify Customer';
 $_['entry_override']             = 'Override';
 $_['entry_date_from']            = 'Date From';
 $_['entry_date_to']              = 'Date To';
+
+// Tab
+$_['tab_order']                  = 'Orders';
 
 // Error
 $_['error_permission']           = 'Warning: You do not have permission to modify subscriptions!';

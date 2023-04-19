@@ -377,12 +377,12 @@ class Product extends \Opencart\System\Engine\Controller {
 			foreach ($results as $result) {
 				$description = '';
 
-				$trial_price = $this->currency->format($this->tax->calculate($result['trial_price'], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
-				$trial_cycle = $result['trial_cycle'];
-				$trial_frequency = $this->language->get('text_' . $result['trial_frequency']);
-				$trial_duration = $result['trial_duration'];
-
 				if ($result['trial_status']) {
+					$trial_price = $this->currency->format($this->tax->calculate($result['trial_price'], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
+					$trial_cycle = $result['trial_cycle'];
+					$trial_frequency = $this->language->get('text_' . $result['trial_frequency']);
+					$trial_duration = $result['trial_duration'];
+
 					$description .= sprintf($this->language->get('text_subscription_trial'), $trial_price, $trial_cycle, $trial_frequency, $trial_duration);
 				}
 

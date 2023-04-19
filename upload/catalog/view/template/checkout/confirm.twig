@@ -12,12 +12,15 @@
           <td class="text-start">{{ product.quantity }}x <a href="{{ product.href }}">{{ product.name }}</a>
             {% for option in product.option %}
               <br/>
-              &nbsp;
               <small> - {{ option.name }}: {{ option.value }}</small>
             {% endfor %}
+            {% if product.reward %}
+              <br/>
+              <small> - {{ text_points }}: {{ product.reward }}</small>
+            {% endif %}
             {% if product.subscription %}
               <br/>
-              <small>{{ text_subscription }} {{ product.subscription }}</small>
+              <small> - {{ text_subscription }} {{ product.subscription }}</small>
             {% endif %}</td>
           <td class="text-end">{{ product.total }}</td>
         </tr>

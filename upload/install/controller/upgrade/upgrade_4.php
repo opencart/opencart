@@ -181,6 +181,100 @@ class Upgrade4 extends \Opencart\System\Engine\Controller {
 				];
 			}
 
+			$missing[] = [
+				'key'        => 'config_session_expire',
+				'value'      => 3600000000,
+				'code'       => 'config',
+				'serialized' => 0
+			];
+
+			$missing[] = [
+				'key'        => 'config_cookie_id',
+				'value'      => 0,
+				'code'       => 'config',
+				'serialized' => 0
+			];
+
+			$missing[] = [
+				'key'        => 'config_gdpr_id',
+				'value'      => 0,
+				'code'       => 'config',
+				'serialized' => 0
+			];
+
+			$missing[] = [
+				'key'        => 'config_gdpr_limit',
+				'value'      => 180,
+				'code'       => 'config',
+				'serialized' => 0
+			];
+
+			$missing[] = [
+				'key'        => 'config_affiliate_status',
+				'value'      => 1,
+				'code'       => 'config',
+				'serialized' => 0
+			];
+
+			$missing[] = [
+				'key'        => 'config_affiliate_expire',
+				'value'      => 3600000000,
+				'code'       => 'config',
+				'serialized' => 0
+			];
+
+			// Subscriptions
+			$missing[] = [
+				'key'        => 'config_subscription_status_id',
+				'value'      => 1,
+				'code'       => 'config',
+				'serialized' => 0
+			];
+
+			$missing[] = [
+				'key'        => 'config_subscription_active_status_id',
+				'value'      => 2,
+				'code'       => 'config',
+				'serialized' => 0
+			];
+
+			$missing[] = [
+				'key'        => 'config_subscription_expired_status_id',
+				'value'      => 6,
+				'code'       => 'config',
+				'serialized' => 0
+			];
+
+
+			$missing[] = [
+				'key'        => 'config_subscription_canceled_status_id',
+				'value'      => 4,
+				'code'       => 'config',
+				'serialized' => 0
+			];
+
+			$missing[] = [
+				'key'        => 'config_subscription_failed_status_id',
+				'value'      => 3,
+				'code'       => 'config',
+				'serialized' => 0
+			];
+
+
+			$missing[] = [
+				'key'        => 'config_subscription_denied_status_id',
+				'value'      => 5,
+				'code'       => 'config',
+				'serialized' => 0
+			];
+
+			$missing[] = [
+				'key'        => 'config_fraud_status_id',
+				'value'      => 8,
+				'code'       => 'config',
+				'serialized' => 0
+			];
+
 			// Serialized
 			$missing[] = [
 				'key'        => 'config_complete_status',

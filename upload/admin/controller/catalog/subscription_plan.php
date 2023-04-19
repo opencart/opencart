@@ -238,12 +238,6 @@ class SubscriptionPlan extends \Opencart\System\Engine\Controller {
 		];
 
 		if (!empty($subscription_info)) {
-			$data['trial_price'] = $subscription_info['trial_price'];
-		} else {
-			$data['trial_price'] = 0.00;
-		}
-
-		if (!empty($subscription_info)) {
 			$data['trial_frequency'] = $subscription_info['trial_frequency'];
 		} else {
 			$data['trial_frequency'] = '';
@@ -265,12 +259,6 @@ class SubscriptionPlan extends \Opencart\System\Engine\Controller {
 			$data['trial_status'] = $subscription_info['trial_status'];
 		} else {
 			$data['trial_status'] = 0;
-		}
-
-		if (!empty($subscription_info)) {
-			$data['price'] = $subscription_info['price'];
-		} else {
-			$data['price'] = 0.00;
 		}
 
 		if (!empty($subscription_info)) {

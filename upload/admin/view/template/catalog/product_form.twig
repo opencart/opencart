@@ -1838,8 +1838,6 @@ $('#option').on('click', '.btn-primary', function () {
     html += '        </div>';
 
     html += '        <div class="mb-3">';
-    html += '          <input type="hidden" name="product_option_value_id" value="' + ($(element).attr('data-option-value-row') ? $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][product_option_value_id]\']').val() : '') + '"/>';
-
     html += '      	   <label for="input-modal-quantity" class="form-label">{{ entry_quantity }}</label>';
     html += '      	   <input type="text" name="quantity" value="' + ($(element).attr('data-option-value-row') ? $('input[name=\'product_option[' + $(element).attr('data-option-row') + '][product_option_value][' + element.option_value_row + '][quantity]\']').val() : '1') + '" placeholder="{{ entry_quantity }}" id="input-modal-quantity" class="form-control"/>';
     html += '        </div>';

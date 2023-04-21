@@ -15,10 +15,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		// Get all
 		$this->load->model('checkout/subscription');
 		$this->load->model('checkout/order');
-		$this->load->model('catalog/product');
-		$this->load->model('setting/store');
-		$this->load->model('account/customer');
-		$this->load->model('account/address');
 
         $results = $this->model_checkout_subscription->getSubscriptions($filter_data);
 
@@ -27,57 +23,78 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 			// Check the there is an order and the order status is complete and subscription status is active
 			if ($order_info && in_array($order_info['order_status_id'], (array)$this->config->get('config_complete_status'))) {
+				$this->load->model('setting/store');
+
 				$error = '';
 
+				// 1. Language
+				$this->load->model('localisation/language');
+
+				$language_info = $this->model_localisation_language->getLanguage($order_info['language_code']);
+
+				if (!$language_info) {
+					$error = $this->language->get('error_language');
+				}
+
 				// 1. create new instance of a store
-				$store = $this->model_setting_store->createStoreInstance($order_info['store_id'], $order_info['language_code']);
+				if (!$error) {
+					$store = $this->model_setting_store->createStoreInstance($result['store_id'], $language_info['code']);
 
-				// 2. Login
-				$customer_info = $this->model_account_customer->getCustomer($order_info['customer_id']);
+					// 2. Login
+					$this->load->model('account/customer');
 
-				if ($customer_info && $this->customer->login($customer_info['email'], '', true)) {
-					// Add customer details into session
-					$store->session->data['customer'] = [
-						'customer_id'       => $customer_info['customer_id'],
-						'customer_group_id' => $customer_info['customer_group_id'],
-						'firstname'         => $customer_info['firstname'],
-						'lastname'          => $customer_info['lastname'],
-						'email'             => $customer_info['email'],
-						'telephone'         => $customer_info['telephone'],
-						'custom_field'      => $customer_info['custom_field']
-					];
-				} else {
-					$error .= $this->language->get('error_customer') . "\n";
+					$customer_info = $this->model_account_customer->getCustomer($result['customer_id']);
+
+					if ($customer_info && $this->customer->login($customer_info['email'], '', true)) {
+						// Add customer details into session
+						$store->session->data['customer'] = [
+							'customer_id'       => $customer_info['customer_id'],
+							'customer_group_id' => $customer_info['customer_group_id'],
+							'firstname'         => $customer_info['firstname'],
+							'lastname'          => $customer_info['lastname'],
+							'email'             => $customer_info['email'],
+							'telephone'         => $customer_info['telephone'],
+							'custom_field'      => $customer_info['custom_field']
+						];
+					} else {
+						$error = $this->language->get('error_customer');
+					}
 				}
 
 				// 3. Add product
-				$product_info = $this->model_checkout_order->getProduct($result['order_id']);
+				if (!$error) {
+					$this->load->model('catalog/product');
 
-				if ($product_info) {
-					$option_data = [];
+					$product_info = $this->model_checkout_order->getProduct($result['product_id']);
 
-					$order_options = $this->model_account_order->getOptions($result['order_id'], $result['order_product_id']);
+					if ($product_info) {
+						$option_data = [];
 
-					foreach ($order_options as $order_option) {
-						if ($order_option['type'] == 'select' || $order_option['type'] == 'radio' || $order_option['type'] == 'image') {
-							$option_data[$order_option['product_option_id']] = $order_option['product_option_value_id'];
-						} elseif ($order_option['type'] == 'checkbox') {
-							$option_data[$order_option['product_option_id']][] = $order_option['product_option_value_id'];
-						} elseif ($order_option['type'] == 'text' || $order_option['type'] == 'textarea' || $order_option['type'] == 'date' || $order_option['type'] == 'datetime' || $order_option['type'] == 'time') {
-							$option_data[$order_option['product_option_id']] = $order_option['value'];
-						} elseif ($order_option['type'] == 'file') {
-							$option_data[$order_option['product_option_id']] = $order_option['value'];
+						$order_options = $this->model_account_order->getOptions($result['order_id'], $result['order_product_id']);
+
+						foreach ($order_options as $order_option) {
+							if ($order_option['type'] == 'select' || $order_option['type'] == 'radio' || $order_option['type'] == 'image') {
+								$option_data[$order_option['product_option_id']] = $order_option['product_option_value_id'];
+							} elseif ($order_option['type'] == 'checkbox') {
+								$option_data[$order_option['product_option_id']][] = $order_option['product_option_value_id'];
+							} elseif ($order_option['type'] == 'text' || $order_option['type'] == 'textarea' || $order_option['type'] == 'date' || $order_option['type'] == 'datetime' || $order_option['type'] == 'time') {
+								$option_data[$order_option['product_option_id']] = $order_option['value'];
+							} elseif ($order_option['type'] == 'file') {
+								$option_data[$order_option['product_option_id']] = $order_option['value'];
+							}
 						}
-					}
 
-					$store->cart->add($result['product_id'], $result['quantity'], $option_data);
-				} else {
-					$error .= $this->language->get('error_product');
+						$store->cart->add($result['product_id'], $result['quantity'], $option_data);
+					} else {
+						$error = $this->language->get('error_product');
+					}
 				}
 
-				// 4.  Add Shipping Address
-				if ($store->cart->hasShipping()) {
-					$shipping_address_info = $this->model_account_address->getAddress($order_info['customer_id'], $order_info['shipping_address_id']);
+				// 4. Add Shipping Address
+				if (!$error && $store->cart->hasShipping()) {
+					$this->load->model('account/address');
+
+					$shipping_address_info = $this->model_account_address->getAddress($result['customer_id'], $result['shipping_address_id']);
 
 					if ($shipping_address_info) {
 						$this->session->data['shipping_address'] = $shipping_address_info;
@@ -85,25 +102,33 @@ class Subscription extends \Opencart\System\Engine\Controller {
 						$error = $this->language->get('error_shipping_address');
 					}
 
-					// Shipping Methods
-					$this->load->model('checkout/shipping_method');
+					// 5. Shipping Methods
+					if (!$error) {
+						$this->load->model('checkout/shipping_method');
 
-					$shipping_methods = $this->model_checkout_shipping_method->getMethods($shipping_address);
+						$shipping_methods = $this->model_checkout_shipping_method->getMethods($shipping_address_info);
 
-					// Validate shipping method
-					if ($order_info['shipping_code'] && $shipping_methods) {
-						$shipping = explode('.', $order_info['shipping_code']);
+						// Validate shipping method
+						if (isset($order_info['shipping_method']['code']) && $shipping_methods) {
+							$shipping = explode('.', $order_info['shipping_method']['code']);
 
-						if (!isset($shipping[0]) || !isset($shipping[1]) || !isset($shipping_methods[$shipping[0]]['quote'][$shipping[1]])) {
-							$error .= $this->language->get('error_shipping_method');
+							if (isset($shipping[0]) && isset($shipping[1]) && isset($shipping_methods[$shipping[0]]['quote'][$shipping[1]])) {
+								$this->session->data['shipping_method'] = $shipping_methods[$shipping[0]]['quote'][$shipping[1]];
+							} else {
+								$error = $this->language->get('error_shipping_method');
+							}
+						} else {
+							$error = $this->language->get('error_shipping_method');
 						}
-					} else {
-						$error .= $this->language->get('error_shipping_method');
 					}
 				}
 
-				// Payment Address
-				if ($this->config->get('config_checkout_payment_address')) {
+				// 6. Payment Address
+				$payment_address = [];
+
+				if (!$error && $this->config->get('config_checkout_payment_address')) {
+					$this->load->model('account/address');
+
 					$payment_address_info = $this->model_account_address->getAddress($order_info['customer_id'], $result['payment_address_id']);
 
 					if ($payment_address_info) {
@@ -111,47 +136,31 @@ class Subscription extends \Opencart\System\Engine\Controller {
 					} else {
 						$error = $this->language->get('error_payment_address');
 					}
-				} else {
-					$payment_address = [];
 				}
 
-				// Payment Methods
-				$this->load->model('checkout/payment_method');
+				// 7. Payment Methods
+				if (!$error) {
+					$this->load->model('checkout/payment_method');
 
-				$payment_methods = $this->model_checkout_payment_method->getMethods($payment_address);
+					$payment_methods = $this->model_checkout_payment_method->getMethods($payment_address);
 
-				// Validate payment methods
-				if ($order_info['payment_code'] && $payment_methods) {
-					$payment = explode('.', $order_info['payment_code']);
+					// Validate payment methods
+					if (isset($order_info['payment_method']['code']) && $payment_methods) {
+						$payment = explode('.', $order_info['payment_method']['code']);
 
-					if (isset($payment[0]) || isset($payment[1]) || isset($payment_methods[$payment[0]]['option'][$payment[1]])) {
+						if (isset($payment[0]) && isset($payment[1]) && isset($payment_methods[$payment[0]]['option'][$payment[1]])) {
+							$this->session->data['payment_method'] = $payment_methods[$payment[0]]['option'][$payment[1]];
+						} else {
+							$error = $this->language->get('error_payment_method');
+						}
+					} else {
 						$error = $this->language->get('error_payment_method');
 					}
-				} else {
-					$error = $this->language->get('error_payment_method');
 				}
 
-
 				if (!$error) {
-
-					// Order Totals
-					$totals = [];
-					$taxes = $store->cart->getTaxes();
-					$total = 0;
-
-					$store->load->model('checkout/cart');
-
-					($store->model_checkout_cart->getTotals)($totals, $taxes, $total);
-
-					$data['totals'] = [];
-
-					foreach ($totals as $total) {
-						$data['totals'][] = [
-							'title' => $total['title'],
-							'text'  => $store->currency->format($total['value'], $this->session->data['currency'])
-						];
-					}
-
+					// Subscription
+					$order_data['subscription_id'] = $order_info['invoice_prefix'];
 
 					// Store Details
 					$order_data['invoice_prefix'] = $order_info['invoice_prefix'];
@@ -204,7 +213,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 					$order_data['payment_method'] = $this->session->data['payment_method'];
 
 					// Shipping Details
-					if ($shipping_address) {
+					if ($store->cart->hasShipping()) {
 						$order_data['shipping_address_id'] = $shipping_address_info['address_id'];
 						$order_data['shipping_firstname'] = $shipping_address_info['firstname'];
 						$order_data['shipping_lastname'] = $shipping_address_info['lastname'];
@@ -220,7 +229,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 						$order_data['shipping_address_format'] = $shipping_address_info['address_format'];
 						$order_data['shipping_custom_field'] = $shipping_address_info['custom_field'];
 
-						$order_data['shipping_method'] = $this->session->data['shipping_method'];
+						$order_data['shipping_method'] = $payment_methods[$payment[0]]['option'][$payment[1]];
 					} else {
 						$order_data['shipping_address_id'] = 0;
 						$order_data['shipping_firstname'] = '';
@@ -260,40 +269,13 @@ class Subscription extends \Opencart\System\Engine\Controller {
 							];
 						}
 
-						$subscription_data = [];
-
-						if ($product['subscription']) {
-							if ($product['subscription']['trial_duration'] && $product['subscription']['trial_remaining']) {
-								$date_next = date('Y-m-d', strtotime('+' . $product['subscription']['trial_cycle'] . ' ' . $product['subscription']['trial_frequency']));
-							} elseif ($product['subscription']['duration'] && $product['subscription']['remaining']) {
-								$date_next = date('Y-m-d', strtotime('+' . $product['subscription']['cycle'] . ' ' . $product['subscription']['frequency']));
-							}
-
-							$subscription_data = [
-								'subscription_plan_id' => $product['subscription']['subscription_plan_id'],
-								'name'                 => $product['subscription']['name'],
-								'trial_price'          => $product['subscription']['trial_price'],
-								'trial_frequency'      => $product['subscription']['trial_frequency'],
-								'trial_cycle'          => $product['subscription']['trial_cycle'],
-								'trial_duration'       => $product['subscription']['trial_duration'],
-								'trial_remaining'      => $product['subscription']['trial_remaining'],
-								'trial_status'         => $product['subscription']['trial_status'],
-								'price'                => $product['subscription']['price'],
-								'frequency'            => $product['subscription']['frequency'],
-								'cycle'                => $product['subscription']['cycle'],
-								'duration'             => $product['subscription']['duration'],
-								'remaining'            => $product['subscription']['duration'],
-								'date_next'            => $date_next
-							];
-						}
-
 						$order_data['products'][] = [
 							'product_id'   => $product['product_id'],
 							'master_id'    => $product['master_id'],
 							'name'         => $product['name'],
 							'model'        => $product['model'],
 							'option'       => $option_data,
-							'subscription' => $subscription_data,
+							'subscription' => [],
 							'download'     => $product['download'],
 							'quantity'     => $product['quantity'],
 							'subtract'     => $product['subtract'],
@@ -304,6 +286,25 @@ class Subscription extends \Opencart\System\Engine\Controller {
 						];
 					}
 				}
+
+				// Order Totals
+				$totals = [];
+				$taxes = $store->cart->getTaxes();
+				$total = 0;
+
+				$store->load->model('checkout/cart');
+
+				($store->model_checkout_cart->getTotals)($totals, $taxes, $total);
+
+				$order_data['totals'] = [];
+
+				foreach ($totals as $total) {
+					$order_data['totals'][] = [
+						'title' => $total['title'],
+						'text'  => $store->currency->format($total['value'], $this->session->data['currency'])
+					];
+				}
+
 
 
 				if ($result['trial_status'] && (!$result['trial_duration'] || $result['trial_remaining']) && ) {
@@ -318,7 +319,32 @@ class Subscription extends \Opencart\System\Engine\Controller {
 				// Check payment status
 				//$this->load->model('extension/payment/' . $payment_info['code']);
 
+				/*
+				if ($product['subscription']) {
+					if ($product['subscription']['trial_duration'] && $product['subscription']['trial_remaining']) {
+						$date_next = date('Y-m-d', strtotime('+' . $product['subscription']['trial_cycle'] . ' ' . $product['subscription']['trial_frequency']));
+					} elseif ($product['subscription']['duration'] && $product['subscription']['remaining']) {
+						$date_next = date('Y-m-d', strtotime('+' . $product['subscription']['cycle'] . ' ' . $product['subscription']['frequency']));
+					}
 
+					$subscription_data = [
+						'subscription_plan_id' => $product['subscription']['subscription_plan_id'],
+						'name'                 => $product['subscription']['name'],
+						'trial_price'          => $product['subscription']['trial_price'],
+						'trial_frequency'      => $product['subscription']['trial_frequency'],
+						'trial_cycle'          => $product['subscription']['trial_cycle'],
+						'trial_duration'       => $product['subscription']['trial_duration'],
+						'trial_remaining'      => $product['subscription']['trial_remaining'],
+						'trial_status'         => $product['subscription']['trial_status'],
+						'price'                => $product['subscription']['price'],
+						'frequency'            => $product['subscription']['frequency'],
+						'cycle'                => $product['subscription']['cycle'],
+						'duration'             => $product['subscription']['duration'],
+						'remaining'            => $product['subscription']['duration'],
+						'date_next'            => $date_next
+					];
+				}
+				*/
 				// Transaction
 				if ($this->config->get('config_subscription_active_status_id') == $subscription_status_id) {
 					if ($result['trial_duration'] && $result['trial_remaining']) {

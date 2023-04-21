@@ -32,7 +32,7 @@ class FreeCheckout extends \Opencart\System\Engine\Model {
 
 			$method_data = [
 				'code'       => 'free_checkout',
-				'title'      => $this->language->get('heading_title'),
+				'name'       => $this->language->get('heading_title'),
 				'option'     => $option_data,
 				'sort_order' => $this->config->get('payment_free_checkout_sort_order')
 			];

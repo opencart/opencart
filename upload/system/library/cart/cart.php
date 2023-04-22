@@ -289,7 +289,7 @@ class Cart {
                         ];
 					}
 
-					$this->data[] = [
+					$this->data[$cart['cart_id']] = [
 						'cart_id'         => $cart['cart_id'],
 						'product_id'      => $product_query->row['product_id'],
 						'master_id'       => $product_query->row['master_id'],
@@ -359,6 +359,10 @@ class Cart {
 		$this->db->query("UPDATE `" . DB_PREFIX . "cart` SET `quantity` = '" . (int)$quantity . "' WHERE `cart_id` = '" . (int)$cart_id . "' AND `api_id` = '" . (isset($this->session->data['api_id']) ? (int)$this->session->data['api_id'] : 0) . "' AND `customer_id` = '" . (int)$this->customer->getId() . "' AND `session_id` = '" . $this->db->escape($this->session->getId()) . "'");
 
 		$this->data = [];
+	}
+
+	public function has(int $cart_id): bool {
+		return isset($this->data[$cart_id]);
 	}
 
 	/**

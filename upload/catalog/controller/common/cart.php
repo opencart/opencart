@@ -123,16 +123,21 @@ class Cart extends \Opencart\System\Engine\Controller {
 			$key = 0;
 		}
 
-		// Remove
-		$this->cart->remove($key);
+		if (!$this->cart->has($key)) {
+			$json['error'] = $this->language->get('error_product');
+		}
 
-		$json['success'] = $this->language->get('text_remove');
+		if (!$json) {
+			$this->cart->remove($key);
 
-		unset($this->session->data['shipping_method']);
-		unset($this->session->data['shipping_methods']);
-		unset($this->session->data['payment_method']);
-		unset($this->session->data['payment_methods']);
-		unset($this->session->data['reward']);
+			$json['success'] = $this->language->get('text_remove');
+
+			unset($this->session->data['shipping_method']);
+			unset($this->session->data['shipping_methods']);
+			unset($this->session->data['payment_method']);
+			unset($this->session->data['payment_methods']);
+			unset($this->session->data['reward']);
+		}
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

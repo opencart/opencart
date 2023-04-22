@@ -995,13 +995,13 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		// Payment Method
-		if (!empty($order_info)) {
+		if (isset($order_info['payment_method']['name'])) {
 			$data['payment_method'] = $order_info['payment_method']['name'];
 		} else {
 			$data['payment_method'] = '';
 		}
 
-		if (!empty($order_info)) {
+		if (isset($order_info['payment_method']['code'])) {
 			$data['payment_code'] = $order_info['payment_method']['code'];
 		} else {
 			$data['payment_code'] = '';
@@ -1081,13 +1081,13 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		// Shipping method
-		if (!empty($order_info)) {
+		if (isset($order_info['shipping_method']['name'])) {
 			$data['shipping_method'] = $order_info['shipping_method']['name'];
 		} else {
 			$data['shipping_method'] = '';
 		}
 
-		if (!empty($order_info)) {
+		if (isset($order_info['shipping_method']['code'])) {
 			$data['shipping_code'] = $order_info['shipping_method']['code'];
 		} else {
 			$data['shipping_code'] = '';

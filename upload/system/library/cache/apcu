@@ -12,17 +12,6 @@ class APCu {
 	public function __construct(int $expire = 3600) {
 		$this->expire = $expire;
 		$this->active = function_exists('apcu_cache_info') && ini_get('apc.enabled');
-		if ($this->active && round(rand(1, 10 / 1)) == 1) {
-			$cache_info = apcu_cache_info();
-
-			$cache_list = $cache_info['cache_list'];
-
-			foreach ($cache_list as $entry) {
-				if (($entry['creation_time'] + $expire) < time()) {
-					apcu_delete($entry['info']);
-				}
-			}
-		}
 	}
 
 	/**

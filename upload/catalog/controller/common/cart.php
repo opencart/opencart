@@ -99,8 +99,8 @@ class Cart extends \Opencart\System\Engine\Controller {
 		}
 
 		$data['list'] = $this->url->link('common/cart.info', 'language=' . $this->config->get('config_language'));
-		$data['product_remove'] = $this->url->link('common/cart.remove', 'language=' . $this->config->get('config_language'));
-		$data['voucher_remove'] = $this->url->link('checkout/voucher.remove', 'language=' . $this->config->get('config_language'));
+		$data['product_remove'] = $this->url->link('common/cart.removeProduct', 'language=' . $this->config->get('config_language'));
+		$data['voucher_remove'] = $this->url->link('common/cart.removeVoucher', 'language=' . $this->config->get('config_language'));
 
 		$data['cart'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'));
 		$data['checkout'] = $this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'));
@@ -112,7 +112,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->index());
 	}
 
-	public function remove(): void {
+	public function removeProduct(): void {
 		$this->load->language('checkout/cart');
 
 		$json = [];
@@ -129,6 +129,41 @@ class Cart extends \Opencart\System\Engine\Controller {
 
 		if (!$json) {
 			$this->cart->remove($key);
+
+			$json['success'] = $this->language->get('text_remove');
+
+			unset($this->session->data['shipping_method']);
+			unset($this->session->data['shipping_methods']);
+			unset($this->session->data['payment_method']);
+			unset($this->session->data['payment_methods']);
+			unset($this->session->data['reward']);
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	public function removeVoucher(): void {
+		$this->load->language('checkout/cart');
+
+		$json = [];
+
+		if (isset($this->request->get['key'])) {
+			$key = $this->request->get['key'];
+		} else {
+			$key = '';
+		}
+
+		if (!isset($this->session->data['vouchers'][$key])) {
+			$json['error'] = $this->language->get('error_voucher');
+		}
+
+		if (!$json) {
+			if ($this->cart->hasProducts() || !empty($this->session->data['vouchers'])) {
+				$json['success'] = $this->language->get('text_remove');
+			} else {
+				$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
+			}
 
 			$json['success'] = $this->language->get('text_remove');
 

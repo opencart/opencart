@@ -158,7 +158,11 @@ class Voucher extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$json['success'] = $this->language->get('text_remove');
+			if ($this->cart->hasProducts() || !empty($this->session->data['vouchers'])) {
+				$json['success'] = $this->language->get('text_remove');
+			} else {
+				$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
+			}
 
 			unset($this->session->data['vouchers'][$key]);
 			unset($this->session->data['shipping_method']);

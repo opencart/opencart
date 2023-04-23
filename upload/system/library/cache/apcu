@@ -67,7 +67,7 @@ class APCu {
 	/**
      * Delete all cache
      *
-     * @param	 int  $timer
+     * @param	 null
 	 * 
 	 * @return	 bool
      */

@@ -159,14 +159,9 @@ class Cart extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			if ($this->cart->hasProducts() || !empty($this->session->data['vouchers'])) {
-				$json['success'] = $this->language->get('text_remove');
-			} else {
-				$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
-			}
-
 			$json['success'] = $this->language->get('text_remove');
 
+			unset($this->session->data['vouchers'][$key]);
 			unset($this->session->data['shipping_method']);
 			unset($this->session->data['shipping_methods']);
 			unset($this->session->data['payment_method']);

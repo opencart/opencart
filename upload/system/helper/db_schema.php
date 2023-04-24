@@ -6577,11 +6577,6 @@ function oc_db_schema() {
 				'not_null' => true
 			],
 			[
-				'name' => 'commission',
-				'type' => 'decimal(10,4)',
-				'not_null' => true
-			],
-			[
 				'name' => 'marketing_id',
 				'type' => 'int(11)',
 				'not_null' => true

@@ -97,7 +97,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 					$shipping_address_info = $this->model_account_address->getAddress($result['customer_id'], $result['shipping_address_id']);
 
 					if ($shipping_address_info) {
-						$this->session->data['shipping_address'] = $shipping_address_info;
+						$store->session->data['shipping_address'] = $shipping_address_info;
 					} else {
 						$error = $this->language->get('error_shipping_address');
 					}
@@ -113,7 +113,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 							$shipping = explode('.', $order_info['shipping_method']['code']);
 
 							if (isset($shipping[0]) && isset($shipping[1]) && isset($shipping_methods[$shipping[0]]['quote'][$shipping[1]])) {
-								$this->session->data['shipping_method'] = $shipping_methods[$shipping[0]]['quote'][$shipping[1]];
+								$store->session->data['shipping_method'] = $shipping_methods[$shipping[0]]['quote'][$shipping[1]];
 							} else {
 								$error = $this->language->get('error_shipping_method');
 							}
@@ -132,7 +132,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 					$payment_address_info = $this->model_account_address->getAddress($order_info['customer_id'], $result['payment_address_id']);
 
 					if ($payment_address_info) {
-						$this->session->data['payment_address'] = $payment_address_info;
+						$store->session->data['payment_address'] = $payment_address_info;
 					} else {
 						$error = $this->language->get('error_payment_address');
 					}
@@ -149,7 +149,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 						$payment = explode('.', $order_info['payment_method']['code']);
 
 						if (isset($payment[0]) && isset($payment[1]) && isset($payment_methods[$payment[0]]['option'][$payment[1]])) {
-							$this->session->data['payment_method'] = $payment_methods[$payment[0]]['option'][$payment[1]];
+							$store->session->data['payment_method'] = $payment_methods[$payment[0]]['option'][$payment[1]];
 						} else {
 							$error = $this->language->get('error_payment_method');
 						}
@@ -160,13 +160,13 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 				if (!$error) {
 					// Subscription
-					$order_data['subscription_id'] = $order_info['invoice_prefix'];
+					$order_data['subscription_id'] = $order_info['subscription_id'];
 
 					// Store Details
 					$order_data['invoice_prefix'] = $order_info['invoice_prefix'];
 					$order_data['store_id'] = $order_info['store_id'];
-					$order_data['store_name'] = $this->config->get('config_name');
-					$order_data['store_url'] = $this->config->get('config_url');
+					$order_data['store_name'] = $order_info['store_name'];
+					$order_data['store_url'] = $order_info['store_url'];
 
 					// Customer Details
 					$order_data['customer_id'] = $customer_info['customer_id'];

@@ -32,11 +32,6 @@ class Coupon extends \Opencart\System\Engine\Controller {
 
 				unset($this->session->data['coupon']);
 			}
-
-			unset($this->session->data['shipping_method']);
-			unset($this->session->data['shipping_methods']);
-			unset($this->session->data['payment_method']);
-			unset($this->session->data['payment_methods']);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

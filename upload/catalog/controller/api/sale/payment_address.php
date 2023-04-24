@@ -117,12 +117,6 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 			];
 
 			$json['success'] = $this->language->get('text_success');
-
-			// Clear payment and shipping methods
-			unset($this->session->data['shipping_method']);
-			unset($this->session->data['shipping_methods']);
-			unset($this->session->data['payment_method']);
-			unset($this->session->data['payment_methods']);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

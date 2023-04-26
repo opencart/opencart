@@ -1131,7 +1131,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		// Extension Order Tabs can are called here.
 		$this->load->model('setting/extension');
 
-		if (!empty($order_info)) {
+		if (!empty($order_info['payment_method']['code'])) {
 			$extension_info = $this->model_setting_extension->getExtensionByCode('payment', $order_info['payment_method']['code']);
 
 			if ($extension_info && $this->user->hasPermission('access', 'extension/' . $extension_info['extension'] . '/payment/' . $extension_info['code'])) {

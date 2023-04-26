@@ -2,7 +2,9 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="float-end"><a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fa-solid fa-reply"></i></a></div>
+      <div class="float-end">
+        <button type="submit" form="form-subscription" formaction="{{ save }}" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i></button>
+        <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fa-solid fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
       <ol class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -17,35 +19,7 @@
       <div class="card-body">
         <form id="form-subscription">
           <div class="row row-cols-1 row-cols-sm-1 row-cols-md-3 row-cols-xl-3">
-            <div class="col">
-              <div class="input-group mb-3">
-                <div class="form-control border rounded-start">
-                  <div class="lead"><strong>{{ text_subscription_id }}</strong>
-                    <br/>
-                    <div id="subscription-value">{{ subscription_id }}</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="input-group mb-3">
-                <div class="form-control border rounded-start">
-                  <div class="lead"><strong>{{ text_order_id }}</strong>
-                    <br/>
-                    <div id="order-value"><a href="{{ order }}" target="_blank">{{ order_id }}</a></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="input-group mb-3">
-                <div class="form-control border rounded-start">
-                  <div class="lead"><strong>{{ text_customer }}</strong>
-                    <div id="customer-value"><a href="{{ customer }}" target="_blank">{{ firstname }} {{ lastname }}</a></div>
-                  </div>
-                </div>
-              </div>
-            </div>
+
             <div class="col">
               <div class="form-control p-0 border rounded mb-3">
                 <div class="lead p-2"><strong>{{ text_date_added }}</strong>
@@ -54,18 +28,42 @@
                 </div>
               </div>
             </div>
+
             <div class="col">
               <div class="form-control p-0 border rounded mb-3">
-                <div class="lead p-2"><strong>{{ text_remaining }}</strong>
+                <div class="lead p-2"><strong>{{ text_order }}</strong>
                   <br/>
-                  {% if duration %}
-                    {{ remaining }}
-                  {% else %}
-                    {{ text_cancel }}
-                  {% endif %}
+                  <a href="index.php?route=customer/customer.form&user_token={{ user_token }}&customer_id={{ customer_id }}" target="_blank">{{ order_id }}</a>
                 </div>
               </div>
             </div>
+
+            <div class="col">
+              <div class="input-group mb-3">
+                <div class="form-control border rounded-start">
+                  <div class="lead"><strong>{{ text_customer }}</strong>
+                    <br/>
+                    {% if customer_id %}
+                      <div id="customer-value"><a href="index.php?route=customer/customer.form&user_token={{ user_token }}&customer_id={{ customer_id }}" target="_blank">{{ firstname }} {{ lastname }}</a></div>
+                    {% else %}
+                      <div id="customer-value">{{ firstname }} {{ lastname }}</div>
+                    {% endif %}
+                  </div>
+                </div>
+                <button type="button" data-bs-toggle="modal" data-bs-target="#modal-customer" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
+              </div>
+            </div>
+
+            <div class="col">
+              <div class="form-control p-0 border rounded mb-3">
+                <div class="lead p-2"><strong>{{ text_subscription_plan }}</strong>
+                  <br/>
+                  {{ subscription_plan }}
+                </div>
+              </div>
+              <button type="button" data-bs-toggle="modal" data-bs-target="#modal-subscription-plan" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
+            </div>
+
             <div class="col">
               <div class="form-control p-0 border rounded mb-3">
                 <div class="lead p-2"><strong>{{ text_date_next }}</strong>
@@ -74,22 +72,7 @@
                 </div>
               </div>
             </div>
-            <div class="col">
-              <div class="form-control p-0 border rounded mb-3">
-                <div class="lead p-2"><strong>{{ text_order_status }}</strong>
-                  <br/>
-                  {{ order_status }}
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="form-control p-0 border rounded mb-3">
-                <div class="lead p-2"><strong>{{ text_subscription_plan }}</strong>
-                  <br/>
-                  {{ subscription_plan }}
-                </div>
-              </div>
-            </div>
+
             <div class="col">
               <div class="form-control p-0 border rounded mb-3">
                 <div class="lead p-2"><strong>{{ text_payment_method }}</strong>
@@ -98,7 +81,48 @@
                 </div>
               </div>
             </div>
+
           </div>
+
+
+          <div class="row">
+
+            <div id="shipping-method" class="col-md{% if not shipping_method %} d-none{% endif %}">
+              <div class="input-group mb-3">
+                <div class="form-control border rounded-start">
+                  <div class="lead"><strong>{{ text_shipping_method }}</strong>
+                    <br/>
+                    {% if shipping_method %}
+                      <span id="shipping-method-value">{{ shipping_method }}</span>
+                    {% else %}
+                      <span id="shipping-method-value"></span>
+                    {% endif %}
+                  </div>
+                </div>
+                <input type="hidden" name="shipping_code" value="{{ shipping_code }}" id="input-shipping-code"/>
+                <button type="button" id="button-shipping-methods" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
+              </div>
+            </div>
+
+            <div id="payment-method" class="col-md">
+              <div class="input-group mb-3">
+                <div class="form-control border rounded-start">
+                  <div class="lead"><strong>{{ text_payment_method }}</strong>
+                    <br/>
+                    {% if payment_method %}
+                      <span id="payment-method-value">{{ payment_method }}</span>
+                    {% else %}
+                      <span id="payment-method-value"></span>
+                    {% endif %}
+                  </div>
+                </div>
+                <input type="hidden" name="payment_code" value="{{ payment_code }}" id="input-payment-code"/>
+                <button type="button" id="button-payment-methods" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
+              </div>
+            </div>
+
+          </div>
+
 
           <fieldset>
             <legend>{{ text_product }}</legend>
@@ -126,6 +150,8 @@
               </tbody>
             </table>
           </fieldset>
+
+
           <input type="hidden" name="subscription_id" value="{{ subscription_id }}" id="input-subscription-id"/>
         </form>
       </div>
@@ -202,7 +228,238 @@
     </div>
   </div>
 </div>
+
+<div id="modal-customer" class="modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ text_customer }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form id="form-customer">
+
+          <div class="mb-3">
+            <label for="input-customer" class="form-label">{{ entry_customer }}</label>
+            <div class="input-group">
+              <input type="text" name="customer" value="{{ firstname }} {{ lastname }}" placeholder="{{ entry_customer }}" id="input-customer" data-oc-target="autocomplete-customer" class="form-control" autocomplete="off"/> <a href="{{ customer_add }}" target="_blank" data-bs-toggle="tooltip" title="{{ button_customer_add }}" class="btn btn-outline-secondary"><i class="fa-solid fa-user-plus"></i></a>
+            </div>
+            <input type="hidden" name="customer_id" value="{{ customer_id }}" id="input-customer-id"/>
+            <ul id="autocomplete-customer" class="dropdown-menu"></ul>
+          </div>
+
+          <div class="mb-3">
+            <label for="input-customer-group" class="form-label">{{ entry_customer_group }}</label> <select name="customer_group_id" id="input-customer-group" class="form-select">
+              {% for customer_group in customer_groups %}
+                <option value="{{ customer_group.customer_group_id }}"{% if customer_group.customer_group_id == customer_group_id %} selected{% endif %}>{{ customer_group.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="text-end">
+            <button type="submit" id="button-customer" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> {{ button_save }}</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div id="modal-subscription" class="modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ text_subscription }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form id="form-subscription">
+
+
+          <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">{{ entry_subscription_plan }}</label>
+            <div class="col-sm-10">
+              <select name="subscription_plan_id" id="input-subscription-plan" class="form-select">
+                {% for subscription_plan in subscription_plans %}
+                  <option value="{{ subscription_plan.subscription_plan_id }}"{% if subscription_plan.subscription_plan_id == subscription_plan_id %} selected{% endif %}>{{ subscription_plan.name }}</option>
+                {% endfor %}
+              </select>
+              <div id="error-subscription-plan" class="invalid-feedback"></div>
+            </div>
+          </div>
+
+          <fieldset>
+            <legend>{{ text_trial }}</legend>
+            <div class="row mb-3">
+              <label for="input-trial-price" class="col-sm-2 col-form-label">{{ entry_trial_price }}</label>
+              <div class="col-sm-10">
+                <input type="text" name="trial_price" value="{{ trial_price }}" placeholder="{{ entry_trial_price }}" id="input-trial-price" class="form-control"/>
+                <div class="form-text">{{ help_trial_price }}</div>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <label class="col-sm-2 col-form-label">{{ entry_trial_duration }}</label>
+              <div class="col-sm-10">
+                <input type="text" name="trial_duration" value="{{ trial_duration }}" placeholder="{{ entry_trial_duration }}" id="input-trial-duration" class="form-control"/>
+                <div id="error-trial-duration" class="invalid-feedback"></div>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <label class="col-sm-2 col-form-label">{{ entry_trial_remaining }}</label>
+              <div class="col-sm-10">
+                <input type="text" name="remaining" value="{{ trial_remaining }}" placeholder="{{ entry_trial_remaining }}" id="input-trial-remaining" class="form-control"/>
+                <div id="error-trial-remaining" class="invalid-feedback"></div>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <label class="col-sm-2 col-form-label">{{ entry_trial_cycle }}</label>
+              <div class="col-sm-10">
+                <input type="text" name="trial_cycle" value="{{ trial_cycle }}" placeholder="{{ entry_trial_cycle }}" id="input-trial-cycle" class="form-control"/>
+                <div id="error-trial-cycle" class="invalid-feedback"></div>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <label class="col-sm-2 col-form-label">{{ entry_trial_frequency }}</label>
+              <div class="col-sm-10">
+                <select name="trial_frequency" id="input-trial-frequency" class="form-select">
+                  {% for frequency in frequencies %}
+                    <option value="{{ frequency.value }}"{% if frequency.value == trial_frequency %} selected{% endif %}>{{ frequency.text }}</option>
+                  {% endfor %}
+                </select>
+                <div id="error-trial-frequency" class="invalid-feedback"></div>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <label class="col-sm-2 col-form-label">{{ entry_trial_status }}</label>
+              <div class="col-sm-10">
+                <div class="form-check form-switch form-switch-lg">
+                  <input type="hidden" name="trial_status" value="0"/> <input type="checkbox" name="trial_status" value="1" id="input-trial-status" class="form-check-input"{% if trial_status %} checked{% endif %}/>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>{{ text_subscription }}</legend>
+
+            <div class="row mb-3">
+              <label for="input-price" class="col-sm-2 col-form-label">{{ entry_price }}</label>
+              <div class="col-sm-10">
+                <input type="text" name="trial_price" value="{{ price }}" placeholder="{{ entry_price }}" id="input-price" class="form-control"/>
+              </div>
+            </div>
+
+
+            <div class="row mb-3">
+              <label class="col-sm-2 col-form-label">{{ entry_duration }}</label>
+              <div class="col-sm-10">
+                <input type="text" name="duration" value="{{ duration }}" placeholder="{{ entry_duration }}" id="input-duration" class="form-control"/>
+                <div id="error-duration" class="invalid-feedback"></div>
+              </div>
+            </div>
+
+
+            <div class="row mb-3">
+              <label class="col-sm-2 col-form-label">{{ entry_remaining }}</label>
+              <div class="col-sm-10">
+                <input type="text" name="remaining" value="{{ remaining }}" placeholder="{{ entry_remaining }}" id="input-remaining" class="form-control"/>
+                <div id="error-remaining" class="invalid-feedback"></div>
+              </div>
+            </div>
+
+
+            <div class="row mb-3">
+              <label class="col-sm-2 col-form-label">{{ entry_cycle }}</label>
+              <div class="col-sm-10">
+                <input type="text" name="cycle" value="{{ cycle }}" placeholder="{{ entry_cycle }}" id="input-cycle" class="form-control"/>
+                <div id="error-cycle" class="invalid-feedback"></div>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <label class="col-sm-2 col-form-label">{{ entry_frequency }}</label>
+              <div class="col-sm-10">
+                <select name="frequency" id="input-frequency" class="form-select">
+                  {% for frequency in frequencies %}
+                    <option value="{{ frequency.value }}"{% if frequency.value == frequency %} selected{% endif %}>{{ frequency.text }}</option>
+                  {% endfor %}
+                </select>
+                <div id="error-frequency" class="invalid-feedback"></div>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <label class="col-sm-2 col-form-label">{{ entry_cycle }}</label>
+              <div class="col-sm-10">
+                <input type="text" name="cycle" value="{{ cycle }}" placeholder="{{ entry_cycle }}" id="input-cycle" class="form-control"/>
+                <div id="error-cycle" class="invalid-feedback"></div>
+              </div>
+            </div>
+
+          </fieldset>
+
+
+          <div class="text-end">
+            <button type="submit" id="button-customer" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> {{ button_save }}</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 <script type="text/javascript"><!--
+$('#input-customer').autocomplete({
+    'source': function (request, response) {
+        $.ajax({
+            url: 'index.php?route=customer/customer.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
+            dataType: 'json',
+            success: function (json) {
+                response($.map(json, function (item) {
+                    return {
+                        category: item['customer_group'],
+                        label: item['name'],
+                        value: item['customer_id'],
+                        customer_group_id: item['customer_group_id']
+                    }
+                }));
+            }
+        });
+    },
+    'select': function (item) {
+        $('#input-customer').val(item['label']);
+        $('#input-customer-id').val(item['value']);
+        $('#input-customer-group').val(item['customer_group_id']);
+    }
+});
+
+$('#input-product').autocomplete({
+    'source': function (request, response) {
+        $.ajax({
+            url: 'index.php?route=catalog/product.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
+            dataType: 'json',
+            success: function (json) {
+                response($.map(json, function (item) {
+                    return {
+                        label: item['name'],
+                        value: item['product_id'],
+                        model: item['model']
+                    }
+                }));
+            }
+        });
+    },
+    'select': function (item) {
+        $('#input-product').val(item['label']);
+        $('#input-product-id').val(item['value']);
+        $('#input-model').val(item['model']);
+    }
+});
+
+
 $('#history').on('click', '.pagination a', function(e) {
     e.preventDefault();
 

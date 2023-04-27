@@ -326,8 +326,7 @@ class FileManager extends \Opencart\System\Engine\Controller {
 			$json['success'] = $this->language->get('text_uploaded');
 		}
 
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+		$this->response->json($json);
 	}
 
 	public function folder(): void {
@@ -379,8 +378,7 @@ class FileManager extends \Opencart\System\Engine\Controller {
 			$json['success'] = $this->language->get('text_directory');
 		}
 
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+		$this->response->json($json);
 	}
 
 	public function delete(): void {
@@ -458,7 +456,6 @@ class FileManager extends \Opencart\System\Engine\Controller {
 			$json['success'] = $this->language->get('text_delete');
 		}
 
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+		$this->response->json($json);
 	}
 }

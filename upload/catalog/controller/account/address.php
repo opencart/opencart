@@ -389,8 +389,7 @@ class Address extends \Opencart\System\Engine\Controller {
 			$json['redirect'] = $this->url->link('account/address', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'], true);
 		}
 
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+		$this->response->json($json);
 	}
 
 	public function delete(): void {
@@ -461,7 +460,6 @@ class Address extends \Opencart\System\Engine\Controller {
 			$json['success'] = $this->language->get('text_delete');
 		}
 
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+		$this->response->json($json);
 	}
 }

@@ -434,8 +434,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 			$json['redirect'] = $this->url->link('account/returns.success', 'language=' . $this->config->get('config_language'), true);
 		}
 
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+		$this->response->json($json);
 	}
 
 	public function success(): void {

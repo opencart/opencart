@@ -249,12 +249,12 @@ class Category extends \Opencart\System\Engine\Controller {
 		$this->load->model('setting/store');
 
 		$data['stores'] = [];
-		
+
 		$data['stores'][] = [
 			'store_id' => 0,
 			'name'     => $this->language->get('text_default')
 		];
-		
+
 		$stores = $this->model_setting_store->getStores();
 
 		foreach ($stores as $store) {
@@ -372,11 +372,11 @@ class Category extends \Opencart\System\Engine\Controller {
 
 		if (isset($this->request->post['category_id']) && $this->request->post['parent_id']) {
 			$results = $this->model_catalog_category->getPaths($this->request->post['parent_id']);
-			
+
 			foreach ($results as $result) {
 				if ($result['path_id'] == $this->request->post['category_id']) {
 					$json['error']['parent'] = $this->language->get('error_parent');
-					
+
 					break;
 				}
 			}
@@ -414,8 +414,7 @@ class Category extends \Opencart\System\Engine\Controller {
 			$json['success'] = $this->language->get('text_success');
 		}
 
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+		$this->response->json($json);
 	}
 
 	public function repair(): void {
@@ -435,8 +434,7 @@ class Category extends \Opencart\System\Engine\Controller {
 			$json['success'] = $this->language->get('text_success');
 		}
 
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+		$this->response->json($json);
 	}
 
 	public function delete(): void {
@@ -464,8 +462,7 @@ class Category extends \Opencart\System\Engine\Controller {
 			$json['success'] = $this->language->get('text_success');
 		}
 
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+		$this->response->json($json);
 	}
 
 	public function autocomplete(): void {
@@ -500,7 +497,6 @@ class Category extends \Opencart\System\Engine\Controller {
 
 		array_multisort($sort_order, SORT_ASC, $json);
 
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+		$this->response->json($json);
 	}
 }

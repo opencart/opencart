@@ -99,8 +99,7 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+		$this->response->json($json);
 	}
 
 	public function save(): void {
@@ -161,8 +160,7 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 			$json['success'] = $this->language->get('text_success');
 		}
 
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+		$this->response->json($json);
 	}
 
 	public function comment(): void {
@@ -176,8 +174,7 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 			$json['success'] = $this->language->get('text_comment');
 		}
 
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+		$this->response->json($json);
 	}
 
 	public function agree(): void {
@@ -191,7 +188,6 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 			unset($this->session->data['agree']);
 		}
 
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+		$this->response->json($json);
 	}
 }

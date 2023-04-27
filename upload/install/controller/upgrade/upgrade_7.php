@@ -149,8 +149,7 @@ class Upgrade7 extends \Opencart\System\Engine\Controller {
 			$json['next'] = $this->url->link('upgrade/upgrade_8', $url, true);
 		}
 
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+		$this->response->json($json);
 	}
 
 	// Function to repair any erroneous categories that are not in the category path table.

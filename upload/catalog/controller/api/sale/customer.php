@@ -94,7 +94,6 @@ class Customer extends \Opencart\System\Engine\Controller {
 			unset($this->session->data['reward']);
 		}
 
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+		$this->response->json($json);
 	}
 }

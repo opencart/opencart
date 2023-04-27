@@ -31,7 +31,7 @@ class BankTransfer extends \Opencart\System\Engine\Controller {
 		$data['payment_bank_transfer_bank'] = [];
 
 		$languages = $this->model_localisation_language->getLanguages();
-		
+
 		foreach ($languages as $language) {
 			$data['payment_bank_transfer_bank'][$language['language_id']] = $this->config->get('payment_bank_transfer_bank_' . $language['language_id']);
 		}
@@ -87,7 +87,6 @@ class BankTransfer extends \Opencart\System\Engine\Controller {
 			$json['success'] = $this->language->get('text_success');
 		}
 
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+		$this->response->json($json);
 	}
 }

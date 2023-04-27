@@ -64,7 +64,7 @@ class Response {
 	 * Set Output
 	 *
 	 * @param	string	$output
- 	*/	
+ 	*/
 	public function setOutput(string $output): void {
 		$this->output = $output;
 	}
@@ -83,7 +83,7 @@ class Response {
 	 *
 	 * @param	string	$data
 	 * @param	int		$level
-	 * 
+	 *
 	 * @return	string
  	*/
 	private function compress(string $data, int $level = 0): string {
@@ -133,5 +133,19 @@ class Response {
 
 			echo $output;
 		}
+	}
+
+	/**
+	 * Json
+	 *
+	 * Sets json output from $data array
+	 *
+	 * @param array $data
+	 * @param int $flags [optional] — Argument is identical to json_encode
+	 * @param int $depth [optional] — Argument is identical to json_encode
+	 */
+	public function json(array $data = [], int $flags = 0, int $depth = 512): void {
+		$this->addHeader('Content-Type: application/json');
+		$this->setOutput(json_encode($data, $flags, $depth));
 	}
 }

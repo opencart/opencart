@@ -44,8 +44,7 @@ class Reward extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+		$this->response->json($json);
 	}
 
 	public function maximum(): void {
@@ -61,12 +60,10 @@ class Reward extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+		$this->response->json($json);
 	}
 
 	public function available(): void {
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode(['points' => $this->customer->getRewardPoints()]));
+		$this->response->json(['points' => $this->customer->getRewardPoints()]);
 	}
 }

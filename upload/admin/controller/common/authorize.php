@@ -89,8 +89,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 
 		$json['success'] = $this->language->get('text_resend');
 
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+		$this->response->json($json);
 	}
 
 	public function validate(): void {
@@ -134,8 +133,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+		$this->response->json($json);
 	}
 
 	public function unlock() {
@@ -176,8 +174,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 
 		$this->model_user_user->editCode($this->user->getEmail(), oc_token(32));
 
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+		$this->response->json($json);
 	}
 
 	public function reset() {

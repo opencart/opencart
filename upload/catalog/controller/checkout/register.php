@@ -598,7 +598,6 @@ class Register extends \Opencart\System\Engine\Controller {
 			$this->model_account_customer->deleteLoginAttempts($this->request->post['email']);
 		}
 
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+		$this->response->json($json);
 	}
 }

@@ -241,7 +241,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		// Payment Method
 		if (!isset($this->session->data['payment_method'])) {
-			$json['error'] = $this->language->get('error_payment_method');
+			$json['error']['payment_method'] = $this->language->get('error_payment_method');
 		}
 
 		if (!$json) {

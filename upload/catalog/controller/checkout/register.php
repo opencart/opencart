@@ -80,7 +80,7 @@ class Register extends \Opencart\System\Engine\Controller {
 			$data['payment_custom_field'] = [];
 		}
 
-		if (isset($this->session->data['shipping_address'])) {
+		if (isset($this->session->data['shipping_address']['address_id'])) {
 			$data['shipping_firstname'] = $this->session->data['shipping_address']['firstname'];
 			$data['shipping_lastname'] = $this->session->data['shipping_address']['lastname'];
 			$data['shipping_company'] = $this->session->data['shipping_address']['company'];

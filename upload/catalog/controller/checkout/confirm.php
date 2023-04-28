@@ -43,7 +43,7 @@ class Confirm extends \Opencart\System\Engine\Controller {
 		// Shipping
 		if ($this->cart->hasShipping()) {
 			// Validate shipping address
-			if (!isset($this->session->data['shipping_address'])) {
+			if (!isset($this->session->data['shipping_address']['address_id'])) {
 				$status = false;
 			}
 

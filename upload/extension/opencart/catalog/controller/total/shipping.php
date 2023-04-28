@@ -101,22 +101,14 @@ class Shipping extends \Opencart\System\Engine\Controller {
 			}
 
 			$this->session->data['shipping_address'] = [
-				'firstname'      => '',
-				'lastname'       => '',
-				'company'        => '',
-				'address_1'      => '',
-				'address_2'      => '',
-				'postcode'       => $this->request->post['postcode'],
-				'city'           => '',
-				'zone_id'        => $this->request->post['zone_id'],
-				'zone'           => $zone,
-				'zone_code'      => $zone_code,
-				'country_id'     => $this->request->post['country_id'],
-				'country'        => $country,
-				'iso_code_2'     => $iso_code_2,
-				'iso_code_3'     => $iso_code_3,
-				'address_format' => $address_format,
-				'custom_field'   => []
+				'postcode'   => $this->request->post['postcode'],
+				'zone_id'    => $this->request->post['zone_id'],
+				'zone'       => $zone,
+				'zone_code'  => $zone_code,
+				'country_id' => $this->request->post['country_id'],
+				'country'    => $country,
+				'iso_code_2' => $iso_code_2,
+				'iso_code_3' => $iso_code_3
 			];
 
 			$this->tax->setShippingAddress($this->request->post['country_id'], $this->request->post['zone_id']);

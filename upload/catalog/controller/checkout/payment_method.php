@@ -67,7 +67,7 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 			// Validate shipping
 			if ($this->cart->hasShipping()) {
 				// Validate shipping address
-				if (!isset($this->session->data['shipping_address'])) {
+				if (!isset($this->session->data['shipping_address']['address_id'])) {
 					$json['error'] = $this->language->get('error_shipping_address');
 				}
 
@@ -83,7 +83,7 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 
 			if ($this->config->get('config_checkout_payment_address') && isset($this->session->data['payment_address'])) {
 				$payment_address = $this->session->data['payment_address'];
-			} elseif ($this->config->get('config_checkout_shipping_address') && isset($this->session->data['shipping_address'])) {
+			} elseif ($this->config->get('config_checkout_shipping_address') && isset($this->session->data['shipping_address']['address_id'])) {
 				$payment_address = $this->session->data['shipping_address'];
 			}
 
@@ -133,7 +133,7 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 			// Validate shipping
 			if ($this->cart->hasShipping()) {
 				// Validate shipping address
-				if (!isset($this->session->data['shipping_address'])) {
+				if (!isset($this->session->data['shipping_address']['address_id'])) {
 					$json['error'] = $this->language->get('error_shipping_address');
 				}
 

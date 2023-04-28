@@ -102,6 +102,7 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 			}
 
 			$this->session->data['shipping_address'] = [
+				'address_id'     => $this->request->post['shipping_address_id'],
 				'firstname'      => $this->request->post['firstname'],
 				'lastname'       => $this->request->post['lastname'],
 				'company'        => $this->request->post['company'],

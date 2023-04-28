@@ -50,7 +50,7 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 			}
 
 			// Validate if shipping not required. If not the customer should not have reached this page.
-			if ($this->cart->hasShipping() && !isset($this->session->data['shipping_address'])) {
+			if ($this->cart->hasShipping() && !isset($this->session->data['shipping_address']['address_id'])) {
 				$json['error'] = $this->language->get('error_shipping_address');
 			}
 		}
@@ -105,7 +105,7 @@ class ShippingMethod extends \Opencart\System\Engine\Controller {
 			}
 
 			// Validate if shipping not required. If not the customer should not have reached this page.
-			if ($this->cart->hasShipping() && !isset($this->session->data['shipping_address'])) {
+			if ($this->cart->hasShipping() && !isset($this->session->data['shipping_address']['address_id'])) {
 				$json['error'] = $this->language->get('error_shipping_address');
 			}
 

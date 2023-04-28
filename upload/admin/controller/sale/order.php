@@ -918,6 +918,12 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		// Payment Address
 		if (!empty($order_info)) {
+			$data['payment_address_id'] = $order_info['payment_address_id'];
+		} else {
+			$data['payment_address_id'] = 0;
+		}
+
+		if (!empty($order_info)) {
 			$data['payment_firstname'] = $order_info['payment_firstname'];
 		} else {
 			$data['payment_firstname'] = '';
@@ -1008,6 +1014,12 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		// Shipping Address
+		if (!empty($order_info)) {
+			$data['shipping_address_id'] = $order_info['shipping_address_id'];
+		} else {
+			$data['shipping_address_id'] = 0;
+		}
+
 		if (!empty($order_info)) {
 			$data['shipping_firstname'] = $order_info['shipping_firstname'];
 		} else {

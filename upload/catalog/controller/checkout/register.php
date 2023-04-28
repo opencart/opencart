@@ -97,10 +97,27 @@ class Register extends \Opencart\System\Engine\Controller {
 			$data['shipping_company'] = '';
 			$data['shipping_address_1'] = '';
 			$data['shipping_address_2'] = '';
-			$data['shipping_postcode'] = '';
+
+			if (isset($this->session->data['shipping_address']['postcode'])) {
+				$data['shipping_postcode'] = $this->session->data['shipping_address']['postcode'];
+			} else {
+				$data['shipping_postcode'] = '';
+			}
+
 			$data['shipping_city'] = '';
-			$data['shipping_country_id'] = $this->config->get('config_country_id');
-			$data['shipping_zone_id'] = '';
+
+			if (isset($this->session->data['shipping_address']['country_id'])) {
+				$data['shipping_country_id'] = $this->session->data['shipping_address']['country_id'];
+			} else {
+				$data['shipping_country_id'] = $this->config->get('config_country_id');
+			}
+
+			if (isset($this->session->data['shipping_address']['zone_id'])) {
+				$data['shipping_zone_id'] = $this->session->data['shipping_address']['zone_id'];
+			} else {
+				$data['shipping_zone_id'] = '';
+			}
+
 			$data['shipping_custom_field'] = [];
 		}
 

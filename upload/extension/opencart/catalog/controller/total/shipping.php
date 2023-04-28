@@ -6,8 +6,6 @@ class Shipping extends \Opencart\System\Engine\Controller {
 		if ($this->config->get('total_shipping_status') && $this->config->get('total_shipping_estimator') && $this->cart->hasShipping()) {
 			$this->load->language('extension/opencart/total/shipping');
 
-            $data['language'] = $this->config->get('config_language');
-
 			if (isset($this->session->data['shipping_address'])) {
 				$data['postcode'] = $this->session->data['shipping_address']['postcode'];
 				$data['country_id'] = $this->session->data['shipping_address']['country_id'];
@@ -27,6 +25,8 @@ class Shipping extends \Opencart\System\Engine\Controller {
 			$this->load->model('localisation/country');
 
 			$data['countries'] = $this->model_localisation_country->getCountries();
+
+			$data['language'] = $this->config->get('config_language');
 
 			return $this->load->view('extension/opencart/total/shipping', $data);
 		}

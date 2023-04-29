@@ -475,21 +475,7 @@ class Download extends \Opencart\System\Engine\Controller {
 		$file = DIR_DOWNLOAD . $filename;
 
 		if (is_file($file)) {
-			if (!headers_sent()) {
-				header('Content-Type: application/octet-stream');
-				header('Content-Description: File Transfer');
-				header('Content-Disposition: attachment; filename="' . $filename . '"');
-				header('Content-Transfer-Encoding: binary');
-				header('Expires: 0');
-				header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-				header('Pragma: public');
-				header('Content-Length: ' . filesize($file));
-
-				readfile($file, 'rb');
-				exit;
-			} else {
-				exit($this->language->get('error_headers_sent'));
-			}
+			$this->response->download($file, $filename);
 		} else {
 			$this->load->language('error/not_found');
 

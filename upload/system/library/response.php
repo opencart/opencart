@@ -138,14 +138,50 @@ class Response {
 	/**
 	 * Json
 	 *
-	 * Sets json output from $data array
+	 * Sets json output.
 	 *
-	 * @param array $data
+	 * @param mixed $data
 	 * @param int $flags [optional] — Argument is identical to json_encode
 	 * @param int $depth [optional] — Argument is identical to json_encode
+	 * @link https://php.net/manual/en/function.json-encode.php
 	 */
-	public function json(array $data = [], int $flags = 0, int $depth = 512): void {
+	public function json(mixed $data, int $flags = 0, int $depth = 512): void {
 		$this->addHeader('Content-Type: application/json');
 		$this->setOutput(json_encode($data, $flags, $depth));
+	}
+
+	/**
+	 * Download
+	 *
+	 * Starts downloading a file.
+	 *
+	 * @param  string $file
+	 * @param  string $filename [optional]
+	 *
+	 * @throws \Exception
+	 */
+	public function download(string $file, string $filename = ''): void {
+		if (headers_sent()) {
+			throw new \Exception('Headers already sent out!');
+		}
+
+		if (!is_file($file)) {
+			throw new \Exception(sprintf('Could not find file %s!', basename($file)));
+		}
+
+		$this->addheader('Content-Type: application/octet-stream');
+		$this->addheader('Content-Description: File Transfer');
+		$this->addheader('Content-Disposition: attachment; filename="' . $filename . '"');
+		$this->addheader('Content-Transfer-Encoding: binary');
+		$this->addheader('Expires: 0');
+		$this->addheader('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+		$this->addheader('Pragma: public');
+		$this->addheader('Content-Length: ' . filesize($file));
+
+		if (ob_get_level()) {
+			ob_end_clean();
+		}
+
+		$this->setOutput(file_get_contents($file, FILE_USE_INCLUDE_PATH, null));
 	}
 }

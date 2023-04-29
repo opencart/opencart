@@ -266,25 +266,7 @@ class Upload extends \Opencart\System\Engine\Controller {
 			$file = DIR_UPLOAD . $upload_info['filename'];
 			$mask = basename($upload_info['name']);
 
-			if (!headers_sent()) {
-				if (is_file($file)) {
-					header('Content-Type: application/octet-stream');
-					header('Content-Description: File Transfer');
-					header('Content-Disposition: attachment; filename="' . ($mask ? $mask : basename($file)) . '"');
-					header('Content-Transfer-Encoding: binary');
-					header('Expires: 0');
-					header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-					header('Pragma: public');
-					header('Content-Length: ' . filesize($file));
-
-					readfile($file, 'rb');
-					exit;
-				} else {
-					exit(sprintf($this->language->get('error_not_found'), basename($file)));
-				}
-			} else {
-				exit($this->language->get('error_headers_sent'));
-			}
+			$this->response->download($file, $mask ? $mask : basename($file));
 		} else {
 			$this->load->language('error/not_found');
 

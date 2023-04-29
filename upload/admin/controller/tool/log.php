@@ -112,14 +112,7 @@ class Log extends \Opencart\System\Engine\Controller {
 			$this->response->redirect($this->url->link('tool/log', 'user_token=' . $this->session->data['user_token']));
 		}
 
-		$this->response->addheader('Pragma: public');
-		$this->response->addheader('Expires: 0');
-		$this->response->addheader('Content-Description: File Transfer');
-		$this->response->addheader('Content-Type: application/octet-stream');
-		$this->response->addheader('Content-Disposition: attachment; filename="' . $this->config->get('config_name') . '_' . date('Y-m-d_H-i-s', time()) . '_error.log"');
-		$this->response->addheader('Content-Transfer-Encoding: binary');
-
-		$this->response->setOutput(file_get_contents($file, FILE_USE_INCLUDE_PATH, null));
+		$this->response->download($file, $this->config->get('config_name') . '_' . date('Y-m-d_H-i-s', time()) . '_error.log');
 	}
 
 	public function clear(): void {

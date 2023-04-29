@@ -794,10 +794,11 @@
       <div class="modal-body">
         <form id="form-payment-address">
           <div class="mb-3">
-            <label for="input-payment-address" class="form-label">{{ entry_address }}</label> <select name="payment_address" id="input-payment-address" class="form-select">
+            <label for="input-payment-address" class="form-label">{{ entry_address }}</label>
+            <select name="payment_address_id" id="input-payment-address" class="form-select">
               <option value="0" selected>{{ text_none }}</option>
               {% for address in addresses %}
-                <option value="{{ address.address_id }}">{{ address.firstname }} {{ address.lastname }},{% if address.company %} {{ address.company }},{% endif %} {{ address.address_1 }}, {{ address.city }}, {{ address.country }}</option>
+                <option value="{{ address.address_id }}"{% if address.address_id == payment_address_id %} selected{% endif %}>{{ address.firstname }} {{ address.lastname }},{% if address.company %} {{ address.company }},{% endif %} {{ address.address_1 }}, {{ address.city }}, {{ address.country }}</option>
               {% endfor %}
             </select>
           </div>
@@ -972,10 +973,11 @@
       <div class="modal-body">
         <form id="form-shipping-address">
           <div class="mb-3">
-            <label for="input-shipping-address" class="form-label">{{ entry_address }}</label> <select name="shipping_address" id="input-shipping-address" class="form-select">
-              <option value="0" selected>{{ text_none }}</option>
+            <label for="input-shipping-address" class="form-label">{{ entry_address }}</label>
+            <select name="shipping_address_id" id="input-shipping-address" class="form-select">
+              <option value="0">{{ text_none }}</option>
               {% for address in addresses %}
-                <option value="{{ address.address_id }}">{{ address.firstname }} {{ address.lastname }},{% if address.company %} {{ address.company }},{% endif %} {{ address.address_1 }}, {{ address.city }}, {{ address.country }}</option>
+                <option value="{{ address.address_id }}"{% if address.address_id == shipping_address_id %} selected{% endif %}>{{ address.firstname }} {{ address.lastname }},{% if address.company %} {{ address.company }},{% endif %} {{ address.address_1 }}, {{ address.city }}, {{ address.country }}</option>
               {% endfor %}
             </select>
           </div>

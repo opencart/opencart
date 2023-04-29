@@ -6457,11 +6457,6 @@ function oc_db_schema() {
 				'not_null' => true
 			],
 			[
-				'name' => 'customer_group_id',
-				'type' => 'int(11)',
-				'not_null' => true
-			],
-			[
 				'name' => 'payment_address_id',
 				'type' => 'int(11)',
 				'not_null' => true

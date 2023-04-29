@@ -43,7 +43,7 @@ class Confirm extends \Opencart\System\Engine\Controller {
 		// Shipping
 		if ($this->cart->hasShipping()) {
 			// Validate shipping address
-			if (!isset($this->session->data['shipping_address'])) {
+			if (!isset($this->session->data['shipping_address']['address_id'])) {
 				$status = false;
 			}
 
@@ -199,12 +199,15 @@ class Confirm extends \Opencart\System\Engine\Controller {
 					}
 				}
 
+
+
 				$this->load->model('marketing/marketing');
 
 				$marketing_info = $this->model_marketing_marketing->getMarketingByCode($this->session->data['tracking']);
 
 				if ($marketing_info) {
 					$order_data['marketing_id'] = $marketing_info['marketing_id'];
+					$order_data['tracking'] = $this->session->data['tracking'];
 				}
 			}
 

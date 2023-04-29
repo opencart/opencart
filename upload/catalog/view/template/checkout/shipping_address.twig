@@ -53,7 +53,7 @@
         </div>
         <div class="col mb-3 required">
           <label for="input-shipping-postcode" class="form-label">{{ entry_postcode }}</label>
-          <input type="text" name="postcode" value="" placeholder="{{ entry_postcode }}" id="input-shipping-postcode" class="form-control"/>
+          <input type="text" name="postcode" value="{{ postcode }}" placeholder="{{ entry_postcode }}" id="input-shipping-postcode" class="form-control"/>
           <div id="error-shipping-postcode" class="invalid-feedback"></div>
         </div>
         <div class="col mb-3 required">
@@ -61,7 +61,7 @@
           <select name="country_id" id="input-shipping-country" class="form-select">
             <option value="">{{ text_select }}</option>
             {% for country in countries %}
-              <option value="{{ country.country_id }}">{{ country.name }}</option>
+              <option value="{{ country.country_id }}"{% if country.country_id == country_id %} selected{% endif %}>{{ country.name }}</option>
             {% endfor %}
           </select>
           <div id="error-shipping-country" class="invalid-feedback"></div>
@@ -357,7 +357,13 @@ $('#input-shipping-country').on('change', function () {
 
                 if (json['zone'] && json['zone'] != '') {
                     for (i = 0; i < json['zone'].length; i++) {
-                        html += '<option value="' + json['zone'][i]['zone_id'] + '" selected>' + json['zone'][i]['name'] + '</option>';
+                        html += '<option value="' + json['zone'][i]['zone_id'] + '"';
+
+                        if (json['zone'][i]['zone_id'] == '{{ zone_id }}') {
+                            html += ' selected';
+                        }
+
+                        html += '>' + json['zone'][i]['name'] + '</option>';
                     }
                 } else {
                     html += '<option value="0" selected>{{ text_none }}</option>';
@@ -371,4 +377,6 @@ $('#input-shipping-country').on('change', function () {
         });
     });
 });
+
+$('#input-shipping-country').trigger('change');
 //--></script>

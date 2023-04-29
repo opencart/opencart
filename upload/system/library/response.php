@@ -171,7 +171,7 @@ class Response {
 
 		$this->addheader('Content-Type: application/octet-stream');
 		$this->addheader('Content-Description: File Transfer');
-		$this->addheader('Content-Disposition: attachment; filename="' . $filename . '"');
+		$this->addheader('Content-Disposition: attachment; filename="' . ($filename ? $filename : basename($file)) . '"');
 		$this->addheader('Content-Transfer-Encoding: binary');
 		$this->addheader('Expires: 0');
 		$this->addheader('Cache-Control: must-revalidate, post-check=0, pre-check=0');

@@ -82,6 +82,7 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
 			$json['redirect'] = $this->url->link('install/step_4', $url, true);
 		}
 
-		$this->response->json($json);
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 }

@@ -164,7 +164,8 @@ class Order extends \Opencart\System\Engine\Controller {
 			$json['success'] = $this->language->get('text_success');
 		}
 
-		$this->response->json($json);
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function comment(): void {
@@ -182,7 +183,8 @@ class Order extends \Opencart\System\Engine\Controller {
 			$json['success'] = $this->language->get('text_success');
 		}
 
-		$this->response->json($json);
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function confirm(): void {
@@ -514,7 +516,8 @@ class Order extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$this->response->json($json);
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function delete(): void {
@@ -544,7 +547,8 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$json['success'] = $this->language->get('text_success');
 
-		$this->response->json($json);
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function addHistory(): void {
@@ -581,6 +585,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			$json['success'] = $this->language->get('text_success');
 		}
 
-		$this->response->json($json);
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 }

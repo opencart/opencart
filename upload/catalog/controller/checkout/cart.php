@@ -301,7 +301,8 @@ class Cart extends \Opencart\System\Engine\Controller {
 			$json['redirect'] = $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product_id, true);
 		}
 
-		$this->response->json($json);
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function edit(): void {
@@ -342,7 +343,8 @@ class Cart extends \Opencart\System\Engine\Controller {
 			unset($this->session->data['reward']);
 		}
 
-		$this->response->json($json);
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function remove(): void {
@@ -377,6 +379,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 			unset($this->session->data['reward']);
 		}
 
-		$this->response->json($json);
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 }

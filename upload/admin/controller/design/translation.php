@@ -280,7 +280,8 @@ class Translation extends \Opencart\System\Engine\Controller {
 			$json['success'] = $this->language->get('text_success');
 		}
 
-		$this->response->json($json);
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function delete(): void {
@@ -308,7 +309,8 @@ class Translation extends \Opencart\System\Engine\Controller {
 			$json['success'] = $this->language->get('text_success');
 		}
 
-		$this->response->json($json);
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function path(): void {
@@ -368,7 +370,8 @@ class Translation extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$this->response->json($json);
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function translation(): void {
@@ -425,6 +428,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$this->response->json($json);
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 }

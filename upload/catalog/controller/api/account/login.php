@@ -106,6 +106,7 @@ class Login extends \Opencart\System\Engine\Controller {
 			$json['api_token'] = $session->getId();
 		}
 
-		$this->response->json($json);
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 }

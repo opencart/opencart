@@ -261,11 +261,11 @@ class Language extends \Opencart\System\Engine\Controller {
 		if ((oc_strlen($this->request->post['code']) < 2) || (oc_strlen($this->request->post['code']) > 5)) {
 			$json['error']['code'] = $this->language->get('error_code');
 		}
-
+		
 		if ((oc_strlen($this->request->post['locale']) < 2) || (oc_strlen($this->request->post['locale']) > 255)) {
 			$json['error']['locale'] = $this->language->get('error_locale');
 		}
-
+		
 		$language_info = $this->model_localisation_language->getLanguageByCode($this->request->post['code']);
 
 		if (!$this->request->post['language_id']) {
@@ -290,7 +290,8 @@ class Language extends \Opencart\System\Engine\Controller {
 			$json['success'] = $this->language->get('text_success');
 		}
 
-		$this->response->json($json);
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function delete(): void {
@@ -347,6 +348,7 @@ class Language extends \Opencart\System\Engine\Controller {
 			$json['success'] = $this->language->get('text_success');
 		}
 
-		$this->response->json($json);
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 }

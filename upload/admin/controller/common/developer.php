@@ -28,14 +28,15 @@ class Developer extends \Opencart\System\Engine\Controller {
 			$json['success'] = $this->language->get('text_success');
 		}
 
-		$this->response->json($json);
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function theme(): void {
 		$this->load->language('common/developer');
-
+		
 		$json = [];
-
+		
 		if (!$this->user->hasPermission('modify', 'common/developer')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
@@ -46,30 +47,31 @@ class Developer extends \Opencart\System\Engine\Controller {
 			if ($directories) {
 				foreach ($directories as $directory) {
 					$files = glob($directory . '/*');
-
-					foreach ($files as $file) {
+					
+					foreach ($files as $file) { 
 						if (is_file($file)) {
 							unlink($file);
 						}
 					}
-
+					
 					if (is_dir($directory)) {
 						rmdir($directory);
 					}
 				}
 			}
-
+						
 			$json['success'] = sprintf($this->language->get('text_cache'), $this->language->get('text_theme'));
 		}
-
-		$this->response->json($json);
+		
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
-
+		
 	public function sass(): void {
 		$this->load->language('common/developer');
-
+		
 		$json = [];
-
+		
 		if (!$this->user->hasPermission('modify', 'common/developer')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
@@ -77,34 +79,35 @@ class Developer extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			// Before we delete we need to make sure there is a sass file to regenerate the css
 			$file = DIR_APPLICATION  . 'view/stylesheet/bootstrap.css';
-
+			
 			if (is_file($file) && is_file(DIR_APPLICATION . 'view/stylesheet/scss/bootstrap.scss')) {
 				unlink($file);
 			}
-
+			 
 			$files = glob(DIR_CATALOG  . 'view/theme/*/stylesheet/scss/bootstrap.scss');
-
+			 
 			foreach ($files as $file) {
 				$file = substr($file, 0, -20) . '/bootstrap.css';
-
+				
 				if (is_file($file)) {
 					unlink($file);
 				}
 			}
 
 			$files = glob(DIR_CATALOG  . 'view/theme/*/stylesheet/stylesheet.scss');
-
+			 
 			foreach ($files as $file) {
 				$file = substr($file, 0, -16) . '/stylesheet.css';
-
+				
 				if (is_file($file)) {
 					unlink($file);
 				}
 			}
 
 			$json['success'] = sprintf($this->language->get('text_cache'), $this->language->get('text_sass'));
-		}
-
-		$this->response->json($json);
+		}	
+		
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));					
 	}
 }

@@ -818,7 +818,8 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$this->response->json($json);
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function download(): void {
@@ -912,7 +913,8 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$this->response->json($json);
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function addComment(): void {
@@ -987,7 +989,8 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$this->response->json($json);
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function comment(): void {

@@ -45,7 +45,7 @@ class CustomField extends \Opencart\System\Engine\Controller {
 
 		$this->response->setOutput($this->load->view('customer/custom_field', $data));
 	}
-
+	
 	public function list(): void {
 		$this->load->language('customer/custom_field');
 
@@ -384,7 +384,8 @@ class CustomField extends \Opencart\System\Engine\Controller {
 			$json['success'] = $this->language->get('text_success');
 		}
 
-		$this->response->json($json);
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function delete(): void {
@@ -412,6 +413,7 @@ class CustomField extends \Opencart\System\Engine\Controller {
 			$json['success'] = $this->language->get('text_success');
 		}
 
-		$this->response->json($json);
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 }

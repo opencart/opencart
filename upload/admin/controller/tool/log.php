@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Tool;
 class Log extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('tool/log');
-
+		
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$data['breadcrumbs'] = [];
@@ -114,7 +114,7 @@ class Log extends \Opencart\System\Engine\Controller {
 
 		$this->response->download($file, $this->config->get('config_name') . '_' . date('Y-m-d_H-i-s', time()) . '_error.log');
 	}
-
+	
 	public function clear(): void {
 		$this->load->language('tool/log');
 
@@ -144,6 +144,7 @@ class Log extends \Opencart\System\Engine\Controller {
 			$json['success'] = $this->language->get('text_success');
 		}
 
-		$this->response->json($json);
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 }

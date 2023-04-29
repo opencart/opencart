@@ -271,7 +271,8 @@ class Filter extends \Opencart\System\Engine\Controller {
 			$json['success'] = $this->language->get('text_success');
 		}
 
-		$this->response->json($json);
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function delete(): void {
@@ -299,7 +300,8 @@ class Filter extends \Opencart\System\Engine\Controller {
 			$json['success'] = $this->language->get('text_success');
 		}
 
-		$this->response->json($json);
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function autocomplete(): void {
@@ -332,6 +334,7 @@ class Filter extends \Opencart\System\Engine\Controller {
 
 		array_multisort($sort_order, SORT_ASC, $json);
 
-		$this->response->json($json);
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 }

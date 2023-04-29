@@ -444,6 +444,7 @@ class Upgrade1 extends \Opencart\System\Engine\Controller {
 			$json['next'] = $this->url->link('upgrade/upgrade_2', $url, true);
 		}
 
-		$this->response->json($json);
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 }

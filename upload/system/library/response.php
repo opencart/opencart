@@ -136,21 +136,6 @@ class Response {
 	}
 
 	/**
-	 * Json
-	 *
-	 * Sets json output.
-	 *
-	 * @param mixed $data
-	 * @param int $flags [optional] — Argument is identical to json_encode
-	 * @param int $depth [optional] — Argument is identical to json_encode
-	 * @link https://php.net/manual/en/function.json-encode.php
-	 */
-	public function json(mixed $data, int $flags = 0, int $depth = 512): void {
-		$this->addHeader('Content-Type: application/json');
-		$this->setOutput(json_encode($data, $flags, $depth));
-	}
-
-	/**
 	 * Download
 	 *
 	 * Starts downloading a file.

@@ -37,11 +37,11 @@ class Statistics extends \Opencart\System\Engine\Controller {
 
 	public function getList(): string {
 		$data['statistics'] = [];
-
+		
 		$this->load->model('report/statistics');
-
+		
 		$results = $this->model_report_statistics->getStatistics();
-
+		
 		foreach ($results as $result) {
 			$data['statistics'][] = [
 				'name'  => $this->language->get('text_' . $result['code']),
@@ -71,7 +71,8 @@ class Statistics extends \Opencart\System\Engine\Controller {
 			$json['success'] = $this->language->get('text_success');
 		}
 
-		$this->response->json($json);
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function orderProcessing(): void {
@@ -92,7 +93,8 @@ class Statistics extends \Opencart\System\Engine\Controller {
 			$json['success'] = $this->language->get('text_success');
 		}
 
-		$this->response->json($json);
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function orderComplete(): void {
@@ -113,7 +115,8 @@ class Statistics extends \Opencart\System\Engine\Controller {
 			$json['success'] = $this->language->get('text_success');
 		}
 
-		$this->response->json($json);
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function orderOther(): void {
@@ -146,7 +149,8 @@ class Statistics extends \Opencart\System\Engine\Controller {
 			$json['success'] = $this->language->get('text_success');
 		}
 
-		$this->response->json($json);
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function returns(): void {
@@ -167,7 +171,8 @@ class Statistics extends \Opencart\System\Engine\Controller {
 			$json['success'] = $this->language->get('text_success');
 		}
 
-		$this->response->json($json);
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function product(): void {
@@ -188,7 +193,8 @@ class Statistics extends \Opencart\System\Engine\Controller {
 			$json['success'] = $this->language->get('text_success');
 		}
 
-		$this->response->json($json);
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function review(): void {
@@ -209,6 +215,7 @@ class Statistics extends \Opencart\System\Engine\Controller {
 			$json['success'] = $this->language->get('text_success');
 		}
 
-		$this->response->json($json);
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 }

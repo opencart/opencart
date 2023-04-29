@@ -234,7 +234,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 					$image = '';
 					$thumb = 'no_image.png';
 				}
-
+				
 				$data['banner_images'][$language_id][] = [
 					'title'      => $value['title'],
 					'link'       => $value['link'],
@@ -291,7 +291,8 @@ class Banner extends \Opencart\System\Engine\Controller {
 			$json['success'] = $this->language->get('text_success');
 		}
 
-		$this->response->json($json);
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function delete(): void {
@@ -319,6 +320,7 @@ class Banner extends \Opencart\System\Engine\Controller {
 			$json['success'] = $this->language->get('text_success');
 		}
 
-		$this->response->json($json);
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 }

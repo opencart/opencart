@@ -104,7 +104,8 @@ class Security extends \Opencart\System\Engine\Controller {
 			$json['success'] = $this->language->get('text_install_success');
 		}
 
-		$this->response->json($json);
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function storage(): void {
@@ -250,7 +251,8 @@ class Security extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$this->response->json($json);
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function admin(): void {
@@ -381,7 +383,8 @@ class Security extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$this->response->json($json);
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function __destruct() {

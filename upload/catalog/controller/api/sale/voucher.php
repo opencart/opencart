@@ -35,7 +35,8 @@ class Voucher extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		$this->response->json($json);
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function add(): void {
@@ -99,7 +100,8 @@ class Voucher extends \Opencart\System\Engine\Controller {
 			$json['success'] = $this->language->get('text_cart');
 		}
 
-		$this->response->json($json);
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function remove(): void {
@@ -125,6 +127,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 			unset($this->session->data['reward']);
 		}
 
-		$this->response->json($json);
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 }

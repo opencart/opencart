@@ -115,7 +115,7 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 
 		$this->response->setOutput($this->getList());
 	}
-
+	
 	protected function getList(): string {
 		if (isset($this->request->get['filter_keyword'])) {
 			$filter_keyword = (string)$this->request->get['filter_keyword'];
@@ -504,7 +504,8 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 			$json['success'] = $this->language->get('text_success');
 		}
 
-		$this->response->json($json);
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function delete(): void {
@@ -532,6 +533,7 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 			$json['success'] = $this->language->get('text_success');
 		}
 
-		$this->response->json($json);
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 }

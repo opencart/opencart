@@ -224,7 +224,7 @@ class Location extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['telephone'] = '';
 		}
-
+		
 		if (!empty($location_info)) {
 			$data['image'] = $location_info['image'];
 		} else {
@@ -295,7 +295,8 @@ class Location extends \Opencart\System\Engine\Controller {
 			$json['success'] = $this->language->get('text_success');
 		}
 
-		$this->response->json($json);
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function delete(): void {
@@ -323,6 +324,7 @@ class Location extends \Opencart\System\Engine\Controller {
 			$json['success'] = $this->language->get('text_success');
 		}
 
-		$this->response->json($json);
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 }

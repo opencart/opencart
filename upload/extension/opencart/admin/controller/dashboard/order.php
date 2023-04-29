@@ -30,7 +30,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		$data['dashboard_order_width'] = $this->config->get('dashboard_order_width');
 
 		$data['columns'] = [];
-
+		
 		for ($i = 3; $i <= 12; $i++) {
 			$data['columns'][] = $i;
 		}
@@ -62,9 +62,10 @@ class Order extends \Opencart\System\Engine\Controller {
 			$json['success'] = $this->language->get('text_success');
 		}
 
-		$this->response->json($json);
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
-
+	
 	public function dashboard(): string {
 		$this->load->language('extension/opencart/dashboard/order');
 

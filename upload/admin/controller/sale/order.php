@@ -1768,7 +1768,8 @@ class Order extends \Opencart\System\Engine\Controller {
 			$json['invoice_no'] = $this->model_sale_order->createInvoiceNo($order_id);
 		}
 
-		$this->response->json($json);
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function addReward(): void {
@@ -1812,7 +1813,8 @@ class Order extends \Opencart\System\Engine\Controller {
 			$json['success'] = $this->language->get('text_reward_add');
 		}
 
-		$this->response->json($json);
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function removeReward(): void {
@@ -1846,7 +1848,8 @@ class Order extends \Opencart\System\Engine\Controller {
 			$json['success'] = $this->language->get('text_reward_remove');
 		}
 
-		$this->response->json($json);
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function addCommission(): void {
@@ -1892,7 +1895,8 @@ class Order extends \Opencart\System\Engine\Controller {
 			$json['success'] = $this->language->get('text_commission_add');
 		}
 
-		$this->response->json($json);
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function removeCommission(): void {
@@ -1926,6 +1930,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			$json['success'] = $this->language->get('text_commission_remove');
 		}
 
-		$this->response->json($json);
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 }

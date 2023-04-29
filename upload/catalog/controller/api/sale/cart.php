@@ -87,7 +87,8 @@ class Cart extends \Opencart\System\Engine\Controller {
 
 		$json['shipping_required'] = $this->cart->hasShipping();
 
-		$this->response->json($json);
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function add(): void {
@@ -167,7 +168,8 @@ class Cart extends \Opencart\System\Engine\Controller {
 			$json['success'] = $this->language->get('text_success');
 		}
 
-		$this->response->json($json);
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function edit(): void {
@@ -193,7 +195,8 @@ class Cart extends \Opencart\System\Engine\Controller {
 
 		unset($this->session->data['reward']);
 
-		$this->response->json($json);
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function remove(): void {
@@ -214,6 +217,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 
 		unset($this->session->data['reward']);
 
-		$this->response->json($json);
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 }

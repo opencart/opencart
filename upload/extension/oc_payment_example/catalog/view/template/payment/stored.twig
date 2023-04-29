@@ -1,0 +1,50 @@
+<fieldset>
+  <legend>{{ text_title }}</legend>
+  <div class="alert alert-danger"><i class="fa-solid fa-circle-exclamation"></i> {{ text_description }}</div>
+    <div class="text-end">
+      <button type="button" id="button-confirm" class="btn btn-primary">{{ button_confirm }}</button>
+    </div>
+</fieldset>
+<script type="text/javascript"><!--
+$('#button-confirm').on('click', function(e) {
+    e.preventDefault();
+
+    var element = this;
+
+    $.ajax({
+        url: 'index.php?route=extension/oc_payment_example/payment/credit_card.stored&language={{ language }}',
+        dataType: 'json',
+        beforeSend: function() {
+            $(element).button('loading');
+        },
+        complete: function() {
+            $(element).button('reset');
+        },
+        success: function(json) {
+            console.log(json);
+
+            $('.alert-dismissible').remove();
+            $('#form-credit-card').find('.is-invalid').removeClass('is-invalid');
+            $('#form-credit-card').find('.invalid-feedback').removeClass('d-block');
+
+            if (json['redirect']) {
+                location = json['redirect'];
+            }
+
+            if (json['error']) {
+                if (json['error']['warning']) {
+                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error']['warning'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                }
+
+                for (key in json['error']) {
+                    $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
+                    $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
+                }
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+//--></script>

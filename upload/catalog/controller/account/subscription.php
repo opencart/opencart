@@ -144,8 +144,8 @@ class Subscription extends \Opencart\System\Engine\Controller {
 				'href' => $this->url->link('account/subscription.info', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&subscription_id=' . $this->request->get['subscription_id'] . $url)
 			];
 
-			$data['subscription_id'] = (int)$this->request->get['subscription_id'];
-			
+			$data['subscription_id'] = $subscription_info['subscription_id'];
+			$data['order_id'] = $subscription_info['order_id'];
 			$data['date_added'] = date($this->language->get('date_format_short'), strtotime($subscription_info['date_added']));
 
 			$this->load->model('localisation/subscription_status');
@@ -157,6 +157,23 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			} else {
 				$data['subscription_status'] = '';
 			}
+
+			$data['payment_method'] = $subscription_info['payment_method']['name'];
+
+			$data['name'] = $subscription_info['name'];
+			$data['quantity'] = $subscription_info['quantity'];
+
+			$this->load->model('catalog/subscription_plan');
+
+			$subscription_plan_info = $this->model_catalog_subscription_plan->getSubscriptionPlan($subscription_info['subscription_plan_id']);
+
+			if ($subscription_plan_info) {
+				$data['subscription_plan'] = $subscription_plan_info['name'];
+			} else {
+				$data['subscription_plan'] = '';
+			}
+
+
 			/*
 			// Orders
             $this->load->model('account/order');
@@ -167,10 +184,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
            // $data['reference'] = $subscription_info['reference'];
            // $data['product_name'] = $order_product['name'];
 
-			$data['payment_method'] = $subscription_info['payment_method'];
-            $data['product_quantity'] = $order_product['quantity'];
 
-			$data['description'] = $subscription_info['description'];
 
 			// Transactions
 			$data['transactions'] = [];

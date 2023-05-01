@@ -355,7 +355,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 						}
 					}
 
-
 					// Language
 					$order_data['language_id'] = $language_info['language_id'];
 					$order_data['language_code'] = $language_info['code'];

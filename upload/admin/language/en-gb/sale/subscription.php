@@ -65,6 +65,8 @@ $_['column_action']              = 'Action';
 
 // Entry
 $_['entry_customer']             = 'Customer';
+$_['entry_subscription_id']      = 'Subscription ID';
+$_['entry_order_id']             = 'Order ID';
 $_['entry_subscription_plan']    = 'Subscription Plan';
 $_['entry_trial_price']          = 'Trial Price';
 $_['entry_trial_duration']       = 'Trial Duration';
@@ -84,11 +86,7 @@ $_['entry_notify']               = 'Notify Customer';
 $_['entry_override']             = 'Override';
 $_['entry_date_from']            = 'Date From';
 $_['entry_date_to']              = 'Date To';
-
-
 $_['entry_subscription_status']  = 'Subscription Status';
-
-
 
 // Help
 $_['help_trial_duration']   = 'The duration is the number of times the user will make a payment.';

@@ -11,7 +11,7 @@ $_['text_subscription_id']        = 'Subscription ID';
 $_['text_subscription_detail']    = 'Subscription Payment Details';
 
 
-$_['text_subscription_trial']     = '%s Every %d %s(s) for %d payment(s) then ';
+$_['text_subscription_trial']     = '%s every %d %s(s) for %d payment(s) then ';
 $_['text_subscription_duration']  = '%s every %d %s(s) for %d payment(s)';
 $_['text_subscription_cancel']    = '%s every %d %s(s) until canceled';
 $_['text_day']                    = 'day';

@@ -199,8 +199,6 @@ class Confirm extends \Opencart\System\Engine\Controller {
 					}
 				}
 
-
-
 				$this->load->model('marketing/marketing');
 
 				$marketing_info = $this->model_marketing_marketing->getMarketingByCode($this->session->data['tracking']);
@@ -265,12 +263,14 @@ class Confirm extends \Opencart\System\Engine\Controller {
 						'subscription_plan_id' => $product['subscription']['subscription_plan_id'],
 						'name'                 => $product['subscription']['name'],
 						'trial_price'          => $product['subscription']['trial_price'],
+						'trial_tax'            => $this->tax->getTax($product['subscription']['trial_price'], $product['tax_class_id']),
 						'trial_frequency'      => $product['subscription']['trial_frequency'],
 						'trial_cycle'          => $product['subscription']['trial_cycle'],
 						'trial_duration'       => $product['subscription']['trial_duration'],
 						'trial_remaining'      => $product['subscription']['trial_remaining'],
 						'trial_status'         => $product['subscription']['trial_status'],
 						'price'                => $product['subscription']['price'],
+						'tax'                  => $this->tax->getTax($product['subscription']['price'], $product['tax_class_id']),
 						'frequency'            => $product['subscription']['frequency'],
 						'cycle'                => $product['subscription']['cycle'],
 						'duration'             => $product['subscription']['duration']

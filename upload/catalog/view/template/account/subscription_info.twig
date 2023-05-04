@@ -32,6 +32,7 @@
             </tr>
           </tbody>
         </table>
+
         <table class="table table-bordered table-hover">
           <thead>
             <tr>
@@ -47,36 +48,8 @@
           </tbody>
         </table>
       </div>
-      <h3>{{ text_transaction }}</h3>
-      <div class="table-responsive">
-        <table class="table table-bordered table-hover">
-          <thead>
-            <tr>
-              <td class="text-start">{{ column_date_added }}</td>
-              <td class="text-start">{{ column_type }}</td>
-              <td class="text-end">{{ column_amount }}</td>
-            </tr>
-          </thead>
-          <tbody>
-            {% if transactions %}
-              {% for transaction in transactions %}
-                <tr>
-                  <td class="text-start">{{ transaction.date_added }}</td>
-                  <td class="text-start">{{ transaction.type }}</td>
-                  <td class="text-end">{{ transaction.amount }}</td>
-                </tr>
-              {% endfor %}
-            {% else %}
-              <tr>
-                <td colspan="3" class="text-center">{{ text_no_results }}</td>
-              </tr>
-            {% endif %}
-          </tbody>
-        </table>
-      </div>
-
-      {{ subscription }}
-
+      {{ history }}
+      {{ order }}
       {{ content_bottom }}</div>
     {{ column_right }}</div>
 </div>

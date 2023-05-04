@@ -249,12 +249,12 @@ class Order extends \Opencart\System\Engine\Controller {
 			$description = '';
 
 			$this->load->model('checkout/order');
-			/*
+
 			$subscription_info = $this->model_checkout_order->getSubscription($order_info['order_id'], $order_product['order_product_id']);
 
 			if ($subscription_info) {
 				if ($subscription_info['trial_status']) {
-					$trial_price = $this->currency->format($this->tax->calculate($subscription_info['trial_price'], $order_product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
+					$trial_price = $this->currency->format($subscription_info['trial_price'] + ($this->config->get('config_tax') ? $subscription_info['trial_tax'] : 0), $this->config->get('config_tax')), $this->session->data['currency']);
 					$trial_cycle = $subscription_info['trial_cycle'];
 					$trial_frequency = $this->language->get('text_' . $subscription_info['trial_frequency']);
 					$trial_duration = $subscription_info['trial_duration'];
@@ -273,7 +273,7 @@ class Order extends \Opencart\System\Engine\Controller {
 					$description .= sprintf($this->language->get('text_subscription_cancel'), $price, $cycle, $frequency);
 				}
 			}
-			*/
+
 			$data['products'][] = [
 				'name'         => $order_product['name'],
 				'model'        => $order_product['model'],

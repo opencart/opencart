@@ -101,7 +101,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 					'subscription_id' => $result['subscription_id'],
 					'product_id'      => $result['product_id'],
 					'product_name'    => $product_info['name'],
-					'description'     => $description,
+					'subscription'    => $description,
 					'product'         => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $result['product_id']),
 					'status'          => $subscription_status,
 					'date_added'      => date($this->language->get('date_format_short'), strtotime($result['date_added'])),

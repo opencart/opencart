@@ -1,10 +1,12 @@
 <?php
 // Heading
-$_['heading_title']              = 'Order History';
+$_['heading_title']              = 'Orders';
 
 // Text
 $_['text_account']               = 'Account';
-$_['text_order']                 = 'Order Information';
+$_['text_order']                 = 'Order #%s';
+$_['text_order_info']            = 'Order Information';
+
 $_['text_order_detail']          = 'Order Details';
 $_['text_invoice_no']            = 'Invoice No.:';
 $_['text_order_id']              = 'Order ID:';

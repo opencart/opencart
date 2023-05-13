@@ -67,22 +67,18 @@
             {% for product in products %}
               <tr>
                 <td class="text-start"><a href="{{ product.href }}">{{ product.name }}</a>
-
                   {% for option in product.option %}
                     <br/>
                     <small> - {{ option.name }}: {{ option.value }}</small>
                   {% endfor %}
-
                   {% if product.reward %}
                     <br/>
                     <small> - {{ text_points }}: {{ product.reward }}</small>
                   {% endif %}
-
                   {% if product.subscription %}
                     <br/>
                     <small> - {{ text_subscription }}: <a href="{{ product.subscription }}" target="_blank">{{ product.subscription_description }}</a></small>
                   {% endif %}
-
                 </td>
                 <td class="text-start">{{ product.model }}</td>
                 <td class="text-end">{{ product.quantity }}</td>

@@ -121,7 +121,7 @@ class Order extends \Opencart\System\Engine\Controller {
 					$subscription_plan_id = 0;
 				}
 
-				$this->cart->add($product['product_id'], $product['quantity'], $option_data, $subscription_plan_id);
+				$this->cart->add($product['product_id'], $product['quantity'], $option_data, $subscription_plan_id, true, $product['price']);
 			}
 
 			$this->session->data['vouchers'] = [];

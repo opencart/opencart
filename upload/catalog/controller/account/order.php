@@ -116,7 +116,11 @@ class Order extends \Opencart\System\Engine\Controller {
 		$order_info = $this->model_account_order->getOrder($order_id);
 
 		if ($order_info) {
-			$this->document->setTitle($this->language->get('text_order'));
+			$heading_title = sprintf($this->language->get('text_order'), $order_info['order_id']);
+
+			$this->document->setTitle($heading_title));
+
+			$data['heading_title'] = $heading_title;
 
 			$url = '';
 
@@ -142,7 +146,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			];
 
 			$data['breadcrumbs'][] = [
-				'text' => $this->language->get('text_order'),
+				'text' => $heading_title,
 				'href' => $this->url->link('account/order.info', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&order_id=' . $order_id . $url)
 			];
 

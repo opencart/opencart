@@ -1,8 +1,8 @@
 <?php
 namespace Opencart\System\Library\Cache;
 class Memcached {
-	private int $expire;
 	private object $memcached;
+	private int $expire;
 
 	const CACHEDUMP_LIMIT = 9999;
 

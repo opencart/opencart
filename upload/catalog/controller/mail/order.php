@@ -511,7 +511,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 				if ($subscription_info) {
 					if ($subscription_info['trial_status']) {
-						$trial_price = $this->currency->format($this->tax->calculate($subscription_info['trial_price'], $subscription_info['tax'], $this->config->get('config_tax')), $this->session->data['currency']);
+						$trial_price = $this->currency->format($subscription_info['trial_price'] + ($this->config->get('config_tax') ? $subscription_info['trial_tax'] : 0), $this->session->data['currency']);
 						$trial_cycle = $subscription_info['trial_cycle'];
 						$trial_frequency = $this->language->get('text_' . $subscription_info['trial_frequency']);
 						$trial_duration = $subscription_info['trial_duration'];
@@ -519,7 +519,7 @@ class Order extends \Opencart\System\Engine\Controller {
 						$description .= sprintf($this->language->get('text_subscription_trial'), $trial_price, $trial_cycle, $trial_frequency, $trial_duration);
 					}
 
-					$price = $this->currency->format($this->tax->calculate($subscription_info['price'], $order_product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
+					$price = $this->currency->format($subscription_info['price'] + ($this->config->get('config_tax') ? $subscription_info['tax'] : 0), $this->session->data['currency']);
 					$cycle = $subscription_info['cycle'];
 					$frequency = $this->language->get('text_' . $subscription_info['frequency']);
 					$duration = $subscription_info['duration'];
@@ -537,7 +537,7 @@ class Order extends \Opencart\System\Engine\Controller {
 					'quantity'     => $order_product['quantity'],
 					'option'       => $option_data,
 					'subscription' => $description,
-					'total'        => html_entity_decode($this->currency->format($order_product['total'] + ($this->config->get('config_tax') ? ($order_product['tax'] * $order_product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value']), ENT_NOQUOTES, 'UTF-8')
+					'total'        => html_entity_decode($this->currency->format(($order_product['total'] + ($this->config->get('config_tax') ? ($order_product['tax']) : 0)) * $order_product['quantity'], $order_info['currency_code'], $order_info['currency_value']), ENT_NOQUOTES, 'UTF-8')
 				];
 			}
 

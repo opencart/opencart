@@ -151,7 +151,11 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		$subscription_info = $this->model_account_subscription->getSubscription($subscription_id);
 
 		if ($subscription_info) {
-			$this->document->setTitle($this->language->get('text_subscription'));
+			$heading_title = sprintf($this->language->get('text_subscription'), $subscription_info['subscription_id']);
+
+			$this->document->setTitle($heading_title);
+
+			$data['heading_title'] = $heading_title;
 
 			$url = '';
 
@@ -177,7 +181,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			];
 
 			$data['breadcrumbs'][] = [
-				'text' => $this->language->get('text_subscription'),
+				'text' => $heading_title,
 				'href' => $this->url->link('account/subscription.info', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&subscription_id=' . $this->request->get['subscription_id'] . $url)
 			];
 

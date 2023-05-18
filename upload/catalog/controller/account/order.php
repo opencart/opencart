@@ -22,6 +22,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
+			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/home', 'language=' . $this->config->get('config_language'))
 		];
 
@@ -118,7 +119,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		if ($order_info) {
 			$heading_title = sprintf($this->language->get('text_order'), $order_info['order_id']);
 
-			$this->document->setTitle($heading_title));
+			$this->document->setTitle($heading_title);
 
 			$data['heading_title'] = $heading_title;
 

@@ -6741,11 +6741,6 @@ function oc_db_schema() {
 				'auto_increment' => true
 			],
 			[
-				'name' => 'trial_price',
-				'type' => 'decimal(10,4)',
-				'not_null' => true
-			],
-			[
 				'name' => 'trial_frequency',
 				'type' => 'enum(\'day\',\'week\',\'semi_month\',\'month\',\'year\')',
 				'not_null' => true

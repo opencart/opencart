@@ -36,7 +36,7 @@ class Cart {
 				$this->db->query("DELETE FROM `" . DB_PREFIX . "cart` WHERE `cart_id` = '" . (int)$cart['cart_id'] . "'");
 
 				// The advantage of using $this->add is that it will check if the products already exist and increase the quantity if necessary.
-				$this->add($cart['product_id'], $cart['quantity'], json_decode($cart['option'], true), $cart['subscription_plan_id']);
+				$this->add($cart['product_id'], $cart['quantity'], json_decode($cart['option'], true), $cart['subscription_plan_id'], $cart['override'], $cart['price']);
 			}
 		}
 	}

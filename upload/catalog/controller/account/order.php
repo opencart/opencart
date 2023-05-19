@@ -22,7 +22,6 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('text_home'),
-			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/home', 'language=' . $this->config->get('config_language'))
 		];
 
@@ -356,17 +355,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['comment'] = nl2br($order_info['comment']);
 
 			// History
-			$data['histories'] = [];
-
-			$results = $this->model_account_order->getHistories($order_id);
-
-			foreach ($results as $result) {
-				$data['histories'][] = [
-					'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-					'status'     => $result['status'],
-					'comment'    => $result['notify'] ? nl2br($result['comment']) : ''
-				];
-			}
+			$data['history'] = $this->getHistory($order_info['order_id']);
 
 			$data['continue'] = $this->url->link('account/order', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']);
 
@@ -383,6 +372,56 @@ class Order extends \Opencart\System\Engine\Controller {
 		} else {
 			return new \Opencart\System\Engine\Action('error/not_found');
 		}
+	}
+
+	public function history(): void {
+		$this->load->language('account/order');
+
+		$this->response->setOutput($this->getHistory());
+	}
+
+	public function getHistory(): string {
+		if (isset($this->request->get['order_id'])) {
+			$order_id = (int)$this->request->get['order_id'];
+		} else {
+			$order_id = 0;
+		}
+
+		if (isset($this->request->get['page']) && $this->request->get['route'] == 'account/order.history') {
+			$page = (int)$this->request->get['page'];
+		} else {
+			$page = 1;
+		}
+
+		$limit = 10;
+
+		$data['histories'] = [];
+
+		$this->load->model('account/order');
+
+		$results = $this->model_account_order->getHistories($order_id, ($page - 1) * $limit, $limit);
+
+		foreach ($results as $result) {
+			$data['histories'][] = [
+				'status'     => $result['status'],
+				'comment'    => nl2br($result['comment']),
+				'notify'     => $result['notify'] ? $this->language->get('text_yes') : $this->language->get('text_no'),
+				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added']))
+			];
+		}
+
+		$order_total = $this->model_account_order->getTotalHistories($order_id);
+
+		$data['pagination'] = $this->load->controller('common/pagination', [
+			'total' => $order_total,
+			'page'  => $page,
+			'limit' => $limit,
+			'url'   => $this->url->link('account/subscription.history', 'customer_token=' . $this->session->data['customer_token'] . '&order_id=' . $order_id . '&page={page}')
+		]);
+
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($order_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($order_total - $limit)) ? $order_total : ((($page - 1) * $limit) + $limit), $order_total, ceil($order_total / $limit));
+
+		return $this->load->view('account/subscription_history', $data);
 	}
 
 	public function reorder(): void {

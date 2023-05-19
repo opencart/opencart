@@ -101,7 +101,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 					'subscription_id' => $result['subscription_id'],
 					'product_id'      => $result['product_id'],
 					'product_name'    => $product_info['name'],
-					'subscription'    => $description,
+					'description'     => $description,
 					'product'         => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $result['product_id']),
 					'status'          => $subscription_status,
 					'date_added'      => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
@@ -189,9 +189,127 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$data['order_id'] = $subscription_info['order_id'];
 			$data['date_added'] = date($this->language->get('date_format_short'), strtotime($subscription_info['date_added']));
 
+			// Payment Address
+			if ($subscription_info['payment_address_id']) {
+				$payment_address_id = $subscription_info['payment_address_id'];
+			} else {
+				$payment_address_id = 0;
+			}
+
+			$this->load->model('account/address');
+
+			$address_info = $this->model_account_address->getAddress($this->customer->getId(), $payment_address_id);
+
+			if ($address_info) {
+				if ($address_info['address_format']) {
+					$format = $address_info['address_format'];
+				} else {
+					$format = '{firstname} {lastname}' . "\n" . '{company}' . "\n" . '{address_1}' . "\n" . '{address_2}' . "\n" . '{city} {postcode}' . "\n" . '{zone}' . "\n" . '{country}';
+				}
+
+				$find = [
+					'{firstname}',
+					'{lastname}',
+					'{company}',
+					'{address_1}',
+					'{address_2}',
+					'{city}',
+					'{postcode}',
+					'{zone}',
+					'{zone_code}',
+					'{country}'
+				];
+
+				$replace = [
+					'firstname' => $address_info['firstname'],
+					'lastname'  => $address_info['lastname'],
+					'company'   => $address_info['company'],
+					'address_1' => $address_info['address_1'],
+					'address_2' => $address_info['address_2'],
+					'city'      => $address_info['city'],
+					'postcode'  => $address_info['postcode'],
+					'zone'      => $address_info['zone'],
+					'zone_code' => $address_info['zone_code'],
+					'country'   => $address_info['country']
+				];
+
+				$data['payment_address'] = str_replace(["\r\n", "\r", "\n"], '<br/>', preg_replace(["/\s\s+/", "/\r\r+/", "/\n\n+/"], '<br/>', trim(str_replace($find, $replace, $format))));
+			} else {
+				$data['payment_address'] = '';
+			}
+
+			// Shipping Address
+			if ($subscription_info['shipping_address_id']) {
+				$shipping_address_id = $subscription_info['shipping_address_id'];
+			} else {
+				$shipping_address_id = 0;
+			}
+
+			$this->load->model('account/address');
+
+			$address_info = $this->model_account_address->getAddress($this->customer->getId(), $shipping_address_id);
+
+			if ($address_info) {
+				if ($address_info['address_format']) {
+					$format = $address_info['address_format'];
+				} else {
+					$format = '{firstname} {lastname}' . "\n" . '{company}' . "\n" . '{address_1}' . "\n" . '{address_2}' . "\n" . '{city} {postcode}' . "\n" . '{zone}' . "\n" . '{country}';
+				}
+
+				$find = [
+					'{firstname}',
+					'{lastname}',
+					'{company}',
+					'{address_1}',
+					'{address_2}',
+					'{city}',
+					'{postcode}',
+					'{zone}',
+					'{zone_code}',
+					'{country}'
+				];
+
+				$replace = [
+					'firstname' => $address_info['firstname'],
+					'lastname'  => $address_info['lastname'],
+					'company'   => $address_info['company'],
+					'address_1' => $address_info['address_1'],
+					'address_2' => $address_info['address_2'],
+					'city'      => $address_info['city'],
+					'postcode'  => $address_info['postcode'],
+					'zone'      => $address_info['zone'],
+					'zone_code' => $address_info['zone_code'],
+					'country'   => $address_info['country']
+				];
+
+				$data['shipping_address'] = str_replace(["\r\n", "\r", "\n"], '<br/>', preg_replace(["/\s\s+/", "/\r\r+/", "/\n\n+/"], '<br/>', trim(str_replace($find, $replace, $format))));
+			} else {
+				$data['shipping_address'] = '';
+			}
+
+			if ($subscription_info['shipping_method']) {
+				$data['shipping_method'] = $subscription_info['shipping_method']['name'];
+			} else {
+				$data['shipping_method'] = '';
+			}
+
+			if ($subscription_info['payment_method']) {
+				$data['payment_method'] = $subscription_info['payment_method']['name'];
+			} else {
+				$data['payment_method'] = '';
+			}
+
 			$this->load->model('catalog/product');
 
 			$product_info = $this->model_catalog_product->getProduct($subscription_info['product_id']);
+
+			if ($product_info) {
+				$data['name'] = $product_info['name'];
+			} else {
+				$data['name'] = '';
+			}
+
+			$data['quantity'] = $subscription_info['quantity'];
 
 			$currency_info = $this->model_localisation_currency->getCurrency($subscription_info['currency_id']);
 
@@ -209,21 +327,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 				$data['subscription_status'] = $subscription_status_info['name'];
 			} else {
 				$data['subscription_status'] = '';
-			}
-
-			$data['payment_method'] = $subscription_info['payment_method']['name'];
-
-			$data['name'] = $subscription_info['name'];
-			$data['quantity'] = $subscription_info['quantity'];
-
-			$this->load->model('catalog/subscription_plan');
-
-			$subscription_plan_info = $this->model_catalog_subscription_plan->getSubscriptionPlan($subscription_info['subscription_plan_id']);
-
-			if ($subscription_plan_info) {
-				$data['subscription_plan'] = $subscription_plan_info['name'];
-			} else {
-				$data['subscription_plan'] = '';
 			}
 
 			$data['description'] = '';
@@ -252,7 +355,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			$data['history'] = $this->getHistory();
 			$data['orders'] = $this->getOrder();
 
-			$data['order'] = $this->url->link('account/order.info', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&order_id=' . $subscription_info['order_id']);
+			//$data['order'] = $this->url->link('account/order.info', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&order_id=' . $subscription_info['order_id']);
 			$data['product'] = $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&product_id=' . $subscription_info['product_id']);
 
 			$data['column_left'] = $this->load->controller('common/column_left');
@@ -334,7 +437,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 				'status'     => $result['status'],
 				'total'      => $this->currency->format($result['total'], $result['currency_code'], $result['currency_value']),
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'view'       => $this->url->link('sale/subscription.order', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $result['order_id'] . '&page={page}')
+				'view'       => $this->url->link('sale/subscription.order', 'customer_token=' . $this->session->data['customer_token'] . '&order_id=' . $result['order_id'] . '&page={page}')
 			];
 		}
 
@@ -344,7 +447,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			'total' => $order_total,
 			'page'  => $page,
 			'limit' => $limit,
-			'url'   => $this->url->link('sale/subscription.order', 'user_token=' . $this->session->data['user_token'] . '&subscription_id=' . $subscription_id . '&page={page}')
+			'url'   => $this->url->link('sale/subscription.order', 'customer_token=' . $this->session->data['customer_token'] . '&subscription_id=' . $subscription_id . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($order_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($order_total - $limit)) ? $order_total : ((($page - 1) * $limit) + $limit), $order_total, ceil($order_total / $limit));
@@ -394,7 +497,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 			'total' => $subscription_total,
 			'page'  => $page,
 			'limit' => $limit,
-			'url'   => $this->url->link('account/subscription.history', 'user_token=' . $this->session->data['user_token'] . '&subscription_id=' . $subscription_id . '&page={page}')
+			'url'   => $this->url->link('account/subscription.history', 'customer_token=' . $this->session->data['customer_token'] . '&subscription_id=' . $subscription_id . '&page={page}')
 		]);
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($subscription_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($subscription_total - $limit)) ? $subscription_total : ((($page - 1) * $limit) + $limit), $subscription_total, ceil($subscription_total / $limit));

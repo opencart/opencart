@@ -28,6 +28,31 @@
             </tr>
           </tbody>
         </table>
+
+        {% if payment_address or shipping_address %}
+          <table class="table table-bordered table-hover">
+            <thead>
+              <tr>
+                {% if payment_address %}
+                  <td class="text-start align-top w-50">{{ text_payment_address }}</td>
+                {% endif %}
+                {% if shipping_address %}
+                  <td class="text-start align-top w-50">{{ text_shipping_address }}</td>
+                {% endif %}
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                {% if payment_address %}
+                  <td class="text-start align-top w-50">{{ payment_address }}</td>
+                {% endif %}
+                {% if shipping_address %}
+                  <td class="text-start align-top w-50">{{ shipping_address }}</td>
+                {% endif %}</tr>
+            </tbody>
+          </table>
+        {% endif %}
+
         <table class="table table-bordered table-hover">
           <thead>
             <tr>

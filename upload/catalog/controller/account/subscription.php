@@ -353,7 +353,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 			// Orders
 			$data['history'] = $this->getHistory();
-			$data['orders'] = $this->getOrder();
+			$data['order'] = $this->getOrder();
 
 			//$data['order'] = $this->url->link('account/order.info', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&order_id=' . $subscription_info['order_id']);
 			$data['product'] = $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'] . '&product_id=' . $subscription_info['product_id']);
@@ -402,6 +402,55 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 			$this->response->setOutput($this->load->view('error/not_found', $data));
 		}
+	}
+
+	public function history(): void {
+		$this->load->language('account/subscription');
+
+		$this->response->setOutput($this->getHistory());
+	}
+
+	public function getHistory(): string {
+		if (isset($this->request->get['subscription_id'])) {
+			$subscription_id = (int)$this->request->get['subscription_id'];
+		} else {
+			$subscription_id = 0;
+		}
+
+		if (isset($this->request->get['page']) && $this->request->get['route'] == 'account/subscription.history') {
+			$page = (int)$this->request->get['page'];
+		} else {
+			$page = 1;
+		}
+
+		$limit = 10;
+
+		$data['histories'] = [];
+
+		$this->load->model('account/subscription');
+
+		$results = $this->model_account_subscription->getHistories($subscription_id, ($page - 1) * $limit, $limit);
+
+		foreach ($results as $result) {
+			$data['histories'][] = [
+				'status'     => $result['status'],
+				'comment'    => nl2br($result['comment']),
+				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added']))
+			];
+		}
+
+		$subscription_total = $this->model_account_subscription->getTotalHistories($subscription_id);
+
+		$data['pagination'] = $this->load->controller('common/pagination', [
+			'total' => $subscription_total,
+			'page'  => $page,
+			'limit' => $limit,
+			'url'   => $this->url->link('account/subscription.history', 'customer_token=' . $this->session->data['customer_token'] . '&subscription_id=' . $subscription_id . '&page={page}')
+		]);
+
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($subscription_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($subscription_total - $limit)) ? $subscription_total : ((($page - 1) * $limit) + $limit), $subscription_total, ceil($subscription_total / $limit));
+
+		return $this->load->view('account/subscription_history', $data);
 	}
 
 	public function order(): void {
@@ -453,55 +502,5 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($order_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($order_total - $limit)) ? $order_total : ((($page - 1) * $limit) + $limit), $order_total, ceil($order_total / $limit));
 
 		return $this->load->view('account/subscription_order', $data);
-	}
-
-	public function history(): void {
-		$this->load->language('account/subscription');
-
-		$this->response->setOutput($this->getHistory());
-	}
-
-	public function getHistory(): string {
-		if (isset($this->request->get['subscription_id'])) {
-			$subscription_id = (int)$this->request->get['subscription_id'];
-		} else {
-			$subscription_id = 0;
-		}
-
-		if (isset($this->request->get['page']) && $this->request->get['route'] == 'account/subscription.history') {
-			$page = (int)$this->request->get['page'];
-		} else {
-			$page = 1;
-		}
-
-		$limit = 10;
-
-		$data['histories'] = [];
-
-		$this->load->model('account/subscription');
-
-		$results = $this->model_account_subscription->getHistories($subscription_id, ($page - 1) * $limit, $limit);
-
-		foreach ($results as $result) {
-			$data['histories'][] = [
-				'status'     => $result['status'],
-				'comment'    => nl2br($result['comment']),
-				'notify'     => $result['notify'] ? $this->language->get('text_yes') : $this->language->get('text_no'),
-				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added']))
-			];
-		}
-
-		$subscription_total = $this->model_account_subscription->getTotalHistories($subscription_id);
-
-		$data['pagination'] = $this->load->controller('common/pagination', [
-			'total' => $subscription_total,
-			'page'  => $page,
-			'limit' => $limit,
-			'url'   => $this->url->link('account/subscription.history', 'customer_token=' . $this->session->data['customer_token'] . '&subscription_id=' . $subscription_id . '&page={page}')
-		]);
-
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($subscription_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($subscription_total - $limit)) ? $subscription_total : ((($page - 1) * $limit) + $limit), $subscription_total, ceil($subscription_total / $limit));
-
-		return $this->load->view('account/subscription_history', $data);
 	}
 }

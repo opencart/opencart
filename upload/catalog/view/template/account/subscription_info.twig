@@ -17,14 +17,14 @@
           </thead>
           <tbody>
             <tr>
-              <td class="text-start" style="width: 50%;"><b>{{ text_subscription_id }}</b> #{{ subscription_id }}
+              <td class="text-start w-50"><b>{{ text_subscription_id }}</b> #{{ subscription_id }}
                 <br/>
                 <b>{{ text_date_added }}</b> {{ date_added }}
                 <br/>
                 <b>{{ text_status }}</b> {{ subscription_status }}
                 <br/>
                 <b>{{ text_payment_method }}</b> {{ payment_method }}</td>
-              <td class="text-start" style="width: 50%;"><b>{{ text_order_id }}</b> <a href="{{ order }}">#{{ order_id }}</a></td>
+              <td class="text-start" style="width: 50%;"><b>{{ text_order_id }}</b> #{{ order_id }}</td>
             </tr>
           </tbody>
         </table>
@@ -34,20 +34,22 @@
             <thead>
               <tr>
                 {% if payment_address %}
-                  <td class="text-start align-top w-50">{{ text_payment_address }}</td>
+                  <td class="text-start align-top">{{ text_payment_address }}</td>
                 {% endif %}
+
                 {% if shipping_address %}
-                  <td class="text-start align-top w-50">{{ text_shipping_address }}</td>
+                  <td class="text-start align-top">{{ text_shipping_address }}</td>
                 {% endif %}
               </tr>
             </thead>
             <tbody>
               <tr>
                 {% if payment_address %}
-                  <td class="text-start align-top w-50">{{ payment_address }}</td>
+                  <td class="text-start align-top">{{ payment_address }}</td>
                 {% endif %}
+
                 {% if shipping_address %}
-                  <td class="text-start align-top w-50">{{ shipping_address }}</td>
+                  <td class="text-start align-top">{{ shipping_address }}</td>
                 {% endif %}</tr>
             </tbody>
           </table>
@@ -56,21 +58,39 @@
         <table class="table table-bordered table-hover">
           <thead>
             <tr>
-              <td class="text-start">{{ text_description }}</td>
-              <td class="text-start">{{ text_quantity }}</td>
+              <td class="text-start w-50">{{ text_description }}</td>
+              <td class="text-start w-50">{{ text_quantity }}</td>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td class="text-start" style="width: 50%;"><a href="{{ product }}">{{ name }}</a><br/>{{ description }}</td>
-              <td class="text-start" style="width: 50%;">{{ product_quantity }}</td>
+              <td class="text-start"><a href="{{ product }}">{{ name }}</a>
+                <br/>{{ description }}</td>
+              <td class="text-start">{{ product_quantity }}</td>
             </tr>
           </tbody>
         </table>
       </div>
-      {{ history }}
-      {{ order }}
+
+      <h2>{{ text_history }}</h2>
+      <div id="history">{{ history }}</div>
+      <h2>{{ text_order }}</h2>
+      <div id="order">{{ order }}</div>
+      <div class="text-end mt-3"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
       {{ content_bottom }}</div>
     {{ column_right }}</div>
 </div>
+<script type="text/javascript"><!--
+$('#history').on('click', '.pagination a', function(e) {
+    e.preventDefault();
+
+    $('#history').load(this.href);
+});
+
+$('#order').on('click', '.pagination a', function(e) {
+    e.preventDefault();
+
+    $('#order').load(this.href);
+});
+//--></script>
 {{ footer }}

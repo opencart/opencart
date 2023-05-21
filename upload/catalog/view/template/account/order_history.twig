@@ -5,7 +5,6 @@
         <td class="text-start">{{ column_date_added }}</td>
         <td class="text-start">{{ column_comment }}</td>
         <td class="text-start">{{ column_status }}</td>
-        <td class="text-start">{{ column_notify }}</td>
       </tr>
     </thead>
     <tbody>
@@ -15,12 +14,11 @@
             <td class="text-start">{{ history.date_added }}</td>
             <td class="text-start">{{ history.comment }}</td>
             <td class="text-start">{{ history.status }}</td>
-            <td class="text-start">{{ history.notify }}</td>
           </tr>
         {% endfor %}
       {% else %}
         <tr>
-          <td class="text-center" colspan="4">{{ text_no_results }}</td>
+          <td class="text-center" colspan="3">{{ text_no_results }}</td>
         </tr>
       {% endif %}
     </tbody>

@@ -138,7 +138,7 @@ class Store extends \Opencart\System\Engine\Model {
 			$config->set('config_language', $this->config->get('config_language'));
 		}
 
-		$language = new \Opencart\System\Library\Language($this->config->get('config_language'));
+		$language = new \Opencart\System\Library\Language($config->get('config_language'));
 		$registry->set('language', $language);
 
 		if (!$language_info['extension']) {

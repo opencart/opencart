@@ -11,6 +11,7 @@ $_['text_success']           = 'Success: You have changed shipping method!';
 $_['entry_shipping_method']  = 'Choose shipping method...';
 
 // Error
+$_['error_customer']         = 'Customer required!';
 $_['error_payment_address']  = 'Payment address required!';
 $_['error_shipping_address'] = 'Shipping address required!';
 $_['error_shipping_method']  = 'Shipping method required!';

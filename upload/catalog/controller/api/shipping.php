@@ -45,7 +45,7 @@ class ControllerApiShipping extends Controller {
 					$json['error']['address_1'] = $this->language->get('error_address_1');
 				}
 
-				if ((utf8_strlen($this->request->post['city']) < 2) || (utf8_strlen($this->request->post['city']) > 32)) {
+				if ((utf8_strlen($this->request->post['city']) < 2) || (utf8_strlen($this->request->post['city']) > 128)) {
 					$json['error']['city'] = $this->language->get('error_city');
 				}
 

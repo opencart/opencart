@@ -37,7 +37,7 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 			$json['error']['address_1'] = $this->language->get('error_address_1');
 		}
 
-		if ((oc_strlen($this->request->post['city']) < 2) || (oc_strlen($this->request->post['city']) > 32)) {
+		if ((oc_strlen($this->request->post['city']) < 2) || (oc_strlen($this->request->post['city']) > 128)) {
 			$json['error']['city'] = $this->language->get('error_city');
 		}
 

@@ -36,13 +36,15 @@ class ControllerAccountReward extends Controller {
 			$page = 1;
 		}
 
+		$limit = 10;
+
 		$data['rewards'] = array();
 
 		$filter_data = array(
 			'sort'  => 'date_added',
 			'order' => 'DESC',
-			'start' => ($page - 1) * 10,
-			'limit' => 10
+			'start' => ($page - 1) * $limit,
+			'limit' => $limit
 		);
 
 		$reward_total = $this->model_account_reward->getTotalRewards();
@@ -62,12 +64,12 @@ class ControllerAccountReward extends Controller {
 		$pagination = new Pagination();
 		$pagination->total = $reward_total;
 		$pagination->page = $page;
-		$pagination->limit = 10;
+		$pagination->limit = $limit;
 		$pagination->url = $this->url->link('account/reward', 'page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($reward_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($reward_total - 10)) ? $reward_total : ((($page - 1) * 10) + 10), $reward_total, ceil($reward_total / 10));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($reward_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($reward_total - $limit)) ? $reward_total : ((($page - 1) * $limit) + $limit), $reward_total, ceil($reward_total / $limit));
 
 		$data['total'] = (int)$this->customer->getRewardPoints();
 

@@ -274,26 +274,12 @@ class Subscription extends \Opencart\System\Engine\Controller {
 					$products = $this->model_checkout_cart->getProducts();
 
 					foreach ($products as $product) {
-						$option_data = [];
-
-						foreach ($product['option'] as $option) {
-							$option_data[] = [
-								'product_option_id'       => $option['product_option_id'],
-								'product_option_value_id' => $option['product_option_value_id'],
-								'option_id'               => $option['option_id'],
-								'option_value_id'         => $option['option_value_id'],
-								'name'                    => $option['name'],
-								'value'                   => $option['value'],
-								'type'                    => $option['type']
-							];
-						}
-
 						$order_data['products'][] = [
 							'product_id'   => $product['product_id'],
 							'master_id'    => $product['master_id'],
 							'name'         => $product['name'],
 							'model'        => $product['model'],
-							'option'       => $option_data,
+							'option'       => $product['option'],
 							'subscription' => [],
 							'download'     => $product['download'],
 							'quantity'     => $product['quantity'],

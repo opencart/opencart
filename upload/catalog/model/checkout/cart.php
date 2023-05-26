@@ -33,9 +33,13 @@ class Cart extends \Opencart\System\Engine\Model {
 				}
 
 				$option_data[] = [
-					'name'  => $option['name'],
-					'value' => (oc_strlen($value) > 20 ? oc_substr($value, 0, 20) . '..' : $value),
-					'type'  => $option['type']
+					'product_option_id'       => $option['product_option_id'],
+					'product_option_value_id' => $option['product_option_value_id'],
+					'option_id'               => $option['option_id'],
+					'option_value_id'         => $option['option_value_id'],
+					'name'                    => $option['name'],
+					'value'                   => (oc_strlen($value) > 20 ? oc_substr($value, 0, 20) . '..' : $value),
+					'type'                    => $option['type']
 				];
 			}
 
@@ -53,20 +57,6 @@ class Cart extends \Opencart\System\Engine\Model {
 				$minimum = true;
 			}
 
-			$option_data = [];
-
-			foreach ($product['option'] as $option) {
-				$option_data[] = [
-					'product_option_id'       => $option['product_option_id'],
-					'product_option_value_id' => $option['product_option_value_id'],
-					'option_id'               => $option['option_id'],
-					'option_value_id'         => $option['option_value_id'],
-					'name'                    => $option['name'],
-					'value'                   => $option['value'],
-					'type'                    => $option['type']
-				];
-			}
-
 			$product_data[] = [
 				'cart_id'      => $product['cart_id'],
 				'product_id'   => $product['product_id'],
@@ -74,7 +64,7 @@ class Cart extends \Opencart\System\Engine\Model {
 				'image'        => $image,
 				'name'         => $product['name'],
 				'model'        => $product['model'],
-				'option'       => $product['option'],
+				'option'       => $option_data,
 				'subscription' => $product['subscription'],
 				'download'     => $product['download'],
 				'quantity'     => $product['quantity'],

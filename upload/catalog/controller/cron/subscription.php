@@ -175,8 +175,6 @@ class Subscription extends \Opencart\System\Engine\Controller {
 					$order_data['language_id'] = $this->config->get('config_language_id');
 				}
 
-
-
 				if (!$error) {
 					// Subscription
 					$order_data['subscription_id'] = $order_info['subscription_id'];

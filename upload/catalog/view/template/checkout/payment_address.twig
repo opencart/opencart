@@ -59,7 +59,7 @@
         <div class="col mb-3 required">
           <label for="input-payment-country" class="form-label">{{ entry_country }}</label>
           <select name="country_id" id="input-payment-country" class="form-select">
-            <option value="">{{ text_select }}</option>
+            <option value="0">{{ text_select }}</option>
             {% for country in countries %}
               <option value="{{ country.country_id }}">{{ country.name }}</option>
             {% endfor %}

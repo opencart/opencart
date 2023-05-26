@@ -61,7 +61,7 @@
             <label for="input-country" class="col-sm-2 col-form-label">{{ entry_country }}</label>
             <div class="col-sm-10">
               <select name="country_id" id="input-country" class="form-select">
-                <option value="">{{ text_select }}</option>
+                <option value="0">{{ text_select }}</option>
                 {% for country in countries %}
                   <option value="{{ country.country_id }}"{% if country.country_id == country_id %} selected{% endif %}>{{ country.name }}</option>
                 {% endfor %}

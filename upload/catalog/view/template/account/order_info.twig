@@ -11,17 +11,38 @@
       <table class="table table-bordered table-hover">
         <thead>
           <tr>
-            <td class="text-start" colspan="2">{{ text_order_detail }}</td>
+            <td class="text-start" colspan="4"><strong>{{ text_order_detail }}</strong></td>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td class="text-start w-50">{% if invoice_no %} <b>{{ text_invoice_no }}</b> {{ invoice_no }}
-                <br/>
-              {% endif %} <b>{{ text_order_id }}</b> #{{ order_id }}
 
-              </td>
-            <td class="text-start w-50"><b>{{ text_date_added }}</b> {{ date_added }}</td>
+          <tr>
+
+            {% if invoice_no %}
+              <td class="text-start"><strong>{{ text_invoice_no }}</strong></td>
+              <td class="text-start">{{ invoice_no }}</td>
+            {% endif %}
+
+            <td class="text-start"><strong>{{ text_order_id }}</strong></td>
+            <td class="text-start">#{{ order_id }}</td>
+
+            <td class="text-start"><strong>{{ text_date_added }}</strong></td>
+            <td class="text-start">{{ date_added }}</td>
+
+          </tr>
+
+          <tr>
+
+            {% if payment_method %}
+              <td class="text-start align-top"><strong>{{ text_payment_method }}</strong></td>
+              <td class="text-start align-top">{{ payment_method }}</td>
+            {% endif %}
+
+            {% if shipping_method %}
+              <td class="text-start align-top"><strong>{{ text_shipping_method }}</strong></td>
+              <td class="text-start align-top">{{ shipping_method }}</td>
+            {% endif %}
+
           </tr>
         </tbody>
       </table>
@@ -49,27 +70,6 @@
         </table>
       {% endif %}
 
-      <table class="table table-bordered table-hover">
-        <thead>
-          <tr>
-            {% if payment_method %}
-              <td class="text-start align-top">{{ text_payment_method }}</td>
-            {% endif %}
-            {% if shipping_method %}
-              <td class="text-start align-top">{{ text_shipping_method }}</td>
-            {% endif %}
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-
-            <td class="text-start align-top">{{ payment_method }}</td>
-
-            <td class="text-start align-top">{{ shipping_method }}</td>
-
-          </tr>
-        </tbody>
-      </table>
 
       <div class="table-responsive">
         <table class="table table-bordered table-hover">
@@ -106,7 +106,7 @@
                 <td class="text-end">{{ product.quantity }}</td>
                 <td class="text-end">{{ product.price }}</td>
                 <td class="text-end">{{ product.total }}</td>
-                <td class="text-end" style="white-space: nowrap;">{% if product.reorder %}<a href="{{ product.reorder }}" data-bs-toggle="tooltip" title="{{ button_reorder }}" class="btn btn-primary"><i class="fa-solid fa-cart-shopping"></i></a>{% endif %}
+                <td class="text-end text-nowrap">{% if product.reorder %}<a href="{{ product.reorder }}" data-bs-toggle="tooltip" title="{{ button_reorder }}" class="btn btn-primary"><i class="fa-solid fa-cart-shopping"></i></a>{% endif %}
                   <a href="{{ product.return }}" data-bs-toggle="tooltip" title="{{ button_return }}" class="btn btn-danger"><i class="fa-solid fa-reply"></i></a></td>
               </tr>
             {% endfor %}

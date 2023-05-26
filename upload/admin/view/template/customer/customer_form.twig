@@ -314,7 +314,7 @@
                     <label for="input-address-{{ address_row }}-country" class="col-sm-2 col-form-label">{{ entry_country }}</label>
                     <div class="col-sm-10">
                       <select name="address[{{ address_row }}][country_id]" id="input-address-{{ address_row }}-country" class="form-select" data-address-row="{{ address_row }}" data-zone-id="{{ address.zone_id }}" disabled>
-                        <option value="">{{ text_select }}</option>
+                        <option value="0">{{ text_select }}</option>
                         {% for country in countries %}
                           <option value="{{ country.country_id }}"{% if country.country_id == address.country_id %} selected{% endif %}>{{ country.name }}</option>
                         {% endfor %}
@@ -652,7 +652,7 @@ $('#button-address').on('click', function (e) {
     html += '    <label for="input-address-' + address_row + '-country" class="col-sm-2 col-form-label">{{ entry_country }}</label>';
     html += '    <div class="col-sm-10">';
     html += '       <select name="address[' + address_row + '][country_id]" id="input-address-' + address_row + '-country" data-address-row="' + address_row + '" data-zone-id="0" class="form-select" disabled>';
-    html += '         <option value="">{{ text_select }}</option>';
+    html += '         <option value="0">{{ text_select }}</option>';
   {% for country in countries %}
     html += '         <option value="{{ country.country_id }}">{{ country.name|escape('js') }}</option>';
   {% endfor %}

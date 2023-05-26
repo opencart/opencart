@@ -59,7 +59,7 @@
         <div class="col mb-3 required">
           <label for="input-shipping-country" class="form-label">{{ entry_country }}</label>
           <select name="country_id" id="input-shipping-country" class="form-select">
-            <option value="">{{ text_select }}</option>
+            <option value="0">{{ text_select }}</option>
             {% for country in countries %}
               <option value="{{ country.country_id }}"{% if country.country_id == country_id %} selected{% endif %}>{{ country.name }}</option>
             {% endfor %}

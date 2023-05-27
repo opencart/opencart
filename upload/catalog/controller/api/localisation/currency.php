@@ -24,11 +24,6 @@ class Currency extends \Opencart\System\Engine\Controller {
 			$this->session->data['currency'] = $currency;
 
 			$json['success'] = $this->language->get('text_success');
-
-			unset($this->session->data['shipping_method']);
-			unset($this->session->data['shipping_methods']);
-			unset($this->session->data['payment_method']);
-			unset($this->session->data['payment_methods']);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

@@ -1,0 +1,112 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="float-end">
+        <button type="submit" form="form-payment" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa-solid fa-save"></i></button>
+        <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fa-solid fa-reply"></i></a></div>
+      <h1>{{ heading_title }}</h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="alert alert-info"><i class="fa-solid fa-circle-exclamation"></i> {{ text_description }}</div>
+    <div class="card">
+      <div class="card-header"><i class="fa-solid fa-pencil"></i> {{ text_edit }}</div>
+      <div class="card-body">
+        <form id="form-payment" action="{{ save }}" method="post" data-oc-toggle="ajax">
+          <ul class="nav nav-tabs">
+            <li class="nav-item"><a href="#tab-general" data-bs-toggle="tab" class="nav-link active">{{ tab_general }}</a></li>
+            <li class="nav-item"><a href="#tab-report" data-bs-toggle="tab" class="nav-link">{{ tab_report }}</a></li>
+          </ul>
+          <div class="tab-content">
+            <div id="tab-general" class="tab-pane active">
+
+              <fieldset>
+                <legend>{{ text_developer }}</legend>
+                <div class="row mb-3">
+                  <label for="input-response" class="col-sm-2 col-form-label">{{ entry_response }}</label>
+                  <div class="col-sm-10">
+                    <select name="payment_credit_card_response" id="input-response" class="form-select">
+                      <option value="1"{% if payment_credit_card_response %} selected{% endif %}>{{ text_approve }}</option>
+                      <option value="0"{% if not payment_credit_card_response %} selected{% endif %}>{{ text_deny }}</option>
+                    </select>
+                  </div>
+                </div>
+              </fieldset>
+              <fieldset>
+                <legend>{{ text_general }}</legend>
+                <div class="row mb-3">
+                  <label for="input-approved-status" class="col-sm-2 col-form-label">{{ entry_approved_status }}</label>
+                  <div class="col-sm-10">
+                    <select name="payment_credit_card_approved_status_id" id="input-approved-status" class="form-select">
+                      {% for order_status in order_statuses %}
+                        <option value="{{ order_status.order_status_id }}"{% if order_status.order_status_id == payment_credit_card_approved_status_id %} selected{% endif %}>{{ order_status.name }}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="input-failed-status" class="col-sm-2 col-form-label">{{ entry_failed_status }}</label>
+                  <div class="col-sm-10">
+                    <select name="payment_credit_card_failed_status_id" id="input-failed-status" class="form-select">
+                      {% for order_status in order_statuses %}
+                        <option value="{{ order_status.order_status_id }}"{% if order_status.order_status_id == payment_credit_card_failed_status_id %} selected{% endif %}>{{ order_status.name }}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="input-order-status" class="col-sm-2 col-form-label">{{ entry_order_status }}</label>
+                  <div class="col-sm-10">
+                    <select name="payment_credit_card_order_status_id" id="input-order-status" class="form-select">
+                      {% for order_status in order_statuses %}
+                        <option value="{{ order_status.order_status_id }}"{% if order_status.order_status_id == payment_credit_card_order_status_id %} selected{% endif %}>{{ order_status.name }}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="input-geo-zone" class="col-sm-2 col-form-label">{{ entry_geo_zone }}</label>
+                  <div class="col-sm-10">
+                    <select name="payment_credit_card_geo_zone_id" id="input-geo-zone" class="form-select">
+                      <option value="0">{{ text_all_zones }}</option>
+                      {% for geo_zone in geo_zones %}
+                        <option value="{{ geo_zone.geo_zone_id }}"{% if geo_zone.geo_zone_id == payment_credit_card_geo_zone_id %} selected{% endif %}>{{ geo_zone.name }}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="input-status" class="col-sm-2 col-form-label">{{ entry_status }}</label>
+                  <div class="col-sm-10">
+                    <div class="form-check form-switch form-switch-lg">
+                      <input type="hidden" name="payment_credit_card_status" value="0"/> <input type="checkbox" name="payment_credit_card_status" value="1" id="input-status" class="form-check-input"{% if payment_credit_card_status %} checked{% endif %}/>
+                    </div>
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="input-sort-order" class="col-sm-2 col-form-label">{{ entry_sort_order }}</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="payment_credit_card_sort_order" value="{{ payment_credit_card_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/>
+                  </div>
+                </div>
+              </fieldset>
+            </div>
+            <div id="tab-report" class="tab-pane">
+              <fieldset>
+                <legend>{{ text_report }}</legend>
+                <div id="report">{{ report }}</div>
+              </fieldset>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{{ footer }}

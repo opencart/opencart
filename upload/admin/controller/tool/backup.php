@@ -162,15 +162,19 @@ class Backup extends \Opencart\System\Engine\Controller {
 				$values = '';
 
 				foreach (array_values($result) as $value) {
-					$value = str_replace(["\x00", "\x0a", "\x0d", "\x1a"], ['\0', '\n', '\r', '\Z'], $value);
-					$value = str_replace(["\n", "\r", "\t"], ['\n', '\r', '\t'], $value);
-					$value = str_replace('\\', '\\\\', $value);
-					$value = str_replace('\'', '\\\'', $value);
-					$value = str_replace('\\\n', '\n', $value);
-					$value = str_replace('\\\r', '\r', $value);
-					$value = str_replace('\\\t', '\t', $value);
+					if ($value !== null) {
+						$value = str_replace(["\x00", "\x0a", "\x0d", "\x1a"], ['\0', '\n', '\r', '\Z'], $value);
+						$value = str_replace(["\n", "\r", "\t"], ['\n', '\r', '\t'], $value);
+						$value = str_replace('\\', '\\\\', $value);
+						$value = str_replace('\'', '\\\'', $value);
+						$value = str_replace('\\\n', '\n', $value);
+						$value = str_replace('\\\r', '\r', $value);
+						$value = str_replace('\\\t', '\t', $value);
 
-					$values .= '\'' . $value . '\', ';
+						$values .= '\'' . $value . '\', ';
+					} else {
+						$values .= 'NULL, ';
+					}
 				}
 
 				$output .= 'INSERT INTO `' . $table . '` (' . preg_replace('/, $/', '', $fields) . ') VALUES (' . preg_replace('/, $/', '', $values) . ');' . "\n";

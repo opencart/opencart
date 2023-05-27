@@ -20,6 +20,7 @@ $_['entry_country']         = 'Country';
 $_['entry_zone']            = 'Region / State';
 
 // Error
+$_['error_customer']        = 'Customer required!';
 $_['error_address']         = 'Payment address could not be found!';
 $_['error_firstname']       = 'First Name must be between 1 and 32 characters!';
 $_['error_lastname']        = 'Last Name must be between 1 and 32 characters!';

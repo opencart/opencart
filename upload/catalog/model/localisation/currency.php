@@ -7,6 +7,12 @@ class Currency extends \Opencart\System\Engine\Model {
 		$this->cache->delete('currency');
 	}
 
+	public function getCurrency(int $currency_id): array {
+		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "currency` WHERE `currency_id` = '" . $this->db->escape($currency_id) . "'");
+
+		return $query->row;
+	}
+
 	public function getCurrencyByCode(string $currency): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "currency` WHERE `code` = '" . $this->db->escape($currency) . "' AND `status` = '1'");
 

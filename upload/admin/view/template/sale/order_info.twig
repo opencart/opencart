@@ -78,7 +78,9 @@
                   {% if order_product.option %}
                     {% for option in order_product.option %}
                       <br/>
-                      <small> - {{ option.name }}: {{ option.value }}</small>
+                      {% if option.type != 'file' %}
+                      <small> - {{ option.name }}: {{ option.value }}</small> {% else %}
+                      <small> - {{ option.name }}: <a href="{{ option.href }}">{{ option.value }}</a></small> {% endif %}
                     {% endfor %}
                   {% endif %}
 
@@ -794,10 +796,11 @@
       <div class="modal-body">
         <form id="form-payment-address">
           <div class="mb-3">
-            <label for="input-payment-address" class="form-label">{{ entry_address }}</label> <select name="payment_address" id="input-payment-address" class="form-select">
+            <label for="input-payment-address" class="form-label">{{ entry_address }}</label>
+            <select name="payment_address_id" id="input-payment-address" class="form-select">
               <option value="0" selected>{{ text_none }}</option>
               {% for address in addresses %}
-                <option value="{{ address.address_id }}">{{ address.firstname }} {{ address.lastname }},{% if address.company %} {{ address.company }},{% endif %} {{ address.address_1 }}, {{ address.city }}, {{ address.country }}</option>
+                <option value="{{ address.address_id }}"{% if address.address_id == payment_address_id %} selected{% endif %}>{{ address.firstname }} {{ address.lastname }},{% if address.company %} {{ address.company }},{% endif %} {{ address.address_1 }}, {{ address.city }}, {{ address.country }}</option>
               {% endfor %}
             </select>
           </div>
@@ -829,7 +832,7 @@
           </div>
           <div class="mb-3 required">
             <label for="input-payment-country" class="form-label">{{ entry_country }}</label> <select name="country_id" id="input-payment-country" class="form-select">
-              <option value="">{{ text_select }}</option>
+              <option value="0">{{ text_select }}</option>
               {% for country in countries %}
                 <option value="{{ country.country_id }}"{% if country.country_id == payment_country_id %} selected{% endif %}>{{ country.name }}</option>
               {% endfor %}
@@ -972,10 +975,11 @@
       <div class="modal-body">
         <form id="form-shipping-address">
           <div class="mb-3">
-            <label for="input-shipping-address" class="form-label">{{ entry_address }}</label> <select name="shipping_address" id="input-shipping-address" class="form-select">
-              <option value="0" selected>{{ text_none }}</option>
+            <label for="input-shipping-address" class="form-label">{{ entry_address }}</label>
+            <select name="shipping_address_id" id="input-shipping-address" class="form-select">
+              <option value="0">{{ text_none }}</option>
               {% for address in addresses %}
-                <option value="{{ address.address_id }}">{{ address.firstname }} {{ address.lastname }},{% if address.company %} {{ address.company }},{% endif %} {{ address.address_1 }}, {{ address.city }}, {{ address.country }}</option>
+                <option value="{{ address.address_id }}"{% if address.address_id == shipping_address_id %} selected{% endif %}>{{ address.firstname }} {{ address.lastname }},{% if address.company %} {{ address.company }},{% endif %} {{ address.address_1 }}, {{ address.city }}, {{ address.country }}</option>
               {% endfor %}
             </select>
           </div>
@@ -1007,7 +1011,7 @@
           </div>
           <div class="mb-3 required">
             <label for="input-shipping-country" class="form-label">{{ entry_country }}</label> <select name="country_id" id="input-shipping-country" class="form-select">
-              <option value="">{{ text_select }}</option>
+              <option value="0">{{ text_select }}</option>
               {% for country in countries %}
                 <option value="{{ country.country_id }}"{% if country.country_id == shipping_country_id %} selected{% endif %}>{{ country.name }}</option>
               {% endfor %}
@@ -2545,7 +2549,7 @@ $('#form-shipping-method').on('submit', function(e) {
             }
 
             if (json['success']) {
-                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#form-shipping-method').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                 $('#shipping-method-value').html($('input[name=\'shipping_method\']:checked').parent().find('label').text());
                 $('#input-shipping-code').val($('input[name=\'shipping_method\']:checked').val());
@@ -2646,7 +2650,7 @@ $('#form-payment-method').on('submit', function(e) {
             }
 
             if (json['success']) {
-                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                $('#form-payment-method').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                 $('#payment-method-value').html($('input[name=\'payment_method\']:checked').parent().find('label').text());
                 $('#input-payment-code').val($('input[name=\'payment_method\']:checked').val());

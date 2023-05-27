@@ -61,10 +61,9 @@
             <div class="row mb-3">
               <label for="input-trial-status" class="col-sm-2 col-form-label">{{ entry_trial_status }}</label>
               <div class="col-sm-10">
-                <select name="trial_status" id="input-trial-status" class="form-select">
-                  <option value="1"{% if trial_status %} selected{% endif %}>{{ text_enabled }}</option>
-                  <option value="0"{% if not trial_status %} selected{% endif %}>{{ text_disabled }}</option>
-                </select>
+                <div class="form-check form-switch form-switch-lg">
+                  <input type="hidden" name="trial_status" value="0"/> <input type="checkbox" name="trial_status" value="1" id="input-notify" class="form-check-input"{% if trial_status %} checked{% endif %}/>
+                </div>
               </div>
             </div>
           </fieldset>

@@ -13,7 +13,7 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 
 		$data['addresses'] = $this->model_account_address->getAddresses($this->customer->getId());
 
-		if (isset($this->session->data['payment_address'])) {
+		if (isset($this->session->data['payment_address']['address_id'])) {
 			$data['address_id'] = $this->session->data['payment_address']['address_id'];
 		} else {
 			$data['address_id'] = 0;

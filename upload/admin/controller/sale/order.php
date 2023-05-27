@@ -918,6 +918,12 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		// Payment Address
 		if (!empty($order_info)) {
+			$data['payment_address_id'] = $order_info['payment_address_id'];
+		} else {
+			$data['payment_address_id'] = 0;
+		}
+
+		if (!empty($order_info)) {
 			$data['payment_firstname'] = $order_info['payment_firstname'];
 		} else {
 			$data['payment_firstname'] = '';
@@ -995,19 +1001,25 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		// Payment Method
-		if (!empty($order_info)) {
+		if (isset($order_info['payment_method']['name'])) {
 			$data['payment_method'] = $order_info['payment_method']['name'];
 		} else {
 			$data['payment_method'] = '';
 		}
 
-		if (!empty($order_info)) {
+		if (isset($order_info['payment_method']['code'])) {
 			$data['payment_code'] = $order_info['payment_method']['code'];
 		} else {
 			$data['payment_code'] = '';
 		}
 
 		// Shipping Address
+		if (!empty($order_info)) {
+			$data['shipping_address_id'] = $order_info['shipping_address_id'];
+		} else {
+			$data['shipping_address_id'] = 0;
+		}
+
 		if (!empty($order_info)) {
 			$data['shipping_firstname'] = $order_info['shipping_firstname'];
 		} else {
@@ -1081,13 +1093,13 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		// Shipping method
-		if (!empty($order_info)) {
+		if (isset($order_info['shipping_method']['name'])) {
 			$data['shipping_method'] = $order_info['shipping_method']['name'];
 		} else {
 			$data['shipping_method'] = '';
 		}
 
-		if (!empty($order_info)) {
+		if (isset($order_info['shipping_method']['code'])) {
 			$data['shipping_code'] = $order_info['shipping_method']['code'];
 		} else {
 			$data['shipping_code'] = '';
@@ -1131,7 +1143,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		// Extension Order Tabs can are called here.
 		$this->load->model('setting/extension');
 
-		if (!empty($order_info)) {
+		if (!empty($order_info['payment_method']['code'])) {
 			$extension_info = $this->model_setting_extension->getExtensionByCode('payment', $order_info['payment_method']['code']);
 
 			if ($extension_info && $this->user->hasPermission('access', 'extension/' . $extension_info['extension'] . '/payment/' . $extension_info['code'])) {

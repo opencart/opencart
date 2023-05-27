@@ -2,7 +2,9 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="float-end"><a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fa-solid fa-reply"></i></a></div>
+      <div class="float-end">
+        <button type="submit" form="form-subscription" formaction="{{ save }}" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i></button>
+        <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fa-solid fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
       <ol class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -17,35 +19,7 @@
       <div class="card-body">
         <form id="form-subscription">
           <div class="row row-cols-1 row-cols-sm-1 row-cols-md-3 row-cols-xl-3">
-            <div class="col">
-              <div class="input-group mb-3">
-                <div class="form-control border rounded-start">
-                  <div class="lead"><strong>{{ text_subscription_id }}</strong>
-                    <br/>
-                    <div id="subscription-value">{{ subscription_id }}</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="input-group mb-3">
-                <div class="form-control border rounded-start">
-                  <div class="lead"><strong>{{ text_order_id }}</strong>
-                    <br/>
-                    <div id="order-value"><a href="{{ order }}" target="_blank">{{ order_id }}</a></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="input-group mb-3">
-                <div class="form-control border rounded-start">
-                  <div class="lead"><strong>{{ text_customer }}</strong>
-                    <div id="customer-value"><a href="{{ customer }}" target="_blank">{{ firstname }} {{ lastname }}</a></div>
-                  </div>
-                </div>
-              </div>
-            </div>
+
             <div class="col">
               <div class="form-control p-0 border rounded mb-3">
                 <div class="lead p-2"><strong>{{ text_date_added }}</strong>
@@ -54,18 +28,45 @@
                 </div>
               </div>
             </div>
+
             <div class="col">
               <div class="form-control p-0 border rounded mb-3">
-                <div class="lead p-2"><strong>{{ text_remaining }}</strong>
+                <div class="lead p-2"><strong>{{ text_order }}</strong>
                   <br/>
-                  {% if duration %}
-                    {{ remaining }}
-                  {% else %}
-                    {{ text_cancel }}
-                  {% endif %}
+                  <a href="index.php?route=customer/customer.form&user_token={{ user_token }}&customer_id={{ customer_id }}" target="_blank">{{ order_id }}</a>
                 </div>
               </div>
             </div>
+
+            <div class="col">
+              <div class="input-group mb-3">
+                <div class="form-control border rounded-start">
+                  <div class="lead"><strong>{{ text_customer }}</strong>
+                    <br/>
+                    <div id="customer-value"><a href="index.php?route=customer/customer.form&user_token={{ user_token }}&customer_id={{ customer_id }}" target="_blank">{{ firstname }} {{ lastname }}</a></div>
+                  </div>
+                </div>
+                <button type="button" data-bs-toggle="modal" data-bs-target="#modal-customer" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="row row-cols-1">
+            <div class="col-12">
+              <div class="input-group mb-3">
+                <div class="form-control p-0 border rounded-start">
+                  <div class="lead p-2"><strong>{{ text_subscription_plan }}</strong>
+                    <br/>
+                    {{ subscription_plan }}
+                  </div>
+                </div>
+                <button type="button" data-bs-toggle="modal" data-bs-target="#modal-subscription-plan" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="row row-cols-1 row-cols-sm-1 row-cols-md-3 row-cols-xl-3">
             <div class="col">
               <div class="form-control p-0 border rounded mb-3">
                 <div class="lead p-2"><strong>{{ text_date_next }}</strong>
@@ -76,28 +77,149 @@
             </div>
             <div class="col">
               <div class="form-control p-0 border rounded mb-3">
-                <div class="lead p-2"><strong>{{ text_order_status }}</strong>
+                <div class="lead p-2"><strong>{{ text_remaining }}</strong>
                   <br/>
-                  {{ order_status }}
+                  {{ remaining }}
                 </div>
               </div>
             </div>
-            <div class="col">
-              <div class="form-control p-0 border rounded mb-3">
-                <div class="lead p-2"><strong>{{ text_subscription_plan }}</strong>
-                  <br/>
-                  {{ subscription_plan }}
+          </div>
+
+
+          <div class="row">
+
+            <div class="col-md">
+              <div class="input-group mb-3">
+                <div class="form-control border rounded-start">
+                  <div class="lead"><strong>{{ text_payment_address }}</strong>
+                    <br/>
+                    <div id="payment-address-value">
+                      {% if payment_firstname %}
+                        {{ payment_firstname }} {{ payment_lastname }}
+                        <br/>
+                      {% endif %}
+
+                      {% if payment_company %}
+                        {{ payment_company }}
+                        <br/>
+                      {% endif %}
+
+                      {% if payment_address_1 %}
+                        {{ payment_address_1 }}
+                        <br/>
+                      {% endif %}
+
+                      {% if payment_address_2 %}
+                        {{ payment_address_2 }}
+                        <br/>
+                      {% endif %}
+
+                      {% if payment_city %}
+                        {{ payment_city }}
+                        <br/>
+                      {% endif %}
+
+                      {% if payment_postcode %}
+                        {{ payment_postcode }}
+                        <br/>
+                      {% endif %}
+
+                      {% if payment_zone %}
+                        {{ payment_zone }}
+                        <br/>
+                      {% endif %}
+                      {% if payment_country %}
+                        {{ payment_country }}
+                      {% endif %}
+                    </div>
+                  </div>
                 </div>
+                <button type="button" data-bs-toggle="modal" data-bs-target="#modal-payment-address" class="btn btn-outline-primary float-end"><i class="fa-solid fa-cog"></i></button>
               </div>
             </div>
-            <div class="col">
-              <div class="form-control p-0 border rounded mb-3">
-                <div class="lead p-2"><strong>{{ text_payment_method }}</strong>
-                  <br/>
-                  {{ payment_method }}
+
+            <div id="shipping-address" class="col">
+              <div class="input-group mb-3">
+                <div class="form-control border rounded-start">
+                  <div class="lead"><strong>{{ text_shipping_address }}</strong>
+                    <br/>
+                    <div id="shipping-address-value">
+                      {% if shipping_firstname %}
+                        {{ shipping_firstname }} {{ shipping_lastname }}
+                        <br/>
+                      {% endif %}
+                      {% if shipping_company %}
+                        {{ shipping_company }}
+                        <br/>
+                      {% endif %}
+                      {% if shipping_address_1 %}
+                        {{ shipping_address_1 }}
+                        <br/>
+                      {% endif %}
+                      {% if shipping_address_2 %}
+                        {{ shipping_address_2 }}
+                        <br/>
+                      {% endif %}
+                      {% if shipping_city %}
+                        {{ shipping_city }}
+                        <br/>
+                      {% endif %}
+                      {% if shipping_postcode %}
+                        {{ shipping_postcode }}
+                        <br/>
+                      {% endif %}
+                      {% if shipping_zone %}
+                        {{ shipping_zone }}
+                        <br/>
+                      {% endif %}
+                      {% if shipping_country %}
+                        {{ shipping_country }}
+                      {% endif %}
+                    </div>
+                  </div>
                 </div>
+                <button type="button" data-bs-toggle="modal" data-bs-target="#modal-shipping-address" class="btn btn-outline-primary float-end"><i class="fa-solid fa-cog"></i></button>
               </div>
             </div>
+
+          </div>
+
+          <div class="row">
+
+            <div id="shipping-method" class="col-md">
+              <div class="input-group mb-3">
+                <div class="form-control border rounded-start">
+                  <div class="lead"><strong>{{ text_shipping_method }}</strong>
+                    <br/>
+                    {% if shipping_method %}
+                      <span id="shipping-method-value">{{ shipping_method }}</span>
+                    {% else %}
+                      <span id="shipping-method-value"></span>
+                    {% endif %}
+                  </div>
+                </div>
+                <input type="hidden" name="shipping_code" value="{{ shipping_code }}" id="input-shipping-code"/>
+                <button type="button" id="button-shipping-methods" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
+              </div>
+            </div>
+
+            <div id="payment-method" class="col-md">
+              <div class="input-group mb-3">
+                <div class="form-control border rounded-start">
+                  <div class="lead"><strong>{{ text_payment_method }}</strong>
+                    <br/>
+                    {% if payment_method %}
+                      <span id="payment-method-value">{{ payment_method }}</span>
+                    {% else %}
+                      <span id="payment-method-value"></span>
+                    {% endif %}
+                  </div>
+                </div>
+                <input type="hidden" name="payment_code" value="{{ payment_code }}" id="input-payment-code"/>
+                <button type="button" id="button-payment-methods" class="btn btn-outline-primary"><i class="fa-solid fa-cog"></i></button>
+              </div>
+            </div>
+
           </div>
 
           <fieldset>
@@ -126,6 +248,8 @@
               </tbody>
             </table>
           </fieldset>
+
+
           <input type="hidden" name="subscription_id" value="{{ subscription_id }}" id="input-subscription-id"/>
         </form>
       </div>
@@ -202,7 +326,232 @@
     </div>
   </div>
 </div>
+<form id="form-subscription">
+  <div id="modal-customer" class="modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">{{ text_customer }}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="input-customer" class="form-label">{{ entry_customer }}</label>
+            <div class="input-group">
+              <input type="text" name="customer" value="{{ firstname }} {{ lastname }}" placeholder="{{ entry_customer }}" id="input-customer" data-oc-target="autocomplete-customer" class="form-control" autocomplete="off"/><a href="{{ customer_add }}" target="_blank" data-bs-toggle="tooltip" title="{{ button_customer_add }}" class="btn btn-outline-secondary"><i class="fa-solid fa-user-plus"></i></a>
+            </div>
+            <input type="hidden" name="customer_id" value="{{ customer_id }}" id="input-customer-id"/>
+            <ul id="autocomplete-customer" class="dropdown-menu"></ul>
+          </div>
+          <div class="text-end">
+            <button type="button" id="button-customer" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> {{ button_save }}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="modal-subscription-plan" class="modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">{{ text_subscription }}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="input-subscription-plan" class="form-label">{{ entry_subscription_plan }}</label> <select name="subscription_plan_id" id="input-subscription-plan" class="form-select">
+              <option value="0" selected>{{ text_none }}</option>
+              {% for subscription_plan in subscription_plans %}
+                <option value="{{ subscription_plan.subscription_plan_id }}"{% if subscription_plan.subscription_plan_id == subscription_plan_id %} selected{% endif %}>{{ subscription_plan.name }}</option>
+              {% endfor %}
+            </select>
+            <div id="error-subscription-plan" class="invalid-feedback"></div>
+          </div>
+          <fieldset>
+            <legend>{{ text_trial }}</legend>
+            <div class="mb-3">
+              <label for="input-trial-price" class="form-label">{{ entry_trial_price }}</label> <input type="text" name="trial_price" value="{{ trial_price }}" placeholder="{{ entry_trial_price }}" id="input-trial-price" class="form-control"/>
+              <div class="form-text">{{ help_trial_price }}</div>
+            </div>
+            <div class="mb-3">
+              <label for="input-trial-duration" class="form-label">{{ entry_trial_duration }}</label> <input type="text" name="trial_duration" value="{{ trial_duration }}" placeholder="{{ entry_trial_duration }}" id="input-trial-duration" class="form-control"/>
+              <div id="error-trial-duration" class="invalid-feedback"></div>
+            </div>
+            <div class="mb-3">
+              <label for="input-trial-remaining" class="form-label">{{ entry_trial_remaining }}</label> <input type="text" name="remaining" value="{{ trial_remaining }}" placeholder="{{ entry_trial_remaining }}" id="input-trial-remaining" class="form-control"/>
+              <div id="error-trial-remaining" class="invalid-feedback"></div>
+            </div>
+            <div class="mb-3">
+              <label for="input-trial-cycle" class="form-label">{{ entry_trial_cycle }}</label> <input type="text" name="trial_cycle" value="{{ trial_cycle }}" placeholder="{{ entry_trial_cycle }}" id="input-trial-cycle" class="form-control"/>
+              <div id="error-trial-cycle" class="invalid-feedback"></div>
+            </div>
+            <div class="mb-3">
+              <label for="input-trial-frequency" class="form-label">{{ entry_trial_frequency }}</label> <select name="trial_frequency" id="input-trial-frequency" class="form-select">
+                {% for frequency in frequencies %}
+                  <option value="{{ frequency.value }}"{% if frequency.value == trial_frequency %} selected{% endif %}>{{ frequency.text }}</option>
+                {% endfor %}
+              </select>
+              <div id="error-trial-frequency" class="invalid-feedback"></div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">{{ entry_trial_status }}</label>
+              <div class="form-check form-switch form-switch-lg">
+                <input type="hidden" name="trial_status" value="0"/> <input type="checkbox" name="trial_status" value="1" id="input-trial-status" class="form-check-input"{% if trial_status %} checked{% endif %}/>
+              </div>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>{{ text_subscription }}</legend>
+            <div class="mb-3">
+              <label for="input-price" class="form-label">{{ entry_price }}</label>
+              <input type="text" name="trial_price" value="{{ price }}" placeholder="{{ entry_price }}" id="input-price" class="form-control"/>
+            </div>
+            <div class="mb-3">
+              <label for="input-duration" class="form-label">{{ entry_duration }}</label>
+              <input type="text" name="duration" value="{{ duration }}" placeholder="{{ entry_duration }}" id="input-duration" class="form-control"/>
+              <div id="error-duration" class="invalid-feedback"></div>
+            </div>
+            <div class="mb-3">
+              <label for="input-remaining" class="form-label">{{ entry_remaining }}</label>
+              <input type="text" name="remaining" value="{{ remaining }}" placeholder="{{ entry_remaining }}" id="input-remaining" class="form-control"/>
+              <div id="error-remaining" class="invalid-feedback"></div>
+            </div>
+            <div class="mb-3">
+              <label for="input-cycle" class="form-label">{{ entry_cycle }}</label>
+              <input type="text" name="cycle" value="{{ cycle }}" placeholder="{{ entry_cycle }}" id="input-cycle" class="form-control"/>
+              <div id="error-cycle" class="invalid-feedback"></div>
+            </div>
+            <div class="mb-3">
+              <label for="input-frequency" class="form-label">{{ entry_frequency }}</label>
+              <select name="frequency" id="input-frequency" class="form-select">
+                {% for frequency in frequencies %}
+                  <option value="{{ frequency.value }}"{% if frequency.value == frequency %} selected{% endif %}>{{ frequency.text }}</option>
+                {% endfor %}
+              </select>
+              <div id="error-frequency" class="invalid-feedback"></div>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>{{ text_date_next }}</legend>
+            <div class="mb-3">
+              <div class="input-group">
+                <input type="text" name="date_next" value="{{ date_next }}" placeholder="{{ entry_date_next }}" id="input-date-next" class="form-control date"/>
+                <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
+              </div>
+              <div class="form-text">{{ help_date_next }}</div>
+              <div id="error-date-next" class="invalid-feedback"></div>
+            </div>
+          </fieldset>
+          <div class="text-end">
+            <button type="button" id="button-customer" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> {{ button_save }}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="modal-payment-address" class="modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">{{ text_payment_address }}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="input-payment-address" class="form-label">{{ entry_address }}</label>
+            <select name="payment_address" id="input-payment-address" class="form-select">
+              <option value="0" selected>{{ text_none }}</option>
+              {% for address in addresses %}
+                <option value="{{ address.address_id }}">{{ address.firstname }} {{ address.lastname }},{% if address.company %} {{ address.company }},{% endif %} {{ address.address_1 }}, {{ address.city }}, {{ address.country }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="text-end">
+            <button type="button" id="button-customer" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> {{ button_save }}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="modal-shipping-address" class="modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">{{ text_shipping_address }}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="input-shipping-address" class="form-label">{{ entry_address }}</label>
+            <select name="shipping_address" id="input-shipping-address" class="form-select">
+              <option value="0" selected>{{ text_none }}</option>
+              {% for address in addresses %}
+                <option value="{{ address.address_id }}">{{ address.firstname }} {{ address.lastname }},{% if address.company %} {{ address.company }},{% endif %} {{ address.address_1 }}, {{ address.city }}, {{ address.country }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="text-end">
+            <button type="button" id="button-customer" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> {{ button_save }}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</form>
 <script type="text/javascript"><!--
+$('#input-customer').autocomplete({
+    'source': function(request, response) {
+        $.ajax({
+            url: 'index.php?route=customer/customer.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
+            dataType: 'json',
+            success: function(json) {
+                response($.map(json, function(item) {
+                    return {
+                        category: item['customer_group'],
+                        label: item['name'],
+                        value: item['customer_id'],
+                        customer_group_id: item['customer_group_id']
+                    }
+                }));
+            }
+        });
+    },
+    'select': function(item) {
+        $('#input-customer').val(item['label']);
+        $('#input-customer-id').val(item['value']);
+        $('#input-customer-group').val(item['customer_group_id']);
+    }
+});
+
+$('#input-product').autocomplete({
+    'source': function(request, response) {
+        $.ajax({
+            url: 'index.php?route=catalog/product.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
+            dataType: 'json',
+            success: function(json) {
+                response($.map(json, function(item) {
+                    return {
+                        label: item['name'],
+                        value: item['product_id'],
+                        model: item['model']
+                    }
+                }));
+            }
+        });
+    },
+    'select': function(item) {
+        $('#input-product').val(item['label']);
+        $('#input-product-id').val(item['value']);
+        $('#input-model').val(item['model']);
+    }
+});
+
+
 $('#history').on('click', '.pagination a', function(e) {
     e.preventDefault();
 

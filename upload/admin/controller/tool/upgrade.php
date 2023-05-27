@@ -86,7 +86,7 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		if (version_compare($version, VERSION, '>=')) {
+		if (version_compare($version, VERSION, '<')) {
 			$json['error'] = $this->language->get('error_version');
 		}
 

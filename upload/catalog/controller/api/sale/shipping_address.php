@@ -38,7 +38,7 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 				$json['error']['address_1'] = $this->language->get('error_address_1');
 			}
 
-			if ((oc_strlen($this->request->post['city']) < 2) || (oc_strlen($this->request->post['city']) > 32)) {
+			if ((oc_strlen($this->request->post['city']) < 2) || (oc_strlen($this->request->post['city']) > 128)) {
 				$json['error']['city'] = $this->language->get('error_city');
 			}
 
@@ -102,6 +102,7 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 			}
 
 			$this->session->data['shipping_address'] = [
+				'address_id'     => $this->request->post['shipping_address_id'],
 				'firstname'      => $this->request->post['firstname'],
 				'lastname'       => $this->request->post['lastname'],
 				'company'        => $this->request->post['company'],
@@ -121,12 +122,6 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 			];
 
 			$json['success'] = $this->language->get('text_success');
-
-			// Clear payment and shipping methods
-			unset($this->session->data['shipping_method']);
-			unset($this->session->data['shipping_methods']);
-			unset($this->session->data['payment_method']);
-			unset($this->session->data['payment_methods']);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

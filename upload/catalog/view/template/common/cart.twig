@@ -4,6 +4,7 @@
     {% if products or vouchers %}
       <li>
         <table class="table table-sm table-striped">
+
           {% for product in products %}
             <tr>
               <td class="text-center">{% if product.thumb %}<a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-thumbnail"/></a>{% endif %}</td>
@@ -11,7 +12,7 @@
                 {% if product.option %}
                   {% for option in product.option %}
                     <br/>
-                    <small> - {{ option.name }} {{ option.value }}</small>
+                    <small> - {{ option.name }}: {{ option.value }}</small>
                   {% endfor %}
                 {% endif %}
                 {% if product.reward %}
@@ -20,9 +21,8 @@
                 {% endif %}
                 {% if product.subscription %}
                   <br/>
-                  <small> - {{ text_subscription }} {{ product.subscription }}</small>
+                  <small> - {{ text_subscription }}: {{ product.subscription }}</small>
                 {% endif %}
-
               </td>
               <td class="text-end">x {{ product.quantity }}</td>
               <td class="text-end">{{ product.total }}</td>
@@ -34,6 +34,7 @@
               </td>
             </tr>
           {% endfor %}
+
           {% for voucher in vouchers %}
             <tr>
               <td class="text-center"></td>
@@ -48,6 +49,7 @@
               </td>
             </tr>
           {% endfor %}
+
         </table>
         <div>
           <table class="table table-sm table-bordered">

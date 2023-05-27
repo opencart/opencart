@@ -24,7 +24,10 @@
               {% for subscription in subscriptions %}
                 <tr>
                   <td class="text-end">#{{ subscription.subscription_id }}</td>
-                  <td class="text-start"><a href="{{ subscription.product }}">{{ subscription.product_name }}</a></td>
+                  <td class="text-start"><a href="{{ subscription.product }}">{{ subscription.product_name }}</a>
+                    <br/>
+                    {{ subscription.description }}
+                  </td>
                   <td class="text-start">{{ subscription.status }}</td>
                   <td class="text-start">{{ subscription.date_added }}</td>
                   <td class="text-end"><a href="{{ subscription.view }}" data-bs-toggle="tooltip" title="{{ button_view }}" class="btn btn-info"><i class="fa-solid fa-eye"></i></a></td>

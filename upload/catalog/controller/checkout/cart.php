@@ -322,20 +322,26 @@ class Cart extends \Opencart\System\Engine\Controller {
 			$quantity = 1;
 		}
 
-		// Handles single item update
-		$this->cart->update($key, $quantity);
-
-		if ($this->cart->hasProducts() || !empty($this->session->data['vouchers'])) {
-			$json['success'] = $this->language->get('text_edit');
-		} else {
-			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
+		if (!$this->cart->has($key)) {
+			$json['error'] = $this->language->get('error_product');
 		}
 
-		unset($this->session->data['shipping_method']);
-		unset($this->session->data['shipping_methods']);
-		unset($this->session->data['payment_method']);
-		unset($this->session->data['payment_methods']);
-		unset($this->session->data['reward']);
+		if (!$json) {
+			// Handles single item update
+			$this->cart->update($key, $quantity);
+
+			if ($this->cart->hasProducts() || !empty($this->session->data['vouchers'])) {
+				$json['success'] = $this->language->get('text_edit');
+			} else {
+				$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
+			}
+
+			unset($this->session->data['shipping_method']);
+			unset($this->session->data['shipping_methods']);
+			unset($this->session->data['payment_method']);
+			unset($this->session->data['payment_methods']);
+			unset($this->session->data['reward']);
+		}
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
@@ -352,20 +358,26 @@ class Cart extends \Opencart\System\Engine\Controller {
 			$key = 0;
 		}
 
-		// Remove
-		$this->cart->remove($key);
-
-		if ($this->cart->hasProducts() || !empty($this->session->data['vouchers'])) {
-			$json['success'] = $this->language->get('text_remove');
-		} else {
-			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
+		if (!$this->cart->has($key)) {
+			$json['error'] = $this->language->get('error_product');
 		}
 
-		unset($this->session->data['shipping_method']);
-		unset($this->session->data['shipping_methods']);
-		unset($this->session->data['payment_method']);
-		unset($this->session->data['payment_methods']);
-		unset($this->session->data['reward']);
+		// Remove
+		if (!$json) {
+			$this->cart->remove($key);
+
+			if ($this->cart->hasProducts() || !empty($this->session->data['vouchers'])) {
+				$json['success'] = $this->language->get('text_remove');
+			} else {
+				$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
+			}
+
+			unset($this->session->data['shipping_method']);
+			unset($this->session->data['shipping_methods']);
+			unset($this->session->data['payment_method']);
+			unset($this->session->data['payment_methods']);
+			unset($this->session->data['reward']);
+		}
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

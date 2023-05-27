@@ -1,8 +1,8 @@
 <?php
 namespace Opencart\System\Library\Cache;
 class APC {
-	private int $expire;
 	private bool $active;
+	private int $expire;
 
 	/**
 	 * Constructor

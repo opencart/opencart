@@ -171,11 +171,11 @@ $registry->set('template', $template);
 $template->addPath(DIR_TEMPLATE);
 
 // Language
-$language_code =  $request->get['language'] ?? $config->get('language_code');
+// Get is for front-end, cookie for admin, config for default
+$language_code =  $request->get['language'] ?? $request->cookie['language'] ?? $config->get('language_code');
 $language = new \Opencart\System\Library\Language($language_code);
 $registry->set('language', $language);
 $language->addPath(DIR_LANGUAGE);
-$loader->language('default');
 
 // Url
 $registry->set('url', new \Opencart\System\Library\Url($config->get('site_url')));

@@ -19,7 +19,7 @@ class Language extends \Opencart\System\Engine\Controller {
 			if ($language_info['extension']) {
 				self::$extension = $language_info['extension'];
 
-				$this->language->addPath('extension/' . $language_info['extension'], DIR_EXTENSION . $language_info['extension'] . '/admin/language/');
+				$this->language->addPath(DIR_EXTENSION . $language_info['extension'] . '/admin/language/');
 			}
 
 			// Set the config language_id key

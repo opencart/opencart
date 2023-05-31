@@ -2,24 +2,9 @@
 namespace Opencart\Catalog\Controller\Account;
 class Login extends \Opencart\System\Engine\Controller {
 	public function index(): void {
-		if ($this->customer->isLogged() && ) {
-			if (!isset($this->session->data['redirect'])) {
-				$redirect = $this->url->link('account/account', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']);
-			} else {
-				$redirect = $this->session->data['redirect'];
-
-				unset($this->session->data['redirect']);
-			}
-
-			$this->response->redirect($redirect);
-		}
-
+		// If already logged in and has matching token then redirect to account page
 		if ($this->customer->isLogged() && isset($this->request->get['customer_token']) && isset($this->session->data['customer_token']) && ($this->request->get['customer_token'] == $this->session->data['customer_token'])) {
-
-
-			$this->response->redirect($this->url->link('account/account', 'user_token=' . $this->session->data['user_token']));
-
-
+			$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']));
 		}
 
 		$this->load->language('account/login');
@@ -43,7 +28,27 @@ class Login extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('account/login', 'language=' . $this->config->get('config_language'))
 		];
 
-		if (isset($this->session->data['error'])) {
+		// Check to see if user is using incorrect token
+		if (isset($this->session->data['customer_token'])) {
+			$data['error_warning'] = $this->language->get('error_token');
+
+			$this->customer->logout();
+
+			unset($this->session->data['customer']);
+			unset($this->session->data['shipping_address']);
+			unset($this->session->data['shipping_method']);
+			unset($this->session->data['shipping_methods']);
+			unset($this->session->data['payment_address']);
+			unset($this->session->data['payment_method']);
+			unset($this->session->data['payment_methods']);
+			unset($this->session->data['comment']);
+			unset($this->session->data['order_id']);
+			unset($this->session->data['coupon']);
+			unset($this->session->data['reward']);
+			unset($this->session->data['voucher']);
+			unset($this->session->data['vouchers']);
+			unset($this->session->data['customer_token']);
+		} elseif (isset($this->session->data['error'])) {
 			$data['error_warning'] = $this->session->data['error'];
 
 			unset($this->session->data['error']);

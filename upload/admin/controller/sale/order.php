@@ -1596,11 +1596,6 @@ class Order extends \Opencart\System\Engine\Controller {
 
 				$shipping_address = str_replace(["\r\n", "\r", "\n"], '<br/>', preg_replace(["/\s\s+/", "/\r\r+/", "/\n\n+/"], '<br/>', trim(str_replace($find, $replace, $format))));
 
-				// Subscription
-				$filter_data = [
-					'filter_order_id'	=> $order_id
-				];
-
 				$product_data = [];
 
 				$products = $this->model_sale_order->getProducts($order_id);

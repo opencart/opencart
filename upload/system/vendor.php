@@ -47,11 +47,11 @@ $autoloader->register('ScssPhp\ScssPhp', DIR_STORAGE . 'vendor/scssphp/scssphp/s
 require_once(DIR_STORAGE . 'vendor/symfony/deprecation-contracts/function.php');
 
 // symfony/polyfill-ctype
-$autoloader->register('Symfony\Polyfill\Ctype', DIR_STORAGE . 'vendor/symfony/polyfill-ctype/', true);
+$autoloader->register('Symfony\Polyfill\Ctype', DIR_STORAGE . 'vendor/symfony/polyfill-ctype//', true);
 require_once(DIR_STORAGE . 'vendor/symfony/polyfill-ctype/bootstrap.php');
 
 // symfony/polyfill-mbstring
-$autoloader->register('Symfony\Polyfill\Mbstring', DIR_STORAGE . 'vendor/symfony/polyfill-mbstring/', true);
+$autoloader->register('Symfony\Polyfill\Mbstring', DIR_STORAGE . 'vendor/symfony/polyfill-mbstring//', true);
 require_once(DIR_STORAGE . 'vendor/symfony/polyfill-mbstring/bootstrap.php');
 
 // twig/twig

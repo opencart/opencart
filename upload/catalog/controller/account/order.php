@@ -157,6 +157,17 @@ class Order extends \Opencart\System\Engine\Controller {
 			}
 
 			$data['order_id'] = $order_id;
+
+			$this->load->model('localisation/order_status');
+
+			$order_status_info = $this->model_localisation_order_status->getOrderStatus($order_info['order_status_id']);
+
+			if ($order_status_info) {
+				$data['order_status'] = $order_status_info['name'];
+			} else {
+				$data['order_status'] = '';
+			}
+
 			$data['date_added'] = date($this->language->get('date_format_short'), strtotime($order_info['date_added']));
 
 			// Payment Address

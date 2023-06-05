@@ -8,71 +8,82 @@
   <div class="row">{{ column_left }}
     <div id="content" class="col">{{ content_top }}
       <h1>{{ heading_title }}</h1>
-      <div class="table-responsive">
-
-        <table class="table table-bordered table-hover">
-          <thead>
-            <tr>
-              <td class="text-start" colspan="2">{{ text_subscription_detail }}</td>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="text-start w-50"><b>{{ text_subscription_id }}</b> #{{ subscription_id }}
-                <br/>
-                <b>{{ text_date_added }}</b> {{ date_added }}
-                <br/>
-                <b>{{ text_status }}</b> {{ subscription_status }}
-                <br/>
-                <b>{{ text_payment_method }}</b> {{ payment_method }}</td>
-              <td class="text-start"><b>{{ text_order_id }}</b> #{{ order_id }}</td>
-            </tr>
-          </tbody>
-        </table>
-
-        {% if payment_address or shipping_address %}
+      <div class="row row-cols-md-2">
+        <div class="col">
           <table class="table table-bordered table-hover">
-            <thead>
-              <tr>
-                {% if payment_address %}
-                  <td class="text-start align-top">{{ text_payment_address }}</td>
-                {% endif %}
-
-                {% if shipping_address %}
-                  <td class="text-start align-top">{{ text_shipping_address }}</td>
-                {% endif %}
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                {% if payment_address %}
-                  <td class="text-start align-top">{{ payment_address }}</td>
-                {% endif %}
-
-                {% if shipping_address %}
-                  <td class="text-start align-top">{{ shipping_address }}</td>
-                {% endif %}</tr>
-            </tbody>
+            <tr>
+              <td><b>{{ text_subscription_id }}</b></td>
+              <td>#{{ subscription_id }}</td>
+            </tr>
+            <tr>
+              <td><b>{{ text_status }}</b></td>
+              <td>{{ subscription_status }}</td>
+            </tr>
+            <tr>
+              <td><b>{{ text_order_id }}</b></td>
+              <td>#{{ order_id }}</td>
+            </tr>
           </table>
-        {% endif %}
-
+        </div>
+        <div class="col">
+          <table class="table table-bordered table-hover">
+            {% if shipping_method %}
+            <tr>
+              <td><strong>{{ text_shipping_method }}</strong></td>
+              <td>{{ shipping_method }}</td>
+            </tr>
+            {% endif %}
+            <tr>
+              <td><strong>{{ text_payment_method }}</strong></td>
+              <td>{{ payment_method }}</td>
+            </tr>
+            <tr>
+              <td><b>{{ text_date_added }}</b></td>
+              <td>{{ date_added }}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      {% if payment_address or shipping_address %}
         <table class="table table-bordered table-hover">
           <thead>
             <tr>
-              <td class="text-start w-50">{{ text_description }}</td>
-              <td class="text-start w-50">{{ text_quantity }}</td>
+              {% if payment_address %}
+                <td class="text-start align-top">{{ text_payment_address }}</td>
+              {% endif %}
+
+              {% if shipping_address %}
+                <td class="text-start align-top">{{ text_shipping_address }}</td>
+              {% endif %}
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td class="text-start"><a href="{{ product }}">{{ name }}</a>
-                <br/>{{ description }}</td>
-              <td class="text-start">{{ product_quantity }}</td>
-            </tr>
+              {% if payment_address %}
+                <td class="text-start align-top">{{ payment_address }}</td>
+              {% endif %}
+
+              {% if shipping_address %}
+                <td class="text-start align-top">{{ shipping_address }}</td>
+              {% endif %}</tr>
           </tbody>
         </table>
-      </div>
-
+      {% endif %}
+      <table class="table table-bordered table-hover">
+        <thead>
+          <tr>
+            <td class="text-start w-50">{{ text_description }}</td>
+            <td class="text-start w-50">{{ text_quantity }}</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="text-start"><a href="{{ product }}">{{ name }}</a>
+              <br/>{{ description }}</td>
+            <td class="text-start">{{ product_quantity }}</td>
+          </tr>
+        </tbody>
+      </table>
       <h2>{{ text_history }}</h2>
       <div id="history">{{ history }}</div>
       <h2>{{ text_order }}</h2>

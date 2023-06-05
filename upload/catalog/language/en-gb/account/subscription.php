@@ -5,15 +5,13 @@ $_['heading_title']               = 'Subscriptions';
 // Text
 $_['text_account']                = 'Account';
 $_['text_subscription']           = 'Subscription #%s';
-$_['text_subscription_detail']    = 'Subscription Payment Details';
-$_['text_invoice_no']             = 'Invoice No.:';
-$_['text_subscription_id']        = 'Subscription ID:';
-$_['text_order_id']               = 'Order ID:';
-
+$_['text_invoice_no']             = 'Invoice No.';
+$_['text_subscription_id']        = 'Subscription ID';
+$_['text_order_id']               = 'Order ID';
 $_['text_shipping_address']       = 'Shipping Address';
-$_['text_shipping_method']        = 'Shipping Method:';
+$_['text_shipping_method']        = 'Shipping Method';
 $_['text_payment_address']        = 'Payment Address';
-$_['text_payment_method']         = 'Payment Method:';
+$_['text_payment_method']         = 'Payment Method';
 $_['text_subscription_trial']     = '%s every %d %s(s) for %d payment(s) then ';
 $_['text_subscription_duration']  = '%s every %d %s(s) for %d payment(s)';
 $_['text_subscription_cancel']    = '%s every %d %s(s) until canceled';
@@ -25,10 +23,10 @@ $_['text_year']                   = 'year';
 $_['text_history']                = 'Subscription History';
 $_['text_orders']                 = 'Order History';
 
-$_['text_date_added']             = 'Date Added:';
-$_['text_status']                 = 'Status:';
-$_['text_payment_method']         = 'Payment Method:';
-$_['text_order_id']               = 'Order ID:';
+$_['text_date_added']             = 'Date Added';
+$_['text_status']                 = 'Subscription Status';
+$_['text_payment_method']         = 'Payment Method';
+$_['text_order_id']               = 'Order ID';
 
 $_['text_description']            = 'Description';
 $_['text_quantity']               = 'Quantity';

@@ -37,7 +37,7 @@
                   <span class="badge bg-success">{{ text_complete }}</span>
                 {% endif %}</td>
               <td class="text-start d-none d-lg-table-cell">{{ gdpr.date_added }}</td>
-              <td class="text-end"><button type="button" value="{{ gdpr.approve }}" data-bs-toggle="tooltip" title="{{ text_approve }}" class="btn btn-success"><i class="fa-solid fa-check"></i></button>
+              <td class="text-end text-nowrap"><button type="button" value="{{ gdpr.approve }}" data-bs-toggle="tooltip" title="{{ text_approve }}" class="btn btn-success"><i class="fa-solid fa-check"></i></button>
                 <button type="button" value="{{ gdpr.deny }}" data-bs-toggle="tooltip" title="{{ text_deny }}" class="btn btn-warning"><i class="fa-solid fa-circle-xmark"></i></button>
                 <button type="button" value="{{ gdpr.delete }}" data-bs-toggle="tooltip" title="{{ text_delete }}" class="btn btn-danger"><i class="fa-regular fa-trash-can"></i></button></td>
             </tr>

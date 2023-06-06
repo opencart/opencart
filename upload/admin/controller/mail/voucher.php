@@ -30,7 +30,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 					$language_code = $this->config->get('config_language');
 				}
 
-				$this->load->language($language_code, 'mail', $language_code);
+				$this->load->language('default', 'mail', $language_code);
 				$this->load->language('mail/voucher', 'mail', $language_code);
 
 				$store_name = html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8');

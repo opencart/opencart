@@ -113,7 +113,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 			}
 
 			// Load the language for any mails using a different country code and prefixing it so that it does not pollute the main data pool.
-			$this->load->language($language_code, 'mail', $language_code);
+			$this->load->language('default', 'mail', $language_code);
 			$this->load->language('mail/gdpr_delete', 'mail', $language_code);
 
 			// Add language vars to the template folder

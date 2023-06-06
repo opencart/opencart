@@ -61,7 +61,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 		}
 
 		// Load the language for any mails using a different country code and prefixing it so it does not pollute the main data pool.
-		$this->load->language($language_code, 'mail', $language_code);
+		$this->load->language('default', 'mail', $language_code);
 		$this->load->language('mail/gdpr_export', 'mail', $language_code);
 
 		// Add language vars to the template folder
@@ -174,7 +174,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 			foreach ($results as $result) {
 				$data['ips'][] = [
 					'ip'         => $result['ip'],
-					'date_added' => date($this->language->get('datetime_format'), strtotime($result['date_added']))
+					'date_added' => date($this->language->get('mail_datetime_format'), strtotime($result['date_added']))
 				];
 			}
 		}
@@ -231,7 +231,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 		}
 
 		// Load the language for any mails using a different country code and prefixing it so it does not pollute the main data pool.
-		$this->load->language($language_code, 'mail', $language_code);
+		$this->load->language('default', 'mail', $language_code);
 		$this->load->language('mail/gdpr_approve', 'mail', $language_code);
 
 		// Add language vars to the template folder
@@ -316,7 +316,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 		}
 
 		// Load the language for any mails using a different country code and prefixing it so it does not pollute the main data pool.
-		$this->load->language($language_code, 'mail', $language_code);
+		$this->load->language('default', 'mail', $language_code);
 		$this->load->language('mail/gdpr_deny', 'mail', $language_code);
 
 		// Add language vars to the template folder
@@ -401,7 +401,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 		}
 
 		// Load the language for any mails using a different country code and prefixing it so it does not pollute the main data pool.
-		$this->load->language($language_code, 'mail', $language_code);
+		$this->load->language('default', 'mail', $language_code);
 		$this->load->language('mail/gdpr_delete', 'mail', $language_code);
 
 		// Add language vars to the template folder

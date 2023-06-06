@@ -130,34 +130,38 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 		foreach ($results as $result) {
 			$order_info = $this->model_sale_order->getOrder($result['order_id']);
 
-			$address = [
-				'firstname' => $order_info['payment_firstname'],
-				'lastname'  => $order_info['payment_lastname'],
-				'address_1' => $order_info['payment_address_1'],
-				'address_2' => $order_info['payment_address_2'],
-				'city'      => $order_info['payment_city'],
-				'postcode'  => $order_info['payment_postcode'],
-				'country'   => $order_info['payment_country'],
-				'zone'      => $order_info['payment_zone']
-			];
+			if ($order_info['payment_country_id']) {
+				$address = [
+					'firstname' => $order_info['payment_firstname'],
+					'lastname'  => $order_info['payment_lastname'],
+					'address_1' => $order_info['payment_address_1'],
+					'address_2' => $order_info['payment_address_2'],
+					'city'      => $order_info['payment_city'],
+					'postcode'  => $order_info['payment_postcode'],
+					'country'   => $order_info['payment_country'],
+					'zone'      => $order_info['payment_zone']
+				];
 
-			if (!in_array($address, $data['addresses'])) {
-				$data['addresses'][] = $address;
+				if (!in_array($address, $data['addresses'])) {
+					$data['addresses'][] = $address;
+				}
 			}
 
-			$address = [
-				'firstname' => $order_info['shipping_firstname'],
-				'lastname'  => $order_info['shipping_lastname'],
-				'address_1' => $order_info['shipping_address_1'],
-				'address_2' => $order_info['shipping_address_2'],
-				'city'      => $order_info['shipping_city'],
-				'postcode'  => $order_info['shipping_postcode'],
-				'country'   => $order_info['shipping_country'],
-				'zone'      => $order_info['shipping_zone']
-			];
+			if ($order_info['shipping_country_id']) {
+				$address = [
+					'firstname' => $order_info['shipping_firstname'],
+					'lastname'  => $order_info['shipping_lastname'],
+					'address_1' => $order_info['shipping_address_1'],
+					'address_2' => $order_info['shipping_address_2'],
+					'city'      => $order_info['shipping_city'],
+					'postcode'  => $order_info['shipping_postcode'],
+					'country'   => $order_info['shipping_country'],
+					'zone'      => $order_info['shipping_zone']
+				];
 
-			if (!in_array($address, $data['addresses'])) {
-				$data['addresses'][] = $address;
+				if (!in_array($address, $data['addresses'])) {
+					$data['addresses'][] = $address;
+				}
 			}
 		}
 
@@ -170,7 +174,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 			foreach ($results as $result) {
 				$data['ips'][] = [
 					'ip'         => $result['ip'],
-					'date_added' => date($this->language->get('mail_datetime_format'), strtotime($result['date_added']))
+					'date_added' => date($this->language->get('datetime_format'), strtotime($result['date_added']))
 				];
 			}
 		}

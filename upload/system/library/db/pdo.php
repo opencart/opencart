@@ -27,7 +27,7 @@ class PDO {
 
 		if ($pdo) {
 			$this->connection = $pdo;
-			$this->connection->query("SET SESSION sql_mode = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION'");
+			$this->connection->query("SET SESSION sql_mode = 'NO_ZERO_IN_DATE,NO_ENGINE_SUBSTITUTION'");
 			$this->connection->query("SET FOREIGN_KEY_CHECKS = 0");
 		}
 	}

@@ -1102,13 +1102,13 @@ class Product extends \Opencart\System\Engine\Controller {
 				if (!$this->request->post['master_id']) {
 					// Normal product edit
 					$this->model_catalog_product->editProduct($this->request->post['product_id'], $this->request->post);
+					
+					// Variant products edit if master product is edited
+					$this->model_catalog_product->editVariants($this->request->post['product_id'], $this->request->post);
 				} else {
 					// Variant product edit
 					$this->model_catalog_product->editVariant($this->request->post['master_id'], $this->request->post['product_id'], $this->request->post);
 				}
-
-				// Variant products edit if master product is edited
-				$this->model_catalog_product->editVariants($this->request->post['product_id'], $this->request->post);
 			}
 
 			$json['success'] = $this->language->get('text_success');

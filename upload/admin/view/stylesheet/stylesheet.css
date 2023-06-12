@@ -43,6 +43,10 @@ a {
     pointer-events: all;
 }
 
+#alert .alert {
+    margin-bottom: 15px;
+}
+
 #header {
     border-bottom: 1px solid #d8d8d8;
     box-shadow: 0px 0px 3px #CCCCCC;

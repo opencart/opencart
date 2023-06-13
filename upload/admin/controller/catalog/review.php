@@ -539,11 +539,13 @@ class Review extends \Opencart\System\Engine\Controller {
 				$this->model_catalog_product->editRating($result['product_id'], $this->model_catalog_review->getRating($result['product_id']));
 			}
 
-			$json['success'] = sprintf($this->language->get('text_rating'), $end, $total);
-
 			if ($total && $end < $total) {
+				$json['text'] = sprintf($this->language->get('text_rating'), $end, $total);
+
 				$json['next'] = $this->url->link('catalog/review.sync', 'user_token=' . $this->session->data['user_token'] . '&page=' . ($page + 1), true);
 			} else {
+				$json['success'] = sprintf($this->language->get('text_rating'), $end, $total);
+
 				$json['next'] = '';
 			}
 		}

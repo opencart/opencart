@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\System\Library\DB;
 class MySQLi {
-	private object $connection;
+	private object|null $connection;
 
 	/**
 	 * Constructor
@@ -22,8 +22,12 @@ class MySQLi {
 
 			$this->connection = $mysqli;
 			$this->connection->set_charset('utf8mb4');
-			$this->connection->query("SET SESSION sql_mode = 'NO_ZERO_IN_DATE,NO_ENGINE_SUBSTITUTION'");
-			$this->connection->query("SET FOREIGN_KEY_CHECKS = 0");
+
+			$this->query("SET SESSION sql_mode = 'NO_ZERO_IN_DATE,NO_ENGINE_SUBSTITUTION'");
+			$this->query("SET FOREIGN_KEY_CHECKS = 0");
+
+			// Sync PHP and DB time zones
+			$this->query("SET `time_zone` = '" . $this->escape(date('P')) . "'");
 		} catch (\mysqli_sql_exception $e) {
 			throw new \Exception('Error: Could not make a database link using ' . $username . '@' . $hostname . '!<br/>Message: ' . $e->getMessage());
 		}
@@ -100,11 +104,7 @@ class MySQLi {
 	 * @return   bool
 	 */
 	public function isConnected(): bool {
-		if ($this->connection) {
-			return $this->connection->ping();
-		} else {
-			return false;
-		}
+		return $this->connection;
 	}
 
 	/**
@@ -117,7 +117,7 @@ class MySQLi {
 		if ($this->connection) {
 			$this->connection->close();
 
-			unset($this->connection);
+			$this->connection = null;
 		}
 	}
 }

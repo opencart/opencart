@@ -27,5 +27,6 @@ $_['help_items']       = 'The number of items to show per slide.';
 // Error
 $_['error_permission'] = 'Warning: You do not have permission to modify banner module!';
 $_['error_name']       = 'Module Name must be between 3 and 64 characters!';
+$_['error_interval']   = 'Interval required!';
 $_['error_width']      = 'Width required!';
 $_['error_height']     = 'Height required!';

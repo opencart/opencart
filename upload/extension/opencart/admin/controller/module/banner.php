@@ -135,6 +135,10 @@ class Banner extends \Opencart\System\Engine\Controller {
 			$json['error']['name'] = $this->language->get('error_name');
 		}
 
+		if (!$this->request->post['interval']) {
+			$json['error']['interval'] = $this->language->get('error_interval');
+		}
+
 		if (!$this->request->post['width']) {
 			$json['error']['width'] = $this->language->get('error_width');
 		}

@@ -46,8 +46,8 @@
                           <option value="{{ store.store_id }}"{% if store.store_id == layout_route.store_id %} selected{% endif %}>{{ store.name }}</option>
                         {% endfor %}
                       </select></td>
-                    <td class="text-start"><input type="text" name="layout_route[{{ route_row }}][route]" value="{{ layout_route.route }}" placeholder="{{ entry_route }}" class="form-control"/></td>
-                    <td class="text-end"><button type="button" onclick="$('#route-row-{{ route_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
+                    <td class="text-start"><input type="text" name="layout_route[{{ route_row }}][route]" value="{{ layout_route.route }}" placeholder="{{ entry_route|escape('js') }}" class="form-control"/></td>
+                    <td class="text-end"><button type="button" onclick="$('#route-row-{{ route_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove|escape('js') }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
                   </tr>
                   {% set route_row = route_row + 1 %}
                 {% endfor %}
@@ -55,7 +55,7 @@
               <tfoot>
                 <tr>
                   <td colspan="2"></td>
-                  <td class="text-end"><button type="button" onclick="addRoute();" data-bs-toggle="tooltip" title="{{ button_route_add }}" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i></button></td>
+                  <td class="text-end"><button type="button" onclick="addRoute();" data-bs-toggle="tooltip" title="{{ button_route_add|escape('js') }}" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i></button></td>
                 </tr>
               </tfoot>
             </table>
@@ -90,7 +90,7 @@
                                   </optgroup>
                                 {% endfor %}
                               </select> <input type="hidden" name="layout_module[{{ module_row }}][position]" value="{{ layout_module.position }}"/> <input type="hidden" name="layout_module[{{ module_row }}][sort_order]" value="{{ layout_module.sort_order }}"/> <a href="{{ layout_module.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary btn-sm"><i class="fa-solid fa-pencil fa-fw"></i></a>
-                              <button type="button" onclick="$('#module-row-{{ module_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-sm"><i class="fa-solid fa-minus-circle fa-fw"></i></button>
+                              <button type="button" onclick="$('#module-row-{{ module_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove|escape('js') }}" class="btn btn-danger btn-sm"><i class="fa-solid fa-minus-circle fa-fw"></i></button>
                             </div>
                           </td>
                         </tr>
@@ -100,7 +100,7 @@
                   </tbody>
                   <tfoot>
                     <tr>
-                      <td class="text-end"><button type="button" onclick="addModule('column-left');" data-bs-toggle="tooltip" title="{{ button_module_add }}" class="btn btn-primary btn-sm"><i class="fa-solid fa-plus-circle fa-fw"></i></button></td>
+                      <td class="text-end"><button type="button" onclick="addModule('column-left');" data-bs-toggle="tooltip" title="{{ button_module_add|escape('js') }}" class="btn btn-primary btn-sm"><i class="fa-solid fa-plus-circle fa-fw"></i></button></td>
                     </tr>
                   </tfoot>
                 </table>
@@ -240,13 +240,13 @@ var route_row = {{ route_row }};
 function addRoute() {
     html = '<tr id="route-row-' + route_row + '">';
     html += '  <td class="text-start"><select name="layout_route[' + route_row + '][store_id]" class="form-select">';
-    html += '  <option value="0">{{ text_default }}</option>';
+    html += '  <option value="0">{{ text_default|escape('js') }}</option>';
   {% for store in stores %}
     html += '<option value="{{ store.store_id }}">{{ store.name|escape('js') }}</option>';
   {% endfor %}
     html += '  </select></td>';
-    html += '  <td class="text-start"><input type="text" name="layout_route[' + route_row + '][route]" value="" placeholder="{{ entry_route }}" class="form-control"/></td>';
-    html += '  <td class="text-end"><button type="button" onclick="$(\'#route-row-' + route_row + '\').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>';
+    html += '  <td class="text-start"><input type="text" name="layout_route[' + route_row + '][route]" value="" placeholder="{{ entry_route|escape('js') }}" class="form-control"/></td>';
+    html += '  <td class="text-end"><button type="button" onclick="$(\'#route-row-' + route_row + '\').remove();" data-bs-toggle="tooltip" title="{{ button_remove|escape('js') }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>';
     html += '</tr>';
 
     $('#route tbody').append(html);
@@ -263,10 +263,10 @@ function addModule(type) {
   {% for extension in extensions %}
     html += '    <optgroup label="{{ extension.name|escape('js') }}">';
   {% if not extension.module %}
-    html += '      <option value="{{ extension.code }}">{{ extension.name|escape('js') }}</option>';
+    html += '      <option value="{{ extension.code|escape('js') }}">{{ extension.name|escape('js') }}</option>';
   {% else %}
   {% for module in extension.module %}
-    html += '      <option value="{{ module.code }}">{{ module.name|escape('js') }}</option>';
+    html += '      <option value="{{ module.code|escape('js') }}">{{ module.name|escape('js') }}</option>';
   {% endfor %}
   {% endif %}
     html += '    </optgroup>';
@@ -274,7 +274,7 @@ function addModule(type) {
     html += '  </select>';
     html += '  <input type="hidden" name="layout_module[' + module_row + '][position]" value="' + type.replaceAll('-', '_') + '" />';
     html += '  <input type="hidden" name="layout_module[' + module_row + '][sort_order]" value="" />';
-    html += '  <a href=" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary btn-sm"><i class="fa-solid fa-pencil fa-fw"></i></a><button type="button" onclick="$(\'#module-row-' + module_row + '\').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger btn-sm"><i class="fa-solid fa-minus-circle fa-fw"></i></button>';
+    html += '  <a href=" data-bs-toggle="tooltip" title="{{ button_edit|escape('js') }}" class="btn btn-primary btn-sm"><i class="fa-solid fa-pencil fa-fw"></i></a><button type="button" onclick="$(\'#module-row-' + module_row + '\').remove();" data-bs-toggle="tooltip" title="{{ button_remove|escape('js') }}" class="btn btn-danger btn-sm"><i class="fa-solid fa-minus-circle fa-fw"></i></button>';
     html += '  </div></td>';
     html += '</tr>';
 

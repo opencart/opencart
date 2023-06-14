@@ -79,7 +79,7 @@
                             </div>
                           </td>
                           <td class="text-end" style="width: 10%;"><input type="text" name="banner_image[{{ language.language_id }}][{{ image_row }}][sort_order]" value="{{ banner_image.sort_order }}" placeholder="{{ entry_sort_order }}" id="input-image-{{ language.language_id }}-{{ image_row }}-sort-order" class="form-control"/></td>
-                          <td class="text-end"><button type="button" onclick="$('#image-row-{{ image_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
+                          <td class="text-end"><button type="button" onclick="$('#image-row-{{ image_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove|escape('js') }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
                         </tr>
                         {% set image_row = image_row + 1 %}
                       {% endfor %}
@@ -109,22 +109,22 @@ $('button[id^=\'button-banner\']').on('click', function () {
 
     html = '<tr id="image-row-' + image_row + '">';
     html += '  <td class="text-start">';
-    html += '    <input type="text" name="banner_image[' + $(element).attr('data-language') + '][' + image_row + '][title]" value="" placeholder="{{ entry_title }}" id="input-image-' + $(element).attr('data-language') + '-' + image_row + '-title" class="form-control"/>';
+    html += '    <input type="text" name="banner_image[' + $(element).attr('data-language') + '][' + image_row + '][title]" value="" placeholder="{{ entry_title|escape('js') }}" id="input-image-' + $(element).attr('data-language') + '-' + image_row + '-title" class="form-control"/>';
     html += '    <div id="error-image-' + $(element).attr('data-language') + '-' + image_row + '-title" class="invalid-feedback"></div>';
     html += '  </td>';
-    html += '  <td class="text-start"><input type="text" name="banner_image[' + $(element).attr('data-language') + '][' + image_row + '][link]" value="" placeholder="{{ entry_link }}" id="input-image-' + $(element).attr('data-language') + '-' + image_row + '-link" class="form-control"/></td>';
+    html += '  <td class="text-start"><input type="text" name="banner_image[' + $(element).attr('data-language') + '][' + image_row + '][link]" value="" placeholder="{{ entry_link|escape('js') }}" id="input-image-' + $(element).attr('data-language') + '-' + image_row + '-link" class="form-control"/></td>';
     html += '  <td class="text-center">';
     html += '    <div class="card">';
-    html += '      <img src="{{ placeholder }}" alt="" title="" id="thumb-image-' + $(element).attr('data-language') + '-' + image_row + '" data-oc-placeholder="{{ placeholder }}" class="card-img-top"/>';
+    html += '      <img src="{{ placeholder|escape('js') }}" alt="" title="" id="thumb-image-' + $(element).attr('data-language') + '-' + image_row + '" data-oc-placeholder="{{ placeholder|escape('js') }}" class="card-img-top"/>';
     html += '      <input type="hidden" name="banner_image[' + $(element).attr('data-language') + '][' + image_row + '][image]" value="" id="input-image-' + $(element).attr('data-language') + '-' + image_row + '-image"/>';
     html += '      <div class="card-body">';
-    html += '        <button type="button" data-oc-toggle="image" data-oc-target="#input-image-' + $(element).attr('data-language') + '-' + image_row + '-image" data-oc-thumb="#thumb-image-' + $(element).attr('data-language') + '-' + image_row + '" class="btn btn-primary btn-sm btn-block"><i class="fa-solid fa-pencil"></i> {{ button_edit }}</button>';
-    html += '        <button type="button" data-oc-toggle="clear" data-oc-target="#input-image-' + $(element).attr('data-language') + '-' + image_row + '-image" data-oc-thumb="#thumb-image-' + $(element).attr('data-language') + '-' + image_row + '" class="btn btn-warning btn-sm btn-block"><i class="fa-regular fa-trash-can"></i> {{ button_clear }}</button>';
+    html += '        <button type="button" data-oc-toggle="image" data-oc-target="#input-image-' + $(element).attr('data-language') + '-' + image_row + '-image" data-oc-thumb="#thumb-image-' + $(element).attr('data-language') + '-' + image_row + '" class="btn btn-primary btn-sm btn-block"><i class="fa-solid fa-pencil"></i> {{ button_edit|escape('js') }}</button>';
+    html += '        <button type="button" data-oc-toggle="clear" data-oc-target="#input-image-' + $(element).attr('data-language') + '-' + image_row + '-image" data-oc-thumb="#thumb-image-' + $(element).attr('data-language') + '-' + image_row + '" class="btn btn-warning btn-sm btn-block"><i class="fa-regular fa-trash-can"></i> {{ button_clear|escape('js') }}</button>';
     html += '      </div>';
     html += '    </div>';
     html += '  </td>';
-    html += '  <td class="text-end"><input type="text" name="banner_image[' + $(element).attr('data-language') + '][' + image_row + '][sort_order]" value="" placeholder="{{ entry_sort_order }}" id="input-image-' + $(element).attr('data-language') + '-' + image_row + '-sort-order" class="form-control"/></td>';
-    html += '  <td class="text-end"><button type="button" onclick="$(\'#image-row-' + image_row + '\').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>';
+    html += '  <td class="text-end"><input type="text" name="banner_image[' + $(element).attr('data-language') + '][' + image_row + '][sort_order]" value="" placeholder="{{ entry_sort_order|escape('js') }}" id="input-image-' + $(element).attr('data-language') + '-' + image_row + '-sort-order" class="form-control"/></td>';
+    html += '  <td class="text-end"><button type="button" onclick="$(\'#image-row-' + image_row + '\').remove();" data-bs-toggle="tooltip" title="{{ button_remove|escape('js') }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>';
     html += '</tr>';
 
     $('#image-' + $(element).attr('data-language') + ' tbody').append(html);

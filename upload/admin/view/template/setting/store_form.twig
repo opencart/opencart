@@ -614,7 +614,7 @@ $('#input-country').on('change', function () {
             $('#input-zone').prop('disabled', false);
         },
         success: function (json) {
-            html = '<option value="">{{ text_select }}</option>';
+            html = '<option value="">{{ text_select|escape('js') }}</option>';
 
             if (json['zone'] && json['zone'] != '') {
                 for (i = 0; i < json['zone'].length; i++) {
@@ -627,7 +627,7 @@ $('#input-country').on('change', function () {
                     html += '>' + json['zone'][i]['name'] + '</option>';
                 }
             } else {
-                html += '<option value="0" selected>{{ text_none }}</option>';
+                html += '<option value="0" selected>{{ text_none|escape('js') }}</option>';
             }
 
             $('#input-zone').html(html);

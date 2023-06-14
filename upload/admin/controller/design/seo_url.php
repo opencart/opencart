@@ -483,8 +483,17 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 			$json['error']['value'] = $this->language->get('error_value_exists');
 		}
 
-		if (!$this->request->post['keyword'] || preg_match('/[^a-zA-Z0-9_-]|[\p{Cyrillic}]+/u', $this->request->post['keyword'])) {
-			$json['error']['keyword'] = $this->language->get('error_keyword');
+		// Split keywords by / so we can validate each keyword
+		$keywords = explode('/', $this->request->post['keyword']);
+
+		foreach ($keywords as $keyword) {
+			if ((oc_strlen(trim($keyword)) < 1) || (oc_strlen($keyword) > 64)) {
+				$json['error']['keyword'] = $this->language->get('error_keyword');
+			}
+
+			if (preg_match('/[^a-zA-Z0-9\/_-]|[\p{Cyrillic}]+/u', $keyword)) {
+				$json['error']['keyword'] = $this->language->get('error_keyword_character');
+			}
 		}
 
 		// Check if keyword already exists and on the same store as long as the keyword matches the key / value pair

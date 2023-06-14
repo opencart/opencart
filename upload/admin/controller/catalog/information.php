@@ -307,6 +307,10 @@ class Information extends \Opencart\System\Engine\Controller {
 						$json['error']['keyword_' . $store_id . '_' . $language_id] = $this->language->get('error_keyword');
 					}
 
+					if (preg_match('/[^a-zA-Z0-9\/_-]|[\p{Cyrillic}]+/u', $keyword)) {
+						$json['error']['keyword_' . $store_id . '_' . $language_id] = $this->language->get('error_keyword_character');
+					}
+
 					$seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyword($keyword, $store_id);
 
 					if ($seo_url_info && (!isset($this->request->post['information_id']) || $seo_url_info['key'] != 'information_id' || $seo_url_info['value'] != (int)$this->request->post['information_id'])) {

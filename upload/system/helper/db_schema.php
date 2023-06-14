@@ -7230,7 +7230,7 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'keyword',
-				'type' => 'varchar(255)',
+				'type' => 'text',
 				'not_null' => true
 			],
 			[

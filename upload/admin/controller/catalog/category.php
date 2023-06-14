@@ -387,7 +387,7 @@ class Category extends \Opencart\System\Engine\Controller {
 
 			foreach ($this->request->post['category_seo_url'] as $store_id => $language) {
 				foreach ($language as $language_id => $keyword) {
-					if ((oc_strlen(trim($keyword)) < 1) || (oc_strlen($keyword) > 100)) {
+					if ((oc_strlen(trim($keyword)) < 1) || (oc_strlen($keyword) > 64)) {
 						$json['error']['keyword_' . $store_id . '_' . $language_id] = $this->language->get('error_keyword');
 					}
 

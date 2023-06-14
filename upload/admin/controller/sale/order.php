@@ -648,6 +648,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('sale/order');
 		$this->load->model('sale/subscription');
+		$this->load->model('tool/upload');
 
 		$products = $this->model_sale_order->getProducts($order_id);
 

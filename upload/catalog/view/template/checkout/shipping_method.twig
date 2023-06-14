@@ -39,12 +39,12 @@ $('#button-shipping-methods').on('click', function() {
                     html += '  <div class="modal-dialog modal-dialog-centered">';
                     html += '    <div class="modal-content">';
                     html += '      <div class="modal-header">';
-                    html += '        <h5 class="modal-title"><i class="fa fa-truck"></i> {{ text_shipping_method }}</h5>';
+                    html += '        <h5 class="modal-title"><i class="fa fa-truck"></i> {{ text_shipping_method|escape('js') }}</h5>';
                     html += '        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>';
                     html += '      </div>';
                     html += '      <div class="modal-body">';
                     html += '        <form id="form-shipping-method">';
-                    html += '          <p>{{ text_shipping }}</p>';
+                    html += '          <p>{{ text_shipping|escape('js') }}</p>';
 
                     for (i in json['shipping_methods']) {
                         html += '<p><strong>' + json['shipping_methods'][i]['name'] + '</strong></p>';
@@ -71,7 +71,7 @@ $('#button-shipping-methods').on('click', function() {
                     }
 
                     html += '          <div class="text-end">';
-                    html += '            <button type="submit" id="button-shipping-method" class="btn btn-primary">{{ button_continue }}</button>';
+                    html += '            <button type="submit" id="button-shipping-method" class="btn btn-primary">{{ button_continue|escape('js') }}</button>';
                     html += '          </div>';
                     html += '        </form>';
                     html += '      </div>';

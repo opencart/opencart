@@ -48,12 +48,12 @@ $('#button-payment-methods').on('click', function() {
                     html += '  <div class="modal-dialog modal-dialog-centered">';
                     html += '    <div class="modal-content">';
                     html += '      <div class="modal-header">';
-                    html += '        <h5 class="modal-title"><i class="fa fa-credit-card"></i> {{ text_payment_method }}</h5>';
+                    html += '        <h5 class="modal-title"><i class="fa fa-credit-card"></i> {{ text_payment_method|escape('js') }}</h5>';
                     html += '        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>';
                     html += '      </div>';
                     html += '      <div class="modal-body">';
                     html += '        <form id="form-payment-method">';
-                    html += '          <p>{{ text_payment }}</p>';
+                    html += '          <p>{{ text_payment|escape('js') }}</p>';
 
                     for (i in json['payment_methods']) {
                         html += '<p><strong>' + json['payment_methods'][i]['name'] + '</strong></p>';
@@ -80,7 +80,7 @@ $('#button-payment-methods').on('click', function() {
                     }
 
                     html += '          <div class="text-end">';
-                    html += '            <button type="submit" id="button-payment-method" class="btn btn-primary">{{ button_continue }}</button>';
+                    html += '            <button type="submit" id="button-payment-method" class="btn btn-primary">{{ button_continue|escape('js') }}</button>';
                     html += '          </div>';
                     html += '        </form>';
                     html += '      </div>';

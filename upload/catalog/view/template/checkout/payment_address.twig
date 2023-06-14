@@ -285,7 +285,7 @@ $('#form-payment-address').on('submit', function(e) {
 
                     $('#form-payment-address')[0].reset();
 
-                    var html = '<option value="">{{ text_select }}</option>';
+                    var html = '<option value="">{{ text_select|escape('js') }}</option>';
 
                     if (json['addresses']) {
                         for (i in json['addresses']) {
@@ -351,14 +351,14 @@ $('#input-payment-country').on('change', function() {
                     $('#input-payment-postcode').parent().removeClass('required');
                 }
 
-                html = '<option value="">{{ text_select }}</option>';
+                html = '<option value="">{{ text_select|escape('js') }}</option>';
 
                 if (json['zone'] && json['zone'] != '') {
                     for (i = 0; i < json['zone'].length; i++) {
                         html += '<option value="' + json['zone'][i]['zone_id'] + '">' + json['zone'][i]['name'] + '</option>';
                     }
                 } else {
-                    html += '<option value="0" selected>{{ text_none }}</option>';
+                    html += '<option value="0" selected>{{ text_none|escape('js') }}</option>';
                 }
 
                 $('#input-payment-zone').html(html);

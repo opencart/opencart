@@ -2750,7 +2750,7 @@ $('#button-refresh').on('click', function() {
                     html += '  <td class="text-end">' + product['total'] + '</td>';
                     html += '  <td class="text-end">';
                     html += '    <form>';
-                    html += '      <button type="submit" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button>';
+                    html += '      <button type="submit" data-bs-toggle="tooltip" title="{{ button_remove|escape('js') }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button>';
                     html += '      <input type="hidden" name="key" value="' + product['cart_id'] + '"/>';
                     html += '    </form>';
                     html += '  </td>';
@@ -2774,7 +2774,7 @@ $('#button-refresh').on('click', function() {
                     html += '  <td class="text-end">' + voucher['amount'] + '</td>';
                     html += '  <td class="text-end">';
                     html += '    <form>';
-                    html += '      <button type="submit" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button>';
+                    html += '      <button type="submit" data-bs-toggle="tooltip" title="{{ button_remove|escape('js') }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button>';
                     html += '      <input type="hidden" name="key" value="' + voucher['key'] + '"/>';
                     html += '    </form>';
                     html += '  </td>';
@@ -2784,7 +2784,7 @@ $('#button-refresh').on('click', function() {
 
             if (!json['products'].length && !json['vouchers'].length) {
                 html += '<tr>';
-                html += '  <td colspan="6" class="text-center">{{ text_no_results }}</td>';
+                html += '  <td colspan="6" class="text-center">{{ text_no_results|escape('js') }}</td>';
                 html += '</tr>';
             }
 

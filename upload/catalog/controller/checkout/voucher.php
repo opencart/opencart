@@ -126,7 +126,7 @@ class Voucher extends \Opencart\System\Engine\Controller {
 				'from_email'       => $this->request->post['from_email'],
 				'voucher_theme_id' => $this->request->post['voucher_theme_id'],
 				'message'          => $this->request->post['message'],
-				'amount'           => $this->currency->convert($this->request->post['amount'], $this->session->data['currency'], $this->config->get('config_currency'))
+				'amount'           => $this->currency->convert((int)$this->request->post['amount'], $this->session->data['currency'], $this->config->get('config_currency'))
 			];
 
 			unset($this->session->data['shipping_method']);

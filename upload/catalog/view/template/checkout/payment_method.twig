@@ -151,10 +151,12 @@ $(document).on('submit', '#form-payment-method', function(e) {
 var timer = '';
 
 $('#input-comment').on('keydown', function() {
-    // Request
-    clearTimeout(timer);
+    $('#button-confirm').prop('disabled', true);
 
-    timer = setTimeout(function(object) {
+    // Request
+    clearTimeout(this.timer);
+
+    this.timer = setTimeout(function(object) {
         chain.attach(function() {
             return $.ajax({
                 url: 'index.php?route=checkout/payment_method.comment&language={{ language }}',
@@ -162,13 +164,9 @@ $('#input-comment').on('keydown', function() {
                 data: $('#input-comment').serialize(),
                 dataType: 'json',
                 contentType: 'application/x-www-form-urlencoded',
-                beforeSend: function() {
-                    $('#button-confirm').button('loading');
-                },
-                complete: function() {
-                    $('#button-confirm').button('reset');
-                },
                 success: function(json) {
+                    console.log(json);
+
                     $('.alert-dismissible').remove();
 
                     if (json['redirect']) {
@@ -177,24 +175,32 @@ $('#input-comment').on('keydown', function() {
 
                     if (json['error']) {
                         $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                        $('#button-confirm').prop('disabled', false);
                     }
 
                     if (json['success']) {
                         $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                        $('#button-confirm').prop('disabled', false);
                     }
 
+                    /*
                     window.setTimeout(function() {
                         $('.alert-dismissible').fadeTo(1000, 0, function() {
                             $(this).remove();
                         });
                     }, 3000);
+                    */
                 },
                 error: function(xhr, ajaxOptions, thrownError) {
+                    $('#button-confirm').prop('disabled', false);
+
                     console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
                 }
             });
         });
-    }, 500, this);
+    }, 1000, this);
 });
 
 /* Agree to terms */

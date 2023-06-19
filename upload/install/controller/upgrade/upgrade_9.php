@@ -36,7 +36,8 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
 							$shipping_method = [
 								'name' => $result['shipping_method'],
 								'code' => $result['shipping_code'],
-								'cost' => $order_total_query->row['value']
+								'cost' => $order_total_query->row['value'],
+								'text' => $result['shipping_method']
 							];
 
 							$this->db->query("UPDATE `" . DB_PREFIX . "order` SET `shipping_method` = '" . $this->db->escape(json_encode($shipping_method)) . "' WHERE `order_id` = '" . (int)$result['order_id'] . "'");

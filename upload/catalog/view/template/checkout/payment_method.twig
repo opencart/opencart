@@ -154,9 +154,9 @@ $('#input-comment').on('keydown', function() {
     $('#button-confirm').prop('disabled', true);
 
     // Request
-    clearTimeout(this.timer);
+    clearTimeout(timer);
 
-    this.timer = setTimeout(function(object) {
+    timer = setTimeout(function(object) {
         chain.attach(function() {
             return $.ajax({
                 url: 'index.php?route=checkout/payment_method.comment&language={{ language }}',
@@ -185,13 +185,11 @@ $('#input-comment').on('keydown', function() {
                         $('#button-confirm').prop('disabled', false);
                     }
 
-                    /*
                     window.setTimeout(function() {
                         $('.alert-dismissible').fadeTo(1000, 0, function() {
                             $(this).remove();
                         });
                     }, 3000);
-                    */
                 },
                 error: function(xhr, ajaxOptions, thrownError) {
                     $('#button-confirm').prop('disabled', false);

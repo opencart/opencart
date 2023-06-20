@@ -36,7 +36,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			}
 
 			// Load the language for any mails using a different country code and prefixing it so it does not pollute the main data pool.
-			$this->load->language($language_code, 'mail', $language_code);
+			$this->load->language('default', 'mail', $language_code);
 			$this->load->language('mail/affiliate_approve', 'mail', $language_code);
 
 			// Add language vars to the template folder
@@ -111,7 +111,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			}
 
 			// Load the language for any mails using a different country code and prefixing it so it does not pollute the main data pool.
-			$this->load->language($language_code, 'mail', $language_code);
+			$this->load->language('default', 'mail', $language_code);
 			$this->load->language('mail/affiliate_deny', 'mail', $language_code);
 
 			// Add language vars to the template folder

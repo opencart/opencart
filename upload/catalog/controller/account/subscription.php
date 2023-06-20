@@ -187,6 +187,17 @@ class Subscription extends \Opencart\System\Engine\Controller {
 
 			$data['subscription_id'] = $subscription_info['subscription_id'];
 			$data['order_id'] = $subscription_info['order_id'];
+
+			$this->load->model('localisation/subscription_status');
+
+			$subscription_status_info = $this->model_localisation_subscription_status->getSubscriptionStatus($subscription_info['subscription_status_id']);
+
+			if ($subscription_status_info) {
+				$data['subscription_status'] = $subscription_status_info['name'];
+			} else {
+				$data['subscription_status'] = '';
+			}
+
 			$data['date_added'] = date($this->language->get('date_format_short'), strtotime($subscription_info['date_added']));
 
 			// Payment Address

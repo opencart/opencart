@@ -255,7 +255,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 
 			// Merge variant code with options
 			foreach ($product_info['variant'] as $key => $value) {
-				if (in_array($key, $override)) {
+				if (array_key_exists($key, $override)) {
 					$option[$key] = $value;
 				}
 			}

@@ -173,7 +173,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 									}
 
 									// Load the language for any mails using a different country code and prefixing it so it does not pollute the main data pool.
-									$this->load->language($language_code, 'mail', $language_code);
+									$this->load->language('default', 'mail', $language_code);
 									$this->load->language('mail/order_add', 'mail', $language_code);
 
 									// Add language vars to the template folder

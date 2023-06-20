@@ -4896,6 +4896,11 @@ function oc_db_schema() {
 				'default' => '1'
 			],
 			[
+				'name' => 'rating',
+				'type' => 'int(1)',
+				'not_null' => true
+			],
+			[
 				'name' => 'sort_order',
 				'type' => 'int(11)',
 				'not_null' => true,
@@ -7225,7 +7230,7 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'keyword',
-				'type' => 'varchar(255)',
+				'type' => 'text(768)',
 				'not_null' => true
 			],
 			[

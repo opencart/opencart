@@ -6,7 +6,9 @@
 {{ text_customer_group }} {{ customer_group }}<br/>
 {% endif %}
 {{ text_email }} {{ email }}<br/>
-{{ text_telephone }} {{ telephone }}<br/>
+{% if telephone %}
+{{ text_telephone }} {{ telephone }}
+{% endif %}
 <br/>
 {{ store }}<br/>
 {{ store_url }}

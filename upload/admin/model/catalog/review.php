@@ -6,6 +6,11 @@ class Review extends \Opencart\System\Engine\Model {
 
 		$review_id = $this->db->getLastId();
 
+		// Update product rating
+		$this->load->model('catalog/product');
+
+		$this->model_catalog_product->editRating($data['product_id'], $this->getRating($data['product_id']));
+
 		$this->cache->delete('product');
 
 		return $review_id;
@@ -14,19 +19,43 @@ class Review extends \Opencart\System\Engine\Model {
 	public function editReview(int $review_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "review` SET `author` = '" . $this->db->escape((string)$data['author']) . "', `product_id` = '" . (int)$data['product_id'] . "', `text` = '" . $this->db->escape(strip_tags((string)$data['text'])) . "', `rating` = '" . (int)$data['rating'] . "', `status` = '" . (bool)(isset($data['status']) ? $data['status'] : 0) . "', `date_added` = '" . $this->db->escape((string)$data['date_added']) . "', `date_modified` = NOW() WHERE `review_id` = '" . (int)$review_id . "'");
 
+		// Update product rating
+		$this->load->model('catalog/product');
+
+		$this->model_catalog_product->editRating($data['product_id'], $this->getRating($data['product_id']));
+
 		$this->cache->delete('product');
 	}
 
 	public function deleteReview(int $review_id): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "review` WHERE `review_id` = '" . (int)$review_id . "'");
+		$review_info = $this->getReview($review_id);
 
-		$this->cache->delete('product');
+		if ($review_info) {
+			$this->db->query("DELETE FROM `" . DB_PREFIX . "review` WHERE `review_id` = '" . (int)$review_info['review_id'] . "'");
+
+			// Update product rating
+			$this->load->model('catalog/product');
+
+			$this->model_catalog_product->editRating($review_info['product_id'], $this->getRating($review_info['product_id']));
+
+			$this->cache->delete('product');
+		}
 	}
 
 	public function getReview(int $review_id): array {
 		$query = $this->db->query("SELECT DISTINCT *, (SELECT pd.`name` FROM `" . DB_PREFIX . "product_description` pd WHERE pd.`product_id` = r.`product_id` AND pd.`language_id` = '" . (int)$this->config->get('config_language_id') . "') AS product FROM `" . DB_PREFIX . "review` r WHERE r.`review_id` = '" . (int)$review_id . "'");
 
 		return $query->row;
+	}
+
+	public function getRating(int $product_id): int {
+		$query = $this->db->query("SELECT AVG(`rating`) AS `total` FROM `" . DB_PREFIX . "review` WHERE `product_id` = '" . (int)$product_id . "' AND `status` = '1'");
+
+		if ($query->num_rows) {
+			return (int)$query->row['total'];
+		} else {
+			return 0;
+		}
 	}
 
 	public function getReviews(array $data = []): array {

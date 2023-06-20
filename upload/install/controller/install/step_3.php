@@ -190,8 +190,7 @@ class Step3 extends \Opencart\System\Engine\Controller {
 
 		$db_drivers = [
 			'mysqli',
-			'pdo',
-			'pgsql'
+			'pdo'
 		];
 
 		$data['drivers'] = [];

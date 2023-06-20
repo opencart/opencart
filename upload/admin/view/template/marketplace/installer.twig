@@ -142,6 +142,8 @@ $('#extension').on('click', '.btn-success, .btn-warning', function (e) {
                     $('#progress-text').html('<div class="text-success">' + json['success'] + '</div>');
 
                     $('#extension').load('index.php?route=marketplace/installer.list&user_token={{ user_token }}');
+
+                    $(element).button('reset');
                 }
 
                 if (json['next']) {
@@ -149,8 +151,6 @@ $('#extension').on('click', '.btn-success, .btn-warning', function (e) {
 
                     chain.attach(installer);
                 }
-
-                $(element).button('reset');
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);

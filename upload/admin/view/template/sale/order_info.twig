@@ -1286,7 +1286,7 @@ $('#input-customer').autocomplete({
 
         $('#input-customer-group').trigger('change');
 
-        html = '<option value="0">{{ text_none }}</option>';
+        html = '<option value="0">{{ text_none|escape('js') }}</option>';
 
         for (i in item['address']) {
             html += '<option value="' + item['address'][i]['address_id'] + '">' + item['address'][i]['firstname'] + ' ' + item['address'][i]['lastname'] + ', ' + (item['address'][i]['company'] ? item['address'][i]['company'] + ', ' : '') + item['address'][i]['address_1'] + ', ' + item['address'][i]['city'] + ', ' + item['address'][i]['country'] + '</option>';
@@ -1408,7 +1408,7 @@ $('#input-product').autocomplete({
 
         if (item['option'] != '') {
             html = '<fieldset class="mb-0">';
-            html += '  <legend>{{ entry_option }}</legend>';
+            html += '  <legend>{{ entry_option|escape('js') }}</legend>';
 
             for (i = 0; i < item['option'].length; i++) {
                 option = item['option'][i];
@@ -1417,7 +1417,7 @@ $('#input-product').autocomplete({
                     html += '<div class="mb-3' + (option['required'] == 1 ? ' required' : '') + '">';
                     html += '  <label for="input-option-' + option['product_option_id'] + '" class="form-label">' + option['name'] + '</label>';
                     html += '  <select name="option[' + option['product_option_id'] + ']" id="input-option-' + option['product_option_id'] + '" class="form-select">';
-                    html += '    <option value="">{{ text_select }}</option>';
+                    html += '    <option value="">{{ text_select|escape('js') }}</option>';
 
                     for (j = 0; j < option['product_option_value'].length; j++) {
                         option_value = option['product_option_value'][j];
@@ -1441,7 +1441,7 @@ $('#input-product').autocomplete({
                     html += '  <label for="input-option-' + option['product_option_id'] + '" class="form-label">' + option['name'] + '</label>';
 
                     html += '  <select name="option[' + option['product_option_id'] + ']" id="input-option-' + option['product_option_id'] + '" class="form-select">';
-                    html += '    <option value="">{{ text_select }}</option>';
+                    html += '    <option value="">{{ text_select|escape('js') }}</option>';
 
                     for (j = 0; j < option['product_option_value'].length; j++) {
                         option_value = option['product_option_value'][j];
@@ -1491,7 +1491,7 @@ $('#input-product').autocomplete({
                     html += '  <label for="input-option-' + option['product_option_id'] + '" class="form-label">' + option['name'] + '</label>';
 
                     html += '  <select name="option[' + option['product_option_id'] + ']" id="input-option-' + option['product_option_id'] + '" class="form-select">';
-                    html += '    <option value="">{{ text_select }}</option>';
+                    html += '    <option value="">{{ text_select|escape('js') }}</option>';
 
                     for (j = 0; j < option['product_option_value'].length; j++) {
                         option_value = option['product_option_value'][j];
@@ -1530,7 +1530,7 @@ $('#input-product').autocomplete({
                     html += '<div class="mb-3' + (option['required'] == 1 ? ' required' : '') + '">';
                     html += '  <label class="form-label">' + option['name'] + '</label>';
                     html += '  <div>';
-                    html += '    <button type="button" data-oc-toggle="upload" data-oc-url="{{ upload }}" data-oc-target="#input-option-' + option['product_option_id'] + '" data-oc-size-max="{{ config_file_max_size }}" data-oc-size-error="{{ error_upload_size }}" class="btn btn-light"><i class="fa-solid fa-upload"></i> {{ button_upload }}</button>';
+                    html += '    <button type="button" data-oc-toggle="upload" data-oc-url="{{ upload }}" data-oc-target="#input-option-' + option['product_option_id'] + '" data-oc-size-max="{{ config_file_max_size }}" data-oc-size-error="{{ error_upload_size|escape('js') }}" class="btn btn-light"><i class="fa-solid fa-upload"></i> {{ button_upload|escape('js') }}</button>';
                     html += '    <a href="" class="btn btn-light"><i class="fa-solid fa-download"></i></a>';
                     html += '    <input type="hidden" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" id="input-option-' + option['product_option_id'] + '"/>';
                     html += '  </div>';
@@ -1572,10 +1572,10 @@ $('#input-product').autocomplete({
 
         if (item['subscription'] != '') {
             html = '<fieldset class="mb-0">';
-            html += '  <legend>{{ entry_subscription }}</legend>';
+            html += '  <legend>{{ entry_subscription|escape('js') }}</legend>';
             html += '  <div class="mb-3 required">';
             html += '    <select name="subscription_plan_id" id="input-subscription-plan" class="form-select">';
-            html += '      <option value="">{{ text_select }}</option>';
+            html += '      <option value="">{{ text_select|escape('js') }}</option>';
 
             for (i = 0; i < item['subscription'].length; i++) {
                 html += '<option value="' + item['subscription'][i]['subscription_plan_id'] + '">' + item['subscription'][i]['name'] + '</option>';
@@ -1981,11 +1981,11 @@ $(document).on('click', '#button-reward-add, #button-reward-remove', function(e)
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                 if (action == 'add') {
-                    $(element).replaceWith('<button type="button" id="button-reward-remove" data-bs-toggle="tooltip" title="{{ button_reward_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button>');
+                    $(element).replaceWith('<button type="button" id="button-reward-remove" data-bs-toggle="tooltip" title="{{ button_reward_remove|escape('js') }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button>');
                 }
 
                 if (action == 'remove') {
-                    $(element).replaceWith('<button type="button" id="button-reward-add" data-bs-toggle="tooltip" title="{{ button_reward_add }}" class="btn btn-success"><i class="fa-solid fa-plus-circle"></i></button>');
+                    $(element).replaceWith('<button type="button" id="button-reward-add" data-bs-toggle="tooltip" title="{{ button_reward_add|escape('js') }}" class="btn btn-success"><i class="fa-solid fa-plus-circle"></i></button>');
                 }
 
                 $('#payment-method-value').html('');
@@ -2096,11 +2096,11 @@ $(document).on('click', '#button-commission-add, #button-commission-remove', fun
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
                 if (action == 'add') {
-                    $(element).replaceWith('<button type="button" id="button-commission-remove" data-bs-toggle="tooltip" title="{{ button_commission_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button>');
+                    $(element).replaceWith('<button type="button" id="button-commission-remove" data-bs-toggle="tooltip" title="{{ button_commission_remove|escape('js') }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button>');
                 }
 
                 if (action == 'remove') {
-                    $(element).replaceWith('<button type="button" id="button-commission-add" data-bs-toggle="tooltip" title="{{ button_commission_add }}" class="btn btn-success"><i class="fa-solid fa-plus-circle"></i></button>');
+                    $(element).replaceWith('<button type="button" id="button-commission-add" data-bs-toggle="tooltip" title="{{ button_commission_add|escape('js') }}" class="btn btn-success"><i class="fa-solid fa-plus-circle"></i></button>');
                 }
             }
         },
@@ -2260,7 +2260,7 @@ $('#input-payment-country').on('change', function() {
                 $('#input-payment-postcode').parent().removeClass('required');
             }
 
-            html = '<option value="">{{ text_select }}</option>';
+            html = '<option value="">{{ text_select|escape('js') }}</option>';
 
             if (json['zone'] && json['zone'] != '') {
                 for (i = 0; i < json['zone'].length; i++) {
@@ -2273,7 +2273,7 @@ $('#input-payment-country').on('change', function() {
                     html += '>' + json['zone'][i]['name'] + '</option>';
                 }
             } else {
-                html += '<option value="0" selected>{{ text_none }}</option>';
+                html += '<option value="0" selected>{{ text_none|escape('js') }}</option>';
             }
 
             $('#input-payment-zone').html(html);
@@ -2438,7 +2438,7 @@ $('#input-shipping-country').on('change', function() {
                 $('#input-shipping-postcode').parent().removeClass('required');
             }
 
-            html = '<option value="">{{ text_select }}</option>';
+            html = '<option value="">{{ text_select|escape('js') }}</option>';
 
             if (json['zone'] && json['zone'] != '') {
                 for (i = 0; i < json['zone'].length; i++) {
@@ -2451,7 +2451,7 @@ $('#input-shipping-country').on('change', function() {
                     html += '>' + json['zone'][i]['name'] + '</option>';
                 }
             } else {
-                html += '<option value="0" selected>{{ text_none }}</option>';
+                html += '<option value="0" selected>{{ text_none|escape('js') }}</option>';
             }
 
             $('#input-shipping-zone').html(html);
@@ -2735,12 +2735,12 @@ $('#button-refresh').on('click', function() {
 
                     if (product['reward']) {
                         html += '<br/>';
-                        html += '  - <small>{{ text_points }}: ' + product['reward'] + '</small>';
+                        html += '  - <small>{{ text_points|escape('js') }}: ' + product['reward'] + '</small>';
                     }
 
                     if (product['subscription']) {
                         html += '<br/>';
-                        html += '  - <small>{{ text_subscription }}: <a href="index.php?route=sale/subscription.info&user_token={{ user_token }}&subscription_id={{ order_product.subscription_id }}" target="_blank">' + product['subscription'] + '</small>';
+                        html += '  - <small>{{ text_subscription|escape('js') }}: <a href="index.php?route=sale/subscription.info&user_token={{ user_token }}&subscription_id={{ order_product.subscription_id }}" target="_blank">' + product['subscription'] + '</small>';
                     }
 
                     html += '  </td>';
@@ -2750,7 +2750,7 @@ $('#button-refresh').on('click', function() {
                     html += '  <td class="text-end">' + product['total'] + '</td>';
                     html += '  <td class="text-end">';
                     html += '    <form>';
-                    html += '      <button type="submit" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button>';
+                    html += '      <button type="submit" data-bs-toggle="tooltip" title="{{ button_remove|escape('js') }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button>';
                     html += '      <input type="hidden" name="key" value="' + product['cart_id'] + '"/>';
                     html += '    </form>';
                     html += '  </td>';
@@ -2774,7 +2774,7 @@ $('#button-refresh').on('click', function() {
                     html += '  <td class="text-end">' + voucher['amount'] + '</td>';
                     html += '  <td class="text-end">';
                     html += '    <form>';
-                    html += '      <button type="submit" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button>';
+                    html += '      <button type="submit" data-bs-toggle="tooltip" title="{{ button_remove|escape('js') }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button>';
                     html += '      <input type="hidden" name="key" value="' + voucher['key'] + '"/>';
                     html += '    </form>';
                     html += '  </td>';
@@ -2784,7 +2784,7 @@ $('#button-refresh').on('click', function() {
 
             if (!json['products'].length && !json['vouchers'].length) {
                 html += '<tr>';
-                html += '  <td colspan="6" class="text-center">{{ text_no_results }}</td>';
+                html += '  <td colspan="6" class="text-center">{{ text_no_results|escape('js') }}</td>';
                 html += '</tr>';
             }
 

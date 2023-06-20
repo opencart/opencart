@@ -136,8 +136,8 @@ var ip_row = {{ ip_row }};
 
 $('#button-ip').on('click', function () {
     html = '<tr id="ip-row-' + ip_row + '">';
-    html += '  <td class="text-end"><input type="text" name="api_ip[]" value="" placeholder="{{ entry_ip }}" class="form-control"/></td>';
-    html += '  <td class="text-end"><button type="button" onclick="$(\'#ip-row-' + ip_row + '\').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>';
+    html += '  <td class="text-end"><input type="text" name="api_ip[]" value="" placeholder="{{ entry_ip|escape('js') }}" class="form-control"/></td>';
+    html += '  <td class="text-end"><button type="button" onclick="$(\'#ip-row-' + ip_row + '\').remove();" data-bs-toggle="tooltip" title="{{ button_remove|escape('js') }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>';
     html += '</tr>';
 
     $('#ip tbody').append(html);

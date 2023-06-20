@@ -133,24 +133,24 @@ function addOptionValue() {
     html += '  <td class="text-start"><input type="hidden" name="option_value[' + option_value_row + '][option_value_id]" value="" />';
   {% for language in languages %}
     html += '    <div class="input-group">';
-    html += '      <div class="input-group-text"><img src="{{ language.image }}" title="{{ language.name }}" /></div>';
-    html += '      <input type="text" name="option_value[' + option_value_row + '][option_value_description][{{ language.language_id }}][name]" value="" placeholder="{{ entry_option_value }}" id="input-option-value-' + option_value_row + '-{{ language.language_id }}" class="form-control"/>';
+    html += '      <div class="input-group-text"><img src="{{ language.image|escape('js') }}" title="{{ language.name|escape('js') }}" /></div>';
+    html += '      <input type="text" name="option_value[' + option_value_row + '][option_value_description][{{ language.language_id }}][name]" value="" placeholder="{{ entry_option_value|escape('js') }}" id="input-option-value-' + option_value_row + '-{{ language.language_id }}" class="form-control"/>';
     html += '    </div>';
     html += '    <div id="error-option-value-' + option_value_row + '-{{ language.language_id }}" class="invalid-feedback"></div>';
   {% endfor %}
     html += '  </td>';
     html += '  <td class="text-center">';
     html += '    <div class="card image">';
-    html += '      <img src="{{ placeholder }}" alt="" title="" id="thumb-image-' + option_value_row + '" data-oc-placeholder="{{ placeholder }}" class="card-img-top"/>';
+    html += '      <img src="{{ placeholder|escape('js') }}" alt="" title="" id="thumb-image-' + option_value_row + '" data-oc-placeholder="{{ placeholder|escape('js') }}" class="card-img-top"/>';
     html += '      <input type="hidden" name="option_value[' + option_value_row + '][image]" value="" id="input-image-' + option_value_row + '"/>';
     html += '      <div class="card-body">';
-    html += '        <button type="button" data-oc-toggle="image" data-oc-target="#input-image-' + option_value_row + '" data-oc-thumb="#thumb-image-' + option_value_row + '" class="btn btn-primary btn-sm btn-block"><i class="fa-solid fa-pencil"></i> {{ button_edit }}</button>';
-    html += '        <button type="button" data-oc-toggle="clear" data-oc-target="#input-image-' + option_value_row + '" data-oc-thumb="#thumb-image-' + option_value_row + '" class="btn btn-warning btn-sm btn-block"><i class="fa-regular fa-trash-can"></i> {{ button_clear }}</button>';
+    html += '        <button type="button" data-oc-toggle="image" data-oc-target="#input-image-' + option_value_row + '" data-oc-thumb="#thumb-image-' + option_value_row + '" class="btn btn-primary btn-sm btn-block"><i class="fa-solid fa-pencil"></i> {{ button_edit|escape('js') }}</button>';
+    html += '        <button type="button" data-oc-toggle="clear" data-oc-target="#input-image-' + option_value_row + '" data-oc-thumb="#thumb-image-' + option_value_row + '" class="btn btn-warning btn-sm btn-block"><i class="fa-regular fa-trash-can"></i> {{ button_clear|escape('js') }}</button>';
     html += '      </div>';
     html += '    </div>';
     html += '  </td>';
-    html += '  <td class="text-end"><input type="text" name="option_value[' + option_value_row + '][sort_order]" value="" placeholder="{{ entry_sort_order }}" class="form-control"/></td>';
-    html += '  <td class="text-end"><button type="button" onclick="$(\'#option-value-row-' + option_value_row + '\').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>';
+    html += '  <td class="text-end"><input type="text" name="option_value[' + option_value_row + '][sort_order]" value="" placeholder="{{ entry_sort_order|escape('js') }}" class="form-control"/></td>';
+    html += '  <td class="text-end"><button type="button" onclick="$(\'#option-value-row-' + option_value_row + '\').remove();" data-bs-toggle="tooltip" title="{{ button_remove|escape('js') }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>';
     html += '</tr>';
 
     $('#option-value tbody').append(html);

@@ -134,7 +134,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 
 	public function success(): object|null {
 		if (isset($this->request->get['code'])) {
-			$code = $this->request->get['code'];
+			$code = (string)$this->request->get['code'];
 		} else {
 			$code = '';
 		}
@@ -166,7 +166,7 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 			];
 
 			if ($gdpr_info['status'] == 0) {
-				$this->model_account_gdpr->editStatus($code, 1);
+				$this->model_account_gdpr->editStatus($gdpr_info['gdpr_id'], 1);
 			}
 
 			if ($gdpr_info['action'] == 'export') {

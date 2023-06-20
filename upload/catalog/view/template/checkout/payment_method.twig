@@ -48,12 +48,12 @@ $('#button-payment-methods').on('click', function() {
                     html += '  <div class="modal-dialog modal-dialog-centered">';
                     html += '    <div class="modal-content">';
                     html += '      <div class="modal-header">';
-                    html += '        <h5 class="modal-title"><i class="fa fa-credit-card"></i> {{ text_payment_method }}</h5>';
+                    html += '        <h5 class="modal-title"><i class="fa fa-credit-card"></i> {{ text_payment_method|escape('js') }}</h5>';
                     html += '        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>';
                     html += '      </div>';
                     html += '      <div class="modal-body">';
                     html += '        <form id="form-payment-method">';
-                    html += '          <p>{{ text_payment }}</p>';
+                    html += '          <p>{{ text_payment|escape('js') }}</p>';
 
                     for (i in json['payment_methods']) {
                         html += '<p><strong>' + json['payment_methods'][i]['name'] + '</strong></p>';
@@ -80,7 +80,7 @@ $('#button-payment-methods').on('click', function() {
                     }
 
                     html += '          <div class="text-end">';
-                    html += '            <button type="submit" id="button-payment-method" class="btn btn-primary">{{ button_continue }}</button>';
+                    html += '            <button type="submit" id="button-payment-method" class="btn btn-primary">{{ button_continue|escape('js') }}</button>';
                     html += '          </div>';
                     html += '        </form>';
                     html += '      </div>';
@@ -151,6 +151,8 @@ $(document).on('submit', '#form-payment-method', function(e) {
 var timer = '';
 
 $('#input-comment').on('keydown', function() {
+    $('#button-confirm').prop('disabled', true);
+
     // Request
     clearTimeout(timer);
 
@@ -162,13 +164,9 @@ $('#input-comment').on('keydown', function() {
                 data: $('#input-comment').serialize(),
                 dataType: 'json',
                 contentType: 'application/x-www-form-urlencoded',
-                beforeSend: function() {
-                    $('#button-confirm').button('loading');
-                },
-                complete: function() {
-                    $('#button-confirm').button('reset');
-                },
                 success: function(json) {
+                    console.log(json);
+
                     $('.alert-dismissible').remove();
 
                     if (json['redirect']) {
@@ -177,10 +175,14 @@ $('#input-comment').on('keydown', function() {
 
                     if (json['error']) {
                         $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                        $('#button-confirm').prop('disabled', false);
                     }
 
                     if (json['success']) {
                         $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                        $('#button-confirm').prop('disabled', false);
                     }
 
                     window.setTimeout(function() {
@@ -190,11 +192,13 @@ $('#input-comment').on('keydown', function() {
                     }, 3000);
                 },
                 error: function(xhr, ajaxOptions, thrownError) {
+                    $('#button-confirm').prop('disabled', false);
+
                     console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
                 }
             });
         });
-    }, 500, this);
+    }, 1000, this);
 });
 
 /* Agree to terms */

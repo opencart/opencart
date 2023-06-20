@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\System\Library\DB;
 class PgSQL {
-	private object $connection;
+	private object|null $connection;
 
 	/**
 	 * Constructor
@@ -26,8 +26,9 @@ class PgSQL {
 		if ($pg) {
 			$this->connection = $pg;
 			pg_query($this->connection, "SET CLIENT_ENCODING TO 'UTF8'");
-			pg_query("SET SESSION sql_mode = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION'");
-			pg_query($this->connection, "SET FOREIGN_KEY_CHECKS = 0");
+
+			// Sync PHP and DB time zones
+			pg_query($this->connection, "SET TIMEZONE = '" . $this->escape(date('P')) . "'");
 		}
 	}
 
@@ -67,7 +68,7 @@ class PgSQL {
 				return true;
 			}
 		} else {
-			throw new \Exception('Error: ' . pg_result_error($this->connection) . '<br/>' . $sql);
+			throw new \Exception('Error: ' . pg_result_error($resource) . '<br/>' . $sql);
 		}
 	}
 	
@@ -108,11 +109,7 @@ class PgSQL {
 	 * @return   bool
 	 */
 	public function isConnected(): bool {
-		if (pg_connection_status($this->connection) == PGSQL_CONNECTION_OK) {
-			return true;
-		} else {
-			return false;
-		}
+		return pg_connection_status($this->connection) == PGSQL_CONNECTION_OK;
 	}
 
 	/**
@@ -125,7 +122,7 @@ class PgSQL {
 		if ($this->connection) {
 			pg_close($this->connection);
 
-			$this->connection = '';
+			$this->connection = null;
 		}
 	}
 }

@@ -89,7 +89,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		// Load the language for any mails using a different country code and prefixing it so it does not pollute the main data pool.
-		$this->load->language($language_code, 'mail', $language_code);
+		$this->load->language('default', 'mail', $language_code);
 		$this->load->language('mail/order_add', 'mail', $language_code);
 
 		// Add language vars to the template folder
@@ -127,8 +127,8 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$data['order_id'] = $order_info['order_id'];
 		$data['date_added'] = date($this->language->get('date_format_short'), strtotime($order_info['date_added']));
-		$data['payment_method'] = $order_info['payment_method'];
-		$data['shipping_method'] = $order_info['shipping_method'];
+		$data['payment_method'] = $order_info['payment_method']['name'];
+		$data['shipping_method'] = $order_info['shipping_method']['name'];
 		$data['email'] = $order_info['email'];
 		$data['telephone'] = $order_info['telephone'];
 		$data['ip'] = $order_info['ip'];
@@ -367,7 +367,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		// Load the language for any mails using a different country code and prefixing it so it does not pollute the main data pool.
-		$this->load->language($language_code, 'mail', $language_code);
+		$this->load->language('default', 'mail', $language_code);
 		$this->load->language('mail/order_edit', 'mail', $language_code);
 
 		// Add language vars to the template folder

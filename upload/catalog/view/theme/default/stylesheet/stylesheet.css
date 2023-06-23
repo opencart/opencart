@@ -313,6 +313,9 @@ div.required .control-label:before {
 #content {
 	min-height: 600px;
 }
+#product-category #content, #product-product #tab-description, #information-information #content {
+	font-size: 13px;
+}
 /* footer */
 footer {
 	margin-top: 30px;

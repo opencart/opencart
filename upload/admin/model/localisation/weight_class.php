@@ -35,55 +35,49 @@ class WeightClass extends \Opencart\System\Engine\Model {
 	}
 
 	public function getWeightClasses(array $data = []): array {
-		if ($data) {
-			$sql = "SELECT * FROM `" . DB_PREFIX . "weight_class` wc LEFT JOIN `" . DB_PREFIX . "weight_class_description` wcd ON (wc.`weight_class_id` = wcd.`weight_class_id`) WHERE wcd.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+		$sql = "SELECT * FROM `" . DB_PREFIX . "weight_class` wc LEFT JOIN `" . DB_PREFIX . "weight_class_description` wcd ON (wc.`weight_class_id` = wcd.`weight_class_id`) WHERE wcd.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
-			$sort_data = [
-				'title',
-				'unit',
-				'value'
-			];
+		$sort_data = [
+			'title',
+			'unit',
+			'value'
+		];
 
-			if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
-				$sql .= " ORDER BY `" . $data['sort'] . "`";
-			} else {
-				$sql .= " ORDER BY `title`";
+		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
+			$sql .= " ORDER BY `" . $data['sort'] . "`";
+		} else {
+			$sql .= " ORDER BY `title`";
+		}
+
+		if (isset($data['order']) && ($data['order'] == 'DESC')) {
+			$sql .= " DESC";
+		} else {
+			$sql .= " ASC";
+		}
+
+		if (isset($data['start']) || isset($data['limit'])) {
+			if ($data['start'] < 0) {
+				$data['start'] = 0;
 			}
 
-			if (isset($data['order']) && ($data['order'] == 'DESC')) {
-				$sql .= " DESC";
-			} else {
-				$sql .= " ASC";
+			if ($data['limit'] < 1) {
+				$data['limit'] = 20;
 			}
 
-			if (isset($data['start']) || isset($data['limit'])) {
-				if ($data['start'] < 0) {
-					$data['start'] = 0;
-				}
+			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
+		}
 
-				if ($data['limit'] < 1) {
-					$data['limit'] = 20;
-				}
+		$weight_class_data = $this->cache->get('weight_class.' . md5($sql));
 
-				$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
-			}
-
+		if (!$weight_class_data) {
 			$query = $this->db->query($sql);
 
-			return $query->rows;
-		} else {
-			$weight_class_data = $this->cache->get('weight_class.' . (int)$this->config->get('config_language_id'));
+			$weight_class_data = $query->rows;
 
-			if (!$weight_class_data) {
-				$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "weight_class` wc LEFT JOIN `" . DB_PREFIX . "weight_class_description` wcd ON (wc.`weight_class_id` = wcd.`weight_class_id`) WHERE wcd.`language_id` = '" . (int)$this->config->get('config_language_id') . "'");
-
-				$weight_class_data = $query->rows;
-
-				$this->cache->set('weight_class.' . (int)$this->config->get('config_language_id'), $weight_class_data);
-			}
-
-			return $weight_class_data;
+			$this->cache->set('weight_class.' . md5($sql), $weight_class_data);
 		}
+
+		return $weight_class_data;
 	}
 
 	public function getWeightClass(int $weight_class_id): array {

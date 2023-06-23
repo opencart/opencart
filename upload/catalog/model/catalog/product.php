@@ -54,8 +54,6 @@ class Product extends \Opencart\System\Engine\Model {
 			$sql .= " FROM `" . DB_PREFIX . "product_to_store` `p2s` LEFT JOIN `" . DB_PREFIX . "product` `p` ON (`p2s`.`product_id` = `p`.`product_id` AND `p`.`status` = '1' AND `p`.`date_available` <= NOW())";
 		}
 
-
-
 		$sql .= " LEFT JOIN `" . DB_PREFIX . "product_description` `pd` ON (`p`.`product_id` = `pd`.`product_id`) WHERE `pd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND `p2s`.`store_id` = '" . (int)$this->config->get('config_store_id') . "'";
 
 		if (!empty($data['filter_category_id'])) {
@@ -176,9 +174,17 @@ class Product extends \Opencart\System\Engine\Model {
 			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
 		}
 
-		$query = $this->db->query($sql);
+		$product_data = (array)$this->cache->get('product.' . md5($sql));
 
-		return $query->rows;
+		if (!$product_data) {
+			$query = $this->db->query($sql);
+
+			$zone_data = $query->rows;
+
+			$this->cache->set('product.' . md5($sql), $product_data);
+		}
+
+		return $product_data;
 	}
 
 	public function getCategories(int $product_id): array {
@@ -310,16 +316,18 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	public function getLatest(int $limit): array {
-		$product_data = $this->cache->get('product.latest.' . (int)$this->config->get('config_language_id') . '.' . (int)$this->config->get('config_store_id') . '.' . $this->config->get('config_customer_group_id') . '.' . (int)$limit);
-
-		if (!$product_data) {
-			$query = $this->db->query("SELECT p.`product_id` FROM `" . DB_PREFIX . "product` p 
+		$sql = "SELECT p.`product_id` FROM `" . DB_PREFIX . "product` p 
 			LEFT JOIN `" . DB_PREFIX . "product_to_store` p2s ON (p.`product_id` = p2s.`product_id`) 
 			WHERE p.`status` = '1' 
 			AND p.`date_available` <= NOW() 
 			AND p2s.`store_id` = '" . (int)$this->config->get('config_store_id') . "' 
 			ORDER BY p.`product_id` 
-			DESC LIMIT " . (int)$limit);
+DESC LIMIT " . (int)$limit;
+
+		$product_data = $this->cache->get('product.' . md5($sql));
+
+		if (!$product_data) {
+			$query = $this->db->query();
 
 			foreach ($query->rows as $result) {
 				$product_data[$result['product_id']] = $this->model_catalog_product->getProduct($result['product_id']);

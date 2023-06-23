@@ -40,45 +40,37 @@ class StockStatus extends \Opencart\System\Engine\Model {
 	}
 
 	public function getStockStatuses(array $data = []): array {
-		if ($data) {
-			$sql = "SELECT * FROM `" . DB_PREFIX . "stock_status` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+		$sql = "SELECT * FROM `" . DB_PREFIX . "stock_status` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "' ORDER BY `name`";
 
-			$sql .= " ORDER BY `name`";
+		if (isset($data['order']) && ($data['order'] == 'DESC')) {
+			$sql .= " DESC";
+		} else {
+			$sql .= " ASC";
+		}
 
-			if (isset($data['order']) && ($data['order'] == 'DESC')) {
-				$sql .= " DESC";
-			} else {
-				$sql .= " ASC";
+		if (isset($data['start']) || isset($data['limit'])) {
+			if ($data['start'] < 0) {
+				$data['start'] = 0;
 			}
 
-			if (isset($data['start']) || isset($data['limit'])) {
-				if ($data['start'] < 0) {
-					$data['start'] = 0;
-				}
-
-				if ($data['limit'] < 1) {
-					$data['limit'] = 20;
-				}
-
-				$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
+			if ($data['limit'] < 1) {
+				$data['limit'] = 20;
 			}
 
+			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
+		}
+
+		$stock_status_data = $this->cache->get('stock_status.' . md5($sql));
+
+		if (!$stock_status_data) {
 			$query = $this->db->query($sql);
 
-			return $query->rows;
-		} else {
-			$stock_status_data = $this->cache->get('stock_status.' . (int)$this->config->get('config_language_id'));
+			$stock_status_data = $query->rows;
 
-			if (!$stock_status_data) {
-				$query = $this->db->query("SELECT `stock_status_id`, `name` FROM `" . DB_PREFIX . "stock_status` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "' ORDER BY `name`");
-
-				$stock_status_data = $query->rows;
-
-				$this->cache->set('stock_status.' . (int)$this->config->get('config_language_id'), $stock_status_data);
-			}
-
-			return $stock_status_data;
+			$this->cache->set('stock_status.' . md5($sql), $stock_status_data);
 		}
+
+		return $stock_status_data;
 	}
 
 	public function getDescriptions(int $stock_status_id): array {

@@ -1,6 +1,6 @@
 <?php
 // Heading
-$_['heading_title']         = 'OpenCart';
+$_['heading_title']          = 'OpenCart';
 
 // Text
 $_['text_notification']      = 'Notifications';

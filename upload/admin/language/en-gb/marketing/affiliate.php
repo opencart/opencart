@@ -18,7 +18,7 @@ $_['text_history']              = 'History';
 $_['text_history_add']          = 'Add History';
 $_['text_transaction']          = 'Transactions';
 $_['text_transaction_add']      = 'Add Transaction';
-$_['text_report']               = 'Report';
+$_['text_report']               = 'Reports';
 $_['text_filter']               = 'Filter';
 
 // Column

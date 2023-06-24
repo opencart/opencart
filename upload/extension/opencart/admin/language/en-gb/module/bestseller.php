@@ -8,6 +8,11 @@ $_['text_success']     = 'Success: You have modified bestsellers module!';
 $_['text_edit']        = 'Edit Bestsellers Module';
 $_['text_horizontal']  = 'Horizontal';
 $_['text_vertical']    = 'Vertical';
+$_['text_report']      = 'Reports';
+
+// Column
+$_['column_product']   = 'Product';
+$_['column_total']     = 'Total';
 
 // Entry
 $_['entry_name']       = 'Module Name';

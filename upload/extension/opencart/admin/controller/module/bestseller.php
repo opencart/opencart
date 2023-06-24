@@ -87,6 +87,10 @@ class BestSeller extends \Opencart\System\Engine\Controller {
 			$data['module_id'] = 0;
 		}
 
+		$data['report'] = $this->getReport();
+
+		$data['user_token'] = $this->session->data['user_token'];
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -127,6 +131,125 @@ class BestSeller extends \Opencart\System\Engine\Controller {
 			$this->cache->delete('product');
 
 			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	public function install(): void {
+		if ($this->user->hasPermission('modify', 'extension/opencart/module/bestseller')) {
+			$this->load->model('extension/opencart/module/bestseller');
+
+			$this->model_extension_opencart_module_bestseller->install();
+		}
+	}
+
+	public function uninstall(): void {
+		if ($this->user->hasPermission('modify', 'extension/opencart/module/bestseller')) {
+			$this->load->model('extension/opencart/module/bestseller');
+
+			$this->model_extension_opencart_module_bestseller->uninstall();
+		}
+	}
+
+	public function report(): void {
+		$this->load->language('extension/opencart/module/bestseller');
+
+		$this->response->setOutput($this->getReport());
+	}
+
+	public function getReport(): string {
+		if (isset($this->request->get['page']) && $this->request->get['route'] == 'extension/opencart/module/bestseller.report') {
+			$page = (int)$this->request->get['page'];
+		} else {
+			$page = 1;
+		}
+
+		$limit = 10;
+
+		$data['reports'] = [];
+
+		$this->load->model('extension/opencart/module/bestseller');
+		$this->load->model('catalog/product');
+
+		$results = $this->model_extension_opencart_module_bestseller->getReports(($page - 1) * $limit, $limit);
+
+		foreach ($results as $result) {
+			$product_info = $this->model_catalog_product->getProduct($result['product_id']);
+
+			if ($product_info) {
+				$product = $product_info['name'];
+			} else {
+				$product = '';
+			}
+
+			$data['reports'][] = [
+				'product' => $product,
+				'total'   => $result['total'],
+				'edit'    => $this->url->link('catalog/product.edit', 'user_token=' . $this->session->data['user_token'] . '&product_id=' . $result['product_id'])
+			];
+		}
+
+		$report_total = $this->model_extension_opencart_module_bestseller->getTotalReports();
+
+		$data['pagination'] = $this->load->controller('common/pagination', [
+			'total' => $report_total,
+			'page'  => $page,
+			'limit' => $limit,
+			'url'   => $this->url->link('extension/opencart/module/bestseller.report', 'user_token=' . $this->session->data['user_token'] . '&page={page}')
+		]);
+
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($report_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($report_total - $limit)) ? $report_total : ((($page - 1) * $limit) + $limit), $report_total, ceil($report_total / $limit));
+
+		return $this->load->view('extension/opencart/module/bestseller_report', $data);
+	}
+
+	public function sync(): void {
+		$this->load->language('extension/opencart/module/bestseller');
+
+		$json = [];
+
+		if (isset($this->request->get['page'])) {
+			$page = (int)$this->request->get['page'];
+		} else {
+			$page = 1;
+		}
+
+		if (!$this->user->hasPermission('modify', 'extension/opencart/module/bestseller')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			$this->load->model('catalog/product');
+			$this->load->model('sale/order');
+
+			$total = $this->model_catalog_product->getTotalProducts();
+			$limit = 10;
+
+			$start = ($page - 1) * $limit;
+			$end = $start > ($total - $limit) ? $total : ($start + $limit);
+
+			$product_data = [
+				'start' => ($page - 1) * $limit,
+				'limit' => $limit
+			];
+
+			$results = $this->model_catalog_product->getProducts($product_data);
+
+			foreach ($results as $result) {
+				$this->model_catalog_product->editTotal($result['product_id'], $this->model_sale_order->getTotalOrdersByProductId($result['product_id']));
+			}
+
+			if ($total && $end < $total) {
+				$json['text'] = sprintf($this->language->get('text_rating'), $end, $total);
+
+				$json['next'] = $this->url->link('extension/opencart/module/bestseller.sync', 'user_token=' . $this->session->data['user_token'] . '&page=' . ($page + 1), true);
+			} else {
+				$json['success'] = sprintf($this->language->get('text_rating'), $end, $total);
+
+				$json['next'] = '';
+			}
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

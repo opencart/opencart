@@ -174,15 +174,15 @@ class Product extends \Opencart\System\Engine\Model {
 			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
 		}
 
-		$product_data = (array)$this->cache->get('product.' . md5($sql));
+		//$product_data = (array)$this->cache->get('product.' . md5($sql));
 
-		if (!$product_data) {
+		//if (!$product_data) {
 			$query = $this->db->query($sql);
 
-			$zone_data = $query->rows;
+			$product_data = $query->rows;
 
-			$this->cache->set('product.' . md5($sql), $product_data);
-		}
+		//	$this->cache->set('product.' . md5($sql), $product_data);
+		//}
 
 		return $product_data;
 	}

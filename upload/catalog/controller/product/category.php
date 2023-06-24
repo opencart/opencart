@@ -137,7 +137,7 @@ class Category extends \Opencart\System\Engine\Controller {
 			foreach ($results as $result) {
 				$filter_data = [
 					'filter_category_id'  => $result['category_id'],
-					'filter_sub_category' => true
+					'filter_sub_category' => false
 				];
 
 				$data['categories'][] = [

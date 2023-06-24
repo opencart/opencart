@@ -295,33 +295,23 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	public function getRelated(int $product_id): array {
-		$product_data = [];
-
 		$query = $this->db->query("SELECT DISTINCT *, pd.`name` AS name, `p`.`image`, " . $this->statement['discount'] . ", " . $this->statement['special'] . ", " . $this->statement['reward'] . ", " . $this->statement['review'] . " 
-		
-		FROM `" . DB_PREFIX . "product_to_store` `p2s` LEFT JOIN `" . DB_PREFIX . "product_related` `pr` ON (`p2s`.`product_id` = `p`.`product_id`)  
-		
-		LEFT JOIN `" . DB_PREFIX . "product` p ON (pr.`related_id` = p.`product_id`) 
-		LEFT JOIN `" . DB_PREFIX . "product_to_store` p2s ON (p.`product_id` = p2s.`product_id`) 
-		WHERE pr.`product_id` = '" . (int)$product_id . "' 
-		AND p.`status` = '1' 
-		AND p.`date_available` <= NOW() 
-		AND p2s.`store_id` = '" . (int)$this->config->get('config_store_id') . "'");
+		FROM `" . DB_PREFIX . "product_related` `pr`  
+		LEFT JOIN `" . DB_PREFIX . "product_to_store` `p2s` ON (`p2s`.`product_id` = `pr`.`product_id`) 
+		LEFT JOIN `" . DB_PREFIX . "product` `p` ON (`p`.`product_id` = `pr`.`related_id` AND p.`status` = '1' AND p.`date_available` <= NOW() ) 
+		LEFT JOIN `" . DB_PREFIX . "product_description` `pd` ON (`p`.`product_id` = `pd`.`product_id`) WHERE pr.`product_id` = '" . (int)$product_id . "' AND `pd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND p2s.`store_id` = '" . (int)$this->config->get('config_store_id') . "'");
 
-		foreach ($query->rows as $result) {
-			$product_data[$result['related_id']] = $this->model_catalog_product->getProduct($result['related_id']);
-		}
-
-		return $product_data;
+		return $query->rows;
 	}
 
 	public function getLatest(int $limit): array {
-		$sql = "SELECT p.`product_id` FROM `" . DB_PREFIX . "product` p 
-			LEFT JOIN `" . DB_PREFIX . "product_to_store` p2s ON (p.`product_id` = p2s.`product_id`) 
-			WHERE p.`status` = '1' 
-			AND p.`date_available` <= NOW() 
-			AND p2s.`store_id` = '" . (int)$this->config->get('config_store_id') . "' 
-			ORDER BY p.`product_id` 
+		$sql = "SELECT `p`.`product_id` 
+			FROM  `" . DB_PREFIX . "product_to_store` `p2s`
+			LEFT JOIN `" . DB_PREFIX . "product` `p` ON (`p`.`product_id` = `p2s`.`product_id` AND `p`.`status` = '1' ) 
+			WHERE 
+			AND `p`.`date_available` <= NOW() 
+			AND `p2s`.`store_id` = '" . (int)$this->config->get('config_store_id') . "' 
+			ORDER BY `p`.`date_added`
 DESC LIMIT " . (int)$limit;
 
 		$product_data = $this->cache->get('product.' . md5($sql));

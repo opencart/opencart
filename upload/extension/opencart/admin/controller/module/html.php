@@ -1,6 +1,5 @@
 <?php
 namespace Opencart\Admin\Controller\Extension\Opencart\Module;
-use \Opencart\System\Helper AS Helper;
 class HTML extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('extension/opencart/module/html');

@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Catalog\Model\Catalog;
 class Product extends \Opencart\System\Engine\Model {
-	private array $statement = [];
+	protected array $statement = [];
 
 	public function __construct(\Opencart\System\Engine\Registry $registry) {
 		$this->registry = $registry;

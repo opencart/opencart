@@ -3,7 +3,7 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="float-end">
-
+        <button type="button" id="button-sync" data-bs-toggle="tooltip" title="{{ button_sync }}" class="btn btn-warning"><i class="fa-solid fa-rotate"></i></button>
         <button type="submit" form="form-module" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa-solid fa-save"></i></button>
         <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fa-solid fa-reply"></i></a></div>
       <h1>{{ heading_title }}</h1>
@@ -88,6 +88,58 @@ $('#report').on('click', '.pagination a', function (e) {
     e.preventDefault();
 
     $('#report').load(this.href);
+});
+
+$('#button-sync').on('click', function () {
+    var element = this;
+
+    $('#button-sync').button('loading');
+
+    var next = 'index.php?route=extension/opencart/module/bestseller.sync&user_token={{ user_token }}';
+
+    var rating = function () {
+        return $.ajax({
+            url: next,
+            dataType: 'json',
+            success: function (json) {
+                console.log(json);
+
+                $('.alert-dismissible').remove();
+
+                if (json['error']) {
+                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                    $('#button-sync').button('reset');
+                    $('#report').load('index.php?route=extension/opencart/module/bestseller.report&user_token={{ user_token }}');
+                }
+
+                if (json['text']) {
+                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle-circle"></i> ' + json['text'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                }
+
+                if (json['success']) {
+                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                    $('#button-sync').button('reset');
+                    $('#report').load('index.php?route=extension/opencart/module/bestseller.report&user_token={{ user_token }}');
+                }
+
+                if (json['next']) {
+                    next = json['next'];
+
+                    chain.attach(rating);
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+
+                $('#button-sync').button('reset');
+                $('#report').load('index.php?route=extension/opencart/module/bestseller.report&user_token={{ user_token }}');
+            }
+        });
+    };
+
+    chain.attach(rating);
 });
 //--></script>
 {{ footer }}

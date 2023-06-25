@@ -5,6 +5,7 @@ $_['heading_title']    = 'Bestsellers';
 // Text
 $_['text_extension']   = 'Extensions';
 $_['text_success']     = 'Success: You have modified bestsellers module!';
+$_['text_next']        = 'Success: You have modified %s bestsellers out of %s!';
 $_['text_edit']        = 'Edit Bestsellers Module';
 $_['text_horizontal']  = 'Horizontal';
 $_['text_vertical']    = 'Vertical';
@@ -21,6 +22,9 @@ $_['entry_limit']      = 'Limit';
 $_['entry_width']      = 'Image Width';
 $_['entry_height']     = 'Image Height';
 $_['entry_status']     = 'Status';
+
+// Button
+$_['button_sync']      = 'Generate Bestsellers List';
 
 // Error
 $_['error_permission'] = 'Warning: You do not have permission to modify bestsellers module!';

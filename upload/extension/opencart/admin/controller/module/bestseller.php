@@ -221,6 +221,7 @@ class BestSeller extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			$this->load->model('extension/opencart/module/bestseller');
 			$this->load->model('catalog/product');
 			$this->load->model('sale/order');
 
@@ -238,15 +239,21 @@ class BestSeller extends \Opencart\System\Engine\Controller {
 			$results = $this->model_catalog_product->getProducts($product_data);
 
 			foreach ($results as $result) {
-				$this->model_catalog_product->editTotal($result['product_id'], $this->model_sale_order->getTotalOrdersByProductId($result['product_id']));
+				$product_total = $this->model_sale_order->getTotalProductsByProductId($result['product_id']);
+
+				if ($product_total) {
+					$this->model_extension_opencart_module_bestseller->editTotal($result['product_id'], $product_total);
+				} else {
+					$this->model_extension_opencart_module_bestseller->delete($result['product_id']);
+				}
 			}
 
 			if ($total && $end < $total) {
-				$json['text'] = sprintf($this->language->get('text_rating'), $end, $total);
+				$json['text'] = sprintf($this->language->get('text_next'), $end, $total);
 
 				$json['next'] = $this->url->link('extension/opencart/module/bestseller.sync', 'user_token=' . $this->session->data['user_token'] . '&page=' . ($page + 1), true);
 			} else {
-				$json['success'] = sprintf($this->language->get('text_rating'), $end, $total);
+				$json['success'] = sprintf($this->language->get('text_next'), $end, $total);
 
 				$json['next'] = '';
 			}

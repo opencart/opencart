@@ -17,6 +17,10 @@ class Bestseller extends \Opencart\System\Engine\Model {
 		$this->db->query("REPLACE INTO `" . DB_PREFIX . "product_bestseller` SET `product_id` = '" . (int)$product_id . "', `total` = '" . (int)$total . "'");
 	}
 
+	public function delete(int $product_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_bestseller` WHERE `product_id` = '" . (int)$product_id . "'");
+	}
+
 	public function getReports(int $start = 0, int $limit = 10): array {
 		if ($start < 0) {
 			$start = 0;

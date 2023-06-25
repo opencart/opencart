@@ -2,7 +2,7 @@
 namespace Opencart\Admin\Model\Sale;
 class Order extends \Opencart\System\Engine\Model {
 	public function getOrder(int $order_id): array {
-		$order_query = $this->db->query("SELECT *, (SELECT os.`name` FROM `" . DB_PREFIX . "order_status` os WHERE os.`order_status_id` = o.`order_status_id` AND os.`language_id` = '" . (int)$this->config->get('config_language_id') . "') AS order_status FROM `" . DB_PREFIX . "order` o WHERE o.`order_id` = '" . (int)$order_id . "'");
+		$order_query = $this->db->query("SELECT *, (SELECT `os`.`name` FROM `" . DB_PREFIX . "order_status` os WHERE `os`.`order_status_id` = `o`.`order_status_id` AND `os`.`language_id` = '" . (int)$this->config->get('config_language_id') . "') AS `order_status` FROM `" . DB_PREFIX . "order` `o` WHERE `o`.`order_id` = '" . (int)$order_id . "'");
 
 		if ($order_query->num_rows) {
 			$country_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "country` WHERE `country_id` = '" . (int)$order_query->row['payment_country_id'] . "'");
@@ -254,10 +254,30 @@ class Order extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-	public function getProductByOrderProductId(int $order_id, int $order_product_id): array {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_product` WHERE `order_id` = '" . (int)$order_id . "' AND `order_product_id` = '" . (int)$order_product_id . "' ORDER BY `order_product_id` ASC");
+	public function getTotalProductsByProductId(int $product_id): int {
+		$sql = "SELECT SUM(op.quantity) AS `total` FROM `" . DB_PREFIX . "order_product` `op` LEFT JOIN `" . DB_PREFIX . "order` `o` ON (`op`.`order_id` = `o`.`order_id`) WHERE `op`.`product_id` = '" . (int)$product_id . "'";
 
-		return $query->row;
+		if (!empty($data['filter_order_status'])) {
+			$implode = [];
+
+			$order_statuses = explode(',', $data['filter_order_status']);
+
+			foreach ($order_statuses as $order_status_id) {
+				$implode[] = "`order_status_id` = '" . (int)$order_status_id . "'";
+			}
+
+			if ($implode) {
+				$sql .= " AND (" . implode(" OR ", $implode) . ")";
+			}
+		} elseif (isset($data['filter_order_status_id']) && $data['filter_order_status_id'] !== '') {
+			$sql .= " AND `order_status_id` = '" . (int)$data['filter_order_status_id'] . "'";
+		} else {
+			$sql .= " AND `order_status_id` > '0'";
+		}
+
+		$query = $this->db->query($sql);
+
+		return (int)$query->row['total'];
 	}
 
 	public function getOptions(int $order_id, int $order_product_id): array {

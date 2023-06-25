@@ -12,7 +12,7 @@ class BestSeller extends \Opencart\System\Engine\Controller {
 
 		$data['products'] = [];
 
-		$results = $this->model_extension_opencart_module_bestseller->getBestSeller($setting['limit']);
+		$results = $this->model_extension_opencart_module_bestseller->getBestSellers($setting['limit']);
 
 		if ($results) {
 			foreach ($results as $result) {

@@ -142,9 +142,9 @@ $('#button-rating').on('click', function () {
             url: next,
             dataType: 'json',
             success: function (json) {
-                $('.alert-dismissible').remove();
-
                 console.log(json);
+
+                $('.alert-dismissible').remove();
 
                 if (json['error']) {
                     $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');

@@ -17,7 +17,7 @@ class Country extends \Opencart\System\Engine\Model {
 
 			$country_data = $query->rows;
 
-			$this->cache->set('country.'. md5($sql));
+			$this->cache->set('country.'. md5($sql), $country_data);
 		}
 
 		return $country_data;
@@ -33,7 +33,7 @@ class Country extends \Opencart\System\Engine\Model {
 
 			$country_data = $query->rows;
 
-			$this->cache->set('country.'. md5($sql));
+			$this->cache->set('country.'. md5($sql), $country_data);
 		}
 
 		return $country_data;
@@ -49,7 +49,7 @@ class Country extends \Opencart\System\Engine\Model {
 
 			$country_data = $query->rows;
 
-			$this->cache->set('country.'. md5($sql));
+			$this->cache->set('country.'. md5($sql), $country_data);
 		}
 
 		return $country_data;

@@ -220,7 +220,7 @@
             </trans-unit>
             <trans-unit id="58">
                 <source>Unsupported card type or invalid card number.</source>
-                <target>Nicht unterstützer Kartentyp oder ungültige Kartennummer.</target>
+                <target>Nicht unterstützter Kartentyp oder ungültige Kartennummer.</target>
             </trans-unit>
             <trans-unit id="59">
                 <source>This is not a valid International Bank Account Number (IBAN).</source>
@@ -312,7 +312,7 @@
             </trans-unit>
             <trans-unit id="81">
                 <source>This is not a valid Business Identifier Code (BIC).</source>
-                <target>Dieser Wert ist kein gültiger BIC.</target>
+                <target>Dieser Wert ist keine gültige internationale Bankleitzahl (BIC).</target>
             </trans-unit>
             <trans-unit id="82">
                 <source>Error</source>
@@ -321,6 +321,86 @@
             <trans-unit id="83">
                 <source>This is not a valid UUID.</source>
                 <target>Dies ist keine gültige UUID.</target>
+            </trans-unit>
+            <trans-unit id="84">
+                <source>This value should be a multiple of {{ compared_value }}.</source>
+                <target>Dieser Wert sollte ein Vielfaches von {{ compared_value }} sein.</target>
+            </trans-unit>
+            <trans-unit id="85">
+                <source>This Business Identifier Code (BIC) is not associated with IBAN {{ iban }}.</source>
+                <target>Diese internationale Bankleitzahl (BIC) ist nicht mit der IBAN {{ iban }} assoziiert.</target>
+            </trans-unit>
+            <trans-unit id="86">
+                <source>This value should be valid JSON.</source>
+                <target>Dieser Wert sollte gültiges JSON sein.</target>
+            </trans-unit>
+            <trans-unit id="87">
+                <source>This collection should contain only unique elements.</source>
+                <target>Diese Sammlung darf keine doppelten Elemente enthalten.</target>
+            </trans-unit>
+            <trans-unit id="88">
+                <source>This value should be positive.</source>
+                <target>Diese Zahl sollte positiv sein.</target>
+            </trans-unit>
+            <trans-unit id="89">
+                <source>This value should be either positive or zero.</source>
+                <target>Diese Zahl sollte entweder positiv oder 0 sein.</target>
+            </trans-unit>
+            <trans-unit id="90">
+                <source>This value should be negative.</source>
+                <target>Diese Zahl sollte negativ sein.</target>
+            </trans-unit>
+            <trans-unit id="91">
+                <source>This value should be either negative or zero.</source>
+                <target>Diese Zahl sollte entweder negativ oder 0 sein.</target>
+            </trans-unit>
+            <trans-unit id="92">
+                <source>This value is not a valid timezone.</source>
+                <target>Dieser Wert ist keine gültige Zeitzone.</target>
+            </trans-unit>
+            <trans-unit id="93">
+                <source>This password has been leaked in a data breach, it must not be used. Please use another password.</source>
+                <target>Dieses Passwort ist Teil eines Datenlecks, es darf nicht verwendet werden.</target>
+            </trans-unit>
+            <trans-unit id="94">
+                <source>This value should be between {{ min }} and {{ max }}.</source>
+                <target>Dieser Wert sollte zwischen {{ min }} und {{ max }} sein.</target>
+            </trans-unit>
+            <trans-unit id="95">
+                <source>This value is not a valid hostname.</source>
+                <target>Dieser Wert ist kein gültiger Hostname.</target>
+            </trans-unit>
+            <trans-unit id="96">
+                <source>The number of elements in this collection should be a multiple of {{ compared_value }}.</source>
+                <target>Die Anzahl an Elementen in dieser Sammlung sollte ein Vielfaches von {{ compared_value }} sein.</target>
+            </trans-unit>
+            <trans-unit id="97">
+                <source>This value should satisfy at least one of the following constraints:</source>
+                <target>Dieser Wert sollte eine der folgenden Bedingungen erfüllen:</target>
+            </trans-unit>
+            <trans-unit id="98">
+                <source>Each element of this collection should satisfy its own set of constraints.</source>
+                <target>Jedes Element dieser Sammlung sollte seine eigene Menge an Bedingungen erfüllen.</target>
+            </trans-unit>
+            <trans-unit id="99">
+                <source>This value is not a valid International Securities Identification Number (ISIN).</source>
+                <target>Dieser Wert ist keine gültige Internationale Wertpapierkennnummer (ISIN).</target>
+            </trans-unit>
+            <trans-unit id="100">
+                <source>This value should be a valid expression.</source>
+                <target>Dieser Wert sollte eine gültige Expression sein.</target>
+            </trans-unit>
+            <trans-unit id="101">
+                <source>This value is not a valid CSS color.</source>
+                <target>Dieser Wert ist keine gültige CSS-Farbe.</target>
+            </trans-unit>
+            <trans-unit id="102">
+                <source>This value is not a valid CIDR notation.</source>
+                <target>Dieser Wert entspricht nicht der CIDR-Notation.</target>
+            </trans-unit>
+            <trans-unit id="103">
+                <source>The value of the netmask should be between {{ min }} and {{ max }}.</source>
+                <target>Der Wert der Subnetzmaske sollte zwischen {{ min }} und {{ max }} liegen.</target>
             </trans-unit>
         </body>
     </file>

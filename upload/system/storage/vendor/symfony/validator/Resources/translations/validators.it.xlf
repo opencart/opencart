@@ -322,6 +322,86 @@
                 <source>This is not a valid UUID.</source>
                 <target>Questo non è un UUID valido.</target>
             </trans-unit>
+            <trans-unit id="84">
+                <source>This value should be a multiple of {{ compared_value }}.</source>
+                <target>Questo valore dovrebbe essere un multiplo di {{ compared_value }}.</target>
+            </trans-unit>
+            <trans-unit id="85">
+                <source>This Business Identifier Code (BIC) is not associated with IBAN {{ iban }}.</source>
+                <target>Questo codice identificativo bancario (BIC) non è associato all'IBAN {{ iban }}.</target>
+            </trans-unit>
+            <trans-unit id="86">
+                <source>This value should be valid JSON.</source>
+                <target>Questo valore dovrebbe essere un JSON valido.</target>
+            </trans-unit>
+            <trans-unit id="87">
+                <source>This collection should contain only unique elements.</source>
+                <target>Questa collezione dovrebbe contenere solo elementi unici.</target>
+            </trans-unit>
+            <trans-unit id="88">
+                <source>This value should be positive.</source>
+                <target>Questo valore dovrebbe essere positivo.</target>
+            </trans-unit>
+            <trans-unit id="89">
+                <source>This value should be either positive or zero.</source>
+                <target>Questo valore dovrebbe essere positivo oppure zero.</target>
+            </trans-unit>
+            <trans-unit id="90">
+                <source>This value should be negative.</source>
+                <target>Questo valore dovrebbe essere negativo.</target>
+            </trans-unit>
+            <trans-unit id="91">
+                <source>This value should be either negative or zero.</source>
+                <target>Questo valore dovrebbe essere negativo oppure zero.</target>
+            </trans-unit>
+            <trans-unit id="92">
+                <source>This value is not a valid timezone.</source>
+                <target>Questo valore non è un fuso orario valido.</target>
+            </trans-unit>
+            <trans-unit id="93">
+                <source>This password has been leaked in a data breach, it must not be used. Please use another password.</source>
+                <target>Questa password è trapelata durante una compromissione di dati, non deve essere usata. Si prega di usare una password diversa.</target>
+            </trans-unit>
+            <trans-unit id="94">
+                <source>This value should be between {{ min }} and {{ max }}.</source>
+                <target>Questo valore dovrebbe essere compreso tra {{ min }} e {{ max }}.</target>
+            </trans-unit>
+            <trans-unit id="95">
+                <source>This value is not a valid hostname.</source>
+                <target>Questo valore non è un nome di host valido.</target>
+            </trans-unit>
+            <trans-unit id="96">
+                <source>The number of elements in this collection should be a multiple of {{ compared_value }}.</source>
+                <target>Il numero di elementi in questa collezione dovrebbe essere un multiplo di {{ compared_value }}.</target>
+            </trans-unit>
+            <trans-unit id="97">
+                <source>This value should satisfy at least one of the following constraints:</source>
+                <target>Questo valore dovrebbe soddisfare almeno uno dei vincoli seguenti:</target>
+            </trans-unit>
+            <trans-unit id="98">
+                <source>Each element of this collection should satisfy its own set of constraints.</source>
+                <target>Ciascun elemento di questa collezione dovrebbe soddisfare il suo insieme di vincoli.</target>
+            </trans-unit>
+            <trans-unit id="99">
+                <source>This value is not a valid International Securities Identification Number (ISIN).</source>
+                <target>Questo valore non è un codice identificativo internazionale di valori mobiliari (ISIN) valido.</target>
+            </trans-unit>
+            <trans-unit id="100">
+                <source>This value should be a valid expression.</source>
+                <target>Questo valore dovrebbe essere un'espressione valida.</target>
+            </trans-unit>
+            <trans-unit id="101">
+                <source>This value is not a valid CSS color.</source>
+                <target>Questo valore non è un colore CSS valido.</target>
+            </trans-unit>
+            <trans-unit id="102">
+                <source>This value is not a valid CIDR notation.</source>
+                <target>Questo valore non è una notazione CIDR valida.</target>
+            </trans-unit>
+            <trans-unit id="103">
+                <source>The value of the netmask should be between {{ min }} and {{ max }}.</source>
+                <target>Il valore della netmask dovrebbe essere compreso tra {{ min }} e {{ max }}.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

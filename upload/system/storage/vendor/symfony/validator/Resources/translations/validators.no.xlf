@@ -314,6 +314,94 @@
                 <source>This is not a valid Business Identifier Code (BIC).</source>
                 <target>Dette er ikke en gyldig BIC.</target>
             </trans-unit>
+            <trans-unit id="82">
+                <source>Error</source>
+                <target>Feil</target>
+            </trans-unit>
+            <trans-unit id="83">
+                <source>This is not a valid UUID.</source>
+                <target>Dette er ikke en gyldig UUID.</target>
+            </trans-unit>
+            <trans-unit id="84">
+                <source>This value should be a multiple of {{ compared_value }}.</source>
+                <target>Verdien skal være flertall av {{ compared_value }}.</target>
+            </trans-unit>
+            <trans-unit id="85">
+                <source>This Business Identifier Code (BIC) is not associated with IBAN {{ iban }}.</source>
+                <target>Business Identifier Code (BIC) er ikke tilknyttet en IBAN {{ iban }}.</target>
+            </trans-unit>
+            <trans-unit id="86">
+                <source>This value should be valid JSON.</source>
+                <target>Verdien er ikke gyldig JSON.</target>
+            </trans-unit>
+            <trans-unit id="87">
+                <source>This collection should contain only unique elements.</source>
+                <target>Samlingen kan kun inneholde unike elementer.</target>
+            </trans-unit>
+            <trans-unit id="88">
+                <source>This value should be positive.</source>
+                <target>Denne verdien må være positiv.</target>
+            </trans-unit>
+            <trans-unit id="89">
+                <source>This value should be either positive or zero.</source>
+                <target>Denne verdien må være positiv eller null.</target>
+            </trans-unit>
+            <trans-unit id="90">
+                <source>This value should be negative.</source>
+                <target>Denne verdien må være negativ.</target>
+            </trans-unit>
+            <trans-unit id="91">
+                <source>This value should be either negative or zero.</source>
+                <target>Denne verdien må være negativ eller null.</target>
+            </trans-unit>
+            <trans-unit id="92">
+                <source>This value is not a valid timezone.</source>
+                <target>Verdien er ikke en gyldig tidssone.</target>
+            </trans-unit>
+            <trans-unit id="93">
+                <source>This password has been leaked in a data breach, it must not be used. Please use another password.</source>
+                <target>Dette passordet er lekket i et datainnbrudd, det må ikke tas i bruk. Vennligst bruk et annet passord.</target>
+            </trans-unit>
+            <trans-unit id="94">
+                <source>This value should be between {{ min }} and {{ max }}.</source>
+                <target>Verdien må være mellom {{ min }} og {{ max }}.</target>
+            </trans-unit>
+            <trans-unit id="95">
+                <source>This value is not a valid hostname.</source>
+                <target>Denne verdien er ikke et gyldig vertsnavn.</target>
+            </trans-unit>
+            <trans-unit id="96">
+                <source>The number of elements in this collection should be a multiple of {{ compared_value }}.</source>
+                <target>Antall elementer i denne samlingen bør være et multiplum av {{ compared_value }}.</target>
+            </trans-unit>
+            <trans-unit id="97">
+                <source>This value should satisfy at least one of the following constraints:</source>
+                <target>Denne verdien skal tilfredsstille minst en av følgende begrensninger:</target>
+            </trans-unit>
+            <trans-unit id="98">
+                <source>Each element of this collection should satisfy its own set of constraints.</source>
+                <target>Hvert element i denne samlingen skal tilfredsstille sitt eget sett med begrensninger.</target>
+            </trans-unit>
+            <trans-unit id="99">
+                <source>This value is not a valid International Securities Identification Number (ISIN).</source>
+                <target>Denne verdien er ikke et gyldig International Securities Identification Number (ISIN).</target>
+            </trans-unit>
+            <trans-unit id="100">
+                <source>This value should be a valid expression.</source>
+                <target>Denne verdien skal være et gyldig uttrykk.</target>
+            </trans-unit>
+            <trans-unit id="101">
+                <source>This value is not a valid CSS color.</source>
+                <target>Denne verdien er ikke en gyldig CSS-farge.</target>
+            </trans-unit>
+            <trans-unit id="102">
+                <source>This value is not a valid CIDR notation.</source>
+                <target>Denne verdien er ikke en gyldig CIDR-notasjon.</target>
+            </trans-unit>
+            <trans-unit id="103">
+                <source>The value of the netmask should be between {{ min }} and {{ max }}.</source>
+                <target>Verdien på nettmasken skal være mellom {{ min }} og {{ max }}.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

@@ -9,7 +9,7 @@ class Finalize implements MethodInterface
 {
     private $paymentId;
     private $authorizeData;
-    
+
     public function __construct($paymentId, $authorizeData)
     {
         $this->paymentId = $paymentId;

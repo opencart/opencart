@@ -3,7 +3,6 @@
 namespace spec\Cardinity\Method\Payment;
 
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 
 class FinalizeSpec extends ObjectBehavior
 {
@@ -47,16 +46,11 @@ class FinalizeSpec extends ObjectBehavior
 
     function it_creates_result_object()
     {
-        $this->createResultObject()
-            ->shouldReturnAnInstanceOf('Cardinity\Method\Payment\Payment')
-        ;
+        $this->createResultObject()->shouldReturnAnInstanceOf('Cardinity\Method\Payment\Payment');
     }
 
     function it_has_validation_constraints()
     {
-        $this
-            ->getValidationConstraints()
-            ->shouldReturnAnInstanceOf('Symfony\Component\Validator\Constraint')
-        ;
+        $this->getValidationConstraints()->shouldReturnAnInstanceOf('Symfony\Component\Validator\Constraint');
     }
 }

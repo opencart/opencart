@@ -3,8 +3,6 @@
 namespace Cardinity\Method;
 
 use Cardinity\Exception;
-use Cardinity\Method\MethodInterface;
-use Cardinity\Method\MethodResultCollectionInterface;
 use Cardinity\Method\Payment\AuthorizationInformation;
 use Cardinity\Method\Payment\PaymentInstrumentCard;
 use Cardinity\Method\Payment\PaymentInstrumentRecurring;
@@ -31,7 +29,7 @@ class ResultObjectMapper implements ResultObjectMapperInterface
 
     /**
      * Map response data to instance of ResultObjectInterface
-     * @param array           $response
+     * @param array $response
      * @param ResultObjectInterface $result
      *
      * @return ResultObjectInterface
@@ -42,13 +40,7 @@ class ResultObjectMapper implements ResultObjectMapperInterface
             $method = $this->getSetterName($field);
 
             if (!method_exists($result, $method)) {
-                throw new Exception\ResultObjectInterfacePropertyNotFound(
-                    sprintf(
-                        'Result object %s property "%s" not found.',
-                        get_class($result),
-                        $field
-                    )
-                );
+                continue;
             }
 
             if ($field == 'payment_instrument') {

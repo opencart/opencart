@@ -4,7 +4,6 @@ namespace spec\Cardinity\Exception;
 
 use Cardinity\Method\ResultObject;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 
 class ValidationFailedSpec extends ObjectBehavior
 {

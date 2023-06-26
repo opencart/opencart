@@ -11,11 +11,12 @@
 
 namespace Symfony\Component\Validator\Constraints;
 
-use Symfony\Component\Intl\Intl;
+use Symfony\Component\Intl\Languages;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
-use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use Symfony\Component\Validator\Exception\LogicException;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
+use Symfony\Component\Validator\Exception\UnexpectedValueException;
 
 /**
  * Validates whether a value is a valid language code.
@@ -30,32 +31,28 @@ class LanguageValidator extends ConstraintValidator
     public function validate($value, Constraint $constraint)
     {
         if (!$constraint instanceof Language) {
-            throw new UnexpectedTypeException($constraint, __NAMESPACE__.'\Language');
+            throw new UnexpectedTypeException($constraint, Language::class);
         }
 
         if (null === $value || '' === $value) {
             return;
         }
 
-        if (!is_scalar($value) && !(\is_object($value) && method_exists($value, '__toString'))) {
-            throw new UnexpectedTypeException($value, 'string');
+        if (!\is_scalar($value) && !(\is_object($value) && method_exists($value, '__toString'))) {
+            throw new UnexpectedValueException($value, 'string');
+        }
+
+        if (!class_exists(Languages::class)) {
+            throw new LogicException('The Intl component is required to use the Language constraint. Try running "composer require symfony/intl".');
         }
 
         $value = (string) $value;
-        $languages = Intl::getLanguageBundle()->getLanguageNames();
 
-        if (!isset($languages[$value])) {
-            if ($this->context instanceof ExecutionContextInterface) {
-                $this->context->buildViolation($constraint->message)
-                    ->setParameter('{{ value }}', $this->formatValue($value))
-                    ->setCode(Language::NO_SUCH_LANGUAGE_ERROR)
-                    ->addViolation();
-            } else {
-                $this->buildViolation($constraint->message)
-                    ->setParameter('{{ value }}', $this->formatValue($value))
-                    ->setCode(Language::NO_SUCH_LANGUAGE_ERROR)
-                    ->addViolation();
-            }
+        if (!Languages::exists($value)) {
+            $this->context->buildViolation($constraint->message)
+                ->setParameter('{{ value }}', $this->formatValue($value))
+                ->setCode(Language::NO_SUCH_LANGUAGE_ERROR)
+                ->addViolation();
         }
     }
 }

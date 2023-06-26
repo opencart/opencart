@@ -3,7 +3,6 @@
 namespace spec\Cardinity\Method\Payment;
 
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 
 class PaymentInstrumentRecurringSpec extends ObjectBehavior
 {

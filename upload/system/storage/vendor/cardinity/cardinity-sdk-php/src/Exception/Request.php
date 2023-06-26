@@ -8,7 +8,7 @@ class Request extends Runtime
 {
     /** @type ResultObjectInterface */
     private $result;
-    
+
     /**
      * @param \Exception $previous
      * @param ResultObjectInterface $result

@@ -1,4 +1,5 @@
 <?php
+
 namespace Cardinity\Tests;
 
 use Cardinity\Client;

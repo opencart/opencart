@@ -1,6 +1,63 @@
+# 3.6.1 (2023-06-08)
+
+ * Suppress some native return type deprecation messages
+
+# 3.6.0 (2023-05-03)
+
+ * Allow psr/container 2.0
+ * Add the new PHP 8.0 IntlDateFormatter::RELATIVE_* constants for date formatting
+ * Make the Lexer initialize itself lazily
+
+# 3.5.1 (2023-02-08)
+
+ * Arrow functions passed to the "reduce" filter now accept the current key as a third argument
+ * Restores the leniency of the matches twig comparison
+ * Fix error messages in sandboxed mode for "has some" and "has every"
+
+# 3.5.0 (2022-12-27)
+
+ * Make Twig\ExpressionParser non-internal
+ * Add "has some" and "has every" operators
+ * Add Compile::reset()
+ * Throw a better runtime error when the "matches" regexp is not valid
+ * Add "twig *_names" intl functions
+ * Fix optimizing closures callbacks
+ * Add a better exception when getting an undefined constant via `constant`
+ * Fix `if` nodes when outside of a block and with an empty body
+
+# 3.4.3 (2022-09-28)
+
+ * Fix a security issue on filesystem loader (possibility to load a template outside a configured directory)
+
+# 3.4.2 (2022-08-12)
+
+ * Allow inherited magic method to still run with calling class
+ * Fix CallExpression::reflectCallable() throwing TypeError
+ * Fix typo in naming (currency_code)
+
+# 3.4.1 (2022-05-17)
+
+* Fix optimizing non-public named closures
+
+# 3.4.0 (2022-05-22)
+
+ * Add support for named closures
+
+# 3.3.10 (2022-04-06)
+
+ * Enable bytecode invalidation when auto_reload is enabled
+
+# 3.3.9 (2022-03-25)
+
+ * Fix custom escapers when using multiple Twig environments
+ * Add support for "constant('class', object)"
+ * Do not reuse internally generated variable names during parsing
+
 # 3.3.8 (2022-02-04)
 
  * Fix a security issue when in a sandbox: the `sort` filter must require a Closure for the `arrow` parameter
+ * Fix deprecation notice on `round`
+ * Fix call to deprecated `convertToHtml` method
 
 # 3.3.7 (2022-01-03)
 

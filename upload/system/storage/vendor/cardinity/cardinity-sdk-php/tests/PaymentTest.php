@@ -1,4 +1,5 @@
 <?php
+
 namespace Cardinity\Tests;
 
 use Cardinity\Exception;
@@ -18,7 +19,7 @@ class PaymentTest extends ClientTestCase
         $card = new Payment\PaymentInstrumentCard();
         $card->setCardBrand('Visa');
         $card->setPan('4447');
-        $card->setExpYear(2017);
+        $card->setExpYear(2021);
         $card->setExpMonth(5);
         $card->setHolder('John Smith');
         $payment->setPaymentInstrument($card);
@@ -29,14 +30,14 @@ class PaymentTest extends ClientTestCase
         $payment->setAuthorizationInformation($info);
 
         $this->assertSame(
-            '{"id":"foo","amount":"55.00","type":"bar","payment_method":"card","payment_instrument":{"card_brand":"Visa","pan":"4447","exp_year":2017,"exp_month":5,"holder":"John Smith"},"authorization_information":{"url":"http:\/\/...","data":"some_data"}}',
+            '{"id":"foo","amount":"55.00","type":"bar","payment_method":"card","payment_instrument":{"card_brand":"Visa","pan":"4447","exp_year":2021,"exp_month":5,"holder":"John Smith"},"authorization_information":{"url":"http:\/\/...","data":"some_data"}}',
             $payment->serialize()
         );
     }
 
     public function testResultObjectUnserialization()
     {
-        $json = '{"id":"foo","amount":"55.00","type":"bar","payment_method":"card","payment_instrument":{"card_brand":"Visa","pan":"4447","exp_year":2017,"exp_month":5,"holder":"John Smith"},"authorization_information":{"url":"http:\/\/...","data":"some_data"}}';
+        $json = '{"id":"foo","amount":"55.00","type":"bar","payment_method":"card","payment_instrument":{"card_brand":"Visa","pan":"4447","exp_year":2021,"exp_month":5,"holder":"John Smith"},"authorization_information":{"url":"http:\/\/...","data":"some_data"}}';
 
         $payment = new Payment\Payment();
         $payment->unserialize($json);
@@ -53,17 +54,17 @@ class PaymentTest extends ClientTestCase
 
     /**
      * @expectedException Cardinity\Exception\InvalidAttributeValue
-     * @dataProvider invalidaAmountValuesData
+     * @dataProvider invalidAmountValuesData
      */
     public function testAmountValidationConstraint($amount)
     {
         $params = $this->getPaymentParams();
         $params['amount'] = $amount;
         $method = new Payment\Create($params);
-        $result = $this->client->call($method);
+        $this->client->call($method);
     }
 
-    public function invalidaAmountValuesData()
+    public function invalidAmountValuesData()
     {
         return [
             ['150.01'],
@@ -79,7 +80,7 @@ class PaymentTest extends ClientTestCase
         $params = $this->getPaymentParams();
         unset($params['currency']);
         $method = new Payment\Create($params);
-        $result = $this->client->call($method);
+        $this->client->call($method);
     }
 
     /**
@@ -93,12 +94,13 @@ class PaymentTest extends ClientTestCase
 
         try {
             $method = new Payment\Create($params);
-            $result = $this->client->call($method);
+            $this->client->call($method);
         } catch (Exception\Declined $e) {
             $result = $e->getResult();
 
             $this->assertInstanceOf('Cardinity\Method\Payment\Payment', $result);
             $this->assertSame('declined', $result->getStatus());
+            $this->assertSame(true, $result->isDeclined());
             $this->assertSame('CRD-TEST: Do Not Honor', $result->getError());
             $this->assertContains('status: CRD-TEST: Do Not Honor;', $e->getErrorsAsString());
 
@@ -118,7 +120,7 @@ class PaymentTest extends ClientTestCase
 
         try {
             $method = new Payment\Create($params);
-            $result = $this->client->callNoValidate($method);
+            $this->client->callNoValidate($method);
         } catch (Exception\ValidationFailed $e) {
             $result = $e->getResult();
 
@@ -140,7 +142,7 @@ class PaymentTest extends ClientTestCase
         $params['payment_instrument']['exp_month'] = 13;
 
         $method = new Payment\Create($params);
-        $result = $this->client->call($method);
+        $this->client->call($method);
     }
 
     public function testCreate()
@@ -151,6 +153,7 @@ class PaymentTest extends ClientTestCase
 
         $this->assertInstanceOf('Cardinity\Method\Payment\Payment', $result);
         $this->assertSame('approved', $result->getStatus());
+        $this->assertSame(true, $result->isApproved());
 
         return $result;
     }
@@ -171,6 +174,7 @@ class PaymentTest extends ClientTestCase
 
         $this->assertInstanceOf('Cardinity\Method\Payment\Payment', $result);
         $this->assertSame('approved', $result->getStatus());
+        $this->assertSame(true, $result->isApproved());
 
         return $result;
     }
@@ -185,6 +189,7 @@ class PaymentTest extends ClientTestCase
 
         $this->assertInstanceOf('Cardinity\Method\Payment\Payment', $result);
         $this->assertSame('approved', $result->getStatus());
+        $this->assertSame(true, $result->isApproved());
     }
 
     public function testGetAll()
@@ -206,6 +211,7 @@ class PaymentTest extends ClientTestCase
 
         $this->assertInstanceOf('Cardinity\Method\Payment\Payment', $result);
         $this->assertSame('pending', $result->getStatus());
+        $this->assertSame(true, $result->isPending());
         $this->assertSame('3d-fail', $result->getAuthorizationInformation()->getData());
 
         return $result;
@@ -221,12 +227,13 @@ class PaymentTest extends ClientTestCase
 
         try {
             $method = new Payment\Finalize($paymentId, $authorizationInformation);
-            $result = $this->client->call($method);
+            $this->client->call($method);
         } catch (Exception\Declined $e) {
             $result = $e->getResult();
 
             $this->assertInstanceOf('Cardinity\Method\Payment\Payment', $result);
             $this->assertSame('declined', $result->getStatus());
+            $this->assertSame(true, $result->isDeclined());
             $this->assertContains('status: 33333: 3D Secure Authorization Failed.;', $e->getErrorsAsString());
 
             return;
@@ -245,6 +252,7 @@ class PaymentTest extends ClientTestCase
 
         $this->assertInstanceOf('Cardinity\Method\Payment\Payment', $result);
         $this->assertSame('pending', $result->getStatus());
+        $this->assertSame(true, $result->isPending());
         $this->assertSame('3d-pass', $result->getAuthorizationInformation()->getData());
 
         return $result;
@@ -263,5 +271,6 @@ class PaymentTest extends ClientTestCase
 
         $this->assertInstanceOf('Cardinity\Method\Payment\Payment', $result);
         $this->assertSame('approved', $result->getStatus());
+        $this->assertSame(true, $result->isApproved());
     }
 }

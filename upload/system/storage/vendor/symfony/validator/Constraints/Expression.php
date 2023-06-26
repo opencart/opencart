@@ -11,7 +11,9 @@
 
 namespace Symfony\Component\Validator\Constraints;
 
+use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\Exception\LogicException;
 
 /**
  * @Annotation
@@ -22,14 +24,25 @@ use Symfony\Component\Validator\Constraint;
  */
 class Expression extends Constraint
 {
-    const EXPRESSION_FAILED_ERROR = '6b3befbc-2f01-4ddf-be21-b57898905284';
+    public const EXPRESSION_FAILED_ERROR = '6b3befbc-2f01-4ddf-be21-b57898905284';
 
-    protected static $errorNames = array(
+    protected static $errorNames = [
         self::EXPRESSION_FAILED_ERROR => 'EXPRESSION_FAILED_ERROR',
-    );
+    ];
 
     public $message = 'This value is not valid.';
     public $expression;
+    public $values = [];
+
+    public function __construct($options = null)
+    {
+        if (!class_exists(ExpressionLanguage::class)) {
+            // throw new LogicException(sprintf('The "symfony/expression-language" component is required to use the "%s" constraint.', __CLASS__));
+            @trigger_error(sprintf('Using the "%s" constraint without the "symfony/expression-language" component installed is deprecated since Symfony 4.2.', __CLASS__), \E_USER_DEPRECATED);
+        }
+
+        parent::__construct($options);
+    }
 
     /**
      * {@inheritdoc}
@@ -44,7 +57,7 @@ class Expression extends Constraint
      */
     public function getRequiredOptions()
     {
-        return array('expression');
+        return ['expression'];
     }
 
     /**
@@ -52,7 +65,7 @@ class Expression extends Constraint
      */
     public function getTargets()
     {
-        return array(self::CLASS_CONSTRAINT, self::PROPERTY_CONSTRAINT);
+        return [self::CLASS_CONSTRAINT, self::PROPERTY_CONSTRAINT];
     }
 
     /**

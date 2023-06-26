@@ -93,7 +93,7 @@ $('#report').on('click', '.pagination a', function (e) {
 $('#button-sync').on('click', function () {
     var element = this;
 
-    $('#button-sync').button('loading');
+    $(element).button('loading');
 
     var next = 'index.php?route=extension/opencart/module/bestseller.sync&user_token={{ user_token }}';
 
@@ -109,7 +109,8 @@ $('#button-sync').on('click', function () {
                 if (json['error']) {
                     $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                    $('#button-sync').button('reset');
+                    $(element).button('reset');
+
                     $('#report').load('index.php?route=extension/opencart/module/bestseller.report&user_token={{ user_token }}');
                 }
 
@@ -120,7 +121,8 @@ $('#button-sync').on('click', function () {
                 if (json['success']) {
                     $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                    $('#button-sync').button('reset');
+                    $(element).button('reset');
+
                     $('#report').load('index.php?route=extension/opencart/module/bestseller.report&user_token={{ user_token }}');
                 }
 
@@ -133,7 +135,7 @@ $('#button-sync').on('click', function () {
             error: function (xhr, ajaxOptions, thrownError) {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 
-                $('#button-sync').button('reset');
+                $(element).button('reset');
                 $('#report').load('index.php?route=extension/opencart/module/bestseller.report&user_token={{ user_token }}');
             }
         });

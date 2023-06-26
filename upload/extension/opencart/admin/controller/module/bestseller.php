@@ -247,7 +247,7 @@ class BestSeller extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-			if ($total && $end < $total) {
+			if ($end < $total) {
 				$json['text'] = sprintf($this->language->get('text_next'), $end, $total);
 
 				$json['next'] = $this->url->link('extension/opencart/module/bestseller.sync', 'user_token=' . $this->session->data['user_token'] . '&page=' . ($page + 1), true);

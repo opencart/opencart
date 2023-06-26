@@ -1,0 +1,42 @@
+{
+  "type": "library",
+  "name": "zoujingli/wechat-developer",
+  "homepage": "https://github.com/zoujingli/WeChatDeveloper",
+  "description": "WeChat platform and WeChat payment development tools",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Anyon",
+      "email": "zoujingli@qq.com",
+      "homepage": "http://ctolog.com"
+    }
+  ],
+  "keywords": [
+    "WePay",
+    "AliPay",
+    "WeMini",
+    "WeChat",
+    "WeChatPay",
+    "WeChatDeveloper"
+  ],
+  "require": {
+    "php": ">=5.4",
+    "ext-json": "*",
+    "ext-curl": "*",
+    "ext-libxml": "*",
+    "ext-openssl": "*",
+    "ext-mbstring": "*",
+    "ext-simplexml": "*"
+  },
+  "autoload": {
+    "classmap": [
+      "We.php"
+    ],
+    "psr-4": {
+      "WePay\\": "WePay",
+      "WeMini\\": "WeMini",
+      "WeChat\\": "WeChat",
+      "AliPay\\": "AliPay"
+    }
+  }
+}

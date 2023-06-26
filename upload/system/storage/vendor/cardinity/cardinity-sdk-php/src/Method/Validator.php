@@ -3,7 +3,6 @@
 namespace Cardinity\Method;
 
 use Cardinity\Exception;
-use Cardinity\Method\MethodInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface as BaseValidator;
 
 class Validator implements ValidatorInterface
@@ -19,6 +18,12 @@ class Validator implements ValidatorInterface
         $this->validator = $validator;
     }
 
+    /**
+     * Validates given method values against its constraints
+     *
+     * @param MethodInterface $method
+     * @throws Exception\InvalidAttributeValue
+     */
     public function validate(MethodInterface $method)
     {
         $constraints = $method->getValidationConstraints();
@@ -31,7 +36,9 @@ class Validator implements ValidatorInterface
             $constraints
         );
 
-        if (count($violations) !== 0) {
+        $countable = is_array($violations) || $violations instanceof \Countable;
+
+        if ($countable && count($violations) !== 0) {
             throw new Exception\InvalidAttributeValue(
                 'Your method contains invalid attribute value',
                 $violations

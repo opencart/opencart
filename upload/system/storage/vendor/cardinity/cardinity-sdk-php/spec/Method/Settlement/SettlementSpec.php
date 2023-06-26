@@ -3,7 +3,6 @@
 namespace spec\Cardinity\Method\Settlement;
 
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 
 class SettlementSpec extends ObjectBehavior
 {

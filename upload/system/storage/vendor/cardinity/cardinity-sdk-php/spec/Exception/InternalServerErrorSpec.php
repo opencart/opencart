@@ -4,7 +4,6 @@ namespace spec\Cardinity\Exception;
 
 use Cardinity\Method\ResultObject;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 
 class InternalServerErrorSpec extends ObjectBehavior
 {
@@ -15,7 +14,7 @@ class InternalServerErrorSpec extends ObjectBehavior
             $error
         );
     }
-    
+
     function it_should_extend_request()
     {
         $this->shouldHaveType('Cardinity\Exception\Request');

@@ -3,7 +3,6 @@ Cardinity Client PHP Library
 ================================================
 [![Build Status](https://travis-ci.org/cardinity/cardinity-sdk-php.svg?branch=master)](http://travis-ci.org/cardinity/cardinity-sdk-php)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/cardinity/cardinity-sdk-php/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/cardinity/cardinity-sdk-php/?branch=master)
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/536548a5-73e5-4c71-8a8b-d6fdd6e5e7a6/mini.png)](https://insight.sensiolabs.com/projects/536548a5-73e5-4c71-8a8b-d6fdd6e5e7a6)
 
 This is official PHP client library for [Cardinity's](https://developers.cardinity.com/api/v1/) API.  
 Library includes all the functionality provided by API. Library was designed to be flexible and self-explanatory for developers to implement.
@@ -42,7 +41,7 @@ $method = new Payment\Create([
     'payment_method' => Payment\Create::CARD,
     'payment_instrument' => [
         'pan' => '4111111111111111',
-        'exp_year' => 2016,
+        'exp_year' => 2021,
         'exp_month' => 12,
         'cvc' => '456',
         'holder' => 'Mike Dough'

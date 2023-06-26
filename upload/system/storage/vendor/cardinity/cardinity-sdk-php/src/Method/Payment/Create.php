@@ -56,7 +56,11 @@ class Create implements MethodInterface
                 new Assert\Type(['type' => 'bool'])
             ]),
             'order_id' => new Assert\Optional([
-                new Assert\Type(['type' => 'string'])
+                new Assert\Type(['type' => 'string']),
+                new Assert\Length([
+                    'min' => 2,
+                    'max' => 50
+                ]),
             ]),
             'description' => new Assert\Optional([
                 new Assert\Type(['type' => 'string']),
@@ -113,6 +117,10 @@ class Create implements MethodInterface
                     'cvc' => new Assert\Required([
                         new Assert\NotBlank(),
                         new Assert\Type(['type' => 'string']),
+                        new Assert\Length([
+                            'min' => 3,
+                            'max' => 4
+                        ]),
                     ]),
                     'holder' => new Assert\Required([
                         new Assert\NotBlank(),

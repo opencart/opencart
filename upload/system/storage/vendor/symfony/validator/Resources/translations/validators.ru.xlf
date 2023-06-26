@@ -131,24 +131,24 @@
                 <target>Значение должно быть числом.</target>
             </trans-unit>
             <trans-unit id="36">
-                <source>This value is not a valid country.</source>
-                <target>Значение не является допустимой страной.</target>
-            </trans-unit>
-            <trans-unit id="37">
                 <source>This file is not a valid image.</source>
                 <target>Файл не является допустимым форматом изображения.</target>
             </trans-unit>
-            <trans-unit id="38">
+            <trans-unit id="37">
                 <source>This is not a valid IP address.</source>
                 <target>Значение не является допустимым IP адресом.</target>
             </trans-unit>
-            <trans-unit id="39">
+            <trans-unit id="38">
                 <source>This value is not a valid language.</source>
                 <target>Значение не является допустимым языком.</target>
             </trans-unit>
-            <trans-unit id="40">
+            <trans-unit id="39">
                 <source>This value is not a valid locale.</source>
                 <target>Значение не является допустимой локалью.</target>
+            </trans-unit>
+            <trans-unit id="40">
+                <source>This value is not a valid country.</source>
+                <target>Значение не является допустимой страной.</target>
             </trans-unit>
             <trans-unit id="41">
                 <source>This value is already used.</source>
@@ -310,9 +310,97 @@
                 <source>This value does not match the expected {{ charset }} charset.</source>
                 <target>Значение не совпадает с ожидаемой {{ charset }} кодировкой.</target>
             </trans-unit>
+            <trans-unit id="81">
+                <source>This is not a valid Business Identifier Code (BIC).</source>
+                <target>Значение не соответствует формату BIC.</target>
+            </trans-unit>
             <trans-unit id="82">
                 <source>Error</source>
                 <target>Ошибка</target>
+            </trans-unit>
+            <trans-unit id="83">
+                <source>This is not a valid UUID.</source>
+                <target>Значение не соответствует формату UUID.</target>
+            </trans-unit>
+            <trans-unit id="84">
+                <source>This value should be a multiple of {{ compared_value }}.</source>
+                <target>Значение должно быть кратно {{ compared_value }}.</target>
+            </trans-unit>
+            <trans-unit id="85">
+                <source>This Business Identifier Code (BIC) is not associated with IBAN {{ iban }}.</source>
+                <target>Данный BIC не связан с IBAN {{ iban }}.</target>
+            </trans-unit>
+            <trans-unit id="86">
+                <source>This value should be valid JSON.</source>
+                <target>Значение должно быть корректным JSON.</target>
+            </trans-unit>
+            <trans-unit id="87">
+                <source>This collection should contain only unique elements.</source>
+                <target>Эта коллекция должна содержать только уникальные элементы.</target>
+            </trans-unit>
+            <trans-unit id="88">
+                <source>This value should be positive.</source>
+                <target>Значение должно быть положительным.</target>
+            </trans-unit>
+            <trans-unit id="89">
+                <source>This value should be either positive or zero.</source>
+                <target>Значение должно быть положительным или равным нулю.</target>
+            </trans-unit>
+            <trans-unit id="90">
+                <source>This value should be negative.</source>
+                <target>Значение должно быть отрицательным.</target>
+            </trans-unit>
+            <trans-unit id="91">
+                <source>This value should be either negative or zero.</source>
+                <target>Значение должно быть отрицательным или равным нулю.</target>
+            </trans-unit>
+            <trans-unit id="92">
+                <source>This value is not a valid timezone.</source>
+                <target>Значение не является корректным часовым поясом.</target>
+            </trans-unit>
+            <trans-unit id="93">
+                <source>This password has been leaked in a data breach, it must not be used. Please use another password.</source>
+                <target>Данный пароль был скомпрометирован в результате утечки данных и не должен быть использован. Пожалуйста, используйте другой пароль.</target>
+            </trans-unit>
+            <trans-unit id="94">
+                <source>This value should be between {{ min }} and {{ max }}.</source>
+                <target>Значение должно быть между {{ min }} и {{ max }}.</target>
+            </trans-unit>
+            <trans-unit id="95">
+                <source>This value is not a valid hostname.</source>
+                <target>Значение не является корректным именем хоста.</target>
+            </trans-unit>
+            <trans-unit id="96">
+                <source>The number of elements in this collection should be a multiple of {{ compared_value }}.</source>
+                <target>Количество элементов в этой коллекции должно быть кратным {{ compared_value }}.</target>
+            </trans-unit>
+            <trans-unit id="97">
+                <source>This value should satisfy at least one of the following constraints:</source>
+                <target>Значение должно удовлетворять как минимум одному из следующих ограничений:</target>
+            </trans-unit>
+            <trans-unit id="98">
+                <source>Each element of this collection should satisfy its own set of constraints.</source>
+                <target>Каждый элемент этой коллекции должен удовлетворять своему собственному набору ограничений.</target>
+            </trans-unit>
+            <trans-unit id="99">
+                <source>This value is not a valid International Securities Identification Number (ISIN).</source>
+                <target>Значение не является корректным международным идентификационным номером ценных бумаг (ISIN).</target>
+            </trans-unit>
+            <trans-unit id="100">
+                <source>This value should be a valid expression.</source>
+                <target>Это значение должно быть корректным выражением.</target>
+            </trans-unit>
+            <trans-unit id="101">
+                <source>This value is not a valid CSS color.</source>
+                <target>Значение не является корректным CSS цветом.</target>
+            </trans-unit>
+            <trans-unit id="102">
+                <source>This value is not a valid CIDR notation.</source>
+                <target>Значение не соответствует нотации CIDR.</target>
+            </trans-unit>
+            <trans-unit id="103">
+                <source>The value of the netmask should be between {{ min }} and {{ max }}.</source>
+                <target>Значение маски подсети должно быть от {{ min }} до {{ max }}.</target>
             </trans-unit>
         </body>
     </file>

@@ -4,7 +4,6 @@ namespace spec\Cardinity\Method;
 
 use Cardinity\Method\MethodInterface;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 use Symfony\Component\Validator\ConstraintViolationList;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -20,10 +19,8 @@ class ValidatorSpec extends ObjectBehavior
         $this->shouldImplement('Cardinity\Method\ValidatorInterface');
     }
 
-    function it_validates_given_method_instance(
-        MethodInterface $method,
-        ValidatorInterface $validator
-    ) {
+    function it_validates_given_method_instance(MethodInterface $method, ValidatorInterface $validator)
+    {
         $attributes = ['field' => 'value'];
         $constraints = ['constraints'];
 
@@ -49,21 +46,13 @@ class ValidatorSpec extends ObjectBehavior
         $violations->count()->willReturn(1);
         $violations->__toString()->willReturn('');
 
-        $validator
-            ->validate($attributes, $constraints)
-            ->willReturn($violations)
-        ;
+        $validator->validate($attributes, $constraints)->willReturn($violations);
 
-        $this
-            ->shouldThrow('Cardinity\Exception\InvalidAttributeValue')
-            ->duringValidate($method)
-        ;
+        $this->shouldThrow('Cardinity\Exception\InvalidAttributeValue')->duringValidate($method);
     }
 
-    function it_does_not_validate_method_with_no_constraints(
-        MethodInterface $method,
-        ValidatorInterface $validator
-    ) {
+    function it_does_not_validate_method_with_no_constraints(MethodInterface $method, ValidatorInterface $validator)
+    {
         $constraints = [];
 
         $method->getValidationConstraints()->shouldBeCalled()->willReturn($constraints);
@@ -72,5 +61,4 @@ class ValidatorSpec extends ObjectBehavior
 
         $this->validate($method);
     }
-}   
-    
+}

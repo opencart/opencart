@@ -76,6 +76,7 @@ class RefundTest extends ClientTestCase
 
         $this->assertInstanceOf('Cardinity\Method\Refund\Refund', $result);
         $this->assertSame('10.00', $result->getAmount());
+        $this->assertSame(true, $result->isApproved());
 
         return $result;
     }

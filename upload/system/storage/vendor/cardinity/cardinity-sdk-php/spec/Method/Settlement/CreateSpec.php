@@ -3,7 +3,6 @@
 namespace spec\Cardinity\Method\Settlement;
 
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 
 class CreateSpec extends ObjectBehavior
 {
@@ -57,16 +56,11 @@ class CreateSpec extends ObjectBehavior
 
     function it_creates_result_object()
     {
-        $this->createResultObject()
-            ->shouldReturnAnInstanceOf('Cardinity\Method\Settlement\Settlement')
-        ;
+        $this->createResultObject()->shouldReturnAnInstanceOf('Cardinity\Method\Settlement\Settlement');
     }
 
     function it_has_validation_constraints()
     {
-        $this
-            ->getValidationConstraints()
-            ->shouldReturnAnInstanceOf('Symfony\Component\Validator\Constraint')
-        ;
+        $this->getValidationConstraints()->shouldReturnAnInstanceOf('Symfony\Component\Validator\Constraint');
     }
 }

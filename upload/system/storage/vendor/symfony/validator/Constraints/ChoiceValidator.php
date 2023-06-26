@@ -13,9 +13,9 @@ namespace Symfony\Component\Validator\Constraints;
 
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
-use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Validator\Exception\ConstraintDefinitionException;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
+use Symfony\Component\Validator\Exception\UnexpectedValueException;
 
 /**
  * ChoiceValidator validates that the value is one of the expected values.
@@ -32,11 +32,11 @@ class ChoiceValidator extends ConstraintValidator
     public function validate($value, Constraint $constraint)
     {
         if (!$constraint instanceof Choice) {
-            throw new UnexpectedTypeException($constraint, __NAMESPACE__.'\Choice');
+            throw new UnexpectedTypeException($constraint, Choice::class);
         }
 
         if (!\is_array($constraint->choices) && !$constraint->callback) {
-            throw new ConstraintDefinitionException('Either "choices" or "callback" must be specified on constraint Choice');
+            throw new ConstraintDefinitionException('Either "choices" or "callback" must be specified on constraint Choice.');
         }
 
         if (null === $value) {
@@ -44,36 +44,34 @@ class ChoiceValidator extends ConstraintValidator
         }
 
         if ($constraint->multiple && !\is_array($value)) {
-            throw new UnexpectedTypeException($value, 'array');
+            throw new UnexpectedValueException($value, 'array');
         }
 
         if ($constraint->callback) {
-            if (!\is_callable($choices = array($this->context->getClassName(), $constraint->callback))
+            if (!\is_callable($choices = [$this->context->getObject(), $constraint->callback])
+                && !\is_callable($choices = [$this->context->getClassName(), $constraint->callback])
                 && !\is_callable($choices = $constraint->callback)
             ) {
-                throw new ConstraintDefinitionException('The Choice constraint expects a valid callback');
+                throw new ConstraintDefinitionException('The Choice constraint expects a valid callback.');
             }
-            $choices = \call_user_func($choices);
+            $choices = $choices();
         } else {
             $choices = $constraint->choices;
         }
 
+        if (true !== $constraint->strict) {
+            throw new \RuntimeException('The "strict" option of the Choice constraint should not be used.');
+        }
+
         if ($constraint->multiple) {
             foreach ($value as $_value) {
-                if (!\in_array($_value, $choices, $constraint->strict)) {
-                    if ($this->context instanceof ExecutionContextInterface) {
-                        $this->context->buildViolation($constraint->multipleMessage)
-                            ->setParameter('{{ value }}', $this->formatValue($_value))
-                            ->setCode(Choice::NO_SUCH_CHOICE_ERROR)
-                            ->setInvalidValue($_value)
-                            ->addViolation();
-                    } else {
-                        $this->buildViolation($constraint->multipleMessage)
-                            ->setParameter('{{ value }}', $this->formatValue($_value))
-                            ->setCode(Choice::NO_SUCH_CHOICE_ERROR)
-                            ->setInvalidValue($_value)
-                            ->addViolation();
-                    }
+                if (!\in_array($_value, $choices, true)) {
+                    $this->context->buildViolation($constraint->multipleMessage)
+                        ->setParameter('{{ value }}', $this->formatValue($_value))
+                        ->setParameter('{{ choices }}', $this->formatValues($choices))
+                        ->setCode(Choice::NO_SUCH_CHOICE_ERROR)
+                        ->setInvalidValue($_value)
+                        ->addViolation();
 
                     return;
                 }
@@ -82,52 +80,30 @@ class ChoiceValidator extends ConstraintValidator
             $count = \count($value);
 
             if (null !== $constraint->min && $count < $constraint->min) {
-                if ($this->context instanceof ExecutionContextInterface) {
-                    $this->context->buildViolation($constraint->minMessage)
-                        ->setParameter('{{ limit }}', $constraint->min)
-                        ->setPlural((int) $constraint->min)
-                        ->setCode(Choice::TOO_FEW_ERROR)
-                        ->addViolation();
-                } else {
-                    $this->buildViolation($constraint->minMessage)
-                        ->setParameter('{{ limit }}', $constraint->min)
-                        ->setPlural((int) $constraint->min)
-                        ->setCode(Choice::TOO_FEW_ERROR)
-                        ->addViolation();
-                }
+                $this->context->buildViolation($constraint->minMessage)
+                    ->setParameter('{{ limit }}', $constraint->min)
+                    ->setPlural((int) $constraint->min)
+                    ->setCode(Choice::TOO_FEW_ERROR)
+                    ->addViolation();
 
                 return;
             }
 
             if (null !== $constraint->max && $count > $constraint->max) {
-                if ($this->context instanceof ExecutionContextInterface) {
-                    $this->context->buildViolation($constraint->maxMessage)
-                        ->setParameter('{{ limit }}', $constraint->max)
-                        ->setPlural((int) $constraint->max)
-                        ->setCode(Choice::TOO_MANY_ERROR)
-                        ->addViolation();
-                } else {
-                    $this->buildViolation($constraint->maxMessage)
-                        ->setParameter('{{ limit }}', $constraint->max)
-                        ->setPlural((int) $constraint->max)
-                        ->setCode(Choice::TOO_MANY_ERROR)
-                        ->addViolation();
-                }
+                $this->context->buildViolation($constraint->maxMessage)
+                    ->setParameter('{{ limit }}', $constraint->max)
+                    ->setPlural((int) $constraint->max)
+                    ->setCode(Choice::TOO_MANY_ERROR)
+                    ->addViolation();
 
                 return;
             }
-        } elseif (!\in_array($value, $choices, $constraint->strict)) {
-            if ($this->context instanceof ExecutionContextInterface) {
-                $this->context->buildViolation($constraint->message)
-                    ->setParameter('{{ value }}', $this->formatValue($value))
-                    ->setCode(Choice::NO_SUCH_CHOICE_ERROR)
-                    ->addViolation();
-            } else {
-                $this->buildViolation($constraint->message)
-                    ->setParameter('{{ value }}', $this->formatValue($value))
-                    ->setCode(Choice::NO_SUCH_CHOICE_ERROR)
-                    ->addViolation();
-            }
+        } elseif (!\in_array($value, $choices, true)) {
+            $this->context->buildViolation($constraint->message)
+                ->setParameter('{{ value }}', $this->formatValue($value))
+                ->setParameter('{{ choices }}', $this->formatValues($choices))
+                ->setCode(Choice::NO_SUCH_CHOICE_ERROR)
+                ->addViolation();
         }
     }
 }

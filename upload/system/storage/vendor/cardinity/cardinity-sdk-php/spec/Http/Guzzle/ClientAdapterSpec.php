@@ -2,31 +2,21 @@
 
 namespace spec\Cardinity\Http\Guzzle;
 
-use Cardinity\Exception;
 use Cardinity\Http\ClientInterface;
 use Cardinity\Http\Guzzle\ExceptionMapper;
 use Cardinity\Method\MethodInterface;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
-use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\Message\RequestInterface;
-use GuzzleHttp\Message\ResponseInterface;
+use Psr\Http\Message\ResponseInterface;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 
 class ClientAdapterSpec extends ObjectBehavior
 {
     function let(
         Client $client,
-        ExceptionMapper $mapper,
-        RequestInterface $request
+        ExceptionMapper $mapper
     ) {
         $this->beConstructedWith($client, $mapper);
-
-        $client
-            ->createRequest('POST', 'https://api.cardinity.com/v1/', [])
-            ->willReturn($request)
-        ;
     }
 
     function it_is_initializable()
@@ -37,16 +27,15 @@ class ClientAdapterSpec extends ObjectBehavior
     function it_sends_post_and_returns_result(
         MethodInterface $method,
         Client $client,
-        RequestInterface $request,
         ResponseInterface $response
     ) {
         $response
-            ->json()
+            ->getBody()
             ->shouldBeCalled()
-            ->willReturn(['foo' => 'bar'])
+            ->willReturn(json_encode(['foo' => 'bar']))
         ;
         $client
-            ->send($request)
+            ->request('POST', 'https://api.cardinity.com/v1/', [])
             ->shouldBeCalled()
             ->willReturn($response)
         ;
@@ -59,12 +48,11 @@ class ClientAdapterSpec extends ObjectBehavior
     function it_wraps_client_exceptions_with_ours(
         MethodInterface $method,
         ClientInterface $client,
-        RequestInterface $request,
         ExceptionMapper $mapper,
         ClientException $exception
     ) {
         $client
-            ->send($request)
+            ->request('POST', 'https://api.cardinity.com/v1/', [])
             ->willThrow($exception->getWrappedObject())
         ;
         $mapper
@@ -81,12 +69,11 @@ class ClientAdapterSpec extends ObjectBehavior
     function it_handles_unexpected_exceptions(
         MethodInterface $method,
         ClientInterface $client,
-        RequestInterface $request,
         \Exception $exception
     )
     {
         $client
-            ->send($request)
+            ->request('POST', 'https://api.cardinity.com/v1/', [])
             ->willThrow($exception->getWrappedObject())
         ;
         $this

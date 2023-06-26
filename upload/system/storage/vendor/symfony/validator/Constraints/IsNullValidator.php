@@ -13,7 +13,6 @@ namespace Symfony\Component\Validator\Constraints;
 
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
-use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 /**
@@ -27,21 +26,14 @@ class IsNullValidator extends ConstraintValidator
     public function validate($value, Constraint $constraint)
     {
         if (!$constraint instanceof IsNull) {
-            throw new UnexpectedTypeException($constraint, __NAMESPACE__.'\IsNull');
+            throw new UnexpectedTypeException($constraint, IsNull::class);
         }
 
         if (null !== $value) {
-            if ($this->context instanceof ExecutionContextInterface) {
-                $this->context->buildViolation($constraint->message)
-                    ->setParameter('{{ value }}', $this->formatValue($value))
-                    ->setCode(IsNull::NOT_NULL_ERROR)
-                    ->addViolation();
-            } else {
-                $this->buildViolation($constraint->message)
-                    ->setParameter('{{ value }}', $this->formatValue($value))
-                    ->setCode(IsNull::NOT_NULL_ERROR)
-                    ->addViolation();
-            }
+            $this->context->buildViolation($constraint->message)
+                ->setParameter('{{ value }}', $this->formatValue($value))
+                ->setCode(IsNull::NOT_NULL_ERROR)
+                ->addViolation();
         }
     }
 }

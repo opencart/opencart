@@ -4,7 +4,6 @@ namespace spec\Cardinity\Exception;
 
 use Cardinity\Method\ResultObject;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 
 class ServiceUnavailableSpec extends ObjectBehavior
 {
@@ -15,7 +14,7 @@ class ServiceUnavailableSpec extends ObjectBehavior
             $error
         );
     }
-    
+
     function it_is_initializable()
     {
         $this->shouldHaveType('Cardinity\Exception\ServiceUnavailable');

@@ -4,7 +4,6 @@ namespace spec\Cardinity\Method\Payment;
 
 use Cardinity\Method\Payment\AuthorizationInformation;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 
 class PaymentSpec extends ObjectBehavior
 {
@@ -44,13 +43,13 @@ class PaymentSpec extends ObjectBehavior
 
     function it_is_able_to_unserialize_card_payment_instrument()
     {
-        $json = '{"payment_method":"card","payment_instrument":{"card_brand":"Visa","pan":"4447","exp_year":2017,"exp_month":5,"holder":"John Smith"}}';
+        $json = '{"payment_method":"card","payment_instrument":{"card_brand":"Visa","pan":"4447","exp_year":2021,"exp_month":5,"holder":"John Smith"}}';
         $this->unserialize($json);
 
         $this->getPaymentMethod()->shouldReturn('card');
         $this->getPaymentInstrument()->shouldReturnAnInstanceOf('Cardinity\Method\Payment\PaymentInstrumentCard');
         $this->getPaymentInstrument()->getCardBrand()->shouldReturn('Visa');
-        $this->getPaymentInstrument()->getExpYear()->shouldReturn(2017);
+        $this->getPaymentInstrument()->getExpYear()->shouldReturn(2021);
     }
 
     function it_is_able_to_unserialize_recurring_payment_instrument()

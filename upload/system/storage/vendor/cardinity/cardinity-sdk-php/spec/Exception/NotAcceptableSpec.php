@@ -4,7 +4,6 @@ namespace spec\Cardinity\Exception;
 
 use Cardinity\Method\ResultObject;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 
 class NotAcceptableSpec extends ObjectBehavior
 {
@@ -15,7 +14,7 @@ class NotAcceptableSpec extends ObjectBehavior
             $error
         );
     }
-    
+
     function it_is_initializable()
     {
         $this->shouldHaveType('Cardinity\Exception\NotAcceptable');

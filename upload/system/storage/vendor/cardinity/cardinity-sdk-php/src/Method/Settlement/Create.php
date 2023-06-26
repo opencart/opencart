@@ -10,6 +10,7 @@ class Create implements MethodInterface
     private $paymentId;
     private $amount;
     private $description;
+
     public function __construct($paymentId, $amount, $description = null)
     {
         $this->paymentId = $paymentId;

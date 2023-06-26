@@ -3,7 +3,6 @@
 namespace spec\Cardinity\Method\Payment;
 
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 
 class GetAllSpec extends ObjectBehavior
 {
@@ -41,16 +40,11 @@ class GetAllSpec extends ObjectBehavior
 
     function it_has_create_result()
     {
-        $this->createResultObject()
-            ->shouldReturnAnInstanceOf('Cardinity\Method\Payment\Payment')
-        ;
+        $this->createResultObject()->shouldReturnAnInstanceOf('Cardinity\Method\Payment\Payment');
     }
 
     function it_has_validation_constraints()
     {
-        $this
-            ->getValidationConstraints()
-            ->shouldReturnAnInstanceOf('Symfony\Component\Validator\Constraint')
-        ;
+        $this->getValidationConstraints()->shouldReturnAnInstanceOf('Symfony\Component\Validator\Constraint');
     }
 }

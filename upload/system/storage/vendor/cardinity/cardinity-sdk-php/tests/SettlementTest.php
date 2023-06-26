@@ -1,4 +1,5 @@
 <?php
+
 namespace Cardinity\Tests;
 
 use Cardinity\Method\Settlement;
@@ -70,8 +71,9 @@ class SettlementTest extends ClientTestCase
         );
         $result = $this->client->call($method);
 
-        $this->assertInstanceOf('Cardinity\Method\Settlement\Settlement', $result); 
+        $this->assertInstanceOf('Cardinity\Method\Settlement\Settlement', $result);
         $this->assertSame('10.00', $result->getAmount());
+        $this->assertSame(true, $result->isApproved());
 
         return $result;
     }
@@ -87,7 +89,7 @@ class SettlementTest extends ClientTestCase
         );
         $result = $this->client->call($method);
 
-        $this->assertInstanceOf('Cardinity\Method\Settlement\Settlement', $result); 
+        $this->assertInstanceOf('Cardinity\Method\Settlement\Settlement', $result);
         $this->assertSame($settlement->getParentId(), $result->getParentId());
         $this->assertSame('10.00', $result->getAmount());
         $this->assertSame('settlement', $result->getType());

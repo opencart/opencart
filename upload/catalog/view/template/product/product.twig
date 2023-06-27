@@ -8,9 +8,10 @@
   <div class="row">{{ column_left }}
     <div id="content" class="col">
       {{ content_top }}
+
       <div class="row mb-3">
-        <div class="col-sm">
-          {% if thumb or images %}
+        {% if thumb or images %}
+          <div class="col-sm">
             <div class="image magnific-popup">
               {% if thumb %}
                 <a href="{{ popup }}" title="{{ heading_title }}"><img src="{{ thumb }}" title="{{ heading_title }}" alt="{{ heading_title }}" class="img-thumbnail mb-3"/></a>
@@ -23,8 +24,8 @@
                 </div>
               {% endif %}
             </div>
-          {% endif %}
-        </div>
+          </div>
+        {% endif %}
         <div class="col-sm">
           <h1>{{ heading_title }}</h1>
           <ul class="list-unstyled">
@@ -63,6 +64,7 @@
               {% endif %}
             </ul>
           {% endif %}
+
           <form method="post" data-oc-toggle="ajax">
             <div class="btn-group">
               <button type="submit" formaction="{{ add_to_wishlist }}" data-bs-toggle="tooltip" class="btn btn-light" title="{{ button_wishlist }}"><i class="fa-solid fa-heart"></i></button>
@@ -80,8 +82,7 @@
                 {% for option in options %}
                   {% if option.type == 'select' %}
                     <div class="mb-3{% if option.required %} required{% endif %}">
-                      <label for="input-option-{{ option.product_option_id }}" class="form-label">{{ option.name }}</label>
-                      <select name="option[{{ option.product_option_id }}]" id="input-option-{{ option.product_option_id }}" class="form-select">
+                      <label for="input-option-{{ option.product_option_id }}" class="form-label">{{ option.name }}</label> <select name="option[{{ option.product_option_id }}]" id="input-option-{{ option.product_option_id }}" class="form-select">
                         <option value="">{{ text_select }}</option>
                         {% for option_value in option.product_option_value %}
                           <option value="{{ option_value.product_option_value_id }}">{{ option_value.name }}
@@ -99,8 +100,7 @@
                       <div id="input-option-{{ option.product_option_id }}">
                         {% for option_value in option.product_option_value %}
                           <div class="form-check">
-                            <input type="radio" name="option[{{ option.product_option_id }}]" value="{{ option_value.product_option_value_id }}" id="input-option-value-{{ option_value.product_option_value_id }}" class="form-check-input"/>
-                            <label for="input-option-value-{{ option_value.product_option_value_id }}" class="form-check-label">{% if option_value.image %}<img src="{{ option_value.image }}" alt="{{ option_value.name }} {% if option_value.price %}{{ option_value.price_prefix }} {{ option_value.price }}{% endif %}" class="img-thumbnail"/>{% endif %}
+                            <input type="radio" name="option[{{ option.product_option_id }}]" value="{{ option_value.product_option_value_id }}" id="input-option-value-{{ option_value.product_option_value_id }}" class="form-check-input"/> <label for="input-option-value-{{ option_value.product_option_value_id }}" class="form-check-label">{% if option_value.image %}<img src="{{ option_value.image }}" alt="{{ option_value.name }} {% if option_value.price %}{{ option_value.price_prefix }} {{ option_value.price }}{% endif %}" class="img-thumbnail"/>{% endif %}
                               {{ option_value.name }}
                               {% if option_value.price %}
                                 ({{ option_value.price_prefix }}{{ option_value.price }})
@@ -119,8 +119,7 @@
 
                         {% for option_value in option.product_option_value %}
                           <div class="form-check">
-                            <input type="checkbox" name="option[{{ option.product_option_id }}][]" value="{{ option_value.product_option_value_id }}" id="input-option-value-{{ option_value.product_option_value_id }}" class="form-check-input"/>
-                            <label for="input-option-value-{{ option_value.product_option_value_id }}" class="form-check-label">
+                            <input type="checkbox" name="option[{{ option.product_option_id }}][]" value="{{ option_value.product_option_value_id }}" id="input-option-value-{{ option_value.product_option_value_id }}" class="form-check-input"/> <label for="input-option-value-{{ option_value.product_option_value_id }}" class="form-check-label">
                               {% if option_value.image %}
                                 <img src="{{ option_value.image }}" alt="{{ option_value.name }} {% if option_value.price %}{{ option_value.price_prefix }} {{ option_value.price }}{% endif %}" class="img-thumbnail"/>{% endif %}
                               {{ option_value.name }}
@@ -135,15 +134,13 @@
                   {% endif %}
                   {% if option.type == 'text' %}
                     <div class="mb-3{% if option.required %} required{% endif %}">
-                      <label for="input-option-{{ option.product_option_id }}" class="form-label">{{ option.name }}</label>
-                      <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" placeholder="{{ option.name }}" id="input-option-{{ option.product_option_id }}" class="form-control"/>
+                      <label for="input-option-{{ option.product_option_id }}" class="form-label">{{ option.name }}</label> <input type="text" name="option[{{ option.product_option_id }}]" value="{{ option.value }}" placeholder="{{ option.name }}" id="input-option-{{ option.product_option_id }}" class="form-control"/>
                       <div id="error-option-{{ option.product_option_id }}" class="invalid-feedback"></div>
                     </div>
                   {% endif %}
                   {% if option.type == 'textarea' %}
                     <div class="mb-3{% if option.required %} required{% endif %}">
-                      <label for="input-option-{{ option.product_option_id }}" class="form-label">{{ option.name }}</label>
-                      <textarea name="option[{{ option.product_option_id }}]" rows="5" placeholder="{{ option.name }}" id="input-option-{{ option.product_option_id }}" class="form-control">{{ option.value }}</textarea>
+                      <label for="input-option-{{ option.product_option_id }}" class="form-label">{{ option.name }}</label> <textarea name="option[{{ option.product_option_id }}]" rows="5" placeholder="{{ option.name }}" id="input-option-{{ option.product_option_id }}" class="form-control">{{ option.value }}</textarea>
                       <div id="error-option-{{ option.product_option_id }}" class="invalid-feedback"></div>
                     </div>
                   {% endif %}
@@ -290,7 +287,7 @@
     {{ column_right }}</div>
 </div>
 <script type="text/javascript"><!--
-$('#input-subscription').on('change', function (e) {
+$('#input-subscription').on('change', function(e) {
     var element = this;
 
     $('.subscription').addClass('d-none');
@@ -298,7 +295,7 @@ $('#input-subscription').on('change', function (e) {
     $('#subscription-description-' + $(element).val()).removeClass('d-none');
 });
 
-$('#form-product').on('submit', function (e) {
+$('#form-product').on('submit', function(e) {
     e.preventDefault();
 
     $.ajax({
@@ -309,13 +306,13 @@ $('#form-product').on('submit', function (e) {
         contentType: 'application/x-www-form-urlencoded',
         cache: false,
         processData: false,
-        beforeSend: function () {
+        beforeSend: function() {
             $('#button-cart').button('loading');
         },
-        complete: function () {
+        complete: function() {
             $('#button-cart').button('reset');
         },
-        success: function (json) {
+        success: function(json) {
             console.log(json);
 
             $('#form-product').find('.is-invalid').removeClass('is-invalid');
@@ -334,13 +331,13 @@ $('#form-product').on('submit', function (e) {
                 $('#header-cart').load('index.php?route=common/cart.info');
             }
         },
-        error: function (xhr, ajaxOptions, thrownError) {
+        error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 });
 
-$(document).ready(function () {
+$(document).ready(function() {
     $('.magnific-popup').magnificPopup({
         type: 'image',
         delegate: 'a',

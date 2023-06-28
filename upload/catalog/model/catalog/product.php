@@ -437,7 +437,7 @@ class Product extends \Opencart\System\Engine\Model {
 		$sort_data = [
 			'pd.name',
 			'p.model',
-			'ps.price',
+			'p.price',
 			'rating',
 			'p.sort_order'
 		];
@@ -445,11 +445,13 @@ class Product extends \Opencart\System\Engine\Model {
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 			if ($data['sort'] == 'pd.name' || $data['sort'] == 'p.model') {
 				$sql .= " ORDER BY LCASE(" . $data['sort'] . ")";
+			} elseif ($data['sort'] == 'p.price') {
+				$sql .= " ORDER BY (CASE WHEN `special` IS NOT NULL THEN `special` WHEN `discount` IS NOT NULL THEN `discount` ELSE p.`price` END)";
 			} else {
 				$sql .= " ORDER BY " . $data['sort'];
 			}
 		} else {
-			$sql .= " ORDER BY `p`.`sort_order`";
+			$sql .= " ORDER BY p.`sort_order`";
 		}
 
 		if (isset($data['order']) && ($data['order'] == 'DESC')) {

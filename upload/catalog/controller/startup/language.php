@@ -15,8 +15,6 @@ class Language extends \Opencart\System\Engine\Controller {
 		$language_info = $this->model_localisation_language->getLanguageByCode($code);
 
 		if ($language_info) {
-			echo self::$extension;
-
 			// If extension switch add language directory
 			if ($language_info['extension']) {
 				self::$extension = $language_info['extension'];

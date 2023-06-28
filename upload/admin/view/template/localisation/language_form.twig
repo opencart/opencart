@@ -29,8 +29,13 @@
             <label for="input-code" class="col-sm-2 col-form-label">{{ entry_code }}</label>
             <div class="col-sm-10">
               <input type="text" name="code" value="{{ code }}" placeholder="{{ entry_code }}" id="input-code" class="form-control"/>
-              <input type="hidden" name="extension" value="{{ extension }}"/>
               <div id="error-code" class="invalid-feedback"></div>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label for="input-extension" class="col-sm-2 col-form-label">{{ entry_extension }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="extension" value="{{ extension }}" id="input-extension" class="form-control" readonly/>
             </div>
           </div>
           <div class="row mb-3 required">

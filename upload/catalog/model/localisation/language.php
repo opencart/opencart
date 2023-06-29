@@ -56,12 +56,14 @@ class Language extends \Opencart\System\Engine\Model {
 	}
 
 	public function getLanguages(): array {
-		$language_data = $this->cache->get('catalog.language');
+		$sql = "SELECT * FROM `" . DB_PREFIX . "language` WHERE `status` = '1' ORDER BY `sort_order`, `name`";
+
+		$language_data = $this->cache->get('language.'. md5($sql));
 
 		if (!$language_data) {
 			$language_data = [];
 
-			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "language` WHERE `status` = '1' ORDER BY `sort_order`, `name`");
+			$query = $this->db->query($sql);
 
 			foreach ($query->rows as $result) {
 				$image = HTTP_SERVER;
@@ -84,7 +86,7 @@ class Language extends \Opencart\System\Engine\Model {
 				];
 			}
 
-			$this->cache->set('catalog.language', $language_data);
+			$this->cache->set('language.'. md5($sql), $language_data);
 		}
 
 		return $language_data;

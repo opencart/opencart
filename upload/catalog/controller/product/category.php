@@ -5,9 +5,7 @@ class Category extends \Opencart\System\Engine\Controller {
 		$this->load->language('product/category');
 
 		$this->load->model('catalog/category');
-
 		$this->load->model('catalog/product');
-
 		$this->load->model('tool/image');
 
 		if (isset($this->request->get['filter'])) {
@@ -139,7 +137,7 @@ class Category extends \Opencart\System\Engine\Controller {
 			foreach ($results as $result) {
 				$filter_data = [
 					'filter_category_id'  => $result['category_id'],
-					'filter_sub_category' => true
+					'filter_sub_category' => false
 				];
 
 				$data['categories'][] = [
@@ -152,7 +150,7 @@ class Category extends \Opencart\System\Engine\Controller {
 
 			$filter_data = [
 				'filter_category_id'  => $category_id,
-				'filter_sub_category' => true,
+				'filter_sub_category' => false,
 				'filter_filter'       => $filter,
 				'sort'                => $sort,
 				'order'               => $order,

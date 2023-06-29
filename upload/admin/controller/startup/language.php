@@ -38,9 +38,11 @@ class Language extends \Opencart\System\Engine\Controller {
 			$language = $this->config->get('config_language');
 		}
 
-		// Use language->load so it's not triggering infinite loops
+		// Use load->language so it's not triggering infinite loops
 		if (oc_substr($route, 0, 10) != 'extension/' && self::$extension) {
-			$this->load->language('extension/' . self::$extension . '/' . $route, $prefix, $language);
+			$this->language->load('extension/' . self::$extension . '/' . $route, $prefix, $language);
+		} else {
+			$this->language->load($route, $prefix, $language);
 		}
 	}
 }

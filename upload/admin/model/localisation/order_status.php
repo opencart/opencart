@@ -40,45 +40,37 @@ class OrderStatus extends \Opencart\System\Engine\Model {
 	}
 
 	public function getOrderStatuses(array $data = []): array {
-		if ($data) {
-			$sql = "SELECT * FROM `" . DB_PREFIX . "order_status` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+		$sql = "SELECT * FROM `" . DB_PREFIX . "order_status` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "' ORDER BY `name`";
 
-			$sql .= " ORDER BY `name`";
+		if (isset($data['order']) && ($data['order'] == 'DESC')) {
+			$sql .= " DESC";
+		} else {
+			$sql .= " ASC";
+		}
 
-			if (isset($data['order']) && ($data['order'] == 'DESC')) {
-				$sql .= " DESC";
-			} else {
-				$sql .= " ASC";
+		if (isset($data['start']) || isset($data['limit'])) {
+			if ($data['start'] < 0) {
+				$data['start'] = 0;
 			}
 
-			if (isset($data['start']) || isset($data['limit'])) {
-				if ($data['start'] < 0) {
-					$data['start'] = 0;
-				}
-
-				if ($data['limit'] < 1) {
-					$data['limit'] = 20;
-				}
-
-				$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
+			if ($data['limit'] < 1) {
+				$data['limit'] = 20;
 			}
 
+			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
+		}
+
+		$order_status_data = $this->cache->get('order_status.' . md5($sql));
+
+		if (!$order_status_data) {
 			$query = $this->db->query($sql);
 
-			return $query->rows;
-		} else {
-			$order_status_data = $this->cache->get('order_status.' . (int)$this->config->get('config_language_id'));
+			$order_status_data = $query->rows;
 
-			if (!$order_status_data) {
-				$query = $this->db->query("SELECT `order_status_id`, `name` FROM `" . DB_PREFIX . "order_status` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "' ORDER BY `name`");
-
-				$order_status_data = $query->rows;
-
-				$this->cache->set('order_status.' . (int)$this->config->get('config_language_id'), $order_status_data);
-			}
-
-			return $order_status_data;
+			$this->cache->set('order_status.' . md5($sql), $order_status_data);
 		}
+
+		return $order_status_data;
 	}
 
 	public function getDescriptions(int $order_status_id): array {

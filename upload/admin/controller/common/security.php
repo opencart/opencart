@@ -201,7 +201,7 @@ class Security extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-			if (($page * $limit) <= $total) {
+			if ($end < $total) {
 				$json['next'] = $this->url->link('common/security.storage', '&user_token=' . $this->session->data['user_token'] . '&name=' . $name . '&path=' . $path . '&page=' . ($page + 1), true);
 			} else {
 				// Start deleting old storage location files.

@@ -39,6 +39,9 @@ class Cart {
 				$this->add($cart['product_id'], $cart['quantity'], json_decode($cart['option'], true), $cart['subscription_plan_id'], $cart['override'], $cart['price']);
 			}
 		}
+
+		// Populate the cart data
+		$this->data = $this->getProducts();
 	}
 
 	/**
@@ -348,7 +351,8 @@ class Cart {
 			$this->db->query("UPDATE `" . DB_PREFIX . "cart` SET `quantity` = (`quantity` + " . (int)$quantity . ") WHERE `api_id` = '" . (isset($this->session->data['api_id']) ? (int)$this->session->data['api_id'] : 0) . "' AND `customer_id` = '" . (int)$this->customer->getId() . "' AND `session_id` = '" . $this->db->escape($this->session->getId()) . "' AND `product_id` = '" . (int)$product_id . "' AND `subscription_plan_id` = '" . (int)$subscription_plan_id . "' AND `option` = '" . $this->db->escape(json_encode($option)) . "'");
 		}
 
-		$this->data = [];
+		// Populate the cart data
+		$this->data = $this->getProducts();
 	}
 
 	/**
@@ -362,7 +366,8 @@ class Cart {
 	public function update(int $cart_id, int $quantity): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "cart` SET `quantity` = '" . (int)$quantity . "' WHERE `cart_id` = '" . (int)$cart_id . "' AND `api_id` = '" . (isset($this->session->data['api_id']) ? (int)$this->session->data['api_id'] : 0) . "' AND `customer_id` = '" . (int)$this->customer->getId() . "' AND `session_id` = '" . $this->db->escape($this->session->getId()) . "'");
 
-		$this->data = [];
+		// Populate the cart data
+		$this->data = $this->getProducts();
 	}
 
 	public function has(int $cart_id): bool {
@@ -379,7 +384,7 @@ class Cart {
 	public function remove(int $cart_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "cart` WHERE `cart_id` = '" . (int)$cart_id . "' AND `api_id` = '" . (isset($this->session->data['api_id']) ? (int)$this->session->data['api_id'] : 0) . "' AND `customer_id` = '" . (int)$this->customer->getId() . "' AND `session_id` = '" . $this->db->escape($this->session->getId()) . "'");
 
-		$this->data = [];
+		unset($this->data[$cart_id]);
 	}
 
 	/**
@@ -401,7 +406,7 @@ class Cart {
 	public function getSubscription(): array {
 		$product_data = [];
 
-		foreach ($this->getProducts() as $value) {
+		foreach ($this->data as $value) {
 			if ($value['subscription']) {
 				$product_data[] = $value;
 			}
@@ -418,7 +423,7 @@ class Cart {
 	public function getWeight(): float {
 		$weight = 0;
 
-		foreach ($this->getProducts() as $product) {
+		foreach ($this->data as $product) {
 			if ($product['shipping']) {
 				$weight += $this->weight->convert($product['weight'], $product['weight_class_id'], $this->config->get('config_weight_class_id'));
 			}
@@ -435,7 +440,7 @@ class Cart {
 	public function getSubTotal(): float {
 		$total = 0;
 
-		foreach ($this->getProducts() as $product) {
+		foreach ($this->data as $product) {
 			$total += $product['total'];
 		}
 
@@ -450,7 +455,7 @@ class Cart {
 	public function getTaxes(): array {
 		$tax_data = [];
 
-		foreach ($this->getProducts() as $product) {
+		foreach ($this->data as $product) {
 			if ($product['tax_class_id']) {
 				$tax_rates = $this->tax->getRates($product['price'], $product['tax_class_id']);
 
@@ -475,7 +480,7 @@ class Cart {
 	public function getTotal(): float {
 		$total = 0;
 
-		foreach ($this->getProducts() as $product) {
+		foreach ($this->data as $product) {
 			$total += $this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')) * $product['quantity'];
 		}
 
@@ -505,7 +510,7 @@ class Cart {
 	 * @return	bool
 	 */
 	public function hasProducts(): bool {
-		return count($this->getProducts());
+		return count($this->data);
 	}
 
 	/**
@@ -523,7 +528,7 @@ class Cart {
 	 * @return	bool
 	 */
 	public function hasStock(): bool {
-		foreach ($this->getProducts() as $product) {
+		foreach ($this->data as $product) {
 			if (!$product['stock']) {
 				return false;
 			}
@@ -538,7 +543,7 @@ class Cart {
 	 * @return	bool
 	 */
 	public function hasShipping(): bool {
-		foreach ($this->getProducts() as $product) {
+		foreach ($this->data as $product) {
 			if ($product['shipping']) {
 				return true;
 			}
@@ -553,7 +558,7 @@ class Cart {
 	 * @return	bool
 	 */
 	public function hasDownload(): bool {
-		foreach ($this->getProducts() as $product) {
+		foreach ($this->data as $product) {
 			if ($product['download']) {
 				return true;
 			}

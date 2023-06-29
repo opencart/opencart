@@ -18,6 +18,10 @@
 //								 --db_port     3306
 //                               --db_prefix   oc_
 //
+// Example:
+//
+// php c://xampp/htdocs/opencart-master/upload/install/cli_install.php install --username admin --password mexico --email email@example.com --http_server http://localhost/opencart-master/upload/ --db_driver mysqli --db_hostname localhost --db_username root --db_database opencart-master --db_port 3306 --db_prefix oc_
+//
 
 namespace Install;
 
@@ -211,10 +215,7 @@ class CliInstall extends \Opencart\System\Engine\Controller {
 		}
 
 		if ($error) {
-			$output  = 'ERROR: Pre-installation check failed: ' . "\n";
-			$output .= $error . "\n\n";
-
-			return $output;
+			return $error;
 		}
 
 		// Pre-installation check
@@ -229,17 +230,16 @@ class CliInstall extends \Opencart\System\Engine\Controller {
 		}
 
 		// If not cloud then we validate the password
-		$password = html_entity_decode($option['password'], ENT_QUOTES, 'UTF-8');
+		if ($option['db_password']) {
+			$password = html_entity_decode($option['password'], ENT_QUOTES, 'UTF-8');
 
-		if ((oc_strlen($password) < 5) || (oc_strlen($password) > 20)) {
-			$error .= 'ERROR: Password must be between 5 and 20 characters!' . "\n";
+			if ((oc_strlen($password) < 5) || (oc_strlen($password) > 20)) {
+				$error .= 'ERROR: Password must be between 5 and 20 characters!' . "\n";
+			}
 		}
 
 		if ($error) {
-			$output  = 'ERROR: Validation failed: ' . "\n";
-			$output .= $error . "\n\n";
-
-			return $output;
+			return $error;
 		}
 
 		// Make sure there is a SQL file to load sample data

@@ -9,7 +9,7 @@ $_['text_list']                = 'Download List';
 $_['text_add']                 = 'Add Download';
 $_['text_edit']                = 'Edit Download';
 $_['text_upload']              = 'Your file was successfully uploaded!';
-$_['text_report']              = 'Report';
+$_['text_report']              = 'Reports';
 
 // Column
 $_['column_name']              = 'Download Name';

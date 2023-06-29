@@ -168,10 +168,16 @@ $registry->set('template', $template);
 $template->addPath(DIR_TEMPLATE);
 
 // Language
-$language = new \Opencart\System\Library\Language($config->get('language_code'));
+if(!empty($request->get['language'])){
+ $language_code =  $request->get['language'] ?? $config->get('language_code');   
+}else{
+$language_code =  $request->get['language'] ?? $request->cookie['language'] ?? $config->get('language_code');
+}
+
+$language = new \Opencart\System\Library\Language($language_code);
 $registry->set('language', $language);
 $language->addPath(DIR_LANGUAGE);
-$loader->language('default');
+$loader->language($language_code);
 
 // Url
 $registry->set('url', new \Opencart\System\Library\Url($config->get('site_url')));

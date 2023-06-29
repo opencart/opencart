@@ -14,9 +14,11 @@
         {% if thumb or images %}
           <div class="col-sm">
             <div class="image magnific-popup">
+
               {% if thumb %}
                 <a href="{{ popup }}" title="{{ heading_title }}"><img src="{{ thumb }}" title="{{ heading_title }}" alt="{{ heading_title }}" class="img-thumbnail mb-3"/></a>
               {% endif %}
+
               {% if images %}
                 <div>
                   {% for image in images %}
@@ -24,6 +26,7 @@
                   {% endfor %}
                 </div>
               {% endif %}
+
             </div>
           </div>
         {% endif %}
@@ -31,13 +34,17 @@
         <div class="col-sm">
           <h1>{{ heading_title }}</h1>
           <ul class="list-unstyled">
+
             {% if manufacturer %}
               <li>{{ text_manufacturer }} <a href="{{ manufacturers }}">{{ manufacturer }}</a></li>
             {% endif %}
+
             <li>{{ text_model }} {{ model }}</li>
+
             {% if reward %}
               <li>{{ text_reward }} {{ reward }}</li>
             {% endif %}
+
             <li>{{ text_stock }} {{ stock }}</li>
           </ul>
 
@@ -51,12 +58,15 @@
                 <li><span class="price-old">{{ price }}</span></li>
                 <li><h2><span class="price-new">{{ special }}</span></h2></li>
               {% endif %}
+
               {% if tax %}
                 <li>{{ text_tax }} {{ tax }}</li>
               {% endif %}
+
               {% if points %}
                 <li>{{ text_points }} {{ points }}</li>
               {% endif %}
+
               {% if discounts %}
                 <li>
                   <hr>

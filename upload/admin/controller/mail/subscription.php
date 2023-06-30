@@ -120,7 +120,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
                                     $data['text_subscription_status'] = $this->language->get('mail_text_subscription_status');
 
                                     if ($this->config->get('config_mail_engine')) {
-                                        $mail = new \Mail($this->config->get('config_mail_engine'));
+                                        $mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'));
                                         $mail->parameter = $this->config->get('config_mail_parameter');
                                         $mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
                                         $mail->smtp_username = $this->config->get('config_mail_smtp_username');
@@ -237,7 +237,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
                                 $data['date_added'] = date($this->language->get('date_format_short'), $subscription['date_added']);
 
                                 if ($this->config->get('config_mail_engine')) {
-                                    $mail = new \Mail($this->config->get('config_mail_engine'));
+                                    $mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'));
                                     $mail->parameter = $this->config->get('config_mail_parameter');
                                     $mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
                                     $mail->smtp_username = $this->config->get('config_mail_smtp_username');

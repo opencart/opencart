@@ -37,8 +37,8 @@
               <div class="col-sm-10">
                 <select name="location" id="input-location" class="form-select">
                   <option value="account"{% if location == 'account' %} selected{% endif %}>{{ text_account }}</option>
-                  <option value="address"{% if location == 'address' %} selected="selected"{% endif %}>{{ text_address }}</option>
-                  <option value="affiliate"{% if location == 'affiliate' %} selected="selected"{% endif %}>{{ text_affiliate }}</option>
+                  <option value="address"{% if location == 'address' %} selected{% endif %}>{{ text_address }}</option>
+                  <option value="affiliate"{% if location == 'affiliate' %} selected{% endif %}>{{ text_affiliate }}</option>
                 </select>
               </div>
             </div>
@@ -47,21 +47,21 @@
               <div class="col-sm-10">
                 <select name="type" id="input-type" class="form-select">
                   <optgroup label="{{ text_choose }}">
-                    <option value="select"{% if type == 'select' %} selected="selected"{% endif %}>{{ text_select }}</option>
-                    <option value="radio"{% if type == 'radio' %} selected="selected"{% endif %}>{{ text_radio }}</option>
-                    <option value="checkbox"{% if type == 'checkbox' %} selected="selected"{% endif %}>{{ text_checkbox }}</option>
+                    <option value="select"{% if type == 'select' %} selected{% endif %}>{{ text_select }}</option>
+                    <option value="radio"{% if type == 'radio' %} selected{% endif %}>{{ text_radio }}</option>
+                    <option value="checkbox"{% if type == 'checkbox' %} selected{% endif %}>{{ text_checkbox }}</option>
                   </optgroup>
                   <optgroup label="{{ text_input }}">
-                    <option value="text"{% if type == 'text' %} selected="selected"{% endif %}>{{ text_text }}</option>
-                    <option value="textarea"{% if type == 'textarea' %} selected="selected"{% endif %}>{{ text_textarea }}</option>
+                    <option value="text"{% if type == 'text' %} selected{% endif %}>{{ text_text }}</option>
+                    <option value="textarea"{% if type == 'textarea' %} selected{% endif %}>{{ text_textarea }}</option>
                   </optgroup>
                   <optgroup label="{{ text_file }}">
-                    <option value="file"{% if type == 'file' %} selected="selected"{% endif %}>{{ text_file }}</option>
+                    <option value="file"{% if type == 'file' %} selected{% endif %}>{{ text_file }}</option>
                   </optgroup>
                   <optgroup label="{{ text_date }}">
-                    <option value="date"{% if type == 'date' %} selected="selected"{% endif %}>{{ text_date }}</option>
-                    <option value="time"{% if type == 'time' %} selected="selected"{% endif %}>{{ text_time }}</option>
-                    <option value="datetime"{% if type == 'datetime' %} selected="selected"{% endif %}>{{ text_datetime }}</option>
+                    <option value="date"{% if type == 'date' %} selected{% endif %}>{{ text_date }}</option>
+                    <option value="time"{% if type == 'time' %} selected{% endif %}>{{ text_time }}</option>
+                    <option value="datetime"{% if type == 'datetime' %} selected{% endif %}>{{ text_datetime }}</option>
                   </optgroup>
                 </select>
               </div>
@@ -179,15 +179,15 @@ $('#input-type').on('change', function () {
     }
 
     if (this.value == 'date') {
-        $('#display-value > div').html('<div class="input-group"><input type="text" name="value" value="' + $('#input-value').val() + '" placeholder="{{ entry_value }}" id="input-value" class="form-control date"/><div class="input-group-text"><i class="fa-regular fa-calendar"></i></div></div>');
+        $('#display-value > div').html('<div class="input-group"><input type="text" name="value" value="' + $('#input-value').val() + '" placeholder="{{ entry_value|escape('js') }}" id="input-value" class="form-control date"/><div class="input-group-text"><i class="fa-regular fa-calendar"></i></div></div>');
     } else if (this.value == 'time') {
-        $('#display-value > div').html('<div class="input-group"><input type="text" name="value" value="' + $('#input-value').val() + '" placeholder="{{ entry_value }}" id="input-value" class="form-control time"/><div class="input-group-text"><i class="fa-regular fa-calendar"></i></div></div>');
+        $('#display-value > div').html('<div class="input-group"><input type="text" name="value" value="' + $('#input-value').val() + '" placeholder="{{ entry_value|escape('js') }}" id="input-value" class="form-control time"/><div class="input-group-text"><i class="fa-regular fa-calendar"></i></div></div>');
     } else if (this.value == 'datetime') {
-        $('#display-value > div').html('<div class="input-group"><input type="text" name="value" value="' + $('#input-value').val() + '" placeholder="{{ entry_value }}" id="input-value" class="form-control datetime"/><div class="input-group-text"><i class="fa-regular fa-calendar"></i></div></div>');
+        $('#display-value > div').html('<div class="input-group"><input type="text" name="value" value="' + $('#input-value').val() + '" placeholder="{{ entry_value|escape('js') }}" id="input-value" class="form-control datetime"/><div class="input-group-text"><i class="fa-regular fa-calendar"></i></div></div>');
     } else if (this.value == 'textarea') {
-        $('#display-value > div').html('<textarea name="value" placeholder="{{ entry_value }}" id="input-value" class="form-control">' + $('#input-value').val() + '</textarea>');
+        $('#display-value > div').html('<textarea name="value" placeholder="{{ entry_value|escape('js') }}" id="input-value" class="form-control">' + $('#input-value').val() + '</textarea>');
     } else {
-        $('#display-value > div').html('<input type="text" name="value" value="' + $('#input-value').val() + '" placeholder="{{ entry_value }}" id="input-value" class="form-control"/>');
+        $('#display-value > div').html('<input type="text" name="value" value="' + $('#input-value').val() + '" placeholder="{{ entry_value|escape('js') }}" id="input-value" class="form-control"/>');
     }
 });
 
@@ -200,14 +200,14 @@ function addCustomFieldValue() {
     html += '  <td class="text-start" style="width: 70%;"><input type="hidden" name="custom_field_value[' + custom_field_value_row + '][custom_field_value_id]" value="" />';
   {% for language in languages %}
     html += '    <div class="input-group">';
-    html += '      <div class="input-group-text"><img src="{{ language.image }}" title="{{ language.name }}" /></div>';
-    html += '      <input type="text" name="custom_field_value[' + custom_field_value_row + '][custom_field_value_description][{{ language.language_id }}][name]" value="" placeholder="{{ entry_custom_value }}" id="input-custom-field-{{ custom_field_value_row }}-{{ language.language_id }}" class="form-control"/>';
+    html += '      <div class="input-group-text"><img src="{{ language.image|escape('js') }}" title="{{ language.name|escape('js') }}" /></div>';
+    html += '      <input type="text" name="custom_field_value[' + custom_field_value_row + '][custom_field_value_description][{{ language.language_id }}][name]" value="" placeholder="{{ entry_custom_value|escape('js') }}" id="input-custom-field-{{ custom_field_value_row }}-{{ language.language_id }}" class="form-control"/>';
     html += '    </div>';
     html += '    <div id="error-custom-field-value-{{ custom_field_value_row }}-{{ language.language_id }}" class="invalid-feedback"></div>';
   {% endfor %}
     html += '  </td>';
-    html += '  <td class="text-end"><input type="text" name="custom_field_value[' + custom_field_value_row + '][sort_order]" value="" placeholder="{{ entry_sort_order }}" class="form-control"/></td>';
-    html += '  <td class="text-end"><button type="button" onclick="$(\'#custom-field-value-row-' + custom_field_value_row + '\').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>';
+    html += '  <td class="text-end"><input type="text" name="custom_field_value[' + custom_field_value_row + '][sort_order]" value="" placeholder="{{ entry_sort_order|escape('js') }}" class="form-control"/></td>';
+    html += '  <td class="text-end"><button type="button" onclick="$(\'#custom-field-value-row-' + custom_field_value_row + '\').remove();" data-bs-toggle="tooltip" title="{{ button_remove|escape('js') }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>';
     html += '</tr>';
 
     $('#custom-field-value tbody').append(html);

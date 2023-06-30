@@ -82,7 +82,7 @@ class Smtp {
 		if (empty($this->option['html'])) {
 			$message .= 'Content-Type: text/plain; charset="utf-8"' . PHP_EOL;
 			$message .= 'Content-Transfer-Encoding: base64' . PHP_EOL . PHP_EOL;
-			$message .= base64_encode($this->option['text']) . PHP_EOL;
+			$message .= chunk_split(base64_encode($this->option['text']), 950) . PHP_EOL;
 		} else {
 			$message .= 'Content-Type: multipart/alternative; boundary="' . $boundary . '_alt"' . PHP_EOL . PHP_EOL;
 			$message .= '--' . $boundary . '_alt' . PHP_EOL;
@@ -90,15 +90,15 @@ class Smtp {
 			$message .= 'Content-Transfer-Encoding: base64' . PHP_EOL . PHP_EOL;
 
 			if (!empty($this->option['text'])) {
-				$message .= base64_encode($this->option['text']) . PHP_EOL;
+				$message .= chunk_split(base64_encode($this->option['text']), 950) . PHP_EOL;
 			} else {
-				$message .= base64_encode('This is a HTML email and your email client software does not support HTML email!') . PHP_EOL;
+				$message .= chunk_split(base64_encode('This is a HTML email and your email client software does not support HTML email!'), 950) . PHP_EOL;
 			}
 
 			$message .= '--' . $boundary . '_alt' . PHP_EOL;
 			$message .= 'Content-Type: text/html; charset="utf-8"' . PHP_EOL;
 			$message .= 'Content-Transfer-Encoding: base64' . PHP_EOL . PHP_EOL;
-			$message .= base64_encode($this->option['html']) . PHP_EOL;
+			$message .= chunk_split(base64_encode($this->option['html']), 950) . PHP_EOL;
 			$message .= '--' . $boundary . '_alt--' . PHP_EOL;
 		}
 
@@ -117,7 +117,7 @@ class Smtp {
 					$message .= 'Content-Disposition: attachment; filename="' . basename($attachment) . '"' . PHP_EOL;
 					$message .= 'Content-ID: <' . urlencode(basename($attachment)) . '>' . PHP_EOL;
 					$message .= 'X-Attachment-Id: ' . urlencode(basename($attachment)) . PHP_EOL . PHP_EOL;
-					$message .= chunk_split(base64_encode($content));
+					$message .= chunk_split(base64_encode($content), 950);
 				}
 			}
 		}
@@ -169,14 +169,16 @@ class Smtp {
 
 				$this->handleReply($handle, 220, 'Error: STARTTLS not accepted from server!');
 
-				stream_socket_enable_crypto($handle, true, STREAM_CRYPTO_METHOD_TLS_CLIENT);
-			}
+				if (stream_socket_enable_crypto($handle, true, STREAM_CRYPTO_METHOD_TLS_CLIENT) !== true) {
+					throw new \Exception('Error: TLS could not be established!');
+				}
 
-			if (!empty($this->option['smtp_username']) && !empty($this->option['smtp_password'])) {
 				fputs($handle, 'EHLO ' . getenv('SERVER_NAME') . "\r\n");
 
 				$this->handleReply($handle, 250, 'Error: EHLO not accepted from server!');
+			}
 
+			if (!empty($this->option['smtp_username']) && !empty($this->option['smtp_password'])) {
 				fputs($handle, 'AUTH LOGIN' . "\r\n");
 
 				$this->handleReply($handle, 334, 'Error: AUTH LOGIN not accepted from server!');

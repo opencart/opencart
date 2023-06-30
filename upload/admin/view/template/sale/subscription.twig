@@ -20,7 +20,8 @@
           <div class="card-header"><i class="fa-solid fa-filter"></i> {{ text_filter }}</div>
           <div class="card-body">
             <div class="mb-3">
-              <label for="input-subscription-id" class="form-label">{{ entry_subscription_id }}</label> <input type="text" name="filter_subscription_id" value="{{ filter_subscription_id }}" placeholder="{{ entry_subscription_id }}" id="input-subscription-id" class="form-control"/>
+              <label for="input-subscription-id" class="form-label">{{ entry_subscription_id }}</label>
+              <input type="text" name="filter_subscription_id" value="{{ filter_subscription_id }}" placeholder="{{ entry_subscription_id }}" id="input-subscription-id" class="form-control"/>
             </div>
             <div class="mb-3">
               <label for="input-order-id" class="form-label">{{ entry_order_id }}</label>
@@ -35,7 +36,7 @@
               <label for="input-subscription-status" class="form-label">{{ entry_subscription_status }}</label> <select name="filter_subscription_status_id" id="input-subscription-status" class="form-select">
                 <option value=""></option>
                 {% for subscription_status in subscription_statuses %}
-                  <option value="{{ subscription_status.subscription_status_id }}"{% if subscription_status.subscription_status_id == filter_subscription_status_id %} selected="selected"{% endif %}>{{ subscription_status.name }}</option>
+                  <option value="{{ subscription_status.subscription_status_id }}"{% if subscription_status.subscription_status_id == filter_subscription_status_id %} selected{% endif %}>{{ subscription_status.name }}</option>
                 {% endfor %}
               </select>
             </div>

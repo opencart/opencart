@@ -1,42 +1,117 @@
-<form id="form-payment-method">
-  <fieldset>
-    <legend>{{ heading_title }}</legend>
-    <div class="input-group">
-      <select name="payment_method" id="input-payment-method" class="form-select"{% if not payment_methods %} disabled{% endif %}>
-        <option value="">{{ text_select }}</option>
-        {% for payment_method in payment_methods %}
-          <optgroup label="{{ payment_method.title }}">
-            {% for option in payment_method.option %}
-              <option value="{{ option.code }}"{% if option.code == code %} selected{% endif %}>{{ option.name }}</option>
-            {% endfor %}
-          </optgroup>
-        {% endfor %}
-      </select>
-      <button type="button" id="button-payment-method" class="btn btn-light"><i class="fa-solid fa-rotate"></i></button>
-    </div>
-  </fieldset>
-</form>
+<fieldset>
+  <legend>{{ heading_title }}</legend>
+  <div class="input-group">
+    <span class="input-group-text"><i class="fa fa-credit-card"></i></span><input type="text" name="payment_method" value="{{ payment_method }}" placeholder="{{ entry_payment_method }}" id="input-payment-method" class="form-control" readonly/>
+    <button type="button" id="button-payment-methods" class="btn btn-primary">{{ button_choose }}</button>
+  </div>
+  <input type="hidden" name="code" value="{{ code }}" id="input-payment-code"/>
+  <div id="error-payment-method" class="invalid-feedback"></div>
+</fieldset>
 <br/>
 <div class="mb-2">
-  <label for="input-comment" class="form-label"><strong>{{ text_comments }}</strong></label> <textarea name="comment" rows="3" id="input-comment" class="form-control">{{ comment }}</textarea>
+  <label for="input-comment" class="form-label"><strong>{{ text_comments }}</strong></label> <textarea name="comment" rows="4" id="input-comment" class="form-control">{{ comment }}</textarea>
 </div>
 {% if text_agree %}
-  <div class="mb-2">
-    <div class="text-end">{{ text_agree }} <input type="checkbox" name="agree" value="1" id="input-agree" class="form-check-input"{% if agree %} checked{% endif %}/></div>
+  <div class="form-check form-switch form-switch-lg form-check-reverse mt-3">
+    <label class="form-check-label">{{ text_agree }}</label> <input type="checkbox" name="agree" value="1" id="input-checkout-agree" class="form-check-input"/>
   </div>
 {% endif %}
 <script type="text/javascript"><!--
-// Payment Methods
-$('#button-payment-method').on('click', function() {
+$('#button-payment-methods').on('click', function() {
     var element = this;
-
-    $('#input-payment-method').html('<option value="">{{ text_select }}</option>');
-    $('#input-payment-method').prop('disabled', true);
 
     chain.attach(function() {
         return $.ajax({
             url: 'index.php?route=checkout/payment_method.getMethods&language={{ language }}',
             dataType: 'json',
+            beforeSend: function() {
+                $(element).button('loading');
+            },
+            complete: function() {
+                $(element).button('reset');
+            },
+            success: function(json) {
+                console.log(json);
+
+                $('#input-payment-method').removeClass('is-invalid');
+                $('#error-payment-method').removeClass('d-block');
+
+                if (json['error']) {
+                    $('#input-payment-method').addClass('is-invalid');
+                    $('#error-payment-method').html(json['error']).addClass('d-block');
+                }
+
+                if (json['payment_methods']) {
+                    $('#modal-payment').remove();
+
+                    html = '<div id="modal-payment" class="modal">';
+                    html += '  <div class="modal-dialog modal-dialog-centered">';
+                    html += '    <div class="modal-content">';
+                    html += '      <div class="modal-header">';
+                    html += '        <h5 class="modal-title"><i class="fa fa-credit-card"></i> {{ text_payment_method|escape('js') }}</h5>';
+                    html += '        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>';
+                    html += '      </div>';
+                    html += '      <div class="modal-body">';
+                    html += '        <form id="form-payment-method">';
+                    html += '          <p>{{ text_payment|escape('js') }}</p>';
+
+                    for (i in json['payment_methods']) {
+                        html += '<p><strong>' + json['payment_methods'][i]['name'] + '</strong></p>';
+
+                        if (!json['payment_methods'][i]['error']) {
+                            for (j in json['payment_methods'][i]['option']) {
+                                html += '<div class="form-check">';
+
+                                var code = i + '-' + j.replaceAll('_', '-');
+
+                                html += '<input type="radio" name="payment_method" value="' + json['payment_methods'][i]['option'][j]['code'] + '" id="input-payment-method-' + code + '"';
+
+                                if (json['payment_methods'][i]['option'][j]['code'] == $('#input-payment-code').val()) {
+                                    html += ' checked';
+                                }
+
+                                html += '/>';
+                                html += '  <label for="input-payment-method-' + code + '">' + json['payment_methods'][i]['option'][j]['name'] + '</label>';
+                                html += '</div>';
+                            }
+                        } else {
+                            html += '<div class="alert alert-danger">' + json['payment_methods'][i]['error'] + '</div>';
+                        }
+                    }
+
+                    html += '          <div class="text-end">';
+                    html += '            <button type="submit" id="button-payment-method" class="btn btn-primary">{{ button_continue|escape('js') }}</button>';
+                    html += '          </div>';
+                    html += '        </form>';
+                    html += '      </div>';
+                    html += '    </div>';
+                    html += '  </div>';
+                    html += '</div>';
+
+                    $('body').append(html);
+
+                    $('#modal-payment').modal('show');
+                }
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
+        });
+    });
+});
+
+$(document).on('submit', '#form-payment-method', function(e) {
+    e.preventDefault();
+
+    var element = this;
+
+    chain.attach(function() {
+        return $.ajax({
+            url: 'index.php?route=checkout/payment_method.save&language={{ language }}',
+            type: 'post',
+            data: $('#form-payment-method').serialize(),
+            dataType: 'json',
+            contentType: 'application/x-www-form-urlencoded',
             beforeSend: function() {
                 $('#button-payment-method').button('loading');
             },
@@ -54,67 +129,13 @@ $('#button-payment-method').on('click', function() {
                     $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                 }
 
-                html = '<option value="">{{ text_select }}</option>';
-
-                if (json['payment_methods']) {
-                    for (i in json['payment_methods']) {
-                        html += '<optgroup label="' + json['payment_methods'][i]['title'] + '">';
-
-                        for (j in json['payment_methods'][i]['option']) {
-                            html += '<option value="' + json['payment_methods'][i]['option'][j]['code'] + '">' + json['payment_methods'][i]['option'][j]['name'] + '</option>';
-                        }
-
-                        html += '</optgroup>';
-                    }
-
-                    $('#input-payment-method').prop('disabled', false);
-                }
-
-                $('#input-payment-method').html(html);
-            },
-            error: function(xhr, ajaxOptions, thrownError) {
-                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-            }
-        });
-    });
-});
-
-{% if not payment_methods and not payment_address_required and not shipping_required %}
-$('#button-payment-method').trigger('click');
-{% endif %}
-
-// Payment Method
-$('#input-payment-method').on('change', function() {
-    var element = this;
-
-    chain.attach(function() {
-        return $.ajax({
-            url: 'index.php?route=checkout/payment_method.save&language={{ language }}',
-            type: 'post',
-            data: $('#form-payment-method').serialize(),
-            dataType: 'json',
-            contentType: 'application/x-www-form-urlencoded',
-            beforeSend: function() {
-                $(element).prop('disabled', true);
-                $('#button-payment-method').prop('disabled', true);
-            },
-            complete: function() {
-                $(element).prop('disabled', false);
-                $('#button-payment-method').prop('disabled', false);
-            },
-            success: function(json) {
-                console.log(json);
-
-                if (json['redirect']) {
-                    location = json['redirect'];
-                }
-
-                if (json['error']) {
-                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-                }
-
                 if (json['success']) {
                     $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                    $('#modal-payment').modal('hide');
+
+                    $('#input-payment-method').val($('input[name=\'payment_method\']:checked').parent().find('label').text());
+                    $('#input-payment-code').val($('input[name=\'payment_method\']:checked').val());
 
                     $('#checkout-confirm').load('index.php?route=checkout/confirm.confirm&language={{ language }}');
                 }
@@ -130,7 +151,7 @@ $('#input-payment-method').on('change', function() {
 var timer = '';
 
 $('#input-comment').on('keydown', function() {
-    var button = $('#button-confirm').prop('disabled');
+    $('#button-confirm').prop('disabled', true);
 
     // Request
     clearTimeout(timer);
@@ -143,13 +164,9 @@ $('#input-comment').on('keydown', function() {
                 data: $('#input-comment').serialize(),
                 dataType: 'json',
                 contentType: 'application/x-www-form-urlencoded',
-                beforeSend: function() {
-                    $('#button-confirm').prop('disabled', true);
-                },
-                complete: function() {
-                    $('#button-confirm').prop('disabled', button);
-                },
                 success: function(json) {
+                    console.log(json);
+
                     $('.alert-dismissible').remove();
 
                     if (json['redirect']) {
@@ -158,10 +175,14 @@ $('#input-comment').on('keydown', function() {
 
                     if (json['error']) {
                         $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                        $('#button-confirm').prop('disabled', false);
                     }
 
                     if (json['success']) {
                         $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                        $('#button-confirm').prop('disabled', false);
                     }
 
                     window.setTimeout(function() {
@@ -171,29 +192,31 @@ $('#input-comment').on('keydown', function() {
                     }, 3000);
                 },
                 error: function(xhr, ajaxOptions, thrownError) {
+                    $('#button-confirm').prop('disabled', false);
+
                     console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
                 }
             });
         });
-    }, 500, this);
+    }, 1000, this);
 });
 
 /* Agree to terms */
-$('#input-agree').on('change', function() {
+$('#input-checkout-agree').on('change', function() {
     var element = this;
 
     chain.attach(function() {
         return $.ajax({
             url: 'index.php?route=checkout/payment_method.agree&language={{ language }}',
             type: 'post',
-            data: $('#input-agree').serialize(),
+            data: $('#input-checkout-agree').serialize(),
             dataType: 'json',
             contentType: 'application/x-www-form-urlencoded',
             beforeSend: function() {
-                $(element).prop('disabled', true);
+                $('#button-confirm').button('loading');
             },
             complete: function() {
-                $(element).prop('disabled', false);
+                $('#button-confirm').button('reset');
             },
             success: function(json) {
                 $('#checkout-confirm').load('index.php?route=checkout/confirm.confirm&language={{ language }}');

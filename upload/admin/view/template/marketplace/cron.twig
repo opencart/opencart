@@ -79,12 +79,13 @@ $('#cron').on('click', '.btn-info', function () {
     html += '  <div class="modal-dialog">';
     html += '    <div class="modal-content">';
     html += '      <div class="modal-header">';
-    html += '        <h5 class="modal-title">{{ text_info }}</h5>';
+    html += '        <h5 class="modal-title">{{ text_info|escape('js') }}</h5>';
     html += '        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>';
     html += '      </div>';
     html += '      <div class="modal-body">';
     html += '        <div class="mb-3">';
-    html += '          <label for="input-description" class="form-label">{{ entry_description }}</label> <textarea placeholder="{{ entry_description }}" id="input-description" rows="5" class="form-control" disabled>' + $(element).attr('data-oc-description') + '</textarea>';
+    html += '          <label for="input-description" class="form-label">{{ entry_description|escape('js') }}</label>';
+    html += '          <textarea placeholder="{{ entry_description|escape('js') }}" id="input-description" rows="5" class="form-control" disabled>' + $(element).attr('data-oc-description') + '</textarea>';
     html += '        </div>';
     html += '      </div>';
     html += '      </div>';

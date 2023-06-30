@@ -32,8 +32,8 @@
                   <label for="input-response" class="col-sm-2 col-form-label">{{ entry_response }}</label>
                   <div class="col-sm-10">
                     <select name="payment_credit_card_response" id="input-response" class="form-select">
-                      <option value="1"{% if payment_credit_card_response %} selected="selected"{% endif %}>{{ text_approve }}</option>
-                      <option value="0"{% if not payment_credit_card_response %} selected="selected"{% endif %}>{{ text_deny }}</option>
+                      <option value="1"{% if payment_credit_card_response %} selected{% endif %}>{{ text_approve }}</option>
+                      <option value="0"{% if not payment_credit_card_response %} selected{% endif %}>{{ text_deny }}</option>
                     </select>
                   </div>
                 </div>
@@ -45,7 +45,7 @@
                   <div class="col-sm-10">
                     <select name="payment_credit_card_approved_status_id" id="input-approved-status" class="form-select">
                       {% for order_status in order_statuses %}
-                        <option value="{{ order_status.order_status_id }}"{% if order_status.order_status_id == payment_credit_card_approved_status_id %} selected="selected"{% endif %}>{{ order_status.name }}</option>
+                        <option value="{{ order_status.order_status_id }}"{% if order_status.order_status_id == payment_credit_card_approved_status_id %} selected{% endif %}>{{ order_status.name }}</option>
                       {% endfor %}
                     </select>
                   </div>
@@ -55,7 +55,7 @@
                   <div class="col-sm-10">
                     <select name="payment_credit_card_failed_status_id" id="input-failed-status" class="form-select">
                       {% for order_status in order_statuses %}
-                        <option value="{{ order_status.order_status_id }}"{% if order_status.order_status_id == payment_credit_card_failed_status_id %} selected="selected"{% endif %}>{{ order_status.name }}</option>
+                        <option value="{{ order_status.order_status_id }}"{% if order_status.order_status_id == payment_credit_card_failed_status_id %} selected{% endif %}>{{ order_status.name }}</option>
                       {% endfor %}
                     </select>
                   </div>
@@ -65,7 +65,7 @@
                   <div class="col-sm-10">
                     <select name="payment_credit_card_order_status_id" id="input-order-status" class="form-select">
                       {% for order_status in order_statuses %}
-                        <option value="{{ order_status.order_status_id }}"{% if order_status.order_status_id == payment_credit_card_order_status_id %} selected="selected"{% endif %}>{{ order_status.name }}</option>
+                        <option value="{{ order_status.order_status_id }}"{% if order_status.order_status_id == payment_credit_card_order_status_id %} selected{% endif %}>{{ order_status.name }}</option>
                       {% endfor %}
                     </select>
                   </div>
@@ -76,7 +76,7 @@
                     <select name="payment_credit_card_geo_zone_id" id="input-geo-zone" class="form-select">
                       <option value="0">{{ text_all_zones }}</option>
                       {% for geo_zone in geo_zones %}
-                        <option value="{{ geo_zone.geo_zone_id }}"{% if geo_zone.geo_zone_id == payment_credit_card_geo_zone_id %} selected="selected"{% endif %}>{{ geo_zone.name }}</option>
+                        <option value="{{ geo_zone.geo_zone_id }}"{% if geo_zone.geo_zone_id == payment_credit_card_geo_zone_id %} selected{% endif %}>{{ geo_zone.name }}</option>
                       {% endfor %}
                     </select>
                   </div>

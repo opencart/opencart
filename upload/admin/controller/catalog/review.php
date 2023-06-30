@@ -502,4 +502,55 @@ class Review extends \Opencart\System\Engine\Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
+
+	public function sync(): void {
+		$this->load->language('catalog/review');
+
+		$json = [];
+
+		if (isset($this->request->get['page'])) {
+			$page = (int)$this->request->get['page'];
+		} else {
+			$page = 1;
+		}
+
+		if (!$this->user->hasPermission('modify', 'catalog/review')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			$this->load->model('catalog/product');
+			$this->load->model('catalog/review');
+
+			$total = $this->model_catalog_product->getTotalProducts();
+			$limit = 10;
+
+			$start = ($page - 1) * $limit;
+			$end = $start > ($total - $limit) ? $total : ($start + $limit);
+
+			$product_data = [
+				'start' => ($page - 1) * $limit,
+				'limit' => $limit
+			];
+
+			$results = $this->model_catalog_product->getProducts($product_data);
+
+			foreach ($results as $result) {
+				$this->model_catalog_product->editRating($result['product_id'], $this->model_catalog_review->getRating($result['product_id']));
+			}
+
+			if ($total && $end < $total) {
+				$json['text'] = sprintf($this->language->get('text_next'), $end, $total);
+
+				$json['next'] = $this->url->link('catalog/review.sync', 'user_token=' . $this->session->data['user_token'] . '&page=' . ($page + 1), true);
+			} else {
+				$json['success'] = sprintf($this->language->get('text_next'), $end, $total);
+
+				$json['next'] = '';
+			}
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
 }

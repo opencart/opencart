@@ -23,18 +23,26 @@ class CreditCard extends \Opencart\System\Engine\Controller {
 			$data['language'] = $this->config->get('config_language');
 
 			// Card storage
-			if ($this->session->data['payment_method'] == 'credit_card.credit_card') {
+			if ($this->session->data['payment_method']['code'] == 'credit_card.credit_card') {
 				return $this->load->view('extension/oc_payment_example/payment/credit_card', $data);
 			} else {
 				return $this->load->view('extension/oc_payment_example/payment/stored', $data);
 			}
 		}
+
+		return '';
 	}
 
 	public function confirm(): void {
 		$this->load->language('extension/oc_payment_example/payment/credit_card');
 
 		$json = [];
+
+		if (isset($this->session->data['order_id'])) {
+			$order_id = $this->session->data['order_id'];
+		} else {
+			$order_id = 0;
+		}
 
 		$keys = [
 			'card_name',
@@ -51,11 +59,15 @@ class CreditCard extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		if (!isset($this->session->data['order_id'])) {
+		$this->load->model('checkout/order');
+
+		$order_info = $this->model_checkout_order->getOrder($order_id);
+
+		if (!$order_info) {
 			$json['error']['warning'] = $this->language->get('error_order');
 		}
 
-		if (!$this->config->get('payment_credit_card_status') || !isset($this->session->data['payment_method']) || $this->session->data['payment_method'] == 'credit_card.credit_card') {
+		if (!$this->config->get('payment_credit_card_status') || !isset($this->session->data['payment_method']) || $this->session->data['payment_method']['code'] != 'credit_card.credit_card') {
 			$json['error']['warning'] = $this->language->get('error_payment_method');
 		}
 
@@ -125,8 +137,14 @@ class CreditCard extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
+		if (isset($this->session->data['order_id'])) {
+			$order_id = $this->session->data['order_id'];
+		} else {
+			$order_id = 0;
+		}
+
 		if (isset($this->session->data['payment_method'])) {
-			$payment = explode('.', $this->session->data['payment_method']);
+			$payment = explode('.', $this->session->data['payment_method']['code']);
 		} else {
 			$payment = [];
 		}
@@ -143,7 +161,11 @@ class CreditCard extends \Opencart\System\Engine\Controller {
 			$credit_card_id = 0;
 		}
 
-		if (!isset($this->session->data['order_id'])) {
+		$this->load->model('checkout/order');
+
+		$order_info = $this->model_checkout_order->getOrder($order_id);
+
+		if (!$order_info) {
 			$json['error']['warning'] = $this->language->get('error_order');
 		}
 
@@ -170,8 +192,8 @@ class CreditCard extends \Opencart\System\Engine\Controller {
 			 *
 			 */
 
-			// Card storage
-			$response = $this->model_extension_oc_payment_example_payment_credit_card->charge($this->customer->getId(), $credit_card_id);
+			// Charge
+			$response = $this->model_extension_oc_payment_example_payment_credit_card->charge($this->customer->getId(), $this->session->data['order_id'], $order_info['total'], $credit_card_id);
 
 			// Set Credit Card response
 			if ($response) {
@@ -220,6 +242,12 @@ class CreditCard extends \Opencart\System\Engine\Controller {
 			$this->model_extension_oc_payment_example_payment_credit_card->deleteCreditCard($this->customer->getId(), $credit_card_id);
 
 			$json['success'] = $this->language->get('text_delete');
+
+			// Clear payment and shipping methods
+			unset($this->session->data['shipping_method']);
+			unset($this->session->data['shipping_methods']);
+			unset($this->session->data['payment_method']);
+			unset($this->session->data['payment_methods']);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

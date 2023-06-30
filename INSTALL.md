@@ -38,6 +38,12 @@ If you are __upgrading your existing cart__, be sure to read the [upgrade instru
 5. You should be taken to the installer page. Follow the on screen instructions.
 6. After successful install, delete the ```/install/``` directory.
 
+7. Make sure the following extensions are enabled in php.ini:
+
+extension=curl;
+extension=gd;
+extension=zip;
+
 ## Local Install
 
 There are many all-in-one web servers out there and most of them should work with OpenCart out of the box.
@@ -49,7 +55,7 @@ Some examples...
 * http://www.usbwebserver.net
 * http://www.wampserver.com/en/
 
- ## Notes
+## Notes
 
 Godaddy Issues
 

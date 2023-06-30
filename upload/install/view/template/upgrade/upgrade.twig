@@ -50,7 +50,11 @@
 </div>
 <script type="text/javascript"><!--
 $('#button-continue').on('click', function () {
+    var element = this;
+
     var step = 1;
+
+    $(element).prop('disabled', true);
 
     $('#progress-bar').addClass('progress-bar-success').css('width', '0%').removeClass('progress-bar-danger');
     $('#progress-text').html('');
@@ -61,12 +65,6 @@ $('#button-continue').on('click', function () {
         return $.ajax({
             url: next,
             dataType: 'json',
-            beforeSend: function () {
-                $('#button-continue').button('loading');
-            },
-            complete: function () {
-                $('#button-continue').button('reset');
-            },
             success: function (json) {
                 console.log(json);
 
@@ -77,6 +75,8 @@ $('#button-continue').on('click', function () {
                 if (json['error']) {
                     $('#progress-bar').addClass('progress-bar-danger');
                     $('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
+
+                    $(element).prop('disabled', false);
                 }
 
                 if (json['text']) {
@@ -85,6 +85,8 @@ $('#button-continue').on('click', function () {
 
                 if (json['success']) {
                     $('#progress-text').html('<span class="text-success">' + json['success'] + '</span>');
+
+                    $(element).prop('disabled', false);
                 }
 
                 $('#progress-bar').css('width', Math.round((step / {{ total }}) * 100) + '%');
@@ -99,6 +101,8 @@ $('#button-continue').on('click', function () {
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+
+                $(element).prop('disabled', false);
             }
         });
     }

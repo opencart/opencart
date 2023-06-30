@@ -327,15 +327,15 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			$data['orders'][] = [
-				'order_id'      => $result['order_id'],
-				'store_name'    => $result['store_name'],
-				'customer'      => $result['customer'],
-				'order_status'  => $result['order_status'] ? $result['order_status'] : $this->language->get('text_missing'),
-				'total'         => $this->currency->format($result['total'], $result['currency_code'], $result['currency_value']),
-				'date_added'    => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'date_modified' => date($this->language->get('date_format_short'), strtotime($result['date_modified'])),
-				'shipping_code' => $result['shipping_code'],
-				'view'          => $this->url->link('sale/order.info', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $result['order_id'] . $url)
+				'order_id'        => $result['order_id'],
+				'store_name'      => $result['store_name'],
+				'customer'        => $result['customer'],
+				'order_status'    => $result['order_status'] ? $result['order_status'] : $this->language->get('text_missing'),
+				'total'           => $this->currency->format($result['total'], $result['currency_code'], $result['currency_value']),
+				'date_added'      => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
+				'date_modified'   => date($this->language->get('date_format_short'), strtotime($result['date_modified'])),
+				'shipping_method' => $result['shipping_method'],
+				'view'            => $this->url->link('sale/order.info', 'user_token=' . $this->session->data['user_token'] . '&order_id=' . $result['order_id'] . $url)
 			];
 		}
 
@@ -648,6 +648,7 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('sale/order');
 		$this->load->model('sale/subscription');
+		$this->load->model('tool/upload');
 
 		$products = $this->model_sale_order->getProducts($order_id);
 
@@ -677,20 +678,17 @@ class Order extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-			$subscription_id = 0;
 			$description = '';
 
-			$subscription_info = $this->model_sale_subscription->getSubscriptionByOrderProductId($order_id, $product['order_product_id']);
+			$subscription_info = $this->model_sale_order->getSubscription($order_id, $product['order_product_id']);
 
 			if ($subscription_info) {
-				$subscription_id = $subscription_info['subscription_id'];
-
-				$trial_price = $this->currency->format($subscription_info['trial_price'], $this->config->get('config_currency'));
-				$trial_cycle = $subscription_info['trial_cycle'];
-				$trial_frequency = $this->language->get('text_' . $subscription_info['trial_frequency']);
-				$trial_duration = $subscription_info['trial_duration'];
-
 				if ($subscription_info['trial_status']) {
+					$trial_price = $this->currency->format($subscription_info['trial_price'], $this->config->get('config_currency'));
+					$trial_cycle = $subscription_info['trial_cycle'];
+					$trial_frequency = $this->language->get('text_' . $subscription_info['trial_frequency']);
+					$trial_duration = $subscription_info['trial_duration'];
+
 					$description .= sprintf($this->language->get('text_subscription_trial'), $trial_price, $trial_cycle, $trial_frequency, $trial_duration);
 				}
 
@@ -706,18 +704,26 @@ class Order extends \Opencart\System\Engine\Controller {
 				}
 			}
 
+			$subscription_info = $this->model_sale_subscription->getSubscriptionByOrderProductId($order_id, $product['order_product_id']);
+
+			if ($subscription_info) {
+				$subscription = $this->url->link('sale/subscription.info', 'user_token=' . $this->session->data['user_token'] . '&subscription_id=' . $subscription_info['subscription_id']);
+			} else {
+				$subscription = '';
+			}
+
 			$data['order_products'][] = [
-				'order_product_id' => $product['order_product_id'],
-				'product_id'       => $product['product_id'],
-				'name'             => $product['name'],
-				'model'            => $product['model'],
-				'option'           => $option_data,
-				'subscription_id'  => $subscription_id,
-				'subscription'     => $description,
-				'quantity'         => $product['quantity'],
-				'price'            => $this->currency->format($product['price'] + ($this->config->get('config_tax') ? $product['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']),
-				'total'            => $this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value']),
-				'reward'           => $product['reward']
+				'order_product_id'         => $product['order_product_id'],
+				'product_id'               => $product['product_id'],
+				'name'                     => $product['name'],
+				'model'                    => $product['model'],
+				'option'                   => $option_data,
+				'subscription'             => $subscription,
+				'subscription_description' => $description,
+				'quantity'                 => $product['quantity'],
+				'price'                    => $this->currency->format($product['price'] + ($this->config->get('config_tax') ? $product['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']),
+				'total'                    => $this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value']),
+				'reward'                   => $product['reward']
 			];
 		}
 
@@ -913,6 +919,12 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		// Payment Address
 		if (!empty($order_info)) {
+			$data['payment_address_id'] = $order_info['payment_address_id'];
+		} else {
+			$data['payment_address_id'] = 0;
+		}
+
+		if (!empty($order_info)) {
 			$data['payment_firstname'] = $order_info['payment_firstname'];
 		} else {
 			$data['payment_firstname'] = '';
@@ -990,19 +1002,25 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		// Payment Method
-		if (!empty($order_info)) {
-			$data['payment_method'] = $order_info['payment_method'];
+		if (isset($order_info['payment_method']['name'])) {
+			$data['payment_method'] = $order_info['payment_method']['name'];
 		} else {
 			$data['payment_method'] = '';
 		}
 
-		if (!empty($order_info)) {
-			$data['payment_code'] = $order_info['payment_code'];
+		if (isset($order_info['payment_method']['code'])) {
+			$data['payment_code'] = $order_info['payment_method']['code'];
 		} else {
 			$data['payment_code'] = '';
 		}
 
 		// Shipping Address
+		if (!empty($order_info)) {
+			$data['shipping_address_id'] = $order_info['shipping_address_id'];
+		} else {
+			$data['shipping_address_id'] = 0;
+		}
+
 		if (!empty($order_info)) {
 			$data['shipping_firstname'] = $order_info['shipping_firstname'];
 		} else {
@@ -1076,14 +1094,14 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		// Shipping method
-		if (!empty($order_info)) {
-			$data['shipping_method'] = $order_info['shipping_method'];
+		if (isset($order_info['shipping_method']['name'])) {
+			$data['shipping_method'] = $order_info['shipping_method']['name'];
 		} else {
 			$data['shipping_method'] = '';
 		}
 
-		if (!empty($order_info)) {
-			$data['shipping_code'] = $order_info['shipping_code'];
+		if (isset($order_info['shipping_method']['code'])) {
+			$data['shipping_code'] = $order_info['shipping_method']['code'];
 		} else {
 			$data['shipping_code'] = '';
 		}
@@ -1126,8 +1144,8 @@ class Order extends \Opencart\System\Engine\Controller {
 		// Extension Order Tabs can are called here.
 		$this->load->model('setting/extension');
 
-		if (!empty($order_info)) {
-			$extension_info = $this->model_setting_extension->getExtensionByCode('payment', $order_info['payment_code']);
+		if (!empty($order_info['payment_method']['code'])) {
+			$extension_info = $this->model_setting_extension->getExtensionByCode('payment', $order_info['payment_method']['code']);
 
 			if ($extension_info && $this->user->hasPermission('access', 'extension/' . $extension_info['extension'] . '/payment/' . $extension_info['code'])) {
 				$output = $this->load->controller('extension/' . $extension_info['extension'] . '/payment/' . $extension_info['code'] . '.order');
@@ -1371,13 +1389,6 @@ class Order extends \Opencart\System\Engine\Controller {
 
 				$shipping_address = str_replace(["\r\n", "\r", "\n"], '<br/>', preg_replace(["/\s\s+/", "/\r\r+/", "/\n\n+/"], '<br/>', trim(str_replace($find, $replace, $format))));
 
-				// Subscription
-				$filter_data = [
-					'filter_order_id'	=> $order_id
-				];
-
-				$subscriptions = $this->model_sale_subscription->getSubscriptions($filter_data);
-
 				$product_data = [];
 
 				$products = $this->model_sale_order->getProducts($order_id);
@@ -1401,24 +1412,35 @@ class Order extends \Opencart\System\Engine\Controller {
 						}
 
 						$option_data[] = [
-							'name' => $option['name'],
+							'name'  => $option['name'],
 							'value' => $value
 						];
 					}
 
 					// Subscription
-					$subscription_data = '';
+					$description = '';
 
-					foreach ($subscriptions as $subscription) {
-						$filter_data = [
-							'filter_subscription_id'	=> $subscription['subscription_id'],
-							'filter_order_product_id'	=> $product['order_product_id']
-						];
+					$subscription_info = $this->model_sale_order->getSubscription($order_id, $product['order_product_id']);
 
-						$subscription_info = $this->model_sale_subscription->getSubscriptions($filter_data);
+					if ($subscription_info) {
+						if ($subscription_info['trial_status']) {
+							$trial_price = $this->currency->format($subscription_info['trial_price'], $this->config->get('config_currency'));
+							$trial_cycle = $subscription_info['trial_cycle'];
+							$trial_frequency = $this->language->get('text_' . $subscription_info['trial_frequency']);
+							$trial_duration = $subscription_info['trial_duration'];
 
-						if ($subscription_info) {
-							$subscription_data = $subscription['name'];
+							$description .= sprintf($this->language->get('text_subscription_trial'), $trial_price, $trial_cycle, $trial_frequency, $trial_duration);
+						}
+
+						$price = $this->currency->format($subscription_info['price'], $this->config->get('config_currency'));
+						$cycle = $subscription_info['cycle'];
+						$frequency = $this->language->get('text_' . $subscription_info['frequency']);
+						$duration = $subscription_info['duration'];
+
+						if ($subscription_info['duration']) {
+							$description .= sprintf($this->language->get('text_subscription_duration'), $price, $cycle, $frequency, $duration);
+						} else {
+							$description .= sprintf($this->language->get('text_subscription_cancel'), $price, $cycle, $frequency);
 						}
 					}
 
@@ -1426,7 +1448,7 @@ class Order extends \Opencart\System\Engine\Controller {
 						'name'     		=> $product['name'],
 						'model'    		=> $product['model'],
 						'option'   		=> $option_data,
-						'subscription'	=> $subscription_data,
+						'subscription'	=> $description,
 						'quantity' 		=> $product['quantity'],
 						'price'    		=> $this->currency->format($product['price'] + ($this->config->get('config_tax') ? $product['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']),
 						'total'    		=> $this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value'])
@@ -1467,9 +1489,9 @@ class Order extends \Opencart\System\Engine\Controller {
 					'email'            => $order_info['email'],
 					'telephone'        => $order_info['telephone'],
 					'shipping_address' => $shipping_address,
-					'shipping_method'  => $order_info['shipping_method'],
+					'shipping_method'  => ($order_info['shipping_method'] ? $order_info['shipping_method']['name'] : ''),
 					'payment_address'  => $payment_address,
-					'payment_method'   => $order_info['payment_method'],
+					'payment_method'   => $order_info['payment_method']['name'],
 					'product'          => $product_data,
 					'voucher'          => $voucher_data,
 					'total'            => $total_data,
@@ -1521,7 +1543,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			$order_info = $this->model_sale_order->getOrder($order_id);
 
 			// Make sure there is a shipping method
-			if ($order_info && $order_info['shipping_code']) {
+			if ($order_info && $order_info['shipping_method']) {
 				$store_info = $this->model_setting_setting->getSetting('config', $order_info['store_id']);
 
 				if ($store_info) {
@@ -1575,13 +1597,6 @@ class Order extends \Opencart\System\Engine\Controller {
 
 				$shipping_address = str_replace(["\r\n", "\r", "\n"], '<br/>', preg_replace(["/\s\s+/", "/\r\r+/", "/\n\n+/"], '<br/>', trim(str_replace($find, $replace, $format))));
 
-				// Subscription
-				$filter_data = [
-					'filter_order_id'	=> $order_id
-				];
-
-				$subscriptions = $this->model_sale_subscription->getSubscriptions($filter_data);
-
 				$product_data = [];
 
 				$products = $this->model_sale_order->getProducts($order_id);
@@ -1625,27 +1640,10 @@ class Order extends \Opencart\System\Engine\Controller {
 							}
 						}
 
-						// Subscription
-						$subscription_data = '';
-
-						foreach ($subscriptions as $subscription) {
-							$filter_data = [
-								'filter_subscription_id'	=> $subscription['subscription_id'],
-								'filter_order_product_id'	=> $product['order_product_id']
-							];
-
-							$subscription_info = $this->model_sale_subscription->getSubscriptions($filter_data);
-
-							if ($subscription_info) {
-								$subscription_data = $subscription['name'];
-							}
-						}
-
 						$product_data[] = [
 							'name'     	   => $product_info['name'],
 							'model'    	   => $product_info['model'],
 							'option'   	   => $option_data,
-							'subscription' => $subscription_data,
 							'quantity'     => $product['quantity'],
 							'location'     => $product_info['location'],
 							'sku'          => $product_info['sku'],
@@ -1671,7 +1669,7 @@ class Order extends \Opencart\System\Engine\Controller {
 					'email'            => $order_info['email'],
 					'telephone'        => $order_info['telephone'],
 					'shipping_address' => $shipping_address,
-					'shipping_method'  => $order_info['shipping_method'],
+					'shipping_method'  => $order_info['shipping_method']['name'],
 					'product'          => $product_data,
 					'comment'          => nl2br($order_info['comment'])
 				];

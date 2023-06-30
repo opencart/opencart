@@ -217,26 +217,22 @@
             {% endif %}
           {% endfor %}
         </fieldset>
-
-        <div class="pt-2 pd-2 d-inline-block w-100">
-          <div class="float-end">
-            {% if text_agree %}
-              <div class="form-check form-check-inline">
-                <label class="form-check-label">{{ text_agree }}</label>
-                <input type="checkbox" name="agree" value="1" class="form-check-input"/>
-                &nbsp;
-              </div>
-            {% endif %}
-            <button type="submit" class="btn btn-primary">{{ button_continue }}</button>
-          </div>
+        <div class="text-end">
+          {% if text_agree %}
+            <div class="form-check form-switch form-switch-lg form-check-reverse form-check-inline">
+              <label class="form-check-label">{{ text_agree }}</label>
+              <input type="hidden" name="agree" value="0"/>
+              <input type="checkbox" name="agree" value="1" id="input-agree" class="form-check-input"/>
+            </div>
+          {% endif %}
+          <button type="submit" class="btn btn-primary">{{ button_continue }}</button>
         </div>
-
       </form>
       {{ content_bottom }}</div>
     {{ column_right }}</div>
 </div>
 <script type="text/javascript"><!--
-$('input[name=\'payment\']').on('change', function () {
+$('input[name=\'payment\']').on('change', function() {
     $('.payment').hide();
 
     $('#payment-' + this.value).show();

@@ -4,7 +4,7 @@ class Register extends \Opencart\System\Engine\Controller {
 	public function index(): string {
 		$this->load->language('checkout/register');
 
-		$data['text_login'] = sprintf($this->language->get('text_login'), $this->url->link('account/login', 'language=' . $this->config->get('config_language') . '&redirect=' . urlencode($this->url->link('account/login', 'language=' . $this->config->get('config_language'), true))));
+		$data['text_login'] = sprintf($this->language->get('text_login'), $this->url->link('account/login', 'language=' . $this->config->get('config_language') . '&redirect=' . urlencode($this->url->link('checkout/checkout', 'language=' . $this->config->get('config_language'), true))));
 
 		$data['entry_newsletter'] = sprintf($this->language->get('entry_newsletter'), $this->config->get('config_name'));
 
@@ -80,7 +80,7 @@ class Register extends \Opencart\System\Engine\Controller {
 			$data['payment_custom_field'] = [];
 		}
 
-		if (isset($this->session->data['shipping_address'])) {
+		if (isset($this->session->data['shipping_address']['address_id'])) {
 			$data['shipping_firstname'] = $this->session->data['shipping_address']['firstname'];
 			$data['shipping_lastname'] = $this->session->data['shipping_address']['lastname'];
 			$data['shipping_company'] = $this->session->data['shipping_address']['company'];
@@ -97,10 +97,27 @@ class Register extends \Opencart\System\Engine\Controller {
 			$data['shipping_company'] = '';
 			$data['shipping_address_1'] = '';
 			$data['shipping_address_2'] = '';
-			$data['shipping_postcode'] = '';
+
+			if (isset($this->session->data['shipping_address']['postcode'])) {
+				$data['shipping_postcode'] = $this->session->data['shipping_address']['postcode'];
+			} else {
+				$data['shipping_postcode'] = '';
+			}
+
 			$data['shipping_city'] = '';
-			$data['shipping_country_id'] = $this->config->get('config_country_id');
-			$data['shipping_zone_id'] = '';
+
+			if (isset($this->session->data['shipping_address']['country_id'])) {
+				$data['shipping_country_id'] = $this->session->data['shipping_address']['country_id'];
+			} else {
+				$data['shipping_country_id'] = $this->config->get('config_country_id');
+			}
+
+			if (isset($this->session->data['shipping_address']['zone_id'])) {
+				$data['shipping_zone_id'] = $this->session->data['shipping_address']['zone_id'];
+			} else {
+				$data['shipping_zone_id'] = '';
+			}
+
 			$data['shipping_custom_field'] = [];
 		}
 
@@ -273,7 +290,7 @@ class Register extends \Opencart\System\Engine\Controller {
 					$json['error']['payment_address_1'] = $this->language->get('error_address_1');
 				}
 
-				if ((oc_strlen($this->request->post['payment_city']) < 2) || (oc_strlen($this->request->post['payment_city']) > 32)) {
+				if ((oc_strlen($this->request->post['payment_city']) < 2) || (oc_strlen($this->request->post['payment_city']) > 128)) {
 					$json['error']['payment_city'] = $this->language->get('error_city');
 				}
 
@@ -562,8 +579,6 @@ class Register extends \Opencart\System\Engine\Controller {
 					if (!$customer_group_info['approval']) {
 						$this->session->data['shipping_address'] = $shipping_address_data;
 					}
-
-					unset($this->session->data['shipping_methods']);
 				} elseif (!$customer_group_info['approval'] && $this->config->get('config_checkout_payment_address')) {
 					$this->session->data['shipping_address'] = $this->session->data['payment_address'];
 

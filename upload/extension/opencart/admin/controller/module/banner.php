@@ -1,6 +1,5 @@
 <?php
 namespace Opencart\Admin\Controller\Extension\Opencart\Module;
-use \Opencart\System\Helper AS Helper;
 class Banner extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('extension/opencart/module/banner');
@@ -133,6 +132,10 @@ class Banner extends \Opencart\System\Engine\Controller {
 
 		if ((oc_strlen($this->request->post['name']) < 3) || (oc_strlen($this->request->post['name']) > 64)) {
 			$json['error']['name'] = $this->language->get('error_name');
+		}
+
+		if (!$this->request->post['interval']) {
+			$json['error']['interval'] = $this->language->get('error_interval');
 		}
 
 		if (!$this->request->post['width']) {

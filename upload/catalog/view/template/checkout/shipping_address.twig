@@ -1,6 +1,5 @@
 <fieldset id="shipping-address" style="display: {% if payment_address_required and not addresses %}none{% else %}block{% endif %};">
   <legend>{{ heading_title }}</legend>
-
   <div id="shipping-addresses" style="display: {% if addresses %}block{% else %}none{% endif %};">
     <div class="form-check">
       <input type="radio" name="shipping_existing" value="1" id="input-shipping-existing" class="form-check-input"{% if addresses %} checked{% endif %}/>
@@ -11,68 +10,58 @@
       <label for="input-shipping-new" class="form-check-label">{{ text_address_new }}</label>
     </div>
   </div>
-
   <div id="shipping-existing" style="display: {% if addresses %}block{% else %}none{% endif %};">
-    <select name="address_id" id="input-shipping-address" class="form-select"{% if payment_address_required %} disabled{% endif %}>
+    <select name="address_id" id="input-shipping-address" class="form-select">
       <option value="">{{ text_select }}</option>
       {% for address in addresses %}
         <option value="{{ address.address_id }}"{% if address.address_id == address_id %} selected{% endif %}>{{ address.firstname }} {{ address.lastname }},{% if address.company %} {{ address.company }},{% endif %} {{ address.address_1 }}, {{ address.city }}, {{ address.zone }}, {{ address.country }}</option>
       {% endfor %}
     </select>
+    <div id="error-shipping-address" class="invalid-feedback"></div>
   </div>
-
   <br/>
-
   <div id="shipping-new" style="display: {% if not addresses %}block{% else %}none{% endif %};">
     <form id="form-shipping-address">
       <div class="row row-cols-1 row-cols-md-2">
-
         <div class="col mb-3 required">
           <label for="input-shipping-firstname" class="form-label">{{ entry_firstname }}</label >
           <input type="text" name="firstname" value="" placeholder="{{ entry_firstname }}" id="input-shipping-firstname" class="form-control"/>
           <div id="error-shipping-firstname" class="invalid-feedback"></div>
         </div>
-
         <div class="col mb-3 required">
           <label for="input-shipping-lastname" class="form-label">{{ entry_lastname }}</label>
           <input type="text" name="lastname" value="" placeholder="{{ entry_lastname }}" id="input-shipping-lastname" class="form-control"/>
           <div id="error-shipping-lastname" class="invalid-feedback"></div>
         </div>
-
         <div class="col mb-3">
           <label for="input-shipping-company" class="form-label">{{ entry_company }}</label>
           <input type="text" name="company" value="" placeholder="{{ entry_company }}" id="input-shipping-company" class="form-control"/>
         </div>
-
         <div class="col mb-3 required">
           <label for="input-shipping-address-1" class="form-label">{{ entry_address_1 }}</label>
           <input type="text" name="address_1" value="" placeholder="{{ entry_address_1 }}" id="input-shipping-address-1" class="form-control"/>
           <div id="error-shipping-address-1" class="invalid-feedback"></div>
         </div>
-
         <div class="col mb-3">
           <label for="input-shipping-address-2" class="form-label">{{ entry_address_2 }}</label>
           <input type="text" name="address_2" value="" placeholder="{{ entry_address_2 }}" id="input-shipping-address-2" class="form-control"/>
         </div>
-
         <div class="col mb-3 required">
           <label for="input-shipping-city" class="form-label">{{ entry_city }}</label>
           <input type="text" name="city" value="" placeholder="{{ entry_city }}" id="input-shipping-city" class="form-control"/>
           <div id="error-shipping-city" class="invalid-feedback"></div>
         </div>
-
         <div class="col mb-3 required">
           <label for="input-shipping-postcode" class="form-label">{{ entry_postcode }}</label>
-          <input type="text" name="postcode" value="" placeholder="{{ entry_postcode }}" id="input-shipping-postcode" class="form-control"/>
+          <input type="text" name="postcode" value="{{ postcode }}" placeholder="{{ entry_postcode }}" id="input-shipping-postcode" class="form-control"/>
           <div id="error-shipping-postcode" class="invalid-feedback"></div>
         </div>
-
         <div class="col mb-3 required">
           <label for="input-shipping-country" class="form-label">{{ entry_country }}</label>
           <select name="country_id" id="input-shipping-country" class="form-select">
-            <option value="">{{ text_select }}</option>
+            <option value="0">{{ text_select }}</option>
             {% for country in countries %}
-              <option value="{{ country.country_id }}">{{ country.name }}</option>
+              <option value="{{ country.country_id }}"{% if country.country_id == country_id %} selected{% endif %}>{{ country.name }}</option>
             {% endfor %}
           </select>
           <div id="error-shipping-country" class="invalid-feedback"></div>
@@ -213,11 +202,6 @@ $('input[name=\'shipping_existing\']').on('change', function () {
 $('#input-shipping-address').on('change', function () {
     var element = this;
 
-    $('#input-shipping-method').html('<option value="">{{ text_select }}</option>');
-    $('#input-shipping-method').prop('disabled', true);
-    $('#input-payment-method').html('<option value="">{{ text_select }}</option>');
-    $('#input-payment-method').prop('disabled', true);
-
     chain.attach(function () {
         return $.ajax({
             url: 'index.php?route=checkout/shipping_address.address&language={{ language }}&address_id=' + $(element).val(),
@@ -231,18 +215,25 @@ $('#input-shipping-address').on('change', function () {
             success: function (json) {
                 console.log(json);
 
+                $('#input-shipping-address').removeClass('is-invalid');
+                $('#error-shipping-address').removeClass('d-block');
+
                 if (json['redirect']) {
                     location = json['redirect'];
                 }
 
                 if (json['error']) {
-                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    $('#input-shipping-address').addClass('is-invalid');
+                    $('#error-shipping-address').html(json['error']).addClass('d-block');
                 }
 
                 if (json['success']) {
                     $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                    $('#button-shipping-method').trigger('click');
+                    $('#input-shipping-method').val('');
+                    $('#input-payment-method').val('');
+
+                    $('#checkout-confirm').load('index.php?route=checkout/confirm.confirm&language={{ language }}');
                 }
             },
             error: function (xhr, ajaxOptions, thrownError) {
@@ -297,11 +288,11 @@ $('#form-shipping-address').on('submit', function (e) {
 
                     $('#form-shipping-address')[0].reset();
 
-                    var html = '<option value="">{{ text_select }}</option>';
+                    var html = '<option value="">{{ text_select|escape('js') }}</option>';
 
                     if (json['addresses']) {
                         for (i in json['addresses']) {
-                            html += '<option value="' + addresses[i]['value'] + '">' + addresses[i]['text'] + '</option>';
+                            html += '<option value="' + json['addresses'][i]['address_id'] + '">' + json['addresses'][i]['firstname'] + ' ' + json['addresses'][i]['lastname'] + ', ' + (json['addresses'][i]['company'] ? json['addresses'][i]['company'] + ', ' : '') + json['addresses'][i]['address_1'] + ', ' + json['addresses'][i]['city'] + ', ' + json['addresses'][i]['zone'] + ', ' + json['addresses'][i]['country'] + '</option>';
                         }
                     }
 
@@ -327,7 +318,10 @@ $('#form-shipping-address').on('submit', function (e) {
 
                     $('#input-payment-existing').trigger('click');
 
-                    $('#button-shipping-method').trigger('click');
+                    $('#input-shipping-method').val('');
+                    $('#input-payment-method').val('');
+
+                    $('#checkout-confirm').load('index.php?route=checkout/confirm.confirm&language={{ language }}');
                 }
             },
             error: function (xhr, ajaxOptions, thrownError) {
@@ -359,14 +353,20 @@ $('#input-shipping-country').on('change', function () {
                     $('#input-shipping-postcode').parent().removeClass('required');
                 }
 
-                html = '<option value="">{{ text_select }}</option>';
+                html = '<option value="">{{ text_select|escape('js') }}</option>';
 
                 if (json['zone'] && json['zone'] != '') {
                     for (i = 0; i < json['zone'].length; i++) {
-                        html += '<option value="' + json['zone'][i]['zone_id'] + '" selected>' + json['zone'][i]['name'] + '</option>';
+                        html += '<option value="' + json['zone'][i]['zone_id'] + '"';
+
+                        if (json['zone'][i]['zone_id'] == '{{ zone_id }}') {
+                            html += ' selected';
+                        }
+
+                        html += '>' + json['zone'][i]['name'] + '</option>';
                     }
                 } else {
-                    html += '<option value="0" selected>{{ text_none }}</option>';
+                    html += '<option value="0" selected>{{ text_none|escape('js') }}</option>';
                 }
 
                 $('#input-shipping-zone').html(html);

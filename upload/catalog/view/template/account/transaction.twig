@@ -33,13 +33,11 @@
           {% endif %}
         </tbody>
       </table>
-      <div class="row">
+      <div class="row mb-3">
         <div class="col-sm-6 text-start">{{ pagination }}</div>
         <div class="col-sm-6 text-end">{{ results }}</div>
       </div>
-      <div class="d-inline-block pt-2 pd-2 w-100">
-        <div class="float-end"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
-      </div>
+      <div class="text-end"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
       {{ content_bottom }}</div>
     {{ column_right }}</div>
 </div>

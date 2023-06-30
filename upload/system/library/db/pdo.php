@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\System\Library\DB;
 class PDO {
-	private object $connection;
+	private object|null $connection;
 	private array $data = [];
 	private int $affected;
 	
@@ -27,8 +27,12 @@ class PDO {
 
 		if ($pdo) {
 			$this->connection = $pdo;
-			$this->connection->query("SET SESSION sql_mode = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION'");
-			$this->connection->query("SET FOREIGN_KEY_CHECKS = 0");
+
+			$this->query("SET SESSION sql_mode = 'NO_ZERO_IN_DATE,NO_ENGINE_SUBSTITUTION'");
+			$this->query("SET FOREIGN_KEY_CHECKS = 0");
+
+			// Sync PHP and DB time zones
+			$this->query("SET `time_zone` = '" . $this->escape(date('P')) . "'");
 		}
 	}
 	
@@ -114,11 +118,7 @@ class PDO {
 	 * @return   bool
 	 */
 	public function isConnected(): bool {
-		if ($this->connection) {
-			return true;
-		} else {
-			return false;
-		}
+		return $this->connection;
 	}
 
 	/**
@@ -128,6 +128,6 @@ class PDO {
 	 *
 	 */
 	public function __destruct() {
-		unset($this->connection);
+		$this->connection = null;
 	}
 }

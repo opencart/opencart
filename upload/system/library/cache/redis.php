@@ -1,8 +1,8 @@
 <?php
 namespace Opencart\System\Library\Cache;
 class Redis {
+	private object $redis;
 	private int $expire;
-	private object $cache;
 
 	/**
 	 * Constructor
@@ -12,8 +12,8 @@ class Redis {
 	public function __construct(int $expire = 3600) {
 		$this->expire = $expire;
 
-		$this->cache = new \Redis();
-		$this->cache->pconnect(CACHE_HOSTNAME, CACHE_PORT);
+		$this->redis = new \Redis();
+		$this->redis->pconnect(CACHE_HOSTNAME, CACHE_PORT);
 	}
 
 	/**
@@ -24,7 +24,7 @@ class Redis {
 	 * @return	 array|string|null
 	 */
 	public function get(string $key): array|string|null {
-		$data = $this->cache->get(CACHE_PREFIX . $key);
+		$data = $this->redis->get(CACHE_PREFIX . $key);
 
 		return json_decode($data, true);
 	}
@@ -41,10 +41,10 @@ class Redis {
 			$expire = $this->expire;
 		}
 
-		$status = $this->cache->set(CACHE_PREFIX . $key, json_encode($value));
+		$status = $this->redis->set(CACHE_PREFIX . $key, json_encode($value));
 
 		if ($status) {
-			$this->cache->expire(CACHE_PREFIX . $key, $expire);
+			$this->redis->expire(CACHE_PREFIX . $key, $expire);
 		}
 	}
 
@@ -53,7 +53,7 @@ class Redis {
 	 *
 	 * @param    string  $key
 	 */
-	public function delete(string $key): bool {
-		$this->cache->del(CACHE_PREFIX . $key);
+	public function delete(string $key): void {
+		$this->redis->del(CACHE_PREFIX . $key);
 	}
 }

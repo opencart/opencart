@@ -30,7 +30,7 @@ class Cheque extends \Opencart\System\Engine\Model {
 
 			$method_data = [
 				'code'       => 'cheque',
-				'title'      => $this->language->get('heading_title'),
+				'name'       => $this->language->get('heading_title'),
 				'option'     => $option_data,
 				'sort_order' => $this->config->get('payment_cheque_sort_order')
 			];

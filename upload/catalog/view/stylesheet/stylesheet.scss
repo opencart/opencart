@@ -28,7 +28,7 @@ h4 {
   font-size: 15px;
 }
 
-h5 {
+footer h5 {
   font-size: 12px;
 }
 
@@ -74,6 +74,12 @@ div.required .col-form-label:before, div.required .form-label:before {
   content: '* ';
   color: #F00;
   font-weight: bold;
+}
+
+.form-switch-lg {
+  font-size: 20px;
+  min-height: 30px;
+  line-height: 30px;
 }
 
 @media (min-width: 768px) {
@@ -254,13 +260,7 @@ footer a {
 #header-cart {
   margin-bottom: 10px;
 
-  // > .btn {
-  //   font-size: 12px;
-  //   line-height: 18px;
-  // }
-
   .btn-lg {
-    // padding: 0.65rem 1rem;
     color: #FFF;
     height: 40px;
     padding: 0 1rem;

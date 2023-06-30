@@ -1,5 +1,48 @@
 # OpenCart change log
 
+## [v4.0.2.0] (Release date: 18.04.2023)
+
+https://github.com/opencart/opencart/releases/tag/4.0.2.0
+
+#### Changes
+
+* Works with PHP 8.2
+* Changed the route to use . instead of using | for compatibility with some payment gateways
+* Payment methods need to be updated:
+
+```		
+$method_data = [];
+
+if ($status) {
+    $method_data = [
+        'code'       => 'bank_transfer',
+        'title'      => $this->language->get('heading_title'),
+        'sort_order' => $this->config->get('payment_bank_transfer_sort_order')
+    ];
+}
+```
+
+
+has changed to:
+
+```
+$method_data = [];
+
+if ($status) {
+    $option_data['bank_transfer'] = [
+        'code' => 'bank_transfer.bank_transfer',
+        'name' => $this->language->get('heading_title')
+    ];
+
+    $method_data = [
+        'code'       => 'bank_transfer',
+        'name'       => $this->language->get('heading_title'),
+        'option'     => $option_data,
+        'sort_order' => $this->config->get('payment_bank_transfer_sort_order')
+    ];
+}
+```
+
 ## [v4.0.1.0] (Release date: 15.08.2022)
 
 https://github.com/opencart/opencart/releases/tag/4.0.1.0
@@ -32,7 +75,7 @@ https://github.com/opencart/opencart/releases/tag/3.0.3.3
 
 https://github.com/opencart/opencart/releases/tag/3.0.3.3
 
-## [3.0.3.1] (Release date: 07.01.2019)
+## [3.0.3.1] (Release date: 07.01.2019)[UPGRADE.md](UPGRADE.md)
 
 https://github.com/opencart/opencart/releases/tag/3.0.3.1
 

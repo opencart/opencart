@@ -4,6 +4,7 @@ $_['heading_title']     = 'Reviews';
 
 // Text
 $_['text_success']      = 'Success: You have modified reviews!';
+$_['text_next']         = 'Success: You have modified %s product ratings out of %s!';
 $_['text_list']         = 'Review List';
 $_['text_add']          = 'Add Review';
 $_['text_edit']         = 'Edit Review';
@@ -28,6 +29,9 @@ $_['entry_date_to']     = 'Date To';
 
 // Help
 $_['help_product']      = '(Autocomplete)';
+
+// Button
+$_['button_rating']     = 'Sync Product Ratings';
 
 // Error
 $_['error_warning']     = 'Warning: Please check the form carefully for errors!';

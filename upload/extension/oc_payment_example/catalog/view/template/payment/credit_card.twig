@@ -47,7 +47,7 @@
         <label for="input-store" class="form-check-label"><strong>{{ text_store }}</strong></label>
       </div>
     {% endif %}
-    <div class="d-inline-block pt-2 pd-2 w-100 text-end">
+    <div class="text-end">
       <button type="submit" id="button-confirm" class="btn btn-primary">{{ button_confirm }}</button>
     </div>
   </form>
@@ -67,10 +67,10 @@ $('#form-credit-card').on('submit', function(e) {
         cache: false,
         processData: false,
         beforeSend: function() {
-            $('#button-confirm').prop('disabled', true).addClass('loading');
+            $('#button-confirm').button('loading');
         },
         complete: function() {
-            $('#button-confirm').prop('disabled', false).removeClass('loading');
+            $('#button-confirm').button('reset');
         },
         success: function(json) {
             console.log(json);

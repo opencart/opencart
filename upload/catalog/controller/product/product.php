@@ -236,7 +236,15 @@ class Product extends \Opencart\System\Engine\Controller {
 			$data['upload'] = $this->url->link('tool/upload', 'language=' . $this->config->get('config_language'));
 
 			$data['product_id'] = (int)$this->request->get['product_id'];
-			$data['manufacturer'] = $product_info['manufacturer'];
+
+			$manufacturer_info = $this->model_catalog_manufacturer->getManufacturer($product_info['manufacturer_id']);
+
+			if ($manufacturer_info) {
+				$data['manufacturer'] = $manufacturer_info['name'];
+			} else {
+				$data['manufacturer'] = '';
+			}
+
 			$data['manufacturers'] = $this->url->link('product/manufacturer.info', 'language=' . $this->config->get('config_language') . '&manufacturer_id=' . $product_info['manufacturer_id']);
 			$data['model'] = $product_info['model'];
 			$data['reward'] = $product_info['reward'];
@@ -244,7 +252,15 @@ class Product extends \Opencart\System\Engine\Controller {
 			$data['description'] = html_entity_decode($product_info['description'], ENT_QUOTES, 'UTF-8');
 
 			if ($product_info['quantity'] <= 0) {
-				$data['stock'] = $product_info['stock_status'];
+				$this->load->model('localisation/stock_status');
+
+				$stock_status_info = $this->model_localisation_stock_status->getStockStatus($product_info['stock_status_id']);
+
+				if ($stock_status_info) {
+					$data['stock'] = $stock_status_info['name'];
+				} else {
+					$data['stock'] = '';
+				}
 			} elseif ($this->config->get('config_stock_display')) {
 				$data['stock'] = $product_info['quantity'];
 			} else {
@@ -377,12 +393,12 @@ class Product extends \Opencart\System\Engine\Controller {
 			foreach ($results as $result) {
 				$description = '';
 
-				$trial_price = $this->currency->format($this->tax->calculate($result['trial_price'], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
-				$trial_cycle = $result['trial_cycle'];
-				$trial_frequency = $this->language->get('text_' . $result['trial_frequency']);
-				$trial_duration = $result['trial_duration'];
-
 				if ($result['trial_status']) {
+					$trial_price = $this->currency->format($this->tax->calculate($result['trial_price'], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
+					$trial_cycle = $result['trial_cycle'];
+					$trial_frequency = $this->language->get('text_' . $result['trial_frequency']);
+					$trial_duration = $result['trial_duration'];
+
 					$description .= sprintf($this->language->get('text_subscription_trial'), $trial_price, $trial_cycle, $trial_frequency, $trial_duration);
 				}
 

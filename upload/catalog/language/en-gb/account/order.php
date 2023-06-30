@@ -1,18 +1,18 @@
 <?php
 // Heading
-$_['heading_title']              = 'Order History';
+$_['heading_title']              = 'Orders';
 
 // Text
 $_['text_account']               = 'Account';
-$_['text_order']                 = 'Order Information';
-$_['text_order_detail']          = 'Order Details';
-$_['text_invoice_no']            = 'Invoice No.:';
-$_['text_order_id']              = 'Order ID:';
-$_['text_date_added']            = 'Date Added:';
+$_['text_order']                 = 'Order #%s';
+$_['text_invoice_no']            = 'Invoice No.';
+$_['text_order_id']              = 'Order ID';
+$_['text_order_status']          = 'Order Status';
+$_['text_shipping_method']       = 'Shipping Method';
+$_['text_payment_method']        = 'Payment Method';
+$_['text_date_added']            = 'Date Added';
 $_['text_shipping_address']      = 'Shipping Address';
-$_['text_shipping_method']       = 'Shipping Method:';
 $_['text_payment_address']       = 'Payment Address';
-$_['text_payment_method']        = 'Payment Method:';
 $_['text_subscription']          = 'Subscription';
 $_['text_subscription_trial']    = '%s every %d %s(s) for %d payment(s) then ';
 $_['text_subscription_duration'] = '%s every %d %s(s) for %d payment(s)';
@@ -38,9 +38,9 @@ $_['column_quantity']            = 'Quantity';
 $_['column_price']               = 'Price';
 $_['column_total']               = 'Total';
 $_['column_action']              = 'Action';
-$_['column_date_added']          = 'Date Added';
 $_['column_status']              = 'Status';
 $_['column_comment']             = 'Comment';
+$_['column_date_added']          = 'Date Added';
 
 // Error
 $_['error_reorder']              = '%s is not currently available to be reordered.';

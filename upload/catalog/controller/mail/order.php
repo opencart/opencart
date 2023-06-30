@@ -89,7 +89,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		// Load the language for any mails using a different country code and prefixing it so it does not pollute the main data pool.
-		$this->load->language($language_code, 'mail', $language_code);
+		$this->load->language('default', 'mail', $language_code);
 		$this->load->language('mail/order_add', 'mail', $language_code);
 
 		// Add language vars to the template folder
@@ -127,8 +127,8 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$data['order_id'] = $order_info['order_id'];
 		$data['date_added'] = date($this->language->get('date_format_short'), strtotime($order_info['date_added']));
-		$data['payment_method'] = $order_info['payment_method'];
-		$data['shipping_method'] = $order_info['shipping_method'];
+		$data['payment_method'] = $order_info['payment_method']['name'];
+		$data['shipping_method'] = $order_info['shipping_method']['name'];
 		$data['email'] = $order_info['email'];
 		$data['telephone'] = $order_info['telephone'];
 		$data['ip'] = $order_info['ip'];
@@ -141,7 +141,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			$data['order_status'] = '';
 		}
 
-		if ($comment && $notify) {
+		if ($comment) {
 			$data['comment'] = nl2br($comment);
 		} else {
 			$data['comment'] = '';
@@ -248,21 +248,21 @@ class Order extends \Opencart\System\Engine\Controller {
 
 			$description = '';
 
-			$this->load->model('checkout/subscription');
+			$this->load->model('checkout/order');
 
-			$subscription_info = $this->model_checkout_subscription->getSubscriptionByOrderProductId($order_info['order_id'], $order_product['order_product_id']);
+			$subscription_info = $this->model_checkout_order->getSubscription($order_info['order_id'], $order_product['order_product_id']);
 
 			if ($subscription_info) {
-				$trial_price = $this->currency->format($this->tax->calculate($subscription_info['trial_price'], $order_product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
-				$trial_cycle = $subscription_info['trial_cycle'];
-				$trial_frequency = $this->language->get('text_' . $subscription_info['trial_frequency']);
-				$trial_duration = $subscription_info['trial_duration'];
-
 				if ($subscription_info['trial_status']) {
+					$trial_price = $this->currency->format($subscription_info['trial_price'] + ($this->config->get('config_tax') ? $subscription_info['trial_tax'] : 0), $order_info['currency_code'], $order_info['currency_value']);
+					$trial_cycle = $subscription_info['trial_cycle'];
+					$trial_frequency = $this->language->get('text_' . $subscription_info['trial_frequency']);
+					$trial_duration = $subscription_info['trial_duration'];
+
 					$description .= sprintf($this->language->get('text_subscription_trial'), $trial_price, $trial_cycle, $trial_frequency, $trial_duration);
 				}
 
-				$price = $this->currency->format($this->tax->calculate($subscription_info['price'], $order_product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
+				$price = $this->currency->format($subscription_info['price'] + ($this->config->get('config_tax') ? $subscription_info['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']);
 				$cycle = $subscription_info['cycle'];
 				$frequency = $this->language->get('text_' . $subscription_info['frequency']);
 				$duration = $subscription_info['duration'];
@@ -274,7 +274,6 @@ class Order extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-
 			$data['products'][] = [
 				'name'         => $order_product['name'],
 				'model'        => $order_product['model'],
@@ -282,7 +281,8 @@ class Order extends \Opencart\System\Engine\Controller {
 				'subscription' => $description,
 				'quantity'     => $order_product['quantity'],
 				'price'        => $this->currency->format($order_product['price'] + ($this->config->get('config_tax') ? $order_product['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']),
-				'total'        => $this->currency->format($order_product['total'] + ($this->config->get('config_tax') ? ($order_product['tax'] * $order_product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value'])
+				'total'        => $this->currency->format($order_product['total'] + ($this->config->get('config_tax') ? ($order_product['tax'] * $order_product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value']),
+				'reward'       => $order_product['reward']
 			];
 		}
 
@@ -367,7 +367,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		// Load the language for any mails using a different country code and prefixing it so it does not pollute the main data pool.
-		$this->load->language($language_code, 'mail', $language_code);
+		$this->load->language('default', 'mail', $language_code);
 		$this->load->language('mail/order_edit', 'mail', $language_code);
 
 		// Add language vars to the template folder
@@ -381,10 +381,6 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		$data['order_id'] = $order_info['order_id'];
 		$data['date_added'] = date($this->language->get('date_format_short'), strtotime($order_info['date_added']));
-
-		$this->load->model('localisation/order_status');
-
-		$language_info = $this->model_localisation_order_status->getOrderStatus($order_info['language_id']);
 
 		$order_status_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_status` WHERE `order_status_id` = '" . (int)$order_status_id . "' AND `language_id` = '" . (int)$order_info['language_id'] . "'");
 
@@ -507,12 +503,41 @@ class Order extends \Opencart\System\Engine\Controller {
 					];
 				}
 
+				$description = '';
+
+				$this->load->model('checkout/subscription');
+
+				$subscription_info = $this->model_checkout_order->getSubscription($order_info['order_id'], $order_product['order_product_id']);
+
+				if ($subscription_info) {
+					if ($subscription_info['trial_status']) {
+						$trial_price = $this->currency->format($subscription_info['trial_price'] + ($this->config->get('config_tax') ? $subscription_info['trial_tax'] : 0), $this->session->data['currency']);
+						$trial_cycle = $subscription_info['trial_cycle'];
+						$trial_frequency = $this->language->get('text_' . $subscription_info['trial_frequency']);
+						$trial_duration = $subscription_info['trial_duration'];
+
+						$description .= sprintf($this->language->get('text_subscription_trial'), $trial_price, $trial_cycle, $trial_frequency, $trial_duration);
+					}
+
+					$price = $this->currency->format($subscription_info['price'] + ($this->config->get('config_tax') ? $subscription_info['tax'] : 0), $this->session->data['currency']);
+					$cycle = $subscription_info['cycle'];
+					$frequency = $this->language->get('text_' . $subscription_info['frequency']);
+					$duration = $subscription_info['duration'];
+
+					if ($duration) {
+						$description .= sprintf($this->language->get('text_subscription_duration'), $price, $cycle, $frequency, $duration);
+					} else {
+						$description .= sprintf($this->language->get('text_subscription_cancel'), $price, $cycle, $frequency);
+					}
+				}
+
 				$data['products'][] = [
-					'name'     => $order_product['name'],
-					'model'    => $order_product['model'],
-					'quantity' => $order_product['quantity'],
-					'option'   => $option_data,
-					'total'    => html_entity_decode($this->currency->format($order_product['total'] + ($this->config->get('config_tax') ? ($order_product['tax'] * $order_product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value']), ENT_NOQUOTES, 'UTF-8')
+					'name'         => $order_product['name'],
+					'model'        => $order_product['model'],
+					'quantity'     => $order_product['quantity'],
+					'option'       => $option_data,
+					'subscription' => $description,
+					'total'        => html_entity_decode($this->currency->format($order_product['total'] + ($this->config->get('config_tax') ? $order_product['tax'] * $order_product['quantity'] : 0), $order_info['currency_code'], $order_info['currency_value']), ENT_NOQUOTES, 'UTF-8')
 				];
 			}
 

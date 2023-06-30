@@ -24,7 +24,7 @@
               <select name="shipping_pickup_geo_zone_id" id="input-geo-zone" class="form-select">
                 <option value="0">{{ text_all_zones }}</option>
                 {% for geo_zone in geo_zones %}
-                  <option value="{{ geo_zone.geo_zone_id }}"{% if geo_zone.geo_zone_id == shipping_pickup_geo_zone_id %} selected="selected"{% endif %}>{{ geo_zone.name }}</option>
+                  <option value="{{ geo_zone.geo_zone_id }}"{% if geo_zone.geo_zone_id == shipping_pickup_geo_zone_id %} selected{% endif %}>{{ geo_zone.name }}</option>
                 {% endfor %}
               </select>
             </div>

@@ -45,45 +45,37 @@ class TaxClass extends \Opencart\System\Engine\Model {
 	}
 
 	public function getTaxClasses(array $data = []): array {
-		if ($data) {
-			$sql = "SELECT * FROM `" . DB_PREFIX . "tax_class`";
+		$sql = "SELECT * FROM `" . DB_PREFIX . "tax_class` ORDER BY `title`";
 
-			$sql .= " ORDER BY `title`";
+		if (isset($data['order']) && ($data['order'] == 'DESC')) {
+			$sql .= " DESC";
+		} else {
+			$sql .= " ASC";
+		}
 
-			if (isset($data['order']) && ($data['order'] == 'DESC')) {
-				$sql .= " DESC";
-			} else {
-				$sql .= " ASC";
+		if (isset($data['start']) || isset($data['limit'])) {
+			if ($data['start'] < 0) {
+				$data['start'] = 0;
 			}
 
-			if (isset($data['start']) || isset($data['limit'])) {
-				if ($data['start'] < 0) {
-					$data['start'] = 0;
-				}
-
-				if ($data['limit'] < 1) {
-					$data['limit'] = 20;
-				}
-
-				$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
+			if ($data['limit'] < 1) {
+				$data['limit'] = 20;
 			}
 
+			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
+		}
+
+		$tax_class_data = $this->cache->get('tax_class.'. md5($sql));
+
+		if (!$tax_class_data) {
 			$query = $this->db->query($sql);
 
-			return $query->rows;
-		} else {
-			$tax_class_data = $this->cache->get('tax_class');
+			$tax_class_data = $query->rows;
 
-			if (!$tax_class_data) {
-				$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "tax_class`");
-
-				$tax_class_data = $query->rows;
-
-				$this->cache->set('tax_class', $tax_class_data);
-			}
-
-			return $tax_class_data;
+			$this->cache->set('tax_class.'. md5($sql), $tax_class_data);
 		}
+
+		return $tax_class_data;
 	}
 
 	public function getTotalTaxClasses(): int {

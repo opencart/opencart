@@ -115,9 +115,9 @@ $('#extension').on('click', '.btn-success, .btn-warning', function (e) {
 
     var element = this;
 
-    var next = $(element).attr('href');
-
     $(element).button('loading');
+
+    var next = $(element).attr('href');
 
     $('#progress-bar').removeClass('bg-danger bg-success').css('width', '0%');
     $('#progress-text').html('');
@@ -126,20 +126,28 @@ $('#extension').on('click', '.btn-success, .btn-warning', function (e) {
         return $.ajax({
             url: next,
             dataType: 'json',
-            beforeSend: function () {
-
-            },
             success: function (json) {
+                console.log(json);
+
                 $('.alert-dismissible').remove();
 
                 if (json['error']) {
                     $('#progress-bar').addClass('bg-danger');
-                    $('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
+                    $('#progress-text').html('<div class="invalid-feedback">' + json['error'] + '</div>');
+
+                    $(element).button('reset');
+                }
+
+                if (json['text']) {
+                    $('#progress-bar').addClass('bg-success');
+                    $('#progress-text').html('<div class="text-success">' + json['text'] + '</div>');
                 }
 
                 if (json['success']) {
                     $('#progress-bar').addClass('bg-success').css('width', '100%');
                     $('#progress-text').html('<div class="text-success">' + json['success'] + '</div>');
+
+                    $(element).button('reset');
 
                     $('#extension').load('index.php?route=marketplace/installer.list&user_token={{ user_token }}');
                 }
@@ -149,8 +157,6 @@ $('#extension').on('click', '.btn-success, .btn-warning', function (e) {
 
                     chain.attach(installer);
                 }
-
-                $(element).button('reset');
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -180,6 +186,8 @@ $('#extension').on('click', '.btn-danger', function (e) {
                 $(element).button('reset');
             },
             success: function (json) {
+                console.log(json);
+
                 $('.alert-dismissible').remove();
 
                 if (json['error']) {

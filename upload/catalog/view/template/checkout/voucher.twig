@@ -47,8 +47,7 @@
             <div id="input-theme">
               {% for voucher_theme in voucher_themes %}
                 <div class="form-check">
-                  <input type="radio" name="voucher_theme_id" value="{{ voucher_theme.voucher_theme_id }}" id="input-theme-{{ voucher_theme.voucher_theme_id }}" class="form-check-input"{% if voucher_theme.voucher_theme_id == voucher_theme_id %} checked{% endif %}/>
-                  <label for="input-theme-{{ voucher_theme.voucher_theme_id }}" class="form-check-label">{{ voucher_theme.name }}</label>
+                  <input type="radio" name="voucher_theme_id" value="{{ voucher_theme.voucher_theme_id }}" id="input-theme-{{ voucher_theme.voucher_theme_id }}" class="form-check-input"{% if voucher_theme.voucher_theme_id == voucher_theme_id %} checked{% endif %}/> <label for="input-theme-{{ voucher_theme.voucher_theme_id }}" class="form-check-label">{{ voucher_theme.name }}</label>
                 </div>
               {% endfor %}
             </div>
@@ -68,15 +67,14 @@
             <div id="error-amount" class="invalid-feedback"></div>
           </div>
         </div>
-        <div class="d-inline-block pt-2 pd-2 w-100">
-          <div class="float-end">
-            <div class="form-check form-check-inline">
-              <label class="form-check-label">{{ text_agree }}</label> <input type="checkbox" name="agree" value="1" class="form-check-input"/>
-              &nbsp;
-            </div>
-            <button type="submit" class="btn btn-primary">{{ button_continue }}</button>
+
+        <div class="text-end">
+          <div class="form-check form-switch form-switch-lg form-check-reverse form-check-inline">
+            <label class="form-check-label">{{ text_agree }}</label> <input type="hidden" name="agree" value="0"/> <input type="checkbox" name="agree" value="1" class="form-check-input"/>
           </div>
+          <button type="submit" class="btn btn-primary">{{ button_continue }}</button>
         </div>
+
       </form>
       {{ content_bottom }}</div>
     {{ column_right }}</div>

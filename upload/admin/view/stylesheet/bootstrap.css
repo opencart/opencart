@@ -10714,3 +10714,6 @@ textarea.form-control-lg {
 .btn-light, .btn-outline-secondary {
   --bs-btn-border-color: #ced4da;
 }
+.table > :not(caption) > * > * {
+  background: transparent;
+}

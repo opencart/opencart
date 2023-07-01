@@ -10707,3 +10707,6 @@ textarea.form-control-lg {
 .carousel-indicators .active {
   opacity: 0.9;
 }
+.table > :not(caption) > * > * {
+  background: transparent;
+}

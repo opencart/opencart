@@ -100,6 +100,10 @@ $('#button-filter').on('click', function () {
         url += '&filter_status=' + filter_status;
     }
 
+    var new_url = 'index.php?route=catalog/product&user_token={{ user_token }}' + url;
+
+    window.history.pushState({}, null, new_url);
+
     $('#product').load('index.php?route=catalog/product.list&user_token={{ user_token }}' + url);
 });
 

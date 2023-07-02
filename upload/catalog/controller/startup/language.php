@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Catalog\Controller\Startup;
 class Language extends \Opencart\System\Engine\Controller {
-	static array $languages = [];
+	private static array $languages = [];
 
 	public function index(): void {
 		if (isset($this->request->get['language'])) {
@@ -59,9 +59,9 @@ class Language extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset(self::$languages[$language])) {
-			$path = '';
-
 			$language_info = self::$languages[$language];
+
+			$path = '';
 
 			if ($language_info['extension']) {
 				$extension = 'extension/' . $language_info['extension'];

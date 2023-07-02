@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Controller\Startup;
 class Language extends \Opencart\System\Engine\Controller {
-	private static $extension = '';
+	private static array $languages = [];
 
 	public function index(): void {
 		if (isset($this->request->cookie['language'])) {
@@ -12,13 +12,13 @@ class Language extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('localisation/language');
 
-		$language_info = $this->model_localisation_language->getLanguageByCode($code);
+		self::$languages = $this->model_localisation_language->getLanguages();
 
-		if ($language_info) {
+		if (isset(self::$languages[$code])) {
+			$language_info = self::$languages[$code];
+
 			// Language
 			if ($language_info['extension']) {
-				self::$extension = $language_info['extension'];
-
 				$this->language->addPath('extension/' . $language_info['extension'], DIR_EXTENSION . $language_info['extension'] . '/admin/language/');
 			}
 
@@ -38,11 +38,21 @@ class Language extends \Opencart\System\Engine\Controller {
 			$language = $this->config->get('config_language');
 		}
 
-		// Use load->language so it's not triggering infinite loops
-		if (oc_substr($route, 0, 10) != 'extension/' && self::$extension) {
-			$this->language->load('extension/' . self::$extension . '/' . $route, $prefix, $language);
-		} else {
-			$this->language->load($route, $prefix, $language);
+		if (isset(self::$languages[$language])) {
+			$language_info = self::$languages[$language];
+
+			$path = '';
+
+			if ($language_info['extension']) {
+				$extension = 'extension/' . $language_info['extension'];
+
+				if (oc_substr($route, 0, strlen($extension)) != $extension) {
+					$path = $extension . '/';
+				}
+			}
+
+			// Use load->language so it's not triggering infinite loops
+			$this->language->load($path . $route, $prefix, $language);
 		}
 	}
 }

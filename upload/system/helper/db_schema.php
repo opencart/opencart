@@ -849,7 +849,8 @@ function oc_db_schema() {
 			]
 		],
 		'primary' => [
-			'category_id'
+			'category_id',
+			'store_id',
 		],
 		'foreign' => [
 			[

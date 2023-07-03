@@ -104,6 +104,13 @@ class Cart extends \Opencart\System\Engine\Controller {
 		$data['product_remove'] = $this->url->link('checkout/cart.remove', 'language=' . $this->config->get('config_language'));
 		$data['voucher_remove'] = $this->url->link('checkout/voucher.remove', 'language=' . $this->config->get('config_language'));
 
+		// Display prices
+		if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
+			$price_status = true;
+		} else {
+			$price_status = false;
+		}
+
 		$this->load->model('tool/image');
 		$this->load->model('tool/upload');
 
@@ -116,13 +123,6 @@ class Cart extends \Opencart\System\Engine\Controller {
 		foreach ($products as $product) {
 			if (!$product['minimum']) {
 				$data['error_warning'] = sprintf($this->language->get('error_minimum'), $product['name'], $product['minimum']);
-			}
-
-			// Display prices
-			if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
-				$price_status = true;
-			} else {
-				$price_status = false;
 			}
 
 			$description = '';

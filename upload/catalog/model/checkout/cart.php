@@ -75,7 +75,7 @@ class Cart extends \Opencart\System\Engine\Model {
 				'reward'       => $product['reward'],
 				'tax_class_id' => $product['tax_class_id'],
 				'price'        => $product['price'],
-				'total'        => $product['price'] * $product['quantity']
+				'total'        => $product['total']
 			];
 		}
 

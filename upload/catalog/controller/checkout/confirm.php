@@ -4,10 +4,6 @@ class Confirm extends \Opencart\System\Engine\Controller {
 	public function index(): string {
 		$this->load->language('checkout/confirm');
 
-		if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
-			$status = false;
-		}
-
 		// Order Totals
 		$totals = [];
 		$taxes = $this->cart->getTaxes();
@@ -17,7 +13,7 @@ class Confirm extends \Opencart\System\Engine\Controller {
 
 		($this->model_checkout_cart->getTotals)($totals, $taxes, $total);
 
-		$status = true;
+		$status = ($this->customer->isLogged() || !$this->config->get('config_customer_price'));
 
 		// Validate customer data is set
 		if (!isset($this->session->data['customer'])) {
@@ -314,18 +310,18 @@ class Confirm extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		// Display prices
+		if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
+			$price_status = true;
+		} else {
+			$price_status = false;
+		}
+
 		$this->load->model('tool/upload');
 
 		$data['products'] = [];
 
 		foreach ($products as $product) {
-			// Display prices
-			if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
-				$price_status = true;
-			} else {
-				$price_status = false;
-			}
-
 			$description = '';
 
 			if ($product['subscription']) {

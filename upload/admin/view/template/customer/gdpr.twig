@@ -151,6 +151,10 @@ $('#button-filter').on('click', function () {
         url += '&filter_date_to=' + encodeURIComponent(filter_date_to);
     }
 
+    var new_url = 'index.php?route=customer/gdpr&user_token={{ user_token }}' + url;
+
+    window.history.pushState({}, null, new_url);
+
     $('#gdpr').load('index.php?route=customer/gdpr.list&user_token={{ user_token }}' + url);
 });
 

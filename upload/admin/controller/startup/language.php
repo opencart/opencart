@@ -36,6 +36,9 @@ class Language extends \Opencart\System\Engine\Controller {
 			$code = $this->config->get('config_language');
 		}
 
+		// Use load->language so it's not triggering infinite loops
+		$this->language->load($route, $prefix, $code);
+
 		if (isset(self::$languages[$code])) {
 			$language_info = self::$languages[$code];
 

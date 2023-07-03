@@ -50,16 +50,18 @@ class Language extends \Opencart\System\Engine\Controller {
 		}
 	}
 	
-	// Fill the language up with default values
+	// Override the language default values
 	public function after(&$route, &$prefix, &$code, &$output): void {
-		if ($code) {
-			$language = $code;
-		} else {
-			$language = $this->config->get('config_language');
+		if (!$code) {
+			$code = $this->config->get('config_language');
 		}
 
-		if (isset(self::$languages[$language])) {
-			$language_info = self::$languages[$language];
+		// Use load->language so it's not triggering infinite loops
+		$this->language->load($route, $prefix, $code);
+
+		// We load where the first language
+		if (isset(self::$languages[$code])) {
+			$language_info = self::$languages[$code];
 
 			$path = '';
 
@@ -72,7 +74,7 @@ class Language extends \Opencart\System\Engine\Controller {
 			}
 
 			// Use load->language so it's not triggering infinite loops
-			$this->language->load($path . $route, $prefix, $language);
+			$this->language->load($path . $route, $prefix, $code);
 		}
 	}
 }

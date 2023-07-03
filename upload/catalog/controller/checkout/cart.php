@@ -120,13 +120,9 @@ class Cart extends \Opencart\System\Engine\Controller {
 
 			// Display prices
 			if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
-				$unit_price = $this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax'));
-
-				$price = $this->currency->format($unit_price, $this->session->data['currency']);
-				$total = $this->currency->format($unit_price * $product['quantity'], $this->session->data['currency']);
+				$price_status = true;
 			} else {
-				$price = false;
-				$total = false;
+				$price_status = false;
 			}
 
 			$description = '';
@@ -138,21 +134,19 @@ class Cart extends \Opencart\System\Engine\Controller {
 					$trial_frequency = $this->language->get('text_' . $product['subscription']['trial_frequency']);
 					$trial_duration = $product['subscription']['trial_duration'];
 
-					$description .= sprintf($this->language->get('text_subscription_trial'), $trial_price, $trial_cycle, $trial_frequency, $trial_duration);
+					$description .= sprintf($this->language->get('text_subscription_trial'), $price_status ? $trial_price : '', $trial_cycle, $trial_frequency, $trial_duration);
 				}
 
-				if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
-					$price = $this->currency->format($this->tax->calculate($product['subscription']['price'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
-				}
+				$price = $this->currency->format($this->tax->calculate($product['subscription']['price'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
 
 				$cycle = $product['subscription']['cycle'];
 				$frequency = $this->language->get('text_' . $product['subscription']['frequency']);
 				$duration = $product['subscription']['duration'];
 
 				if ($duration) {
-					$description .= sprintf($this->language->get('text_subscription_duration'), $price, $cycle, $frequency, $duration);
+					$description .= sprintf($this->language->get('text_subscription_duration'), $price_status ? $price : '', $cycle, $frequency, $duration);
 				} else {
-					$description .= sprintf($this->language->get('text_subscription_cancel'), $price, $cycle, $frequency);
+					$description .= sprintf($this->language->get('text_subscription_cancel'), $price_status ? $price : '', $cycle, $frequency);
 				}
 			}
 
@@ -167,8 +161,8 @@ class Cart extends \Opencart\System\Engine\Controller {
 				'stock'        => $product['stock'] ? true : !(!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning')),
 				'minimum'      => $product['minimum'],
 				'reward'       => $product['reward'],
-				'price'        => $price,
-				'total'        => $total,
+				'price'        => $price_status ? $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']) : '',
+				'total'        => $price_status ? $this->currency->format($this->tax->calculate($product['total'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']) : '',
 				'href'         => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product['product_id'])
 			];
 		}

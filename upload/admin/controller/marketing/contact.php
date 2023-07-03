@@ -189,16 +189,16 @@ class Contact extends \Opencart\System\Engine\Controller {
 			}
 
 			if ($emails) {
-				$json['success'] = $this->language->get('text_success');
-
 				$start = ($page - 1) * $limit;
 				$end = $start + $limit;
 
-				$json['success'] = sprintf($this->language->get('text_sent'), $start ? $start : 1, $email_total);
-
 				if ($end < $email_total) {
+					$json['text'] = sprintf($this->language->get('text_sent'), $start ? $start : 1, $email_total);
+
 					$json['next'] = $this->url->link('marketing/contact.send', 'user_token=' . $this->session->data['user_token'] . '&page=' . ($page + 1), true);
 				} else {
+					$json['success'] = $this->language->get('text_success');
+
 					$json['next'] = '';
 				}
 
@@ -212,12 +212,12 @@ class Contact extends \Opencart\System\Engine\Controller {
 
 				if ($this->config->get('config_mail_engine')) {
 					$mail_option = [
-						'parameter'     => $this->config->get('config_mail_parameter'),
+						'parameter' => $this->config->get('config_mail_parameter'),
 						'smtp_hostname' => $this->config->get('config_mail_smtp_hostname'),
 						'smtp_username' => $this->config->get('config_mail_smtp_username'),
 						'smtp_password' => html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8'),
-						'smtp_port'     => $this->config->get('config_mail_smtp_port'),
-						'smtp_timeout'  => $this->config->get('config_mail_smtp_timeout')
+						'smtp_port' => $this->config->get('config_mail_smtp_port'),
+						'smtp_timeout' => $this->config->get('config_mail_smtp_timeout')
 					];
 
 					$mail = new \Opencart\System\Library\Mail($this->config->get('config_mail_engine'), $mail_option);

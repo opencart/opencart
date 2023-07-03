@@ -1204,7 +1204,6 @@ class Product extends \Opencart\System\Engine\Controller {
 		$data['reports'] = [];
 
 		$this->load->model('catalog/product');
-		$this->load->model('customer/customer');
 		$this->load->model('setting/store');
 
 		$results = $this->model_catalog_product->getReports($product_id, ($page - 1) * $limit, $limit);

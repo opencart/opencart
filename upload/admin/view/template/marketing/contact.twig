@@ -239,6 +239,8 @@ $('textarea[data-oc-toggle=\'ckeditor\']').ckeditor({
 $('#button-send').on('click', function () {
     var element = this;
 
+    $(element).button('loading');
+
     for (instance in CKEDITOR.instances) {
         CKEDITOR.instances[instance].updateElement();
     }
@@ -251,13 +253,9 @@ $('#button-send').on('click', function () {
             type: 'post',
             data: $('#content form').serialize(),
             dataType: 'json',
-            beforeSend: function () {
-                $('#button-send').button('loading');
-            },
-            complete: function () {
-                $('#button-send').button('reset');
-            },
             success: function (json) {
+                console.log(json);
+
                 $('.invalid-feedback').removeClass('d-block');
 
                 if (json['error']) {
@@ -270,11 +268,17 @@ $('#button-send').on('click', function () {
                         $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
                     }
 
-                    delete json['error'];
+                    $(element).button('reset');
+                }
+
+                if (json['text']) {
+                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle-circle"></i> ' + json['text'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                 }
 
                 if (json['success']) {
                     $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                    $(element).button('reset');
                 }
 
                 if (json['next']) {
@@ -285,6 +289,8 @@ $('#button-send').on('click', function () {
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+
+                $(element).button('reset');
             }
         });
     };

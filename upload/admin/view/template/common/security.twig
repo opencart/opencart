@@ -82,14 +82,13 @@
         </div>
       </div>
       {% endif %}
-
     </div>
   </div>
 </div>
 <script type="text/javascript"><!--
 $(document).ready(function () {
     // Show modal
-    var modal = new bootstrap.Modal(document.querySelector('#modal-security'));
+    var modal = new bootstrap.Modal($('#modal-security'));
 
     modal.show();
 
@@ -140,15 +139,14 @@ $('#form-storage .dropdown-menu a').on('click', function (e) {
 $('#button-storage').on('click', function () {
     var element = this;
 
+    $(element).button('loading');
+
     var next = 'index.php?route=common/security.storage&user_token={{ user_token }}&name=' + encodeURIComponent($('#input-storage').val()) + '&path=' + encodeURIComponent($('#input-path').val());
 
     var storage = function () {
         return $.ajax({
             url: next,
             dataType: 'json',
-            beforeSend: function () {
-                $(element).button('loading');
-            },
             contentType: 'application/x-www-form-urlencoded',
             success: function (json) {
                 console.log(json);
@@ -157,10 +155,18 @@ $('#button-storage').on('click', function () {
 
                 if (json['error']) {
                     $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                    $(element).button('reset');
+                }
+
+                if (json['text']) {
+                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle-circle"></i> ' + json['text'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                 }
 
                 if (json['success']) {
                     $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                    $(element).button('reset');
 
                     $('#security-storage').remove();
 
@@ -172,11 +178,11 @@ $('#button-storage').on('click', function () {
 
                     chain.attach(storage);
                 }
-
-                $(element).button('reset');
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+
+                $(element).button('reset');
             }
         });
     };
@@ -187,15 +193,14 @@ $('#button-storage').on('click', function () {
 $('#button-admin').on('click', function () {
     var element = this;
 
+    $(element).button('loading');
+
     var next = 'index.php?route=common/security.admin&user_token={{ user_token }}&name=' + encodeURIComponent($('#input-admin').val());
 
     var admin = function () {
         return $.ajax({
             url: next,
             dataType: 'json',
-            beforeSend: function () {
-                $(element).button('loading');
-            },
             contentType: 'application/x-www-form-urlencoded',
             success: function (json) {
                 console.log(json);
@@ -208,10 +213,18 @@ $('#button-admin').on('click', function () {
 
                 if (json['error']) {
                     $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                    $(element).button('reset');
+                }
+
+                if (json['text']) {
+                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle-circle"></i> ' + json['text'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
                 }
 
                 if (json['success']) {
                     $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                    $(element).button('reset');
 
                     $('#security-admin').remove();
 
@@ -223,11 +236,11 @@ $('#button-admin').on('click', function () {
 
                     chain.attach(admin);
                 }
-
-                $(element).button('reset');
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+
+                $(element).button('reset');
             }
         });
     };

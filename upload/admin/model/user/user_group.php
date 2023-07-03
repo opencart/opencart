@@ -27,9 +27,7 @@ class UserGroup extends \Opencart\System\Engine\Model {
 	}
 
 	public function getUserGroups(array $data = []): array {
-		$sql = "SELECT * FROM `" . DB_PREFIX . "user_group`";
-
-		$sql .= " ORDER BY `name`";
+		$sql = "SELECT * FROM `" . DB_PREFIX . "user_group` ORDER BY `name`";
 
 		if (isset($data['order']) && ($data['order'] == 'DESC')) {
 			$sql .= " DESC";

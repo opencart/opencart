@@ -540,11 +540,11 @@ class Review extends \Opencart\System\Engine\Controller {
 			}
 
 			if ($total && $end < $total) {
-				$json['text'] = sprintf($this->language->get('text_rating'), $end, $total);
+				$json['text'] = sprintf($this->language->get('text_next'), $end, $total);
 
 				$json['next'] = $this->url->link('catalog/review.sync', 'user_token=' . $this->session->data['user_token'] . '&page=' . ($page + 1), true);
 			} else {
-				$json['success'] = sprintf($this->language->get('text_rating'), $end, $total);
+				$json['success'] = sprintf($this->language->get('text_next'), $end, $total);
 
 				$json['next'] = '';
 			}

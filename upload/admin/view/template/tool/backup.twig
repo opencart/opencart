@@ -66,6 +66,10 @@
 $('#button-backup').on('click', function () {
     var element = this;
 
+    $(element).button('loading');
+
+    $('#button-upload, #history .btn').prop('disabled', true);
+
     $('#progress-bar').css('width', '0%');
     $('#progress-bar').removeClass('bg-danger bg-success');
 
@@ -77,10 +81,6 @@ $('#button-backup').on('click', function () {
             type: 'post',
             data: $('input[name^=\'backup\']:checked'),
             dataType: 'json',
-            beforeSend: function () {
-                $('#button-backup').button('loading');
-                $('#button-upload, #history .btn').prop('disabled', true);
-            },
             success: function (json) {
                 $('.alert-dismissible').remove();
 
@@ -90,8 +90,12 @@ $('#button-backup').on('click', function () {
 
                     $('#history').load('index.php?route=tool/backup.history&user_token={{ user_token }}');
 
-                    $('#button-backup').button('reset');
+                    $(element).button('reset');
                     $('#button-upload, #history .btn').prop('disabled', false);
+                }
+
+                if (json['text']) {
+                    $('#progress-text').html(json['text']);
                 }
 
                 if (json['success']) {
@@ -100,16 +104,12 @@ $('#button-backup').on('click', function () {
 
                     $('#history').load('index.php?route=tool/backup.history&user_token={{ user_token }}');
 
-                    $('#button-backup').button('reset');
+                    $(element).button('reset');
                     $('#button-upload, #history .btn').prop('disabled', false);
                 }
 
                 if (json['progress']) {
                     $('#progress-bar').css('width', json['progress'] + '%');
-                }
-
-                if (json['text']) {
-                    $('#progress-text').html(json['text']);
                 }
 
                 if (json['next']) {
@@ -121,7 +121,7 @@ $('#button-backup').on('click', function () {
             error: function (xhr, ajaxOptions, thrownError) {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 
-                $('#button-backup').button('reset');
+                $(element).button('reset');
                 $('#button-upload, #history .btn').prop('disabled', false);
             }
         });
@@ -134,6 +134,10 @@ $('#button-backup').on('click', function () {
 $('#history').on('click', '.btn-warning', function () {
     var element = this;
 
+    $(element).button('loading');
+
+    $('#button-upload, #button-backup, #history .btn').not(element).prop('disabled', true);
+
     $('#progress-bar').css('width', '0%');
     $('#progress-bar').removeClass('bg-danger bg-success');
 
@@ -144,20 +148,10 @@ $('#history').on('click', '.btn-warning', function () {
             url: next,
             type: 'post',
             dataType: 'json',
-            beforeSend: function () {
-                $(element).button('loading');
-
-                $('#button-upload, #button-backup, #history .btn').not(element).prop('disabled', true);
-            },
-            complete: function () {
-                $(element).button('reset');
-            },
             success: function (json) {
-                $('.alert-dismissible').remove();
+                console.log(json);
 
-                if (json['progress']) {
-                    $('#progress-bar').css('width', json['progress'] + '%');
-                }
+                $('.alert-dismissible').remove();
 
                 if (json['error']) {
                     $('#progress-bar').addClass('bg-danger');
@@ -170,6 +164,14 @@ $('#history').on('click', '.btn-warning', function () {
                     $('#button-upload, #button-backup, #history .btn').not(element).prop('disabled', false);
                 }
 
+                if (json['progress']) {
+                    $('#progress-bar').css('width', json['progress'] + '%');
+                }
+
+                if (json['text']) {
+                    $('#progress-text').html(json['text']);
+                }
+
                 if (json['success']) {
                     $('#progress-bar').css('width', '100%').addClass('bg-success');
                     $('#progress-text').html('<div class="text-success">' + json['success'] + '</div>');
@@ -179,10 +181,6 @@ $('#history').on('click', '.btn-warning', function () {
                     $(element).button('reset');
 
                     $('#button-upload, #button-backup, #history .btn').not(element).prop('disabled', false);
-                }
-
-                if (json['text']) {
-                    $('#progress-text').html(json['text']);
                 }
 
                 if (json['next']) {

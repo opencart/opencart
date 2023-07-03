@@ -107,11 +107,11 @@ $('#button-filter').on('click', function () {
         url += '&filter_date_to=' + encodeURIComponent(filter_date_to);
     }
 
-    var new_url = 'index.php?route=catalog/review&user_token={{ user_token }}' + url;
+    url = 'index.php?route=catalog/review.list&user_token={{ user_token }}' + url;
 
-    window.history.pushState({}, null, new_url);
+    window.history.pushState({}, null, url);
 
-    $('#review').load('index.php?route=catalog/review.list&user_token={{ user_token }}' + url);
+    $('#review').load(url);
 });
 
 $('#input-product').autocomplete({

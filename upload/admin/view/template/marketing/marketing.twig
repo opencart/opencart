@@ -92,11 +92,11 @@ $('#button-filter').on('click', function () {
         url += '&filter_date_to=' + encodeURIComponent(filter_date_to);
     }
 
-    var new_url = 'index.php?route=marketing/marketing&user_token={{ user_token }}' + url;
+    url = 'index.php?route=marketing/marketing.list&user_token={{ user_token }}' + url;
 
-    window.history.pushState({}, null, new_url);
+    window.history.pushState({}, null, url);
 
-    $('#marketing').load('index.php?route=marketing/marketing.list&user_token={{ user_token }}' + url);
+    $('#marketing').load(url);
 });
 //--></script>
 {{ footer }}

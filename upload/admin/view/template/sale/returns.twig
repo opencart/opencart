@@ -137,11 +137,11 @@ $('#button-filter').on('click', function () {
         url += '&filter_date_to=' + encodeURIComponent(filter_date_to);
     }
 
-    var new_url = 'index.php?route=sale/returns&user_token={{ user_token }}' + url;
+    url = 'index.php?route=sale/returns.list&user_token={{ user_token }}' + url;
 
-    window.history.pushState({}, null, new_url);
+    window.history.pushState({}, null, url);
 
-    $('#return').load('index.php?route=sale/returns.list&user_token={{ user_token }}' + url);
+    $('#return').load(url);
 });
 
 $('#input-customer').autocomplete({

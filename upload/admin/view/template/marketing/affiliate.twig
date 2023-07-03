@@ -122,6 +122,10 @@ $('#button-filter').on('click', function () {
         url += '&filter_date_to=' + encodeURIComponent(filter_date_to);
     }
 
+    var new_url = 'index.php?route=marketing/affiliate&user_token={{ user_token }}' + url;
+
+    window.history.pushState({}, null, new_url);
+
     $('#affiliate').load('index.php?route=marketing/affiliate.list&user_token={{ user_token }}' + url);
 });
 

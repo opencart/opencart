@@ -1145,7 +1145,13 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->load->model('setting/extension');
 
 		if (!empty($order_info['payment_method']['code'])) {
-			$extension_info = $this->model_setting_extension->getExtensionByCode('payment', $order_info['payment_method']['code']);
+			if (isset($order_info['payment_method']['code'])) {
+				$code = oc_substr($order_info['payment_method']['code'], 0, strpos($order_info['payment_method']['code'], '.'));
+			} else {
+				$code = '';
+			}
+
+			$extension_info = $this->model_setting_extension->getExtensionByCode('payment', $code);
 
 			if ($extension_info && $this->user->hasPermission('access', 'extension/' . $extension_info['extension'] . '/payment/' . $extension_info['code'])) {
 				$output = $this->load->controller('extension/' . $extension_info['extension'] . '/payment/' . $extension_info['code'] . '.order');

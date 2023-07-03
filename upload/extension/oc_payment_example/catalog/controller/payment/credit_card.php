@@ -11,7 +11,7 @@ class CreditCard extends \Opencart\System\Engine\Controller {
 			$data['months'] = [];
 
 			foreach (range(1, 12) as $month) {
-				$data['months'][] = date('m', mktime(0, 0, 0, $month));
+				$data['months'][] = date('m', mktime(0, 0, 0, $month, 1));
 			}
 
 			$data['years'] = [];

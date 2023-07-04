@@ -193,7 +193,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 			foreach ($totals as $result) {
 				$data['totals'][] = [
 					'title' => $result['title'],
-					'text'  => $this->currency->format($result['value'], $this->session->data['currency'])
+					'text'  => $price_status ? $this->currency->format($result['value'], $this->session->data['currency']) : ''
 				];
 			}
 		}

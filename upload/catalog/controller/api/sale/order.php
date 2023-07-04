@@ -240,7 +240,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		// Payment Method
-		if (!isset($this->session->data['payment_method'])) {
+		if (empty($this->session->data['payment_method'])) {
 			$json['error']['payment_method'] = $this->language->get('error_payment_method');
 		}
 
@@ -278,8 +278,6 @@ class Order extends \Opencart\System\Engine\Controller {
 				$order_data['payment_country_id'] = $this->session->data['payment_address']['country_id'];
 				$order_data['payment_address_format'] = $this->session->data['payment_address']['address_format'];
 				$order_data['payment_custom_field'] = isset($this->session->data['payment_address']['custom_field']) ? $this->session->data['payment_address']['custom_field'] : [];
-
-				$order_data['payment_method'] = $this->session->data['payment_method'];
 			} else {
 				$order_data['payment_address_id'] = 0;
 				$order_data['payment_firstname'] = '';
@@ -295,9 +293,9 @@ class Order extends \Opencart\System\Engine\Controller {
 				$order_data['payment_country_id'] = 0;
 				$order_data['payment_address_format'] = '';
 				$order_data['payment_custom_field'] = [];
-
-				$order_data['payment_method'] = [];
 			}
+
+			$order_data['payment_method'] = $this->session->data['payment_method'];
 
 			// Shipping Details
 			if ($this->cart->hasShipping()) {

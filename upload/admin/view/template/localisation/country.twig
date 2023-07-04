@@ -73,7 +73,11 @@ $('#button-filter').on('click', function () {
         url += '&filter_iso_code_3=' + encodeURIComponent(filter_iso_code_3);
     }
 
-    $('#country').load('index.php?route=localisation/country.list&user_token={{ user_token }}' + url);
+    var url = 'index.php?route=localisation/country.list&user_token={{ user_token }}' + url;
+
+    window.history.pushState({}, null, url);
+
+    $('#country').load(url);
 });
 //--></script>
 {{ footer }}

@@ -4,8 +4,7 @@ class Language extends \Opencart\System\Engine\Model {
 	public function addLanguage(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "language` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `code` = '" . $this->db->escape((string)$data['code']) . "', `locale` = '" . $this->db->escape((string)$data['locale']) . "', `extension` = '" . $this->db->escape((string)$data['extension']) . "', `sort_order` = '" . (int)$data['sort_order'] . "', `status` = '" . (bool)(isset($data['status']) ? $data['status'] : 0) . "'");
 
-		$this->cache->delete('catalog.language');
-		$this->cache->delete('admin.language');
+		$this->cache->delete('language');
 
 		$language_id = $this->db->getLastId();
 
@@ -208,16 +207,14 @@ class Language extends \Opencart\System\Engine\Model {
 			$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `value` = '" . $this->db->escape((string)$data['code']) . "' WHERE `key` = 'config_language_admin' AND `value` = '" . $this->db->escape($language_query->row['code']) . "'");
 		}
 
-		$this->cache->delete('catalog.language');
-		$this->cache->delete('admin.language');
+		$this->cache->delete('language');
 	}
 
 	public function deleteLanguage(int $language_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "language` WHERE `language_id` = '" . (int)$language_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "seo_url` WHERE `language_id` = '" . (int)$language_id . "'");
 
-		$this->cache->delete('catalog.language');
-		$this->cache->delete('admin.language');
+		$this->cache->delete('language');
 
 		/*
 		Do not put any delete code for related tables for languages!
@@ -269,76 +266,70 @@ class Language extends \Opencart\System\Engine\Model {
 	}
 
 	public function getLanguages(array $data = []): array {
-		if ($data) {
-			$sql = "SELECT * FROM `" . DB_PREFIX . "language`";
+		$sql = "SELECT * FROM `" . DB_PREFIX . "language`";
 
-			$sort_data = [
-				'name',
-				'code',
-				'sort_order'
-			];
+		$sort_data = [
+			'name',
+			'code',
+			'sort_order'
+		];
 
-			if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
-				$sql .= " ORDER BY `" . $data['sort'] . "`";
-			} else {
-				$sql .= " ORDER BY `sort_order`, `name`";
+		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
+			$sql .= " ORDER BY `" . $data['sort'] . "`";
+		} else {
+			$sql .= " ORDER BY `sort_order`, `name`";
+		}
+
+		if (isset($data['order']) && ($data['order'] == 'DESC')) {
+			$sql .= " DESC";
+		} else {
+			$sql .= " ASC";
+		}
+
+		if (isset($data['start']) || isset($data['limit'])) {
+			if ($data['start'] < 0) {
+				$data['start'] = 0;
 			}
 
-			if (isset($data['order']) && ($data['order'] == 'DESC')) {
-				$sql .= " DESC";
-			} else {
-				$sql .= " ASC";
+			if ($data['limit'] < 1) {
+				$data['limit'] = 20;
 			}
 
-			if (isset($data['start']) || isset($data['limit'])) {
-				if ($data['start'] < 0) {
-					$data['start'] = 0;
-				}
+			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
+		}
 
-				if ($data['limit'] < 1) {
-					$data['limit'] = 20;
-				}
+		$language_data = $this->cache->get('language.' . md5($sql));
 
-				$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
-			}
+		if (!$language_data) {
+			$language_data = [];
 
 			$query = $this->db->query($sql);
 
-			return $query->rows;
-		} else {
-			$language_data = $this->cache->get('admin.language');
+			foreach ($query->rows as $result) {
+				$image = HTTP_CATALOG;
 
-			if (!$language_data) {
-				$language_data = [];
-
-				$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "language` ORDER BY `sort_order`, `name`");
-
-				foreach ($query->rows as $result) {
-					$image = HTTP_CATALOG;
-
-					if (!$result['extension']) {
-						$image .= 'catalog/';
-					} else {
-						$image .= 'extension/' . $result['extension'] . '/catalog/';
-					}
-
-					$language_data[$result['code']] = [
-						'language_id' => $result['language_id'],
-						'name'        => $result['name'],
-						'code'        => $result['code'],
-						'image'       => $image . 'language/' . $result['code'] . '/' . $result['code'] . '.png',
-						'locale'      => $result['locale'],
-						'extension'   => $result['extension'],
-						'sort_order'  => $result['sort_order'],
-						'status'      => $result['status']
-					];
+				if (!$result['extension']) {
+					$image .= 'catalog/';
+				} else {
+					$image .= 'extension/' . $result['extension'] . '/catalog/';
 				}
 
-				$this->cache->set('admin.language', $language_data);
+				$language_data[$result['code']] = [
+					'language_id' => $result['language_id'],
+					'name'        => $result['name'],
+					'code'        => $result['code'],
+					'image'       => $image . 'language/' . $result['code'] . '/' . $result['code'] . '.png',
+					'locale'      => $result['locale'],
+					'extension'   => $result['extension'],
+					'sort_order'  => $result['sort_order'],
+					'status'      => $result['status']
+				];
 			}
 
-			return $language_data;
+			$this->cache->set('language.' . md5($sql), $language_data);
 		}
+
+		return $language_data;
 	}
 
 	public function getTotalLanguages(): int {

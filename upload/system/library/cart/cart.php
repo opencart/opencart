@@ -370,6 +370,13 @@ class Cart {
 		$this->data = $this->getProducts();
 	}
 
+	/**
+	 * Has
+	 *
+	 * @param	int	 $cart_id
+	 *
+	 * @return	bool
+	 */
 	public function has(int $cart_id): bool {
 		return isset($this->data[$cart_id]);
 	}
@@ -403,10 +410,10 @@ class Cart {
 	 *
 	 * @return	array
 	 */
-	public function getSubscription(): array {
+	public function getSubscriptions(): array {
 		$product_data = [];
 
-		foreach ($this->data as $value) {
+		foreach ($this->getProducts() as $value) {
 			if ($value['subscription']) {
 				$product_data[] = $value;
 			}
@@ -423,7 +430,7 @@ class Cart {
 	public function getWeight(): float {
 		$weight = 0;
 
-		foreach ($this->data as $product) {
+		foreach ($this->getProducts() as $product) {
 			if ($product['shipping']) {
 				$weight += $this->weight->convert($product['weight'], $product['weight_class_id'], $this->config->get('config_weight_class_id'));
 			}
@@ -440,7 +447,7 @@ class Cart {
 	public function getSubTotal(): float {
 		$total = 0;
 
-		foreach ($this->data as $product) {
+		foreach ($this->getProducts() as $product) {
 			$total += $product['total'];
 		}
 
@@ -455,7 +462,7 @@ class Cart {
 	public function getTaxes(): array {
 		$tax_data = [];
 
-		foreach ($this->data as $product) {
+		foreach ($this->getProducts() as $product) {
 			if ($product['tax_class_id']) {
 				$tax_rates = $this->tax->getRates($product['price'], $product['tax_class_id']);
 
@@ -480,7 +487,7 @@ class Cart {
 	public function getTotal(): float {
 		$total = 0;
 
-		foreach ($this->data as $product) {
+		foreach ($this->getProducts() as $product) {
 			$total += $this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')) * $product['quantity'];
 		}
 
@@ -510,7 +517,7 @@ class Cart {
 	 * @return	bool
 	 */
 	public function hasProducts(): bool {
-		return count($this->data);
+		return (bool)count($this->getProducts());
 	}
 
 	/**
@@ -519,7 +526,7 @@ class Cart {
 	 * @return	bool
 	 */
 	public function hasSubscription(): bool {
-		return count($this->getSubscription());
+		return (bool)count($this->getSubscriptions());
 	}
 
 	/**
@@ -528,7 +535,7 @@ class Cart {
 	 * @return	bool
 	 */
 	public function hasStock(): bool {
-		foreach ($this->data as $product) {
+		foreach ($this->getProducts() as $product) {
 			if (!$product['stock']) {
 				return false;
 			}
@@ -543,7 +550,7 @@ class Cart {
 	 * @return	bool
 	 */
 	public function hasShipping(): bool {
-		foreach ($this->data as $product) {
+		foreach ($this->getProducts() as $product) {
 			if ($product['shipping']) {
 				return true;
 			}
@@ -558,7 +565,7 @@ class Cart {
 	 * @return	bool
 	 */
 	public function hasDownload(): bool {
-		foreach ($this->data as $product) {
+		foreach ($this->getProducts() as $product) {
 			if ($product['download']) {
 				return true;
 			}

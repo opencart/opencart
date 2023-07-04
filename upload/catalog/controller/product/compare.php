@@ -5,7 +5,8 @@ class Compare extends \Opencart\System\Engine\Controller {
 		$this->load->language('product/compare');
 
 		$this->load->model('catalog/product');
-
+		$this->load->model('catalog/manufacturer');
+		$this->load->model('localisation/stock_status');
 		$this->load->model('tool/image');
 
 		if (!isset($this->session->data['compare'])) {
@@ -75,8 +76,22 @@ class Compare extends \Opencart\System\Engine\Controller {
 					$special = false;
 				}
 
+				$manufacturer_info = $this->model_catalog_manufacturer->getManufacturer($product_info['manufacturer_id']);
+
+				if ($manufacturer_info) {
+					$manufacturer = $manufacturer_info['name'];
+				} else {
+					$manufacturer = '';
+				}
+
 				if ($product_info['quantity'] <= 0) {
-					$availability = $product_info['stock_status'];
+					$stock_status_info = $this->model_localisation_stock_status->getStockStatus($product_info['stock_status_id']);
+
+					if ($stock_status_info) {
+						$availability = $stock_status_info['name'];
+					} else {
+						$availability = '';
+					}
 				} elseif ($this->config->get('config_stock_display')) {
 					$availability = $product_info['quantity'];
 				} else {
@@ -101,7 +116,7 @@ class Compare extends \Opencart\System\Engine\Controller {
 					'special'      => $special,
 					'description'  => oc_substr(strip_tags(html_entity_decode($product_info['description'], ENT_QUOTES, 'UTF-8')), 0, 200) . '..',
 					'model'        => $product_info['model'],
-					'manufacturer' => $product_info['manufacturer'],
+					'manufacturer' => $manufacturer,
 					'availability' => $availability,
 					'minimum'      => $product_info['minimum'] > 0 ? $product_info['minimum'] : 1,
 					'rating'       => (int)$product_info['rating'],

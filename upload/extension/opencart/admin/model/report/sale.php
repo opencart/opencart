@@ -120,7 +120,7 @@ class Sale extends \Opencart\System\Engine\Model {
 
 		for ($i = 1; $i <= 12; $i++) {
 			$order_data[$i] = [
-				'month' => date('M', mktime(0, 0, 0, $i)),
+				'month' => date('M', mktime(0, 0, 0, $i, 1)),
 				'total' => 0
 			];
 		}

@@ -4,10 +4,6 @@ class Confirm extends \Opencart\System\Engine\Controller {
 	public function index(): string {
 		$this->load->language('checkout/confirm');
 
-		if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
-			$status = false;
-		}
-
 		// Order Totals
 		$totals = [];
 		$taxes = $this->cart->getTaxes();
@@ -17,7 +13,7 @@ class Confirm extends \Opencart\System\Engine\Controller {
 
 		($this->model_checkout_cart->getTotals)($totals, $taxes, $total);
 
-		$status = true;
+		$status = ($this->customer->isLogged() || !$this->config->get('config_customer_price'));
 
 		// Validate customer data is set
 		if (!isset($this->session->data['customer'])) {
@@ -314,6 +310,13 @@ class Confirm extends \Opencart\System\Engine\Controller {
 			}
 		}
 
+		// Display prices
+		if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
+			$price_status = true;
+		} else {
+			$price_status = false;
+		}
+
 		$this->load->model('tool/upload');
 
 		$data['products'] = [];
@@ -337,9 +340,9 @@ class Confirm extends \Opencart\System\Engine\Controller {
 				$duration = $product['subscription']['duration'];
 
 				if ($duration) {
-					$description .= sprintf($this->language->get('text_subscription_duration'), $price, $cycle, $frequency, $duration);
+					$description .= sprintf($this->language->get('text_subscription_duration'), $price_status ? $price : '', $cycle, $frequency, $duration);
 				} else {
-					$description .= sprintf($this->language->get('text_subscription_cancel'), $price, $cycle, $frequency);
+					$description .= sprintf($this->language->get('text_subscription_cancel'), $price_status ? $price : '', $cycle, $frequency);
 				}
 			}
 
@@ -351,8 +354,8 @@ class Confirm extends \Opencart\System\Engine\Controller {
 				'option'       => $product['option'],
 				'subscription' => $description,
 				'quantity'     => $product['quantity'],
-				'price'        => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']),
-				'total'        => $this->currency->format($this->tax->calculate($product['price'] * $product['quantity'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']),
+				'price'        => $price_status ? $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']) : '',
+				'total'        => $price_status ? $this->currency->format($this->tax->calculate($product['total'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']) : '',
 				'reward'       => $product['reward'],
 				'href'         => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . $product['product_id'])
 			];

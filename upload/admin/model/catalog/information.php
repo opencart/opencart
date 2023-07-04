@@ -91,54 +91,48 @@ class Information extends \Opencart\System\Engine\Model {
 	}
 
 	public function getInformations(array $data = []): array {
-		if ($data) {
-			$sql = "SELECT * FROM `" . DB_PREFIX . "information` i LEFT JOIN `" . DB_PREFIX . "information_description` id ON (i.`information_id` = id.`information_id`) WHERE id.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+		$sql = "SELECT * FROM `" . DB_PREFIX . "information` i LEFT JOIN `" . DB_PREFIX . "information_description` id ON (i.`information_id` = id.`information_id`) WHERE id.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
-			$sort_data = [
-				'id.title',
-				'i.sort_order'
-			];
+		$sort_data = [
+			'id.title',
+			'i.sort_order'
+		];
 
-			if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
-				$sql .= " ORDER BY " . $data['sort'];
-			} else {
-				$sql .= " ORDER BY id.`title`";
+		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
+			$sql .= " ORDER BY " . $data['sort'];
+		} else {
+			$sql .= " ORDER BY id.`title`";
+		}
+
+		if (isset($data['order']) && ($data['order'] == 'DESC')) {
+			$sql .= " DESC";
+		} else {
+			$sql .= " ASC";
+		}
+
+		if (isset($data['start']) || isset($data['limit'])) {
+			if ($data['start'] < 0) {
+				$data['start'] = 0;
 			}
 
-			if (isset($data['order']) && ($data['order'] == 'DESC')) {
-				$sql .= " DESC";
-			} else {
-				$sql .= " ASC";
+			if ($data['limit'] < 1) {
+				$data['limit'] = 20;
 			}
 
-			if (isset($data['start']) || isset($data['limit'])) {
-				if ($data['start'] < 0) {
-					$data['start'] = 0;
-				}
+			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
+		}
 
-				if ($data['limit'] < 1) {
-					$data['limit'] = 20;
-				}
+		$information_data = $this->cache->get('information.' . md5($sql));
 
-				$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
-			}
-
+		if (!$information_data) {
 			$query = $this->db->query($sql);
 
-			return $query->rows;
-		} else {
-			$information_data = $this->cache->get('information.' . (int)$this->config->get('config_language_id'));
+			$information_data = $query->rows;
 
-			if (!$information_data) {
-				$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "information` i LEFT JOIN `" . DB_PREFIX . "information_description` id ON (i.`information_id` = id.`information_id`) WHERE id.`language_id` = '" . (int)$this->config->get('config_language_id') . "' ORDER BY id.`title`");
-
-				$information_data = $query->rows;
-
-				$this->cache->set('information.' . (int)$this->config->get('config_language_id'), $information_data);
-			}
-
-			return $information_data;
+			$this->cache->set('information.' . md5($sql), $information_data);
 		}
+
+		return $information_data;
 	}
 
 	public function getDescriptions(int $information_id): array {

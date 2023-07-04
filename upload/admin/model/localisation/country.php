@@ -40,73 +40,67 @@ class Country extends \Opencart\System\Engine\Model {
 	}
 
 	public function getCountries(array $data = []): array {
-		if ($data) {
-			$sql = "SELECT * FROM `" . DB_PREFIX . "country`";
+		$sql = "SELECT * FROM `" . DB_PREFIX . "country`";
 
-			$implode = [];
+		$implode = [];
 
-			if (!empty($data['filter_name'])) {
-				$implode[] = "`name` LIKE '" . $this->db->escape((string)$data['filter_name'] . '%') . "'";
+		if (!empty($data['filter_name'])) {
+			$implode[] = "`name` LIKE '" . $this->db->escape((string)$data['filter_name'] . '%') . "'";
+		}
+
+		if (!empty($data['filter_iso_code_2'])) {
+			$implode[] = "`iso_code_2` LIKE '" . $this->db->escape((string)$data['filter_iso_code_2'] . '%') . "'";
+		}
+
+		if (!empty($data['filter_iso_code_3'])) {
+			$implode[] = "`iso_code_3` LIKE '" . $this->db->escape((string)$data['filter_iso_code_3'] . '%') . "'";
+		}
+
+		if ($implode) {
+			$sql .= " WHERE " . implode(" AND ", $implode);
+		}
+
+		$sort_data = [
+			'name',
+			'iso_code_2',
+			'iso_code_3'
+		];
+
+		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
+			$sql .= " ORDER BY `" . $data['sort'] . "`";
+		} else {
+			$sql .= " ORDER BY `name`";
+		}
+
+		if (isset($data['order']) && ($data['order'] == 'DESC')) {
+			$sql .= " DESC";
+		} else {
+			$sql .= " ASC";
+		}
+
+		if (isset($data['start']) || isset($data['limit'])) {
+			if ($data['start'] < 0) {
+				$data['start'] = 0;
 			}
 
-			if (!empty($data['filter_iso_code_2'])) {
-				$implode[] = "`iso_code_2` LIKE '" . $this->db->escape((string)$data['filter_iso_code_2'] . '%') . "'";
+			if ($data['limit'] < 1) {
+				$data['limit'] = 20;
 			}
 
-			if (!empty($data['filter_iso_code_3'])) {
-				$implode[] = "`iso_code_3` LIKE '" . $this->db->escape((string)$data['filter_iso_code_3'] . '%') . "'";
-			}
+			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
+		}
 
-			if ($implode) {
-				$sql .= " WHERE " . implode(" AND ", $implode);
-			}
+		$country_data = $this->cache->get('country.' . md5($sql));
 
-			$sort_data = [
-				'name',
-				'iso_code_2',
-				'iso_code_3'
-			];
-
-			if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
-				$sql .= " ORDER BY `" . $data['sort'] . "`";
-			} else {
-				$sql .= " ORDER BY `name`";
-			}
-
-			if (isset($data['order']) && ($data['order'] == 'DESC')) {
-				$sql .= " DESC";
-			} else {
-				$sql .= " ASC";
-			}
-
-			if (isset($data['start']) || isset($data['limit'])) {
-				if ($data['start'] < 0) {
-					$data['start'] = 0;
-				}
-
-				if ($data['limit'] < 1) {
-					$data['limit'] = 20;
-				}
-
-				$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
-			}
-
+		if (!$country_data) {
 			$query = $this->db->query($sql);
 
-			return $query->rows;
-		} else {
-			$country_data = $this->cache->get('country.admin');
+			$country_data = $query->rows;
 
-			if (!$country_data) {
-				$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "country` ORDER BY `name` ASC");
-
-				$country_data = $query->rows;
-
-				$this->cache->set('country.admin', $country_data);
-			}
-
-			return $country_data;
+			$this->cache->set('country.' . md5($sql), $country_data);
 		}
+
+		return $country_data;
 	}
 
 	public function getTotalCountries(array $data = []): int {

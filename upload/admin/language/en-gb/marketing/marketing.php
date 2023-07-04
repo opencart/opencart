@@ -10,7 +10,7 @@ $_['text_edit']         = 'Edit Marketing Tracking';
 $_['text_filter']       = 'Filter';
 $_['text_history']      = 'History';
 $_['text_history_add']  = 'Add History';
-$_['text_report']       = 'Report';
+$_['text_report']       = 'Reports';
 
 // Column
 $_['column_name']       = 'Campaign Name';

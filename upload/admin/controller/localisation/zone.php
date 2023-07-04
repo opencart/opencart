@@ -402,9 +402,7 @@ class Zone extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('localisation/zone');
 
-			foreach ($selected as $zone_id) {
-				$this->model_localisation_zone->deleteZone($zone_id);
-			}
+			$this->model_localisation_zone->deleteZone($selected);
 
 			$json['success'] = $this->language->get('text_success');
 		}

@@ -15,8 +15,13 @@ class Zone extends \Opencart\System\Engine\Model {
 		$this->cache->delete('zone');
 	}
 
-	public function deleteZone(int $zone_id): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "zone` WHERE `zone_id` = '" . (int)$zone_id . "'");
+	public function deleteZone(int|array $zone_id): void {
+		if (is_array($zone_id)) {
+			$zoneIds = array_filter($zone_id, 'is_numeric');
+			$this->db->query("DELETE FROM `" . DB_PREFIX . "zone` WHERE `zone_id` in (" . implode(",", $zoneIds) . ")");
+		} else {
+			$this->db->query("DELETE FROM `" . DB_PREFIX . "zone` WHERE `zone_id` = '" . (int)$zone_id . "'");
+		}
 
 		$this->cache->delete('zone');
 	}

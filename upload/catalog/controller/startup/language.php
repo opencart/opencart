@@ -56,7 +56,7 @@ class Language extends \Opencart\System\Engine\Controller {
 			$code = $this->config->get('config_language');
 		}
 
-		// Use load->language so it's not triggering infinite loops
+		// Use $this->language->load so it's not triggering infinite loops
 		$this->language->load($route, $prefix, $code);
 
 		// We load where the first language
@@ -73,7 +73,7 @@ class Language extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-			// Use load->language so it's not triggering infinite loops
+			// Use $this->language->load so it's not triggering infinite loops
 			$this->language->load($path . $route, $prefix, $code);
 		}
 	}

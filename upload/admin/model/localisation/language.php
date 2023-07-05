@@ -298,35 +298,35 @@ class Language extends \Opencart\System\Engine\Model {
 			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
 		}
 
-		$language_data = $this->cache->get('language.' . md5($sql));
+		$results = (array)$this->cache->get('language.' . md5($sql));
 
-		if (!$language_data) {
-			$language_data = [];
-
+		if (!$results) {
 			$query = $this->db->query($sql);
 
-			foreach ($query->rows as $result) {
-				$image = HTTP_CATALOG;
+			$this->cache->set('language.' . md5($sql), $query->rows);
+		}
 
-				if (!$result['extension']) {
-					$image .= 'catalog/';
-				} else {
-					$image .= 'extension/' . $result['extension'] . '/catalog/';
-				}
+		$language_data = [];
 
-				$language_data[$result['code']] = [
-					'language_id' => $result['language_id'],
-					'name'        => $result['name'],
-					'code'        => $result['code'],
-					'image'       => $image . 'language/' . $result['code'] . '/' . $result['code'] . '.png',
-					'locale'      => $result['locale'],
-					'extension'   => $result['extension'],
-					'sort_order'  => $result['sort_order'],
-					'status'      => $result['status']
-				];
+		foreach ($results as $result) {
+			$image = HTTP_CATALOG;
+
+			if (!$result['extension']) {
+				$image .= 'catalog/';
+			} else {
+				$image .= 'extension/' . $result['extension'] . '/catalog/';
 			}
 
-			$this->cache->set('language.' . md5($sql), $language_data);
+			$language_data[$result['code']] = [
+				'language_id' => $result['language_id'],
+				'name'        => $result['name'],
+				'code'        => $result['code'],
+				'image'       => $image . 'language/' . $result['code'] . '/' . $result['code'] . '.png',
+				'locale'      => $result['locale'],
+				'extension'   => $result['extension'],
+				'sort_order'  => $result['sort_order'],
+				'status'      => $result['status']
+			];
 		}
 
 		return $language_data;

@@ -124,7 +124,7 @@ class Order extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['download'] = '';
 		}
-		
+
 		$data['order_id'] = $order_info['order_id'];
 		$data['date_added'] = date($this->language->get('date_format_short'), strtotime($order_info['date_added']));
 		$data['payment_method'] = $order_info['payment_method']['name'];

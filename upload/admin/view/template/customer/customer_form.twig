@@ -805,7 +805,7 @@ $('#button-address').on('click', function (e) {
     html += '<div class="row mb-3">';
     html += '  <label for="input-address-' + address_row + '-default" class="col-sm-2 col-form-label">{{ entry_default|escape('js') }}</label>';
     html += '  <div class="col-sm-10">';
-    html += '    <div class="form-check"><input type="radio" name="default" value="' + address_row + '" id="input-address-' + address_row + '-default" class="form-check-label"/></div>';
+    html += '    <div class="form-check"><input type="radio" name="address[' + address_row + '][default]" value="1" id="input-address-' + address_row + '-default" class="form-check-label"/></div>';
     html += '  </div>';
     html += '</div>';
 

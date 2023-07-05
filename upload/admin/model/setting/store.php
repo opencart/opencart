@@ -91,6 +91,7 @@ class Store extends \Opencart\System\Engine\Model {
 		// Load the default config
 		$config->addPath(DIR_CONFIG);
 		$config->load('default');
+		$config->load('catalog');
 		$config->set('application', 'Catalog');
 
 		// Store
@@ -161,7 +162,7 @@ class Store extends \Opencart\System\Engine\Model {
 			$config->set('config_language', $this->config->get('config_language'));
 		}
 
-		$language = new \Opencart\System\Library\Language($config->get('config_language'));
+		$language = new \Opencart\System\Library\Language($config->get('language_code'));
 		$registry->set('language', $language);
 
 		if (!$language_info['extension']) {
@@ -173,6 +174,17 @@ class Store extends \Opencart\System\Engine\Model {
 		// Load default language file
 		$language->load('default');
 
+		$request->get['language'] = $config->get('config_language');
+
+		echo $config->get('config_language');
+
+
+		// Add event to override default language values with the new language
+		$registry->event->register('language/*/after', new \Opencart\System\Engine\Action('startup/language.after'));
+
+
+
+
 		// Url
 		$registry->set('url', new \Opencart\System\Library\Url($config->get('site_url')));
 
@@ -182,6 +194,7 @@ class Store extends \Opencart\System\Engine\Model {
 		// Run pre actions to load key settings and classes.
 		$pre_actions = [
 			'startup/setting',
+			//'startup/language',
 			'startup/extension',
 			'startup/customer',
 			'startup/tax',

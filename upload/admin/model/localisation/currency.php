@@ -73,28 +73,30 @@ class Currency extends \Opencart\System\Engine\Model {
 			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
 		}
 
-		$currency_data = $this->cache->get('currency.' . md5($sql));
+		$results = (array)$this->cache->get('currency.' . md5($sql));
 
-		if (!$currency_data) {
-			$currency_data = [];
-
+		if (!$results) {
 			$query = $this->db->query($sql);
 
-			foreach ($query->rows as $result) {
-				$currency_data[$result['code']] = [
-					'currency_id'   => $result['currency_id'],
-					'title'         => $result['title'],
-					'code'          => $result['code'],
-					'symbol_left'   => $result['symbol_left'],
-					'symbol_right'  => $result['symbol_right'],
-					'decimal_place' => $result['decimal_place'],
-					'value'         => $result['value'],
-					'status'        => $result['status'],
-					'date_modified' => $result['date_modified']
-				];
-			}
+			$results = $query->rows;
 
-			$this->cache->set('currency.' . md5($sql), $currency_data);
+			$this->cache->set('currency.' . md5($sql), $results);
+		}
+
+		$currency_data = [];
+
+		foreach ($results as $result) {
+			$currency_data[$result['code']] = [
+				'currency_id'   => $result['currency_id'],
+				'title'         => $result['title'],
+				'code'          => $result['code'],
+				'symbol_left'   => $result['symbol_left'],
+				'symbol_right'  => $result['symbol_right'],
+				'decimal_place' => $result['decimal_place'],
+				'value'         => $result['value'],
+				'status'        => $result['status'],
+				'date_modified' => $result['date_modified']
+			];
 		}
 
 		return $currency_data;

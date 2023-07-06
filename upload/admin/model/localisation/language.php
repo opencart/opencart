@@ -303,7 +303,9 @@ class Language extends \Opencart\System\Engine\Model {
 		if (!$results) {
 			$query = $this->db->query($sql);
 
-			$this->cache->set('language.' . md5($sql), $query->rows);
+			$results = $query->rows;
+
+			$this->cache->set('language.' . md5($sql), $results);
 		}
 
 		$language_data = [];

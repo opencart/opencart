@@ -1,7 +1,6 @@
 <?php
 // Heading
 $_['heading_title']            = 'Downloads';
-$_['heading_title']            = 'Downloads';
 
 // Text
 $_['text_success']             = 'Success: You have modified downloads!';

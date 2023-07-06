@@ -73,11 +73,9 @@ $('#button-filter').on('click', function () {
         url += '&filter_code=' + encodeURIComponent(filter_code);
     }
 
-    url = 'index.php?route=localisation/zone.list&user_token={{ user_token }}' + url;
+    window.history.pushState({}, null, 'index.php?route=localisation/zone&user_token={{ user_token }}' + url);
 
-    window.history.pushState({}, null, url);
-
-    $('#zone').load(url);
+    $('#zone').load('index.php?route=localisation/zone.list&user_token={{ user_token }}' + url);
 });
 //--></script>
 {{ footer }}

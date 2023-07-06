@@ -132,11 +132,9 @@ $('#button-filter').on('click', function () {
         url += '&filter_date_to=' + encodeURIComponent(filter_date_to);
     }
 
-    var url = 'index.php?route=sale/order.list&user_token={{ user_token }}' + url;
+    window.history.pushState({}, null, 'index.php?route=sale/order&user_token={{ user_token }}' + url);
 
-    window.history.pushState({}, null, url);
-
-    $('#order').load(url);
+    $('#order').load('index.php?route=sale/order.list&user_token={{ user_token }}' + url);
 });
 
 $('#input-customer').autocomplete({

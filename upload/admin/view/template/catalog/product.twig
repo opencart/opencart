@@ -100,11 +100,9 @@ $('#button-filter').on('click', function () {
         url += '&filter_status=' + filter_status;
     }
 
-    url = 'index.php?route=catalog/product.list&user_token={{ user_token }}' + url;
+    window.history.pushState({}, null, 'index.php?route=catalog/product&user_token={{ user_token }}' + url);
 
-    window.history.pushState({}, null, url);
-
-    $('#product').load(url);
+    $('#product').load('index.php?route=catalog/product.list&user_token={{ user_token }}' + url);
 });
 
 $('#input-name').autocomplete({

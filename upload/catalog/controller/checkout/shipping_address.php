@@ -104,19 +104,19 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 			}
 
 			if ((oc_strlen($this->request->post['firstname']) < 1) || (oc_strlen($this->request->post['firstname']) > 32)) {
-				$json['error']['shipping_firstname'] = $this->language->get('error_firstname');
+				$json['error']['firstname'] = $this->language->get('error_firstname');
 			}
 
 			if ((oc_strlen($this->request->post['lastname']) < 1) || (oc_strlen($this->request->post['lastname']) > 32)) {
-				$json['error']['shipping_lastname'] = $this->language->get('error_lastname');
+				$json['error']['lastname'] = $this->language->get('error_lastname');
 			}
 
 			if ((oc_strlen($this->request->post['address_1']) < 3) || (oc_strlen($this->request->post['address_1']) > 128)) {
-				$json['error']['shipping_address_1'] = $this->language->get('error_address_1');
+				$json['error']['address_1'] = $this->language->get('error_address_1');
 			}
 
 			if ((oc_strlen($this->request->post['city']) < 2) || (oc_strlen($this->request->post['city']) > 128)) {
-				$json['error']['shipping_city'] = $this->language->get('error_city');
+				$json['error']['city'] = $this->language->get('error_city');
 			}
 
 			$this->load->model('localisation/country');
@@ -124,15 +124,15 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 			$country_info = $this->model_localisation_country->getCountry((int)$this->request->post['country_id']);
 
 			if ($country_info && $country_info['postcode_required'] && (oc_strlen($this->request->post['postcode']) < 2 || oc_strlen($this->request->post['postcode']) > 10)) {
-				$json['error']['shipping_postcode'] = $this->language->get('error_postcode');
+				$json['error']['postcode'] = $this->language->get('error_postcode');
 			}
 
 			if ($this->request->post['country_id'] == '') {
-				$json['error']['shipping_country'] = $this->language->get('error_country');
+				$json['error']['country'] = $this->language->get('error_country');
 			}
 
 			if ($this->request->post['zone_id'] == '') {
-				$json['error']['shipping_zone'] = $this->language->get('error_zone');
+				$json['error']['zone'] = $this->language->get('error_zone');
 			}
 
 			// Custom field validation
@@ -143,9 +143,9 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 			foreach ($custom_fields as $custom_field) {
 				if ($custom_field['location'] == 'address') {
 					if ($custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['custom_field_id']])) {
-						$json['error']['shipping_custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
+						$json['error']['custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
 					} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !preg_match(html_entity_decode($custom_field['validation'], ENT_QUOTES, 'UTF-8'), $this->request->post['custom_field'][$custom_field['custom_field_id']])) {
-						$json['error']['shipping_custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_regex'), $custom_field['name']);
+						$json['error']['custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_regex'), $custom_field['name']);
 					}
 				}
 			}

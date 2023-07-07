@@ -149,41 +149,14 @@ class Store extends \Opencart\System\Engine\Model {
 		$template->addPath(DIR_CATALOG . 'view/template/');
 		$registry->set('template', $template);
 
+		// Adding language var to the GET variable so there is a default language
+		$registry->request->get['language'] = $language;
+
 		// Language
-		$this->load->model('localisation/language');
-
-		$language_info = $this->model_localisation_language->getLanguageByCode($language);
-
-		if ($language_info) {
-			$config->set('config_language_id', $language_info['language_id']);
-			$config->set('config_language', $language_info['code']);
-		} else {
-			$config->set('config_language_id', $this->config->get('config_language_id'));
-			$config->set('config_language', $this->config->get('config_language'));
-		}
-
 		$language = new \Opencart\System\Library\Language($config->get('language_code'));
-		$registry->set('language', $language);
-
-		if (!$language_info['extension']) {
-			$language->addPath(DIR_CATALOG . 'language/');
-		} else {
-			$language->addPath(DIR_EXTENSION . $language_info['extension'] . '/catalog/language/');
-		}
-
-		// Load default language file
+		$language->addPath(DIR_CATALOG . 'language/');
 		$language->load('default');
-
-		$request->get['language'] = $config->get('config_language');
-
-		echo $config->get('config_language');
-
-
-		// Add event to override default language values with the new language
-		$registry->event->register('language/*/after', new \Opencart\System\Engine\Action('startup/language.after'));
-
-
-
+		$registry->set('language', $language);
 
 		// Url
 		$registry->set('url', new \Opencart\System\Library\Url($config->get('site_url')));
@@ -194,7 +167,7 @@ class Store extends \Opencart\System\Engine\Model {
 		// Run pre actions to load key settings and classes.
 		$pre_actions = [
 			'startup/setting',
-			//'startup/language',
+			'startup/language',
 			'startup/extension',
 			'startup/customer',
 			'startup/tax',

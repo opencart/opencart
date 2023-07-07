@@ -27,26 +27,6 @@ class Language extends \Opencart\System\Engine\Controller {
 			$this->config->set('config_language', $language_info['code']);
 
 			$this->load->language('default');
-		} else {
-			$url_data = $this->request->get;
-
-			if (isset($url_data['route'])) {
-				$route = $url_data['route'];
-			} else {
-				$route = $this->config->get('action_default');
-			}
-
-			unset($url_data['route']);
-			unset($url_data['language']);
-
-			$url = '';
-
-			if ($url_data) {
-				$url .= '&' . urldecode(http_build_query($url_data));
-			}
-
-			// If no language can be found, we use the default one
-			$this->response->redirect($this->url->link($route, 'language=' . $this->config->get('config_language') . $url, true));
 		}
 	}
 	
@@ -59,7 +39,6 @@ class Language extends \Opencart\System\Engine\Controller {
 		// Use $this->language->load so it's not triggering infinite loops
 		$this->language->load($route, $prefix, $code);
 
-		// We load where the first language
 		if (isset(self::$languages[$code])) {
 			$language_info = self::$languages[$code];
 

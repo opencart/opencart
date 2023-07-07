@@ -7,7 +7,7 @@ class Language extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->cookie['language'])) {
 			$code = (string)$this->request->cookie['language'];
 		} else {
-			$code = $this->config->get('language_code');
+			$code = $this->config->get('config_language_admin');
 		}
 
 		$this->load->model('localisation/language');
@@ -26,7 +26,7 @@ class Language extends \Opencart\System\Engine\Controller {
 			$this->config->set('config_language_id', $language_info['language_id']);
 			$this->config->set('config_language_admin', $language_info['code']);
 
-			$this->language->load('default');
+			$this->load->language('default');
 		}
 	}
 

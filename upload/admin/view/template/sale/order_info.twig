@@ -1786,17 +1786,11 @@ $('#order-vouchers').on('submit', 'form', function(e) {
 $('#input-store').on('change', function(e) {
     e.preventDefault();
 
-    $('#payment-method-value').html('');
-    $('#shipping-method-value').html('');
-
     $('#button-refresh').trigger('click');
 });
 
 $('#input-language').on('change', function(e) {
     e.preventDefault();
-
-    $('#payment-method-value').html('');
-    $('#shipping-method-value').html('');
 
     $('#button-refresh').trigger('click');
 });
@@ -1824,9 +1818,6 @@ $('#input-currency').on('change', function(e) {
 
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                $('#payment-method-value').html('');
-                $('#shipping-method-value').html('');
 
                 $('#button-refresh').trigger('click');
             }
@@ -1861,9 +1852,6 @@ $('#form-coupon').on('submit', function(e) {
 
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                $('#payment-method-value').html('');
-                $('#shipping-method-value').html('');
 
                 // Refresh products, vouchers and totals
                 $('#button-refresh').trigger('click');
@@ -1900,9 +1888,6 @@ $('#form-voucher').on('submit', function(e) {
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                $('#payment-method-value').html('');
-                $('#shipping-method-value').html('');
-
                 // Refresh products, vouchers and totals
                 $('#button-refresh').trigger('click');
             }
@@ -1937,9 +1922,6 @@ $('#form-reward').on('submit', function(e) {
 
             if (json['success']) {
                 $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                $('#payment-method-value').html('');
-                $('#shipping-method-value').html('');
 
                 $('#button-refresh').trigger('click');
             }
@@ -1987,9 +1969,6 @@ $(document).on('click', '#button-reward-add, #button-reward-remove', function(e)
                 if (action == 'remove') {
                     $(element).replaceWith('<button type="button" id="button-reward-add" data-bs-toggle="tooltip" title="{{ button_reward_add|escape('js') }}" class="btn btn-success"><i class="fa-solid fa-plus-circle"></i></button>');
                 }
-
-                $('#payment-method-value').html('');
-                $('#shipping-method-value').html('');
 
                 $('#button-refresh').trigger('click');
             }
@@ -2227,9 +2206,6 @@ $('#form-payment-address').on('submit', function(e) {
 
                 $('#payment-address-value').html(address);
 
-                $('#payment-method-value').html('');
-                $('#shipping-method-value').html('');
-
                 $('#button-refresh').trigger('click');
             }
         },
@@ -2403,9 +2379,6 @@ $('#form-shipping-address').on('submit', function(e) {
                 address += $('#input-shipping-country option:selected').text();
 
                 $('#shipping-address-value').html(address);
-
-                $('#payment-method-value').html('');
-                $('#shipping-method-value').html('');
 
                 // Refresh products, vouchers and totals
                 $('#button-refresh').trigger('click');

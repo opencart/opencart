@@ -262,7 +262,7 @@ class Upgrade1 extends \Opencart\System\Engine\Controller {
 			$output .= 'define(\'DIR_CATALOG\', DIR_OPENCART . \'catalog/\');' . "\n";
 
 			if (isset($config['DIR_STORAGE'])) {
-				$output .= 'define(\'DIR_STORAGE\', ' . $config['DIR_STORAGE'] . ');' . "\n";
+				$output .= 'define(\'DIR_STORAGE\', \'' . $config['DIR_STORAGE'] . '\');' . "\n";
 			} else {
 				$output .= 'define(\'DIR_STORAGE\', DIR_SYSTEM . \'storage/\');' . "\n";
 			}

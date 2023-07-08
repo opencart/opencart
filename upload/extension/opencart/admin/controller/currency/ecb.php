@@ -89,6 +89,12 @@ class ECB extends \Opencart\System\Engine\Controller {
 					}
 				}
 
+				if (isset($currencies[$default])) {
+					$value = $currencies[$default];
+				} else {
+					$value = $currencies['EUR'];
+				}
+
 				if ($currencies) {
 					$this->load->model('localisation/currency');
 
@@ -96,19 +102,15 @@ class ECB extends \Opencart\System\Engine\Controller {
 
 					foreach ($results as $result) {
 						if (isset($currencies[$result['code']])) {
-							$from = $currencies['EUR'];
-
-							$to = $currencies[$result['code']];
-
-							$this->model_localisation_currency->editValueByCode($result['code'], 1 / ($currencies[$default] * ($from / $to)));
+							$this->model_localisation_currency->editValueByCode($result['code'], 1 / ($value * ($value / $currencies[$result['code']])));
 						}
 					}
+
+					$this->model_localisation_currency->editValueByCode($default, '1.00000');
 				}
-
-				$this->model_localisation_currency->editValueByCode($default, '1.00000');
-
-				$this->cache->delete('currency');
 			}
 		}
+
+		$this->cache->delete('currency');
 	}
 }

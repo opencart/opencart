@@ -111,6 +111,8 @@ class Language extends \Opencart\System\Engine\Controller {
 			$this->load->controller('extension/' . $extension . '/language/' . $code . '.install');
 
 			$json['success'] = $this->language->get('text_success');
+
+			$this->cache->delete('language');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -135,6 +137,8 @@ class Language extends \Opencart\System\Engine\Controller {
 			$this->load->controller('extension/' . $this->request->get['extension'] . '/language/' . $this->request->get['code'] . '.uninstall');
 
 			$json['success'] = $this->language->get('text_success');
+
+			$this->cache->delete('language');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

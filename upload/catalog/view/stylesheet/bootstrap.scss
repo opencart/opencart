@@ -110,3 +110,6 @@ $carousel-indicator-active-opacity:  .9;
     opacity: $carousel-indicator-active-opacity;
   }
 }
+.table > :not(caption) > * > * {
+	background: transparent;
+}

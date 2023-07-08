@@ -198,14 +198,7 @@ class Language extends \Opencart\System\Engine\Model {
 	}
 
 	public function editLanguage(int $language_id, array $data): void {
-		$language_query = $this->db->query("SELECT `code` FROM `" . DB_PREFIX . "language` WHERE `language_id` = '" . (int)$language_id . "'");
-
 		$this->db->query("UPDATE `" . DB_PREFIX . "language` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `code` = '" . $this->db->escape((string)$data['code']) . "', `locale` = '" . $this->db->escape((string)$data['locale']) . "', `extension` = '" . $this->db->escape((string)$data['extension']) . "', `sort_order` = '" . (int)$data['sort_order'] . "', `status` = '" . (bool)(isset($data['status']) ? $data['status'] : 0) . "' WHERE `language_id` = '" . (int)$language_id . "'");
-
-		if ($language_query->row['code'] != $data['code']) {
-			$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `value` = '" . $this->db->escape((string)$data['code']) . "' WHERE `key` = 'config_language' AND `value` = '" . $this->db->escape($language_query->row['code']) . "'");
-			$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `value` = '" . $this->db->escape((string)$data['code']) . "' WHERE `key` = 'config_language_admin' AND `value` = '" . $this->db->escape($language_query->row['code']) . "'");
-		}
 
 		$this->cache->delete('language');
 	}

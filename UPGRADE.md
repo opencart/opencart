@@ -45,10 +45,6 @@ If you have __1.5.x__ and want to upgrade __to 3.0.x__, You may try to [contact 
 
 12. Load the store front and again press CTRL+F5 3x times to refresh your browser cache. That will prevent oddly shifted elements due to stylesheet. (If you skip step 9, you will get the error message.)
 
-13. If you use vQmod (by now everyone should be) you should first check for a new version at http://vQmod.com. Be sure to download the version that is marked for "opencart".
-    You will also need to re-run the vQmod installer, even if you have the latest version. You should already have the installer on your site as it isn't meant to be deleted from the first time you run it. Simply browse to:
-http://yoursite.com/vqmod/install and you should see a success message. If you do not see a success message, follow the full install guide from the http://vQmod.com site.
-
 ## Troubleshooting:
 
 1. If you have any upgrade script errors, post them in the forum

@@ -1,5 +1,9 @@
 # OpenCart change log
 
+## [v4.0.2.2] (Release date: 18.04.2023)
+
+https://github.com/opencart/opencart/releases/tag/4.0.2.2
+
 ## [v4.0.2.0] (Release date: 18.04.2023)
 
 https://github.com/opencart/opencart/releases/tag/4.0.2.0
@@ -17,7 +21,7 @@ if ($status) {
     $method_data = [
         'code'       => 'bank_transfer',
         'title'      => $this->language->get('heading_title'),
-        'sort_order' => $this->config->get('payment_bank_transfer_sort_order')
+        'sort_order' => $this->config->get('payment_bank_transfer_sor[UPGRADE.md](UPGRADE.md)t_order')
     ];
 }
 ```

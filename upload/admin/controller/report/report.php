@@ -31,21 +31,21 @@ class Report extends \Opencart\System\Engine\Controller {
 
 		// Get a list of installed modules
 		$results = $this->model_setting_extension->getExtensionsByType('report');
-		
+
 		// Add all the modules which have multiple settings for each module
 		foreach ($results as $result) {
 			if ($this->config->get('report_' . $result['code'] . '_status') && $this->user->hasPermission('access', 'extension/' . $result['extension'] . '/report/' . $result['code'])) {
 				$this->load->language('extension/' . $result['extension'] . '/report/' . $result['code'], $result['code']);
-				
+
 				$data['reports'][] = [
-					'text'       => $this->language->get($result['code'] . '_heading_title'),
-					'code'       => $result['code'],
+					'text' => $this->language->get($result['code'] . '_heading_title'),
+					'code' => $result['code'],
 					'sort_order' => $this->config->get('report_' . $result['code'] . '_sort_order'),
-					'href'       => $this->url->link('extension/' . $result['extension'] . '/report/' . $result['code'] . '.report', 'user_token=' . $this->session->data['user_token'])
+					'href' => $this->url->link('extension/' . $result['extension'] . '/report/' . $result['code'] . '.report', 'user_token=' . $this->session->data['user_token'])
 				];
 			}
 		}
-		
+
 		$sort_order = [];
 
 		foreach ($data['reports'] as $key => $value) {

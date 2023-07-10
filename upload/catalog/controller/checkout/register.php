@@ -11,7 +11,7 @@ class Register extends \Opencart\System\Engine\Controller {
 		$data['error_upload_size'] = sprintf($this->language->get('error_upload_size'), $this->config->get('config_file_max_size'));
 
 		$data['config_checkout_payment_address'] = $this->config->get('config_checkout_payment_address');
-		$data['config_checkout_guest'] = ($this->config->get('config_checkout_guest') && !$this->config->get('config_customer_price') && !$this->cart->hasDownload() && !$this->cart->hasSubscription());
+		$data['config_checkout_guest'] = ($this->config->get('config_checkout_guest') && !$this->config->get('config_customer_price') && !$this->cart->hasDownload() && !$this->cart->hasSubscriptions());
 		$data['config_file_max_size'] = ((int)$this->config->get('config_file_max_size') * 1024 * 1024);
 		$data['config_telephone_display'] = $this->config->get('config_telephone_display');
 		$data['config_telephone_required'] = $this->config->get('config_telephone_required');
@@ -198,7 +198,7 @@ class Register extends \Opencart\System\Engine\Controller {
 		}
 
 		// Force account requires subscript or is a downloadable product.
-		if ($this->cart->hasDownload() || $this->cart->hasSubscription()) {
+		if ($this->cart->hasDownload() || $this->cart->hasSubscriptions()) {
 			$this->request->post['account'] = 1;
 		}
 

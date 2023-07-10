@@ -36,6 +36,6 @@ $_['error_exists']            = 'Warning: Combination of store, language key, va
 $_['error_key']               = 'Key must be between 1 and 64 characters!';
 $_['error_value']             = 'Value must be between 1 and 255 characters!';
 $_['error_value_exists']      = 'Value is already in use!';
-$_['error_keyword']           = 'Keyword must be between 3 and 64 characters!';
+$_['error_keyword']           = 'Keyword must be between 1 and 64 characters!';
 $_['error_keyword_exists']    = 'Keyword is already in use!';
 $_['error_keyword_character'] = 'Keyword can only use characters a-z, 0-9, - and _!';

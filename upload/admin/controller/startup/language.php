@@ -33,7 +33,7 @@ class Language extends \Opencart\System\Engine\Controller {
 	// Fill the language up with default values
 	public function after(&$route, &$prefix, &$code, &$output): void {
 		if (!$code) {
-			$code = $this->config->get('config_language');
+			$code = $this->config->get('config_language_admin');
 		}
 
 		// Use $this->language->load so it's not triggering infinite loops

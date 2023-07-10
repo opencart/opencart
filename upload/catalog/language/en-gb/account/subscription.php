@@ -28,7 +28,6 @@ $_['text_status']                 = 'Subscription Status';
 
 $_['text_description']            = 'Description';
 $_['text_quantity']               = 'Quantity';
-$_['text_history']                = 'Subscription History';
 $_['text_order']                  = 'Order History';
 $_['text_no_results']             = 'No subscriptions found!';
 $_['text_error']                  = 'The recurring order you requested could not be found!';

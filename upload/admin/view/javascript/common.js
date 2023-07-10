@@ -105,7 +105,7 @@ $(document).ready(function() {
 
 		$element.popover({
 			html: true,
-			sanitize: false, // won't work without it
+			sanitize: false,
 			placement: 'right',
 			trigger: 'manual',
 			content: function() {

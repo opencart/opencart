@@ -4,7 +4,7 @@ class Cheque extends \Opencart\System\Engine\Model {
 	public function getMethods(array $address = []): array {
 		$this->load->language('extension/opencart/payment/cheque');
 
-		if ($this->cart->hasSubscription()) {
+		if ($this->cart->hasSubscriptions()) {
 			$status = false;
 		} elseif (!$this->config->get('config_checkout_payment_address')) {
 			$status = true;

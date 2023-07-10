@@ -291,7 +291,7 @@ class Product extends \Opencart\System\Engine\Controller {
 
 			$data['images'] = [];
 
-			$results = $this->model_catalog_product->getImages($this->request->get['product_id']);
+			$results = $this->model_catalog_product->getImages($product_id);
 
 			foreach ($results as $result) {
 				if (is_file(DIR_IMAGE . html_entity_decode($result['image'], ENT_QUOTES, 'UTF-8'))) {
@@ -320,7 +320,7 @@ class Product extends \Opencart\System\Engine\Controller {
 				$data['tax'] = false;
 			}
 
-			$discounts = $this->model_catalog_product->getDiscounts($this->request->get['product_id']);
+			$discounts = $this->model_catalog_product->getDiscounts($product_id);
 
 			$data['discounts'] = [];
 
@@ -388,7 +388,7 @@ class Product extends \Opencart\System\Engine\Controller {
 			// Subscriptions
 			$data['subscription_plans']  = [];
 
-			$results = $this->model_catalog_product->getSubscriptions($this->request->get['product_id']);
+			$results = $this->model_catalog_product->getSubscriptions($product_id);
 
 			foreach ($results as $result) {
 				$description = '';
@@ -428,11 +428,11 @@ class Product extends \Opencart\System\Engine\Controller {
 
 			$data['share'] = $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&product_id=' . (int)$this->request->get['product_id']);
 
-			$data['attribute_groups'] = $this->model_catalog_product->getAttributes($this->request->get['product_id']);
+			$data['attribute_groups'] = $this->model_catalog_product->getAttributes($product_id);
 
 			$data['products'] = [];
 
-			$results = $this->model_catalog_product->getRelated($this->request->get['product_id']);
+			$results = $this->model_catalog_product->getRelated($product_id);
 
 			foreach ($results as $result) {
 				if (is_file(DIR_IMAGE . html_entity_decode($result['image'], ENT_QUOTES, 'UTF-8'))) {

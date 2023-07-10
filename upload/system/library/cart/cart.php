@@ -521,11 +521,11 @@ class Cart {
 	}
 
 	/**
-	 * hasSubscription
+	 * hasSubscriptions
 	 *
 	 * @return	bool
 	 */
-	public function hasSubscription(): bool {
+	public function hasSubscriptions(): bool {
 		return (bool)count($this->getSubscriptions());
 	}
 

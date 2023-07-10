@@ -4,7 +4,7 @@ class COD extends \Opencart\System\Engine\Model {
 	public function getMethods(array $address = []): array {
 		$this->load->language('extension/opencart/payment/cod');
 
-		if ($this->cart->hasSubscription()) {
+		if ($this->cart->hasSubscriptions()) {
 			$status = false;
 		} elseif (!$this->cart->hasShipping()) {
 			$status = false;

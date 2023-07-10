@@ -131,7 +131,7 @@ class Review extends \Opencart\System\Engine\Controller {
 
 	public function getList(): string {
 		if (isset($this->request->get['product_id'])) {
-			$product_id = $this->request->get['product_id'];
+			$product_id = (int)$this->request->get['product_id'];
 		} else {
 			$product_id = 0;
 		}

@@ -20,12 +20,8 @@ $_['text_week']                   = 'week';
 $_['text_semi_month']             = 'half-month';
 $_['text_month']                  = 'month';
 $_['text_year']                   = 'year';
-$_['text_history']                = 'Subscription History';
-$_['text_orders']                 = 'Order History';
-
 $_['text_date_added']             = 'Date Added';
 $_['text_status']                 = 'Subscription Status';
-
 $_['text_description']            = 'Description';
 $_['text_quantity']               = 'Quantity';
 $_['text_history']                = 'Subscription History';

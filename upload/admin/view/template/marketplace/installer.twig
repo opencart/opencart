@@ -133,7 +133,7 @@ $('#extension').on('click', '.btn-success, .btn-warning', function (e) {
 
                 if (json['error']) {
                     $('#progress-bar').addClass('bg-danger');
-                    $('#progress-text').html('<div class="invalid-feedback">' + json['error'] + '</div>');
+                    $('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
 
                     $(element).button('reset');
                 }

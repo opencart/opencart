@@ -54,13 +54,13 @@ class VoucherTheme extends \Opencart\System\Engine\Controller {
 
 	protected function getList(): string {
 		if (isset($this->request->get['sort'])) {
-			$sort = $this->request->get['sort'];
+			$sort = (string)$this->request->get['sort'];
 		} else {
 			$sort = 'vtd.name';
 		}
 
 		if (isset($this->request->get['order'])) {
-			$order = $this->request->get['order'];
+			$order = (string)$this->request->get['order'];
 		} else {
 			$order = 'ASC';
 		}

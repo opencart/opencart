@@ -53,13 +53,13 @@ class Event extends \Opencart\System\Engine\Controller {
 
 	public function getList(): string {
 		if (isset($this->request->get['sort'])) {
-			$sort = $this->request->get['sort'];
+			$sort = (string)$this->request->get['sort'];
 		} else {
 			$sort = 'code';
 		}
 
 		if (isset($this->request->get['order'])) {
-			$order = $this->request->get['order'];
+			$order = (string)$this->request->get['order'];
 		} else {
 			$order = 'ASC';
 		}

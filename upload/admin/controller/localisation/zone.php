@@ -94,13 +94,13 @@ class Zone extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->get['sort'])) {
-			$sort = $this->request->get['sort'];
+			$sort = (string)$this->request->get['sort'];
 		} else {
 			$sort = 'c.name';
 		}
 
 		if (isset($this->request->get['order'])) {
-			$order = $this->request->get['order'];
+			$order = (string)$this->request->get['order'];
 		} else {
 			$order = 'ASC';
 		}

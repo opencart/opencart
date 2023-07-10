@@ -7,43 +7,43 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		if (isset($this->request->get['filter_search'])) {
-			$filter_search = $this->request->get['filter_search'];
+			$filter_search = (string)$this->request->get['filter_search'];
 		} else {
 			$filter_search = '';
 		}
 
 		if (isset($this->request->get['filter_category'])) {
-			$filter_category = $this->request->get['filter_category'];
+			$filter_category = (string)$this->request->get['filter_category'];
 		} else {
 			$filter_category = '';
 		}
 
 		if (isset($this->request->get['filter_license'])) {
-			$filter_license = $this->request->get['filter_license'];
+			$filter_license = (string)$this->request->get['filter_license'];
 		} else {
 			$filter_license = '';
 		}
 
 		if (isset($this->request->get['filter_rating'])) {
-			$filter_rating = $this->request->get['filter_rating'];
+			$filter_rating = (int)$this->request->get['filter_rating'];
 		} else {
 			$filter_rating = '';
 		}
 
 		if (isset($this->request->get['filter_member_type'])) {
-			$filter_member_type = $this->request->get['filter_member_type'];
+			$filter_member_type = (string)$this->request->get['filter_member_type'];
 		} else {
 			$filter_member_type = '';
 		}
 
 		if (isset($this->request->get['filter_member'])) {
-			$filter_member = $this->request->get['filter_member'];
+			$filter_member = (string)$this->request->get['filter_member'];
 		} else {
 			$filter_member = '';
 		}
 
 		if (isset($this->request->get['sort'])) {
-			$sort = $this->request->get['sort'];
+			$sort = (string)$this->request->get['sort'];
 		} else {
 			$sort = 'date_modified';
 		}

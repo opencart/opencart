@@ -111,25 +111,25 @@ class Marketing extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->get['filter_date_from'])) {
-			$filter_date_from = $this->request->get['filter_date_from'];
+			$filter_date_from = (string)$this->request->get['filter_date_from'];
 		} else {
 			$filter_date_from = '';
 		}
 
 		if (isset($this->request->get['filter_date_to'])) {
-			$filter_date_to = $this->request->get['filter_date_to'];
+			$filter_date_to = (string)$this->request->get['filter_date_to'];
 		} else {
 			$filter_date_to = '';
 		}
 
 		if (isset($this->request->get['sort'])) {
-			$sort = $this->request->get['sort'];
+			$sort = (string)$this->request->get['sort'];
 		} else {
 			$sort = 'm.name';
 		}
 
 		if (isset($this->request->get['order'])) {
-			$order = $this->request->get['order'];
+			$order = (string)$this->request->get['order'];
 		} else {
 			$order = 'ASC';
 		}

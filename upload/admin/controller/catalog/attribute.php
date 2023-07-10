@@ -9,15 +9,15 @@ class Attribute extends \Opencart\System\Engine\Controller {
 		$url = '';
 
 		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
+			$url .= '&sort=' . (string)$this->request->get['sort'];
 		}
 
 		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
+			$url .= '&order=' . (string)$this->request->get['order'];
 		}
 
 		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
+			$url .= '&page=' . (int)$this->request->get['page'];
 		}
 
 		$data['breadcrumbs'] = [];
@@ -54,13 +54,13 @@ class Attribute extends \Opencart\System\Engine\Controller {
 
 	public function getList(): string {
 		if (isset($this->request->get['sort'])) {
-			$sort = $this->request->get['sort'];
+			$sort = (string)$this->request->get['sort'];
 		} else {
 			$sort = 'ad.name';
 		}
 
 		if (isset($this->request->get['order'])) {
-			$order = $this->request->get['order'];
+			$order = (string)$this->request->get['order'];
 		} else {
 			$order = 'ASC';
 		}

@@ -62,13 +62,13 @@ class Language extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->get['extension'])) {
-			$extension = basename($this->request->get['extension']);
+			$extension = basename((string)$this->request->get['extension']);
 		} else {
 			$extension = '';
 		}
 
 		if (isset($this->request->get['code'])) {
-			$code = basename($this->request->get['code']);
+			$code = basename((string)$this->request->get['code']);
 		} else {
 			$code = '';
 		}
@@ -111,8 +111,6 @@ class Language extends \Opencart\System\Engine\Controller {
 			$this->load->controller('extension/' . $extension . '/language/' . $code . '.install');
 
 			$json['success'] = $this->language->get('text_success');
-
-			$this->cache->delete('language');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -137,8 +135,6 @@ class Language extends \Opencart\System\Engine\Controller {
 			$this->load->controller('extension/' . $this->request->get['extension'] . '/language/' . $this->request->get['code'] . '.uninstall');
 
 			$json['success'] = $this->language->get('text_success');
-
-			$this->cache->delete('language');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

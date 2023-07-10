@@ -1105,12 +1105,8 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 			$reply_total = 0;
 		}
 
-		if ($json['replies']) {
-			if (isset($json['replies'])) {
-				$results = $json['replies'];
-			} else {
-				$results = [];
-			}
+		if (isset($json['replies'])) {
+			$results = $json['replies'];
 
 			foreach ($results as $result) {
 				$data['replies'][] = [

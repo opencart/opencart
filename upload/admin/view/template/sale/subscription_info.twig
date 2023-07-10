@@ -284,7 +284,7 @@
                   </div>
                 </div>
                 <div class="row mb-3">
-                  <label for="input-override" class="col-sm-2 col-form-label">{{ entry_override }}</label>
+                  <label class="col-sm-2 col-form-label">{{ entry_override }}</label>
                   <div class="col-sm-10">
                     <div class="form-check form-switch form-switch-lg">
                       <input type="hidden" name="override" value="0"/> <input type="checkbox" name="override" value="1" id="input-override" class="form-check-input">
@@ -293,7 +293,7 @@
                   </div>
                 </div>
                 <div class="row mb-3">
-                  <label for="input-notify" class="col-sm-2 col-form-label">{{ entry_notify }}</label>
+                  <label class="col-sm-2 col-form-label">{{ entry_notify }}</label>
                   <div class="col-sm-10">
                     <div class="form-check form-switch form-switch-lg">
                       <input type="hidden" name="notify" value="0"/> <input type="checkbox" name="notify" value="1" id="input-notify" class="form-check-input"/>
@@ -396,7 +396,8 @@
             <div class="mb-3">
               <label class="form-label">{{ entry_trial_status }}</label>
               <div class="form-check form-switch form-switch-lg">
-                <input type="hidden" name="trial_status" value="0"/> <input type="checkbox" name="trial_status" value="1" id="input-trial-status" class="form-check-input"{% if trial_status %} checked{% endif %}/>
+                <input type="hidden" name="trial_status" value="0"/>
+                <input type="checkbox" name="trial_status" value="1" id="input-trial-status" class="form-check-input"{% if trial_status %} checked{% endif %}/>
               </div>
             </div>
           </fieldset>

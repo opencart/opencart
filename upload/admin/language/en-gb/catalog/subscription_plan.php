@@ -1,19 +1,19 @@
 <?php
 // Heading
-$_['heading_title']          = 'Subscription Plans';
+$_['heading_title']         = 'Subscription Plans';
 
 // Text
-$_['text_success']           = 'Success: You have modified subscription plans!';
-$_['text_list']              = 'Subscription Plan List';
-$_['text_add']               = 'Add Subscription Plan';
-$_['text_edit']              = 'Edit Subscription Plan';
-$_['text_subscription']      = 'Subscription';
-$_['text_trial']             = 'Trial';
-$_['text_day']               = 'Day';
-$_['text_week']              = 'Week';
-$_['text_semi_month']        = 'Semi Month';
-$_['text_month']             = 'Month';
-$_['text_year']              = 'Year';
+$_['text_success']          = 'Success: You have modified subscription plans!';
+$_['text_list']             = 'Subscription Plan List';
+$_['text_add']              = 'Add Subscription Plan';
+$_['text_edit']             = 'Edit Subscription Plan';
+$_['text_subscription']     = 'Subscription';
+$_['text_trial']            = 'Trial';
+$_['text_day']              = 'Day';
+$_['text_week']             = 'Week';
+$_['text_semi_month']       = 'Semi Month';
+$_['text_month']            = 'Month';
+$_['text_year']             = 'Year';
 
 // Entry
 $_['entry_name']            = 'Subscription Plan Name';

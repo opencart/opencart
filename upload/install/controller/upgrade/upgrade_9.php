@@ -177,7 +177,7 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
 			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "subscription' AND COLUMN_NAME = 'ip'");
 
 			if (!$query->num_rows) {
-				$this->db->query("ALTER TABLE `" . DB_PREFIX . "subscription` ADD COLUMN `ip` varchar(40) NOT NULL AFTER `ip`");
+				$this->db->query("ALTER TABLE `" . DB_PREFIX . "subscription` ADD COLUMN `ip` varchar(40) NOT NULL AFTER `currency_id`");
 			}
 
 			// Subscription Forwarded IP

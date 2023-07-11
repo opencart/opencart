@@ -344,13 +344,10 @@
                 <div class="row mb-3">
                   <label class="col-sm-2 col-form-label">{{ entry_subtract }}</label>
                   <div class="col-sm-10">
-
                     <div class="input-group">
-
                       <div id="input-subtract" class="form-check form-switch form-switch-lg">
                         <input type="hidden" name="subtract" value="0"/> <input type="checkbox" name="subtract" value="1" class="form-check-input"{% if subtract %} checked{% endif %}/>
                       </div>
-
                       {% if master_id %}
                         <div class="input-group-text">
                           <div class="form-check form-switch">
@@ -358,9 +355,7 @@
                           </div>
                         </div>
                       {% endif %}
-
                     </div>
-
                   </div>
                 </div>
                 <div class="row mb-3">
@@ -406,11 +401,10 @@
                   <label class="col-sm-2 col-form-label">{{ entry_shipping }}</label>
                   <div class="col-sm-10">
                     <div class="input-group">
-
                       <div id="input-shipping" class="form-check form-switch form-switch-lg">
-                        <input type="hidden" name="shipping" value="0"/> <input type="checkbox" name="shipping" value="1" class="form-check-input"{% if shipping %} checked{% endif %}/>
+                        <input type="hidden" name="shipping" value="0"/>
+                        <input type="checkbox" name="shipping" value="1" class="form-check-input"{% if shipping %} checked{% endif %}/>
                       </div>
-
                       {% if master_id %}
                         <div class="input-group-text">
                           <div class="form-check form-switch">
@@ -506,7 +500,7 @@
                   </div>
                 </div>
                 <div class="row mb-3">
-                  <label for="input-status" class="col-sm-2 col-form-label">{{ entry_status }}</label>
+                  <label class="col-sm-2 col-form-label">{{ entry_status }}</label>
                   <div class="col-sm-10">
                     <div class="input-group">
                       <div class="form-check form-switch form-switch-lg">

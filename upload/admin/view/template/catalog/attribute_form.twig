@@ -19,6 +19,7 @@
       <div class="card-header"><i class="fa-solid fa-pencil"></i> {{ text_form }}</div>
       <div class="card-body">
         <form id="form-attribute" action="{{ save }}" method="post" data-oc-toggle="ajax">
+
           <div class="row mb-3 required">
             <label class="col-sm-2 col-form-label">{{ entry_name }}</label>
             <div class="col-sm-10">
@@ -31,6 +32,7 @@
               {% endfor %}
             </div>
           </div>
+
           <div class="row mb-3 required">
             <label for="input-attribute-group" class="col-sm-2 col-form-label required">{{ entry_attribute_group }}</label>
             <div class="col-sm-10">
@@ -43,12 +45,14 @@
               <div id="error-attribute-group" class="invalid-feedback"></div>
             </div>
           </div>
+
           <div class="row mb-3">
             <label for="input-sort-order" class="col-sm-2 col-form-label">{{ entry_sort_order }}</label>
             <div class="col-sm-10">
               <input type="text" name="sort_order" value="{{ sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/>
             </div>
           </div>
+
           <input type="hidden" name="attribute_id" value="{{ attribute_id }}" id="input-attribute-id"/>
         </form>
       </div>

@@ -136,11 +136,18 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 				$this->db->query("ALTER TABLE `" . DB_PREFIX . "cart` ADD COLUMN `price` decimal(15,4) NOT NULL AFTER `override`");
 			}
 
-			// Coupon - Date Added
-			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "coupon' AND COLUMN_NAME = 'date_added' AND COLUMN_DEFAULT = '0000-00-00'");
+			// Coupon - Date Start
+			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "coupon' AND COLUMN_NAME = 'date_start' AND COLUMN_DEFAULT = '0000-00-00'");
 
 			if ($query->num_rows) {
-				$this->db->query("ALTER TABLE `" . DB_PREFIX . "coupon` MODIFY `date_added` date NOT NULL");
+				$this->db->query("ALTER TABLE `" . DB_PREFIX . "coupon` MODIFY `date_start` date NOT NULL");
+			}
+
+			// Coupon - Date End
+			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "coupon' AND COLUMN_NAME = 'date_end' AND COLUMN_DEFAULT = '0000-00-00'");
+
+			if ($query->num_rows) {
+				$this->db->query("ALTER TABLE `" . DB_PREFIX . "coupon` MODIFY `date_end` date NOT NULL");
 			}
 
 			// Currency - Decimal Place

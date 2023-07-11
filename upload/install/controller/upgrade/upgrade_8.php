@@ -228,8 +228,6 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 				'affiliate_login',
 				'affiliate_transaction',
 				'banner_image_description',
-				'banner_image_description',
-				'banner_image_description',
 				'customer_ban_ip',
 				'customer_field',
 				'customer_payment',

@@ -241,9 +241,9 @@ class Sale extends \Opencart\System\Engine\Model {
 		$sql = "SELECT MIN(o.`date_added`) AS date_start, MAX(o.`date_added`) AS date_end, ot.`title`, SUM(ot.`value`) AS total, COUNT(o.`order_id`) AS `orders` FROM `" . DB_PREFIX . "order` o LEFT JOIN `" . DB_PREFIX . "order_total` ot ON (ot.`order_id` = o.`order_id`) WHERE ot.`code` = 'tax'";
 
 		if (!empty($data['filter_order_status_id'])) {
-			$sql .= " AND o.`order_status_id` = '" . (int)$data['filter_order_status_id'] . "'";
+			$sql .= " AND `o`.`order_status_id` = '" . (int)$data['filter_order_status_id'] . "'";
 		} else {
-			$sql .= " AND o.`order_status_id` > '0'";
+			$sql .= " AND `o`.`order_status_id` > '0'";
 		}
 
 		if (!empty($data['filter_date_start'])) {
@@ -262,17 +262,17 @@ class Sale extends \Opencart\System\Engine\Model {
 
 		switch ($group) {
 			case 'day';
-				$sql .= " GROUP BY YEAR(o.`date_added`), MONTH(o.`date_added`), DAY(o.`date_added`), ot.`title`";
+				$sql .= " GROUP BY YEAR(`o`.`date_added`), MONTH(`o`.`date_added`), DAY(`o`.`date_added`), `ot`.`title`";
 				break;
 			default:
 			case 'week':
-				$sql .= " GROUP BY YEAR(o.`date_added`), WEEK(o.`date_added`), ot.`title`";
+				$sql .= " GROUP BY YEAR(`o`.`date_added`), WEEK(`o`.`date_added`), `ot`.`title`";
 				break;
 			case 'month':
-				$sql .= " GROUP BY YEAR(o.`date_added`), MONTH(o.`date_added`), ot.`title`";
+				$sql .= " GROUP BY YEAR(`o`.`date_added`), MONTH(`o`.`date_added`), `ot`.`title`";
 				break;
 			case 'year':
-				$sql .= " GROUP BY YEAR(o.`date_added`), ot.`title`";
+				$sql .= " GROUP BY YEAR(`o`.`date_added`), ot.`title`";
 				break;
 		}
 
@@ -302,34 +302,34 @@ class Sale extends \Opencart\System\Engine\Model {
 
 		switch ($group) {
 			case 'day';
-				$sql = "SELECT COUNT(DISTINCT YEAR(o.`date_added`), MONTH(o.`date_added`), DAY(o.`date_added`), ot.`title`) AS `total` FROM `" . DB_PREFIX . "order` o";
+				$sql = "SELECT COUNT(DISTINCT YEAR(o.`date_added`), MONTH(`o`.`date_added`), DAY(`o`.`date_added`), `ot`.`title`) AS `total` FROM `" . DB_PREFIX . "order` `o`";
 				break;
 			default:
 			case 'week':
-				$sql = "SELECT COUNT(DISTINCT YEAR(o.`date_added`), WEEK(o.`date_added`), ot.`title`) AS `total` FROM `" . DB_PREFIX . "order` o";
+				$sql = "SELECT COUNT(DISTINCT YEAR(`o`.`date_added`), WEEK(`o`.`date_added`), `ot`.`title`) AS `total` FROM `" . DB_PREFIX . "order` `o`";
 				break;
 			case 'month':
-				$sql = "SELECT COUNT(DISTINCT YEAR(o.`date_added`), MONTH(o.`date_added`), ot.`title`) AS `total` FROM `" . DB_PREFIX . "order` o";
+				$sql = "SELECT COUNT(DISTINCT YEAR(`o`.`date_added`), MONTH(`o`.`date_added`), `ot`.`title`) AS `total` FROM `" . DB_PREFIX . "order` `o`";
 				break;
 			case 'year':
-				$sql = "SELECT COUNT(DISTINCT YEAR(o.`date_added`), ot.`title`) AS `total` FROM `" . DB_PREFIX . "order` o";
+				$sql = "SELECT COUNT(DISTINCT YEAR(`o`.`date_added`), `ot`.`title`) AS `total` FROM `" . DB_PREFIX . "order` `o`";
 				break;
 		}
 
-		$sql .= " LEFT JOIN `" . DB_PREFIX . "order_total` ot ON (o.`order_id` = ot.`order_id`) WHERE ot.`code` = 'tax'";
+		$sql .= " LEFT JOIN `" . DB_PREFIX . "order_total` `ot` ON (`o`.`order_id` = `ot`.`order_id`) WHERE `ot`.`code` = 'tax'";
 
 		if (!empty($data['filter_order_status_id'])) {
-			$sql .= " AND o.`order_status_id` = '" . (int)$data['filter_order_status_id'] . "'";
+			$sql .= " AND `o`.`order_status_id` = '" . (int)$data['filter_order_status_id'] . "'";
 		} else {
-			$sql .= " AND o.`order_status_id` > '0'";
+			$sql .= " AND `o`.`order_status_id` > '0'";
 		}
 
 		if (!empty($data['filter_date_start'])) {
-			$sql .= " AND DATE(o.`date_added`) >= DATE('" . $this->db->escape((string)$data['filter_date_start']) . "')";
+			$sql .= " AND DATE(`o`.`date_added`) >= DATE('" . $this->db->escape((string)$data['filter_date_start']) . "')";
 		}
 
 		if (!empty($data['filter_date_end'])) {
-			$sql .= " AND DATE(o.`date_added`) <= DATE('" . $this->db->escape((string)$data['filter_date_end']) . "')";
+			$sql .= " AND DATE(`o`.`date_added`) <= DATE('" . $this->db->escape((string)$data['filter_date_end']) . "')";
 		}
 
 		$query = $this->db->query($sql);
@@ -341,17 +341,17 @@ class Sale extends \Opencart\System\Engine\Model {
 		$sql = "SELECT MIN(o.`date_added`) AS date_start, MAX(o.`date_added`) AS date_end, ot.`title`, SUM(ot.`value`) AS total, COUNT(o.`order_id`) AS orders FROM `" . DB_PREFIX . "order` o LEFT JOIN `" . DB_PREFIX . "order_total` ot ON (o.`order_id` = ot.`order_id`) WHERE ot.`code` = 'shipping'";
 
 		if (!empty($data['filter_order_status_id'])) {
-			$sql .= " AND o.`order_status_id` = '" . (int)$data['filter_order_status_id'] . "'";
+			$sql .= " AND `o`.`order_status_id` = '" . (int)$data['filter_order_status_id'] . "'";
 		} else {
-			$sql .= " AND o.`order_status_id` > '0'";
+			$sql .= " AND `o`.`order_status_id` > '0'";
 		}
 
 		if (!empty($data['filter_date_start'])) {
-			$sql .= " AND DATE(o.`date_added`) >= DATE('" . $this->db->escape((string)$data['filter_date_start']) . "')";
+			$sql .= " AND DATE(`o`.`date_added`) >= DATE('" . $this->db->escape((string)$data['filter_date_start']) . "')";
 		}
 
 		if (!empty($data['filter_date_end'])) {
-			$sql .= " AND DATE(o.`date_added`) <= DATE('" . $this->db->escape((string)$data['filter_date_end']) . "')";
+			$sql .= " AND DATE(`o`.`date_added`) <= DATE('" . $this->db->escape((string)$data['filter_date_end']) . "')";
 		}
 
 		if (!empty($data['filter_group'])) {
@@ -362,17 +362,17 @@ class Sale extends \Opencart\System\Engine\Model {
 
 		switch ($group) {
 			case 'day';
-				$sql .= " GROUP BY YEAR(o.`date_added`), MONTH(o.`date_added`), DAY(o.`date_added`), ot.`title`";
+				$sql .= " GROUP BY YEAR(`o`.`date_added`), MONTH(`o`.`date_added`), DAY(`o`.`date_added`), `ot`.`title`";
 				break;
 			default:
 			case 'week':
-				$sql .= " GROUP BY YEAR(o.`date_added`), WEEK(o.`date_added`), ot.`title`";
+				$sql .= " GROUP BY YEAR(`o`.`date_added`), WEEK(`o`.`date_added`), `ot`.`title`";
 				break;
 			case 'month':
-				$sql .= " GROUP BY YEAR(o.`date_added`), MONTH(o.`date_added`), ot.`title`";
+				$sql .= " GROUP BY YEAR(`o`.`date_added`), MONTH(`o`.`date_added`), `ot`.`title`";
 				break;
 			case 'year':
-				$sql .= " GROUP BY YEAR(o.`date_added`), ot.`title`";
+				$sql .= " GROUP BY YEAR(`o`.`date_added`), `ot`.`title`";
 				break;
 		}
 

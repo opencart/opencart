@@ -6,9 +6,6 @@ class Special extends \Opencart\System\Engine\Controller {
 
 		$data['axis'] = $setting['axis'];
 
-		$this->load->model('catalog/product');
-		$this->load->model('tool/image');
-
 		$data['products'] = [];
 
 		$filter_data = [
@@ -17,6 +14,9 @@ class Special extends \Opencart\System\Engine\Controller {
 			'start' => 0,
 			'limit' => $setting['limit']
 		];
+
+		$this->load->model('catalog/product');
+		$this->load->model('tool/image');
 
 		$results = $this->model_catalog_product->getSpecials($filter_data);
 

@@ -95,6 +95,98 @@ class Customer extends \Opencart\System\Engine\Model {
 		return $customer_data;
 	}
 
+	public function getCustomers(array $data = []): array {
+		$sql = "SELECT MIN(`date_added`) AS `date_start`, MAX(`date_added`) AS `date_end`, COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer`";
+
+		$implode = [];
+
+		if (!empty($data['filter_date_start'])) {
+			$implode[] = "DATE(`date_added`) >= DATE('" . $this->db->escape((string)$data['filter_date_start']) . "')";
+		}
+
+		if (!empty($data['filter_date_end'])) {
+			$implode[] = "DATE(`date_added`) <= DATE('" . $this->db->escape((string)$data['filter_date_end']) . "')";
+		}
+
+		if ($implode) {
+			$sql .= " WHERE " . implode(" AND ", $implode);
+		}
+
+		if (!empty($data['filter_group'])) {
+			$group = $data['filter_group'];
+		} else {
+			$group = 'week';
+		}
+
+		switch ($group) {
+			case 'day';
+				$sql .= " GROUP BY YEAR(`date_added`), MONTH(`date_added`), DAY(`date_added`)";
+				break;
+			default:
+			case 'week':
+				$sql .= " GROUP BY YEAR(`date_added`), WEEK(`date_added`)";
+				break;
+			case 'month':
+				$sql .= " GROUP BY YEAR(`date_added`), MONTH(`date_added`)";
+				break;
+			case 'year':
+				$sql .= " GROUP BY YEAR(`date_added`)";
+				break;
+		}
+
+		if (isset($data['start']) || isset($data['limit'])) {
+			if ($data['start'] < 0) {
+				$data['start'] = 0;
+			}
+
+			if ($data['limit'] < 1) {
+				$data['limit'] = 20;
+			}
+
+			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
+		}
+
+		$query = $this->db->query($sql);
+
+		return $query->rows;
+	}
+
+	public function getTotalCustomers(array $data = []): int {
+		if (!empty($data['filter_group'])) {
+			$group = $data['filter_group'];
+		} else {
+			$group = 'week';
+		}
+
+		switch ($group) {
+			case 'day';
+				$sql = "SELECT COUNT(DISTINCT YEAR(`date_added`), MONTH(`date_added`), DAY(`date_added`)) AS `total` FROM `" . DB_PREFIX . "customer`";
+				break;
+			default:
+			case 'week':
+				$sql = "SELECT COUNT(DISTINCT YEAR(`date_added`), WEEK(`date_added`)) AS `total` FROM `" . DB_PREFIX . "customer`";
+				break;
+			case 'month':
+				$sql = "SELECT COUNT(DISTINCT YEAR(`date_added`), MONTH(`date_added`)) AS `total` FROM `" . DB_PREFIX . "customer`";
+				break;
+			case 'year':
+				$sql = "SELECT COUNT(DISTINCT YEAR(`date_added`)) AS `total` FROM `" . DB_PREFIX . "customer`";
+				break;
+		}
+
+		if (!empty($data['filter_date_start'])) {
+			$sql .= " AND DATE(`date_added`) >= DATE('" . $this->db->escape((string)$data['filter_date_start']) . "')";
+		}
+
+		if (!empty($data['filter_date_end'])) {
+			$sql .= " AND DATE(`date_added`) <= DATE('" . $this->db->escape((string)$data['filter_date_end']) . "')";
+		}
+
+		$query = $this->db->query($sql);
+
+		return (int)$query->row['total'];
+	}
+
 	public function getOrders(array $data = []): array {
 		$sql = "SELECT c.`customer_id`, CONCAT(c.`firstname`, ' ', c.`lastname`) AS `customer`, c.`email`, cgd.`name` AS `customer_group`, c.`status`, o.`order_id`, SUM(op.`quantity`) AS `products`, o.`total` AS `total` FROM `" . DB_PREFIX . "order` o LEFT JOIN `" . DB_PREFIX . "order_product` op ON (o.`order_id` = op.`order_id`) LEFT JOIN `" . DB_PREFIX . "customer` c ON (o.`customer_id` = c.`customer_id`) LEFT JOIN `" . DB_PREFIX . "customer_group_description` cgd ON (c.`customer_group_id` = cgd.`customer_group_id`) WHERE o.`customer_id` > '0' AND cgd.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 

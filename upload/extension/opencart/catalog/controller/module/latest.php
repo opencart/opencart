@@ -6,12 +6,12 @@ class Latest extends \Opencart\System\Engine\Controller {
 
 		$data['axis'] = $setting['axis'];
 
-		$this->load->model('catalog/product');
-		$this->load->model('tool/image');
-
 		$data['products'] = [];
 
-		$results = $this->model_catalog_product->getLatest($setting['limit']);
+		$this->load->model('extension/opencart/module/latest');
+		$this->load->model('tool/image');
+
+		$results = $this->model_extension_opencart_module_latest->getLatest($setting['limit']);
 
 		if ($results) {
 			foreach ($results as $result) {

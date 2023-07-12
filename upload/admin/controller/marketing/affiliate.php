@@ -121,13 +121,13 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 
 	protected function getList(): string {
 		if (isset($this->request->get['filter_customer'])) {
-			$filter_customer = $this->request->get['filter_customer'];
+			$filter_customer = (string)$this->request->get['filter_customer'];
 		} else {
 			$filter_customer = '';
 		}
 
 		if (isset($this->request->get['filter_tracking'])) {
-			$filter_tracking = $this->request->get['filter_tracking'];
+			$filter_tracking = (string)$this->request->get['filter_tracking'];
 		} else {
 			$filter_tracking = '';
 		}
@@ -145,13 +145,13 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->get['filter_date_from'])) {
-			$filter_date_from = $this->request->get['filter_date_from'];
+			$filter_date_from = (string)$this->request->get['filter_date_from'];
 		} else {
 			$filter_date_from = '';
 		}
 
 		if (isset($this->request->get['filter_date_to'])) {
-			$filter_date_to = $this->request->get['filter_date_to'];
+			$filter_date_to = (string)$this->request->get['filter_date_to'];
 		} else {
 			$filter_date_to = '';
 		}

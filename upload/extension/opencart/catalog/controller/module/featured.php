@@ -6,10 +6,10 @@ class Featured extends \Opencart\System\Engine\Controller {
 
 		$data['axis'] = $setting['axis'];
 
+		$data['products'] = [];
+
 		$this->load->model('catalog/product');
 		$this->load->model('tool/image');
-
-		$data['products'] = [];
 
 		if (!empty($setting['product'])) {
 			$products = [];

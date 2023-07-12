@@ -6,10 +6,10 @@ class BestSeller extends \Opencart\System\Engine\Controller {
 
 		$data['axis'] = $setting['axis'];
 
+		$data['products'] = [];
+
 		$this->load->model('extension/opencart/module/bestseller');
 		$this->load->model('tool/image');
-
-		$data['products'] = [];
 
 		$results = $this->model_extension_opencart_module_bestseller->getBestSellers($setting['limit']);
 

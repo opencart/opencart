@@ -213,6 +213,76 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 				'field' => 'status'
 			];
 
+			$remove[] = [
+				'table' => 'customer',
+				'field' => 'wishlist'
+			];
+
+			$remove[] = [
+				'table' => 'customer',
+				'field' => 'address_id'
+			];
+
+			$remove[] = [
+				'table' => 'product',
+				'field' => 'viewed'
+			];
+
+			$remove[] = [
+				'table' => 'seo_url',
+				'field' => 'query'
+			];
+
+			$remove[] = [
+				'table' => 'country',
+				'field' => 'address_format'
+			];
+
+			$remove[] = [
+				'table' => 'cart',
+				'field' => 'recurring_id'
+			];
+
+			$remove[] = [
+				'table' => 'subscription_plan',
+				'field' => 'trial_price'
+			];
+
+			$remove[] = [
+				'table' => 'subscription_plan',
+				'field' => 'price'
+			];
+
+			$remove[] = [
+				'table' => 'subscription_plan_description',
+				'field' => 'description'
+			];
+
+			$remove[] = [
+				'table' => 'theme',
+				'field' => 'theme'
+			];
+
+			$remove[] = [
+				'table' => 'subscription',
+				'field' => 'customer_payment_id'
+			];
+
+			$remove[] = [
+				'table' => 'subscription',
+				'field' => 'description'
+			];
+
+			$remove[] = [
+				'table' => 'subscription',
+				'field' => 'name'
+			];
+
+			$remove[] = [
+				'table' => 'subscription',
+				'field' => 'reference'
+			];
+
 			foreach ($remove as $result) {
 				$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . $result['table'] . "' AND COLUMN_NAME = '" . $result['field'] . "'");
 

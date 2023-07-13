@@ -108,10 +108,9 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 
 		foreach ($results as $result) {
 			$data['affiliates'][] = [
-				'name'       => $result['customer'],
-				'email'      => $result['email'],
-				'amount'     => $result['amount'],
-				'date_added' => date($this->language->get('datetime_format'), strtotime($result['date_added']))
+				'name'  => $result['customer'],
+				'email' => $result['email'],
+				'total' => $result['total']
 			];
 		}
 

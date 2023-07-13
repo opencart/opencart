@@ -74,28 +74,16 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 	}
 
 	public function getReport(): string {
-		if (isset($this->request->get['filter_customer'])) {
-			$filter_customer = $this->request->get['filter_customer'];
+		if (isset($this->request->get['filter_payment'])) {
+			$filter_payment = (string)$this->request->get['filter_payment'];
 		} else {
-			$filter_customer = '';
+			$filter_payment = '';
 		}
 
-		if (isset($this->request->get['filter_ip'])) {
-			$filter_ip = $this->request->get['filter_ip'];
+		if (isset($this->request->get['limit'])) {
+			$limit = (int)$this->request->get['limit'];
 		} else {
-			$filter_ip = '';
-		}
-
-		if (isset($this->request->get['filter_date_start'])) {
-			$filter_date_start = $this->request->get['filter_date_start'];
-		} else {
-			$filter_date_start = '';
-		}
-
-		if (isset($this->request->get['filter_date_end'])) {
-			$filter_date_end = $this->request->get['filter_date_end'];
-		} else {
-			$filter_date_end = '';
+			$limit = $this->config->get('config_pagination');
 		}
 
 		if (isset($this->request->get['page'])) {
@@ -104,77 +92,50 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			$page = 1;
 		}
 
-		$data['activities'] = [];
+		$data['affiliates'] = [];
 
 		$filter_data = [
-			'filter_customer'   => $filter_customer,
-			'filter_ip'         => $filter_ip,
-			'filter_date_start'	=> $filter_date_start,
-			'filter_date_end'	=> $filter_date_end,
-			'start'             => ($page - 1) * 20,
-			'limit'             => 20
+			'filter_payment' => $filter_payment,
+			'start'          => ($page - 1) * $limit,
+			'limit'          => $limit
 		];
 
-		$this->load->model('extension/opencart/report/customer');
+		$this->load->model('extension/opencart/report/affiliate');
 
-		$activity_total = $this->model_extension_opencart_report_customer->getTotalCustomerActivities($filter_data);
+		$affiliate_total = $this->model_extension_opencart_report_affiliate->getTotalAffiliates($filter_data);
 
-		$results = $this->model_extension_opencart_report_customer->getCustomerActivities($filter_data);
+		$results = $this->model_extension_opencart_report_affiliate->getAffiliates($filter_data);
 
 		foreach ($results as $result) {
-			$comment = vsprintf($this->language->get('text_activity_' . $result['key']), json_decode($result['data'], true));
-
-			$find = [
-				'customer_id=',
-				'order_id='
-			];
-
-			$replace = [
-				$this->url->link('customer/customer.form', 'user_token=' . $this->session->data['user_token'] . '&customer_id='),
-				$this->url->link('sale/order.info', 'user_token=' . $this->session->data['user_token'] . '&order_id=')
-			];
-
-			$data['activities'][] = [
-				'comment'    => str_replace($find, $replace, $comment),
-				'ip'         => $result['ip'],
+			$data['affiliates'][] = [
+				'name'       => $result['customer'],
+				'email'      => $result['email'],
+				'amount'     => $result['amount'],
 				'date_added' => date($this->language->get('datetime_format'), strtotime($result['date_added']))
 			];
 		}
 
 		$url = '';
 
-		if (isset($this->request->get['filter_customer'])) {
-			$url .= '&filter_customer=' . urlencode($this->request->get['filter_customer']);
-		}
-
-		if (isset($this->request->get['filter_ip'])) {
-			$url .= '&filter_ip=' . $this->request->get['filter_ip'];
-		}
-
-		if (isset($this->request->get['filter_date_start'])) {
-			$url .= '&filter_date_start=' . $this->request->get['filter_date_start'];
-		}
-
-		if (isset($this->request->get['filter_date_end'])) {
-			$url .= '&filter_date_end=' . $this->request->get['filter_date_end'];
+		if (isset($this->request->get['filter_payment'])) {
+			$url .= '&filter_payment=' . urlencode($this->request->get['filter_payment']);
 		}
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
-			'total' => $activity_total,
+			'total' => $affiliate_total,
 			'page'  => $page,
 			'limit' => $this->config->get('config_pagination'),
-			'url'   => $this->url->link('extension/opencart/report/customer_activity.report', 'user_token=' . $this->session->data['user_token'] . '&code=customer_activity' . $url . '&page={page}')
+			'url'   => $this->url->link('extension/opencart/report/affiliate.report', 'user_token=' . $this->session->data['user_token'] . '&code=affiliate' . $url . '&page={page}&limit=' . $limit)
 		]);
 
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($activity_total) ? (($page - 1) * $this->config->get('config_pagination')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination')) > ($activity_total - $this->config->get('config_pagination'))) ? $activity_total : ((($page - 1) * $this->config->get('config_pagination')) + $this->config->get('config_pagination')), $activity_total, ceil($activity_total / $this->config->get('config_pagination')));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($affiliate_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($affiliate_total - $limit)) ? $affiliate_total : ((($page - 1) * $limit) + $limit), $affiliate_total, ceil($affiliate_total / $limit));
 
-		$data['filter_customer'] = $filter_customer;
-		$data['filter_ip'] = $filter_ip;
-		$data['filter_date_start'] = $filter_date_start;
-		$data['filter_date_end'] = $filter_date_end;
+		$data['filter_payment'] = $filter_payment;
+
+		$data['limit'] = $limit;
 
 		$data['user_token'] = $this->session->data['user_token'];
 
-		return $this->load->view('extension/opencart/report/customer_activity_list', $data);
+		return $this->load->view('extension/opencart/report/affiliate_list', $data);
 	}
 }

@@ -39,13 +39,12 @@ $_['column_action']             = 'Action';
 
 // Entry
 $_['entry_customer']            = 'Customer';
-$_['entry_status']              = 'Status';
 $_['entry_company']             = 'Company';
 $_['entry_tracking']            = 'Tracking Code';
 $_['entry_website']             = 'Web Site';
 $_['entry_commission']          = 'Commission (%)';
 $_['entry_tax']                 = 'Tax ID';
-$_['entry_payment']             = 'Payment Method';
+$_['entry_payment_method']      = 'Payment Method';
 $_['entry_cheque']              = 'Cheque Payee Name';
 $_['entry_paypal']              = 'PayPal Email Account';
 $_['entry_bank_name']           = 'Bank Name';
@@ -58,6 +57,8 @@ $_['entry_description']         = 'Description';
 $_['entry_amount']              = 'Amount';
 $_['entry_date_from']           = 'Date From';
 $_['entry_date_to']             = 'Date To';
+$_['entry_status']              = 'Status';
+$_['entry_limit']               = 'Limit';
 
 // Help
 $_['help_tracking']             = 'The tracking code that will be used to track referrals.';

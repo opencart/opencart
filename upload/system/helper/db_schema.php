@@ -1438,6 +1438,11 @@ function oc_db_schema() {
 				'not_null' => true
 			],
 			[
+				'name' => 'balance',
+				'type' => 'decimal(15,4)',
+				'not_null' => true
+			],
+			[
 				'name' => 'commission',
 				'type' => 'decimal(4,2)',
 				'not_null' => true,
@@ -1449,7 +1454,7 @@ function oc_db_schema() {
 				'not_null' => true
 			],
 			[
-				'name' => 'payment',
+				'name' => 'payment_method',
 				'type' => 'varchar(6)',
 				'not_null' => true
 			],

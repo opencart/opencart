@@ -34,7 +34,7 @@
               <input type="text" name="filter_tracking" value="{{ filter_tracking }}" placeholder="{{ entry_tracking }}" id="input-tracking" class="form-control"/>
             </div>
             <div class="mb-3">
-              <label for="input-payment-method" class="col-form-label">{{ entry_payment_method }}</label>
+              <label for="input-payment-method" class="form-label">{{ entry_payment_method }}</label>
               <select name="filter_payment_method" id="input-payment-method" class="form-select">
                 <option value="">{{ text_all }}</option>
                 {% for payment_method in payment_methods %}
@@ -69,7 +69,7 @@
               </select>
             </div>
             <div class="mb-3">
-              <label for="input-limit" class="col-form-label">{{ entry_limit }}</label>
+              <label for="input-limit" class="form-label">{{ entry_limit }}</label>
               <select name="limit" id="input-limit" class="form-select">
                 {% for limit in limits %}
                   <option value="{{ limit.value }}"{% if limit.value == '1' %} selected{% endif %}>{{ limit.text }}</option>

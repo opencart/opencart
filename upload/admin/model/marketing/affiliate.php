@@ -118,7 +118,7 @@ class Affiliate extends \Opencart\System\Engine\Model {
 		}
 
 		if (!empty($data['filter_payment_method'])) {
-			$implode[] = "ca.`payment_method` = '" . $this->db->escape($data['filter_payment_method']) . "'";
+			$implode[] = "`ca`.`payment_method` = '" . $this->db->escape($data['filter_payment_method']) . "'";
 		}
 
 		if (!empty($data['filter_commission'])) {

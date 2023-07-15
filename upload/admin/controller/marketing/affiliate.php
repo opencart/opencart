@@ -848,7 +848,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 
 				if ($affiliate_info && $affiliate_info['status'] && (float)$affiliate_info['balance'] > 0) {
 					if ($affiliate_info['payment_method'] == 'cheque') {
-
+						$csv .= $affiliate_info['payment_email'] . ',' . $this->currency->format($affiliate_info['balance'], $this->config->get('config_currency'), 1.00000000, false) . ',' . $this->config->get('config_currency') . ',' . $affiliate_info['username'] . ',Thanks for your business!' . "\n";
 					}
 
 					if ($affiliate_info['payment_method'] == 'paypal') {
@@ -856,7 +856,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 					}
 
 					if ($affiliate_info['payment_method'] == 'bank') {
-
+						$csv .= $affiliate_info['payment_email'] . ',' . $this->currency->format($affiliate_info['balance'], $this->config->get('config_currency'), 1.00000000, false) . ',' . $this->config->get('config_currency') . ',' . $affiliate_info['username'] . ',Thanks for your business!' . "\n";
 					}
 				}
 			}

@@ -222,9 +222,9 @@ $(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function (e) {
         complete: function () {
             $(button).button('reset');
         },
-        success: function (json) {
+        success: function (json, textStatus) {
             console.log(json);
-
+            console.log(textStatus);
             $('.alert-dismissible').remove();
             $(element).find('.is-invalid').removeClass('is-invalid');
             $(element).find('.invalid-feedback').removeClass('d-block');

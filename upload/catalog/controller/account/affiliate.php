@@ -186,11 +186,16 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			if ($this->request->post['payment'] == 'cheque' && !$this->request->post['cheque']) {
+			// Payment validation
+			if (empty($this->request->post['payment_method'])) {
+				$json['error']['payment_method'] = $this->language->get('error_payment_method');
+			}
+
+			if ($this->request->post['payment_method'] == 'cheque' && !$this->request->post['cheque']) {
 				$json['error']['cheque'] = $this->language->get('error_cheque');
-			} elseif ($this->request->post['payment'] == 'paypal' && ((oc_strlen($this->request->post['paypal']) > 96) || !filter_var($this->request->post['paypal'], FILTER_VALIDATE_EMAIL))) {
+			} elseif ($this->request->post['payment_method'] == 'paypal' && ((oc_strlen($this->request->post['paypal']) > 96) || !filter_var($this->request->post['paypal'], FILTER_VALIDATE_EMAIL))) {
 				$json['error']['paypal'] = $this->language->get('error_paypal');
-			} elseif ($this->request->post['payment'] == 'bank') {
+			} elseif ($this->request->post['payment_method'] == 'bank') {
 				if ($this->request->post['bank_account_name'] == '') {
 					$json['error']['bank_account_name'] = $this->language->get('error_bank_account_name');
 				}

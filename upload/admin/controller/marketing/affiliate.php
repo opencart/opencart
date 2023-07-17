@@ -112,6 +112,8 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			'href' => $this->url->link('marketing/affiliate', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
+		$data['csv'] = $this->url->link('marketing/affiliate.csv', 'user_token=' . $this->session->data['user_token']);
+		$data['complete'] = $this->url->link('marketing/affiliate.complete', 'user_token=' . $this->session->data['user_token']);
 		$data['add'] = $this->url->link('marketing/affiliate.form', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['delete'] = $this->url->link('marketing/affiliate.delete', 'user_token=' . $this->session->data['user_token']);
 
@@ -583,9 +585,9 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!empty($affiliate_info)) {
-			$data['payment'] = $affiliate_info['payment'];
+			$data['payment_method'] = $affiliate_info['payment_method'];
 		} else {
-			$data['payment'] = 'cheque';
+			$data['payment_method'] = 'cheque';
 		}
 
 		if (!empty($affiliate_info)) {
@@ -712,11 +714,15 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		}
 
 		// Payment validation
-		if ($this->request->post['payment'] == 'cheque' && $this->request->post['cheque'] == '') {
+		if (empty($this->request->post['payment_method'])) {
+			$json['error']['payment_method'] = $this->language->get('error_payment_method');
+		}
+
+		if ($this->request->post['payment_method'] == 'cheque' && $this->request->post['cheque'] == '') {
 			$json['error']['cheque'] = $this->language->get('error_cheque');
-		} elseif ($this->request->post['payment'] == 'paypal' && ((oc_strlen($this->request->post['paypal']) > 96) || !filter_var($this->request->post['paypal'], FILTER_VALIDATE_EMAIL))) {
+		} elseif ($this->request->post['payment_method'] == 'paypal' && ((oc_strlen($this->request->post['paypal']) > 96) || !filter_var($this->request->post['paypal'], FILTER_VALIDATE_EMAIL))) {
 			$json['error']['paypal'] = $this->language->get('error_paypal');
-		} elseif ($this->request->post['payment'] == 'bank') {
+		} elseif ($this->request->post['payment_method'] == 'bank') {
 			if ($this->request->post['bank_account_name'] == '') {
 				$json['error']['bank_account_name'] = $this->language->get('error_bank_account_name');
 			}
@@ -848,15 +854,15 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 
 				if ($affiliate_info && $affiliate_info['status'] && (float)$affiliate_info['balance'] > 0) {
 					if ($affiliate_info['payment_method'] == 'cheque') {
-						$csv .= $affiliate_info['payment_email'] . ',' . $this->currency->format($affiliate_info['balance'], $this->config->get('config_currency'), 1.00000000, false) . ',' . $this->config->get('config_currency') . ',' . $affiliate_info['username'] . ',Thanks for your business!' . "\n";
+						$csv .= $affiliate_info['payment_email'] . ',' . $this->currency->format($affiliate_info['balance'], $this->config->get('config_currency'), 1.00000000, false) . ',' . $this->config->get('config_currency') . ',' . $affiliate_info['name'] . ',Thanks for your business!' . "\n";
 					}
 
 					if ($affiliate_info['payment_method'] == 'paypal') {
-						$csv .= $affiliate_info['payment_email'] . ',' . $this->currency->format($affiliate_info['balance'], $this->config->get('config_currency'), 1.00000000, false) . ',' . $this->config->get('config_currency') . ',' . $affiliate_info['username'] . ',Thanks for your business!' . "\n";
+						$csv .= $affiliate_info['payment_email'] . ',' . $this->currency->format($affiliate_info['balance'], $this->config->get('config_currency'), 1.00000000, false) . ',' . $this->config->get('config_currency') . ',' . $affiliate_info['name'] . ',Thanks for your business!' . "\n";
 					}
 
 					if ($affiliate_info['payment_method'] == 'bank') {
-						$csv .= $affiliate_info['payment_email'] . ',' . $this->currency->format($affiliate_info['balance'], $this->config->get('config_currency'), 1.00000000, false) . ',' . $this->config->get('config_currency') . ',' . $affiliate_info['username'] . ',Thanks for your business!' . "\n";
+						$csv .= $affiliate_info['payment_email'] . ',' . $this->currency->format($affiliate_info['balance'], $this->config->get('config_currency'), 1.00000000, false) . ',' . $this->config->get('config_currency') . ',' . $affiliate_info['name'] . ',Thanks for your business!' . "\n";
 					}
 				}
 			}

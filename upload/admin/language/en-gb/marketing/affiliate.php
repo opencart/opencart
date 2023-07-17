@@ -71,6 +71,7 @@ $_['error_customer']            = 'Warning: Customer required!';
 $_['error_already']             = 'Warning: Customer is already registered as an affiliate!';
 $_['error_tracking']            = 'Tracking Code required!';
 $_['error_exists']              = 'Tracking code is being used by another affiliate!';
+$_['error_payment_method']      = 'Payment method required!';
 $_['error_cheque']              = 'Cheque Payee Name required!';
 $_['error_paypal']              = 'PayPal Email Address does not appear to be valid!';
 $_['error_bank_account_name']   = 'Account Name required!';

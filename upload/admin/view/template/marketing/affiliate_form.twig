@@ -31,9 +31,7 @@
                 <div class="row mb-3 required" class="tab-pane active">
                   <label for="input-customer" class="col-sm-2 col-form-label">{{ entry_customer }}</label>
                   <div class="col-sm-10">
-                    <input type="text" name="customer" value="{{ customer }}" placeholder="{{ entry_customer }}" id="input-customer" data-oc-target="autocomplete-customer" class="form-control"{% if customer_id %} disabled{% endif %} autocomplete="off"/>
-                    <input type="hidden" name="customer_id" value="{{ customer_id }}" id="input-customer-id"/>
-                    <input type="hidden" name="customer_group_id" value="{{ customer_group_id }}" id="input-customer-group"/>
+                    <input type="text" name="customer" value="{{ customer }}" placeholder="{{ entry_customer }}" id="input-customer" data-oc-target="autocomplete-customer" class="form-control"{% if customer_id %} disabled{% endif %} autocomplete="off"/> <input type="hidden" name="customer_id" value="{{ customer_id }}" id="input-customer-id"/> <input type="hidden" name="customer_group_id" value="{{ customer_group_id }}" id="input-customer-group"/>
                     <ul id="autocomplete-customer" class="dropdown-menu"></ul>
                     <div id="error-customer" class="invalid-feedback"></div>
                   </div>
@@ -207,19 +205,21 @@
                   </div>
                 </div>
                 <div class="row mb-3">
-                  <label class="col-sm-2 col-form-label">{{ entry_payment }}</label>
+                  <label class="col-sm-2 col-form-label">{{ entry_payment_method }}</label>
                   <div class="col-sm-10">
-                    <div class="form-check">
-                      <input type="radio" name="payment_method" value="cheque" id="input-payment-cheque" class="form-check-input"{% if payment == 'cheque' %} checked{% endif %}/>
-                      <label for="input-payment-cheque" class="form-check-label">{{ text_cheque }}</label>
-                    </div>
-                    <div class="form-check">
-                      <input type="radio" name="payment_method" value="paypal" id="input-payment-paypal" class="form-check-input"{% if payment == 'paypal' %} checked{% endif %}/>
-                      <label for="input-payment-paypal" class="form-check-label">{{ text_paypal }}</label>
-                    </div>
-                    <div class="form-check">
-                      <input type="radio" name="payment_method" value="bank" id="input-payment-bank" class="form-check-input"{% if payment == 'bank' %} checked{% endif %}/>
-                      <label for="input-payment-bank" class="form-check-label">{{ text_bank }}</label>
+                    <div id="input-payment-method">
+                      <div class="form-check">
+                        <input type="radio" name="payment_method" value="cheque" id="input-payment-cheque" class="form-check-input"{% if payment_method == 'cheque' %} checked{% endif %}/>
+                        <label for="input-payment-cheque" class="form-check-label">{{ text_cheque }}</label>
+                      </div>
+                      <div class="form-check">
+                        <input type="radio" name="payment_method" value="paypal" id="input-payment-paypal" class="form-check-input"{% if payment_method == 'paypal' %} checked{% endif %}/>
+                        <label for="input-payment-paypal" class="form-check-label">{{ text_paypal }}</label>
+                      </div>
+                      <div class="form-check">
+                        <input type="radio" name="payment_method" value="bank" id="input-payment-bank" class="form-check-input"{% if payment_method == 'bank' %} checked{% endif %}/>
+                        <label for="input-payment-bank" class="form-check-label">{{ text_bank }}</label>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -282,8 +282,7 @@
                   <label class="col-sm-2 col-form-label">{{ entry_status }}</label>
                   <div class="col-sm-10">
                     <div class="form-check form-switch form-switch-lg">
-                      <input type="hidden" name="status" value="0"/>
-                      <input type="checkbox" name="status" value="1" id="input-status" class="form-check-input"{% if status %} checked{% endif %}/>
+                      <input type="hidden" name="status" value="0"/> <input type="checkbox" name="status" value="1" id="input-status" class="form-check-input"{% if status %} checked{% endif %}/>
                     </div>
                   </div>
                 </div>
@@ -347,12 +346,12 @@
 </div>
 <script type="text/javascript"><!--
 $('#input-customer').autocomplete({
-    'source': function (request, response) {
+    'source': function(request, response) {
         $.ajax({
             url: 'index.php?route=customer/customer.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
-            success: function (json) {
-                response($.map(json, function (item) {
+            success: function(json) {
+                response($.map(json, function(item) {
                     return {
                         category: item['customer_group'],
                         label: item['name'],
@@ -363,7 +362,7 @@ $('#input-customer').autocomplete({
             }
         });
     },
-    'select': function (item) {
+    'select': function(item) {
         $('#input-customer').val(item['label']);
         $('#input-customer-id').val(item['value']);
         $('#input-customer-group').val(item['customer_group_id']);
@@ -372,11 +371,11 @@ $('#input-customer').autocomplete({
     }
 });
 
-$('#input-customer-group').on('change', function () {
+$('#input-customer-group').on('change', function() {
     $.ajax({
         url: 'index.php?route=customer/customer.customfield&user_token={{ user_token }}&customer_group_id=' + this.value,
         dataType: 'json',
-        success: function (json) {
+        success: function(json) {
             $('.custom-field').hide();
             $('.custom-field').removeClass('required');
 
@@ -390,7 +389,7 @@ $('#input-customer-group').on('change', function () {
                 }
             }
         },
-        error: function (xhr, ajaxOptions, thrownError) {
+        error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
@@ -398,13 +397,13 @@ $('#input-customer-group').on('change', function () {
 
 $('#input-customer-group').trigger('change');
 
-$('#history').on('click', '.pagination a', function (e) {
+$('#history').on('click', '.pagination a', function(e) {
     e.preventDefault();
 
     $('#history').load(this.href);
 });
 
-$('#button-history').on('click', function (e) {
+$('#button-history').on('click', function(e) {
     var element = this;
 
     $.ajax({
@@ -412,13 +411,13 @@ $('#button-history').on('click', function (e) {
         type: 'post',
         dataType: 'json',
         data: 'comment=' + encodeURIComponent($('#input-comment').val()),
-        beforeSend: function () {
+        beforeSend: function() {
             $(element).button('loading');
         },
-        complete: function () {
+        complete: function() {
             $(element).button('reset');
         },
-        success: function (json) {
+        success: function(json) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
@@ -433,19 +432,19 @@ $('#button-history').on('click', function (e) {
                 $('#input-history').val('');
             }
         },
-        error: function (xhr, ajaxOptions, thrownError) {
+        error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 });
 
-$('#transaction').on('click', '.pagination a', function (e) {
+$('#transaction').on('click', '.pagination a', function(e) {
     e.preventDefault();
 
     $('#transaction').load(this.href);
 });
 
-$('#button-transaction').on('click', function (e) {
+$('#button-transaction').on('click', function(e) {
     e.preventDefault();
 
     $.ajax({
@@ -453,13 +452,13 @@ $('#button-transaction').on('click', function (e) {
         type: 'post',
         dataType: 'json',
         data: 'description=' + encodeURIComponent($('#input-transaction').val()) + '&amount=' + encodeURIComponent($('#input-amount').val()),
-        beforeSend: function () {
+        beforeSend: function() {
             $('#button-transaction').button('loading');
         },
-        complete: function () {
+        complete: function() {
             $('#button-transaction').button('reset');
         },
-        success: function (json) {
+        success: function(json) {
             $('.alert-dismissible').remove();
 
             if (json['error']) {
@@ -475,19 +474,19 @@ $('#button-transaction').on('click', function (e) {
                 $('#input-amount').val('');
             }
         },
-        error: function (xhr, ajaxOptions, thrownError) {
+        error: function(xhr, ajaxOptions, thrownError) {
             console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 });
 
-$('#report').on('click', '.pagination a', function (e) {
+$('#report').on('click', '.pagination a', function(e) {
     e.preventDefault();
 
     $('#report').load(this.href);
 });
 
-$('input[name=\'payment_method\']').on('change', function () {
+$('input[name=\'payment_method\']').on('change', function() {
     $('.payment').hide();
 
     $('#payment-' + this.value).show();

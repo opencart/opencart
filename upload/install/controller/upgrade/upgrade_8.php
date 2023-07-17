@@ -76,10 +76,12 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 			}
 
 			// affiliate payment > payment_method
-			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "affiliate' AND COLUMN_NAME = 'payment'");
+			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "customer_affiliate' AND COLUMN_NAME = 'payment'");
 
 			if ($query->num_rows) {
-				$this->db->query("UPDATE `" . DB_PREFIX . "affiliate` SET `customer_activity_id` = `activity_id` WHERE `customer_activity_id` IS NULL or `customer_activity_id` = ''");
+				$this->db->query("UPDATE `" . DB_PREFIX . "customer_affiliate` SET `payment_method` = `payment`");
+
+				$this->db->query("ALTER TABLE `" . DB_PREFIX . "customer_affiliate` DROP COLUMN `payment`");
 			}
 
 			// Country address_format_id
@@ -129,6 +131,11 @@ class Upgrade8 extends \Opencart\System\Engine\Controller {
 
 			// Drop Fields
 			$remove = [];
+
+			$remove[] = [
+				'table' => 'affiliate',
+				'field' => 'payment'
+			];
 
 			$remove[] = [
 				'table' => 'api',

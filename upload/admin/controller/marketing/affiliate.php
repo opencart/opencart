@@ -796,7 +796,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 
 		$json = [];
 
-		if (!$this->user->hasPermission('modify', 'extension/opencart/report/affiliate')) {
+		if (!$this->user->hasPermission('modify', 'marketing/affiliate')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
 

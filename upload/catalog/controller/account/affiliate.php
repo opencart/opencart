@@ -61,9 +61,9 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!empty($affiliate_info)) {
-			$data['payment'] = $affiliate_info['payment'];
+			$data['payment_method'] = $affiliate_info['payment_method'];
 		} else {
-			$data['payment'] = 'cheque';
+			$data['payment_method'] = 'cheque';
 		}
 
 		if (!empty($affiliate_info)) {
@@ -171,7 +171,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		}
 
 		$keys = [
-			'payment',
+			'payment_method',
 			'cheque',
 			'paypal',
 			'bank_account_name',

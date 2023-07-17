@@ -334,7 +334,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 				'name'        => $result['name'],
 				'tracking'    => $result['tracking'],
 				'commission'  => $result['commission'],
-				'balance'     => $this->currency->format($this->model_customer_customer->getTransactionTotal($result['customer_id']), $this->config->get('config_currency')),
+				'balance'     => $this->currency->format($result['balance'], $this->config->get('config_currency')),
 				'status'      => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
 				'date_added'  => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'customer'    => $this->url->link('customer/customer.form', 'user_token=' . $this->session->data['user_token'] . '&customer_id=' . $result['customer_id']),
@@ -834,17 +834,7 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			$selected = [];
 		}
 
-		if (isset($this->request->post['filter_payment_method'])) {
-			$filter_payment_method = (string)$this->request->post['filter_payment_method'];
-		} else {
-			$filter_payment_method = '';
-		}
-
-		if (!$this->user->hasPermission('modify', 'marketing/affiliate')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		if (!$json) {
+		if ($this->user->hasPermission('modify', 'marketing/affiliate')) {
 			$this->load->model('marketing/affiliate');
 
 			$csv = '';
@@ -854,15 +844,15 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 
 				if ($affiliate_info && $affiliate_info['status'] && (float)$affiliate_info['balance'] > 0) {
 					if ($affiliate_info['payment_method'] == 'cheque') {
-						$csv .= $affiliate_info['payment_email'] . ',' . $this->currency->format($affiliate_info['balance'], $this->config->get('config_currency'), 1.00000000, false) . ',' . $this->config->get('config_currency') . ',' . $affiliate_info['name'] . ',Thanks for your business!' . "\n";
+						$csv .= $affiliate_info['cheque'] . ',' . $this->currency->format($affiliate_info['balance'], $this->config->get('config_currency'), 1.00000000, false) . ',' . $this->config->get('config_currency') . ',' . $affiliate_info['customer'] . "\n";
 					}
 
 					if ($affiliate_info['payment_method'] == 'paypal') {
-						$csv .= $affiliate_info['payment_email'] . ',' . $this->currency->format($affiliate_info['balance'], $this->config->get('config_currency'), 1.00000000, false) . ',' . $this->config->get('config_currency') . ',' . $affiliate_info['name'] . ',Thanks for your business!' . "\n";
+						$csv .= $affiliate_info['paypal'] . ',' . $this->currency->format($affiliate_info['balance'], $this->config->get('config_currency'), 1.00000000, false) . ',' . $this->config->get('config_currency') . ',' . $affiliate_info['customer'] . ',Thanks for your business!' . "\n";
 					}
 
 					if ($affiliate_info['payment_method'] == 'bank') {
-						$csv .= $affiliate_info['payment_email'] . ',' . $this->currency->format($affiliate_info['balance'], $this->config->get('config_currency'), 1.00000000, false) . ',' . $this->config->get('config_currency') . ',' . $affiliate_info['name'] . ',Thanks for your business!' . "\n";
+						$csv .= $affiliate_info['bank_name'] . ',' . $affiliate_info['bank_branch_number'] . ',' . $affiliate_info['bank_swift_code'] . ',' . $affiliate_info['bank_account_name'] . ',' . $affiliate_info['bank_account_number'] . ',' . $this->currency->format($affiliate_info['balance'], $this->config->get('config_currency'), 1.00000000, false) . ',' . $this->config->get('config_currency') . ',' . $affiliate_info['customer'] . "\n";
 					}
 				}
 			}
@@ -880,10 +870,9 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 			} else {
 				exit('Error: Headers already sent out!');
 			}
+		} else {
+			return new \Opencart\System\Engine\Action('error/not_found');
 		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
 	}
 
 	public function complete() {
@@ -902,27 +891,17 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$this->load->model('customer/customer');
 			$this->load->model('marketing/affiliate');
+			$this->load->model('customer/customer');
 
-			foreach ($selected as $member_id) {
-				$commission_info = $this->model_report_sale_commission->getCommission($member_id);
+			foreach ($selected as $customer_id) {
+				$affiliate_info = $this->model_marketing_affiliate->getAffiliate($customer_id);
 
-				if ($commission_info && (float)$commission_info['amount'] > 0) {
-					$this->load->model('account/member');
+				if ($affiliate_info && $affiliate_info['status'] && (float)$affiliate_info['balance'] > 0) {
+					$this->model_customer_customer->addTransaction($affiliate_info['customer_id'], $this->language->get('text_payment_' . $affiliate_info['payment_method']), -$affiliate_info['balance']);
 
-					if ($commission_info['payment_method'] == 'paypal') {
-						$this->model_account_member->addTransaction($member_id, 'PayPal Payment', -$commission_info['amount']);
-					}
-
-					$this->model_report_sale_commission->delete($member_id);
+					$this->model_marketing_affiliate->editBalance($affiliate_info['customer_id'], 0);
 				}
-			}
-
-			$results = $this->model_marketing_affiliate->getAffiliates(['filter_status' => 1]);
-
-			foreach ($results as $result) {
-				$this->model_extension_opencart_report_affiliate->addCommission($result['customer_id'], $this->model_customer_customer->getTransactionTotal($result['customer_id']));
 			}
 
 			$json['success'] = $this->language->get('text_success');

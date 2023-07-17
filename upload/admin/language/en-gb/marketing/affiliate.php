@@ -20,6 +20,9 @@ $_['text_transaction']          = 'Transactions';
 $_['text_transaction_add']      = 'Add Transaction';
 $_['text_report']               = 'Reports';
 $_['text_filter']               = 'Filter';
+$_['text_payment_cheque']       = 'Cheque Payment';
+$_['text_payment_paypal']       = 'PayPal Payment';
+$_['text_payment_bank']         = 'Bank Transfer Payment';
 
 // Column
 $_['column_name']               = 'Customer Name';

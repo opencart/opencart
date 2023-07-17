@@ -32,7 +32,7 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	public function getProducts(array $data = []): array {
-		$sql = "SELECT DISTINCT *, pd.`name` , `p`.`image`, " . $this->statement['discount'] . ", " . $this->statement['special'] . ", " . $this->statement['reward'] . ", " . $this->statement['review'];
+		$sql = "SELECT DISTINCT *, pd.`name`, `p`.`image`, " . $this->statement['discount'] . ", " . $this->statement['special'] . ", " . $this->statement['reward'] . ", " . $this->statement['review'];
 
 		if (!empty($data['filter_category_id'])) {
 			$sql .= " FROM `" . DB_PREFIX . "category_to_store` `c2s`";

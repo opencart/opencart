@@ -67,10 +67,10 @@ class Setting extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('tool/image');
 
-		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', 100, 100);
+		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', $this->config->get('config_image_admin_width'), $this->config->get('config_image_admin_height'));
 
 		if (is_file(DIR_IMAGE . html_entity_decode($data['config_image'], ENT_QUOTES, 'UTF-8'))) {
-			$data['thumb'] = $this->model_tool_image->resize(html_entity_decode($data['config_image'], ENT_QUOTES, 'UTF-8'), 100, 100);
+			$data['thumb'] = $this->model_tool_image->resize(html_entity_decode($data['config_image'], ENT_QUOTES, 'UTF-8'), $this->config->get('config_image_admin_width'), $this->config->get('config_image_admin_height'));
 		} else {
 			$data['thumb'] = $data['placeholder'];
 		}
@@ -403,12 +403,24 @@ class Setting extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('tool/image');
 
-		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', 100, 100);
+		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', $this->config->get('config_image_admin_width'), $this->config->get('config_image_admin_height'));
 
 		if (is_file(DIR_IMAGE . html_entity_decode($data['config_logo'], ENT_QUOTES, 'UTF-8'))) {
-			$data['logo'] = $this->model_tool_image->resize(html_entity_decode($data['config_logo'], ENT_QUOTES, 'UTF-8'), 100, 100);
+			$data['logo'] = $this->model_tool_image->resize(html_entity_decode($data['config_logo'], ENT_QUOTES, 'UTF-8'), $this->config->get('config_image_admin_width'), $this->config->get('config_image_admin_height'));
 		} else {
 			$data['logo'] = $data['placeholder'];
+		}
+
+		if ($this->config->get('config_image_admin_width')) {
+			$data['config_image_admin_width'] = $this->config->get('config_image_admin_width');
+		} else {
+			$data['config_image_admin_width'] = 100;
+		}
+
+		if ($this->config->get('config_image_admin_height')) {
+			$data['config_image_admin_height'] = $this->config->get('config_image_admin_height');
+		} else {
+			$data['config_image_admin_height'] = 100;
 		}
 
 		if ($this->config->get('config_image_category_width')) {
@@ -694,6 +706,10 @@ class Setting extends \Opencart\System\Engine\Controller {
 
 		if (!isset($this->request->post['config_complete_status'])) {
 			$json['error']['complete_status'] = $this->language->get('error_complete_status');
+		}
+
+		if (!$this->request->post['config_image_admin_width'] || !$this->request->post['config_image_admin_height']) {
+			$json['error']['image_admin'] = $this->language->get('error_image_admin');
 		}
 
 		if (!$this->request->post['config_image_category_width'] || !$this->request->post['config_image_category_height']) {

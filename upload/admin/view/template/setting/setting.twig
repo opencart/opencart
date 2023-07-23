@@ -990,6 +990,20 @@
               <fieldset>
                 <legend>{{ text_image_size }}</legend>
                 <div class="row mb-3 required">
+                  <label for="input-image-admin-width" class="col-sm-2 col-form-label">{{ entry_image_admin }}</label>
+                  <div class="col-sm-10">
+                    <div id="input-image-admin" class="row">
+                      <div class="col-sm-6">
+                        <input type="text" name="config_image_admin_width" value="{{ config_image_admin_width }}" placeholder="{{ entry_width }}" id="input-image-admin-width" class="form-control"/>
+                      </div>
+                      <div class="col-sm-6">
+                        <input type="text" name="config_image_admin_height" value="{{ config_image_admin_height }}" placeholder="{{ entry_height }}" id="input-image-admin-height" class="form-control"/>
+                      </div>
+                    </div>
+                    <div id="error-image-admin" class="invalid-feedback"></div>
+                  </div>
+                </div>
+                <div class="row mb-3 required">
                   <label for="input-image-category-width" class="col-sm-2 col-form-label">{{ entry_image_category }}</label>
                   <div class="col-sm-10">
                     <div id="input-image-category" class="row">

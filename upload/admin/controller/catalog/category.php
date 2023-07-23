@@ -249,12 +249,12 @@ class Category extends \Opencart\System\Engine\Controller {
 		$this->load->model('setting/store');
 
 		$data['stores'] = [];
-		
+
 		$data['stores'][] = [
 			'store_id' => 0,
 			'name'     => $this->language->get('text_default')
 		];
-		
+
 		$stores = $this->model_setting_store->getStores();
 
 		foreach ($stores as $store) {
@@ -278,10 +278,10 @@ class Category extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('tool/image');
 
-		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', 100, 100);
+		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', $this->config->get('config_image_admin_width'), $this->config->get('config_image_admin_height'));
 
 		if (is_file(DIR_IMAGE . html_entity_decode($data['image'], ENT_QUOTES, 'UTF-8'))) {
-			$data['thumb'] = $this->model_tool_image->resize(html_entity_decode($data['image'], ENT_QUOTES, 'UTF-8'), 100, 100);
+			$data['thumb'] = $this->model_tool_image->resize(html_entity_decode($data['image'], ENT_QUOTES, 'UTF-8'), $this->config->get('config_image_admin_width'), $this->config->get('config_image_admin_height'));
 		} else {
 			$data['thumb'] = $data['placeholder'];
 		}
@@ -372,11 +372,11 @@ class Category extends \Opencart\System\Engine\Controller {
 
 		if (isset($this->request->post['category_id']) && $this->request->post['parent_id']) {
 			$results = $this->model_catalog_category->getPaths($this->request->post['parent_id']);
-			
+
 			foreach ($results as $result) {
 				if ($result['path_id'] == $this->request->post['category_id']) {
 					$json['error']['parent'] = $this->language->get('error_parent');
-					
+
 					break;
 				}
 			}

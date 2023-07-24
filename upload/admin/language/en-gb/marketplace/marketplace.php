@@ -64,7 +64,7 @@ $_['tab_download']       = 'Download';
 $_['tab_comment']        = 'Comment';
 
 // Button
-$_['button_opencart']    = 'Marketplace API';
+$_['button_api']         = 'Marketplace API';
 $_['button_purchase']    = 'Purchase';
 $_['button_view_all']    = 'View all extensions';
 $_['button_support']     = 'Get Support';
@@ -74,6 +74,6 @@ $_['button_forgot_pin']  = 'Forgot PIN?';
 
 // Error
 $_['error_permission']   = 'Warning: You do not have permission to modify extensions!';
-$_['error_opencart']     = 'Warning: You must enter your OpenCart API information before you can make any purchases!';
+$_['error_api']          = 'Warning: You must enter your OpenCart API information by clicking the <i class="fa-solid fa-triangle-exclamation"></i> before you can download extensions or make any purchases!';
 $_['error_purchase']     = 'The extension could not be purchased!';
 $_['error_download']     = 'The extension could not be downloaded!';

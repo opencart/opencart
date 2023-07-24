@@ -36,6 +36,9 @@ class Session extends \Opencart\System\Engine\Controller {
 			$this->config->set('session_expire', $this->config->get('config_session_expire'));
 		}
 
+		// Update the session SameSite
+		$this->config->set('session_samesite', $this->config->get('config_session_samesite'));
+
 		if (isset($this->request->cookie[$this->config->get('session_name')])) {
 			$session_id = $this->request->cookie[$this->config->get('session_name')];
 		} else {
@@ -49,7 +52,7 @@ class Session extends \Opencart\System\Engine\Controller {
 			'path'     => $this->config->get('session_path'),
 			'secure'   => $this->request->server['HTTPS'],
 			'httponly' => false,
-			'SameSite' => $this->config->get('config_session_samesite')
+			'SameSite' => $this->config->get('session_samesite')
 		];
 
 		$this->response->addHeader('Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0');

@@ -826,8 +826,6 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 	public function csv() {
 		$this->load->language('marketing/affiliate');
 
-		$json = [];
-
 		if (isset($this->request->post['selected'])) {
 			$selected = $this->request->post['selected'];
 		} else {

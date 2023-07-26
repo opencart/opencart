@@ -239,10 +239,14 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		if (isset($response_info['error'])) {
-			$data['error_signature'] = $response_info['error'];
+		$data['signature'] = $this->config->get('opencart_username') && $this->config->get('opencart_secret');
+
+		if (!$this->config->get('opencart_username') || !$this->config->get('opencart_secret')) {
+			$data['error_warning'] = $this->language->get('error_api');
+		} elseif (isset($response_info['error'])) {
+			$data['error_warning'] = $response_info['error'];
 		} else {
-			$data['error_signature'] = '';
+			$data['error_warning'] = '';
 		}
 
 		// Categories
@@ -563,10 +567,14 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 
 			$this->document->setTitle($this->language->get('heading_title'));
 
-			if (isset($response_info['error'])) {
-				$data['error_signature'] = $response_info['error'];
+			$data['signature'] = $this->config->get('opencart_username') && $this->config->get('opencart_secret');
+
+			if (!$this->config->get('opencart_username') || !$this->config->get('opencart_secret')) {
+				$data['error_warning'] = $this->language->get('error_api');
+			} elseif (isset($response_info['error'])) {
+				$data['error_warning'] = $response_info['error'];
 			} else {
-				$data['error_signature'] = '';
+				$data['error_warning'] = '';
 			}
 
 			$url = '';
@@ -616,7 +624,6 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 			$data['description'] = $response_info['description'];
 			$data['documentation'] = $response_info['documentation'];
 			$data['price'] = $response_info['price'];
-
 			$data['license'] = $response_info['license'];
 			$data['license_period'] = $response_info['license_period'];
 			$data['purchased'] = $response_info['purchased'];
@@ -760,7 +767,7 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$this->config->get('opencart_username') || !$this->config->get('opencart_secret')) {
-			$json['error'] = $this->language->get('error_opencart');
+			$json['error'] = $this->language->get('error_api');
 		}
 
 		if (!$this->request->post['pin']) {

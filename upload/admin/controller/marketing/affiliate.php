@@ -843,16 +843,18 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 				$affiliate_info = $this->model_marketing_affiliate->getAffiliate($customer_id);
 
 				if ($affiliate_info && $affiliate_info['status'] && (float)$affiliate_info['balance'] > 0) {
+					$balance = $this->currency->format($affiliate_info['balance'], $this->config->get('config_currency'), 1.00000000, false);
+
 					if ($affiliate_info['payment_method'] == 'cheque') {
-						$csv .= $affiliate_info['cheque'] . ',' . $this->currency->format($affiliate_info['balance'], $this->config->get('config_currency'), 1.00000000, false) . ',' . $this->config->get('config_currency') . ',' . $affiliate_info['customer'] . "\n";
+						$csv .= $affiliate_info['cheque'] . ',' . $balance . ',' . $this->config->get('config_currency') . ',' . $affiliate_info['customer'] . "\n";
 					}
 
 					if ($affiliate_info['payment_method'] == 'paypal') {
-						$csv .= $affiliate_info['paypal'] . ',' . $this->currency->format($affiliate_info['balance'], $this->config->get('config_currency'), 1.00000000, false) . ',' . $this->config->get('config_currency') . ',' . $affiliate_info['customer'] . ',Thanks for your business!' . "\n";
+						$csv .= $affiliate_info['paypal'] . ',' . $balance . ',' . $this->config->get('config_currency') . ',' . $affiliate_info['customer'] . ',Thanks for your business!' . "\n";
 					}
 
 					if ($affiliate_info['payment_method'] == 'bank') {
-						$csv .= $affiliate_info['bank_name'] . ',' . $affiliate_info['bank_branch_number'] . ',' . $affiliate_info['bank_swift_code'] . ',' . $affiliate_info['bank_account_name'] . ',' . $affiliate_info['bank_account_number'] . ',' . $this->currency->format($affiliate_info['balance'], $this->config->get('config_currency'), 1.00000000, false) . ',' . $this->config->get('config_currency') . ',' . $affiliate_info['customer'] . "\n";
+						$csv .= $affiliate_info['bank_name'] . ',' . $affiliate_info['bank_branch_number'] . ',' . $affiliate_info['bank_swift_code'] . ',' . $affiliate_info['bank_account_name'] . ',' . $affiliate_info['bank_account_number'] . ',' . $balance . ',' . $this->config->get('config_currency') . ',' . $affiliate_info['customer'] . "\n";
 					}
 				}
 			}
@@ -991,10 +993,10 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		}
 
 		$filter_data = [
-			'filter_name'      => $filter_name,
-			'filter_email'     => $filter_email,
-			'start'            => 0,
-			'limit'            => 5
+			'filter_name'  => $filter_name,
+			'filter_email' => $filter_email,
+			'start'        => 0,
+			'limit'        => 5
 		];
 
 		$this->load->model('marketing/affiliate');

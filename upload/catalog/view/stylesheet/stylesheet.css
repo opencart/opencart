@@ -533,6 +533,7 @@ footer h5 {
 }
 .product-thumb {
   border: 1px solid #ddd;
+  margin-bottom: 15px;
 }
 .product-thumb h4 {
   font-weight: bold;
@@ -547,17 +548,12 @@ footer h5 {
 .product-thumb .description {
   padding: 15px;
 }
-.product-buttons {
-  border-left: 1px solid #ddd;
-  border-bottom: 1px solid #ddd;
-  border-right: 1px solid #ddd;
-  margin-bottom: 15px;
-}
-.product-buttons .button-group {
+.product-thumb .button-group {
   display: flex;
+  border-top: 1px solid #ddd;
   background-color: #eee;
 }
-.product-buttons .button-group button {
+.product-thumb .button-group button {
   flex: 33%;
   border-radius: 0;
   display: inline-block;
@@ -569,13 +565,13 @@ footer h5 {
   text-align: center;
   text-transform: uppercase;
 }
-.product-buttons .button-group button:hover {
+.product-thumb .button-group button:hover {
   color: #444;
   background-color: #ddd;
   text-decoration: none;
   cursor: pointer;
 }
-.product-buttons .button-group button + button {
+.product-thumb .button-group button + button {
   border-left: 1px solid #ddd;
 }
 @media (min-width: 960px) {
@@ -591,7 +587,7 @@ footer h5 {
     flex: 75%;
     position: relative;
   }
-  .product-list .product-buttons .button-group {
+  .product-list .product-thumb .button-group {
     position: absolute;
     bottom: 0px;
     width: 100%;

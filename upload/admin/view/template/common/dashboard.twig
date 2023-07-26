@@ -25,7 +25,7 @@
               {% set class = 'col-lg-%s %s'|format(dashboard_1.width, 'col-md-12 col-sm-12') %}
             {% endif %}
           {% endfor %}
-          <div class="{{ class }}">{{ dashboard_1.output }}</div>
+          <div class="{{ class }} mb-3">{{ dashboard_1.output }}</div>
         {% endfor %}
       </div>
     {% endfor %}

@@ -6552,7 +6552,16 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `name`, `code`, `status`) VALUES
 (4429, 81, 'Niedersachsen, Lütje Hörn (Nordsee)', 'NI-NS86', 1),
 (4430, 81, 'Niedersachsen, Borkum (Nordsee)', 'NI-NS87', 1),
 (4431, 81, 'Schleswig-Holstein, Helgoland (Nordsee)', 'SH-NS88', 1),
-(4432, 81, 'Schleswig-Holstein, Helgoland-Düne (Nordsee)', 'SH-NS89', 1);
+(4432, 81, 'Schleswig-Holstein, Helgoland-Düne (Nordsee)', 'SH-NS89', 1),
+(4433, 81, 'Baden-Württemberg, Büsingen', 'BW-E01', 1),
+(4434, 204, 'Schaffhausen, Büsingen', 'SH-E01', 1),
+(4435, 81, 'Bayern, Jungholz', 'BY-E01', 1),
+(4436, 14, 'Tirol, Jungholz', '7-E01', 1),
+(4437, 81, 'Bayern, Mittelberg', 'BY-E02', 1),
+(4438, 14, 'Vorarlberg, Mittelberg', '8-E01', 1),
+(4439, 105, 'Sondrio, Livigno', 'SO-E01', 1),
+(4440, 105, 'Como, Campione d’Italia and terretory Lake Lugano', 'CO-E01', 1),
+(4441, 84, 'Mount Athos', 'AO', 1);
 
 -----------------------------------------------------------
 

@@ -1,13 +1,13 @@
 <?php
 // Version
-define('VERSION', '4.0.2.2');
+define('VERSION', '4.0.2.3');
 
 // Configuration
 if (is_file('config.php')) {
 	require_once('config.php');
 }
 
-// Install
+// Installs
 if (!defined('DIR_APPLICATION')) {
 	header('Location: ../install/index.php');
 	exit();

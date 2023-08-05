@@ -169,7 +169,7 @@ $(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function (e) {
 
     var element = this;
 
-    return true;
+   // return true;
 
     // Form attributes
     var form = e.target;
@@ -216,8 +216,6 @@ $(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function (e) {
     if (button) {
         var formaction = $(button).attr('data-type');
     }
-
-    console.log(element);
 
     console.log('element ' + element);
     console.log('action ' + action);

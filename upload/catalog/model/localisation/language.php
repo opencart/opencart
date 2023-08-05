@@ -1,8 +1,19 @@
 <?php
 namespace Opencart\Catalog\Model\Localisation;
+/**
+ *
+ */
 class Language extends \Opencart\System\Engine\Model {
+	/**
+	 * @var array
+	 */
 	private array $data = [];
 
+	/**
+	 * @param int $language_id
+	 *
+	 * @return array
+	 */
 	public function getLanguage(int $language_id): array {
 		if (isset($this->data[$language_id])) {
 			return $this->data[$language_id];
@@ -29,6 +40,11 @@ class Language extends \Opencart\System\Engine\Model {
 		return $language;
 	}
 
+	/**
+	 * @param string $code
+	 *
+	 * @return array
+	 */
 	public function getLanguageByCode(string $code): array {
 		if (isset($this->data[$code])) {
 			return $this->data[$code];
@@ -55,6 +71,9 @@ class Language extends \Opencart\System\Engine\Model {
 		return $language;
 	}
 
+	/**
+	 * @return array
+	 */
 	public function getLanguages(): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "language` WHERE `status` = '1' ORDER BY `sort_order`, `name`";
 

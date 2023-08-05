@@ -31,7 +31,7 @@ class Config {
 	}
 
 	/**
-     * 
+     * Get
      *
      * @param	string	$key
 	 * 
@@ -42,7 +42,7 @@ class Config {
 	}
 
     /**
-     * 
+     * Set
      *
      * @param	string	$key
 	 * @param	string	$value
@@ -52,7 +52,7 @@ class Config {
 	}
 
     /**
-     * 
+     * Has
      *
      * @param	string	$key
 	 *
@@ -63,7 +63,7 @@ class Config {
 	}
 	
     /**
-     * 
+     * Load
      *
      * @param	string	$filename
      */

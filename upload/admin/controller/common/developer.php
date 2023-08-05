@@ -1,6 +1,12 @@
 <?php
 namespace Opencart\Admin\Controller\Common;
+/**
+ *
+ */
 class Developer extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		$this->load->language('common/developer');
 
@@ -11,6 +17,9 @@ class Developer extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('common/developer', $data));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function edit(): void {
 		$this->load->language('common/developer');
 
@@ -32,6 +41,9 @@ class Developer extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function theme(): void {
 		$this->load->language('common/developer');
 		
@@ -66,7 +78,10 @@ class Developer extends \Opencart\System\Engine\Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
-		
+
+	/**
+	 * @return void
+	 */
 	public function sass(): void {
 		$this->load->language('common/developer');
 		

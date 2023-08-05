@@ -1,6 +1,12 @@
 <?php
 namespace Opencart\Catalog\Controller\Checkout;
+/**
+ *
+ */
 class Cart extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		$this->load->language('checkout/cart');
 
@@ -94,12 +100,18 @@ class Cart extends \Opencart\System\Engine\Controller {
 		}
 	}
 
+	/**
+	 * @return void
+	 */
 	public function list(): void {
 		$this->load->language('checkout/cart');
 
 		$this->response->setOutput($this->getList());
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getList(): string {
 		$data['list'] = $this->url->link(' ', 'language=' . $this->config->get('config_language'));
 		$data['product_edit'] = $this->url->link('checkout/cart.edit', 'language=' . $this->config->get('config_language'));
@@ -203,6 +215,9 @@ class Cart extends \Opencart\System\Engine\Controller {
 		return $this->load->view('checkout/cart_list', $data);
 	}
 
+	/**
+	 * @return void
+	 */
 	public function add(): void {
 		$this->load->language('checkout/cart');
 
@@ -301,6 +316,9 @@ class Cart extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function edit(): void {
 		$this->load->language('checkout/cart');
 
@@ -343,6 +361,9 @@ class Cart extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function remove(): void {
 		$this->load->language('checkout/cart');
 

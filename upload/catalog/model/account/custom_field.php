@@ -1,12 +1,25 @@
 <?php
 namespace Opencart\Catalog\Model\Account;
+/**
+ *
+ */
 class CustomField extends \Opencart\System\Engine\Model {
+	/**
+	 * @param int $custom_field_id
+	 *
+	 * @return array
+	 */
 	public function getCustomField(int $custom_field_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "custom_field` cf LEFT JOIN `" . DB_PREFIX . "custom_field_description` cfd ON (cf.`custom_field_id` = cfd.`custom_field_id`) WHERE cf.`status` = '1' AND cf.`custom_field_id` = '" . (int)$custom_field_id . "' AND cfd.`language_id` = '" . (int)$this->config->get('config_language_id') . "'");
 
 		return $query->row;
 	}
 
+	/**
+	 * @param int $customer_group_id
+	 *
+	 * @return array
+	 */
 	public function getCustomFields(int $customer_group_id = 0): array {
 		$custom_field_data = [];
 

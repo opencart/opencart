@@ -1,6 +1,17 @@
 <?php
 namespace Opencart\Admin\Controller\Mail;
+/**
+ *
+ */
 class Customer extends \Opencart\System\Engine\Controller {
+	/**
+	 * @param string $route
+	 * @param array  $args
+	 * @param mixed  $output
+	 *
+	 * @return void
+	 * @throws \Exception
+	 */
 	public function approve(string &$route, array &$args, mixed &$output): void {
 		if (isset($args[0])) {
 			$customer_id = (int)$args[0];
@@ -88,6 +99,14 @@ class Customer extends \Opencart\System\Engine\Controller {
 		}
 	}
 
+	/**
+	 * @param string $route
+	 * @param array  $args
+	 * @param mixed  $output
+	 *
+	 * @return void
+	 * @throws \Exception
+	 */
 	public function deny(string &$route, array &$args, mixed &$output): void {
 		if (isset($args[0])) {
 			$customer_id = (int)$args[0];

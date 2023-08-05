@@ -1,6 +1,14 @@
 <?php
 namespace Opencart\Catalog\Model\Marketing;
+/**
+ *
+ */
 class Coupon extends \Opencart\System\Engine\Model {
+	/**
+	 * @param string $code
+	 *
+	 * @return array
+	 */
 	public function getCoupon(string $code): array {
 		$status = true;
 
@@ -98,12 +106,23 @@ class Coupon extends \Opencart\System\Engine\Model {
 		}
 	}
 
+	/**
+	 * @param string $coupon
+	 *
+	 * @return int
+	 */
 	public function getTotalHistoriesByCoupon(string $coupon): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "coupon_history` ch LEFT JOIN `" . DB_PREFIX . "coupon` c ON (ch.`coupon_id` = c.`coupon_id`) WHERE c.`code` = '" . $this->db->escape($coupon) . "'");
 
 		return (int)$query->row['total'];
 	}
 
+	/**
+	 * @param string $coupon
+	 * @param int    $customer_id
+	 *
+	 * @return int
+	 */
 	public function getTotalHistoriesByCustomerId(string $coupon, int $customer_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "coupon_history` ch LEFT JOIN `" . DB_PREFIX . "coupon` c ON (ch.`coupon_id` = c.`coupon_id`) WHERE c.`code` = '" . $this->db->escape($coupon) . "' AND ch.`customer_id` = '" . (int)$customer_id . "'");
 

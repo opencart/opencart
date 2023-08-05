@@ -1,6 +1,12 @@
 <?php
 namespace Opencart\Admin\Controller\Design;
+/**
+ *
+ */
 class Theme extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		$this->load->language('design/theme');
 
@@ -40,6 +46,9 @@ class Theme extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('design/theme', $data));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function history(): void {
 		$this->load->language('design/theme');
 
@@ -91,6 +100,9 @@ class Theme extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('design/theme_history', $data));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function path(): void {
 		$this->load->language('design/theme');
 
@@ -218,6 +230,9 @@ class Theme extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function template(): void {
 		$this->load->language('design/theme');
 
@@ -283,6 +298,9 @@ class Theme extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function save(): void {
 		$this->load->language('design/theme');
 
@@ -323,6 +341,9 @@ class Theme extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function reset(): void {
 		$json = [];
 
@@ -376,6 +397,9 @@ class Theme extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function delete(): void {
 		$this->load->language('design/theme');
 

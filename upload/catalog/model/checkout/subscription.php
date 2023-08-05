@@ -1,6 +1,14 @@
 <?php
 namespace Opencart\Catalog\Model\Checkout;
+/**
+ *
+ */
 class Subscription extends \Opencart\System\Engine\Model {
+	/**
+	 * @param array $data
+	 *
+	 * @return int
+	 */
 	public function addSubscription(array $data): int {
 		if ($data['trial_status'] && $data['trial_duration']) {
 			$trial_remaining = $data['trial_duration'] - 1;
@@ -60,6 +68,12 @@ class Subscription extends \Opencart\System\Engine\Model {
 		return $this->db->getLastId();
 	}
 
+	/**
+	 * @param int   $subscription_id
+	 * @param array $data
+	 *
+	 * @return void
+	 */
 	public function editSubscription(int $subscription_id, array $data): void {
 		if ($data['trial_status'] && $data['trial_duration']) {
 			$trial_remaining = $data['trial_duration'] - 1;
@@ -116,10 +130,21 @@ class Subscription extends \Opencart\System\Engine\Model {
 		");
 	}
 
+	/**
+	 * @param int $order_id
+	 *
+	 * @return void
+	 */
 	public function deleteSubscriptionByOrderId(int $order_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "subscription` WHERE `order_id` = '" . (int)$order_id . "'");
 	}
 
+	/**
+	 * @param int $order_id
+	 * @param int $order_product_id
+	 *
+	 * @return array
+	 */
 	public function getSubscriptionByOrderProductId(int $order_id, int $order_product_id): array {
 		$subscription_data = [];
 
@@ -135,20 +160,46 @@ class Subscription extends \Opencart\System\Engine\Model {
 		return $subscription_data;
 	}
 
+	/**
+	 * @param int    $subscription_id
+	 * @param int    $subscription_status_id
+	 * @param string $comment
+	 * @param bool   $notify
+	 *
+	 * @return void
+	 */
 	public function addHistory(int $subscription_id, int $subscription_status_id, string $comment = '', bool $notify = false): void {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "subscription_history` SET `subscription_id` = '" . (int)$subscription_id . "', `subscription_status_id` = '" . (int)$subscription_status_id . "', `comment` = '" . $this->db->escape($comment) . "', `notify` = '" . (int)$notify . "', `date_added` = NOW()");
 
 		$this->db->query("UPDATE `" . DB_PREFIX . "subscription` SET `subscription_status_id` = '" . (int)$subscription_status_id . "' WHERE `subscription_id` = '" . (int)$subscription_id . "'");
 	}
 
+	/**
+	 * @param int  $subscription_id
+	 * @param bool $subscription_status_id
+	 *
+	 * @return void
+	 */
 	public function editSubscriptionStatus(int $subscription_id, bool $subscription_status_id): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "subscription` SET `subscription_status_id` = '" . (int)$subscription_status_id . "' WHERE `subscription_id` = '" . (int)$subscription_id . "'");
 	}
 
+	/**
+	 * @param int $subscription_id
+	 * @param int $trial_remaining
+	 *
+	 * @return void
+	 */
 	public function editTrialRemaining(int $subscription_id, int $trial_remaining): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "subscription` SET `trial_remaining` = '" . (int)$trial_remaining . "' WHERE `subscription_id` = '" . (int)$subscription_id . "'");
 	}
 
+	/**
+	 * @param int    $subscription_id
+	 * @param string $date_next
+	 *
+	 * @return void
+	 */
 	public function editDateNext(int $subscription_id, string $date_next): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "subscription` SET `date_next` = '" . $this->db->escape($date_next) . "' WHERE `subscription_id` = '" . (int)$subscription_id . "'");
 	}

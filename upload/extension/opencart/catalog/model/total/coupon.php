@@ -1,6 +1,16 @@
 <?php
 namespace Opencart\Catalog\Model\Extension\Opencart\Total;
+/**
+ *
+ */
 class Coupon extends \Opencart\System\Engine\Model {
+	/**
+	 * @param array $totals
+	 * @param array $taxes
+	 * @param float $total
+	 *
+	 * @return void
+	 */
 	public function getTotal(array &$totals, array &$taxes, float &$total): void {
 		if (isset($this->session->data['coupon'])) {
 			$this->load->language('extension/opencart/total/coupon', 'coupon');
@@ -94,6 +104,12 @@ class Coupon extends \Opencart\System\Engine\Model {
 		}
 	}
 
+	/**
+	 * @param array $order_info
+	 * @param array $order_total
+	 *
+	 * @return int
+	 */
 	public function confirm(array $order_info, array $order_total): int {
 		$code = '';
 
@@ -139,6 +155,11 @@ class Coupon extends \Opencart\System\Engine\Model {
 		return 0;
 	}
 
+	/**
+	 * @param int $order_id
+	 *
+	 * @return void
+	 */
 	public function unconfirm(int $order_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "coupon_history` WHERE `order_id` = '" . (int)$order_id . "'");
 	}

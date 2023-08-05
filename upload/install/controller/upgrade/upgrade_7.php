@@ -1,6 +1,12 @@
 <?php
 namespace Opencart\Install\Controller\Upgrade;
+/**
+ *
+ */
 class Upgrade7 extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		$this->load->language('upgrade/upgrade');
 
@@ -154,6 +160,12 @@ class Upgrade7 extends \Opencart\System\Engine\Controller {
 	}
 
 	// Function to repair any erroneous categories that are not in the category path table.
+
+	/**
+	 * @param int $parent_id
+	 *
+	 * @return void
+	 */
 	private function repairCategories(int $parent_id = 0): void {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "category` WHERE `parent_id` = '" . (int)$parent_id . "'");
 

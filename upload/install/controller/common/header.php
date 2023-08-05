@@ -1,6 +1,12 @@
 <?php
 namespace Opencart\Install\Controller\Common;
+/**
+ *
+ */
 class Header extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return string
+	 */
 	public function index(): string {
 		$this->load->language('common/header');
 		

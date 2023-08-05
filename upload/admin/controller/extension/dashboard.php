@@ -1,10 +1,19 @@
 <?php
 namespace Opencart\Admin\Controller\Extension;
+/**
+ *
+ */
 class Dashboard extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		$this->response->setOutput($this->getList());
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getList(): string {
 		$this->load->language('extension/dashboard');
 
@@ -58,6 +67,9 @@ class Dashboard extends \Opencart\System\Engine\Controller {
 		return $this->load->view('extension/dashboard', $data);
 	}
 
+	/**
+	 * @return bool
+	 */
 	protected function validate(): bool {
 		if (!$this->user->hasPermission('modify', 'extension/dashboard')) {
 			$this->error['warning'] = $this->language->get('error_permission');
@@ -66,6 +78,9 @@ class Dashboard extends \Opencart\System\Engine\Controller {
 		return !$this->error;
 	}
 
+	/**
+	 * @return void
+	 */
 	public function install(): void {
 		$this->load->language('extension/dashboard');
 
@@ -127,6 +142,9 @@ class Dashboard extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function uninstall(): void {
 		$this->load->language('extension/dashboard');
 

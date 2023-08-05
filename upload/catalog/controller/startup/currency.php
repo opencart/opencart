@@ -1,6 +1,12 @@
 <?php
 namespace Opencart\Catalog\Controller\Startup;
+/**
+ *
+ */
 class Currency extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		$code = '';
 

@@ -1,6 +1,12 @@
 <?php
 namespace Opencart\Admin\Controller\Extension\Opencart\Shipping;
+/**
+ *
+ */
 class Free extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		$this->load->language('extension/opencart/shipping/free');
 
@@ -43,6 +49,9 @@ class Free extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('extension/opencart/shipping/free', $data));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function save(): void {
 		$this->load->language('extension/opencart/shipping/free');
 

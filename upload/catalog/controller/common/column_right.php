@@ -1,6 +1,12 @@
 <?php
 namespace Opencart\Catalog\Controller\Common;
+/**
+ *
+ */
 class ColumnRight extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return string
+	 */
 	public function index(): string {
 		$this->load->model('design/layout');
 

@@ -1,6 +1,12 @@
 <?php
 namespace Opencart\Admin\Model\Extension\Opencart\Report;
+/**
+ *
+ */
 class Customer extends \Opencart\System\Engine\Model {
+	/**
+	 * @return array
+	 */
 	public function getTotalCustomersByDay(): array {
 		$customer_data = [];
 
@@ -23,6 +29,9 @@ class Customer extends \Opencart\System\Engine\Model {
 		return $customer_data;
 	}
 
+	/**
+	 * @return array
+	 */
 	public function getTotalCustomersByWeek(): array {
 		$customer_data = [];
 
@@ -49,6 +58,9 @@ class Customer extends \Opencart\System\Engine\Model {
 		return $customer_data;
 	}
 
+	/**
+	 * @return array
+	 */
 	public function getTotalCustomersByMonth(): array {
 		$customer_data = [];
 
@@ -73,6 +85,9 @@ class Customer extends \Opencart\System\Engine\Model {
 		return $customer_data;
 	}
 
+	/**
+	 * @return array
+	 */
 	public function getTotalCustomersByYear(): array {
 		$customer_data = [];
 
@@ -95,6 +110,11 @@ class Customer extends \Opencart\System\Engine\Model {
 		return $customer_data;
 	}
 
+	/**
+	 * @param array $data
+	 *
+	 * @return array
+	 */
 	public function getCustomers(array $data = []): array {
 		$sql = "SELECT MIN(`date_added`) AS `date_start`, MAX(`date_added`) AS `date_end`, COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer`";
 
@@ -151,6 +171,11 @@ class Customer extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
+	/**
+	 * @param array $data
+	 *
+	 * @return int
+	 */
 	public function getTotalCustomers(array $data = []): int {
 		if (!empty($data['filter_group'])) {
 			$group = $data['filter_group'];
@@ -193,6 +218,11 @@ class Customer extends \Opencart\System\Engine\Model {
 		return (int)$query->row['total'];
 	}
 
+	/**
+	 * @param array $data
+	 *
+	 * @return array
+	 */
 	public function getOrders(array $data = []): array {
 		$sql = "SELECT c.`customer_id`, CONCAT(c.`firstname`, ' ', c.`lastname`) AS `customer`, c.`email`, cgd.`name` AS `customer_group`, c.`status`, o.`order_id`, SUM(op.`quantity`) AS `products`, o.`total` AS `total` FROM `" . DB_PREFIX . "order` o LEFT JOIN `" . DB_PREFIX . "order_product` op ON (o.`order_id` = op.`order_id`) LEFT JOIN `" . DB_PREFIX . "customer` c ON (o.`customer_id` = c.`customer_id`) LEFT JOIN `" . DB_PREFIX . "customer_group_description` cgd ON (c.`customer_group_id` = cgd.`customer_group_id`) WHERE o.`customer_id` > '0' AND cgd.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
@@ -235,6 +265,11 @@ class Customer extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
+	/**
+	 * @param array $data
+	 *
+	 * @return int
+	 */
 	public function getTotalOrders(array $data = []): int {
 		$sql = "SELECT COUNT(DISTINCT o.`customer_id`) AS `total` FROM `" . DB_PREFIX . "order` o LEFT JOIN `" . DB_PREFIX . "customer` c ON (o.`customer_id` = c.`customer_id`) WHERE o.`customer_id` > '0'";
 
@@ -261,6 +296,11 @@ class Customer extends \Opencart\System\Engine\Model {
 		return (int)$query->row['total'];
 	}
 
+	/**
+	 * @param array $data
+	 *
+	 * @return array
+	 */
 	public function getRewardPoints(array $data = []): array {
 		$sql = "SELECT cr.`customer_id`, CONCAT(c.`firstname`, ' ', c.`lastname`) AS `customer`, c.`email`, cgd.`name` AS `customer_group`, c.`status`, SUM(cr.`points`) AS `points`, COUNT(o.`order_id`) AS `orders`, SUM(o.`total`) AS `total` FROM `" . DB_PREFIX . "customer_reward` cr LEFT JOIN `" . DB_PREFIX . "customer` c ON (cr.`customer_id` = c.`customer_id`) LEFT JOIN `" . DB_PREFIX . "customer_group_description` cgd ON (c.`customer_group_id` = cgd.`customer_group_id`) LEFT JOIN `" . DB_PREFIX . "order` o ON (cr.`order_id` = o.`order_id`) WHERE cgd.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
@@ -295,6 +335,11 @@ class Customer extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
+	/**
+	 * @param array $data
+	 *
+	 * @return int
+	 */
 	public function getTotalRewardPoints(array $data = []): int {
 		$sql = "SELECT COUNT(DISTINCT cr.`customer_id`) AS `total` FROM `" . DB_PREFIX . "customer_reward` cr LEFT JOIN `" . DB_PREFIX . "customer` c ON (cr.`customer_id` = c.`customer_id`)";
 
@@ -321,6 +366,11 @@ class Customer extends \Opencart\System\Engine\Model {
 		return (int)$query->row['total'];
 	}
 
+	/**
+	 * @param array $data
+	 *
+	 * @return array
+	 */
 	public function getCustomerActivities(array $data = []): array {
 		$sql = "SELECT ca.`customer_activity_id`, ca.`customer_id`, ca.`key`, ca.`data`, ca.`ip`, ca.`date_added` FROM `" . DB_PREFIX . "customer_activity` ca LEFT JOIN `" . DB_PREFIX . "customer` c ON (ca.`customer_id` = c.`customer_id`)";
 
@@ -365,6 +415,11 @@ class Customer extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
+	/**
+	 * @param array $data
+	 *
+	 * @return int
+	 */
 	public function getTotalCustomerActivities(array $data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer_activity` ca LEFT JOIN `" . DB_PREFIX . "customer` c ON (ca.`customer_id` = c.`customer_id`)";
 
@@ -395,6 +450,11 @@ class Customer extends \Opencart\System\Engine\Model {
 		return (int)$query->row['total'];
 	}
 
+	/**
+	 * @param array $data
+	 *
+	 * @return array
+	 */
 	public function getCustomerSearches(array $data = []): array {
 		$sql = "SELECT cs.`customer_id`, cs.`keyword`, cs.`category_id`, cs.`products`, cs.`ip`, cs.`date_added`, CONCAT(c.`firstname`, ' ', c.`lastname`) AS `customer` FROM `" . DB_PREFIX . "customer_search` cs LEFT JOIN `" . DB_PREFIX . "customer` c ON (cs.`customer_id` = c.`customer_id`)";
 
@@ -443,6 +503,11 @@ class Customer extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
+	/**
+	 * @param array $data
+	 *
+	 * @return int
+	 */
 	public function getTotalCustomerSearches(array $data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer_search` cs LEFT JOIN `" . DB_PREFIX . "customer` c ON (cs.`customer_id` = c.`customer_id`)";
 

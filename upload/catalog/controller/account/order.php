@@ -1,6 +1,12 @@
 <?php
 namespace Opencart\Catalog\Controller\Account;
+/**
+ *
+ */
 class Order extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		$this->load->language('account/order');
 
@@ -96,6 +102,9 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('account/order_list', $data));
 	}
 
+	/**
+	 * @return object|\Opencart\System\Engine\Action|null
+	 */
 	public function info(): object|null {
 		$this->load->language('account/order');
 
@@ -385,12 +394,18 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 	}
 
+	/**
+	 * @return void
+	 */
 	public function history(): void {
 		$this->load->language('account/order');
 
 		$this->response->setOutput($this->getHistory());
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getHistory(): string {
 		if (isset($this->request->get['order_id'])) {
 			$order_id = (int)$this->request->get['order_id'];
@@ -434,6 +449,9 @@ class Order extends \Opencart\System\Engine\Controller {
 		return $this->load->view('account/order_history', $data);
 	}
 
+	/**
+	 * @return void
+	 */
 	public function reorder(): void {
 		$this->load->language('account/order');
 

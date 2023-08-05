@@ -1,6 +1,14 @@
 <?php
 namespace Opencart\Admin\Model\Catalog;
+/**
+ *
+ */
 class Review extends \Opencart\System\Engine\Model {
+	/**
+	 * @param array $data
+	 *
+	 * @return int
+	 */
 	public function addReview(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "review` SET `author` = '" . $this->db->escape((string)$data['author']) . "', `product_id` = '" . (int)$data['product_id'] . "', `text` = '" . $this->db->escape(strip_tags((string)$data['text'])) . "', `rating` = '" . (int)$data['rating'] . "', `status` = '" . (bool)(isset($data['status']) ? $data['status'] : 0) . "', `date_added` = '" . $this->db->escape((string)$data['date_added']) . "'");
 
@@ -16,6 +24,12 @@ class Review extends \Opencart\System\Engine\Model {
 		return $review_id;
 	}
 
+	/**
+	 * @param int   $review_id
+	 * @param array $data
+	 *
+	 * @return void
+	 */
 	public function editReview(int $review_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "review` SET `author` = '" . $this->db->escape((string)$data['author']) . "', `product_id` = '" . (int)$data['product_id'] . "', `text` = '" . $this->db->escape(strip_tags((string)$data['text'])) . "', `rating` = '" . (int)$data['rating'] . "', `status` = '" . (bool)(isset($data['status']) ? $data['status'] : 0) . "', `date_added` = '" . $this->db->escape((string)$data['date_added']) . "', `date_modified` = NOW() WHERE `review_id` = '" . (int)$review_id . "'");
 
@@ -27,6 +41,11 @@ class Review extends \Opencart\System\Engine\Model {
 		$this->cache->delete('product');
 	}
 
+	/**
+	 * @param int $review_id
+	 *
+	 * @return void
+	 */
 	public function deleteReview(int $review_id): void {
 		$review_info = $this->getReview($review_id);
 
@@ -42,12 +61,22 @@ class Review extends \Opencart\System\Engine\Model {
 		}
 	}
 
+	/**
+	 * @param int $review_id
+	 *
+	 * @return array
+	 */
 	public function getReview(int $review_id): array {
 		$query = $this->db->query("SELECT DISTINCT *, (SELECT pd.`name` FROM `" . DB_PREFIX . "product_description` pd WHERE pd.`product_id` = r.`product_id` AND pd.`language_id` = '" . (int)$this->config->get('config_language_id') . "') AS product FROM `" . DB_PREFIX . "review` r WHERE r.`review_id` = '" . (int)$review_id . "'");
 
 		return $query->row;
 	}
 
+	/**
+	 * @param int $product_id
+	 *
+	 * @return int
+	 */
 	public function getRating(int $product_id): int {
 		$query = $this->db->query("SELECT AVG(`rating`) AS `total` FROM `" . DB_PREFIX . "review` WHERE `product_id` = '" . (int)$product_id . "' AND `status` = '1'");
 
@@ -58,6 +87,11 @@ class Review extends \Opencart\System\Engine\Model {
 		}
 	}
 
+	/**
+	 * @param array $data
+	 *
+	 * @return array
+	 */
 	public function getReviews(array $data = []): array {
 		$sql = "SELECT r.`review_id`, pd.`name`, r.`author`, r.`rating`, r.`status`, r.`date_added` FROM `" . DB_PREFIX . "review` r LEFT JOIN `" . DB_PREFIX . "product_description` pd ON (r.`product_id` = pd.`product_id`) WHERE pd.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
@@ -118,6 +152,11 @@ class Review extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
+	/**
+	 * @param array $data
+	 *
+	 * @return int
+	 */
 	public function getTotalReviews(array $data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "review` r LEFT JOIN `" . DB_PREFIX . "product_description` pd ON (r.`product_id` = pd.`product_id`) WHERE pd.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
@@ -146,6 +185,9 @@ class Review extends \Opencart\System\Engine\Model {
 		return (int)$query->row['total'];
 	}
 
+	/**
+	 * @return int
+	 */
 	public function getTotalReviewsAwaitingApproval(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "review` WHERE `status` = '0'");
 

@@ -1,6 +1,12 @@
 <?php
 namespace Opencart\Admin\Controller\Report;
+/**
+ *
+ */
 class Statistics extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		$this->load->language('report/statistics');
 
@@ -29,12 +35,18 @@ class Statistics extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('report/statistics', $data));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function list(): void {
 		$this->load->language('report/statistics');
 
 		$this->response->setOutput($this->getList());
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getList(): string {
 		$data['statistics'] = [];
 		
@@ -53,6 +65,9 @@ class Statistics extends \Opencart\System\Engine\Controller {
 		return $this->load->view('report/statistics_list', $data);
 	}
 
+	/**
+	 * @return void
+	 */
 	public function orderSale(): void {
 		$this->load->language('report/statistics');
 
@@ -75,6 +90,9 @@ class Statistics extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function orderProcessing(): void {
 		$this->load->language('report/statistics');
 
@@ -97,6 +115,9 @@ class Statistics extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function orderComplete(): void {
 		$this->load->language('report/statistics');
 
@@ -119,6 +140,9 @@ class Statistics extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function orderOther(): void {
 		$this->load->language('report/statistics');
 
@@ -153,6 +177,9 @@ class Statistics extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function returns(): void {
 		$this->load->language('report/statistics');
 
@@ -175,6 +202,9 @@ class Statistics extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function product(): void {
 		$this->load->language('report/statistics');
 
@@ -197,6 +227,9 @@ class Statistics extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function review(): void {
 		$this->load->language('report/statistics');
 

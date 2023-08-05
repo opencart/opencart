@@ -1,36 +1,75 @@
 <?php
 namespace Opencart\Admin\Model\Setting;
+/**
+ *
+ */
 class Startup extends \Opencart\System\Engine\Model {
+	/**
+	 * @param array $data
+	 *
+	 * @return int
+	 */
 	public function addStartup(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "startup` SET `code` = '" . $this->db->escape($data['code']) . "', `action` = '" . $this->db->escape($data['action']) . "', `status` = '" . (bool)$data['status'] . "', `sort_order` = '" . (int)$data['sort_order'] . "'");
 
 		return $this->db->getLastId();
 	}
 
+	/**
+	 * @param int $startup_id
+	 *
+	 * @return void
+	 */
 	public function deleteStartup(int $startup_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "startup` WHERE `startup_id` = '" . (int)$startup_id . "'");
 	}
 
+	/**
+	 * @param string $code
+	 *
+	 * @return void
+	 */
 	public function deleteStartupByCode(string $code): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "startup` WHERE `code` = '" . $this->db->escape($code) . "'");
 	}
 
+	/**
+	 * @param int  $startup_id
+	 * @param bool $status
+	 *
+	 * @return void
+	 */
 	public function editStatus(int $startup_id, bool $status): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "startup` SET `status` = '" . (bool)$status . "' WHERE `startup_id` = '" . (int)$startup_id . "'");
 	}
 
+	/**
+	 * @param int $startup_id
+	 *
+	 * @return array
+	 */
 	public function getStartup(int $startup_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "startup` WHERE `startup_id` = '" . (int)$startup_id . "'");
 
 		return $query->row;
 	}
 
+	/**
+	 * @param string $code
+	 *
+	 * @return array
+	 */
 	public function getStartupByCode(string $code): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "startup` WHERE `code` = '" . $this->db->escape($code) . "' LIMIT 1");
 
 		return $query->row;
 	}
 
+	/**
+	 * @param array $data
+	 *
+	 * @return array
+	 */
 	public function getStartups(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "startup`";
 
@@ -71,6 +110,9 @@ class Startup extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
+	/**
+	 * @return int
+	 */
 	public function getTotalStartups(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "startup`");
 

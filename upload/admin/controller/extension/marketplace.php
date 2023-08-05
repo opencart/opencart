@@ -1,10 +1,19 @@
 <?php
 namespace Opencart\Admin\Controller\Extension;
+/**
+ *
+ */
 class Marketplace extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		$this->response->setOutput($this->getList());
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getList(): string {
 		$this->load->language('extension/marketplace');
 
@@ -56,6 +65,9 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 		return $this->load->view('extension/marketplace', $data);
 	}
 
+	/**
+	 * @return void
+	 */
 	public function install(): void {
 		$this->load->language('extension/marketplace');
 
@@ -117,6 +129,9 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function uninstall(): void {
 		$this->load->language('extension/marketplace');
 

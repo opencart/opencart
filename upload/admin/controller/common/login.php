@@ -1,6 +1,12 @@
 <?php
 namespace Opencart\Admin\Controller\Common;
+/**
+ *
+ */
 class Login extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		$this->load->language('common/login');
 
@@ -62,6 +68,9 @@ class Login extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('common/login', $data));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function login(): void {
 		$this->load->language('common/login');
 

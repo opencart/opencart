@@ -1,6 +1,12 @@
 <?php
 namespace Opencart\Catalog\Controller\Checkout;
+/**
+ *
+ */
 class PaymentAddress extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return string
+	 */
 	public function index(): string {
 		$this->load->language('checkout/payment_address');
 
@@ -41,6 +47,9 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 		return $this->load->view('checkout/payment_address', $data);
 	}
 
+	/**
+	 * @return void
+	 */
 	public function save(): void {
 		$this->load->language('checkout/payment_address');
 
@@ -169,6 +178,9 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function address(): void {
 		$this->load->language('checkout/payment_address');
 

@@ -1,6 +1,14 @@
 <?php
 namespace Opencart\Catalog\Controller\Common;
+/**
+ *
+ */
 class Pagination extends \Opencart\System\Engine\Controller {
+	/**
+	 * @param array $setting
+	 *
+	 * @return string
+	 */
 	public function index(array $setting): string {
 		if (isset($setting['total'])) {
 			$total = $setting['total'];

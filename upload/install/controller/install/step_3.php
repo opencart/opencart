@@ -1,8 +1,17 @@
 <?php
 namespace Opencart\Install\Controller\Install;
+/**
+ *
+ */
 class Step3 extends \Opencart\System\Engine\Controller {
+	/**
+	 * @var array
+	 */
 	private array $error = [];
 
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		$this->load->language('install/step_3');
 		
@@ -273,6 +282,9 @@ class Step3 extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('install/step_3', $data));
 	}
 
+	/**
+	 * @return bool
+	 */
 	private function validate(): bool {
 		if (!$this->request->post['db_hostname']) {
 			$this->error['db_hostname'] = $this->language->get('error_db_hostname');

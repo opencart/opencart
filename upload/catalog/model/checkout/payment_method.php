@@ -1,6 +1,14 @@
 <?php
 namespace Opencart\Catalog\Model\Checkout;
+/**
+ *
+ */
 class PaymentMethod extends \Opencart\System\Engine\Controller {
+	/**
+	 * @param array $payment_address
+	 *
+	 * @return array
+	 */
 	public function getMethods(array $payment_address = []): array {
 		$method_data = [];
 

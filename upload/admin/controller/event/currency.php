@@ -1,9 +1,21 @@
 <?php
 namespace Opencart\Admin\Controller\Event;
+/**
+ *
+ */
 class Currency extends \Opencart\System\Engine\Controller {
-	// model/setting/setting/editSetting
-	// model/localisation/currency/addCurrency
-	// model/localisation/currency/editCurrency
+	/**
+	 *
+	 * model/setting/setting/editSetting
+	 * model/localisation/currency/addCurrency
+	 * model/localisation/currency/editCurrency
+	 *
+	 * @param string $route
+	 * @param array  $args
+	 * @param mixed  $output
+	 *
+	 * @return void
+	 */
 	public function index(string &$route, array &$args, mixed &$output): void {
 		if ($route == 'model/setting/setting/editSetting' && $args[0] == 'config' && isset($args[1]['config_currency'])) {
 			$currency = $args[1]['config_currency'];

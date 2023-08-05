@@ -1,6 +1,14 @@
 <?php
 namespace Opencart\Admin\Model\Catalog;
+/**
+ *
+ */
 class Information extends \Opencart\System\Engine\Model {
+	/**
+	 * @param array $data
+	 *
+	 * @return int
+	 */
 	public function addInformation(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "information` SET `sort_order` = '" . (int)$data['sort_order'] . "', `bottom` = '" . (isset($data['bottom']) ? (int)$data['bottom'] : 0) . "', `status` = '" . (bool)(isset($data['status']) ? $data['status'] : 0) . "'");
 
@@ -36,6 +44,12 @@ class Information extends \Opencart\System\Engine\Model {
 		return $information_id;
 	}
 
+	/**
+	 * @param int   $information_id
+	 * @param array $data
+	 *
+	 * @return void
+	 */
 	public function editInformation(int $information_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "information` SET `sort_order` = '" . (int)$data['sort_order'] . "', `bottom` = '" . (isset($data['bottom']) ? (int)$data['bottom'] : 0) . "', `status` = '" . (bool)(isset($data['status']) ? $data['status'] : 0) . "' WHERE `information_id` = '" . (int)$information_id . "'");
 
@@ -74,6 +88,11 @@ class Information extends \Opencart\System\Engine\Model {
 		$this->cache->delete('information');
 	}
 
+	/**
+	 * @param int $information_id
+	 *
+	 * @return void
+	 */
 	public function deleteInformation(int $information_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "information` WHERE `information_id` = '" . (int)$information_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "information_description` WHERE `information_id` = '" . (int)$information_id . "'");
@@ -84,12 +103,22 @@ class Information extends \Opencart\System\Engine\Model {
 		$this->cache->delete('information');
 	}
 
+	/**
+	 * @param int $information_id
+	 *
+	 * @return array
+	 */
 	public function getInformation(int $information_id): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "information` WHERE `information_id` = '" . (int)$information_id . "'");
 
 		return $query->row;
 	}
 
+	/**
+	 * @param array $data
+	 *
+	 * @return array
+	 */
 	public function getInformations(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "information` i LEFT JOIN `" . DB_PREFIX . "information_description` id ON (i.`information_id` = id.`information_id`) WHERE id.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
@@ -135,6 +164,11 @@ class Information extends \Opencart\System\Engine\Model {
 		return $information_data;
 	}
 
+	/**
+	 * @param int $information_id
+	 *
+	 * @return array
+	 */
 	public function getDescriptions(int $information_id): array {
 		$information_description_data = [];
 
@@ -153,6 +187,11 @@ class Information extends \Opencart\System\Engine\Model {
 		return $information_description_data;
 	}
 
+	/**
+	 * @param int $information_id
+	 *
+	 * @return array
+	 */
 	public function getStores(int $information_id): array {
 		$information_store_data = [];
 
@@ -165,6 +204,11 @@ class Information extends \Opencart\System\Engine\Model {
 		return $information_store_data;
 	}
 
+	/**
+	 * @param int $information_id
+	 *
+	 * @return array
+	 */
 	public function getSeoUrls(int $information_id): array {
 		$information_seo_url_data = [];
 
@@ -177,6 +221,11 @@ class Information extends \Opencart\System\Engine\Model {
 		return $information_seo_url_data;
 	}
 
+	/**
+	 * @param int $information_id
+	 *
+	 * @return array
+	 */
 	public function getLayouts(int $information_id): array {
 		$information_layout_data = [];
 
@@ -189,12 +238,20 @@ class Information extends \Opencart\System\Engine\Model {
 		return $information_layout_data;
 	}
 
+	/**
+	 * @return int
+	 */
 	public function getTotalInformations(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "information`");
 
 		return (int)$query->row['total'];
 	}
 
+	/**
+	 * @param int $layout_id
+	 *
+	 * @return int
+	 */
 	public function getTotalInformationsByLayoutId(int $layout_id): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "information_to_layout` WHERE `layout_id` = '" . (int)$layout_id . "'");
 

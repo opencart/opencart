@@ -1,6 +1,12 @@
 <?php
 namespace Opencart\Catalog\Controller\Extension\Opencart\Payment;
+/**
+ *
+ */
 class FreeCheckout extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return string
+	 */
 	public function index(): string {
 		$this->load->language('extension/opencart/payment/free_checkout');
 
@@ -9,6 +15,9 @@ class FreeCheckout extends \Opencart\System\Engine\Controller {
 		return $this->load->view('extension/opencart/payment/free_checkout', $data);
 	}
 
+	/**
+	 * @return void
+	 */
 	public function confirm(): void {
 		$this->load->language('extension/opencart/payment/free_checkout');
 

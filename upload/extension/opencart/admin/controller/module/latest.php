@@ -1,6 +1,12 @@
 <?php
 namespace Opencart\Admin\Controller\Extension\Opencart\Module;
+/**
+ *
+ */
 class Latest extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		$this->load->language('extension/opencart/module/latest');
 
@@ -93,6 +99,9 @@ class Latest extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('extension/opencart/module/latest', $data));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function save(): void {
 		$this->load->language('extension/opencart/module/latest');
 

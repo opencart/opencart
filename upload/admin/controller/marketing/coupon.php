@@ -1,6 +1,12 @@
 <?php
 namespace Opencart\Admin\Controller\Marketing;
+/**
+ *
+ */
 class Coupon extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		$this->load->language('marketing/coupon');
 
@@ -46,12 +52,18 @@ class Coupon extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('marketing/coupon', $data));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function list(): void {
 		$this->load->language('marketing/coupon');
 
 		$this->response->setOutput($this->getList());
 	}
 
+	/**
+	 * @return string
+	 */
 	protected function getList(): string {
 		if (isset($this->request->get['sort'])) {
 			$sort = (string)$this->request->get['sort'];
@@ -159,6 +171,9 @@ class Coupon extends \Opencart\System\Engine\Controller {
 		return $this->load->view('marketing/coupon_list', $data);
 	}
 
+	/**
+	 * @return void
+	 */
 	public function form(): void {
 		$this->load->language('marketing/coupon');
 
@@ -332,6 +347,9 @@ class Coupon extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('marketing/coupon_form', $data));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function save(): void {
 		$this->load->language('marketing/coupon');
 
@@ -375,6 +393,9 @@ class Coupon extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function delete(): void {
 		$this->load->language('marketing/coupon');
 
@@ -404,12 +425,18 @@ class Coupon extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function history(): void {
 		$this->load->language('marketing/coupon');
 
 		$this->response->setOutput($this->getHistory());
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getHistory(): string {
 		if (isset($this->request->get['coupon_id'])) {
 			$coupon_id = (int)$this->request->get['coupon_id'];

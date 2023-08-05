@@ -1,6 +1,12 @@
 <?php
 namespace Opencart\Catalog\Controller\Startup;
+/**
+ *
+ */
 class Customer extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		$this->registry->set('customer', new \Opencart\System\Library\Cart\Customer($this->registry));
 

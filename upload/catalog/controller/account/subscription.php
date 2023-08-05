@@ -1,6 +1,12 @@
 <?php
 namespace Opencart\Catalog\Controller\Account;
+/**
+ *
+ */
 class Subscription extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		$this->load->language('account/subscription');
 
@@ -131,6 +137,9 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('account/subscription_list', $data));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function info(): void {
 		$this->load->language('account/subscription');
 
@@ -415,12 +424,18 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		}
 	}
 
+	/**
+	 * @return void
+	 */
 	public function history(): void {
 		$this->load->language('account/subscription');
 
 		$this->response->setOutput($this->getHistory());
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getHistory(): string {
 		if (isset($this->request->get['subscription_id'])) {
 			$subscription_id = (int)$this->request->get['subscription_id'];
@@ -464,12 +479,18 @@ class Subscription extends \Opencart\System\Engine\Controller {
 		return $this->load->view('account/subscription_history', $data);
 	}
 
+	/**
+	 * @return void
+	 */
 	public function order(): void {
 		$this->load->language('account/subscription');
 
 		$this->response->setOutput($this->getOrder());
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getOrder(): string {
 		if (isset($this->request->get['subscription_id'])) {
 			$subscription_id = (int)$this->request->get['subscription_id'];

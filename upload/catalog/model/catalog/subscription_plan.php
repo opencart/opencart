@@ -1,12 +1,25 @@
 <?php
 namespace Opencart\Catalog\Model\Catalog;
+/**
+ *
+ */
 class SubscriptionPlan extends \Opencart\System\Engine\Model {
+	/**
+	 * @param int $subscription_plan_id
+	 *
+	 * @return array
+	 */
 	public function getSubscriptionPlan(int $subscription_plan_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "subscription_plan` `sp` LEFT JOIN `" . DB_PREFIX . "subscription_plan_description` `spd` ON (`sp`.`subscription_plan_id` = `spd`.`subscription_plan_id`) WHERE `sp`.`subscription_plan_id` = '" . (int)$subscription_plan_id . "' AND `spd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'");
 
 		return $query->row;
 	}
 
+	/**
+	 * @param array $data
+	 *
+	 * @return array
+	 */
 	public function getSubscriptionPlans(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "subscription_plan` `sp` LEFT JOIN `" . DB_PREFIX . "subscription_plan_description` `spd` ON (`sp`.`subscription_plan_id` = `spd`.`subscription_plan_id`) WHERE `spd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
@@ -48,6 +61,9 @@ class SubscriptionPlan extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
+	/**
+	 * @return int
+	 */
 	public function getTotalSubscriptionPlans(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "subscription_plan`");
 

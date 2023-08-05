@@ -1,6 +1,14 @@
 <?php
 namespace Opencart\Catalog\Controller\Extension\Opencart\Currency;
+/**
+ *
+ */
 class ECB extends \Opencart\System\Engine\Controller {
+	/**
+	 * @param string $default
+	 *
+	 * @return void
+	 */
 	public function currency(string $default = ''): void {
 		if ($this->config->get('currency_ecb_status')) {
 			$curl = curl_init();

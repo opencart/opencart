@@ -1,6 +1,12 @@
 <?php
 namespace Opencart\Catalog\Controller\Product;
+/**
+ *
+ */
 class Review extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return string
+	 */
 	public function index(): string {
 		$this->load->language('product/review');
 
@@ -47,6 +53,9 @@ class Review extends \Opencart\System\Engine\Controller {
 		return $this->load->view('product/review', $data);
 	}
 
+	/**
+	 * @return void
+	 */
 	public function write(): void {
 		$this->load->language('product/review');
 
@@ -123,12 +132,18 @@ class Review extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function list(): void {
 		$this->load->language('product/review');
 
 		$this->response->setOutput($this->getList());
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getList(): string {
 		if (isset($this->request->get['product_id'])) {
 			$product_id = (int)$this->request->get['product_id'];

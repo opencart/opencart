@@ -1,6 +1,15 @@
 <?php
 namespace Opencart\Admin\Model\Tool;
+/**
+ *
+ */
 class Upload extends \Opencart\System\Engine\Model {
+	/**
+	 * @param string $name
+	 * @param string $filename
+	 *
+	 * @return string
+	 */
 	public function addUpload(string $name, string $filename): string {
 		$code = oc_token(32);
 
@@ -9,22 +18,42 @@ class Upload extends \Opencart\System\Engine\Model {
 		return $code;
 	}
 
+	/**
+	 * @param int $upload_id
+	 *
+	 * @return void
+	 */
 	public function deleteUpload(int $upload_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "upload` WHERE `upload_id` = '" . (int)$upload_id . "'");
 	}
 
+	/**
+	 * @param int $upload_id
+	 *
+	 * @return array
+	 */
 	public function getUpload(int $upload_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "upload` WHERE `upload_id` = '" . (int)$upload_id . "'");
 
 		return $query->row;
 	}
 
+	/**
+	 * @param string $code
+	 *
+	 * @return array
+	 */
 	public function getUploadByCode(string $code): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "upload` WHERE `code` = '" . $this->db->escape($code) . "'");
 
 		return $query->row;
 	}
 
+	/**
+	 * @param array $data
+	 *
+	 * @return array
+	 */
 	public function getUploads(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "upload`";
 
@@ -85,6 +114,11 @@ class Upload extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
+	/**
+	 * @param array $data
+	 *
+	 * @return int
+	 */
 	public function getTotalUploads(array $data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "upload`";
 

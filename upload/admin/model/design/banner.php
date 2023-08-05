@@ -1,6 +1,14 @@
 <?php
 namespace Opencart\Admin\Model\Design;
+/**
+ *
+ */
 class Banner extends \Opencart\System\Engine\Model {
+	/**
+	 * @param array $data
+	 *
+	 * @return int
+	 */
 	public function addBanner(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "banner` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `status` = '" . (bool)(isset($data['status']) ? $data['status'] : 0) . "'");
 
@@ -17,6 +25,12 @@ class Banner extends \Opencart\System\Engine\Model {
 		return $banner_id;
 	}
 
+	/**
+	 * @param int   $banner_id
+	 * @param array $data
+	 *
+	 * @return void
+	 */
 	public function editBanner(int $banner_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "banner` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `status` = '" . (bool)(isset($data['status']) ? $data['status'] : 0) . "' WHERE `banner_id` = '" . (int)$banner_id . "'");
 
@@ -31,17 +45,32 @@ class Banner extends \Opencart\System\Engine\Model {
 		}
 	}
 
+	/**
+	 * @param int $banner_id
+	 *
+	 * @return void
+	 */
 	public function deleteBanner(int $banner_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "banner` WHERE `banner_id` = '" . (int)$banner_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "banner_image` WHERE `banner_id` = '" . (int)$banner_id . "'");
 	}
 
+	/**
+	 * @param int $banner_id
+	 *
+	 * @return array
+	 */
 	public function getBanner(int $banner_id): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "banner` WHERE `banner_id` = '" . (int)$banner_id . "'");
 
 		return $query->row;
 	}
 
+	/**
+	 * @param array $data
+	 *
+	 * @return array
+	 */
 	public function getBanners(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "banner`";
 
@@ -79,6 +108,11 @@ class Banner extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
+	/**
+	 * @param int $banner_id
+	 *
+	 * @return array
+	 */
 	public function getImages(int $banner_id): array {
 		$banner_image_data = [];
 
@@ -96,6 +130,9 @@ class Banner extends \Opencart\System\Engine\Model {
 		return $banner_image_data;
 	}
 
+	/**
+	 * @return int
+	 */
 	public function getTotalBanners(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "banner`");
 

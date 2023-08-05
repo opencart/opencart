@@ -1,6 +1,12 @@
 <?php
 namespace Opencart\Catalog\Controller\Extension\Opencart\Total;
+/**
+ *
+ */
 class Voucher extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return string
+	 */
 	public function index(): string {
 		if ($this->config->get('total_voucher_status')) {
 			$this->load->language('extension/opencart/total/voucher');
@@ -20,6 +26,9 @@ class Voucher extends \Opencart\System\Engine\Controller {
 		return '';
 	}
 
+	/**
+	 * @return void
+	 */
 	public function save(): void {
 		$this->load->language('extension/opencart/total/voucher');
 

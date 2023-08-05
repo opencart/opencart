@@ -1,6 +1,12 @@
 <?php
 namespace Opencart\Catalog\Controller\Extension\Opencart\Payment;
+/**
+ *
+ */
 class BankTransfer extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return string
+	 */
 	public function index(): string {
 		$this->load->language('extension/opencart/payment/bank_transfer');
 
@@ -11,6 +17,9 @@ class BankTransfer extends \Opencart\System\Engine\Controller {
 		return $this->load->view('extension/opencart/payment/bank_transfer', $data);
 	}
 
+	/**
+	 * @return void
+	 */
 	public function confirm(): void {
 		$this->load->language('extension/opencart/payment/bank_transfer');
 

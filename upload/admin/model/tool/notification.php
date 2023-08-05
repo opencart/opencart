@@ -1,26 +1,55 @@
 <?php
 namespace Opencart\Admin\Model\Tool;
+/**
+ *
+ */
 class Notification extends \Opencart\System\Engine\Model {
+	/**
+	 * @param array $data
+	 *
+	 * @return int
+	 */
 	public function addNotification(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "notification` SET `title` = '" . $this->db->escape((string)$data['title']) . "', `text` = '" . $this->db->escape((string)$data['text']) . "', `status` = '" . (bool)$data['status'] . "', `date_added` = NOW()");
 
 		return $this->db->getLastId();
 	}
 
+	/**
+	 * @param int  $notification_id
+	 * @param bool $status
+	 *
+	 * @return void
+	 */
 	public function editStatus(int $notification_id, bool $status): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "notification` SET `status` = '" . (bool)$status . "' WHERE `notification_id` = '" . (int)$notification_id . "'");
 	}
 
+	/**
+	 * @param int $notification_id
+	 *
+	 * @return void
+	 */
 	public function deleteNotification(int $notification_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "notification` WHERE `notification_id` = '" . (int)$notification_id . "'");
 	}
 
+	/**
+	 * @param int $notification_id
+	 *
+	 * @return array
+	 */
 	public function getNotification(int $notification_id): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "notification` WHERE `notification_id` = '" . (int)$notification_id . "'");
 
 		return $query->row;
 	}
 
+	/**
+	 * @param array $data
+	 *
+	 * @return array
+	 */
 	public function getNotifications(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "notification`";
 
@@ -47,6 +76,11 @@ class Notification extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
+	/**
+	 * @param array $data
+	 *
+	 * @return int
+	 */
 	public function getTotalNotifications(array $data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "notification`";
 

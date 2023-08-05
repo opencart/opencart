@@ -1,6 +1,12 @@
 <?php
 namespace Opencart\Catalog\Controller\Product;
+/**
+ *
+ */
 class Product extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		$this->load->language('product/product');
 

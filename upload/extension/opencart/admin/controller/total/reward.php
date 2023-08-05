@@ -1,6 +1,12 @@
 <?php
 namespace Opencart\Admin\Controller\Extension\Opencart\Total;
+/**
+ *
+ */
 class Reward extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		$this->load->language('extension/opencart/total/reward');
 
@@ -36,6 +42,9 @@ class Reward extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('extension/opencart/total/reward', $data));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function save(): void {
 		$this->load->language('extension/opencart/total/reward');
 

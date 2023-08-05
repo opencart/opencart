@@ -1,6 +1,12 @@
 <?php
 namespace Opencart\Admin\Controller\Extension\Opencart\Fraud;
+/**
+ *
+ */
 class Ip extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		$this->load->language('extension/opencart/fraud/ip');
 
@@ -43,6 +49,9 @@ class Ip extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('extension/opencart/fraud/ip', $data));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function save(): void {
 		$this->load->language('extension/opencart/fraud/ip');
 
@@ -64,6 +73,9 @@ class Ip extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function install(): void {
 		if ($this->user->hasPermission('modify', 'extension/fraud')) {
 			$this->load->model('extension/opencart/fraud/ip');
@@ -72,6 +84,9 @@ class Ip extends \Opencart\System\Engine\Controller {
 		}
 	}
 
+	/**
+	 * @return void
+	 */
 	public function uninstall(): void {
 		if ($this->user->hasPermission('modify', 'extension/fraud')) {
 			$this->load->model('extension/opencart/fraud/ip');
@@ -80,6 +95,9 @@ class Ip extends \Opencart\System\Engine\Controller {
 		}
 	}
 
+	/**
+	 * @return void
+	 */
 	public function ip(): void {
 		$this->load->language('extension/opencart/fraud/ip');
 
@@ -121,6 +139,9 @@ class Ip extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('extension/opencart/fraud/ip_ip', $data));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function addIp(): void {
 		$this->load->language('extension/opencart/fraud/ip');
 
@@ -150,6 +171,9 @@ class Ip extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function removeIp(): void {
 		$this->load->language('extension/opencart/fraud/ip');
 

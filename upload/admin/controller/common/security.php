@@ -1,6 +1,12 @@
 <?php
 namespace Opencart\Admin\Controller\Common;
+/**
+ *
+ */
 class Security extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return string
+	 */
 	public function index(): string {
 		$this->load->language('common/security');
 
@@ -51,6 +57,9 @@ class Security extends \Opencart\System\Engine\Controller {
 		}
 	}
 
+	/**
+	 * @return void
+	 */
 	public function install(): void {
 		$this->load->language('common/security');
 
@@ -108,6 +117,9 @@ class Security extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function storage(): void {
 		$this->load->language('common/security');
 
@@ -255,6 +267,9 @@ class Security extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function admin(): void {
 		$this->load->language('common/security');
 
@@ -387,6 +402,9 @@ class Security extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 *
+	 */
 	public function __destruct() {
 		// Remove old admin if exists
 		$path = DIR_OPENCART . 'admin/';

@@ -1,18 +1,34 @@
 <?php
 namespace Opencart\Catalog\Model\Setting;
+/**
+ *
+ */
 class Store extends \Opencart\System\Engine\Model {
+	/**
+	 * @param int $store_id
+	 *
+	 * @return array
+	 */
 	public function getStore(int $store_id): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "store` WHERE `store_id` = '" . (int)$store_id . "'");
 
 		return $query->row;
 	}
 
+	/**
+	 * @param string $url
+	 *
+	 * @return array
+	 */
 	public function getStoreByHostname(string $url): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "store` WHERE REPLACE(`url`, 'www.', '') = '" . $this->db->escape($url) . "'");
 
 		return $query->row;
 	}
 
+	/**
+	 * @return array
+	 */
 	public function getStores(): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "store` ORDER BY `url`";
 
@@ -29,6 +45,14 @@ class Store extends \Opencart\System\Engine\Model {
 		return $store_data;
 	}
 
+	/**
+	 * @param int    $store_id
+	 * @param string $language
+	 * @param string $session_id
+	 *
+	 * @return \Opencart\System\Engine\Registry
+	 * @throws \Exception
+	 */
 	public function createStoreInstance(int $store_id = 0, string $language = '', string $session_id = ''): object {
 		// Autoloader
 		$this->autoloader->register('Opencart\Catalog', DIR_CATALOG);

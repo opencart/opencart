@@ -1,6 +1,12 @@
 <?php
 namespace Opencart\Catalog\Controller\Checkout;
+/**
+ *
+ */
 class Confirm extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return string
+	 */
 	public function index(): string {
 		$this->load->language('checkout/confirm');
 
@@ -401,6 +407,9 @@ class Confirm extends \Opencart\System\Engine\Controller {
 		return $this->load->view('checkout/confirm', $data);
 	}
 
+	/**
+	 * @return void
+	 */
 	public function confirm(): void {
 		$this->response->setOutput($this->index());
 	}

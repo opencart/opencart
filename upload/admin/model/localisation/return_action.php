@@ -1,6 +1,14 @@
 <?php
 namespace Opencart\Admin\Model\Localisation;
+/**
+ *
+ */
 class ReturnAction extends \Opencart\System\Engine\Model {
+	/**
+	 * @param array $data
+	 *
+	 * @return int
+	 */
 	public function addReturnAction(array $data): int {
 		foreach ($data['return_action'] as $language_id => $value) {
 			if (isset($return_action_id)) {
@@ -17,6 +25,12 @@ class ReturnAction extends \Opencart\System\Engine\Model {
 		return $return_action_id;
 	}
 
+	/**
+	 * @param int   $return_action_id
+	 * @param array $data
+	 *
+	 * @return void
+	 */
 	public function editReturnAction(int $return_action_id, array $data): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "return_action` WHERE `return_action_id` = '" . (int)$return_action_id . "'");
 
@@ -27,18 +41,33 @@ class ReturnAction extends \Opencart\System\Engine\Model {
 		$this->cache->delete('return_action');
 	}
 
+	/**
+	 * @param int $return_action_id
+	 *
+	 * @return void
+	 */
 	public function deleteReturnAction(int $return_action_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "return_action` WHERE `return_action_id` = '" . (int)$return_action_id . "'");
 
 		$this->cache->delete('return_action');
 	}
 
+	/**
+	 * @param int $return_action_id
+	 *
+	 * @return array
+	 */
 	public function getReturnAction(int $return_action_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "return_action` WHERE `return_action_id` = '" . (int)$return_action_id . "' AND `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
 
 		return $query->row;
 	}
 
+	/**
+	 * @param array $data
+	 *
+	 * @return array
+	 */
 	public function getReturnActions(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "return_action` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "' ORDER BY `name`";
 
@@ -73,6 +102,11 @@ class ReturnAction extends \Opencart\System\Engine\Model {
 		return $return_action_data;
 	}
 
+	/**
+	 * @param int $return_action_id
+	 *
+	 * @return array
+	 */
 	public function getDescriptions(int $return_action_id): array {
 		$return_action_data = [];
 
@@ -85,6 +119,9 @@ class ReturnAction extends \Opencart\System\Engine\Model {
 		return $return_action_data;
 	}
 
+	/**
+	 * @return int
+	 */
 	public function getTotalReturnActions(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "return_action` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
 

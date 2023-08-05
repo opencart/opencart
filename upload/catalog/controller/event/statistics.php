@@ -1,7 +1,17 @@
 <?php
 namespace Opencart\Catalog\Controller\Event;
+/**
+ *
+ */
 class Statistics extends \Opencart\System\Engine\Controller {
 	// catalog/model/catalog/review/addReview/after
+	/**
+	 * @param string $route
+	 * @param array  $args
+	 * @param mixed  $output
+	 *
+	 * @return void
+	 */
 	public function addReview(string &$route, array &$args, mixed &$output): void {
 		$this->load->model('report/statistics');
 
@@ -9,6 +19,14 @@ class Statistics extends \Opencart\System\Engine\Controller {
 	}
 		
 	// catalog/model/account/returns/addReturn/after
+
+	/**
+	 * @param string $route
+	 * @param array  $args
+	 * @param mixed  $output
+	 *
+	 * @return void
+	 */
 	public function addReturn(string &$route, array &$args, mixed &$output): void {
 		$this->load->model('report/statistics');
 
@@ -16,6 +34,13 @@ class Statistics extends \Opencart\System\Engine\Controller {
 	}
 	
 	// catalog/model/checkout/order/addHistory/before
+
+	/**
+	 * @param string $route
+	 * @param array  $args
+	 *
+	 * @return void
+	 */
 	public function addHistory(string &$route, array &$args): void {
 		$this->load->model('checkout/order');
 				

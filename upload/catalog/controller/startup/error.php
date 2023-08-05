@@ -1,13 +1,27 @@
 <?php
 namespace Opencart\Catalog\Controller\Startup;
+/**
+ *
+ */
 class Error extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		$this->registry->set('log', new \Opencart\System\Library\Log($this->config->get('config_error_filename')));
 		
 		set_error_handler([$this, 'error']);
 		set_exception_handler([$this, 'exception']);
 	}
-	
+
+	/**
+	 * @param string $code
+	 * @param string $message
+	 * @param string $file
+	 * @param string $line
+	 *
+	 * @return bool
+	 */
 	public function error(string $code, string $message, string $file, string $line): bool {
 		// error suppressed with @
 		if (error_reporting() === 0) {
@@ -46,6 +60,11 @@ class Error extends \Opencart\System\Engine\Controller {
 		return true;
 	}
 
+	/**
+	 * @param \Throwable $e
+	 *
+	 * @return void
+	 */
 	public function exception(\Throwable $e): void {
 		if ($this->config->get('config_error_log')) {
 			$this->log->write(get_class($e) . ':  ' . $e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine());

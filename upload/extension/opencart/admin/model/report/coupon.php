@@ -1,6 +1,14 @@
 <?php
 namespace Opencart\Admin\Model\Extension\Opencart\Report;
+/**
+ *
+ */
 class Coupon extends \Opencart\System\Engine\Model {
+	/**
+	 * @param array $data
+	 *
+	 * @return array
+	 */
 	public function getCoupons(array $data = []): array {
 		$sql = "SELECT ch.`coupon_id`, c.`name`, c.`code`, COUNT(DISTINCT ch.`order_id`) AS orders, SUM(ch.`amount`) AS `total` FROM `" . DB_PREFIX . "coupon_history` ch LEFT JOIN `" . DB_PREFIX . "coupon` c ON (ch.`coupon_id` = c.`coupon_id`)";
 
@@ -37,6 +45,11 @@ class Coupon extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
+	/**
+	 * @param array $data
+	 *
+	 * @return int
+	 */
 	public function getTotalCoupons(array $data = []): int {
 		$sql = "SELECT COUNT(DISTINCT `coupon_id`) AS `total` FROM `" . DB_PREFIX . "coupon_history`";
 

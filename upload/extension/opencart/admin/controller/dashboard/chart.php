@@ -1,6 +1,12 @@
 <?php
 namespace Opencart\Admin\Controller\Extension\Opencart\Dashboard;
+/**
+ *
+ */
 class Chart extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		$this->load->language('extension/opencart/dashboard/chart');
 
@@ -44,6 +50,9 @@ class Chart extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('extension/opencart/dashboard/chart_form', $data));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function save(): void {
 		$this->load->language('extension/opencart/dashboard/chart');
 
@@ -65,6 +74,9 @@ class Chart extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return string
+	 */
 	public function dashboard(): string {
 		$this->load->language('extension/opencart/dashboard/chart');
 
@@ -73,6 +85,9 @@ class Chart extends \Opencart\System\Engine\Controller {
 		return $this->load->view('extension/opencart/dashboard/chart_info', $data);
 	}
 
+	/**
+	 * @return void
+	 */
 	public function chart(): void {
 		$this->load->language('extension/opencart/dashboard/chart');
 

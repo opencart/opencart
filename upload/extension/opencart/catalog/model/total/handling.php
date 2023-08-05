@@ -1,6 +1,16 @@
 <?php
 namespace Opencart\Catalog\Model\Extension\Opencart\Total;
+/**
+ *
+ */
 class Handling extends \Opencart\System\Engine\Model {
+	/**
+	 * @param array $totals
+	 * @param array $taxes
+	 * @param float $total
+	 *
+	 * @return void
+	 */
 	public function getTotal(array &$totals, array &$taxes, float &$total): void {
 		if (($this->cart->getSubTotal() > (float)$this->config->get('total_handling_total')) && ($this->cart->getSubTotal() > 0)) {
 			$this->load->language('extension/opencart/total/handling');

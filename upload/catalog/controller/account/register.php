@@ -1,6 +1,12 @@
 <?php
 namespace Opencart\Catalog\Controller\Account;
+/**
+ *
+ */
 class Register extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		if ($this->customer->isLogged()) {
 			$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token']));
@@ -102,6 +108,9 @@ class Register extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('account/register', $data));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function register(): void {
 		$this->load->language('account/register');
 

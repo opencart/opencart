@@ -1,8 +1,14 @@
 <?php
 namespace Opencart\Catalog\Controller\Api\Sale;
+/**
+ *
+ */
 class Order extends \Opencart\System\Engine\Controller {
 	/*
 	 * Loads order info
+	 */
+	/**
+	 * @return void
 	 */
 	public function load(): void {
 		$this->load->language('api/sale/order');
@@ -168,6 +174,9 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function comment(): void {
 		$this->load->language('api/sale/order');
 
@@ -187,6 +196,9 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function confirm(): void {
 		$this->load->language('api/sale/order');
 
@@ -518,6 +530,9 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function delete(): void {
 		$this->load->language('api/sale/order');
 
@@ -549,6 +564,9 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function addHistory(): void {
 		$this->load->language('api/sale/order');
 

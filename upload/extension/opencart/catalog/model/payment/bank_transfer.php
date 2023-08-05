@@ -1,6 +1,14 @@
 <?php
 namespace Opencart\Catalog\Model\Extension\Opencart\Payment;
+/**
+ *
+ */
 class BankTransfer extends \Opencart\System\Engine\Model {
+	/**
+	 * @param array $address
+	 *
+	 * @return array
+	 */
 	public function getMethods(array $address = []): array {
 		$this->load->language('extension/opencart/payment/bank_transfer');
 

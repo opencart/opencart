@@ -1,6 +1,16 @@
 <?php
 namespace Opencart\Catalog\Model\Extension\Opencart\Total;
+/**
+ *
+ */
 class Credit extends \Opencart\System\Engine\Model {
+	/**
+	 * @param array $totals
+	 * @param array $taxes
+	 * @param float $total
+	 *
+	 * @return void
+	 */
 	public function getTotal(array &$totals, array &$taxes, float &$total): void {
 		$this->load->language('extension/opencart/total/credit');
 
@@ -23,6 +33,12 @@ class Credit extends \Opencart\System\Engine\Model {
 		}
 	}
 
+	/**
+	 * @param array $order_info
+	 * @param array $order_total
+	 *
+	 * @return void
+	 */
 	public function confirm(array $order_info, array $order_total): void {
 		$this->load->language('extension/opencart/total/credit');
 
@@ -31,6 +47,11 @@ class Credit extends \Opencart\System\Engine\Model {
 		}
 	}
 
+	/**
+	 * @param int $order_id
+	 *
+	 * @return void
+	 */
 	public function unconfirm(int $order_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_transaction` WHERE `order_id` = '" . (int)$order_id . "'");
 	}

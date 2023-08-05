@@ -1,7 +1,18 @@
 <?php
 namespace Opencart\Catalog\Controller\Mail;
+/**
+ *
+ */
 class Transaction extends \Opencart\System\Engine\Controller {
 	// catalog/model/account/customer/addTransaction/after
+	/**
+	 * @param string $route
+	 * @param array  $args
+	 * @param mixed  $output
+	 *
+	 * @return void
+	 * @throws \Exception
+	 */
 	public function index(string &$route, array &$args, mixed &$output): void {
 		$this->load->language('mail/transaction');
 

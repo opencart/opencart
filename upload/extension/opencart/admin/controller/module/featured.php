@@ -1,6 +1,12 @@
 <?php
 namespace Opencart\Admin\Controller\Extension\Opencart\Module;
+/**
+ *
+ */
 class Featured extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		$this->load->language('extension/opencart/module/featured');
 
@@ -110,6 +116,9 @@ class Featured extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('extension/opencart/module/featured', $data));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function save(): void {
 		$this->load->language('extension/opencart/module/featured');
 

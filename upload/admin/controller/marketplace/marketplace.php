@@ -1,6 +1,12 @@
 <?php
 namespace Opencart\Admin\Controller\Marketplace;
+/**
+ *
+ */
 class Marketplace extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		$this->load->language('marketplace/marketplace');
 
@@ -520,6 +526,9 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('marketplace/marketplace_list', $data));
 	}
 
+	/**
+	 * @return object|\Opencart\System\Engine\Action|null
+	 */
 	public function info(): object|null {
 		if (isset($this->request->get['extension_id'])) {
 			$extension_id = (int)$this->request->get['extension_id'];
@@ -686,6 +695,9 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 		}
 	}
 
+	/**
+	 * @return void
+	 */
 	public function extension(): void {
 		$this->load->language('marketplace/marketplace');
 
@@ -751,6 +763,9 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('marketplace/marketplace_extension', $data));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function purchase(): void {
 		$this->load->language('marketplace/marketplace');
 
@@ -830,6 +845,9 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function download(): void {
 		$this->load->language('marketplace/marketplace');
 
@@ -925,6 +943,9 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function addComment(): void {
 		$this->load->language('marketplace/marketplace');
 
@@ -1001,6 +1022,9 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function comment(): void {
 		$this->load->language('marketplace/marketplace');
 
@@ -1072,6 +1096,9 @@ class Marketplace extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('marketplace/marketplace_comment', $data));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function reply(): void {
 		$this->load->language('marketplace/marketplace');
 

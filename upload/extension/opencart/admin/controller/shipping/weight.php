@@ -1,6 +1,12 @@
 <?php
 namespace Opencart\Admin\Controller\Extension\Opencart\Shipping;
+/**
+ *
+ */
 class Weight extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		$this->load->language('extension/opencart/shipping/weight');
 
@@ -53,6 +59,9 @@ class Weight extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('extension/opencart/shipping/weight', $data));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function save(): void {
 		$this->load->language('extension/opencart/shipping/weight');
 

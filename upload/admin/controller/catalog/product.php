@@ -1,6 +1,12 @@
 <?php
 namespace Opencart\Admin\Controller\Catalog;
+/**
+ *
+ */
 class Product extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		$this->load->language('catalog/product');
 
@@ -103,12 +109,18 @@ class Product extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('catalog/product', $data));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function list(): void {
 		$this->load->language('catalog/product');
 
 		$this->response->setOutput($this->getList());
 	}
 
+	/**
+	 * @return string
+	 */
 	protected function getList(): string {
 		if (isset($this->request->get['filter_name'])) {
 			$filter_name = $this->request->get['filter_name'];
@@ -320,6 +332,9 @@ class Product extends \Opencart\System\Engine\Controller {
 		return $this->load->view('catalog/product_list', $data);
 	}
 
+	/**
+	 * @return void
+	 */
 	public function form(): void {
 		$this->load->language('catalog/product');
 
@@ -1032,6 +1047,9 @@ class Product extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('catalog/product_form', $data));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function save(): void {
 		$this->load->language('catalog/product');
 
@@ -1122,6 +1140,9 @@ class Product extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function delete(): void {
 		$this->load->language('catalog/product');
 
@@ -1151,6 +1172,9 @@ class Product extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function copy(): void {
 		$this->load->language('catalog/product');
 
@@ -1180,12 +1204,18 @@ class Product extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function report(): void {
 		$this->load->language('catalog/product');
 
 		$this->response->setOutput($this->getReport());
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getReport(): string {
 		if (isset($this->request->get['product_id'])) {
 			$product_id = (int)$this->request->get['product_id'];
@@ -1241,6 +1271,9 @@ class Product extends \Opencart\System\Engine\Controller {
 		return $this->load->view('catalog/product_report', $data);
 	}
 
+	/**
+	 * @return void
+	 */
 	public function autocomplete(): void {
 		$json = [];
 

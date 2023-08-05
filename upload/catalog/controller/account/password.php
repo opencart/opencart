@@ -1,6 +1,12 @@
 <?php
 namespace Opencart\Catalog\Controller\Account;
+/**
+ *
+ */
 class Password extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		$this->load->language('account/password');
 
@@ -42,6 +48,9 @@ class Password extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('account/password', $data));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function save(): void {
 		$this->load->language('account/password');
 

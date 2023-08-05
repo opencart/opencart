@@ -1,6 +1,12 @@
 <?php
 namespace Opencart\Admin\Controller\Extension\Opencart\Module;
+/**
+ *
+ */
 class BestSeller extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		$this->load->language('extension/opencart/module/bestseller');
 
@@ -97,6 +103,9 @@ class BestSeller extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('extension/opencart/module/bestseller', $data));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function save(): void {
 		$this->load->language('extension/opencart/module/bestseller');
 
@@ -136,6 +145,9 @@ class BestSeller extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function install(): void {
 		if ($this->user->hasPermission('modify', 'extension/opencart/module/bestseller')) {
 			$this->load->model('extension/opencart/module/bestseller');
@@ -144,6 +156,9 @@ class BestSeller extends \Opencart\System\Engine\Controller {
 		}
 	}
 
+	/**
+	 * @return void
+	 */
 	public function uninstall(): void {
 		if ($this->user->hasPermission('modify', 'extension/opencart/module/bestseller')) {
 			$this->load->model('extension/opencart/module/bestseller');
@@ -152,12 +167,18 @@ class BestSeller extends \Opencart\System\Engine\Controller {
 		}
 	}
 
+	/**
+	 * @return void
+	 */
 	public function report(): void {
 		$this->load->language('extension/opencart/module/bestseller');
 
 		$this->response->setOutput($this->getReport());
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getReport(): string {
 		if (isset($this->request->get['page']) && $this->request->get['route'] == 'extension/opencart/module/bestseller.report') {
 			$page = (int)$this->request->get['page'];
@@ -204,6 +225,9 @@ class BestSeller extends \Opencart\System\Engine\Controller {
 		return $this->load->view('extension/opencart/module/bestseller_report', $data);
 	}
 
+	/**
+	 * @return void
+	 */
 	public function sync(): void {
 		$this->load->language('extension/opencart/module/bestseller');
 

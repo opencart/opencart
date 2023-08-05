@@ -1,6 +1,12 @@
 <?php
 namespace Opencart\Catalog\Controller\Account;
+/**
+ *
+ */
 class WishList extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		$this->load->language('account/wishlist');
 
@@ -51,12 +57,18 @@ class WishList extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('account/wishlist', $data));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function list(): void {
 		$this->load->language('account/wishlist');
 
 		$this->response->setOutput($this->getList());
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getList(): string {
 		$data['wishlist'] = $this->url->link('account/wishlist.list', 'language=' . $this->config->get('config_language') . (isset($this->session->data['customer_token']) ? '&customer_token=' . $this->session->data['customer_token'] : ''));
 		$data['add_to_cart'] = $this->url->link('checkout/cart.add', 'language=' . $this->config->get('config_language'));
@@ -119,6 +131,9 @@ class WishList extends \Opencart\System\Engine\Controller {
 		return $this->load->view('account/wishlist_list', $data);
 	}
 
+	/**
+	 * @return void
+	 */
 	public function add(): void {
 		$this->load->language('account/wishlist');
 
@@ -168,6 +183,9 @@ class WishList extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function remove(): void {
 		$this->load->language('account/wishlist');
 

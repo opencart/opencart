@@ -1,6 +1,12 @@
 <?php
 namespace Opencart\Admin\Controller\Extension\Opencart\Total;
+/**
+ *
+ */
 class Shipping extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		$this->load->language('extension/opencart/total/shipping');
 
@@ -37,6 +43,9 @@ class Shipping extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('extension/opencart/total/shipping', $data));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function save(): void {
 		$this->load->language('extension/opencart/total/shipping');
 

@@ -1,6 +1,16 @@
 <?php
 namespace Opencart\Catalog\Controller\Mail;
+/**
+ *
+ */
 class Subscription extends \Opencart\System\Engine\Controller {
+	/**
+	 * @param string $route
+	 * @param array  $args
+	 * @param        $output
+	 *
+	 * @return void
+	 */
 	public function index(string &$route, array &$args, &$output): void {
 		if (isset($args[0])) {
 			$subscription_id = $args[0];

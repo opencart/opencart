@@ -1,6 +1,12 @@
 <?php
 namespace Opencart\Admin\Controller\Localisation;
+/**
+ *
+ */
 class AddressFormat extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		$this->load->language('localisation/address_format');
 
@@ -38,12 +44,18 @@ class AddressFormat extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('localisation/address_format', $data));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function list(): void {
 		$this->load->language('localisation/address_format');
 
 		$this->response->setOutput($this->getList());
 	}
 
+	/**
+	 * @return string
+	 */
 	protected function getList(): string {
 		if (isset($this->request->get['page'])) {
 			$page = (int)$this->request->get['page'];
@@ -93,6 +105,9 @@ class AddressFormat extends \Opencart\System\Engine\Controller {
 		return $this->load->view('localisation/address_format_list', $data);
 	}
 
+	/**
+	 * @return void
+	 */
 	public function form(): void {
 		$this->load->language('localisation/address_format');
 
@@ -152,6 +167,9 @@ class AddressFormat extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('localisation/address_format_form', $data));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function save(): void {
 		$this->load->language('localisation/address_format');
 
@@ -181,6 +199,9 @@ class AddressFormat extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function delete(): void {
 		$this->load->language('localisation/address_format');
 

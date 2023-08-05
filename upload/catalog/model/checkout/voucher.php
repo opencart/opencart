@@ -1,16 +1,35 @@
 <?php
 namespace Opencart\Catalog\Model\Checkout;
+/**
+ *
+ */
 class Voucher extends \Opencart\System\Engine\Model {
+	/**
+	 * @param int   $order_id
+	 * @param array $data
+	 *
+	 * @return int
+	 */
 	public function addVoucher(int $order_id, array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "voucher` SET `order_id` = '" . (int)$order_id . "', `code` = '" . $this->db->escape((string)$data['code']) . "', `from_name` = '" . $this->db->escape((string)$data['from_name']) . "', `from_email` = '" . $this->db->escape((string)$data['from_email']) . "', `to_name` = '" . $this->db->escape((string)$data['to_name']) . "', `to_email` = '" . $this->db->escape((string)$data['to_email']) . "', `voucher_theme_id` = '" . (int)$data['voucher_theme_id'] . "', `message` = '" . $this->db->escape((string)$data['message']) . "', `amount` = '" . (float)$data['amount'] . "', `status` = '1', `date_added` = NOW()");
 
 		return $this->db->getLastId();
 	}
 
+	/**
+	 * @param int $order_id
+	 *
+	 * @return void
+	 */
 	public function disableVoucher(int $order_id): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "voucher` SET `status` = '0' WHERE `order_id` = '" . (int)$order_id . "'");
 	}
 
+	/**
+	 * @param string $code
+	 *
+	 * @return array
+	 */
 	public function getVoucher(string $code): array {
 		$status = true;
 
@@ -73,6 +92,11 @@ class Voucher extends \Opencart\System\Engine\Model {
 		}
 	}
 
+	/**
+	 * @param int $order_id
+	 *
+	 * @return void
+	 */
 	public function deleteVoucherByOrderId(int $order_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "voucher` WHERE `order_id` = '" . (int)$order_id . "'");
 	}

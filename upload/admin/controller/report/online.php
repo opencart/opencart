@@ -1,6 +1,12 @@
 <?php
 namespace Opencart\Admin\Controller\Report;
+/**
+ *
+ */
 class Online extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		$this->load->language('report/online');
 
@@ -43,12 +49,18 @@ class Online extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('report/online', $data));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function list(): void {
 		$this->load->language('report/online');
 
 		$this->response->setOutput($this->getList());
 	}
 
+	/**
+	 * @return string
+	 */
 	protected function getList(): string {
 		if (isset($this->request->get['filter_customer'])) {
 			$filter_customer = $this->request->get['filter_customer'];

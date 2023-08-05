@@ -1,10 +1,25 @@
 <?php
 namespace Opencart\Catalog\Controller\Event;
+/**
+ *
+ */
 class Debug extends \Opencart\System\Engine\Controller {
+	/**
+	 * @param string $route
+	 * @param array  $args
+	 *
+	 * @return void
+	 */
 	public function index(string &$route, array &$args): void {
 		//echo $route;
 	}
 
+	/**
+	 * @param string $route
+	 * @param array  $args
+	 *
+	 * @return void
+	 */
 	public function before(string &$route, array &$args): void {
 		// add the route you want to test
 		/*
@@ -14,6 +29,13 @@ class Debug extends \Opencart\System\Engine\Controller {
 		*/
 	}
 
+	/**
+	 * @param string $route
+	 * @param array  $args
+	 * @param mixed  $output
+	 *
+	 * @return void
+	 */
 	public function after(string $route, array &$args, mixed &$output): void {
 		// add the route you want to test
 		/*

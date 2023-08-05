@@ -1,6 +1,12 @@
 <?php
 namespace Opencart\Admin\Controller\Tool;
+/**
+ *
+ */
 class Backup extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		$this->load->language('tool/backup');
 
@@ -53,12 +59,18 @@ class Backup extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('tool/backup', $data));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function history(): void {
 		$this->load->language('tool/backup');
 
 		$this->response->setOutput($this->getHistory());
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getHistory(): string {
 		$this->load->language('tool/backup');
 
@@ -100,6 +112,9 @@ class Backup extends \Opencart\System\Engine\Controller {
 		return $this->load->view('tool/backup_history', $data);
 	}
 
+	/**
+	 * @return void
+	 */
 	public function backup(): void {
 		$this->load->language('tool/backup');
 
@@ -221,6 +236,9 @@ class Backup extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function restore(): void {
 		$this->load->language('tool/backup');
 
@@ -314,6 +332,9 @@ class Backup extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function upload(): void {
 		$this->load->language('tool/backup');
 
@@ -352,6 +373,9 @@ class Backup extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function download(): void {
 		$this->load->language('tool/backup');
 
@@ -394,6 +418,9 @@ class Backup extends \Opencart\System\Engine\Controller {
 		}
 	}
 
+	/**
+	 * @return void
+	 */
 	public function delete(): void {
 		$this->load->language('tool/backup');
 

@@ -1,6 +1,17 @@
 <?php
 namespace Opencart\Admin\Controller\Mail;
+/**
+ *
+ */
 class Returns extends \Opencart\System\Engine\Controller {
+	/**
+	 * @param string $route
+	 * @param array  $args
+	 * @param mixed  $output
+	 *
+	 * @return void
+	 * @throws \Exception
+	 */
 	public function index(string &$route, array &$args, mixed &$output): void {
 		if (isset($args[0])) {
 			$return_id = $args[0];

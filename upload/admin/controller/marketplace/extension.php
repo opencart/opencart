@@ -1,6 +1,12 @@
 <?php
 namespace Opencart\Admin\Controller\Marketplace;
+/**
+ *
+ */
 class Extension extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		$this->load->language('marketplace/extension');
 

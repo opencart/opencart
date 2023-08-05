@@ -1,8 +1,17 @@
 <?php
 namespace Opencart\Admin\Controller\Event;
+/**
+ *
+ */
 class Language extends \Opencart\System\Engine\Controller {
 	// view/*/before
 	// Dump all the language vars into the template.
+	/**
+	 * @param string $route
+	 * @param array  $args
+	 *
+	 * @return void
+	 */
 	public function index(string &$route, array &$args): void {
 		foreach ($this->language->all() as $key => $value) {
 			if (!isset($args[$key])) {
@@ -13,6 +22,12 @@ class Language extends \Opencart\System\Engine\Controller {
 
 	// controller/*/before
 	// 1. Before controller load store all current loaded language data.
+	/**
+	 * @param string $route
+	 * @param array  $args
+	 *
+	 * @return void
+	 */
 	public function before(string &$route, array &$args): void {
 		$data = $this->language->all();
 
@@ -23,6 +38,13 @@ class Language extends \Opencart\System\Engine\Controller {
 
 	// controller/*/after
 	// 2. After controller load restore old language data.
+	/**
+	 * @param string $route
+	 * @param array  $args
+	 * @param mixed  $output
+	 *
+	 * @return void
+	 */
 	public function after(string &$route, array &$args, mixed &$output): void {
 		$data = json_decode($this->language->get('backup'), true);
 

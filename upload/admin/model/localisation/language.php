@@ -1,6 +1,14 @@
 <?php
 namespace Opencart\Admin\Model\Localisation;
+/**
+ *
+ */
 class Language extends \Opencart\System\Engine\Model {
+	/**
+	 * @param array $data
+	 *
+	 * @return int
+	 */
 	public function addLanguage(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "language` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `code` = '" . $this->db->escape((string)$data['code']) . "', `locale` = '" . $this->db->escape((string)$data['locale']) . "', `extension` = '" . $this->db->escape((string)$data['extension']) . "', `sort_order` = '" . (int)$data['sort_order'] . "', `status` = '" . (bool)(isset($data['status']) ? $data['status'] : 0) . "'");
 
@@ -197,12 +205,23 @@ class Language extends \Opencart\System\Engine\Model {
 		return $language_id;
 	}
 
+	/**
+	 * @param int   $language_id
+	 * @param array $data
+	 *
+	 * @return void
+	 */
 	public function editLanguage(int $language_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "language` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `code` = '" . $this->db->escape((string)$data['code']) . "', `locale` = '" . $this->db->escape((string)$data['locale']) . "', `extension` = '" . $this->db->escape((string)$data['extension']) . "', `sort_order` = '" . (int)$data['sort_order'] . "', `status` = '" . (bool)(isset($data['status']) ? $data['status'] : 0) . "' WHERE `language_id` = '" . (int)$language_id . "'");
 
 		$this->cache->delete('language');
 	}
 
+	/**
+	 * @param int $language_id
+	 *
+	 * @return void
+	 */
 	public function deleteLanguage(int $language_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "language` WHERE `language_id` = '" . (int)$language_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "seo_url` WHERE `language_id` = '" . (int)$language_id . "'");
@@ -218,6 +237,11 @@ class Language extends \Opencart\System\Engine\Model {
 		*/
 	}
 
+	/**
+	 * @param int $language_id
+	 *
+	 * @return array
+	 */
 	public function getLanguage(int $language_id): array {
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "language` WHERE `language_id` = '" . (int)$language_id . "'");
 
@@ -238,6 +262,11 @@ class Language extends \Opencart\System\Engine\Model {
 		return $language;
 	}
 
+	/**
+	 * @param string $code
+	 *
+	 * @return array
+	 */
 	public function getLanguageByCode(string $code): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "language` WHERE `code` = '" . $this->db->escape($code) . "'");
 
@@ -258,6 +287,11 @@ class Language extends \Opencart\System\Engine\Model {
 		return $language;
 	}
 
+	/**
+	 * @param array $data
+	 *
+	 * @return array
+	 */
 	public function getLanguages(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "language`";
 
@@ -327,6 +361,9 @@ class Language extends \Opencart\System\Engine\Model {
 		return $language_data;
 	}
 
+	/**
+	 * @return int
+	 */
 	public function getTotalLanguages(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "language`");
 

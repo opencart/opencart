@@ -1,6 +1,12 @@
 <?php
 namespace Opencart\Catalog\Controller\Api\Sale;
+/**
+ *
+ */
 class PaymentMethod extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		$this->load->language('api/sale/payment_method');
 
@@ -38,6 +44,9 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function save(): void {
 		$this->load->language('api/sale/payment_method');
 

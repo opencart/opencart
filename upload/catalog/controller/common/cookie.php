@@ -1,6 +1,12 @@
 <?php
 namespace Opencart\Catalog\Controller\Common;
+/**
+ *
+ */
 class Cookie extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return string
+	 */
 	public function index(): string {
 		if ($this->config->get('config_cookie_id') && !isset($this->request->cookie['policy'])) {
 			$this->load->model('catalog/information');
@@ -22,6 +28,9 @@ class Cookie extends \Opencart\System\Engine\Controller {
 		return '';
 	}
 
+	/**
+	 * @return void
+	 */
 	public function confirm(): void {
 		$json = [];
 

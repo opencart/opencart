@@ -1,6 +1,12 @@
 <?php
 namespace Opencart\Admin\Controller\Tool;
+/**
+ *
+ */
 class Upload extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		$this->load->language('tool/upload');
 
@@ -46,12 +52,18 @@ class Upload extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('tool/upload', $data));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function list(): void {
 		$this->load->language('tool/upload');
 
 		$this->response->setOutput($this->getList());
 	}
 
+	/**
+	 * @return string
+	 */
 	protected function getList(): string {
 		if (isset($this->request->get['filter_name'])) {
 			$filter_name = $this->request->get['filter_name'];
@@ -214,6 +226,9 @@ class Upload extends \Opencart\System\Engine\Controller {
 		return $this->load->view('tool/upload_list', $data);
 	}
 
+	/**
+	 * @return void
+	 */
 	public function delete(): void {
 		$this->load->language('tool/upload');
 
@@ -250,6 +265,9 @@ class Upload extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function download(): void {
 		$this->load->language('tool/upload');
 
@@ -311,6 +329,9 @@ class Upload extends \Opencart\System\Engine\Controller {
 		}
 	}
 
+	/**
+	 * @return void
+	 */
 	public function upload(): void {
 		$this->load->language('tool/upload');
 

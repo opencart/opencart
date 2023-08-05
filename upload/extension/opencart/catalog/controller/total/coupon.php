@@ -1,6 +1,12 @@
 <?php
 namespace Opencart\Catalog\Controller\Extension\Opencart\Total;
+/**
+ *
+ */
 class Coupon extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return string
+	 */
 	public function index(): string {
 		if ($this->config->get('total_coupon_status')) {
 			$this->load->language('extension/opencart/total/coupon');
@@ -20,6 +26,9 @@ class Coupon extends \Opencart\System\Engine\Controller {
 		return '';
 	}
 
+	/**
+	 * @return void
+	 */
 	public function save(): void {
 		$this->load->language('extension/opencart/total/coupon');
 

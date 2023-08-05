@@ -1,8 +1,19 @@
 <?php
 namespace Opencart\Admin\Controller\Mail;
+/**
+ *
+ */
 class Subscription extends \Opencart\System\Engine\Controller {
     // admin/controller/sale/subscription/addHistory/after
-    public function history(string &$route, array &$args, mixed &$output): void {
+	/**
+	 * @param string $route
+	 * @param array  $args
+	 * @param mixed  $output
+	 *
+	 * @return void
+	 * @throws \Exception
+	 */
+	public function history(string &$route, array &$args, mixed &$output): void {
         if (isset($args[0])) {
             $subscription_id = $args[0];
         } else {
@@ -145,7 +156,16 @@ class Subscription extends \Opencart\System\Engine\Controller {
     }
 
     // admin/controller/sale/subscription/addTransaction/after
-    public function transaction(string &$route, array &$args, mixed &$output): void {
+
+	/**
+	 * @param string $route
+	 * @param array  $args
+	 * @param mixed  $output
+	 *
+	 * @return void
+	 * @throws \Exception
+	 */
+	public function transaction(string &$route, array &$args, mixed &$output): void {
         if (isset($args[0])) {
             $subscription_id = $args[0];
         } else {

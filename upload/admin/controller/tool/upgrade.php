@@ -11,7 +11,13 @@ Upgrade Process
 4. Redirect to upgrade page
 */
 namespace Opencart\Admin\Controller\Tool;
+/**
+ *
+ */
 class Upgrade extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		$this->load->language('tool/upgrade');
 
@@ -71,6 +77,9 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('tool/upgrade', $data));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function download(): void {
 		$this->load->language('tool/upgrade');
 
@@ -127,6 +136,9 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function install(): void {
 		$this->load->language('tool/upgrade');
 

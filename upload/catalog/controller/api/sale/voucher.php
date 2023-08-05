@@ -1,7 +1,13 @@
 <?php
 namespace Opencart\Catalog\Controller\Api\Sale;
+/**
+ *
+ */
 class Voucher extends \Opencart\System\Engine\Controller {
 	// Apply voucher
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		$this->load->language('api/sale/voucher');
 
@@ -39,6 +45,9 @@ class Voucher extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function add(): void {
 		$this->load->language('api/sale/voucher');
 
@@ -104,6 +113,9 @@ class Voucher extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function remove(): void {
 		$this->load->language('api/sale/cart');
 

@@ -1,6 +1,18 @@
 <?php
 namespace Opencart\Catalog\Controller\Cron;
+/**
+ *
+ */
 class Subscription extends \Opencart\System\Engine\Controller {
+	/**
+	 * @param int    $cron_id
+	 * @param string $code
+	 * @param string $cycle
+	 * @param string $date_added
+	 * @param string $date_modified
+	 *
+	 * @return void
+	 */
 	public function index(int $cron_id, string $code, string $cycle, string $date_added, string $date_modified): void {
         $this->load->language('cron/subscription');
 

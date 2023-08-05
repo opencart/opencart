@@ -1,6 +1,12 @@
 <?php
 namespace Opencart\Admin\Controller\Design;
+/**
+ *
+ */
 class Banner extends \Opencart\System\Engine\Controller {
+	/**
+	 * @return void
+	 */
 	public function index(): void {
 		$this->load->language('design/banner');
 
@@ -46,12 +52,18 @@ class Banner extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('design/banner', $data));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function list(): void {
 		$this->load->language('design/banner');
 
 		$this->response->setOutput($this->getList());
 	}
 
+	/**
+	 * @return string
+	 */
 	protected function getList(): string {
 		if (isset($this->request->get['sort'])) {
 			$sort = (string)$this->request->get['sort'];
@@ -151,6 +163,9 @@ class Banner extends \Opencart\System\Engine\Controller {
 		return $this->load->view('design/banner_list', $data);
 	}
 
+	/**
+	 * @return void
+	 */
 	public function form(): void {
 		$this->load->language('design/banner');
 
@@ -256,6 +271,9 @@ class Banner extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('design/banner_form', $data));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function save(): void {
 		$this->load->language('design/banner');
 
@@ -295,6 +313,9 @@ class Banner extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	/**
+	 * @return void
+	 */
 	public function delete(): void {
 		$this->load->language('design/banner');
 

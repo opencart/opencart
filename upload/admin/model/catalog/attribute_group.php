@@ -1,6 +1,14 @@
 <?php
 namespace Opencart\Admin\Model\Catalog;
+/**
+ *
+ */
 class AttributeGroup extends \Opencart\System\Engine\Model {
+	/**
+	 * @param array $data
+	 *
+	 * @return int
+	 */
 	public function addAttributeGroup(array $data): int {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "attribute_group` SET `sort_order` = '" . (int)$data['sort_order'] . "'");
 
@@ -13,6 +21,12 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 		return $attribute_group_id;
 	}
 
+	/**
+	 * @param int   $attribute_group_id
+	 * @param array $data
+	 *
+	 * @return void
+	 */
 	public function editAttributeGroup(int $attribute_group_id, array $data): void {
 		$this->db->query("UPDATE `" . DB_PREFIX . "attribute_group` SET `sort_order` = '" . (int)$data['sort_order'] . "' WHERE `attribute_group_id` = '" . (int)$attribute_group_id . "'");
 
@@ -23,24 +37,36 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 		}
 	}
 
+	/**
+	 * @param int $attribute_group_id
+	 *
+	 * @return void
+	 */
 	public function deleteAttributeGroup(int $attribute_group_id): void {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "attribute_group` WHERE `attribute_group_id` = '" . (int)$attribute_group_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "attribute_group_description` WHERE `attribute_group_id` = '" . (int)$attribute_group_id . "'");
 	}
 
+	/**
+	 * @param int $attribute_group_id
+	 *
+	 * @return array
+	 */
 	public function getAttributeGroup(int $attribute_group_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "attribute_group` WHERE `attribute_group_id` = '" . (int)$attribute_group_id . "'");
 
 		return $query->row;
 	}
 
+	/**
+	 * @param array $data
+	 *
+	 * @return array
+	 */
 	public function getAttributeGroups(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "attribute_group` ag LEFT JOIN `" . DB_PREFIX . "attribute_group_description` agd ON (ag.`attribute_group_id` = agd.`attribute_group_id`) WHERE agd.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
-		$sort_data = [
-			'agd.name',
-			'ag.sort_order'
-		];
+		$sort_data = ['agd.name', 'ag.sort_order'];
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 			$sql .= " ORDER BY " . $data['sort'];
@@ -71,6 +97,11 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
+	/**
+	 * @param int $attribute_group_id
+	 *
+	 * @return array
+	 */
 	public function getDescriptions(int $attribute_group_id): array {
 		$attribute_group_data = [];
 
@@ -83,6 +114,9 @@ class AttributeGroup extends \Opencart\System\Engine\Model {
 		return $attribute_group_data;
 	}
 
+	/**
+	 * @return int
+	 */
 	public function getTotalAttributeGroups(): int {
 		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "attribute_group`");
 

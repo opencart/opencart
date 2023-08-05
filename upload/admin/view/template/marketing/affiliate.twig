@@ -10,7 +10,7 @@
 
         <button type="submit" form="form-affiliate" formaction="{{ csv }}" id="button-csv" data-bs-toggle="tooltip" title="{{ button_csv }}" class="btn btn-info"><i class="fa-solid fa-file-csv"></i></button>
 
-        <button type="submit" form="form-affiliate" formaction="{{ complete }}" id="button-complete" data-bs-toggle="tooltip" title="{{ button_complete }}" class="btn btn-success"><i class="fa-solid fa-credit-card"></i></button>
+        <button type="submit" form="form-affiliate" formaction="{{ complete }}" data-oc-toggle="ajax" id="button-complete" data-bs-toggle="tooltip" title="{{ button_complete }}" class="btn btn-success"><i class="fa-solid fa-credit-card"></i></button>
 
         <a href="{{ add }}" data-bs-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fa-solid fa-plus"></i></a>
 
@@ -196,6 +196,8 @@ $('#button-calculate').on('click', function (e) {
             $(element).button('reset');
         },
         success: function (json) {
+            console.log(json);
+
             if (json['error']) {
                 $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
             }

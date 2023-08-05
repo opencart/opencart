@@ -79,7 +79,7 @@ $(document).ready(function() {
 
     // Date Time
     var oc_datetimepicker = function() {
-        $('.datetime').daterangepicker({
+        $(this).daterangepicker({
             singleDatePicker: true,
             autoApply: true,
             autoUpdateInput: false,
@@ -95,7 +95,6 @@ $(document).ready(function() {
 
     $(document).on('focus', '.datetime', oc_datetimepicker);
 
-    // Alert Fade
     var oc_alert = function() {
         window.setTimeout(function() {
             $('.alert-dismissible').fadeTo(3000, 0, function() {

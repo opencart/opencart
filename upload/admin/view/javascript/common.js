@@ -133,7 +133,7 @@ $(document).ready(function () {
 
     // Date Time
     var oc_datetimepicker = function () {
-        $('.datetime').daterangepicker({
+        $(this).daterangepicker({
             singleDatePicker: true,
             autoApply: true,
             autoUpdateInput: false,
@@ -162,36 +162,19 @@ $(document).ready(function () {
 });
 
 // Forms
-$(document).on('submit', '[data-oc-toggle=\'ajax\']', function (e) {
+$(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function (e) {
     e.preventDefault();
+
+    console.log(e);
 
     var element = this;
 
-    if ($(element).is('form')) {
+    return true;
 
-    }
-
-    if ($(element).is('button')) {
-
-    }
-
-
-
+    // Form attributes
     var form = e.target;
 
     var action = $(form).attr('action');
-
-    if (e.originalEvent !== undefined && e.originalEvent.submitter !== undefined) {
-        var button = e.originalEvent.submitter;
-    } else {
-        var button = '';
-    }
-
-    var formaction = $(button).attr('formaction');
-
-    if (formaction !== undefined) {
-        action = formaction;
-    }
 
     var method = $(form).attr('method');
 
@@ -199,19 +182,50 @@ $(document).on('submit', '[data-oc-toggle=\'ajax\']', function (e) {
         method = 'post';
     }
 
-    var enctype = $(element).attr('enctype');
+    var enctype = $(form).attr('enctype');
 
     if (enctype === undefined) {
         enctype = 'application/x-www-form-urlencoded';
     }
 
-    console.log(e);
+    if (e.originalEvent !== undefined && e.originalEvent.submitter !== undefined) {
+        var button = e.originalEvent.submitter;
+    } else {
+        var button = '';
+    }
+
+    // Form button overrides
+    var formaction = $(button).attr('formaction');
+
+    if (formaction !== undefined) {
+        action = formaction;
+    }
+
+    var formmethod = $(button).attr('formmethod');
+
+    if (formmethod !== undefined) {
+        method = formmethod;
+    }
+
+    var formenctype = $(button).attr('formenctype');
+
+    if (formenctype !== undefined) {
+        enctype = formenctype;
+    }
+
+    if (button) {
+        var formaction = $(button).attr('data-type');
+    }
+
+    console.log(element);
+
     console.log('element ' + element);
     console.log('action ' + action);
     console.log('button ' + button);
     console.log('formaction ' + formaction);
     console.log('method ' + method);
     console.log('enctype ' + enctype);
+    console.log($(element).serialize());
 
     // https://github.com/opencart/opencart/issues/9690
     if (typeof CKEDITOR != 'undefined') {
@@ -225,7 +239,7 @@ $(document).on('submit', '[data-oc-toggle=\'ajax\']', function (e) {
         type: method,
         data: $(form).serialize(),
         dataType: 'json',
-        contentType: 'application/x-www-form-urlencoded',
+        contentType: enctype,
         beforeSend: function () {
             $(button).button('loading');
         },

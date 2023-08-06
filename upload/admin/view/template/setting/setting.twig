@@ -237,7 +237,7 @@
                 </div>
               </div>
               <div class="row mb-3">
-                <label class="col-sm-2 col-form-label">{{ entry_currency_auto }}</label>
+                <label for="input-currency-auto" class="col-sm-2 col-form-label">{{ entry_currency_auto }}</label>
                 <div class="col-sm-10">
                   <div class="form-check form-switch form-switch-lg">
                     <input type="hidden" name="config_currency_auto" value="0"/>
@@ -272,6 +272,7 @@
 
               <div class="accordion" id="accordion-option">
 
+                <!-- region Product Settings Pane -->
                 <div class="accordion-item">
                   <h2 class="accordion-header"><button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapse-product">{{ text_product }}</button></h2>
 
@@ -286,6 +287,7 @@
                           <div id="error-product-description-length" class="invalid-feedback"></div>
                         </div>
                       </div>
+
                       <div class="row mb-3 required">
                         <label for="input-pagination" class="col-sm-2 col-form-label">{{ entry_pagination }}</label>
                         <div class="col-sm-10">
@@ -294,6 +296,7 @@
                           <div id="error-pagination" class="invalid-feedback"></div>
                         </div>
                       </div>
+
                       <div class="row mb-3">
                         <label class="col-sm-2 col-form-label">{{ entry_product_count }}</label>
                         <div class="col-sm-10">
@@ -324,9 +327,58 @@
                           <div class="form-text">{{ help_product_report }}</div>
                         </div>
                       </div>
+
+                      <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label">{{ entry_identifier_fields }}</label>
+                        <div class="col-sm-10">
+                          <!-- region UPC -->
+                          <div class="form-check form-switch form-switch-lg form-check-inline">
+                            <input type="hidden" name="config_product_upc" value="0"/>
+                            <input type="checkbox" name="config_product_upc" value="1" id="input-product-upc" class="form-check-input"{% if config_product_upc %} checked{% endif %}/>
+                            <label class="form-check-label" for="config_product_upc">{{ entry_product_upc }}</label>
+                          </div>
+                          <!-- endregion UPC -->
+
+                          <!-- region EAN -->
+                          <div class="form-check form-switch form-switch-lg form-check-inline">
+                            <input type="hidden" name="config_product_ean" value="0"/>
+                            <input type="checkbox" name="config_product_ean" value="1" id="input-product-ean" class="form-check-input"{% if config_product_ean %} checked{% endif %}/>
+                            <label class="form-check-label" for="config_product_ean">{{ entry_product_ean }}</label>
+                          </div>
+                          <!-- endregion EAN -->
+
+                          <!-- region JAN -->
+                          <div class="form-check form-switch form-switch-lg form-check-inline">
+                            <input type="hidden" name="config_product_jan" value="0"/>
+                            <input type="checkbox" name="config_product_jan" value="1" id="input-product-jan" class="form-check-input"{% if config_product_jan %} checked{% endif %}/>
+                            <label class="form-check-label" for="config_product_jan">{{ entry_product_jan }}</label>
+                          </div>
+                          <!-- endregion JAN -->
+
+                          <!-- region ISBN -->
+                          <div class="form-check form-switch form-switch-lg form-check-inline">
+                            <input type="hidden" name="config_product_isbn" value="0"/>
+                            <input type="checkbox" name="config_product_isbn" value="1" id="input-product-isbn" class="form-check-input"{% if config_product_isbn %} checked{% endif %}/>
+                            <label class="form-check-label" for="config_product_isbn">{{ entry_product_isbn }}</label>
+                          </div>
+                          <!-- endregion ISBN -->
+
+                          <!-- region MPN -->
+                          <div class="form-check form-switch form-switch-lg form-check-inline">
+                            <input type="hidden" name="config_product_mpn" value="0"/>
+                            <input type="checkbox" name="config_product_mpn" value="1" id="input-product-mpn" class="form-check-input"{% if config_product_mpn %} checked{% endif %}/>
+                            <label class="form-check-label" for="config_product_mpn">{{ entry_product_mpn }}</label>
+                          </div>
+                          <!-- endregion MPN -->
+
+                          <div class="form-text">{{ help_identifier_fields }}</div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
+                <!-- endregion Product Settings Pane -->
+
                 <div class="accordion-item">
                   <h2 class="accordion-header"><button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapse-review">{{ text_review }}</button></h2>
                   <div id="collapse-review" class="accordion-collapse collapse" data-bs-parent="#accordion-option">

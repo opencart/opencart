@@ -37,6 +37,31 @@ class Setting extends \Opencart\System\Engine\Model {
 		return $setting_data;
 	}
 
+	public function getSettingsByNames(array $keys, int $store_id = 0): array {
+		$settings = [];
+
+		if(empty($keys)){
+			return $settings;
+		}
+
+		$escaped_keys = array_map(function($item){
+			return "'" . $this->db->escape($item) . "'";
+		}, array_unique($keys));
+
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE `store_id` = '" . (int)$store_id . "' AND `key` IN (" . implode(', ', $escaped_keys) . ')');
+
+		foreach ($query->rows as $result) {
+			if (!$result['serialized']) {
+				$settings[$result['key']] = $result['value'];
+			} else {
+				$settings[$result['key']] = json_decode($result['value'], true);
+			}
+		}
+
+		return $settings;
+	}
+
+
 	/**
 	 * @param string $code
 	 * @param array  $data
@@ -48,7 +73,7 @@ class Setting extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `store_id` = '" . (int)$store_id . "' AND `code` = '" . $this->db->escape($code) . "'");
 
 		foreach ($data as $key => $value) {
-			if (substr($key, 0, strlen($code)) == $code) {
+			if (str_starts_with($key, $code)) {
 				if (!is_array($value)) {
 					$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `store_id` = '" . (int)$store_id . "', `code` = '" . $this->db->escape($code) . "', `key` = '" . $this->db->escape($key) . "', `value` = '" . $this->db->escape($value) . "'");
 				} else {

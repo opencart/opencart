@@ -14,7 +14,7 @@ namespace Opencart\Admin\Controller\Tool;
 /**
  * Class Upgrade
  *
- * @package
+ * @package Opencart\Admin\Controller\Tool
  */
 class Upgrade extends \Opencart\System\Engine\Controller {
 	/**

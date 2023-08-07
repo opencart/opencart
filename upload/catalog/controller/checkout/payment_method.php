@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Controller\Checkout;
 /**
  * Class PaymentMethod
  *
- * @package
+ * @package Opencart\Catalog\Controller\Checkout
  */
 class PaymentMethod extends \Opencart\System\Engine\Controller {
 	/**

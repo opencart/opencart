@@ -3,7 +3,7 @@ namespace Opencart\Install\Controller\Upgrade;
 /**
  * Class Upgrade3
  *
- * @package
+ * @package Opencart\Install\Controller\Upgrade
  */
 class Upgrade3 extends \Opencart\System\Engine\Controller {
 	/**

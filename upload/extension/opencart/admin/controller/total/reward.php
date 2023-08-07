@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Extension\Opencart\Total;
 /**
  * Class Reward
  *
- * @package
+ * @package Opencart\Admin\Controller\Extension\Opencart\Total
  */
 class Reward extends \Opencart\System\Engine\Controller {
 	/**

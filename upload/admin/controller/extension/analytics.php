@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Extension;
 /**
  * Class Analytics
  *
- * @package
+ * @package Opencart\Admin\Controller\Extension
  */
 class Analytics extends \Opencart\System\Engine\Controller {
 	/**

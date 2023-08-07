@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Extension\Opencart\Report;
 /**
  * Class SaleOrder
  *
- * @package
+ * @package Opencart\Admin\Controller\Extension\Opencart\Report
  */
 class SaleOrder extends \Opencart\System\Engine\Controller {
 	/**

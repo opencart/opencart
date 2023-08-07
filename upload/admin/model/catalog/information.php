@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Model\Catalog;
 /**
  * Class Information
+ *
+ * @package Opencart\Admin\Model\Catalog
  */
 class Information extends \Opencart\System\Engine\Model {
 	/**

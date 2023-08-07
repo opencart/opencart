@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Controller\Common;
 /**
  * Class Maintenance
  *
- * @package
+ * @package Opencart\Catalog\Controller\Common
  */
 class Maintenance extends \Opencart\System\Engine\Controller {
 	/**

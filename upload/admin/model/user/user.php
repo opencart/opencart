@@ -3,7 +3,7 @@ namespace Opencart\Admin\Model\User;
 /**
  * Class User
  *
- * @package
+ * @package Opencart\Admin\Model\User
  */
 class User extends \Opencart\System\Engine\Model {
 	/**

@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Extension\Opencart\Dashboard;
 /**
  * Class Recent
  *
- * @package
+ * @package Opencart\Admin\Controller\Extension\Opencart\Dashboard
  */
 class Recent extends \Opencart\System\Engine\Controller {
 	/**

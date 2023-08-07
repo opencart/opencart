@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Model\Setting;
 /**
  * Class Cron
  *
- * @package
+ * @package Opencart\Catalog\Model\Setting
  */
 class Cron extends \Opencart\System\Engine\Model {
 	/**

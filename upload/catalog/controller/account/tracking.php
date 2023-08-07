@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Controller\Account;
 /**
  * Class Tracking
  *
- * @package
+ * @package Opencart\Catalog\Controller\Account
  */
 class Tracking extends \Opencart\System\Engine\Controller {
 	/**

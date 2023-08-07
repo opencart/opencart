@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Extension\Opencart\Currency;
 /**
  * Class Fixer
  *
- * @package
+ * @package Opencart\Admin\Controller\Extension\Opencart\Currency
  */
 class Fixer extends \Opencart\System\Engine\Controller {
 	/**

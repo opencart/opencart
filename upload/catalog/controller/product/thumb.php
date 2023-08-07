@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Controller\Product;
 /**
  * Class Thumb
  *
- * @package
+ * @package Opencart\Catalog\Controller\Product
  */
 class Thumb extends \Opencart\System\Engine\Controller {
 	/**

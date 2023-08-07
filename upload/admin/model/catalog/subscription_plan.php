@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Model\Catalog;
 /**
  * Class Subscription Plan
+ *
+ * @package Opencart\Admin\Model\Catalog
  */
 class SubscriptionPlan extends \Opencart\System\Engine\Model {
 	/**

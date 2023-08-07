@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Controller\Common;
 /**
  * Class Search
  *
- * @package
+ * @package Opencart\Catalog\Controller\Common
  */
 class Search extends \Opencart\System\Engine\Controller {
 	/**

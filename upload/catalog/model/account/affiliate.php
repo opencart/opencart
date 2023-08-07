@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Model\Account;
 /**
  * Class Affiliate
  *
- * @package
+ * @package Opencart\Catalog\Model\Account
  */
 class Affiliate extends \Opencart\System\Engine\Model {
 	/**

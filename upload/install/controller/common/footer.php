@@ -3,7 +3,7 @@ namespace Opencart\Install\Controller\Common;
 /**
  * Class Footer
  *
- * @package
+ * @package Opencart\Install\Controller\Common
  */
 class Footer extends \Opencart\System\Engine\Controller {
 	/**

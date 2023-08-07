@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Customer;
 /**
  * Class GDPR
  *
- * @package
+ * @package Opencart\Admin\Controller\Customer
  */
 class Gdpr extends \Opencart\System\Engine\Controller {
 	/**

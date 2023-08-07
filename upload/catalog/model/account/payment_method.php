@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Model\Account;
 /**
  * Class PaymentMethod
  *
- * @package
+ * @package Opencart\Catalog\Model\Account
  */
 class PaymentMethod extends \Opencart\System\Engine\Model {
 	/**

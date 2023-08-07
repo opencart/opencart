@@ -3,7 +3,7 @@ namespace Opencart\Admin\Model\Extension\Opencart\Report;
 /**
  * Class Returns
  *
- * @package
+ * @package Opencart\Admin\Model\Extension\Opencart\Report
  */
 class Returns extends \Opencart\System\Engine\Model {
 	/**

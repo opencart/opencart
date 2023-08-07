@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Controller\Event;
 /**
  * Class Activity
  *
- * @package
+ * @package Opencart\Catalog\Controller\Event
  */
 class Activity extends \Opencart\System\Engine\Controller {
 	// catalog/model/account/customer/addCustomer/after

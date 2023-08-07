@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Controller\Startup;
 /**
  * Class Customer
  *
- * @package
+ * @package Opencart\Catalog\Controller\Startup
  */
 class Customer extends \Opencart\System\Engine\Controller {
 	/**

@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Common;
 /**
  * Class Notification
  *
- * @package
+ * @package Opencart\Admin\Controller\Startup
  */
 class Notification extends \Opencart\System\Engine\Controller {
 	/**

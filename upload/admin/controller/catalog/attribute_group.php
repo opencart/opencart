@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Catalog;
 /**
  * Class Attribute Group
  *
- * @package
+ * @package Opencart\Admin\Controller\Catalog
  */
 class AttributeGroup extends \Opencart\System\Engine\Controller {
 	/**

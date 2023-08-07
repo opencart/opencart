@@ -3,7 +3,7 @@ namespace Opencart\Admin\Model\Localisation;
 /**
  * Class ReturnReason
  *
- * @package
+ * @package Opencart\Admin\Model\Localisation
  */
 class ReturnReason extends \Opencart\System\Engine\Model {
 	/**

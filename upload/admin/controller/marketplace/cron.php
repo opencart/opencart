@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Marketplace;
 /**
  * Class Cron
  *
- * @package
+ * @package Opencart\Admin\Controller\Marketplace
  */
 class Cron extends \Opencart\System\Engine\Controller {
 	/**

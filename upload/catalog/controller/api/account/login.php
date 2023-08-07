@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Controller\Api\Account;
 /**
  * Class Login
  *
- * @package
+ * @package Opencart\Catalog\Controller\Api\Account
  */
 class Login extends \Opencart\System\Engine\Controller {
 	/*

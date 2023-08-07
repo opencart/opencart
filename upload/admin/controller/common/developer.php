@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Common;
 /**
  * Class Developer
  *
- * @package
+ * @package Opencart\Admin\Controller\Common
  */
 class Developer extends \Opencart\System\Engine\Controller {
 	/**

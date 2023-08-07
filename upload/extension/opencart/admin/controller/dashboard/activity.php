@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Extension\Opencart\Dashboard;
 /**
  * Class Activity
  *
- * @package
+ * @package Opencart\Admin\Controller\Extension\Opencart\Dashboard
  */
 class Activity extends \Opencart\System\Engine\Controller {
 	/**

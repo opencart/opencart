@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Marketing;
 /**
  * Class Coupon
  *
- * @package
+ * @package Opencart\Admin\Controller\Marketing
  */
 class Coupon extends \Opencart\System\Engine\Controller {
 	/**

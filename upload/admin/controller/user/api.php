@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\User;
 /**
  * Class Api
  *
- * @package
+ * @package Opencart\Admin\Controller\User
  */
 class Api extends \Opencart\System\Engine\Controller {
 	/**

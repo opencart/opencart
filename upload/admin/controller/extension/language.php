@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Controller\Extension;
 /**
  * Class Language
+ *
+ * @package Opencart\Admin\Controller\Extension
  */
 class Language extends \Opencart\System\Engine\Controller {
 	/**

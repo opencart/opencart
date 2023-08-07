@@ -3,7 +3,7 @@ namespace Opencart\Admin\Model\Sale;
 /**
  * Class Voucher Theme
  *
- * @package
+ * @package Opencart\Admin\Model\Sale
  */
 class VoucherTheme extends \Opencart\System\Engine\Model {
 	/**

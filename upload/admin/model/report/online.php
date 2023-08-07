@@ -3,7 +3,7 @@ namespace Opencart\Admin\Model\Report;
 /**
  * Class Online
  *
- * @package
+ * @package Opencart\Admin\Model\Report
  */
 class Online extends \Opencart\System\Engine\Model {
 	/**

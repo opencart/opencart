@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Controller\Catalog;
 /**
  * Class Product
+ *
+ * @package Opencart\Admin\Controller\Catalog
  */
 class Product extends \Opencart\System\Engine\Controller {
 	/**

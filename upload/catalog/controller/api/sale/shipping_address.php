@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Controller\Api\Sale;
 /**
  * Class Shipping Address
  *
- * @package
+ * @package Opencart\Catalog\Controller\Api\Sale
  */
 class ShippingAddress extends \Opencart\System\Engine\Controller {
 	/**

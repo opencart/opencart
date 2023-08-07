@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Model\Account;
 /**
  * Class Returns
  *
- * @package
+ * @package Opencart\Catalog\Model\Account
  */
 class Returns extends \Opencart\System\Engine\Model {
 	/**

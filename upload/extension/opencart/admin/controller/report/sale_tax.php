@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Extension\Opencart\Report;
 /**
  * Class Sale Tax
  *
- * @package
+ * @package Opencart\Admin\Controller\Extension\Opencart\Report
  */
 class SaleTax extends \Opencart\System\Engine\Controller {
 	/**

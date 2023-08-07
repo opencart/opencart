@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Controller\Checkout;
 /**
  * Class Confirm
  *
- * @package
+ * @package Opencart\Catalog\Controller\Checkout
  */
 class Confirm extends \Opencart\System\Engine\Controller {
 	/**

@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Extension;
 /**
  * Class Payment
  *
- * @package
+ * @package Opencart\Admin\Controller\Extension
  */
 class Payment extends \Opencart\System\Engine\Controller {
 	/**

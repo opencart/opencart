@@ -3,7 +3,7 @@ namespace Opencart\Admin\Model\Localisation;
 /**
  * Class Country
  *
- * @package
+ * @package Opencart\Admin\Model\Localisation
  */
 class Country extends \Opencart\System\Engine\Model {
 	/**

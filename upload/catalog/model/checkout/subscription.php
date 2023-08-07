@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Model\Checkout;
 /**
  * Class Subscription
  *
- * @package
+ * @package Opencart\Catalog\Model\Checkout
  */
 class Subscription extends \Opencart\System\Engine\Model {
 	/**

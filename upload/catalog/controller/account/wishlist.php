@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Controller\Account;
 /**
  * Class Wish List
  *
- * @package
+ * @package Opencart\Catalog\Controller\Account
  */
 class WishList extends \Opencart\System\Engine\Controller {
 	/**

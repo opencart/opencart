@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Controller\Account;
 /**
  * Class Logout
  *
- * @package
+ * @package Opencart\Catalog\Controller\Account
  */
 class Logout extends \Opencart\System\Engine\Controller {
 	/**

@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Controller\Api\Sale;
 /**
  * Class Affiliate
  *
- * @package
+ * @package Opencart\Catalog\Controller\Api\Sale
  */
 class Affiliate extends \Opencart\System\Engine\Controller {
 	/**

@@ -3,7 +3,7 @@ namespace Opencart\Admin\Model\Localisation;
 /**
  * Class ReturnStatus
  *
- * @package
+ * @package Opencart\Admin\Model\Localisation
  */
 class ReturnStatus extends \Opencart\System\Engine\Model {
 	/**

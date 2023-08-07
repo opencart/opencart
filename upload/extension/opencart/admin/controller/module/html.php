@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Extension\Opencart\Module;
 /**
  * Class HTML
  *
- * @package
+ * @package Opencart\Admin\Controller\Extension\Opencart\Module
  */
 class HTML extends \Opencart\System\Engine\Controller {
 	/**

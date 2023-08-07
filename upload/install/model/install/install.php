@@ -3,7 +3,7 @@ namespace Opencart\Install\Model\Install;
 /**
  * Class Install
  *
- * @package
+ * @package Opencart\Install\Model\Install
  */
 class Install extends \Opencart\System\Engine\Model {
 	/**

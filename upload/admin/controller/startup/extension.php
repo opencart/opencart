@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Startup;
 /**
  * Class Extension
  *
- * @package
+ * @package Opencart\Admin\Controller\Startup
  */
 class Extension extends \Opencart\System\Engine\Controller {
 	/**

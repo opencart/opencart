@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Controller\Cron;
 /**
  * Class Subscription
  *
- * @package
+ * @package Opencart\Catalog\Controller\Cron
  */
 class Subscription extends \Opencart\System\Engine\Controller {
 	/**

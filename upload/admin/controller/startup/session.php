@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Startup;
 /**
  * Class Session
  *
- * @package
+ * @package Opencart\Admin\Controller\Startup
  */
 class Session extends \Opencart\System\Engine\Controller {
 	/**

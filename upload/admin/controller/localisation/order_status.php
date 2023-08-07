@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Localisation;
 /**
  * Class Order Status
  *
- * @package
+ * @package Opencart\Admin\Controller\Localisation
  */
 class OrderStatus extends \Opencart\System\Engine\Controller {
 	/**

@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Setting;
 /**
  * Class Store
  *
- * @package
+ * @package Opencart\Admin\Controller\Setting
  */
 class Store extends \Opencart\System\Engine\Controller {
 	/**

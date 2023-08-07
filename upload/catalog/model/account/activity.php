@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Model\Account;
 /**
  * Class Activity
  *
- * @package
+ * @package Opencart\Catalog\Model\Account
  */
 class Activity extends \Opencart\System\Engine\Model {
 	/**

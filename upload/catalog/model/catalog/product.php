@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Model\Catalog;
 /**
  * Class Product
  *
- * @package
+ * @package Opencart\Catalog\Model\Catalog
  */
 class Product extends \Opencart\System\Engine\Model {
 	/**

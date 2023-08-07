@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Model\Setting;
 /**
  * Class Event
  *
- * @package
+ * @package Opencart\Catalog\Model\Setting
  */
 class Event extends \Opencart\System\Engine\Model {
 	/**

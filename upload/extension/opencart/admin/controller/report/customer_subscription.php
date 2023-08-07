@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Extension\Opencart\Report;
 /**
  * Class CustomerSubscription
  *
- * @package
+ * @package Opencart\Admin\Controller\Extension\Opencart\Report
  */
 class CustomerSubscription extends \Opencart\System\Engine\Controller {
 	/**

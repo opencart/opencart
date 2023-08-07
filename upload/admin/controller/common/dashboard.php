@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Common;
 /**
  * Class Dashboard
  *
- * @package
+ * @package Opencart\Admin\Controller\Common
  */
 class Dashboard extends \Opencart\System\Engine\Controller {
 	/**

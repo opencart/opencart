@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Controller\Product;
 /**
  * Class Compare
  *
- * @package
+ * @package Opencart\Catalog\Controller\Product
  */
 class Compare extends \Opencart\System\Engine\Controller {
 	/**

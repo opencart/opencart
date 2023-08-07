@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Controller\Mail;
 /**
  * Class Voucher
  *
- * @package
+ * @package Opencart\Catalog\Controller\Mail
  */
 class Voucher extends \Opencart\System\Engine\Controller {
 	/**

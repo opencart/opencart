@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\User;
 /**
  * Class Profile
  *
- * @package
+ * @package Opencart\Admin\Controller\User
  */
 class Profile extends \Opencart\System\Engine\Controller {
 	/**

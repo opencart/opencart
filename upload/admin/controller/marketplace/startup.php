@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Marketplace;
 /**
  * Class Startup
  *
- * @package
+ * @package Opencart\Admin\Controller\Marketplace
  */
 class Startup extends \Opencart\System\Engine\Controller {
 	/**

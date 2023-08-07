@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Model\Design;
 /**
  *  Class Banner
+ *
+ * @package Opencart\Admin\Model\Design
  */
 class Banner extends \Opencart\System\Engine\Model {
 	/**

@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Model\Account;
 /**
  * Class Address
  *
- * @package
+ * @package Opencart\Catalog\Model\Account
  */
 class Address extends \Opencart\System\Engine\Model {
 	/**

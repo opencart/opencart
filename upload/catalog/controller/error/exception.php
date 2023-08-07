@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Controller\Error;
 /**
  * Class Exception
  *
- * @package
+ * @package Opencart\Catalog\Controller\Error
  */
 class Exception extends \Opencart\System\Engine\Controller {
 	/**

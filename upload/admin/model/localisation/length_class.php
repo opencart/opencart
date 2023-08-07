@@ -3,7 +3,7 @@ namespace Opencart\Admin\Model\Localisation;
 /**
  * Class Length Class
  *
- * @package
+ * @package Opencart\Admin\Model\Localisation
  */
 class LengthClass extends \Opencart\System\Engine\Model {
 	/**

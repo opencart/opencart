@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Controller\Account;
 /**
  * Class Edit
  *
- * @package
+ * @package Opencart\Catalog\Controller\Account
  */
 class Edit extends \Opencart\System\Engine\Controller {
 	/**

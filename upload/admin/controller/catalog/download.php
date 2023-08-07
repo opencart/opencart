@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Catalog;
 /**
  * Class Download
  *
- * @package
+ * @package Opencart\Admin\Controller\Catalog
  */
 class Download extends \Opencart\System\Engine\Controller {
 	/**

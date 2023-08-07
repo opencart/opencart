@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Model\Localisation;
 /**
  * Class SubscriptionStatus
  *
- * @package
+ * @package Opencart\Catalog\Model\Localisation
  */
 class SubscriptionStatus extends \Opencart\System\Engine\Model {
 	/**

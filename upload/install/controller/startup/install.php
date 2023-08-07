@@ -3,7 +3,7 @@ namespace Opencart\Install\Controller\Startup;
 /**
  * Class Install
  *
- * @package
+ * @package Opencart\Install\Controller\Startup
  */
 class Install extends \Opencart\System\Engine\Controller {
 	/**

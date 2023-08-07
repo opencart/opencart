@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Controller\Cron;
 /**
  * Class Gdpr
  *
- * @package
+ * @package Opencart\Catalog\Controller\Cron
  */
 class Gdpr extends \Opencart\System\Engine\Controller {
 	/**

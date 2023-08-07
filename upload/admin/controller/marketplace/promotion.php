@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Marketplace;
 /**
  * Class Promotion
  *
- * @package
+ * @package Opencart\Admin\Controller\Marketplace
  */
 class Promotion extends \Opencart\System\Engine\Controller {
 	/**

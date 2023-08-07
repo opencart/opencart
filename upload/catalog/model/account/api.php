@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Model\Account;
 /**
  * Class Api
  *
- * @package
+ * @package Opencart\Catalog\Model\Account
  */
 class Api extends \Opencart\System\Engine\Model {
 	/**

@@ -3,7 +3,7 @@ namespace Opencart\Admin\Model\Setting;
 /**
  * Class Module
  *
- * @package
+ * @package Opencart\Admin\Model\Setting
  */
 class Module extends \Opencart\System\Engine\Model {
 	/**

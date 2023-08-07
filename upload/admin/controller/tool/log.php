@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Tool;
 /**
  * Class Log
  *
- * @package
+ * @package Opencart\Admin\Controller\Tool
  */
 class Log extends \Opencart\System\Engine\Controller {
 	/**

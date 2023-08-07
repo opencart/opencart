@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Controller\Common;
 /**
  * Class Pagination
  *
- * @package
+ * @package Opencart\Catalog\Controller\Common
  */
 class Pagination extends \Opencart\System\Engine\Controller {
 	/**

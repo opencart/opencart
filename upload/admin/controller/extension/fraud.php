@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Extension;
 /**
  * Class Fraud
  *
- * @package
+ * @package Opencart\Admin\Controller\Extension
  */
 class Fraud extends \Opencart\System\Engine\Controller {
 	/**

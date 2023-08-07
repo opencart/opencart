@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Controller\Mail;
 /**
  * Class Register
  *
- * @package
+ * @package Opencart\Catalog\Controller\Mail
  */
 class Register extends \Opencart\System\Engine\Controller {
 	// catalog/model/account/customer/addCustomer/after

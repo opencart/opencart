@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Model\Marketing;
 /**
  * Class Marketing
  *
- * @package
+ * @package Opencart\Catalog\Model\Marketing
  */
 class Marketing extends \Opencart\System\Engine\Model {
 	/**

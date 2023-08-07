@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Sale;
 /**
  * Class Returns
  *
- * @package
+ * @package Opencart\Admin\Controller\Sale
  */
 class Returns extends \Opencart\System\Engine\Controller {
 	/**

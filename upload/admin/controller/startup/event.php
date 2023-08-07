@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Startup;
 /**
  * Class Event
  *
- * @package
+ * @package Opencart\Admin\Controller\Startup
  */
 class Event extends \Opencart\System\Engine\Controller {
 	/**

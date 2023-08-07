@@ -3,7 +3,7 @@ namespace Opencart\Admin\Model\Localisation;
 /**
  * Class GeoZone
  *
- * @package
+ * @package Opencart\Admin\Model\Localisation
  */
 class GeoZone extends \Opencart\System\Engine\Model {
 	/**

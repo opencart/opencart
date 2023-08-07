@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Controller\Event;
 /**
  * Class Statistics
  *
- * @package
+ * @package Opencart\Catalog\Controller\Event
  */
 class Statistics extends \Opencart\System\Engine\Controller {
 	// catalog/model/catalog/review/addReview/after

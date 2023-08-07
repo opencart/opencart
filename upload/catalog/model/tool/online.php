@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Model\Tool;
 /**
  * Class Online
  *
- * @package
+ * @package Opencart\Catalog\Model\Tool
  */
 class Online extends \Opencart\System\Engine\Model {
 	/**

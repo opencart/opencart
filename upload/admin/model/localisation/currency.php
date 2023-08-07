@@ -3,7 +3,7 @@ namespace Opencart\Admin\Model\Localisation;
 /**
  * Class Currency
  *
- * @package
+ * @package Opencart\Admin\Model\Localisation
  */
 class Currency extends \Opencart\System\Engine\Model {
 	/**

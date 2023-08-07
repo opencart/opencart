@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Model\Customer;
 /**
  * Class Customer
+ *
+ * @package Opencart\Admin\Model\Customer
  */
 class Customer extends \Opencart\System\Engine\Model {
 	/**

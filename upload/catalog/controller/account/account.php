@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Controller\Account;
 /**
  * Class Account
  *
- * @package
+ * @package Opencart\Catalog\Controller\Account
  */
 class Account extends \Opencart\System\Engine\Controller {
 	/**

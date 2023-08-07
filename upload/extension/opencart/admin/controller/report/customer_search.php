@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Extension\Opencart\Report;
 /**
  * Class CustomerSearch
  *
- * @package
+ * @package Opencart\Admin\Controller\Extension\Opencart\Report
  */
 class CustomerSearch extends \Opencart\System\Engine\Controller {
 	/**

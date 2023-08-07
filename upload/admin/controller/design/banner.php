@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Design;
 /**
  * Class Banner
  *
- * @package
+ * @package Opencart\Admin\Controller\Design
  */
 class Banner extends \Opencart\System\Engine\Controller {
 	/**

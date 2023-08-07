@@ -1,9 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Mail;
 /**
- * Class
+ * Class Forgotten
  *
- * @package
+ * @package Opencart\Admin\Controller\Mail
  */
 class Forgotten extends \Opencart\System\Engine\Controller {
 	// admin/model/user/user/editCode/after

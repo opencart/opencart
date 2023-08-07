@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Controller\Api\Sale;
 /**
  * Class Order
  *
- * @package
+ * @package Opencart\Catalog\Controller\Api\Sale
  */
 class Order extends \Opencart\System\Engine\Controller {
 	/*

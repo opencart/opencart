@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Controller\Information;
 /**
  * Class Sitemap
  *
- * @package
+ * @package Opencart\Catalog\Controller\Information
  */
 class Sitemap extends \Opencart\System\Engine\Controller {
 	/**

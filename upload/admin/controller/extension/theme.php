@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Extension;
 /**
  * Class Theme
  *
- * @package
+ * @package Opencart\Admin\Controller\Extension
  */
 class Theme extends \Opencart\System\Engine\Controller {
 	/**

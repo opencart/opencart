@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Common;
 /**
  * Class File Manager
  *
- * @package
+ * @package Opencart\Admin\Controller\Common
  */
 class FileManager extends \Opencart\System\Engine\Controller {
 	/**

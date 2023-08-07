@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Model\Design;
 /**
  * Class Layout
+ *
+ * @package Opencart\Admin\Model\Design
  */
 class Layout extends \Opencart\System\Engine\Model {
 	/**

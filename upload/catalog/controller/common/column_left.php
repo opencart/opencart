@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Controller\Common;
 /**
  * Class Column Left
  *
- * @package
+ * @package Opencart\Catalog\Controller\Common
  */
 class ColumnLeft extends \Opencart\System\Engine\Controller {
 	/**

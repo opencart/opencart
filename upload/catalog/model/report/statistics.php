@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Model\Report;
 /**
  * Class Statistics
  *
- * @package
+ * @package Opencart\Catalog\Model\Report
  */
 class Statistics extends \Opencart\System\Engine\Model {
 	/**

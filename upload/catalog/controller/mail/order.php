@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Controller\Mail;
 /**
  * Class Order
  *
- * @package
+ * @package Opencart\Catalog\Controller\Mail
  */
 class Order extends \Opencart\System\Engine\Controller {
 	/**

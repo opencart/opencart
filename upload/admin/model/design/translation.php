@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Model\Design;
 /**
  * Class Translation
+ *
+ * @package Opencart\Admin\Model\Design
  */
 class Translation extends \Opencart\System\Engine\Model {
 	/**

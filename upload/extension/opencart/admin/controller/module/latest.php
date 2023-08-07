@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Extension\Opencart\Module;
 /**
  * Class Latest
  *
- * @package
+ * @package Opencart\Admin\Controller\Extension\Opencart\Module
  */
 class Latest extends \Opencart\System\Engine\Controller {
 	/**

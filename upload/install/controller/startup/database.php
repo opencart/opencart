@@ -3,7 +3,7 @@ namespace Opencart\Install\Controller\Startup;
 /**
  * Class Database
  *
- * @package
+ * @package Opencart\Install\Controller\Startup
  */
 class Database extends \Opencart\System\Engine\Controller {
 	/**

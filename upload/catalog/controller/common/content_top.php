@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Controller\Common;
 /**
  * Class Content Top
  *
- * @package
+ * @package Opencart\Catalog\Controller\Common
  */
 class ContentTop extends \Opencart\System\Engine\Controller {
 	/**

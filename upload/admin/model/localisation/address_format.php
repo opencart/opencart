@@ -3,7 +3,7 @@ namespace Opencart\Admin\Model\Localisation;
 /**
  * Class Address Format
  *
- * @package
+ * @package Opencart\Admin\Model\Localisation
  */
 class AddressFormat extends \Opencart\System\Engine\Model {
 	/**

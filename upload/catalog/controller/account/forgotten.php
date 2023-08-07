@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Controller\Account;
 /**
  * Class Forgotten
  *
- * @package
+ * @package Opencart\Catalog\Controller\Account
  */
 class Forgotten extends \Opencart\System\Engine\Controller {
 	/**

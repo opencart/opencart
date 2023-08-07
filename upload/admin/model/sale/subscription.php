@@ -3,7 +3,7 @@ namespace Opencart\Admin\Model\Sale;
 /**
  * Class Subscription
  *
- * @package
+ * @package Opencart\Admin\Model\Sale
  */
 class Subscription extends \Opencart\System\Engine\Model {
 	/**

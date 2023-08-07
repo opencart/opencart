@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Extension;
 /**
  * Class Currency
  *
- * @package
+ * @package Opencart\Admin\Controller\Extension
  */
 class Currency extends \Opencart\System\Engine\Controller {
 	/**

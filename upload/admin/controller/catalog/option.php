@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Catalog;
 /**
  * Class Option
  *
- * @package
+ * @package Opencart\Admin\Controller\Catalog
  */
 class Option extends \Opencart\System\Engine\Controller {
 	/**

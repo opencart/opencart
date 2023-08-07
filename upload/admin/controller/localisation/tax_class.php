@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Localisation;
 /**
  * Class Tax Class
  *
- * @package
+ * @package Opencart\Admin\Controller\Localisation
  */
 class TaxClass extends \Opencart\System\Engine\Controller {
 	/**

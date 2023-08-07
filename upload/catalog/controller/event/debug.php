@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Controller\Event;
 /**
  * Class Debug
  *
- * @package
+ * @package Opencart\Catalog\Controller\Event
  */
 class Debug extends \Opencart\System\Engine\Controller {
 	/**

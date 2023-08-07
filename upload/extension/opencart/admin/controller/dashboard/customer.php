@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Extension\Opencart\Dashboard;
 /**
  * Class Customer
  *
- * @package
+ * @package Opencart\Admin\Controller\Extension\Opencart\Dashboard
  */
 class Customer extends \Opencart\System\Engine\Controller {
 	/**

@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Controller\Common;
 /**
  * Class Menu
  *
- * @package
+ * @package Opencart\Catalog\Controller\Common
  */
 class Menu extends \Opencart\System\Engine\Controller {
 	/**

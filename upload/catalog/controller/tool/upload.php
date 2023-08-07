@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Controller\Tool;
 /**
  * Class Upload
  *
- * @package
+ * @package Opencart\Catalog\Controller\Tool
  */
 class Upload extends \Opencart\System\Engine\Controller {
 	/**

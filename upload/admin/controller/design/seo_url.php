@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Design;
 /**
  * Class SEO URL
  *
- * @package
+ * @package Opencart\Admin\Controller\Design
  */
 class SeoUrl extends \Opencart\System\Engine\Controller {
 	/**

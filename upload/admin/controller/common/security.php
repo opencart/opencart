@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Common;
 /**
  * Class Security
  *
- * @package
+ * @package Opencart\Admin\Controller\Common
  */
 class Security extends \Opencart\System\Engine\Controller {
 	/**

@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Controller\Checkout;
 /**
  * Class Cart
  *
- * @package
+ * @package Opencart\Catalog\Controller\Checkout
  */
 class Cart extends \Opencart\System\Engine\Controller {
 	/**

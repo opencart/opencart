@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Controller\Cron;
 /**
  * Class Currency
  *
- * @package
+ * @package Opencart\Catalog\Controller\Cron
  */
 class Currency extends \Opencart\System\Engine\Controller {
 	/**

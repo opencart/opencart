@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Controller\Checkout;
 /**
  * Class ShippingAddress
  *
- * @package
+ * @package Opencart\Catalog\Controller\Checkout
  */
 class ShippingAddress extends \Opencart\System\Engine\Controller {
 	/**

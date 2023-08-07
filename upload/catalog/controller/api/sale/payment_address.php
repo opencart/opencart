@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Controller\Api\Sale;
 /**
  * Class Payment Address
  *
- * @package
+ * @package Opencart\Catalog\Controller\Api\Sale
  */
 class PaymentAddress extends \Opencart\System\Engine\Controller {
 	/**

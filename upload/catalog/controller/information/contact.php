@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Controller\Information;
 /**
  * Class Contact
  *
- * @package
+ * @package Opencart\Catalog\Controller\Information
  */
 class Contact extends \Opencart\System\Engine\Controller {
 	/**

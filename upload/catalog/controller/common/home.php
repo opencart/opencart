@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Controller\Common;
 /**
  * Class Home
  *
- * @package
+ * @package Opencart\Catalog\Controller\Common
  */
 class Home extends \Opencart\System\Engine\Controller {
 	/**

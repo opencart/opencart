@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Controller\Product;
 /**
  * Class Special
  *
- * @package
+ * @package Opencart\Catalog\Controller\Product
  */
 class Special extends \Opencart\System\Engine\Controller {
 	/**

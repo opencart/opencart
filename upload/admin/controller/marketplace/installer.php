@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Marketplace;
 /**
  * Class Installer
  *
- * @package
+ * @package Opencart\Admin\Controller\Marketplace
  */
 class Installer extends \Opencart\System\Engine\Controller {
 	/**

@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Extension\Opencart\Module;
 /**
  * Class Category
  *
- * @package
+ * @package Opencart\Admin\Controller\Extension\Opencart\Module
  */
 class Category extends \Opencart\System\Engine\Controller {
 	/**

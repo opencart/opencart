@@ -3,7 +3,7 @@ namespace Opencart\Admin\Model\Tool;
 /**
  * Class Image
  *
- * @package
+ * @package Opencart\Admin\Model\Tool
  */
 class Image extends \Opencart\System\Engine\Model {
 	/**

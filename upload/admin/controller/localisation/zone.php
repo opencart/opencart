@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Localisation;
 /**
  * Class Zone
  *
- * @package
+ * @package Opencart\Admin\Controller\Localisation
  */
 class Zone extends \Opencart\System\Engine\Controller {
 	/**

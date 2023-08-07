@@ -3,7 +3,7 @@ namespace Opencart\Install\Controller\Common;
 /**
  * Class Header
  *
- * @package
+ * @package Opencart\Install\Controller\Common
  */
 class Header extends \Opencart\System\Engine\Controller {
 	/**

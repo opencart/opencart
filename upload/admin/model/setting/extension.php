@@ -3,7 +3,7 @@ namespace Opencart\Admin\Model\Setting;
 /**
  * Class Extension
  *
- * @package
+ * @package Opencart\Admin\Model\Setting
  */
 class Extension extends \Opencart\System\Engine\Model {
 	/**

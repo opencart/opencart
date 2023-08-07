@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Extension\Opencart\Report;
 /**
  * Class ProductViewed
  *
- * @package
+ * @package Opencart\Admin\Controller\Extension\Opencart\Report
  */
 class ProductViewed extends \Opencart\System\Engine\Controller {
 	/**

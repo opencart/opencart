@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Controller\Error;
 /**
  * Class Not Found
  *
- * @package
+ * @package Opencart\Catalog\Controller\Error
  */
 class NotFound extends \Opencart\System\Engine\Controller {
 	/**

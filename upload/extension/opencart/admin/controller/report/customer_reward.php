@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Extension\Opencart\Report;
 /**
  * Class Customer Reward
  *
- * @package
+ * @package Opencart\Admin\Controller\Extension\Opencart\Report
  */
 class CustomerReward extends \Opencart\System\Engine\Controller {
 	/**

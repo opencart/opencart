@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Model\Design;
 /**
  * Class Layout
  *
- * @package
+ * @package Opencart\Catalog\Model\Design
  */
 class Layout extends \Opencart\System\Engine\Model {
 	/**

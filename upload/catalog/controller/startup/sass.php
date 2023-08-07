@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Controller\Startup;
 /**
  * Class Sass
  *
- * @package
+ * @package Opencart\Catalog\Controller\Startup
  */
 class Sass extends \Opencart\System\Engine\Controller {
 	/**

@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Customer;
 /**
  * Class Customer Approval
  *
- * @package
+ * @package Opencart\Admin\Controller\Customer
  */
 class CustomerApproval extends \Opencart\System\Engine\Controller {
 	/**

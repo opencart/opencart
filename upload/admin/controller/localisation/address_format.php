@@ -2,6 +2,8 @@
 namespace Opencart\Admin\Controller\Localisation;
 /**
  * Class Address Format
+ *
+ * @package Opencart\Admin\Controller\Localisation
  */
 class AddressFormat extends \Opencart\System\Engine\Controller {
 	/**

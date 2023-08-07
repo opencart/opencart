@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Controller\Event;
 /**
  * Class Translation
  *
- * @package
+ * @package Opencart\Catalog\Controller\Event
  */
 class Translation extends \Opencart\System\Engine\Controller {
 	/**

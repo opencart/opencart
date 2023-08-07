@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Model\Setting;
 /**
  * Class Setting
  *
- * @package
+ * @package Opencart\Catalog\Model\Setting
  */
 class Setting extends \Opencart\System\Engine\Model {
 	/**

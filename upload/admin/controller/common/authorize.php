@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Common;
 /**
  * Class Authorize
  *
- * @package
+ * @package Opencart\Admin\Controller\Common
  */
 class Authorize extends \Opencart\System\Engine\Controller {
 	/**

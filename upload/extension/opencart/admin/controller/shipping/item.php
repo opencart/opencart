@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Extension\Opencart\Shipping;
 /**
  * Class Item
  *
- * @package
+ * @package Opencart\Admin\Controller\Extension\Opencart\Shipping
  */
 class Item extends \Opencart\System\Engine\Controller {
 	/**

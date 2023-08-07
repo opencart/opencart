@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Extension\Opencart\Payment;
 /**
  * Class Cod
  *
- * @package
+ * @package Opencart\Admin\Controller\Extension\Opencart\Payment
  */
 class Cod extends \Opencart\System\Engine\Controller {
 	/**

@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Customer;
 /**
  * Class Custom Field
  *
- * @package
+ * @package Opencart\Admin\Controller\Customer
  */
 class CustomField extends \Opencart\System\Engine\Controller {
 	/**

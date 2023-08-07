@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Controller\Api\Sale;
 /**
  * Class Reward
  *
- * @package
+ * @package Opencart\Catalog\Controller\Api\Sale
  */
 class Reward extends \Opencart\System\Engine\Controller {
 	/**

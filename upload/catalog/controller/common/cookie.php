@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Controller\Common;
 /**
  * Class Cookie
  *
- * @package
+ * @package Opencart\Catalog\Controller\Common
  */
 class Cookie extends \Opencart\System\Engine\Controller {
 	/**

@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Extension\Opencart\Total;
 /**
  * Class Total
  *
- * @package
+ * @package Opencart\Admin\Controller\Extension\Opencart\Total
  */
 class Total extends \Opencart\System\Engine\Controller {
 	/**

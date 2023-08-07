@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Extension;
 /**
  * Class Feed
  *
- * @package
+ * @package Opencart\Admin\Controller\Extension
  */
 class Feed extends \Opencart\System\Engine\Controller {
 	/**

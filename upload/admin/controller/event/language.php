@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Event;
 /**
  * Class Language
  *
- * @package
+ * @package Opencart\Admin\Controller\Event
  */
 class Language extends \Opencart\System\Engine\Controller {
 	// view/*/before

@@ -3,7 +3,7 @@ namespace Opencart\Catalog\Controller\Checkout;
 /**
  * Class PaymentAddress
  *
- * @package
+ * @package Opencart\Catalog\Controller\Checkout
  */
 class PaymentAddress extends \Opencart\System\Engine\Controller {
 	/**

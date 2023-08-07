@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Extension\Opencart\Total;
 /**
  * Class Credit
  *
- * @package
+ * @package Opencart\Admin\Controller\Extension\Opencart\Total
  */
 class Credit extends \Opencart\System\Engine\Controller {
 	/**

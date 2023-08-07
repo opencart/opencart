@@ -3,7 +3,7 @@ namespace Opencart\Admin\Controller\Marketplace;
 /**
  * Class API
  *
- * @package
+ * @package Opencart\Admin\Controller\Marketplace
  */
 class Api extends \Opencart\System\Engine\Controller {
 	/**

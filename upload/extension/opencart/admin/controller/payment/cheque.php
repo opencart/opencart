@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Extension\Opencart\Payment;
 /**
+ * Class Cheque
  *
+ * @package Opencart\Admin\Controller\Extension\Opencart\Payment
  */
 class Cheque extends \Opencart\System\Engine\Controller {
 	/**

@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Controller\Account;
 /**
+ * Class Address
  *
+ * @package Opencart\Catalog\Controller\Account
  */
 class Address extends \Opencart\System\Engine\Controller {
 	/**

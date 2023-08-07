@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Model\Design;
 /**
+ * Class Seo Url
  *
+ * @package Opencart\Catalog\Model\Design
  */
 class SeoUrl extends \Opencart\System\Engine\Model {
 	/**

@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Controller\Checkout;
 /**
+ * Class Failure
  *
+ * @package Opencart\Catalog\Controller\Checkout
  */
 class Failure extends \Opencart\System\Engine\Controller {
 	/**

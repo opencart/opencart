@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Extension\Opencart\Total;
 /**
+ * Class Shipping
  *
+ * @package Opencart\Admin\Controller\Extension\Opencart\Total
  */
 class Shipping extends \Opencart\System\Engine\Controller {
 	/**

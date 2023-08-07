@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Controller\Account;
 /**
+ * Class Success
  *
+ * @package Opencart\Catalog\Controller\Account
  */
 class Success extends \Opencart\System\Engine\Controller {
 	/**

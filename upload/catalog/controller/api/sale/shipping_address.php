@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Controller\Api\Sale;
 /**
+ * Class Shipping Address
  *
+ * @package Opencart\Catalog\Controller\Api\Sale
  */
 class ShippingAddress extends \Opencart\System\Engine\Controller {
 	/**

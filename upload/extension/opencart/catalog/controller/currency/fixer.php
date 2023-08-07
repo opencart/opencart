@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Controller\Extension\Opencart\Currency;
 /**
+ * Class Fixer
  *
+ * @package
  */
 class Fixer extends \Opencart\System\Engine\Controller {
 	/**

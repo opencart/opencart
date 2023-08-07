@@ -1,12 +1,11 @@
 <?php
 namespace Opencart\Admin\Model\Catalog;
 /*
- *	Attribute Model Class
+ * Class Attribute
  *
- *	@package Opencart\Admin\Model\Catalog\Attribute
+ * Can be called from $this->load->model('catalog/attribute');
  *
- *	Can be called from $this->load->model('catalog/attribute');
- *
+ * @package Opencart\Admin\Model\Catalog
  * */
 class Attribute extends \Opencart\System\Engine\Model {
 	/*
@@ -130,11 +129,7 @@ class Attribute extends \Opencart\System\Engine\Model {
 			$sql .= " AND a.`attribute_group_id` = '" . (int)$data['filter_attribute_group_id'] . "'";
 		}
 
-		$sort_data = [
-			'ad.name',
-			'attribute_group',
-			'a.sort_order'
-		];
+		$sort_data = ['ad.name', 'attribute_group', 'a.sort_order'];
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 			$sql .= " ORDER BY " . $data['sort'];

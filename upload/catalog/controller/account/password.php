@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Controller\Account;
 /**
+ * Class Password
  *
+ * @package Opencart\Catalog\Controller\Account
  */
 class Password extends \Opencart\System\Engine\Controller {
 	/**

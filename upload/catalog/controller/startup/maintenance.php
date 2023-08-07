@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Controller\Startup;
 /**
+ * Class Maintenance
  *
+ * @package Opencart\Catalog\Controller\Startup
  */
 class Maintenance extends \Opencart\System\Engine\Controller {
 	/**

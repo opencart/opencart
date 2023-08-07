@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Controller\Api\Sale;
 /**
+ * Class Coupon
  *
+ * @package Opencart\Catalog\Controller\Api\Sale
  */
 class Coupon extends \Opencart\System\Engine\Controller {
 	/**

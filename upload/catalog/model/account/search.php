@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Model\Account;
 /**
+ * Class Search
  *
+ * @package Opencart\Catalog\Model\Account
  */
 class Search extends \Opencart\System\Engine\Model {
 	/**

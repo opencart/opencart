@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Model\Extension\Opencart\Payment;
 /**
+ * Class FreeCheckout
  *
+ * @package
  */
 class FreeCheckout extends \Opencart\System\Engine\Model {
 	/**

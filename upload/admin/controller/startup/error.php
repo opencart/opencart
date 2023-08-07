@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Startup;
 /**
+ * Class Error
  *
+ * @package Opencart\Admin\Controller\Startup
  */
 class Error extends \Opencart\System\Engine\Controller {
 	/**

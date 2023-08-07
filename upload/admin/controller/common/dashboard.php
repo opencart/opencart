@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Common;
 /**
+ * Class Dashboard
  *
+ * @package Opencart\Admin\Controller\Common
  */
 class Dashboard extends \Opencart\System\Engine\Controller {
 	/**

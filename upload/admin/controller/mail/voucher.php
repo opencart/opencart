@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Mail;
 /**
+ * Class Voucher
  *
+ * @package Opencart\Admin\Controller\Mail
  */
 class Voucher extends \Opencart\System\Engine\Controller {
 	/**

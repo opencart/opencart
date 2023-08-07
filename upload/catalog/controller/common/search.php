@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Controller\Common;
 /**
+ * Class Search
  *
+ * @package Opencart\Catalog\Controller\Common
  */
 class Search extends \Opencart\System\Engine\Controller {
 	/**

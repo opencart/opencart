@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Model\Account;
 /**
+ * Class Download
  *
+ * @package Opencart\Catalog\Model\Account
  */
 class Download extends \Opencart\System\Engine\Model {
 	/**

@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Extension\Opencart\Total;
 /**
+ * Class Handling
  *
+ * @package Opencart\Admin\Controller\Extension\Opencart\Total
  */
 class Handling extends \Opencart\System\Engine\Controller {
 	/**

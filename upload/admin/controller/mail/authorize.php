@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Mail;
 /**
+ * Class Authorize
  *
+ * @package Opencart\Admin\Controller\Mail
  */
 class Authorize extends \Opencart\System\Engine\Controller {
 	// admin/model/user/user/editCode/after

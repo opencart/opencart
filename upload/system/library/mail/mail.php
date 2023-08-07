@@ -1,8 +1,10 @@
 <?php
+namespace Opencart\System\Library\Mail;
 /**
+ * Class Mail
+ *
  * Basic PHP mail class
  */
-namespace Opencart\System\Library\Mail;
 class Mail {
 	protected array $option = [];
 

@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Controller\Extension\Opencart\Payment;
 /**
+ * Class Cod
  *
+ * @package
  */
 class Cod extends \Opencart\System\Engine\Controller {
 	/**

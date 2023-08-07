@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Extension\Opencart\Module;
 /**
+ * Class Account
  *
+ * @package Opencart\Admin\Controller\Extension\Opencart\Module
  */
 class Account extends \Opencart\System\Engine\Controller {
 	/**

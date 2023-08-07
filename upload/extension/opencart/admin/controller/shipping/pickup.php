@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Extension\Opencart\Shipping;
 /**
+ * Class Pickup
  *
+ * @package Opencart\Admin\Controller\Extension\Opencart\Shipping
  */
 class Pickup extends \Opencart\System\Engine\Controller {
 	/**

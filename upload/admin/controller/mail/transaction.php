@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Mail;
 /**
+ * Class Transaction
  *
+ * @package Opencart\Admin\Controller\Mail
  */
 class Transaction extends \Opencart\System\Engine\Controller {
 	/**

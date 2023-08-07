@@ -1,7 +1,18 @@
 <?php
 namespace Opencart\System\Library\Cache;
+/**
+ * Class Redis
+ *
+ * @package
+ */
 class Redis {
+	/**
+	 * @var object|\Redis
+	 */
 	private object $redis;
+	/**
+	 * @var int
+	 */
 	private int $expire;
 
 	/**

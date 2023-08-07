@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Marketplace;
 /**
+ * Class Installer
  *
+ * @package Opencart\Admin\Controller\Marketplace
  */
 class Installer extends \Opencart\System\Engine\Controller {
 	/**

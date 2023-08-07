@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Startup;
 /**
+ * Class Authorize
  *
+ * @package Opencart\Admin\Controller\Startup
  */
 class Authorize extends \Opencart\System\Engine\Controller {
 	/**

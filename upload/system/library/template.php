@@ -6,12 +6,14 @@
  * @license		https://opensource.org/licenses/GPL-3.0
  * @link		https://www.opencart.com
 */
-
-/**
-* Template class
-*/
 namespace Opencart\System\Library;
+/**
+ * Class Template
+ */
 class Template {
+	/**
+	 * @var object|mixed
+	 */
 	private object $adaptor;
 
 	/**

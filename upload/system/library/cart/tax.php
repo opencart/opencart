@@ -1,8 +1,22 @@
 <?php
 namespace Opencart\System\Library\Cart;
+/**
+ * Class Tax
+ *
+ * @package
+ */
 class Tax {
+	/**
+	 * @var object|mixed|null
+	 */
 	private object $db;
+	/**
+	 * @var object|mixed|null
+	 */
 	private object $config;
+	/**
+	 * @var array
+	 */
 	private array $tax_rates = [];
 
 	/**

@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Model\Extension\Opencart\Shipping;
 /**
+ * Class Flat
  *
+ * @package
  */
 class Flat extends \Opencart\System\Engine\Model {
 	/**

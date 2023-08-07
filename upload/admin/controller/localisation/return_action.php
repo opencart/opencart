@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Localisation;
 /**
+ * Class Return Action
  *
+ * @package Opencart\Admin\Controller\Localisation
  */
 class ReturnAction extends \Opencart\System\Engine\Controller {
 

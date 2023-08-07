@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Model\Localisation;
 /**
+ * Class TaxClass
  *
+ * @package Opencart\Admin\Model\Localisation
  */
 class TaxClass extends \Opencart\System\Engine\Model {
 	/**

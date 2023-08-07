@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Model\Localisation;
 /**
+ * Class Location
  *
+ * @package Opencart\Admin\Model\Localisation
  */
 class Location extends \Opencart\System\Engine\Model {
 	/**

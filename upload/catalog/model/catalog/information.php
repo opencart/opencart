@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Model\Catalog;
 /**
+ * Class Information
  *
+ * @package Opencart\Catalog\Model\Catalog
  */
 class Information extends \Opencart\System\Engine\Model {
 	/**

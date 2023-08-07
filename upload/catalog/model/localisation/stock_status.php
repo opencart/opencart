@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Model\Localisation;
 /**
+ * Class StockStatus
  *
+ * @package Opencart\Catalog\Model\Localisation
  */
 class StockStatus extends \Opencart\System\Engine\Model {
 	/**

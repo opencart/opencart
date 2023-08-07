@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Tool;
 /**
+ * Class Backup
  *
+ * @package Opencart\Admin\Controller\Tool
  */
 class Backup extends \Opencart\System\Engine\Controller {
 	/**

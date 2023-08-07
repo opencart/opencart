@@ -1,6 +1,14 @@
 <?php
 namespace Opencart\System\Library\Cache;
+/**
+ * Class File
+ *
+ * @package
+ */
 class File {
+	/**
+	 * @var int
+	 */
 	private int $expire;
 	
 	/**

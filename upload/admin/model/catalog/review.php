@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Model\Catalog;
 /**
- *
+ * Class Review
  */
 class Review extends \Opencart\System\Engine\Model {
 	/**

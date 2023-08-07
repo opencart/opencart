@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Controller\Information;
 /**
+ * Class Sitemap
  *
+ * @package
  */
 class Sitemap extends \Opencart\System\Engine\Controller {
 	/**

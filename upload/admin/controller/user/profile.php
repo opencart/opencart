@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\User;
 /**
+ * Class Profile
  *
+ * @package
  */
 class Profile extends \Opencart\System\Engine\Controller {
 	/**

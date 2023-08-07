@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Extension\Opencart\Report;
 /**
+ * Class CustomerTransaction
  *
+ * @package
  */
 class CustomerTransaction extends \Opencart\System\Engine\Controller {
 	/**

@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Controller\Checkout;
 /**
+ * Class Confirm
  *
+ * @package
  */
 class Confirm extends \Opencart\System\Engine\Controller {
 	/**

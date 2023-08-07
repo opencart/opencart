@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Model\Sale;
 /**
+ * Class Voucher
  *
+ * @package
  */
 class Voucher extends \Opencart\System\Engine\Model {
 	/**

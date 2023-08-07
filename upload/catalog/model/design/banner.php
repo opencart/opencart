@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Model\Design;
 /**
+ * Class Banner
  *
+ * @package
  */
 class Banner extends \Opencart\System\Engine\Model {
 	/**

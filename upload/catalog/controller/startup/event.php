@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Controller\Startup;
 /**
+ * Class Event
  *
+ * @package
  */
 class Event extends \Opencart\System\Engine\Controller {
 	/**

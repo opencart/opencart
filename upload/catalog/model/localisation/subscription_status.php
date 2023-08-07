@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Model\Localisation;
 /**
+ * Class SubscriptionStatus
  *
+ * @package
  */
 class SubscriptionStatus extends \Opencart\System\Engine\Model {
 	/**

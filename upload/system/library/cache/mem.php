@@ -1,9 +1,23 @@
 <?php
 namespace Opencart\System\Library\Cache;
+/**
+ * Class Mem
+ *
+ * @package
+ */
 class Mem {
+	/**
+	 * @var object|\Memcache
+	 */
 	private object $memcache;
+	/**
+	 * @var int
+	 */
 	private int $expire;
 
+	/**
+	 *
+	 */
 	const CACHEDUMP_LIMIT = 9999;
 
 	/**

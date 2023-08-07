@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Event;
 /**
+ * Class Statistics
  *
+ * @package
  */
 class Statistics extends \Opencart\System\Engine\Controller {
 	// admin/model/catalog/review/addReview/after

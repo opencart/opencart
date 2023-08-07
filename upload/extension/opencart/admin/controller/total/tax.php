@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Extension\Opencart\Total;
 /**
+ * Class Tax
  *
+ * @package
  */
 class Tax extends \Opencart\System\Engine\Controller {
 	/**

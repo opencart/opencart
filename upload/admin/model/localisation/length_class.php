@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Model\Localisation;
 /**
+ * Class Length Class
  *
+ * @package
  */
 class LengthClass extends \Opencart\System\Engine\Model {
 	/**

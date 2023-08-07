@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Model\Report;
 /**
+ * Class Online
  *
+ * @package
  */
 class Online extends \Opencart\System\Engine\Model {
 	/**

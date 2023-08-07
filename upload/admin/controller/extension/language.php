@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Controller\Extension;
 /**
- *
+ * Class Language
  */
 class Language extends \Opencart\System\Engine\Controller {
 	/**

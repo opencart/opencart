@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Controller\Account;
 /**
+ * Class Custom Field
  *
+ * @package
  */
 class CustomField extends \Opencart\System\Engine\Controller {
 	/**

@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Marketing;
 /**
+ * Class Contact
  *
+ * @package
  */
 class Contact extends \Opencart\System\Engine\Controller {
 	/**

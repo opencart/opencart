@@ -1,24 +1,25 @@
 <?php
 /**
  * @package        OpenCart
- * @author        Daniel Kerr
- * @copyright    Copyright (c) 2005 - 2022, OpenCart, Ltd. (https://www.opencart.com/)
+ * @author         Daniel Kerr
+ * @copyright      Copyright (c) 2005 - 2022, OpenCart, Ltd. (https://www.opencart.com/)
  * @license        https://opensource.org/licenses/GPL-3.0
- * @link        https://www.opencart.com
- */
-
-/**
- * Loader class
+ * @link           https://www.opencart.com
  */
 namespace Opencart\System\Engine;
-use \Opencart\System\Engine\Action as Action;
+/**
+ * Class Loader
+ */
 class Loader {
+	/**
+	 * @var object|\Opencart\System\Engine\Registry
+	 */
 	protected $registry;
 
 	/**
 	 * Constructor
 	 *
-	 * @param    object  $registry
+	 * @param object $registry
 	 */
 	public function __construct(\Opencart\System\Engine\Registry $registry) {
 		$this->registry = $registry;
@@ -29,7 +30,7 @@ class Loader {
 	 *
 	 * https://www.php.net/manual/en/language.oop5.overloading.php#object.get
 	 *
-	 * @param    string $key
+	 * @param string $key
 	 *
 	 * @return   object
 	 */
@@ -42,8 +43,8 @@ class Loader {
 	 *
 	 * https://www.php.net/manual/en/language.oop5.overloading.php#object.set
 	 *
-	 * @param    string $key
-	 * @param    object $value
+	 * @param string $key
+	 * @param object $value
 	 *
 	 * @return    void
 	 */
@@ -56,8 +57,8 @@ class Loader {
 	 *
 	 * https://wiki.php.net/rfc/variadics
 	 *
-	 * @param    string $route
-	 * @param    array $data
+	 * @param string $route
+	 * @param array  $data
 	 *
 	 * @return    mixed
 	 */
@@ -106,13 +107,13 @@ class Loader {
 
 		return $output;
 	}
-	
+
 	/**
 	 * Model
 	 *
-	 * @param    string $route
+	 * @param string $route
 	 *
-	 * @return	 void
+	 * @return     void
 	 */
 	public function model(string $route): void {
 		// Sanitize the call
@@ -183,9 +184,9 @@ class Loader {
 	 *
 	 * Loads the template file and generates the html code.
 	 *
-	 * @param    string  $route
-	 * @param    array   $data
-	 * @param	 string  $code
+	 * @param string $route
+	 * @param array  $data
+	 * @param string $code
 	 *
 	 * @return   string
 	 */
@@ -220,9 +221,9 @@ class Loader {
 	/**
 	 * Language
 	 *
-	 * @param    string $route
-	 * @param    string $prefix
-	 * @param	 string $code
+	 * @param string $route
+	 * @param string $prefix
+	 * @param string $code
 	 *
 	 * @return    array
 	 */
@@ -256,9 +257,9 @@ class Loader {
 	/**
 	 * Config
 	 *
-	 * @param    string  $route
+	 * @param string $route
 	 *
-	 * @return	 array
+	 * @return     array
 	 */
 	public function config(string $route): array {
 		// Sanitize the call
@@ -290,9 +291,9 @@ class Loader {
 	/**
 	 * Helper
 	 *
-	 * @param    string  $route
+	 * @param string $route
 	 *
-	 * @return	 void
+	 * @return     void
 	 */
 	public function helper(string $route): void {
 		$route = preg_replace('/[^a-zA-Z0-9_\/]/', '', $route);

@@ -1,13 +1,42 @@
 <?php
 namespace Opencart\System\Library\Cart;
+/**
+ * Class User
+ *
+ * @package
+ */
 class User {
+	/**
+	 * @var object|mixed|null
+	 */
 	private object $db;
+	/**
+	 * @var object|mixed|null
+	 */
 	private object $request;
+	/**
+	 * @var object|mixed|null
+	 */
 	private object $session;
+	/**
+	 * @var int|mixed
+	 */
 	private int $user_id = 0;
+	/**
+	 * @var string|mixed
+	 */
 	private string $username = '';
+	/**
+	 * @var int|mixed
+	 */
 	private int $user_group_id = 0;
+	/**
+	 * @var string|mixed
+	 */
 	private string $email = '';
+	/**
+	 * @var array
+	 */
 	private array $permission = [];
 
 	/**

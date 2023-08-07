@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Model\Checkout;
 /**
+ * Class Voucher
  *
+ * @package
  */
 class Voucher extends \Opencart\System\Engine\Model {
 	/**

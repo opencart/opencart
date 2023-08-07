@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Mail;
 /**
+ * Class
  *
+ * @package
  */
 class Returns extends \Opencart\System\Engine\Controller {
 	/**

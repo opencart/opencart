@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Extension\Opencart\Total;
 /**
+ * Class Low Order Fee
  *
+ * @package
  */
 class LowOrderFee extends \Opencart\System\Engine\Controller {
 	/**

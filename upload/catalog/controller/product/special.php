@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Controller\Product;
 /**
+ * Class Special
  *
+ * @package
  */
 class Special extends \Opencart\System\Engine\Controller {
 	/**

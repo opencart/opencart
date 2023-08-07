@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Controller\Extension\Opencart\Report;
 /**
- *
+ * CLass SaleCoupon
  */
 class SaleCoupon extends \Opencart\System\Engine\Controller {
 	/**

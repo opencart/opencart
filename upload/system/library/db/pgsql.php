@@ -1,6 +1,14 @@
 <?php
 namespace Opencart\System\Library\DB;
+/**
+ * Class PgSQL
+ *
+ * @package
+ */
 class PgSQL {
+	/**
+	 * @var object|resource|null
+	 */
 	private object|null $connection;
 
 	/**

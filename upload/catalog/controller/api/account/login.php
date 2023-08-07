@@ -1,5 +1,10 @@
 <?php
 namespace Opencart\Catalog\Controller\Api\Account;
+/**
+ * Class Login
+ *
+ * @package
+ */
 class Login extends \Opencart\System\Engine\Controller {
 	/*
 	 * Opencart\Catalog\Controller\Api\Account\Login.Index

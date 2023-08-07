@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Extension\Opencart\Total;
 /**
+ * Class Credit
  *
+ * @package
  */
 class Credit extends \Opencart\System\Engine\Controller {
 	/**

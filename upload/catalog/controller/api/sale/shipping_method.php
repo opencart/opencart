@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Controller\Api\Sale;
 /**
+ * Class Shipping Method
  *
+ * @package
  */
 class ShippingMethod extends \Opencart\System\Engine\Controller {
 	/**

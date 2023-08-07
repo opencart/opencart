@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Model\Setting;
 /**
+ * Class Extension
  *
+ * @package
  */
 class Extension extends \Opencart\System\Engine\Model {
 	/**

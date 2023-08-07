@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Extension\Opencart\Dashboard;
 /**
+ * Class Map
  *
+ * @package
  */
 class Map extends \Opencart\System\Engine\Controller {
 	/**

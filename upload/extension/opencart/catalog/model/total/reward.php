@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Model\Extension\Opencart\Total;
 /**
+ * Class Reward
  *
+ * @package
  */
 class Reward extends \Opencart\System\Engine\Model {
 	/**

@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Model\Marketing;
 /**
+ * Class Marketing
  *
+ * @package
  */
 class Marketing extends \Opencart\System\Engine\Model {
 	/**

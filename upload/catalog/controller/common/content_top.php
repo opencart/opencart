@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Controller\Common;
 /**
+ * Class Content Top
  *
+ * @package
  */
 class ContentTop extends \Opencart\System\Engine\Controller {
 	/**

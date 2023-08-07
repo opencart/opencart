@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Customer;
 /**
+ * Class Customer Approval
  *
+ * @package
  */
 class CustomerApproval extends \Opencart\System\Engine\Controller {
 	/**

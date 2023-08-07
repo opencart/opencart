@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Extension\Opencart\Theme;
 /**
+ * Class Basic
  *
+ * @package
  */
 class Basic extends \Opencart\System\Engine\Controller {
 	/**

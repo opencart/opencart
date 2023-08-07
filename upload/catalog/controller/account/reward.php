@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Controller\Account;
 /**
+ * Class Reward
  *
+ * @package
  */
 class Reward extends \Opencart\System\Engine\Controller {
 	/**

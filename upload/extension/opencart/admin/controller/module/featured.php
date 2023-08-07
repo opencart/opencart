@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Extension\Opencart\Module;
 /**
+ * Class Featured
  *
+ * @package
  */
 class Featured extends \Opencart\System\Engine\Controller {
 	/**

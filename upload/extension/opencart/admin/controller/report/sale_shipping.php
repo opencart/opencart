@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Controller\Extension\Opencart\Report;
 /**
- *
+ * Class Sale Shipping
  */
 class SaleShipping extends \Opencart\System\Engine\Controller {
 	/**

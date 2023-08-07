@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Extension\Opencart\Report;
 /**
+ * Class Customer Reward
  *
+ * @package
  */
 class CustomerReward extends \Opencart\System\Engine\Controller {
 	/**

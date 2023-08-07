@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Common;
 /**
+ * Class Security
  *
+ * @package
  */
 class Security extends \Opencart\System\Engine\Controller {
 	/**

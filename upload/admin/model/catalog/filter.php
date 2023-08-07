@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Model\Catalog;
 /**
- *
+ * Class Filter
  */
 class Filter extends \Opencart\System\Engine\Model {
 	/**

@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Model\User;
 /**
+ * Class User Group
  *
+ * @package
  */
 class UserGroup extends \Opencart\System\Engine\Model {
 	/**

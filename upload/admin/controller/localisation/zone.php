@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Localisation;
 /**
+ * Class Zone
  *
+ * @package
  */
 class Zone extends \Opencart\System\Engine\Controller {
 	/**

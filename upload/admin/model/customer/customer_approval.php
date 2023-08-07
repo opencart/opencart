@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Model\Customer;
 /**
- *
+ * Class Customer Approval
  */
 class CustomerApproval extends \Opencart\System\Engine\Model {
 	/**

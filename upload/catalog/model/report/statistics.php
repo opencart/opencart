@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Model\Report;
 /**
+ * Class Statistics
  *
+ * @package
  */
 class Statistics extends \Opencart\System\Engine\Model {
 	/**

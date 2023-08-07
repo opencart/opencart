@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Controller\Mail;
 /**
+ * Class Subscription
  *
+ * @package
  */
 class Subscription extends \Opencart\System\Engine\Controller {
 	/**

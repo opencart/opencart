@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Extension;
 /**
+ * Class Analytics
  *
+ * @package
  */
 class Analytics extends \Opencart\System\Engine\Controller {
 	/**

@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Common;
 /**
+ * Class Forgotten
  *
+ * @package
  */
 class Forgotten extends \Opencart\System\Engine\Controller {
 	/**

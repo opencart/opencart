@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Controller\Account;
 /**
+ * Class Returns
  *
+ * @package
  */
 class Returns extends \Opencart\System\Engine\Controller {
 	/**

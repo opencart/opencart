@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Model\Catalog;
 /**
- *
+ * Class Subscription Plan
  */
 class SubscriptionPlan extends \Opencart\System\Engine\Model {
 	/**

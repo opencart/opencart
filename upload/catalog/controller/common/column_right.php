@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Controller\Common;
 /**
+ * Class Column Right
  *
+ * @package
  */
 class ColumnRight extends \Opencart\System\Engine\Controller {
 	/**

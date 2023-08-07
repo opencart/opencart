@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Customer;
 /**
+ * Class Customer Group
  *
+ * @package
  */
 class CustomerGroup extends \Opencart\System\Engine\Controller {
 	/**

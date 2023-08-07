@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Controller\Startup;
 /**
+ * Class Sass
  *
+ * @package
  */
 class Sass extends \Opencart\System\Engine\Controller {
 	/**

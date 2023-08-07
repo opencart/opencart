@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Design;
 /**
+ * Class Layout
  *
+ * @package
  */
 class Layout extends \Opencart\System\Engine\Controller {
 	/**

@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Controller\Common;
 /**
+ * Class Cookie
  *
+ * @package
  */
 class Cookie extends \Opencart\System\Engine\Controller {
 	/**

@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Model\Extension\Opencart\Report;
 /**
+ * Class Activity
  *
+ * @package
  */
 class Activity extends \Opencart\System\Engine\Model {
 	/**

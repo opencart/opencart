@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Controller\Account;
 /**
+ * Class Tracking
  *
+ * @package
  */
 class Tracking extends \Opencart\System\Engine\Controller {
 	/**

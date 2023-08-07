@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Install\Controller\Install;
 /**
+ * Class Step3
  *
+ * @package
  */
 class Step3 extends \Opencart\System\Engine\Controller {
 	/**

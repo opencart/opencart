@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Model\Extension\Opencart\Module;
 /**
+ * Class Latest
  *
+ * @package
  */
 class Latest extends \Opencart\Catalog\Model\Catalog\Product {
 	/**

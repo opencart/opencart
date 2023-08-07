@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Model\Tool;
 /**
+ * Class Image
  *
+ * @package
  */
 class Image extends \Opencart\System\Engine\Model {
 	/**

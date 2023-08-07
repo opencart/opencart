@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Controller\Startup;
 /**
+ * Class Application
  *
+ * @package
  */
 class Application extends \Opencart\System\Engine\Controller {
 	/**

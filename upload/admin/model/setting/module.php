@@ -1,9 +1,9 @@
 <?php
 namespace Opencart\Admin\Model\Setting;
-use Aws\signer\signerClient;
-
 /**
+ * Class Module
  *
+ * @package
  */
 class Module extends \Opencart\System\Engine\Model {
 	/**

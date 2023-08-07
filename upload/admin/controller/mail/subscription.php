@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Mail;
 /**
+ * Class
  *
+ * @package
  */
 class Subscription extends \Opencart\System\Engine\Controller {
     // admin/controller/sale/subscription/addHistory/after

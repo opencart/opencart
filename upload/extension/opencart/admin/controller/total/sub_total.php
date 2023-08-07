@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Extension\Opencart\Total;
 /**
+ * Class Sub Total
  *
+ * @package
  */
 class SubTotal extends \Opencart\System\Engine\Controller {
 	/**

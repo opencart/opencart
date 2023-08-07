@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Extension\Opencart\Shipping;
 /**
+ * Class Free
  *
+ * @package
  */
 class Free extends \Opencart\System\Engine\Controller {
 	/**

@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Controller\Information;
 /**
+ * Class Gdpr
  *
+ * @package
  */
 class Gdpr extends \Opencart\System\Engine\Controller {
 	/**

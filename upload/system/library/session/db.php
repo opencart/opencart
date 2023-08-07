@@ -8,6 +8,11 @@ CREATE TABLE IF NOT EXISTS `session` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 */
 namespace Opencart\System\Library\Session;
+/**
+ * Class DB
+ *
+ * @package
+ */
 class DB {
 	private object $db;
 	private object $config;

@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Install\Controller\Startup;
 /**
+ * Class Install
  *
+ * @package
  */
 class Install extends \Opencart\System\Engine\Controller {
 	/**

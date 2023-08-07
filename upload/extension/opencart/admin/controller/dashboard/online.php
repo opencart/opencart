@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Extension\Opencart\Dashboard;
 /**
+ * Class Online
  *
+ * @package
  */
 class Online extends \Opencart\System\Engine\Controller {
 	/**

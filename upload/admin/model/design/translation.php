@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Model\Design;
 /**
- *
+ * Class Translation
  */
 class Translation extends \Opencart\System\Engine\Model {
 	/**

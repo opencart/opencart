@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Extension\Opencart\Module;
 /**
+ * Class Information
  *
+ * @package
  */
 class Information extends \Opencart\System\Engine\Controller {
 	/**

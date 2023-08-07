@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Event;
 /**
+ * Class Currency
  *
+ * @package
  */
 class Currency extends \Opencart\System\Engine\Controller {
 	/**

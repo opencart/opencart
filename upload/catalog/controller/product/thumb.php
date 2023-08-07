@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Controller\Product;
 /**
+ * Class Thumb
  *
+ * @package
  */
 class Thumb extends \Opencart\System\Engine\Controller {
 	/**

@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Install\Controller\Install;
 /**
+ * Class Promotion
  *
+ * @package
  */
 class Promotion extends \Opencart\System\Engine\Controller {
 	/**

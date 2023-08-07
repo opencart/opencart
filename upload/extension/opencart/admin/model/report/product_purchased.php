@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Model\Extension\Opencart\Report;
 /**
+ * Class ProductPurchased
  *
+ * @package
  */
 class ProductPurchased extends \Opencart\System\Engine\Model {
 	/**

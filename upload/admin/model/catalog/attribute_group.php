@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Model\Catalog;
 /**
+ * Class Attribute Group
  *
+ * @package Opencart\Admin\Model\Catalog\AttributeGroup
  */
 class AttributeGroup extends \Opencart\System\Engine\Model {
 	/**

@@ -3,8 +3,17 @@
  * Basic SMTP mail class
  */
 namespace Opencart\System\Library\Mail;
+/**
+ * Class Smtp
+ */
 class Smtp {
+	/**
+	 * @var array
+	 */
 	protected array $option = [];
+	/**
+	 * @var array|int[]
+	 */
 	protected array $default = [
 		'smtp_port'     => 25,
 		'smtp_timeout'  => 5,

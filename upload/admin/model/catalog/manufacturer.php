@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Model\Catalog;
 /**
- *
+ * Class Manufacturer
  */
 class Manufacturer extends \Opencart\System\Engine\Model {
 	/**

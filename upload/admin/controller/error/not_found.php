@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Error;
 /**
+ * Class Not Found
  *
+ * @package
  */
 class NotFound extends \Opencart\System\Engine\Controller {
 	/**

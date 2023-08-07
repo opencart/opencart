@@ -1,9 +1,11 @@
 <?php
 namespace Opencart\Admin\Controller\Extension\Opencart\Module;
 /**
+ * Class Filter
  *
+ * @package
  */
-class filter extends \Opencart\System\Engine\Controller {
+class Filter extends \Opencart\System\Engine\Controller {
 	/**
 	 * @return void
 	 */

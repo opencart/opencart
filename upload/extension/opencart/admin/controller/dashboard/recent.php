@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Extension\Opencart\Dashboard;
 /**
+ * Class Recent
  *
+ * @package
  */
 class Recent extends \Opencart\System\Engine\Controller {
 	/**

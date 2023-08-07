@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Model\Localisation;
 /**
+ * Class Language
  *
+ * @package
  */
 class Language extends \Opencart\System\Engine\Model {
 	/**

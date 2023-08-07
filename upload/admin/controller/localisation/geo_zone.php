@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Localisation;
 /**
+ * Class Geo Zone
  *
+ * @package
  */
 class GeoZone extends \Opencart\System\Engine\Controller {
 	/**

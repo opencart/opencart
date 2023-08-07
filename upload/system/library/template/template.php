@@ -1,5 +1,10 @@
 <?php
 namespace Opencart\System\Library\Template;
+/**
+ * Class Template
+ *
+ * @package
+ */
 class Template {
 	protected string $directory = '';
 	protected array $path = [];

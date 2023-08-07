@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Controller\Common;
 /**
+ * Class Content Bottom
  *
+ * @package
  */
 class ContentBottom extends \Opencart\System\Engine\Controller {
 	/**

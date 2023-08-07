@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Extension\Opencart\Dashboard;
 /**
+ * Class Activity
  *
+ * @package
  */
 class Activity extends \Opencart\System\Engine\Controller {
 	/**

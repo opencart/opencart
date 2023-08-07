@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Controller\Account;
 /**
+ * Class Register
  *
+ * @package
  */
 class Register extends \Opencart\System\Engine\Controller {
 	/**

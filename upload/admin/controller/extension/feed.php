@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Extension;
 /**
+ * Class Feed
  *
+ * @package
  */
 class Feed extends \Opencart\System\Engine\Controller {
 	/**

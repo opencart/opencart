@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Controller\Extension\Opencart\Currency;
 /**
+ * Class ECB
  *
+ * @package
  */
 class ECB extends \Opencart\System\Engine\Controller {
 	/**

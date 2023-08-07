@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Controller\Common;
 /**
+ * Class Cart
  *
+ * @package
  */
 class Cart extends \Opencart\System\Engine\Controller {
 	/**

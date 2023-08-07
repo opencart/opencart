@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Extension\Opencart\Shipping;
 /**
+ * Class Weight
  *
+ * @package
  */
 class Weight extends \Opencart\System\Engine\Controller {
 	/**

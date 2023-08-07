@@ -1,8 +1,22 @@
 <?php
 namespace Opencart\System\Library\DB;
+/**
+ * Class PDO
+ *
+ * @package
+ */
 class PDO {
+	/**
+	 * @var object|\PDO|null
+	 */
 	private object|null $connection;
+	/**
+	 * @var array
+	 */
 	private array $data = [];
+	/**
+	 * @var int
+	 */
 	private int $affected;
 	
 	/**

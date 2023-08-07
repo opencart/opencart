@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Marketplace;
 /**
+ * Class API
  *
+ * @package
  */
 class Api extends \Opencart\System\Engine\Controller {
 	/**

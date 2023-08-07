@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Design;
 /**
+ * Class Theme
  *
+ * @package
  */
 class Theme extends \Opencart\System\Engine\Controller {
 	/**

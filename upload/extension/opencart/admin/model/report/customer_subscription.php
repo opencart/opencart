@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Model\Extension\Opencart\Report;
 /**
+ * Class Customer Subscription
  *
+ * @package
  */
 class CustomerSubscription extends \Opencart\System\Engine\Model {
 	/**

@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Design;
 /**
+ * Class SEO URL
  *
+ * @package
  */
 class SeoUrl extends \Opencart\System\Engine\Controller {
 	/**

@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Common;
 /**
+ * Class Developer
  *
+ * @package
  */
 class Developer extends \Opencart\System\Engine\Controller {
 	/**

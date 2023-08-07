@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Catalog;
 /**
+ * Class Download
  *
+ * @package
  */
 class Download extends \Opencart\System\Engine\Controller {
 	/**

@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Extension\Opencart\Report;
 /**
+ * Class CustomerSearch
  *
+ * @package
  */
 class CustomerSearch extends \Opencart\System\Engine\Controller {
 	/**

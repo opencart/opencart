@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Model\Design;
 /**
+ * Class Translation
  *
+ * @package
  */
 class Translation extends \Opencart\System\Engine\Model {
 	/**

@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Model\Design;
 /**
- *
+ *  Class Banner
  */
 class Banner extends \Opencart\System\Engine\Model {
 	/**

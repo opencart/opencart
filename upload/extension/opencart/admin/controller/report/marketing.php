@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Extension\Opencart\Report;
 /**
+ * Class Marketing
  *
+ * @package
  */
 class Marketing extends \Opencart\System\Engine\Controller {
 	/**

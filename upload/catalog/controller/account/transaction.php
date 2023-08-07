@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Controller\Account;
 /**
+ * Class Transaction
  *
+ * @package
  */
 class Transaction extends \Opencart\System\Engine\Controller {
 	/**

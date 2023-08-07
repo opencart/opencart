@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Controller\Cron;
 /**
+ * Class Subscription
  *
+ * @package
  */
 class Subscription extends \Opencart\System\Engine\Controller {
 	/**

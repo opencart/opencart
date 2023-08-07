@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Install\Controller\Startup;
 /**
+ * Class Database
  *
+ * @package
  */
 class Database extends \Opencart\System\Engine\Controller {
 	/**

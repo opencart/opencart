@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Extension\Opencart\Module;
 /**
+ * Class Banner
  *
+ * @package
  */
 class Banner extends \Opencart\System\Engine\Controller {
 	/**

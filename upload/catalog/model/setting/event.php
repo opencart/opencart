@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Model\Setting;
 /**
+ * Class Event
  *
+ * @package
  */
 class Event extends \Opencart\System\Engine\Model {
 	/**

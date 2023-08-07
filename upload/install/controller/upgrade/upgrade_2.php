@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Install\Controller\Upgrade;
 /**
+ * Class Upgrade2
  *
+ * @package
  */
 class Upgrade2 extends \Opencart\System\Engine\Controller {
 	/**

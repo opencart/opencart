@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Startup;
 /**
+ * Class Session
  *
+ * @package
  */
 class Session extends \Opencart\System\Engine\Controller {
 	/**

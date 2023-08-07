@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Controller\Account;
 /**
+ * Class Newsletter
  *
+ * @package
  */
 class Newsletter extends \Opencart\System\Engine\Controller {
 	/**

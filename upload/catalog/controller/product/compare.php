@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Controller\Product;
 /**
+ * Class Compare
  *
+ * @package
  */
 class Compare extends \Opencart\System\Engine\Controller {
 	/**

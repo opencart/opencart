@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Controller\Mail;
 /**
+ * Class Review
  *
+ * @package
  */
 class Review extends \Opencart\System\Engine\Controller {
 	// catalog/model/catalog/review/addReview/after

@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Model\Sale;
 /**
+ * Class Returns
  *
+ * @package
  */
 class Returns extends \Opencart\System\Engine\Model {
 	/**

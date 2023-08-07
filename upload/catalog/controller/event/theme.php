@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Controller\Event;
 /**
+ * Class Theme
  *
+ * @package
  */
 class Theme extends \Opencart\System\Engine\Controller {
 	/**

@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Model\Customer;
 /**
- *
+ * Class Custom Field
  */
 class CustomField extends \Opencart\System\Engine\Model {
 	/**

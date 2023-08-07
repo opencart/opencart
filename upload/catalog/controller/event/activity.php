@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Controller\Event;
 /**
+ * Class Activity
  *
+ * @package
  */
 class Activity extends \Opencart\System\Engine\Controller {
 	// catalog/model/account/customer/addCustomer/after

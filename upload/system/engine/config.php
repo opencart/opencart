@@ -1,26 +1,34 @@
 <?php
 /**
- * @package		OpenCart
- * @author		Daniel Kerr
- * @copyright	Copyright (c) 2005 - 2017, OpenCart, Ltd. (https://www.opencart.com/)
- * @license		https://opensource.org/licenses/GPL-3.0
- * @link		https://www.opencart.com
-*/
-
-/**
-* Config class
-*/
+ * @package        OpenCart
+ * @author         Daniel Kerr
+ * @copyright      Copyright (c) 2005 - 2017, OpenCart, Ltd. (https://www.opencart.com/)
+ * @license        https://opensource.org/licenses/GPL-3.0
+ * @link           https://www.opencart.com
+ */
 namespace Opencart\System\Engine;
+/**
+ * Class Config
+ */
 class Config {
+	/**
+	 * @var string
+	 */
 	protected string $directory;
+	/**
+	 * @var array
+	 */
 	private array $path = [];
+	/**
+	 * @var array
+	 */
 	private array $data = [];
 
 	/**
 	 * addPath
 	 *
-	 * @param    string $namespace
-	 * @param    string $directory
+	 * @param string $namespace
+	 * @param string $directory
 	 */
 	public function addPath(string $namespace, string $directory = ''): void {
 		if (!$directory) {
@@ -31,42 +39,42 @@ class Config {
 	}
 
 	/**
-     * Get
-     *
-     * @param	string	$key
-	 * 
-	 * @return	mixed
-     */
-	public function get(string $key): mixed  {
+	 * Get
+	 *
+	 * @param string $key
+	 *
+	 * @return    mixed
+	 */
+	public function get(string $key): mixed {
 		return isset($this->data[$key]) ? $this->data[$key] : '';
 	}
 
-    /**
-     * Set
-     *
-     * @param	string	$key
-	 * @param	string	$value
-     */
+	/**
+	 * Set
+	 *
+	 * @param string $key
+	 * @param string $value
+	 */
 	public function set(string $key, mixed $value): void {
 		$this->data[$key] = $value;
 	}
 
-    /**
-     * Has
-     *
-     * @param	string	$key
+	/**
+	 * Has
 	 *
-	 * @return	mixed
-     */
+	 * @param string $key
+	 *
+	 * @return    mixed
+	 */
 	public function has(string $key): bool {
 		return isset($this->data[$key]);
 	}
-	
-    /**
-     * Load
-     *
-     * @param	string	$filename
-     */
+
+	/**
+	 * Load
+	 *
+	 * @param string $filename
+	 */
 	public function load(string $filename): array {
 		$file = $this->directory . $filename . '.php';
 

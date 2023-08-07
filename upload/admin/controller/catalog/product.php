@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Controller\Catalog;
 /**
- *
+ * Class Product
  */
 class Product extends \Opencart\System\Engine\Controller {
 	/**

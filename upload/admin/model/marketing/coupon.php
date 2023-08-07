@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Model\Marketing;
 /**
+ * Class Coupon
  *
+ * @package
  */
 class Coupon extends \Opencart\System\Engine\Model {
 	/**

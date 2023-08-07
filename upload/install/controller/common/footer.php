@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Install\Controller\Common;
 /**
+ * Class Footer
  *
+ * @package
  */
 class Footer extends \Opencart\System\Engine\Controller {
 	/**

@@ -1,7 +1,7 @@
 <?php
 namespace Opencart\Admin\Controller\Localisation;
 /**
- *
+ * Class Address Format
  */
 class AddressFormat extends \Opencart\System\Engine\Controller {
 	/**

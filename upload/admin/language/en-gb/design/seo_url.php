@@ -14,6 +14,7 @@ $_['text_default']            = 'Default';
 $_['column_key']              = 'Key';
 $_['column_value']            = 'Value';
 $_['column_keyword']          = 'Keyword';
+$_['column_sort_order']       = 'Sort Order';
 $_['column_store']            = 'Store';
 $_['column_language']         = 'Language';
 $_['column_action']           = 'Action';

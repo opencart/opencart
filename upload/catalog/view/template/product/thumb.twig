@@ -5,7 +5,6 @@
       <div class="description">
         <h4><a href="{{ href }}">{{ name }}</a></h4>
         <p>{{ description }}</p>
-
         {% if price %}
           <div class="price">
             {% if not special %}
@@ -18,7 +17,6 @@
             {% endif %}
           </div>
         {% endif %}
-
         {% if review_status and rating %}
           <div class="rating">
             {% for i in 1..5 %}
@@ -30,20 +28,13 @@
             {% endfor %}
           </div>
         {% endif %}
-
       </div>
-
       <div class="button-group">
         <button type="submit" formaction="{{ add_to_cart }}" data-bs-toggle="tooltip" title="{{ button_cart }}"><i class="fa-solid fa-shopping-cart"></i></button>
         <button type="submit" formaction="{{ add_to_wishlist }}" data-bs-toggle="tooltip" title="{{ button_wishlist }}"><i class="fa-solid fa-heart"></i></button>
         <button type="submit" formaction="{{ add_to_compare }}" data-bs-toggle="tooltip" title="{{ button_compare }}"><i class="fa-solid fa-arrow-right-arrow-left"></i></button>
       </div>
-
     </div>
-    <input type="hidden" name="product_id" value="{{ product_id }}"/>
-    <input type="hidden" name="quantity" value="{{ minimum }}"/>
-
-
+    <input type="hidden" name="product_id" value="{{ product_id }}"/> <input type="hidden" name="quantity" value="{{ minimum }}"/>
   </div>
-
 </form>

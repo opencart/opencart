@@ -194,7 +194,7 @@ class WishList extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->post['product_id'])) {
-			$product_id = $this->request->post['product_id'];
+			$product_id = (int)$this->request->post['product_id'];
 		} else {
 			$product_id = 0;
 		}

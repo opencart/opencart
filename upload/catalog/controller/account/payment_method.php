@@ -100,7 +100,6 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-
 		foreach ($results as $result) {
 			$data['payment_methods'][] = [
 				'code'        => $result['code'],

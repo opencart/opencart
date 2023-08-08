@@ -85,6 +85,7 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 			'keyword',
 			'key',
 			'value',
+			'sort_order',
 			'store_id',
 			'language_id'
 		];

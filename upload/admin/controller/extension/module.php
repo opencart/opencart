@@ -239,7 +239,7 @@ class Module extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->get['module_id'])) {
-			$module_id = $this->request->get['module_id'];
+			$module_id = (int)$this->request->get['module_id'];
 		} else {
 			$module_id = 0;
 		}

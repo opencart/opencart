@@ -422,7 +422,7 @@ class Address extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->get['address_id'])) {
-			$address_id = $this->request->get['address_id'];
+			$address_id = (int)$this->request->get['address_id'];
 		} else {
 			$address_id = 0;
 		}

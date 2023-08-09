@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Model\Extension\Opencart\Payment;
 /**
+ * Class COD
  *
+ * @package
  */
 class COD extends \Opencart\System\Engine\Model {
 	/**

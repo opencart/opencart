@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Model\Design;
 /**
+ * Class Theme
  *
+ * @package Opencart\Catalog\Model\Design
  */
 class Theme extends \Opencart\System\Engine\Model {
 	/**

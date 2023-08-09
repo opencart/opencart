@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Model\Catalog;
 /**
+ * Class Category
  *
+ * @package Opencart\Admin\Model\Catalog
  */
 class Category extends \Opencart\System\Engine\Model {
 	/**

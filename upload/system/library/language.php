@@ -6,16 +6,30 @@
  * @license		https://opensource.org/licenses/GPL-3.0
  * @link		https://www.opencart.com
 */
-
-/**
-* Language class
-*/
 namespace Opencart\System\Library;
+/**
+ * Class Language
+ */
 class Language {
+	/**
+	 * @var string
+	 */
 	protected string $code;
+	/**
+	 * @var string
+	 */
 	protected string $directory;
+	/**
+	 * @var array
+	 */
 	protected array $path = [];
+	/**
+	 * @var array
+	 */
 	protected array $data = [];
+	/**
+	 * @var array
+	 */
 	protected array $cache = [];
 
 	/**

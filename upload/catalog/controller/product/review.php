@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Controller\Product;
 /**
+ * Class Review
  *
+ * @package Opencart\Catalog\Controller\Product
  */
 class Review extends \Opencart\System\Engine\Controller {
 	/**
@@ -62,7 +64,7 @@ class Review extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		if (isset($this->request->get['product_id'])) {
-			$product_id = $this->request->get['product_id'];
+			$product_id = (int)$this->request->get['product_id'];
 		} else {
 			$product_id = 0;
 		}

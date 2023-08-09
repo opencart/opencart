@@ -12,7 +12,9 @@ Upgrade Process
 */
 namespace Opencart\Admin\Controller\Tool;
 /**
+ * Class Upgrade
  *
+ * @package Opencart\Admin\Controller\Tool
  */
 class Upgrade extends \Opencart\System\Engine\Controller {
 	/**

@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Extension;
 /**
+ * Class Captcha
  *
+ * @package Opencart\Admin\Controller\Extension
  */
 class Captcha extends \Opencart\System\Engine\Controller {
 	/**

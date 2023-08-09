@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Controller\Checkout;
 /**
+ * Class Register
  *
+ * @package Opencart\Catalog\Controller\Checkout
  */
 class Register extends \Opencart\System\Engine\Controller {
 	/**

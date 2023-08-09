@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Extension\Opencart\Fraud;
 /**
+ * Class IP
  *
+ * @package Opencart\Admin\Controller\Extension\Opencart\Fraud
  */
 class Ip extends \Opencart\System\Engine\Controller {
 	/**

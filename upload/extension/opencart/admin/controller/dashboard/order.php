@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Extension\Opencart\Dashboard;
 /**
+ * Class Order
  *
+ * @package Opencart\Admin\Controller\Extension\Opencart\Dashboard
  */
 class Order extends \Opencart\System\Engine\Controller {
 	/**

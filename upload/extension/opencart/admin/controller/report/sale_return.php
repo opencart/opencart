@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Extension\Opencart\Report;
 /**
+ * Class Sale Return
  *
+ * @package  Opencart\Admin\Controller\Extension\Opencart\Report
  */
 class SaleReturn extends \Opencart\System\Engine\Controller {
 	/**

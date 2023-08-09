@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Marketing;
 /**
+ * Class Affiliate
  *
+ * @package Opencart\Admin\Controller\Marketing
  */
 class Affiliate extends \Opencart\System\Engine\Controller {
 	/**

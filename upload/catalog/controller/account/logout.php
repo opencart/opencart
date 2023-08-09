@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Controller\Account;
 /**
+ * Class Logout
  *
+ * @package Opencart\Catalog\Controller\Account
  */
 class Logout extends \Opencart\System\Engine\Controller {
 	/**

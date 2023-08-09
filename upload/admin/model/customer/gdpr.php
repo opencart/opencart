@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Model\Customer;
 /**
+ * Class GDPR
  *
+ * @package Opencart\Admin\Model\Customer
  */
 class Gdpr extends \Opencart\System\Engine\Model {
 	/**

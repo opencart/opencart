@@ -1,5 +1,10 @@
 <?php
 namespace Opencart\System\Library\Session;
+/**
+ * Class Redis
+ *
+ * @package
+ */
 class Redis {
 	private object $config;
 	private object $redis;

@@ -1,16 +1,54 @@
 <?php
 namespace Opencart\System\Library\Cart;
+/**
+ * Class Customer
+ *
+ * @package
+ */
 class Customer {
+	/**
+	 * @var object|mixed|null
+	 */
 	private object $db;
+	/**
+	 * @var object|mixed|null
+	 */
 	private object $config;
+	/**
+	 * @var object|mixed|null
+	 */
 	private object $request;
+	/**
+	 * @var object|mixed|null
+	 */
 	private object $session;
+	/**
+	 * @var int|mixed
+	 */
 	private int $customer_id = 0;
+	/**
+	 * @var string|mixed
+	 */
 	private string $firstname = '';
+	/**
+	 * @var string|mixed
+	 */
 	private string $lastname = '';
+	/**
+	 * @var int|mixed
+	 */
 	private int $customer_group_id = 0;
+	/**
+	 * @var string|mixed
+	 */
 	private string $email = '';
+	/**
+	 * @var string|mixed
+	 */
 	private string $telephone = '';
+	/**
+	 * @var bool|mixed
+	 */
 	private bool $newsletter = false;
 
 	/**

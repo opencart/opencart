@@ -6,14 +6,22 @@
  * @license		https://opensource.org/licenses/GPL-3.0
  * @link		https://www.opencart.com
 */
-
-/**
-* Session
-*/
 namespace Opencart\System\Library;
+/**
+ * Class Session
+ */
 class Session {
+	/**
+	 * @var object|mixed
+	 */
 	protected object $adaptor;
+	/**
+	 * @var string
+	 */
 	protected string $session_id;
+	/**
+	 * @var array
+	 */
 	public array $data = [];
 
 	/**

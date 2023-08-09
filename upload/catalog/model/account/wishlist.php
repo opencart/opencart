@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Model\Account;
 /**
+ * Class Wishlist
  *
+ * @package Opencart\Catalog\Model\Account
  */
 class Wishlist extends \Opencart\System\Engine\Model {
 	/**

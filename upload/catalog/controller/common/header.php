@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Controller\Common;
 /**
+ * Class Header
  *
+ * @package Opencart\Catalog\Controller\Common
  */
 class Header extends \Opencart\System\Engine\Controller {
 	/**

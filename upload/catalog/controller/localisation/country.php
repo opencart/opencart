@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Controller\Localisation;
 /**
+ * Class Country
  *
+ * @package Opencart\Catalog\Controller\Localisation
  */
 class Country extends \Opencart\System\Engine\Controller {
 	/**

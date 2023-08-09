@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Controller\Api\Localisation;
 /**
+ * Class Currency
  *
+ * @package Opencart\Catalog\Controller\Api\Localisation
  */
 class Currency extends \Opencart\System\Engine\Controller {
 	/**

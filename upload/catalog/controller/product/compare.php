@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Controller\Product;
 /**
+ * Class Compare
  *
+ * @package Opencart\Catalog\Controller\Product
  */
 class Compare extends \Opencart\System\Engine\Controller {
 	/**
@@ -173,7 +175,7 @@ class Compare extends \Opencart\System\Engine\Controller {
 		}
 
 		if (isset($this->request->post['product_id'])) {
-			$product_id = $this->request->post['product_id'];
+			$product_id = (int)$this->request->post['product_id'];
 		} else {
 			$product_id = 0;
 		}

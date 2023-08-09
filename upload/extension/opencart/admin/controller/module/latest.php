@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Extension\Opencart\Module;
 /**
+ * Class Latest
  *
+ * @package Opencart\Admin\Controller\Extension\Opencart\Module
  */
 class Latest extends \Opencart\System\Engine\Controller {
 	/**

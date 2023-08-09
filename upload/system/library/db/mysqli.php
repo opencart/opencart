@@ -1,6 +1,14 @@
 <?php
 namespace Opencart\System\Library\DB;
+/**
+ * Class MySQLi
+ *
+ * @package
+ */
 class MySQLi {
+	/**
+	 * @var object|\mysqli|null
+	 */
 	private object|null $connection;
 
 	/**

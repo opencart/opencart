@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Model\Design;
 /**
+ * Class Seo Url
  *
+ * @package Opencart\Admin\Model\Design
  */
 class SeoUrl extends \Opencart\System\Engine\Model {
 	/**
@@ -83,6 +85,7 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 			'keyword',
 			'key',
 			'value',
+			'sort_order',
 			'store_id',
 			'language_id'
 		];

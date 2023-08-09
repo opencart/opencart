@@ -1,14 +1,28 @@
 <?php
 namespace Opencart\System\Library\Cart;
+/**
+ * Class Currency
+ *
+ * @package
+ */
 class Currency {
+	/**
+	 * @var object|mixed|null
+	 */
 	private object $db;
+	/**
+	 * @var object|mixed|null
+	 */
 	private object $language;
+	/**
+	 * @var array
+	 */
 	private array $currencies = [];
 
 	/**
 	 * Constructor
 	 *
-	 * @param    object  $registry
+	 * @param object $registry
 	 */
 	public function __construct(\Opencart\System\Engine\Registry $registry) {
 		$this->db = $registry->get('db');
@@ -17,24 +31,17 @@ class Currency {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "currency`");
 
 		foreach ($query->rows as $result) {
-			$this->currencies[$result['code']] = [
-				'currency_id'   => $result['currency_id'],
-				'title'         => $result['title'],
-				'symbol_left'   => $result['symbol_left'],
-				'symbol_right'  => $result['symbol_right'],
-				'decimal_place' => $result['decimal_place'],
-				'value'         => $result['value']
-			];
+			$this->currencies[$result['code']] = ['currency_id' => $result['currency_id'], 'title' => $result['title'], 'symbol_left' => $result['symbol_left'], 'symbol_right' => $result['symbol_right'], 'decimal_place' => $result['decimal_place'], 'value' => $result['value']];
 		}
 	}
 
 	/**
 	 * Format
 	 *
-	 * @param    float  $number
-	 * @param    string  $currency
-	 * @param    float  $value
-	 * @param    bool  $format
+	 * @param float  $number
+	 * @param string $currency
+	 * @param float  $value
+	 * @param bool   $format
 	 *
 	 * @return   string
 	 */
@@ -52,9 +59,9 @@ class Currency {
 		}
 
 		$amount = $value ? (float)$number * $value : (float)$number;
-		
+
 		$amount = round($amount, $decimal_place);
-		
+
 		if (!$format) {
 			return $amount;
 		}
@@ -73,13 +80,13 @@ class Currency {
 
 		return $string;
 	}
-	
+
 	/**
 	 * Convert
 	 *
-	 * @param    float  $value
-	 * @param    string  $from
-	 * @param    string  $to
+	 * @param float  $value
+	 * @param string $from
+	 * @param string $to
 	 *
 	 * @return   float
 	 */
@@ -98,14 +105,14 @@ class Currency {
 
 		return $value * ($to / $from);
 	}
-	
+
 	/**
 	 * getId
 	 *
-	 * @param    string  $currency
+	 * @param string $currency
 	 *
 	 * @return   int
-	 */	
+	 */
 	public function getId(string $currency): int {
 		if (isset($this->currencies[$currency])) {
 			return $this->currencies[$currency]['currency_id'];
@@ -117,10 +124,10 @@ class Currency {
 	/**
 	 * getSymbolLeft
 	 *
-	 * @param    string  $currency
+	 * @param string $currency
 	 *
 	 * @return   string
-	 */	
+	 */
 	public function getSymbolLeft(string $currency): string {
 		if (isset($this->currencies[$currency])) {
 			return $this->currencies[$currency]['symbol_left'];
@@ -128,11 +135,11 @@ class Currency {
 			return '';
 		}
 	}
-	
+
 	/**
 	 * getSymbolRight
 	 *
-	 * @param    string  $currency
+	 * @param string $currency
 	 *
 	 * @return   string
 	 */
@@ -143,11 +150,11 @@ class Currency {
 			return '';
 		}
 	}
-	
+
 	/**
 	 * getDecimalPlace
 	 *
-	 * @param    string  $currency
+	 * @param string $currency
 	 *
 	 * @return   string
 	 */
@@ -158,11 +165,11 @@ class Currency {
 			return 0;
 		}
 	}
-	
+
 	/**
 	 * getValue
 	 *
-	 * @param    string  $currency
+	 * @param string $currency
 	 *
 	 * @return   float
 	 */
@@ -174,11 +181,11 @@ class Currency {
 			return 0;
 		}
 	}
-	
+
 	/**
 	 * Has
 	 *
-	 * @param    string  $currency
+	 * @param string $currency
 	 *
 	 * @return   bool
 	 */

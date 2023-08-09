@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Mail;
 /**
+ * Class Gdpr
  *
+ * @package Opencart\Admin\Controller\Mail
  */
 class Gdpr extends \Opencart\System\Engine\Controller {
 	// admin/model/customer/gdpr/editStatus

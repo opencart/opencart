@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Catalog;
 /**
+ * Class Attribute
  *
+ * @package Opencart\Admin\Controller\Catalog
  */
 class Attribute extends \Opencart\System\Engine\Controller {
 	/**

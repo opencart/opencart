@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Marketplace;
 /**
+ * Class Event
  *
+ * @package Opencart\Admin\Controller\Marketplace
  */
 class Event extends \Opencart\System\Engine\Controller {
 	/**

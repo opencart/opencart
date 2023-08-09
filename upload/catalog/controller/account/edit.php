@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Controller\Account;
 /**
+ * Class Edit
  *
+ * @package Opencart\Catalog\Controller\Account
  */
 class Edit extends \Opencart\System\Engine\Controller {
 	/**

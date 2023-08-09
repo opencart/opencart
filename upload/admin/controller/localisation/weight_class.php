@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Localisation;
 /**
+ * Class Weight Class
  *
+ * @package Opencart\Admin\Controller\Localisation
  */
 class WeightClass extends \Opencart\System\Engine\Controller {
 	/**

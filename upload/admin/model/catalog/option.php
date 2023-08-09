@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Model\Catalog;
 /**
+ * Class Option
  *
+ * @package Opencart\Admin\Model\Catalog
  */
 class Option extends \Opencart\System\Engine\Model {
 	/**

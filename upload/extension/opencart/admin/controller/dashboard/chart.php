@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Extension\Opencart\Dashboard;
 /**
+ * Class Chart
  *
+ * @package
  */
 class Chart extends \Opencart\System\Engine\Controller {
 	/**

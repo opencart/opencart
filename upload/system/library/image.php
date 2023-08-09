@@ -6,18 +6,34 @@
  * @license        https://opensource.org/licenses/GPL-3.0
  * @link        https://www.opencart.com
  */
-
-/**
- * Image class
- */
-
 namespace Opencart\System\Library;
+/**
+ * Class Image
+ */
 class Image {
+	/**
+	 * @var string
+	 */
 	private string $file;
+	/**
+	 * @var object|false|\GdImage|resource
+	 */
 	private object $image;
+	/**
+	 * @var int|mixed
+	 */
 	private int $width;
+	/**
+	 * @var int|mixed
+	 */
 	private int $height;
+	/**
+	 * @var string|mixed
+	 */
 	private string $bits;
+	/**
+	 * @var string|mixed
+	 */
 	private string $mime;
 
 	/**

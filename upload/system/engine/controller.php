@@ -6,12 +6,14 @@
  * @license      https://opensource.org/licenses/GPL-3.0
  * @link         https://www.opencart.com
  */
-
-/**
- * Controller class
- */
 namespace Opencart\System\Engine;
+/**
+ * Class Controller
+ */
 class Controller {
+	/**
+	 * @var object|\Opencart\System\Engine\Registry
+	 */
 	protected $registry;
 
 	/**

@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Report;
 /**
+ * Class Report
  *
+ * @package Opencart\Admin\Controller\Report
  */
 class Report extends \Opencart\System\Engine\Controller {
 	/**

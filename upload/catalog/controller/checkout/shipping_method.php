@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Controller\Checkout;
 /**
+ * Class ShippingMethod
  *
+ * @package Opencart\Catalog\Controller\Checkout
  */
 class ShippingMethod extends \Opencart\System\Engine\Controller {
 	/**

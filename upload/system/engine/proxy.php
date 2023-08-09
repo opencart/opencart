@@ -6,12 +6,14 @@
  * @license        https://opensource.org/licenses/GPL-3.0
  * @link           https://www.opencart.com
  */
-
-/**
- * Proxy class
- */
 namespace Opencart\System\Engine;
+/**
+ * Class Proxy
+ */
 class Proxy {
+	/**
+	 * @var array
+	 */
 	protected $data = [];
 
 	/**

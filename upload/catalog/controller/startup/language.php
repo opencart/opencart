@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Controller\Startup;
 /**
+ * Class Language
  *
+ * @package Opencart\Catalog\Controller\Startup
  */
 class Language extends \Opencart\System\Engine\Controller {
 	/**

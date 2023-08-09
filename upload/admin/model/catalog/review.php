@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Model\Catalog;
 /**
+ * Class Review
  *
+ * @package Opencart\Admin\Model\Catalog
  */
 class Review extends \Opencart\System\Engine\Model {
 	/**

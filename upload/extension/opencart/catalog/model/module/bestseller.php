@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Model\Extension\Opencart\Module;
 /**
+ * Class Bestseller
  *
+ * @package
  */
 class Bestseller extends \Opencart\Catalog\Model\Catalog\Product {
 	/**

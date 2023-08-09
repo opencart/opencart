@@ -1,5 +1,10 @@
 <?php
 namespace Opencart\System\Library\Session;
+/**
+ * Class File
+ *
+ * @package
+ */
 class File {
 	private object $config;
 	/**

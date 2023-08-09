@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Event;
 /**
+ * Class Debug
  *
+ * @package Opencart\Admin\Controller\Event
  */
 class Debug extends \Opencart\System\Engine\Controller {
 	/**

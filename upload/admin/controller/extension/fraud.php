@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Extension;
 /**
+ * Class Fraud
  *
+ * @package Opencart\Admin\Controller\Extension
  */
 class Fraud extends \Opencart\System\Engine\Controller {
 	/**

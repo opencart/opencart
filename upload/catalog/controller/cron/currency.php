@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Controller\Cron;
 /**
+ * Class Currency
  *
+ * @package Opencart\Catalog\Controller\Cron
  */
 class Currency extends \Opencart\System\Engine\Controller {
 	/**

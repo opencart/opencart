@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Model\Tool;
 /**
+ * Class Upload
  *
+ * @package Opencart\Admin\Model\Tool
  */
 class Upload extends \Opencart\System\Engine\Model {
 	/**

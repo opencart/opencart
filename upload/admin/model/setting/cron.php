@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Model\Setting;
 /**
+ * Class Cron
  *
+ * @package Opencart\Admin\Model\Setting
  */
 class Cron extends \Opencart\System\Engine\Model {
 	/**

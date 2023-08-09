@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Controller\Error;
 /**
+ * Class Exception
  *
+ * @package Opencart\Catalog\Controller\Error
  */
 class Exception extends \Opencart\System\Engine\Controller {
 	/**

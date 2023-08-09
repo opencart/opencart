@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Extension\Opencart\Report;
 /**
+ * Class Sale Tax
  *
+ * @package Opencart\Admin\Controller\Extension\Opencart\Report
  */
 class SaleTax extends \Opencart\System\Engine\Controller {
 	/**

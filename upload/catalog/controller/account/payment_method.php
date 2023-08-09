@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Controller\Account;
 /**
+ * Class Payment Method
  *
+ * @package Opencart\Catalog\Controller\Account
  */
 class PaymentMethod extends \Opencart\System\Engine\Controller {
 	/**

@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Catalog\Model\Account;
 /**
+ * Class Affiliate
  *
+ * @package Opencart\Catalog\Model\Account
  */
 class Affiliate extends \Opencart\System\Engine\Model {
 	/**

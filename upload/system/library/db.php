@@ -1,30 +1,32 @@
 <?php
 /**
- * @package		OpenCart
- * @author		Daniel Kerr
- * @copyright	Copyright (c) 2005 - 2022, OpenCart, Ltd. (https://www.opencart.com/)
- * @license		https://opensource.org/licenses/GPL-3.0
- * @link		https://www.opencart.com
-*/
-
-/**
-* DB Adapter
-*/
+ * @package        OpenCart
+ * @author         Daniel Kerr
+ * @copyright      Copyright (c) 2005 - 2022, OpenCart, Ltd. (https://www.opencart.com/)
+ * @license        https://opensource.org/licenses/GPL-3.0
+ * @link           https://www.opencart.com
+ */
 namespace Opencart\System\Library;
+/**
+ * Class DB Adapter
+ */
 class DB {
+	/**
+	 * @var object|mixed
+	 */
 	private object $adaptor;
 
 	/**
 	 * Constructor
 	 *
-	 * @param	string	$adaptor
-	 * @param	string	$hostname
-	 * @param	string	$username
-     * @param	string	$password
-	 * @param	string	$database
-	 * @param	int		$port
+	 * @param string $adaptor
+	 * @param string $hostname
+	 * @param string $username
+	 * @param string $password
+	 * @param string $database
+	 * @param int    $port
 	 *
- 	*/
+	 */
 	public function __construct(string $adaptor, string $hostname, string $username, string $password, string $database, string $port = '') {
 		$class = 'Opencart\System\Library\DB\\' . $adaptor;
 
@@ -36,56 +38,56 @@ class DB {
 	}
 
 	/**
-     * Query
-     *
-     * @param	string	$sql  SQL statement to be executed
-	 * 
-	 * @return	array
-     */
+	 * Query
+	 *
+	 * @param string $sql SQL statement to be executed
+	 *
+	 * @return    array
+	 */
 	public function query(string $sql): bool|object {
 		return $this->adaptor->query($sql);
 	}
 
 	/**
-     * Escape
-     *
-     * @param	string	$value	Value to be protected against SQL injections
-	 * 
-	 * @return	string	returns escaped value
-     */
+	 * Escape
+	 *
+	 * @param string $value Value to be protected against SQL injections
+	 *
+	 * @return    string    returns escaped value
+	 */
 	public function escape(string $value): string {
 		return $this->adaptor->escape($value);
 	}
 
 	/**
-     * Count Affected
+	 * Count Affected
 	 *
 	 * Gets the total number of affected rows from the last query
 	 *
-	 * @return	int	returns the total number of affected rows.
-     */
+	 * @return    int    returns the total number of affected rows.
+	 */
 	public function countAffected(): int {
 		return $this->adaptor->countAffected();
 	}
 
 	/**
-     * Get Last ID
+	 * Get Last ID
 	 *
 	 * Get the last ID gets the primary key that was returned after creating a row in a table.
 	 *
-	 * @return	int returns last ID
-     */
+	 * @return    int returns last ID
+	 */
 	public function getLastId(): int {
 		return $this->adaptor->getLastId();
 	}
-	
+
 	/**
-     * Is Connected
+	 * Is Connected
 	 *
 	 * Checks if a DB connection is active.
 	 *
-	 * @return	bool
-     */	
+	 * @return    bool
+	 */
 	public function isConnected(): bool {
 		return $this->adaptor->isConnected();
 	}

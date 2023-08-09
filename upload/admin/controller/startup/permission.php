@@ -1,7 +1,9 @@
 <?php
 namespace Opencart\Admin\Controller\Startup;
 /**
+ * Class Permission
  *
+ * @package Opencart\Admin\Controller\Startup
  */
 class Permission extends \Opencart\System\Engine\Controller {
 	/**

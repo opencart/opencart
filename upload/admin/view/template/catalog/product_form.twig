@@ -186,7 +186,7 @@
                 </div>
 
                 {# UPC #}
-                <div class="row mb-3{% if upc_enabled %} d-none{% endif %}">
+                <div class="row mb-3{% if not upc_enabled %} d-none{% endif %}">
                   <label for="input-upc" class="col-sm-2 col-form-label">{{ entry_upc }}</label>
                   <div class="col-sm-10">
                     <div class="input-group">
@@ -205,7 +205,7 @@
 
 
                 {# EAN #}
-                <div class="row mb-3{% if ean_enabled %} d-none{% endif %}">
+                <div class="row mb-3{% if not ean_enabled %} d-none{% endif %}">
                   <label for="input-ean" class="col-sm-2 col-form-label">{{ entry_ean }}</label>
                   <div class="col-sm-10">
                     <div class="input-group">
@@ -223,7 +223,7 @@
                 </div>
 
                 {# JAN #}
-                <div class="row mb-3{% if jan_enabled %} d-none{% endif %}">
+                <div class="row mb-3{% if not jan_enabled %} d-none{% endif %}">
                   <label for="input-jan" class="col-sm-2 col-form-label">{{ entry_jan }}</label>
                   <div class="col-sm-10">
                     <div class="input-group">
@@ -241,7 +241,7 @@
                 </div>
 
                 {# ISBN #}
-                <div class="row mb-3{% if isbn_enabled %} d-none{% endif %}">
+                <div class="row mb-3{% if not isbn_enabled %} d-none{% endif %}">
                   <label for="input-isbn" class="col-sm-2 col-form-label">{{ entry_isbn }}</label>
                   <div class="col-sm-10">
                     <div class="input-group">
@@ -259,7 +259,7 @@
                 </div>
 
                 {# MPN #}
-                <div class="row mb-3{% if mpn_enabled %} d-none{% endif %}">
+                <div class="row mb-3{% if not mpn_enabled %} d-none{% endif %}">
                   <label for="input-mpn" class="col-sm-2 col-form-label">{{ entry_mpn }}</label>
                   <div class="col-sm-10">
                     <div class="input-group">

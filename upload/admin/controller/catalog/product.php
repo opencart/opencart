@@ -529,9 +529,9 @@ class Product extends \Opencart\System\Engine\Controller {
 			$data['mpn'] = '';
 		}
 
-        $this->load->model('setting/setting');
+        $this->load->model('setting/admin');
         // Get the identifier settings of Default Store.
-        $identifier_settings = $this->model_setting_setting->getSettingsByNames(['config_product_upc', 'config_product_ean', 'config_product_jan', 'config_product_isbn', 'config_product_mpn']);
+        $identifier_settings = $this->model_setting_admin->getByKeys(['config_product_upc', 'config_product_ean', 'config_product_jan', 'config_product_isbn', 'config_product_mpn']);
         foreach(['upc', 'ean', 'jan', 'isbn', 'mpn'] as $identifier_name){
             if(!empty($identifier_settings['config_product_' . $identifier_name])){
                 $data[$identifier_name . '_enabled'] = true;
